@@ -1185,14 +1185,17 @@ public class EconomyBuildings {
         List<DialogData> backButtons = new ArrayList<>();
         rootOptions.add(buildOption(NONE, objectId));
 
-        // Bank/Exchange stay Capitol-exclusive per the earlier 2026-08-08 decision. Trader
-        // (2026-08-22) is the odd one out in this submenu - deliberately buildable in ANY town,
-        // not just the Capitol, so it can serve as an early-game resource source before a player
-        // has reached/built their Capitol at all.
+        // Bank stays Capitol-exclusive per the earlier 2026-08-08 decision. Trader (2026-08-22)
+        // is the odd one out in this submenu - deliberately buildable in ANY town, not just the
+        // Capitol, so it can serve as an early-game resource source before a player has
+        // reached/built their Capitol at all. Exchange is deliberately NOT offered here at all
+        // (2026-08-22 user report: "you currently have the option to build a trade or exchange.
+        // You can't build an Exchange without a trade first, so remove the Exchange build
+        // option") - the ONLY route to an Exchange is upgrading a Capitol Trader in place (see
+        // refreshTraderDialog()'s "Upgrade to Exchange" row / upgradeTraderToExchange()).
         boolean traderOffered = typeAvailable(stage, TRADER);
         boolean bankOffered = isCapitol && typeAvailable(stage, BANK);
-        boolean exchangeOffered = isCapitol && typeAvailable(stage, EXCHANGE);
-        if (traderOffered || bankOffered || exchangeOffered) {
+        if (traderOffered || bankOffered) {
             DialogData financialBack = new DialogData();
             financialBack.name = "Back";
             backButtons.add(financialBack);
@@ -1204,8 +1207,6 @@ public class EconomyBuildings {
                 financialOptions.add(buildOption(BANK, objectId));
             if (traderOffered)
                 financialOptions.add(buildOption(TRADER, objectId));
-            if (exchangeOffered)
-                financialOptions.add(buildOption(EXCHANGE, objectId));
             financialOptions.add(financialBack);
             financial.options = financialOptions.toArray(new DialogData[0]);
             rootOptions.add(financial);
@@ -1684,17 +1685,25 @@ public class EconomyBuildings {
         }
         // Upgrade to Exchange (2026-08-22, user spec, "Independent buildings" design): only ever
         // reachable on a Trader that's physically in the Capitol - a town Trader keeps working as
-        // a Trader forever, on its own merits, with no cross-location state to track. Always
-        // shown rather than hidden outside the Capitol (same "show the cost, grey it out" idiom
-        // buildOption() uses for affordability) so a town Trader still tells the player where to
-        // go next.
+        // a Trader forever, on its own merits, with no cross-location state to track. Shown
+        // (disabled, "Capitol only") on a town Trader while no Capitol exists yet, so the player
+        // knows the feature exists and where they're headed - but once a Capitol IS established,
+        // every OTHER town's Trader hides the row entirely (2026-08-22 user report): that specific
+        // town can never become the Capitol, so a permanently-disabled button there is just
+        // clutter, not a helpful pointer anymore. addButtonRow() was the wrong helper here (single
+        // column, no colspan - left the button visibly off-center against the 2-wide Buy/Sell
+        // grid above it and the colspan(2) Destroy/Close rows below); built directly instead.
         boolean isCapitol = TownRestoration.isCurrentTownCapitol();
-        int[] exchangeCost = buildCostFor(EXCHANGE);
-        boolean canUpgrade = isCapitol && canAffordCost(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]);
-        String upgradeLabel = isCapitol
-                ? "Upgrade to Exchange (" + costLabel(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]) + ")"
-                : "Upgrade to Exchange (Capitol only)";
-        addButtonRow(dialog, upgradeLabel, canUpgrade, () -> openUpgradeToExchangeConfirmDialog(stage, objectId));
+        if (isCapitol || !TownRestoration.capitolExists()) {
+            int[] exchangeCost = buildCostFor(EXCHANGE);
+            boolean canUpgrade = isCapitol && canAffordCost(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]);
+            String upgradeLabel = isCapitol
+                    ? "Upgrade to Exchange (" + costLabel(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]) + ")"
+                    : "Upgrade to Exchange (Capitol only)";
+            TextraButton upgrade = Controls.newTextButton(upgradeLabel, () -> openUpgradeToExchangeConfirmDialog(stage, objectId));
+            upgrade.setDisabled(!canUpgrade);
+            dialog.getButtonTable().add(upgrade).colspan(2).width(240f).row();
+        }
         TextraButton destroy = Controls.newTextButton("Destroy Building", () ->
                 openDestroyConfirmDialog(stage, objectId, () -> refreshTraderDialog(stage, objectId)));
         dialog.getButtonTable().add(destroy).colspan(2).width(240f).row();

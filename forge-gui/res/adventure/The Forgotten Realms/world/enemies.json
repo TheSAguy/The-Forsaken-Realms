@@ -65002,7 +65002,7 @@
         "flying":  true,
         "speed":  40,
         "scale":  1,
-        "life":  30,
+        "life":  60,
         "rewards":  [
                         {
                             "type":  "card",
@@ -122548,7 +122548,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "item",
@@ -122638,7 +122638,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "item",
@@ -122708,7 +122708,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -122774,7 +122774,7 @@
   "ai": "",
   "speed": 60,
   "scale": 2,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -122840,7 +122840,7 @@
   "ai": "",
   "speed": 60,
   "scale": 3,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -122907,7 +122907,7 @@
   "speed": 45,
   "flying": true,
   "scale": 2.5,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "item",
@@ -122977,7 +122977,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -123048,7 +123048,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "item",
@@ -123119,7 +123119,7 @@
   "speed": 45,
   "flying": true,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "item",
@@ -123189,7 +123189,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -123265,7 +123265,7 @@
   "ai": "",
   "speed": 60,
   "scale": 3,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -123331,7 +123331,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "card",
@@ -123397,7 +123397,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "item",
@@ -123485,7 +123485,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "card",
@@ -123554,7 +123554,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "card",
@@ -123618,7 +123618,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "card",
@@ -123687,7 +123687,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "card",
@@ -123751,7 +123751,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "card",
@@ -123830,7 +123830,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 40,
+  "life": 80,
   "rewards": [
     {
       "type": "card",
@@ -123908,7 +123908,7 @@
   "ai": "",
   "speed": 45,
   "scale": 1,
-  "life": 50,
+  "life": 100,
   "rewards": [
     {
       "type": "card",
@@ -123947,7 +123947,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124012,7 +124012,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124078,7 +124078,7 @@
   "ai": "",
   "speed": 45,
   "scale": 0.5,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124134,7 +124134,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124199,7 +124199,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124264,7 +124264,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124330,7 +124330,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "item",
@@ -124427,7 +124427,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124497,7 +124497,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124563,7 +124563,7 @@
   "ai": "",
   "speed": 45,
   "scale": 0.5,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124628,7 +124628,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124699,7 +124699,7 @@
   "ai": "",
   "speed": 60,
   "scale": 1,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "item",
@@ -124801,7 +124801,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124866,7 +124866,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124931,7 +124931,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -124996,7 +124996,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -125061,7 +125061,7 @@
   ],
   "ai": "",
   "speed": 45,
-  "life": 20,
+  "life": 40,
   "rewards": [
     {
       "type": "card",
@@ -125127,7 +125127,7 @@
   "ai": "",
   "speed": 60,
   "scale": 2,
-  "life": 30,
+  "life": 60,
   "rewards": [
     {
       "type": "item",

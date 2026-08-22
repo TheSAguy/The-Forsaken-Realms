@@ -7610,7 +7610,8 @@
             "startBattleWithCard":  [
                 "Joven|hml"
             ]
-        }
+        },
+        "rarity":  "Rare"
     },
     {
         "name":  "Chandler's Shoes",
@@ -7622,7 +7623,8 @@
             "startBattleWithCard":  [
                 "Chandler|hml"
             ]
-        }
+        },
+        "rarity":  "Rare"
     },
     {
         "name":  "Murderer's Axe",
@@ -7633,7 +7635,8 @@
             "startBattleWithCard":  [
                 "Murderer's Axe|SOI"
             ]
-        }
+        },
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Morcant's Crown",
@@ -7645,7 +7648,8 @@
             "startBattleWithCard":  [
                 "Morcant's Eyes"
             ]
-        }
+        },
+        "rarity":  "Rare"
     },
     {
         "name":  "Faerie Crown",
@@ -7656,7 +7660,8 @@
             "startBattleWithCard":  [
                 "Faerie Tauntings"
             ]
-        }
+        },
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Evershrike Anklet",
@@ -7668,7 +7673,8 @@
             "startBattleWithCard":  [
                 "Evershrike"
             ]
-        }
+        },
+        "rarity":  "Rare"
     },
     {
         "name":  "Flamecaster Pants",
@@ -7680,7 +7686,8 @@
             "startBattleWithCard":  [
                 "Enraged Flamecaster"
             ]
-        }
+        },
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Tarfire Helm",
@@ -7691,7 +7698,8 @@
             "startBattleWithCard":  [
                 "Lasting Tarfire"
             ]
-        }
+        },
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Starfish On Your Foot",
@@ -7702,7 +7710,8 @@
             "startBattleWithCard":  [
                 "Spiny Starfish"
             ]
-        }
+        },
+        "rarity":  "Common"
     },
     {
         "name":  "Tidal Amulet",
@@ -7727,7 +7736,8 @@
             "startBattleWithCard":  [
                 "Pegasus Refuge"
             ]
-        }
+        },
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Interplanar Armor",
@@ -7739,7 +7749,8 @@
             "startBattleWithCard":  [
                 "Interplanar Beacon"
             ]
-        }
+        },
+        "rarity":  "Rare"
     },
     {
         "name":  "Cloud Keeper Armor",
@@ -7751,6 +7762,7 @@
             "startBattleWithCard":  [
                 "Untaidake, the Cloud Keeper"
             ]
-        }
+        },
+        "rarity":  "Rare"
     }
 ]

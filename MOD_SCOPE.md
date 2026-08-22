@@ -4316,7 +4316,7 @@ Trader has no such option and keeps working as a Trader indefinitely - each loca
 independent, nothing carries over or migrates between towns (user's own choice among three
 proposed designs, see `MOD_CHANGELOG.md`'s "thirty-third round").
 
-### 91. Tier 2 Enemy-Balance-Curve Reconciliation — `In Progress (2026-08-22)`
+### 91. Tier 2 Enemy-Balance-Curve Reconciliation — `Audit delivered (2026-08-22), awaiting go-ahead`
 
 Follow-up to #89's Realm of Legends port. Tier 1 (v1.01) only *labeled* the 9 ported "Legendary"
 POIs as endgame content (minimap glyph + entry warning) without touching their actual numbers,
@@ -4326,6 +4326,13 @@ native boss range, and audit the RoL-imported items the same way the Life Item L
 thread) audited Heavy/Blessed Armor - anything whose effect assumes 30-life play gets re-rarity'd
 or re-costed, using **20** as the reference life for this pass specifically (user's deliberate
 choice - splits the difference between RoL's 30 and TFR Normal's 16 for endgame-tier content).
-Audit in progress; report pending, nothing applied to game data yet.
+
+**Report delivered** (`MOD_CHANGELOG.md`'s "Thirty-fifth round"), nothing applied to game data yet:
+a ×2 life rescale proposal for 38 of the 39 ported bosses (the 39th, Zo-Zu the Punisher, reads as a
+joke cameo and was excluded), and rarity recommendations for 12 of the 14 items those bosses drop
+(the other 2 already fine). Also surfaced two things a numbers pass can't fix on its own: **Eldrazi
+Prison has no reachable boss at all** - a known, deliberately-scoped 2026-08-10 gap (only 1/8 of the
+dungeon was ever built) that never got reconciled against its own later "Legendary" promotion - and
+Zo-Zu's cameo status. Both need the user's call before Tier 2 can actually ship.
 
 

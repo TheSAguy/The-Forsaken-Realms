@@ -11944,3 +11944,53 @@ Docs/tooling-only round while the user playtested the thirty-third round's build
   (same methodology as the Life Item Ledger) of RoL-imported items against a 20-reference-life
   baseline (user's deliberate choice for this pass, not TFR Normal's 16 or RoL's 30). Report-only,
   nothing applied yet - result pending.
+
+## Thirty-fifth round: Tier 2 audit delivered, Trader dialog fixes from first playtest (2026-08-22)
+
+- **Tier 2 report delivered** (MOD_SCOPE.md #91) as the "Legendary Reclassification" artifact.
+  Traced all 39 named bosses across the 9 Legendary POIs to their `enemies.json` `rawLife` and
+  proposed a uniform ×2 rescale (the ported roster already clusters into flat 20/30/40/50 tiers,
+  not RoL-absurd numbers - doubling maps them cleanly onto TFR's own native boss range: median 40,
+  Karona-tier 80, Emrakul ceiling 100). One boss, **Zo-Zu the Punisher**, excluded - its stat block
+  (`life:1, difficulty:0.1, rewards:[]`) reads as a joke cameo unrelated to the real 6-fight
+  gauntlet in the same dungeon. Also audited the 14 items those bosses actually drop (a much
+  narrower set than the general RoL item pool the Life Item Ledger already covered) - found 12 of
+  14 have no `rarity` field at all (confirmed via a full 642-item scan: the *only* 12 in the entire
+  game missing one), a classification gap rather than a Heavy/Blessed-Armor-style miscalibration.
+  Recommendations given for all 12; nothing applied - awaiting go-ahead, same as the original
+  Ledger.
+  - **Eldrazi Prison has no reachable boss at all - root-caused, not just flagged.** Traced the
+    full history rather than reporting the static finding alone (user asked "I thought all main
+    quests were verified"): the 2026-08-10 Item Economy round that imported this POI explicitly
+    documented importing only 1/8 of it (entry hall only; the 7 doors meant to lead to 6 titans'
+    boss chambers were left safely disabled, `teleport` cleared to `""`, rather than pointing at
+    files that were never built) and logged it as a deliberate, scoped-out gap ("worth a dedicated
+    import pass later if wanted"). Every obtainability audit since has correctly passed this POI,
+    because none of them were asking "can a player reach the deepest room" - they were checking
+    "does every item/enemy have SOME real source," and Eldrazi Prison's item (Eldrazi rune) and the
+    titans' names (independently reachable elsewhere as roaming creatures) both do. What actually
+    fell through the cracks: v1.01 (2026-08-21) promoted this POI to "Legendary" - a red-skull,
+    "come here, it's dangerous and worthwhile" label - applied to all 9 imported names without
+    cross-checking back against the 5-round-old note that this specific one was left unfinished.
+    Fixing reachability (restore the 12 now-deleted gate items, re-target the doors, or swap in a
+    simpler single boss) is the user's call, not something Tier 2's numbers can resolve alone.
+- **Trader dialog fixes** (`EconomyBuildings.java`), from the user's first playtest of the
+  thirty-third round's build:
+  - **"Upgrade to Exchange" button was visibly off-center** - built via `addButtonRow()` (single
+    table column, no `colspan`), unlike every other button in that dialog. Rebuilt directly with
+    `colspan(2)` to match Destroy Building/Close.
+  - **Exchange removed from the direct build-choice menu entirely** (user: "You can't build an
+    Exchange without a trade first, so remove the Exchange build option") - Trader is now a strict
+    prerequisite; the Financial submenu at a Capitol only offers Bank + Trader, never Exchange
+    directly. The only route to an Exchange is upgrading a Capitol Trader in place.
+  - **"Upgrade to Exchange" row now hides entirely in a non-Capitol town once a Capitol exists**
+    elsewhere (user: "that town can't become a capitol, it's redundant") - still shown, disabled,
+    everywhere while no Capitol exists yet (so new players learn the feature exists), via the
+    existing `TownRestoration.capitolExists()` check.
+- **Splash-screen version string left as-is** (user's call, after I flagged it): `forge/screens/
+  SplashScreen.java` is stock, pre-plane-load Forge code reading `Forge.getDeviceAdapter().
+  getVersionString()` directly - the raw Maven-computed string, which auto-stamps the actual
+  compile date, unlike the manually-tracked `engineBuildVersion` the start menu now shows.
+  Reconciling them means touching shared code or core version computation; user agreed the two
+  screens answering different questions ("when was this jar built" vs. "which engine snapshot are
+  we on") is fine as-is.
