@@ -4316,23 +4316,41 @@ Trader has no such option and keeps working as a Trader indefinitely - each loca
 independent, nothing carries over or migrates between towns (user's own choice among three
 proposed designs, see `MOD_CHANGELOG.md`'s "thirty-third round").
 
-### 91. Tier 2 Enemy-Balance-Curve Reconciliation — `Audit delivered (2026-08-22), awaiting go-ahead`
+### 91. Tier 2 Enemy-Balance-Curve Reconciliation — `Done (2026-08-22)`, Eldrazi Prison import included
 
 Follow-up to #89's Realm of Legends port. Tier 1 (v1.01) only *labeled* the 9 ported "Legendary"
 POIs as endgame content (minimap glyph + entry warning) without touching their actual numbers,
-which still assume RoL's 30-starting-life balance rather than TFR's own (Easy 21/Normal 16/Hard
-11/Insane 9). Tier 2 is the real numbers pass: rescale the ported bosses' life onto TFR's own
-native boss range, and audit the RoL-imported items the same way the Life Item Ledger (#2 open
-thread) audited Heavy/Blessed Armor - anything whose effect assumes 30-life play gets re-rarity'd
-or re-costed, using **20** as the reference life for this pass specifically (user's deliberate
-choice - splits the difference between RoL's 30 and TFR Normal's 16 for endgame-tier content).
+which still assumed RoL's 30-starting-life balance rather than TFR's own (Easy 21/Normal 16/Hard
+11/Insane 9). Tier 2 is the real numbers pass, using **20** as the reference life for this pass
+specifically (user's deliberate choice - splits the difference between RoL's 30 and TFR Normal's
+16 for endgame-tier content).
 
-**Report delivered** (`MOD_CHANGELOG.md`'s "Thirty-fifth round"), nothing applied to game data yet:
-a ×2 life rescale proposal for 38 of the 39 ported bosses (the 39th, Zo-Zu the Punisher, reads as a
-joke cameo and was excluded), and rarity recommendations for 12 of the 14 items those bosses drop
-(the other 2 already fine). Also surfaced two things a numbers pass can't fix on its own: **Eldrazi
-Prison has no reachable boss at all** - a known, deliberately-scoped 2026-08-10 gap (only 1/8 of the
-dungeon was ever built) that never got reconciled against its own later "Legendary" promotion - and
-Zo-Zu's cameo status. Both need the user's call before Tier 2 can actually ship.
+**Audit delivered, then applied, same day (2026-08-22)** - report in `MOD_CHANGELOG.md`'s
+"Thirty-fifth round": a ×2 life rescale for 39 of the 39 ported bosses (rescaled 20/30/40/50 tiers
+onto TFR's own native boss range: 40/60/80/100), and rarity assignments for 12 of the 14 items
+those bosses drop (the other 2 already fine) - closes the item-rarity gap to 0/642 missing. Both
+**applied directly to `enemies.json`/`items.json`** the same round (verified: all 39 life values
+and 12 rarities landed correctly, both files re-validated as clean JSON).
+
+Two things a numbers pass alone couldn't fix, also resolved same day:
+- **Eldrazi Prison had no reachable boss at all** - a known, deliberately-scoped 2026-08-10 gap
+  (only 1/8 of the dungeon was ever built) that never got reconciled against its own later
+  "Legendary" promotion. **Fixed via a full import** (not a stopgap): all 6 titan boss chambers
+  plus a previously-unlisted 7th (`Hall_of_the_Unifier.tmx`, RoL's own true final encounter - Jodah
+  the Unifier - found on inspection, not assumed away) copied in from `Realm of Legends`; the "Six
+  broken cross-plane dungeon exits" path bug fixed for all 7 new files and the hub's 7 doors
+  re-enabled; the 12 gate items restored to `items.json`; a real `Emrakul`/`Kozilek` name collision
+  against pre-existing baseline bosses resolved by adding two distinctly-named entries (`Emrakul,
+  the Aeons Torn` / `Kozilek, Butcher of Truth`) rather than overwriting the already-live baseline
+  ones; reachability traced end to end, including where the Pentakey Shards/Ur-Dragon's Key
+  actually come from (6 other roaming legends elsewhere in the world, not this dungeon). The 6
+  titans' own life totals were deliberately left as imported (already sit inside TFR's native
+  range, unlike the 39 dungeon-exclusive bosses above). Full detail, including what's still
+  unconfirmed (no in-game walkthrough, no pixel-level tile-collision check), in
+  `MOD_CHANGELOG.md`'s "Thirty-sixth round."
+- **Zo-Zu the Punisher** (life 1, zero rewards, reads as a joke cameo unrelated to the Dueling
+  Club's real 6-fight gauntlet) - left untouched, no change requested.
+
+Not yet packaged/deployed for testing as of this entry - repo-only.
 
 

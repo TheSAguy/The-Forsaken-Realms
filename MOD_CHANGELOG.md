@@ -11994,3 +11994,160 @@ Docs/tooling-only round while the user playtested the thirty-third round's build
   Reconciling them means touching shared code or core version computation; user agreed the two
   screens answering different questions ("when was this jar built" vs. "which engine snapshot are
   we on") is fine as-is.
+
+## Thirty-sixth round: Eldrazi Prison — full 7-branch boss dungeon import (2026-08-22)
+
+User-approved implementation (not an audit) closing the gap the Thirty-fifth round's Tier 2 report
+surfaced: Eldrazi Prison was "Legendary"-tagged with no reachable boss, since only its entry hall was
+ever imported back on 2026-08-10 ("Six broken cross-plane dungeon exits"). This round does the actual
+import, not a stopgap single-boss simplification.
+
+**Copied 7 files from `Realm of Legends/maps/map/cave/` into this plane's own copy** (matching the
+entry hall's own location, not `common/`): `Eldrazi_Prison_Azlask.tmx`, `_Emrakul.tmx`, `_Kozilek.tmx`,
+`_Ulalek.tmx`, `_Ulamog.tmx`, `_Zhulodok.tmx` (the 6 titan boss chambers), plus a 7th found on
+inspection rather than assumed away - **`Hall_of_the_Unifier.tmx`**. The hub's 7th door (object
+id=86) turned out not to be a duplicate or an unbuilt stub: it's RoL's own true final encounter,
+Jodah the Unifier (full multi-stage lore dialogue, a difficulty-scaled fight, a working exit portal),
+sitting directly behind the hub's second item gate (Ur-Dragon's Key + 6 hexkeys) - exactly the room
+that gate's own flavor text already describes ("the most well-protected... the portal you've been
+looking for... a way to leave this realm"). Importing it was the only reading consistent with
+"genuine, finishable 7-branch dungeon," so this round is 7 files, not 6.
+
+**Asset check, before wiring anything in**: all 7 files use only tilesets already resolvable via
+`common/` (`main.tsx`, `buildings.tsx`, `dungeon_bis.tsx`, `animatedtiles.tsx`) - zero new
+tileset/atlas copying needed. `Hall_of_the_Unifier.tmx`'s portal object references
+`sprites/portal3.atlas`, confirmed already present at `common/sprites/portal3.atlas`. No
+filename collisions with anything already in this plane's `cave/` folder (checked before copying -
+the only other file there, `cave_eldrazi.tmx`, is an unrelated generic filler cave).
+
+**Cross-plane path fixes** (the exact "Six broken cross-plane dungeon exits" bug class from
+2026-08-10, applied to the newly-copied files this time):
+- Each of the 6 titan files has exactly one internal reference, its own `door_up` back to the hub
+  (`../Realm of Legends/maps/map/cave/Eldrazi_Prison_0.tmx`) - repointed to `../The Forgotten
+  Realms/...` in all 6.
+- `Hall_of_the_Unifier.tmx` had one broken-by-design internal link of its own, not in the 6-file
+  list: a `door_down` (object id=150) to `Mirror_Gallery_1.tmx`, described in Jodah's own dialogue
+  as containing "post-game challenges." Traced it rather than assuming a stub: this is a genuinely
+  separate, 11-file sub-dungeon (`Mirror_Gallery_1/2/B/C1/C2/C3/Eldrazi/G/R/Ur-Dragon/W.tmx`). Well
+  beyond this round's scope (matches the established "disable the sub-link rather than chain-import
+  an untested new dungeon" precedent from the original Six-broken-exits fix) - disabled (`teleport`
+  cleared to `""`), which `PortalActor`/`MapStage` door-collision handling confirms is a safe,
+  ordinary-exit-door behavior, not a crash risk. Worth its own import pass later if wanted.
+- Re-enabled all 7 doors in `Eldrazi_Prison_0.tmx` (ids 81/86/87/88/89/90/91), each now pointing at
+  its correct newly-copied file - the id-to-file mapping wasn't guessable from the hub file alone
+  (all 7 were uniformly disabled), it required reading RoL's still-intact source copy of the same
+  hub file to recover which door originally led where.
+- One more player-facing fix in `Hall_of_the_Unifier.tmx`, found while reading the defeat dialogue:
+  Jodah's victory text said "Congratulations on completing the Realm of Legends!" (both
+  difficulty-variant copies of the line) - literal leftover branding from the source plane. Changed
+  to "The Forgotten Realms" in both. Left the same paragraph's "the Mirror Gallery you can now
+  access" mention alone (see Uncertain section below) - the door behind it is deliberately disabled
+  this round, but there genuinely is a door there, so the line isn't factually broken, just premature.
+
+**Real name collision found and fixed - `Emrakul` and `Kozilek` were already-occupied names.**
+Checked every boss's `enemy` property against this plane's `enemies.json` before wiring anything in,
+per the scope's own instruction to verify rather than assume it resolves:
+- `Azlask`, `Ulalek`, `Ulamog`, `Zhulodok` already exist here from the 2026-08-10 mass bestiary
+  import, faithfully matching RoL's own data (same life/rewards) - no conflict, used as-is.
+- `Emrakul` and `Kozilek` also already exist here, but as **different creatures**. This plane's
+  `Emrakul` is the pre-existing `common`-baseline boss (`decks/boss/emrakul.dck`, life 100,
+  `boss:true`, already reachable elsewhere with its own working Item-Economy-round boss-drop table) -
+  not RoL's narrative titan. This plane's `Kozilek` (`decks/miniboss/copperhostbrutalizer.dck`,
+  colors `W`, `questTags:["Phyrexian","Copper Host","Humanoid"]`) isn't even thematically an Eldrazi -
+  a pre-existing, unrelated name reuse from a much earlier import, not something this round
+  introduced. Both baseline entries are themselves already-live, already-reachable, already-reward-
+  wired bosses elsewhere in this plane; renaming *them* would have been out of scope and riskier than
+  renaming the new arrivals.
+  - Added two new `enemies.json` entries instead, using RoL's own titan data unchanged:
+    **`Emrakul, the Aeons Torn`** and **`Kozilek, Butcher of Truth`** (both names taken directly from
+    their own reward card names - reads as authored, not a hacky suffix - and confirmed against all
+    1518 existing names before adding: zero collisions, zero duplicates after, 1520 total).
+  - Updated the corresponding `.tmx` files' `enemy` properties (both difficulty-variant objects in
+    each file) to the new names.
+  - **Their deck files were missing.** `decks/legends/emrakul.dck` and `decks/legends/kozilek.dck`
+    were never copied during the 2026-08-10 mass bestiary import, almost certainly because that
+    import's new-vs-baseline diff treated the names as "already exists" and silently skipped them -
+    unlike `azlask.dck`/`ulalek.dck`/`ulamog.dck`/`zhulodok.dck`/`jodah.dck`, which were all already
+    present. Copied both from RoL now; without them the two new encounters would reference a deck
+    that resolves nowhere.
+  - All 6 auxiliary equipment drops the titans carry (`Amulet of Annihilation`, `Amulet of
+    Awakening`, `Despoiler's Boots`, `Anklet of the End`, `Amulet of Aeons Torn`, `Truth Butcher's
+    Armor`) were already confirmed present in this plane's `items.json` - no gaps there.
+
+**Restored the 12 gate items to `items.json`** (654 total now), definitions pulled from `Realm of
+Legends/items.json` (still intact there, never touched by the 2026-08-10 deletion round) rather than
+invented: 5× Eldrazi Pentakey Shard, Ur-Dragon's Key, and the 6 named Hexkeys (Azlask's/Ulalek's/
+Zhulodok's/Ulamog's/Kozilek's/Emrakul's) - all `questItem:true`, `rarity:"Common"` (matching this
+catalog's own established convention for every other quest-only key/shard item, e.g. `Strange Key`,
+`Torturer's Key`, `First Shard`).
+
+**Tiers.** Gave all 6 titans a consistent `Mythic` tier (`Azlask`/`Ulalek`/`Ulamog`/`Zhulodok`
+upgraded from the card-rarity-formula's auto-assigned `Rare`; the two new entries created at
+`Mythic` directly) plus `difficulty:3` for internal consistency with the existing `Mythic`-tier
+baseline `Emrakul` - a deliberate read of "set them consistent with their status as top-tier bosses"
+rather than the narrower "only if unset," since leaving 4 of 6 at `Rare` while 2 were freshly
+`Mythic` would have made an inconsistent roster for one 7-branch endgame dungeon. `Jodah` turned out
+to already carry `tier:"Mythic", difficulty:3` from some earlier round (verified directly against
+the file rather than trusted from an earlier summary, which had wrongly suggested it was unset) -
+left untouched. **Life totals were deliberately NOT touched** - MOD_SCOPE #91's own ×2 rescale
+proposal (RoL's 30-life balance onto TFR's own range) is still awaiting the user's go-ahead as a
+separate decision; this round only restores reachability and tiers, it doesn't pre-empt that pending
+numbers pass.
+
+**Reachability, walked end to end, not assumed:**
+- Entry hall -> defeat any/all of the 6 titans behind their now-repointed doors -> each drops its
+  own Hexkey (confirmed in `enemies.json`, unchanged from RoL).
+- The 5 Pentakey Shards and the Ur-Dragon's Key are **not** dropped by anything inside this dungeon
+  (checked all 7 new files - confirmed absent). Traced their real source instead of assuming a gap:
+  RoL's `enemies.json` grants them from 6 *different* named legends - `Cromat`, `Ramos`, `Child of
+  Alara`, `The First Sliver`, `Klothys` (the 5 Pentakey Shards) and `The Ur-Dragon` (the key) - all 6
+  of which already exist in this plane's `enemies.json` (from the same 2026-08-10 mass bestiary
+  import) and are already wired into the matching colored `biomes/*.json` roaming pools. Both gates
+  are satisfiable through ordinary open-world play, no additional import needed - this also resolves
+  what looked at first like a chicken-and-egg problem (the Pentakey gate sits close to the entrance;
+  it does not block the source of its own keys, since that source is entirely external to this
+  dungeon).
+- Once both gates are opened (removing the gate objects themselves via `deleteMapObject:-1`, the same
+  mechanism every other gate in this plane already uses), the hexkey gate opens the path to
+  `Hall_of_the_Unifier.tmx`'s door - fight Jodah, exit via the portal (`PortalActor` on an active,
+  empty-teleport portal safely calls `stage.exitDungeon()`, verified by reading
+  `MapStage.java`/`PortalActor.java` rather than assumed).
+
+**Verification performed:**
+- `grep -rl "Realm of Legends"` across this plane's `maps/` -> zero hits (was 1, the flavor-text
+  line above, fixed).
+- All 8 touched/added `.tmx` files (7 new + the hub) parsed with `xml.etree.ElementTree` - well-
+  formed. Every `tileset source=`, `object template=`, and `teleport` value resolved to a real file
+  on disk via script, not eyeballed (teleport paths resolve relative to the plane root,
+  `../PlaneName/...` - confirmed empirically to be a different base than `tileset source=`, which is
+  relative to the file's own folder).
+- `items.json` and `enemies.json` both re-parsed as valid JSON after editing (654 items; 1520
+  enemies, zero duplicate names).
+- Deck copies verified byte-identical to their RoL source via `diff`.
+
+**Uncertain / not fully confirmed, flagged rather than glossed over:**
+- Map-geometry walkability (which tiles are physically solid) was **not** decoded pixel-by-pixel from
+  the compressed tile layers - that would need parsing per-tile collision flags out of the `.tsx`
+  tilesets, not attempted this round. Confidence that the 6 titan doors and both gates are reachable
+  rests on reading every door/gate object's own position and logic, RoL shipping this exact hub
+  layout as presumably-tested content, and one concrete data point: the hub's pre-existing `Eldrazi
+  rune` treasure (object 94, far from the entrance, in the same region as several titan doors) was
+  already confirmed reachable in this plane *before* any of this round's changes (that's how its
+  capital-R typo bug was found and fixed back on 2026-08-10). No in-game walkthrough was performed.
+- `Hall_of_the_Unifier.tmx`'s surviving "the Mirror Gallery you can now access" line is now technically
+  premature (the door behind it is disabled) - left as-is rather than rewritten, a minor, easily-
+  revisited loose end rather than a broken promise worth a deeper dialogue edit in this already-large
+  round.
+- `Jodah`'s reward list still references `"Commander's Robes"`, an item removed from this plane's
+  catalog in the original 2026-08-10 Commander cleanup - a pre-existing gap (same silently-no-ops
+  behavior as the ~48 other unresolved reward references documented in the Post-round audit entry),
+  not introduced this round and not fixed, since it's one dead slot in an otherwise-large reward table
+  and outside this round's stated scope.
+- Not playtested - this is a large, mechanically self-consistent import verified by reading and
+  script-checking every path/reference, not by a live run through the dungeon.
+
+**Files touched**: `Eldrazi_Prison_{Azlask,Emrakul,Kozilek,Ulalek,Ulamog,Zhulodok}.tmx` (new) +
+`Hall_of_the_Unifier.tmx` (new), all under `The Forgotten Realms/maps/map/cave/`;
+`Eldrazi_Prison_0.tmx` (7 doors re-enabled, same folder); `The Forgotten Realms/decks/legends/
+{emrakul,kozilek}.dck` (new copies); `The Forgotten Realms/world/items.json` (+12 items); `The
+Forgotten Realms/world/enemies.json` (+2 entries, 6 tier/difficulty updates).

@@ -7764,5 +7764,89 @@
             ]
         },
         "rarity":  "Rare"
+    },
+    {
+        "name":  "Eldrazi Pentakey Shard 1",
+        "description":  "One of the five keys to the Eldrazi Prison.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Eldrazi Pentakey Shard 2",
+        "description":  "One of the five keys to the Eldrazi Prison.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Eldrazi Pentakey Shard 3",
+        "description":  "One of the five keys to the Eldrazi Prison.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Eldrazi Pentakey Shard 4",
+        "description":  "One of the five keys to the Eldrazi Prison.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Eldrazi Pentakey Shard 5",
+        "description":  "One of the five keys to the Eldrazi Prison.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Ur-Dragon's Key",
+        "description":  "Unlocks the gate to your final goal somewhere within the Eldrazi Prison.",
+        "iconName":  "GoldKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Azlask's Hexkey",
+        "description":  "One of six keys which will open the final gate alongside the Ur-Dragon's Key.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Ulalek's Hexkey",
+        "description":  "One of six keys which will open the final gate alongside the Ur-Dragon's Key.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Zhulodok's Hexkey",
+        "description":  "One of six keys which will open the final gate alongside the Ur-Dragon's Key.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Ulamog's Hexkey",
+        "description":  "One of six keys which will open the final gate alongside the Ur-Dragon's Key.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Kozilek's Hexkey",
+        "description":  "One of six keys which will open the final gate alongside the Ur-Dragon's Key.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
+    },
+    {
+        "name":  "Emrakul's Hexkey",
+        "description":  "One of six keys which will open the final gate alongside the Ur-Dragon's Key.",
+        "iconName":  "StrangeKey",
+        "questItem":  true,
+        "rarity":  "Common"
     }
 ]

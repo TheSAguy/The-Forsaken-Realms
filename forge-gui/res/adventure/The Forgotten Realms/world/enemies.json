@@ -35903,8 +35903,8 @@
                     ],
         "colors":  "WUBRG",
         "spawnRate":  0,
-        "tier":  "Rare",
-        "difficulty":  2
+        "tier":  "Mythic",
+        "difficulty":  3
     },
     {
         "name":  "Ulalek",
@@ -35978,8 +35978,8 @@
                     ],
         "colors":  "WUBRG",
         "spawnRate":  0,
-        "tier":  "Rare",
-        "difficulty":  2
+        "tier":  "Mythic",
+        "difficulty":  3
     },
     {
         "name":  "Ulamog",
@@ -36055,8 +36055,8 @@
         "colors":  "C",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
-        "difficulty":  2
+        "tier":  "Mythic",
+        "difficulty":  3
     },
     {
         "name":  "Zhulodok",
@@ -36130,8 +36130,8 @@
                     ],
         "colors":  "C",
         "spawnRate":  0,
-        "tier":  "Rare",
-        "difficulty":  2
+        "tier":  "Mythic",
+        "difficulty":  3
     },
     {
         "name":  "Kynaios and Tiro",
@@ -125261,5 +125261,162 @@
   "speed": 0,
   "life": 1,
   "rewards": []
+},
+{
+  "name": "Emrakul, the Aeons Torn",
+  "sprite": "sprites/enemy/aberration/emrakul.atlas",
+  "deck": [
+    "decks/legends/emrakul.dck"
+  ],
+  "ai": "",
+  "speed": 45,
+  "scale": 2,
+  "life": 70,
+  "rewards": [
+    {
+      "type": "item",
+      "count": 1,
+      "itemName": "Amulet of Aeons Torn"
+    },
+    {
+      "type": "item",
+      "count": 1,
+      "itemName": "Emrakul's Hexkey"
+    },
+    {
+      "type": "card",
+      "count": 1,
+      "cardName": "Emrakul, the Aeons Torn"
+    },
+    {
+      "type": "card",
+      "count": 1,
+      "cardName": "Emrakul, the World Anew"
+    },
+    {
+      "type": "card",
+      "count": 1,
+      "cardName": "Emrakul, the Promised End",
+      "editions": [
+        "EMN"
+      ]
+    },
+    {
+      "type": "randomCard",
+      "count": 12,
+      "addMaxCount": 12,
+      "rarity": [
+        "Rare",
+        "Mythic Rare"
+      ]
+    },
+    {
+      "type": "gold",
+      "count": 4000,
+      "addMaxCount": 12000
+    },
+    {
+      "type": "shards",
+      "count": 40,
+      "addMaxCount": 160
+    },
+    {
+      "type": "card",
+      "count": 2,
+      "addMaxCount": 2,
+      "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+    },
+    {
+      "type": "card",
+      "count": 2,
+      "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+    },
+    {
+      "type": "landSketchbookShop",
+      "count": 1
+    }
+  ],
+  "colors": "C",
+  "gamesPerMatch": 3,
+  "spawnRate": 0,
+  "tier": "Mythic",
+  "difficulty": 3
+},
+{
+  "name": "Kozilek, Butcher of Truth",
+  "sprite": "sprites/enemy/aberration/eldrazi/kozilek.atlas",
+  "deck": [
+    "decks/legends/kozilek.dck"
+  ],
+  "ai": "",
+  "speed": 45,
+  "scale": 2,
+  "life": 70,
+  "rewards": [
+    {
+      "type": "item",
+      "count": 1,
+      "itemName": "Truth Butcher's Armor"
+    },
+    {
+      "type": "item",
+      "count": 1,
+      "itemName": "Kozilek's Hexkey"
+    },
+    {
+      "type": "card",
+      "count": 1,
+      "cardName": "Kozilek, Butcher of Truth"
+    },
+    {
+      "type": "card",
+      "count": 1,
+      "cardName": "Kozilek, the Great Distortion"
+    },
+    {
+      "type": "card",
+      "count": 1,
+      "cardName": "Kozilek, the Broken Reality"
+    },
+    {
+      "type": "randomCard",
+      "count": 12,
+      "addMaxCount": 12,
+      "rarity": [
+        "Rare",
+        "Mythic Rare"
+      ]
+    },
+    {
+      "type": "gold",
+      "count": 4000,
+      "addMaxCount": 12000
+    },
+    {
+      "type": "shards",
+      "count": 40,
+      "addMaxCount": 160
+    },
+    {
+      "type": "card",
+      "count": 2,
+      "addMaxCount": 2,
+      "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
+    },
+    {
+      "type": "card",
+      "count": 2,
+      "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+    },
+    {
+      "type": "landSketchbookShop",
+      "count": 1
+    }
+  ],
+  "colors": "C",
+  "gamesPerMatch": 3,
+  "spawnRate": 0,
+  "tier": "Mythic",
+  "difficulty": 3
 }
 ]
