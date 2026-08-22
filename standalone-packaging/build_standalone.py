@@ -3,7 +3,7 @@
 
 One command builds the shippable package (MOD_SCOPE.md #89 part 2):
 
-    python standalone-packaging/build_standalone.py [--zip]
+    python standalone-packaging/build_standalone.py [--zip] [--full]
 
 Inputs:
   - This repo (must be built first:
@@ -20,9 +20,12 @@ What it does, in order:
   1. Verify the built jar's version matches BASE_INSTALL's jar version.
   2. Copy the include-listed root files + launcher shells from BASE_INSTALL,
      renaming the adventure launcher to the game's name.
-  3. Copy BASE_INSTALL/res EXCEPT res/adventure.
-  4. res/adventure gets exactly two entries: common/ (from BASE_INSTALL) and
-     the repo's "The Forgotten Realms" plane folder.
+  3. Copy BASE_INSTALL/res EXCEPT res/adventure - SKIPPED on a fast-path run
+     (see below), since this is by far the biggest, slowest step and its
+     content is static between TFR-only rounds.
+  4. res/adventure gets exactly two entries: common/ (from BASE_INSTALL, also
+     skipped on a fast-path run) and the repo's "The Forgotten Realms" plane
+     folder (ALWAYS rebuilt fresh - this is the part that actually changes).
   5. Overwrite the jar with the repo-built one (carries the mod engine code).
   6. Overlay the repo's non-adventure res edits (en-US.properties, skins art) -
      the list is DERIVED from git (diff vs the upstream merge base), so future
@@ -31,6 +34,15 @@ What it does, in order:
      CREDITS.md into the plane folder ("licensing in the mod folder").
   8. Verify: our GameLauncher title marker is inside the shipped jar, the
      update-check kill is present, res/adventure has exactly 2 entries.
+
+Fast path (2026-08-22): steps 3 and 4's common/ copy are skipped whenever the
+existing output folder's res/.base_install_version marker already matches the
+current BASE_INSTALL's jar name - that static content (tens of thousands of
+files) only actually changes on an engine merge, not an ordinary TFR round.
+A version mismatch (engine merge happened) forces the full copy automatically
+even without --full. --zip release builds always do the full copy regardless
+of the flag, since those are rare and matter more than local test iteration
+speed. Pass --full to force it anyway (e.g. suspected local corruption).
 """
 import argparse
 import os
@@ -81,6 +93,11 @@ def git_overlay_list():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--zip", action="store_true", help="also write a release zip")
+    ap.add_argument("--full", action="store_true",
+                     help="force a full rebuild of the static stock-asset tree (res minus "
+                          "adventure, plus adventure/common) even if it looks current - use "
+                          "after pointing BASE_INSTALL at a new engine version. A --zip release "
+                          "build always does this automatically regardless of the flag.")
     args = ap.parse_args()
 
     jar_name = find_jar(os.path.join(BASE_INSTALL))
@@ -100,19 +117,49 @@ def main():
     ok_marker = os.path.join(game_dir, "PACKAGE_OK.txt")
     if os.path.exists(ok_marker):
         os.remove(ok_marker)
-    if os.path.exists(game_dir):
-        print(f"removing previous package at {game_dir}")
-        shutil.rmtree(game_dir)
-    # Windows: rmtree returns before the directory handle is fully released, so an
-    # immediate makedirs can get WinError 5 - retry briefly.
-    for attempt in range(30):
-        try:
-            os.makedirs(game_dir)
-            break
-        except (PermissionError, FileExistsError):
-            if attempt == 29:
-                raise
-            time.sleep(1)
+
+    # Fast-path (2026-08-22): everything under res/ EXCEPT adventure/<plane>, plus
+    # adventure/common, comes straight from BASE_INSTALL and only actually changes when that
+    # points at a new engine version (rare, deliberate) - not on an ordinary TFR-only round.
+    # Recopying it (tens of thousands of files, the step this script itself calls "the big one")
+    # on every local test build was pure waste. version_marker records which BASE_INSTALL jar
+    # the static tree currently on disk was copied from; a mismatch (engine merge happened) or
+    # a --zip release build always forces the full copy - --full is only needed to force-refresh
+    # otherwise (e.g. suspected corruption).
+    static_res_dir = os.path.join(game_dir, "res")
+    version_marker = os.path.join(static_res_dir, ".base_install_version")
+    have_current_static = (
+        os.path.isdir(os.path.join(static_res_dir, "adventure", "common"))
+        and os.path.exists(version_marker)
+        and open(version_marker, encoding="utf-8").read().strip() == jar_name
+    )
+    full_rebuild = args.full or args.zip or not have_current_static
+
+    if full_rebuild:
+        if os.path.exists(game_dir):
+            print(f"removing previous package at {game_dir}")
+            shutil.rmtree(game_dir)
+        # Windows: rmtree returns before the directory handle is fully released, so an
+        # immediate makedirs can get WinError 5 - retry briefly.
+        for attempt in range(30):
+            try:
+                os.makedirs(game_dir)
+                break
+            except (PermissionError, FileExistsError):
+                if attempt == 29:
+                    raise
+                time.sleep(1)
+    else:
+        print("static asset tree matches the current base install - skipping the stock-res "
+              "copy (pass --full to force it, or it happens automatically after an engine merge)")
+        # Only clear what actually changes every round: the plane folder and any old jar(s).
+        # res/<static>/ and res/adventure/common are left untouched.
+        plane_dir = os.path.join(static_res_dir, "adventure", PLANE)
+        if os.path.isdir(plane_dir):
+            shutil.rmtree(plane_dir)
+        for f in os.listdir(game_dir):
+            if re.fullmatch(r"forge-gui-mobile-dev-.*-jar-with-dependencies\.jar", f):
+                os.remove(os.path.join(game_dir, f))
 
     # 2. root files + launchers
     for f in ROOT_INCLUDE:
@@ -128,16 +175,19 @@ def main():
     open(os.path.join(game_dir, f"{GAME_NAME}.cmd"), "w", encoding="utf-8",
          newline="\r\n").write(cmd)
 
-    # 3. res minus adventure
-    print("copying res/ from base install (this is the big one)...")
-    shutil.copytree(os.path.join(BASE_INSTALL, "res"), os.path.join(game_dir, "res"),
-                    ignore=lambda d, names: ["adventure"] if os.path.samefile(d, os.path.join(BASE_INSTALL, "res")) else [])
-
-    # 4. adventure = common + the plane
     adv = os.path.join(game_dir, "res", "adventure")
-    os.makedirs(adv)
-    shutil.copytree(os.path.join(BASE_INSTALL, "res", "adventure", "common"),
-                    os.path.join(adv, "common"))
+    if full_rebuild:
+        # 3. res minus adventure
+        print("copying res/ from base install (this is the big one)...")
+        shutil.copytree(os.path.join(BASE_INSTALL, "res"), os.path.join(game_dir, "res"),
+                        ignore=lambda d, names: ["adventure"] if os.path.samefile(d, os.path.join(BASE_INSTALL, "res")) else [])
+        # 4a. adventure/common (static, part of the base install)
+        os.makedirs(adv)
+        shutil.copytree(os.path.join(BASE_INSTALL, "res", "adventure", "common"),
+                        os.path.join(adv, "common"))
+        with open(version_marker, "w", encoding="utf-8") as vm:
+            vm.write(jar_name)
+    # 4b. adventure/<plane> (changes every round - always fresh)
     print("copying the plane folder from the repo...")
     shutil.copytree(os.path.join(REPO, "forge-gui", "res", "adventure", PLANE),
                     os.path.join(adv, PLANE))

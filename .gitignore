@@ -62,6 +62,7 @@ forge-gui-android/res/*/*
 # '*.png' excludes rule that would otherwise silently drop the icons
 !forge-gui-ios/resources/**
 forge-gui-android/*.keystore
+forge-gui-android/local.properties
 forge-gui-android/**/Thumbs.db
 forge-gui-mobile-dev/**/Thumbs.db
 forge-gui-mobile-dev/res

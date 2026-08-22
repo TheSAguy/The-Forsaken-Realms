@@ -105,11 +105,13 @@ own. They're spent on building and upgrading structures, and on the Capitol upgr
 ### Buildings & the Economy
 
 Towns you restore can be built up with dedicated economy buildings: **Gold/Wood/Stone/Shard
-Mines** for steady weekly income, a **Bank** and **Exchange** (Capitol-only), an **Outlook**
-(expands your fog-of-war vision radius - 2x in a town, 3x in your Capitol), a **Teleporter**
-network for fast travel between any two Teleporter-equipped locations, and an **Archaeologist**
-who can be sent on week-long expeditions for a chance at boosters and rare items. Guards can be
-hired to defend a town, paid weekly out of your own coffers.
+Mines** for steady weekly income, a **Trader** (any town, including your Capitol) for converting
+Gold into Wood/Stone at a markup, a **Bank** and **Exchange** (Capitol-only - a Trader built at
+your Capitol can also be upgraded into an Exchange, which trades at better rates and adds
+Shards), an **Outlook** (expands your fog-of-war vision radius - 2x in a town, 3x in your
+Capitol), a **Teleporter** network for fast travel between any two Teleporter-equipped locations,
+and an **Archaeologist** who can be sent on week-long expeditions for a chance at boosters and
+rare items. Guards can be hired to defend a town, paid weekly out of your own coffers.
 
 ### Progressive Set Unlocks
 
@@ -165,6 +167,16 @@ constantly for the first several in-game weeks. Prioritize a town of your own ea
 one gives you a Mine or two, a place to restock cards, and a foothold toward eventually owning
 five (and thus a Capitol). Watch your reputation with the color you're camped nearest to - it's
 much easier to stay Happy than to climb back from Unhappy once shops start charging you extra.
+
+Push toward your Capitol as early as you reasonably can - five towns is a real early-game
+investment, but it's the only place a Trader can be upgraded into an Exchange, on top of unlocking
+the Bank and Archaeologist outright. Build a **Trader** well before then, even though its rates
+are worse than an Exchange's - it's a guaranteed early way to turn spare Gold into the Wood and
+Stone your buildings actually need, instead of waiting on Mines or dungeon loot alone. It's also a
+good home for Gold you don't need sitting in your pocket: if you lose an ante duel and want the
+card back, Buy Back costs real Gold, priced by rarity - a cost that bites hardest on Insane, where
+you start with barely any cushion. Gold you've already converted into Wood or Stone isn't there
+tempting you into a buy-back you hadn't planned for.
 
 ## Mid and Late Game Advice
 

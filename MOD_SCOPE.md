@@ -4300,4 +4300,32 @@ work committed first as `d6b5caea863` and tagged `tfr-v0.9-base-2.0.14`; then up
   obligation (GitHub untouched until the user says so).
 - Each public release = git tag + zip, always rebuildable.
 
+### 90. Trader Building — `Done (built 2026-08-22), not yet playtested`
+
+User request: a cheaper, earlier-game way to convert gold into Wood/Stone than the Capitol-only
+Exchange, buildable in any ordinary town. Built as a new Economy Building type alongside
+Bank/Exchange in the Financial submenu - same Buy-5/Sell-5 mechanic as Exchange, Wood/Stone only
+(no Shards), at rates 25% worse both directions (Buy 125g / Sell 60g vs. Exchange's 100g/80g).
+200 gold flat to build (gold-only by design - it would be backwards to charge Wood/Stone to build
+the thing that sells you Wood/Stone).
+
+**Upgrade to Exchange**: a Trader built specifically at your Capitol shows an "Upgrade to
+Exchange" option (pays Exchange's own build cost on top, same as it costs to build one fresh -
+matches the Armory/Arena Level 1→2 precedent of upgrades costing extra, not being free). A town
+Trader has no such option and keeps working as a Trader indefinitely - each location's building is
+independent, nothing carries over or migrates between towns (user's own choice among three
+proposed designs, see `MOD_CHANGELOG.md`'s "thirty-third round").
+
+### 91. Tier 2 Enemy-Balance-Curve Reconciliation — `In Progress (2026-08-22)`
+
+Follow-up to #89's Realm of Legends port. Tier 1 (v1.01) only *labeled* the 9 ported "Legendary"
+POIs as endgame content (minimap glyph + entry warning) without touching their actual numbers,
+which still assume RoL's 30-starting-life balance rather than TFR's own (Easy 21/Normal 16/Hard
+11/Insane 9). Tier 2 is the real numbers pass: rescale the ported bosses' life onto TFR's own
+native boss range, and audit the RoL-imported items the same way the Life Item Ledger (#2 open
+thread) audited Heavy/Blessed Armor - anything whose effect assumes 30-life play gets re-rarity'd
+or re-costed, using **20** as the reference life for this pass specifically (user's deliberate
+choice - splits the difference between RoL's 30 and TFR Normal's 16 for endgame-tier content).
+Audit in progress; report pending, nothing applied to game data yet.
+
 

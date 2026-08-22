@@ -11913,3 +11913,34 @@ Exchange) shipped everything except the upgrade action itself pending a design a
   still-open asset-delivery decision (bundle `res/` into the APK vs. self-host, since Android
   Forge's `AssetsDownloader` path points at stock Forge's asset server) are the two real blockers,
   not missing build infrastructure.
+
+## Thirty-fourth round: packaging speedup, MOD_SCOPE.md updated, guide tips, Tier 2 audit kicked off (2026-08-22)
+
+Docs/tooling-only round while the user playtested the thirty-third round's build.
+
+- **`standalone-packaging/build_standalone.py` fast path**: step 3 (copying BASE_INSTALL's entire
+  stock res/ tree - "the big one," tens of thousands of files) and adventure/common now SKIP on a
+  local test build if a `res/.base_install_version` marker on disk already matches the current
+  BASE_INSTALL jar name - that content only actually changes on an engine merge, not an ordinary
+  TFR-only round. A version mismatch forces the full copy automatically (no need to remember a
+  flag after an engine merge); a new `--full` flag forces it manually otherwise. `--zip` release
+  builds always do the full copy regardless, since those are rare and correctness matters more
+  than local-iteration speed there. Syntax-checked (`py_compile`); not yet exercised end-to-end
+  (today's build ran under the old always-full behavior, committed before this change).
+- **`MOD_SCOPE.md`**: added #90 (Trader Building, Done) and #91 (Tier 2 Enemy-Balance-Curve
+  Reconciliation, In Progress) - #89 was the last entry and the file hadn't been touched since.
+- **`GUIDE.md`**: "Buildings & the Economy" now mentions Trader (was undocumented); "Early Game
+  Advice" gained a new paragraph on rushing toward the Capitol, building a Trader early despite
+  its worse rates, and treating spare Gold as worth converting to Wood/Stone rather than sitting
+  as buy-back temptation. **Note on the user's original ask**: the user described losing a duel as
+  directly costing Gold ("Losing gold when you lose a duel, on Insane this is a killer"). Checked
+  every `takeGold` call site in `forge-gui-mobile/src/forge/adventure/` - found no such mechanic;
+  a lost ante duel only puts the ante CARD at risk, and Gold is only spent if the player chooses
+  Buy Back afterward. Wrote the guide tip around the verified mechanic (Buy Back cost, worse on
+  Insane's tighter economy) rather than the literal claim - flagged to the user rather than either
+  shipping an inaccurate mechanic description or silently rewriting their ask.
+- **Tier 2 audit launched** (MOD_SCOPE.md #91): a background research pass rescaling the 9
+  Legendary-tagged RoL-ported bosses' life onto TFR's own native boss range, plus an item audit
+  (same methodology as the Life Item Ledger) of RoL-imported items against a 20-reference-life
+  baseline (user's deliberate choice for this pass, not TFR Normal's 16 or RoL's 30). Report-only,
+  nothing applied yet - result pending.
