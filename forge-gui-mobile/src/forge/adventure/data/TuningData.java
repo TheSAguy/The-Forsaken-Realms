@@ -114,4 +114,14 @@ public class TuningData {
     // offsets plus the town-count and Color Defeat bonuses on top. Default 3 reproduces the old
     // hardcoded 2+index ladder (2/3/4/5) exactly.
     public int baseAttackingMagesPerColor = 3;
+
+    // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
+    // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an
+    // edition's own real card count you must have found before the Research Lab offers to unlock
+    // it - was a fixed 0.10f (10%, the user's original 2026-08-12 spec: "10% of an expansion vs.
+    // 10 cards... standard across the different expansions and card counts"). The 5-card floor
+    // (ResearchScene.THRESHOLD_MIN, keeping a tiny supplemental set from becoming a 1-2 card
+    // unlock) stays a fixed constant - not asked to be tunable, and unlike the fraction it isn't a
+    // single "how hard should this be" knob.
+    public float researchThresholdFraction = 0.10f;
 }

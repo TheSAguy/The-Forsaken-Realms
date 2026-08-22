@@ -12417,3 +12417,45 @@ independent reports.
 
 **Files touched**: `standalone-packaging/build_standalone.py`, `forge-gui/res/adventure/common/
 custom_cards/tibalt_boss_effect.txt`, `CORE_ENGINE_CHANGES.md`.
+
+## Thirty-ninth round: research threshold tunable, Capitol-defense investigation, scope catch-up (2026-08-22)
+
+User's live-playtest feedback round. Repo-only per explicit request - the live standalone folder
+is mid-session, not rebuilt this round.
+
+- **Progressive Set Unlocks research threshold moved to `settings.json`** (`data/TuningData.java`,
+  `scene/ResearchScene.java`): the 10% fraction (`ResearchScene.thresholdFor()` - fraction of an
+  edition's own card count you must have found before the Research Lab offers to unlock it) was a
+  private `THRESHOLD_FRACTION` constant; now `TuningData.researchThresholdFraction` (default
+  unchanged, 0.10f), read live via `Config.instance().getTuningData()`. The 5-card floor
+  (`THRESHOLD_MIN`) stays a fixed constant - not asked to be tunable, and it's a "never below this"
+  guard rather than a difficulty knob like the fraction is. `settings.json` gained a matching
+  `"researchThresholdFraction": 0.10` entry with a description comment, same convention as every
+  other tunable in that file.
+- **Capitol-defense "the city won after I lost" report - investigated, not changed.** Read the
+  full mechanic (`TerritoryControl.onMageArrived()`/`checkPendingCapitolDefense()`/
+  `WorldStage.startForcedCapitolDuel()`/`triggerCapitolDefeat()`) end to end rather than guessing a
+  fix: the Capitol has its own dedicated defense path (guards fought first, strongest-first, then
+  a forced duel) that explicitly bypasses the ordinary probabilistic town-capture flow entirely -
+  there is no code path today where the Capitol can fall back to a `CaptureOdds`-style roll after a
+  forced duel. `triggerCapitolDefeat()`/`triggerGameLost()` is also unconditional once reached: it
+  freezes controls, shows a single-button blocking dialog, and returns to the main menu - no branch
+  where the run continues after that point. The user's own supplied `forge.log` for this exact
+  session shows **zero** Capitol-defense events at all (no forced duel, no guard fight - only
+  routine territory-radius growth logging), so whatever was observed isn't reproducible from the
+  evidence in hand. Most likely explanation, surfaced for the user rather than assumed: the forced
+  duel is a **best-of-3 match** (`startForcedCapitolDuel()`'s `duelData.gamesPerMatch = 3`), so
+  losing one game doesn't mean losing the match - "I lost [a game], but the city [[still won the
+  match" is exactly what a 2-1/1-2 best-of-3 scoreline would look like, with no bug required. Not
+  changed pending a repro with a specific detail (did the "Your Capitol has fallen!" dialog
+  actually appear; what was the game score).
+- **MOD_SCOPE.md**: 10 items marked complete per user confirmation from live testing - #56, #79,
+  #80, #82, #83, #88 promoted from "deployed/built, not yet playtested" to playtest-confirmed
+  `Done`; #27, #28, #34, #39 marked `Done (user-confirmed complete)` - these four were tracked as
+  `Not Started` in this file but the user confirmed they're actually finished (most likely
+  completed in an earlier thread this session has no transcript access to - recorded as the user's
+  own confirmation rather than a fabricated implementation history).
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/data/TuningData.java`, `forge-gui-mobile/
+src/forge/adventure/scene/ResearchScene.java`, `forge-gui/res/adventure/The Forgotten Realms/
+config tables/settings.json`, `MOD_SCOPE.md`.

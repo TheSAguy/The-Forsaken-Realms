@@ -1977,7 +1977,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
 ### 26. Research: External Feature Requests — `Removed (2026-08-12, user decision)`
 - Was: a research task to mine Forge community channels for feature ideas. Cut from scope.
 
-### 27. Simulate Level 2 Arena Battles — `Not Started`
+### 27. Simulate Level 2 Arena Battles — `Done (2026-08-22, user-confirmed complete)`
 - User idea (2026-08-11, wishlist batch): "Simulate lvl 2 arena battles." Ties to #20 (Upgradable
   Arena) - not yet clear whether this means an auto-resolve/fast-forward option for a Challenge
   Arena bracket (skip watching every fight play out), a balance-testing tool (run N simulated
@@ -1995,7 +1995,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   A real simulated duel per fight is likely too expensive to run routinely; stat-weighted RNG for
   routine sims, reserving real simulation for rare/important battles, was the leaning.
 
-### 28. Promo Write-Up — `Not Started` (writing task, not a build task)
+### 28. Promo Write-Up — `Done (2026-08-22, user-confirmed complete)` (writing task, not a build task)
 - User ask (2026-08-11, wishlist batch): "Do promo write up." A marketing/announcement write-up for
   the mod (for a release post, Discord, Reddit, wherever it'd be shared), not a code change. Should
   probably wait until #39 (easy deployment/sharing) is further along, so there's something concrete
@@ -2075,7 +2075,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   re-fresh") - so it's the "bonus roll on top" resolution to this entry's own open question, not
   the "resets the timer" one. See #18 for full implementation detail.
 
-### 34. Update Mod Intro Text — `Not Started` (writing task)
+### 34. Update Mod Intro Text — `Done (2026-08-22, user-confirmed complete)` (writing task)
 - User ask (2026-08-11, wishlist batch): "Update mod intro text." The player-facing text shown when
   starting/selecting "The Forgotten Realms" plane (New Game screen and/or a title/lore blurb) -
   needs the actual current text located and a replacement drafted with the user, not scoped further
@@ -2134,7 +2134,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   requested "Expansion" button was added alongside it in the same round (see #7's own note) -
   the user's message covered both together as one "wiki" ask.
 
-### 39. Easy Mod Deployment/Sharing — `Not Started`
+### 39. Easy Mod Deployment/Sharing — `Done (2026-08-22, user-confirmed complete)`
 - User idea (2026-08-11, wishlist batch): "Mod deployment/sharing made easy." Today's deploy process
   (per `CLAUDE.md`/this session's own established loop) is manual and dev-oriented: compile, splice
   the compiled `forge/adventure` package into an already-installed Forge jar via `jar uf`, then
@@ -2609,7 +2609,7 @@ Not yet playtested - needs the user to confirm a colored-booster shop only offer
 unlocked editions, and that restoring/rebuilding a shop immediately reflects current research
 without needing to leave and re-enter the town.
 
-### 56. Diagnostic Logging for Edition-Restriction Decisions — `Built (2026-08-13), not yet playtested`
+### 56. Diagnostic Logging for Edition-Restriction Decisions — `Done (playtest-confirmed 2026-08-22)`
 User request, following up on #55's investigation: "It's hard for me to test what the other AI
 colors should or should not have... can we somehow create a log for future testing." Audited all 3
 edition-restriction decision points (shops, monster loot, Inn tournaments) for existing coverage
@@ -3817,7 +3817,7 @@ Two balance tweaks plus a log-health check, confirmed clean via investigation be
 Deployed: `ShopActor`, `ResourceSpawns`, `TuningData` spliced into both jars; `settings.json`
 mirrored with the 3 new keys. Spot-checked via `javap -p` in both jars. Not yet playtested.
 
-### 79. Wood Added to Intro Template + Dungeon-Clear Despawn + Confirmations — `Deployed (2026-08-18), not yet playtested`
+### 79. Wood Added to Intro Template + Dungeon-Clear Despawn + Confirmations — `Done (playtest-confirmed 2026-08-22)`
 User explicitly asked for repo-only work at the time ("I'm currently playing a live game, so don't
 make any changes to the live files") - everything below was compiled to verify correctness but
 deliberately NOT spliced into the installed jars or robocopied to `E:\GAMES\FORGE` in that same
@@ -3893,7 +3893,7 @@ Compiled (`mvn -pl forge-gui-mobile -am compile`) clean on the first pass for `A
 **Deployed 2026-08-18** (round 21) - jar spliced, res folder mirrored, spot-checked live (see #81's
 round summary below for the mechanics and verification).
 
-### 80. Full Dungeon-Map De-Duplication From `common/` — `Deployed (2026-08-18), not yet playtested`
+### 80. Full Dungeon-Map De-Duplication From `common/` — `Done (playtest-confirmed 2026-08-22)`
 Follow-up to #79's scoped recommendation - the user opted for the full de-duplication instead
 ("all 202... it's only 4MB total and this way we ensure no Common override"). Executed via a
 one-off Python migration script (discovery → copy → rewrite → validate), not manual edits - the
@@ -4013,7 +4013,7 @@ same call site, no other logic touched.
   back to the user rather than silently marked done, since marking unbuilt work "done" would be a
   real documentation error rather than a playtest confirmation.
 
-### 82. Realm of Legends Content Update, Ported — `Deployed (2026-08-18), not yet playtested`
+### 82. Realm of Legends Content Update, Ported — `Done (playtest-confirmed 2026-08-22)`
 User spotted a Reddit post about a Realm of Legends (a stock Forge plane) content update and asked
 for a review of what's new, what's not yet in this mod, and to port whatever would work. Full
 diff investigated first (via a background research agent, cross-checked directly against both the
@@ -4125,7 +4125,7 @@ rebuild was needed. Spot-checked live afterward: new `.tmx` files present, new c
 present, `points_of_interest.json` has the new entries, `items.png` is the new 1072px-tall
 version, both new precons present in the live install's precon folder.
 
-### 83. Stone/Wood Added as Dungeon Loot, Ratio to Gold — `Deployed (2026-08-18), not yet playtested`
+### 83. Stone/Wood Added as Dungeon Loot, Ratio to Gold — `Done (playtest-confirmed 2026-08-22)`
 User spec: "go through all the dungeons, not towns, and add some stone or wood resource drops to
 them. Maybe, let's say for each 2 gold drops there is, add one stone or wood. Min 1. (Just those
 that don't already have these)". Also fixed, same round: the 11-POI missing-`Hostile`-tag gap
@@ -4197,7 +4197,7 @@ User wishlist addition (2026-08-18): expand the player's offensive options again
 towns/castles beyond the current Territory Control capture mechanism (#7). Scope not yet defined -
 could mean new attack types, mercenary/ally forces, siege mechanics, or something else.
 
-### 88. Post-Playtest Polish: Quiet Despawns, Tutorial Additions, Real Resource Sparkle, Two Log-Review Bugs Fixed — `Deployed (2026-08-19), playtest in progress`
+### 88. Post-Playtest Polish: Quiet Despawns, Tutorial Additions, Real Resource Sparkle, Two Log-Review Bugs Fixed — `Done (playtest-confirmed 2026-08-22)`
 Two user messages in one thread: a request to quiet down routine dungeon-despawn notifications
 and expand the opening tutorial dialogue, followed by a report that the newly-added Stone/Wood
 dungeon pickups don't animate and don't show a preview icon in Tiled, plus a request to check the

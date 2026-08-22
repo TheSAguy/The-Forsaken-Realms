@@ -63,5 +63,10 @@
     // How many attacking mages each AI color can field at once on Normal difficulty.
     // Easy uses one fewer, Hard one more, Insane two more. Town-count and Color
     // Defeat bonuses stack on top of this base.
-    "baseAttackingMagesPerColor": 3
+    "baseAttackingMagesPerColor": 3,
+
+    // Fraction of an edition's own card count you must have found before the Research
+    // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this
+    // value, so a tiny supplemental set can't become a 1-2 card unlock.
+    "researchThresholdFraction": 0.10
 }

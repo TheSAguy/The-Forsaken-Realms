@@ -13,6 +13,7 @@ import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.data.RewardData;
 import forge.adventure.player.AdventurePlayer;
+import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
 import forge.adventure.util.EconomyBuildings;
@@ -54,10 +55,12 @@ public class ResearchScene extends UIScene {
         return object;
     }
 
-    // 10% of an edition's own real card count, floor 5 - user's own refined spec (2026-08-12,
+    // Fraction of an edition's own real card count, floor 5 - user's own refined spec (2026-08-12,
     // "10% of an expansion vs. 10 cards... standard across the different expansions and card
-    // counts"). The floor keeps a tiny supplemental set from becoming a 1-2 card unlock.
-    private static final float THRESHOLD_FRACTION = 0.10f;
+    // counts"). The floor keeps a tiny supplemental set from becoming a 1-2 card unlock. The
+    // fraction itself moved to TuningData (2026-08-22 user request) - see
+    // TuningData.researchThresholdFraction for the tunable default/rationale; THRESHOLD_MIN stays
+    // a fixed constant here, not asked to be tunable.
     private static final int THRESHOLD_MIN = 5;
     // 2026-08-12 user cost table: research costs shards now, not gold.
     private static final int COST_SHARDS = 100;
@@ -138,9 +141,10 @@ public class ResearchScene extends UIScene {
         return true;
     }
 
-    /** ceil(total * 10%), floor THRESHOLD_MIN. */
+    /** ceil(total * TuningData.researchThresholdFraction), floor THRESHOLD_MIN. */
     private static int thresholdFor(int totalCardsInEdition) {
-        return Math.max(THRESHOLD_MIN, (int) Math.ceil(totalCardsInEdition * THRESHOLD_FRACTION));
+        float fraction = Config.instance().getTuningData().researchThresholdFraction;
+        return Math.max(THRESHOLD_MIN, (int) Math.ceil(totalCardsInEdition * fraction));
     }
 
     private void buildList() {
