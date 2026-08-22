@@ -408,6 +408,16 @@ public class DuelScene extends ForgeScene {
         if (!won)
             System.out.println("[TFR-AnteBuyBack] card=" + card.getName() + " price=" + buyBackPrice
                     + " gold=" + Current.player().getGold() + " offering=" + offerBuyBack);
+        // 2026-08-22 fix: buyBackPrice>0 but unaffordable used to fall through to a bare "OK"
+        // popup with zero mention of Buy Back ever having been an option - indistinguishable from
+        // the mechanic simply not existing here. A dungeon-loss report ("never offered") turned
+        // out to be exactly this case (gold=280, price=300) rather than a code-level gate - see
+        // MOD_CHANGELOG.md. Surface the price/shortfall in the message text itself so "broke" reads
+        // differently from "broken."
+        if (buyBackPrice > 0 && !offerBuyBack) {
+            message += "\nBuy Back available for " + buyBackPrice + " gold - you only have "
+                    + Current.player().getGold() + ".";
+        }
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
             buttons = sellPrice > 0

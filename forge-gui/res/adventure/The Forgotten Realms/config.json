@@ -290,7 +290,9 @@
     "arenaUpgradesEnabled": true,
     "contentFilterTablesEnabled": true,
     "showEnemyTierInName": true,
-    "modVersion": "1.01",
+    "modVersion": "1.02",
+    "modVersionDate": "08.22",
+    "engineBuildVersion": "2.0.15-SNAPSHOT-08.19",
     "welcomePopupText": "Thanks for trying out The Forgotten Realms!\n\nThis is an early release - your feedback on balance, bugs, and anything else is very much appreciated. Join us on Discord: discord.gg/TTRPKc9HYJ\n\nRecommended settings (already ON by default): Fog of War, Play for Ante, and Match Ante Rarity - visit Settings if you'd like to change them.\n\nGood luck out there, planeswalker!",
     "raceEditions": [
         { "race": "Devil",        "editions": ["RNA", "TOR", "SOI", "VOW"] },

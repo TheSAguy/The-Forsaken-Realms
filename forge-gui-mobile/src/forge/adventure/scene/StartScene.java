@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
+import forge.adventure.data.ConfigData;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.GameStage;
 import forge.adventure.stage.MapStage;
@@ -54,11 +55,18 @@ public class StartScene extends UIScene {
         resumeButton.setVisible(false);
         // Standalone-game version tag (MOD_SCOPE.md #89): planes that set modVersion in their
         // config.json get it appended to the engine version on the start menu.
-        String modVersion = Config.instance().getConfigData() == null ? null
-                : Config.instance().getConfigData().modVersion;
+        // Format overhauled 2026-08-22 (user spec): "v<engine build> | TFR v<mod version> -
+        // <mod build date>" - engineBuildVersion tracks the last upstream Forge snapshot merged
+        // (static across TFR-only rounds), modVersion/modVersionDate bump every TFR round. Falls
+        // back to the raw engine version string if engineBuildVersion isn't set.
+        ConfigData configData = Config.instance().getConfigData();
+        String modVersion = configData == null ? null : configData.modVersion;
         if (modVersion != null && !modVersion.isEmpty()) {
-            version.setText("{GRADIENT}[%80]v." + Forge.getDeviceAdapter().getVersionString()
-                    + "  |  TFR - v" + modVersion + "{ENDGRADIENT}");
+            String engineBuild = configData.engineBuildVersion != null && !configData.engineBuildVersion.isEmpty()
+                    ? configData.engineBuildVersion : Forge.getDeviceAdapter().getVersionString();
+            String dateSuffix = configData.modVersionDate != null && !configData.modVersionDate.isEmpty()
+                    ? " - " + configData.modVersionDate : "";
+            version.setText("{GRADIENT}[%80]v" + engineBuild + " | TFR v" + modVersion + dateSuffix + "{ENDGRADIENT}");
         }
         version.setHeight(5);
         version.skipToTheEnd();

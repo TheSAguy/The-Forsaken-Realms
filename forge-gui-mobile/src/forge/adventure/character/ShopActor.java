@@ -130,6 +130,9 @@ public class ShopActor extends MapActor {
             case EconomyBuildings.EXCHANGE:
                 EconomyBuildings.openExchangeDialog(stage, objectId);
                 return;
+            case EconomyBuildings.TRADER:
+                EconomyBuildings.openTraderDialog(stage, objectId);
+                return;
             case EconomyBuildings.SHARD_MINE:
             case EconomyBuildings.GOLD_MINE:
             case EconomyBuildings.LUMBER_MILL:

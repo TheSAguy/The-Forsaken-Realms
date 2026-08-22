@@ -1,5 +1,5 @@
 new_buildings.png
-size: 208,32
+size: 240,32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -23,4 +23,7 @@ ArmoryLevel2
   size: 32, 32
 Archaeologist
   xy: 176, 0
+  size: 32, 32
+Trader
+  xy: 208, 0
   size: 32, 32

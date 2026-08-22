@@ -69,6 +69,12 @@ public class EconomyBuildings {
     // (PointOfInterestChanges.archaeologistExpeditionSentDay) is a single, non-objectId-keyed
     // field by design, "never more than one per save".
     public static final int ARCHAEOLOGIST = 9;
+    // Trader (2026-08-22, user spec): a Financial building offering Wood/Stone trades like
+    // Exchange but at worse rates (25% pricier to buy, 25% less on sell - see TRADER_TRADES) and,
+    // unlike Bank/Exchange, buildable in an ordinary town, not just the Capitol - meant as an
+    // early/accessible way to convert gold into resources before Exchange is reachable. Upgrading
+    // a Trader into an Exchange at the Capitol is planned but not yet wired - see MOD_CHANGELOG.md.
+    public static final int TRADER = 10;
 
     // Byte-safe map flag (0-6) used only to gate "one economy building per town" declaratively
     // and to discriminate which option the player picked in buildChooseBuildingDialog(). The
@@ -145,6 +151,7 @@ public class EconomyBuildings {
             case OUTLOOK: return "Outlook";
             case TELEPORTER: return "Teleporter";
             case ARCHAEOLOGIST: return "Archaeologist";
+            case TRADER: return "Trader";
             default: return "Card Shop";
         }
     }
@@ -175,6 +182,8 @@ public class EconomyBuildings {
             return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Outlook");
         if (type == ARCHAEOLOGIST)
             return getArchaeologistSprite();
+        if (type == TRADER)
+            return Config.instance().getAtlasSprite(NEW_BUILDINGS_ATLAS, "Trader");
         String region = atlasRegion(type);
         if (region == null)
             return null;
@@ -1100,6 +1109,11 @@ public class EconomyBuildings {
             case OUTLOOK:       return new int[]{0, 125, 0, 0};
             case TELEPORTER:    return new int[]{0, 0, 0, 200};
             case ARCHAEOLOGIST: return new int[]{0, 0, 175, 0};
+            // 2026-08-22: gold-only by design - Trader's whole purpose is converting gold INTO
+            // wood/stone, so charging wood/stone to build it would be backwards. No user-specified
+            // amount given; chosen to sit below Exchange's 150g (cheaper, earlier-game) and well
+            // below Bank's 500g. Revisit if it feels off in testing.
+            case TRADER:        return new int[]{200, 0, 0, 0};
             default:            return new int[]{100, 5, 0, 0}; // NONE / plain shop
         }
     }
@@ -1171,19 +1185,29 @@ public class EconomyBuildings {
         List<DialogData> backButtons = new ArrayList<>();
         rootOptions.add(buildOption(NONE, objectId));
 
-        if (isCapitol && (typeAvailable(stage, BANK) || typeAvailable(stage, EXCHANGE))) {
-            // Financial (Bank/Exchange) stays Capitol-exclusive per the earlier 2026-08-08 decision.
+        // Bank/Exchange stay Capitol-exclusive per the earlier 2026-08-08 decision. Trader
+        // (2026-08-22) is the odd one out in this submenu - deliberately buildable in ANY town,
+        // not just the Capitol, so it can serve as an early-game resource source before a player
+        // has reached/built their Capitol at all.
+        boolean traderOffered = typeAvailable(stage, TRADER);
+        boolean bankOffered = isCapitol && typeAvailable(stage, BANK);
+        boolean exchangeOffered = isCapitol && typeAvailable(stage, EXCHANGE);
+        if (traderOffered || bankOffered || exchangeOffered) {
             DialogData financialBack = new DialogData();
             financialBack.name = "Back";
             backButtons.add(financialBack);
             DialogData financial = new DialogData();
             financial.name = "Financial";
             financial.text = "Which financial building?";
-            financial.options = new DialogData[]{
-                    buildOption(BANK, objectId),
-                    buildOption(EXCHANGE, objectId),
-                    financialBack
-            };
+            List<DialogData> financialOptions = new ArrayList<>();
+            if (bankOffered)
+                financialOptions.add(buildOption(BANK, objectId));
+            if (traderOffered)
+                financialOptions.add(buildOption(TRADER, objectId));
+            if (exchangeOffered)
+                financialOptions.add(buildOption(EXCHANGE, objectId));
+            financialOptions.add(financialBack);
+            financial.options = financialOptions.toArray(new DialogData[0]);
             rootOptions.add(financial);
         }
 
@@ -1528,6 +1552,19 @@ public class EconomyBuildings {
             new Trade("Sell", RESOURCE_ICON_ATLAS, "Stone", 0, 0, 0, TRADE_UNITS, TRADE_SELL_PRICE, 0, 0, 0),
     };
 
+    // Trader (2026-08-22, user spec): same Wood/Stone trades as Exchange, Shards excluded, at
+    // worse rates - "25% more to buy, 25% less for selling" read as the gold amount moving 25%
+    // against the player at the same TRADE_UNITS=5 quantity, not the quantity changing.
+    // 100 -> 125 buy, 80 -> 60 sell.
+    private static final int TRADER_BUY_PRICE = Math.round(TRADE_BUY_PRICE * 1.25f);
+    private static final int TRADER_SELL_PRICE = Math.round(TRADE_SELL_PRICE * 0.75f);
+    private static final Trade[] TRADER_TRADES = {
+            new Trade("Buy", RESOURCE_ICON_ATLAS, "Lumber", TRADER_BUY_PRICE, 0, 0, 0, 0, 0, TRADE_UNITS, 0),
+            new Trade("Sell", RESOURCE_ICON_ATLAS, "Lumber", 0, 0, TRADE_UNITS, 0, TRADER_SELL_PRICE, 0, 0, 0),
+            new Trade("Buy", RESOURCE_ICON_ATLAS, "Stone", TRADER_BUY_PRICE, 0, 0, 0, 0, 0, 0, TRADE_UNITS),
+            new Trade("Sell", RESOURCE_ICON_ATLAS, "Stone", 0, 0, 0, TRADE_UNITS, TRADER_SELL_PRICE, 0, 0, 0),
+    };
+
     public static void openExchangeDialog(MapStage stage, int objectId) {
         refreshExchangeDialog(stage, objectId);
         stage.showDialog();
@@ -1593,6 +1630,113 @@ public class EconomyBuildings {
         dialog.getButtonTable().add(destroy).colspan(2).width(240f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).colspan(2).width(240f).row();
         dialog.setKeepWithinStage(true);
+    }
+
+    // Trader (2026-08-22) - same structure as Exchange above (Wood/Stone only, TRADER_TRADES'
+    // worse rates). The planned "Upgrade to Exchange (Capitol only)" row is NOT wired yet - see
+    // MOD_CHANGELOG.md for why this shipped as its own round first.
+    public static void openTraderDialog(MapStage stage, int objectId) {
+        refreshTraderDialog(stage, objectId);
+        stage.showDialog();
+    }
+
+    private static void refreshTraderDialog(MapStage stage, int objectId) {
+        Dialog dialog = stage.getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+
+        AdventurePlayer player = AdventurePlayer.current();
+        TypingLabel title = Controls.newTypingLabel("Trader");
+        title.skipToTheEnd();
+        dialog.getContentTable().add(title).row();
+
+        Table summary = new Table();
+        TypingLabel goldLabel = Controls.newTypingLabel("[+Gold]" + player.getGold());
+        goldLabel.skipToTheEnd();
+        summary.add(goldLabel).padRight(10f);
+        Sprite lumberSprite = Config.instance().getAtlasSprite(RESOURCE_ICON_ATLAS, "Lumber");
+        if (lumberSprite != null)
+            summary.add(new Image(new TextureRegionDrawable(lumberSprite))).size(14f).padRight(2f);
+        TypingLabel woodLabel = Controls.newTypingLabel(String.valueOf(player.getWood()));
+        woodLabel.skipToTheEnd();
+        summary.add(woodLabel).padRight(10f);
+        Sprite stoneSprite = Config.instance().getAtlasSprite(RESOURCE_ICON_ATLAS, "Stone");
+        if (stoneSprite != null)
+            summary.add(new Image(new TextureRegionDrawable(stoneSprite))).size(14f).padRight(2f);
+        TypingLabel stoneLabel = Controls.newTypingLabel(String.valueOf(player.getStone()));
+        stoneLabel.skipToTheEnd();
+        summary.add(stoneLabel);
+        dialog.getContentTable().add(summary).padBottom(6f).row();
+
+        for (int i = 0; i + 1 < TRADER_TRADES.length; i += 2) {
+            Trade buy = TRADER_TRADES[i], sell = TRADER_TRADES[i + 1];
+            dialog.getButtonTable().add(buildTradeRow(buy.verb, TRADE_UNITS, buy.resourceAtlas, buy.resourceIcon,
+                    TRADER_BUY_PRICE, buy.affordable(player), () -> {
+                        buy.apply(player);
+                        refreshTraderDialog(stage, objectId);
+                    })).width(118f);
+            dialog.getButtonTable().add(buildTradeRow(sell.verb, TRADE_UNITS, sell.resourceAtlas, sell.resourceIcon,
+                    TRADER_SELL_PRICE, sell.affordable(player), () -> {
+                        sell.apply(player);
+                        refreshTraderDialog(stage, objectId);
+                    })).width(118f).row();
+        }
+        // Upgrade to Exchange (2026-08-22, user spec, "Independent buildings" design): only ever
+        // reachable on a Trader that's physically in the Capitol - a town Trader keeps working as
+        // a Trader forever, on its own merits, with no cross-location state to track. Always
+        // shown rather than hidden outside the Capitol (same "show the cost, grey it out" idiom
+        // buildOption() uses for affordability) so a town Trader still tells the player where to
+        // go next.
+        boolean isCapitol = TownRestoration.isCurrentTownCapitol();
+        int[] exchangeCost = buildCostFor(EXCHANGE);
+        boolean canUpgrade = isCapitol && canAffordCost(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]);
+        String upgradeLabel = isCapitol
+                ? "Upgrade to Exchange (" + costLabel(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]) + ")"
+                : "Upgrade to Exchange (Capitol only)";
+        addButtonRow(dialog, upgradeLabel, canUpgrade, () -> openUpgradeToExchangeConfirmDialog(stage, objectId));
+        TextraButton destroy = Controls.newTextButton("Destroy Building", () ->
+                openDestroyConfirmDialog(stage, objectId, () -> refreshTraderDialog(stage, objectId)));
+        dialog.getButtonTable().add(destroy).colspan(2).width(240f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).colspan(2).width(240f).row();
+        dialog.setKeepWithinStage(true);
+    }
+
+    // Confirmation gate (same "Yes/No, act or return" idiom as openDestroyConfirmDialog) - pays
+    // Exchange's own build cost (buildCostFor(EXCHANGE), same as building one fresh - an upgrade,
+    // like Armory/Arena's, isn't free just because a Trader already stands here) and re-keys this
+    // objectId from TRADER to EXCHANGE. Only reachable while canUpgrade was true at render time;
+    // re-checks nothing on click since payCost()'s own contract is "caller gates first."
+    private static void openUpgradeToExchangeConfirmDialog(MapStage stage, int objectId) {
+        Dialog dialog = stage.getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+        int[] c = buildCostFor(EXCHANGE);
+        addContentRow(dialog, "Upgrade this Trader to an Exchange for " + costLabel(c[0], c[1], c[2], c[3])
+                + "?\nAdds Shards trading and better Wood/Stone rates. This cannot be undone.");
+        addButtonRow(dialog, "Upgrade", true, () -> {
+            upgradeTraderToExchange(stage, objectId);
+            refreshExchangeDialog(stage, objectId);
+        });
+        addButtonRow(dialog, "Cancel", true, () -> refreshTraderDialog(stage, objectId));
+        dialog.setKeepWithinStage(true);
+    }
+
+    private static void upgradeTraderToExchange(MapStage stage, int objectId) {
+        PointOfInterestChanges changes = stage.getChanges();
+        if (changes == null)
+            return;
+        int[] c = buildCostFor(EXCHANGE);
+        payCost(c[0], c[1], c[2], c[3]);
+        // Same cleanup destroyBuilding() uses for the old registration (remove-by-value, since
+        // the map is type->objectId and a given objectId only ever holds one type at a time), NOT
+        // a full destroy - shopRebuilt_<objectId> is deliberately left set, this building stays
+        // built/functional throughout, just under a new type.
+        changes.getEconomyBuildingObjectIds().values().removeIf(v -> v == objectId);
+        changes.getMapFlags().remove(builtFlag(TRADER));
+        changes.setEconomyBuildingObjectId(EXCHANGE, objectId);
+        changes.getMapFlags().put(builtFlag(EXCHANGE), (byte) 1);
     }
 
     // One clickable trade row, e.g. "Buy 5 [shard icon] for 100 [gold icon]". MUST return an

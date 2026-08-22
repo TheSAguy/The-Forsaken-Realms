@@ -1045,14 +1045,14 @@
         "description":  "1/1 Human that can pay W, tap, and discard to gain 3",
         "equipmentSlot":  "Boots",
         "iconName":  "Peddler\u0027sShoes",
-        "cost":  1000,
+        "cost":  4500,
         "effect":  {
                        "lifeModifier":  6,
                        "startBattleWithCard":  [
                                                    "Tonic Peddler|MMQ"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Rare"
     },
     {
         "name":  "Sky Skiff Turnkey",
@@ -1065,7 +1065,7 @@
                                                    "Sky Skiff"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Bloodfire Boots",
@@ -1087,14 +1087,14 @@
         "description":  "1/1 Human that can pay B, tap, and discard to give -1/-1",
         "equipmentSlot":  "Boots",
         "iconName":  "Witch\u0027sShoes",
-        "cost":  1000,
+        "cost":  3750,
         "effect":  {
                        "lifeModifier":  5,
                        "startBattleWithCard":  [
                                                    "Plague Witch|NEM"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Rare"
     },
     {
         "name":  "Petalmane Pants",
@@ -1172,7 +1172,7 @@
                                                    "Deathspore Thallid|TSP"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Obscura Shoes",
@@ -1305,14 +1305,14 @@
         "description":  "1/1 knight, level up to get bigger",
         "equipmentSlot":  "Boots",
         "iconName":  "Caravaneer\u0027sGreaves",
-        "cost":  1000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
                                                    "Caravan Escort|ROE"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Joraga Boots",
@@ -1425,7 +1425,7 @@
                                                    "Cliffside Lookout|BFZ"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Rare"
     },
     {
         "name":  "Bearhide Breeches",
@@ -1482,14 +1482,14 @@
         "description":  "1/1 goblin that can pay 1R, tap, and discard to give red fear",
         "equipmentSlot":  "Boots",
         "iconName":  "FirefrightenerShoes",
-        "cost":  1000,
+        "cost":  2250,
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
                                                    "Firefright Mage|PLC"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Despoiler\u0027s Boots",
@@ -1554,7 +1554,7 @@
                                                    "Gingerbrute|ELD"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Dune-Brood Anklet",
@@ -1706,21 +1706,21 @@
                                                    "Wily Bandar|KLD"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Trickster\u0027s Shoes",
         "description":  "1/1 Human that can pay U, tap, and discard to tap or untap",
         "equipmentSlot":  "Boots",
         "iconName":  "Trickster\u0027sShoes",
-        "cost":  1000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
                                                    "Trickster Mage|NEM"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Godsire Greaves",
@@ -1909,14 +1909,14 @@
         "description":  "1/1 elf that can pay G, tap, and discard to tutor a basic",
         "equipmentSlot":  "Boots",
         "iconName":  "Greenseeker\u0027sShoes",
-        "cost":  1000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
                                                    "Greenseeker|TSR"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Angelic Greaves",
@@ -1929,7 +1929,7 @@
                                                    "Angelic Wall|PO2"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Abzan Gauntlet",
@@ -1955,7 +1955,7 @@
                                                    "Basilica Skullbomb|ONE"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Fblthp\u0027s Lost Bauble",
@@ -1994,7 +1994,7 @@
                                                    "Golden Egg|ELD"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Urza\u0027s Bauble",
@@ -2292,14 +2292,14 @@
                                                    "Kaleidostone|CON"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Rare"
     },
     {
         "name":  "Sunbeam Gauntlet",
         "description":  "Pay 1 for a card or W for 5 life",
         "equipmentSlot":  "Left",
         "iconName":  "SunbeamGauntlet",
-        "cost":  1000,
+        "cost":  1500,
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -2345,7 +2345,7 @@
                                                    "Maze Skullbomb|ONE"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Prayerbook of Vigor",
@@ -2358,7 +2358,7 @@
                                                    "Font of Vigor|JOU"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Mardu Gauntlet",
@@ -2397,7 +2397,7 @@
                                                    "Surgical Skullbomb|ONE"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Triassic Egg",
@@ -2535,7 +2535,7 @@
         "description":  "Pay 1 for a card or G to make a land a 3/3",
         "equipmentSlot":  "Left",
         "iconName":  "LifesparkGauntlet",
-        "cost":  1000,
+        "cost":  1500,
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -2619,7 +2619,7 @@
                                                    "Dross Skullbomb|ONE"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Mephitic Draught",
@@ -2833,7 +2833,7 @@
                                                    "Breaching Dragonstorm|TDM"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Rare"
     },
     {
         "name":  "Mask of Narcissism",
@@ -3034,7 +3034,7 @@
         "description":  "1B and discard to exile a grave card or 1B and sac to exile a grave card",
         "equipmentSlot":  "Neck",
         "iconName":  "MaskofMortiphobia",
-        "cost":  2000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
@@ -3048,7 +3048,7 @@
         "description":  "1R and random discard to ping 1 or 1R and sac to ping 1. Also lowers opp life.",
         "equipmentSlot":  "Neck",
         "iconName":  "MaskofPyromania",
-        "cost":  2000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
@@ -3082,7 +3082,7 @@
                                                    "Teeming Dragonstorm|TDM"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Rare"
     },
     {
         "name":  "Skywise Talisman",
@@ -3201,7 +3201,7 @@
                                                    "Encroaching Dragonstorm|TDM"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Rare"
     },
     {
         "name":  "Amulet of Favor",
@@ -3254,21 +3254,21 @@
                                                    "Bladed Bracers|AVR"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Echo Shield",
         "description":  "Equip 1, equipped can block an extra creature",
         "equipmentSlot":  "Right",
         "iconName":  "EchoShield",
-        "cost":  500,
+        "cost":  2250,
         "effect":  {
                        "lifeModifier":  3,
                        "startBattleWithCard":  [
                                                    "Echo Circlet|SOM"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Sorcerer\u0027s Wand",
@@ -3344,7 +3344,7 @@
                                                    "Tawnos\u0027s Wand|ME4"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Spy Kit",
@@ -3383,7 +3383,7 @@
                                                    "Short Sword|DOM"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Steelclaw Lance",
@@ -3505,7 +3505,7 @@
         "description":  "Equip 4, +2/+2 and trample",
         "equipmentSlot":  "Right",
         "iconName":  "Brawler\u0027sCestus",
-        "cost":  1000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4,
                        "startBattleWithCard":  [
@@ -3531,7 +3531,7 @@
         "description":  "Equip 3, +2/+0 and first strike on your turn",
         "equipmentSlot":  "Right",
         "iconName":  "JoustingLance",
-        "cost":  1000,
+        "cost":  1500,
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -3755,7 +3755,7 @@
         "description":  "Equip 2, +0/+2 and reach",
         "equipmentSlot":  "Right",
         "iconName":  "SpidersilkGlove",
-        "cost":  500,
+        "cost":  1500,
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -3856,7 +3856,7 @@
         "description":  "A powerful life boost, but boosts your foe as well.",
         "equipmentSlot":  "Body",
         "iconName":  "DivinelyBlessedArmor",
-        "cost":  3000,
+        "cost":  11250,
         "effect":  {
                        "lifeModifier":  15,
                        "opponent":  {
@@ -3988,11 +3988,11 @@
         "description":  "Basic life boost",
         "equipmentSlot":  "Body",
         "iconName":  "SteelArmor",
-        "cost":  1000,
+        "cost":  3000,
         "effect":  {
                        "lifeModifier":  4
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Armor of Ipnu",
@@ -4012,7 +4012,7 @@
         "description":  "An amazing life boost but opponent\u0027s permanents enter untapped.",
         "equipmentSlot":  "Body",
         "iconName":  "UltraHeavyArmor",
-        "cost":  3000,
+        "cost":  11250,
         "effect":  {
                        "lifeModifier":  15,
                        "opponent":  {
@@ -4137,7 +4137,7 @@
         "effect":  {
                        "lifeModifier":  8
                    },
-        "rarity":  "Common"
+        "rarity":  "Mythic"
     },
     {
         "name":  "Cloak of the Wastes",
@@ -4307,7 +4307,7 @@
                                                                 ]
                                     }
                    },
-        "rarity":  "Common"
+        "rarity":  "Mythic"
     },
     {
         "name":  "Parun\u0027s Armor",
@@ -4868,7 +4868,7 @@
                                                    "Faerie Dragon"
                                                ]
                    },
-        "rarity":  "Common"
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Fleshwright Chaps",
@@ -4913,7 +4913,7 @@
         "description":  "Equip 3, +2/+2 and menace",
         "equipmentSlot":  "Right",
         "iconName":  "ChitinousClub",
-        "cost":  1000,
+        "cost":  1500,
         "effect":  {
                        "lifeModifier":  2,
                        "startBattleWithCard":  [
@@ -7714,7 +7714,8 @@
             "startBattleWithCard":  [
                 "Tidal Influence"
             ]
-        }
+        },
+        "rarity":  "Uncommon"
     },
     {
         "name":  "Pegasus Helm",

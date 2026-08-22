@@ -71,5 +71,12 @@ public class ConfigData {
     // it there). Both null/absent on stock planes - no behavior change for them.
     public String modVersion;
     public String welcomePopupText;
+    // Start-menu version label overhaul (2026-08-22, user spec): the label now shows the last
+    // upstream Forge snapshot merged (engineBuildVersion, e.g. "2.0.15-SNAPSHOT-08.19" - stays
+    // static across TFR-only rounds, only bumped when a new engine merge happens) alongside
+    // modVersion and modVersionDate (the TFR build's own version/date, bumped every round). Falls
+    // back to Forge.getDeviceAdapter().getVersionString() if unset - see StartScene.java.
+    public String engineBuildVersion;
+    public String modVersionDate;
 
 }

@@ -11820,3 +11820,96 @@ criticism) drove this round, plus the user's own follow-ups. Repo-only by reques
   delivery answer - Android Forge downloads stock assets at first run, ours must be bundled or
   self-hosted, plus the AssetsDownloader Android path currently points at stock Forge's asset
   server). Not attempted inside this round.
+
+## Thirty-third round: ante buy-back root-caused, Life Item Ledger applied, Trader building, version label overhaul (2026-08-22, REPO-ONLY, not packaged/deployed)
+
+User's v1.01 feedback-response round, from a live playtest session plus two dungeon-loss `forge.log`
+captures. Four independent asks; three shipped in full, the fourth (Trader's planned upgrade into
+Exchange) shipped everything except the upgrade action itself pending a design answer.
+
+- **Ante buy-back "never offered after a dungeon loss" - ROOT CAUSED, not a code bug.** Two fresh
+  dungeon-loss logs (both v1.01, both real random encounters mid-dungeon) were read against the
+  `[TFR-AnteResult]`/`[TFR-AnteBuyBack]` probes from the thirty-first/-second rounds:
+  `raw=won=0 lost=1` both times (the ante result is populated correctly, contradicting the
+  thirty-second round's "EMPTY results" theory), and in both `DuelScene.showAnteResults()`
+  correctly computed a real `buyBackPrice` (300 both times - the `anteBuyBackMinPrice()` floor,
+  not a coincidence of matching cards) and correctly gated on `Current.player().getGold() >=
+  buyBackPrice` - gold=280 both times, i.e. simply short of the price. `eventData` (Arena/Inn-
+  tournament duels only, confirmed by tracing every `eventData` read in `DuelScene.java`) was
+  independently ruled out as a dungeon-specific gate. **No location-based gate exists anywhere in
+  this chain** - the two-suspect list from the thirty-second round (RegisteredPlayer identity
+  mismatch / engine not flagging the human as loser) is resolved: `humanNotFound` on the
+  `[TFR-AnteResult]` diagnostic line is a red herring (that probe reads a *different*, already-
+  torn-down `Game` reference purely for its own logging - the real ante accumulation, from
+  `Match.getAnteResult()`, was fine both times).
+  - **Real gap found and fixed**: `offerBuyBack=false` produced a bare "OK" popup with zero
+    mention Buy Back was ever a possibility - indistinguishable from the mechanic not existing.
+    Likely origin of the "never offered" perception if this player is consistently low on gold
+    right after a dungeon run (plausible, not confirmed - only one non-zero gold sample exists).
+    `DuelScene.showAnteResults()`: when `buyBackPrice > 0 && !offerBuyBack`, the popup message now
+    appends "Buy Back available for `<price>` gold - you only have `<gold>`." - same plain
+    "N gold" phrasing the buttons already use (not `[+Gold]` markup - confirmed this popup's
+    message renders via a plain `FTextArea`, which doesn't parse Textra markup, unlike the
+    TypingLabel-based dialogs elsewhere).
+- **Life Item Ledger (delivered thirty-second round) applied**: all 41 flagged items in `world/
+  items.json` (23 rarity-only, 10 price-only, 8 both), scripted from the ledger's own exact
+  recommended values - verified against its 23/10/8 summary counts before writing. One surprise:
+  **Tidal Amulet had no `rarity` field in the source data at all** (the ledger's "?" wasn't a
+  parsing gap, the field was simply absent) - added `"rarity": "Uncommon"` directly rather than
+  via the scripted pass. 117 items left untouched (already fine per the ladder). JSON validity
+  and a handful of before/after spot-checks confirmed post-edit.
+- **New building: Trader** (`EconomyBuildings.java`, `ShopActor.java`) - a cheaper, town-buildable
+  alternative to Exchange: same Wood/Stone buy-5/sell-5 mechanic, rates 25% worse both directions
+  (Buy 125g / Sell 60g vs Exchange's 100g/80g - `TRADER_BUY_PRICE`/`TRADER_SELL_PRICE`, derived
+  from `TRADE_BUY_PRICE`/`TRADE_SELL_PRICE` rather than hand-duplicated), no Shards trade. New
+  `TRADER` type constant (10); cost `{200 gold, 0, 0, 0}` (gold-only by design - charging
+  wood/stone to build the building that SELLS you wood/stone would be backwards; no user-specified
+  amount, chosen below Exchange's 150g+resources and Bank's 500g, flag if it feels off). Unlike
+  Bank/Exchange, offered in the Financial submenu in ANY town, not just the Capitol - the
+  `isCapitol` gate in `buildChooseBuildingDialog()` now applies per-option (Bank/Exchange) instead
+  of to the whole submenu. Art: cropped directly from `common/maps/tileset/buildings.png`'s
+  126/127/154/155 2x2 tile block (the coordinates the user pulled from Tiled's tile inspector) at
+  native 32x32 resolution - no upscaling needed, same "2x2 block, used as-is" precedent as
+  Archaeologist/Spellsmith (as opposed to the older single-16x16-tile-then-2x-upscale approach).
+  Appended to `The Forgotten Realms/maps/tileset/new_buildings.png` (208x32 -> 240x32) and its
+  `.atlas` (region + header `size:` both updated - the atlas text format declares image dimensions
+  redundantly with the PNG itself, easy to miss).
+  - **"Upgrade to Exchange" row wired** (matches the user's own mockup) - held back initially
+    pending a design answer ("if you build it in your town, needs to carry over to Capitol" had
+    three real readings: independent per-location buildings, a new global per-player unlock flag,
+    or literal cross-POI building migration - each implies a different data model, not just UI).
+    User chose **"Independent buildings"**: a town Trader keeps working as a Trader forever on its
+    own merits; the upgrade row lives inside every Trader's dialog, always shown (same "show the
+    cost, grey it out" idiom `buildOption()` already uses for affordability) but only enabled when
+    `TownRestoration.isCurrentTownCapitol()` is true for THIS Trader's actual location - so a
+    Capitol-built Trader is what upgrades, nothing moves or migrates. Confirms via a Yes/Cancel
+    dialog (same idiom as `openDestroyConfirmDialog`), pays Exchange's own build cost via
+    `payCost()` (an upgrade isn't free just because a Trader already stands there - matches the
+    Armory/Arena Level 1->2 precedent of charging extra, not the "sunk cost" idea), then re-keys
+    the objectId from `TRADER` to `EXCHANGE` in `PointOfInterestChanges.economyBuildingObjectIds`
+    (remove-by-value + `builtFlag` swap, same cleanup `destroyBuilding()` uses for the old
+    registration, WITHOUT touching `shopRebuilt_<objectId>` - this stays a live, functional
+    building throughout, never rubble). Exchange's existing direct-build path in the Financial
+    submenu is untouched - both routes to an Exchange coexist.
+- **Start-menu version label reformatted** (user spec): was `"v.<engine version>  |  TFR -
+  v<modVersion>"`; now `"v<engineBuildVersion> | TFR v<modVersion> - <modVersionDate>"` - two new
+  `ConfigData` fields, both manually maintained like `modVersion` already was rather than derived.
+  `engineBuildVersion` ("2.0.15-SNAPSHOT-08.19") tracks the last upstream Forge snapshot merged
+  and stays static until the next engine merge - it is NOT what `Forge.getDeviceAdapter().
+  getVersionString()` returns (that's just the Maven `revision` property, "2.0.15-SNAPSHOT", no
+  date - the date suffix upstream's own daily builds carry isn't in our manifest at all, so it has
+  to be tracked by hand). `modVersionDate` is the TFR build's own date, bumped every round.
+  `StartScene.java` falls back to the raw engine version string if `engineBuildVersion` is unset.
+  **modVersion bumped 1.01 -> 1.02** for this round. (User's own spec string said "SHAPSHOT" -
+  read as a typo for "SNAPSHOT" and corrected; flagging rather than shipping a player-visible
+  typo.)
+- **Android build requirements answered** (open thread, not attempted as code): confirmed via
+  `forge-gui-android/pom.xml` that upstream already ships a full, mature Android build pipeline -
+  `android-debug`/`android-release-build`/`android-release-upload`/`android-test-build`/
+  `android-dev-build` Maven profiles (the last one signs with an embedded debug keystore, no
+  release signing needed for local testing), not something to build from scratch as the prior
+  round's "scoped as its own milestone" framing implied. This machine has no Android SDK at all
+  (`ANDROID_HOME`/`ANDROID_SDK_ROOT` unset, no SDK under the default install path) - that + the
+  still-open asset-delivery decision (bundle `res/` into the APK vs. self-host, since Android
+  Forge's `AssetsDownloader` path points at stock Forge's asset server) are the two real blockers,
+  not missing build infrastructure.
