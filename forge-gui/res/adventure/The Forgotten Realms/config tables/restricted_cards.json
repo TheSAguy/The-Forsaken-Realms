@@ -1,0 +1,101 @@
+{
+    // ============================================================================
+    // The Forgotten Realms - Restricted Cards list. Any card named here is fully
+    // excluded from EVERY card source: the main reward/shop/booster pool AND
+    // sourceDeck-based rewards (e.g. the Alt-Art boss-reward decks) - it will
+    // never be offered anywhere in the game, no matter how many printings of it
+    // a reward deck happens to list. Add card names below (exact spelling) as
+    // more problem cards turn up - no code change needed, just restart the game.
+    // Comments (// lines) are supported by the game's JSON reader - leave them in.
+    //
+    // Moved here 2026-08-22 (was inline in config.json) so the list has its own
+    // easy-to-edit home, same as settings.json - see MOD_CHANGELOG.md.
+    // ============================================================================
+    "restrictedCards": [
+        // --- Power 9 / broken-power staples (original list) ---
+        "Black Lotus",
+        "Mox Emerald",
+        "Mox Pearl",
+        "Mox Ruby",
+        "Mox Sapphire",
+        "Mox Jet",
+        "Ancestral Recall",
+        "Timetwister",
+        "Time Walk",
+        "Time Vault",
+        "Sol Ring",
+        "Mana Crypt",
+        "Tolarian Academy",
+        "Tinker",
+        "Demonic Tutor",
+        "Vampiric Tutor",
+        "Bazaar of Baghdad",
+        "Library of Alexandria",
+        "Mana Vault",
+        "Fastbond",
+        "Mishra's Workshop",
+        "Yawgmoth's Bargain",
+        "Gaea's Cradle",
+        "Drake Stone",
+        "Wrenn and One",
+
+        // --- Commander-only support cards (original list) ---
+        "Command Tower",
+        "Arcane Signet",
+        "Opal Palace",
+        "Path of Ancestry",
+        "War Room",
+        "Commander's Plate",
+        "Campfire",
+        "Cloudkill",
+        "Command Beacon",
+        "Commander's Insignia",
+        "Forge of Heroes",
+        "Imposing Grandeur",
+        "Jeweled Lotus",
+        "Myth Unbound",
+        "Netherborn Altar",
+        "Sanctum of Eternity",
+        "Stinging Study",
+        "Study Hall",
+        "Witch's Clinic",
+        "Commander's Sphere",
+
+        // --- Un-set / joke / booster-fun cards (original list) ---
+        "Under-Construction Skyscraper",
+        "Temur Elevator",
+        "Slumbering Waterways",
+        "Omenpath to Naya",
+        "The Heron Moon",
+        "Gobland",
+        "Fetching Garden",
+        "Mox Poison",
+        "Wisedrafter's Will",
+        "New Master of Arms",
+        "Halving Season",
+        "Questing Cosplayer",
+        "Teferi, Druid of Argoth",
+        "Anax and Cymede & Kynaios and Tiro",
+        "Call from the Grave",
+        "Mise",
+
+        // --- Two-color guild Signets (added 2026-08-22) ---
+        // Root cause of the "2 Sol Rings in a 40-card deck" / "Commander-only signet
+        // rewards" report: common/decks/rewards/Alt-Art_Staples.dck (a boss-kill reward
+        // deck referenced by dozens of enemies) lists these + 21 separate Arcane Signet
+        // printings + 30 separate Sol Ring printings as individual entries. That reward
+        // path pulled straight from the deck file and never checked this list at all -
+        // RewardData.java now filters sourceDeck-based pools against it too, so Arcane
+        // Signet/Sol Ring (already above) and these are excluded from that pool as well.
+        "Azorius Signet",
+        "Boros Signet",
+        "Dimir Signet",
+        "Golgari Signet",
+        "Gruul Signet",
+        "Izzet Signet",
+        "Orzhov Signet",
+        "Rakdos Signet",
+        "Selesnya Signet",
+        "Simic Signet"
+    ]
+}

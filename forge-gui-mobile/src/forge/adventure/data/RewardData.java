@@ -164,6 +164,9 @@ public class RewardData implements Serializable {
 
         Set<String> restrictedCards = new HashSet<>(Arrays.asList(configData.restrictedCards));
         filters.add(pc -> !restrictedCards.contains(pc.getName()));
+        if (!restrictedCards.isEmpty())
+            System.out.println("[TFR-RestrictedCards] main reward/shop/booster pool built with "
+                    + restrictedCards.size() + " card(s) excluded");
 
         // Filter out specific cards.
         allCards = CardUtil.getFullCardPool(false).stream()
@@ -185,6 +188,42 @@ public class RewardData implements Serializable {
 
     public static void invalidateCardPool() {
         allCards = null;
+    }
+
+    // Restricted Cards enforcement for sourceDeck-based rewards (2026-08-22 fix, MOD_CHANGELOG.md).
+    // initializeAllCards()'s filter above only ever applied to the generic rarity-weighted pool -
+    // a sourceDeck reward (the "Union" branch's per-entry sourceDeck below, and the "card"/
+    // "randomCard" branch's own sourceDeck case) reads a .dck file's card list directly via
+    // CardUtil.getDeck() and never consulted configData.restrictedCards at all. Root cause of the
+    // user's "2 Sol Rings in a 40-card deck" / "Commander-only signet rewards" report:
+    // common/decks/rewards/Alt-Art_Staples.dck (a boss-kill reward deck referenced by dozens of
+    // enemies) lists 30 separate Sol Ring printings + 21 separate Arcane Signet printings + all 10
+    // guild Signets as literal entries, and that reward path bypassed this list entirely - worse,
+    // Sol Ring's 30 printings made it wildly over-weighted vs. every single-copy card in the same
+    // pool. Logs only when something is actually removed (same convention as ContentFilterTables'
+    // [ContentFilter] lines) so ordinary sourceDeck rewards (the funny-card shops, the goblin king
+    // deck, etc.) that contain nothing restricted stay silent.
+    private static List<PaperCard> filterRestrictedCards(List<PaperCard> cards, String sourceDeckName) {
+        String[] restrictedArr = Config.instance().getConfigData().restrictedCards;
+        if (restrictedArr == null || restrictedArr.length == 0 || cards == null || cards.isEmpty())
+            return cards;
+        Set<String> restricted = new HashSet<>(Arrays.asList(restrictedArr));
+        List<PaperCard> filtered = new ArrayList<>(cards.size());
+        Set<String> removedNames = null;
+        int removedCount = 0;
+        for (PaperCard card : cards) {
+            if (card != null && restricted.contains(card.getName())) {
+                if (removedNames == null) removedNames = new LinkedHashSet<>();
+                removedNames.add(card.getName());
+                removedCount++;
+            } else {
+                filtered.add(card);
+            }
+        }
+        if (removedCount > 0)
+            System.out.println("[TFR-RestrictedCards] " + sourceDeckName + ": filtered " + removedCount
+                    + " restricted-card printing(s) (" + removedNames + ")");
+        return filtered;
     }
 
     // Weighted item-rarity roll (user spec 2026-08-12): Common 60% / Uncommon 30% / Rare 8% /
@@ -245,7 +284,9 @@ public class RewardData implements Serializable {
                             if (pc != null)
                                 pool.add(pc);
                         } else if (r.sourceDeck != null && !r.sourceDeck.isEmpty() ) {
-                            pool.addAll(CardUtil.getDeck(r.sourceDeck, false, false, "", false, false).getAllCardsInASinglePool().toFlatList());
+                            pool.addAll(filterRestrictedCards(
+                                    CardUtil.getDeck(r.sourceDeck, false, false, "", false, false).getAllCardsInASinglePool().toFlatList(),
+                                    r.sourceDeck));
                         } else {
                             pool.addAll(CardUtil.getPredicateResult(allCards, r));
                         }
@@ -309,7 +350,10 @@ public class RewardData implements Serializable {
                             }
                         }
                     } else if (sourceDeck != null && !sourceDeck.isEmpty()) {
-                        for( PaperCard card : CardUtil.generateCards(CardUtil.getDeck(sourceDeck, false, false, "", false, false).getAllCardsInASinglePool().toFlatList() ,this, count+addedCount, rewardRandom)) {
+                        List<PaperCard> sourcePool = filterRestrictedCards(
+                                CardUtil.getDeck(sourceDeck, false, false, "", false, false).getAllCardsInASinglePool().toFlatList(),
+                                sourceDeck);
+                        for( PaperCard card : CardUtil.generateCards(sourcePool, this, count+addedCount, rewardRandom)) {
                             if (card != null)
                                 ret.add(new Reward(card, isNoSell));
                         }

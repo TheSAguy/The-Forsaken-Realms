@@ -12493,3 +12493,69 @@ above.
 
 **Files touched**: `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`,
 `forge-gui/res/adventure/The Forgotten Realms/world/items.json`.
+
+## Forty-first round: RoL/Commander card-mixing fix, root-caused and closed (2026-08-22)
+
+User request: "Let's proceed with your 'RoL/Commander card mixing' solution. Create game logs for
+you to track this on the back-end. Also, create a Restricted card list in the settings folder that
+we can add more cards to if needed." Directly implements the plan from the round above (Thirty-
+ninth round's "RoL/Commander card mixing - my plan") - but investigation before writing any code
+found the actual root cause was narrower and different in shape than the plan assumed, so the fix
+targets that instead of guessing. Repo-only, live standalone folder untouched (still "playing the
+live game").
+
+- **Root cause, confirmed before writing any fix** (matches the plan's own "first real step":
+  confirm which pool is handing these out before writing an exclusion list). `config.json` already
+  had a `restrictedCards` list (61 entries: Power 9, Commander-only support cards including "Arcane
+  Signet" itself, Un-set jokes) and `RewardData.initializeAllCards()` already filtered the main
+  reward/shop/booster pool against it - that part was never broken. The actual leak:
+  `common/decks/rewards/Alt-Art_Staples.dck`, a boss-kill reward deck referenced by `sourceDeck` on
+  dozens of `enemies.json` entries, lists **30 separate Sol Ring printings + 21 separate Arcane
+  Signet printings + all 10 two-color guild Signets** as literal deck entries. `RewardData.generate()`'s
+  `sourceDeck` branches (the "card"/"randomCard" case, and the "Union" case's per-entry `sourceDeck`)
+  read that file straight via `CardUtil.getDeck()` and never consulted `restrictedCards` at all - so
+  both cards leaked through regardless of the existing list, and Sol Ring's 30 printings made it
+  wildly over-weighted vs. every single-copy card in the same pool (explaining "2 Sol Rings in a
+  40-card deck already").
+- **`RewardData.java` fix**: new private `filterRestrictedCards(List<PaperCard>, String)` helper,
+  applied at both `sourceDeck` call sites, removing any card whose name is in
+  `configData.restrictedCards` before it reaches the pool. Filters by card NAME (same semantics as
+  the pre-existing main-pool filter), so every alt-art printing of a restricted card is caught, not
+  just one. Logs only when something is actually removed - ordinary `sourceDeck` rewards (the
+  funny-card shops, the goblin king deck, etc.) that contain nothing restricted stay silent.
+- **Restricted Cards moved to its own file** (user request: "create a Restricted card list in the
+  settings folder"). New `data/RestrictedCardsData.java` (one field, same tiny-class pattern as
+  `TuningData`) backed by `config tables/restricted_cards.json` - loaded in `Config.java`'s
+  constructor (plane-local falling back to common, same pattern as `settings.json`) and MERGED into
+  `configData.restrictedCards` rather than replacing it, so any plane still setting the field inline
+  in its own `config.json` is unaffected. TFR's own `config.json` had its 61-entry inline list
+  removed (migrated, not duplicated) and replaced with a comment pointing at the new file. The new
+  file carries all 61 original entries plus the 10 two-color guild Signets newly identified above -
+  71 total, hand-editable, `//`-comments supported, restart-to-apply.
+- **Diagnostic logging** (`[TFR-RestrictedCards]` tag, per this project's logging standard) at three
+  points: file load (`Config.java`, how many cards loaded and the total after merge), main-pool
+  build (`RewardData.initializeAllCards()`, one-time count), and every time a `sourceDeck` reward
+  actually has something filtered out (names it, so a boss kill that would have handed over a
+  restricted card is visible in forge.log even though the player never sees the near-miss).
+- Not compiled in this environment (Maven wasn't on this machine's PATH here at the start of this
+  session - see the separate Maven PATH fix below, which only takes effect starting next session).
+  Same low-risk profile as the round above: new code reuses only symbols already proven working
+  elsewhere in the same files.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/data/RewardData.java`,
+`forge-gui-mobile/src/forge/adventure/data/RestrictedCardsData.java` (new),
+`forge-gui-mobile/src/forge/adventure/util/Config.java`,
+`forge-gui\res\adventure\The Forgotten Realms\config.json`,
+`forge-gui\res\adventure\The Forgotten Realms\config tables\restricted_cards.json` (new).
+
+**Outside the repo**: `C:\Users\User\.claude\settings.json` (this machine's global Claude Code
+config, not part of this repo) gained a `SessionStart` hook prepending
+`C:\Users\User\.claude\Tools\apache-maven-3.9.16\bin` to PATH for both PowerShell and Bash tool
+shells, per user request ("Marvin [Maven] should be here... code this location for ALL Claude
+sessions"). Takes effect starting the next session - this session's shells were already running
+before the hook existed, so `mvn` still isn't on PATH here (confirmed: still not found after the
+edit). Chose a SessionStart hook over either (a) Claude Code's `env` settings block, because
+whether `env.PATH` prepends vs. replaces the whole PATH is undocumented and getting it wrong would
+break every shell tool call in every future session, or (b) editing the OS-wide user PATH directly,
+because the user's own phrasing ("for ALL Claude sessions") and the tool's location inside `.claude`
+itself both pointed at a Claude-scoped fix rather than a machine-wide one.

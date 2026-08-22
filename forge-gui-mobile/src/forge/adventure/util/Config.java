@@ -144,6 +144,34 @@ public class Config {
         } else {
             tuningData = new TuningData();
         }
+
+        // Restricted Cards file (2026-08-22 user request: "create a Restricted card list in the
+        // settings folder that we can add more cards to if needed" - part of the RoL/Commander
+        // card-mixing fix, MOD_CHANGELOG.md). Same plane-local/fallback-to-common load pattern as
+        // settings.json above. Merges into configData.restrictedCards (a pre-existing field,
+        // already wired into RewardData.initializeAllCards()'s main pool filter and
+        // cardPackShop's edition filter) rather than replacing it, so anything a plane still sets
+        // inline in its own config.json survives untouched.
+        FileHandle restrictedCardsFile = new FileHandle(prefix + "config tables/restricted_cards.json");
+        if (!restrictedCardsFile.exists())
+            restrictedCardsFile = new FileHandle(commonPrefix + "config tables/restricted_cards.json");
+        if (restrictedCardsFile.exists()) {
+            try {
+                RestrictedCardsData restrictedCardsData = new Json().fromJson(RestrictedCardsData.class, restrictedCardsFile);
+                if (restrictedCardsData.restrictedCards != null && restrictedCardsData.restrictedCards.length > 0) {
+                    Set<String> merged = new LinkedHashSet<>();
+                    if (configData.restrictedCards != null)
+                        merged.addAll(Arrays.asList(configData.restrictedCards));
+                    merged.addAll(Arrays.asList(restrictedCardsData.restrictedCards));
+                    configData.restrictedCards = merged.toArray(new String[0]);
+                    System.out.println("[TFR-RestrictedCards] loaded " + restrictedCardsData.restrictedCards.length
+                            + " card(s) from " + restrictedCardsFile.path() + " (" + configData.restrictedCards.length
+                            + " total after merge)");
+                }
+            } catch (Exception e) {
+                System.err.println("[TFR-RestrictedCards] restricted_cards.json failed to load, none applied: " + e);
+            }
+        }
     }
 
     private String resPath() {
