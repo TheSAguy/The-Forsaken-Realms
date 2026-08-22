@@ -12459,3 +12459,37 @@ is mid-session, not rebuilt this round.
 **Files touched**: `forge-gui-mobile/src/forge/adventure/data/TuningData.java`, `forge-gui-mobile/
 src/forge/adventure/scene/ResearchScene.java`, `forge-gui/res/adventure/The Forgotten Realms/
 config tables/settings.json`, `MOD_SCOPE.md`.
+
+## Fortieth round: Colorless rune now returns to the Capitol (2026-08-22)
+
+User request, directly implementing their own earlier feedback ("It would be nice to get an item
+that sent you back to your capital"): "We have a colorless rune you start with. Let's make that
+take you to the capitol ONCE you have a capitol... take you to just outside the cap." Repo-only,
+live standalone folder untouched per the same "playing the live game" instruction as the round
+above.
+
+- **New console command `teleport home`** (`stage/ConsoleCommandInterpreter.java`): before a
+  Capitol exists, reproduces the rune's original behavior exactly - `TownRestoration.findCapitol()`
+  returns null, so it falls back to the existing "teleport to poi Spawn" logic verbatim (enters
+  Spawn's interior via `WorldStage.loadPOI()`, same `CoverScreen` transition treatment). Once
+  `TownRestoration.capitolExists()`, it instead does a position-only teleport - `setPosition()` to
+  just outside the Capitol's marker (same `x - 16f, y + 16f` offset formula the POI-teleport already
+  uses) plus the plain teleport-effect, deliberately *not* calling `loadPOI()` - so the player lands
+  on the overworld outside the Capitol rather than being dropped inside it, matching the user's
+  explicit "just outside" wording rather than a literal reuse of the interior-entry path. Put the
+  whole conditional in one new command (not duplicated across `InventoryScene.java`'s and
+  `GameHUD.java`'s separate `commandOnUse` dispatch sites) so there's a single source of truth -
+  the item's JSON only needed a one-line `commandOnUse` change.
+- **`world/items.json`**: Colorless rune's `commandOnUse` changed from `"teleport to poi Spawn"` to
+  `"teleport home"`; description updated from "Teleports you to the mysterious library" to
+  "Teleports you home - to the mysterious library, or just outside your Capitol once you've built
+  one" so the item's own flavor text still matches what it actually does post-Capitol.
+- Not compiled in this environment - Maven isn't on this machine's PATH here, so this will get its
+  first real compile check at the next standalone rebuild rather than now. The new command reuses
+  only symbols/imports already present and exercised elsewhere in the same file
+  (`TownRestoration.findCapitol()`, `Current.world().findPointsOfInterest()`,
+  `WorldStage.getInstance()`, `Vector2`, `CoverScreen`, `Paths.EFFECT_TELEPORT`), so risk is low, but
+  flagging rather than silently assuming a clean build.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`,
+`forge-gui/res/adventure/The Forgotten Realms/world/items.json`.

@@ -163,6 +163,33 @@ public class ConsoleCommandInterpreter {
             }, Forge.takeScreenshot())));
             return "Teleported to " + s[0] + "(" + poi.getPosition() + ")";
         });
+        // Colorless rune (MOD_CHANGELOG.md 2026-08-22, user request: "take you to the spawn area,
+        // until you have a Capitol, then take you to just outside the cap"). Before a Capitol
+        // exists, reproduces the item's original "teleport to poi Spawn" behavior exactly (enters
+        // Spawn's interior). Once TownRestoration.capitolExists(), goes to the Capitol instead -
+        // deliberately position-only (no loadPOI(), same as the raw "teleport to X Y" command
+        // above) so the player lands just outside the Capitol on the overworld rather than being
+        // dropped inside it, per the user's explicit "just outside" wording.
+        registerCommand(new String[]{"teleport", "home"}, s -> {
+            PointOfInterest capitol = TownRestoration.findCapitol();
+            if (capitol == null) {
+                PointOfInterest spawn = Current.world().findPointsOfInterest("Spawn");
+                if (spawn == null)
+                    return "PoI Spawn not found";
+
+                Forge.advFreezePlayerControls = true;
+                FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new CoverScreen(() -> {
+                    Forge.advFreezePlayerControls = false;
+                    WorldStage.getInstance().setPosition(new Vector2(spawn.getPosition().x - 16f, spawn.getPosition().y + 16f));
+                    WorldStage.getInstance().loadPOI(spawn);
+                    Forge.clearTransitionScreen();
+                }, Forge.takeScreenshot())));
+                return "Teleported to Spawn(" + spawn.getPosition() + ")";
+            }
+            WorldStage.getInstance().setPosition(new Vector2(capitol.getPosition().x - 16f, capitol.getPosition().y + 16f));
+            WorldStage.getInstance().player.playEffect(Paths.EFFECT_TELEPORT, 10);
+            return "Teleported outside the Capitol(" + capitol.getPosition() + ")";
+        });
         registerCommand(new String[]{"spawn", "enemy"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: enemy name.";
 
