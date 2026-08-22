@@ -12151,3 +12151,269 @@ numbers pass.
 `Eldrazi_Prison_0.tmx` (7 doors re-enabled, same folder); `The Forgotten Realms/decks/legends/
 {emrakul,kozilek}.dck` (new copies); `The Forgotten Realms/world/items.json` (+12 items); `The
 Forgotten Realms/world/enemies.json` (+2 entries, 6 tier/difficulty updates).
+
+## Thirty-seventh round: enemy tier gap-fill + full whole-game reachability re-audit (2026-08-22)
+
+User-approved implementation, two related data-integrity asks. Task A: `enemies.json` had 43
+entries (of 1520) with the `tier` field entirely absent - find out whether that's silently handled
+and, if not, fix it for real. Task B: re-run the 2026-08-10 "Final pre-playtest audit" from scratch
+against the CURRENT state of every file, since a Trader/Exchange building, a Tier 2 boss-life
+rescale, an item rarity pass, and the Thirty-sixth round's Eldrazi Prison import have all landed
+since. Both built as Python scripts against the live JSON/`.tmx` data (parsed, not eyeballed) rather
+than trusted from memory of prior rounds.
+
+**Task A - the "card-rarity formula" mentioned in the Thirty-sixth round turned out to be a
+one-time, already-deleted tool, not a live fallback.** Traced `EnemyData.java` first: `public
+String tier = "Common";` is a bare Java field default - if `tier` is absent from an entry's JSON,
+deserialization leaves this default in place, so an untiered entry silently plays as the WEAKEST
+possible tier (10% mage-capture win chance in `TerritoryControl.attackerWinChance()`, `tierPower()`
+1/8th of a Mythic in guard fights, "(Apprentice)" appended to its display name if
+`showEnemyTierInName` is on) regardless of its actual power level - not a graceful fallback, a
+silent mismatch. The real "card-rarity formula" was `forge.lda.DeckRarityLookup`, a throwaway batch
+tool (weighted deck-card-rarity average, Common=1/Uncommon=2/Rare=4/Mythic=8 per card, bucketed
+`<2.0`/`2.0-3.0`/`3.0-4.5`/`>=4.5`) run exactly once during the 2026-08-10 mass bestiary import to
+backfill `tier`/`difficulty` for entries that had neither - and deleted after use, per that round's
+own notes. It does not exist to be re-run today.
+
+**All 43 gaps traced to real dungeon placements, not random holes.** Grep-located every one of the
+43 names against every `.tmx` in this plane (not assumed from context): 38 are the "Legendary
+POI"-roster bosses MOD_SCOPE #91's Tier 2 pass ×2-rescaled the `life` of (Thirty-fifth round) but
+never gave a `tier` - confirmed by cross-referencing life values (all landed on the rescaled
+40/60/80/100 band) and by finding all of them placed as named `enemy` properties across exactly 8
+dungeon `.tmx` files (`Ashlings_Domain`, `Eclipsed_Elven_Court`, `Isolated_Hut`,
+`Planeswalker_Dueling_Club`, `Ancient_Opal_Cavern`, `Peaceful_Clearing`, `An-Havva_Inn`,
+`Idyllic_Beachfront` - the 8 non-Eldrazi-Prison Legendary POIs; Eldrazi Prison's own titans already
+got their `tier` fixed directly in the Thirty-sixth round). The other 5 are `Zo-Zu the Punisher`
+(already known from the Thirty-fifth round as a "joke cameo... unrelated to the real 6-fight
+gauntlet") plus 4 previously-undocumented siblings - `Adriana`, `Ashiok`, `Gwafa Hazid`, `Vadmir` -
+found via the same grep pass, not mentioned in any prior round. All 5 share an identical stat block
+(`life:1, difficulty:0.1, deck:"decks/legends/mystery_list.dck"`) and are each a single easter-egg
+placement inside a different PRE-EXISTING, already-tiered dungeon (`Planeswalker_Dueling_Club` for
+Zo-Zu, `Court_of_Paliano`/`Three_Tree_City`/`Valors_Reach_Arena`/`Omenport` for the other 4) - never
+part of the "39 named bosses across the 9 Legendary POIs" Tier 2 scoped, since they aren't Legendary
+POI content at all.
+
+**Root cause of the gap**: Tier 2's life rescale (Thirty-fifth round) touched only `life`, by its
+own explicit design ("this round only restores reachability and tiers, it doesn't pre-empt that
+pending numbers pass" - the Thirty-sixth round entry, about the titans specifically, but the same
+scoping applied here); nothing in that work path ever wrote `tier`. And since `DeckRarityLookup` was
+already gone by the time these 38 legends entered the catalog (they don't carry the auto-formula's
+fingerprint the way the 4 Eldrazi titans did - those were explicitly "auto-tiered Rare by the old
+card-rarity formula" per the Thirty-sixth round), they must have been added in a round after the
+2026-08-10 import, bypassing the one-time tool entirely.
+
+**Assignment method**: calibrated against the file's own already-near-exceptionless
+`difficulty`->`tier` convention (checked across all 1477 previously-tiered entries before trusting
+it: `difficulty<0.5` -> Common 426/426, `1.5<=difficulty<2.5` -> Rare 655/655, `difficulty>=2.5` ->
+Mythic 41/41, all clean; `0.5<=difficulty<1.5` -> Uncommon in 350/355, 5 hand-tuned exceptions) and
+the Tier 2 report's own framing of the rescaled life band as a real internal ladder ("median 40,
+Karona-tier 80, Emrakul ceiling 100" - not a flat "endgame content, tier it all the same" read, which
+is why this round did NOT copy the Eldrazi-titans' uniform-Mythic treatment wholesale):
+- **life 40 or 60 -> `Rare` (`difficulty:2`)** - 26 entries. Matches the dominant existing tier for
+  this power band in the general (untouched) `decks/legends/` population (life-20/30 legends, the
+  pre-rescale equivalent, are 56-78% Rare) without over-crediting the "median" tier as top-shelf.
+- **life 80 or 100 -> `Mythic` (`difficulty:3`)** - 12 entries. "Karona-tier" (80) and "Emrakul
+  ceiling" (100) are the report's own words for these two bands; life-100 `decks/legends/` entries
+  that already carried a tier before this round (`Jodah`, `Meloku`, plus the baseline `Emrakul` boss)
+  were 3/3 Mythic, a clean precedent.
+- **life 1, difficulty 0.1 (the Zo-Zu joke-cameo family) -> `Common`** - 5 entries
+  (`Zo-Zu the Punisher`, `Adriana`, `Ashiok`, `Gwafa Hazid`, `Vadmir`). Matches both their
+  pre-existing `difficulty` value under the established mapping and their own narrative role
+  (confirmed harmless cameos, not real fights).
+- `difficulty` was also written for the 38 Rare/Mythic entries (the 5 cameos already had it) - not
+  explicitly asked, but the file has zero exceptions to entries-with-`tier`-also-having-a-matching-
+  `difficulty`, and it mirrors the Thirty-sixth round's own reasoning for the Eldrazi titans
+  ("`difficulty:3` for internal consistency with the existing Mythic-tier baseline `Emrakul`").
+  `Jodah` was re-checked directly (not trusted from the earlier summary) and confirmed to already
+  carry `tier:"Mythic", difficulty:3` - left untouched.
+
+Full 43-entry list (dungeon, life, assigned tier/difficulty), grouped by placement:
+
+| Dungeon | Entries (life -> tier) |
+|---|---|
+| `An-Havva_Inn` | Joven and Chandler (60->Rare), Autumn Willow (An-Havva) (40->Rare), Daughter of Autumn (40->Rare), Feroz (40->Rare), Greensleeves (40->Rare) |
+| `Ancient_Opal_Cavern` | Nephilim Epochal (100->Mythic) |
+| `Ashlings_Domain` | Ashling (80->Mythic), Grub (80->Mythic), Auntie Ool (60->Rare), Bre (60->Rare), Salacinder and Soot (60->Rare) |
+| `Eclipsed_Elven_Court` | Eirdu (80->Mythic), Morcant (80->Mythic), Oura (80->Mythic), Maralen (60->Rare), The Grand Goatnapper (60->Rare), Thorna and Twigtooth (60->Rare), Trystan (60->Rare) |
+| `Idyllic_Beachfront` | Rikala (60->Rare), Cynette (40->Rare), Grandmother Goby (40->Rare), Kitsa (40->Rare), Mu Yanling (40->Rare), Neerdiv (40->Rare) |
+| `Isolated_Hut` | Istvan (60->Rare) |
+| `Peaceful_Clearing` | Thurid (60->Rare), Cerise (40->Rare), Emiel (40->Rare), Grakk (40->Rare), Kwain (40->Rare), Phelia (40->Rare), Preston (40->Rare) |
+| `Planeswalker_Dueling_Club` | Freyalise, Sifa Grent, Sivitri, Thomil, Venser, Worzel (all 80->Mythic); Zo-Zu the Punisher (1->Common, joke cameo, excluded from the real 6-fight gauntlet) |
+| `Court_of_Paliano` (cameo) | Adriana (1->Common) |
+| `Three_Tree_City` (cameo) | Ashiok (1->Common) |
+| `Valors_Reach_Arena` (cameo) | Gwafa Hazid (1->Common) |
+| `Omenport` (cameo) | Vadmir (1->Common) |
+
+**Task B - full reachability re-audit, rebuilt fresh against current data (not trusted from the
+2026-08-10 methodology's memory of what things looked like then).**
+
+- **Items (654 total, was 628 on 2026-08-10): 0 unobtainable after 1 real fix.** Scanned
+  `shops.json` + `quests.json` + every `.tmx`/`.tx` under both `common/maps` and this plane's
+  `maps` (763 files) + `enemies.json`, checking both the literal and `'`-escaped apostrophe
+  form of every name (110 items have an apostrophe) - the exact mismatch class the 2026-08-10 audit
+  hit. First pass flagged 7: `Torch`, `Grand Torch`, `Staff of Speed`, `Staff of Flight`,
+  `Staff of Healing`, `Manasight Stone`, `Ghost rune`. Investigated each rather than trusting the
+  static-text scan alone (the task's own "or a direct-use grant" category isn't a `shops.json`
+  string match):
+  - **6 are real, just not name-referenced anywhere.** `Torch` is injected directly by
+    `EconomyBuildings.injectGuaranteedTorchIfOwed()` (Java code, not shop data - the guaranteed-
+    purchasable-Torch mechanic from 2026-08-14). The other 5 (`Grand Torch` Rare, the rest Common)
+    are all non-quest-items with a valid `rarity`, so they're pulled by
+    `ItemListData.getItemNamesByRarity()` into the generic `itemRarity:"Weighted"` pool
+    (`RewardData.java` - Common 60%/Uncommon 30%/Rare 8%/Mythic 2% per slot, live on 4 shop
+    templates: `Equipment`, `EquipmentL2`, `ArmoryCommon`, `ArmoryCommonL2`) - reachable by rarity,
+    never by literal name, which is exactly why a name-substring scan alone misses them. (This is
+    the same mechanism the 2026-08-14 "Second-half round" put `Staff of Healing`/`Staff of
+    Flight`/`Manasight Stone`/`Staff of Speed` into (the "3 Armory items guaranteed" fix) -
+    confirmed still wired correctly today.)
+  - **`Ghost rune` is a real, still-open gap - fixed.** Fully statted
+    (`cost:1600, rarity:"Common", questItem:true`, `commandOnUse:"teleport to poi Spawn"`, valid
+    `GhostRune` icon region confirmed present in `sprites/items.atlas`, "Spawn" confirmed to exist
+    in `points_of_interest.json`) but never wired into any shop, quest, or enemy reward table -
+    `questItem:true` also excludes it from the generic Weighted pool, so none of the 6 items above
+    cover it either. This project's own `ContentFilterTables.java` `KNOWN_UNUSED_ITEMS` set already
+    flagged this exact item by name 10 days ago ("`Ghost rune` is this project's own addition and
+    has no such excuse" - unlike the 22 co-listed stock Shandalar items). Its 8 siblings
+    (`Omenport Omenstone`, `Three Tree Omenstone`, `Tarnation Omenstone`, `Wizard Palace Omenstone`,
+    `Gitrog Bog Omenstone`, `Squirrel Farm Omenstone`, `Aerie Omenstone`, `Valor's Reach Omenstone` -
+    same shape: `questItem:true`, `commandOnUse` teleport, one `itemName` slot each) are all sold at
+    the `"OmenStones"` shop ("Quick Travel Mart"), placed on `Omenport.tmx`. `Ghost rune` was simply
+    missing from that shop's reward list. **Fix**: added a 9th `{"type":"item","count":1,
+    "itemName":"Ghost rune"}` entry to `shops.json`'s `"OmenStones"` template, matching its 8
+    siblings exactly.
+- **Enemies (1520 total, was 1469 on 2026-08-10): 0 unreachable.** Rebuilt the full check: biome
+  roaming pools (`white`/`blue`/`black`/`red`/`green`/`colorless`/`player.json` `enemies[]`,
+  1203 unique names), named `.tmx` `enemy` properties + `enemyPool` arrays (both plane and
+  `common/maps`, matched as quoted/`&quot;`-delimited tokens to avoid the substring-collision risk a
+  raw `contains()` would have - e.g. `"Emrakul"` must NOT false-match inside
+  `"Emrakul, the Aeons Torn"`), `TerritoryControl.WAR_TIER_BOSSES` (read directly from the Java
+  source, all 5 color arrays transcribed by hand, 38 unique names), `AdventureQuestController.
+  getExtraQuestSpawns()`'s tag-matching (`Defeat`-objective-only, confirmed by reading the method;
+  extracted all 18 unique `(enemyTags, enemyExcludeTags)` combinations from `quests.json` and
+  applied the exact same subset/disjoint logic the Java does), and `nextEnemy` chain closure (only 1
+  entry in the whole file uses it - `Goblin Pack` -> `Goblin` -> `Goblin`, a self-contained
+  2-hop chain). Cross-validated with a second, independently-written script that also breaks down
+  *which* mechanism covers each enemy - only 7 enemies (`Auramancer`, `Bone Golem`, `Goblin Pack`,
+  `Human Captain`, `Sand Ghoul`, `Supreme Elemental`, `Undead Shuffler`, all ordinary life-18-20
+  mooks, none boss-flagged) depend solely on the broadest quest-tag rule
+  (`enemyTags:[]`/`enemyExcludeTags:["Boss","Leader","Large"]`, i.e. "any non-boss mook" - a real,
+  intentional generic-bounty-quest mechanic, not a scan artifact). All 43 of this round's freshly-
+  tiered entries were individually spot-checked against their actual dungeon placement (grep, not
+  assumed) as part of Task A - see above.
+- **Quests (53 total): all resolve, 0 broken references.** Every literal cross-reference field
+  extracted by recursively walking the full `quests.json` tree (not just top-level keys, since
+  quests are deeply nested dialogue trees): `issueQuest` (48 unique values, all within the real
+  1-53 id range), `itemNames` (`Fetch` objective - exactly one literal value used anywhere in the
+  whole file, `"Landscape Sketchbook"`, confirmed to exist exactly in `items.json`), `POITags` (30
+  unique tags across all `Travel`/`Leave`/etc. stages, every one matched against >=1 real POI's own
+  `questTags` in `points_of_interest.json` - lowest was 1 match, for `Xira`/`Kiora`/`Teferi`/several
+  `Quest_*`-prefixed single-target tags), and `enemyTags`/`enemyExcludeTags` on both `Defeat` and
+  `Hunt` objectives (24 unique combos, every one matched against >=1 real enemy's `questTags` in
+  `enemies.json` - lowest was 1 match, for `Elf+Leader` excluding `Boss`). `POIReference` values are
+  always template placeholders (`$(poi_1)`/`$(poi_2)`/`$(poi_3)`), never literal names, so nothing
+  to cross-check there. `equipNames` is never populated anywhere in this file.
+- **Dungeon files (763 `.tmx`/`.tx` under `common/maps` + this plane's `maps`): 0 broken references
+  reachable from this plane.** Parsed every file with `xml.etree.ElementTree` (0 parse errors) and
+  resolved every `<tileset source>` and `object template=` (file-relative - libGDX/Tiled's own
+  standard resolution, no Forge-specific fallback) and every non-empty `teleport` property
+  (plane-root-relative via `Config.getFilePath()` - confirmed no fallback either, unlike
+  `Config.getFile()`/`getAtlas()` which sprite/atlas fields DO use; conflating the two on a first
+  pass produced a false "1520 broken enemy sprites" result, caught and corrected before trusting it
+  - re-ran with the correct plane-then-common fallback for asset fields and got a clean 0 across
+  `points_of_interest.json` `spriteAtlas`, `shops.json` `spriteAtlas`, and `enemies.json` `sprite`,
+  305/293/1520 checked). **132 genuinely broken tileset/template/teleport references found, all
+  confined to `common/` files under `garruk/`, `jacetower/`, `nahiri/`, and `naktamun/` sub-folders
+  - traced each to confirm none are reachable from this plane before leaving them alone**: this
+  plane's own front-door copies either fully self-contain their teleport loop with correct
+  plane-relative paths (`naktamun/naktamun.tmx` <-> `naktamun/gym.tmx`, `nahiri/nahiri.tmx` <->
+  `nahiri/nahiricave.tmx` - neither ever touches the broken deeper `common/` sub-files) or have
+  their sole teleport explicitly disabled (`garruk/garruk.tmx`, `jacetower/jacehold.tmx`, both
+  `value=""`), and `jacetower` itself isn't referenced by this plane's `points_of_interest.json` at
+  all beyond that one disabled front door. Pre-existing stock-content bugs, same class as the 22
+  dead stock items `ContentFilterTables.java` already documents as out-of-scope - not fixed, noted
+  here for traceability rather than silently dropped. Also re-verified `points_of_interest.json`'s
+  305 `map` fields directly (0 broken).
+  - **Eldrazi Prison (Thirty-sixth round's 7-file import) re-verified rather than trusted**: all 8
+    touched/added files (7 new + `Eldrazi_Prison_0.tmx`) parse clean and contributed zero broken
+    references. All 7 hub doors (object ids 81/86/87/88/89/90/91) directly re-read and confirmed
+    still pointing at real, existing files. The deliberately-disabled `Mirror_Gallery_1.tmx` link
+    (`Hall_of_the_Unifier.tmx` object id=150) re-confirmed still `teleport value=""`, not broken-by-
+    accident. `grep -rl "Realm of Legends"` across this plane's `maps/` - 0 hits, confirming no
+    stray cross-plane reference survived.
+
+**Verification performed**: re-parsed every touched/closely-read file (`enemies.json`,
+`shops.json`, `items.json`, `points_of_interest.json`) with Python's `json` module after editing:
+all clean, `enemies.json` still 1520 entries (0 duplicates, 0 missing `tier`,
+distribution now Rare 686/Uncommon 350/Mythic 53/Common 431), `shops.json`'s `"OmenStones"` template
+now has 9 entries. `git diff --stat` confirms only `enemies.json` (167 lines, surgical per-entry
+insertions preserving the file's existing 2-space/single-space-after-colon formatting, not a full
+reformat) and `shops.json` (5 lines) actually changed - `points_of_interest.json` was investigated
+(a `spriteAtlas` value looked broken on a plane-root-only check) but reverted once reading
+`Config.java`'s `getFile()` showed the bare path already resolves correctly via the common-fallback
+loop; noted here so a future session doesn't waste time re-checking the same false lead.
+
+**Uncertain / not fully confirmed:**
+- Map-geometry walkability (physically solid tiles) was not decoded for any of the 43 newly-tiered
+  bosses' dungeons or the 132 out-of-scope stock references - same limitation the Thirty-sixth round
+  already flagged for Eldrazi Prison, unchanged here. Reachability in this audit means "a real,
+  data-level path exists," not "confirmed walkable in a live playthrough."
+- `AdventureQuestController.getExtraQuestSpawns()`'s tag-matching reachability path (relied on
+  solely by 7 enemies, see above) was verified by reading the method's logic and replicating it
+  exactly, not by triggering it in a live game session.
+- MOD_SCOPE.md was checked (#91 and nearby entries) per the task's own instruction - #91 is already
+  `Done`; this round is a fresh, separate data-integrity pass rather than a continuation of that
+  wishlist item, so no MOD_SCOPE.md entry was added, matching how the original 2026-08-10 audit was
+  also changelog-only.
+- Not playtested - both tasks verified by parsing/re-parsing the actual data and cross-reading the
+  Java resolution code, not by a live run.
+
+**Files touched**: `The Forgotten Realms/world/enemies.json` (43 entries gained `tier`, 38 of those
+also gained `difficulty`; 1520 total, unchanged); `The Forgotten Realms/world/shops.json`
+(`"OmenStones"` template +1 entry, `Ghost rune`).
+
+## Thirty-eighth round: external-fork review, macOS/Linux launchers, Tibalt boss-effect bug fix (2026-08-22)
+
+User asked for a discerning (not exhaustive) review of `github.com/tchntm43/forge` ("mods" branch,
+9 commits / 152 files ahead of `Card-Forge/forge` master) for anything worth taking, plus two
+independent reports.
+
+- **macOS/Linux launchers added to the standalone package** (`standalone-packaging/
+  build_standalone.py`) - root-caused a macOS player report ("the CMD file isn't booting"): not
+  user error, `.cmd` is a Windows batch file and can never run on macOS. `BASE_INSTALL` already
+  ships working `forge-adventure.command` (macOS double-click) and `forge-adventure.sh` (plain
+  shell) launchers - both are already-correct copies of the same `java -jar ... jar-with-
+  dependencies.jar` invocation `.cmd` uses, just never copied/renamed into the shipped package
+  (Windows was the only platform actually getting a launcher at all). Same copy+rename pattern as
+  the existing `.cmd` handling, plus an explicit `os.chmod(dst, 0o755)` - shutil/git/zip don't
+  reliably preserve the executable bit, and it can't be assumed present. Syntax-checked; not yet
+  exercised on an actual Mac (no such machine available here to test against).
+- **Tibalt's Boss Effect: real bug fixed** (`common/custom_cards/tibalt_boss_effect.txt` - see
+  `CORE_ENGINE_CHANGES.md` for why this shared, non-plane-scoped file needed an entry there too).
+  Found while checking whether TFR's copy had the same issue tchntm43's fork's commit message
+  described ("Fixed Tibalt boss effect so the 11-15 result only deals random creature damage") -
+  it did: TFR's `DBDamageBis` (the 11-15 damage effect) chained into `DBChangeZone` before
+  `DBCleanup`, which reanimates a random creature from ANY graveyard onto the CASTER's own
+  battlefield - a real, silent bonus effect absent from the card's own Oracle text ("Tibalt deals
+  seven damage to a creature chosen at random," nothing about reanimation). One-line fix:
+  `DBDamageBis`'s `SubAbility$` now points straight at `DBCleanup`.
+- **Skull-tier minimap investigation** (user recalled seeing 1/2/3-skull icons, asked to confirm
+  no issue exists) - confirmed the user's memory was right and my earlier "only 3-skull exists"
+  claim was incomplete: `common/sprites/map_marker.atlas` genuinely has three regions -
+  `sidebosseasy`, `sidebossmoderate`, `sidebosshard` - but a repo-wide search found **zero** Java
+  references to the first two anywhere in `forge-gui-mobile`. Only `World.mapMarkerKey()`'s
+  `"Legendary"` tag check returns `sidebosshard`; nothing ever returns the other two. They're real,
+  present, unused art, not a bug the user imagined - confirmed via `points_of_interest.json` that
+  Shandalar Old Border's 5 `ElderDragon`-tagged lairs and its 13 `Boss`+`Planeswalker`-tagged
+  disguised encounters (Garruk, Jace, Kiora, Nahiri, etc.) are consistently tagged and would be a
+  natural fit for a "moderate" (2-skull) tier if the user wants to wire it up - not implemented
+  this round, reported for a decision (see chat).
+- **`RandomMapEventController.java` (tchntm43 fork) read in full** and reported back to the user
+  as a plain-language event list, not applied - the user's own ask was review-only for this round.
+- Reviewed, not taken (recorded for future reference rather than re-researching): enemy
+  trading/trade-binder behavior and "enemy fear" AI (narrow, would need real integration against
+  TFR's own reputation/territory AI), a Liliana boss item, and their non-paper-legal card shop
+  filter (TFR likely already covers this via Content Filter Tables, #41 - not independently
+  re-verified this round).
+
+**Files touched**: `standalone-packaging/build_standalone.py`, `forge-gui/res/adventure/common/
+custom_cards/tibalt_boss_effect.txt`, `CORE_ENGINE_CHANGES.md`.

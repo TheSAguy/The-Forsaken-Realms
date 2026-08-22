@@ -1231,6 +1231,18 @@ One round: first Progressive Set Unlocks playtest fixes + a Fable deep-dive revi
   (`upgradeToCapitol()`, see the #13/#1 entries above) raised from +1 to +2 (2026-08-18, user
   spec) - `newChanges.addMapReputation(oldChanges.getMapReputation() + 2)`, was `+ 1`.
 
+### Shared (non-plane-scoped) card data
+- **`forge-gui/res/adventure/common/custom_cards/tibalt_boss_effect.txt`** (2026-08-22) — real
+  bug fix, not a mod feature: the 11-15 D20 result was chaining `DBDamageBis` into `DBChangeZone`
+  (a random-graveyard-creature reanimation onto the caster's own battlefield) before `DBCleanup`,
+  a silent bonus effect the card's own Oracle text never mentions ("Tibalt deals seven damage to a
+  creature chosen at random" - nothing about reanimating anything). Now chains straight to
+  `DBCleanup`, so 11-15 only deals damage, matching the documented text. Genuinely shared (custom
+  card scripts load into the global card database, not per-plane) - no plane-scoped alternative
+  exists, per `CLAUDE.md`'s exception clause. Found by comparing against a fix on an external fork
+  (`github.com/tchntm43/forge`, "mods" branch) the user asked to review; confirmed as a real
+  behavioral bug rather than a stylistic diff before applying.
+
 ## New files (won't conflict with an upstream merge, but worth an inventory)
 
 Under `forge-gui-mobile/src/forge/adventure/util/` - upstream doesn't have these paths, so there's

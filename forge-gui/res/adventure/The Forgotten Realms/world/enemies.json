@@ -122627,7 +122627,9 @@
   ],
   "colors": "WUBRG",
   "gamesPerMatch": 3,
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Grub",
@@ -122697,7 +122699,9 @@
   ],
   "colors": "RB",
   "gamesPerMatch": 3,
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Auntie Ool",
@@ -122763,7 +122767,9 @@
     }
   ],
   "colors": "BGR",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Bre",
@@ -122829,7 +122835,9 @@
     }
   ],
   "colors": "WR",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Salacinder and Soot",
@@ -122895,7 +122903,9 @@
     }
   ],
   "colors": "UR",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Eirdu",
@@ -122966,7 +122976,9 @@
   ],
   "colors": "BW",
   "gamesPerMatch": 3,
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Maralen",
@@ -123037,7 +123049,9 @@
     }
   ],
   "colors": "BGU",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Morcant",
@@ -123107,7 +123121,9 @@
   ],
   "colors": "GB",
   "gamesPerMatch": 3,
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Oura",
@@ -123178,7 +123194,9 @@
   ],
   "colors": "UB",
   "gamesPerMatch": 3,
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "The Grand Goatnapper",
@@ -123254,7 +123272,9 @@
     }
   ],
   "colors": "BR",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Thorna and Twigtooth",
@@ -123320,7 +123340,9 @@
     }
   ],
   "colors": "BWR",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Trystan",
@@ -123386,7 +123408,9 @@
     }
   ],
   "colors": "BG",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Istvan",
@@ -123474,7 +123498,9 @@
     }
   ],
   "colors": "B",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Freyalise",
@@ -123543,7 +123569,9 @@
     }
   ],
   "colors": "G",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Sifa Grent",
@@ -123607,7 +123635,9 @@
     }
   ],
   "colors": "BR",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Sivitri",
@@ -123676,7 +123706,9 @@
     }
   ],
   "colors": "UB",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Thomil",
@@ -123740,7 +123772,9 @@
     }
   ],
   "colors": "B",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Venser",
@@ -123819,7 +123853,9 @@
     }
   ],
   "colors": "UW",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Worzel",
@@ -123883,7 +123919,9 @@
     }
   ],
   "colors": "W",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Zo-Zu the Punisher",
@@ -123897,7 +123935,8 @@
   "scale": 0.3,
   "speed": 0,
   "life": 1,
-  "rewards": []
+  "rewards": [],
+  "tier": "Common"
 },
 {
   "name": "Nephilim Epochal",
@@ -123937,7 +123976,9 @@
   ],
   "colors": "WUBRG",
   "gamesPerMatch": 3,
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 3,
+  "tier": "Mythic"
 },
 {
   "name": "Cerise",
@@ -124002,7 +124043,9 @@
     }
   ],
   "colors": "W",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Emiel",
@@ -124067,7 +124110,9 @@
     }
   ],
   "colors": "WG",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Grakk",
@@ -124124,7 +124169,9 @@
     }
   ],
   "colors": "W",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Kwain",
@@ -124189,7 +124236,9 @@
     }
   ],
   "colors": "WU",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Phelia",
@@ -124254,7 +124303,9 @@
     }
   ],
   "colors": "W",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Preston",
@@ -124319,7 +124370,9 @@
     }
   ],
   "colors": "W",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Thurid",
@@ -124417,7 +124470,9 @@
     }
   ],
   "colors": "W",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Autumn Willow (An-Havva)",
@@ -124487,7 +124542,9 @@
     }
   ],
   "colors": "G",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Daughter of Autumn",
@@ -124552,7 +124609,9 @@
     }
   ],
   "colors": "GW",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Feroz",
@@ -124618,7 +124677,9 @@
     }
   ],
   "colors": "WUG",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Greensleeves",
@@ -124688,7 +124749,9 @@
     }
   ],
   "colors": "G",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Joven and Chandler",
@@ -124791,7 +124854,9 @@
     }
   ],
   "colors": "R",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Cynette",
@@ -124856,7 +124921,9 @@
     }
   ],
   "colors": "U",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Grandmother Goby",
@@ -124921,7 +124988,9 @@
     }
   ],
   "colors": "U",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Kitsa",
@@ -124986,7 +125055,9 @@
     }
   ],
   "colors": "U",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Mu Yanling",
@@ -125051,7 +125122,9 @@
     }
   ],
   "colors": "U",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Neerdiv",
@@ -125116,7 +125189,9 @@
     }
   ],
   "colors": "U",
-  "spawnRate": 1
+  "spawnRate": 1,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Rikala",
@@ -125204,7 +125279,9 @@
     }
   ],
   "colors": "UG",
-  "spawnRate": 0
+  "spawnRate": 0,
+  "difficulty": 2,
+  "tier": "Rare"
 },
 {
   "name": "Adriana",
@@ -125218,7 +125295,8 @@
   "scale": 1,
   "speed": 0,
   "life": 1,
-  "rewards": []
+  "rewards": [],
+  "tier": "Common"
 },
 {
   "name": "Ashiok",
@@ -125232,7 +125310,8 @@
   "scale": 1,
   "speed": 0,
   "life": 1,
-  "rewards": []
+  "rewards": [],
+  "tier": "Common"
 },
 {
   "name": "Gwafa Hazid",
@@ -125246,7 +125325,8 @@
   "scale": 1,
   "speed": 0,
   "life": 1,
-  "rewards": []
+  "rewards": [],
+  "tier": "Common"
 },
 {
   "name": "Vadmir",
@@ -125260,7 +125340,8 @@
   "scale": 1,
   "speed": 0,
   "life": 1,
-  "rewards": []
+  "rewards": [],
+  "tier": "Common"
 },
 {
   "name": "Emrakul, the Aeons Torn",

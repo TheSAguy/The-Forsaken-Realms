@@ -18,8 +18,9 @@ OUT_DIR/<GAME_NAME>-<version>.zip.
 
 What it does, in order:
   1. Verify the built jar's version matches BASE_INSTALL's jar version.
-  2. Copy the include-listed root files + launcher shells from BASE_INSTALL,
-     renaming the adventure launcher to the game's name.
+  2. Copy the include-listed root files + launcher shells from BASE_INSTALL
+     (.exe/.cmd for Windows, .command for macOS double-click, .sh for a plain
+     shell), renaming each to the game's name.
   3. Copy BASE_INSTALL/res EXCEPT res/adventure - SKIPPED on a fast-path run
      (see below), since this is by far the biggest, slowest step and its
      content is static between TFR-only rounds.
@@ -174,6 +175,21 @@ def main():
                errors="ignore").read()
     open(os.path.join(game_dir, f"{GAME_NAME}.cmd"), "w", encoding="utf-8",
          newline="\r\n").write(cmd)
+    # macOS/Linux launchers (2026-08-22 fix - a macOS user reported the .cmd "isn't booting,"
+    # correctly: .cmd is a Windows batch file and can never run there. BASE_INSTALL already ships
+    # working cross-platform launchers (forge-adventure.command for macOS double-click,
+    # forge-adventure.sh for a plain shell) that this script simply never copied - Windows was the
+    # only platform actually getting a launcher in the shipped zip. Same copy+rename pattern as
+    # .cmd above; .command/.sh need the executable bit set explicitly (git/zip don't reliably
+    # preserve it, and shutil.copy2 alone doesn't add it if the source lacks it either).
+    for src_name, dst_suffix in ((".command", ".command"), (".sh", ".sh")):
+        src = os.path.join(BASE_INSTALL, f"forge-adventure{src_name}")
+        if not os.path.exists(src):
+            fail(f"forge-adventure{src_name} missing from BASE_INSTALL - expected alongside forge-adventure.cmd")
+        text = open(src, encoding="utf-8", errors="ignore").read()
+        dst = os.path.join(game_dir, f"{GAME_NAME}{dst_suffix}")
+        open(dst, "w", encoding="utf-8", newline="\n").write(text)
+        os.chmod(dst, 0o755)
 
     adv = os.path.join(game_dir, "res", "adventure")
     if full_rebuild:
