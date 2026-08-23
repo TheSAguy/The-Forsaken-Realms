@@ -213,7 +213,29 @@ def main():
     shutil.copy2(built_jar, os.path.join(game_dir, jar_name))
 
     # 6. non-adventure res overlay, derived from git
+    # 2026-08-22 review fix: this list only ever ADDS/refreshes files - a fast-path run (which
+    # skips steps 3/4's full stock-res recopy) had no way to undo a PREVIOUS round's overlay once
+    # that round's repo edit got reverted, so the stale, already-reverted content stayed in
+    # game_dir/res indefinitely on local test builds (release --zip builds were never affected -
+    # those always force full_rebuild, which recopies res from BASE_INSTALL fresh regardless).
+    # Fixed by persisting the overlay list itself; anything in last round's list but not this
+    # round's gets its pristine BASE_INSTALL copy restored before the current list is (re)applied.
+    overlay_manifest = os.path.join(game_dir, "res", ".overlay_manifest.txt")
+    previous_overlay = []
+    if os.path.exists(overlay_manifest):
+        with open(overlay_manifest, encoding="utf-8") as mf:
+            previous_overlay = [line.strip() for line in mf if line.strip()]
+
     overlay = git_overlay_list()
+    for rel in previous_overlay:
+        if rel in overlay:
+            continue
+        base_src = os.path.join(BASE_INSTALL, "res", os.path.relpath(rel, "forge-gui/res"))
+        dst = os.path.join(game_dir, "res", os.path.relpath(rel, "forge-gui/res"))
+        if os.path.exists(base_src):
+            shutil.copy2(base_src, dst)
+            print(f"  overlay reverted (no longer in repo diff): {rel}")
+
     for rel in overlay:
         src = os.path.join(REPO, rel)
         dst = os.path.join(game_dir, "res", os.path.relpath(rel, "forge-gui/res"))
@@ -223,6 +245,8 @@ def main():
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copy2(src, dst)
     print(f"overlaid {len(overlay)} repo res file(s): {overlay}")
+    with open(overlay_manifest, "w", encoding="utf-8") as mf:
+        mf.write("\n".join(overlay))
 
     # 7. docs
     here = os.path.dirname(os.path.abspath(__file__))
@@ -275,7 +299,23 @@ def main():
             for r, _, fs in os.walk(game_dir):
                 for f in fs:
                     p = os.path.join(r, f)
-                    z.write(p, os.path.relpath(p, OUT_DIR))
+                    arcname = os.path.relpath(p, OUT_DIR)
+                    if f.endswith((".command", ".sh")):
+                        # 2026-08-22 review fix: this script only ever runs on the Windows dev box
+                        # (BASE_INSTALL/OUT_DIR above), so os.chmod(0o755) on these two launchers
+                        # is a no-op on NTFS, and a plain z.write() derives its zip entry's Unix
+                        # permission bits from that same no-exec Windows stat - the +x bit never
+                        # makes it into the shipped zip either way. create_system=3 (Unix) tells
+                        # extractors to honor external_attr as a Unix mode; without it macOS/Linux
+                        # unzip tools ignore the permission word entirely regardless of its value.
+                        zi = zipfile.ZipInfo.from_file(p, arcname)
+                        zi.compress_type = zipfile.ZIP_DEFLATED
+                        zi.create_system = 3
+                        zi.external_attr = 0o100755 << 16  # regular file, rwxr-xr-x
+                        with open(p, "rb") as fh:
+                            z.writestr(zi, fh.read())
+                    else:
+                        z.write(p, arcname)
         print("zip done")
 
 

@@ -72,8 +72,9 @@ public class EconomyBuildings {
     // Trader (2026-08-22, user spec): a Financial building offering Wood/Stone trades like
     // Exchange but at worse rates (25% pricier to buy, 25% less on sell - see TRADER_TRADES) and,
     // unlike Bank/Exchange, buildable in an ordinary town, not just the Capitol - meant as an
-    // early/accessible way to convert gold into resources before Exchange is reachable. Upgrading
-    // a Trader into an Exchange at the Capitol is planned but not yet wired - see MOD_CHANGELOG.md.
+    // early/accessible way to convert gold into resources before Exchange is reachable. A Trader
+    // in the Capitol can be upgraded into an Exchange - see openUpgradeToExchangeConfirmDialog()/
+    // upgradeTraderToExchange() below.
     public static final int TRADER = 10;
 
     // Byte-safe map flag (0-6) used only to gate "one economy building per town" declaratively
@@ -1634,8 +1635,8 @@ public class EconomyBuildings {
     }
 
     // Trader (2026-08-22) - same structure as Exchange above (Wood/Stone only, TRADER_TRADES'
-    // worse rates). The planned "Upgrade to Exchange (Capitol only)" row is NOT wired yet - see
-    // MOD_CHANGELOG.md for why this shipped as its own round first.
+    // worse rates), plus an "Upgrade to Exchange (Capitol only)" row - see
+    // refreshTraderDialog()/upgradeTraderToExchange() below.
     public static void openTraderDialog(MapStage stage, int objectId) {
         refreshTraderDialog(stage, objectId);
         stage.showDialog();
@@ -1696,11 +1697,29 @@ public class EconomyBuildings {
         boolean isCapitol = TownRestoration.isCurrentTownCapitol();
         if (isCapitol || !TownRestoration.capitolExists()) {
             int[] exchangeCost = buildCostFor(EXCHANGE);
-            boolean canUpgrade = isCapitol && canAffordCost(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]);
-            String upgradeLabel = isCapitol
-                    ? "Upgrade to Exchange (" + costLabel(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]) + ")"
-                    : "Upgrade to Exchange (Capitol only)";
-            TextraButton upgrade = Controls.newTextButton(upgradeLabel, () -> openUpgradeToExchangeConfirmDialog(stage, objectId));
+            // One-Exchange-per-town guard (2026-08-22 review fix): builtFlag(TRADER) gets cleared
+            // by upgradeTraderToExchange() below (the slot is no longer a Trader), which otherwise
+            // re-opens "build a Trader" in this same Capitol - a second Trader could then ALSO be
+            // upgraded, silently overwriting the first Exchange's objectId mapping (orphaning it -
+            // ShopActor's dispatch would fall through to a default and it'd revert to a plain
+            // shop). Checking builtFlag(EXCHANGE) here closes that regardless of how many Traders
+            // this Capitol ends up with.
+            boolean alreadyHasExchange = stage.checkQuestFlag(builtFlag(EXCHANGE));
+            boolean canUpgrade = isCapitol && !alreadyHasExchange
+                    && canAffordCost(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]);
+            String upgradeLabel = !isCapitol
+                    ? "Upgrade to Exchange (Capitol only)"
+                    : alreadyHasExchange
+                            ? "Upgrade to Exchange (already built)"
+                            : "Upgrade to Exchange (" + costLabel(exchangeCost[0], exchangeCost[1], exchangeCost[2], exchangeCost[3]) + ")";
+            // 2026-08-22 review fix: Button.setDisabled() only changes the greyed-out drawable in
+            // this UI framework - it does NOT stop the click listener from firing (every OTHER
+            // gated button in this file already guards against this, see buildTradeRow() below).
+            // This one didn't, so a tap on the visibly-disabled button opened the confirm dialog
+            // and completed the upgrade anyway - bypassing the Capitol-only gate, or (if
+            // unaffordable) driving gold/wood/stone negative via payCost()'s un-clamped deduction.
+            TextraButton upgrade = Controls.newTextButton(upgradeLabel,
+                    canUpgrade ? () -> openUpgradeToExchangeConfirmDialog(stage, objectId) : () -> {});
             upgrade.setDisabled(!canUpgrade);
             dialog.getButtonTable().add(upgrade).colspan(2).width(240f).row();
         }

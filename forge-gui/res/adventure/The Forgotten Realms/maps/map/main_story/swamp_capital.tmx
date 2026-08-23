@@ -184,7 +184,7 @@
     <property name="signYOffset" type="float" value="-8"/>
    </properties>
   </object>
-  <object id="95" template="../../../../common/maps/obj/arena.tx" x="168.775" y="168.415">
+  <object id="95" template="../../../../common/maps/obj/arena.tx" x="168.775" y="182.415">
    <properties>
     <property name="arena">{
 

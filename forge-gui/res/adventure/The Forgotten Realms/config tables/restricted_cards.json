@@ -1,12 +1,19 @@
 {
     // ============================================================================
-    // The Forgotten Realms - Restricted Cards list. Any card named here is fully
-    // excluded from EVERY card source: the main reward/shop/booster pool AND
-    // sourceDeck-based rewards (e.g. the Alt-Art boss-reward decks) - it will
-    // never be offered anywhere in the game, no matter how many printings of it
-    // a reward deck happens to list. Add card names below (exact spelling) as
-    // more problem cards turn up - no code change needed, just restart the game.
-    // Comments (// lines) are supported by the game's JSON reader - leave them in.
+    // The Forgotten Realms - Restricted Cards list. Any card named here is
+    // excluded from the main reward/shop/booster pool AND sourceDeck-based
+    // rewards (e.g. the Alt-Art boss-reward decks), no matter how many printings
+    // of it a reward deck happens to list. Add card names below (exact spelling)
+    // as more problem cards turn up - no code change needed, just restart the
+    // game. Comments (// lines) are supported by the game's JSON reader - leave
+    // them in.
+    //
+    // NOT covered by this list (2026-08-22 review finding, still open): colored
+    // booster shops (AdventureEventController.generateBoosterByColor() - full
+    // card DB minus edition filtering only), a cardPackShop reward that sets an
+    // explicit editions list, fixed "cardPack" deck rewards, and an explicit
+    // cardName/cardUnion cardName reward. A card added here can still reach the
+    // player through one of those paths - see RewardData.java.
     //
     // Moved here 2026-08-22 (was inline in config.json) so the list has its own
     // easy-to-edit home, same as settings.json - see MOD_CHANGELOG.md.

@@ -1242,6 +1242,11 @@ One round: first Progressive Set Unlocks playtest fixes + a Fable deep-dive revi
   exists, per `CLAUDE.md`'s exception clause. Found by comparing against a fix on an external fork
   (`github.com/tchntm43/forge`, "mods" branch) the user asked to review; confirmed as a real
   behavioral bug rather than a stylistic diff before applying.
+  **Follow-up (2026-08-22, post-v1.00 review):** the fix above only changed the SubAbility chain -
+  `SVar:DBDamage`'s own `SpellDescription$` (the text `RollDiceEffect.makeFormatedDescription()`
+  actually shows the player in the boss-fight roll tooltip) still promised "Then Tibalt returns a
+  random creature card to the battlefield." Removed that clause so the tooltip matches both the
+  Oracle text (already correct) and the real, no-longer-reanimating behavior.
 
 ## New files (won't conflict with an upstream merge, but worth an inventory)
 

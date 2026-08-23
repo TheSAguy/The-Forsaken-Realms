@@ -473,8 +473,9 @@ public class TownRestoration {
                 needMore.setDisabled(true);
                 dialog.getButtonTable().add(needMore).width(240f).row();
             } else {
-                // Multi-resource cost (2026-08-12 user table: 1000 gold + 200 stone + 200 wood
-                // + 50 shards); upgradeToCapitol() pays the same tuple via EconomyBuildings.payCost().
+                // Multi-resource cost (2026-08-12 user table, wood/stone halved 2026-08-21: 1000
+                // gold + 100 stone + 100 wood + 50 shards); upgradeToCapitol() pays the same tuple
+                // via EconomyBuildings.payCost().
                 com.github.tommyettinger.textra.TextraButton upgrade = Controls.newTextButton(
                         "[%90]Upgrade to Capitol (" + EconomyBuildings.costLabel(CAPITOL_COST_GOLD,
                                 CAPITOL_COST_WOOD, CAPITOL_COST_STONE, CAPITOL_COST_SHARDS) + ")", () -> {

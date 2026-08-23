@@ -12686,3 +12686,74 @@ Rebuilt (Java unchanged - `.tmx` content only, so packaging-only, no Maven step)
 **Files touched**: `forge-gui/res/adventure/The Forgotten Realms/maps/map/main_story/
 island_capital.tmx`, `.../mountain_capital.tmx`, `.../plains_capital.tmx`, `.../swamp_capital.tmx`
 (object placement by the user directly in Tiled; loot/enemy data corrected here).
+
+## Forty-fourth round: full post-v1.00 code review, 8 confirmed findings fixed (2026-08-22, REPO-ONLY, not deployed)
+
+User request: review everything changed since the v1.00 public release (`f5d1d5fe932..HEAD`, 13
+commits) for correctness bugs, then fix everything confirmed - repo only, live standalone folder
+untouched per explicit instruction. Ran an 8-dimension parallel review (game engine, economy,
+restricted cards, ante/duel, teleport, UI/config, data files, maps/packaging), each finding
+adversarially re-verified against the actual current code before being reported; 8 confirmed, 1
+refuted as pre-existing (a 38-name dangling itemName gap in `enemies.json`, real but not introduced
+by this range, left unfixed here). After applying all 8 fixes, ran a SEPARATE independent
+verification pass (8 fresh checks, one per fix) plus a real Maven compile - both the belt-and-
+suspenders discipline this session settled on after the Arena regression two rounds ago. The
+verification pass caught a real bug in one of my own fixes (see below), fixed and re-confirmed
+before this round closed.
+
+**Critical - fixed**: `EconomyBuildings.java`'s "Upgrade to Exchange" button called
+`setDisabled()` but its click handler ran unconditionally regardless (this UI framework's
+`Button.setDisabled()` only changes the greyed-out drawable, not click behavior - confirmed by
+decompiling the actual libGDX/textratypist jars this project depends on). A tap on the visibly-
+disabled button could convert a non-Capitol Trader into a full Exchange, or drive gold/wood/stone
+negative on an unaffordable upgrade. Fixed with the same `enabled ? action : () -> {}` guard
+`buildTradeRow()` elsewhere in the same file already uses correctly.
+
+**Major - fixed (3)**:
+- Upgrading a second Trader in the same town to Exchange silently orphaned the first (overwrote
+  the single type->objectId mapping, reverting the paid-for first Exchange to a plain shop). Fixed
+  by gating the upgrade on `stage.checkQuestFlag(builtFlag(EXCHANGE))` - once a town has an
+  Exchange from any source, no further Trader there can be upgraded into a second one.
+- `restricted_cards.json` being emptied, malformed, or deleted (the file's own header invites
+  exactly this hand-editing) left `configData.restrictedCards` null, NPEing reward generation far
+  from the actual misconfiguration instead of degrading gracefully like the catch handler's log
+  line claimed. Fixed with an unconditional null-to-empty-array fallback at the end of `Config`'s
+  constructor, covering all four load-outcome paths (parsed+merged, parsed+empty, malformed+
+  caught, file absent).
+- The macOS-launcher fix from two rounds ago called `os.chmod(0o755)` on `.command`/`.sh`, but
+  this build only ever runs on Windows (NTFS has no exec bit to set), and the `--zip` step's plain
+  `zipfile.write()` derived the same no-exec permission from that same Windows stat - so the
+  shipped release zip never actually carried the executable bit, reproducing the exact "isn't
+  booting" complaint that fix's own commit claimed to resolve. Fixed by writing those two entries
+  via an explicit `ZipInfo` with `create_system=3` (Unix) and `external_attr=0o100755<<16`.
+
+**Minor - fixed (4)**: two stale "not yet wired"/pre-halving-cost comments in
+`EconomyBuildings.java`/`TownRestoration.java` that would have misdirected future debugging of the
+bugs above; `restricted_cards.json`'s header overclaimed "excluded from EVERY card source... never
+offered anywhere" when 4 reward paths (colored boosters, explicit-edition `cardPackShop`, fixed
+`cardPack` decks, explicit `cardName` rewards) bypass it - narrowed the claim and documented the
+real gaps instead; Tibalt's boss-fight roll tooltip (`SpellDescription$` on `SVar:DBDamage`) still
+promised a reanimation the earlier Tibalt fix intentionally removed - text now matches the already-
+correct Oracle text; `build_standalone.py`'s non-adventure res overlay only ever added files, so a
+fast-path local test build couldn't roll back a res-file edit reverted in the repo since the last
+build (release `--zip` builds were never affected - those always force a full rebuild). Fixed with
+a small persisted manifest: anything in last round's overlay list but not this round's gets its
+pristine `BASE_INSTALL` copy restored before the current list is reapplied.
+
+**Self-caught bug in the fix above**: the independent verification pass found the overlay-manifest
+fix's revert step computed `base_src` without the `"res"` path segment `BASE_INSTALL`'s tree
+actually needs (`os.path.join(BASE_INSTALL, os.path.relpath(...))` instead of
+`os.path.join(BASE_INSTALL, "res", os.path.relpath(...))`), so `os.path.exists(base_src)` was
+`False` for every real file and the restore silently never ran - looked complete, did nothing.
+Fixed and re-confirmed directly against the real `BASE_INSTALL` directory on disk.
+
+Also carried forward: the two capital-map `.tmx` header/nextobjectid bumps visible in `git status`
+this round are just Tiled re-stamping its own version string on save (1.10.1 -> 1.12.2) from the
+user's earlier hand-placement work, not new content - re-verified all 4 still have exactly one
+correctly-colored Arena object each before committing.
+
+**Files touched**: `CORE_ENGINE_CHANGES.md`, `forge-gui-mobile/src/forge/adventure/util/
+Config.java`, `.../EconomyBuildings.java`, `.../TownRestoration.java`, `forge-gui/res/adventure/
+The Forgotten Realms/config tables/restricted_cards.json`, `forge-gui/res/adventure/common/
+custom_cards/tibalt_boss_effect.txt`, `standalone-packaging/build_standalone.py`, plus the 4
+capital `.tmx` re-stamps noted above.

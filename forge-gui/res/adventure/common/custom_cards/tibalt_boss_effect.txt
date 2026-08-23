@@ -9,7 +9,7 @@ SVar:TrigRollDice:DB$ RollDice | Sides$ 20 | ResultSubAbilities$ 1-5:DBConjureSm
 SVar:DBConjureSmall:DB$ MakeCard | Conjure$ True | AtRandom$ True | Spellbook$ Chained Brute,Big Spender,Devilish Valet,Gibbering Fiend,Hobblefiend,Footlight Fiend,Forge Devil,Festival Crasher,Hulking Devil,Mayhem Devil,Spiteful Prankster,Vexing Devil,Wildfire Devils | Zone$ Battlefield | SpellDescription$ Conjure a random Devil onto the battlefield.
 SVar:DBRandomLoot:DB$ Draw | Defined$ Player | NumCards$ 3 | SubAbility$ DBDiscard3 | SpellDescription$ Each player draws three cards, then discards three cards at random.
 SVar:DBDiscard3:DB$ Discard | Defined$ Player | Mode$ Random | NumCards$ 3
-SVar:DBDamage:DB$ ChooseCard | AtRandom$ True | Choices$ Creature | SubAbility$ DBDamageBis | SpellDescription$ Tibalt deals seven damage to a creature chosen at random. Then Tibalt returns a random creature card to the battlefield.
+SVar:DBDamage:DB$ ChooseCard | AtRandom$ True | Choices$ Creature | SubAbility$ DBDamageBis | SpellDescription$ Tibalt deals seven damage to a creature chosen at random.
 SVar:DBDamageBis:DB$ DealDamage | NumDmg$ 7 | Defined$ ChosenCard | SubAbility$ DBCleanup
 SVar:DBChangeZone:DB$ ChangeZone | ChangeType$ Creature | ChangeNum$ 1 | GainControl$ True | Hidden$ True | Origin$ Graveyard | AtRandom$ True | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True

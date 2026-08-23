@@ -172,6 +172,15 @@ public class Config {
                 System.err.println("[TFR-RestrictedCards] restricted_cards.json failed to load, none applied: " + e);
             }
         }
+        // Null-safety net (2026-08-22 review fix): before this file existed, every plane's
+        // config.json set restrictedCards inline, so it was never null. Now a plane can end up
+        // with no non-null source at all (restricted_cards.json emptied to "[]", deleted, or the
+        // catch above firing) - without this, RewardData.initializeAllCards()'s
+        // "new HashSet<>(Arrays.asList(configData.restrictedCards))" and the cardPackShop
+        // edition-purge loop both NPE on the very first reward/shop generation, far from this
+        // load site, contradicting the log line above's claim of graceful degradation.
+        if (configData.restrictedCards == null)
+            configData.restrictedCards = new String[0];
     }
 
     private String resPath() {
