@@ -12651,3 +12651,38 @@ copying common's) is required before re-attempting this fix - not yet done.
 **Current state**: Arena is inaccessible again for Island/Mountain/Plains/Swamp (back to the
 original bug), but all 5 capitals are enterable and every other building works normally. Confirmed
 safe, verified, and deployed. Fixing Arena properly for real is still open.
+
+## Forty-third round: Arena fixed for real - user placed the objects, loot data corrected (2026-08-22)
+
+Follow-up investigation into the forty-second round's freeze found the coordinate-mismatch theory
+didn't actually hold: decoded the compressed Ground/Ground2 tile layers directly (base64 + zlib,
+manual GID extraction) and confirmed each capital's "ARENA" signage art sits at the EXACT SAME
+pixel position in TFR's own map as in `common/`'s - so the copied coordinates weren't wrong, and
+the real cause of the freeze is still unconfirmed (ruled out: JSON validity, missing enemy names,
+content-filter exclusion via `config tables/enemies.csv` - zero rows are Include=N in that file -
+and now coordinate mismatch). Was about to ask the user for a forge.log from the actual freeze to
+pin it down for certain rather than guess a third time.
+
+**User resolved the placement question directly**: opened all 5 capitals in Tiled themselves and
+copy-pasted Forest/Green's own (working) Arena object into the other 4, positioning each by eye in
+the actual editor - sidestepping the whole coordinate-safety question this round's investigation
+was stuck on, since a human-placed object in the real map is definitionally positioned safely.
+This left all 4 new objects carrying Green's own enemy pool and reward data (colors: green)
+instead of their own color's.
+
+**Fix**: replaced ONLY each new object's `<property name="arena">` JSON content with that color's
+own correct data (sourced from `common/`'s per-color file, same source used in the reverted forty-
+second round) - the object tag itself (id, x, y, template - everything the user set in Tiled) was
+left completely untouched. `git diff` per file confirms this: one deletion (the pasted single-line
+Green JSON) and one multi-line insertion (the correct color's JSON), nothing else. Also carried
+forward the enemy-name cleanup from the reverted round: Loamcaller removed from Island, Challenger
+1-4 -> 20/21/22 for Mountain, and (new this round, found during re-validation but never previously
+flagged) Assassin/Banshee/Rat Ninja removed from Swamp's pool - none exist in `enemies.json`.
+Verified after: valid XML, valid JSON, zero missing enemy names, and each capital's reward `colors`
+field matches its own color (blue/red/white/black) - not green.
+
+Rebuilt (Java unchanged - `.tmx` content only, so packaging-only, no Maven step) and redeployed.
+
+**Files touched**: `forge-gui/res/adventure/The Forgotten Realms/maps/map/main_story/
+island_capital.tmx`, `.../mountain_capital.tmx`, `.../plains_capital.tmx`, `.../swamp_capital.tmx`
+(object placement by the user directly in Tiled; loot/enemy data corrected here).
