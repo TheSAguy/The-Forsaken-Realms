@@ -843,19 +843,9 @@ public class MapStage extends GameStage {
                         // (Enter Arena/Enter Challenge Arena/Upgrade) is gone; ArenaScene now owns
                         // its own Upgrade + Normal/Challenging toggle buttons instead.
                         addMapActor(obj, new OnCollide(() -> {
-                            // Diagnostic (2026-08-22, user report: "can't access any AI Arenas
-                            // except green" - no exception ever surfaced, so logging the collision
-                            // itself to pin down whether it's firing at all vs. failing silently
-                            // downstream). Remove once root-caused.
-                            String townName = TileMapScene.instance().rootPoint != null
-                                    ? TileMapScene.instance().rootPoint.getDisplayName() : "?";
-                            System.out.println("[TFR-Arena] collision fired: town=" + townName
-                                    + " objectId=" + id + " isDestroyed-gate active=" + TownRestoration.isWastelandTown());
                             String challengeJson = prop.containsKey("arenaChallenge") ? prop.get("arenaChallenge").toString() : null;
                             ArenaScene.instance().enterArenaBuilding(this, id, prop.get("arena").toString(), challengeJson);
-                            System.out.println("[TFR-Arena] enterArenaBuilding() returned normally for " + townName);
                             Forge.switchScene(ArenaScene.instance());
-                            System.out.println("[TFR-Arena] switchScene(ArenaScene) called for " + townName);
                         }, id, this).withRebuiltIcon(() -> EconomyBuildings.getArenaSprite(changes.getBuildingLevel(id)))
                                 // 2026-08-12 cost table: Arena rebuild is 250 gold (vs the plain
                                 // shop default this gate would otherwise charge).

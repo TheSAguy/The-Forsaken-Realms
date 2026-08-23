@@ -12559,3 +12559,67 @@ whether `env.PATH` prepends vs. replaces the whole PATH is undocumented and gett
 break every shell tool call in every future session, or (b) editing the OS-wide user PATH directly,
 because the user's own phrasing ("for ALL Claude sessions") and the tool's location inside `.claude`
 itself both pointed at a Claude-scoped fix rather than a machine-wide one.
+
+## Forty-second round: AI Arena inaccessible bug, root-caused and fixed (2026-08-22)
+
+User report: "I can't access any of the AI Arenas, except for green." Ruled out reputation
+(user's Standings screen showed Neutral with all 5 colors) and, via static analysis, every
+plausible code-level cause: the wasteland/rubble rebuild gate (none of the 5 capitals are tagged
+`BiomeColorless`), corrupted or malformed arena JSON (all 5 parse cleanly), a duplicate/colliding
+Tiled object id, a `deleteMapObject` dialog effect targeting the arena object, and an
+infinite-loop-on-bad-enemy-name theory (Plains' enemy pool is 100% clean and was still reportedly
+broken, ruling out a pool-content explanation). Added temporary `[TFR-Arena]` diagnostic logging
+to the collision path to catch it live - superseded before it was ever needed, once the user
+opened the LIVE STANDALONE BUILD's own copy of `mountain_capital.tmx` directly in Tiled and
+visually confirmed the Arena object itself was absent from the Objects layer (Forest/Green's had
+it, id 71; Mountain didn't).
+
+**Actual root cause**: TFR has its own plane-specific override copies of all 5 capital `.tmx`
+files at `The Forgotten Realms/maps/map/main_story/*_capital.tmx`, separate from and taking
+priority over the shared `common/maps/map/main_story/*_capital.tmx` versions (same "plane file
+first, common as fallback" pattern config.json already uses). A full diff showed TFR's override
+files are near-total stale snapshots of the common/ files (different compressed tile-layer data
+throughout, not just a hand-edited delta) - they were very likely copied in wholesale at some
+earlier point (plane self-containment work, or the upstream Forge 2.0.15 merge) and never
+refreshed since. Forest's override happened to already include the Arena object (id 71); Island,
+Mountain, Plains, and Swamp's overrides did not - Island was missing only the arena object (id
+61); Mountain/Plains/Swamp were each missing a contiguous 3-object run (ids 59-61: entry_left,
+entry_right, arena). Confirmed empirically against the live standalone build too: its packaged
+`mountain_capital.tmx` has the exact same 21-object count and missing-id set as TFR's own
+(pre-fix) override - the packaging process was faithfully copying the correct (already-stale)
+source file, not corrupting anything itself.
+
+**Fix**: extracted the exact missing `<object>` XML (bounded by the shared, present-in-both
+neighboring ids on each side - id 58 before, id 62 after, in every case) from each color's
+current `common/` file and inserted it into the corresponding TFR override at the same position,
+leaving everything else in those files untouched. Verified via full XML parse (not just regex) on
+all 5 overrides afterward - correct object counts, exactly one arena object each, and each
+inserted arena JSON's reward `colors` field matches its own capital's color (blue/red/white/black
+respectively). TFR's overrides use LF line endings (common/'s use CRLF) - the insertion
+normalized to match each file's own existing convention, confirmed byte-clean afterward (zero
+stray CRLF in the patched files). Removed the `[TFR-Arena]` diagnostic logging afterward - no
+longer needed, and left in place it would have been leftover debug noise.
+
+Not yet verified in a live rebuild - same "confirm after packaging" caveat as every repo-only
+round this session. Given these 5 files are the only known TFR-vs-common override drift found so
+far, but the OVERRIDE MECHANISM ITSELF (a plane-specific .tmx silently shadowing a newer common/
+one with no automated staleness check) is real and could affect other files too - flagged to the
+user as worth a broader audit if anything else AI-capital-adjacent turns up looking similarly
+"present but non-functional" later.
+
+Verified before committing that the fix is a pure addition: `git diff` on all 4 patched files
+shows only inserted lines, zero removed or modified ones - the pre-existing Inn, Shop,
+Spellsmith, and Shardtrader objects in each of these 5 capitals (their card pools and
+`commonShopList`/`rareShopList`/`mythicShopList` properties) are untouched.
+
+**Also cleaned up** (found in passing during the JSON-validity check, user asked to fix too):
+Mountain's arena `enemyPool` referenced the old `Challenger 1/2/3/4` naming (doesn't exist in
+`enemies.json` anymore) while every other capital already uses `Challenger 20/21/22` - realigned
+Mountain to match (4 stale entries -> the same 3 current ones every other color uses). Island's
+pool referenced `Loamcaller`, which has no obvious renamed equivalent in the current card/creature
+list - removed rather than guessed at a replacement. Both pools re-validated afterward: zero
+names missing from `enemies.json` in either.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (diagnostic logging
+added then removed, net no-op), `forge-gui/res/adventure/The Forgotten Realms/maps/map/main_story/
+island_capital.tmx`, `.../mountain_capital.tmx`, `.../plains_capital.tmx`, `.../swamp_capital.tmx`.
