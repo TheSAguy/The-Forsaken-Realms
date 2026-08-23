@@ -12623,3 +12623,31 @@ names missing from `enemies.json` in either.
 **Files touched**: `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (diagnostic logging
 added then removed, net no-op), `forge-gui/res/adventure/The Forgotten Realms/maps/map/main_story/
 island_capital.tmx`, `.../mountain_capital.tmx`, `.../plains_capital.tmx`, `.../swamp_capital.tmx`.
+
+## Forty-second round, REVERTED same day: the Arena fix above caused a movement-blocking regression
+
+Rebuilt and deployed the fix above (Maven package + standalone repackage), then the user reported
+it live: entering Island/Mountain/Plains/Swamp's capitals now hard-blocked movement entirely ("bump
+against the capitol and can't move after") - strictly worse than the original bug (which at least
+let the player walk in and use everything except the Arena). Immediately reverted all 4 `.tmx`
+files to their pre-patch state (`git show <fix-commit>^:<path>`, verified via XML parse + object
+count back to 21/21/22/21 with zero arena objects, matching the original bug state exactly) and
+repackaged the live folder again to ship the revert - no Java changed, so this was packaging-only,
+no Maven rebuild needed.
+
+**Working theory, not yet confirmed**: TFR's own capital `.tmx` files carry entirely different
+compressed Ground/Ground2/Walls tile-layer data than `common/`'s current versions (established
+during the original investigation - this wasn't a small hand-edited delta, the whole file diverged).
+The inserted `entry_left`/`entry_right`/arena objects' (x,y) coordinates were copied verbatim from
+`common/`, which assumes `common/`'s OWN tile layout - if TFR's actual (older, different) ground/
+wall geometry doesn't match, those coordinates can land on top of a walkway or the player's own
+entry/spawn point instead of the intended empty space, turning them into an unintended solid
+obstruction. Notably Island's break came from the arena object ALONE (it never got entry_left/
+entry_right - its missing set was always just the one object), so whatever's wrong isn't confined
+to the gate objects specifically. Real position-safety verification (checking where these
+coordinates actually land against TFR's OWN current Ground/Ground2/Walls layers, not just
+copying common's) is required before re-attempting this fix - not yet done.
+
+**Current state**: Arena is inaccessible again for Island/Mountain/Plains/Swamp (back to the
+original bug), but all 5 capitals are enterable and every other building works normally. Confirmed
+safe, verified, and deployed. Fixing Arena properly for real is still open.
