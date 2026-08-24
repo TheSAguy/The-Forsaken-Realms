@@ -137,4 +137,11 @@ public class TuningData {
     public float killDecaySuppressionPerStack = 0.20f;
     public int killDecayMaxStacks = 3;
     public int killDecayRecoveryDaysPerStack = 4;
+
+    // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
+    // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an
+    // exact number, and the closest existing precedent (EconomyBuildings.SHOP_TYPE_REROLL_
+    // SHARD_COST, a shop's card-shop-TYPE re-roll) is likewise a flat, unscaled cost. See
+    // InnScene.rerollEvent().
+    public int innTournamentRerollShardCost = 15;
 }

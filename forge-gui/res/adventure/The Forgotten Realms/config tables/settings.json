@@ -52,7 +52,8 @@
     "anteBuyBackMinMythic": 500,
 
     // Maximum resource pickups (Gold/Wood/Stone/Shards) on the world map at once.
-    "maxResourceSpawns": 30,
+    // Raised 30 -> 50 (2026-08-23 user request).
+    "maxResourceSpawns": 50,
 
     // Card price multipliers: cards cost more in AI-owned towns, less in yours
     // (applied before reputation discounts/markups).
@@ -79,5 +80,10 @@
     // their own file, "config tables/spawn_tier_weighting.json".
     "killDecaySuppressionPerStack": 0.20,
     "killDecayMaxStacks": 3,
-    "killDecayRecoveryDaysPerStack": 4
+    "killDecayRecoveryDaysPerStack": 4,
+
+    // Shard cost to re-roll an Inn Tournament's draft/sealed card pool before entering
+    // (2026-08-24). The new pool is drawn from the same edition-progression-gated set as
+    // the original roll - re-rolling never lets you into editions you haven't unlocked.
+    "innTournamentRerollShardCost": 15
 }

@@ -458,7 +458,7 @@
 			},
 			{
 				"name": "So long as it pays. What do you need?",
-				"text": "I'm new to town, and looking to open a new spell shop. But I need supplies that I had to leave behind. Can you go get them for me from $(poi_1)?",
+				"text": "I'm new to town, and looking to open a new spell shop. But I need supplies that I had to leave behind. Can you go get them for me from $(poi_2)?",
 				"options": [
 					{
 						"name": "\"And the pay?\"",

@@ -1,5 +1,7 @@
 package forge.adventure.stage;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -260,6 +262,19 @@ public class WorldStage extends GameStage implements SaveFileContent {
         this.fastTimeEnabled = fastTimeEnabled;
     }
 
+    // Hold-Z run (user spec 2026-08-23): "Hold Z to run at 1.5x speed on the map. This should
+    // also affect the time." - a held-key check (Gdx.input.isKeyPressed(), the same per-frame
+    // polling API Forge.java/Console.java already use for modifier keys), not an edge-triggered
+    // KeyBinding like ordinary movement input - checked live wherever it's needed rather than
+    // cached, since "held" is inherently a per-frame question. Z is confirmed unbound elsewhere
+    // in adventure mode. Stacks multiplicatively with every other speed source (sprint, road,
+    // territory) and with Fast-Time, matching how every other modifier in this method already
+    // composes - deliberately not a flat replacement for either.
+    public static final float RUN_KEY_SPEED_MULTIPLIER = 1.5f;
+    private static boolean isRunKeyHeld() {
+        return Gdx.input.isKeyPressed(Input.Keys.Z);
+    }
+
     @Override
     protected void onActing(float delta) {
         if (isPaused() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
@@ -270,7 +285,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (player.isMoving() || waitingForTime) {
             World world = WorldSave.getCurrentSave().getWorld();
             int dayBefore = world.getCurrentDay();
-            world.advanceTime(fastTimeEnabled ? delta * fastTimeMultiplier() : delta);
+            float timeDelta = fastTimeEnabled ? delta * fastTimeMultiplier() : delta;
+            if (isRunKeyHeld())
+                timeDelta *= RUN_KEY_SPEED_MULTIPLIER;
+            world.advanceTime(timeDelta);
             int dayAfter = world.getCurrentDay();
             if (dayAfter != dayBefore) {
                 EconomyBuildings.processDaysPassed(dayAfter - dayBefore, dayAfter);
@@ -840,13 +858,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
         int currentBiome = World.highestBiome(world.getBiome((int) player.getX() / world.getTileSize(), (int) player.getY() / world.getTileSize()));
         List<BiomeData> biomeData = WorldSave.getCurrentSave().getWorld().getData().GetBiomes();
         float sprintingMod = currentModifications.containsKey(PlayerModification.Sprint) ? 2 : 1;
+        float runMod = isRunKeyHeld() ? RUN_KEY_SPEED_MULTIPLIER : 1f;
         if (biomeData.size() <= currentBiome) {// "if isOnRoad
-            player.setMoveModifier(1.5f * sprintingMod);
+            player.setMoveModifier(1.5f * sprintingMod * runMod);
             return;
         }
         BiomeData data = biomeData.get(currentBiome);
         if (data == null) return;
-        player.setMoveModifier(1.0f * sprintingMod * territorySpeedModifier(data));
+        player.setMoveModifier(1.0f * sprintingMod * territorySpeedModifier(data) * runMod);
 
         spawnDelay -= delta;
         if (spawnDelay >= 0) return;

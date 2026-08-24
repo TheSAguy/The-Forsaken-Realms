@@ -13174,3 +13174,158 @@ scene/WorldStandingsScene.java` (Reputation dialog + Mod Details paragraph updat
 res/adventure/The Forgotten Realms/config tables/spawn_tier_weighting.json` (new), `.../config
 tables/settings.json` (3 new fields + `dayLengthSeconds` 400->300), `.../config.json` (new flag
 enabled), `.../GUIDE.md` (Reputation section updated).
+
+## Forty-eighth round: Inn Tournament re-roll, hold-Z run speed, drafted-basic-land and equipment-sell economy fixes, quest text bug (2026-08-24, REPO-ONLY, not deployed)
+
+User request, seven items in one batch, explicitly scoped "local repo only for now" - unlike the
+prior round, this one deliberately stops after local compile verification: no live-standalone-
+folder build/deploy, no commit-then-push. Two items were pure questions (answered below, no code
+change); five were implementation asks.
+
+### 1. Inn Tournament re-roll, 15 shards, edition-gating reused rather than reimplemented
+
+`InnScene.java` already had a `replaceLocalEvent(EventFormat, CardBlock)` swap primitive (until
+now only reachable from a debug console command) and a static `localEvent` the scene already
+tracks. The missing piece was how to obtain a *new*, correctly-gated `CardBlock` to swap in.
+`AdventureEventData`'s format->block picker (`pickCardBlockByFormat`, dispatching to
+`pickWeightedCardBlock`/`pickJumpstartCardBlock`) already has `EditionProgression.
+eventAllowedEditionCodes()` gating baked into those two private methods - confirmed by direct
+read, not assumed. Rather than hand-roll a second random-pick path in `InnScene` (risking it
+drifting out of sync with the gating logic over time), `pickCardBlockByFormat` was widened from
+`private static` to `public static` - a one-word, zero-behavior-change visibility change, since
+it's a pure function (format in, gated `CardBlock` out, no side effects beyond an existing
+diagnostic log call) - and `InnScene` now calls it directly. This means the re-roll button can
+never surface an edition the Inn/color combo wouldn't already offer on an ordinary roll, by
+construction, not by a second copy of the same gating check.
+
+New `promptRerollEvent()` in `InnScene.java` mirrors the exact confirm-then-charge shape already
+established by `RewardScene.promptRerollShopType()` (a prior round's Shop Type Re-Roll feature,
+the closest existing "regenerate content, pay shards, swap in new data" precedent in this
+codebase): pick the new block *first*, bail with no charge if the format is Constructed (picker
+returns null), only then call `AdventurePlayer.current().takeShards(cost)`, then
+`replaceLocalEvent()`, then `refreshStatus()`. Gated to `eventStatus == Available` only - once
+Entered/Ready/Started/Completed/Awarded, a deck build or bracket is already committed underneath
+that event, so re-rolling the pool at that point would orphan that progress rather than just
+swap flavor.
+
+Cost is a new `TuningData.innTournamentRerollShardCost = 15` (flat, not difficulty-scaled - the
+user gave an exact number, and the closest precedent, `EconomyBuildings.
+SHOP_TYPE_REROLL_SHARD_COST`, is likewise flat), loaded the same way every other TFR tunable is
+(`config tables/settings.json` override, falls back to the Java default on stock planes). New
+TFR-local `ui/inn.json` and `ui/inn_portrait.json` overrides were created (TFR previously had no
+local override for either, silently inheriting `common/ui/inn.json` - confirmed by absence before
+this round) with one new "Re-roll" button each: landscape at (320, 230, 100x30), tucked into the
+unused gap between the existing "Info" button (200-230) and the bottom edge, clear of
+`playerGold`/`playerShards` at x=420; portrait as a new row at (165, 295, 100x30) in the 70px gap
+between the "Info" button (265-295) and the leave icon (365). Button text shows the live cost via
+`[+Shards]` glyph, not a bare number suffix (this project's own resource-symbol convention).
+
+### 2. Hold Z to run at 1.5x - map movement AND time, together
+
+Already implemented in `WorldStage.java` in an earlier part of this same session's work on this
+batch (before the context compaction that split this round's work across two sittings) - this
+entry documents it for the record and confirms it survived compaction intact (re-verified by
+direct grep of the live file, not assumed from memory). Added `RUN_KEY_SPEED_MULTIPLIER = 1.5f`
+and a private `isRunKeyHeld()` (`Gdx.input.isKeyPressed(Input.Keys.Z)` - the correct "held every
+frame" API, matching `Forge.java`/`Console.java`'s existing modifier-key precedent; Z was
+confirmed unbound elsewhere in adventure mode by checking the full `KeyBinding` enum and every
+`Keys.Z` reference in the repo). Wired into both halves of the same `onActing()` call path in one
+pass: the day-length `timeDelta` calculation gets `*= RUN_KEY_SPEED_MULTIPLIER` alongside the
+existing Speed-Up toggle multiplier, and `handleMonsterSpawn()`'s movement-speed calculation gets
+a `runMod` factor stacked with the existing sprint/territory modifiers. Deliberately scoped to the
+overworld only, matching the user's literal "on the map" - `MapStage.java` has its own separate
+`setMoveModifier()` call for indoor/dungeon maps that this round did not touch.
+
+### 3. Basic lands from Draft/Sealed/Jumpstart Inn-tournament rewards no longer enter inventory
+
+New private `stripBasicLands(Deck)` in `AdventureEventData.java`, using the project's existing
+`PaperCard.isVeryBasicLand()` check (already the established filter used by `AdventurePlayer.
+removeLostCardFromPools()`, `RewardData.rewardsToCards()`, and `EnemySprite`'s loot filtering -
+reused here rather than inventing a second basic-land test). Called on both the main deck and
+sideboard (via `Deck.has(DeckSection.Sideboard)`/`getOrCreate(DeckSection.Sideboard)`) right
+before each of the three format branches (Draft/Sealed/Jumpstart) names its reward deck inside
+`giveRewards()` - deliberately placed here rather than downstream in `RewardScene`/
+`AdventurePlayer`, since those downstream paths are shared with ordinary shop boosters and
+filtering there would have silently stripped basics from every booster in the game, not just Inn
+tournament rewards, which is narrower than what was asked.
+
+### 4. Equipment Sell, flat 25% of value
+
+New "Sell" button in `InventoryScene.java` alongside the existing Dispose/Use/Equip/Back row.
+Price is `data.cost * 0.25f` (flat, no difficulty scaling) - the codebase has no existing
+difficulty-scaled sell-price mechanism for `ItemData` (only cards have one, via `AdventurePlayer.
+cardSellPrice()`); the one existing precedent for "% of an item's cost" on equipment specifically
+is `repair()`'s flat `cost * 0.4f`, so 25% follows that same flat-fraction shape rather than
+introducing a new scaling design nobody asked for. Confirm-then-pay dialog mirrors the same
+`createGenericDialog` shape used elsewhere this round (Inn re-roll) and in prior rounds (Shop
+Type Re-Roll): `showSellConfirm()` builds the dialog, the confirm callback calls `sell()`, which
+credits gold via `Current.player().giveGold(...)` and removes the item via `Current.player().
+removeItem(data)` - the latter already safely handles unequipping first, so no separate
+`isEquipped=false` step was needed. Disabled for quest items (`data.questItem`) and whenever
+nothing sellable is selected (deck/booster selections, or no selection at all), same gating
+pattern the Dispose button already uses. New TFR-local `ui/inventory.json` and `ui/
+inventory_portrait.json` overrides created (TFR had none before, inheriting `common/`) with the
+new button added to the existing button row (landscape, extending the row leftward at the
+established 80px pitch) or as a new row below it (portrait, where the 270px width leaves no room
+to extend horizontally).
+
+### 5. Quest text bug: `$(poi_1)` shown literally instead of a location name - confirmed base-game, fixed anyway
+
+User suspected this was a base-game bug, not TFR-introduced - confirmed correct. Root cause: the
+"new spell shop" quest's offer dialog interpolates stage-id 1's point-of-interest token
+(`$(poi_1)`), but stage 1 is "Leave", an `anyPOI:true` stage that by design never binds a
+`PointOfInterest` and so never has a token to substitute - the dialog should reference stage 2
+("Travel"), which does resolve one. Confirmed byte-identical in `Realm of Legends/world/
+quests.json` at the same line number, meaning this is inherited base-game data, not something
+this mod's own quest edits introduced, exactly as the user guessed. Fixed in both files (`The
+Forgotten Realms` and `Realm of Legends`) since both are actively played; other stock planes'
+copies of the same quest were left untouched, matching this mod's standing rule against editing
+shared/stock content beyond what a plane actively uses.
+
+### 6. Blue dot on the quest list, no code needed - what it actually shows
+
+Traced to `QuestLogScene.java`'s list-header rendering: `quest.isTracked ? "{GRADIENT=CYAN;BLUE;
+1;1}•{ENDGRADIENT}..." : ...` - the blue/cyan gradient dot marks whichever quest is currently
+**tracked** (toggled via the quest log's own Track button, `AdventureQuestController.java` sets
+`isTracked` true on the selected quest and false on all others - only one quest can be tracked at
+a time). `WorldStage.java` reads the same flag to drive the on-map objective marker for that
+quest. It has no relation to the word "Almost" in "(Almost) Open for Business" - that's simply
+the quest's own literal name (confirmed against `quests.json`, a base-game quest name, not
+mod text), which is why it happened to appear next to the dot in the reported screenshot.
+
+### 7. Random map resource spawns raised, 30 -> 50
+
+`config tables/settings.json`'s `maxResourceSpawns` raised from 30 to 50, a purely numeric change
+(the user's first-quoted figure, "40," was corrected against the actual current value before
+changing anything, then the user confirmed 50 vs. the real 30). No code touched - `TuningData.
+maxResourceSpawns` was already wired everywhere it needs to be from an earlier round.
+
+### Validation performed
+
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - failed once on a Checkstyle unused-
+  import violation (`InnScene.java` imported `TuningData` directly but only ever reaches it via
+  `Config.instance().getTuningData()`); import removed, re-ran clean, exit 0.
+- All seven touched/new JSON files (`config tables/settings.json`, both new `ui/inn*.json`
+  overrides, both new `ui/inventory*.json` overrides, and both `world/quests.json` files) parsed
+  successfully with `//` comments stripped, matching this project's established JSON-with-
+  comments convention.
+- Per this round's explicit scope ("local repo only for now"): no `mvn ... package` jar build, no
+  `standalone-packaging/build_standalone.py` run, no live-folder deploy, no push. Deliberately
+  stops after local compile + JSON validation, unlike the prior (Forty-seventh) round.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`
+(`pickCardBlockByFormat` widened to `public static`; new `stripBasicLands()`, called from
+`giveRewards()`'s Draft/Sealed/Jumpstart branches), `forge-gui-mobile/src/forge/adventure/data/
+TuningData.java` (new `innTournamentRerollShardCost` field), `forge-gui-mobile/src/forge/
+adventure/scene/InnScene.java` (new `reroll` button field/wiring, `promptRerollEvent()`,
+`refreshStatus()` extended to gate/label it), `forge-gui-mobile/src/forge/adventure/scene/
+InventoryScene.java` (new `sellButton`/`sellDialog` fields, `showSellConfirm()`/`sellPrice()`/
+`sell()`, `setSelected()` extended in 3 branches), `forge-gui-mobile/src/forge/adventure/stage/
+WorldStage.java` (hold-Z run speed, done earlier this same round before compaction - imports,
+`RUN_KEY_SPEED_MULTIPLIER`, `isRunKeyHeld()`, wired into `onActing()` and
+`handleMonsterSpawn()`); `forge-gui/res/adventure/The Forgotten Realms/config tables/
+settings.json` (`maxResourceSpawns` 30->50, new `innTournamentRerollShardCost` field), `.../ui/
+inn.json` (new), `.../ui/inn_portrait.json` (new), `.../ui/inventory.json` (new), `.../ui/
+inventory_portrait.json` (new), `.../world/quests.json` (`$(poi_1)` -> `$(poi_2)` fix); `forge-
+gui/res/adventure/Realm of Legends/world/quests.json` (same fix, confirmed inherited base-game
+bug).

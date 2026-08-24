@@ -170,7 +170,12 @@ public class AdventureEventData implements Serializable {
         return draft;
     }
 
-    private static CardBlock pickCardBlockByFormat(AdventureEventController.EventFormat format) {
+    // Widened from private (2026-08-24, Inn Tournament Re-roll, user spec: "let the player re-roll
+    // the tournament draft set... keep the sets gated to each Inn/color"). InnScene.rerollEvent()
+    // calls this directly so the re-roll draws from the exact same EditionProgression-gated pool
+    // as the original roll (the gating lives inside pickWeightedCardBlock/pickJumpstartCardBlock
+    // below, not duplicated in InnScene) - no other behavior change, still a pure pick.
+    public static CardBlock pickCardBlockByFormat(AdventureEventController.EventFormat format) {
         return switch (format) {
             case Draft, Sealed -> pickWeightedCardBlock(format.toString());
             case Jumpstart -> pickJumpstartCardBlock();
@@ -771,6 +776,23 @@ public class AdventureEventData implements Serializable {
 
     public Map<Integer, List<AdventureEventMatch>> matches = new HashMap<>();
 
+    // Mod addition (user spec 2026-08-23): basic lands drafted/opened in an Inn tournament
+    // (Draft/Sealed/Jumpstart) shouldn't clutter the player's permanent card collection - they're
+    // effectively free/unlimited everywhere else. Stripped here, before the deck is wrapped into
+    // a "cardPack" reward, since this is the last point the tournament's own Deck is still
+    // distinct from the shared RewardScene/AdventurePlayer pipeline that ordinary shop boosters
+    // also flow through (stripping downstream would affect every booster in the game, not just
+    // tournament rewards). Reuses PaperCard.isVeryBasicLand(), the same check this project's own
+    // AdventurePlayer.removeLostCardFromPools()/RewardData.rewardsToCards()/EnemySprite loot
+    // filtering already use elsewhere - not a new concept.
+    private static void stripBasicLands(Deck deck) {
+        if (deck == null)
+            return;
+        deck.getMain().removeIf(forge.item.PaperCard::isVeryBasicLand);
+        if (deck.has(DeckSection.Sideboard))
+            deck.getOrCreate(DeckSection.Sideboard).removeIf(forge.item.PaperCard::isVeryBasicLand);
+    }
+
     public void giveRewards() {
         int wins = matchesWon;
         Array<Reward> ret = new Array<>();
@@ -782,6 +804,7 @@ public class AdventureEventData implements Serializable {
             rewards[3] = new AdventureEventReward();
             rewards[3].minWins = 3;
             rewards[3].maxWins = 3;
+            stripBasicLands(rewardDeck);
             rewardDeck.setName("Drafted Deck");
             rewardDeck.setComment("Prize for placing 1st overall in draft event");
             rewards[3].cardRewards = new Deck[]{rewardDeck};
@@ -791,6 +814,7 @@ public class AdventureEventData implements Serializable {
             rewards[3] = new AdventureEventReward();
             rewards[3].minWins = 3;
             rewards[3].maxWins = 3;
+            stripBasicLands(rewardDeck);
             rewardDeck.setName("Sealed Card Pool");
             rewardDeck.setComment("Prize for placing 1st overall in sealed event");
             rewards[3].cardRewards = new Deck[]{rewardDeck};
@@ -800,6 +824,7 @@ public class AdventureEventData implements Serializable {
             rewards[3] = new AdventureEventReward();
             rewards[3].minWins = 0;
             rewards[3].maxWins = 3;
+            stripBasicLands(registeredDeck);
             registeredDeck.setName("Jumpstart Event Packs");
             rewards[3].cardRewards = new Deck[]{registeredDeck};
             rewards[3].isNoSell = true;

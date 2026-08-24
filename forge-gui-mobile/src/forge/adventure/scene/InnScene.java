@@ -11,6 +11,7 @@ import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.util.AdventureEventController;
 import forge.adventure.util.ColorReputation;
+import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
 import forge.adventure.util.TownRestoration;
@@ -45,7 +46,7 @@ public class InnScene extends UIScene {
     }
 
 
-    TextraButton tempHitPointCost, sell, leave, event;
+    TextraButton tempHitPointCost, sell, leave, event, reroll;
     Image healIcon, sellIcon, leaveIcon;
     private TextraLabel playerGold,playerShards,eventDescription;
 
@@ -69,6 +70,9 @@ public class InnScene extends UIScene {
         eventDescription = ui.findActor("eventDescription");
 
         ui.onButtonPress("event", InnScene.this::startEvent);
+
+        reroll = ui.findActor("reroll");
+        ui.onButtonPress("reroll", InnScene.this::promptRerollEvent);
     }
 
 
@@ -149,9 +153,15 @@ public class InnScene extends UIScene {
         if (localEvent == null){
             eventDescription.setText("[GREY]No events at this time");
             event.setDisabled(true);
+            reroll.setDisabled(true);
         }
         else{
             event.setDisabled(false);
+            // Re-roll (2026-08-24 user spec) only makes sense before the player has entered -
+            // once Entered/Ready/Started/Completed/Awarded, the deck build or bracket is already
+            // committed, so re-rolling the pool underneath it would orphan that progress.
+            reroll.setDisabled(localEvent.eventStatus != AdventureEventController.EventStatus.Available);
+            reroll.setText("[%80]Re-roll (" + Config.instance().getTuningData().innTournamentRerollShardCost + " [+Shards])");
             switch (localEvent.eventStatus){
                 case Available:
                     eventDescription.setText(localEvent.format.toString() + " available");
@@ -174,6 +184,7 @@ public class InnScene extends UIScene {
                 case Abandoned:
                     eventDescription.setText(localEvent.format.toString() + " [RED]abandoned");
                     event.setDisabled(true);
+                    reroll.setDisabled(true);
                     break;
             }
         }
@@ -196,6 +207,35 @@ public class InnScene extends UIScene {
         localEvent = controller.createEvent(localPointOfInterestId);
         if(localEvent != null)
             controller.initializeEvent(localEvent, localPointOfInterestId, localObjectId, changes);
+    }
+
+    // Inn Tournament Re-roll (2026-08-24, user spec: "let the player be able to re-roll the
+    // tournament draft set. for 15 gems. Remember to keep the sets gated to each Inn/color
+    // though. Only re-roll from the pool they are allowed."). Draws the replacement CardBlock via
+    // AdventureEventData.pickCardBlockByFormat() - the exact same EditionProgression-gated picker
+    // the original roll used - so the re-roll can never surface an edition this Inn/color combo
+    // wouldn't already offer. New block is picked BEFORE charging shards, mirroring RewardScene's
+    // promptRerollShopType(): if the picker somehow returns null (or the same block - acceptable,
+    // it's still a real fresh roll), the swap still proceeds, but a charge only ever happens once
+    // a real event exists to swap into.
+    private void promptRerollEvent() {
+        if (localEvent == null || localEvent.eventStatus != AdventureEventController.EventStatus.Available)
+            return;
+        int cost = Config.instance().getTuningData().innTournamentRerollShardCost;
+        if (AdventurePlayer.current().getShards() < cost)
+            return;
+        showDialog(createGenericDialog("", "Re-roll this Inn's tournament for " + cost
+                        + " [+Shards]?\nPicks a new random card pool from the same allowed editions.",
+                Forge.getLocalizer().getMessage("lblYes"), Forge.getLocalizer().getMessage("lblNo"), () -> {
+                    removeDialog();
+                    AdventureEventController.EventFormat format = localEvent.format;
+                    CardBlock newBlock = AdventureEventData.pickCardBlockByFormat(format);
+                    if (newBlock == null)
+                        return; // no legal pool to draw from - no charge, no change
+                    AdventurePlayer.current().takeShards(cost);
+                    replaceLocalEvent(format, newBlock);
+                    refreshStatus();
+                }, this::removeDialog));
     }
 
     public static void replaceLocalEvent(AdventureEventController.EventFormat format, CardBlock cardBlock) {

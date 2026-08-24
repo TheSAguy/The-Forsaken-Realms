@@ -39,8 +39,15 @@ public class InventoryScene extends UIScene {
     Button selected;
     Button deleteButton;
     TextraButton repairButton;
+    // Sell equipment (user spec 2026-08-23): 25% of ItemData.cost, same "% of the purchase-price
+    // field" idea InventoryScene already uses for repair (initialCost = data.cost * 0.4f, see
+    // repair() below) - no equipment-specific sellFactor exists anywhere in this codebase to
+    // scale by instead (cards have one, AdventurePlayer.cardSellPrice(), but it's never applied
+    // to ItemData), so a flat 25% matches the one precedent that does exist rather than inventing
+    // a new difficulty-scaling rule.
+    TextraButton sellButton;
     Texture equipOverlay, unusableOverlay;
-    Dialog useDialog, deleteDialog;
+    Dialog useDialog, deleteDialog, sellDialog;
     int columns = 0;
     private String selectedSlot = null;
     private NinePatchDrawable slotBorderDrawable = null;
@@ -87,10 +94,12 @@ public class InventoryScene extends UIScene {
         ui.onButtonPress("delete", this::showConfirm);
         ui.onButtonPress("equip", this::equip);
         ui.onButtonPress("use", this::use);
+        ui.onButtonPress("sell", this::showSellConfirm);
         equipButton = ui.findActor("equip");
         useButton = ui.findActor("use");
         useButton.setDisabled(true);
         deleteButton = ui.findActor("delete");
+        sellButton = ui.findActor("sell");
         itemDescription = ui.findActor("item_description");
         itemDescription.setAlignment(Align.topLeft);
         itemDescription.setWrap(true);
@@ -173,6 +182,29 @@ public class InventoryScene extends UIScene {
         showDialog(deleteDialog);
     }
 
+    // Sell equipment (2026-08-23) - same confirm-dialog shape as showConfirm()/delete() above,
+    // rebuilt fresh each time (not cached like deleteDialog) since the price text changes per
+    // selected item.
+    private void showSellConfirm() {
+        if (selected == null || itemLocation.get(selected) == null)
+            return;
+        ItemData data = itemLocation.get(selected).getRight();
+        if (data == null || data.questItem)
+            return;
+        final int price = sellPrice(data);
+        sellDialog = createGenericDialog("", "Sell " + data.name + " for " + price + "[+GoldCoin]?",
+            Forge.getLocalizer().getMessage("lblYes"),
+            Forge.getLocalizer().getMessage("lblNo"), () -> {
+                this.sell();
+                removeDialog();
+            }, this::removeDialog);
+        showDialog(sellDialog);
+    }
+
+    private static int sellPrice(ItemData data) {
+        return (int) (data.cost * 0.25f);
+    }
+
     private void repair() {
         if (selected == null)
             return;
@@ -240,6 +272,23 @@ public class InventoryScene extends UIScene {
         }
         updateInventory();
 
+    }
+
+    // Sell equipment (2026-08-23 user spec): 25% of ItemData.cost, gold-granted then removed the
+    // same way delete() removes it - Current.player().removeItem() already detects and clears an
+    // equipped slot on its own (AdventurePlayer.removeItem()), so there's no separate unequip
+    // step needed here beyond what delete() already relies on.
+    public void sell() {
+        if (selected == null)
+            return;
+        if (itemLocation.get(selected) == null)
+            return;
+        ItemData data = itemLocation.get(selected).getRight();
+        if (data != null && !data.questItem) {
+            Current.player().giveGold(sellPrice(data));
+            Current.player().removeItem(data);
+        }
+        updateInventory();
     }
 
     public void equip() {
@@ -330,6 +379,7 @@ public class InventoryScene extends UIScene {
             deleteButton.setDisabled(true);
             equipButton.setDisabled(true);
             useButton.setDisabled(true);
+            sellButton.setDisabled(true);
             repairButton.setVisible(false);
             for (Button button : inventoryButtons) {
                 button.setChecked(false);
@@ -341,6 +391,9 @@ public class InventoryScene extends UIScene {
             if (data == null) return;
 
             deleteButton.setDisabled(data.questItem);
+            sellButton.setDisabled(data.questItem);
+            sellButton.setText("Sell " + sellPrice(data) + "[+GoldCoin]");
+            sellButton.layout();
 
             boolean isInPoi = MapStage.getInstance().isInMap();
             useButton.setDisabled(!(isInPoi && data.usableInPoi || !isInPoi && data.usableOnWorldMap));
@@ -380,6 +433,7 @@ public class InventoryScene extends UIScene {
             useButton.setText("Open");
             useButton.layout();
             equipButton.setDisabled(true);
+            sellButton.setDisabled(true);
             repairButton.setVisible(false);
 
             itemDescription.setText(data.getName() + "\n[%98]" + (data.getComment() == null?"":data.getComment()+" - ") + data.getAllCardsInASinglePool(true, true).countAll() + " cards");
