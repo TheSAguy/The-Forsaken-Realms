@@ -104,6 +104,20 @@ public class DialogData implements Serializable {
         // couldn't distinguish which of the 4 call sites actually fired).
         public String refreshShopRewardsTrigger = null;
 
+        // Generic dungeon-clear trigger (mod addition, 2026-08-23): manually fires the same
+        // despawn-on-clear treatment DungeonRotation.onDungeonClear() already gives an ordinary
+        // combat win (see AdventureQuestController.updateQuestsWin(), which only calls it from a
+        // tracked "defeated the last enemy" event). Needed for any dungeon whose "clear" is
+        // resolved through dialogue/quest actions instead of combat - e.g. a riddle dungeon whose
+        // correct final answer just deletes its own map object - since that path never generates
+        // the win event the despawn hook normally rides on. Deliberately generic (not scoped to
+        // one dungeon) so any future non-combat "clear" can reuse it. Safe to fire while still
+        // standing inside the dungeon: onDungeonClear() only touches the POI's World-level
+        // active/rotation bookkeeping, not the currently-loaded MapStage. No-op via
+        // onDungeonClear's own gating for non-rotatable POIs, story targets, dungeon-rotation-
+        // disabled planes, etc. - same rules as an ordinary combat clear.
+        public boolean triggerDungeonClear = false;
+
         public ActionData(){}
 
         public ActionData(ActionData other){
@@ -139,6 +153,7 @@ public class DialogData implements Serializable {
             POIReference = other.POIReference;
             runCommand = other.runCommand;
             refreshShopRewardsTrigger = other.refreshShopRewardsTrigger;
+            triggerDungeonClear = other.triggerDungeonClear;
         }
     }
 

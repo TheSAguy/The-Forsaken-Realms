@@ -5,8 +5,10 @@
     // Deleting this file resets everything to the built-in defaults.
     // ============================================================================
 
-    // Real-world seconds per in-game day (at normal 1x speed).
-    "dayLengthSeconds": 400.0,
+    // Real-world seconds per in-game day (at normal 1x speed). Lowered 400 -> 300 (2026-08-23
+    // user request) - a shorter real-world day means the same in-game week/day milestones (the
+    // weighted spawn tier system's week brackets included) arrive faster in wall-clock time.
+    "dayLengthSeconds": 300.0,
 
     // Territory growth: how fast the player's Capitol claims land (tiles per day).
     "capitolExpansionTilesPerDay": 1,
@@ -68,5 +70,14 @@
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this
     // value, so a tiny supplemental set can't become a 1-2 card unlock.
-    "researchThresholdFraction": 0.10
+    "researchThresholdFraction": 0.10,
+
+    // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23). One kill adds one
+    // suppression stack; effective multiplier is (1-killDecaySuppressionPerStack)^stacks. Stacks
+    // cap at killDecayMaxStacks. One stack decays away every killDecayRecoveryDaysPerStack days
+    // without a further kill on that same enemy. The week-progression/territory tables live in
+    // their own file, "config tables/spawn_tier_weighting.json".
+    "killDecaySuppressionPerStack": 0.20,
+    "killDecayMaxStacks": 3,
+    "killDecayRecoveryDaysPerStack": 4
 }

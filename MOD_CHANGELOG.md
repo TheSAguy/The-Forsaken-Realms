@@ -12757,3 +12757,420 @@ Config.java`, `.../EconomyBuildings.java`, `.../TownRestoration.java`, `forge-gu
 The Forgotten Realms/config tables/restricted_cards.json`, `forge-gui/res/adventure/common/
 custom_cards/tibalt_boss_effect.txt`, `standalone-packaging/build_standalone.py`, plus the 4
 capital `.tmx` re-stamps noted above.
+
+## Forty-fifth round: New Game+ Challenge Coin duplication fixed, generic dungeon-clear trigger added (2026-08-23, REPO-ONLY, not deployed)
+
+Two playtester-facing bugs from live feedback, both root-caused before fixing rather than
+patched on symptom alone.
+
+**New Game+ duplicate starting Challenge Coins - root-caused and fixed.** User report: doing
+New Game+ left them with exactly double the starting "coin" items (screenshot showed 10 items -
+6 Bronze/2 mid-tier/2 Silver Challenge Coins - where 5 is correct). Traced the actual grant:
+quest 28 ("Entering The Forgotten Realms")'s "Skip tutorial - just get me to the game" prologue
+option grants a Colorless rune + 3x Bronze/1x/1x Silver Challenge Coin and sets a
+`freeChallengeCoins` character flag - but, unlike every OTHER place in this codebase that grants
+the same coins (the Spawn map's own wizard NPC in `spawn.tmx`, and even an unrelated Innistrad
+inn NPC), this specific option never checked whether the flag was already set before granting
+again. `SaveLoadScene.java`'s `NewGamePlus` flow force-restarts quest 28 every time
+(`addQuest("28", true)`) without clearing the player's existing inventory first (by design - NG+
+is meant to carry progress forward), so picking "Skip tutorial" a second time on a NG+ replay - a
+very natural choice, since the player has already seen the full text once - re-granted the whole
+bundle on top of what was already there. **Fix**: added the same
+`{"checkCharacterFlag": "freeChallengeCoins", "not": true}` condition the other three grant sites
+already use, to `world/quests.json`'s quest 28 "Skip tutorial" option. Picking it a second time
+still lets you skip, just without re-granting. No Java changed - pure data fix.
+
+**Dungeons "cleared" via dialogue instead of combat never triggered despawn-on-clear - real gap,
+now a generic fix.** User: completed the Riddles Lair sphinx encounter (Sphinx's Sanctum, all 6
+riddles), got the reward, left - and the now-empty dungeon didn't disappear from the map, even
+though dungeon-clear despawn is an existing, deliberately-built feature (nineteenth round,
+2026-08-18, built for this exact "empty dungeon should make room for a new one" complaint).
+Root cause: `DungeonRotation.onDungeonClear()` is only ever called from
+`AdventureQuestController.updateQuestsWin(EnemySprite defeated, ArrayList<EnemySprite> enemies)`
+- i.e., only from an actual combat-win event. The sphinx riddle resolves entirely through a quest
+dialogue action (`deleteMapObject` on the sphinx object directly, `advanceQuestFlag`) - no enemy
+is ever defeated in combat, so the win-event pipeline the despawn hook rides on never fires. This
+is a narrow but real pattern gap: any encounter resolved via dialogue/quest actions rather than
+defeating an enemy silently never gets the same despawn treatment a combat win gets, even when
+the design intent clearly covers it.
+
+**Fix, built generic per user request ("other quests might need it later")**, not scoped to this
+one dungeon:
+- New `DialogData.ActionData.triggerDungeonClear` (boolean, default false) - manually fires
+  `DungeonRotation.onDungeonClear(TileMapScene.instance().rootPoint)` when a quest action sets it.
+  Same file/pattern as the existing `runCommand` field's own precedent (added 2026-08-11
+  specifically to stay "generic rather than a single-purpose" mechanism instead of a narrow
+  one-off).
+- `MapDialog.java` dispatches it alongside the existing `deleteMapObject`/`activateMapObject`
+  handling (same package as `DungeonRotation`, no new import needed).
+- Wired into `riddles_lair.tmx`'s final correct answer (Krosan Cloudscraper), alongside the
+  existing `deleteMapObject`/`advanceQuestFlag`/`grantRewards` actions.
+- Safe to fire while still standing inside the dungeon (verified by reading `onDungeonClear()`/
+  `hidePoi()`): it only touches the POI's World-level active/rotation bookkeeping
+  (`poi.setActive(false)`, respawn-day maps, `refreshWorldMapMarkers()`), never the currently-
+  loaded `MapStage` the player is walking around in - no risk of the ground disappearing under
+  them mid-dialogue.
+- Checked Ancient Diamond Mine, the other file sharing the sphinx's opening flavor text - it has
+  no `deleteMapObject`/`advanceQuestFlag` at all, so it's a simpler, unrelated use of the same
+  text, not a second instance of this gap. Not touched.
+
+Both fixes compiled clean (`mvn -pl forge-gui-mobile -am compile -DskipTests -o`, exit 0) and
+verified as well-formed JSON/XML after editing. Repo-only per standing session pattern - live
+standalone folder untouched, nothing packaged or pushed.
+
+**Files touched**: `forge-gui/res/adventure/The Forgotten Realms/world/quests.json`,
+`forge-gui-mobile/src/forge/adventure/data/DialogData.java`,
+`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`,
+`forge-gui/res/adventure/The Forgotten Realms/maps/map/lair/riddles_lair.tmx`.
+
+## Forty-sixth round: full enemy-roster tier recompute - one consistent method for all 1,520 enemies, replacing a three-way patchwork (2026-08-23, REPO-ONLY, not deployed)
+
+User request, following directly from a playtest-feedback investigation this same session: three
+"Common"/Apprentice-tier enemies (Cloaker, Hulking Brute, Recruiter Sliver) were found wired to
+fixed stock decks containing individually powerful cards (Hypnotic Specter, Control Magic, Mana
+Drain among them) never power-reviewed against their assigned tier. Investigating *why* surfaced
+that this project's tier data was never one consistent thing to begin with - a three-way
+patchwork of (a) ~453 pre-2026-08-10 hand-authored values nobody ever checked against real card
+content, (b) ~1,016 values computed once by a since-deleted throwaway tool
+(`forge.lda.DeckRarityLookup`, 2026-08-10) using a deck-rarity-average formula, and (c) 43 more
+backfilled via a totally different life-value bucketing (thirty-seventh round, 2026-08-22). User's
+ask: recompute literally everyone under one method, discarding every pre-existing value, "just to
+confirm they are all done" - and document it in detail.
+
+### Rebuilding the analysis tool
+
+The original tool was genuinely gone (throwaway, deleted after use per its own round's notes, and
+never separately committed to git - confirmed via `git log --all --diff-filter=A` across the
+whole repo history, zero hits). Rebuilt as a new `forge.lda.DeckRarityLookup` in the same
+`forge-lda` module, from the original round's own detailed prose spec (exact weighting formula,
+bootstrap sequence, basic-land exclusion) rather than guessed from scratch - and extended in one
+real way the original never covered: it also records each deck's single highest-weight non-land
+card (name + rarity), not just the average, to support investigating outlier cards directly
+(see "the outlier-bump idea" below for why this ended up informational only, not applied).
+
+**Weighting, unchanged from the original**: Common=1, Uncommon=2, Rare=4, Mythic=8 per card,
+basic lands excluded from both the weighted sum and the card-count denominator. Card rarity
+resolved via `StaticData.instance().getCommonCards().getCard(name).getRarity()`, matching the
+original exactly (canonical printing by name, not the specific printing referenced in the deck
+line) for methodological consistency with the 2026-08-10 baseline.
+
+**New this round: procedural `GeneratedDeckData` templates are now covered at all.** 66 of the
+1,594 unique deck paths referenced across the roster turned out to be `.json` template files
+(e.g. `common/decks/standard/cloaker`'s neighbor `construct.json`: `{"tribe":"Construct",
+"rares":0.1, ...}`), not fixed `.dck` decklists - a mechanic the original tool had no way to
+handle (it only ever saw fixed decks) and simply never covered, silently. Read
+`CardUtil.generateRewards()` directly to get the real generation split right rather than guess:
+`(1 - rares)` fraction draws from a combined {Uncommon, Common} pool, `rares` fraction from a
+combined {Rare, Mythic Rare} pool - neither sub-pool's internal split is specified by the
+template itself. Approximated (flagged explicitly as an approximation, not an exact computation):
+75%/25% Common/Uncommon within the first pool, and - reusing this project's own already-
+established convention rather than inventing a new ratio - the same 90%/10% Rare/Mythic split
+the "Boss drop odds corrected: 90% Rare / 10% Mythic" round already uses. Cross-check: this
+formula gives `blackwizard_easy.json` (`rares:0.1`, the Apprentice-tier template) a score of
+1.565 - comfortably in the weakest bucket, exactly where the hand-authored Apprentice tier it
+belongs to should land. All 66 templates now score; 0 of 1,594 unique deck paths are uncovered.
+
+**Per-enemy score**: an enemy with multiple deck variants (`deck: [...]` with more than one
+entry - `getEnemyDeckNumber()` picks one deterministically per player+enemy, so any variant could
+be the one actually encountered) gets the mean of its variants' scores, not just one. Bucketed
+using the SAME thresholds the original round validated against its own computed distribution
+(`<2.0` Common / `2.0-3.0` Uncommon / `3.0-4.5` Rare / `>=4.5` Mythic) - not re-derived, because
+this round's own computed distribution (mean 2.997, median 3.032) landed almost exactly on top of
+the original's (mean 3.01) despite covering a larger, current roster with an extended tool -
+strong evidence the methodology behaves consistently, so reusing the already-validated cutoffs
+rather than re-deriving new ones from scratch was the more defensible call.
+
+### The outlier-bump idea - investigated, and deliberately NOT implemented
+
+The plan going into this round (per the prior discussion) was a hybrid: deck-rarity average PLUS
+a bump for decks whose average undersells a single genuinely powerful card. Built the data to
+support it (every deck's max-weight card is recorded), then checked it against real numbers
+before wiring up a bump rule - and the check failed the idea, not the data:
+
+**Cloaker's outlier card is confirmed real** - Hypnotic Specter, Rare, exactly matching the
+playtest finding this round is following up on. But checking the SAME outlier signal against the
+already-validated Apprentice/Adept/Master wizard ladder (the one piece of tier data everyone
+agrees is correctly ordered) showed every single wizard deck checked - including every Apprentice
+(weakest) tier one - contains at least one Rare or Mythic card somewhere among its own variants
+(one Apprentice Black Wizard variant literally carries Tevesh Szat, Doom of Fools, a Mythic, at a
+higher raw average than Cloaker's). That's just normal constructed deckbuilding, not a bug -
+real precons almost always build around at least one strong card regardless of overall power
+level. A rule like "contains a Rare/Mythic -> bump" would have incorrectly promoted large parts
+of the wizard ladder right alongside fixing the 3 known cases. Tried narrowing it further
+(single-deck-only, i.e. no other variant to average against, undiluted Mythic specifically, low
+average) - 30 enemies would qualify, but none of the 3 original problem decks are even Mythic-
+outliers (all three are Rare, not Mythic), so a narrower rule wouldn't have caught the motivating
+cases either, while still resting on an unproven judgment call for the other 30. No version of
+this idea survived contact with the real data, so no outlier-bump logic was added. **The max-
+weight/outlier-card fields are still recorded and saved** (`mythic_outlier_candidates.json` in
+this round's own working files - not committed, listed as a candidate set for a future manual
+look, not an automatic tier change) as useful diagnostic context, just not used to move any tier.
+
+### What actually fixed the 3 known cases
+
+Pure per-deck averaging, computed for real instead of never-computed/inherited, already moved 2
+of 3: Cloaker 2.25 (-> Uncommon) and Recruiter Sliver 2.222 (-> Uncommon) both cross the 2.0
+line on their own real card content, no special-casing needed. **Hulking Brute (1.694) does not**
+- it stays bucketed Common even under a full, real recompute, because its one Rare card
+(Necroskitter) is diluted enough by an otherwise-ordinary 36-card spell package that the honest
+average still reads as weak. Reported here rather than silently left as "fixed" - this is the
+real ceiling of a rarity-only methodology the earlier playtest-feedback discussion already
+flagged as a risk: some genuinely-efficient decks just won't be caught by rarity data alone, and
+this round didn't invent a way around that.
+
+### Toolchain note - classpath assembly, exact versions this time (for the next one-off tool)
+
+`mvn dependency:build-classpath` is still unreliable standalone here, consistent with every prior
+round's note - stuck with the documented manual-glob-plus-`@argfile` approach, but hit three new,
+specific failure modes worth recording exactly since they cost real time to diagnose:
+- **`find` under Git Bash emits POSIX-style paths (`/c/Users/...`)** - the native Windows `java`
+  launcher can't resolve these as real files, so jars picked up this way are silently invisible to
+  the classloader (while reactor `target/classes` dirs specified in native `C:/...` form still
+  resolved fine, which is what made this confusing at first - only jar-sourced classes failed).
+  Fix: build the classpath glob starting from a `C:/...`-form root, not `/c/...`.
+- **A giant inline `-cp "..."` string blows Windows' command-line length limit** even under Git
+  Bash (`Argument list too long`) once the classpath crosses a few hundred entries. Java's own
+  `@argfile` mechanism (`java @cp_argfile.txt forge.lda.MyTool args...`) is the actual fix, not
+  just a nice-to-have - the file's contents are read directly by the JVM launcher, bypassing the
+  OS argv limit entirely, unlike shell `eval`-based inlining which still constructs one giant
+  literal command line under the hood.
+- **`com.google.collections:google-collections:1.0`** (the pre-rename Guava predecessor) ships
+  its own `com.google.common.collect.Maps`, alphabetically sorts before `com.google.guava` in a
+  naive `find` traversal, and silently shadows the real Guava class the compiled code actually
+  needs - producing a `NoSuchMethodError` deep in `ForgeConstants.<clinit>` that has nothing
+  obviously to do with the real cause. Confirmed the actual resolved versions via
+  `mvn dependency:tree -DoutputFile=...` (not guessed, and not achievable with `-q` alone - that
+  suppresses the plugin's own tree output too) rather than pattern-matching a plausible-looking
+  exclusion regex: **guava must be `33.3.1-android` and commons-lang3 must be `3.18.0`** for this
+  project as of 2026-08-23 - every other version present in the local `.m2` repo (10.0.1 through
+  33.3.1-jre for guava; 3.4 through 3.14.0 for commons-lang3) is a transitive pin from something
+  else and must be excluded, plus `google-collections` excluded outright regardless of version.
+
+### Validation performed
+
+- Real Maven compile of the tool itself, clean (`mvn -pl forge-lda -am compile`, exit 0).
+- Tool run against all 1,594 unique deck paths (1,528 fixed `.dck` files via the tool, 66
+  procedural templates via the documented approximation above) - 0 unresolved.
+- Wizard-ladder ordering check: Apprentice < Adept < Master held in every color checked (Black
+  1.648/2.309/3.007, Blue 1.729/2.343/2.939, Red 2.222/2.361/3.034) - the one piece of pre-
+  existing tier data with a known-correct relative order was NOT broken by the recompute, even
+  though this round didn't specially preserve it.
+- **Write safety**: the actual file edit is a surgical per-line text patch (tracking the current
+  enemy via `"name"` lines, replacing only its own `"tier"` value), not a full JSON re-dump -
+  deliberately, since a generic `json.dump()` would have reformatted all ~125,500 lines and
+  buried 514 real changes in cosmetic churn, breaking from this project's own established
+  "surgical insertions preserving existing formatting" discipline (thirty-seventh round). Caught
+  and fixed two real bugs in the patcher itself before touching the production file: (1) `\u0027`-
+  escaped apostrophes in names (e.g. "Chandra's Acolyte") weren't being JSON-unescaped before
+  dict lookup, silently skipping those entries; (2) a handful of `"tier"` lines carry a trailing
+  comma (tier isn't always the last field in every entry, e.g. bosses like Emrakul with more
+  fields after it) which an overly strict end-of-line regex rejected, also silently skipping
+  those specific lines. Both caught by testing against a throwaway copy first and asserting the
+  patched-count matched the intended-count exactly (1,520 of 1,520) before ever touching the real
+  file - a third bug (the line-ending regex greedily swallowing the line's own trailing newline,
+  doubling every patched line into two) was caught the same way, via a line-count assertion, and
+  is why this process runs the same script against a disposable copy before the real file as a
+  standing precaution now. Final change verified byte-exact against `git show HEAD:...` via a
+  plain line-level diff (not git's own diff renderer, which - confusingly, but harmlessly -
+  represented the same 514 scattered single-line changes as several full-entry deletions/re-
+  insertions due to its move-detection heuristic getting confused by a huge file with many small
+  scattered edits; spot-checked one such "deleted" entry, Chainer, directly and confirmed it's
+  byte-identical, not actually touched): exactly 514 changed lines, 0 lines with any other
+  content difference, same total line count (125,503) before and after.
+- Scope decision, stated explicitly: this round recomputes and writes `tier` only. `difficulty`
+  (the mechanical float `BiomeData.getEnemy()` actually gates spawn selection on) is untouched -
+  matching this project's own existing tier/difficulty split (tier is the readable label other
+  systems switch on, difficulty is the separate mechanical value), and because changing actual
+  spawn-difficulty pacing for the whole game is a materially bigger, different decision than
+  fixing what a tier label displays.
+
+### Results
+
+**1,520 of 1,520 enemies got a freshly computed tier; 514 changed from their previous value.**
+
+| Tier | White | Blue | Black | Red | Green | Colorless | Total |
+|---|---|---|---|---|---|---|---|
+| Common | 17 | 21 | 38 | 21 | 31 | 11 | **139** |
+| Uncommon | 153 | 125 | 146 | 79 | 62 | 9 | **574** |
+| Rare | 282 | 175 | 149 | 81 | 71 | 4 | **762** |
+| Mythic | 16 | 1 | 3 | 4 | 1 | 0 | **25** |
+
+(Color = the enemy's own `colors` field, first-listed color for multicolor entries - the same
+"dominant color" convention `EditionProgression`'s loot restriction already uses for the same
+kind of question. 24 additional entries have an empty/colorless `colors` field beyond what the
+table above's "Colorless" column shows spread across tiers - those are folded into each tier's
+own Colorless count above, not a separate bucket.)
+
+Previous (patchwork) totals for comparison, from the thirty-seventh round's own audit: Rare 686 /
+Uncommon 350 / Mythic 53 / Common 431. The big shift - Common dropping from 431 to 139, Uncommon
+nearly doubling - is the expected, intended signature of this round's finding: a large fraction
+of the old "Common" tag was inherited-but-never-computed baseline data (like Cloaker and Hulking
+Brute), not a real assessment of those decks' actual card content. Once actually measured, most
+of it wasn't as weak as its tag claimed.
+
+**Repo-only, not deployed** - no jar splice, no standalone repackage, nothing pushed, matching
+this session's standing pattern. The throwaway tool itself was deleted after use (same convention
+as both prior rounds' own one-off tools) - its full methodology is captured above instead, same
+as how this round was able to rebuild the original from its own prose in the first place.
+
+**Files touched**: `forge-gui/res/adventure/The Forgotten Realms/world/enemies.json` (514 `tier`
+values changed, nothing else - see validation above). No Java files persist from this round -
+`forge-lda/src/forge/lda/DeckRarityLookup.java` was created, used, and deleted within it.
+
+## Forty-seventh round: weighted overworld-spawn tier system implemented, day length shortened, reputation docs updated (2026-08-23)
+
+User request, implementing the 3-layer weighted spawn design proposed and discussed across the
+prior several rounds this same session (following the Cloaker/Hulking Brute/Recruiter Sliver
+playtest finding and the full enemy-tier recompute). First feature this session built for BOTH
+the repo AND the live standalone game folder, per explicit instruction - every prior round this
+session was repo-only.
+
+### The three layers, as implemented
+
+**Layer 1 - week progression.** A hand-editable bracket table (`config tables/
+spawn_tier_weighting.json`, new file, `SpawnTierWeightData.java` POJO - same dedicated-table-file
+pattern `restricted_cards.json`/`RestrictedCardsData.java` already established) maps week number
+to target Common/Uncommon/Rare/Mythic percentages: week 1 is 90/10/0/0 (the user's own example),
+climbing through 7 brackets to a permanent 22/24/30/24 plateau at week 21+ - no runaway, no
+approach to 100% of any single tier even arbitrarily far into a run. Week number reuses
+`World.recordStandingsHistoryIfNewWeek()`'s own existing `(dayCount-1)/7` boundary math (re-based
+to 1-indexed) rather than inventing new time-tracking.
+
+**Layer 2 - territory/reputation modifier.** A second table in the same file, percentage-point
+deltas keyed by `PLAYER_OWNED` or one of `ColorReputation.Status`'s own names, added to the active
+week bracket's row before use. War's Common delta (-18) is deliberately 3x Unhappy's (-6) -
+reproduces the exact ratio `ColorReputation.getSpawnIntrusionMultiplier()` already uses between
+those two statuses (2.5x/1.5x relative to Neutral), so the new danger curve matches a ratio this
+project already committed to rather than inventing an unrelated one. Confirmed compatible with the
+pre-existing War-tier boss roll (`TerritoryControl.rollWarTierBoss()`, a separate flat-4%-chance
+named-boss short-circuit that never touches `BiomeData.getEnemy()` at all) - the two mechanisms
+compose rather than conflict, since the boss roll is checked first and this system only reshapes
+the ordinary pool it falls through to on a miss.
+
+**Layer 3 - per-enemy kill-decay.** Killing a specific named enemy adds one suppression stack
+(effective multiplier `(1 - killDecaySuppressionPerStack) ^ stacks`, default 0.20/stack, capped at
+3 stacks, one stack decaying every `killDecayRecoveryDaysPerStack` (4) days without a further
+kill on that name) - reuses `PlayerStatistic.winLossRecord`'s own name-as-identity convention and
+`DungeonRotation`'s "absolute day, evaluated lazily on read" storage idiom, generalized from
+on/off to a graduated stack. Hooked into `DuelScene.afterGameEnd()`'s guarded `endRunnable`,
+immediately after the existing `Current.player().getStatistic().setResult()` call - same Deck-
+Tester exclusion, gated additionally on an actual win.
+
+### Integration - folded in, signature unchanged
+
+All three layers fold into `BiomeData.getEnemy(float difficultyFactor)` as a per-candidate weight
+multiplier, computed in two passes (tally each eligible tier's real `spawnRate` sum first, then
+`tierMultiplier = target / natural` per candidate) so the config table's percentages are the
+*realized* percentages, not diluted by however many enemies of a given tier a specific biome
+happens to have - deliberately chosen over a design that skips this normalization (an earlier,
+simpler candidate's own worked example admitted its week-1 target of 90/10 realized as 96.4/3.6%
+in a real pool; this design's whole point was closing that gap). The method's exact 1-argument
+signature and both its existing fallback guards (`filteredEnemies.isEmpty()`, `totalDistribution
+<= 0.0f`) are untouched - confirmed necessary, not just cautious: `TerritoryControl.
+reThemedEnemyFor()` calls this exact same method (used when territory ownership flips to re-theme
+a hardcoded dungeon encounter), so a signature change would have broken it. Re-themed encounters
+correctly inherit the new weighting automatically rather than needing special-casing, since they
+resolve through the identical code path - a deliberate choice (a re-themed encounter reflects its
+new owner's own current situation), not an oversight.
+
+**Boss and quest-tagged enemies are exempt from every layer** - `SpawnTierWeighting.isExempt()`
+checks `EnemyData.boss`/`questTags`, same "story/scripted encounters aren't silently reshaped"
+idiom `EnemySprite.java`'s loot edition-restriction and `MapStage.java`'s territory re-theming
+already use. Exempt enemies are excluded from BOTH the natural-weight tally AND the final scaling
+(not just the scaling alone) - excluding them from only the scaling would have left the
+tier's realized total not matching its target, since one enemy's raw contribution wouldn't track
+the rest of the tier's proportional scaling.
+
+### What was investigated and deliberately NOT built
+
+An "outlier card" bump (flagging a deck containing an individually powerful card regardless of its
+own average) was investigated and abandoned before implementation - checked against the
+Apprentice/Adept/Master wizard ladder and found every single wizard deck, including Apprentice
+(weakest) tier, already contains at least one Rare or Mythic card as completely normal
+deckbuilding (one Apprentice Black Wizard variant carries a Mythic at a higher raw score than
+Cloaker's own). No version of that rule survived contact with real data without either missing the
+motivating cases (none of Cloaker/Hulking Brute/Recruiter Sliver's own outlier cards are Mythic-
+rarity) or incorrectly promoting large parts of an already-correct ladder. Pure per-deck averaging,
+computed for real instead of inherited-but-never-computed, already fixed 2 of the 3 known cases
+(Cloaker, Recruiter Sliver both cross into Uncommon on real card content); Hulking Brute does not
+- reported as a real, honest ceiling of a rarity-only methodology, not silently left as "fixed."
+
+### Player-facing danger indicator - decided against a new UI element
+
+Considered whether the tier shift should be visible in-game (a threat indicator) versus purely
+felt through what spawns. Decided: document it in the existing Reputation info dialog and the
+Mod Details/GUIDE.md explainers rather than build new UI - `WorldStandingsScene.
+showReputationInfo()`'s per-tier breakdown (Partner through War) now each mention the spawn-danger
+shift alongside their existing price/attack-odds/healing effects, `showModDetails()`'s Reputation
+paragraph gained a sentence covering both the reputation-based and week-based shifts, and GUIDE.md's
+"Reputation & Color Alliances" section gained the same. All three deliberately stay qualitative
+("noticeably weaker/tougher") rather than quoting the exact tunable percentages, so the docs don't
+silently go stale if the tables in `spawn_tier_weighting.json` get hand-rebalanced later.
+
+### Day length shortened, 400 -> 300 (user request)
+
+`config tables/settings.json`'s `dayLengthSeconds` (real-world seconds per in-game day at normal
+speed) lowered from 400 to 300 - a purely numeric tuning change, no code touched. Every day/week-
+keyed mechanic (mine paydays, guard salary, the new spawn-tier week brackets, standings history)
+reaches its next milestone proportionally faster in wall-clock time as a direct consequence, with
+no special-casing needed anywhere - they all already compute off `World.getCurrentDay()`, not a
+cached real-time duration.
+
+### Two follow-up user requests, same round
+
+**Confirmed (verification only, no code change needed): Arena and Inn-tournament wins never
+affect Reputation.** Re-read `DuelScene.afterGameEnd()` directly rather than trusting recollection
+- the single call site that adjusts reputation (`ColorReputation.onPlayerWonDuel()`) is gated
+`if (winner && !isArena && eventData == null && enemy != null)`, with its own comment naming this
+as "the single funnel every duel's end passes through, and the only place all three exclusions
+are cheaply knowable at once: losses, Arena brackets (`isArena`), and Inn tournaments (`eventData
+!= null`)." Confirmed already correct exactly as the user expected.
+
+**Ante mitigation (Re-roll, Buy Back) surfaced earlier - GUIDE.md already covered it in full**
+(its own "Ante, Tournaments & Hostile Lands" section already explains both by name), so no guide
+change was needed there. The **welcome popup** (`config.json`'s `welcomePopupText`, shown on a new
+save's first map entry) did NOT mention either mitigation - only that ante is on by default. Added
+one sentence naming both Re-roll and Buy Back and pointing to the full guide for detail, directly
+addressing the playtest-feedback finding from earlier this session ("the complaint is fair, but
+it's not neglect... the gap is that a first-hour player doesn't know any of that scaffolding
+exists yet").
+
+### Validation performed
+
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0.
+- `mvn -pl forge-gui-mobile-dev -am package -DskipTests -o` - clean, exit 0 twice (once for the
+  core implementation, once more after the info-dialog/GUIDE.md/welcome-text follow-ups touched
+  one more Java file) - produces the deployed jar-with-dependencies both times.
+- All touched/new JSON config files (`spawn_tier_weighting.json`, `settings.json`, `config.json`)
+  parsed successfully with comments stripped, matching this project's existing `//`-comment
+  convention, after every edit round including the final welcome-text change.
+- `python standalone-packaging/build_standalone.py` (fast-path) - exit 0, its own self-check
+  passed ("Package OK"). Not trusted on the script's report alone (this project's own standing
+  rule): read `PACKAGE_OK.txt` directly ("Package verified complete. Safe to play from this
+  folder."), then independently confirmed the deployed jar actually contains the new classes
+  (`jar tf ... | grep SpawnTierWeight` - all 4 expected `.class` files present) and that the live
+  folder's own `config.json` copy carries `weightedSpawnTiersEnabled: true` and the updated
+  welcome text, not just the repo's copy.
+
+**Opt-in via new `ConfigData.weightedSpawnTiersEnabled`** (false by default, true only in this
+plane's `config.json`) - inert on every other plane, matching every other mod feature's standing
+convention. New-game/New-Game+ safety: the kill-decay maps are wired into `World.java`'s existing
+save/load `storeObject`/`readObject` pairs AND its `generateNew()` in-place reset block (the exact
+touch-point New Game+ needs, since it reuses the same `World` instance rather than constructing a
+fresh one - confirmed by re-reading `SaveLoadScene.NewGamePlus`'s own flow, same class this
+session's earlier Challenge Coins fix already investigated).
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/util/SpawnTierWeighting.java` (new),
+`forge-gui-mobile/src/forge/adventure/data/SpawnTierWeightData.java` (new),
+`forge-gui-mobile/src/forge/adventure/data/BiomeData.java` (`getEnemy()` restructured, signature
+unchanged), `forge-gui-mobile/src/forge/adventure/data/TuningData.java` (3 new kill-decay
+fields), `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (new opt-in flag),
+`forge-gui-mobile/src/forge/adventure/util/Config.java` (loads the new table file, same pattern
+as `RestrictedCardsData`), `forge-gui-mobile/src/forge/adventure/world/World.java` (2 new kill-
+decay maps + getters + persist/restore/reset wiring), `forge-gui-mobile/src/forge/adventure/
+scene/DuelScene.java` (1 new call, guarded, win-only), `forge-gui-mobile/src/forge/adventure/
+stage/WorldStage.java` (`[TFR-Spawn]` log line extended), `forge-gui-mobile/src/forge/adventure/
+scene/WorldStandingsScene.java` (Reputation dialog + Mod Details paragraph updated); `forge-gui/
+res/adventure/The Forgotten Realms/config tables/spawn_tier_weighting.json` (new), `.../config
+tables/settings.json` (3 new fields + `dayLengthSeconds` 400->300), `.../config.json` (new flag
+enabled), `.../GUIDE.md` (Reputation section updated).

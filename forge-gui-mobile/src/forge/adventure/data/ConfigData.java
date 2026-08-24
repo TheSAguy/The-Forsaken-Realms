@@ -78,5 +78,10 @@ public class ConfigData {
     // back to Forge.getDeviceAdapter().getVersionString() if unset - see StartScene.java.
     public String engineBuildVersion;
     public String modVersionDate;
+    // Weighted overworld-spawn tier system (user spec 2026-08-23): week-based progression toward
+    // higher tiers, a territory/reputation modifier, and per-enemy kill-decay - see
+    // SpawnTierWeighting.java. Same opt-in rule as every flag above: false here, true only in
+    // "The Forgotten Realms"/config.json.
+    public boolean weightedSpawnTiersEnabled = false;
 
 }

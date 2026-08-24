@@ -75,13 +75,14 @@ public class WorldStandingsScene extends UIScene {
 
     private void showReputationInfo() {
         showInfoDialog("Reputation",
-                "Partner (+80 or higher): 30% cheaper card shops, 25% less likely to be attacked, free Inn healing.\n\n"
-                        + "Happy (+30 to +79): 15% cheaper card shops, 5% less likely to be attacked.\n\n"
+                "Partner (+80 or higher): 30% cheaper card shops, 25% less likely to be attacked, free Inn healing, noticeably weaker enemies roaming their land.\n\n"
+                        + "Happy (+30 to +79): 15% cheaper card shops, 5% less likely to be attacked, somewhat weaker enemies.\n\n"
                         + "Neutral (-29 to +29): no effect.\n\n"
-                        + "Unhappy (-30 to -79): 25% pricier card shops, 5% more likely to be attacked.\n\n"
+                        + "Unhappy (-30 to -79): 25% pricier card shops, 5% more likely to be attacked, somewhat tougher enemies.\n\n"
                         + "War (-80 or lower): barred from that color's towns (Capitals: pay "
                         + ColorReputation.CAPITAL_ENTRY_TOLL + " gold to enter, 40% pricier once inside), "
-                        + "25% more likely to be attacked, no healing at their Inns.");
+                        + "25% more likely to be attacked, no healing at their Inns, noticeably tougher enemies roaming their land.\n\n"
+                        + "Your own territory is also always safer to fight in than anyone else's, on top of all of the above.");
     }
 
     // Expansion/defense explainer (2026-08-11, round 8) - mechanics cross-checked against
@@ -137,7 +138,10 @@ public class WorldStandingsScene extends UIScene {
                         + "swings shop prices, attack odds, and healing access at that color's towns. It "
                         + "also changes how fast you move: your own land is always friendlier to travel, "
                         + "and a color's land gets easier or harsher to cross the better or worse your "
-                        + "standing with them is.",
+                        + "standing with them is. The same standing also shifts what tier of enemy you're "
+                        + "likely to run into on their land - and separately, week by week, the world as a "
+                        + "whole trends toward tougher roaming enemies as a run goes on, capped well short "
+                        + "of an endless escalation. Your own territory is always the safest place to fight.",
 
                 "Card sets aren't all available on day one. This world splits every real Magic "
                         + "expansion six ways - one slice per color, plus a neutral slice - and you only "

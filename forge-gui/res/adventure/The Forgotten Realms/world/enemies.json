@@ -560,7 +560,7 @@
                           "Loner",
                           "Minion"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Aerie Guard",
@@ -701,7 +701,7 @@
                           "IdentityAzorius",
                           "Mystic"
                       ],
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Akroma",
@@ -974,7 +974,7 @@
                           "Aberration",
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Ancient Silver Dragon",
@@ -1256,7 +1256,7 @@
                           "Wise",
                           "IdentityBlack"
                       ],
-        "tier":  "Rare"
+        "tier":  "Mythic"
     },
     {
         "name":  "Angel Overseer",
@@ -1312,7 +1312,7 @@
                           "BiomeWhite",
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Angel Warrior",
@@ -1395,7 +1395,7 @@
                           "Mythical",
                           "Warrior"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Angelic Page",
@@ -1462,7 +1462,7 @@
                           null,
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Ape",
@@ -1548,7 +1548,7 @@
                           "IdentityGruul",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Apprentice Black Wizard",
@@ -1766,7 +1766,7 @@
                           "BiomeGreen",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Apprentice Red Wizard",
@@ -1840,7 +1840,7 @@
                           "BiomeRed",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Apprentice White Wizard",
@@ -1912,7 +1912,7 @@
                           "BiomeColorless",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Arcane Golem",
@@ -1986,7 +1986,7 @@
                           "Wizard",
                           "Hostile"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Mythic"
     },
     {
         "name":  "Archaeologist",
@@ -2040,7 +2040,7 @@
                           "Scientist",
                           "Artificer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Archer",
@@ -2137,7 +2137,7 @@
                           "Leader",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Archfiend",
@@ -2203,7 +2203,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Archivist",
@@ -2258,7 +2258,7 @@
                           "IdentityBlue",
                           "Dungeon"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Archmage",
@@ -2312,7 +2312,7 @@
                           "Intelligent",
                           "Mystic"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Armadillo",
@@ -2374,7 +2374,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Armored Knight",
@@ -2445,7 +2445,7 @@
                           "IdentityBoros",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Artifact Warrior",
@@ -2518,7 +2518,7 @@
                           "Construct",
                           "Robot"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Ashmouth Devil",
@@ -2555,7 +2555,7 @@
                           "IdentityRakdos",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Auramancer",
@@ -2609,7 +2609,7 @@
                           "Scientist",
                           "Artificer"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Axgard Dwarf",
@@ -2759,7 +2759,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bandit",
@@ -2835,7 +2835,7 @@
                           "IdentityRakdos",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bandit Archer",
@@ -2915,7 +2915,7 @@
                           "Human",
                           "Fighter"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bandit Leader",
@@ -2996,7 +2996,7 @@
                           "Leader",
                           "Human"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bandit Scoundrel",
@@ -3076,7 +3076,7 @@
                           "Human",
                           "Scavenger"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bandit Slingshot",
@@ -3155,7 +3155,7 @@
                           "Archer",
                           "Human"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Bandit Trapmaster",
@@ -3233,7 +3233,7 @@
                           "Trapper",
                           "Human"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Barbarian",
@@ -3293,7 +3293,7 @@
                           "Warrior",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bat",
@@ -3435,7 +3435,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Beastmaster",
@@ -3514,7 +3514,7 @@
                           "BiomeGreen",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Beholder",
@@ -3590,7 +3590,7 @@
                           "IdentityGrixis",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Berserker",
@@ -3631,7 +3631,7 @@
                           "IdentityJund",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Big Zombie",
@@ -3766,7 +3766,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Black Golem",
@@ -3842,7 +3842,7 @@
                           "Construct",
                           "Robot"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Bloodgift Demon",
@@ -3902,7 +3902,7 @@
                           null,
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Bloodied Skeleton",
@@ -4014,7 +4014,7 @@
                           "Construct",
                           "Robot"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Blue Prototype",
@@ -4090,7 +4090,7 @@
                           "Construct",
                           "Robot"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Boar",
@@ -4220,7 +4220,7 @@
                           "Human",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Boggart",
@@ -4358,7 +4358,7 @@
                           "Undead",
                           "Skeleton"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Bone Golem",
@@ -4433,7 +4433,7 @@
                           "Monster",
                           "Evil"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Brain Mole",
@@ -4488,7 +4488,7 @@
                           "Unholy",
                           "Evil"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Bull",
@@ -4558,7 +4558,7 @@
                           "IdentityGreen",
                           "BiomeRed"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Camel",
@@ -4781,7 +4781,7 @@
                           "BiomeWhite",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Cave Spider",
@@ -4849,7 +4849,7 @@
                           "Spider",
                           "Insect"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Centaur",
@@ -4885,7 +4885,7 @@
                           "IdentitySelesnya",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Centaur Warrior",
@@ -5102,7 +5102,7 @@
                           "IdentityRed",
                           "Beast"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Challenger 20",
@@ -5197,7 +5197,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Mythic"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Challenger 21",
@@ -5292,7 +5292,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Mythic"
+        "tier":  "Rare"
     },
     {
         "name":  "Challenger 22",
@@ -5387,7 +5387,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Mythic"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Chandra",
@@ -5493,7 +5493,7 @@
                           "IdentityRed"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Chandra\u0027s Acolyte",
@@ -5599,7 +5599,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Chandra\u0027s Firestarter",
@@ -5705,7 +5705,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Chandra\u0027s Hellhound",
@@ -5810,7 +5810,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Chandra\u0027s Immolator",
@@ -5916,7 +5916,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Chandra\u0027s Lavamancer",
@@ -6022,7 +6022,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Chandra\u0027s Pyromancer",
@@ -6128,7 +6128,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Chandra\u0027s Scorcher",
@@ -6234,7 +6234,7 @@
                           "Fire",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Chicken",
@@ -6283,7 +6283,7 @@
                           "IdentityGreen",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Chimera",
@@ -6334,7 +6334,7 @@
                           "Wandering",
                           "IdentityTimur"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Clay Golem",
@@ -6381,7 +6381,7 @@
                           "IdentityWhite",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Cleric",
@@ -6465,7 +6465,7 @@
                           "IdentityWhite",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Cloaker",
@@ -6539,7 +6539,7 @@
                           "Demon",
                           "Aberration"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Cloud Giant",
@@ -6600,7 +6600,7 @@
                           "IdentityBant",
                           "Guard"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Cloud Guardian",
@@ -6662,7 +6662,7 @@
                           "Celestial",
                           "Holy"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Conjurer",
@@ -6778,7 +6778,7 @@
                           "Warlock",
                           "Intelligent"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Construct",
@@ -6931,7 +6931,7 @@
                           "Copper Host",
                           "Humanoid"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Copper Host Infector",
@@ -7011,7 +7011,7 @@
                           "Copper Host",
                           "Humanoid"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Corrupted Blue Wizard",
@@ -7174,7 +7174,7 @@
                           "Wizard",
                           "Corrupted"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Corrupted Red Wizard",
@@ -7297,7 +7297,7 @@
                           "Sneaky",
                           "Unholy"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Crab",
@@ -7375,7 +7375,7 @@
                           "IdentityDimir",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Criosphinx",
@@ -7429,7 +7429,7 @@
                           "IdentityAzorius",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Crocodile",
@@ -7480,7 +7480,7 @@
                           "Sneaky",
                           "Crocodile"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Curselord",
@@ -7549,7 +7549,7 @@
                           "Evil",
                           "Curses"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Cyclops",
@@ -7788,7 +7788,7 @@
                           "Unholy",
                           "Evil"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dark Knight",
@@ -7873,7 +7873,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dark Spirit",
@@ -7953,7 +7953,7 @@
                           "IdentityBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dawnhart Witch",
@@ -8122,7 +8122,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Demon",
@@ -8224,7 +8224,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Demon of Tibalt",
@@ -8292,7 +8292,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Demoncaller",
@@ -8347,7 +8347,7 @@
                           "Evil",
                           "Monster"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Devil",
@@ -8465,7 +8465,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Dimir Faerie",
@@ -8543,7 +8543,7 @@
                           "IdentityBlue",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Dinosaur",
@@ -8649,7 +8649,7 @@
                           "IdentityWhite",
                           "IdentityNaya"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Disciple of Teferi",
@@ -8728,7 +8728,7 @@
                           "IdentityWhite",
                           "Identity Jeskai"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Djinn",
@@ -8813,7 +8813,7 @@
                           "IdentityIzzet",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dog",
@@ -8883,7 +8883,7 @@
                           "BiomeColorless",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Doppelganger",
@@ -8933,7 +8933,7 @@
                           "BiomeColorless",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dragon",
@@ -9020,7 +9020,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dragonfly",
@@ -9080,7 +9080,7 @@
                           "IdentityAbzan",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Drake",
@@ -9167,7 +9167,7 @@
                           "Drake",
                           "Dragon"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dross Gladiator",
@@ -9248,7 +9248,7 @@
                           "Humanoid",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dross Grimnarch",
@@ -9331,7 +9331,7 @@
                           "IdentityBlue",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dwarf",
@@ -9418,7 +9418,7 @@
                           "IdentityBoros",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dwarf Demolisher",
@@ -9491,7 +9491,7 @@
                           "Bandit",
                           "Subterranean"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dwarf Mercenary",
@@ -9576,7 +9576,7 @@
                           "Dwarf",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Dwarf Pilot",
@@ -9651,7 +9651,7 @@
                           "IdentityBoros",
                           "Artificer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Dwarf Warlord",
@@ -9705,7 +9705,7 @@
                           "Leader",
                           "Artificer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Earth Elemental",
@@ -9753,7 +9753,7 @@
                           "IdentityBoros",
                           "Earth"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Efreet",
@@ -9791,7 +9791,7 @@
                           "IdentityIzzet",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Eldraine Faerie",
@@ -9878,7 +9878,7 @@
                           "IdentitySimic",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Eldraine Knight",
@@ -9965,7 +9965,7 @@
                           "BiomeWhite",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Eldrazi",
@@ -10058,7 +10058,7 @@
                           "IdentitySultai",
                           "BiomeColorless"
                       ],
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Eldrazi Devastator",
@@ -10153,7 +10153,7 @@
                           "IdentitySultai",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Eldrazi Floater",
@@ -10249,7 +10249,7 @@
                           "IdentitySultai",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Elemental",
@@ -10296,7 +10296,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Elephant",
@@ -10349,7 +10349,7 @@
                           "IdentitySelesnya",
                           "Domesticated"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Elesh Norn",
@@ -10560,7 +10560,7 @@
                           "BiomeGreen",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Elk",
@@ -10847,7 +10847,7 @@
                           "IdentityColorless"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -10953,7 +10953,7 @@
                           "Warlock",
                           "Intelligent"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Evil Wall",
@@ -11018,7 +11018,7 @@
                           "Artifact",
                           "Hidden"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Eye",
@@ -11089,7 +11089,7 @@
                           "Horror",
                           "Evil"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Faerie",
@@ -11164,7 +11164,7 @@
                           "IdentitySultai",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Faerie Dragon",
@@ -11249,7 +11249,7 @@
                           "IdentityBlue",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Falcon",
@@ -11470,7 +11470,7 @@
                           "Mystic",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "False Knight",
@@ -11554,7 +11554,7 @@
                           "IdentityBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "False Monk",
@@ -11634,7 +11634,7 @@
                           "Unholy",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Farmer",
@@ -11721,7 +11721,7 @@
                           "Farmer",
                           "Poor"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Fire Dragon",
@@ -11800,7 +11800,7 @@
                           "Fire",
                           "Monster"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Fire Elemental",
@@ -11884,7 +11884,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Fire Giant",
@@ -11958,7 +11958,7 @@
                           "Territorial",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Flame Elemental",
@@ -12040,7 +12040,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Flesh Abomination",
@@ -12109,7 +12109,7 @@
                           "Sneaky",
                           "Unholy"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Flying Witch",
@@ -12174,7 +12174,7 @@
                           "Human",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Fog Trap",
@@ -12258,7 +12258,7 @@
                           "IdentityGreen",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Forest Giant",
@@ -12332,7 +12332,7 @@
                           "Territorial",
                           "IdentityGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Fox",
@@ -12465,7 +12465,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Froghemoth",
@@ -12525,7 +12525,7 @@
                           "IdentityRed",
                           "IdentityGruul"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Frost Titan",
@@ -12613,7 +12613,7 @@
                           "BiomeWhite",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Fungus",
@@ -12781,7 +12781,7 @@
                           "Humanoid",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Furnace Tormentor",
@@ -12864,7 +12864,7 @@
                           "IdentityGreen",
                           "IdentityGruul"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Gargoyle",
@@ -12956,7 +12956,7 @@
                           "IdentityJeskai",
                           "BiomeColorless"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Gargoyle 2",
@@ -13045,7 +13045,7 @@
                           "IdentityWhite",
                           "BiomeColorless"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Garruk",
@@ -13136,7 +13136,7 @@
                           "IdentityGolgari"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Geist",
@@ -13297,7 +13297,7 @@
                           "Human",
                           "Ghost"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Geonid Death-Cap",
@@ -13384,7 +13384,7 @@
                           "IdentityGreen",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Ghalta",
@@ -13543,7 +13543,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Ghoul",
@@ -13639,7 +13639,7 @@
                           "Ghoul",
                           "Zombie"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Giant Cyclops",
@@ -13703,7 +13703,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Giant Fly",
@@ -13764,7 +13764,7 @@
                           "IdentityAbzan",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Giant Panda",
@@ -13839,7 +13839,7 @@
                           "Panda",
                           "Bear"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Giant Spider",
@@ -13961,7 +13961,7 @@
                           "IdentityGreen",
                           "IdentitySimic"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Gitaxian Underling",
@@ -14042,7 +14042,7 @@
                           "Humanoid",
                           "IdentityBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Gladiator",
@@ -14098,7 +14098,7 @@
                           "IdentityWhite",
                           "Gladiator"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Goblin",
@@ -14231,7 +14231,7 @@
                           "IdentityRed",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Goblin Chief",
@@ -14284,7 +14284,7 @@
                           "IdentityRakdos",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Goblin Fanatic",
@@ -14337,7 +14337,7 @@
                           "BiomeRed",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Goblin King",
@@ -14398,7 +14398,7 @@
                           "King",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Goblin Pack",
@@ -14546,7 +14546,7 @@
                           "IdentityBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Goblin Warrior",
@@ -14597,7 +14597,7 @@
                           "BiomeRed",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Golem",
@@ -14703,7 +14703,7 @@
                           "Construct",
                           "Dungeon"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Golgari Elf",
@@ -14773,7 +14773,7 @@
                           "IdentityGolgari",
                           "Leader"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Golgari Fungus",
@@ -14836,7 +14836,7 @@
                           "IdentityBlack",
                           "IdentityGolgari"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Golgari Treefolk",
@@ -14922,7 +14922,7 @@
                           "IdentityGreen",
                           "IdentityGolgari"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Gorgon",
@@ -15007,7 +15007,7 @@
                           "IdentityGolgari",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Gorgon 2",
@@ -15175,7 +15175,7 @@
                           "IdentityRed",
                           "IdentityGruul"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Grave Titan",
@@ -15241,7 +15241,7 @@
                           "Humanoid",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Graven Revenant",
@@ -15321,7 +15321,7 @@
                           "Wizard",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Greater Sandwurm",
@@ -15365,7 +15365,7 @@
                           "Subterranean",
                           "IdentityWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Greater Zombie",
@@ -15435,7 +15435,7 @@
                           "Humanoid",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Green Beast",
@@ -15520,7 +15520,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Green Golem",
@@ -15597,7 +15597,7 @@
                           "Construct",
                           "Robot"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Green Prototype",
@@ -15673,7 +15673,7 @@
                           "Prototype",
                           "Robot"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Griffin",
@@ -15760,7 +15760,7 @@
                           "IdentityWhite",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Griselbrand",
@@ -15833,7 +15833,7 @@
         "gamesPerMatch":  3,
         "bossInsult":  "Kneel. It is the only thing you were ever worthy of doing before me.",
         "bossIntro":  "When the power of light fails you, what atrocities might you contemplate to curry favor with darkness?",
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -16094,7 +16094,7 @@
         "questTags":  [
                           "Special Encounter"
                       ],
-        "tier":  "Common"
+        "tier":  "Mythic"
     },
     {
         "name":  "Harpy",
@@ -16348,7 +16348,7 @@
                           "Wild",
                           "Beast"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Hedgehog",
@@ -16406,7 +16406,7 @@
                           "IdentityGreen",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Hellhound",
@@ -16542,7 +16542,7 @@
                           "BiomeRed",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Hermit Crab",
@@ -16601,7 +16601,7 @@
                           "BiomeBlue",
                           "Crab"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Hidden Bush",
@@ -16653,7 +16653,7 @@
                           "Sneaky",
                           "Plant"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Hidden Snake",
@@ -16704,7 +16704,7 @@
                           "Ambush",
                           "IdentityGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "High Cultist",
@@ -16784,7 +16784,7 @@
                           "Unholy",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "High Elf",
@@ -16834,7 +16834,7 @@
                           "BiomeGreen",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "High Vampire",
@@ -16921,7 +16921,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Hippo",
@@ -16971,7 +16971,7 @@
                           "Territorial",
                           "IdentityGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Holy Apparition",
@@ -17038,7 +17038,7 @@
                           "Arcane",
                           "Magical"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Holy Paladin",
@@ -17097,7 +17097,7 @@
                           "Holy",
                           "Leader"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Homarid",
@@ -17246,7 +17246,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Horror of Tibalt",
@@ -17296,7 +17296,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Horse",
@@ -17354,7 +17354,7 @@
                           "IdentityWhite",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Horseman",
@@ -17570,7 +17570,7 @@
                           "IdentityGruul",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Human Captain",
@@ -17624,7 +17624,7 @@
                           "Scientist",
                           "Artificer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Human elite",
@@ -17672,7 +17672,7 @@
                           "IdentityWhite",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Human guard",
@@ -17727,7 +17727,7 @@
                           "IdentityOrzhov",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Human Looter",
@@ -17781,7 +17781,7 @@
                           null,
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Human Mercenary",
@@ -17914,7 +17914,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Ibis",
@@ -18150,7 +18150,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Immersturm Demon",
@@ -18321,7 +18321,7 @@
                           "IdentityAzorius"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Jellyfish",
@@ -18382,7 +18382,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Jin-Gitaxias",
@@ -18631,7 +18631,7 @@
                           "BiomeGreen",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Khan",
@@ -18718,7 +18718,7 @@
                           "IdentityMardu",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Khenra Warrior",
@@ -18881,7 +18881,7 @@
                           "IdentitySimic"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Knight",
@@ -18928,7 +18928,7 @@
                           "IdentityWhite",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Knight Mercenary",
@@ -19013,7 +19013,7 @@
                           "IdentityAzorius",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Kobold Dragoncaller",
@@ -19081,7 +19081,7 @@
                           "Dragon",
                           "Wizard"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Kobold Pyromancer",
@@ -19149,7 +19149,7 @@
                           "Pyromancer",
                           "Wizard"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Kobold Shaman",
@@ -19284,7 +19284,7 @@
                           "Slinger",
                           "Archer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Kobold Trapmaster",
@@ -19351,7 +19351,7 @@
                           "BiomeRed",
                           "Trapmaster"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Kobold Warrior",
@@ -19417,7 +19417,7 @@
                           "BiomeRed",
                           "Warrior"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Kobold Worker",
@@ -19483,7 +19483,7 @@
                           "BiomeRed",
                           "Worker"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Kor Warrior",
@@ -19541,7 +19541,7 @@
                           "IdentityBoros",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Kozilek",
@@ -19813,7 +19813,7 @@
                           "IdentityAbzan",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Lathliss",
@@ -19885,7 +19885,7 @@
         "gamesPerMatch":  3,
         "bossInsult":  "Even my hatchlings would have ended you faster.",
         "bossIntro":  "If I command it, my children will burn this world to ash.",
-        "tier":  "Rare",
+        "tier":  "Mythic",
         "difficulty":  2
     },
     {
@@ -19937,7 +19937,7 @@
                           "Leonin",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Leonin Weaponmaster",
@@ -19995,7 +19995,7 @@
                           "Equipments",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Lich",
@@ -20078,7 +20078,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Lightning Elemental",
@@ -20183,7 +20183,7 @@
                           "Inhuman",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Liliana",
@@ -20289,7 +20289,7 @@
                           "IdentityBlack"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Liliana\u0027s Alchemist",
@@ -20371,7 +20371,7 @@
                           "Poison",
                           "Liliana"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Liliana\u0027s Herbalist",
@@ -20453,7 +20453,7 @@
                           "Poison",
                           "Liliana"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Lion",
@@ -20515,7 +20515,7 @@
                           "Hunter",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Loamspeaker",
@@ -20598,7 +20598,7 @@
                           "Mystic",
                           "IdentityGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Lord Pestilence",
@@ -20678,7 +20678,7 @@
                           "Wizard",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Lorthos",
@@ -20748,7 +20748,7 @@
         "gamesPerMatch":  3,
         "bossInsult":  "The deep remembers every failure… and now it remembers you.",
         "bossIntro":  "Struggle if you must. The ocean always claims what enters it.",
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -20860,7 +20860,7 @@
                           "Identity Temur",
                           "Insect"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Magma Elemental",
@@ -20966,7 +20966,7 @@
                           "Subterranean",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Magma Fire Elemental",
@@ -21140,7 +21140,7 @@
                           "BiomeColorless",
                           "BiomeBlue"
                       ],
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Master Green Wizard",
@@ -21409,7 +21409,7 @@
                           "BiomeBlue",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Merfolk Elite",
@@ -21501,7 +21501,7 @@
                           "IdentityBant",
                           "Leader"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Merfolk Fighter",
@@ -21562,7 +21562,7 @@
                           "BiomeBlue",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Merfolk Lord",
@@ -21624,7 +21624,7 @@
                           "IdentitySimic",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Merfolk Soldier",
@@ -21675,7 +21675,7 @@
                           "BiomeBlue",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Merfolk warrior",
@@ -21727,7 +21727,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Metallic Sliver",
@@ -21778,7 +21778,7 @@
                           "Construct",
                           "IdentityColorless"
                       ],
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -21830,7 +21830,7 @@
                           "IdentityBlue",
                           "Djinn"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Mimic",
@@ -21915,7 +21915,7 @@
                           "IdentityBlue",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Mindclaw Shaman",
@@ -22004,7 +22004,7 @@
                           "BiomeRed",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Minor Demon",
@@ -22059,7 +22059,7 @@
                           null,
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Minotaur",
@@ -22148,7 +22148,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Minotaur Flayer",
@@ -22295,7 +22295,7 @@
                           "IdentityRakdos",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Monk",
@@ -22378,7 +22378,7 @@
                           "IdentityWhite",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Monkey",
@@ -22460,7 +22460,7 @@
                           "IdentityRed",
                           "IdentityTemur"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Mountain Ogre",
@@ -22518,7 +22518,7 @@
                           "Large",
                           "Dungeon"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Mummy",
@@ -22925,7 +22925,7 @@
                           "IdentityWhite",
                           "IdentityBoros"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Naked Mole Rat",
@@ -22983,7 +22983,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Nantuko Guard",
@@ -23076,7 +23076,7 @@
                           "IdentityBlue",
                           "IdentitySultai"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Necrogoyf",
@@ -23136,7 +23136,7 @@
                           "Unholy",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Necromancer",
@@ -23195,7 +23195,7 @@
                           "Human",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Nezumi Leader",
@@ -23260,7 +23260,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Nezumi Ninja",
@@ -23325,7 +23325,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Nightmare",
@@ -23394,7 +23394,7 @@
                           "Sneaky",
                           "Unholy"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Mythic"
     },
     {
         "name":  "Nissa",
@@ -23541,7 +23541,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Ooze",
@@ -23612,7 +23612,7 @@
                           "BiomeGreen",
                           "BiomeColorless"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Ooze Boss",
@@ -23713,7 +23713,7 @@
                           "IdentityGolgari"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Orc Brute",
@@ -23771,7 +23771,7 @@
                           "Huge",
                           "Fighter"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Orc Hunter",
@@ -23829,7 +23829,7 @@
                           "Huge",
                           "Archer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Orc Warrior",
@@ -23887,7 +23887,7 @@
                           "Huge",
                           "Archer"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Orthodoxy Angel",
@@ -23969,7 +23969,7 @@
                           "IdentityGreen",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Orthodoxy Duelist",
@@ -24051,7 +24051,7 @@
                           "IdentityBlack",
                           "IdentityOrzhov"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Orzhov Cleric",
@@ -24137,7 +24137,7 @@
                           "IdentityBlack",
                           "IdentityOrzhov"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Owl",
@@ -24207,7 +24207,7 @@
                           "BiomeWhite",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Parrot",
@@ -24276,7 +24276,7 @@
                           "IdentityGreen",
                           "IdentityBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Penguin",
@@ -24349,7 +24349,7 @@
                           "Bird",
                           "Snow"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Penguin Elite",
@@ -24424,7 +24424,7 @@
                           "Bird",
                           "Snow"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Pharaoh",
@@ -24483,7 +24483,7 @@
                           "BiomeColorless",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Phoenix",
@@ -24591,7 +24591,7 @@
                           "Loner",
                           "IdentityRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Pirate",
@@ -24673,7 +24673,7 @@
                           "BiomeBlue",
                           "Pirate"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Pirate 2",
@@ -24755,7 +24755,7 @@
                           "IdentityGrixis",
                           "Dungeon"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Pirate 3",
@@ -24837,7 +24837,7 @@
                           "IdentityGrixis",
                           "Dungeon"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Pirate Captain",
@@ -24913,7 +24913,7 @@
                           "Pirate",
                           "Captain"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Pirate Captain 2",
@@ -24995,7 +24995,7 @@
                           "Pirate",
                           "Captain"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Plague Rat Swarm",
@@ -25134,7 +25134,7 @@
                           "Wizard",
                           "IdentityDimir"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Plant",
@@ -25196,7 +25196,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Poisonous Snake",
@@ -25343,7 +25343,7 @@
                           "IdentityGreen",
                           "Snow"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Porcupine",
@@ -25401,7 +25401,7 @@
                           "IdentityGruul",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Priest Fanatic",
@@ -25460,7 +25460,7 @@
                           "Holy",
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Pyromancer",
@@ -25516,7 +25516,7 @@
                           "Lightning",
                           "Magic"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Raccoon",
@@ -25575,7 +25575,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Rakdos Devil",
@@ -25616,7 +25616,7 @@
                           "IdentityRakdos",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Rakdos Wizard",
@@ -25697,7 +25697,7 @@
                           "IdentityRed",
                           "IdentityRakdos"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Raptor",
@@ -25756,7 +25756,7 @@
                           "Dinosaur",
                           "Beast"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Raven",
@@ -25873,7 +25873,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Recruiter Sliver",
@@ -25971,7 +25971,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Rhino",
@@ -26034,7 +26034,7 @@
                           "Territorial",
                           "Beast"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Rogue",
@@ -26076,7 +26076,7 @@
                           "IdentityDimir",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Royal King",
@@ -26135,7 +26135,7 @@
                           "Holy",
                           "King"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Royal Sentinel",
@@ -26216,7 +26216,7 @@
                           "IdentityDimir",
                           "Guardian"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Runelord",
@@ -26284,7 +26284,7 @@
                           "Auramaster",
                           "Runelord"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Sand Ghoul",
@@ -26364,7 +26364,7 @@
                           "Aggressive",
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Sand Golem",
@@ -26582,7 +26582,7 @@
                           "IdentityGruul",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Scarab",
@@ -26698,7 +26698,7 @@
                           "IdentityBlack",
                           "Farm"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Scarecrow Captain",
@@ -26771,7 +26771,7 @@
                           "IdentityAll"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Scorpion",
@@ -26903,7 +26903,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Sea Monster",
@@ -26985,7 +26985,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Shade",
@@ -27057,7 +27057,7 @@
                           "IdentityBlack",
                           "Humanoid"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Shaman",
@@ -27142,7 +27142,7 @@
                           "IdentityGruul",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Shaman of Zedruu",
@@ -27228,7 +27228,7 @@
                           "IdentityGruul",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Simic Wizard",
@@ -27294,7 +27294,7 @@
                           "IdentityGreen",
                           "IdentitySimic"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Skeleton",
@@ -27388,7 +27388,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Skeleton Soldier",
@@ -27428,7 +27428,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Slimefoot",
@@ -27849,7 +27849,7 @@
                           "IdentityGrixis",
                           "BiomeBlack"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Sliver_Blue",
@@ -27905,7 +27905,7 @@
                           "IdentityEsper",
                           "BiomeBlue"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Sliver_Green",
@@ -27961,7 +27961,7 @@
                           "IdentityNaya",
                           "BiomeGreen"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Sliver_Red",
@@ -28171,7 +28171,7 @@
                           "IdentityRed"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Snail",
@@ -28292,7 +28292,7 @@
                           "IdentityBlue",
                           "IdentitySimic"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Snow Wizard",
@@ -28563,7 +28563,7 @@
                           "IdentityOrzhov"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Sphinx",
@@ -28617,7 +28617,7 @@
                           "IdentityAzorius",
                           "BiomeWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Spider",
@@ -28703,7 +28703,7 @@
                           "IdentityGolgari",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Spiked Ravager",
@@ -28771,7 +28771,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Spirit",
@@ -28829,7 +28829,7 @@
                           "IdentityBlue",
                           "Dungeon"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Squirrel",
@@ -28881,7 +28881,7 @@
                           "IdentityGolgari",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Stegosaurus",
@@ -28955,7 +28955,7 @@
                           "BiomeGreen",
                           "IdentityGruul"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Storm Titan",
@@ -29016,7 +29016,7 @@
                           "Aggressive",
                           "Leader"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Stray Cat",
@@ -29150,7 +29150,7 @@
                           "Territorial",
                           "IdentityWhite"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Sunmare",
@@ -29208,7 +29208,7 @@
                           "IdentityWhite",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Supreme Elemental",
@@ -29270,7 +29270,7 @@
                           null,
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Swamp Troll",
@@ -29370,7 +29370,7 @@
                           "BiomeBlack",
                           "Leader"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Symbiote",
@@ -29457,7 +29457,7 @@
                           "IdentityGreen",
                           "IdentitySultai"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Tarkir Djinn",
@@ -29584,7 +29584,7 @@
                           "IdentityAzorius"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Mythic"
     },
     {
         "name":  "The Cheff",
@@ -29711,7 +29711,7 @@
                           "Boss"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "The Hydra of Shandalaar",
@@ -29879,7 +29879,7 @@
                           "Aberration",
                           "IdentitySimic"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Tibalt",
@@ -29984,7 +29984,7 @@
                           "IdentityRed"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Tiger",
@@ -30312,7 +30312,7 @@
                           "Evil"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Treefolk",
@@ -30370,7 +30370,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Treefolk Elite",
@@ -30454,7 +30454,7 @@
                           "Territorial",
                           "IdentityGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Treefolk Guardian",
@@ -30531,7 +30531,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Triceratops",
@@ -30604,7 +30604,7 @@
                           "Aggressive",
                           "IdentitySelesnya"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Troll",
@@ -30681,7 +30681,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Turtle",
@@ -30746,7 +30746,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Undead Goblin",
@@ -30820,7 +30820,7 @@
                           "Aberration",
                           "IdentityRakdos"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Undead Roamer",
@@ -30873,7 +30873,7 @@
                           "Aberration",
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Undead Shuffler",
@@ -30948,7 +30948,7 @@
                           null,
                           null
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Unholy Knight",
@@ -31025,7 +31025,7 @@
                           "Hostile",
                           "Unholy"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Unholy Skull",
@@ -31083,7 +31083,7 @@
                           "IdentityDimir",
                           "Skull"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Unraveling Crawler",
@@ -31421,7 +31421,7 @@
                           "IdentityBlack"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Vampire",
@@ -31462,7 +31462,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Vampire Lord",
@@ -31496,7 +31496,7 @@
                           "IdentityRed",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Viashino",
@@ -31721,7 +31721,7 @@
                           "Fire",
                           "Monster"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Volcano Elemental",
@@ -31828,7 +31828,7 @@
                           "IdentityBlack",
                           "IdentityRakdos"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Vorinclex",
@@ -32035,7 +32035,7 @@
                           "BiomeBlue",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Walter, the Stray Camel",
@@ -32195,7 +32195,7 @@
                           "BiomeColorless",
                           "IdentityBoros"
                       ],
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Wandering Treefolk",
@@ -32351,7 +32351,7 @@
                           "IdentityBlack",
                           "IdentityJund"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Water Elemental",
@@ -32397,7 +32397,7 @@
                           "IdentityBlue",
                           "BiomeBlue"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Weak Demon",
@@ -32430,7 +32430,7 @@
                           "IdentityBlack",
                           "Beginner"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Werebear",
@@ -32504,7 +32504,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Werewolf",
@@ -32546,7 +32546,7 @@
                           "IdentityGruul",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "White Dwarf",
@@ -32736,7 +32736,7 @@
                           "BiomeGreen",
                           "BiomeRed"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Witch",
@@ -32797,7 +32797,7 @@
                           "Human",
                           "IdentityBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Wolf",
@@ -32868,7 +32868,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Wolf Pup",
@@ -32933,7 +32933,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Worm",
@@ -32968,7 +32968,7 @@
                           "IdentityWhite",
                           "Beginner"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Wounded Sliver",
@@ -33235,7 +33235,7 @@
                           "IdentityGreen",
                           "BiomeGreen"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Xira",
@@ -33339,7 +33339,7 @@
                           "IdentityJund"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Yeti",
@@ -33511,7 +33511,7 @@
                           "Large"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Zombie",
@@ -33561,7 +33561,7 @@
                           "BiomeBlack",
                           "Minion"
                       ],
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Zombie Lord",
@@ -33608,7 +33608,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Zombie Master",
@@ -33655,7 +33655,7 @@
                           "IdentityBlack",
                           "BiomeBlack"
                       ],
-        "tier":  "Common"
+        "tier":  "Rare"
     },
     {
         "name":  "Avacynian Preacher",
@@ -34804,7 +34804,7 @@
                           "BiomeGreen",
                           "BiomeWhite"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Shrieking Skaab",
@@ -35903,7 +35903,7 @@
                     ],
         "colors":  "WUBRG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -35978,7 +35978,7 @@
                     ],
         "colors":  "WUBRG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -36055,7 +36055,7 @@
         "colors":  "C",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -36130,7 +36130,7 @@
                     ],
         "colors":  "C",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -36953,7 +36953,7 @@
         "colors":  "WUBRG",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -37237,7 +37237,7 @@
                     ],
         "colors":  "WUBRG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -37311,7 +37311,7 @@
                     ],
         "colors":  "WUBRG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -38108,7 +38108,7 @@
         "colors":  "R",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -38240,7 +38240,7 @@
         "colors":  "BRG",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -38438,7 +38438,7 @@
         "colors":  "UBR",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -39031,7 +39031,7 @@
         "colors":  "UG",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -39976,7 +39976,7 @@
         "colors":  "BR",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -40269,7 +40269,7 @@
                     ],
         "colors":  "WUG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -40699,7 +40699,7 @@
                     ],
         "colors":  "WRG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -40765,7 +40765,7 @@
                     ],
         "colors":  "WBG",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -41055,7 +41055,7 @@
                     ],
         "colors":  "WBR",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -44370,7 +44370,7 @@
         "colors":  "WUG",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -44450,7 +44450,7 @@
         "colors":  "WRG",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -44779,7 +44779,7 @@
         "colors":  "B",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -45502,7 +45502,7 @@
         "colors":  "B",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -45878,7 +45878,7 @@
         "colors":  "W",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -46204,7 +46204,7 @@
         "colors":  "RG",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -46577,7 +46577,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -47419,7 +47419,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -48018,7 +48018,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -50373,7 +50373,7 @@
                     ],
         "colors":  "BR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -52607,7 +52607,7 @@
                     ],
         "colors":  "RG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -53700,7 +53700,7 @@
                     ],
         "colors":  "BRG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -53900,7 +53900,7 @@
                     ],
         "colors":  "UBR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -54314,7 +54314,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -54455,7 +54455,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -54881,7 +54881,7 @@
                     ],
         "colors":  "WUR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -55027,7 +55027,7 @@
                     ],
         "colors":  "URG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -55932,7 +55932,7 @@
                     ],
         "colors":  "UB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -56137,7 +56137,7 @@
                     ],
         "colors":  "W",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -56702,7 +56702,7 @@
                     ],
         "colors":  "WB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -57472,7 +57472,7 @@
                     ],
         "colors":  "WUB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -58951,7 +58951,7 @@
                     ],
         "colors":  "WB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -59019,7 +59019,7 @@
                     ],
         "colors":  "W",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -59775,7 +59775,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -60057,7 +60057,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -61537,7 +61537,7 @@
                     ],
         "colors":  "WG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -61742,7 +61742,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -62230,7 +62230,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -62434,7 +62434,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -62643,7 +62643,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -63060,7 +63060,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -63138,7 +63138,7 @@
                     ],
         "colors":  "UB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -63416,7 +63416,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -64989,7 +64989,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -66086,7 +66086,7 @@
                     ],
         "colors":  "G",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -66157,7 +66157,7 @@
                     ],
         "colors":  "UB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -66438,7 +66438,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -66507,7 +66507,7 @@
                     ],
         "colors":  "WU",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -67567,7 +67567,7 @@
                     ],
         "colors":  "UG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -67850,7 +67850,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -68833,7 +68833,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -69462,7 +69462,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -69598,7 +69598,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -70080,7 +70080,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -70421,7 +70421,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -70914,7 +70914,7 @@
                     ],
         "colors":  "WBG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -71639,7 +71639,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -71775,7 +71775,7 @@
                     ],
         "colors":  "WU",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -72120,7 +72120,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -72187,7 +72187,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -73275,7 +73275,7 @@
                     ],
         "colors":  "C",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -73708,7 +73708,7 @@
                     ],
         "colors":  "W",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -74740,7 +74740,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -75161,7 +75161,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Common",
         "difficulty":  1
     },
     {
@@ -75321,7 +75321,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -75805,7 +75805,7 @@
                     ],
         "colors":  "WG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -76149,7 +76149,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -76563,7 +76563,7 @@
                     ],
         "colors":  "UR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -76839,7 +76839,7 @@
                     ],
         "colors":  "WUR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -77725,7 +77725,7 @@
                     ],
         "colors":  "C",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -78214,7 +78214,7 @@
                     ],
         "colors":  "UB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -78287,7 +78287,7 @@
                     ],
         "colors":  "WG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -78582,7 +78582,7 @@
                     ],
         "colors":  "WB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -78802,7 +78802,7 @@
                     ],
         "colors":  "UBG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -79170,7 +79170,7 @@
                     ],
         "colors":  "WG",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -80057,7 +80057,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Common",
         "difficulty":  1
     },
     {
@@ -80392,7 +80392,7 @@
                     ],
         "colors":  "UBG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -80752,7 +80752,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -80892,7 +80892,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -81945,7 +81945,7 @@
                     ],
         "colors":  "WB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -83431,7 +83431,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -83865,7 +83865,7 @@
                     ],
         "colors":  "UG",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -84272,7 +84272,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -84478,7 +84478,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -84978,7 +84978,7 @@
                     ],
         "colors":  "W",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -85123,7 +85123,7 @@
                     ],
         "colors":  "W",
         "spawnRate":  1,
-        "tier":  "Uncommon",
+        "tier":  "Common",
         "difficulty":  1
     },
     {
@@ -85336,7 +85336,7 @@
                     ],
         "colors":  "WG",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -85627,7 +85627,7 @@
                     ],
         "colors":  "WB",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -86219,7 +86219,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -86286,7 +86286,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -87453,7 +87453,7 @@
                     ],
         "colors":  "UBR",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -87598,7 +87598,7 @@
                     ],
         "colors":  "WUR",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -87873,7 +87873,7 @@
                     ],
         "colors":  "URG",
         "spawnRate":  1,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -89964,7 +89964,7 @@
                     ],
         "colors":  "WUB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -90031,7 +90031,7 @@
                     ],
         "colors":  "WUB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -90376,7 +90376,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -90443,7 +90443,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Common",
         "difficulty":  1
     },
     {
@@ -90577,7 +90577,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Common",
         "difficulty":  3
     },
     {
@@ -90925,7 +90925,7 @@
                     ],
         "colors":  "WBG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -91059,7 +91059,7 @@
                     ],
         "colors":  "BG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -91277,7 +91277,7 @@
                     ],
         "colors":  "UB",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -91421,7 +91421,7 @@
                     ],
         "colors":  "WG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -92047,7 +92047,7 @@
                     ],
         "colors":  "UG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -92466,7 +92466,7 @@
                     ],
         "colors":  "B",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -92683,7 +92683,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -92828,7 +92828,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -95621,7 +95621,7 @@
                     ],
         "colors":  "R",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -96669,7 +96669,7 @@
                     ],
         "colors":  "BRG",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -97251,7 +97251,7 @@
                     ],
         "colors":  "WR",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -97401,7 +97401,7 @@
                     ],
         "colors":  "U",
         "spawnRate":  0,
-        "tier":  "Rare",
+        "tier":  "Uncommon",
         "difficulty":  2
     },
     {
@@ -97820,7 +97820,7 @@
         "colors":  "C",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Uncommon",
+        "tier":  "Rare",
         "difficulty":  1
     },
     {
@@ -97854,7 +97854,7 @@
         "colors":  "W",
         "gamesPerMatch":  3,
         "spawnRate":  0,
-        "tier":  "Mythic",
+        "tier":  "Rare",
         "difficulty":  3
     },
     {
@@ -99507,7 +99507,7 @@
                         }
                     ],
         "colors":  "WUBRG",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Elf Queen Guay",
@@ -100684,7 +100684,7 @@
                           "BiomeBlue",
                           "Leader"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Forest Titan",
@@ -101236,7 +101236,7 @@
                         }
                     ],
         "colors":  "WUR",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Svend Geertsen \u002797",
@@ -101442,7 +101442,7 @@
                         }
                     ],
         "colors":  "G",
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Paul McCabe \u002797",
@@ -101654,7 +101654,7 @@
                         }
                     ],
         "colors":  "UR",
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Brian Selden \u002798",
@@ -102176,7 +102176,7 @@
                         }
                     ],
         "colors":  "W",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Randy Buehler \u002798",
@@ -102382,7 +102382,7 @@
                         }
                     ],
         "colors":  "U",
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Kai Budde \u002799",
@@ -103000,7 +103000,7 @@
                         }
                     ],
         "colors":  "G",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Jakub Šlemr \u002799",
@@ -103624,7 +103624,7 @@
                         }
                     ],
         "colors":  "RG",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Tom van de Logt \u002700",
@@ -104460,7 +104460,7 @@
                         }
                     ],
         "colors":  "U",
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Antoine Ruel \u002701",
@@ -104666,7 +104666,7 @@
                         }
                     ],
         "colors":  "UBR",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Jan Tomcani \u002701",
@@ -104878,7 +104878,7 @@
                         }
                     ],
         "colors":  "BRG",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Carlos Romao \u002702",
@@ -107252,7 +107252,7 @@
                         }
                     ],
         "colors":  "UBRG",
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Cyrille deFoucaud \u002794",
@@ -109160,7 +109160,7 @@
                         }
                     ],
         "colors":  "RG",
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "Legend of the Savannah",
@@ -113002,7 +113002,7 @@
                           "BiomeBlue"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Nether Fiend of Shandalar",
@@ -113323,7 +113323,7 @@
                           "Human",
                           "BiomeBlack"
                       ],
-        "tier":  "Uncommon"
+        "tier":  "Common"
     },
     {
         "name":  "The Lichlord of Azar",
@@ -114236,7 +114236,7 @@
                           "BiomeRed"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Uncommon"
+        "tier":  "Rare"
     },
     {
         "name":  "Beast Master of Shandalar",
@@ -114901,7 +114901,7 @@
                           "BiomeGreen"
                       ],
         "gamesPerMatch":  3,
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Kiska-Ra of Shandalar",
@@ -115369,7 +115369,7 @@
                           "Dragon",
                           "BiomeColorless"
                       ],
-        "tier":  "Rare"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Mandurang of Shandalar",
@@ -118369,7 +118369,7 @@
                           "BiomeWhite"
                       ],
         "boss":  true,
-        "tier":  "Common"
+        "tier":  "Uncommon"
     },
     {
         "name":  "Swamp Queen Tojira",
@@ -120837,7 +120837,7 @@
                           "Humanoid",
                           "Elf"
                       ],
-        "tier":  "Uncommon",
+        "tier":  "Common",
         "difficulty":  1
     },
     {
@@ -122372,7 +122372,7 @@
   "colors": "WU",
   "questTags": [],
   "gamesPerMatch": 3,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Kaervek",
@@ -122409,7 +122409,7 @@
   "colors": "BR",
   "questTags": [],
   "gamesPerMatch": 3,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Sidar Kondo",
@@ -122520,7 +122520,7 @@
   "colors": "RG",
   "questTags": [],
   "gamesPerMatch": 3,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Mysterious Mage",
@@ -122701,7 +122701,7 @@
   "gamesPerMatch": 3,
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "Auntie Ool",
@@ -122978,7 +122978,7 @@
   "gamesPerMatch": 3,
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "Maralen",
@@ -123123,7 +123123,7 @@
   "gamesPerMatch": 3,
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "Oura",
@@ -123196,7 +123196,7 @@
   "gamesPerMatch": 3,
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "The Grand Goatnapper",
@@ -123500,7 +123500,7 @@
   "colors": "B",
   "spawnRate": 0,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Freyalise",
@@ -123708,7 +123708,7 @@
   "colors": "UB",
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "Thomil",
@@ -123855,7 +123855,7 @@
   "colors": "UW",
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "Worzel",
@@ -123978,7 +123978,7 @@
   "gamesPerMatch": 3,
   "spawnRate": 0,
   "difficulty": 3,
-  "tier": "Mythic"
+  "tier": "Rare"
 },
 {
   "name": "Cerise",
@@ -124112,7 +124112,7 @@
   "colors": "WG",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Grakk",
@@ -124171,7 +124171,7 @@
   "colors": "W",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Kwain",
@@ -124305,7 +124305,7 @@
   "colors": "W",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Preston",
@@ -124372,7 +124372,7 @@
   "colors": "W",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Thurid",
@@ -124472,7 +124472,7 @@
   "colors": "W",
   "spawnRate": 0,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Autumn Willow (An-Havva)",
@@ -124611,7 +124611,7 @@
   "colors": "GW",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Feroz",
@@ -124751,7 +124751,7 @@
   "colors": "G",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Joven and Chandler",
@@ -124923,7 +124923,7 @@
   "colors": "U",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Grandmother Goby",
@@ -125057,7 +125057,7 @@
   "colors": "U",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Mu Yanling",
@@ -125124,7 +125124,7 @@
   "colors": "U",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Neerdiv",
@@ -125191,7 +125191,7 @@
   "colors": "U",
   "spawnRate": 1,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Rikala",
@@ -125281,7 +125281,7 @@
   "colors": "UG",
   "spawnRate": 0,
   "difficulty": 2,
-  "tier": "Rare"
+  "tier": "Uncommon"
 },
 {
   "name": "Adriana",
@@ -125420,7 +125420,7 @@
   "colors": "C",
   "gamesPerMatch": 3,
   "spawnRate": 0,
-  "tier": "Mythic",
+  "tier": "Rare",
   "difficulty": 3
 },
 {
@@ -125497,7 +125497,7 @@
   "colors": "C",
   "gamesPerMatch": 3,
   "spawnRate": 0,
-  "tier": "Mythic",
+  "tier": "Rare",
   "difficulty": 3
 }
 ]

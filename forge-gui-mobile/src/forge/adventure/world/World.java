@@ -281,6 +281,13 @@ public class World implements Disposable, SaveFileContent {
     private final java.util.Map<String, Integer> poiDespawnDay = new java.util.HashMap<>();
     private final java.util.Map<String, Integer> poiRespawnDay = new java.util.HashMap<>();
     private final java.util.Map<String, Integer> poiFailedAttempts = new java.util.HashMap<>();
+    // Weighted spawn tier system, Layer 3 (2026-08-23 user spec) - per-enemy-name kill-decay
+    // suppression, same shape as the poi* maps above (World-level, keyed by a stable string id,
+    // absolute-day-based, evaluated lazily on read rather than ticked). enemyKillStacks: current
+    // suppression stack count per enemy name. enemyLastKillDay: the day stacks were last added,
+    // used to compute how many have decayed away since. See SpawnTierWeighting.java.
+    private final java.util.Map<String, Integer> enemyKillStacks = new java.util.HashMap<>();
+    private final java.util.Map<String, Integer> enemyLastKillDay = new java.util.HashMap<>();
 
     public java.util.Map<String, Integer> getPoiDespawnDay() {
         return poiDespawnDay;
@@ -292,6 +299,14 @@ public class World implements Disposable, SaveFileContent {
 
     public java.util.Map<String, Integer> getPoiFailedAttempts() {
         return poiFailedAttempts;
+    }
+
+    public java.util.Map<String, Integer> getEnemyKillStacks() {
+        return enemyKillStacks;
+    }
+
+    public java.util.Map<String, Integer> getEnemyLastKillDay() {
+        return enemyLastKillDay;
     }
 
     // How many rotatable dungeons/caves should be visible at once (pool rotation) - set to
@@ -522,6 +537,16 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             poiFailedAttempts.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiFailedAttempts"));
         }
+        enemyKillStacks.clear();
+        if (saveFileData.containsKey("enemyKillStacks")) {
+            //noinspection unchecked
+            enemyKillStacks.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyKillStacks"));
+        }
+        enemyLastKillDay.clear();
+        if (saveFileData.containsKey("enemyLastKillDay")) {
+            //noinspection unchecked
+            enemyLastKillDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyLastKillDay"));
+        }
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
         questAcceptedDay.clear();
         if (saveFileData.containsKey("questAcceptedDay")) {
@@ -572,6 +597,8 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
+        data.storeObject("enemyKillStacks", enemyKillStacks);
+        data.storeObject("enemyLastKillDay", enemyLastKillDay);
         data.store("poiActiveTarget", poiActiveTarget);
         data.storeObject("questAcceptedDay", questAcceptedDay);
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
@@ -830,6 +857,12 @@ public class World implements Disposable, SaveFileContent {
             poiDespawnDay.clear();
             poiRespawnDay.clear();
             poiFailedAttempts.clear();
+            // Weighted spawn tier system, Layer 3 (2026-08-23) - must be cleared here same as the
+            // poi* maps above: New Game+ reuses this exact World instance and calls generateNew()
+            // in place rather than constructing a fresh one, so without this an enemy's kill
+            // suppression from the PREVIOUS playthrough would silently carry into the new one.
+            enemyKillStacks.clear();
+            enemyLastKillDay.clear();
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
             questAcceptedDay.clear();
 

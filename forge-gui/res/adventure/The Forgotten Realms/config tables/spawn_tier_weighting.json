@@ -1,0 +1,36 @@
+{
+  // Weighted overworld-spawn tier system (user spec 2026-08-23) - hand-editable, no code change
+  // needed to rebalance. See SpawnTierWeighting.java for how this is consumed; kill-decay's own
+  // scalars live in settings.json instead (flat tunables, not a table).
+  //
+  // weekBrackets: ordered rows of {weekMin, weekMax, common, uncommon, rare, mythic} - target
+  // percentages for that week range (need not sum to exactly 100). weekMax: -1 = open-ended, i.e.
+  // this is the permanent plateau once reached. Week number = 1 + (currentDay-1)/7 (same day/7
+  // boundary EconomyBuildings' weekly mine payouts and World's own weekly standings history use).
+  "weekBrackets": [
+    { "weekMin": 1,  "weekMax": 1,  "common": 90, "uncommon": 10, "rare": 0,  "mythic": 0 },
+    { "weekMin": 2,  "weekMax": 3,  "common": 78, "uncommon": 18, "rare": 4,  "mythic": 0 },
+    { "weekMin": 4,  "weekMax": 6,  "common": 65, "uncommon": 24, "rare": 10, "mythic": 1 },
+    { "weekMin": 7,  "weekMax": 10, "common": 52, "uncommon": 27, "rare": 17, "mythic": 4 },
+    { "weekMin": 11, "weekMax": 15, "common": 40, "uncommon": 28, "rare": 24, "mythic": 8 },
+    { "weekMin": 16, "weekMax": 20, "common": 30, "uncommon": 27, "rare": 28, "mythic": 15 },
+    { "weekMin": 21, "weekMax": -1, "common": 22, "uncommon": 24, "rare": 30, "mythic": 24 }
+  ],
+  // territoryDeltas: percentage-point deltas added to the active week bracket's row before
+  // clamping (floor 0) - NOT renormalized to exactly 100 afterward (BiomeData.getEnemy() divides
+  // by each tier's own real spawnRate pool anyway, so small over/under-100 totals just shift the
+  // overall spawn rate slightly, not the relative mix). Keys: PLAYER_OWNED (the current tile is
+  // player-owned terrain) or one of ColorReputation.Status's own names (PARTNER/HAPPY/NEUTRAL/
+  // UNHAPPY/WAR) for AI-color territory. War's Common delta (-18) is deliberately 3x Unhappy's
+  // (-6) - reproduces the same ratio this project's own ColorReputation.getSpawnIntrusionMultiplier()
+  // already uses between those two statuses (2.5x / 1.5x relative to Neutral's 1x), so the new
+  // "danger curve" matches a ratio this codebase already committed to rather than a new one.
+  "territoryDeltas": {
+    "PLAYER_OWNED": { "common": 10,  "uncommon": 2,  "rare": -4, "mythic": -8  },
+    "PARTNER":      { "common": 15,  "uncommon": 5,  "rare": -8, "mythic": -12 },
+    "HAPPY":        { "common": 7,   "uncommon": 3,  "rare": -4, "mythic": -6  },
+    "NEUTRAL":       { "common": 0,   "uncommon": 0,  "rare": 0,  "mythic": 0   },
+    "UNHAPPY":      { "common": -6,  "uncommon": -2, "rare": 3,  "mythic": 5   },
+    "WAR":          { "common": -18, "uncommon": -6, "rare": 8,  "mythic": 16  }
+  }
+}

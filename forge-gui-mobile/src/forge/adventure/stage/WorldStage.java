@@ -925,9 +925,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // colors:"C" enemies fixed this round actually appear, etc.). speed/life added
                 // 2026-08-13 (diagnostic logging standard) - the raw catalog values for a roaming
                 // enemy at the moment it spawns, otherwise not printed anywhere.
+                String spawnTierInfo = "";
+                if (SpawnTierWeighting.isEnabled()) {
+                    int week = SpawnTierWeighting.currentWeek(world);
+                    spawnTierInfo = ", week=" + week + ", killDecayMult=" + SpawnTierWeighting.killDecayMultiplier(enemyData);
+                }
                 System.out.println("[TFR-Spawn] " + enemyData.getName() + " (tier=" + enemyData.tier
                         + ", colors=" + enemyData.colors + ", speed=" + enemyData.speed
-                        + ", life=" + enemyData.life + ") in " + data.name + " territory (rank=" + difficultyFactor + ")");
+                        + ", life=" + enemyData.life + ") in " + data.name + " territory (rank=" + difficultyFactor
+                        + spawnTierInfo + ")");
             }
         }
         EnemyData extraSpawnForQuests = data.getExtraSpawnEnemy(difficultyFactor);

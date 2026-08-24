@@ -54,7 +54,12 @@ five tiers - **Partner** (80+), **Happy** (30-79), **Neutral**, **Unhappy** (-30
 **War** (-80 and below) - and each tier changes real things: card-shop pricing (30% cheaper as a
 Partner, 40% pricier at War), how often that color's mages target you, and whether you can enter
 their towns at all. At War, ordinary towns are barred outright and a color's own Capitol charges a
-steep gold toll just to set foot inside.
+steep gold toll just to set foot inside. Your standing with a color also shapes what you'll run
+into on their land - roaming enemies skew noticeably weaker with a Partner or Happy standing, and
+tougher the worse things get, down to War. Your own territory is always the safest place to fight,
+regardless of anyone else's standing. Separately, the world as a whole trends toward tougher
+roaming enemies the longer a run goes on, week by week, capped well short of an endless escalation
+- so the opening weeks are the gentlest part of any run, by design.
 
 ### Territory Control & Color Defeat
 

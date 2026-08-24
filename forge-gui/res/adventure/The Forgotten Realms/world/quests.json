@@ -6934,6 +6934,12 @@
 				]
 			},
 			{
+				"condition": [
+					{
+						"checkCharacterFlag": "freeChallengeCoins",
+						"not": true
+					}
+				],
 				"action": [
 					{ "addItem": "Colorless rune" },
 					{ "addItem": "Bronze Challenge Coin" },

@@ -42,6 +42,7 @@ public class Config {
     private final HashMap<String, FileHandle> Cache = new HashMap<>();
     private ConfigData configData;
     private TuningData tuningData;
+    private SpawnTierWeightData spawnTierWeightData;
     private final String[] adventures;
     private SettingData settingsData;
     private String Lang = "en-us";
@@ -181,6 +182,25 @@ public class Config {
         // load site, contradicting the log line above's claim of graceful degradation.
         if (configData.restrictedCards == null)
             configData.restrictedCards = new String[0];
+
+        // Spawn Tier Weighting file (2026-08-23 user spec) - same plane-local/fallback-to-common
+        // load pattern as restricted_cards.json above. Unlike that file, this one is NOT merged
+        // into an existing ConfigData field - it's this feature's own dedicated data, silently
+        // absent (spawnTierWeightData stays null) on any plane without the file, which
+        // SpawnTierWeighting.targetTierWeight() already treats as "target 0 for everything" -
+        // harmless, since the feature is separately gated off by default via
+        // ConfigData.weightedSpawnTiersEnabled anyway.
+        FileHandle spawnTierWeightFile = new FileHandle(prefix + "config tables/spawn_tier_weighting.json");
+        if (!spawnTierWeightFile.exists())
+            spawnTierWeightFile = new FileHandle(commonPrefix + "config tables/spawn_tier_weighting.json");
+        if (spawnTierWeightFile.exists()) {
+            try {
+                spawnTierWeightData = new Json().fromJson(SpawnTierWeightData.class, spawnTierWeightFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-SpawnTierWeighting] spawn_tier_weighting.json failed to load, feature will no-op: " + e);
+                spawnTierWeightData = null;
+            }
+        }
     }
 
     private String resPath() {
@@ -206,6 +226,10 @@ public class Config {
 
     public TuningData getTuningData() {
         return tuningData;
+    }
+
+    public SpawnTierWeightData getSpawnTierWeightData() {
+        return spawnTierWeightData;
     }
 
     // Push the plane's allowed/restricted editions and restricted token pairs into TokenDb.

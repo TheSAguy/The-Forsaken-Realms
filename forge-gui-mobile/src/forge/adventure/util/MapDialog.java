@@ -383,6 +383,9 @@ public class MapDialog {
             if (E.activateMapObject != 0){
                 stage.activateMapObject(E.activateMapObject);
             }
+            if (E.triggerDungeonClear) { //Manually fires despawn-on-clear for a dialogue-resolved dungeon (mod addition).
+                DungeonRotation.onDungeonClear(TileMapScene.instance().rootPoint);
+            }
             if (E.battleWithActorID != 0) { //Starts a battle with the given enemy ID.
                 if (E.battleWithActorID < 0) stage.beginDuel(stage.getEnemyByID(parentID));
                 else stage.beginDuel(stage.getEnemyByID(E.battleWithActorID));

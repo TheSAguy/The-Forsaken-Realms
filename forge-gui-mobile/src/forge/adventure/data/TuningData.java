@@ -124,4 +124,17 @@ public class TuningData {
     // unlock) stays a fixed constant - not asked to be tunable, and unlike the fraction it isn't a
     // single "how hard should this be" knob.
     public float researchThresholdFraction = 0.10f;
+
+    // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (user spec 2026-08-23: "every
+    // time you kill an enemy, the chances of that specific enemy re-appearing goes down just a
+    // little bit"). The week-progression/territory tables live in their own dedicated file
+    // (config tables/spawn_tier_weighting.json, SpawnTierWeightData.java) since they're
+    // structured tabular data, not flat scalars - same split this project already uses for
+    // restricted_cards.json vs. this file. One kill = one suppression stack (multiplier
+    // (1-killDecaySuppressionPerStack)^stacks); stacks cap at killDecayMaxStacks; one stack
+    // decays every killDecayRecoveryDaysPerStack days without a further kill. See
+    // SpawnTierWeighting.java.
+    public float killDecaySuppressionPerStack = 0.20f;
+    public int killDecayMaxStacks = 3;
+    public int killDecayRecoveryDaysPerStack = 4;
 }

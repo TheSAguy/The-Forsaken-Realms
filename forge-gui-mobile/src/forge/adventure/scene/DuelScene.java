@@ -23,6 +23,7 @@ import forge.adventure.util.AdventureEventController;
 import forge.adventure.util.ColorReputation;
 import forge.adventure.util.Config;
 import forge.adventure.util.Current;
+import forge.adventure.util.SpawnTierWeighting;
 import forge.adventure.util.TownRestoration;
 import forge.adventure.world.WorldSave;
 import forge.assets.FBufferedImage;
@@ -306,8 +307,15 @@ public class DuelScene extends ForgeScene {
             // mode the recorded result was whatever the AI-piloted seat happened to do).
             // EnemyData.fixedDeck is only ever set on Deck Tester's synthetic per-fight clone
             // (see its own field comment), making it the reliable discriminator here.
-            if (enemy == null || enemy.getData().fixedDeck == null)
+            if (enemy == null || enemy.getData().fixedDeck == null) {
                 Current.player().getStatistic().setResult(enemyName, winner);
+                // Weighted spawn tier system, Layer 3 (2026-08-23) - same guarded funnel as the
+                // win/loss record above (Deck Tester excluded, only a confirmed win registers).
+                // enemy can be null here (see the guard above); WorldData.getEnemy() resolves the
+                // EnemyData by name in that case - registerKill() itself is null-safe either way.
+                if (winner)
+                    SpawnTierWeighting.registerKill(enemy != null ? enemy.getData() : WorldData.getEnemy(enemyName));
+            }
 
             if (last instanceof IAfterMatch) {
                 ((IAfterMatch) last).setWinner(winner, isArena);
