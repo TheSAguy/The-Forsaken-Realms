@@ -13329,3 +13329,176 @@ inn.json` (new), `.../ui/inn_portrait.json` (new), `.../ui/inventory.json` (new)
 inventory_portrait.json` (new), `.../world/quests.json` (`$(poi_1)` -> `$(poi_2)` fix); `forge-
 gui/res/adventure/Realm of Legends/world/quests.json` (same fix, confirmed inherited base-game
 bug).
+
+## Forty-ninth round: welcome-popup scroll fix, Inn re-roll must-differ guarantee, town count halved, POI placement diagnostics, Functioning Neutral Towns, territory-radius growth/protection decoupled (2026-08-24)
+
+Three sittings' worth of user requests, all implemented and deployed live this round (unlike the
+prior REPO-ONLY round). Two quick bug fixes, then a larger, explicitly consulted-on map-generation
+and territory-system rework.
+
+### Welcome popup overflow, fixed via InfoTextScene instead of a Dialog
+
+User screenshot showed the welcome text spilling off the top of the screen, unscrollable.
+`WorldStage.showWelcomeDialog()` used to build a raw `Dialog` - which `Dialog.show()` packs to fit
+its content with no way to cap it below the 480x270 virtual screen every scene here uses, so
+wrapping the text in a `ScrollPane` inside that Dialog would not have fixed anything (the outer
+window would still overflow; this exact failure mode is already documented in `InfoTextScene`'s
+own class comment from an earlier round's identical mistake). Routed through `InfoTextScene`
+instead - the fixed-size, actually-scrollable page this project already built for "How Guards
+Work"/"Mod Details" - splitting `welcomePopupText` on its own `\n\n` paragraph breaks (matching
+how every other `InfoTextScene` caller hand-builds its paragraph list) rather than passing one
+giant unwrapped string.
+
+### Inn Tournament re-roll must actually produce a different card pool
+
+Follow-up to last round's re-roll feature: the picker could roll the same edition back. Now
+retries up to 20 times, rejecting any candidate whose `cardBlockName` matches what's currently
+showing, before giving up with no charge (same "no legal pool -> no charge" shape the original
+implementation already used for a fully-exhausted pool). Bounded rather than unbounded, since an
+edition-progression pool with only one currently-legal block would otherwise retry forever.
+
+### Town count: generation pool halved, pure data edit
+
+User spec, clarified mid-round: "generation pool only," not a guaranteed day-1-owned count (the
+latter would have needed a code change to `TerritoryControl.neutralizeAfterGeneration()`'s
+radius-based cutoff - not what was asked). `world/points_of_interest.json`'s town/capital `count`
+fields redistributed so each color's Capital(1) + town-variant sum lands on exactly 50, and
+neutral's three Waste Town variants sum to exactly 60:
+
+| Group | Old total | New total | Breakdown |
+|---|---|---|---|
+| White (Plains) | 66 | 50 | Capital 1, Generic 11, Identity 19, Tribal 19 |
+| Blue (Island) | 61 | 50 | Capital 1, Generic 17, Identity 16, Tribal 16 |
+| Black (Swamp) | 64 | 50 | Capital 1, Generic 17, Identity 16, Tribal 16, Town2 0 (dropped for parity) |
+| Red (Mountain) | 71 | 50 | Capital 1, Generic 14, Identity 18, Tribal 17 |
+| Green (Forest) | 66 | 50 | Capital 1, Generic 11, Identity 19, Tribal 19 |
+| Neutral (Waste) | 100 | 60 | Generic 18, Identity 21, Tribal 21 |
+
+Black's extra `Swamp Town2` template (the other 4 colors have no fifth variant) was zeroed rather
+than deleted, so nothing else referencing that template name breaks. Two dead/orphaned templates
+found during research (`Naktamun`, the bare `"<Color> Town"` entries) - referenced by zero biome
+files, place nothing - were deliberately left untouched.
+
+### `[TFR-PoiPlacement]` diagnostic logging for map-gen crowding
+
+User request, ahead of a possible town-only exclusion-zone change (see below) - "create a log
+entry and see if/how many times we hit the 500-attempt failure. Or even how high that goes."
+`World.java`'s POI placement loop already had two failure-path messages (a full-pass regenerate
+on collision exhaustion, and a "not placed after 500 attempts" silent-drop log) - both tagged
+`[TFR-PoiPlacement]` now for greppability, and every SUCCESSFUL placement's attempt count is
+tracked too (previously invisible - only outright failure was logged). One summary line per
+completed placement pass: `[TFR-PoiPlacement] summary: N POI(s) placed, max attempts used=X/500,
+placements needing >50 attempts=Y, full-pass restarts=Z`. Per-pass counters reset at the top of
+each `while(running)` iteration (so the summary reflects only the pass that actually finished);
+the full-pass-restart counter persists across the whole `generateNew()` call.
+
+### Functioning Neutral Towns
+
+User spec: "10 out of the 60 neutral towns should not be ruined, but actual functioning neutral
+towns (like base game). The shops in these towns should all still be gated to only sell cards
+from expansions neutral has access to." Research found `EditionProgression.NEUTRAL` already a
+first-class edition shard on equal footing with the 5 colors, and `restrictShopRewardsForCurrentTown()`'s
+`else` branch already falls through to it for any town whose name matches no color - meaning the
+edition-gating half of this feature needed zero new code. The missing half was bypassing the
+"ruined" state without granting ownership.
+
+Deliberately did NOT reuse `TOWN_RESTORED_FLAG` (the existing player-paid-restoration flag) -
+that flag means two different things across the codebase depending on which system reads it:
+"not ruined" (`ShopActor`/`QuestActor`/`OnCollide`/`MapStage`'s rubble-vs-normal checks) AND
+"this is now the player's own territory" (`TerritoryControl`'s many ownership/expansion/standings
+checks). Reusing it would have silently made these 10 towns count as player-owned land. Instead,
+`TownRestoration.java` gained a standalone `NEUTRAL_SEEDED_FLAG`, checked only by a new
+`isNeutralSeeded()` helper wired into the two "does THIS instance look ruined right now" entry
+points that already had a concrete `PointOfInterest` in hand (`isWastelandTown()`'s no-arg
+overload, used by ShopActor/QuestActor/OnCollide/MapStage; and `getBrokenTownSprite()`, the
+overworld ruin icon) - every other `isWastelandTown(PointOfInterestData)` caller (template-
+classification logic, debug tooling, the name-migration repair pass) is untouched, since none of
+them determine per-instance ruined-state.
+
+New `TownRestoration.seedFunctioningNeutralTowns(World)`, called from `World.generateNew()` right
+after `TerritoryControl.neutralizeAfterGeneration()` (so the final neutral-town pool, including
+any AI towns just swept back to neutral, is already known) - randomly flags
+`TuningData.functioningNeutralTownCount` (10) of them via the world's own seeded `Random`
+(reproducible per save seed). Gated behind new `ConfigData.functioningNeutralTownsEnabled`.
+
+**Verified, not assumed, against the user's explicit follow-up requirement** ("these should NOT
+be player towns. They should not grow, have any sort of territory ownership. They can be attacked
+and taken over by the AI... Player can only enter like a vanilla neutral town.") - re-read
+`TerritoryControl.onMageArrived()` directly: AI-capture eligibility checks
+`isWastelandTown(target.getData())`, the template-level overload this feature never touches, so
+these towns remain exactly as capturable as any other neutral town, with the same "no fight-back,
+just claims" path genuinely-unclaimed neutral land already had. They're never seeded into
+`World.townTerritoryRadius` either (only `onMageArrived()` for AI capture or the player's own
+restore path ever does that), so they have no growth and no territory, full stop. No code change
+was needed for this - the design already satisfied it by construction.
+
+### Territory radius: growth cap raised, protected core deliberately held fixed
+
+Follow-up user correction to an initial "double it?" question from last round: "I don't want to
+double the protected area... All I want is to increase how far out the town can grow... The
+starting radius and protected radius should stay unchanged." Research had already found the
+protected core is not a separate number - `TerritoryControl.buildPullSources()` computes it live
+as `currentRadius / 2`, so raising the growth cap alone would have silently raised the protected
+core right along with it.
+
+Decoupled the two: new `TuningData.townProtectedRadiusCap` (20, exactly matching the *original*
+`townMaxTerritoryRadius`) caps the INPUT to the `/2` formula, independent of the growth ceiling.
+Both `buildPullSources()` call sites (AI-owned towns and player towns) now compute
+`protect = max(1, min(radius, townProtectedRadiusCap) / 2)` instead of `max(1, radius / 2)` - so
+the protected core's ceiling stays pinned at 10 tiles (`20/2`) exactly as it is today, no matter
+how far `townMaxTerritoryRadius` itself grows. `RECOLOR_RADIUS` (the starting radius on capture,
+10) was never touched - already matched "starting radius... unchanged."
+
+`townMaxTerritoryRadius` itself raised 20 -> 25. Sizing check, not an arbitrary pick: modeling
+total covered area per color as roughly `townCount x radius^2` and solving for the radius that
+keeps that product constant after the town-count cut (e.g. White 65 towns@20 -> 49 towns@~23,
+similarly ~22-24 across the other 4 colors) gives a natural range; 25 is a round number inside it,
+leaving margin since fewer "seed" towns also means fewer expansion fronts to begin with. Both
+numbers are plain `settings.json` tunables now - no code change needed to retune either after
+playtesting.
+
+### Validation performed
+
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0 (one prior attempt this
+  session failed on an unrelated transient "error reading" I/O fault across unrelated forge-core
+  files, not a real compile error - confirmed by re-reading one of the flagged files directly and
+  finding it intact; a bare retry succeeded).
+- `mvn -pl forge-gui-mobile-dev -am package -DskipTests -o` - clean, exit 0, produces the deployed
+  jar-with-dependencies.
+- All touched/new JSON (`points_of_interest.json`, `config.json`, `settings.json`) parsed
+  successfully with `//` comments stripped.
+- `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly in
+  the live folder (not trusted from the script's own report alone) confirming "Package verified
+  complete. Safe to play from this folder."; live-folder copies of `settings.json`/`config.json`/
+  `ui/inn.json`/`ui/inventory.json`/`world/quests.json`/`world/points_of_interest.json` spot-
+  checked against the repo's edited values; jar timestamp confirmed fresh.
+
+### Unrelated incident, same session: 85 map files found corrupted, restored
+
+Mid-round, the user reported Tiled couldn't open `spawn.tmx` ("Not a map file"). Investigation
+found 85 of 105 modified `.tmx` files in the working tree contained JSON quest-dialogue text
+instead of map XML - not something Tiled itself could ever produce, and not touched by this
+session's own edits (confirmed via `git status` - none of this round's changes touched any
+`.tmx` file). Each of the 85 had genuinely different content (85 unique content hashes, ruling
+out one repeated bad paste), pointing more toward some other tool/script writing mismatched data
+per-file rather than a single clipboard accident - exact cause unconfirmed, outside this repo's
+visibility. All 85 were uncommitted working-tree-only changes with intact last-committed versions,
+and the live standalone folder's copies were confirmed still valid (unaffected) - so this was a
+zero-risk `git checkout HEAD --` restore for exactly those 85 files, leaving the other 20
+modified `.tmx` files (all in `maps/map/fort/`, well-formed XML, the user's own genuine dungeon
+edits) completely untouched.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (welcome popup
+routed through `InfoTextScene`), `forge-gui-mobile/src/forge/adventure/scene/InnScene.java`
+(re-roll must-differ retry loop), `forge-gui-mobile/src/forge/adventure/world/World.java`
+(`[TFR-PoiPlacement]` diagnostics, `isFunctioningNeutralTownsEnabled()`,
+`seedFunctioningNeutralTowns()` call site), `forge-gui-mobile/src/forge/adventure/util/
+TownRestoration.java` (`NEUTRAL_SEEDED_FLAG`, `isNeutralSeeded()`, `seedFunctioningNeutralTowns()`),
+`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java` (`townProtectedRadiusCap()`,
+both `buildPullSources()` protect-radius calculations), `forge-gui-mobile/src/forge/adventure/
+data/ConfigData.java` (`functioningNeutralTownsEnabled`), `forge-gui-mobile/src/forge/adventure/
+data/TuningData.java` (`functioningNeutralTownCount`, `townMaxTerritoryRadius` 20->25,
+`townProtectedRadiusCap`); `forge-gui/res/adventure/The Forgotten Realms/world/
+points_of_interest.json` (town/capital counts), `.../config.json`
+(`functioningNeutralTownsEnabled: true`), `.../config tables/settings.json`
+(`townMaxTerritoryRadius`, new `townProtectedRadiusCap`, new `functioningNeutralTownCount`).

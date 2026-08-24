@@ -1920,7 +1920,7 @@
 	{
 		"name": "Forest Town Generic",
 		"type": "town",
-		"count": 15,
+		"count": 11,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "ForestTown",
 		"map": "../The Forgotten Realms/maps/map/towns/forest_town_generic.tmx",
@@ -1936,7 +1936,7 @@
 	{
 		"name": "Forest Town Identity",
 		"type": "town",
-		"count": 25,
+		"count": 19,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "ForestTown",
 		"map": "../The Forgotten Realms/maps/map/towns/forest_town_identity.tmx",
@@ -1952,7 +1952,7 @@
 	{
 		"name": "Forest Town Tribal",
 		"type": "town",
-		"count": 25,
+		"count": 19,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "ForestTown",
 		"map": "../The Forgotten Realms/maps/map/towns/forest_town_tribal.tmx",
@@ -2518,7 +2518,7 @@
 	{
 		"name": "Island Town Generic",
 		"type": "town",
-		"count": 20,
+		"count": 17,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "IslandTown",
 		"map": "../The Forgotten Realms/maps/map/towns/island_town_generic.tmx",
@@ -2534,7 +2534,7 @@
 	{
 		"name": "Island Town Identity",
 		"type": "town",
-		"count": 20,
+		"count": 16,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "IslandTown",
 		"map": "../The Forgotten Realms/maps/map/towns/island_town_identity.tmx",
@@ -2550,7 +2550,7 @@
 	{
 		"name": "Island Town Tribal",
 		"type": "town",
-		"count": 20,
+		"count": 16,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "IslandTown",
 		"map": "../The Forgotten Realms/maps/map/towns/island_town_tribal.tmx",
@@ -3235,7 +3235,7 @@
 	{
 		"name": "Mountain Town Generic",
 		"type": "town",
-		"count": 20,
+		"count": 14,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "MountainTown",
 		"map": "../The Forgotten Realms/maps/map/towns/mountain_town_generic.tmx",
@@ -3251,7 +3251,7 @@
 	{
 		"name": "Mountain Town Identity",
 		"type": "town",
-		"count": 25,
+		"count": 18,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "MountainTown",
 		"map": "../The Forgotten Realms/maps/map/towns/mountain_town_identity.tmx",
@@ -3267,7 +3267,7 @@
 	{
 		"name": "Mountain Town Tribal",
 		"type": "town",
-		"count": 25,
+		"count": 17,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "MountainTown",
 		"map": "../The Forgotten Realms/maps/map/towns/mountain_town_tribal.tmx",
@@ -3408,7 +3408,7 @@
 	{
 		"name": "Plains Town Generic",
 		"type": "town",
-		"count": 15,
+		"count": 11,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "PlainsTown",
 		"map": "../The Forgotten Realms/maps/map/towns/plains_town_generic.tmx",
@@ -3424,7 +3424,7 @@
 	{
 		"name": "Plains Town Identity",
 		"type": "town",
-		"count": 25,
+		"count": 19,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "PlainsTown",
 		"map": "../The Forgotten Realms/maps/map/towns/plains_town_identity.tmx",
@@ -3440,7 +3440,7 @@
 	{
 		"name": "Plains Town Tribal",
 		"type": "town",
-		"count": 25,
+		"count": 19,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "PlainsTown",
 		"map": "../The Forgotten Realms/maps/map/towns/plains_town_tribal.tmx",
@@ -3893,7 +3893,7 @@
 	{
 		"name": "Swamp Town Generic",
 		"type": "town",
-		"count": 20,
+		"count": 17,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "SwampTown",
 		"map": "../The Forgotten Realms/maps/map/towns/swamp_town_generic.tmx",
@@ -3909,7 +3909,7 @@
 	{
 		"name": "Swamp Town Identity",
 		"type": "town",
-		"count": 20,
+		"count": 16,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "SwampTown",
 		"map": "../The Forgotten Realms/maps/map/towns/swamp_town_identity.tmx",
@@ -3925,7 +3925,7 @@
 	{
 		"name": "Swamp Town Tribal",
 		"type": "town",
-		"count": 20,
+		"count": 16,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "SwampTown",
 		"map": "../The Forgotten Realms/maps/map/towns/swamp_town_tribal.tmx",
@@ -3950,7 +3950,7 @@
 	{
 		"name": "Swamp Town2",
 		"type": "town",
-		"count": 3,
+		"count": 0,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "SwampTown",
 		"map": "../The Forgotten Realms/maps/map/towns/swamp_town_2.tmx",
@@ -4126,7 +4126,7 @@
 	{
 		"name": "Waste Town Generic",
 		"type": "town",
-		"count": 30,
+		"count": 18,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "WasteTown",
 		"map": "../The Forgotten Realms/maps/map/towns/player_town.tmx",
@@ -4142,7 +4142,7 @@
 	{
 		"name": "Waste Town Identity",
 		"type": "town",
-		"count": 35,
+		"count": 21,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "WasteTown",
 		"map": "../The Forgotten Realms/maps/map/towns/player_town.tmx",
@@ -4158,7 +4158,7 @@
 	{
 		"name": "Waste Town Tribal",
 		"type": "town",
-		"count": 35,
+		"count": 21,
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "WasteTown",
 		"map": "../The Forgotten Realms/maps/map/towns/player_town.tmx",

@@ -215,9 +215,18 @@ public class InnScene extends UIScene {
     // AdventureEventData.pickCardBlockByFormat() - the exact same EditionProgression-gated picker
     // the original roll used - so the re-roll can never surface an edition this Inn/color combo
     // wouldn't already offer. New block is picked BEFORE charging shards, mirroring RewardScene's
-    // promptRerollShopType(): if the picker somehow returns null (or the same block - acceptable,
-    // it's still a real fresh roll), the swap still proceeds, but a charge only ever happens once
-    // a real event exists to swap into.
+    // promptRerollShopType(): pick first, only charge once a real (and different, see below) block
+    // is confirmed.
+    //
+    // Must-actually-change guarantee (2026-08-24 follow-up user request: "make sure it changes.
+    // Can't be the same one from current expansion set.") - retries the pick up to MAX_REROLL_
+    // ATTEMPTS times, rejecting any candidate matching the currently-showing block's name. Bounded
+    // rather than looping forever, since an extremely narrow edition-progression pool (e.g. the
+    // player has only unlocked one legal edition so far) could otherwise never produce a different
+    // result at all - in that case this behaves like the pool-exhausted case below: no charge, no
+    // change, same as if the picker itself had returned null.
+    private static final int MAX_REROLL_ATTEMPTS = 20;
+
     private void promptRerollEvent() {
         if (localEvent == null || localEvent.eventStatus != AdventureEventController.EventStatus.Available)
             return;
@@ -229,9 +238,19 @@ public class InnScene extends UIScene {
                 Forge.getLocalizer().getMessage("lblYes"), Forge.getLocalizer().getMessage("lblNo"), () -> {
                     removeDialog();
                     AdventureEventController.EventFormat format = localEvent.format;
-                    CardBlock newBlock = AdventureEventData.pickCardBlockByFormat(format);
+                    String currentBlockName = localEvent.cardBlockName;
+                    CardBlock newBlock = null;
+                    for (int attempt = 0; attempt < MAX_REROLL_ATTEMPTS; attempt++) {
+                        CardBlock candidate = AdventureEventData.pickCardBlockByFormat(format);
+                        if (candidate == null)
+                            break; // no legal pool to draw from at all
+                        if (currentBlockName == null || !candidate.getName().equals(currentBlockName)) {
+                            newBlock = candidate;
+                            break;
+                        }
+                    }
                     if (newBlock == null)
-                        return; // no legal pool to draw from - no charge, no change
+                        return; // no different block available - no charge, no change
                     AdventurePlayer.current().takeShards(cost);
                     replaceLocalEvent(format, newBlock);
                     refreshStatus();

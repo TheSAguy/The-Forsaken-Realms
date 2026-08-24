@@ -23,6 +23,17 @@ import forge.adventure.world.WorldSave;
  */
 public class TownRestoration {
     public static final String TOWN_RESTORED_FLAG = "townRestored";
+    // Functioning Neutral Towns (2026-08-24 user spec) - a per-instance exemption, deliberately
+    // NOT the same flag as TOWN_RESTORED_FLAG. TOWN_RESTORED_FLAG is overloaded across the
+    // codebase to mean both "not ruined" (ShopActor/QuestActor/OnCollide/MapStage) AND "this is
+    // now the player's own territory" (TerritoryControl's many isTownRestored() ownership/
+    // expansion checks) - reusing it here would silently grant the player ownership of these
+    // towns, which is the opposite of "neutral". This flag only ever short-circuits
+    // isWastelandTown()/getBrokenTownSprite() below (the "does this look/act ruined right now"
+    // checks) - it is never read by EditionProgression or TerritoryControl, so shops still fall
+    // through to the ordinary "no color match -> NEUTRAL" branch, and the town never counts as
+    // player-owned. See TownRestoration.seedFunctioningNeutralTowns().
+    public static final String NEUTRAL_SEEDED_FLAG = "neutralSeeded";
     // 2026-08-12 user cost table (multi-resource; see EconomyBuildings' cost helpers).
     // Wood component halved 2026-08-21 (v1.00 feedback round) - gold untouched.
     private static final int RESTORE_COST_GOLD = 200;
@@ -88,6 +99,48 @@ public class TownRestoration {
             System.out.println("[TownRestoration] renamed " + renamed + " generic-named wasteland town(s)");
     }
 
+    /**
+     * Functioning Neutral Towns (2026-08-24 user spec: "10 out of the 60 neutral towns should
+     * not be ruined, but actual functioning neutral towns... shops in these towns should all
+     * still be gated to only sell cards from expansions neutral has access to"). Called once,
+     * from World.generateNew() right after TerritoryControl.neutralizeAfterGeneration() (so the
+     * final, full pool of neutral towns - including any AI-color towns just swept back to
+     * neutral - is already known), gated by the caller on isFunctioningNeutralTownsEnabled().
+     * <p>
+     * Deliberately does NOT set TOWN_RESTORED_FLAG - that flag also means "this is the player's
+     * own territory" everywhere TerritoryControl checks ownership, which would silently steal
+     * these towns away from "neutral" into "player-owned". Setting only NEUTRAL_SEEDED_FLAG
+     * (checked by isWastelandTown()/getBrokenTownSprite() above) makes the town render/act like
+     * an ordinary functioning town everywhere else in the game, while EditionProgression's shop-
+     * restriction code still falls through to its normal "no color name match -> NEUTRAL" branch
+     * (colorOfTown() never matches a "Waste Town..." name), and TerritoryControl's ownership/
+     * standings bucketing (all keyed off isTownRestored(), never isWastelandTown()) never sees it
+     * as anything but neutral.
+     */
+    public static void seedFunctioningNeutralTowns(forge.adventure.world.World world) {
+        java.util.List<PointOfInterest> candidates = new java.util.ArrayList<>();
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if (isWastelandTown(poi.getData()))
+                candidates.add(poi);
+        }
+        int target = Config.instance().getTuningData().functioningNeutralTownCount;
+        java.util.Collections.shuffle(candidates, world.getRandom());
+        int seeded = 0;
+        for (int i = 0; i < candidates.size() && seeded < target; i++) {
+            PointOfInterest poi = candidates.get(i);
+            WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID())
+                    .getMapFlags().put(NEUTRAL_SEEDED_FLAG, (byte) 1);
+            seeded++;
+        }
+        // [TFR-NeutralTowns] - diagnostic logging (2026-08-24 user request), same greppable-tag
+        // convention as every other hard-to-observe/probabilistic mechanic this mod has added.
+        // Logs the shortfall explicitly rather than silently seeding fewer than requested, since
+        // "fewer neutral towns exist than the requested count" is exactly the kind of map-gen
+        // interaction (see the placement-failure logging added alongside this) worth surfacing.
+        System.out.println("[TFR-NeutralTowns] seeded " + seeded + "/" + target
+                + " functioning neutral towns out of " + candidates.size() + " wasteland town candidate(s)");
+    }
+
     // Overworld icon for a destroyed wasteland town, custom art kept plane-local so it can never
     // show up on Shandalar or any other stock plane. All 16 variants share one atlas region name
     // so Forge's existing PointOfInterest.spriteIndex machinery could pick among them the normal
@@ -98,8 +151,20 @@ public class TownRestoration {
     private static final String BROKEN_WASTETOWN_SPRITE = "WasteTownBroken";
     private static Array<Sprite> brokenWasteTownSprites;
 
+    // Shared by isWastelandTown() and getBrokenTownSprite() below - both already have a concrete
+    // PointOfInterest instance (not just the shared template PointOfInterestData every other
+    // isWastelandTown(data) caller works with), so both can check this per-instance exemption.
+    private static boolean isNeutralSeeded(String poiId) {
+        if (poiId == null)
+            return false;
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poiId);
+        return changes != null && changes.getMapFlags().get(NEUTRAL_SEEDED_FLAG) != null;
+    }
+
     public static boolean isWastelandTown() {
         PointOfInterest point = TileMapScene.instance().rootPoint;
+        if (point != null && isNeutralSeeded(point.getID()))
+            return false;
         return point != null && isWastelandTown(point.getData());
     }
 
@@ -185,7 +250,7 @@ public class TownRestoration {
      * the same variant without needing a new persisted field.
      */
     public static TextureRegion getBrokenTownSprite(PointOfInterest point) {
-        if (point == null || !isWastelandTown(point.getData()))
+        if (point == null || isNeutralSeeded(point.getID()) || !isWastelandTown(point.getData()))
             return null;
         // peek, not get - a pure read for every wasteland town icon drawn on the map; the
         // get-or-create accessor would materialize an empty changes entry per town just for

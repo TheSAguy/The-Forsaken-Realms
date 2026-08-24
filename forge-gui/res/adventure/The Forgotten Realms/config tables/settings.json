@@ -19,8 +19,17 @@
 
     // Maximum territory radius (in tiles) a Capitol or AI castle can ever reach.
     "maxTerritoryRadius": 450,
-    // Maximum territory radius for ordinary towns.
-    "townMaxTerritoryRadius": 20,
+    // Maximum territory radius for ordinary towns. Raised 20 -> 25 (2026-08-24) after the town-
+    // count reduction to 50/color - fewer towns need to reach further to keep total map coverage
+    // from shrinking. Freely retune this number directly - see townProtectedRadiusCap below for
+    // why raising this alone no longer also grows a town's inviolable protected core.
+    "townMaxTerritoryRadius": 25,
+    // Cap on a town's PROTECTED core (rivals can never touch it), kept separate from the growth
+    // cap above (2026-08-24 user spec: "increase how far... towns can grow... starting radius and
+    // protected radius should stay unchanged"). Protected radius = min(currentRadius, this) / 2,
+    // so pinning this at the ORIGINAL townMaxTerritoryRadius (20) keeps the protected core's
+    // ceiling exactly what it is today (20/2=10) even as the outer territory disc now reaches to 25.
+    "townProtectedRadiusCap": 20,
 
     // Game speed when the HUD "Speed-Up" toggle is on (multiplier over normal time).
     "speedUpMultiplier": 50.0,
@@ -85,5 +94,12 @@
     // Shard cost to re-roll an Inn Tournament's draft/sealed card pool before entering
     // (2026-08-24). The new pool is drawn from the same edition-progression-gated set as
     // the original roll - re-rolling never lets you into editions you haven't unlocked.
-    "innTournamentRerollShardCost": 15
+    "innTournamentRerollShardCost": 15,
+
+    // How many neutral ("Waste Town") POIs get pre-seeded as already-functioning (real shops,
+    // no rubble) at world-gen, out of however many neutral towns end up on the map (2026-08-24
+    // user request). Their shops are still gated to editions the "neutral" shard has access to,
+    // same as every other unrestored neutral town's shop - see TownRestoration.
+    // seedFunctioningNeutralTowns().
+    "functioningNeutralTownCount": 10
 }

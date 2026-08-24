@@ -32,8 +32,25 @@ public class TuningData {
 
     // Shared cap both Capitol and AI castle radius growth are clamped to ("Max Capitol Spread").
     public int maxTerritoryRadius = 450;
-    // Per-town (not castle) territory radius cap - user request 2026-08-14: "5 more than currently" (was 15).
-    public int townMaxTerritoryRadius = 20;
+    // Per-town (not castle) territory radius cap - how far a captured/restored town's territory
+    // can grow outward. Raised 20 -> 25 (2026-08-24, following the town-count reduction to 50/
+    // color): with roughly 65-71 towns per color cut to 50, each remaining town needs to reach
+    // further to keep total map coverage from shrinking. Sizing check: treating total covered
+    // area as townCount x radius^2 and solving for the radius that keeps that product roughly
+    // constant per color gives ~22-24 tiles across all 5 colors (e.g. White 65 towns@20 ->
+    // 49 towns@~23); 25 is a round number in that range. Since this is a plain tunable, retune
+    // directly in settings.json if actual playtesting wants it higher/lower - no code change
+    // needed for the number itself.
+    public int townMaxTerritoryRadius = 25;
+    // Decouples the "protected core" (hard-protect radius rivals can never touch, TerritoryControl.
+    // buildPullSources()'s `radius / 2`) from the growth cap above (2026-08-24 user spec: "All I
+    // want to do is increase how far out the max distance the town can grow to... The starting
+    // radius and protected radius should stay unchanged"). Without this, protect = liveRadius / 2
+    // would silently grow right along with townMaxTerritoryRadius, since it was never a separate
+    // number - just half of whatever the current radius happens to be. Pinned at the ORIGINAL
+    // townMaxTerritoryRadius (20) so the protected core's ceiling (20/2=10) stays exactly what it
+    // is today, even though the outer territory disc now reaches further.
+    public int townProtectedRadiusCap = 20;
 
     // WorldStage.java's FAST_TIME_MULTIPLIER, backing the "Speed-Up" HUD checkbox (renamed
     // 2026-08-14 from "100x Speed" - see en-US.properties lblFastTimeToggle). User: "Current
@@ -144,4 +161,9 @@ public class TuningData {
     // SHARD_COST, a shop's card-shop-TYPE re-roll) is likewise a flat, unscaled cost. See
     // InnScene.rerollEvent().
     public int innTournamentRerollShardCost = 15;
+
+    // Functioning Neutral Towns (2026-08-24 user spec: "10 out of the 60 neutral towns should
+    // not be ruined, but actual functioning neutral towns"). How many neutral ("Waste Town")
+    // POIs get pre-seeded as functioning at world-gen - see TownRestoration.seedFunctioningNeutralTowns().
+    public int functioningNeutralTownCount = 10;
 }

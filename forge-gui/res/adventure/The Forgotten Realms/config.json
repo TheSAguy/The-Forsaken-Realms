@@ -230,6 +230,7 @@
     "contentFilterTablesEnabled": true,
     "showEnemyTierInName": true,
     "weightedSpawnTiersEnabled": true,
+    "functioningNeutralTownsEnabled": true,
     "modVersion": "1.02",
     "modVersionDate": "08.22",
     "engineBuildVersion": "2.0.15-SNAPSHOT-08.19",

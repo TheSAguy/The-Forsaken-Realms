@@ -83,5 +83,12 @@ public class ConfigData {
     // SpawnTierWeighting.java. Same opt-in rule as every flag above: false here, true only in
     // "The Forgotten Realms"/config.json.
     public boolean weightedSpawnTiersEnabled = false;
+    // Functioning Neutral Towns (user spec 2026-08-24): at world-gen, a handful of the neutral
+    // ("Waste Town") POIs are seeded as already-functioning instead of ruined - real shops, no
+    // rubble, gated to EditionProgression's existing NEUTRAL shard (not the player's unlocked
+    // editions, unlike a player-paid town restoration). See TownRestoration.NEUTRAL_SEEDED_FLAG
+    // and TownRestoration.seedFunctioningNeutralTowns(). Same opt-in rule as every flag above: false here,
+    // true only in "The Forgotten Realms"/config.json.
+    public boolean functioningNeutralTownsEnabled = false;
 
 }

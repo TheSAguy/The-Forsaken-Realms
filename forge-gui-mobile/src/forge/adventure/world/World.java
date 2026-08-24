@@ -987,9 +987,24 @@ public class World implements Disposable, SaveFileContent {
             // Rerun budget for the essential-POI no-silent-drop check below - array so the
             // count survives the labeled `continue here` restarts.
             final int[] essentialPlacementReruns = {0};
+            // [TFR-PoiPlacement] diagnostic counters (2026-08-24 user request: "create a log entry
+            // and see if/how many times we hit the 500-attempt failure. Or even how high that
+            // goes" - ahead of a possible town-only exclusion-zone change, to have a real baseline
+            // for how crowded placement already is). totalRegenRestarts persists across every
+            // `continue here` full-pass restart (both the collision path and the essential-POI
+            // path below); the other three reset at the top of each pass so the summary logged
+            // after the loop reflects only the pass that actually finished.
+            final int[] totalRegenRestarts = {0};
+            final int[] maxAttemptsSeen = {0};
+            final int[] highAttemptPlacements = {0};
+            final int[] totalPlacements = {0};
+            final int HIGH_ATTEMPT_THRESHOLD = 50;
             here:
             while (running) {
                 mapPoiIds = new PointOfInterestMap(getChunkSize(), data.tileSize, data.width / getChunkSize(), data.height / getChunkSize());
+                maxAttemptsSeen[0] = 0;
+                highAttemptPlacements[0] = 0;
+                totalPlacements[0] = 0;
                 int biomeIndex2 = -1;
                 running = false;
                 for (BiomeData biome : data.GetBiomes()) {
@@ -1066,7 +1081,9 @@ public class World implements Disposable, SaveFileContent {
                                     }
                                     if (!foundSolution) {
                                         if (counter == 499) {
-                                            System.err.print("Can not place POI " + poi.name + "...Rerunning..\n");
+                                            totalRegenRestarts[0]++;
+                                            System.err.print("[TFR-PoiPlacement] Can not place POI " + poi.name
+                                                    + "...Rerunning.. (full-pass restart #" + totalRegenRestarts[0] + ")\n");
                                             running = true;
                                             towns.clear();
                                             notTowns.clear();
@@ -1116,6 +1133,13 @@ public class World implements Disposable, SaveFileContent {
                                     notTowns.add(newPoint);
                                 }
                                 placedThisInstance = true;
+                                // [TFR-PoiPlacement] - see the counter declarations above `here:`.
+                                int attemptsUsed = counter + 1;
+                                totalPlacements[0]++;
+                                if (attemptsUsed > maxAttemptsSeen[0])
+                                    maxAttemptsSeen[0] = attemptsUsed;
+                                if (attemptsUsed > HIGH_ATTEMPT_THRESHOLD)
+                                    highAttemptPlacements[0]++;
                                 break;
                             }
                             // No-silent-drop check (2026-08-08): the attempt loop can also exhaust
@@ -1129,8 +1153,9 @@ public class World implements Disposable, SaveFileContent {
                             if (!placedThisInstance) {
                                 if (isEssentialPoi(poi) && essentialPlacementReruns[0] < 10) {
                                     essentialPlacementReruns[0]++;
-                                    System.err.print("Essential POI " + poi.name + " could not be placed (attempt "
-                                            + essentialPlacementReruns[0] + "/10)...Rerunning..\n");
+                                    totalRegenRestarts[0]++;
+                                    System.err.print("[TFR-PoiPlacement] Essential POI " + poi.name + " could not be placed (attempt "
+                                            + essentialPlacementReruns[0] + "/10)...Rerunning.. (full-pass restart #" + totalRegenRestarts[0] + ")\n");
                                     running = true;
                                     towns.clear();
                                     notTowns.clear();
@@ -1141,7 +1166,7 @@ public class World implements Disposable, SaveFileContent {
                                         biomeToReset.resetTownNamePool();
                                     continue here;
                                 }
-                                System.err.print((isEssentialPoi(poi) ? "CRITICAL: essential " : "")
+                                System.err.print("[TFR-PoiPlacement] " + (isEssentialPoi(poi) ? "CRITICAL: essential " : "")
                                         + "POI " + poi.name + " instance " + (i + 1) + "/" + placeCount
                                         + " not placed after 500 attempts, skipping\n");
                             }
@@ -1149,6 +1174,13 @@ public class World implements Disposable, SaveFileContent {
                     }
                 }
             }
+            // [TFR-PoiPlacement] summary for the pass that actually completed (see the counter
+            // declarations above `here:`) - answers "how many times did we hit the 500-attempt
+            // failure, and how high does it go" in one greppable line per world generation,
+            // rather than needing to count individual failure/rerun lines by hand.
+            System.out.println("[TFR-PoiPlacement] summary: " + totalPlacements[0] + " POI(s) placed, max attempts used="
+                    + maxAttemptsSeen[0] + "/500, placements needing >" + HIGH_ATTEMPT_THRESHOLD + " attempts="
+                    + highAttemptPlacements[0] + ", full-pass restarts=" + totalRegenRestarts[0]);
             currentTime[0] = measureGenerationTime("poi placement", currentTime[0]);
 
             // Hide the reserve 4/5 of the rotation pool BEFORE anything bakes markers or picks
@@ -1553,6 +1585,14 @@ public class World implements Disposable, SaveFileContent {
                 // would otherwise erase these markers right back out again.
                 redrawAllPoiMarkers();
             }
+            // Functioning Neutral Towns (2026-08-24 user spec) - runs right after the territory-
+            // control sweep above so the pool of neutral ("Waste Town") POIs is final, including
+            // any AI-color towns just converted back to neutral by that sweep. See
+            // TownRestoration.seedFunctioningNeutralTowns()'s own doc comment for why this is a
+            // separate flag from TOWN_RESTORED_FLAG (that flag also means "player-owned"
+            // everywhere TerritoryControl checks ownership).
+            if (isFunctioningNeutralTownsEnabled())
+                TownRestoration.seedFunctioningNeutralTowns(this);
             // Progressive Set Unlocks (MOD_SCOPE.md #4): one-time per new game, splits every real
             // edition into 6 shards (5 colors + neutral) - see EditionProgression's own doc
             // comment for why this runs here (world's own seeded Random, reproducible from seed).
@@ -3384,6 +3424,11 @@ public class World implements Disposable, SaveFileContent {
     public boolean isEditionProgressionEnabled() {
         ConfigData configData = Config.instance().getConfigData();
         return configData != null && configData.editionProgressionEnabled;
+    }
+
+    public boolean isFunctioningNeutralTownsEnabled() {
+        ConfigData configData = Config.instance().getConfigData();
+        return configData != null && configData.functioningNeutralTownsEnabled;
     }
 
     /** Fraction of the current day elapsed, in [0,1), where 0 is midnight. */

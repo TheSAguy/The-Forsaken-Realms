@@ -23,6 +23,7 @@ import forge.adventure.character.EnemySprite;
 import forge.adventure.data.*;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.scene.DuelScene;
+import forge.adventure.scene.InfoTextScene;
 import forge.adventure.scene.RewardScene;
 import forge.adventure.scene.Scene;
 import forge.adventure.scene.StartScene;
@@ -657,19 +658,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // on the first WORLD-MAP entry - the spawn-dungeon placements collided with the tutorial
     // intro dialog (see TileMapScene.initializeDialogs()).
     public void showWelcomeDialog(String text) {
-        Dialog dialog = getDialog();
-        dialog.getContentTable().clear();
-        dialog.getButtonTable().clear();
-        dialog.clearListeners();
-
-        TypingLabel label = Controls.newTypingLabel(text);
-        label.setWrap(true);
-        label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(250f).row();
-
-        dialog.getButtonTable().add(Controls.newTextButton("OK", this::hideDialog)).width(240f).row();
-        dialog.setKeepWithinStage(true);
-        showDialog();
+        // Long-text overflow fix (2026-08-24 user report, screenshot showed the popup spilling
+        // off the top of the screen with no scrollbar) - same root cause InfoTextScene's own
+        // class comment documents: Dialog.show() packs the WHOLE window to its content with no
+        // way to cap it below the 480x270 virtual screen every scene here is laid out on, so an
+        // inner ScrollPane's height cap does nothing to stop the outer Dialog overflowing.
+        // Delegates to InfoTextScene (the fixed-size, actually-scrollable page already built for
+        // this exact problem - see "How Guards Work"/"Mod Details") instead of a raw Dialog.
+        // Paragraph breaks match how welcomePopupText is authored in config.json (blank-line-
+        // separated), same convention InfoTextScene's other callers use for a hand-split list.
+        InfoTextScene.show("Welcome", Arrays.asList(text.split("\n\n")));
     }
 
     // Side-quest timer expiry (user request 2026-08-08): a real blocking dialog, same pattern as

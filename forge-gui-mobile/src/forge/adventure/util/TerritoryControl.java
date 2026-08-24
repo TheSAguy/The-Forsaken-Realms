@@ -213,6 +213,12 @@ public class TerritoryControl {
     public static int townMaxTerritoryRadius() {
         return Config.instance().getTuningData().townMaxTerritoryRadius;
     }
+    // Cap on the INPUT to the protected-core formula below (`radius / 2`), separate from the
+    // growth cap above (2026-08-24 user spec) - lets townMaxTerritoryRadius grow the outer
+    // territory disc further without also growing the inviolable core rivals can never touch.
+    public static int townProtectedRadiusCap() {
+        return Config.instance().getTuningData().townProtectedRadiusCap;
+    }
     // Town growth pacing: 1 tile per N days (N tunable, was a hardcoded 7), down from the
     // 9-tiles/day rate towns previously shared with AI castles/the Capitol. A per-day rate can't
     // express "1 tile per week" as a whole number, so town growth tracks each town's own last-grew
@@ -478,7 +484,7 @@ public class TerritoryControl {
                 if (!isColorTownOrCapital(poi.getData(), color) || playerTowns.contains(poi))
                     continue;
                 Integer radius = world.getTownTerritoryRadius(poi.getID());
-                int protect = Math.max(1, (radius != null ? radius : RECOLOR_RADIUS) / 2);
+                int protect = Math.max(1, Math.min(radius != null ? radius : RECOLOR_RADIUS, townProtectedRadiusCap()) / 2);
                 boolean isCapital = poi.getData().name != null && poi.getData().name.endsWith("Capital");
                 list.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
                         isCapital ? CAPITAL_PULL_WEIGHT : TOWN_PULL_WEIGHT, protect});
@@ -496,7 +502,7 @@ public class TerritoryControl {
                 continue;
             }
             Integer radius = world.getTownTerritoryRadius(poi.getID());
-            int protect = Math.max(1, (radius != null ? radius : RECOLOR_RADIUS) / 2);
+            int protect = Math.max(1, Math.min(radius != null ? radius : RECOLOR_RADIUS, townProtectedRadiusCap()) / 2);
             playerList.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
                     PLAYER_TOWN_PULL_WEIGHT, protect});
         }
