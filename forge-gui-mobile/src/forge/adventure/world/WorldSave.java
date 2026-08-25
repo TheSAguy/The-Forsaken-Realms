@@ -195,8 +195,17 @@ public class WorldSave {
     }
 
     public static WorldSave generateNewWorld(String name, boolean male, int race, int avatarIndex, ColorSet startingColorIdentity, DifficultyData diff, AdventureModes mode, int customDeckIndex, CardEdition starterEdition, long seed) {
-        currentSave.world.generateNew(seed);
+        // Order fixed 2026-08-24 (real bug, user report: "10 working neutral towns" never
+        // appeared in a fresh game) - this used to clear AFTER generateNew(), silently wiping any
+        // pointOfInterestChanges writes generateNew() itself makes (TownRestoration.
+        // seedFunctioningNeutralTowns(), called from inside World.generateNew(), writes its
+        // NEUTRAL_SEEDED_FLAG here - confirmed via direct save-file inspection: the world-gen log
+        // showed "seeded 10/10", but the saved pointOfInterestChanges had zero). Nothing in
+        // generateNew() ever READS pointOfInterestChanges, so clearing first is behaviorally
+        // identical for everything else and matches the already-correct order SaveLoadScene's
+        // NewGamePlus path uses (clearChanges() before generateNew()).
         currentSave.pointOfInterestChanges.clear();
+        currentSave.world.generateNew(seed);
         boolean chaos = mode == AdventureModes.Chaos;
         boolean custom = mode == AdventureModes.Custom;
 
@@ -211,6 +220,21 @@ public class WorldSave {
         currentSave.player.setWorldPosY((int) (currentSave.world.getData().playerStartPosY * currentSave.world.getData().height * currentSave.world.getTileSize()));
         currentSave.player.setWorldPosX((int) (currentSave.world.getData().playerStartPosX * currentSave.world.getData().width * currentSave.world.getTileSize()));
         currentSave.onLoadList.emit();
+        // [TFR-NeutralTowns] persistence check (2026-08-24, same user report as the clear()-order
+        // fix above) - re-counts live neutralSeeded flags at the very end of new-game setup, not
+        // just at the moment World.generateNew() wrote them. The original log line alone couldn't
+        // have caught this bug: it logged "seeded 10/10" truthfully, then a later clear() silently
+        // wiped it, and nothing downstream ever re-confirmed the count survived. This line is that
+        // re-confirmation - if it ever again reads 0 despite World.generateNew() logging a
+        // non-zero seed count, something between those two points is clearing
+        // pointOfInterestChanges, the same failure mode as before.
+        if (currentSave.world.isFunctioningNeutralTownsEnabled()) {
+            long stillSeeded = currentSave.pointOfInterestChanges.values().stream()
+                    .filter(c -> c.getMapFlags().get(forge.adventure.util.TownRestoration.NEUTRAL_SEEDED_FLAG) != null)
+                    .count();
+            System.out.println("[TFR-NeutralTowns] post-setup persistence check: " + stillSeeded
+                    + " town(s) still flagged neutralSeeded in this save");
+        }
         return currentSave;
     }
 
