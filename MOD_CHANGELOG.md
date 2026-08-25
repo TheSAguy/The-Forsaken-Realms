@@ -13654,3 +13654,48 @@ before the rest of this round), `forge-gui-mobile/src/forge/adventure/util/TownR
 `forge-gui-mobile/src/forge/adventure/data/TuningData.java` (`functioningNeutralTownCount` 10->20);
 `forge-gui/res/adventure/The Forgotten Realms/config tables/settings.json`
 (`functioningNeutralTownCount` 10->20).
+
+## Fifty-first round: broken-shop popup fixed, edition-gating re-verified against real playtest logs (2026-08-24)
+
+Follow-up playtest of round 50's broken-shop-slots feature.
+
+### Permanently-broken shop's locked-dialog popup removed
+
+User: walking into a permanently-broken shop showed "This shop can't be rebuilt until the town's
+Job Board has been restored" - reused from the ordinary ruined-shop dialog, but actively wrong for
+this case (these towns are never restored, so there's no "eventually unlockable" path the message
+implies). `ShopActor.onPlayerCollide()` now checks `TownRestoration.isPermanentlyBrokenShop()`
+first and returns immediately (player still stops moving, but no dialog) - same as walking into
+any other inert rubble, no misleading prompt.
+
+### Edition-gating re-verified, second independent playtest
+
+User provided two fresh sets of shop screenshots (one from neutral-town shops, one from a
+restored/Capitol town) after starting another new game, asking to confirm both were gated
+correctly. Applying last round's lesson directly instead of re-reading tiny on-card text by eye:
+grepped the actual `forge.log` from this exact session for `[TFR-ShopEditions]` (shop-level
+restriction list) and `[TFR-PrintRemap]` (per-card printing correction) on the specific shops/cards
+shown. Both confirmed correct: neutral shops read `owner=neutral restriction(31)=[...]` matching
+the save's real neutral shard; the restored-town shop read `owner=player-unlocked
+restriction(3)=[GRN, ALA, DGM]` matching the player's real unlocked editions exactly. Several cards
+displayed art/badges from editions outside those lists (30A, DMU, OTP, CLU, GN3, M3C, etc.) -
+`[TFR-PrintRemap]` lines confirm every one of them was actually remapped to an in-shard printing
+before being granted (e.g. `Cruel Ultimatum: OTP -> ALA`, `Hill Giant: 30A -> 5ED`); the displayed
+card art/collector text simply doesn't update to reflect the remap. Not a bug, on a second
+independent check - the restriction system has now been verified this way twice.
+
+### Dungeon-effect source file identified (informational, no code change)
+
+User asked which file a screenshotted "Strange magical energies flow within this place... 1x Staff
+of the Sun Magus" popup came from. `maps/map/magetower/magetower_4_monastery.tmx`'s map-level
+`dungeonEffect` property is `{"startBattleWithCard": ["Staff of the Sun Magus"]}` - the exact match
+(a second file, `magetower_7_church.tmx`, has the same card name but only as an ordinary loot
+reward, not the dungeon-wide effect banner).
+
+### Validation performed
+
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0.
+- `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/character/ShopActor.java`
+(`onPlayerCollide()` early-return for permanently-broken shops).

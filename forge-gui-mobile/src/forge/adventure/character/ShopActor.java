@@ -104,6 +104,14 @@ public class ShopActor extends MapActor {
     public void onPlayerCollide() {
         if (isDestroyed()) {
             stage.getPlayerSprite().stop();
+            // Permanently-broken shop slots (2026-08-24 user report/spec: "please remove the
+            // pop-up, saying the message board need to be built first. Those shops will always be
+            // ruined, can't be repaired") - the ordinary locked-shop dialog below is actively
+            // wrong here (it implies restoring the town's Job Board would eventually unlock a
+            // repair option; a permanently-broken slot has no repair path at all, ever). Just
+            // stop the player and do nothing else, same as walking into any other inert rubble.
+            if (TownRestoration.isPermanentlyBrokenShop(stage, objectId))
+                return;
             MapDialog dialog;
             if (!TownRestoration.isTownRestored(stage)) {
                 dialog = TownRestoration.buildShopLockedDialog(stage, objectId);
