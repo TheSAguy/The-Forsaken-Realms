@@ -13502,3 +13502,155 @@ data/TuningData.java` (`functioningNeutralTownCount`, `townMaxTerritoryRadius` 2
 points_of_interest.json` (town/capital counts), `.../config.json`
 (`functioningNeutralTownsEnabled: true`), `.../config tables/settings.json`
 (`townMaxTerritoryRadius`, new `townProtectedRadiusCap`, new `functioningNeutralTownCount`).
+
+## Fiftieth round: first-playtest fallout from Functioning Neutral Towns - persistence bug, invisible shops, broken-shop-slot feature, welcome-popup readability (2026-08-24)
+
+User started a fresh game on the round-49 build and playtested the new Functioning Neutral Towns
+feature directly - this round is entirely the fallout from that first real playtest, deployed live.
+
+### Persistence bug: the 10 (now 20) flagged towns were being wiped every single new game
+
+User report: "I could not find any of the 10 working neutral towns. Can you check the logs and
+confirm they existed. If logs can't tell you, can we update so they can. I'm wondering if the
+script that creates the ruined towns killed them or something." Checked `forge.log` first -
+`[TFR-NeutralTowns] seeded 10/10...` was present and correct, so the seeding itself ran fine. Built
+a small standalone save-file reader (reusing the game's own `PointOfInterestChanges.Map`/`SaveFileData`
+deserialization classes directly - no GL/rendering bootstrap needed, unlike an earlier attempt this
+session to read `World` in full, which hit `Gdx.app`/`AssetManager` dependencies a bare `java`
+process can't satisfy) and found **zero** `neutralSeeded` flags in the actual save, despite the log's
+claim.
+
+Root cause: `WorldSave.generateNewWorld()` called `world.generateNew(seed)` (where the seeding runs)
+*then* `pointOfInterestChanges.clear()` - the clear ran second, silently wiping everything
+`generateNew()` had just written. Nothing in `generateNew()` reads `pointOfInterestChanges`, so this
+had never mattered before this feature existed. Fixed by swapping the two lines (clear first, matching
+the order the separate NewGamePlus path already used correctly) - a one-line reorder, not a scattered
+fix across the 3 call sites that invoke `generateNew()`. Also added a post-setup
+`[TFR-NeutralTowns] persistence check` log line, re-counting live flags after the entire new-game
+bootstrap finishes, specifically so this exact bug class (write-then-silently-cleared) is visible in
+the log itself next time, per the user's explicit ask. This was significant enough to deploy and
+commit (`a30d1a8b0eb`) as its own immediate fix before the rest of this round's work.
+
+### Count raised 10 -> 20
+
+User, after confirming the fix worked in a fresh game: "I found one, finally, man, that's a big map."
+`TuningData.functioningNeutralTownCount` and its `settings.json` mirror both raised to 20 - simple
+data change, no code involved.
+
+### Invisible shops - real regression, one-line-class fix
+
+User report: "The shops are not showing up. I think it's because we use something in our towns."
+Dispatched a focused investigation (not guessed) rather than hand-tracing the whole shop-build
+pipeline myself. Root cause, found and confirmed: `ShopActor.java`'s fallback-building-icon gate
+(the code that draws SOME icon for a rebuilt shop when the map has no baked art of its own) checked
+`TownRestoration.isWastelandTown()` - the RUIN-STATE predicate, which `NEUTRAL_SEEDED_FLAG`
+deliberately makes return `false` for these towns. But that gate was never really asking "is this
+town ruined" - its own comment says it's asking "does this map (`player_town.tmx`) have baked
+building art at all" (it doesn't - confirmed by decoding its tile layers: 5 non-empty cells total,
+versus ~144 for an ordinary color town). Those two questions happened to have the same answer for
+every town in the game until this feature existed, which is exactly why nobody had separated them
+before.
+
+Fix: new `TownRestoration.isWastelandTownTemplate()` - the MAP-TEMPLATE question only, deliberately
+without the `NEUTRAL_SEEDED_FLAG` short-circuit `isWastelandTown()` has. Swapped in at
+`ShopActor.java`'s icon gate and at the identical, currently-latent copy of the same bug in
+`OnCollide.java` (not reachable from `player_town.tmx` today - no Arena/Spellsmith objects there -
+but the same conflation, fixed for consistency). `isDestroyed()`/`isDestroyable()` (the actual
+ruin-state checks) were deliberately left untouched - they want the real `isWastelandTown()` meaning.
+
+This is why the user was seeing floating shop signs ("Elf tribal", "Eldrazi" bulletin boards) with no
+buildings underneath - the signs' own visibility check already read `!isWastelandTown()` correctly
+(so they showed), while the building icon's gate read the same flag and skipped drawing anything.
+
+### Edition-gating "leak" - investigated, NOT a bug, confirmed by direct log evidence
+
+Same investigation also chased a second report: 10 cards spotted across screenshots of these shops
+that appeared to be printed in editions outside the save's `neutral` shard (GN3, M3C, BRO, NEC, C21,
+PIP, 30A). Statistical cross-check against the real card database found all 10 card NAMES do have a
+printing inside the neutral shard - the "wrong" printings I'd read off the screenshots were, in every
+case, alternate/reprint editions of the same card (several sharing identical card art with the
+in-shard printing, e.g. 30A vs. 4ED/ME4 Water Elemental - exactly the kind of thing a manual visual ID
+from a screenshot's small collector-info text would misread). Confirmed decisively, not just by
+statistics: grepped the actual playtest `forge.log` for `[TFR-ShopEditions] shop=Eldrazi` and
+`shop=Elf` - every line reads `owner=neutral reason=no-match-neutral trigger=init
+restriction(31)=[...the correct 31-edition neutral shard...]`. The edition-restriction system was
+working correctly the whole time; the "leak" was a misreading of screenshot text, not a defect. No
+code change.
+
+One real, separate, pre-existing gap the investigation surfaced while cross-checking this (not
+triggered here, not this session's regression): `RewardData.java`'s `"Union"` reward type's
+`sourceDeck` sub-case builds its card pool via `CardUtil.getDeck(...)`, which never passes through
+`CardUtil.getPredicateResult()` - the only place `r.editions` is actually applied at the card-name
+level. Only affects `goblinKingShop2`/`ubwarhammer40K` in `shops.json`, neither present in
+`player_town.tmx` - flagged for a future round, not fixed here (out of scope for this playtest fix).
+
+### Randomly-broken, permanently-unrepairable shop slots (new feature)
+
+User, once the missing-shops investigation surfaced that `player_town.tmx` has exactly 9 shop
+objects (8 ordinary card-shop slots + 1 dedicated Armory slot, id 48 - the only one whose
+`commonShopList` is the single value `"Equipment"`, confirmed by direct read - matching the user's
+own framing "8 possible shops and 1 armory" exactly): "I want you to randomly have some of the shops
+be broken, and can't be repaired... randomly 1-5 broken shops/armory per shop." Broken slots show a
+random broken-shop sprite (reusing the existing 64-variant pool every ordinary ruined shop already
+uses) and are non-interactive; fixed slots show the ordinary plain/special/Armory icon - the Armory
+specifically shows its level-1 sprite by construction, since `getBuildingLevel()` already defaults to
+1 for an entry with no recorded upgrade, and these towns have no upgrade path.
+
+New `TownRestoration.PLAYER_TOWN_SHOP_OBJECT_IDS` (the 9 known ids, stable across every instance
+since every Waste Town template points at the same physical map file) and a new
+`permanentlyBrokenShop_<id>` per-town map flag, distinct from the existing `shopRebuilt_<id>` flag -
+that one means "still ruined, but the player COULD pay to fix it"; this one means "broken forever, no
+repair path exists at all" (these towns are never restored, so there's no dialog to route a fix
+through in the first place). `seedFunctioningNeutralTowns()` now also picks 1-5 of the 9 ids per
+seeded town (uniform random count, uniform random which ids) at the same world-gen moment it sets
+`NEUTRAL_SEEDED_FLAG`. `ShopActor.isDestroyed()` now ORs in the new flag alongside its existing
+ruin check (broken slots render/behave exactly like an ordinary ruined shop - broken sprite, locked
+dialog on collide - without disturbing the ordinary ruin logic for every other town in the game).
+Shop signs also now hide for permanently-broken slots (no point advertising a shop that can never
+open) - same visibility check every other sign-hiding case already uses, one added condition.
+
+### Welcome popup readability
+
+User: "On the welcome text, can you remove the dark background, just have the canvas background.
+It's hard to read the text." Root cause: `InfoTextScene`'s `ScrollPane` was constructed with the
+skin's default style, whose background (`windowMain10Patch`, the same dark window texture also
+identified this round as the small-scale flagged "quest screenshot" border) was stacking on top of
+the scene's own parchment `Window` behind it. The skin already ships a transparent
+`"nobg"` `ScrollPaneStyle` for exactly this - one-word style-name change
+(`new ScrollPane(content, Controls.getSkin(), "nobg")`), no new assets needed.
+
+Separately identified (not changed - shared/common asset, user asked only for the location so they
+can edit it themselves): the dialog/Window border artifact the user flagged in a quest-reward
+screenshot is `forge-gui/res/adventure/common/skin/ui_skin.png`, region `windowMain` in the paired
+`ui_skin.atlas` (xy 203,385, size 48x48, 6px 9-patch split on all sides) - registered as
+`windowMain10Patch` in `ui_skin.json`, used as the default `WindowStyle`/`ScrollPaneStyle`
+background project-wide. Flagged as shared/common rather than edited in place, since narrowing or
+forking it would need the same "never silently affect a stock plane" consideration every other
+common-asset edit this project makes gets.
+
+### Validation performed
+
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0, across all edits this round.
+- Persistence-bug fix independently re-verified against a real save file after the fix (not just
+  trusted from the log): re-ran the same standalone save-reader tool against a fresh post-fix
+  autosave and confirmed 10/10 `neutralSeeded` flags present (later re-confirmed at 20/20 after the
+  count bump, via the new post-setup log line in an actual playtest session).
+- Edition-gating "leak" investigated to a definitive conclusion via direct `forge.log` evidence
+  (`[TFR-ShopEditions]` lines), not left as an open question.
+- `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly in the
+  live folder; live-folder jar timestamp and settings.json/config.json values spot-checked against
+  the repo's edited values before every deploy this round.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (persistence-bug
+line-order fix, new post-setup persistence-check log line - committed separately as `a30d1a8b0eb`
+before the rest of this round), `forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`
+(`isWastelandTownTemplate()`, `PLAYER_TOWN_SHOP_OBJECT_IDS`, `permanentlyBrokenShopFlag()`/
+`isPermanentlyBrokenShop()`, `seedFunctioningNeutralTowns()` extended for broken-slot seeding),
+`forge-gui-mobile/src/forge/adventure/character/ShopActor.java` (`isWastelandTownTemplate()` swap,
+`isDestroyed()` ORs in the new flag), `forge-gui-mobile/src/forge/adventure/character/OnCollide.java`
+(same template/ruin-state swap, latent), `forge-gui-mobile/src/forge/adventure/stage/MapStage.java`
+(sign/overlay visibility extended for permanently-broken slots, both call sites),
+`forge-gui-mobile/src/forge/adventure/scene/InfoTextScene.java` (`ScrollPane` "nobg" style),
+`forge-gui-mobile/src/forge/adventure/data/TuningData.java` (`functioningNeutralTownCount` 10->20);
+`forge-gui/res/adventure/The Forgotten Realms/config tables/settings.json`
+(`functioningNeutralTownCount` 10->20).

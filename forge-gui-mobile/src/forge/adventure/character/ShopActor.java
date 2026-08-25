@@ -177,7 +177,12 @@ public class ShopActor extends MapActor {
     }
 
     private boolean isDestroyed() {
-        return TownRestoration.isWastelandTown() && !TownRestoration.isShopRebuilt(stage, objectId);
+        // Permanently-broken shop slots (2026-08-24, Functioning Neutral Towns) - OR'd in, not a
+        // replacement for the ordinary ruin check below. Renders/behaves exactly like an ordinary
+        // ruined shop (broken sprite, locked-dialog on collide) but has no repair path at all -
+        // these towns are never restored, so the flag this ORs against never gets set.
+        return TownRestoration.isPermanentlyBrokenShop(stage, objectId)
+                || (TownRestoration.isWastelandTown() && !TownRestoration.isShopRebuilt(stage, objectId));
     }
 
     @Override
@@ -215,7 +220,12 @@ public class ShopActor extends MapActor {
             } else {
                 buildingSprite = EconomyBuildings.getBuildingSprite(economyType);
             }
-            if (buildingSprite == null && TownRestoration.isWastelandTown() && !fixedShop) {
+            // isWastelandTownTemplate(), not isWastelandTown() (2026-08-24 fix) - this is asking
+            // "does the current map lack baked building art", not "is this town ruined". A
+            // functioning neutral town (NEUTRAL_SEEDED_FLAG) still renders from player_town.tmx,
+            // which has no baked art either way - see TownRestoration.isWastelandTownTemplate()'s
+            // own comment.
+            if (buildingSprite == null && TownRestoration.isWastelandTownTemplate() && !fixedShop) {
                 if (EconomyBuildings.isArmoryShop(shopData))
                     buildingSprite = EconomyBuildings.getArmoryShopSprite(stage.getChanges().getBuildingLevel(objectId));
                 else if (EconomyBuildings.isSpecialShop(shopData))

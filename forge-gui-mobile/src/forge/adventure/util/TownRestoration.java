@@ -126,10 +126,26 @@ public class TownRestoration {
         int target = Config.instance().getTuningData().functioningNeutralTownCount;
         java.util.Collections.shuffle(candidates, world.getRandom());
         int seeded = 0;
+        int totalBroken = 0;
         for (int i = 0; i < candidates.size() && seeded < target; i++) {
             PointOfInterest poi = candidates.get(i);
-            WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID())
-                    .getMapFlags().put(NEUTRAL_SEEDED_FLAG, (byte) 1);
+            PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID());
+            changes.getMapFlags().put(NEUTRAL_SEEDED_FLAG, (byte) 1);
+            // Randomly broken, unrepairable shop slots (2026-08-24 user spec: "randomly have some
+            // of the shops be broken, and can't be repaired... randomly 1-5 broken shops/armory
+            // per town"). 1-5 of the 9 fixed shop slots in player_town.tmx (see
+            // PLAYER_TOWN_SHOP_OBJECT_IDS's own comment) get PERMANENTLY_BROKEN_SHOP_FLAG_PREFIX
+            // set - checked by ShopActor.isDestroyed(), completely separate from the ordinary
+            // shopRebuilt_<id> flag (that one means "still needs the player to pay to fix it";
+            // these towns are never restored, so there's no repair dialog to route through at
+            // all - this state has no path back to "fixed").
+            java.util.List<Integer> shopIds = new java.util.ArrayList<>();
+            for (int id : PLAYER_TOWN_SHOP_OBJECT_IDS) shopIds.add(id);
+            java.util.Collections.shuffle(shopIds, world.getRandom());
+            int brokenCount = 1 + world.getRandom().nextInt(5); // 1-5 inclusive
+            for (int b = 0; b < brokenCount; b++)
+                changes.getMapFlags().put(permanentlyBrokenShopFlag(shopIds.get(b)), (byte) 1);
+            totalBroken += brokenCount;
             seeded++;
         }
         // [TFR-NeutralTowns] - diagnostic logging (2026-08-24 user request), same greppable-tag
@@ -138,7 +154,27 @@ public class TownRestoration {
         // "fewer neutral towns exist than the requested count" is exactly the kind of map-gen
         // interaction (see the placement-failure logging added alongside this) worth surfacing.
         System.out.println("[TFR-NeutralTowns] seeded " + seeded + "/" + target
-                + " functioning neutral towns out of " + candidates.size() + " wasteland town candidate(s)");
+                + " functioning neutral towns out of " + candidates.size() + " wasteland town candidate(s), "
+                + totalBroken + " total permanently-broken shop slot(s) across them");
+    }
+
+    // The 9 shop slot object ids inside maps/map/towns/player_town.tmx - confirmed by direct
+    // read: this is the SAME map file every Waste Town instance uses regardless of template
+    // (Generic/Identity/Tribal all point at it), so these ids are stable across every functioning
+    // neutral town. 8 ordinary card-shop slots (broad commonShopList/rareShopList/
+    // uncommonShopList pool) + 1 dedicated Armory slot (id 48, the only one whose
+    // commonShopList is the single value "Equipment") - matches the user's own framing exactly
+    // ("8 possible shops and 1 armory").
+    private static final int[] PLAYER_TOWN_SHOP_OBJECT_IDS = {41, 55, 57, 50, 51, 52, 53, 54, 48};
+
+    private static String permanentlyBrokenShopFlag(int objectId) {
+        return "permanentlyBrokenShop_" + objectId;
+    }
+
+    /** Used by ShopActor (rendering/interaction, has a live MapStage) - same access pattern as
+     *  isShopRebuilt(MapStage, int). */
+    public static boolean isPermanentlyBrokenShop(MapStage stage, int objectId) {
+        return stage.checkQuestFlag(permanentlyBrokenShopFlag(objectId));
     }
 
     // Overworld icon for a destroyed wasteland town, custom art kept plane-local so it can never
@@ -165,6 +201,22 @@ public class TownRestoration {
         PointOfInterest point = TileMapScene.instance().rootPoint;
         if (point != null && isNeutralSeeded(point.getID()))
             return false;
+        return point != null && isWastelandTown(point.getData());
+    }
+
+    /** Is the CURRENTLY-LOADED map built from the wasteland/player_town template - a question
+     *  about the MAP FILE (does it have baked building art?), NOT about ruined state. Deliberately
+     *  does NOT apply the NEUTRAL_SEEDED_FLAG exemption isWastelandTown() above does (2026-08-24
+     *  bug found via playtest: "the shops are not showing up" in a functioning neutral town) - a
+     *  functioning neutral town is STILL rendered from player_town.tmx, which has no Walls layer
+     *  and almost no baked building tiles (confirmed: 5 non-empty cells total vs. ~144 for an
+     *  ordinary color town), so ShopActor's fallback building icon (see its own isWastelandTown()
+     *  gate) is still required, or the shop draws nothing at all - only its floating sign, which
+     *  is exactly what got reported ("Elf tribal"/"Eldrazi" bulletin boards with no buildings
+     *  underneath). Use this instead of isWastelandTown() for "does this map need a fallback
+     *  building sprite drawn", never for "is this town ruined" (that's still isWastelandTown()). */
+    public static boolean isWastelandTownTemplate() {
+        PointOfInterest point = TileMapScene.instance().rootPoint;
         return point != null && isWastelandTown(point.getData());
     }
 

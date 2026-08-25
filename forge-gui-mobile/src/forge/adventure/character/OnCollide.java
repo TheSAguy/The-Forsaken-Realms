@@ -96,7 +96,11 @@ public class OnCollide extends MapActor {
             // Rebuilt gated building in a template with no baked art: draw its icon (user report
             // 2026-08-09 - a restored Arena/Spellsmith showed nothing at all). Same
             // over-footprint placement as ShopActor's icons.
-            if (rebuiltIcon != null && gatedStage != null && TownRestoration.isWastelandTown()) {
+            // isWastelandTownTemplate(), not isWastelandTown() (2026-08-24 fix, same class of bug
+            // as ShopActor's identical gate) - "does this map lack baked art", not "is this town
+            // ruined". Not currently reachable from player_town.tmx (no Arena/Spellsmith objects
+            // there today), but fixed for consistency/future-proofing.
+            if (rebuiltIcon != null && gatedStage != null && TownRestoration.isWastelandTownTemplate()) {
                 com.badlogic.gdx.graphics.g2d.TextureRegion icon = rebuiltIcon.get();
                 if (icon != null)
                     drawOverFootprint(batch, icon);

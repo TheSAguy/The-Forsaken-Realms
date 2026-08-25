@@ -101,5 +101,5 @@
     // user request). Their shops are still gated to editions the "neutral" shard has access to,
     // same as every other unrestored neutral town's shop - see TownRestoration.
     // seedFunctioningNeutralTowns().
-    "functioningNeutralTownCount": 10
+    "functioningNeutralTownCount": 20
 }

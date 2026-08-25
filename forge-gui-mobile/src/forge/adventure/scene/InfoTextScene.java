@@ -39,7 +39,13 @@ public class InfoTextScene extends UIScene {
         titleLabel = ui.findActor("title");
         Table root = ui.findActor("textArea");
         ui.onButtonPress("return", InfoTextScene.this::back);
-        ScrollPane scroller = new ScrollPane(content, Controls.getSkin());
+        // "nobg" (2026-08-24 user report: the Welcome popup's text was hard to read) - the
+        // default ScrollPaneStyle's background is "windowMain10Patch", a dark window texture
+        // that was rendering as a solid dark panel stacked on top of this scene's own parchment
+        // "paper"-style Window behind it (ui/info_text.json's "scrollWindow"). The skin already
+        // defines a transparent style for exactly this ("nobg": {"background": "transparent"}),
+        // so the parchment shows through cleanly instead of double-layering two backgrounds.
+        ScrollPane scroller = new ScrollPane(content, Controls.getSkin(), "nobg");
         scroller.setScrollingDisabled(true, false); // vertical-only, same as QuestLogScene's detailScroller
         root.add(scroller).expand().fill();
     }

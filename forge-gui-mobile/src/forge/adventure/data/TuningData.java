@@ -162,8 +162,8 @@ public class TuningData {
     // InnScene.rerollEvent().
     public int innTournamentRerollShardCost = 15;
 
-    // Functioning Neutral Towns (2026-08-24 user spec: "10 out of the 60 neutral towns should
-    // not be ruined, but actual functioning neutral towns"). How many neutral ("Waste Town")
-    // POIs get pre-seeded as functioning at world-gen - see TownRestoration.seedFunctioningNeutralTowns().
-    public int functioningNeutralTownCount = 10;
+    // Functioning Neutral Towns (2026-08-24 user spec, raised 10 -> 20 same day after the first
+    // playtest found one: "that's a big map"). How many neutral ("Waste Town") POIs get
+    // pre-seeded as functioning at world-gen - see TownRestoration.seedFunctioningNeutralTowns().
+    public int functioningNeutralTownCount = 20;
 }

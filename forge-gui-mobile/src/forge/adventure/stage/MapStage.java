@@ -1093,7 +1093,10 @@ public class MapStage extends GameStage {
                                     @Override
                                     public void act(float delta) {
                                         super.act(delta);
+                                        // Permanently-broken slots (2026-08-24) never show a sign
+                                        // either - no point advertising a shop that can never open.
                                         setVisible((!TownRestoration.isWastelandTown() || TownRestoration.isShopRebuilt(MapStage.this, shopId))
+                                                && !TownRestoration.isPermanentlyBrokenShop(MapStage.this, shopId)
                                                 && EconomyBuildings.getBuildingType(getChanges(), shopId) == EconomyBuildings.NONE);
                                     }
                                 };
