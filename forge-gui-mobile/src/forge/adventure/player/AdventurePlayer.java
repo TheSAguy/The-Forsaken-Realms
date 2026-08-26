@@ -1142,6 +1142,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void addCard(PaperCard card, int amount) {
         cards.add(card, amount);
         newCards.add(card, amount);
+        // Research-threshold popup fires from here too, not just addReward() (2026-08-26 review
+        // finding): ante wins, ante buy-backs, and the Chest artificer's duplicates all land
+        // through this method - a threshold crossed on one of those paths would otherwise never
+        // notify, and the stateless crossing test in addReward()'s hook could then never fire
+        // for that edition again. addReward()'s Card branch adds to `cards` directly (not via
+        // this method), so the two hooks can never double-fire for one grant.
+        maybeNotifyResearchThreshold(card, amount);
     }
 
     public void addCards(ItemPool<PaperCard> cardPool) {
@@ -1158,6 +1165,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     autoSellCards.add(reward.getCard());
                     refreshEditor();
                 }
+                maybeNotifyResearchThreshold(reward.getCard(), 1);
                 break;
             case Gold:
                 addGold(reward.getCount());
@@ -1185,6 +1193,47 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             case Wood:
                 addWood(reward.getCount());
                 break;
+        }
+    }
+
+    // Research-threshold popup (user request 2026-08-25, spec: "add in a pop-up when you get new
+    // cards and you reach a 10% threshold an an expansion - something like, you can now research
+    // 'x' expansion at a research lab in the capitol"). Hooked into BOTH addReward()'s Card
+    // branch (shop buys, loot screens, quest rewards, chest picks) AND addCard() (ante wins,
+    // ante buy-backs, artificer duplicates) - together those cover every real card-pickup path;
+    // bulk addCards() (starter-deck import) is deliberately NOT hooked, a fresh save's starting
+    // cards shouldn't fire pickup popups. Stateless crossing detection (owned-after >= threshold AND
+    // owned-before < threshold) rather than a persisted "already notified" set: counts only ever
+    // cross the threshold once in normal play, no save-format change needed, and the rare
+    // sell-below-then-recross duplicate popup is harmless. Same threshold formula and legal-pool
+    // counting the Research Lab's own screen uses (ResearchScene.thresholdForEditionCode()).
+    // Never allowed to break a card grant - hard try/catch around the whole convenience.
+    private void maybeNotifyResearchThreshold(PaperCard card, int amountAdded) {
+        try {
+            if (card == null)
+                return;
+            forge.adventure.world.World world = Current.world();
+            if (world == null || !world.isEditionProgressionEnabled())
+                return;
+            String code = card.getEdition();
+            if (code == null || hasUnlockedEdition(code) || code.equals(getResearchEditionInProgress()))
+                return;
+            int threshold = forge.adventure.scene.ResearchScene.thresholdForEditionCode(code);
+            if (threshold == Integer.MAX_VALUE)
+                return;
+            int owned = 0;
+            for (Map.Entry<PaperCard, Integer> entry : cards)
+                if (code.equals(entry.getKey().getEdition()))
+                    owned += entry.getValue();
+            if (owned >= threshold && owned - amountAdded < threshold) {
+                forge.card.CardEdition edition = forge.model.FModel.getMagicDb().getEditions().get(code);
+                String name = edition != null ? edition.getName() : code;
+                System.out.println("[TFR-Research] threshold reached: " + code + " owned=" + owned + "/" + threshold);
+                forge.adventure.stage.GameHUD.getInstance().addNotification(
+                        "You can now research " + name + " (" + code + ") at your Capitol's Research Lab!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -293,17 +293,38 @@ public class WorldStage extends GameStage implements SaveFileContent {
             world.advanceTime(timeDelta);
             int dayAfter = world.getCurrentDay();
             if (dayAfter != dayBefore) {
+                // [TFR-DayTick] per-subsystem timing (2026-08-26, user request while chasing the
+                // recurring day-end stutter: "don't hesitate to add entries to the game log that
+                // you can review later") - one line per day-rollover, milliseconds per subsystem,
+                // so any future "day-end lag" report can be attributed from forge.log alone
+                // instead of re-root-causing from scratch. Costs two nanoTime() reads per
+                // subsystem once per in-game day - negligible.
+                long tickStart = System.nanoTime();
                 EconomyBuildings.processDaysPassed(dayAfter - dayBefore, dayAfter);
+                long tEconomy = System.nanoTime();
                 TerritoryControl.processDaysPassed(dayAfter - dayBefore, dayAfter);
+                long tTerritory = System.nanoTime();
                 DungeonRotation.processDaysPassed(dayAfter);
+                long tDungeons = System.nanoTime();
                 QuestExpiry.processDaysPassed(dayAfter);
+                long tQuests = System.nanoTime();
                 world.checkFogOfWarStage2(this::refreshBackgroundTile);
+                long tFog = System.nanoTime();
                 // World Standings line-chart history (2026-08-15) - checked on every real day
                 // advance, but recordStandingsHistoryIfNewWeek() itself no-ops unless the week
                 // number actually changed, so this doesn't spam a snapshot every single day.
                 java.util.Map<String, Integer> standingsCounts = TerritoryControl.getTownCounts(world);
                 standingsCounts.remove("Colorless"); // chart is 5 AI colors + Player only
                 world.recordStandingsHistoryIfNewWeek(standingsCounts);
+                long tickEnd = System.nanoTime();
+                System.out.println("[TFR-DayTick] day " + dayAfter
+                        + ": economy=" + (tEconomy - tickStart) / 1_000_000 + "ms"
+                        + " territory=" + (tTerritory - tEconomy) / 1_000_000 + "ms"
+                        + " dungeons=" + (tDungeons - tTerritory) / 1_000_000 + "ms"
+                        + " quests=" + (tQuests - tDungeons) / 1_000_000 + "ms"
+                        + " fog=" + (tFog - tQuests) / 1_000_000 + "ms"
+                        + " standings=" + (tickEnd - tFog) / 1_000_000 + "ms"
+                        + " total=" + (tickEnd - tickStart) / 1_000_000 + "ms");
             }
             // Per frame while moving, not just on day change - pickups are walk-over, so the
             // collection check has to track the player's live position (cheap; see its comment).
@@ -1208,6 +1229,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     System.err.println("[TFR-RoamLoad] dropping unresolvable roaming enemy \"" + names.get(i)
                             + "\" from save (renamed or removed from enemies.json?)");
                     continue;
+                }
+                // Territory mages keep their dispatch-time sprite-scale normalization across a
+                // save/load (2026-08-26, companion to TerritoryControl.dispatch()'s own clone) -
+                // this rebuild reads the SHARED template, which still carries an oversized
+                // "Legends" scale, so without re-normalizing here a saved 1x mage came back 2x.
+                boolean isTerritoryMage = territoryTargetIds != null && i < territoryTargetIds.size()
+                        && territoryTargetIds.get(i) != null;
+                if (isTerritoryMage && resolved.scale != 1.0f) {
+                    resolved = new EnemyData(resolved);
+                    resolved.scale = 1.0f;
                 }
                 EnemySprite sprite = new EnemySprite(resolved);
                 sprite.setX(x.get(i));

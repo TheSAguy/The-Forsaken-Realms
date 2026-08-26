@@ -1666,11 +1666,37 @@ public class World implements Disposable, SaveFileContent {
     // that queue was already flushed and cleared earlier in generateNew(), so it can't be reused
     // here, and a second, immediate draw is simpler anyway for a one-time post-sweep touch-up.
     private void redrawAllPoiMarkers() {
+        redrawPoiMarkers(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    }
+
+    // Per-call pixmap cache (2026-08-26 perf fix, the day-end freeze's biggest single cost):
+    // consumePixmap() on a FileTextureData re-decodes the ENTIRE backing atlas PNG from disk
+    // every call - and the 2026-08-25 town-icon generalization below made this method call it
+    // once PER TOWN (hundreds of towns), and claimWastelandRing() called this method once per
+    // owner per day (6x). Hundreds of full PNG decodes x6, synchronously on the render thread,
+    // every single day-rollover. Each distinct atlas texture is now decoded at most ONCE per
+    // call, shared by every marker drawn from it, and disposed together at the end.
+    private static Pixmap markerPixmapFor(Map<Texture, Pixmap> cache, Texture texture) {
+        Pixmap cached = cache.get(texture);
+        if (cached != null)
+            return cached;
+        TextureData textureData = texture.getTextureData();
+        if (!textureData.isPrepared())
+            textureData.prepare();
+        Pixmap fresh = textureData.consumePixmap();
+        cache.put(texture, fresh);
+        return fresh;
+    }
+
+    /** Rect-scoped marker redraw (2026-08-26 perf fix, companion to the pixmap cache above):
+     *  claimWastelandRing() only needs to restore markers its own minimap tile repaints could
+     *  have clipped - i.e. towns inside that day's claimed ring band - not all 2000+ POIs on the
+     *  map. Bounds are inclusive WORLD-TILE coords (same unflipped wy space the claim loop
+     *  tracks); pass Integer.MIN/MAX halves for the full-map redraw every other caller wants. */
+    private void redrawPoiMarkers(int minTileX, int minTileY, int maxTileX, int maxTileY) {
         TextureAtlas mapMarker = Config.instance().getAtlas(Paths.MAP_MARKER);
-        TextureData markerTextureData = mapMarker.getTextures().first().getTextureData();
-        if (!markerTextureData.isPrepared())
-            markerTextureData.prepare();
-        Pixmap mapMarkerPixmap = markerTextureData.consumePixmap();
+        Map<Texture, Pixmap> pixmapCache = new HashMap<>();
+        Pixmap mapMarkerPixmap = markerPixmapFor(pixmapCache, mapMarker.getTextures().first());
         int mm = data.miniMapTileSize;
         // Grainy town/Capitol icons fixed (2026-08-25 user report): every scaled drawPixmap below
         // (Capitol 64->32, town 48->16/23) was downscaling with Pixmap's default nearest-neighbor
@@ -1685,6 +1711,10 @@ public class World implements Disposable, SaveFileContent {
             // without this, a vanished dungeon kept its baked icon until the next full rebake.
             if (!poi.getActive())
                 continue;
+            int poiTileX = (int) (poi.getPosition().x / data.tileSize);
+            int poiTileY = (int) (poi.getPosition().y / data.tileSize);
+            if (poiTileX < minTileX || poiTileX > maxTileX || poiTileY < minTileY || poiTileY > maxTileY)
+                continue; // outside the caller's dirty rect - marker untouched, nothing to restore
             // Player Capitol (user request 2026-08-13): its minimap marker is a scaled-down copy
             // of its OWN 64x64 overworld sprite ("Orazca", player_capitol.atlas) instead of the
             // generic 32x32 "capital" glyph - drawn at 32x32 so it exactly covers the old baked
@@ -1695,16 +1725,12 @@ public class World implements Disposable, SaveFileContent {
             // needed.
             if (TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name) && poi.getSprite() != null) {
                 com.badlogic.gdx.graphics.g2d.TextureRegion capSprite = poi.getSprite();
-                TextureData capTexData = capSprite.getTexture().getTextureData();
-                if (!capTexData.isPrepared())
-                    capTexData.prepare();
-                Pixmap capPixmap = capTexData.consumePixmap();
+                Pixmap capPixmap = markerPixmapFor(pixmapCache, capSprite.getTexture());
                 int dstSize = 32;
                 int cx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
                 int cy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
                 biomeImage.drawPixmap(capPixmap, capSprite.getRegionX(), capSprite.getRegionY(),
                         capSprite.getRegionWidth(), capSprite.getRegionHeight(), cx, cy, dstSize, dstSize);
-                capPixmap.dispose();
                 refreshFogForMarkerRect(cx, cy, dstSize, dstSize);
                 continue;
             }
@@ -1716,16 +1742,12 @@ public class World implements Disposable, SaveFileContent {
             // atlas, same idea as the Capitol special case above.
             if ("Spawn".equals(poi.getData().name) && poi.getSprite() != null) {
                 com.badlogic.gdx.graphics.g2d.TextureRegion spawnSprite = poi.getSprite();
-                TextureData spawnTexData = spawnSprite.getTexture().getTextureData();
-                if (!spawnTexData.isPrepared())
-                    spawnTexData.prepare();
-                Pixmap spawnPixmap = spawnTexData.consumePixmap();
+                Pixmap spawnPixmap = markerPixmapFor(pixmapCache, spawnSprite.getTexture());
                 int sx = (int) ((poi.getPosition().x / data.tileSize) * mm) - spawnSprite.getRegionWidth() / 2;
                 int sy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - spawnSprite.getRegionHeight() / 2;
                 biomeImage.drawPixmap(spawnPixmap, spawnSprite.getRegionX(), spawnSprite.getRegionY(),
                         spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight(), sx, sy,
                         spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight());
-                spawnPixmap.dispose();
                 refreshFogForMarkerRect(sx, sy, spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight());
                 continue;
             }
@@ -1740,17 +1762,37 @@ public class World implements Disposable, SaveFileContent {
             // glyph needs no new art for the 5 AI colors at all - just reusing what the main map
             // already shows. Player Capitol/Spawn keep their own dedicated special cases above
             // (distinct POI names, not handled via type here).
-            if ("town".equals(poi.getData().type) && poi.getSprite() != null) {
+            // Pre-seeded functioning neutral towns use the original base-game "town" hut glyph
+            // (2026-08-26 user request with screenshot: "use the Original Town icons, from base
+            // game for the Neutral towns that are restored from the start" - the downscaled
+            // WasteTown building art kept reading as "ruined" on the minimap no matter how it
+            // was filtered/sized). Drawn at 20x20, not the glyph's native 16x16, so it exactly
+            // covers the 20x20 WasteTown footprint the previous build baked into existing saves'
+            // persisted biomeImage (same stale-edge-pixels reasoning as the Capitol's own 32x32
+            // comment above).
+            boolean neutralSeeded = "town".equals(poi.getData().type)
+                    && TownRestoration.isNeutralSeededTown(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
+            if (neutralSeeded) {
+                TextureAtlas.AtlasRegion hutGlyph = mapMarker.findRegion("town");
+                if (hutGlyph != null) {
+                    int dstSize = 20;
+                    int hx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
+                    int hy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
+                    biomeImage.drawPixmap(mapMarkerPixmap, hutGlyph.getRegionX(), hutGlyph.getRegionY(),
+                            hutGlyph.getRegionWidth(), hutGlyph.getRegionHeight(), hx, hy, dstSize, dstSize);
+                    refreshFogForMarkerRect(hx, hy, dstSize, dstSize);
+                    continue;
+                }
+                // glyph missing from the atlas for some reason - fall through to mapMarkerKey below
+            }
+            if (!neutralSeeded && "town".equals(poi.getData().type) && poi.getSprite() != null) {
                 com.badlogic.gdx.graphics.g2d.TextureRegion brokenTexture = TownRestoration.getBrokenTownSprite(poi);
                 com.badlogic.gdx.graphics.g2d.TextureRegion townTexture = brokenTexture;
                 if (townTexture == null)
                     townTexture = TownRestoration.getPlayerTownSprite(poi);
                 if (townTexture == null)
                     townTexture = poi.getSprite();
-                TextureData townTexData = townTexture.getTexture().getTextureData();
-                if (!townTexData.isPrepared())
-                    townTexData.prepare();
-                Pixmap townPixmap = townTexData.consumePixmap();
+                Pixmap townPixmap = markerPixmapFor(pixmapCache, townTexture.getTexture());
                 // Base footprint 16->20 (2026-08-25 user request: "maybe slightly bigger" to help
                 // with graininess, alongside the BiLinear downscale set above) - not the town
                 // sprite's own much-larger native size, so restored/AI-color towns still don't
@@ -1761,16 +1803,14 @@ public class World implements Disposable, SaveFileContent {
                 int ty = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
                 biomeImage.drawPixmap(townPixmap, townTexture.getRegionX(), townTexture.getRegionY(),
                         townTexture.getRegionWidth(), townTexture.getRegionHeight(), tx, ty, dstSize, dstSize);
-                townPixmap.dispose();
                 refreshFogForMarkerRect(tx, ty, dstSize, dstSize);
                 continue;
             }
             TextureAtlas.AtlasRegion marker = mapMarker.findRegion(mapMarkerKey(poi.getData()));
             if (marker == null)
                 continue;
-            // Every town-type POI is now handled by the generalized block above (which always
-            // continue's), so this fallback only ever draws non-town markers (dungeons, castles,
-            // etc.) at native size - there's no "ruined" concept for those.
+            // This fallback draws non-town markers (dungeons, castles, etc.) at native size, plus
+            // the pre-seeded functioning neutral towns routed here deliberately (see above).
             int xInPixels = (int) ((poi.getPosition().x / data.tileSize) * mm);
             int yInPixels = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm);
             xInPixels -= marker.getRegionWidth() / 2;
@@ -1780,7 +1820,8 @@ public class World implements Disposable, SaveFileContent {
                     marker.getRegionWidth(), marker.getRegionHeight());
             refreshFogForMarkerRect(xInPixels, yInPixels, marker.getRegionWidth(), marker.getRegionHeight());
         }
-        mapMarkerPixmap.dispose();
+        for (Pixmap cached : pixmapCache.values())
+            cached.dispose();
         // Restore the default filter - every OTHER biomeImage draw elsewhere (crisp pixel-art
         // terrain tiles) implicitly relies on NearestNeighbour and never sets it explicitly.
         biomeImage.setFilter(Pixmap.Filter.NearestNeighbour);
@@ -3111,9 +3152,15 @@ public class World implements Disposable, SaveFileContent {
             // Same reasoning as repaintBiomeAroundTown()'s own call: the per-tile minimap redraws
             // above can paint over a nearby POI's marker icon (markers are baked pixels, not
             // separate actors) - daily expansion sweeps across town markers as it grows, which
-            // was clipping them out of the minimap a few pixels per day.
-            if (biomeImage != null)
-                redrawAllPoiMarkers();
+            // was clipping them out of the minimap a few pixels per day. Rect-scoped (2026-08-26
+            // perf fix): only markers inside this ring's own repainted bounding box could have
+            // been clipped, so only those get restored - the old full-map redraw here ran for
+            // every one of 2000+ POIs, once per owner per day, and was the single largest
+            // component of the reported day-end freeze. 5-tile margin: the widest marker (32px,
+            // Capitol/castle) half-extends 16px from its POI's center, and at miniMapTileSize=4
+            // one WORLD tile is 4 minimap pixels, so 16px = 4 tiles of reach - plus one spare.
+            if (biomeImage != null && minX <= maxX)
+                redrawPoiMarkers(minX - 5, minY - 5, maxX + 5, maxY + 5);
         }
 
         regenerateDoodadsInRadius(centerTileX, centerTileY, innerRadiusTiles, outerRadiusTiles, colorBiome, claimedTiles);

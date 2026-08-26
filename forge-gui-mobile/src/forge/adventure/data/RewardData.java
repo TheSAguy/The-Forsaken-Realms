@@ -188,6 +188,10 @@ public class RewardData implements Serializable {
 
     public static void invalidateCardPool() {
         allCards = null;
+        // The research-threshold popup's totals cache is derived from this same pool - drop it
+        // together so popup thresholds can never drift from the Research Lab screen's own live
+        // numbers after a pool rebuild (settings toggles, save load, research completion).
+        forge.adventure.scene.ResearchScene.invalidateThresholdCache();
     }
 
     // Restricted Cards enforcement for sourceDeck-based rewards (2026-08-22 fix, MOD_CHANGELOG.md).

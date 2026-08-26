@@ -859,7 +859,14 @@ public class RewardScene extends UIScene {
                 restockButton.setVisible(false);
                 headerLabel.setVisible(remainingSelections > 0);
                 headerLabel.setText(Forge.getLocalizer().getMessage("lblSelectRewards", remainingSelections));
-                doneButton.setDisabled(remainingSelections > 0);
+                // PRICED picks (Thief Merchant, selectionPriceMultiplier > 0) must leave Done
+                // enabled from the start (2026-08-26 review finding, soft-lock): this screen has
+                // no other exit, and every pick button is gold-gated - a player who couldn't
+                // afford any of the 8 cards was permanently stuck (kill-the-process territory),
+                // and one who could was forced to buy to leave. A merchant is something you can
+                // walk away from. FREE picks (quest-authored grantRewardsChoice) keep the
+                // original mandatory-pick contract unchanged.
+                doneButton.setDisabled(remainingSelections > 0 && selectionPriceMultiplier <= 0f);
         }
         for (int h = 1; h < targetHeight; h++) {
             cardHeight = h;
@@ -1125,7 +1132,9 @@ public class RewardScene extends UIScene {
 
                         headerLabel.setVisible(remainingSelections > 0);
                         headerLabel.setText("Select " + remainingSelections + " rewards");
-                        doneButton.setDisabled(remainingSelections > 0);
+                        // Same priced-picks-are-optional rule as the build-time check - see the
+                        // RewardChoice case in loadRewards() (soft-lock fix).
+                        doneButton.setDisabled(remainingSelections > 0 && selectionPriceMultiplier <= 0f);
 
                         HapticEngine.vibrate(FPref.UI_VIBRATE_ON_ADVENTURE_REWARD, 5);
                         //SoundSystem.instance.play(SoundEffectType.FlipCoin, false);

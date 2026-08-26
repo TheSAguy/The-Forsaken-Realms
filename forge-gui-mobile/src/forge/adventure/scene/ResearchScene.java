@@ -147,6 +147,33 @@ public class ResearchScene extends UIScene {
         return Math.max(THRESHOLD_MIN, (int) Math.ceil(totalCardsInEdition * fraction));
     }
 
+    // Session-lazy total-cards-per-edition cache backing thresholdForEditionCode() below - the
+    // threshold-crossed popup (AdventurePlayer.maybeNotifyResearchThreshold()) runs on every
+    // single card pickup, and re-deriving totals from RewardData.getAllCards() (tens of
+    // thousands of cards) per pickup would be silly. buildList() above deliberately does NOT use
+    // this cache - the on-screen list stays freshly derived every open, exactly as before.
+    private static Map<String, Integer> cachedTotalsByEdition;
+
+    /** Drops the totals cache - called by RewardData.invalidateCardPool() whenever the legal
+     *  card pool itself is rebuilt, so the popup's thresholds always track the live pool. */
+    public static void invalidateThresholdCache() {
+        cachedTotalsByEdition = null;
+    }
+
+    /** The research threshold for one edition, same formula/counting the on-screen list uses
+     *  (thresholdFor() over the live legal card pool). Integer.MAX_VALUE for an edition with no
+     *  cards in the pool at all - callers treat that as "can never be researched, never notify". */
+    public static int thresholdForEditionCode(String editionCode) {
+        if (cachedTotalsByEdition == null) {
+            Map<String, Integer> totals = new HashMap<>();
+            for (PaperCard pc : RewardData.getAllCards())
+                totals.merge(pc.getEdition(), 1, Integer::sum);
+            cachedTotalsByEdition = totals;
+        }
+        int total = cachedTotalsByEdition.getOrDefault(editionCode, 0);
+        return total <= 0 ? Integer.MAX_VALUE : thresholdFor(total);
+    }
+
     private void buildList() {
         // Selectables must be rebuilt alongside the rows (2026-08-12 review finding): without
         // this, every rebuild - and buildList now runs from enter(), both filter toggles, and

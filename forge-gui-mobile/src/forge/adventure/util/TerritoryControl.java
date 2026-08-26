@@ -476,6 +476,19 @@ public class TerritoryControl {
         return hash;
     }
 
+    // Stable per-owner phase offset so the 6 owners' periodic forced re-contests never all land
+    // on the same day (2026-08-26): every owner's timer starts on the same first tick of a
+    // session, so without an offset, day N+30 would run SIX full-disc re-contests in one frame -
+    // a bigger one-day spike than the daily cost this whole caching layer exists to avoid.
+    private static final String[] FORCED_RECONTEST_OWNER_ORDER = {"white", "blue", "black", "red", "green", "player"};
+
+    private static int forcedRecontestStagger(String owner) {
+        for (int i = 0; i < FORCED_RECONTEST_OWNER_ORDER.length; i++)
+            if (FORCED_RECONTEST_OWNER_ORDER[i].equalsIgnoreCase(owner))
+                return i * (FORCE_RECONTEST_INTERVAL_DAYS / FORCED_RECONTEST_OWNER_ORDER.length);
+        return 0;
+    }
+
     // True the first time this owner's fingerprint is computed (forces one full re-contest, same
     // as the old code's session-start behavior), whenever it actually changed since last tick, or
     // whenever this owner is overdue for its periodic forced re-contest (see the staleness
@@ -487,7 +500,11 @@ public class TerritoryControl {
         Integer previousRecontestDay = lastFullRecontestDay.get(owner);
         boolean overdue = previousRecontestDay == null || currentDay - previousRecontestDay >= FORCE_RECONTEST_INTERVAL_DAYS;
         if (changed || overdue) {
-            lastFullRecontestDay.put(owner, currentDay);
+            // First-seen initialization back-dates the timer by the owner's stagger offset so the
+            // NEXT forced re-contest (and every one after) lands on that owner's own phase of the
+            // 30-day cycle rather than all six owners sharing one.
+            lastFullRecontestDay.put(owner, previousRecontestDay == null
+                    ? currentDay - forcedRecontestStagger(owner) : currentDay);
             return true;
         }
         return false;
@@ -940,6 +957,31 @@ public class TerritoryControl {
         if (attackable.isEmpty())
             return; // nothing left to capture - the natural "done" state, quietly no-op forever
 
+        // In-flight target exclusion (2026-08-26, user report: "I was black, send 3 mages, all
+        // to the same town" - each dispatch independently rolled from the same nearest-5 pool
+        // with zero memory of what this color's other mages were already flying toward). Towns
+        // already claimed by one of THIS color's in-flight mages drop out of the candidate pool
+        // before the roll; if that would leave zero candidates, the exclusion is waived and a
+        // repeat target is allowed rather than silently skipping the attack.
+        java.util.Set<String> inFlightTargetIds = new java.util.HashSet<>();
+        for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages())
+            if (color.equals(mage.territoryColor) && mage.territoryTarget != null)
+                inFlightTargetIds.add(mage.territoryTarget.getID());
+        if (!inFlightTargetIds.isEmpty()) {
+            List<PointOfInterest> untargeted = new ArrayList<>();
+            for (PointOfInterest candidate : attackable)
+                if (!inFlightTargetIds.contains(candidate.getID()))
+                    untargeted.add(candidate);
+            if (untargeted.isEmpty()) {
+                System.out.println("[TFR-Targeting] " + color + ": every attackable town already has an in-flight mage - allowing a repeat target");
+            } else {
+                if (untargeted.size() < attackable.size())
+                    System.out.println("[TFR-Targeting] " + color + ": excluded " + (attackable.size() - untargeted.size())
+                            + " town(s) already targeted by this color's in-flight mage(s)");
+                attackable = untargeted;
+            }
+        }
+
         PointOfInterest target = null;
         // Color Defeat forced-targeting (2026-08-14 user spec): a one-shot flag armed when a
         // neighboring color falls (see defeatColor()) forces this color's NEXT dispatch to hit a
@@ -963,7 +1005,8 @@ public class TerritoryControl {
             // the intended uniform selection odds). Same dedup shape the pre-existing weighted-pick
             // Capitol handling below already uses via candidates.indexOf().
             PointOfInterest playerCapitol = TownRestoration.findCapitol();
-            if (playerCapitol != null && !playerTargets.contains(playerCapitol))
+            if (playerCapitol != null && !playerTargets.contains(playerCapitol)
+                    && !inFlightTargetIds.contains(playerCapitol.getID()))
                 playerTargets.add(playerCapitol);
             if (!playerTargets.isEmpty()) {
                 target = playerTargets.get(world.getRandom().nextInt(playerTargets.size()));
@@ -1008,6 +1051,10 @@ public class TerritoryControl {
             // an enemy-color town check). Neutral/Unhappy leave the Capitol untouched - only War and
             // Partner/Happy have user-specified rules.
             PointOfInterest capitol = TownRestoration.findCapitol();
+            // Same in-flight exclusion as the ordinary pool above - a Capitol already under
+            // attack by one of this color's mages doesn't get a second one rolled onto it.
+            if (capitol != null && inFlightTargetIds.contains(capitol.getID()))
+                capitol = null;
             if (capitol != null && ColorReputation.getStatus(color) == ColorReputation.Status.WAR) {
                 float bonus = totalWeight / 19f; // solves bonus / (totalWeight + bonus) == 0.05
                 int existingIndex = candidates.indexOf(capitol);
@@ -1047,6 +1094,16 @@ public class TerritoryControl {
         if (enemyData == null) {
             System.out.println("[TerritoryControl] " + color + ": enemy \"" + enemyName + "\" not found, skipping dispatch");
             return;
+        }
+        // Mythic-tier dispatches draw from the color's roaming pool, which includes the
+        // deliberately-oversized "Legends" commander sprites (scale 2x+, e.g. Commodore Guff) -
+        // fine as a stationary boss, but marching across the overworld at double size it reads
+        // as a rendering bug (user report 2026-08-26: "A large Enemy icon appeared"). Clone
+        // (never mutate the shared JSON-loaded template) and normalize the SPRITE scale only -
+        // deck/life/tier, i.e. the actual threat, are untouched.
+        if (enemyData.scale != 1.0f) {
+            enemyData = new EnemyData(enemyData);
+            enemyData.scale = 1.0f;
         }
         EnemySprite mage = new EnemySprite(enemyData);
         mage.territoryTarget = target;

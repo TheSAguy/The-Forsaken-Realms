@@ -13836,3 +13836,122 @@ build_standalone.py`; `CLAUDE.md`, `MOD_SCOPE.md`, `DUNGEON_POOL_RESEARCH.md`,
 `PLAYTEST_LOG_CHECKLIST.md`, `README.md`, `standalone-packaging/README.md`; new `world/sprites/
 map_sprites.png`/`.atlas`/`.json`; `world/biomes/player.json`; deleted `world/tilesets/
 new_player_terrain.png`/`.atlas`.
+
+## Fifty-fourth round: day-end stutter (2nd cause), disabled-button purchases, minimap fixes, Chest reworks (2026-08-25 evening)
+
+(Entry backfilled 2026-08-26 during a log-review pass - this round was committed as `047d8bf161b`
+without its changelog entry.)
+
+- **Day-end stutter, second cause**: `EconomyBuildings.processDaysPassed()` iterated every
+  `PointOfInterestChanges` ever lazily created (grows with exploration, not with buildings) -
+  rewritten to scan the world's bounded POI registry via `peekPointOfInterestChanges()`.
+- **Disabled-but-clickable purchase buttons**: `Controls.newTextButton()`'s ClickListener never
+  checked `isDisabled()` (scene2d's `setDisabled(true)` is visual-only), so a greyed-out Capitol
+  upgrade still built and drove stone negative. Root-fixed in Controls; also
+  `EconomyBuildings.canAffordCost()` now skips resources a purchase doesn't actually cost, so one
+  negative resource no longer blocks unrelated purchases (the Arena's gold-only repair was blocked
+  by negative stone).
+- **Neutral-town minimap ruins (ordering)**: `seedFunctioningNeutralTowns()` moved BEFORE the
+  one-time minimap icon bake in `World.generateNew()`.
+- **Grainy minimap icons**: BiLinear downscale + base size 16->20 in `redrawAllPoiMarkers()`.
+- **Ruin/Player town main-map icons** +15% via a new `MapSprite.getDrawScale()` hook.
+- **Dangerous Enemy** launches its duel immediately (`WorldStage.startChestDuel()`); **Duplicate**
+  picks Rare/Mythic-first from the active deck; chest notification text de-bolded (the unclosed
+  `[*]` smear bug, third occurrence).
+
+## Fifty-fifth round: day-end freeze root cause (global fingerprint), Chest/Arena round-3 (2026-08-26 morning)
+
+(Entry backfilled 2026-08-26 - committed as `2042e94be24` without its changelog entry.)
+
+- **Territory re-contest caching was global**: ONE fingerprint across all 6 owners meant any town
+  growing anywhere forced a full O(radius^2) re-contest for EVERY owner every day (confirmed via
+  forge.log: 100% of late-game ticks). Now per-owner (`sourcesChangedFor()`), plus a 30-day
+  bounded-staleness forced re-contest per owner (independent review caught the permanent-stall
+  edge case for an owner whose own sources stop changing).
+- **Illegal Arena Match** stale "Upgrade to Level 2" button fixed via a dedicated
+  `ArenaScene.loadArenaDataStandalone()` that clears the singleton's leftover building context.
+- **Duplicate** grants to Inventory (not the deck - 4-copy legality); **Lost Card** shows the
+  actual card via the Loot reward screen; unaffordable-state greying extended to the Arena
+  upgrade, Inn re-roll, and Inventory repair buttons; the Capitol's 6 land shops cost gold only.
+
+## Fifty-sixth round: day-end freeze killed (marker/chunk work), missed features implemented, seeded-town icons (2026-08-26)
+
+User re-test on the fifty-fifth build: fingerprint fix verified working in the log (full
+re-contests down from 100% to ~21% of ticks) but the stutter persisted and still grew with time.
+Deep pass found the remaining - and biggest - costs were never the territory *scan* at all:
+
+- **`redrawAllPoiMarkers()` PNG-decode storm**: since the round-52 town-icon generalization, the
+  minimap marker redraw called `consumePixmap()` once PER TOWN - and `consumePixmap()` on a
+  FileTextureData re-decodes the entire backing atlas PNG from disk. `claimWastelandRing()` ran
+  the full-map version once per owner per day (6x). Hundreds of PNG decodes per day-rollover,
+  synchronously on the render thread. Fixed two ways: a per-call `Map<Texture, Pixmap>` cache
+  (each atlas decodes at most once per call), and the claim path now calls a new rect-scoped
+  `redrawPoiMarkers(minX,minY,maxX,maxY)` restoring only markers inside that ring's own repainted
+  bounding box instead of all 2000+ POIs.
+- **Off-screen chunk actor leak**: `WorldBackground.reloadChunkObjects()` unconditionally
+  `loadChunk()`ed - ADDING a far-away chunk's rebuilt actors straight into the live stage groups.
+  Daily expansion reloads dozens of off-screen chunks, so the stage accumulated (and
+  double-added) thousands of orphan actors over a session - per-frame act/draw cost growing the
+  longer a playthrough ran, day-tick or not. Off-window chunks now just invalidate their cache;
+  the normal window-transition load rebuilds them on approach.
+- **Off-screen per-tile texture patches**: `onTileRevealed()` ran a full neighbor-blend
+  `getBiomeSprite()` composition + GPU upload for every repainted tile in every chunk texture
+  ever built (1000+ tiles/day, almost all nowhere near the player). Off-window chunk textures are
+  now evicted (`dispose()`) instead - rebuilt lazily via the same path a never-visited chunk
+  already takes.
+- **`[TFR-DayTick]` instrumentation** (user request: "add entries to the game log that you can
+  review later"): one line per day-rollover with per-subsystem ms
+  (economy/territory/dungeons/quests/fog/standings/total) so any future day-end-lag report is
+  attributable from forge.log alone.
+- **Forced re-contests staggered per owner** (white/blue/black/red/green/player phase-offset
+  across the 30-day cycle) so the periodic full scans never all land on one day.
+- **Mage same-target exclusion** (missed earlier request, user-confirmed spec): `dispatch()` now
+  drops towns already targeted by this color's in-flight mages from the candidate pool before the
+  roll (forced-player-target and War-Capitol paths included), waiving the exclusion only if it
+  would empty the pool. `[TFR-Targeting]` logs exclusions.
+- **Research-threshold popup** (missed earlier request): `AdventurePlayer.addReward()`'s Card
+  branch now detects the owned-count crossing the Research Lab's own threshold formula
+  (`ResearchScene.thresholdForEditionCode()`, new session-cached helper) for a not-yet-unlocked
+  edition and fires "You can now research <Name> (CODE) at your Capitol's Research Lab!" -
+  stateless crossing detection, no save-format change.
+- **Seeded neutral towns use the original base-game hut icon on the minimap** (user request with
+  screenshot): the ~20 pre-seeded functioning "Waste Town"s skip the custom-sprite path in the
+  marker redraw and fall through to the stock `map_marker` "town" glyph - the downscaled
+  WasteTown building art kept reading as "ruined" regardless of filtering/size.
+- **Dispatch-mage sprite scale normalized to 1.0** (clone, sprite-only - deck/life untouched):
+  Mythic-tier dispatches can draw oversized "Legends" (log: green dispatched Commodore Guff),
+  which read as a rendering bug marching the overworld at 2x.
+- **Welcome-popup startup stack trace silenced**: `UIScene.enter()` null-guards
+  `Forge.lastPreview` (always null at a fresh game's first popup; the exception was caught but
+  logged a full trace in every new game's log).
+
+### Review-pass additions (multi-agent audit of the round + the last 4 days, before deploy)
+- **Thief Merchant soft-lock fixed (HIGH)**: the priced RewardChoice screen's Done button was
+  disabled until a pick was made, and every pick is gold-gated - a player who couldn't afford
+  any of the 8 cards was permanently stuck on the screen (no other exit path exists), and one
+  who could was forced to buy. Done now stays enabled whenever selectionPriceMultiplier > 0
+  (a merchant you can walk away from); free quest-authored picks keep the mandatory contract.
+- **Research popup bypass paths**: ante wins, ante buy-backs, and artificer duplicates land via
+  addCard(), not addReward() - a threshold crossed there would never notify AND permanently
+  disarm the stateless crossing test. addCard(card, amount) now fires the same hook (the two
+  paths are disjoint, no double-fire); bulk addCards() (starter deck) deliberately excluded.
+- **Duplicate cheap-slot restricted bypass**: the 25-shard slot drew from the whole active deck
+  including restricted cards (bypassing their own 200-shard slot, and both buttons could offer
+  the identical card at two prices) - cheap slot now draws non-restricted cards only.
+- **Three stale ChestEvents comments corrected** - worst one still instructed inserting
+  Duplicate's card into the deck (the deliberately reverted illegal-decklist behavior).
+- **Rect margin 3 -> 5** (at miniMapTileSize=4 a 32px marker half-extends 4 tiles, not 2).
+- **Seeded-town hut glyph drawn at 20x20** to fully cover the 20x20 WasteTown footprint the
+  previous build baked into existing saves' persisted biomeImage.
+- Also backfilled the missing round 54/55 changelog entries (both committed without one).
+
+### Validation
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean.
+- Log-verified from the user's 14:10 session: chest events all firing (all 6 types incl. the
+  8-competitor arena bracket), resource pool stable 60/60 through day 42, per-owner fingerprint
+  reducing full re-contests as designed.
+
+**Files touched**: `world/World.java`, `stage/WorldBackground.java`, `stage/WorldStage.java`,
+`util/TerritoryControl.java`, `util/ChestEvents.java`, `player/AdventurePlayer.java`,
+`scene/ResearchScene.java`, `scene/RewardScene.java`, `scene/UIScene.java`,
+`data/RewardData.java`.

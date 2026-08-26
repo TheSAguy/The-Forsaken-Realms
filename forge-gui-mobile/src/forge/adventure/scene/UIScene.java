@@ -644,7 +644,11 @@ public class UIScene extends Scene {
 
     @Override
     public void enter() {
-        if (screenImage != null) {
+        // Forge.lastPreview is null until the first screenshot of a session exists - a fresh
+        // game's very first popup (the welcome dialog) always hit the IllegalArgumentException
+        // inside the catch below, printing a full stack trace into every new game's log
+        // (2026-08-26 log-review cleanup; behavior unchanged, the trace was already non-fatal).
+        if (screenImage != null && Forge.lastPreview != null) {
             //create from lastPreview from header...
             try {
                 backgroundTexture = new TextureRegion(Forge.lastPreview);

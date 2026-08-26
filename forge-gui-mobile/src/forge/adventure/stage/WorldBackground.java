@@ -296,7 +296,16 @@ public class WorldBackground extends Actor {
         unLoadChunk(chunkX, chunkY);
         chunksSprites[chunkX][chunkY] = null;
         chunksSpritesBackground[chunkX][chunkY] = null;
-        loadChunk(chunkX, chunkY);
+        // Only re-ADD the rebuilt actors when this chunk is inside the live 3x3 window
+        // (2026-08-26 perf/correctness fix, part of the day-end freeze): the unconditional
+        // loadChunk() here ADDED an off-screen chunk's actors straight into the live stage
+        // groups - territory expansion reloads dozens of far-away chunks every day, so the stage
+        // accumulated (and double-added, once the player later walked back in) thousands of
+        // orphan actors over a session, growing every frame's act/draw cost the longer a
+        // playthrough ran. Off-window chunks now just invalidate their cache; the ordinary
+        // window-transition loadChunk() rebuilds them fresh whenever the player next approaches.
+        if (Math.abs(chunkX - currentChunkX) <= 1 && Math.abs(chunkY - currentChunkY) <= 1)
+            loadChunk(chunkX, chunkY);
     }
 
     // Called when a tile newly becomes explored, or (package-private, see WorldStage's
@@ -314,6 +323,18 @@ public class WorldBackground extends Actor {
         Texture tex = chunks[chunkX][chunkY];
         if (tex == null)
             return; // chunk not built yet; it will draw correctly once it is, since getBiomeSprite() checks explored state
+        // Off-window chunks EVICT instead of patching (2026-08-26 perf fix, part of the day-end
+        // freeze): each patch runs a full getBiomeSprite() neighbor-blend composition plus a GPU
+        // texture upload, and daily territory expansion repaints 1000+ tiles/day, almost all in
+        // chunks nowhere near the player - built once, kept forever, patched tile-by-tile purely
+        // so they'd be correct IF revisited. Disposing the stale texture is near-free now, and
+        // getChunkTexture() rebuilds it on demand the next time it actually enters the window -
+        // the exact same lazy path a never-yet-visited chunk already takes.
+        if (Math.abs(chunkX - currentChunkX) > 1 || Math.abs(chunkY - currentChunkY) > 1) {
+            tex.dispose();
+            chunks[chunkX][chunkY] = null;
+            return;
+        }
         int localX = Math.floorMod(worldTileX, chunkSize);
         int localY = Math.floorMod(worldTileY, chunkSize);
         Pixmap tile = WorldSave.getCurrentSave().getWorld().getBiomeSprite(worldTileX, worldTileY);

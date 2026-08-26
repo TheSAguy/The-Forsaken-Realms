@@ -22,10 +22,11 @@ import java.util.Set;
 
 /**
  * Chest loot spawn (2026-08-25 user spec): the 6th resource-spawn type, ResourceSpawns.TYPE_CHEST.
- * Resolves at pickup time into a uniform 1-of-6 random event. Two are instant (Gold Chest, Lost
- * Card); two spawn a strong roaming enemy nearby for the player to engage or avoid (Dangerous
- * Enemy, Illegal Arena Match - opt-in via ordinary collision, same mechanism as ResourceSpawns'
- * own Mystery-pickup ambush); two open a dialog/scene (Thief Merchant, Duplicate).
+ * Resolves at pickup time into a uniform 1-of-6 random event. Gold Chest grants instantly; Lost
+ * Card shows the found card on the Loot reward screen; Dangerous Enemy launches an immediate duel
+ * (WorldStage.startChestDuel(), user revision 2026-08-25 - replaced the original opt-in
+ * spawn-nearby design); Illegal Arena Match launches a full 8-competitor ArenaScene bracket
+ * (user revision 2026-08-25); Thief Merchant and Duplicate open a priced scene/dialog.
  * <p>
  * Two documented simplifications from the original spec, both forced by real infrastructure
  * constraints rather than oversight: Thief Merchant is a priced "pick 1 of 8" reward choice
@@ -143,11 +144,12 @@ public class ChestEvents {
         System.out.println("[ChestEvents] Thief Merchant: offered " + rewards.size + " cards at 0.75x value, pick 1");
     }
 
-    // Duplicate scopes its candidate pool to the player's ACTIVE deck's mainboard (user revision
+    // Duplicate scopes its CANDIDATE pool to the player's ACTIVE deck's mainboard (user revision
     // 2026-08-25: "duplicate a random owned card in the current active deck"), not the full owned
-    // collection. WorldStage.showChestDuplicateDialog() is responsible for actually inserting the
-    // duplicate into that same deck's CardPool on purchase, not just the general collection - see
-    // its own comment (mirrors DuelScene's ante Buy Back precedent).
+    // collection - but the purchased duplicate itself goes to the general Inventory/collection
+    // ONLY, never into the deck (user revision 2026-08-26: a deck already at its 4-copy limit
+    // would become an illegal decklist - an earlier deck-insertion version of this was
+    // deliberately reverted; do NOT reintroduce it). See WorldStage.showChestDuplicateDialog().
     private static void triggerDuplicate(World world) {
         Deck deck = Current.player().getSelectedDeck();
         List<PaperCard> owned = deck != null ? deck.getMain().toFlatList() : java.util.Collections.emptyList();
@@ -158,17 +160,26 @@ public class ChestEvents {
         }
         String[] restrictedNames = Config.instance().getConfigData().restrictedCards;
         List<PaperCard> restrictedOwned = new ArrayList<>();
-        if (restrictedNames != null) {
-            for (PaperCard card : owned) {
-                for (String restricted : restrictedNames) {
-                    if (restricted.equalsIgnoreCase(card.getName())) {
-                        restrictedOwned.add(card);
+        List<PaperCard> unrestrictedOwned = new ArrayList<>();
+        for (PaperCard card : owned) {
+            boolean restricted = false;
+            if (restrictedNames != null) {
+                for (String restrictedName : restrictedNames) {
+                    if (restrictedName.equalsIgnoreCase(card.getName())) {
+                        restricted = true;
                         break;
                     }
                 }
             }
+            (restricted ? restrictedOwned : unrestrictedOwned).add(card);
         }
-        PaperCard cheap = pickByRarityPriority(owned, world);
+        // The cheap 25-shard slot draws only from NON-restricted deck cards (2026-08-26 review
+        // finding: it used to draw from the whole deck, so a restricted card could roll into the
+        // cheap slot and bypass its own 200-shard price - and both buttons could even offer the
+        // identical card at two different prices). An all-restricted deck falls back to the full
+        // pool rather than offering nothing.
+        List<PaperCard> cheapPool = unrestrictedOwned.isEmpty() ? owned : unrestrictedOwned;
+        PaperCard cheap = pickByRarityPriority(cheapPool, world);
         PaperCard expensive = restrictedOwned.isEmpty() ? null : pickByRarityPriority(restrictedOwned, world);
         System.out.println("[ChestEvents] Duplicate: offered " + cheap.getName()
                 + (expensive != null ? " / " + expensive.getName() : " (no restricted card in active deck)"));
@@ -259,11 +270,12 @@ public class ChestEvents {
         return names.toArray(new String[0]);
     }
 
-    // Archmage-tier pick shared by Dangerous Enemy and Illegal Arena Match: a random color's
-    // strongest real roaming threat (TerritoryControl.pickGrandmasterMage, made public for this),
-    // tried across all 5 colors (shuffled) in case the first roll's color has no Mythic-tier
-    // entry. Returns an independent clone (EnemyData's own copy constructor) - safe to mutate
-    // (life, rewards) without touching the shared JSON-loaded template.
+    // Archmage-tier pick for Dangerous Enemy (Illegal Arena Match builds its own bracket pool
+    // via buildArchmagePool() above instead): a random color's strongest real roaming threat
+    // (TerritoryControl.pickGrandmasterMage, made public for this), tried across all 5 colors
+    // (shuffled) in case the first roll's color has no Mythic-tier entry. Returns an independent
+    // clone (EnemyData's own copy constructor) - safe to mutate (life, rewards) without touching
+    // the shared JSON-loaded template.
     private static EnemyData pickRandomArchmage(World world) {
         List<String> colors = new ArrayList<>(java.util.Arrays.asList(ColorReputation.COLORS));
         Collections.shuffle(colors, world.getRandom());
