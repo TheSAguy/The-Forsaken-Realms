@@ -788,6 +788,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         TextraButton cheapButton = Controls.newTextButton("Duplicate " + cheapCard.getName() + " (" + cheapCost + " shards)", () -> {
             Current.player().takeShards(cheapCost);
             Current.player().addCard(cheapCard, 1);
+            // The card came from the player's ACTIVE deck (ChestEvents.triggerDuplicate now scopes
+            // its pool there, not the full collection) - addCard alone only restocks the general
+            // collection, so the duplicate needs inserting into the deck itself too, same as
+            // DuelScene's ante Buy Back flow (see its own comment there).
+            if (Current.player().getSelectedDeck() != null)
+                Current.player().getSelectedDeck().getMain().add(cheapCard);
             hideDialog();
             GameHUD.getInstance().addNotification("The artificer duplicates your " + cheapCard.getName() + "!");
         });
@@ -799,45 +805,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
             TextraButton expensiveButton = Controls.newTextButton("Duplicate " + expensiveCard.getName() + " (" + expensiveCost + " shards)", () -> {
                 Current.player().takeShards(expensiveCost);
                 Current.player().addCard(expensiveCard, 1);
+                if (Current.player().getSelectedDeck() != null)
+                    Current.player().getSelectedDeck().getMain().add(expensiveCard);
                 hideDialog();
                 GameHUD.getInstance().addNotification("The artificer duplicates your " + expensiveCard.getName() + "!");
             });
             expensiveButton.setDisabled(Current.player().getShards() < expensiveCost);
             dialog.getButtonTable().add(expensiveButton).width(240f).row();
         }
-        dialog.getButtonTable().add(Controls.newTextButton("Decline", this::hideDialog)).width(240f).row();
-        dialog.setKeepWithinStage(true);
-        showDialog();
-    }
-
-    // Chest loot spawn - "Illegal Arena Match" event (2026-08-25 user spec): a toll dialog, same
-    // pay/leave shape as showCapitalTollDialog above. Accepting spawns the opponent a couple tiles
-    // off the player's position (opt-in via ordinary collision, same mechanism ResourceSpawns'
-    // Mystery-pickup ambush uses) rather than launching a duel directly - no code path in this
-    // codebase launches a duel without a real overworld encounter/POI visit behind it, and
-    // reusing the existing collision-triggered flow avoids inventing one just for this.
-    public void showChestArenaTollDialog(EnemyData opponent, Vector2 spawnPosition) {
-        Dialog dialog = getDialog();
-        dialog.getContentTable().clear();
-        dialog.getButtonTable().clear();
-        dialog.clearListeners();
-
-        final int toll = 250;
-        TypingLabel label = Controls.newTypingLabel("A grinning tout offers you a spot in the [RED]Illegal Arena[] "
-                + "Match, entry [+Gold] " + toll + " gold. The house never asks who wins.");
-        label.setWrap(true);
-        label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(250f).row();
-
-        TextraButton payButton = Controls.newTextButton("Pay " + toll + " gold", () -> {
-            Current.player().takeGold(toll);
-            hideDialog();
-            EnemySprite arenaOpponent = new EnemySprite(opponent);
-            spawnAt(arenaOpponent, spawnPosition);
-            GameHUD.getInstance().addNotification("[*]The Illegal Arena awaits - " + opponent.name + " approaches!");
-        });
-        payButton.setDisabled(Current.player().getGold() < toll);
-        dialog.getButtonTable().add(payButton).width(240f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Decline", this::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();

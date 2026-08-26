@@ -23,11 +23,11 @@
     "height":  0,
     "color":  "d4af37",
     "spriteNames":  [
-                        "Stone",
-                        "Gravel",
-                        "Stump",
-                        "Bush",
-                        "Flower"
+                        "PlayerStone",
+                        "PlayerGravel",
+                        "PlayerStump",
+                        "PlayerBush",
+                        "PlayerFlower"
                     ],
     "pointsOfInterest":  [
 

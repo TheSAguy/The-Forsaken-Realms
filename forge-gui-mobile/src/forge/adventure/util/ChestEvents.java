@@ -4,12 +4,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
+import forge.adventure.data.ArenaData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.RewardData;
+import forge.adventure.data.WorldData;
+import forge.adventure.scene.ArenaScene;
 import forge.adventure.scene.RewardScene;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.world.World;
+import forge.deck.Deck;
 import forge.item.PaperCard;
 
 import java.util.ArrayList;
@@ -25,10 +29,11 @@ import java.util.Set;
  * own Mystery-pickup ambush); two open a dialog/scene (Thief Merchant, Duplicate).
  * <p>
  * Two documented simplifications from the original spec, both forced by real infrastructure
- * constraints rather than oversight: Thief Merchant is a free "pick 1 of 8" reward choice rather
- * than a priced shop (RewardScene.Type.Shop requires a real, MapStage-backed ShopActor at every
- * other call site in this codebase - unsafe to fake for a one-off overworld encounter); Duplicate
- * hands the player a RANDOM owned card rather than letting them choose one (no free-form
+ * constraints rather than oversight: Thief Merchant is a priced "pick 1 of 8" reward choice
+ * (RewardScene.Type.RewardChoice with a per-card gold cost) rather than a real priced shop
+ * (RewardScene.Type.Shop requires a real, MapStage-backed ShopActor at every other call site in
+ * this codebase - unsafe to fake for a one-off overworld encounter); Duplicate hands the player a
+ * RANDOM card from their active deck rather than letting them choose one (no free-form
  * card-picker dialog exists anywhere in this codebase's plain Dialog+TypingLabel+buttons pattern).
  */
 public class ChestEvents {
@@ -111,6 +116,11 @@ public class ChestEvents {
         GameHUD.getInstance().addNotification("[*]" + message);
     }
 
+    // Priced pick-1-of-8 (user revision 2026-08-25: "not free... 0.75x their normal value") -
+    // RewardScene computes each card's own price at 0.75x CardUtil.getRewardPrice() and charges
+    // gold when the player picks (see RewardScene.ChooseRewardButton / selectionPriceMultiplier).
+    private static final float THIEF_MERCHANT_PRICE_MULTIPLIER = 0.75f;
+
     private static void triggerThiefMerchant(World world) {
         Array<Reward> rewards = generateCardRewards(new String[]{"Rare", "Mythic Rare"}, 8);
         if (rewards.isEmpty()) {
@@ -118,15 +128,21 @@ public class ChestEvents {
             triggerGoldChest(world);
             return;
         }
-        RewardScene.instance().loadSelectableRewards(rewards, RewardScene.Type.RewardChoice, 1);
+        RewardScene.instance().loadSelectableRewards(rewards, RewardScene.Type.RewardChoice, 1, THIEF_MERCHANT_PRICE_MULTIPLIER);
         Forge.switchScene(RewardScene.instance());
-        System.out.println("[ChestEvents] Thief Merchant: offered " + rewards.size + " cards, pick 1");
+        System.out.println("[ChestEvents] Thief Merchant: offered " + rewards.size + " cards at 0.75x value, pick 1");
     }
 
+    // Duplicate now scopes its candidate pool to the player's ACTIVE deck's mainboard (user
+    // revision 2026-08-25: "duplicate a random owned card in the current active deck"), not the
+    // full owned collection. WorldStage.showChestDuplicateDialog() is responsible for actually
+    // inserting the duplicate into that same deck's CardPool on purchase, not just the general
+    // collection - see its own comment (mirrors DuelScene's ante Buy Back precedent).
     private static void triggerDuplicate(World world) {
-        List<PaperCard> owned = Current.player().getCards().toFlatList();
+        Deck deck = Current.player().getSelectedDeck();
+        List<PaperCard> owned = deck != null ? deck.getMain().toFlatList() : java.util.Collections.emptyList();
         if (owned.isEmpty()) {
-            System.out.println("[ChestEvents] Duplicate: player owns no cards, awarding gold instead");
+            System.out.println("[ChestEvents] Duplicate: active deck has no cards, awarding gold instead");
             triggerGoldChest(world);
             return;
         }
@@ -146,33 +162,68 @@ public class ChestEvents {
         PaperCard expensive = restrictedOwned.isEmpty() ? null
                 : restrictedOwned.get(world.getRandom().nextInt(restrictedOwned.size()));
         System.out.println("[ChestEvents] Duplicate: offered " + cheap.getName()
-                + (expensive != null ? " / " + expensive.getName() : " (no restricted card owned)"));
+                + (expensive != null ? " / " + expensive.getName() : " (no restricted card in active deck)"));
         WorldStage.getInstance().showChestDuplicateDialog(cheap, expensive);
     }
 
+    // Illegal Arena Match (user revision 2026-08-25: "a real arena match interface, where you
+    // start as 1 of 8 competitors. Just like in the capitols. All Archmages. The reward is a
+    // Rare(75%)/Mythic(25%) Item, not card") - reuses the Capitol's own ArenaScene bracket
+    // wholesale instead of a single spawned duel: rounds=3 gives 2^3-1=7 enemy fighters + the
+    // player = 8 competitors, exactly matching the spec. ArenaScene.loadArenaData() needs no
+    // MapStage/building context (confirmed - the arenaMapStage==null path only suppresses the
+    // Upgrade/Toggle buttons), so this launches directly, mirroring how WorldStage.
+    // startForcedCapitolDuel() launches a duel outside the normal building-click flow. ArenaScene
+    // itself already shows the entry fee and charges it on its own "Start" button
+    // (Current.player().takeGold(arenaData.entryFee) inside ArenaScene.startRound()) - no separate
+    // toll dialog needed here, unlike the other paid event (Duplicate).
     private static void triggerIllegalArena(World world) {
-        WorldStage stage = WorldStage.getInstance();
-        if (stage.getPlayerSprite() == null) {
+        String[] archmagePool = buildArchmagePool();
+        if (archmagePool.length == 0) {
+            System.out.println("[ChestEvents] Illegal Arena Match: no eligible Archmage-tier enemies found, awarding gold instead");
             triggerGoldChest(world);
             return;
         }
-        EnemyData enemy = pickRandomArchmage(world);
-        if (enemy == null) {
-            System.out.println("[ChestEvents] Illegal Arena Match: no eligible enemy found, awarding gold instead");
-            triggerGoldChest(world);
-            return;
-        }
-        // Single-card reward, 75% Rare / 25% Mythic (user spec) - replaces the enemy's own stock
-        // loot entirely, unlike Dangerous Enemy above. Left unrestricted by edition here;
-        // EnemySprite.getRewards() applies this enemy's own color-based edition gate automatically
-        // when the fight resolves, same as every other roaming enemy's loot.
+        // Item, not card (user spec) - "Rare"/"Mythic" are ItemData's OWN rarity strings (distinct
+        // from CardRarity's "Rare"/"Mythic Rare" - see RewardData.rollWeightedItemRarity()/
+        // ItemListData.getItemNamesByRarity() for the same bare-word convention).
         RewardData reward = new RewardData();
-        reward.type = "card";
+        reward.type = "item";
         reward.count = 1;
-        reward.rarity = world.getRandom().nextFloat() < 0.75f ? new String[]{"Rare"} : new String[]{"Mythic Rare"};
-        enemy.rewards = new RewardData[]{reward};
-        System.out.println("[ChestEvents] Illegal Arena Match: offered vs " + enemy.name);
-        stage.showChestArenaTollDialog(enemy, nearbyPosition(world, stage));
+        reward.itemRarity = world.getRandom().nextFloat() < 0.75f ? "Rare" : "Mythic";
+
+        ArenaData arenaData = new ArenaData();
+        arenaData.enemyPool = archmagePool;
+        arenaData.rounds = 3;
+        arenaData.entryFee = 250;
+        // Reward only for winning the WHOLE bracket (user spec: "the reward is..." singular), not
+        // per-round loot - ArenaScene.done() grants every round's own rewards[i] independently, so
+        // rounds 0/1 get an empty table and only the final round (index 2) carries the item.
+        arenaData.rewards = new RewardData[3][];
+        arenaData.rewards[0] = new RewardData[0];
+        arenaData.rewards[1] = new RewardData[0];
+        arenaData.rewards[2] = new RewardData[]{reward};
+
+        System.out.println("[ChestEvents] Illegal Arena Match: launching an 8-competitor Archmage bracket ("
+                + archmagePool.length + " eligible names), entry 250 gold");
+        ArenaScene.instance().loadArenaData(arenaData, 0L, false);
+        Forge.switchScene(ArenaScene.instance());
+    }
+
+    // Every Mythic-tier ("Archmage") enemy name in the game, boss/quest-tagged exclusions only
+    // (spawnRate<=0 "Legends"-tier enemies are DELIBERATELY included - ArenaScene's own "Champion
+    // bounty" mechanism specifically exists to reward drawing one of these arena-exclusive
+    // fighters into the bracket). Mixed across all 5 colors, matching how the Capitol's own arena
+    // pool is already a hand-picked mix of multiple colors' wizards.
+    private static String[] buildArchmagePool() {
+        List<String> names = new ArrayList<>();
+        for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies())) {
+            if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+                continue;
+            if ("Mythic".equals(data.tier))
+                names.add(data.name);
+        }
+        return names.toArray(new String[0]);
     }
 
     // Archmage-tier pick shared by Dangerous Enemy and Illegal Arena Match: a random color's

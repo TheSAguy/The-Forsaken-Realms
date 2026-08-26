@@ -40,12 +40,12 @@ A full player guide ships with the game (`GAME_GUIDE.md`).
 
 1. Install **Java 17 or newer** (64-bit) — https://adoptium.net
 2. Download the latest release zip and unzip it anywhere.
-3. Run **`The Forgotten Realms.exe`** (or `The Forgotten Realms.cmd`).
+3. Run **`The Forsaken Realms.exe`** (or `The Forsaken Realms.cmd`).
 
 Currently **tested on Windows PC only**. The engine itself is cross-platform Java, but other
 platforms are untested territory for now.
 
-Saves and settings live in `%APPDATA%\ForgottenRealms`. The card-art cache is shared with a
+Saves and settings live in `%APPDATA%\ForsakenRealms`. The card-art cache is shared with a
 stock Forge install if you have one, so you never re-download images you already own. A stock
 Forge installation on the same machine is otherwise completely unaffected.
 
@@ -58,7 +58,7 @@ This is an early release — balance feedback and bug reports are very welcome o
 
 This repository is a fork of [Card-Forge/forge](https://github.com/Card-Forge/forge) carrying
 the game's engine changes and the world itself
-(`forge-gui/res/adventure/The Forgotten Realms/`). To build:
+(`forge-gui/res/adventure/The Forsaken Realms/`). To build:
 
 ```
 mvn -pl forge-gui-mobile-dev -am package -DskipTests

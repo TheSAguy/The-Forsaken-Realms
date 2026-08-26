@@ -118,7 +118,7 @@ public class GameLauncher {
             config.setResizable(false);
         }
         config.setHdpiMode(HdpiMode.Logical);
-        // The Forgotten Realms standalone: this fork ships as its own game (Forge credited in
+        // The Forsaken Realms standalone: this fork ships as its own game (Forge credited in
         // CREDITS/README per GPL); keep the engine version visible for bug reports.
         config.setTitle("The Forsaken Realms (Forge " + versionString + ")");
         config.setWindowListener(new Lwjgl3WindowAdapter() {

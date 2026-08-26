@@ -18,7 +18,7 @@ rules engine underneath. Fair warning: it's HARD, and that's intentional. See `G
 ## Install & Run
 
 1. Unzip this folder anywhere you like.
-2. Run **`The Forgotten Realms.exe`** (or `The Forgotten Realms.cmd` if the exe
+2. Run **`The Forsaken Realms.exe`** (or `The Forsaken Realms.cmd` if the exe
    won't start).
 3. Pick your race and difficulty, and good luck out there.
 
@@ -26,7 +26,7 @@ That's it — no installer, nothing else touched.
 
 ## Where your data lives
 
-- **Saves, settings, decks:** `%APPDATA%\ForgottenRealms`
+- **Saves, settings, decks:** `%APPDATA%\ForsakenRealms`
 - **Card art cache:** `%LOCALAPPDATA%\Forge\Cache\pics\cards` — deliberately
   shared with stock Forge, so if you already play Forge you reuse the gigabytes
   of card images you've downloaded instead of fetching them again. If you don't
@@ -36,8 +36,8 @@ A stock Forge install (any version) on the same machine is otherwise completely
 unaffected by this game, and vice versa.
 
 **Moving saves from a Forge-based install of this mod:** copy
-`%APPDATA%\Forge\adventure\The Forgotten Realms` into
-`%APPDATA%\ForgottenRealms\adventure\`.
+`%APPDATA%\Forge\adventure\The Forsaken Realms` into
+`%APPDATA%\ForsakenRealms\adventure\`.
 
 ## Feedback & Community
 
@@ -52,7 +52,7 @@ Enjoying the game? You can support development on Ko-fi:
 This is a **pinned build** — it never auto-updates, and the stock Forge updater
 is disabled on purpose (updating the engine underneath a running world corrupts
 the experience). New versions of The Forsaken Realms ship as fresh zips; your
-saves in `%APPDATA%\ForgottenRealms` carry over.
+saves in `%APPDATA%\ForsakenRealms` carry over.
 
 ## License & Source
 

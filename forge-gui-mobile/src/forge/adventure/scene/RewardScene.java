@@ -70,6 +70,11 @@ public class RewardScene extends UIScene {
     static public final float CARD_WIDTH_TO_HEIGHT = CARD_WIDTH / CARD_HEIGHT;
     ItemPool<PaperCard> collectionPool = null;
     private int remainingSelections = 0;
+    // Priced RewardChoice (2026-08-25, Chest's Thief Merchant event - user spec: "not free... at
+    // 0.75x their normal value"). 0 keeps the original free behavior every other RewardChoice
+    // caller (MapDialog's quest-authored grantRewardsChoice) relies on - explicit per-call so
+    // nothing can silently inherit a stale multiplier from RewardScene's singleton state.
+    private float selectionPriceMultiplier = 0f;
 
     private RewardScene() {
         super(Forge.isLandscapeMode() ? "ui/items.json" : "ui/items_portrait.json");
@@ -617,10 +622,11 @@ public class RewardScene extends UIScene {
         loadRewards(rewards, type, shopActor);
     }
 
-    public void loadSelectableRewards(Array<Reward> choices, Type type, int countToSelect) {
+    public void loadSelectableRewards(Array<Reward> choices, Type type, int countToSelect, float priceMultiplier) {
         if (type != Type.RewardChoice)
             return;
         this.remainingSelections = countToSelect;
+        this.selectionPriceMultiplier = priceMultiplier;
         loadRewards(choices, type, null);
     }
 
@@ -1067,10 +1073,11 @@ public class RewardScene extends UIScene {
         private final int index;
         public RewardActor rewardActor;
         private Reward reward;
+        int price;
         boolean isSold;
 
         void update() {
-            setDisabled(remainingSelections <= 0);
+            setDisabled(remainingSelections <= 0 || Current.player().getGold() < price);
             if (isSold)
                 setText("SELECTED");
             else
@@ -1078,12 +1085,15 @@ public class RewardScene extends UIScene {
         }
 
         void updateOwned() {
-            if (Type.Shop != type)
+            String label = price > 0 ? "[%75][+GoldCoin] " + price : "Pick Reward";
+            if (Type.Shop != type) {
+                setText(label);
                 return;
+            }
             if (collectionPool != null && Reward.Type.Card.equals(reward.getType()))
-                setText("Pick Reward" + "\n" + Forge.getLocalizer().getMessage("lblOwned") + ": " + collectionPool.count(reward.getCard()));
+                setText(label + "\n" + Forge.getLocalizer().getMessage("lblOwned") + ": " + collectionPool.count(reward.getCard()));
             else if (Reward.Type.Item.equals(reward.getType()))
-                setText("Pick Reward" + "\n" + Forge.getLocalizer().getMessage("lblOwned") + ": " + AdventurePlayer.current().countItem(reward.getItem().name));
+                setText(label + "\n" + Forge.getLocalizer().getMessage("lblOwned") + ": " + AdventurePlayer.current().countItem(reward.getItem().name));
         }
 
         public ChooseRewardButton(int i, RewardActor actor, Reward reward, TextraButton style) {
@@ -1096,14 +1106,21 @@ public class RewardScene extends UIScene {
             setX(actor.getX());
             setY(actor.getY() - getHeight());
 
-            setText("Pick Reward");
+            // Priced RewardChoice (Chest's Thief Merchant) vs. the original free pick (quest
+            // grantRewardsChoice) - see selectionPriceMultiplier's own comment.
+            price = selectionPriceMultiplier > 0f
+                    ? Math.round(CardUtil.getRewardPrice(reward) * selectionPriceMultiplier)
+                    : 0;
+            setText(price > 0 ? "[%75][+GoldCoin] " + price : "Pick Reward");
             updateOwned();
             addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (remainingSelections >= 1) {
+                    if (remainingSelections >= 1 && Current.player().getGold() >= price) {
 
                         remainingSelections--;
+                        if (price > 0)
+                            Current.player().takeGold(price);
                         Current.player().addReward(rewardActor.getReward());
 
                         headerLabel.setVisible(remainingSelections > 0);

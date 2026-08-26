@@ -50,7 +50,7 @@ public class ConfigData {
     // (Shandalar's Equipment/*Items shops matched isArmoryShop, common-town multi-name shop
     // lists exposed the type re-roll, and the common capitals' arena objects exposed the
     // upgrade economy). Same opt-in rule as every flag above: false here, true only in
-    // "The Forgotten Realms"/config.json.
+    // "The Forsaken Realms"/config.json.
     public boolean armoryGuardsEnabled = false;
     public boolean shopTypeRerollEnabled = false;
     public boolean arenaUpgradesEnabled = false;
@@ -59,7 +59,7 @@ public class ConfigData {
     public boolean contentFilterTablesEnabled = false;
     // Show each enemy's difficulty tier appended to its displayed name, e.g. "Red Wizard (Adept)"
     // (user spec 2026-08-13) - display-only, see EnemyData.getTieredDisplayName(). Same opt-in
-    // rule as every flag above: false here, true only in "The Forgotten Realms"/config.json.
+    // rule as every flag above: false here, true only in "The Forsaken Realms"/config.json.
     public boolean showEnemyTierInName = false;
     // Per-race starting expansions (user spec 2026-08-12) - see RaceEditionData. When a race has
     // an entry here, it replaces the flat starterEditions first-N seeding; races without an
@@ -81,14 +81,14 @@ public class ConfigData {
     // Weighted overworld-spawn tier system (user spec 2026-08-23): week-based progression toward
     // higher tiers, a territory/reputation modifier, and per-enemy kill-decay - see
     // SpawnTierWeighting.java. Same opt-in rule as every flag above: false here, true only in
-    // "The Forgotten Realms"/config.json.
+    // "The Forsaken Realms"/config.json.
     public boolean weightedSpawnTiersEnabled = false;
     // Functioning Neutral Towns (user spec 2026-08-24): at world-gen, a handful of the neutral
     // ("Waste Town") POIs are seeded as already-functioning instead of ruined - real shops, no
     // rubble, gated to EditionProgression's existing NEUTRAL shard (not the player's unlocked
     // editions, unlike a player-paid town restoration). See TownRestoration.NEUTRAL_SEEDED_FLAG
     // and TownRestoration.seedFunctioningNeutralTowns(). Same opt-in rule as every flag above: false here,
-    // true only in "The Forgotten Realms"/config.json.
+    // true only in "The Forsaken Realms"/config.json.
     public boolean functioningNeutralTownsEnabled = false;
 
 }

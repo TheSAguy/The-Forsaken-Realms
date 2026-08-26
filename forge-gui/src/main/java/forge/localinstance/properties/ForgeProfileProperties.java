@@ -70,7 +70,7 @@ public class ForgeProfileProperties {
         final Pair<String, String> defaults = getDefaultDirs();
         userDir     = getDir(props, USER_DIR_KEY,      defaults.getLeft());
         cacheDir    = getDir(props, CACHE_DIR_KEY,     defaults.getRight());
-        // The Forgotten Realms standalone: card art defaults to STOCK Forge's pics folder so
+        // The Forsaken Realms standalone: card art defaults to STOCK Forge's pics folder so
         // players with an existing Forge install reuse gigabytes of already-downloaded art
         // (and a fresh machine just creates it). Everything else stays in this game's own dirs.
         // A cardPicsDir entry in forge.profile.properties still overrides this.
@@ -180,10 +180,10 @@ public class ForgeProfileProperties {
             throw new RuntimeException("cannot determine OS and user home directory");
         }
 
-        // The Forgotten Realms standalone: this fork stores its data under its own app
+        // The Forsaken Realms standalone: this fork stores its data under its own app
         // folder so a stock Forge install (any version) on the same machine is never touched.
         // Card art is the deliberate exception - see load()'s cardPicsDir default.
-        final String fallbackDataDir = TextUtil.concatNoSpace(homeDir, "/.forgottenrealms");
+        final String fallbackDataDir = TextUtil.concatNoSpace(homeDir, "/.forsakenrealms");
 
         if (StringUtils.containsIgnoreCase(osName, "windows")) {
             // the split between appdata and localappdata on windows is relatively recent.  If
@@ -199,15 +199,15 @@ public class ForgeProfileProperties {
             }
             // the cache dir is <name>/Cache instead of just <name> since appRoot and cacheRoot might be the
             // same directory on windows and we need to distinguish them.
-            return Pair.of(appRoot + File.separator + "ForgottenRealms", cacheRoot + File.separator + "ForgottenRealms" + File.separator + "Cache");
+            return Pair.of(appRoot + File.separator + "ForsakenRealms", cacheRoot + File.separator + "ForsakenRealms" + File.separator + "Cache");
         }
         else if (StringUtils.containsIgnoreCase(osName, "mac os x")) {
-            return Pair.of(TextUtil.concatNoSpace(homeDir, "/Library/Application Support/ForgottenRealms"),
-                    TextUtil.concatNoSpace(homeDir, "/Library/Caches/ForgottenRealms"));
+            return Pair.of(TextUtil.concatNoSpace(homeDir, "/Library/Application Support/ForsakenRealms"),
+                    TextUtil.concatNoSpace(homeDir, "/Library/Caches/ForsakenRealms"));
         }
 
         // Linux and everything else
-        return Pair.of(fallbackDataDir, TextUtil.concatNoSpace(homeDir, "/.cache/forgottenrealms"));
+        return Pair.of(fallbackDataDir, TextUtil.concatNoSpace(homeDir, "/.cache/forsakenrealms"));
     }
 
     // Stock Forge's cache dir (the upstream getDefaultDirs() cache-side logic, unrebranded) -

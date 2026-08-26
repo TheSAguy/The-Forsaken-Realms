@@ -431,7 +431,7 @@ public class MapDialog {
                for(RewardData rdata:E.grantRewardsChoice) {
                    ret.addAll(rdata.generate(false, true));
                }
-               RewardScene.instance().loadSelectableRewards(ret, RewardScene.Type.RewardChoice, 1);
+               RewardScene.instance().loadSelectableRewards(ret, RewardScene.Type.RewardChoice, 1, 0f);
                Forge.switchScene(RewardScene.instance());
             }
             if (E.issueQuest != null && (!E.issueQuest.isEmpty())) {

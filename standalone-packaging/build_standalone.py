@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble "The Forgotten Realms" standalone game folder.
+"""Assemble "The Forsaken Realms" standalone game folder.
 
 One command builds the shippable package (MOD_SCOPE.md #89 part 2):
 
@@ -25,7 +25,7 @@ What it does, in order:
      (see below), since this is by far the biggest, slowest step and its
      content is static between TFR-only rounds.
   4. res/adventure gets exactly two entries: common/ (from BASE_INSTALL, also
-     skipped on a fast-path run) and the repo's "The Forgotten Realms" plane
+     skipped on a fast-path run) and the repo's "The Forsaken Realms" plane
      folder (ALWAYS rebuilt fresh - this is the part that actually changes).
   5. Overwrite the jar with the repo-built one (carries the mod engine code).
   6. Overlay the repo's non-adventure res edits (en-US.properties, skins art) -
@@ -57,8 +57,8 @@ import zipfile
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_INSTALL = r"E:\GAMES\Forge_2"
 OUT_DIR = r"F:\FORGE\TFR-Standalone"
-GAME_NAME = "The Forgotten Realms"
-PLANE = "The Forgotten Realms"
+GAME_NAME = "The Forsaken Realms"
+PLANE = "The Forsaken Realms"
 
 # Root files copied verbatim from BASE_INSTALL (everything else is deliberately
 # dropped: stock-Forge client, editors, uninstaller, upstream txt files that
@@ -265,8 +265,8 @@ def main():
         if b"The Forsaken Realms (Forge " not in gl:
             errors.append("shipped jar's GameLauncher lacks the standalone title - wrong/stale jar?")
         pp = z.read("forge/localinstance/properties/ForgeProfileProperties.class")
-        if b"ForgottenRealms" not in pp:
-            errors.append("shipped jar lacks the ForgottenRealms data-dir rebrand")
+        if b"ForsakenRealms" not in pp:
+            errors.append("shipped jar lacks the ForsakenRealms data-dir rebrand")
     entries = sorted(os.listdir(adv))
     if entries != sorted(["common", PLANE]):
         errors.append(f"res/adventure should hold exactly common + the plane, has: {entries}")

@@ -29,7 +29,7 @@ public class SettingData {
     public boolean bindEquipmentLoadoutsToDecks;
     public boolean drawChevronsToHiddenEnemiesInClearQuest;
     public boolean preferEraMatchedTokenArt;
-    // Default ON for The Forgotten Realms standalone (MOD_SCOPE.md #89, user decision
+    // Default ON for The Forsaken Realms standalone (MOD_SCOPE.md #89, user decision
     // 2026-08-19); the per-plane fogOfWar config flag still gates the feature, so stock planes
     // are unaffected regardless of this user setting.
     public boolean fogOfWarEnabled = true;

@@ -12,7 +12,7 @@ Make the Shandalar-style overworld a lot more dynamic and interactive — the fi
 struggle against each other, the player has a reputation with each of them, and the world
 visibly changes over time instead of sitting static.
 
-## Mod Plane: "The Forgotten Realms"
+## Mod Plane: "The Forsaken Realms"
 
 All of this is being built as its own selectable plane, `forge-gui/res/adventure/The Forgotten
 Realms/` (currently a copy of Shandalar's `world/` data as a starting point). The plane has its
@@ -937,7 +937,7 @@ needs its own design pass before any of this gets built:**
   Gold (zero gap, reads as one continuing column). Icons are **real art, sourced by the user
   directly from `common/maps/tileset/buildings.png`** - a resource-pile icon row already in the
   game (orange pile for Lumber, dark grey pile for Stone), cropped into a small dedicated atlas
-  (`The Forgotten Realms/maps/tileset/resource_icons.png`/`.atlas`) and rendered as real
+  (`The Forsaken Realms/maps/tileset/resource_icons.png`/`.atlas`) and rendered as real
   `Image`/`TextureRegionDrawable` actors, not inline font markup - the original `[+Lumber]`/
   `[+Stone]` markup approach (mirroring how `[+Gold]`/`[+Shards]` work) turned out not to actually
   render the icon in-game (root cause not fully pinned down - see `MOD_CHANGELOG.md`), so this
@@ -1266,7 +1266,7 @@ needs its own design pass before any of this gets built:**
   - **Player Capitol castle icon** - a distinct gray/white stone castle sprite (twin corner
     towers, arched entrance, red-roofed spires), meant to represent the player's own Capitol on
     the overworld map once #13 exists - visually its own thing, not a recolor of the 5 AI castle
-    icons. **Saved into the repo (2026-08-07)** as `The Forgotten Realms/maps/tileset/
+    icons. **Saved into the repo (2026-08-07)** as `The Forsaken Realms/maps/tileset/
     Player_Capitol.png` (128x128, single image, confirmed the intended art with the user). Not
     yet wired to anything - no `.atlas` yet, and note the size: existing POI icons are 16x16
     (normal towns) to 48x48 (broken-town variants), so using this on the overworld will need a
@@ -1333,7 +1333,7 @@ pattern/assets, not literal copy-paste, unless noted otherwise.
   in the repo) — 6 custom biomes matching real sub-regions, fully re-themed UI screens (market/
   tavern/spellsmith/reward, not just terrain), custom structure sprites, and a genuine hand-built
   planeswalker-driven questline through named locations (`main_story/approaches/
-  davriels_mansion*.tmx`). This is the playbook to study if we want The Forgotten Realms to feel
+  davriels_mansion*.tmx`). This is the playbook to study if we want The Forsaken Realms to feel
   like its own place with real geography/lore (Faerûn regions, e.g. Waterdeep/Baldur's Gate/
   Neverwinter-flavored biomes) rather than a reskinned Shandalar. Also has custom booster
   contents (`printsheets.txt`/`boosters-special.txt`) as a smaller sub-idea.
@@ -1348,7 +1348,7 @@ pattern/assets, not literal copy-paste, unless noted otherwise.
 - Earlier tweak: sacrifice condition adjustment on Misty Mountains card (unrelated one-off,
   predates this scope list)
 - Borrowed `Realm of Legends`' expanded item pool (526 items total vs. common's 220 - ~306 new)
-  into `The Forgotten Realms`. Pure data/asset copy, no new art or code - see `MOD_CHANGELOG.md`.
+  into `The Forsaken Realms`. Pure data/asset copy, no new art or code - see `MOD_CHANGELOG.md`.
   Items are loadable/obtainable via the `give item <name>` cheat console command now; wiring
   them into actual shop inventories or reward tables is a separate follow-up, not done yet.
 
@@ -1461,7 +1461,7 @@ concept. Built out over one long round:
   load a file that doesn't exist on disk. Disabled those doors (empty `teleport` = exits the
   dungeon instead, same as other intentionally-unbuilt exits already in these files) rather than
   importing 7 more untested dungeon files for a bonus task. One pair (Gitrog Bog levels 1↔2) had
-  both ends already present in this plane - repointed to `../The Forgotten Realms/...` instead of
+  both ends already present in this plane - repointed to `../The Forsaken Realms/...` instead of
   disabling, since that one actually works once fixed. The Eldrazi Prison hub in particular is a
   real 7-branch boss dungeon only 1/8 built out here - worth a dedicated import pass later if
   wanted, not done this round.
@@ -2077,7 +2077,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
 
 ### 34. Update Mod Intro Text — `Done (2026-08-22, user-confirmed complete)` (writing task)
 - User ask (2026-08-11, wishlist batch): "Update mod intro text." The player-facing text shown when
-  starting/selecting "The Forgotten Realms" plane (New Game screen and/or a title/lore blurb) -
+  starting/selecting "The Forsaken Realms" plane (New Game screen and/or a title/lore blurb) -
   needs the actual current text located and a replacement drafted with the user, not scoped further
   yet.
 
@@ -2096,7 +2096,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   (all comments/log lines, no other functional value): `TownRestoration.java`'s upgrade
   notification text ("Orazca rises!..."), its console log line, and two explanatory comments in
   `TownRestoration.java`/`TerritoryControl.java`. Confirmed zero remaining "Camelot" references
-  anywhere in the mod's own Java source or `The Forgotten Realms` resource folder.
+  anywhere in the mod's own Java source or `The Forsaken Realms` resource folder.
 
 ### 36. More Terrain Customization — `Merged into #11 (2026-08-12, user decision - same ask)`
 
@@ -2138,7 +2138,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
 - User idea (2026-08-11, wishlist batch): "Mod deployment/sharing made easy." Today's deploy process
   (per `CLAUDE.md`/this session's own established loop) is manual and dev-oriented: compile, splice
   the compiled `forge/adventure` package into an already-installed Forge jar via `jar uf`, then
-  mirror `forge-gui/res/adventure/The Forgotten Realms/` on top of an existing install - nothing a
+  mirror `forge-gui/res/adventure/The Forsaken Realms/` on top of an existing install - nothing a
   non-technical player could do. This would need something closer to a single distributable
   package/installer another player could drop onto a stock Forge install (or a from-scratch bundled
   build) without needing Maven/a JDK/manual jar surgery. Needs scoping: are we packaging for players
@@ -2153,7 +2153,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   map next to the campfire, skipping the rest of the intro/tutorial quest chain (find a town, find
   a dungeon, find a cave) entirely.
 - **Traced the full intro flow before touching anything** (`quests.json`): the cave dialog (quest
-  28, "Entering The Forgotten Realms") issues quest 53 ("Welcome to The Forgotten Realms" - talk to
+  28, "Entering The Forsaken Realms") issues quest 53 ("Welcome to The Forsaken Realms" - talk to
   the cave mage, exit the cave), which on exit issues quest 30 ("Where Am I?" - the actual "find a
   town / find a dungeon / win a duel / find a cave / find a town again" tutorial chain the user
   described). Confirmed the ACTUAL "wizard reward" isn't in this JSON at all - it's a second wizard
@@ -2537,7 +2537,7 @@ Found via direct forge.log review (not a user report) while investigating #53 ab
 Story `.tmx` maps (Tarnation, Gitrog Bog, Squirrel Farm, Wizard Palace) each have a spawn-point
 object property `enemy="Mysterious Mage"`, but that enemy was only ever defined in a DIFFERENT
 plane's data (`Realm of Legends/world/enemies.json`), not this plane's own
-`The Forgotten Realms/world/enemies.json` - so every time a player entered one of these maps, the
+`The Forsaken Realms/world/enemies.json` - so every time a player entered one of these maps, the
 game logged "Enemy 'Mysterious Mage' not found, choosing a random one for current biome" and
 silently substituted a random encounter instead. Harmless (graceful fallback, no crash) but not
 what these Story locations were built to grant. Fixed by porting the enemy definition
@@ -3116,7 +3116,7 @@ them plus the previously-deferred Capitol shop-coverage content task (see #26).
   - The doubled starting "coins"/teleport rune traced to `AdventureQuestData.prologueDisplayed`/
     `epilogueDisplayed` being declared `transient` - Java serialization silently drops `transient`
     fields on every save/load round-trip, resetting them to `false` each time, which re-queued quest
-    28's ("Entering The Forgotten Realms") intro dialog and its one-time "Skip tutorial" item grant
+    28's ("Entering The Forsaken Realms") intro dialog and its one-time "Skip tutorial" item grant
     (a teleport rune + starting Challenge Coins) on the next `showQuestDialogs()` call after any
     reload - triggered from over a dozen ordinary places (entering a town, opening inventory, etc.).
     Fixed by removing `transient` from those two fields specifically (`completed`/`failed`, also
@@ -3162,7 +3162,7 @@ them plus the previously-deferred Capitol shop-coverage content task (see #26).
   entirely by "does a `ShopActor` exist for this object" with no separate expected-shop-count
   anywhere - deleting the object correctly means nothing spawns or renders there, no companion code
   fix needed.
-- **World Standings title** changed to "The Forgotten Realms Standings" (scaled down via `[%55]`
+- **World Standings title** changed to "The Forsaken Realms Standings" (scaled down via `[%55]`
   to fit the available width without colliding with the Reputation/Expansion buttons).
 - **Line chart replaces the round-#63 snapshot bar chart** (user supplied a mockup): town count by
   week, 5 AI colors + Player (Colorless excluded per spec), rolling 10-week window. This needed real
@@ -3847,7 +3847,7 @@ gave the go-ahead ("proceed to update the game, include all the changes we made 
   (the plane's own `fort/`/`cave/` folders hold 4 unrelated custom files each, zero overlap).
   Path resolution traced exactly: `TileMapScene`/`MapStage` always call `Config.
   getCommonFilePath()` for dungeon maps (unconditionally prepends `common/`), so a POI's own
-  `"map"` string using `../The Forgotten Realms/...` is the ONLY thing that already redirects a
+  `"map"` string using `../The Forsaken Realms/...` is the ONLY thing that already redirects a
   few custom dungeons out of `common/` today - no separate plane-fallback mechanism like
   `getFile()` exists for maps specifically. Recommendation given: copy-and-repoint, but scoped
   ONLY to the specific templates about to be hand-edited (not a blanket copy of all 202 `common/`
@@ -3922,7 +3922,7 @@ scale made that the only reliable way to do this correctly.
   nesting depth: tileset refs still point back at the shared `common/maps/tileset/` (tilesets
   themselves were NOT copied, staying genuinely shared - only the map layouts moved), while
   teleport refs that pointed at another `common/`-hosted dungeon now point at that dungeon's new
-  plane-local copy instead, using the same `"../The Forgotten Realms/maps/map/..."` convention the
+  plane-local copy instead, using the same `"../The Forsaken Realms/maps/map/..."` convention the
   plane's own pre-existing custom dungeons already established.
 - **`points_of_interest.json` updated**: all 259 `"map"` string occurrences (202 unique targets,
   some referenced by multiple POI instances) repointed from `common/` to the plane's own folder.
@@ -3994,8 +3994,8 @@ same call site, no other logic touched.
   afterward: extracted `TownRestoration.class`/`DungeonRotation.class`/
   `AdventureQuestController.class` back out of the live jar and `cmp`'d each against the
   just-compiled copy in `target/classes` - all three identical.
-- Mirrored the plane's res folder (`forge-gui/res/adventure/The Forgotten Realms/` ->
-  `E:\GAMES\FORGE\res\adventure\The Forgotten Realms\`) via `robocopy /E /XO` (additive only - no
+- Mirrored the plane's res folder (`forge-gui/res/adventure/The Forsaken Realms/` ->
+  `E:\GAMES\FORGE\res\adventure\The Forsaken Realms\`) via `robocopy /E /XO` (additive only - no
   `/MIR`, so nothing already in the live folder could be deleted by this step). 300 of 1436 files
   copied (the rest already matched from a prior round's deploy), covering #79's `wood.tx`/
   `wood_pickup.atlas`/`spawn.tmx` and #80's 287 migrated dungeon `.tmx` files plus the repointed

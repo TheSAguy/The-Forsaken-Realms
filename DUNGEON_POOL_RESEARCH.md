@@ -2,7 +2,7 @@
 
 Research-only pass, no code/data changed. Answers one question: **which non-quest, non-city,
 randomly-spawning dungeon/cave content from the other bundled Adventure planes could be pulled
-into "The Forgotten Realms"'s dungeon rotation pool for extra variety?** Written for whichever
+into "The Forsaken Realms"'s dungeon rotation pool for extra variety?** Written for whichever
 session (this PC or the Gaming PC) picks up the actual import work — every claim below was
 verified directly against the JSON/asset files, not taken on faith from a first-pass search.
 
@@ -39,7 +39,7 @@ several files (confirmed: `Aerie` appears in `blue.json`, `colorless.json`, and 
 
 - `common/world/points_of_interest.json`: 264 POI objects total, 208 of them `cave`/`dungeon`
   (105 cave + 103 dungeon), all unique `name`s.
-- `The Forgotten Realms/world/points_of_interest.json` is **no longer a byte-identical copy of
+- `The Forsaken Realms/world/points_of_interest.json` is **no longer a byte-identical copy of
   common's** — it picked up 16 extra entries during the 2026-08-10 "Item Economy overhaul" (a
   quest-item-sourcing import from Realm of Legends, see `MOD_CHANGELOG.md`'s entry of that name).
   Current FR file: 217 `cave`/`dungeon`-type entries. **Every name check in this doc was run
@@ -65,7 +65,7 @@ files.
 | MageTowerC, C2, C3, C4, C5, C6, C8, CE | dungeon | `../common/maps/map/magetower/magetower_*.tmx` | 8 separate mage-tower flavors, mostly tagged BiomeColorless/MageTower/Dungeon — a whole unused sub-family |
 | Maze3 | dungeon | `../common/maps/map/maze/maze_4.tmx` | tagged Hostile/Maze |
 | Oasis | cave | `../common/maps/map/oasis.tmx` | `count: 10` in its own definition — was clearly meant to be common, just never wired in |
-| **Valor's Reach Arena** | cave | `../The Forgotten Realms/maps/map/cave/Valors_Reach_Arena.tmx` | **plane-local, mod-specific asset** — art/map was already custom-built for this mod and is sitting completely unused |
+| **Valor's Reach Arena** | cave | `../The Forsaken Realms/maps/map/cave/Valors_Reach_Arena.tmx` | **plane-local, mod-specific asset** — art/map was already custom-built for this mod and is sitting completely unused |
 | Fort | dungeon | `../common/maps/map/fort/fort_colorless_1_snow.tmx` | grep output around this entry looked slightly malformed (possible duplicate `"type"` key spillover from the adjacent object) — **read this one entry directly before using it**, didn't get a fully clean parse |
 | DEBUGZONE | — | — | correctly excluded — this is dev/test content, leave it out |
 
@@ -117,7 +117,7 @@ dragon dungeon type, distinct from the unique legendary Elder Dragons — plausi
 folders (spot-checked: its `garruk.tmx` and `buildings.atlas` are genuinely different byte
 content from common's, not pointers), so nothing here is a free common-only reuse. Per this
 project's standing "prefer plane-local storage" convention (see `CLAUDE.md`), land copied assets
-under `The Forgotten Realms/maps/...`, not `common/`.
+under `The Forsaken Realms/maps/...`, not `common/`.
 
 **Explicitly excluded, and why (don't re-import these):**
 - **13 disguised Boss/Planeswalker encounters** (Garruk Forest, Grolnoks Bog, Jacehold, Kiora
@@ -205,7 +205,7 @@ encounters rather than filler.
    files / `colorless.json` if untagged).
 2. For the 11 asset-requiring imports: copy `.tmx` + atlas + backing `.png` files into `The
    Forgotten Realms/maps/...` (not `common/`, per project convention), fixing relative paths as
-   you go (`../Shandalar Old Border/...` / `../Innistrad/...` → `../The Forgotten Realms/...`).
+   you go (`../Shandalar Old Border/...` / `../Innistrad/...` → `../The Forsaken Realms/...`).
 3. **Check every copied `.tmx` for internal door/teleport properties pointing at the source
    plane** before wiring it in — this exact bug bit the 2026-08-10 Realm of Legends import ("Six
    broken cross-plane dungeon exits", walking into an unconnected door tried to load a file that
@@ -221,7 +221,7 @@ encounters rather than filler.
    5 times at world-gen — a known lever if a fresh world ever hangs at POI placement (documented
    in `MOD_CHANGELOG.md`'s "Playtest fix round + pool rotation" entry).
 7. New POI entries + biome file edits are exactly the kind of change `CORE_ENGINE_CHANGES.md`
-   does **not** need to track (everything here lives under `The Forgotten Realms/`, not a shared
+   does **not** need to track (everything here lives under `The Forsaken Realms/`, not a shared
    engine file) — but log the actual import in `MOD_CHANGELOG.md` and update `MOD_SCOPE.md` #15's
    status line when it happens.
 
@@ -234,5 +234,5 @@ before it was confirmed that **FR's own file has diverged from common's** (16 ex
 the 2026-08-10 Realm of Legends quest-item import) — direct `grep -c` verification against both
 files afterward showed all 4 were false positives, already present in common all along. Every
 name in this document's tables was re-verified directly against both `common/world/
-points_of_interest.json` and `The Forgotten Realms/world/points_of_interest.json` before being
+points_of_interest.json` and `The Forsaken Realms/world/points_of_interest.json` before being
 listed — this doc's numbers supersede the first pass.

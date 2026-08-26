@@ -1,7 +1,7 @@
 # This Repo
 
 This is a fork of [Card-Forge/forge](https://github.com/Card-Forge/forge) (the open-source MTG
-engine) used to build a personal Adventure-mode mod called **"The Forgotten Realms"**. The user
+engine) used to build a personal Adventure-mode mod called **"The Forsaken Realms"**. The user
 works across two machines and may or may not have git sync available at any given time - **read
 `MOD_SCOPE.md`, `MOD_CHANGELOG.md`, and `CORE_ENGINE_CHANGES.md` before touching any mod-related
 code**, since a prior Claude Code session may have made changes here that this session doesn't
@@ -19,13 +19,13 @@ have in its own memory.
 
 - All mod features are **opt-in per-plane config flags** on `ConfigData.java`
   (`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`), defaulting to `false`, turned
-  on only in `forge-gui/res/adventure/The Forgotten Realms/config.json`. Never make a mod
+  on only in `forge-gui/res/adventure/The Forsaken Realms/config.json`. Never make a mod
   feature apply unconditionally - it must not affect Shandalar or any other stock plane.
-- `The Forgotten Realms/config.json` is a **full standalone copy** of `common/config.json`, not
+- `The Forsaken Realms/config.json` is a **full standalone copy** of `common/config.json`, not
   a small override - Forge does not merge per-plane config with common's. See
   `MOD_CHANGELOG.md` for details.
 - Mod code changes live under `forge-gui-mobile/src/forge/adventure/`. Mod plane data/assets
-  live under `forge-gui/res/adventure/The Forgotten Realms/`. Both need to travel together
+  live under `forge-gui/res/adventure/The Forsaken Realms/`. Both need to travel together
   (e.g. via git) for the mod to actually work on another machine - copying just one half is not
   enough.
 - **Prefer storing custom/edited assets and data under `forge-gui/res/adventure/The Forgotten
@@ -36,7 +36,7 @@ have in its own memory.
   shared. Only touch a genuinely shared file (like `forge-gui/res/languages/en-US.properties` -
   Forge's localization strings have no per-plane override mechanism) when there's truly no
   plane-scoped alternative, and note it as an exception in `CORE_ENGINE_CHANGES.md` when you do.
-- **Any edit to an existing engine file outside `forge-gui/res/adventure/The Forgotten Realms/`
+- **Any edit to an existing engine file outside `forge-gui/res/adventure/The Forsaken Realms/`
   (or a new file added outside that folder) needs a matching entry in `CORE_ENGINE_CHANGES.md` in
   the same round** - same standing requirement as keeping `MOD_CHANGELOG.md` current, just scoped
   to upstream-conflict-relevant changes specifically.
@@ -86,8 +86,8 @@ Deploy loop, in order:
 2. From `forge-gui-mobile/target/classes`: `jar uf "<jar>" forge/adventure` — splice into
    **both** `forge-gui-mobile-dev-...jar` and `forge-gui-desktop-...jar` at
    `E:\GAMES\FORGE\`, mobile-dev first since it's the one that actually matters
-3. If any file under `forge-gui/res/adventure/The Forgotten Realms/` changed, mirror the whole
-   folder on top of `E:\GAMES\FORGE\res\adventure\The Forgotten Realms\` (`cp -r`, plus explicit
+3. If any file under `forge-gui/res/adventure/The Forsaken Realms/` changed, mirror the whole
+   folder on top of `E:\GAMES\FORGE\res\adventure\The Forsaken Realms\` (`cp -r`, plus explicit
    `rm` for anything deleted from the repo - `cp -r` never removes stale destination files)
 4. **Spot-check the splice actually landed** before telling the user it's ready: extract the
    changed `.class` file(s) from the jar just spliced and `grep` for a string literal unique to

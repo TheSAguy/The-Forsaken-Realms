@@ -53,7 +53,7 @@ public class EnemyData implements Serializable {
     public int gamesPerMatch = 1;
     public String bossInsult;
     public String bossIntro;
-    // Mod addition (The Forgotten Realms, 2026-08-11): Arena matches disable the ante mechanic
+    // Mod addition (The Forsaken Realms, 2026-08-11): Arena matches disable the ante mechanic
     // (on globally by default, DuelScene reads UI_ANTE) without touching that global preference -
     // set true only on a per-fight clone (see ArenaScene.loadArenaData()), same pattern the
     // Capitol-defense duel already uses for a one-off gamesPerMatch override.

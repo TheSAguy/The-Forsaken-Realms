@@ -1,7 +1,7 @@
 package forge.adventure.data;
 
 /**
- * Tunable game-balance numbers for "The Forgotten Realms" mod (user request 2026-08-14: "Create
+ * Tunable game-balance numbers for "The Forsaken Realms" mod (user request 2026-08-14: "Create
  * another 'config' file... for things like: How long a day is. How fast Capitol spreads. How fast
  * Towns spread. Max Capitol Spread. Speed-up: how fast this should speed up the game."). Loaded
  * the same way ConfigData is (Config.java's constructor, plane-local settings.json falling back to

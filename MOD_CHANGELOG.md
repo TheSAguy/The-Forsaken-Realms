@@ -13699,3 +13699,140 @@ reward, not the dungeon-wide effect banner).
 
 **Files touched**: `forge-gui-mobile/src/forge/adventure/character/ShopActor.java`
 (`onPlayerCollide()` early-return for permanently-broken shops).
+
+## Fifty-second round: Chest loot spawn, day-end freeze fix, edition-split rebalance, new player art (2026-08-25)
+
+### Chest Loot Spawn - a 6th resource-spawn type
+New `ChestEvents.java`: `ResourceSpawns.TYPE_CHEST` (value 5, alongside Gold/Shards/Wood/Stone/
+Mystery) rolls a uniform 1-of-6 event on pickup - Gold Chest (750-1250 gold), Lost Card (1 free
+Rare), Dangerous Enemy (an Archmage-tier roaming enemy at 1.5x life, spawned a couple tiles off
+the player - opt-in via ordinary collision, same mechanism as the existing Mystery-pickup ambush),
+Thief Merchant (free pick-1-of-8 Rare/Mythic cards via `RewardScene.Type.RewardChoice`), Duplicate
+(a new `WorldStage.showChestDuplicateDialog()` - pay shards to duplicate a random owned card),
+Illegal Arena Match (pay gold, fight a spawned Archmage-tier enemy for a guaranteed Rare/Mythic
+card). `maxResourceSpawns` raised 50 -> 60 to make room for it. New plane-local `sprites/chest.png`/
+`.atlas` (cropped from common's `treasure.png` top row, same 4-frame twinkle-animation shape as the
+other resource-drop atlases).
+
+### Day-end freeze fixed
+`World.claimWastelandRing()`'s daily territory-expansion tile scan was an O(radius^2) full
+bounding-box scan with a per-tile distance-check reject - cost grew with territory radius (21->107
+tiles/day observed over a 13-week log). Rewritten to compute each column's valid y-range
+analytically (circle-row math) instead of scanning the full box; body of the loop otherwise
+unchanged.
+
+### Oversized "Legends"-tier enemies leaking into ordinary roaming spawns fixed
+`SpawnTierWeighting.isExempt()` had dropped its `spawnRate<=0` exemption in an earlier round's
+uniform-baseline redesign, letting deliberately-oversized commander-flavor enemies (Kothophed,
+Yargle and Multani, etc.) spawn as normal roaming encounters. Restored the exemption.
+
+### Edition/expansion split rebalanced
+`EditionProgression.seedColorShards()`: neutral now gets a fixed 12 editions at world-gen (not
+1/6 of the ~189-edition master pool), remainder split round-robin across the 5 color groups.
+`reservePlayerEditions()`: once the player's race is chosen, that race's own ~4 editions move
+from the 5 color shards into neutral (not discarded).
+
+### New player-provided art
+Player Capitol and Player Town (restored-town state) main-map/minimap sprites replacing generic
+placeholders, a new world-gen background image, and unified ruined/restored/AI-color town-icon
+sprite-priority logic shared by the minimap and main map (`TownRestoration.getBrokenTownSprite()`
+-> `getPlayerTownSprite()` -> default).
+
+### Validation performed
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0.
+- An independent multi-agent review pass (adversarial verification, not just self-review) caught
+  a real pre-deploy bug: both Illegal Arena Match and Thief Merchant used the rarity string
+  `"Mythic"`, which `CardRarity.smartValueOf()` doesn't recognize (needs `"Mythic Rare"`/
+  `"MythicRare"`/`"M"`) - silently generated zero cards 25% of the time on Illegal Arena wins, and
+  silently excluded Mythic cards from Thief Merchant's pool entirely. Fixed both before shipping.
+- `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly.
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/util/ChestEvents.java` (new),
+`ResourceSpawns.java`, `Paths.java`, `EditionProgression.java`, `SpawnTierWeighting.java`,
+`TerritoryControl.java` (`pickGrandmasterMage` made public), `TownRestoration.java`,
+`stage/WorldStage.java`, `stage/PointOfInterestMapSprite.java`, `world/World.java`,
+`data/TuningData.java`; `config tables/settings.json`; new
+`sprites/chest.png`/`.atlas`, `maps/tileset/playertown.png`/`.atlas`; `maps/tileset/
+player_capitol_icon.png`, `forge-gui/res/skins/default/adv_worldgen_bg.png` (both overwritten).
+
+## Fifty-third round: Chest event reworks, player-only doodads, "Forsaken Realms" rebrand (2026-08-25)
+
+### Thief Merchant - now priced, not free
+User revision: "not free... 0.75x their normal value". `RewardScene.loadSelectableRewards()` gained
+a `priceMultiplier` param; `ChooseRewardButton` now computes `CardUtil.getRewardPrice(reward) *
+multiplier`, shows it, and gates/charges gold on pick - mirroring `BuyButton`'s existing pattern.
+`0f` keeps every other `RewardChoice` caller (quest-authored `grantRewardsChoice` via `MapDialog`)
+free and unchanged; only Thief Merchant passes `0.75f`.
+
+### Duplicate - now scoped to the active deck
+User revision: "duplicate a random owned card in the current active deck" (was: any owned card).
+`ChestEvents.triggerDuplicate()` now draws its candidate pool from
+`Current.player().getSelectedDeck().getMain().toFlatList()`. `WorldStage.showChestDuplicateDialog()`
+now also inserts the duplicate into `getSelectedDeck().getMain()` (not just the owned-card pool),
+mirroring `DuelScene`'s existing ante Buy Back precedent - `addCard()` alone doesn't make an extra
+copy usable in the deck that's actually played.
+
+### Illegal Arena Match - now a real ArenaScene bracket
+User revision: "a real arena match interface, where you start as 1 of 8 competitors. Just like in
+the capitols. All Archmages. The reward is a Rare(75%)/Mythic(25%) Item, not card." Reuses the
+Capitol's own `ArenaScene`/`ArenaData` bracket wholesale (`rounds=3` -> 2^3-1=7 enemy fighters + the
+player = 8) instead of a single spawned duel - launched directly via `ArenaScene.loadArenaData()` +
+`Forge.switchScene()`, the same ad-hoc pattern `WorldStage.startForcedCapitolDuel()` already uses to
+bypass the normal building-click entry point. Enemy pool is every Mythic-tier ("Archmage") enemy in
+the game (`WorldData.getAllEnemies()` filtered by `tier`, boss/quest-tag exclusions only -
+`spawnRate<=0` "Legends" deliberately included, matching ArenaScene's own "Champion bounty"
+design). `ArenaScene` already shows/charges the entry fee itself (`arenaData.entryFee`) on its own
+Start button - no separate toll dialog needed, so the old `WorldStage.showChestArenaTollDialog()`
+was removed. Reward is a single Item (not card) RewardData with `itemRarity` "Rare"/"Mythic" (the
+item-rarity system's own bare-word convention, distinct from `CardRarity`'s "Mythic Rare"), placed
+only in the final round's reward table so it's granted for winning the whole bracket, not per-round.
+
+### Player-only doodads
+New plane-local override of the shared scatter-sprite catalog: `world/sprites/map_sprites.png`/
+`.atlas`/`.json` (full copies of `common`'s, since a plane's `biomesSprites` path resolves to
+exactly one file - every other biome in this plane still needs its existing names to resolve).
+5 new entries (`PlayerStone`, `PlayerGravel`, `PlayerFlower`, `PlayerBush`, `PlayerStump`) alias the
+same existing art/regions Stone/Gravel/Flower/Bush/Stump already use - zero visual change today,
+but now independently retunable without touching `common/` or any other biome.
+`world/biomes/player.json`'s `spriteNames` repointed at the new names.
+
+### Rebrand: "The Forgotten Realms" -> "The Forsaken Realms"
+User: "go ahead and start the rebrand" (previously deferred behind the Chest feature/freeze fix).
+Plane folder renamed (`git mv`); every occurrence of the exact phrase "The Forgotten Realms"
+replaced with "The Forsaken Realms" throughout the renamed folder (134 files - mostly `.tmx` files'
+own internal relative image-source paths) and in the ~15 outside-repo files that reference the mod
+by name (`CLAUDE.md`, `MOD_SCOPE.md`, `DUNGEON_POOL_RESEARCH.md`, `README.md`, `standalone-packaging/
+README.md`, and doc-comment-only mentions in `TuningData.java`/`AdventurePlayer.java`/`EnemyData.
+java`/`ConfigData.java`/`RewardData.java`/`SettingData.java`/`WorldStandingsScene.java`/
+`GameLauncher.java`/`ForgePreferences.java`/`AssetsDownloader.java`). `standalone-packaging/
+build_standalone.py`'s `GAME_NAME`/`PLANE` constants updated (renames the output folder AND the
+exe/cmd/command/sh launcher files, which are named from `GAME_NAME`). `ForgeProfileProperties.java`'s
+three per-OS app-data folder name strings (Windows/macOS `ForgottenRealms`, Linux `.forgottenrealms`)
+renamed to `ForsakenRealms`/`.forsakenrealms` - per user's earlier explicit sign-off ("It's okay if
+it only affects new games. Can't change existing games"), existing saves under the old folder are
+simply not migrated; the old folder is left untouched on disk, not deleted. Deliberately NOT
+touched: the `[TFR-...]` log-line prefix convention (already baked into hundreds of existing log
+statements - a separate, much larger, unrequested task), any of the real MTG "Adventures in the
+Forgotten Realms" set's own files (`editions/`, `cardsfolder/`, stock Quest/Conquest content), and
+past entries in this changelog / `CORE_ENGINE_CHANGES.md` (historically accurate as originally
+written, left alone). Two clearly-orphaned untracked files from an earlier, separately-reverted
+player-terrain experiment (`world/tilesets/new_player_terrain.png`/`.atlas`, confirmed unreferenced
+anywhere) were deleted per explicit user request in this same round.
+
+### Validation performed
+- `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0.
+- `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly; new
+  output folder is `F:\FORGE\TFR-Standalone\The Forsaken Realms\`.
+- Repo-wide grep for `The Forgotten Realms` / `ForgottenRealms` / `forgottenrealms` re-run after
+  every edit pass; only the two historical changelogs (by design) and one explanatory note in
+  `PLAYTEST_LOG_CHECKLIST.md` (explaining why `[TFR-` stayed put) still match.
+
+**Files touched**: plane folder renamed (134 files edited within); `forge-gui-mobile/src/forge/
+adventure/scene/RewardScene.java`, `util/ChestEvents.java`, `util/MapDialog.java`,
+`stage/WorldStage.java`; `forge-gui/src/main/java/forge/localinstance/properties/
+ForgeProfileProperties.java`, `ForgePreferences.java`; `forge-gui-mobile/src/forge/assets/
+AssetsDownloader.java`; `forge-gui-mobile-dev/src/forge/app/GameLauncher.java`; `standalone-packaging/
+build_standalone.py`; `CLAUDE.md`, `MOD_SCOPE.md`, `DUNGEON_POOL_RESEARCH.md`,
+`PLAYTEST_LOG_CHECKLIST.md`, `README.md`, `standalone-packaging/README.md`; new `world/sprites/
+map_sprites.png`/`.atlas`/`.json`; `world/biomes/player.json`; deleted `world/tilesets/
+new_player_terrain.png`/`.atlas`.

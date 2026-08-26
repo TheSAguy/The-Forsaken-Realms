@@ -26,7 +26,7 @@ import java.util.Map;
  * live per-color town counts, opened from a HUD button rather than a permanently-visible panel
  * (the earlier TownCountActor HUD panel this replaced was taking up too much on-screen space for
  * data that only changes every few in-game days). Own JSON layout lives under the plane's own
- * `ui/` folder (`The Forgotten Realms/ui/world_standings.json`) rather than forking a shared one -
+ * `ui/` folder (`The Forsaken Realms/ui/world_standings.json`) rather than forking a shared one -
  * same "new file in the mod folder, not an edit to a common one" pattern as everything else this
  * feature has added.
  */
