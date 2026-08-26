@@ -81,6 +81,12 @@ public class MapSprite extends Actor {
         return actorGroup;
     }
 
+    // Overridable draw-size multiplier, native size when 1f (the default for every non-town
+    // MapSprite). PointOfInterestMapSprite overrides this for ruined/player-restored towns.
+    protected float getDrawScale() {
+        return 1f;
+    }
+
     //BitmapFont font;
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -95,7 +101,17 @@ public class MapSprite extends Actor {
         int centerTileY = (int) ((getY() + getHeight() / 2f) / tileSize);
         if (!world.isExploredWorld(centerTileX, centerTileY))
             return;
-        batch.draw(texture, getX(), getY());
+        float scale = getDrawScale();
+        if (scale == 1f) {
+            batch.draw(texture, getX(), getY());
+        } else {
+            // Grown symmetrically around the icon's own center (not just from its bottom-left
+            // corner) so a scaled-up sprite doesn't visually drift off its actual tile.
+            float w = texture.getRegionWidth() * scale;
+            float h = texture.getRegionHeight() * scale;
+            batch.draw(texture, getX() - (w - texture.getRegionWidth()) / 2f,
+                    getY() - (h - texture.getRegionHeight()) / 2f, w, h);
+        }
         if (isCaveDungeon && !isOldorVisited && magnifier != null) {
             magnifier.setScale(0.7f, 0.7f);
             magnifier.setPosition(getX() - 7, getY() + 2);

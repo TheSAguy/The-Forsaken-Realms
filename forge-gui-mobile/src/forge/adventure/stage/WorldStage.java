@@ -597,6 +597,27 @@ public class WorldStage extends GameStage implements SaveFileContent {
         });
     }
 
+    // Chest loot spawn - "Dangerous Enemy" event (2026-08-25 user revision: "Start the duel
+    // immediately. Don't just spawn the enemy" - replaces the original opt-in
+    // spawn-near-player-and-let-them-walk-into-it design). Same direct-launch template as
+    // startForcedCapitolDuel above, minus the Capitol-defense-specific bookkeeping (this isn't a
+    // run-ending encounter). currentMob still needs setting - WorldStage.setWinner() reads
+    // currentMob.getRewards() on a win, the same reward-granting pipeline every other duel uses.
+    public void startChestDuel(EnemySprite enemy) {
+        currentMob = enemy;
+        Forge.advFreezePlayerControls = true;
+        DuelScene duelScene = DuelScene.instance();
+        FThreads.invokeInEdtNowOrLater(() -> {
+            Forge.setTransitionScreen(new TransitionScreen(() -> {
+                Forge.advFreezePlayerControls = false;
+                duelScene.initDuels(player, enemy);
+                Forge.switchScene(duelScene);
+            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+                    enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName()));
+            WorldSave.getCurrentSave().autoSave();
+        });
+    }
+
     // Capitol defense loss (MOD_SCOPE.md #7, user request 2026-08-10): nothing like a run-ending
     // state exists elsewhere in Adventure mode - built new for this. Deliberately does NOT delete
     // the save (no permadeath mechanic exists in this codebase to hook into) - a blocking dialog,

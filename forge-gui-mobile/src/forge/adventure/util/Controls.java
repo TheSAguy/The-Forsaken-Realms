@@ -450,6 +450,17 @@ public class Controls {
         ret.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // 2026-08-25 bug fix (user report: "I could upgrade my town to a Capitol even
+                // though I could not afford it. The button was greyed out, but it still built").
+                // scene2d's Button.setDisabled(true) only swaps the visual style - it does NOT
+                // block input, and this ClickListener never checked it, so a caller that greys a
+                // button out via setDisabled() but doesn't ALSO re-check affordability inside its
+                // own handler (unlike e.g. ArenaScene.promptUpgradeArena()'s defensive re-check)
+                // let the purchase go through anyway. Checked here once, at the root, so every
+                // caller - current and future - is protected regardless of whether it remembers
+                // its own re-check.
+                if (ret.isDisabled())
+                    return;
                 try {
                     if (func != null)
                         func.run();

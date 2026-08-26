@@ -20,6 +20,10 @@ public class PointOfInterestMapSprite extends MapSprite {
     Texture debugTexture;
     Rectangle boundingRect;
     MapSprite mapSprite;
+    // Ruin/Player-town main-map icon bump (2026-08-25 user request: "still a little small
+    // compared to the Neutral town or AI towns... increase the size of Ruin Towns and Player
+    // towns by 15%"), set fresh in draw() alongside the texture choice itself.
+    private boolean drawEnlarged;
 
     public PointOfInterestMapSprite(PointOfInterest point) {
         super(point.getPosition(), point.getSprite(), point);
@@ -52,6 +56,11 @@ public class PointOfInterestMapSprite extends MapSprite {
     }
 
     @Override
+    protected float getDrawScale() {
+        return drawEnlarged ? 1.15f : 1f;
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         if (pointOfInterest.getActive()) {
             // Read the POI's own current sprite fresh rather than caching it, since Territory
@@ -60,11 +69,13 @@ public class PointOfInterestMapSprite extends MapSprite {
             TextureRegion brokenTexture = TownRestoration.getBrokenTownSprite(pointOfInterest);
             if (brokenTexture != null) {
                 texture = brokenTexture;
+                drawEnlarged = true;
             } else {
                 // Player-restored wasteland town (2026-08-25) - dedicated art distinct from the
                 // shared "WasteTown" look every functioning-neutral town still uses.
                 TextureRegion playerTownTexture = TownRestoration.getPlayerTownSprite(pointOfInterest);
                 texture = playerTownTexture != null ? playerTownTexture : pointOfInterest.getSprite();
+                drawEnlarged = playerTownTexture != null;
             }
             super.draw(batch, parentAlpha);
             drawGuardIndicator(batch, parentAlpha);

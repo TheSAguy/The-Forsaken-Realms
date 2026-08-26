@@ -1,6 +1,5 @@
 package forge.adventure.util;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
@@ -92,6 +91,9 @@ public class ChestEvents {
         GameHUD.getInstance().addNotification(message);
     }
 
+    // User revision 2026-08-25: "Start the duel immediately. Don't just spawn the enemy" -
+    // replaces the original opt-in spawn-and-walk-into-it design with a direct duel launch, same
+    // template as WorldStage.startForcedCapitolDuel()/startChestDuel().
     private static void triggerDangerousEnemy(World world) {
         WorldStage stage = WorldStage.getInstance();
         if (stage.getPlayerSprite() == null) {
@@ -110,10 +112,14 @@ public class ChestEvents {
         // own color, so no custom reward array is needed here.
         enemy.life = Math.round(enemy.life * 1.5f);
         EnemySprite sprite = new EnemySprite(enemy);
-        stage.spawnAt(sprite, nearbyPosition(world, stage));
         String message = "A dangerous " + enemy.name + " stalks out of the chest!";
         System.out.println("[ChestEvents] Dangerous Enemy: " + message);
-        GameHUD.getInstance().addNotification("[*]" + message);
+        // Plain text, no "[*]" bold markup (2026-08-25 user report: illegible/smeared text) -
+        // same unclosed-bold-tag bug already fixed once for "Orazca rises..."/"Camelot rises..."
+        // (see TownRestoration.java's own comment on this) - [*] renders as smeared double-struck
+        // glyphs at this pixel-font size when left open for an entire message.
+        GameHUD.getInstance().addNotification(message);
+        stage.startChestDuel(sprite);
     }
 
     // Priced pick-1-of-8 (user revision 2026-08-25: "not free... 0.75x their normal value") -
@@ -133,11 +139,11 @@ public class ChestEvents {
         System.out.println("[ChestEvents] Thief Merchant: offered " + rewards.size + " cards at 0.75x value, pick 1");
     }
 
-    // Duplicate now scopes its candidate pool to the player's ACTIVE deck's mainboard (user
-    // revision 2026-08-25: "duplicate a random owned card in the current active deck"), not the
-    // full owned collection. WorldStage.showChestDuplicateDialog() is responsible for actually
-    // inserting the duplicate into that same deck's CardPool on purchase, not just the general
-    // collection - see its own comment (mirrors DuelScene's ante Buy Back precedent).
+    // Duplicate scopes its candidate pool to the player's ACTIVE deck's mainboard (user revision
+    // 2026-08-25: "duplicate a random owned card in the current active deck"), not the full owned
+    // collection. WorldStage.showChestDuplicateDialog() is responsible for actually inserting the
+    // duplicate into that same deck's CardPool on purchase, not just the general collection - see
+    // its own comment (mirrors DuelScene's ante Buy Back precedent).
     private static void triggerDuplicate(World world) {
         Deck deck = Current.player().getSelectedDeck();
         List<PaperCard> owned = deck != null ? deck.getMain().toFlatList() : java.util.Collections.emptyList();
@@ -158,12 +164,35 @@ public class ChestEvents {
                 }
             }
         }
-        PaperCard cheap = owned.get(world.getRandom().nextInt(owned.size()));
-        PaperCard expensive = restrictedOwned.isEmpty() ? null
-                : restrictedOwned.get(world.getRandom().nextInt(restrictedOwned.size()));
+        PaperCard cheap = pickByRarityPriority(owned, world);
+        PaperCard expensive = restrictedOwned.isEmpty() ? null : pickByRarityPriority(restrictedOwned, world);
         System.out.println("[ChestEvents] Duplicate: offered " + cheap.getName()
                 + (expensive != null ? " / " + expensive.getName() : " (no restricted card in active deck)"));
         WorldStage.getInstance().showChestDuplicateDialog(cheap, expensive);
+    }
+
+    // Rarity-priority pick (user revision 2026-08-25: "Must be from current deck and Rare or
+    // Mythical if possible, else Uncommon next, if still not than Common"). Random WITHIN the
+    // highest available tier present, not a flat random across the whole pool - a deck with any
+    // Rare/Mythic never offers a Common instead. Falls through to the whole pool as a last resort
+    // (a deck that's genuinely all basic lands, say) rather than ever returning null.
+    private static PaperCard pickByRarityPriority(List<PaperCard> pool, World world) {
+        List<PaperCard> rareOrMythic = new ArrayList<>();
+        List<PaperCard> uncommon = new ArrayList<>();
+        List<PaperCard> common = new ArrayList<>();
+        for (PaperCard card : pool) {
+            forge.card.CardRarity rarity = card.getRarity();
+            if (rarity == forge.card.CardRarity.Rare || rarity == forge.card.CardRarity.MythicRare)
+                rareOrMythic.add(card);
+            else if (rarity == forge.card.CardRarity.Uncommon)
+                uncommon.add(card);
+            else
+                common.add(card);
+        }
+        List<PaperCard> tier = !rareOrMythic.isEmpty() ? rareOrMythic
+                : !uncommon.isEmpty() ? uncommon
+                : !common.isEmpty() ? common : pool;
+        return tier.get(world.getRandom().nextInt(tier.size()));
     }
 
     // Illegal Arena Match (user revision 2026-08-25: "a real arena match interface, where you
@@ -240,21 +269,6 @@ public class ChestEvents {
                 return new EnemyData(found);
         }
         return null;
-    }
-
-    // A couple tiles off the player's own position, in a random direction - opt-in via ordinary
-    // collision (walk into it or avoid it) rather than an ambush placed directly on top of the
-    // player, matching the Chest's "here's a risk you can choose to take" flavor. Clamped to the
-    // world's pixel bounds so a chest opened at the map's edge can't spawn something unreachable.
-    private static Vector2 nearbyPosition(World world, WorldStage stage) {
-        float tileSize = world.getTileSize();
-        float offset = (2 + world.getRandom().nextInt(2)) * tileSize;
-        float angle = world.getRandom().nextFloat() * (float) (Math.PI * 2);
-        float x = stage.getPlayerSprite().getX() + (float) Math.cos(angle) * offset;
-        float y = stage.getPlayerSprite().getY() + (float) Math.sin(angle) * offset;
-        x = Math.max(0, Math.min(x, world.getWidthInPixels() - tileSize));
-        y = Math.max(0, Math.min(y, world.getHeightInPixels() - tileSize));
-        return new Vector2(x, y);
     }
 
     // Builds a fresh, edition-gated card RewardData and immediately generates it - shared by Lost

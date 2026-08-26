@@ -1015,12 +1015,18 @@ public class EconomyBuildings {
         sb.append(scaledCost(baseAmount)).append(' ').append(icon);
     }
 
+    // 2026-08-25 bug fix (user report: couldn't repair the Arena - 250 gold, no stone cost -
+    // because stone had gone negative from an unrelated purchase). A 0-cost component here used
+    // to still require player.get<Resource>() >= 0, so once ANY resource went negative, every
+    // OTHER purchase that happens to pass 0 for that resource got wrongly blocked too. A
+    // non-positive requested cost is now always satisfied, regardless of that resource's current
+    // balance - this check only ever gates the resources a purchase actually spends.
     public static boolean canAffordCost(int gold, int wood, int stone, int shards) {
         AdventurePlayer player = AdventurePlayer.current();
-        return player.getGold() >= scaledCost(gold)
-                && player.getWood() >= scaledCost(wood)
-                && player.getStone() >= scaledCost(stone)
-                && player.getShards() >= scaledCost(shards);
+        return (gold <= 0 || player.getGold() >= scaledCost(gold))
+                && (wood <= 0 || player.getWood() >= scaledCost(wood))
+                && (stone <= 0 || player.getStone() >= scaledCost(stone))
+                && (shards <= 0 || player.getShards() >= scaledCost(shards));
     }
 
     /** Immediate payment for TextraButton flows (upgrades, research). Callers gate on
@@ -1856,7 +1862,19 @@ public class EconomyBuildings {
         // outside the per-town loop below - unlocks the edition the moment the 7-day timer
         // elapses, not only when the player happens to revisit the Lab.
         AdventurePlayer.current().checkResearchCompletion(newDayCount);
-        for (PointOfInterestChanges changes : WorldSave.getCurrentSave().getAllPointOfInterestChanges()) {
+        // Bounded scan over the world's own fixed POI registry (2026-08-25 perf fix - user
+        // report: day-end stutter "not as bad [as the claimWastelandRing fix], but there...
+        // getting worse"). getAllPointOfInterestChanges() returns every PointOfInterestChanges
+        // ever LAZILY CREATED this session - which happens just from a POI's map marker being
+        // built while the player walks near it (see MapSprite's constructor), not from anything
+        // actually being built there - so that collection only ever grows with how much of the
+        // map has been explored, unrelated to how many economy buildings actually exist. Same
+        // peekPointOfInterestChanges() + early-continue pattern the guard-salary pass below
+        // already uses for the identical reason.
+        for (PointOfInterest poi : WorldSave.getCurrentSave().getWorld().getAllPointOfInterest()) {
+            PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+            if (changes == null || changes.getEconomyBuildingObjectIds().isEmpty())
+                continue;
             // A town can now have several economy buildings at once (one of each type) - process
             // every type it actually has, not just a single registered building. Iteration order
             // here doesn't matter - unlike guard salaries below, mine production/bank interest

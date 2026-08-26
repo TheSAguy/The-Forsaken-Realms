@@ -1560,6 +1560,22 @@ public class World implements Disposable, SaveFileContent {
             // shrinking each color's world-gen territory directly.
             if (isTerritoryControlEnabled()) {
                 TerritoryControl.neutralizeAfterGeneration(this);
+                // Functioning Neutral Towns (2026-08-24 user spec) - runs right after the
+                // territory-control sweep above so the pool of neutral ("Waste Town") POIs is
+                // final, including any AI-color towns just converted back to neutral by that
+                // sweep. See TownRestoration.seedFunctioningNeutralTowns()'s own doc comment for
+                // why this is a separate flag from TOWN_RESTORED_FLAG (that flag also means
+                // "player-owned" everywhere TerritoryControl checks ownership).
+                // MUST run before the minimap bake below (2026-08-25 bug fix - user report: "The
+                // Neutral towns still have ruin icons on the Mini-map"): redrawAllPoiMarkers()
+                // rasterizes each town's ruined/restored icon into biomeImage ONCE here at
+                // world-gen and never again on its own, reading TownRestoration.isNeutralSeeded()
+                // to decide. Seeding used to run AFTER this bake, so isNeutralSeeded() saw no
+                // flag yet for any town and every one of the 20 seeded-functioning towns got
+                // permanently baked in with ruin art - correct on the main map (which re-checks
+                // live every frame) but wrong on the minimap forever after.
+                if (isFunctioningNeutralTownsEnabled())
+                    TownRestoration.seedFunctioningNeutralTowns(this);
                 // neutralizeTerritoryOutsideRadius() (called above) already repaints the minimap
                 // pixel for every tile it individually reassigns, which should already be complete
                 // - but a full re-bake from biomeMap/terrainMap's now-final state is a stronger
@@ -1575,15 +1591,11 @@ public class World implements Disposable, SaveFileContent {
                 // Must run after the re-bake above, not before - a bake only draws ground, so it
                 // would otherwise erase these markers right back out again.
                 redrawAllPoiMarkers();
-            }
-            // Functioning Neutral Towns (2026-08-24 user spec) - runs right after the territory-
-            // control sweep above so the pool of neutral ("Waste Town") POIs is final, including
-            // any AI-color towns just converted back to neutral by that sweep. See
-            // TownRestoration.seedFunctioningNeutralTowns()'s own doc comment for why this is a
-            // separate flag from TOWN_RESTORED_FLAG (that flag also means "player-owned"
-            // everywhere TerritoryControl checks ownership).
-            if (isFunctioningNeutralTownsEnabled())
+            } else if (isFunctioningNeutralTownsEnabled()) {
+                // Territory Control off: no minimap bake happens above for this to race against,
+                // so the original standalone call is still correct here.
                 TownRestoration.seedFunctioningNeutralTowns(this);
+            }
             // Progressive Set Unlocks (MOD_SCOPE.md #4): one-time per new game, splits every real
             // edition into 6 shards (5 colors + neutral) - see EditionProgression's own doc
             // comment for why this runs here (world's own seeded Random, reproducible from seed).
@@ -1660,6 +1672,14 @@ public class World implements Disposable, SaveFileContent {
             markerTextureData.prepare();
         Pixmap mapMarkerPixmap = markerTextureData.consumePixmap();
         int mm = data.miniMapTileSize;
+        // Grainy town/Capitol icons fixed (2026-08-25 user report): every scaled drawPixmap below
+        // (Capitol 64->32, town 48->16/23) was downscaling with Pixmap's default nearest-neighbor
+        // sampling - the .atlas "filter: Nearest,Nearest" line only governs GL texture sampling,
+        // it has no effect on this CPU-side Pixmap blit. BiLinear smooths the downscale instead;
+        // restored to NearestNeighbour (libGDX's own default, and what every other biomeImage
+        // draw elsewhere - crisp pixel-art terrain tiles - implicitly relies on) at the end of
+        // this method so nothing else drawing onto this same Pixmap is affected.
+        biomeImage.setFilter(Pixmap.Filter.BiLinear);
         for (PointOfInterest poi : getAllPointOfInterest()) {
             // Despawned/hidden POIs (dungeon rotation, quest-flag gates) get no minimap marker -
             // without this, a vanished dungeon kept its baked icon until the next full rebake.
@@ -1731,11 +1751,12 @@ public class World implements Disposable, SaveFileContent {
                 if (!townTexData.isPrepared())
                     townTexData.prepare();
                 Pixmap townPixmap = townTexData.consumePixmap();
-                // Fixed 16x16 base footprint (matching the old generic glyph's on-map size, not
-                // the town sprite's own much-larger native size) so restored/AI-color towns don't
-                // suddenly dwarf every other minimap icon; ruined keeps the existing ~15% bump
+                // Base footprint 16->20 (2026-08-25 user request: "maybe slightly bigger" to help
+                // with graininess, alongside the BiLinear downscale set above) - not the town
+                // sprite's own much-larger native size, so restored/AI-color towns still don't
+                // dwarf every other minimap icon; ruined keeps the existing ~15% bump on top
                 // (2026-08-15 user request: "they look small next to the fixed/repaired towns").
-                int dstSize = brokenTexture != null ? Math.round(16 * 1.15f) : 16;
+                int dstSize = brokenTexture != null ? Math.round(20 * 1.15f) : 20;
                 int tx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
                 int ty = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
                 biomeImage.drawPixmap(townPixmap, townTexture.getRegionX(), townTexture.getRegionY(),
@@ -1760,6 +1781,9 @@ public class World implements Disposable, SaveFileContent {
             refreshFogForMarkerRect(xInPixels, yInPixels, marker.getRegionWidth(), marker.getRegionHeight());
         }
         mapMarkerPixmap.dispose();
+        // Restore the default filter - every OTHER biomeImage draw elsewhere (crisp pixel-art
+        // terrain tiles) implicitly relies on NearestNeighbour and never sets it explicitly.
+        biomeImage.setFilter(Pixmap.Filter.NearestNeighbour);
     }
 
     /** Fog-of-war companion to the marker draws above (2026-08-15 bug fix: "town icon missing" /

@@ -360,7 +360,10 @@ public class ResourceSpawns {
         SoundSystem.instance.play(SoundEffectType.Damage, false);
         String message = "Ambush! A " + enemyName + " was lurking under the treasure!";
         System.out.println("[ResourceSpawns] " + message);
-        GameHUD.getInstance().addNotification("[*]" + message);
+        // Plain text, no "[*]" bold markup - unclosed bold renders as smeared double-struck
+        // glyphs at this pixel-font size (same bug as ChestEvents' Dangerous Enemy notification,
+        // already fixed once before for "Orazca rises..."/"Camelot rises...").
+        GameHUD.getInstance().addNotification(message);
         return true;
     }
 
