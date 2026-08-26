@@ -436,19 +436,61 @@ public class TerritoryControl {
         return MIN_ATTACK_DAYS + world.getRandom().nextInt(MAX_ATTACK_DAYS - MIN_ATTACK_DAYS + 1);
     }
 
-    // Last tick's pull-source fingerprint (see the caching comment in processTerritoryExpansion).
-    // Deliberately transient/static: a fresh session's first tick always runs one full re-contest.
-    private static long lastPullSourcesFingerprint = Long.MIN_VALUE;
+    // Last tick's pull-source fingerprint, PER OWNER (2026-08-26 perf fix - user report: a
+    // day-end stutter that "kills the game" and gets worse over time, still present after two
+    // earlier fixes. Root cause: this used to be ONE global fingerprint hashing ALL 6 owners'
+    // (5 colors + player) combined sources together (see the caching comment in
+    // processTerritoryExpansion) - so ANY town anywhere growing, which happens almost every day
+    // once a game has more than a handful of active towns, invalidated the cache for EVERY owner
+    // simultaneously, forcing a full O(radius^2) re-contest for all 6 owners every day, with
+    // radius (and therefore cost) growing throughout the game. Confirmed via forge.log: 100% of
+    // the last 20 daily territory ticks in a real session were "(full re-contest)" by radius ~65,
+    // ~79,000 tile evaluations per day-tick and climbing. Tracking one fingerprint PER OWNER
+    // instead means a change to one color's own towns only forces a re-contest for THAT color -
+    // the other owners' borders are unaffected by it and correctly take the cheap "just the new
+    // ring" path (used whenever an owner's own radius is still growing but its own sources
+    // didn't change). Trade-off: an owner can miss an opportunistic reclaim from a rival's pull
+    // weakening (e.g. a rival town's protection shrinking) on the day it happens - normally
+    // self-corrects the next time that owner's OWN sources change (roughly every
+    // townExpansionDaysPerTile() days per town it actually owns). A defeated color's territory is
+    // swept to colorless immediately by defeatColor() itself, not dependent on any other color's
+    // re-contest, so that specific case needs no special handling here.
+    //
+    // Bounded-staleness safety net (2026-08-26 review finding): the "self-corrects" claim above
+    // breaks down for an owner that genuinely STALLS - every town it holds capped at
+    // townMaxTerritoryRadius() and no new captures - since its own fingerprint then never changes
+    // again, meaning it could otherwise NEVER re-contest a border tile against a rival that later
+    // weakens, indefinitely. sourcesChangedFor() also forces one full re-contest per owner every
+    // FORCE_RECONTEST_INTERVAL_DAYS regardless of its own fingerprint, capping the staleness at
+    // that many days for a stalled owner instead of "forever," while still cutting the original
+    // bug's near-100%-of-days full-recontest rate by roughly that same factor for an active one.
+    private static final int FORCE_RECONTEST_INTERVAL_DAYS = 30;
+    private static final Map<String, Long> lastPullSourcesFingerprint = new HashMap<>();
+    private static final Map<String, Integer> lastFullRecontestDay = new HashMap<>();
 
-    private static long pullSourcesFingerprint(Map<String, List<float[]>> sources) {
+    private static long pullSourcesFingerprint(List<float[]> source) {
         long hash = 17;
-        for (Map.Entry<String, List<float[]>> entry : sources.entrySet()) {
-            hash = hash * 31 + entry.getKey().hashCode();
-            for (float[] source : entry.getValue())
-                for (float component : source)
-                    hash = hash * 31 + Float.floatToIntBits(component);
-        }
+        for (float[] entry : source)
+            for (float component : entry)
+                hash = hash * 31 + Float.floatToIntBits(component);
         return hash;
+    }
+
+    // True the first time this owner's fingerprint is computed (forces one full re-contest, same
+    // as the old code's session-start behavior), whenever it actually changed since last tick, or
+    // whenever this owner is overdue for its periodic forced re-contest (see the staleness
+    // comment above).
+    private static boolean sourcesChangedFor(String owner, Map<String, List<float[]>> pullSources, int currentDay) {
+        long fingerprint = pullSourcesFingerprint(pullSources.get(owner));
+        Long previousFingerprint = lastPullSourcesFingerprint.put(owner, fingerprint);
+        boolean changed = previousFingerprint == null || previousFingerprint != fingerprint;
+        Integer previousRecontestDay = lastFullRecontestDay.get(owner);
+        boolean overdue = previousRecontestDay == null || currentDay - previousRecontestDay >= FORCE_RECONTEST_INTERVAL_DAYS;
+        if (changed || overdue) {
+            lastFullRecontestDay.put(owner, currentDay);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -649,9 +691,7 @@ public class TerritoryControl {
         // is provably unchanged too, so scanning only the newly-grown outer ring is exact, not an
         // approximation - and a color already at its radius cap skips scanning entirely. Any
         // source change (or the first tick of a session) triggers one full-disc re-contest day.
-        long fingerprint = pullSourcesFingerprint(pullSources);
-        boolean sourcesChanged = fingerprint != lastPullSourcesFingerprint;
-        lastPullSourcesFingerprint = fingerprint;
+        // Per-owner now, not global - see sourcesChangedFor()'s own comment for why.
 
         for (String color : COLORS) {
             // Color Defeat (2026-08-14, adversarial review finding): without this skip, a defeated
@@ -668,6 +708,7 @@ public class TerritoryControl {
             if (castlePosition == null)
                 continue;
             int newRadius = Math.min(currentRadius + expansionTilesPerDay() * daysPassed, maxTerritoryRadius());
+            boolean sourcesChanged = sourcesChangedFor(color, pullSources, world.getCurrentDay());
             int innerRadius;
             if (sourcesChanged) {
                 // Full-disc re-contest, KEEP outward (2026-08-08 pentagon-stall fix): tiles
@@ -728,6 +769,7 @@ public class TerritoryControl {
                 world.setColorTerritoryRadius("player", currentRadius);
             }
             int newRadius = Math.min(currentRadius + capitolExpansionTilesPerDay() * daysPassed, maxTerritoryRadius());
+            boolean sourcesChanged = sourcesChangedFor("player", pullSources, world.getCurrentDay());
             int innerRadius;
             if (sourcesChanged) {
                 // Inner radius 1, not the keep: unlike an AI castle (whose keep was generated as

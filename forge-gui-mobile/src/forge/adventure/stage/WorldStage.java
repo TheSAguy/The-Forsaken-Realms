@@ -808,13 +808,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
         final int cheapCost = 25;
         TextraButton cheapButton = Controls.newTextButton("Duplicate " + cheapCard.getName() + " (" + cheapCost + " shards)", () -> {
             Current.player().takeShards(cheapCost);
+            // Goes to the general Inventory/collection, NOT the active deck itself (2026-08-26
+            // user revision: "the duplicate was returned to Inventory" / "The player might have 4
+            // of the card and if we add it to his deck, it will be illegal" - a deck already at
+            // its 4-copy limit for this card would become an illegal decklist. The card is still
+            // CHOSEN from the active deck's contents - only where the duplicate itself lands
+            // changed).
             Current.player().addCard(cheapCard, 1);
-            // The card came from the player's ACTIVE deck (ChestEvents.triggerDuplicate now scopes
-            // its pool there, not the full collection) - addCard alone only restocks the general
-            // collection, so the duplicate needs inserting into the deck itself too, same as
-            // DuelScene's ante Buy Back flow (see its own comment there).
-            if (Current.player().getSelectedDeck() != null)
-                Current.player().getSelectedDeck().getMain().add(cheapCard);
             hideDialog();
             GameHUD.getInstance().addNotification("The artificer duplicates your " + cheapCard.getName() + "!");
         });
@@ -826,8 +826,6 @@ public class WorldStage extends GameStage implements SaveFileContent {
             TextraButton expensiveButton = Controls.newTextButton("Duplicate " + expensiveCard.getName() + " (" + expensiveCost + " shards)", () -> {
                 Current.player().takeShards(expensiveCost);
                 Current.player().addCard(expensiveCard, 1);
-                if (Current.player().getSelectedDeck() != null)
-                    Current.player().getSelectedDeck().getMain().add(expensiveCard);
                 hideDialog();
                 GameHUD.getInstance().addNotification("The artificer duplicates your " + expensiveCard.getName() + "!");
             });

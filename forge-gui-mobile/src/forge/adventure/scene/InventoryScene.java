@@ -421,6 +421,11 @@ public class InventoryScene extends UIScene {
                 }
             }
             repairButton.setVisible(data.isCracked);
+            // Greyed out when unaffordable (2026-08-26 user request: "apply this logic to all
+            // buy/upgrade/re-roll buttons") - repair() already re-checks this itself and shows a
+            // "not enough credits" dialog instead of repairing, but nothing previously reflected
+            // it in the button's own visual state. Same 0.4x-of-item-cost formula repair() uses.
+            repairButton.setDisabled(Current.player().getGold() < (int) (data.cost * 0.4f));
             String status = data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "";
             itemDescription.setText(data.name + status + "\n[%98]" + data.getDescription());
         }

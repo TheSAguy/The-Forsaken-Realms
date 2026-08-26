@@ -1357,15 +1357,17 @@ public class EconomyBuildings {
 
         DialogData repair = new DialogData();
         // Per-shop-type repair costs (2026-08-12 user cost table): Armory 250g+125 wood,
-        // Booster 200g+5 stone, the 6 land shops 50g+3 wood, everything else plain-shop cost.
-        // Wood/Stone components halved (rounding up) 2026-08-21 - gold untouched.
+        // Booster 200g+5 stone, the 6 land shops 50g (gold-only, 2026-08-26 - user request:
+        // these are the ones you first need to visit a capitol to build, so no wood cost),
+        // everything else plain-shop cost. Wood/Stone components halved (rounding up)
+        // 2026-08-21 - gold untouched.
         int[] c;
         if (isArmoryShop(data))
             c = new int[]{250, 125, 0, 0};
         else if (isBoosterShop(data))
             c = new int[]{200, 0, 5, 0};
         else if (landShop != null)
-            c = new int[]{50, 3, 0, 0};
+            c = new int[]{50, 0, 0, 0};
         else
             c = new int[]{100, 5, 0, 0};
         repair.name = what + " (" + costLabel(c[0], c[1], c[2], c[3]) + ")";

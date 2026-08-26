@@ -84,11 +84,15 @@ public class ChestEvents {
             return;
         }
         Reward reward = rewards.first();
-        Current.player().addReward(reward);
         String cardName = reward.getCard() != null ? reward.getCard().getName() : "a card";
-        String message = "A forgotten card lies within the chest - you find " + cardName + "!";
-        System.out.println("[ChestEvents] Lost Card: " + message);
-        GameHUD.getInstance().addNotification(message);
+        System.out.println("[ChestEvents] Lost Card: found " + cardName);
+        // Shows the actual card image via the same Loot reward screen every other card drop in
+        // this game uses (2026-08-26 user revision: "Show an image of the card, not the pop-up
+        // text. Player needs to see the card he received."). RewardScene grants the reward
+        // itself once this screen is left (see its clearGenerated() method) - do NOT also call
+        // addReward() here, that would double-grant.
+        RewardScene.instance().loadRewards(rewards, RewardScene.Type.Loot, null);
+        Forge.switchScene(RewardScene.instance());
     }
 
     // User revision 2026-08-25: "Start the duel immediately. Don't just spawn the enemy" -
@@ -235,7 +239,7 @@ public class ChestEvents {
 
         System.out.println("[ChestEvents] Illegal Arena Match: launching an 8-competitor Archmage bracket ("
                 + archmagePool.length + " eligible names), entry 250 gold");
-        ArenaScene.instance().loadArenaData(arenaData, 0L, false);
+        ArenaScene.instance().loadArenaDataStandalone(arenaData, 0L);
         Forge.switchScene(ArenaScene.instance());
     }
 

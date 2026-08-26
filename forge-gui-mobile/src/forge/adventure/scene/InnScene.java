@@ -160,7 +160,12 @@ public class InnScene extends UIScene {
             // Re-roll (2026-08-24 user spec) only makes sense before the player has entered -
             // once Entered/Ready/Started/Completed/Awarded, the deck build or bracket is already
             // committed, so re-rolling the pool underneath it would orphan that progress.
-            reroll.setDisabled(localEvent.eventStatus != AdventureEventController.EventStatus.Available);
+            // Greyed out when unaffordable too, not just when unavailable (2026-08-26 user
+            // request: "apply this logic to all buy/upgrade/re-roll buttons" - promptRerollEvent()
+            // already re-checks this itself before spending, but nothing previously reflected it
+            // in the button's own visual state).
+            reroll.setDisabled(localEvent.eventStatus != AdventureEventController.EventStatus.Available
+                    || AdventurePlayer.current().getShards() < Config.instance().getTuningData().innTournamentRerollShardCost);
             reroll.setText("[%80]Re-roll (" + Config.instance().getTuningData().innTournamentRerollShardCost + " [+Shards])");
             switch (localEvent.eventStatus){
                 case Available:

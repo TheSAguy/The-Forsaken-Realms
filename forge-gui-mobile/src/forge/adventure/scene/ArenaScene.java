@@ -194,6 +194,23 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         loadArenaData(data, WorldSave.getCurrentSave().getWorld().getRandom().nextLong(), false);
     }
 
+    /** Ad-hoc entry point for a bracket with no MapStage/building behind it (2026-08-26, Chest's
+     *  Illegal Arena Match - user report: "There is an upgrade button on the Arena interface.
+     *  Remove that (NOT in Player city, just the Chest Illegal Arena Match)"). This scene is a
+     *  singleton, and loadArenaData() itself never calls refreshArenaBuildingButtons() (only the
+     *  Start-button flow and done() do) - so a caller that skips enterArenaBuilding() entirely
+     *  (as ChestEvents does) would otherwise inherit whatever arenaMapStage/button visibility was
+     *  left over from the player's LAST real Capitol arena visit. Explicitly clears that context
+     *  and re-evaluates the buttons before returning, so Upgrade/Toggle/DeckTester are correctly
+     *  hidden for this run regardless of prior state. */
+    public void loadArenaDataStandalone(ArenaData data, long seed) {
+        arenaMapStage = null;
+        arenaObjectId = -1;
+        challengeArenaJson = null;
+        loadArenaData(data, seed, false);
+        refreshArenaBuildingButtons();
+    }
+
     private int arenaBuildingLevel() {
         if (arenaMapStage == null || arenaMapStage.getChanges() == null || arenaObjectId < 0)
             return 1;
@@ -225,6 +242,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // Text refreshed here too (round 4, difficulty price multiplier), not just at
         // construction - the label was previously baked in once from the raw constant.
         arenaUpgradeButton.setText("[%80]Upgrade to Level 2 (" + EconomyBuildings.costLabel(0, EconomyBuildings.ARENA_UPGRADE_WOOD, EconomyBuildings.ARENA_UPGRADE_STONE, 0) + ")");
+        // Greyed out when unaffordable (2026-08-26 user request: "Grey our the upgrade button if
+        // you can't afford the upgrade") - promptUpgradeArena() already re-checks this itself
+        // before spending, but nothing previously reflected it in the button's own visual state.
+        arenaUpgradeButton.setDisabled(!EconomyBuildings.canAffordCost(0, EconomyBuildings.ARENA_UPGRADE_WOOD, EconomyBuildings.ARENA_UPGRADE_STONE, 0));
         boolean toggleAvailable = !midMatch && level >= 2 && challengeArenaJson != null;
         arenaModeToggleButton.setVisible(toggleAvailable);
         if (toggleAvailable)
