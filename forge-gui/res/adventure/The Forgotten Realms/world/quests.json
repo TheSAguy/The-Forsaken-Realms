@@ -6899,7 +6899,7 @@
 {
 	"id": 28,
 	"isTemplate": true,
-	"name": "Entering The Forgotten Realms",
+	"name": "Entering The Forsaken Realms",
 	"description": "Learn about your surroundings.",
 	"offerDialog": {},
 	"prologue": {
@@ -7289,7 +7289,7 @@
 			],
 			"objective": "Travel",
 			"prologue": {
-				"text": "All major locations in The Forgotten Realms can be divided up into one of two categories: towns and dungeons.",
+				"text": "All major locations in The Forsaken Realms can be divided up into one of two categories: towns and dungeons.",
 				"options": [
 					{
 						"name": "(Continue)",
@@ -7322,7 +7322,7 @@
 			"objective": "Leave",
 			"prerequisiteIDs": [ 1 ],
 			"prologue": {
-				"text": "Most towns in a given region of The Forgotten Realms will look very similar to one another, and offer the same basic services.",
+				"text": "Most towns in a given region of The Forsaken Realms will look very similar to one another, and offer the same basic services.",
 				"options": [
 					{
 						"name": "(Continue)",
@@ -7593,7 +7593,7 @@
 	"id": 34,
 	"isTemplate": true,
 	"name": "A Healthy Dose of Skep-ticism",
-	"description": "Find The Forgotten Realms' largest Sliver hive.",
+	"description": "Find The Forsaken Realms' largest Sliver hive.",
 	"offerDialog": {},
 	"prologue": {
 		"text": "Quest 'A Healthy Dose of Skep-ticism' is a placeholder. It will eventually be replaced with an actual quest to explore the Skep. For now, this simply serves as directions to get there if you so desire. This placeholder quest does not provide any rewards.",
@@ -7668,7 +7668,7 @@
 			},
 			{
 				"name": "Kiora? What's she up to now, Elder?",
-				"text": "(Grimaces) She seeks to summon ancient sea titans that slumber beneath the waves, creatures that could engulf our lands in a cataclysmic flood. It's a threat that endangers The Forgotten Realms' very existence.",
+				"text": "(Grimaces) She seeks to summon ancient sea titans that slumber beneath the waves, creatures that could engulf our lands in a cataclysmic flood. It's a threat that endangers The Forsaken Realms' very existence.",
 				"options": [
 					{
 						"name": "That sounds like a catastrophe waiting to happen. What can we do?",
@@ -7691,7 +7691,7 @@
 										"POIReference": ""
 									}
 								],
-								"name": "I'll do my best to stop her, Elder. The Forgotten Realms' safety is my priority.",
+								"name": "I'll do my best to stop her, Elder. The Forsaken Realms' safety is my priority.",
 								"text": "(Grateful smile) Thank you, brave one. We place our hopes in your hands. Kiora must be convinced to abandon her reckless path, or we'll face a watery doom."
 							},
 							{
@@ -7848,7 +7848,7 @@
 	"name": "Teferi's Fall",
 	"description": "Find and defeat Teferi.",
 	"offerDialog": {
-		"text": "Village Scholar: (Worried expression, hurried tone) Adventurer, we have a grave concern on our hands, and it concerns Teferi, the temporal mage. His actions threaten The Forgotten Realms' very fabric of time.",
+		"text": "Village Scholar: (Worried expression, hurried tone) Adventurer, we have a grave concern on our hands, and it concerns Teferi, the temporal mage. His actions threaten The Forsaken Realms' very fabric of time.",
 		"options": [
 			{
 				"action": [
@@ -7877,7 +7877,7 @@
 			},
 			{
 				"name": "Teferi? What's he doing that's causing such alarm?",
-				"text": "(Frowning) Teferi's meddling with time magic has created temporal anomalies across The Forgotten Realms. The past, present, and future are becoming entangled, leading to chaos and unpredictability. It's a perilous situation.",
+				"text": "(Frowning) Teferi's meddling with time magic has created temporal anomalies across The Forsaken Realms. The past, present, and future are becoming entangled, leading to chaos and unpredictability. It's a perilous situation.",
 				"options": [
 					{
 						"name": "That sounds like a serious problem. How can we resolve it?",
@@ -7900,8 +7900,8 @@
 										"POIReference": ""
 									}
 								],
-								"name": "I'll do what I can to reason with him, Scholar. The Forgotten Realms' timeline must be protected. (Accept Quest)",
-								"text": "(Appreciative nod) Your bravery is commendable. Remember, time magic is delicate and dangerous. Approach Teferi with caution, but be resolute in your mission to save The Forgotten Realms from temporal disaster."
+								"name": "I'll do what I can to reason with him, Scholar. The Forsaken Realms' timeline must be protected. (Accept Quest)",
+								"text": "(Appreciative nod) Your bravery is commendable. Remember, time magic is delicate and dangerous. Approach Teferi with caution, but be resolute in your mission to save The Forsaken Realms from temporal disaster."
 							},
 							{
 								"action": [
@@ -8090,7 +8090,7 @@
 				"options": [
 					{
 						"name": "You've had quite a few drinks, Tim. Are you sure you're not imagining things? Phyrexians haven't been seen in these parts for thousands of years.",
-						"text": "Nonsense! Me eyes don't lie, friend. Them Phyrexians are real trouble, I'm tellin' ya. You gotta go. See for yourself. Kick 'em outta The Forgotten Realms!",
+						"text": "Nonsense! Me eyes don't lie, friend. Them Phyrexians are real trouble, I'm tellin' ya. You gotta go. See for yourself. Kick 'em outta The Forsaken Realms!",
 						"options": [
 							{
 								"action": [
@@ -8110,7 +8110,7 @@
 									}
 								],
 								"name": "Alright, Tim, I'll look into it. But first, maybe you should lay off the ale for a while.",
-								"text": "Yeah, yeah, maybe you're right. But don't forget about them Phyrexians! The Forgotten Realms needs ya, and so does ol' Tipsy Tim!"
+								"text": "Yeah, yeah, maybe you're right. But don't forget about them Phyrexians! The Forsaken Realms needs ya, and so does ol' Tipsy Tim!"
 							},
 							{
 								"action": [
@@ -9201,7 +9201,7 @@
 		{
 			"id": 1,
 			"name": "Complete a side quest",
-			"description": "Side quests are available in all towns (look for the question mark) and can be a great way to collect extra loot while exploring The Forgotten Realms.",
+			"description": "Side quests are available in all towns (look for the question mark) and can be a great way to collect extra loot while exploring The Forsaken Realms.",
 			"anyPOI": true,
 			"count3": 1,
 			"POITags": [
@@ -9222,7 +9222,7 @@
 		{
 			"id": 2,
 			"name": "Complete more side quests",
-			"description": "Side quests are available in all towns (look for the question mark) and can be a great way to collect extra loot while exploring The Forgotten Realms.",
+			"description": "Side quests are available in all towns (look for the question mark) and can be a great way to collect extra loot while exploring The Forsaken Realms.",
 			"anyPOI": true,
 			"count3": 3,
 			"POITags": [
@@ -11181,7 +11181,7 @@
 	{
 		"id": 53,
 		"isTemplate": true,
-		"name": "Welcome to The Forgotten Realms",
+		"name": "Welcome to The Forsaken Realms",
 		"description": "Learn about your surroundings.",
 		"offerDialog": {},
 		"prologue": {},

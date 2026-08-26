@@ -1,4 +1,4 @@
-# The Forgotten Realms
+# The Forsaken Realms
 
 A standalone single-player adventure card game built on the open-source
 [Forge](https://github.com/Card-Forge/forge) card-game rules engine.
@@ -51,7 +51,7 @@ Enjoying the game? You can support development on Ko-fi:
 
 This is a **pinned build** — it never auto-updates, and the stock Forge updater
 is disabled on purpose (updating the engine underneath a running world corrupts
-the experience). New versions of The Forgotten Realms ship as fresh zips; your
+the experience). New versions of The Forsaken Realms ship as fresh zips; your
 saves in `%APPDATA%\ForgottenRealms` carry over.
 
 ## License & Source
@@ -64,6 +64,6 @@ See `CREDITS.md` — this game stands on a lot of other people's excellent work.
 
 ---
 
-*The Forgotten Realms is unofficial Fan Content permitted under the Wizards of
+*The Forsaken Realms is unofficial Fan Content permitted under the Wizards of
 the Coast Fan Content Policy. Magic: The Gathering and all card names and images
 are © Wizards of the Coast, LLC.*

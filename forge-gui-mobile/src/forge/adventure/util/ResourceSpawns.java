@@ -56,11 +56,17 @@ public class ResourceSpawns {
     // TYPE_MYSTERY (the diamond icon, user request 2026-08-08): contents decided at PICKUP, not
     // spawn - 5% an ambush by the mage of whichever color the player's reputation is worst with,
     // 95% an even split across the four ordinary resources.
-    public static final int TYPE_GOLD = 0, TYPE_SHARDS = 1, TYPE_WOOD = 2, TYPE_STONE = 3, TYPE_MYSTERY = 4;
+    // TYPE_CHEST (2026-08-25 user spec): a 6th top-level type, alongside the original 5 - contents
+    // ALSO decided at pickup, a uniform 1-of-6 pick among 6 new "loot event" outcomes (see
+    // WorldStage.triggerChestEvent()), same "resolve at pickup, not spawn" idiom Mystery already
+    // established. Deliberately its own type rather than folded into Mystery's own resolution -
+    // the user asked for it as a visibly distinct chest icon on the map, not a Mystery sub-case.
+    public static final int TYPE_GOLD = 0, TYPE_SHARDS = 1, TYPE_WOOD = 2, TYPE_STONE = 3, TYPE_MYSTERY = 4, TYPE_CHEST = 5;
     private static final float MYSTERY_AMBUSH_CHANCE = 0.05f;
 
     private static final String ITEMS_ATLAS = "sprites/items.atlas";
     private static final String RESOURCE_ICONS_ATLAS = "maps/tileset/resource_icons.atlas";
+    private static final String CHEST_ATLAS = "sprites/chest.atlas";
 
     private static int lastProcessedDay = Integer.MIN_VALUE;
     private static boolean needsResync = true;
@@ -113,15 +119,31 @@ public class ResourceSpawns {
     // appear." Pickups (removed elsewhere) are also replenished here, on the day tick.
     private static boolean processExpiry(World world, int currentDay) {
         boolean changed = false;
+        int expiredCount = 0;
         Iterator<int[]> it = world.getResourceSpawns().iterator();
         while (it.hasNext()) {
             if (it.next()[4] <= currentDay) {
                 it.remove();
                 changed = true;
+                expiredCount++;
             }
         }
-        for (int i = world.getResourceSpawns().size(); i < maxSpawns(); i++)
-            changed |= spawnOne(world, currentDay);
+        int refilled = 0;
+        for (int i = world.getResourceSpawns().size(); i < maxSpawns(); i++) {
+            if (spawnOne(world, currentDay))
+                refilled++;
+            changed = true;
+        }
+        // Diagnostic (2026-08-25, user report: "seeded 50 initial resource spawn(s)" logged once,
+        // then nothing for the rest of a multi-week playtest - genuinely ambiguous from that log
+        // alone whether the system silently died or was just working quietly, since a successful
+        // spawn/refill never logged anything before this - only placement FAILURES did. This makes
+        // the pool's actual size directly visible every day, so the next playtest settles it either
+        // way instead of staying a mystery. Once a week (not every day) to avoid log spam.
+        if (currentDay % 7 == 0) {
+            System.out.println("[TFR-ResourceSpawns] day " + currentDay + ": pool=" + world.getResourceSpawns().size()
+                    + "/" + maxSpawns() + " (expired " + expiredCount + ", refilled " + refilled + " today)");
+        }
         return changed;
     }
 
@@ -183,10 +205,10 @@ public class ResourceSpawns {
             }
             if (blocked)
                 continue;
-            int type = world.getRandom().nextInt(5);
-            // A mystery spawn's value is rolled at pickup (award() decides what it even IS);
-            // 0 here just keeps the entry layout uniform.
-            int value = type == TYPE_MYSTERY ? 0
+            int type = world.getRandom().nextInt(6);
+            // A mystery/chest spawn's value is rolled at pickup (award() decides what it even
+            // IS); 0 here just keeps the entry layout uniform.
+            int value = (type == TYPE_MYSTERY || type == TYPE_CHEST) ? 0
                     : type == TYPE_GOLD
                     ? GOLD_MIN + world.getRandom().nextInt(GOLD_MAX - GOLD_MIN + 1)
                     : OTHER_MIN + world.getRandom().nextInt(OTHER_MAX - OTHER_MIN + 1);
@@ -222,6 +244,8 @@ public class ResourceSpawns {
             case TYPE_SHARDS: return "Shards";
             case TYPE_WOOD: return "Wood";
             case TYPE_STONE: return "Stone";
+            case TYPE_MYSTERY: return "Mystery";
+            case TYPE_CHEST: return "Chest";
             default: return "?";
         }
     }
@@ -260,6 +284,13 @@ public class ResourceSpawns {
     }
 
     private static void award(World world, int type, int value) {
+        if (type == TYPE_CHEST) {
+            // Resolved entirely by ChestEvents (2026-08-25 user spec) - a uniform 1-of-6 pick
+            // among 6 new loot events, several of which need a dialog/duel/reward-choice scene
+            // that only WorldStage (not this util class) has the infrastructure to show.
+            ChestEvents.trigger(world);
+            return;
+        }
         if (type == TYPE_MYSTERY) {
             if (world.getRandom().nextFloat() < MYSTERY_AMBUSH_CHANCE && spawnAmbush())
                 return;
@@ -348,6 +379,8 @@ public class ResourceSpawns {
                 return Config.instance().getAtlasSprite(RESOURCE_ICONS_ATLAS, "Stone");
             case TYPE_MYSTERY:
                 return Config.instance().getAtlasSprite(ITEMS_ATLAS, "Treasure");
+            case TYPE_CHEST:
+                return Config.instance().getAtlasSprite(CHEST_ATLAS, "Idle");
             default:
                 return null;
         }

@@ -1,0 +1,8 @@
+playertown.png
+size: 48,48
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+PlayerTown
+  xy: 0, 0
+  size: 48, 48

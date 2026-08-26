@@ -106,10 +106,14 @@ public class TuningData {
     public int anteBuyBackMinMythic = 500;
 
     // Overworld resource pickups, max simultaneous on the map at once (2026-08-17 user request:
-    // "we have 20 currently... let's make that 30"). Was a hardcoded ResourceSpawns.MAX_SPAWNS
-    // constant; moved here so it's re-tunable without a code change, same as every other
-    // world-balance number in this file. See ResourceSpawns.maxSpawns().
-    public int maxResourceSpawns = 30;
+    // "we have 20 currently... let's make that 30", raised again 30 -> 50 -> 60, see
+    // settings.json's own comment for the Chest loot spawn type this most recently made room for).
+    // Was a hardcoded ResourceSpawns.MAX_SPAWNS constant; moved here so it's re-tunable without a
+    // code change, same as every other world-balance number in this file. This default only
+    // matters if settings.json is deleted (its own comment says that resets to these built-in
+    // defaults) - kept equal to the live settings.json value so a reset doesn't silently undo the
+    // balance changes above. See ResourceSpawns.maxSpawns().
+    public int maxResourceSpawns = 60;
 
     // Shop card-price baseline by town ownership (2026-08-17 user spec: "cards bought at AI shops
     // 25% more expensive... 25% cheaper at player shops... before any other discounts/increases
@@ -141,19 +145,6 @@ public class TuningData {
     // unlock) stays a fixed constant - not asked to be tunable, and unlike the fraction it isn't a
     // single "how hard should this be" knob.
     public float researchThresholdFraction = 0.10f;
-
-    // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (user spec 2026-08-23: "every
-    // time you kill an enemy, the chances of that specific enemy re-appearing goes down just a
-    // little bit"). The week-progression/territory tables live in their own dedicated file
-    // (config tables/spawn_tier_weighting.json, SpawnTierWeightData.java) since they're
-    // structured tabular data, not flat scalars - same split this project already uses for
-    // restricted_cards.json vs. this file. One kill = one suppression stack (multiplier
-    // (1-killDecaySuppressionPerStack)^stacks); stacks cap at killDecayMaxStacks; one stack
-    // decays every killDecayRecoveryDaysPerStack days without a further kill. See
-    // SpawnTierWeighting.java.
-    public float killDecaySuppressionPerStack = 0.20f;
-    public int killDecayMaxStacks = 3;
-    public int killDecayRecoveryDaysPerStack = 4;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

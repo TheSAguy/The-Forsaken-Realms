@@ -1054,6 +1054,7 @@ public class MapStage extends GameStage {
                             ret.addAll(rdata.generate(false, false));
                         }
                         EconomyBuildings.injectGuaranteedTorchIfOwed(ret, data, changes);
+                        EconomyBuildings.excludeMythicItemsForNeutralArmory(ret, data, changes);
                         ShopActor actor = new ShopActor(this, id, ret, data);
                         // Capitol land shops: fixed identity, simple repair, no overlay icon once
                         // rebuilt (hut art baked into the map) - see ShopActor.fixedShop.

@@ -362,6 +362,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void updateDifficulty(DifficultyData diff) {
+        // New Game+ bug fix (2026-08-25 user report: Insane NG+ started at 7 life instead of the
+        // expected 9): New Game+ regenerates the world (town/Capitol ownership wiped by
+        // WorldSave.clearChanges()+World.generateNew() in SaveLoadScene's NewGamePlus flow) but
+        // this method is the only per-playthrough reset NG+ runs on the player object - it must
+        // also clear the carried-over town-count life bonus (townLifeBonus), or the next
+        // TownRestoration.updateTownLifeBonus() call (first town restored/Capitol founded/town
+        // lost in the new world) silently subtracts the OLD playthrough's stale bonus from
+        // maxLife/life. Mirrors the reset clear() already does for a fresh New Game.
+        townLifeBonus = 0;
+        System.out.println("[TFR-NGPlusLife] updateDifficulty: reset townLifeBonus to 0, starting life now " + diff.startingLife);
         maxLife = diff.startingLife;
         this.difficultyData.startingShards = diff.startingShards;
         this.difficultyData.startingLife = diff.startingLife;
@@ -380,6 +390,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     //Getters
     public int getSelectedDeckIndex() {
         return selectedDeckIndex;
+    }
+
+    public DifficultyData getDifficultyData() {
+        return difficultyData;
     }
 
     public Deck getSelectedDeck() {

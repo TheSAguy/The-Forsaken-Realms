@@ -21,7 +21,7 @@
     {
       "type": "Label",
       "name": "title",
-      "text": "[%55]The Forgotten Realms Standings",
+      "text": "[%55]The Forsaken Realms Standings",
       "fontColor": "black",
       "x": 25,
       "y": 25,

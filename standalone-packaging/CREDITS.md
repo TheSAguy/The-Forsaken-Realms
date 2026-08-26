@@ -1,6 +1,6 @@
 # Credits
 
-The Forgotten Realms is built on the work of many people. Thank you.
+The Forsaken Realms is built on the work of many people. Thank you.
 
 ## The Forge development team
 
@@ -14,7 +14,7 @@ by the Card-Forge team and its many contributors over nearly two decades
 ## The Realm of Legends team
 
 Creators of the Realm of Legends adventure plane bundled with Forge. The
-Forgotten Realms ports a substantial amount of their content: the legendary
+Forsaken Realms ports a substantial amount of their content: the legendary
 boss encounters and their decks, eight dungeons (Ashling's Domain, Eclipsed
 Elven Court, Planeswalker Dueling Club, Idyllic Beachfront, Peaceful Clearing,
 An-Havva Inn, Ancient Opal Cavern, Isolated Hut), an expanded item catalog,
@@ -22,21 +22,21 @@ building/boss artwork, and starter deck concepts.
 
 ## The Shandalar Old Border team
 
-Creators of the Shandalar Old Border adventure plane. The Forgotten Realms
+Creators of the Shandalar Old Border adventure plane. The Forsaken Realms
 ports their dungeon designs (Demon's Bargain, the Ancient Diamond Mine,
 Riddle's Lair, the five color Dragon's Lairs) and their 38 classic bosses,
 who roam this world as rare War-tier encounters.
 
 ## The Shandalar, Innistrad, and Amonkhet plane teams
 
-The Forgotten Realms began as a clone of Forge's Shandalar plane and still
+The Forsaken Realms began as a clone of Forge's Shandalar plane and still
 builds on its maps, quests, and structure. Several dungeon maps and tilesets
 originate from the Innistrad plane, and the Naktamun maps from the Amonkhet
 plane.
 
 ## Everything on top
 
-The Forgotten Realms' own systems — dynamic Territory Control, the color
+The Forsaken Realms' own systems — dynamic Territory Control, the color
 reputation system, town reconstruction and the player Capitol, the Wood/Stone
 economy and its buildings, Progressive Set Unlocks and the Research Lab,
 dungeon rotation, the bestiary tiers, fog of war, day/night, and the rest —

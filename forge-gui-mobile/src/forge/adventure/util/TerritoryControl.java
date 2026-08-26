@@ -786,13 +786,14 @@ public class TerritoryControl {
     // Dispatched-mage tier variety (2026-08-14 user spec): was hardcoded to always "Adept
     // <Color> Wizard" - every attack, every color, forever, confirmed by direct code read before
     // this round (one call site, zero variation). Weighted roll instead: Apprentice 30% / Adept
-    // 50% / Master 15% / Grandmaster 5%, same cumulative-boundary pattern as RewardData.
+    // 50% / Master 15% / Archmage 5%, same cumulative-boundary pattern as RewardData.
     // rollWeightedItemRarity(). Internal tier strings (Common/Uncommon/Rare/Mythic), matching
-    // EnemyData.tier - display names are Apprentice/Adept/Master/Grandmaster (#58's rename).
+    // EnemyData.tier - display names are Apprentice/Adept/Master/Archmage (#58's rename, renamed
+    // again 2026-08-25).
     private static final String[] DISPATCH_TIERS = {"Common", "Uncommon", "Rare", "Mythic"};
     private static final float[] DISPATCH_TIER_CUMULATIVE = {30f, 80f, 95f, 100f};
     // Color Defeat tier-shift (2026-08-14 user spec, stacking per additional defeat): per
-    // defeated color, Adept -10 / Master +5 / Grandmaster +5, Apprentice untouched. Clamped so
+    // defeated color, Adept -10 / Master +5 / Archmage +5, Apprentice untouched. Clamped so
     // Adept can't go negative - at 5 defeats (the max possible) it lands exactly on 0, so the
     // clamp is defensive, not load-bearing for the intended range.
     private static final float DISPATCH_TIER_SHIFT_PER_DEFEAT_ADEPT = 10f;
@@ -812,7 +813,7 @@ public class TerritoryControl {
                 + DISPATCH_TIER_SHIFT_PER_DEFEAT_GRANDMASTER * defeats; // baseline 5
         // Sums grandmasterShare in rather than hardcoding the final boundary to 100f (adversarial
         // review 2026-08-14: with the shipped constants these are numerically identical today -
-        // ADEPT_SHIFT(10) == MASTER_SHIFT(5)+GRANDMASTER_SHIFT(5), so the three shares always summed
+        // ADEPT_SHIFT(10) == MASTER_SHIFT(5)+ARCHMAGE_SHIFT(5), so the three shares always summed
         // back to 100 anyway - but a hardcoded 100f made DISPATCH_TIER_SHIFT_PER_DEFEAT_GRANDMASTER
         // completely inert: tuning it alone would have silently changed nothing).
         return new float[]{apprentice, apprentice + adeptShare, apprentice + adeptShare + masterShare,
@@ -828,7 +829,7 @@ public class TerritoryControl {
         return "Mythic"; // unreachable (last boundary is 100), kept as a safe fallback
     }
 
-    // No color has a Mythic-tier NAMED wizard ("Grandmaster <Color> Wizard" doesn't exist for any
+    // No color has a Mythic-tier NAMED wizard ("Archmage <Color> Wizard" doesn't exist for any
     // color, confirmed 2026-08-14 - the hand-tuned wizard roster only ever had 3 tiers). Per user
     // decision: pick randomly from that color's own Mythic-tier roaming pool instead of inventing
     // a stand-in - a real, already-established threat for that color (17-26 candidates per color,
@@ -836,7 +837,10 @@ public class TerritoryControl {
     // EnemySprite.getRewards() already uses for the analogous edition-restriction exemption, and
     // getEnemyList() is already content-filter-table-aware (#41 Include=N exclusions respected
     // here for free). Returns null if that color's pool has no eligible Mythic entry at all.
-    private static EnemyData pickGrandmasterMage(World world, String color) {
+    // Made public 2026-08-25: reused by ChestEvents (Chest loot spawn's "Dangerous Enemy" and
+    // "Illegal Arena Match" events) for the same "strongest real roaming threat for this color"
+    // pick - no behavior change, only widened visibility.
+    public static EnemyData pickGrandmasterMage(World world, String color) {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))
                 continue;
@@ -1149,7 +1153,7 @@ public class TerritoryControl {
 
     // Guard-fight balance adjustment (user spec 2026-08-11): the base tier-vs-tier formula alone
     // felt too safe for the defender once compounded with the base town-capture roll afterward
-    // (e.g. a Common attacker vs. a hired Grandmaster guard was ~11%, then another roll on top of
+    // (e.g. a Common attacker vs. a hired Archmage guard was ~11%, then another roll on top of
     // that) - a flat attacker bonus, partly countered by a new combat role for the Outlook
     // building (previously vision-radius only) if the town has one. Deliberately NOT applied to
     // guardFightAttackerWinChance() itself - that function stays the pure tier-math baseline,
@@ -1856,7 +1860,7 @@ public class TerritoryControl {
      * <li>+1 simultaneous attacking-mage slot for every surviving color, stacking per additional
      * defeat (maxActiveMagesPerColor() reads World.getDefeatedColorCount() directly - nothing
      * further needed here beyond marking the color defeated).</li>
-     * <li>Attacker tier distribution shifts toward Master/Grandmaster for every surviving color's
+     * <li>Attacker tier distribution shifts toward Master/Archmage for every surviving color's
      * FUTURE dispatches, also stacking per defeat (rollDispatchMageTier() likewise reads
      * getDefeatedColorCount() directly).</li>
      * <li>The defeated color's 2 surviving allies each get a one-shot "next dispatch must target a

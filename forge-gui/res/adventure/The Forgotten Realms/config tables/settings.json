@@ -60,9 +60,10 @@
     "anteBuyBackMinRare": 300,
     "anteBuyBackMinMythic": 500,
 
-    // Maximum resource pickups (Gold/Wood/Stone/Shards) on the world map at once.
-    // Raised 30 -> 50 (2026-08-23 user request).
-    "maxResourceSpawns": 50,
+    // Maximum resource pickups (Gold/Wood/Stone/Shards/Mystery/Chest) on the world map at once.
+    // Raised 30 -> 50 (2026-08-23 user request), then 50 -> 60 (2026-08-25, to make room for the
+    // new Chest loot-spawn type without thinning out the original 5).
+    "maxResourceSpawns": 60,
 
     // Card price multipliers: cards cost more in AI-owned towns, less in yours
     // (applied before reputation discounts/markups).
@@ -82,14 +83,10 @@
     // value, so a tiny supplemental set can't become a 1-2 card unlock.
     "researchThresholdFraction": 0.10,
 
-    // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23). One kill adds one
-    // suppression stack; effective multiplier is (1-killDecaySuppressionPerStack)^stacks. Stacks
-    // cap at killDecayMaxStacks. One stack decays away every killDecayRecoveryDaysPerStack days
-    // without a further kill on that same enemy. The week-progression/territory tables live in
-    // their own file, "config tables/spawn_tier_weighting.json".
-    "killDecaySuppressionPerStack": 0.20,
-    "killDecayMaxStacks": 3,
-    "killDecayRecoveryDaysPerStack": 4,
+    // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
+    // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via
+    // flat scalars here; see SpawnTierWeighting.rawSpawnWeight()). The week-progression/territory
+    // tables still live in their own file, "config tables/spawn_tier_weighting.json".
 
     // Shard cost to re-roll an Inn Tournament's draft/sealed card pool before entering
     // (2026-08-24). The new pool is drawn from the same edition-progression-gated set as

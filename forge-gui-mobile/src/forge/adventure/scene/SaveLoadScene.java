@@ -439,7 +439,21 @@ public class SaveLoadScene extends UIScene {
         if (mode == Modes.NewGamePlus) {
             if (difficulty != null) {
                 difficulty.setVisible(true);
-                difficulty.setSelectedIndex(1);
+                // Was hardcoded to index 1 ("Normal") every time this screen opened (2026-08-25
+                // user report, found alongside the NG+ starting-life bug on this same path) - a
+                // player who didn't notice and reselect their real difficulty would silently
+                // start NG+ on Normal instead. Pre-select whatever difficulty the player is
+                // actually on instead.
+                int currentIndex = 1; // fallback: Normal, if no match is found below
+                DifficultyData[] all = Config.instance().getConfigData().difficulties;
+                String currentName = Current.player().getDifficultyData().name;
+                for (int i = 0; i < all.length; i++) {
+                    if (all[i].name.equals(currentName)) {
+                        currentIndex = i;
+                        break;
+                    }
+                }
+                difficulty.setSelectedIndex(currentIndex);
             }
         } else {
             if (difficulty != null) {

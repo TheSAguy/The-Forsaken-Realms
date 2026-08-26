@@ -1,8 +1,8 @@
-# The Forgotten Realms — Player Guide
+# The Forsaken Realms — Player Guide
 
 *A custom Adventure-mode world for Card-Forge/forge.*
 
-This guide walks through what's different about The Forgotten Realms compared to the base
+This guide walks through what's different about The Forsaken Realms compared to the base
 Adventure experience, how the plane's custom systems fit together, and what to expect as you
 explore. It's meant to sit alongside the game, not replace discovering things yourself — read as
 much or as little as you want before diving in.
@@ -23,7 +23,7 @@ much or as little as you want before diving in.
 
 ## Introduction
 
-The Forgotten Realms is built on top of stock Forge Adventure mode, but changes how the world
+The Forsaken Realms is built on top of stock Forge Adventure mode, but changes how the world
 itself behaves: towns take sides, dungeons come and go, your reputation with each color actually
 means something, and there's a real path from "wandering duelist" to "ruler of your own Capitol."
 None of it requires you to play differently deck-wise — it's a layer on top of the normal
@@ -71,7 +71,7 @@ threat to you changes, and the balance of the whole map shifts.
 
 ### Time, Day & Night
 
-The Forgotten Realms runs on a living clock. Every in-game day the world ticks forward: territory
+The Forsaken Realms runs on a living clock. Every in-game day the world ticks forward: territory
 spreads, mages march, shops restock on their weekly cycle, mines pay out on paydays (days 7, 14,
 21, 28), guards draw their wages, quest timers count down (side quests fail after 20 days -
 story quests never expire), and dungeons age toward their rotation. A HUD clock shows the time of
@@ -194,7 +194,7 @@ you push into the plane's hardest dungeons and boss fights - including the newes
 
 ## The World
 
-The Forgotten Realms uses the standard five-color-plus-colorless biome layout: each color has its
+The Forsaken Realms uses the standard five-color-plus-colorless biome layout: each color has its
 own territory, its own AI-controlled Capitol and castles, and its own flavor of dungeon. Beyond
 the color biomes, the world is dotted with named landmarks worth seeking out - ancient castles
 like **Von Gant's Fortress**, **Emrakul's Castle**, and **Black Dragon Mountain**; strongholds like
@@ -276,12 +276,12 @@ deck tier before assuming it's just you.
 
 ---
 
-*This guide covers the state of The Forgotten Realms as of 2026-08-21. See `MOD_CHANGELOG.md` in
+*This guide covers the state of The Forsaken Realms as of 2026-08-21. See `MOD_CHANGELOG.md` in
 the repository for the full history of how the mod got here, if you're curious.*
 
 ## Support & Community
 
-The Forgotten Realms is free and open source. If you're enjoying it:
+The Forsaken Realms is free and open source. If you're enjoying it:
 
 - **Join the Discord** for feedback, bug reports, and balance talk: https://discord.gg/TTRPKc9HYJ
 - **Support development on Ko-fi**: https://ko-fi.com/thesaguy

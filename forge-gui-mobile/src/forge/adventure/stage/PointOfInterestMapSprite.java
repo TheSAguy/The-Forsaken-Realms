@@ -58,7 +58,14 @@ public class PointOfInterestMapSprite extends MapSprite {
             // Control (MOD_SCOPE.md #7) can change it after this actor was constructed
             // (PointOfInterest.transformInto() when a captured town becomes a different POI).
             TextureRegion brokenTexture = TownRestoration.getBrokenTownSprite(pointOfInterest);
-            texture = brokenTexture != null ? brokenTexture : pointOfInterest.getSprite();
+            if (brokenTexture != null) {
+                texture = brokenTexture;
+            } else {
+                // Player-restored wasteland town (2026-08-25) - dedicated art distinct from the
+                // shared "WasteTown" look every functioning-neutral town still uses.
+                TextureRegion playerTownTexture = TownRestoration.getPlayerTownSprite(pointOfInterest);
+                texture = playerTownTexture != null ? playerTownTexture : pointOfInterest.getSprite();
+            }
             super.draw(batch, parentAlpha);
             drawGuardIndicator(batch, parentAlpha);
         }

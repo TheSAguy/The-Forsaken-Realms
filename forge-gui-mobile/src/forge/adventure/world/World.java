@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Json;
 import forge.Forge;
 import forge.adventure.data.*;
 import forge.adventure.pointofintrest.PointOfInterest;
-import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.pointofintrest.PointOfInterestMap;
 import forge.adventure.scene.Scene;
 import forge.adventure.stage.GameHUD;
@@ -281,13 +280,15 @@ public class World implements Disposable, SaveFileContent {
     private final java.util.Map<String, Integer> poiDespawnDay = new java.util.HashMap<>();
     private final java.util.Map<String, Integer> poiRespawnDay = new java.util.HashMap<>();
     private final java.util.Map<String, Integer> poiFailedAttempts = new java.util.HashMap<>();
-    // Weighted spawn tier system, Layer 3 (2026-08-23 user spec) - per-enemy-name kill-decay
-    // suppression, same shape as the poi* maps above (World-level, keyed by a stable string id,
-    // absolute-day-based, evaluated lazily on read rather than ticked). enemyKillStacks: current
-    // suppression stack count per enemy name. enemyLastKillDay: the day stacks were last added,
-    // used to compute how many have decayed away since. See SpawnTierWeighting.java.
-    private final java.util.Map<String, Integer> enemyKillStacks = new java.util.HashMap<>();
-    private final java.util.Map<String, Integer> enemyLastKillDay = new java.util.HashMap<>();
+    // Weighted spawn tier system, Layer 3 (2026-08-25 redesign, replacing the original
+    // time-decaying suppression-stack system): how many times this exact enemy name has been
+    // confirmed-defeated in roaming combat, permanently - never decays over time. Same shape as
+    // the poi* maps above (World-level, keyed by a stable string id). Permanence (rather than the
+    // old day-based recovery) is required for SpawnTierWeighting.rawSpawnWeight()'s uniform-
+    // baseline-halved-per-kill formula to have the property the user specifically asked for:
+    // defeat every candidate in a pool an equal number of times and the pool reads as perfectly
+    // uniform again, from a stateless recompute rather than a path-dependent redistribution.
+    private final java.util.Map<String, Integer> enemyPermanentKillCount = new java.util.HashMap<>();
 
     public java.util.Map<String, Integer> getPoiDespawnDay() {
         return poiDespawnDay;
@@ -301,12 +302,8 @@ public class World implements Disposable, SaveFileContent {
         return poiFailedAttempts;
     }
 
-    public java.util.Map<String, Integer> getEnemyKillStacks() {
-        return enemyKillStacks;
-    }
-
-    public java.util.Map<String, Integer> getEnemyLastKillDay() {
-        return enemyLastKillDay;
+    public java.util.Map<String, Integer> getEnemyPermanentKillCount() {
+        return enemyPermanentKillCount;
     }
 
     // How many rotatable dungeons/caves should be visible at once (pool rotation) - set to
@@ -537,15 +534,10 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             poiFailedAttempts.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiFailedAttempts"));
         }
-        enemyKillStacks.clear();
-        if (saveFileData.containsKey("enemyKillStacks")) {
+        enemyPermanentKillCount.clear();
+        if (saveFileData.containsKey("enemyPermanentKillCount")) {
             //noinspection unchecked
-            enemyKillStacks.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyKillStacks"));
-        }
-        enemyLastKillDay.clear();
-        if (saveFileData.containsKey("enemyLastKillDay")) {
-            //noinspection unchecked
-            enemyLastKillDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyLastKillDay"));
+            enemyPermanentKillCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyPermanentKillCount"));
         }
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
         questAcceptedDay.clear();
@@ -597,8 +589,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
-        data.storeObject("enemyKillStacks", enemyKillStacks);
-        data.storeObject("enemyLastKillDay", enemyLastKillDay);
+        data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.store("poiActiveTarget", poiActiveTarget);
         data.storeObject("questAcceptedDay", questAcceptedDay);
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
@@ -857,12 +848,12 @@ public class World implements Disposable, SaveFileContent {
             poiDespawnDay.clear();
             poiRespawnDay.clear();
             poiFailedAttempts.clear();
-            // Weighted spawn tier system, Layer 3 (2026-08-23) - must be cleared here same as the
-            // poi* maps above: New Game+ reuses this exact World instance and calls generateNew()
-            // in place rather than constructing a fresh one, so without this an enemy's kill
-            // suppression from the PREVIOUS playthrough would silently carry into the new one.
-            enemyKillStacks.clear();
-            enemyLastKillDay.clear();
+            // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
+            // cleared here same as the poi* maps above: New Game+ reuses this exact World instance
+            // and calls generateNew() in place rather than constructing a fresh one, so without
+            // this an enemy's permanent kill count from the PREVIOUS playthrough would silently
+            // carry into the new one.
+            enemyPermanentKillCount.clear();
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
             questAcceptedDay.clear();
 
@@ -1697,27 +1688,76 @@ public class World implements Disposable, SaveFileContent {
                 refreshFogForMarkerRect(cx, cy, dstSize, dstSize);
                 continue;
             }
+            // Starting Portal / "Spawn" (2026-08-25 user report: on the minimap this reads as an
+            // ordinary town - it's type="town" so mapMarkerKey() falls through to the same
+            // generic "town" hut glyph every other town uses). Reuses its own already-distinct
+            // overworld campfire sprite (buildings.atlas "Spawn" region, 16x16 - the same native
+            // size as the generic marker, so no scaling is needed) instead of the shared marker
+            // atlas, same idea as the Capitol special case above.
+            if ("Spawn".equals(poi.getData().name) && poi.getSprite() != null) {
+                com.badlogic.gdx.graphics.g2d.TextureRegion spawnSprite = poi.getSprite();
+                TextureData spawnTexData = spawnSprite.getTexture().getTextureData();
+                if (!spawnTexData.isPrepared())
+                    spawnTexData.prepare();
+                Pixmap spawnPixmap = spawnTexData.consumePixmap();
+                int sx = (int) ((poi.getPosition().x / data.tileSize) * mm) - spawnSprite.getRegionWidth() / 2;
+                int sy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - spawnSprite.getRegionHeight() / 2;
+                biomeImage.drawPixmap(spawnPixmap, spawnSprite.getRegionX(), spawnSprite.getRegionY(),
+                        spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight(), sx, sy,
+                        spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight());
+                spawnPixmap.dispose();
+                refreshFogForMarkerRect(sx, sy, spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight());
+                continue;
+            }
+            // Generalized town icon (2026-08-25 user spec: "use the broken/ruin icons for ruined
+            // cities and the normal fixed icons for existing neutral towns that are fine. Same
+            // for the 5 AI colors. Create mini-map icons for their color towns.") - every
+            // town-type POI already resolves its own correct overworld sprite via the same
+            // broken/player-town/default priority PointOfInterestMapSprite.draw() uses: ruined ->
+            // one of 16 broken-art variants, player-restored -> the dedicated PlayerTown art,
+            // otherwise each color's own existing ForestTown/IslandTown/MountainTown/PlainsTown/
+            // SwampTown/WasteTown sprite. Drawing THAT instead of the shared generic "town" hut
+            // glyph needs no new art for the 5 AI colors at all - just reusing what the main map
+            // already shows. Player Capitol/Spawn keep their own dedicated special cases above
+            // (distinct POI names, not handled via type here).
+            if ("town".equals(poi.getData().type) && poi.getSprite() != null) {
+                com.badlogic.gdx.graphics.g2d.TextureRegion brokenTexture = TownRestoration.getBrokenTownSprite(poi);
+                com.badlogic.gdx.graphics.g2d.TextureRegion townTexture = brokenTexture;
+                if (townTexture == null)
+                    townTexture = TownRestoration.getPlayerTownSprite(poi);
+                if (townTexture == null)
+                    townTexture = poi.getSprite();
+                TextureData townTexData = townTexture.getTexture().getTextureData();
+                if (!townTexData.isPrepared())
+                    townTexData.prepare();
+                Pixmap townPixmap = townTexData.consumePixmap();
+                // Fixed 16x16 base footprint (matching the old generic glyph's on-map size, not
+                // the town sprite's own much-larger native size) so restored/AI-color towns don't
+                // suddenly dwarf every other minimap icon; ruined keeps the existing ~15% bump
+                // (2026-08-15 user request: "they look small next to the fixed/repaired towns").
+                int dstSize = brokenTexture != null ? Math.round(16 * 1.15f) : 16;
+                int tx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
+                int ty = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
+                biomeImage.drawPixmap(townPixmap, townTexture.getRegionX(), townTexture.getRegionY(),
+                        townTexture.getRegionWidth(), townTexture.getRegionHeight(), tx, ty, dstSize, dstSize);
+                townPixmap.dispose();
+                refreshFogForMarkerRect(tx, ty, dstSize, dstSize);
+                continue;
+            }
             TextureAtlas.AtlasRegion marker = mapMarker.findRegion(mapMarkerKey(poi.getData()));
             if (marker == null)
                 continue;
-            // Ruined/neutral towns draw ~15% larger (2026-08-15 user request: "they look small
-            // next to the fixed/repaired towns") - same atlas region, just a scaled destination
-            // rect (the 9-arg drawPixmap scales). Restored towns and every other POI type keep
-            // native size. No ghosting risk on restore: repaintBiomeAroundTown() repaints the
-            // whole RECOLOR_RADIUS ground disc before markers get redrawn at normal size.
-            PointOfInterestChanges markerChanges = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
-            boolean ruinedTown = "town".equals(poi.getData().type)
-                    && TownRestoration.isWastelandTown(poi.getData())
-                    && (markerChanges == null || !TownRestoration.isTownRestored(markerChanges));
-            int dstW = ruinedTown ? Math.round(marker.getRegionWidth() * 1.15f) : marker.getRegionWidth();
-            int dstH = ruinedTown ? Math.round(marker.getRegionHeight() * 1.15f) : marker.getRegionHeight();
+            // Every town-type POI is now handled by the generalized block above (which always
+            // continue's), so this fallback only ever draws non-town markers (dungeons, castles,
+            // etc.) at native size - there's no "ruined" concept for those.
             int xInPixels = (int) ((poi.getPosition().x / data.tileSize) * mm);
             int yInPixels = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm);
-            xInPixels -= dstW / 2;
-            yInPixels -= dstH / 2;
+            xInPixels -= marker.getRegionWidth() / 2;
+            yInPixels -= marker.getRegionHeight() / 2;
             biomeImage.drawPixmap(mapMarkerPixmap, marker.getRegionX(), marker.getRegionY(),
-                    marker.getRegionWidth(), marker.getRegionHeight(), xInPixels, yInPixels, dstW, dstH);
-            refreshFogForMarkerRect(xInPixels, yInPixels, dstW, dstH);
+                    marker.getRegionWidth(), marker.getRegionHeight(), xInPixels, yInPixels,
+                    marker.getRegionWidth(), marker.getRegionHeight());
+            refreshFogForMarkerRect(xInPixels, yInPixels, marker.getRegionWidth(), marker.getRegionHeight());
         }
         mapMarkerPixmap.dispose();
     }
@@ -2828,9 +2868,41 @@ public class World implements Disposable, SaveFileContent {
         // claimed set here and handing it directly to doodad placement (see below) means there's only
         // ever one definition of "does this color own this tile," not two that can drift apart.
         Set<Long> claimedTiles = new HashSet<>();
+        // Per-column analytic y-range (2026-08-25 perf fix: "freeze at the end of every day, gets
+        // worse the longer a playthrough runs"). This loop used to scan the FULL (2*outerRadiusTiles
+        // +1)^2 bounding box and reject non-ring tiles one at a time via the distSq check below -
+        // O(outerRadiusTiles^2) despite the surrounding comments' claim that only the new ring is
+        // scanned. outerRadiusTiles is a color's/town's live territory radius, which grows toward a
+        // 450-tile cap essentially never reached in a normal session (observed climbing 21->107,
+        // >5x, over one 13-week playtest, i.e. >25x more wasted iteration by the end) - and this
+        // method runs synchronously on the render thread every day a color/town/Capitol expands, so
+        // that growing cost was paid as a direct, worsening frame stall at every day-rollover.
+        // For each column (dx), the valid y-range is the row-solve of x^2+y^2<=outerRadiusSq (and,
+        // for the annulus case where |dx| is small enough to also be inside the inner circle, MINUS
+        // the row-solve of x^2+y^2<innerRadiusSq, splitting the column into two segments straddling
+        // the inner hole). Iterating only those segments turns the per-call cost into O(ring area)
+        // instead of O(bounding box area) - cheap even as the radius grows into the hundreds. The
+        // original distSq check is kept as a defensive no-op safety net, not load-bearing for
+        // correctness of which tiles get visited anymore.
         for (int wx = Math.max(0, centerTileX - outerRadiusTiles); wx <= Math.min(width - 1, centerTileX + outerRadiusTiles); wx++) {
             int dx = wx - centerTileX;
-            for (int wy = Math.max(0, centerTileY - outerRadiusTiles); wy <= Math.min(height - 1, centerTileY + outerRadiusTiles); wy++) {
+            int dxSq = dx * dx;
+            if (dxSq > outerRadiusSq)
+                continue; // column doesn't intersect the outer circle at all
+            int outerY = (int) Math.floor(Math.sqrt((double) (outerRadiusSq - dxSq)));
+            int segStart1 = centerTileY - outerY, segEnd1 = centerTileY + outerY;
+            int segStart2 = 1, segEnd2 = 0; // sentinel: empty (segStart2 > segEnd2) unless overwritten below
+            if (dxSq < innerRadiusSq) {
+                // this column also punches through the inner circle - split into two segments
+                int innerY = (int) Math.ceil(Math.sqrt((double) (innerRadiusSq - dxSq)));
+                segEnd1 = centerTileY - innerY;
+                segStart2 = centerTileY + innerY;
+                segEnd2 = centerTileY + outerY;
+            }
+            for (int seg = 0; seg < 2; seg++) {
+                int segStart = seg == 0 ? segStart1 : segStart2;
+                int segEnd = seg == 0 ? segEnd1 : segEnd2;
+            for (int wy = Math.max(0, segStart); wy <= Math.min(height - 1, segEnd); wy++) {
                 int dy = wy - centerTileY;
                 int distSq = dx * dx + dy * dy;
                 if (distSq > outerRadiusSq || distSq < innerRadiusSq)
@@ -2984,6 +3056,7 @@ public class World implements Disposable, SaveFileContent {
 
                 minX = Math.min(minX, wx); maxX = Math.max(maxX, wx);
                 minY = Math.min(minY, wy); maxY = Math.max(maxY, wy);
+            }
             }
         }
         // Repaint the live chunk textures only AFTER every tile's biomeMap/terrainMap write is

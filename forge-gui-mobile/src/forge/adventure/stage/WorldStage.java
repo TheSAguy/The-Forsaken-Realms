@@ -150,6 +150,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         SPARKLE_ATLASES.put(ResourceSpawns.TYPE_WOOD, Paths.WOOD_ATLAS);
         SPARKLE_ATLASES.put(ResourceSpawns.TYPE_STONE, Paths.STONE_ATLAS);
         SPARKLE_ATLASES.put(ResourceSpawns.TYPE_MYSTERY, Paths.MYSTERY_ATLAS);
+        SPARKLE_ATLASES.put(ResourceSpawns.TYPE_CHEST, Paths.CHEST_ATLAS);
     }
 
     // Defensive, not expected in practice: every type above has a real atlas now, so this only
@@ -763,6 +764,85 @@ public class WorldStage extends GameStage implements SaveFileContent {
         showDialog();
     }
 
+    // Chest loot spawn - "Duplicate" event (2026-08-25 user spec). Public: ChestEvents lives in
+    // util, not stage, and needs WorldStage's private Dialog infra the same way every other
+    // world-map popup above does. A free-form card-picker UI doesn't exist anywhere in this
+    // codebase's simple Dialog+TypingLabel+buttons pattern, so - same documented simplification
+    // as the Thief Merchant event below - the traveling artificer duplicates a RANDOM owned card
+    // instead of letting the player choose one. cheapCard/expensiveCard are pre-picked by
+    // ChestEvents (expensiveCard null when the player owns no restricted card at all, in which
+    // case only the cheap button is offered).
+    public void showChestDuplicateDialog(forge.item.PaperCard cheapCard, forge.item.PaperCard expensiveCard) {
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+
+        TypingLabel label = Controls.newTypingLabel("A traveling artificer emerges from the chest: "
+                + "\"I can duplicate one of your cards, for a price.\"");
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+
+        final int cheapCost = 25;
+        TextraButton cheapButton = Controls.newTextButton("Duplicate " + cheapCard.getName() + " (" + cheapCost + " shards)", () -> {
+            Current.player().takeShards(cheapCost);
+            Current.player().addCard(cheapCard, 1);
+            hideDialog();
+            GameHUD.getInstance().addNotification("The artificer duplicates your " + cheapCard.getName() + "!");
+        });
+        cheapButton.setDisabled(Current.player().getShards() < cheapCost);
+        dialog.getButtonTable().add(cheapButton).width(240f).row();
+
+        if (expensiveCard != null) {
+            final int expensiveCost = 200;
+            TextraButton expensiveButton = Controls.newTextButton("Duplicate " + expensiveCard.getName() + " (" + expensiveCost + " shards)", () -> {
+                Current.player().takeShards(expensiveCost);
+                Current.player().addCard(expensiveCard, 1);
+                hideDialog();
+                GameHUD.getInstance().addNotification("The artificer duplicates your " + expensiveCard.getName() + "!");
+            });
+            expensiveButton.setDisabled(Current.player().getShards() < expensiveCost);
+            dialog.getButtonTable().add(expensiveButton).width(240f).row();
+        }
+        dialog.getButtonTable().add(Controls.newTextButton("Decline", this::hideDialog)).width(240f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+    }
+
+    // Chest loot spawn - "Illegal Arena Match" event (2026-08-25 user spec): a toll dialog, same
+    // pay/leave shape as showCapitalTollDialog above. Accepting spawns the opponent a couple tiles
+    // off the player's position (opt-in via ordinary collision, same mechanism ResourceSpawns'
+    // Mystery-pickup ambush uses) rather than launching a duel directly - no code path in this
+    // codebase launches a duel without a real overworld encounter/POI visit behind it, and
+    // reusing the existing collision-triggered flow avoids inventing one just for this.
+    public void showChestArenaTollDialog(EnemyData opponent, Vector2 spawnPosition) {
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+
+        final int toll = 250;
+        TypingLabel label = Controls.newTypingLabel("A grinning tout offers you a spot in the [RED]Illegal Arena[] "
+                + "Match, entry [+Gold] " + toll + " gold. The house never asks who wins.");
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+
+        TextraButton payButton = Controls.newTextButton("Pay " + toll + " gold", () -> {
+            Current.player().takeGold(toll);
+            hideDialog();
+            EnemySprite arenaOpponent = new EnemySprite(opponent);
+            spawnAt(arenaOpponent, spawnPosition);
+            GameHUD.getInstance().addNotification("[*]The Illegal Arena awaits - " + opponent.name + " approaches!");
+        });
+        payButton.setDisabled(Current.player().getGold() < toll);
+        dialog.getButtonTable().add(payButton).width(240f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Decline", this::hideDialog)).width(240f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+    }
+
     @Override
     public boolean isColliding(Rectangle boundingRect) {
         if (currentModifications.containsKey(PlayerModification.Fly))
@@ -945,7 +1025,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 String spawnTierInfo = "";
                 if (SpawnTierWeighting.isEnabled()) {
                     int week = SpawnTierWeighting.currentWeek(world);
-                    spawnTierInfo = ", week=" + week + ", killDecayMult=" + SpawnTierWeighting.killDecayMultiplier(enemyData);
+                    spawnTierInfo = ", week=" + week + ", permanentKills=" + SpawnTierWeighting.getPermanentKillCount(enemyData.getName());
                 }
                 System.out.println("[TFR-Spawn] " + enemyData.getName() + " (tier=" + enemyData.tier
                         + ", colors=" + enemyData.colors + ", speed=" + enemyData.speed

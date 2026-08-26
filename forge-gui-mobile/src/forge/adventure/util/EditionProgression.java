@@ -24,9 +24,16 @@ import java.util.function.Predicate;
 
 /**
  * Progressive Set Unlocks (MOD_SCOPE.md #4, opt-in via editionProgressionEnabled). Splits every
- * real, obtainable edition into 6 roughly-equal groups once per new game - one per color (white/
- * blue/black/red/green) plus a "neutral" group for wasteland/non-colored encounters (user spec
- * 2026-08-12) - and persists the split on World for the rest of that save's lifetime.
+ * real, obtainable edition into 6 groups once per new game - one per color (white/blue/black/red/
+ * green) plus a "neutral" group for wasteland/non-colored encounters (user spec 2026-08-12) - and
+ * persists the split on World for the rest of that save's lifetime.
+ *
+ * Neutral is NOT an equal 1/6 share (redesigned 2026-08-25, user spec): it's a small fixed size
+ * (NEUTRAL_SHARD_SIZE) at seed time, then grows by whatever the player's chosen race's starting
+ * editions are once reservePlayerEditions() runs (those are pulled OUT of the 5 color shards and
+ * added into neutral instead of just being discarded). The 5 AI colors split whatever's left of
+ * the master pool after neutral's fixed slice, round-robin, same "near-equal, differs by at most
+ * 1" mechanism as before.
  *
  * This is the AI/world side of the feature: roaming-monster loot and AI-color-town shop stock both
  * draw from a color's assigned shard, permanently, regardless of the player's own research
@@ -37,6 +44,8 @@ import java.util.function.Predicate;
 public class EditionProgression {
     public static final String NEUTRAL = "neutral";
     private static final String[] GROUPS = {"white", "blue", "black", "red", "green", NEUTRAL};
+    private static final String[] COLOR_GROUPS = {"white", "blue", "black", "red", "green"};
+    private static final int NEUTRAL_SHARD_SIZE = 12;
 
     /** Every real, obtainable edition this plane could ever show - the same CAN_MAKE_BOOSTER +
      *  hasBoosterTemplate filter the existing "cardPackShop" booster-generation code already uses
@@ -60,12 +69,15 @@ public class EditionProgression {
     }
 
     /**
-     * Randomly splits the master edition list into 6 groups (5 colors + neutral) and stores the
-     * result on World for this save's lifetime. Called once from World.generateNew() - shuffles
-     * with the world's own seeded Random (so the split is reproducible from the same world seed),
-     * then deals editions round-robin across the 6 groups so every color gets a near-equal share
-     * (differs by at most 1) rather than each edition independently rolling 1-of-6, which could
-     * hand one color a lopsided majority purely by chance.
+     * Splits the master edition list into 6 groups (5 colors + neutral) and stores the result on
+     * World for this save's lifetime. Called once from World.generateNew() - shuffles with the
+     * world's own seeded Random (so the split is reproducible from the same world seed), then
+     * neutral greedily claims the first NEUTRAL_SHARD_SIZE editions off the front of that shuffle
+     * (a fixed size, not a 1/6 share - user spec 2026-08-25), and everything left over deals
+     * round-robin across the 5 AI colors so they get a near-equal share (differs by at most 1).
+     * Race-starting editions aren't special-cased here - a player hasn't been created yet at this
+     * point in World.generateNew() (see reservePlayerEditions(), which moves the chosen race's
+     * editions into neutral as a second pass once a race exists).
      */
     public static void seedColorShards(World world) {
         List<CardEdition> editions = new ArrayList<>(getMasterEditionList());
@@ -73,8 +85,16 @@ public class EditionProgression {
         Map<String, List<String>> shards = new HashMap<>();
         for (String group : GROUPS)
             shards.put(group, new ArrayList<>());
-        for (int i = 0; i < editions.size(); i++)
-            shards.get(GROUPS[i % GROUPS.length]).add(editions.get(i).getCode());
+        List<String> neutralShard = shards.get(NEUTRAL);
+        List<CardEdition> colorPool = new ArrayList<>();
+        for (CardEdition edition : editions) {
+            if (neutralShard.size() < NEUTRAL_SHARD_SIZE)
+                neutralShard.add(edition.getCode());
+            else
+                colorPool.add(edition);
+        }
+        for (int i = 0; i < colorPool.size(); i++)
+            shards.get(COLOR_GROUPS[i % COLOR_GROUPS.length]).add(colorPool.get(i).getCode());
         world.setColorEditionShards(shards);
         // Diagnostic-only logging (this whole feature is otherwise invisible/hard to test) -
         // greppable in forge.log as "[TFR-EditionShard]". One line per group, so a single run
@@ -86,19 +106,23 @@ public class EditionProgression {
     }
 
     /**
-     * Removes the player's race-assigned editions from the 5 AI COLOR shards (2026-08-16 user
-     * spec: "These should be exclusive" - a real playtest showed AFR in both the black shard and
-     * the player's own unlocked set). Runs as a second pass because seedColorShards() fires
-     * inside World.generateNew(), BEFORE a player exists (WorldSave.generateNewWorld() line
-     * order), so the seed pass can't know what to exclude. Removes the race's FULL edition pool
-     * (all 4), not just the difficulty-scaled unlocked subset - on Hard/Insane the locked
-     * remainder is still this character's thematic set and shouldn't fly an AI banner either.
-     * The NEUTRAL shard is deliberately untouched: neutral is unowned land, not a rival color,
-     * and thinning it would shrink every neutral town's shop pool for no exclusivity gain.
-     * Falls back to the player's actual unlockedEditions when the race has no raceEditions
-     * entry (the starterEditions fallback pool is large - excluding all of it would gut the
-     * shards). Idempotent, so it also runs on every save LOAD as a migration for worlds seeded
-     * before this existed - logs only when it actually removed something.
+     * Moves the player's race-assigned editions out of the 5 AI COLOR shards and into NEUTRAL
+     * (2026-08-16 user spec: "These should be exclusive" - a real playtest showed AFR in both the
+     * black shard and the player's own unlocked set; redesigned 2026-08-25, user spec: "Give
+     * neutral also ALL the starting race sets [of the player's own chosen race]" - previously
+     * these were just discarded from the color shards and NEUTRAL was left untouched; now they
+     * land in neutral instead, growing it past its seedColorShards() baseline of
+     * NEUTRAL_SHARD_SIZE). Runs as a second pass because seedColorShards() fires inside
+     * World.generateNew(), BEFORE a player exists (WorldSave.generateNewWorld() line order), so
+     * the seed pass can't know what to move yet. Moves the race's FULL edition pool (all 4), not
+     * just the difficulty-scaled unlocked subset - on Hard/Insane the locked remainder is still
+     * this character's thematic set and shouldn't fly an AI banner either. Only the player's OWN
+     * chosen race is affected - the other 15 races' starting editions are untouched and stay
+     * wherever seedColorShards()'s shuffle happened to put them. Falls back to the player's
+     * actual unlockedEditions when the race has no raceEditions entry (the starterEditions
+     * fallback pool is large - excluding all of it would gut the shards). Idempotent, so it also
+     * runs on every save LOAD as a migration for worlds seeded before this existed - logs only
+     * when it actually moved something.
      */
     public static void reservePlayerEditions(World world, forge.adventure.player.AdventurePlayer player) {
         if (world == null || player == null || !world.isEditionProgressionEnabled())
@@ -134,9 +158,23 @@ public class EditionProgression {
                     removedLog.add(code + " (from " + group + ")");
             }
         }
-        if (!removedLog.isEmpty()) {
+        // Moved into neutral rather than discarded (2026-08-25 redesign - see this method's own
+        // doc comment). Dedup-safe: harmless no-op on a re-run (idempotent migration case) or if
+        // seedColorShards() had coincidentally already put one of these codes in neutral.
+        List<String> neutralShard = shards.get(NEUTRAL);
+        List<String> addedLog = new ArrayList<>();
+        if (neutralShard != null) {
+            for (String code : reserved) {
+                if (!neutralShard.contains(code)) {
+                    neutralShard.add(code);
+                    addedLog.add(code);
+                }
+            }
+        }
+        if (!removedLog.isEmpty() || !addedLog.isEmpty()) {
             System.out.println("[TFR-EditionShard] reserved for player (race=" + raceName + "): "
-                    + reserved + " - removed from AI color shards: " + removedLog);
+                    + reserved + " - removed from AI color shards: " + removedLog
+                    + " - added to neutral: " + addedLog);
         }
     }
 

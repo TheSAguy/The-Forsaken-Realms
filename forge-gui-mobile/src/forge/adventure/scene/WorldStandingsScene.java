@@ -93,7 +93,7 @@ public class WorldStandingsScene extends UIScene {
         showInfoDialog("Expansion",
                 "Each color periodically sends a mage from its Castle toward one of its nearest "
                         + "neutral or enemy towns. Reaching an undefended town gives it a real chance to "
-                        + "capture it - stronger mages (Apprentice/Adept/Master/Grandmaster) have a much "
+                        + "capture it - stronger mages (Apprentice/Adept/Master/Archmage) have a much "
                         + "better chance.\n\n"
                         + "Defending a town:\n"
                         + "- Hire Guards (Armory, Level 2) to fight the attacker before it can capture.\n"
@@ -113,7 +113,7 @@ public class WorldStandingsScene extends UIScene {
     // rather than recalled from memory, same standard as the wiki dialogs above.
     private void showModDetails() {
         InfoTextScene.show("Mod Details", Arrays.asList(
-                "Welcome to The Forgotten Realms - a custom world for Forge's Adventure mode. "
+                "Welcome to The Forsaken Realms - a custom world for Forge's Adventure mode. "
                         + "The five colors of Magic each rule a Castle and a swath of the map. Your job: "
                         + "carve out your own territory, build it up, and either out-develop the AI colors "
                         + "or bring their Castles down one by one.",

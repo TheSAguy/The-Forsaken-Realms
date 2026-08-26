@@ -262,7 +262,7 @@ def main():
     errors = []
     with zipfile.ZipFile(os.path.join(game_dir, jar_name)) as z:
         gl = z.read("forge/app/GameLauncher.class")
-        if b"The Forgotten Realms (Forge " not in gl:
+        if b"The Forsaken Realms (Forge " not in gl:
             errors.append("shipped jar's GameLauncher lacks the standalone title - wrong/stale jar?")
         pp = z.read("forge/localinstance/properties/ForgeProfileProperties.class")
         if b"ForgottenRealms" not in pp:

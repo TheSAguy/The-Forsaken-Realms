@@ -528,7 +528,7 @@ public class EconomyBuildings {
                         + "50/50 before that adjustment; a bigger tier gap swings it hard either way.",
                 "If every guard falls (or none were hired), the mage rolls to take the town "
                         + "itself - odds by the mage's own tier: Apprentice 10%, Adept 30%, "
-                        + "Master 70%, Grandmaster 90% (also -5% with an Outlook). Winning that "
+                        + "Master 70%, Archmage 90% (also -5% with an Outlook). Winning that "
                         + "roll still has a further 20% chance to sack the town instead of "
                         + "properly capturing it - sacked, it reverts to a neutral ruin rather "
                         + "than changing hands.",
@@ -629,6 +629,24 @@ public class EconomyBuildings {
         }
         ret.add(new Reward(torch));
         System.out.println("[TFR-FirstArmoryTorch] guaranteed Torch injected into stock (shop=" + data.name + ")");
+    }
+
+    /**
+     * Functioning Neutral Towns: a neutral-seeded town's Armory must never sell Mythic-rarity
+     * equipment. Strips any Mythic ItemData Reward that RewardData.generate()'s itemRarity="Weighted"
+     * roll placed into `ret`, but ONLY when this shop is the Armory AND the current town is one of
+     * TownRestoration.seedFunctioningNeutralTowns()'s seeded towns. Player-owned town Armories, the
+     * Capitol Armory, and every non-Armory shop are left untouched.
+     */
+    public static void excludeMythicItemsForNeutralArmory(Array<Reward> ret, ShopData data, PointOfInterestChanges changes) {
+        if (!isArmoryShop(data) || !TownRestoration.isNeutralSeededTown(changes))
+            return;
+        for (int i = ret.size - 1; i >= 0; i--) {
+            Reward r = ret.get(i);
+            if (r.getType() == Reward.Type.Item && r.getItem() != null
+                    && "Mythic".equalsIgnoreCase(r.getItem().rarity))
+                ret.removeIndex(i);
+        }
     }
 
     public static boolean isSpecialShop(ShopData data) {
@@ -1916,7 +1934,7 @@ public class EconomyBuildings {
                         break;
                     int goldCost = guardWeeklyGoldCost(tier);
                     int shardCost = guardWeeklyShardCost(tier);
-                    // Shards (Grandmaster/Mythic tier only) always come straight from the player's
+                    // Shards (Archmage/Mythic tier only) always come straight from the player's
                     // own inventory, untouched by the Bank preference (user spec) - checked first,
                     // side-effect-free, so a shard shortfall never leaves gold half-spent below.
                     if (AdventurePlayer.current().getShards() >= shardCost && payGuardGold(changes, goldCost)) {

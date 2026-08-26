@@ -136,20 +136,21 @@ public class EnemyData implements Serializable {
         return "(Unnamed Enemy)";
     }
 
-    // Enemy tier naming convention (user spec 2026-08-13): Apprentice -> Adept -> Master ->
-    // Grandmaster, the display mapping for EnemyData.tier's internal Common/Uncommon/Rare/Mythic
-    // values. Single source of truth - guard tier labels (EconomyBuildings.guardTierDisplayName())
-    // delegate here too, so guards and enemies can't drift apart. "Grandmaster" replaced the
-    // original "Challenger" label (user request 2026-08-13) - deliberately distinct from the
-    // Arena's "Challenger 20/21/22" champion enemies and the "Challenging Arena" mode, which kept
-    // their names and were never tier labels.
+    // Enemy tier naming convention: Apprentice -> Adept -> Master -> Archmage, the display
+    // mapping for EnemyData.tier's internal Common/Uncommon/Rare/Mythic values. Single source of
+    // truth - guard tier labels (EconomyBuildings.guardTierDisplayName()) delegate here too, so
+    // guards and enemies can't drift apart. "Grandmaster" replaced the original "Challenger"
+    // label (user request 2026-08-13), then "Archmage" replaced "Grandmaster" (user request
+    // 2026-08-25) - deliberately distinct from the Arena's "Challenger 20/21/22" champion
+    // enemies and the "Challenging Arena" mode, which kept their names and were never tier
+    // labels.
     public static String tierDisplayName(String tier) {
         if (tier == null)
             return "Apprentice";
         switch (tier) {
             case "Uncommon": return "Adept";
             case "Rare": return "Master";
-            case "Mythic": return "Grandmaster";
+            case "Mythic": return "Archmage";
             default: return "Apprentice";
         }
     }

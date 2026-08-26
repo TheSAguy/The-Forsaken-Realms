@@ -24,6 +24,9 @@ public class Paths {
     public static final String STONE_ATLAS = "sprites/stone.atlas";
     public static final String SHARDS_ATLAS = "sprites/shard.atlas";
     public static final String MYSTERY_ATLAS = "sprites/random.atlas";
+    // Chest loot spawn (2026-08-25 user spec): top row of the stock treasure.png, 4 "Idle" frames,
+    // same twinkle-animation shape as the other resource-drop atlases above.
+    public static final String CHEST_ATLAS = "sprites/chest.atlas";
     public static final String PIXELMANA_ATLAS = "sprites/pixelmana.atlas";
     public static final String KEYS_ATLAS = "skin/keys.atlas";
     public static final String COLOR_FRAME_ATLAS = "ui/color_frames.atlas";

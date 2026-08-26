@@ -81,7 +81,7 @@ public class PointOfInterestChanges implements SaveFileContent  {
     // capitol's Armory. Parallel lists (tier + the in-game day salary was last paid), matching
     // every other simple-collection field in this class rather than a custom GuardData POJO.
     // Tier strings match EnemyData.tier's own values (Common/Uncommon/Rare/Mythic) - "Apprentice/
-    // Adept/Master/Grandmaster" is a display-only mapping, same convention as mage tiers already
+    // Adept/Master/Archmage" is a display-only mapping, same convention as mage tiers already
     // use (see EnemyData.tierDisplayName(), 2026-08-13 rename from "Challenger").
     private final java.util.List<String> guardTiers = new ArrayList<>();
     private final java.util.List<Integer> guardLastPaidDay = new ArrayList<>();

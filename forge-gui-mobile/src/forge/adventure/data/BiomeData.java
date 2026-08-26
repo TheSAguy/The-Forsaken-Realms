@@ -122,24 +122,47 @@ public class BiomeData implements Serializable {
             return Aggregates.random(enemyList);
         }
 
-        // Weighted-spawn tier system (2026-08-23, opt-in via SpawnTierWeighting.isEnabled()):
-        // reshapes the per-candidate weight fed into the pick below, WITHOUT changing this
-        // method's signature or either of its two fallback guards - TerritoryControl.
-        // reThemedEnemyFor() (a second, separate caller of this exact 1-arg method) and any other
-        // unaudited caller keep compiling and behaving unchanged when the feature is off, and
-        // correctly inherit the new weighting when it's on, since they call the same method.
-        // See SpawnTierWeighting.java for the full mechanism (week progression, territory/
-        // reputation modifier, per-enemy kill-decay - all folded into effectiveWeights here).
+        // Weighted-spawn tier system (2026-08-23, opt-in via SpawnTierWeighting.isEnabled();
+        // Layer 3 redesigned 2026-08-25): reshapes the per-candidate weight fed into the pick
+        // below, WITHOUT changing this method's signature or either of its two fallback guards -
+        // TerritoryControl.reThemedEnemyFor() (a second, separate caller of this exact 1-arg
+        // method) and any other unaudited caller keep compiling and behaving unchanged when the
+        // feature is off, and correctly inherit the new weighting when it's on, since they call
+        // the same method.
+        //
+        // Conceptually two sequential rolls - tier first, then a specific monster within that
+        // tier - collapsed into one flat weighted pick, which is mathematically identical to
+        // rolling them separately: each candidate's final weight is targetForItsTier * itsShare-
+        // within-that-tier, so a single weighted draw over the combined array picks a tier with
+        // probability proportional to that tier's total weight, and (conditional on that tier)
+        // picks a candidate with probability proportional to its own share - exactly as if two
+        // separate rolls had been made. See SpawnTierWeighting.java for the full mechanism (week
+        // progression, territory/reputation modifier, and rawSpawnWeight()'s uniform-baseline-
+        // permanently-halved-per-kill within-tier share).
         float[] effectiveWeights = new float[filteredEnemies.size()];
         float totalDistribution = 0.0f;
         if (SpawnTierWeighting.isEnabled()) {
             World world = WorldSave.getCurrentSave().getWorld();
             int week = SpawnTierWeighting.currentWeek(world);
-            Map<String, Float> naturalByTier = new HashMap<>();
+            // Non-exempt candidate count per tier - the uniform baseline's denominator (1/N).
+            Map<String, Integer> countByTier = new HashMap<>();
             for (EnemyData data : filteredEnemies) {
                 if (SpawnTierWeighting.isExempt(data))
                     continue; // bosses/quest-tagged don't count toward - or get scaled by - tier weighting
-                naturalByTier.merge(data.tier, data.spawnRate, Float::sum);
+                countByTier.merge(data.tier, 1, Integer::sum);
+            }
+            // Each non-exempt candidate's raw (pre-normalization) within-tier weight, and each
+            // tier's raw weight sum - the denominator that turns raw weight into an actual share.
+            float[] rawWeights = new float[filteredEnemies.size()];
+            Map<String, Float> rawWeightSumByTier = new HashMap<>();
+            for (int i = 0; i < filteredEnemies.size(); i++) {
+                EnemyData data = filteredEnemies.get(i);
+                if (SpawnTierWeighting.isExempt(data))
+                    continue;
+                int n = countByTier.getOrDefault(data.tier, 0);
+                float raw = SpawnTierWeighting.rawSpawnWeight(data, n);
+                rawWeights[i] = raw;
+                rawWeightSumByTier.merge(data.tier, raw, Float::sum);
             }
             Map<String, Float> targetByTier = new HashMap<>();
             for (String tier : SpawnTierWeighting.tiers())
@@ -150,10 +173,10 @@ public class BiomeData implements Serializable {
                 if (SpawnTierWeighting.isExempt(data)) {
                     weight = data.spawnRate; // exempt: unaffected, identical to the feature being off
                 } else {
-                    float natural = naturalByTier.getOrDefault(data.tier, 0f);
+                    float rawSum = rawWeightSumByTier.getOrDefault(data.tier, 0f);
                     float target = targetByTier.getOrDefault(data.tier, 0f);
-                    float tierMultiplier = natural > 0f ? (target / natural) : 0f;
-                    weight = data.spawnRate * tierMultiplier * SpawnTierWeighting.killDecayMultiplier(data);
+                    float share = rawSum > 0f ? (rawWeights[i] / rawSum) : 0f;
+                    weight = target * share;
                 }
                 effectiveWeights[i] = weight;
                 totalDistribution += weight;

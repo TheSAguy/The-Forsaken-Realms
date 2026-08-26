@@ -177,6 +177,45 @@ public class TownRestoration {
         return stage.checkQuestFlag(permanentlyBrokenShopFlag(objectId));
     }
 
+    // Overworld icon for a wasteland town the PLAYER has personally restored (2026-08-25 user
+    // spec: "Currently we're using the Neutral one... since we now have neutral towns that work,
+    // we need our own" - a restored player town and a functioning-neutral-seeded town previously
+    // looked identical, both falling through to the shared default "WasteTown" sprite). Custom
+    // art kept plane-local, same convention as the broken-town art below. Single static frame
+    // (unlike the 16-variant broken art) - one consistent look for "this is my town" is the point.
+    private static final String PLAYER_TOWN_ATLAS = "maps/tileset/playertown.atlas";
+    private static final String PLAYER_TOWN_SPRITE = "PlayerTown";
+    private static Sprite playerTownSprite;
+
+    /**
+     * The overworld icon for a player-restored wasteland town, or null if this isn't one (not a
+     * Waste Town template, not restored, or a functioning-neutral-seeded town - those keep the
+     * ordinary shared "WasteTown" look, they were never ruined and aren't the player's). Mirrors
+     * getBrokenTownSprite()'s own gating below, just for the opposite (restored, not ruined) case.
+     * <p>
+     * Explicitly excludes the Capitol (2026-08-25 bug found via playtest: "Player's Capitol Icon
+     * still looks like a player town, not capitol" on the main map) - isWastelandTown(data)
+     * matches on type=="capital" too (by design, so a not-yet-upgraded ruin can still show broken
+     * art before it becomes the Capitol), and the Capitol is always "restored" by definition, so
+     * without this guard every Capitol matched both the wasteland-template AND restored checks
+     * above and got the generic PlayerTown sprite instead of its own dedicated Capitol art.
+     * getBrokenTownSprite() never had this problem (its restored-check runs the OPPOSITE
+     * direction - it returns null once restored, and the Capitol is always restored), but this
+     * method's restored-check runs the same direction as "is Capitol", so it needs its own guard.
+     */
+    public static TextureRegion getPlayerTownSprite(PointOfInterest point) {
+        if (point == null || isNeutralSeeded(point.getID()) || !isWastelandTown(point.getData()))
+            return null;
+        if (CAPITOL_POI_NAME.equals(point.getData().name))
+            return null;
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID());
+        if (!isTownRestored(changes))
+            return null;
+        if (playerTownSprite == null)
+            playerTownSprite = Config.instance().getAtlas(PLAYER_TOWN_ATLAS).createSprite(PLAYER_TOWN_SPRITE);
+        return playerTownSprite;
+    }
+
     // Overworld icon for a destroyed wasteland town, custom art kept plane-local so it can never
     // show up on Shandalar or any other stock plane. All 16 variants share one atlas region name
     // so Forge's existing PointOfInterest.spriteIndex machinery could pick among them the normal
@@ -254,6 +293,15 @@ public class TownRestoration {
 
     public static boolean isTownRestored(PointOfInterestChanges changes) {
         return changes != null && changes.getMapFlags().get(TOWN_RESTORED_FLAG) != null;
+    }
+
+    /** Is this town one of the Functioning Neutral Towns seeded by seedFunctioningNeutralTowns()
+     *  (NEUTRAL_SEEDED_FLAG set on its own PointOfInterestChanges)? Public counterpart to the
+     *  private isNeutralSeeded(String poiId) above, for callers that already hold the town's
+     *  `changes` object directly (e.g. EconomyBuildings' shop-generation post-processing) and
+     *  don't need the peek-by-id lookup. */
+    public static boolean isNeutralSeededTown(PointOfInterestChanges changes) {
+        return changes != null && changes.getMapFlags().get(NEUTRAL_SEEDED_FLAG) != null;
     }
 
     // PROTOTYPE for MOD_SCOPE.md #7: hardcoded to always recolor "player" (was "green" - flipped

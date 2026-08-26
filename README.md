@@ -1,8 +1,8 @@
-# The Forgotten Realms
+# The Forsaken Realms
 
 **A free, standalone single-player adventure card game — five colors, one map, no neutral ground.**
 
-The Forgotten Realms turns a trading-card world map into a living campaign. Five rival
+The Forsaken Realms turns a trading-card world map into a living campaign. Five rival
 colors each rule a castle and carve up the land between them: towns take sides, borders creep
 while you sleep, and the color you cross today decides whether its Capitol opens its gates to
 you — or charges you a toll to survive the visit. Underneath it all runs the full Forge rules engine,
@@ -77,5 +77,5 @@ began as a clone of **Shandalar**. See `standalone-packaging/CREDITS.md` for det
 
 Licensed under the **GNU General Public License v3** (see `LICENSE`).
 
-*The Forgotten Realms is unofficial Fan Content permitted under the Wizards of the Coast Fan
+*The Forsaken Realms is unofficial Fan Content permitted under the Wizards of the Coast Fan
 Content Policy. Magic: The Gathering and all card names and images are © Wizards of the Coast, LLC.*
