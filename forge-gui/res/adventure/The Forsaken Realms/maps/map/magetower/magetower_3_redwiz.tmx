@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="78">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="79">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -8,6 +8,7 @@
  </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJxjYBgF+MBenoGxN5oXQtdy09fe3VD/7qSDv0F+jOJFFavjxo+pYScMwOyWBvp1FwFMLTuR7cYmTm2Qy4Kdjc6n1I8DCZDjCT09EdJHTUCK3dQGyHaD0hW10i4xgF72jGSALYwpCXcA4Msefg==
@@ -45,7 +46,7 @@
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/gold.tx" x="144.5" y="64.25"/>
-  <object id="77" template="../../obj/stone.tx" x="149.5" y="69.25"/>
+  <object id="77" template="../../obj/stone.tx" x="272.025" y="56.5123"/>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="128.25" y="192.75">
    <properties>
     <property name="enemy" value="Magma Fire Elemental"/>
@@ -101,6 +102,17 @@
 &quot;probability&quot;: 1,
 &quot;count&quot;: 1,
 &quot;cardName&quot;: &quot;Staff of the Flame Magus&quot;}]</property>
+   </properties>
+  </object>
+  <object id="78" template="../../obj/wood.tx" x="175.787" y="61.3498">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

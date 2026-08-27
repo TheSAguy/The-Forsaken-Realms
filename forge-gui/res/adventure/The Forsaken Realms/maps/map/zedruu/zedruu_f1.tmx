@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="31" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="27" nextobjectid="227">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="31" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="27" nextobjectid="230">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
- <tileset firstgid="16001" source="../../../../common/maps/tileset/FarmFood.tsx"/>
- <tileset firstgid="20097" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="16385" source="../../../../common/maps/tileset/FarmFood.tsx"/>
+ <tileset firstgid="20481" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="30593" source="../../tileset/resource_drop.tsx"/>
  <layer id="25" name="Collision" width="31" height="22">
   <data encoding="base64" compression="zlib">
    eJxjYBgF1AJ8AvgxJfrpYTc2mhhAyG5SzCIVDKTdhNxFL3uI8SctwgJbWsFmB7obsbHxuY8YM8lxN6XmkAMIhRUhfcTm08GQB6gBSPX3QAFC5Q85cvjUkutGUuSpGcb0tjtEcuDsHgXUBwCRlA5C
@@ -25,7 +26,7 @@
  </layer>
  <layer id="26" name="AboveSprites" width="31" height="22">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFQxU08jMwNBGBFQWob7c80EwFIjCt7CYGDEd/Dye7lVPoa/eBFOLzDAyrUNHfhPyBDIixcyjYDQpzYuOP2naD1OwF4n00wPtJSOchkrjlcOUBbOLE5peRDh7yoNKjYOgDAGpcPmg=
+   eJxjYBgFQxU08jMwNBGBFQWob7c80EwFIjCt7CYGDEd/Dye7F6fS126HNOLzDAyrUNHfhPyBDIixcyjYDQpzYuOP2naD1OwF4n00wPtJSOchkrjlcOUBbOLE5peRDh7yoNKjYOgDADvpP3A=
   </data>
  </layer>
  <layer id="24" name="Clutter" width="31" height="22">
@@ -33,12 +34,12 @@
    <property name="spriteLayer" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztlLtOwzAUhk/LWmgr0VAYCqikjEwdGGEAAV2QmBiQoGXlPjMgNmCBFXoZeQMmHgImhBh4AfaKofxHiWX31HHpZewnfXJ84vjEx06IRijiGaKjaaJjeAJP4Rk8hxewNdk+3uyXcb/SRcmGp72cJUrMEI3DCZiEKZiGpRxRDe9WN+S+IoYx8S5KNj0t585ng7hsGVduptd1b3lazj0Iva675GkHze1iIdsZ+85pd+eHk6fso8bw0HeP214N7JcDy/yxAmoMxwo6Jtf9KM6K/IYU90Wih2JnfBn7RIXOeA2xOmxY7pn8hu065lnx9DUZ8TfkfQ9zXyW1kn3f3Ur2YD1BdLMUfDN3aJ+NepjXcym7ipbvbiX8L1NWM/Yx3XKr/L2um2vK626Srnk/eV3rjVq3ifxP2XhNaYfJU5ib65+v6Diff3Nv1Bgl3//0gme+RO3MeSSq5nzmGphnTTyr+tdT9uej4ovG9/yDOSy/8zai9vs/eyF5Ma5vI96PaYZto48cUfA6d9K6H1Ufkw/HWR8xGH9S62Lb
+   eJztlD1PAkEQhgdsUSCREy1Qo4elFYWlMcGolFYWJoq0ftcWxk5ttFWBWPkPrPwPamWMhX/AnljgO7nb7DLsLfJR8iRP9nZub+d2du+IhijiGaL9SaIDeAiP4DE8gaewOd463uyXcX+vg5I1T3s2TZSYIhqFYzAJUzANSzmiKt6tZsh9RQxj4h2UrHtazj2XDeKyZVy5mW7XveFpOXc/dLvukqftN7eL+Wx77Dun3ZodTJ6yjxrDiu8e97oS2Cu7lvljedQYjuR1TK77TpwV+Q0pbgpEt4X2+BL2ifLt8SpiNVi33DP5DdtVzLPs6Wsy4m/I+x7mPk9qJTu+u5Vsw1qC6HIx+Gau0T4Z9TCvZ1J2FU3f3Ur4X6Z8yNjHdMqt8ne7bq4pr7tBuua95HWtN2rdJvI/ZeMlpR0k92Furv9jRcf5/Jt7o8Yo+f6nFzzzJWpnziNRNeczV8c8RfGs6l9M2J+Pii8Y3/MP5rD8zluI2u//7IXk2bi+ing/phG29R5yRMHr3EzrflR9TD4cZ31If/wB0FdlYA==
   </data>
  </layer>
  <objectgroup id="12" name="Objects" opacity="0.9" offsetx="3.15789" offsety="7.89474">
   <object id="115" template="../../../../common/maps/obj/gold.tx" x="347.713" y="266.037"/>
-  <object id="226" template="../../obj/stone.tx" x="352.713" y="271.037"/>
+  <object id="226" template="../../obj/stone.tx" x="322.046" y="293.037"/>
   <object id="117" template="../../../../common/maps/obj/enemy.tx" x="428.76" y="199.309">
    <properties>
     <property name="enemy" value="Illusionist"/>
@@ -76,7 +77,7 @@
   <object id="167" template="../../../../common/maps/obj/entry_up.tx" x="220.675" y="328.272" width="48.6667" height="16">
    <properties>
     <property name="direction" value="up"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/zedruu/zedruu.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/zedruu/zedruu.tmx"/>
    </properties>
   </object>
   <object id="169" template="../../../../common/maps/obj/enemy.tx" x="311.49" y="108.728">
@@ -108,7 +109,7 @@
   <object id="197" template="../../../../common/maps/obj/door_up.tx" x="220.842" y="122.438" width="48" height="33">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/zedruu/zedruu_f2.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/zedruu/zedruu_f2.tmx"/>
    </properties>
   </object>
   <object id="199" template="../../../../common/maps/obj/waypoint.tx" x="109.805" y="213.071"/>
@@ -138,7 +139,7 @@
   <object id="214" template="../../../../common/maps/obj/collision.tx" x="271.409" y="294.772" width="185.199" height="16"/>
   <object id="215" template="../../../../common/maps/obj/door_up.tx" x="423.509" y="279.439" width="28.6667" height="16">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/zedruu/zedruu_f0.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/zedruu/zedruu_f0.tmx"/>
    </properties>
   </object>
   <object id="216" template="../../../../common/maps/obj/enemy.tx" x="203.888" y="168.866">
@@ -216,5 +217,18 @@
   </object>
   <object id="224" template="../../../../common/maps/obj/waypoint.tx" x="426.59" y="108.134"/>
   <object id="225" template="../../../../common/maps/obj/waypoint.tx" x="431.606" y="166.956"/>
+  <object id="227" template="../../obj/stone.tx" x="128.509" y="108.439"/>
+  <object id="228" template="../../obj/stone.tx" x="175.509" y="204.439"/>
+  <object id="229" template="../../obj/wood.tx" x="31.5088" y="230.772">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

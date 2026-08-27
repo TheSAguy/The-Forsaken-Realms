@@ -216,7 +216,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="74" template="../../obj/wood.tx" x="125.273" y="131.818">
+  <object id="74" template="../../obj/wood.tx" x="114.583" y="135.194">
    <properties>
     <property name="reward">[
   {

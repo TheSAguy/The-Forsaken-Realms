@@ -81,7 +81,7 @@
 </property>
    </properties>
   </object>
-  <object id="63" template="../../obj/stone.tx" x="223.818" y="47.7273"/>
-  <object id="64" template="../../obj/stone.tx" x="83.6364" y="79.0909"/>
+  <object id="63" template="../../obj/stone.tx" x="173.273" y="64.0909"/>
+  <object id="64" template="../../obj/stone.tx" x="84.1819" y="88.7273"/>
  </objectgroup>
 </map>

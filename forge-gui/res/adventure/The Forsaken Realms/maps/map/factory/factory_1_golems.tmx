@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="94">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="97">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJytVMENwyAM9DMVMAHpYsksNI9uU3WBtOk6VccoPJAoPhwT1dJJkYLvsH1mtESzI3rYNqb4f7QcUl6Zk8/V+ecIKXxD6ynkecDf0v2ciN4n/o049mK1/H6pB7PjXPeB6Dbw78SxuP0ateE7a+iNi/nFEhEiNmWf09nMsxi9Lponmlmrz0fm6y3XTTNaC6/3+DmfDYb3sQSqt+Z7WZljA7qonhZSZG/35rZ0NW9HXdcGeBHPBHYu76f27dDWUwZ6A7SBakHvrtavwej2CnGiPiDdUO1+mSvdU5pFrYu8Lfl5bxfKu+b+It1ePx/xzD/2SIOr4/gCMTp8IA==
@@ -30,7 +31,7 @@
    <property name="spriteLayer" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYBhYEEeiODK4oIGdjQ6eajIwPNPEFJdnZ2BQYMdkEwJvNLCz0QGjFgMDkxam+F6gPfvYMdmDBaCHPbHhjAvQOpxxAUrCOYIdgkkFpKRnYtI4OniozsDwSJ0MjRSCv0A7/w2AvdQA6OGcJ4IqHsYOwaQCbUYGhmgoO5ZMt1EC/tDZvl9QOhgYVjFY5NHDOYgduzg6+AjM25/IyN+UAl5gncCHpV6gJYCVK+SULdQEALykI6M=
+   eJxjYBhYEEeiODK4oIGdjQ6eajIwPNPEFJdnZ2BQYMdkEwJvNLCz0QGjFgMDkxam+F6gPfvYMdmDBaCHPbHhjAvQOpxxgYEIZ1LSMzFpHB08VGdgeKROhkYKwV+gnf8GwF5qAPRwzhNBFQ9jh2BSgTYjA0M0lB1LptsoAX/obN8vKB0MDKsYLPLo4RzEjl0cHXwE5u1PZORvSgEvsE7gw1IvjAQAAIzTIcg=
   </data>
  </layer>
  <objectgroup id="4" name="Objects">
@@ -47,7 +48,7 @@
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/gold.tx" x="456" y="154.333"/>
-  <object id="93" template="../../obj/stone.tx" x="461" y="159.333"/>
+  <object id="93" template="../../obj/stone.tx" x="455.339" y="260.83"/>
   <object id="65" template="../../../../common/maps/obj/gold.tx" x="457" y="200"/>
   <object id="66" template="../../../../common/maps/obj/gold.tx" x="20.6667" y="81.3333"/>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="108.667" y="200">
@@ -148,5 +149,18 @@
   </object>
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="128" y="132"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="28" y="132.5"/>
+  <object id="94" template="../../obj/stone.tx" x="438.225" y="259.694"/>
+  <object id="95" template="../../obj/stone.tx" x="421.241" y="257.47"/>
+  <object id="96" template="../../obj/wood.tx" x="103.202" y="24.1476">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

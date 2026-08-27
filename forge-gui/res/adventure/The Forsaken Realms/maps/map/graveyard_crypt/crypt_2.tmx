@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="43" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="80">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="43" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="82">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
+ <tileset firstgid="16385" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="43" height="25">
   <data encoding="base64" compression="zlib">
    eJztlcENgCAMRb2aOIAHXZujCziAjmc8NJBvW4piQEOTHxIo8FoKuL7rXCFNg5fmQ1aKs7GWj6ex/rcGvsyKRmM1sIa8Ugw1sUq8tdXAF1lJS2NNZlh6/ZxrqoG/seK7iv278mfklsQqMSLvyUr1VFJ3WDmjfvRJZcEW18/FamGx+Gu5sLJy8ZKtc1wxpnDMZcortw9ybaPXPFxZpdy9wYp7prBK5yL9D0/uFidk3UcvLq9vvgMWaetYZLHY/ANTjBtb
@@ -33,11 +34,11 @@
   <object id="38" template="../../../../common/maps/obj/entry_up.tx" x="209" y="380.5" width="62.5" height="45">
    <properties>
     <property name="direction" value="right"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/graveyard_crypt/graveyard_2.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/graveyard_crypt/graveyard_2.tmx"/>
    </properties>
   </object>
   <object id="47" template="../../../../common/maps/obj/gold.tx" x="337" y="175"/>
-  <object id="79" template="../../obj/stone.tx" x="342" y="180"/>
+  <object id="79" template="../../obj/stone.tx" x="335.624" y="228.397"/>
   <object id="49" template="../../../../common/maps/obj/gold.tx" x="60" y="176.5"/>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="336" y="201.5" visible="1">
    <properties>
@@ -148,5 +149,17 @@
 </property>
    </properties>
   </object>
+  <object id="80" template="../../obj/wood.tx" x="81.2584" y="220.073">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="81" template="../../obj/stone.tx" x="615.07" y="215.436"/>
  </objectgroup>
 </map>

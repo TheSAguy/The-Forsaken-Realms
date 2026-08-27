@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="28" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="95">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="28" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="96">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -8,6 +8,7 @@
  </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="8" name="Collision" width="28" height="17">
   <data encoding="base64" compression="zlib">
    eJxz42RgcBthGAYo0U+qXZTah0+/CR+mXSAAEscGsKnFJYfLPmwAJF7HzcBwnROCQWwQBomv4IBgmByMj8st6PaxCuB2MzUAMf4btW/o2IcvjVPTLnz5nR52UdNOcsoketgFi08QTSwm1y5C9mALB1LsAwBao0vN
@@ -51,7 +52,7 @@
    </properties>
   </object>
   <object id="69" template="../../../../common/maps/obj/gold.tx" x="306.52" y="83.2111"/>
-  <object id="94" template="../../obj/stone.tx" x="311.52" y="88.2111"/>
+  <object id="94" template="../../obj/stone.tx" x="183.577" y="80.2854"/>
   <object id="70" template="../../../../common/maps/obj/treasure.tx" x="54.144" y="139.941">
    <properties>
     <property name="reward">[{&quot;type&quot;: &quot;randomCard&quot;,&quot;colors&quot;: [&quot;Green&quot;], &quot;count&quot;: 5 }, {&quot;type&quot;: &quot;item&quot;,&quot;count&quot;: 1,&quot;probability&quot;:0.2,&quot;itemName&quot;: &quot;Leather Boots&quot;},
@@ -138,6 +139,17 @@
     <property name="enemy" value="Treefolk"/>
     <property name="threatRange" type="int" value="30"/>
     <property name="waypoints" value="81,80"/>
+   </properties>
+  </object>
+  <object id="95" template="../../obj/wood.tx" x="43.7057" y="94.8453">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

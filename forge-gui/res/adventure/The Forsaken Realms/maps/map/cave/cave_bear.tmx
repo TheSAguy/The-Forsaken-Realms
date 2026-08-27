@@ -109,6 +109,6 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="74" template="../../obj/stone.tx" x="142.909" y="49.4545"/>
+  <object id="74" template="../../obj/stone.tx" x="139.273" y="61.4545"/>
  </objectgroup>
 </map>

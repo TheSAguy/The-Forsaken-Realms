@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="31" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="91">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="31" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="92">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/phyrexia/DrossPitTiles.tsx"/>
+ <tileset firstgid="12004" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="31" height="17">
   <data encoding="base64" compression="zlib">
    eJzVlM0NgCAMRrkYT3YZo67nEuJc6ia6gHAgYG1JIWBik+8g1L7+Bd0opQWqYRJubfYOtL5g596XZM9t/L7kfHLYEzOfEbyvJC98ZmNQ96EG47N0Sp3gtZrvHmR9wTvGGVXfAW+OzWcjfGM15FqP8h0i+WOTssO+4v5iNp4DJ2kPuHnj/lJzSFFobt8pP66eC55xJLxUdsn3l/rH7WjNdy2MH9uL2uxSffwD+wZNG6DH
@@ -40,7 +41,7 @@
  <objectgroup id="4" name="Objects">
   <object id="38" template="../../../../common/maps/obj/entry_left.tx" x="0.706867" y="192" width="16" height="80"/>
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="432.239" y="155.641"/>
-  <object id="90" template="../../obj/stone.tx" x="437.239" y="160.641"/>
+  <object id="90" template="../../obj/stone.tx" x="348.863" y="145.807"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="96.485" y="173.992">
    <properties>
     <property name="enemy" value="Dross Gladiator"/>
@@ -109,6 +110,7 @@
     <property name="waypoints" value="88,87,79,70,88,84,83,82,81,80,83,84"/>
    </properties>
   </object>
+  <object id="91" template="../../obj/wood.tx" x="147.023" y="141.8"/>
  </objectgroup>
  <objectgroup id="7" name="Waypoints">
   <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="295" y="107"/>

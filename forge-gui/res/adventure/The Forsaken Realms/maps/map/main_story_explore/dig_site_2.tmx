@@ -100,7 +100,7 @@
   <object id="116" template="../../obj/stone.tx" x="382" y="49"/>
   <object id="98" template="../../../../common/maps/obj/entry_down.tx" x="316" y="37" width="26" height="25">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story_explore/dig_site_1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story_explore/dig_site_1.tmx"/>
     <property name="teleportObjectId" value="104"/>
    </properties>
   </object>

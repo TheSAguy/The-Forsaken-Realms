@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="107">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="110">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_2.tsx"/>
+ <tileset firstgid="36241" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="60" height="40">
   <data encoding="base64" compression="zlib">
    eJztwzEJAAAMA7C+8w/VWw37E0gvqaqqqqqqqqqqqu8DFRHS7A==
@@ -32,7 +33,7 @@
  <objectgroup id="4" name="Objects">
   <object id="65" template="../../../../common/maps/obj/door_down.tx" x="816.832" y="303.333">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/vampirecastle/vampirecastle_4B.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/vampirecastle/vampirecastle_4B.tmx"/>
     <property name="teleportObjectId" value="67"/>
    </properties>
   </object>
@@ -50,7 +51,7 @@
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/treasure.tx" x="586.167" y="96.5"/>
-  <object id="106" template="../../obj/stone.tx" x="591.167" y="101.5"/>
+  <object id="106" template="../../obj/stone.tx" x="549.5" y="97.8333"/>
   <object id="70" template="../../../../common/maps/obj/entry_left.tx" x="3.66667" y="305"/>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="561.115" y="202.691">
    <properties>
@@ -284,6 +285,39 @@
     <property name="enemy" value="Farmer"/>
     <property name="speedModifier" type="float" value="30"/>
     <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="107" template="../../obj/wood.tx" x="365.333" y="99">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="108" template="../../obj/wood.tx" x="325.333" y="509.333">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="109" template="../../obj/wood.tx" x="810" y="471.333">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

@@ -129,7 +129,7 @@
   <object id="84" template="../../../../common/maps/obj/manashards.tx" x="643.711" y="257.741"/>
   <object id="85" template="../../../../common/maps/obj/treasure.tx" x="615.62" y="158.299"/>
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="535.28" y="201.559"/>
-  <object id="87" template="../../obj/stone.tx" x="266.727" y="92"/>
-  <object id="88" template="../../obj/stone.tx" x="677.273" y="158.909"/>
+  <object id="87" template="../../obj/stone.tx" x="264.909" y="109.636"/>
+  <object id="88" template="../../obj/stone.tx" x="672.909" y="170.909"/>
  </objectgroup>
 </map>

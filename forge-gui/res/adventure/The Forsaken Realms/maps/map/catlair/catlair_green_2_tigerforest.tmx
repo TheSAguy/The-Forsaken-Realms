@@ -121,7 +121,7 @@
   <object id="84" template="../../../../common/maps/obj/collision.tx" x="-14.48" y="273" width="516.96" height="16"/>
   <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="276.333" y="134.333"/>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="67.3333" y="150.333"/>
-  <object id="88" template="../../obj/wood.tx" x="380.266" y="90.898">
+  <object id="88" template="../../obj/wood.tx" x="384.516" y="97.148">
    <properties>
     <property name="reward">[
   {
@@ -132,6 +132,6 @@
 ]</property>
    </properties>
   </object>
-  <object id="89" template="../../obj/stone.tx" x="36.8165" y="168.25"/>
+  <object id="89" template="../../obj/stone.tx" x="32.3165" y="182.75"/>
  </objectgroup>
 </map>

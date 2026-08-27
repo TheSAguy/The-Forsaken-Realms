@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="70">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="71">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="30">
   <data encoding="base64" compression="zlib">
    eJzt1z0OABAMBWCbSKzu2NM4s9hE4qe0jVSHt75v4QWIzgFRcpiHsgsbaW/H5TJHNrfXu1Je60qb5r6R5M9i7lvuaK843dk+m6vT1Xyef9wNc2XvEZfb96/ezzcu1b+nZsek9DA2pqsA8yt8nw==
@@ -36,7 +37,7 @@
  <objectgroup id="4" name="Objects">
   <object id="38" template="../../../../common/maps/obj/entry_up.tx" x="192" y="480" width="112" height="8">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/skep/skep_outer.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/skep/skep_outer.tmx"/>
     <property name="teleportObjectId" value="153"/>
    </properties>
   </object>
@@ -97,6 +98,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="69" template="../../obj/stone.tx" x="293.62" y="55.1133"/>
+  <object id="69" template="../../obj/stone.tx" x="332.425" y="44.141"/>
+  <object id="70" template="../../obj/wood.tx" x="28.9313" y="170.501"/>
  </objectgroup>
 </map>

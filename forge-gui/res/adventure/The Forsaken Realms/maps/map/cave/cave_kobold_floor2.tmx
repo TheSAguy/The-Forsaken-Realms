@@ -32,7 +32,7 @@
  <objectgroup id="4" name="Objects">
   <object id="66" template="../../../../common/maps/obj/door_up.tx" x="543" y="638">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/cave/cave_kobold.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_kobold.tmx"/>
     <property name="teleportObjectId" value="67"/>
    </properties>
   </object>
@@ -73,8 +73,8 @@
   <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="592.498" y="206.711"/>
   <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="369.476" y="447.741"/>
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="151.302" y="410.34"/>
-  <object id="92" template="../../obj/stone.tx" x="698.333" y="50"/>
-  <object id="93" template="../../obj/stone.tx" x="698.667" y="298.667"/>
+  <object id="92" template="../../obj/stone.tx" x="696.333" y="73.6667"/>
+  <object id="93" template="../../obj/stone.tx" x="698.334" y="300.334"/>
   <object id="94" template="../../obj/stone.tx" x="47.6667" y="74"/>
  </objectgroup>
 </map>

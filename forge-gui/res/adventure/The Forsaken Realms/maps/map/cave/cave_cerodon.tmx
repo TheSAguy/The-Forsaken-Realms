@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="83">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="84">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -10,6 +10,7 @@
  </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJyr42RgqBvk+L0AfkyOmenCEEzIrtuiCBoZw+QtgewqMdzm4bIXXS0IWCOZiw1UikHUoNtJqr3ouAJqLj4AUoNuJzn2kgOwmUEPe7GBoWIvNey+IYrApOQnSvyIbCcx9iJjVnbi/ERNe0F2gnAOGwLjCkMbJLth+dwWKGZHhl9BGJudsHhAtrNcDNNeUBlWKgaxn5KyGd1emJ9vimIvq2HlJyV2Ekpj1KgfyLGXmvYQwuSkF2QMAD5y21A=
@@ -51,6 +52,7 @@
   <object id="69" template="../../../../common/maps/obj/manashards.tx" x="98.7808" y="104.447"/>
   <object id="70" template="../../../../common/maps/obj/manashards.tx" x="342.344" y="62.6373"/>
   <object id="81" template="../../../../common/maps/obj/manashards.tx" x="250.577" y="202.911"/>
-  <object id="82" template="../../obj/stone.tx" x="226.727" y="26.9091"/>
+  <object id="82" template="../../obj/stone.tx" x="271.477" y="45.1591"/>
+  <object id="83" template="../../obj/stone.tx" x="46.75" y="82.25"/>
  </objectgroup>
 </map>

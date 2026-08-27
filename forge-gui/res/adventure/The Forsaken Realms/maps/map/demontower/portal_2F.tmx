@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="66">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="66">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -37,18 +37,18 @@
  <objectgroup id="4" name="Objects">
   <object id="58" template="../../../../common/maps/obj/door_right.tx" x="177.5" y="46.333">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/demontower/portal_2G.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/demontower/portal_2G.tmx"/>
     <property name="teleportObjectId" value="63"/>
    </properties>
   </object>
   <object id="59" template="../../../../common/maps/obj/door_down.tx" x="98" y="144">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/demontower/portal_2E.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/demontower/portal_2E.tmx"/>
     <property name="teleportObjectId" value="56"/>
    </properties>
   </object>
   <object id="60" template="../../../../common/maps/obj/gold.tx" x="331.263" y="134.829"/>
-  <object id="65" template="../../obj/stone.tx" x="336.263" y="139.829"/>
+  <object id="65" template="../../obj/stone.tx" x="146.815" y="228.387"/>
   <object id="61" template="../../../../common/maps/obj/enemy.tx" x="313.625" y="134.138">
    <properties>
     <property name="enemy" value="Cosmic Horror"/>

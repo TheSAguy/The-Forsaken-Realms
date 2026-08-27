@@ -155,8 +155,8 @@
    </properties>
   </object>
   <object id="78" template="../../../../common/maps/obj/gold.tx" x="398.793" y="348.348"/>
-  <object id="79" template="../../obj/stone.tx" x="101.991" y="94.7654"/>
+  <object id="79" template="../../obj/stone.tx" x="101.723" y="98.5121"/>
   <object id="80" template="../../obj/stone.tx" x="375.764" y="289.056"/>
-  <object id="81" template="../../obj/stone.tx" x="231.856" y="47.397"/>
+  <object id="81" template="../../obj/stone.tx" x="231.053" y="62.6512"/>
  </objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="55">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="55">
  <editorsettings>
   <export target="ancient_diamond_mine.tmx" format="tmx"/>
  </editorsettings>
@@ -34,65 +34,65 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="54" template="../../obj/stone.tx" x="197" y="287"/>
+  <object id="54" template="../../obj/stone.tx" x="185.071" y="122.218"/>
   <object id="50" template="../../../../common/maps/obj/dialog.tx" type="dialog" gid="10575" x="197.5" y="138.75" width="16" height="16">
    <properties>
-    <property name="hidden" type="bool" value="false"/>
     <property name="dialog">[
   {
-    "text": "Before you stands an ancient crystalline formation, pulsing with primordial mana. The diamonds here are remnants of Shandalar's earliest age, and can be exchanged for spells from the dawn of magic itself.",
-    "options": [
+    &quot;text&quot;: &quot;Before you stands an ancient crystalline formation, pulsing with primordial mana. The diamonds here are remnants of Shandalar's earliest age, and can be exchanged for spells from the dawn of magic itself.&quot;,
+    &quot;options&quot;: [
       {
-        "name": "Trade 10,000 Gold for Beta Pack",
-        "condition": [
-          { "hasGold": 10000 }
+        &quot;name&quot;: &quot;Trade 10,000 Gold for Beta Pack&quot;,
+        &quot;condition&quot;: [
+          { &quot;hasGold&quot;: 10000 }
         ],
-        "text": "The crystals shimmer and absorb your gold. In exchange, a sealed pack from the dawn of magic materializes before you!",
-        "action": [
+        &quot;text&quot;: &quot;The crystals shimmer and absorb your gold. In exchange, a sealed pack from the dawn of magic materializes before you!&quot;,
+        &quot;action&quot;: [
           {
-            "addGold": -10000,
-            "grantRewards": [
-              { "type": "cardPackShop", "count": 1, "editions": ["LEB"] }
+            &quot;addGold&quot;: -10000,
+            &quot;grantRewards&quot;: [
+              { &quot;type&quot;: &quot;cardPackShop&quot;, &quot;count&quot;: 1, &quot;editions&quot;: [&quot;LEB&quot;] }
             ]
           }
         ]
       },
       {
-        "name": "Trade 10,000 Gold for Beta Pack",
-        "condition": [
-          { "hasGold": 10000, "not": true }
+        &quot;name&quot;: &quot;Trade 10,000 Gold for Beta Pack&quot;,
+        &quot;condition&quot;: [
+          { &quot;hasGold&quot;: 10000, &quot;not&quot;: true }
         ],
-        "text": "You don't have enough gold. The ancient diamonds require 10,000 gold to activate."
+        &quot;text&quot;: &quot;You don't have enough gold. The ancient diamonds require 10,000 gold to activate.&quot;
       },
       {
-        "name": "Trade 400 Shards for Beta Pack",
-        "condition": [
-          { "hasShards": 400 }
+        &quot;name&quot;: &quot;Trade 400 Shards for Beta Pack&quot;,
+        &quot;condition&quot;: [
+          { &quot;hasShards&quot;: 400 }
         ],
-        "text": "The crystals shimmer and absorb your mana shards. In exchange, a sealed pack from the dawn of magic materializes before you!",
-        "action": [
+        &quot;text&quot;: &quot;The crystals shimmer and absorb your mana shards. In exchange, a sealed pack from the dawn of magic materializes before you!&quot;,
+        &quot;action&quot;: [
           {
-            "addShards": -400,
-            "grantRewards": [
-              { "type": "cardPackShop", "count": 1, "editions": ["LEB"] }
+            &quot;addShards&quot;: -400,
+            &quot;grantRewards&quot;: [
+              { &quot;type&quot;: &quot;cardPackShop&quot;, &quot;count&quot;: 1, &quot;editions&quot;: [&quot;LEB&quot;] }
             ]
           }
         ]
       },
       {
-        "name": "Trade 400 Shards for Beta Pack",
-        "condition": [
-          { "hasShards": 400, "not": true }
+        &quot;name&quot;: &quot;Trade 400 Shards for Beta Pack&quot;,
+        &quot;condition&quot;: [
+          { &quot;hasShards&quot;: 400, &quot;not&quot;: true }
         ],
-        "text": "You don't have enough mana shards. The ancient diamonds require 400 shards to activate."
+        &quot;text&quot;: &quot;You don't have enough mana shards. The ancient diamonds require 400 shards to activate.&quot;
       },
       {
-        "name": "Leave",
-        "text": ""
+        &quot;name&quot;: &quot;Leave&quot;,
+        &quot;text&quot;: &quot;&quot;
       }
     ]
   }
 ]</property>
+    <property name="hidden" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>

@@ -188,7 +188,7 @@
   <object id="88" template="../../../../common/maps/obj/collision.tx" x="-2.98" y="-16" width="483.96" height="16"/>
   <object id="89" template="../../../../common/maps/obj/collision.tx" x="479.5" y="-16.472" width="16" height="434.944"/>
   <object id="90" template="../../../../common/maps/obj/collision.tx" x="-17" y="-15.472" width="16" height="434.944"/>
-  <object id="91" template="../../obj/wood.tx" x="459.44" y="41.0633">
+  <object id="91" template="../../obj/wood.tx" x="451.69" y="47.8133">
    <properties>
     <property name="reward">[
   {
@@ -210,7 +210,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="93" template="../../obj/stone.tx" x="405.47" y="94.81"/>
+  <object id="93" template="../../obj/stone.tx" x="404.72" y="110.06"/>
   <object id="94" template="../../obj/stone.tx" x="118.227" y="315.372"/>
  </objectgroup>
 </map>

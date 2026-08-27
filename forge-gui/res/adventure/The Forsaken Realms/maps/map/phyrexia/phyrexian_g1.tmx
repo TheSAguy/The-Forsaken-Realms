@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="29" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="76">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="77">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/phyrexia/Copperhost_Tiles.tsx"/>
+ <tileset firstgid="12004" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="29" height="34">
   <data encoding="base64" compression="zlib">
    eJztlksOgzAMRLPpsrkMlJ60cC7gQlUWkSw3dhw8gCplJK8CeRr/lBC6kj7P65lDDGEzxivimFahmCvzMpF73+xsBzG5qG+Ur1rPnMG09EwWqqeoj+R5boyF5OkIs6VnSxwUc6jkzsvkc0JnQjvzMKV6ppppZx6mlFvtzjPquQp5RDGlmmlxtJ6W2bPIyhyjHKU7tO/HBp+WvGX13ff/uy/ryt2Xdcfumx+/0XefjemVlVnyNlX+5e9cxHu35h315uxMP/MLiOKyFQ==
@@ -44,7 +45,7 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/treasure.tx" x="286.638" y="78.836"/>
   <object id="54" template="../../../../common/maps/obj/gold.tx" x="223.441" y="366.796"/>
-  <object id="75" template="../../obj/stone.tx" x="228.441" y="371.796"/>
+  <object id="75" template="../../obj/stone.tx" x="219.342" y="394.544"/>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="207" y="239.5"/>
   <object id="56" template="../../../../common/maps/obj/booster.tx" x="144.5" y="79">
    <properties>
@@ -103,6 +104,7 @@
    </properties>
   </object>
   <object id="74" template="../../../../common/maps/obj/treasure.tx" x="217" y="71"/>
+  <object id="76" template="../../obj/wood.tx" x="214.623" y="193.392"/>
  </objectgroup>
  <objectgroup id="7" name="Waypoints">
   <object id="57" template="../../../../common/maps/obj/waypoint.tx" x="88.5" y="327.167"/>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="158">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="161">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
+ <tileset firstgid="16385" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="40" height="25">
   <data encoding="base64" compression="zlib">
    eJybxsnAMG0AMLFgINwx1Nw3jxOCB6v7BjL8QDhZBGIXiEZ3N3q4ofPp5T4YHozuwxfvg9196GAg3HdMGIEpdd+8AQ4/dDAU3UeJG4lNM8M5/Aaz++iFR91HH/eNglEwCkbBSAUAn0g43w==
@@ -38,7 +39,7 @@
   <object id="38" template="../../../../common/maps/obj/entry_up.tx" x="351.333" y="271.333" width="48.3333" height="49.3333">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/graveyard_crypt/graveyard_3.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/graveyard_crypt/graveyard_3.tmx"/>
    </properties>
   </object>
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="168.333" y="29.8333"/>
@@ -346,5 +347,18 @@
    </properties>
   </object>
   <object id="154" template="../../../../common/maps/obj/waypoint.tx" x="156.333" y="78.3333"/>
+  <object id="158" template="../../obj/wood.tx" x="182.594" y="114.929">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="159" template="../../obj/stone.tx" x="453.793" y="188.255"/>
+  <object id="160" template="../../obj/stone.tx" x="285.305" y="334.908"/>
  </objectgroup>
 </map>

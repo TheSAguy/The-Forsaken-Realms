@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="139">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="140">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -9,6 +9,7 @@
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="28289" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJx7ws7A8GQUj+JRPIrJwKxWA++GUTyKRzFpGADnNdOO
@@ -54,7 +55,7 @@
 &quot;cardName&quot;: &quot;Staff of the Sun Magus&quot;}]</property>
    </properties>
   </object>
-  <object id="138" template="../../obj/stone.tx" x="164.5" y="55.8333"/>
+  <object id="138" template="../../obj/stone.tx" x="229.2" y="49.7677"/>
   <object id="67" template="../../../../common/maps/obj/booster.tx" x="176.167" y="49.3333">
    <properties>
     <property name="reward">[
@@ -139,5 +140,16 @@
   <object id="134" template="../../../../common/maps/obj/collision.tx" x="115.696" y="84.1" width="22.6078" height="6.6"/>
   <object id="135" template="../../../../common/maps/obj/collision.tx" x="256.296" y="51.1" width="16.2078" height="8.4"/>
   <object id="136" template="../../../../common/maps/obj/collision.tx" x="192.496" y="31.9" width="31.2078" height="36.8"/>
+  <object id="139" template="../../obj/wood.tx" x="160.421" y="69.2351">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

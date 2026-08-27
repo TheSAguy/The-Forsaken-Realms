@@ -35,7 +35,7 @@
 	   &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the ground. 'Excellent... Well done {var=player_name}. I am truly sorry for all the trouble...' With that he collapses, dead despite his immortality.&quot;,
 	   &quot;options&quot;: [{
 		  &quot;name&quot;: &quot;(Continue)&quot;,
-&quot;text&quot;: &quot;Congratulations on completing The Forgotten Realms! You can now continue exploring this world if you wish - the Mirror Gallery you can now access contains difficult post-game challenges. You can also use new game plus to experience the adventure again. You'll keep your cards and non-key items, but lose all life upgrades and all enemies will respawn. You can also choose a new difficulty. More content may be added in the future, but just dungeons here and there; this is the only planned 'main story'.&quot;,
+&quot;text&quot;: &quot;Congratulations on completing The Forsaken Realms! You can now continue exploring this world if you wish - the Mirror Gallery you can now access contains difficult post-game challenges. You can also use new game plus to experience the adventure again. You'll keep your cards and non-key items, but lose all life upgrades and all enemies will respawn. You can also choose a new difficulty. More content may be added in the future, but just dungeons here and there; this is the only planned 'main story'.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]}
    ] }
@@ -189,7 +189,7 @@
 	   &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the ground. 'Excellent... Well done {var=player_name}. I am truly sorry for all the trouble...' With that he collapses, dead despite his immortality.&quot;,
 	   &quot;options&quot;: [{
 		  &quot;name&quot;: &quot;(Continue)&quot;,
-&quot;text&quot;: &quot;Congratulations on completing The Forgotten Realms! You can now continue exploring this world if you wish - the Mirror Gallery you can now access contains difficult post-game challenges. You can also use new game plus to experience the adventure again. You'll keep your cards and non-key items, but lose all life upgrades and all enemies will respawn. You can also choose a new difficulty. More content may be added in the future, but just dungeons here and there; this is the only planned 'main story'.&quot;,
+&quot;text&quot;: &quot;Congratulations on completing The Forsaken Realms! You can now continue exploring this world if you wish - the Mirror Gallery you can now access contains difficult post-game challenges. You can also use new game plus to experience the adventure again. You'll keep your cards and non-key items, but lose all life upgrades and all enemies will respawn. You can also choose a new difficulty. More content may be added in the future, but just dungeons here and there; this is the only planned 'main story'.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]}
    ] }

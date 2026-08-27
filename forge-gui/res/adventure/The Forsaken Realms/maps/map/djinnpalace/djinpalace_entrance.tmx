@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="34" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="131">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="133">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="22017" source="../../tileset/resource_drop.tsx"/>
  <layer id="9" name="Sub Layer" width="34" height="37">
   <data encoding="base64" compression="zlib">
    eJztlG0KgzAMhv0jmyD76UkceAKP4Dl22p1jRxihC3QxqalN0Y088CJoPx7TaNM4zv+yjEcbBH7VA8Zbuz/bfWuewcO6HuCw1wPnQo72wDXco965aF1wbEk94negwfXjDJ/Q+3EdNDXRuGrcuGcSXF01Ho/Ld6S5Kd+t8805u9c9eMAV53Z9yFYNrr2NB+xNk4uFxzCuk+I21fHAGnB9AntKsfZAF+ogeXCk/ok59aDfDfpI+6ZcNB5cT8Z9WeIh7Skxd+twvVHbg/pwaHrCyqMGZ/FwHMcp4Q3e2ISr
@@ -85,7 +86,7 @@
   </object>
   <object id="74" template="../../../../common/maps/obj/gold.tx" x="129.667" y="592"/>
   <object id="129" template="../../obj/stone.tx" x="373.54" y="158.34"/>
-  <object id="130" template="../../obj/stone.tx" x="124.667" y="597"/>
+  <object id="130" template="../../obj/stone.tx" x="33.8998" y="565.644"/>
   <object id="75" template="../../../../common/maps/obj/gold.tx" x="110" y="461.667"/>
   <object id="76" template="../../../../common/maps/obj/treasure.tx" x="161.334" y="324"/>
   <object id="77" template="../../../../common/maps/obj/booster.tx" x="445.667" y="431.667">
@@ -200,7 +201,7 @@
   <object id="118" template="../../../../common/maps/obj/entry_up.tx" x="307.667" y="191" width="58.6667" height="25.3333">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/djinnpalace/djinnpalace_1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/djinnpalace/djinnpalace_1.tmx"/>
     <property name="teleportObjectId" value="38"/>
    </properties>
   </object>
@@ -214,5 +215,27 @@
   <object id="126" template="../../../../common/maps/obj/waypoint.tx" x="484.667" y="214.667"/>
   <object id="127" template="../../../../common/maps/obj/manashards.tx" x="290" y="415.667"/>
   <object id="128" template="../../../../common/maps/obj/manashards.tx" x="304.333" y="111"/>
+  <object id="131" template="../../obj/wood.tx" x="479.172" y="536.603">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="132" template="../../obj/wood.tx" x="468.61" y="589.413">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

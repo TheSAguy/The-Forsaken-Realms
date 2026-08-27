@@ -1771,7 +1771,7 @@
   <object id="241" template="../../../../../common/maps/obj/entry_up.tx" x="0" y="544" width="144" height="16">
    <properties>
     <property name="spawn" type="bool" value="true"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/bog.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/bog.tmx"/>
     <property name="teleportObjectId" value="241"/>
    </properties>
   </object>
@@ -2097,7 +2097,7 @@
    <properties>
     <property name="activeQuestFlag" value="lilianaBossPortal"/>
     <property name="portalState" value="inactive"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
     <property name="teleportObjectId" value="239"/>
    </properties>
   </object>
@@ -2291,7 +2291,7 @@
     <property name="activeQuestFlag" value="lilianaTownPortal"/>
     <property name="direction" value="left"/>
     <property name="portalState" value="closed"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
     <property name="teleportObjectId" value="238"/>
    </properties>
   </object>

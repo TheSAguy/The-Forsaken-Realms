@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="35" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="89">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="35" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="89">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -44,7 +44,7 @@
   <object id="38" template="../../../../common/maps/obj/entry_up.tx" x="348.333" y="335" width="67.6667" height="46.3333">
    <properties>
     <property name="direction" value="right"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/graveyard_crypt/graveyard.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/graveyard_crypt/graveyard.tmx"/>
    </properties>
   </object>
   <object id="47" template="../../../../common/maps/obj/gold.tx" x="320.333" y="148"/>
@@ -63,8 +63,8 @@
   <object id="54" template="../../../../common/maps/obj/treasure.tx" x="48" y="367"/>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="64.3333" y="126.667"/>
   <object id="86" template="../../obj/stone.tx" x="325.333" y="153"/>
-  <object id="87" template="../../obj/stone.tx" x="43.3333" y="131.333"/>
-  <object id="88" template="../../obj/stone.tx" x="69.3333" y="121.667"/>
+  <object id="87" template="../../obj/stone.tx" x="308.467" y="93.3557"/>
+  <object id="88" template="../../obj/stone.tx" x="207.797" y="92.1815"/>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="56.3333" y="125.333"/>
   <object id="57" template="../../../../common/maps/obj/gold.tx" x="52" y="125.667"/>
   <object id="58" template="../../../../common/maps/obj/gold.tx" x="60.3333" y="125"/>

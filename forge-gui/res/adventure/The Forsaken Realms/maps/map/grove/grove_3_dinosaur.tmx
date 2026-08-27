@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="70" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="130">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="70" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="131">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="22017" source="../../tileset/resource_drop.tsx"/>
  <layer id="2" name="Grass" width="70" height="50">
   <data encoding="base64" compression="zlib">
    eJzt1UsKwjAUheGAtLZxA4L42IS4Cdfh0JlOBadOXI1bEFehgjgWV2AvMRg1qH2oVf7AR1JaWnK4uR3HSg0KMEysIqX2PaXWybw5r9NYBMa8es+OQ5j+vVkUkUlFm1wCbTLpJPM4zp5LPbi+PoaXtejX3p9LU+fPRd4j2ciYxiYTMUmZjbt3n1n1c7n46kdGw8lLsov09VnxyVMrZeX2CbuWbCQTWw/D+Hk2/8R3NkJ9/5zbR7J8R3rx9kcy9fVPy/d81kx+zeBm/5KNzUeupWe0H2QhZ2pZQA3IcOeys/8X371IP66tPPmUnfTe3bkeWvrSH17JxPbnUdf49l4AAAAAAAAAAAAAAAAAAAAAlNMJp7PLsA==
@@ -73,8 +74,8 @@
   <object id="81" template="../../../../common/maps/obj/gold.tx" x="730" y="189.333"/>
   <object id="82" template="../../../../common/maps/obj/gold.tx" x="435.333" y="85.3333"/>
   <object id="127" template="../../obj/wood.tx" x="552.583" y="231.75"/>
-  <object id="128" template="../../obj/wood.tx" x="725" y="194.333"/>
-  <object id="129" template="../../obj/wood.tx" x="440.333" y="80.3333"/>
+  <object id="128" template="../../obj/wood.tx" x="790.576" y="259.909"/>
+  <object id="129" template="../../obj/wood.tx" x="293.613" y="131.284"/>
   <object id="83" template="../../../../common/maps/obj/collision.tx" x="-3.385" y="-16" width="1125.44" height="16"/>
   <object id="84" template="../../../../common/maps/obj/collision.tx" x="-2.05333" y="798.667" width="1125.44" height="16"/>
   <object id="85" template="../../../../common/maps/obj/treasure.tx" x="466" y="97.3333">
@@ -246,5 +247,6 @@
   <object id="121" template="../../../../common/maps/obj/waypoint.tx" x="584.667" y="697.333"/>
   <object id="125" template="../../../../common/maps/obj/waypoint.tx" x="256" y="537.333"/>
   <object id="126" template="../../../../common/maps/obj/waypoint.tx" x="800" y="467.333"/>
+  <object id="130" template="../../obj/wood.tx" x="187.312" y="714.748"/>
  </objectgroup>
 </map>

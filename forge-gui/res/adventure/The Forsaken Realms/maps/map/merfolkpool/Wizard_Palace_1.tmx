@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="34" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="147">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="149">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -9,6 +9,7 @@
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="22017" source="../../tileset/resource_drop.tsx"/>
  <layer id="9" name="Sub Layer" width="34" height="37">
   <data encoding="base64" compression="zlib">
    eJztlG0KgzAMhv0jmyD76UkceAKP4Dl22p1jRxihC3QxqalN0Y088CJoPx7TaNM4zv+yjEcbBH7VA8Zbuz/bfWuewcO6HuCw1wPnQo72wDXco965aF1wbEk94negwfXjDJ/Q+3EdNDXRuGrcuGcSXF01Ho/Ld6S5Kd+t8805u9c9eMAV53Z9yFYNrr2NB+xNk4uFxzCuk+I21fHAGnB9AntKsfZAF+ogeXCk/ok59aDfDfpI+6ZcNB5cT8Z9WeIh7Skxd+twvVHbg/pwaHrCyqMGZ/FwHMcp4Q3e2ISr
@@ -57,8 +58,8 @@
    </properties>
   </object>
   <object id="75" template="../../../../common/maps/obj/gold.tx" x="110" y="461.667"/>
-  <object id="145" template="../../obj/stone.tx" x="407.207" y="166.673"/>
-  <object id="146" template="../../obj/stone.tx" x="105" y="466.667"/>
+  <object id="145" template="../../obj/stone.tx" x="400.276" y="191.098"/>
+  <object id="146" template="../../obj/stone.tx" x="108.301" y="379.531"/>
   <object id="76" template="../../../../common/maps/obj/treasure.tx" x="209.834" y="299.5">
    <properties>
     <property name="reward">[{
@@ -238,6 +239,28 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
     <property name="mythicShopList" value=""/>
     <property name="rareShopList" value=""/>
     <property name="uncommonShopList" value=""/>
+   </properties>
+  </object>
+  <object id="147" template="../../obj/wood.tx" x="309.85" y="417.12">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="148" template="../../obj/wood.tx" x="251.429" y="144.819">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

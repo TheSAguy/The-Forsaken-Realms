@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="24" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="65">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="24" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="66">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="7" name="Collision" width="30" height="24">
   <data encoding="base64" compression="zlib">
    eJztwYEAAAAAw6D5U1/hAFUBAACvAQtAAAE=
@@ -58,7 +59,7 @@
   </object>
   <object id="56" template="../../../../common/maps/obj/treasure.tx" x="338.333" y="215.333"/>
   <object id="57" template="../../../../common/maps/obj/gold.tx" x="365.75" y="193"/>
-  <object id="64" template="../../obj/stone.tx" x="370.75" y="198"/>
+  <object id="64" template="../../obj/stone.tx" x="391.089" y="205.707"/>
   <object id="58" template="../../../../common/maps/obj/booster.tx" x="139" y="266.667">
    <properties>
     <property name="reward">[
@@ -93,5 +94,6 @@
     <property name="enemy" value="Archfiend"/>
    </properties>
   </object>
+  <object id="65" template="../../obj/stone.tx" x="174.194" y="126.237"/>
  </objectgroup>
 </map>

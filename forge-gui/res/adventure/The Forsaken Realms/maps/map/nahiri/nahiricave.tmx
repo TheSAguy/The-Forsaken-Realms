@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="46" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="98">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="46" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="100">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="22017" source="../../tileset/resource_drop.tsx"/>
  <layer id="7" name="Background" width="46" height="25">
   <data encoding="base64" compression="zlib">
    eJztlEEOgCAMBDl48Re+wifwfN9kPJgQU3C7tECUTXorZUq7xDWEOGPGjyOn3lws98g9oDqWtgy1+RfvHaV60vk3jpIseky5pTypRq42KoQbmWXKzXBohO4Vs4de3BoOxjs55m3XsWkYGH9L/mRVs6/snJ8eRZi091szI9K+pSU32yPiY9Q7nvmafq3+CM3dVvNlA5FH7VGZrWZYu8ejcnvyW9Zuye05v948X+Y+AdzkAgs=
@@ -72,12 +73,12 @@
    </properties>
   </object>
   <object id="64" template="../../../../common/maps/obj/gold.tx" x="681" y="244"/>
-  <object id="97" template="../../obj/stone.tx" x="686" y="249"/>
+  <object id="97" template="../../obj/stone.tx" x="681.35" y="257.371"/>
   <object id="65" template="../../../../common/maps/obj/gold.tx" x="498" y="322"/>
   <object id="66" template="../../../../common/maps/obj/gold.tx" x="147" y="312"/>
   <object id="71" template="../../../../common/maps/obj/door_left.tx" gid="2147494992" x="720" y="144" width="16" height="48" rotation="0">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/nahiri/nahiri.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/nahiri/nahiri.tmx"/>
     <property name="teleportObjectId" value="79"/>
    </properties>
   </object>
@@ -124,9 +125,11 @@
   <object id="96" template="../../../../common/maps/obj/door_down.tx" x="40.3333" y="388.333">
    <properties>
     <property name="direction" value="left"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/nahiri/nahiri.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/nahiri/nahiri.tmx"/>
     <property name="teleportObjectId" value="106"/>
    </properties>
   </object>
+  <object id="98" template="../../obj/stone.tx" x="231.024" y="224.514"/>
+  <object id="99" template="../../obj/stone.tx" x="142.979" y="124.688"/>
  </objectgroup>
 </map>

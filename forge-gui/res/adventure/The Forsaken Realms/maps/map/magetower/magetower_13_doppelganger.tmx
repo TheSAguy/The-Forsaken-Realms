@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="103">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="104">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -10,6 +10,7 @@
  </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="30">
   <data encoding="base64" compression="zlib">
    eJztyDENAAAIwDAE4F8M6jgQAC9Jm+xZBAAAAB9UTtu7auBAAxk=
@@ -220,7 +221,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="102" template="../../obj/stone.tx" x="95.0974" y="389"/>
+  <object id="102" template="../../obj/stone.tx" x="143.536" y="313.799"/>
   <object id="76" template="../../../../common/maps/obj/gold.tx" x="320" y="320">
    <properties>
     <property name="reward">[
@@ -288,6 +289,17 @@
   &quot;addMaxCount&quot;: 2
 }]</property>
     <property name="spawn.Hard" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="103" template="../../obj/wood.tx" x="266.309" y="318.494">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="108">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="109">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJxjYBj8QJaHgUGaB8KWRmLTCpjwQTA2e2FytARRvAwM0bwIe2FsWoOdQLt282CyhxNAjz8Yn5Zxis2OUXtH7R0IsGMY5unhDnbxIDAx4sQAAKmkFSk=
@@ -46,7 +47,7 @@
     <property name="reward" value="[{&quot;type&quot;: &quot;randomCard&quot;,&quot;colors&quot;: [&quot;Blue&quot;], &quot;count&quot;: 5 }, {&quot;type&quot;: &quot;item&quot;,&quot;count&quot;: 1,&quot;probability&quot;:0.2,&quot;itemName&quot;: &quot;Steel Sword&quot;}]"/>
    </properties>
   </object>
-  <object id="107" template="../../obj/stone.tx" x="213" y="52.5"/>
+  <object id="107" template="../../obj/stone.tx" x="276.891" y="63.2159"/>
   <object id="83" template="../../../../common/maps/obj/booster.tx" x="227.311" y="125.723">
    <properties>
     <property name="reward">[
@@ -166,7 +167,7 @@
   <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="197.57" y="89.588"/>
   <object id="104" template="../../../../common/maps/obj/entry_up.tx" x="320.565" y="158.304">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/magetower/magetower_8_illusion_basement.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/magetower/magetower_8_illusion_basement.tmx"/>
    </properties>
   </object>
   <object id="105" template="../../../../common/maps/obj/manashards.tx" x="158.667" y="68.6667"/>
@@ -184,6 +185,17 @@
     }
     ]
 }]</property>
+   </properties>
+  </object>
+  <object id="108" template="../../obj/wood.tx" x="129.487" y="95.1149">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

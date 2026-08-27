@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="133">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="136">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="22017" source="../../tileset/resource_drop.tsx"/>
  <layer id="9" name="Collision" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt2EEKwCAMBEA/0f/3qaWHQvFg6UFZw8wD1IUQo60BkOw89l5/1V4rcwDAHxXuqDuDHDnkyFMlB8BqFfpnhQzsbVSD6fX5zIPvuTD9zAAzpfbAvl9/vedTc/Qq/UuwH7UH812IzBgL
@@ -90,8 +91,8 @@
    </properties>
   </object>
   <object id="70" template="../../../../common/maps/obj/gold.tx" x="243" y="685.5"/>
-  <object id="130" template="../../obj/wood.tx" x="662.25" y="784.417"/>
-  <object id="131" template="../../obj/wood.tx" x="105.667" y="115.667"/>
+  <object id="130" template="../../obj/wood.tx" x="635.934" y="668.895"/>
+  <object id="131" template="../../obj/wood.tx" x="419.672" y="79.5385"/>
   <object id="132" template="../../obj/wood.tx" x="248" y="680.5"/>
   <object id="71" template="../../../../common/maps/obj/gold.tx" x="2" y="514"/>
   <object id="72" template="../../../../common/maps/obj/gold.tx" x="224.5" y="143"/>
@@ -349,6 +350,39 @@
     <property name="hidden" type="bool" value="true"/>
     <property name="pursueRange" type="float" value="60"/>
     <property name="threatRange" type="float" value="30"/>
+   </properties>
+  </object>
+  <object id="133" template="../../obj/wood.tx" x="702.08" y="396.103">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="134" template="../../obj/wood.tx" x="86.5584" y="495.122">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="135" template="../../obj/wood.tx" x="416.621" y="479.957">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="68">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="68">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -30,7 +30,7 @@
  <objectgroup id="4" name="Objects">
   <object id="38" template="../../../../common/maps/obj/entry_up.tx" x="192" y="268" width="48" height="16">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/vampirecastle/vampirecastle_1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/vampirecastle/vampirecastle_1.tmx"/>
    </properties>
   </object>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="193.5" y="125.987">
@@ -128,7 +128,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="67" template="../../obj/stone.tx" x="213.637" y="28.8091"/>
+  <object id="67" template="../../obj/stone.tx" x="225.137" y="99.5591"/>
   <object id="66" template="../../../../common/maps/obj/booster.tx" x="197.253" y="42.225">
    <properties>
     <property name="reward">[

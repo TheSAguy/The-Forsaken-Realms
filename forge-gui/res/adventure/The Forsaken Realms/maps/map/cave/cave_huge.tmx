@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="159">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="164">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/buildings-nocollide.tsx"/>
+ <tileset firstgid="13697" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="200" height="200">
   <data encoding="base64" compression="zlib">
    eJzt0zENAEAIBEEEIAH/Lt7bhwINUMwk11+zEQAAAABsqtx+AHd1H7OnFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOOEDKtEBag==
@@ -193,5 +194,10 @@
   <object id="156" template="../../obj/stone.tx" x="2528" y="1415.33"/>
   <object id="157" template="../../obj/stone.tx" x="3085.33" y="442.667"/>
   <object id="158" template="../../obj/stone.tx" x="1912" y="328.667"/>
+  <object id="159" template="../../obj/stone.tx" x="2627.33" y="99.3333"/>
+  <object id="160" template="../../obj/stone.tx" x="2435.33" y="232.667"/>
+  <object id="161" template="../../obj/stone.tx" x="1249.33" y="1038"/>
+  <object id="162" template="../../obj/stone.tx" x="3036.67" y="592"/>
+  <object id="163" template="../../obj/stone.tx" x="2424.67" y="613.333"/>
  </objectgroup>
 </map>

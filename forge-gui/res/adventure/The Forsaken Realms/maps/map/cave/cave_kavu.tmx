@@ -141,6 +141,6 @@
   <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="372.078" y="188.103"/>
   <object id="80" template="../../../../common/maps/obj/gold.tx" x="382.431" y="157.046"/>
   <object id="81" template="../../../../common/maps/obj/manashards.tx" x="374.445" y="170.356"/>
-  <object id="82" template="../../obj/stone.tx" x="232.823" y="28.1335"/>
+  <object id="82" template="../../obj/stone.tx" x="231.41" y="45.8974"/>
  </objectgroup>
 </map>

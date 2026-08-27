@@ -132,7 +132,7 @@
   <object id="88" template="../../../../common/maps/obj/manashards.tx" x="459.597" y="219.072"/>
   <object id="89" template="../../../../common/maps/obj/manashards.tx" x="92.6222" y="64.6417"/>
   <object id="90" template="../../../../common/maps/obj/manashards.tx" x="307.857" y="623.175"/>
-  <object id="91" template="../../obj/wood.tx" x="419.832" y="509.038">
+  <object id="91" template="../../obj/wood.tx" x="420.546" y="525.452">
    <properties>
     <property name="reward">[
   {
@@ -143,7 +143,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="92" template="../../obj/stone.tx" x="85.488" y="203.24"/>
+  <object id="92" template="../../obj/stone.tx" x="79.0652" y="210.02"/>
   <object id="93" template="../../obj/stone.tx" x="466.933" y="382.366"/>
  </objectgroup>
 </map>

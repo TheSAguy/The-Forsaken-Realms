@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="89">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="90">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="22017" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="SubGround" width="45" height="40">
   <data encoding="base64" compression="zlib">
    eJzt1U0KgCAQQGF33SI6RD836FpdpVO2DhEpLCpyNCfeB4PbpwhjDAAAQDnG9uuCo7umEpsBAPrYfcJOwR80/TYaaGqdOndq6bW0/QdLU+uVWvAec+Umht9zOfad75XoPrMMbt4K+8LWVO0xzU9JNvt3Tt0d27zvzNErQUMj0lsBSIQiiQ==
@@ -149,7 +150,8 @@
   <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="227.333" y="383.667"/>
   <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="93.6667" y="456.333"/>
   <object id="86" template="../../obj/stone.tx" x="581.906" y="136.238"/>
-  <object id="87" template="../../obj/stone.tx" x="350.003" y="131.487"/>
+  <object id="87" template="../../obj/stone.tx" x="346.98" y="144.442"/>
   <object id="88" template="../../obj/stone.tx" x="25.6842" y="249.382"/>
+  <object id="89" template="../../obj/stone.tx" x="658.775" y="164.308"/>
  </objectgroup>
 </map>

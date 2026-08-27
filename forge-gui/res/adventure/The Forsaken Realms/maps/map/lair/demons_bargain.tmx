@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="55">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="55">
  <editorsettings>
   <export target="demons_bargain.tmx" format="tmx"/>
  </editorsettings>
@@ -34,66 +34,65 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="50" name="Demon" template="../../../../common/maps/obj/enemy.tx" gid="10575" x="197.5" y="138.75" width="16" height="16">
+  <object id="50" template="../../../../common/maps/obj/enemy.tx" name="Demon" gid="10575" x="197.5" y="138.75" width="16" height="16">
    <properties>
-    <property name="enemy" value="Scourgemaster"/>
     <property name="dialog">[
   {
-    "text": "Hello, planeswalker. Do you appreciate the fine art of ante – the wagering on duels to the death?",
-    "options": [
+    &quot;text&quot;: &quot;Hello, planeswalker. Do you appreciate the fine art of ante – the wagering on duels to the death?&quot;,
+    &quot;options&quot;: [
       {
-        "name": "Yes, I play with ante enabled",
-        "text": "I have many mighty spells to tip the scales of such wagers in your favor! You could win countless more spells from your foes with such tools – contracts from below, demonic attorneys, jeweled birds, bronze tablets and more… all for just a tiny sliver of your soul. What do you say?",
-        "options": [
+        &quot;name&quot;: &quot;Yes, I play with ante enabled&quot;,
+        &quot;text&quot;: &quot;I have many mighty spells to tip the scales of such wagers in your favor! You could win countless more spells from your foes with such tools – contracts from below, demonic attorneys, jeweled birds, bronze tablets and more… all for just a tiny sliver of your soul. What do you say?&quot;,
+        &quot;options&quot;: [
           {
-            "name": "Accept the deal",
-            "text": "A wise decision... no refunds, now.",
-            "action": [
+            &quot;name&quot;: &quot;Accept the deal&quot;,
+            &quot;text&quot;: &quot;A wise decision... no refunds, now.&quot;,
+            &quot;action&quot;: [
               {
-                "deleteMapObject": -1,
-                "grantRewards": [
-                  { "type": "life", "count": -2 },
-                  { "type": "card", "cardName": "Contract from Below|LEA", "count": 4 },
-                  { "type": "card", "cardName": "Demonic Attorney|LEA", "count": 4 },
-                  { "type": "card", "cardName": "Jeweled Bird|ARN", "count": 4 },
-                  { "type": "card", "cardName": "Bronze Tablet|ATQ", "count": 4 },
-                  { "type": "card", "cardName": "Darkpact|LEA", "count": 4 },
-                  { "type": "card", "cardName": "Timmerian Fiends|HML", "count": 4 }
+                &quot;deleteMapObject&quot;: -1,
+                &quot;grantRewards&quot;: [
+                  { &quot;type&quot;: &quot;life&quot;, &quot;count&quot;: -2 },
+                  { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Contract from Below|LEA&quot;, &quot;count&quot;: 4 },
+                  { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Demonic Attorney|LEA&quot;, &quot;count&quot;: 4 },
+                  { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Jeweled Bird|ARN&quot;, &quot;count&quot;: 4 },
+                  { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Bronze Tablet|ATQ&quot;, &quot;count&quot;: 4 },
+                  { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Darkpact|LEA&quot;, &quot;count&quot;: 4 },
+                  { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Timmerian Fiends|HML&quot;, &quot;count&quot;: 4 }
                 ]
               }
             ]
           },
           {
-            "name": "Decline",
-            "text": "Well, perhaps I shall take your whole soul myself!",
-            "action": [
-              { "battleWithActorID": -1 }
+            &quot;name&quot;: &quot;Decline&quot;,
+            &quot;text&quot;: &quot;Well, perhaps I shall take your whole soul myself!&quot;,
+            &quot;action&quot;: [
+              { &quot;battleWithActorID&quot;: -1 }
             ]
           }
         ]
       },
       {
-        "name": "No, I don't use ante",
-        "text": "Well, I still have something quite magnificent to offer you – fabulous wealth in exchange for just a tiny sliver of your soul. How does 20,000 gold sound? A fortune fit for a king, I would say! And well-deserved by a mighty and noble adventurer such as yourself. So, do we have a deal?",
-        "options": [
+        &quot;name&quot;: &quot;No, I don't use ante&quot;,
+        &quot;text&quot;: &quot;Well, I still have something quite magnificent to offer you – fabulous wealth in exchange for just a tiny sliver of your soul. How does 20,000 gold sound? A fortune fit for a king, I would say! And well-deserved by a mighty and noble adventurer such as yourself. So, do we have a deal?&quot;,
+        &quot;options&quot;: [
           {
-            "name": "Accept the deal",
-            "text": "A wise decision... no refunds, now.",
-            "action": [
+            &quot;name&quot;: &quot;Accept the deal&quot;,
+            &quot;text&quot;: &quot;A wise decision... no refunds, now.&quot;,
+            &quot;action&quot;: [
               {
-                "deleteMapObject": -1,
-                "addGold": 20000,
-                "grantRewards": [
-                  { "type": "life", "count": -2 }
+                &quot;deleteMapObject&quot;: -1,
+                &quot;addGold&quot;: 20000,
+                &quot;grantRewards&quot;: [
+                  { &quot;type&quot;: &quot;life&quot;, &quot;count&quot;: -2 }
                 ]
               }
             ]
           },
           {
-            "name": "Decline",
-            "text": "Well, perhaps I shall take your whole soul myself!",
-            "action": [
-              { "battleWithActorID": -1 }
+            &quot;name&quot;: &quot;Decline&quot;,
+            &quot;text&quot;: &quot;Well, perhaps I shall take your whole soul myself!&quot;,
+            &quot;action&quot;: [
+              { &quot;battleWithActorID&quot;: -1 }
             ]
           }
         ]
@@ -101,8 +100,9 @@
     ]
   }
 ]</property>
+    <property name="enemy" value="Scourgemaster"/>
    </properties>
   </object>
-  <object id="54" template="../../obj/stone.tx" x="202.5" y="143.75"/>
+  <object id="54" template="../../obj/stone.tx" x="187.134" y="122.116"/>
  </objectgroup>
 </map>

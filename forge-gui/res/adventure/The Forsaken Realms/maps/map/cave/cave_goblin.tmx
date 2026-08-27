@@ -133,8 +133,8 @@
     <property name="threatRange" type="int" value="30"/>
    </properties>
   </object>
-  <object id="80" template="../../obj/stone.tx" x="74.7638" y="77.1862"/>
+  <object id="80" template="../../obj/stone.tx" x="72.1396" y="99.7949"/>
   <object id="81" template="../../obj/stone.tx" x="279.655" y="64.6707"/>
-  <object id="82" template="../../obj/stone.tx" x="361.006" y="125.23"/>
+  <object id="82" template="../../obj/stone.tx" x="359.593" y="147.435"/>
  </objectgroup>
 </map>

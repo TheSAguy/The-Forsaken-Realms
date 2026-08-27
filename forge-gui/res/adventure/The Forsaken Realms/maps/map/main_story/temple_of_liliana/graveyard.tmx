@@ -134,7 +134,7 @@
   <object id="5" template="../../../../../common/maps/obj/collision.tx" x="-16" y="-16" width="528.5" height="16"/>
   <object id="183" template="../../../../../common/maps/obj/entry_up.tx" x="165.583" y="384.667" width="73.5" height="16">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/forest.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/forest.tmx"/>
     <property name="teleportObjectId" value="240"/>
    </properties>
   </object>
@@ -495,7 +495,7 @@
   </object>
   <object id="267" template="../../../../../common/maps/obj/entry_left.tx" x="1.45455" y="206.909" width="16.3636" height="72.7273">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/bog.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/bog.tmx"/>
     <property name="teleportObjectId" value="228"/>
    </properties>
   </object>
@@ -544,7 +544,7 @@
    <properties>
     <property name="activeQuestFlag" value="lilianaGraveyardPortal"/>
     <property name="direction" value="left"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
     <property name="teleportObjectId" value="267"/>
    </properties>
   </object>

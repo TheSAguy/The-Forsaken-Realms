@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="27" height="29" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="83">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="27" height="29" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="84">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <tileset firstgid="28289" source="../../tileset/resource_drop.tsx"/>
  <layer id="11" name="Collision" width="27" height="29">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2BkAhke3JgYtdSwixh9pAJK3EmJXbQG9LKHEkBP95GbNuhpF3qc4UubMD417CKU16hlFzH5mlZ2YTOT3v4iN0+O2kW5XcTYRy9/4dNHTbsI6RsF9AMAC28XIQ==
@@ -48,7 +49,7 @@
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/gold.tx" x="159.451" y="163.641"/>
-  <object id="82" template="../../obj/stone.tx" x="164.451" y="168.641"/>
+  <object id="82" template="../../obj/stone.tx" x="196.784" y="145.308"/>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="208.042" y="98.2767" width="15.6274" height="17.4905">
    <properties>
     <property name="enemy" value="Bat"/>
@@ -65,7 +66,7 @@
   <object id="67" template="../../../../common/maps/obj/entry_up.tx" x="145.517" y="208.488" width="29.0414" height="31.2771">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/vampirecastle/vampirecastle_grave_3.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/vampirecastle/vampirecastle_grave_3.tmx"/>
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="184.641" y="206.252">
@@ -104,5 +105,16 @@
    </properties>
   </object>
   <object id="81" template="../../../../common/maps/obj/manashards.tx" x="249.103" y="164.892"/>
+  <object id="83" template="../../obj/wood.tx" x="105.667" y="233.667">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

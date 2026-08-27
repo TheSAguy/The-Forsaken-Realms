@@ -26,26 +26,26 @@
  <objectgroup id="4" name="Objects">
   <object id="66" template="../../../../../common/maps/obj/door_up.tx" x="208" y="272.5">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/cave/cave_multilevel/cave_16.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_multilevel/cave_16.tmx"/>
     <property name="teleportObjectId" value="65"/>
    </properties>
   </object>
   <object id="73" template="../../../obj/stone.tx" x="213" y="277.5"/>
   <object id="67" template="../../../../../common/maps/obj/door_down.tx" gid="1073746531" x="192.5" y="16">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/cave/cave_multilevel/cave_16C.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_multilevel/cave_16C.tmx"/>
     <property name="teleportObjectId" value="64"/>
    </properties>
   </object>
   <object id="71" template="../../../../../common/maps/obj/door_left.tx" x="464.5" y="113.5">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/cave/cave_multilevel/cave_16BR1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_multilevel/cave_16BR1.tmx"/>
     <property name="teleportObjectId" value="73"/>
    </properties>
   </object>
   <object id="72" template="../../../../../common/maps/obj/door_right.tx" x="2" y="113.333">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/cave/cave_multilevel/cave_16BL1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_multilevel/cave_16BL1.tmx"/>
     <property name="teleportObjectId" value="74"/>
    </properties>
   </object>

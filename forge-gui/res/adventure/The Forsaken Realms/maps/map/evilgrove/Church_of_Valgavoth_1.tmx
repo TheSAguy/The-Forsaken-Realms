@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="110">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="111">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -9,6 +9,7 @@
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="28289" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="22">
   <data encoding="base64" compression="zlib">
    eJzt1dEJgCAQBmAfDW6DaJxs1GiEapxoj4o8uEwl9ZSIfriX5Pz4oUhVQqiXjxnOu1xxuTnj6/tF12WU6kt7x74nId66TwNC1HA9x2cLs40mNWzuES6bmkcmOAfPzGcctmmGJMW27WG3Wfcb4d7Xtx/rltj/+5brO8i43V6mf0vUftI31XTZvnCZITa3SW2cTt/fZvwf2XzTjc0GSO1G/w==
@@ -120,7 +121,7 @@
    </properties>
   </object>
   <object id="85" template="../../../../common/maps/obj/manashards.tx" x="249" y="161.5"/>
-  <object id="109" template="../../obj/wood.tx" x="254" y="166.5"/>
+  <object id="109" template="../../obj/wood.tx" x="268.962" y="164.883"/>
   <object id="86" template="../../../../common/maps/obj/gate.tx" x="207.75" y="124.5" width="16.4999" height="22">
    <properties>
     <property name="dialog">[{
@@ -223,6 +224,17 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="110" template="../../obj/wood.tx" x="130.498" y="263.132">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

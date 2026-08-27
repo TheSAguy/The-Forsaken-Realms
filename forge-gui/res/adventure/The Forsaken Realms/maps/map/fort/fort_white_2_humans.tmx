@@ -143,7 +143,7 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="77" template="../../obj/wood.tx" x="381.636" y="16.3636">
+  <object id="77" template="../../obj/wood.tx" x="381.964" y="24.569">
    <properties>
     <property name="reward">[
   {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="29" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="31" nextobjectid="204">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="31" nextobjectid="204">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -45,10 +45,9 @@
     <property name="spawn.Normal" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="203" template="../../obj/stone.tx" x="218.399" y="133.82"/>
   <object id="202" template="../../../../common/maps/obj/door_up.tx" x="220.413" y="176.555">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/zedruu/zedruu_f4.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/zedruu/zedruu_f4.tmx"/>
     <property name="teleportObjectId" value="114"/>
    </properties>
   </object>

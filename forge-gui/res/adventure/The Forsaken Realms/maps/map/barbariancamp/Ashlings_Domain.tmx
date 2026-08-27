@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="25" nextobjectid="266">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="25" nextobjectid="268">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -11,6 +11,7 @@
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="44673" source="../../../../common/maps/tileset/buildings-nocollide.tsx"/>
+ <tileset firstgid="46465" source="../../tileset/resource_drop.tsx"/>
  <layer id="24" name="LayerBis" width="30" height="30">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRQApYwTvQLkAFC0QhtDMfKiYH4NMHsgcdg4AJHwI7Q2lk91DTXhM+VD3I2ISP9DDApQabP9H1kYqpYS+pgJA7cNlLrzQOsgdbuqKHGwar3bQGuOwezmCg/EtPe3GlJ1r7FZtdIyFNDTcAALipQkk=
@@ -100,7 +101,7 @@
    </properties>
   </object>
   <object id="223" template="../../../../common/maps/obj/gold.tx" x="353.842" y="33.4386"/>
-  <object id="265" template="../../obj/wood.tx" x="358.842" y="38.4386"/>
+  <object id="265" template="../../obj/wood.tx" x="408.887" y="122.471"/>
   <object id="246" template="../../../../common/maps/obj/entry_up.tx" x="28.5287" y="467.452" width="33.6981" height="12.5">
    <properties>
     <property name="teleport" value=""/>
@@ -228,6 +229,28 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Normal" type="bool" value="true"/>
     <property name="speedModifier" type="float" value="40"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="266" template="../../obj/wood.tx" x="300.885" y="353.954">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="267" template="../../obj/stone.tx" x="100.707" y="382.589">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;stone&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

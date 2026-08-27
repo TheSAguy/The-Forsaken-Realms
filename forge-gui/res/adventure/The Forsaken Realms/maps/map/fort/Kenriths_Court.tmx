@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="169">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="171">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -10,6 +10,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="7" name="CollisionBis" width="40" height="35">
   <data encoding="base64" compression="zlib">
    eJzt0ssJgDAQRdGAa0PAgsSmbMaNYBuWYjG6EEYSEfFDHuEemP3lMc4BAPCPzucuSA21nULf4u0UemKtYNORet+0/dm4nzrFLefKjr536CtbE9LDfez3vbNN411L3T30uQuuqfcBeGYFHpcSLg==
@@ -136,7 +137,7 @@
     <property name="waypoints" value="129,130"/>
    </properties>
   </object>
-  <object id="88" template="../../../../common/maps/obj/enemy.tx" x="114.928" y="237.092">
+  <object id="88" template="../../../../common/maps/obj/enemy.tx" x="97.4436" y="236.468">
    <properties>
     <property name="enemy" value="Torbran"/>
     <property name="threatRange" type="int" value="40"/>
@@ -472,7 +473,7 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
     <property name="uncommonShopList" value=""/>
    </properties>
   </object>
-  <object id="167" template="../../obj/wood.tx" x="506.541" y="281.429">
+  <object id="167" template="../../obj/wood.tx" x="503.107" y="291.108">
    <properties>
     <property name="reward">[
   {
@@ -484,6 +485,28 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
    </properties>
   </object>
   <object id="168" template="../../obj/wood.tx" x="7.29884" y="320.769">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="169" template="../../obj/wood.tx" x="116.264" y="236.781">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="170" template="../../obj/wood.tx" x="475.318" y="124.382">
    <properties>
     <property name="reward">[
   {

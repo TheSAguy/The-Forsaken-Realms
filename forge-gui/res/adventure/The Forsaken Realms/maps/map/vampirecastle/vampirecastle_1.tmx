@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="36" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="95">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="36" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="96">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -8,6 +8,7 @@
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
  <tileset firstgid="16385" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="32769" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <tileset firstgid="49153" source="../../tileset/resource_drop.tsx"/>
  <layer id="10" name="Collision" width="36" height="30">
   <data encoding="base64" compression="zlib">
    eJztlz1Ow0AQhd26yColUhrOAIJ0KVFyIcrcIn/QcCXEhWBknvL8MjP2mkhQ8KQnO1l75vPs7MZpGl8389ientuzF5u+b9f9cZWNw7UsEQ9LeVS7WdMcZpcsHs8Qyxie101sYzl++fTNlPGMYWEei72vtLGsSmePKWPJtJPYY23iz8o0ZU6mskRmpmuzlPmltT6ml03/+4fi83j597PzZ2VhcX5lMulat/wZT1YLKGIxPbV+bezo7T3oGeaJBBbL8URxIpa3uy4mM/Ec2ji0bTvzusp4lEV5mAFGTJ0rMIEHLDU898Vn4WdkFvA8But6WfrXgoef7SR9GvFofj7XPey9dEyIa0dj+ShnBmby2DMeFtdGWU08D9vW/w73gSnaL1V4ThXXXKW5mcu7roYnYop4otpkY8pjyta76Sj9pTzR/CzW/XMe0zjgAUtNDyEW7tMaIz94+Nxj4TUBHpuTg7POMh6v1srD5j4a4lkVn2kKj4nroT2tLBEPmPi9aZn0uvJ4ebTvs2u4j4fenWrqk+XMWHRd1fLoPV5NxtaL5f1uj63PT2riMXp7/lhFMaO9e0jgsOOU/zPXFNfkn+dv82j//iYPv3+yPwECSRbh
@@ -60,7 +61,7 @@
   <object id="67" template="../../../../common/maps/obj/entry_up.tx" x="348.747" y="207.742" width="24.5254" height="16">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/vampirecastle/vampirecastle_grave_1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/vampirecastle/vampirecastle_grave_1.tmx"/>
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/collision.tx" x="576.502" y="-7.44119" width="20.7262" height="500.024"/>
@@ -98,7 +99,7 @@
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="116.453" y="97.8221"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="59.0703" y="165.265"/>
   <object id="82" template="../../../../common/maps/obj/gold.tx" x="466.336" y="215.94"/>
-  <object id="94" template="../../obj/stone.tx" x="471.336" y="220.94"/>
+  <object id="94" template="../../obj/stone.tx" x="490.669" y="173.273"/>
   <object id="83" template="../../../../common/maps/obj/gold.tx" x="256.183" y="208.861"/>
   <object id="84" template="../../../../common/maps/obj/enemy.tx" x="535.27" y="47.8919">
    <properties>
@@ -120,5 +121,16 @@
   <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="281.52" y="287.109"/>
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="298.288" y="382.126"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="472.671" y="259.536"/>
+  <object id="95" template="../../obj/wood.tx" x="451.333" y="344.333">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

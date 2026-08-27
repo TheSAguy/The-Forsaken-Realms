@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="63">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="64">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJzr42Rg6BuE+BgrBNPLvgXsEAyzF8QmVS+5evBhbOEix0xYHSV2wsKBGH3UtpcUPBB2DqS9+OwetXfUXlrYS4zd5LqP3LKD0vKGluU6NvtJ0UsvDAAUXz5k
@@ -31,7 +32,7 @@
   </object>
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="192.396" y="34.3787"/>
   <object id="49" template="../../../../common/maps/obj/gold.tx" x="355.065" y="66.2689"/>
-  <object id="62" template="../../obj/stone.tx" x="360.065" y="71.2689"/>
+  <object id="62" template="../../obj/stone.tx" x="433.459" y="81.176"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="83.5746" y="135.792">
    <properties>
     <property name="enemy" value="Merfolk Fighter"/>
@@ -88,6 +89,17 @@
   <object id="61" template="../../../../common/maps/obj/enemy.tx" x="248.318" y="76.5719">
    <properties>
     <property name="enemy" value="Sand Golem"/>
+   </properties>
+  </object>
+  <object id="63" template="../../obj/wood.tx" x="214.607" y="35.2678">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

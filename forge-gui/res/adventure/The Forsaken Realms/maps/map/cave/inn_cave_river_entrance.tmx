@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="32" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="54">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="32" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="55">
  <tileset firstgid="1" source="../../tileset/inn_main.tsx"/>
  <tileset firstgid="10113" source="../../tileset/INN_dungen_crawler_tileset.tsx"/>
  <tileset firstgid="22401" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="32513" source="../../tileset/inn_buildings_src.tsx"/>
+ <tileset firstgid="34305" source="../../tileset/resource_drop.tsx"/>
  <layer id="2" name="Water" width="32" height="40">
   <data encoding="csv">
 2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,2516,
@@ -632,7 +633,8 @@
   <object id="49" template="../../../../common/maps/obj/waypoint.tx" x="455.25" y="448.75"/>
   <object id="50" template="../../../../common/maps/obj/waypoint.tx" x="341.75" y="255.25"/>
   <object id="51" template="../../../../common/maps/obj/waypoint.tx" x="31.75" y="432.25"/>
-  <object id="52" template="../../obj/stone.tx" x="57.3333" y="596"/>
-  <object id="53" template="../../obj/stone.tx" x="144.667" y="49.3333"/>
+  <object id="52" template="../../obj/stone.tx" x="53.3333" y="605.333"/>
+  <object id="53" template="../../obj/stone.tx" x="134.334" y="54"/>
+  <object id="54" template="../../obj/stone.tx" x="49.3333" y="266.667"/>
  </objectgroup>
 </map>

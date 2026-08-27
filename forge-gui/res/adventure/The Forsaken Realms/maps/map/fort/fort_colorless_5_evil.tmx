@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="81">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="83">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="30">
   <data encoding="base64" compression="zlib">
    eJztlj0KwzAMhUOXYLJ0S4euuUqO6PMWU0zMi2QJS2o65IEwibE+ZP3gaYrXY/kBJIC7J9k8uZxfLXdU23wYfuNeBFf7/5+5NSe9/HB3aeWicfnzzKmFa9Eo1yqp95CX09e8VLjvtc/1ZnKKjrWovefqP6cz15uHK1VLGK+lzjT1LNX5aLwW7qiunFfIL5JYEfNL8hs9yyhG7a1ovraPvONt/ePcuIpLsT1V6/z15Pcs70nuLHKpmeLB5XxQ3Fs6fQACPkMB
@@ -134,7 +135,29 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="80" template="../../obj/wood.tx" x="289.273" y="77.4545">
+  <object id="80" template="../../obj/wood.tx" x="290.961" y="130.344">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="81" template="../../obj/wood.tx" x="165.86" y="326.779">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="82" template="../../obj/wood.tx" x="327.342" y="284.861">
    <properties>
     <property name="reward">[
   {

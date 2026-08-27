@@ -41,7 +41,7 @@
  <objectgroup id="12" name="Objects" opacity="0.9" offsetx="3.15789" offsety="7.89474">
   <object id="114" template="../../../../common/maps/obj/entry_up.tx" x="300.842" y="317.718" width="48" height="16">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/barbariancamp/barbariancamp_kobold.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/barbariancamp/barbariancamp_kobold.tmx"/>
     <property name="teleportObjectId" value="108"/>
    </properties>
   </object>
@@ -134,7 +134,7 @@
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>
-  <object id="165" template="../../obj/wood.tx" x="347.379" y="170.603">
+  <object id="165" template="../../obj/wood.tx" x="348.008" y="176.051">
    <properties>
     <property name="reward">[
   {
@@ -145,7 +145,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="166" template="../../obj/stone.tx" x="138.04" y="23.0812"/>
+  <object id="166" template="../../obj/stone.tx" x="137.621" y="30.4154"/>
   <object id="167" template="../../obj/stone.tx" x="228.146" y="85.1073"/>
  </objectgroup>
 </map>

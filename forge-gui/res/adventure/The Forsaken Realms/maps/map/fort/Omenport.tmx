@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="351">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="352">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -9,6 +9,7 @@
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/FarmFood.tsx"/>
+ <tileset firstgid="16001" source="../../tileset/resource_drop.tsx"/>
  <layer id="28" name="Collision" width="44" height="23">
   <data encoding="base64" compression="zlib">
    eJzt11sKwjAQBdCAPxXBjfjrGmpxqdEluJviPmSwQy9jHtNkEvrhhQH7YDikyYDj0blRlIx8nqpcpuWde+ZdPzj3HMosk8IxF3gfw7eky8O1fKZZH40Xe2m8mBnsVG/xDpo131Lr5X5bvZqwOWf1gT2USqwX3d/aC8P7nb34PbhKEjuvNVYKnk9a68vpt0oivRZWCno151qbkhmnSSuvjLXXcg1ahmYe7dvWXove1/Na3LOV28ob8u3dW9O75563WN+/N569eV+HtTA8D2oN1rMk5U2ZNY4Wsw+96M550dPLil7+fVv6a7zsit1vcc4svDX/KWvM6JWWkvScY6G1+gBsblEO
@@ -567,7 +568,18 @@
 ]</property>
    </properties>
   </object>
-  <object id="350" template="../../obj/wood.tx" x="58.0108" y="88.2889">
+  <object id="350" template="../../obj/wood.tx" x="56.4605" y="101.079">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="351" template="../../obj/wood.tx" x="556.647" y="292.231">
    <properties>
     <property name="reward">[
   {

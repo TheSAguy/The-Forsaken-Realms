@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="94">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="95">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -8,6 +8,7 @@
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="22017" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
  <tileset firstgid="38401" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="54785" source="../../tileset/resource_drop.tsx"/>
  <layer id="12" name="Collision" width="30" height="25">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo4AywCeAiellL73BXF4GBhu+UTtpBegdpyB/guykt1+He9qFhSstwxbZDhCgR9mDKwyLRRgYrgnT105a2k1sWqGm3aSmT5DdyHUOue6gNH2SEwbUSqek2k3N/IEe/vjMpnd5R++2CLKd9AAAgmsXKA==
@@ -195,5 +196,16 @@
   </object>
   <object id="92" template="../../obj/stone.tx" x="90.3497" y="257.834"/>
   <object id="93" template="../../obj/stone.tx" x="368.896" y="75.6307"/>
+  <object id="94" template="../../obj/wood.tx" x="413.667" y="299.667">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

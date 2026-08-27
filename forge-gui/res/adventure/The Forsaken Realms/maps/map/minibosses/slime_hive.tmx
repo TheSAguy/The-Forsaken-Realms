@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="152">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="153">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="22017" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="13" name="Background" width="45" height="40">
   <data encoding="base64" compression="zlib">
    eJzt1jtuAkEMBuCliEK6VJQoV0AisKKi4iQ5Uypa7kHFUXKD9MhaWbLMeNYez4soln4J2NHON9YuM8NQr467cHotydujOWbt0azx9raGVHMru9cbc5/ebJafl7rm1J6Dk2Yxs87cXqs5NB5+k/pdwmtxc9vyfRgun9Nn7Hlus3QPbfHx4IXwZwVyfW3T52/2nEpm7HVsnSUSmzc0N/Vy99c4JTQGo/Foo6mV4An132K2OGnAo0nq/f+K2Xsv6VmA0O+x8s5reU6ftXLuQbnqdxO/nvO/vta6S+1Pc3P+V/912tbLepwyN+5jN6WmzWuGMTXMdL9AW2qwz9J1WnyfSt1bveZYcE+eO6eFqsU6VgGz9kziOd94vfTs4z1rlfTzM2Yrc6q3ldni47nt25mpHUpjBi81W96xEu+j1ms1S5VqxvmpDddAjTy0zofHaMzUbllDzKUxo5Hbtb229J+Wtp+eeb1mqajzGcxeY86izpQ1S3UHMbGErQ==
@@ -79,7 +80,7 @@
    </properties>
   </object>
   <object id="104" template="../../../../common/maps/obj/gold.tx" x="695.216" y="457.21"/>
-  <object id="151" template="../../obj/stone.tx" x="700.216" y="462.21"/>
+  <object id="151" template="../../obj/stone.tx" x="571.759" y="239.552"/>
   <object id="106" template="../../../../common/maps/obj/gold.tx" x="4.61251" y="358.867"/>
   <object id="107" template="../../../../common/maps/obj/gold.tx" x="148.282" y="613.857"/>
   <object id="109" template="../../../../common/maps/obj/treasure.tx" x="515.922" y="237.91"/>
@@ -170,6 +171,17 @@
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="false"/>
     <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="152" template="../../obj/wood.tx" x="96.5495" y="230.002">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

@@ -189,7 +189,7 @@
     <property name="enemy" value="Big Zombie"/>
    </properties>
   </object>
-  <object id="116" template="../../obj/stone.tx" x="64.6667" y="158"/>
+  <object id="116" template="../../obj/stone.tx" x="66" y="176.333"/>
   <object id="117" template="../../obj/stone.tx" x="711.333" y="83"/>
   <object id="118" template="../../obj/stone.tx" x="655.667" y="488.667"/>
   <object id="119" template="../../obj/stone.tx" x="223.667" y="363.667"/>

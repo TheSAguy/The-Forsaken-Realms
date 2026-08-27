@@ -158,7 +158,7 @@
    <properties>
     <property name="portalState" value="active"/>
     <property name="sprite" value="sprites/portal.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/forest.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/forest.tmx"/>
     <property name="teleportObjectId" value="183"/>
    </properties>
   </object>
@@ -167,7 +167,7 @@
     <property name="activeQuestFlag" value="lilianaGraveyardPortal"/>
     <property name="portalState" value="closed"/>
     <property name="sprite" value="sprites/portal.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/graveyard.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/graveyard.tmx"/>
     <property name="teleportObjectId" value="269"/>
    </properties>
   </object>
@@ -176,7 +176,7 @@
     <property name="activeQuestFlag" value="lilianaBogPortal"/>
     <property name="portalState" value="closed"/>
     <property name="sprite" value="sprites/portal.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/bog.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/bog.tmx"/>
     <property name="teleportObjectId" value="270"/>
    </properties>
   </object>
@@ -185,7 +185,7 @@
     <property name="activeQuestFlag" value="lilianaTownPortal"/>
     <property name="portalState" value="closed"/>
     <property name="sprite" value="sprites/portal.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/town.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/town.tmx"/>
     <property name="teleportObjectId" value="288"/>
    </properties>
   </object>
@@ -194,7 +194,7 @@
     <property name="activeQuestFlag" value="lilianaBossPortal"/>
     <property name="portalState" value="inactive"/>
     <property name="sprite" value="sprites/portal.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/temple_of_liliana/town.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/town.tmx"/>
     <property name="teleportObjectId" value="279"/>
    </properties>
   </object>

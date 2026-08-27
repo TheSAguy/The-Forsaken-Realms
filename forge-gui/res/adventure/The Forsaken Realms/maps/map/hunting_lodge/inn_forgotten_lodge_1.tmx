@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="20" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="107">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="20" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="107">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -122,7 +122,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="106" template="../../obj/wood.tx" x="263.75" y="166"/>
+  <object id="106" template="../../obj/wood.tx" x="262.688" y="112.316"/>
   <object id="102" template="../../../../common/maps/obj/gold.tx" x="126" y="45.5">
    <properties>
     <property name="reward">[

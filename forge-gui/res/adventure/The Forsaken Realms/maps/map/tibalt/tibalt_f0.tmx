@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="27" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="197">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="27" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="198">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -13,6 +13,7 @@
  <tileset firstgid="22017" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="38401" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
  <tileset firstgid="54785" source="../../../../common/maps/tileset/buildings-nocollide.tsx"/>
+ <tileset firstgid="56577" source="../../tileset/resource_drop.tsx"/>
  <layer id="18" name="CollisionBis" width="27" height="40">
   <data encoding="base64" compression="zlib">
    eJzt1dEJwjAQBuA+WmqLj4KO4QSK4g7OotMUA+oI3UbUNeyhodeQXAL3V3zoDwcWQr5eEtMsGzPm/7PLu9+XSZZdPXVra1V1pbXIeeT+Mfe872ksyfF5GmsfcXhGy289EywDOhsUyTPAM2+LvJenuIOyQoWyltOuJIuPR1jc4z2jLDuvZNG9QjkWWCsUcprImFRL8hCOa1lvCMdnHcr+M8qx1qn4lOtQUA5lkTAXP5u/sIbYr1Ck/8TZs/bauO9Vt4Zpa1thPbtnNZvTfC3KfIZ1qEzg/TeK+9+mYXfkWphPazXONyDUk9ZyHaknbbhDkXpKCd/zkFWXeidm2aDWLsVC9MQtX1BrF7PQDre4p/l+vAFhQE9Z
@@ -76,14 +77,14 @@
   <object id="170" template="../../../../common/maps/obj/door_down.tx" x="146.537" y="632.155" width="45.8303" height="21.1308" rotation="0.284412">
    <properties>
     <property name="direction" value="up"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt.tmx"/>
     <property name="teleportObjectId" value="204"/>
    </properties>
   </object>
   <object id="174" template="../../../../common/maps/obj/door_down.tx" x="270.927" y="631.04" width="45.8303" height="16.1284" rotation="0.284412">
    <properties>
     <property name="direction" value="up"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt.tmx"/>
     <property name="teleportObjectId" value="203"/>
    </properties>
   </object>
@@ -106,20 +107,20 @@
   <object id="176" template="../../../../common/maps/obj/door_down.tx" x="203.912" y="149.787" width="29.8454" height="19.2078" rotation="0.284412">
    <properties>
     <property name="direction" value="up"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt_f4.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt_f4.tmx"/>
     <property name="teleportObjectId" value="174"/>
    </properties>
   </object>
   <object id="177" template="../../../../common/maps/obj/gold.tx" x="362.842" y="499.605"/>
   <object id="178" template="../../../../common/maps/obj/gold.tx" x="379.342" y="510.605"/>
   <object id="195" template="../../obj/stone.tx" x="367.842" y="504.605"/>
-  <object id="196" template="../../obj/stone.tx" x="374.342" y="515.605"/>
+  <object id="196" template="../../obj/stone.tx" x="304.761" y="588.754"/>
   <object id="179" template="../../../../common/maps/obj/gold.tx" x="336.342" y="547.105"/>
   <object id="180" template="../../../../common/maps/obj/gold.tx" x="353.342" y="541.105"/>
   <object id="182" template="../../../../common/maps/obj/door_down.tx" x="211.919" y="296.502" width="29.8454" height="19.2078" rotation="0.284412">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt_f1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt_f1.tmx"/>
     <property name="teleportObjectId" value="114"/>
    </properties>
   </object>
@@ -213,8 +214,19 @@
     <property name="activeQuestFlag" value="FortressPortal"/>
     <property name="portalState" value="inactive"/>
     <property name="sprite" value="sprites/portal3.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt.tmx"/>
     <property name="teleportObjectId" value="221"/>
+   </properties>
+  </object>
+  <object id="197" template="../../obj/wood.tx" x="186.88" y="502.214">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

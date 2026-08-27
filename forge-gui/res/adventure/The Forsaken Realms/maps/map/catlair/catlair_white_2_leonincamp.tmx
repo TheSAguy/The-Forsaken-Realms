@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="77">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="78">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJzr42Rg6MOC25AwNnl86onB1DJnqNtLrt3E6hu1d9TeUXtH7R3q9pJjJ6nuG6z20qL+BQDfkyFi
@@ -111,7 +112,7 @@
   <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="383.855" y="127.914"/>
   <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="309.72" y="135.415"/>
   <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="303.101" y="220.582"/>
-  <object id="75" template="../../obj/wood.tx" x="432.727" y="212">
+  <object id="75" template="../../obj/wood.tx" x="435.227" y="227.75">
    <properties>
     <property name="reward">[
   {
@@ -123,5 +124,16 @@
    </properties>
   </object>
   <object id="76" template="../../obj/stone.tx" x="256.182" y="113.636"/>
+  <object id="77" template="../../obj/stone.tx" x="57.5" y="200.75">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;stone&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

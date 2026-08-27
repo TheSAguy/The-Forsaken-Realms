@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="85">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="87">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="25">
   <data encoding="base64" compression="zlib">
    eJyr4GZgqBjFgx67cUIwOjuIARXTy14YpradMDvQ7cGFaeFnYu2ll93ocYzNXlqkA3SziLGXmnYPZBzTKn5leCB4sNk7ikcxPcs0bPYOp3w+ikcxLTEAmwh07A==
@@ -56,7 +57,7 @@
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/gold.tx" x="40.3175" y="287.322"/>
-  <object id="84" template="../../obj/stone.tx" x="45.3175" y="292.322"/>
+  <object id="84" template="../../obj/stone.tx" x="62.7127" y="323.544"/>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="282.667" y="239.121">
    <properties>
     <property name="enemy" value="Devil"/>
@@ -120,5 +121,7 @@
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="417.74" y="225.432"/>
   <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="424.544" y="76.3195"/>
   <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="322.473" y="296.142"/>
+  <object id="85" template="../../obj/stone.tx" x="106.184" y="157.477"/>
+  <object id="86" template="../../obj/stone.tx" x="419.074" y="160.376"/>
  </objectgroup>
 </map>

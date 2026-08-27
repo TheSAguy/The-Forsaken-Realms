@@ -32,7 +32,7 @@
   <object id="66" template="../../../obj/stone.tx" x="214" y="277"/>
   <object id="65" template="../../../../../common/maps/obj/door_down.tx" x="224.166" y="17">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/cave/cave_multilevel/cave_16B.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_multilevel/cave_16B.tmx"/>
     <property name="teleportObjectId" value="66"/>
    </properties>
   </object>

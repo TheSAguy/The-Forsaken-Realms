@@ -76,7 +76,7 @@
   <object id="66" template="../../../../common/maps/obj/gold.tx" x="147" y="312"/>
   <object id="71" template="../../../../common/maps/obj/door_left.tx" gid="2147494992" x="720" y="144" width="16" height="48" rotation="0">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/barbariancamp/kor_encampment.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/barbariancamp/kor_encampment.tmx"/>
     <property name="teleportObjectId" value="79"/>
    </properties>
   </object>
@@ -98,11 +98,11 @@
   <object id="96" template="../../../../common/maps/obj/door_down.tx" x="40.3333" y="388.333">
    <properties>
     <property name="direction" value="left"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/barbariancamp/kor_encampment.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/barbariancamp/kor_encampment.tmx"/>
     <property name="teleportObjectId" value="106"/>
    </properties>
   </object>
-  <object id="97" template="../../obj/wood.tx" x="687.223" y="121.323">
+  <object id="97" template="../../obj/wood.tx" x="686.023" y="124.023">
    <properties>
     <property name="reward">[
   {
@@ -113,7 +113,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="98" template="../../obj/stone.tx" x="195.736" y="83.8162"/>
-  <object id="99" template="../../obj/stone.tx" x="442.68" y="300.755"/>
+  <object id="98" template="../../obj/stone.tx" x="196.336" y="91.6176"/>
+  <object id="99" template="../../obj/stone.tx" x="446.581" y="312.757"/>
  </objectgroup>
 </map>

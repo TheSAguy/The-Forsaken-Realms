@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="73">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="74">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="28289" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="30">
   <data encoding="base64" compression="zlib">
    eJztlkEKwlAMRIsbKYK4EbyAJxE8omuPKn8ROoyZJP5+FcGBIG01L8mfqNP0l9J1zuNdvEodo3TeLsHXHCN12T9HxP8Wt8K28+CzsdycHxVxI/5m5/uivb9xK3krwfl/lXub8zBuY2GovVPe8fJW/YRc9hdLMe/HJSI2XntcFu6Mx+3ZIZyx16/Kb/easM+sZxTurfca9Vv1scfk7wv288io/I7hHnG/GNmce7mf6JfnzefLPTdlLPyMOmPPb5FPsjljra9K9Wp+rvRseXqk9jficv094v1VNfGcR0hxPbbVOkLmwdNBP1vzXzLyOHKj3VzDVTk87l81PQDi23S5
@@ -127,7 +128,7 @@
 </property>
    </properties>
   </object>
-  <object id="71" template="../../obj/wood.tx" x="360" y="124.5">
+  <object id="71" template="../../obj/wood.tx" x="347.34" y="128.439">
    <properties>
     <property name="reward">[
   {
@@ -139,6 +140,17 @@
    </properties>
   </object>
   <object id="72" template="../../obj/wood.tx" x="95" y="222.5">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="73" template="../../obj/wood.tx" x="179.082" y="141.103">
    <properties>
     <property name="reward">[
   {

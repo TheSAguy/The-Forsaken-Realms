@@ -630,7 +630,7 @@
     <property name="enemy" value="Gwafa Hazid"/>
    </properties>
   </object>
-  <object id="189" template="../../obj/stone.tx" x="676.667" y="383.333"/>
+  <object id="189" template="../../obj/stone.tx" x="671.334" y="399.333"/>
   <object id="190" template="../../obj/stone.tx" x="345" y="376.333"/>
  </objectgroup>
 </map>

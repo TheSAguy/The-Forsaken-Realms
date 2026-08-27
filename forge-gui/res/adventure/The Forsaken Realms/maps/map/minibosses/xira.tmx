@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="40" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="106">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="108">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -8,6 +8,7 @@
  </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="11" name="Collision" width="40" height="26">
   <data encoding="base64" compression="zlib">
    eJzVl11uwkAMhHnMPsBtegWKckDOgNqehjOgwjHIKrLqjDz+WZUHRhopJNn1F6/3h2Pb7Y5v5NPi7+nPXZX2uq12tq2WfuYpionfg0IO65nV1sqdvh9pTr53a1sjQ+a7Ti3XZoSPSWLflbN8+NviiPgidhy/DB/jxVhz8+tAP2Pv4Liz2hQei81jZHPCm6OePD6PDd+NYjCmbL4rfJU84JhafDh/u9j6lGWTa0vn/WqMgzG99ZGpwhf18XGoxa6yZfis2rweVr+Sy1tTIr5MPN0f67vCZvWB7BHTf9tbVzSflY8Kl9SD5VG+aNwz+cvUqWbFfrJ8LHcsjrBpXabVkTAXbMxG1h3Nqpku6twYcbJ9ITN3qvJq65PUDzLgPTlXjKwrFcYMX/fXkuufactm7ZeZ+Jb6WEv/3p7LWHueZnXNpM+60XpiKbsPsxpj7YULc47nzJHcix7kO3/b9n+AZdZOz03L7DvRjO3V9sYt8hMoNu4z
@@ -51,7 +52,7 @@
   <object id="71" template="../../../../common/maps/obj/manashards.tx" x="55.5" y="390.5"/>
   <object id="72" template="../../../../common/maps/obj/manashards.tx" x="51.5" y="88"/>
   <object id="73" template="../../../../common/maps/obj/gold.tx" x="38.5" y="101"/>
-  <object id="105" template="../../obj/stone.tx" x="43.5" y="106"/>
+  <object id="105" template="../../obj/stone.tx" x="162.655" y="68.5282"/>
   <object id="74" template="../../../../common/maps/obj/gold.tx" x="228" y="79"/>
   <object id="75" template="../../../../common/maps/obj/booster.tx" x="598.5" y="41.5">
    <properties>
@@ -166,6 +167,28 @@
     <property name="enemy" value="Xira"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="106" template="../../obj/wood.tx" x="374.806" y="38.0984">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="107" template="../../obj/wood.tx" x="288.54" y="302.827">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

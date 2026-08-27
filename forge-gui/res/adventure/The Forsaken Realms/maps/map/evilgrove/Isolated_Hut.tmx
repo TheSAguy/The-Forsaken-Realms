@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="103">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="104">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -12,6 +12,7 @@
  <tileset firstgid="16385" source="../../../../common/maps/tileset/dungeon-nocollide.tsx"/>
  <tileset firstgid="20865" source="../../../../common/maps/tileset/FarmFood.tsx"/>
  <tileset firstgid="24961" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="41345" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJyr42RgqBvFo3gUj+JRPIpH8YjAAOMFDQI=
@@ -37,7 +38,7 @@
    </properties>
   </object>
   <object id="52" template="../../../../common/maps/obj/gold.tx" x="98.5129" y="55.8932"/>
-  <object id="102" template="../../obj/wood.tx" x="103.513" y="60.8932"/>
+  <object id="102" template="../../obj/wood.tx" x="66.9173" y="45.9314"/>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="118.937" y="81.2363">
    <properties>
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Murderer's Axe|SOI&quot;, &quot;Lake of the Dead|ALL&quot;, &quot;Season of the Witch|DRK&quot;]}"/>
@@ -143,6 +144,17 @@
 }
 ]</property>
     <property name="spawn.Hard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="103" template="../../obj/wood.tx" x="419.421" y="113.109">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

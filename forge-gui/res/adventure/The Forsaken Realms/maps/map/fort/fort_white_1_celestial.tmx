@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="91">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="93">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="7" name="Collision" width="40" height="35">
   <data encoding="base64" compression="zlib">
    eJzt1kuOwjAMANBuWSRCmg1nmBt0UZgKiaNwLRh6pFnMArgLWMXC48aJM+knRViyUKloXp3EoSh0UduiuHjyyyof1GPsF+1ndR97w8b/LP9eV5n5eLx93QAf5H99a9umFKH7r+DDscF3NG3SwO9Opvv7IQJNpW0TffCeq2X3fbEG5UjrD+d0at/P2u/DOv5u9T7o0d+eeYZnxfi4kbqos1bW5vwwwnrkTrBpfWiTfPwsuz58B/PcD65EEzpTfdQF+497eIR6MO1Bsf0aPa7awXuF+tuQPuqhPmqcysc9kq9xrKNUHzxH6hMQ2MM0vt3imVItY3ywRxoj78UhfLR/8HSdb5X1+0JzG+uLDe6j42ls0trIzUfP2jn4Gs/Z0IdPa5Pml67FlDU5ps9VU1pX19l8MnGWFJ+UWFeolev+ED6fGf4DYubgw73zscyzfnxvx8ZY89uHL3Q9lU97PYVPGznbIEK+1H3QR8zZl0O4bDfnln82
@@ -194,6 +195,28 @@
    </properties>
   </object>
   <object id="90" template="../../obj/wood.tx" x="328.727" y="140.727">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="91" template="../../obj/wood.tx" x="471.006" y="176.55">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="92" template="../../obj/wood.tx" x="43.3891" y="163.422">
    <properties>
     <property name="reward">[
   {

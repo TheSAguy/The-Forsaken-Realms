@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="33" height="24" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="167">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="33" height="24" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="169">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -10,6 +10,7 @@
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/FarmFood.tsx"/>
+ <tileset firstgid="16001" source="../../tileset/resource_drop.tsx"/>
  <layer id="11" name="Collision" width="33" height="24">
   <data encoding="base64" compression="zlib">
    eJxjYKAfCGSlo2V43EANd4jyI7ADH/luoTZ4xDgwbkAOA1xuEGfBjakFYGaRGg6Ugi5u3HLU9N8oGAXkAMNBUPYOBjeMAlRQwA7BgwHA3IILj4JRMAqGFgAAEQwL+g==
@@ -22,7 +23,7 @@
  </layer>
  <layer id="8" name="Tilelaag 3" width="33" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYCAOLGMlUiEZYD8U08MNy5gIu6GYBb8bQFiZh3K3YHMDMj1QYD8axgVyOUkz9ysb+W6ihhvQ7f+iiBsTA7axIjAMFGoyMKwVxW0nOiDVDTC7QPRdZoR4tjIDw0SgnizinE4VAHPDNrR8+YiRdLOapRkYWnBgQm4AYS8xCF+XnYGhnw2Bz7DT1g3IaQAWDukcCHn0sCAUP+SGAzo4hGSvChuCVkFKj7jcQqkb9qOxQ9ggGAT0OPCXKdjclEVAHhm0ceMWR5YLhrqJVLfgAsSW2djcp8sBCRcYJgcQst9bg4HBRwO3G5ABqMzSJdEtuOwHmQXCU4DsdKD9GUS6ARnkkVDGYzMX5gYYhoEd0HpeCkjvwlPng+wn5AZY+kJPZ4RAKCt2NjY3EALkuuEL0F5pFgjGB2BuANHvqdQeRC6riQHIbsAVJt8UKMeUgsHghq+DwA0AgRejBQ==
+   eJxjYCAOLGMlUiEZYD8U08MNy5gIu6GYBb8bQFiZh3K3YHMDMj1QYD8axgVyOUkz9ysb+W6ihhvQ7f+iiBsTA7axIjAyWCuK2050QKobYHaB6LvMCPFsZQaGiUA9WcQ5nSoA5gZ0/z9iJN2sZmkGhhYcmJAbQNhLDMLXZWdg6GdD4DPstHUDchqAhUM6B0IePSwIxQ+54YAODiHZq8KGoFWQ0iMut1Dqhv1o7BA2CAYBPQ78ZQo2N2URkEcGbdy4xZHlgqFuItUtuACxZTY29+lyQMIFhskBhOz31mBg8NHA7QZkACqzdEl0Cy77QWaB8BQgOx1ofwaRbkAGeSSU8djMhbkBhmFgB7SelwLSu/DU+SD7CbkBlr7Q0xkhEMqKnY3NDYQAuW74ArRXmgWC8QGYG0D0eyq1B5HLamIAshtwhck3BcoxpWAwuOHrIHADAA1Voms=
   </data>
  </layer>
  <layer id="7" name="water" width="33" height="24">
@@ -49,7 +50,7 @@
 }]</property>
    </properties>
   </object>
-  <object id="166" template="../../obj/wood.tx" x="452.956" y="61.4352"/>
+  <object id="166" template="../../obj/wood.tx" x="374.206" y="54.9352"/>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="430.769" y="128.183">
    <properties>
     <property name="enemy" value="Euru"/>
@@ -403,6 +404,18 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
     <property name="mythicShopList" value=""/>
     <property name="rareShopList" value=""/>
     <property name="uncommonShopList" value=""/>
+   </properties>
+  </object>
+  <object id="167" template="../../obj/wood.tx" x="204.5" y="170.75"/>
+  <object id="168" template="../../obj/stone.tx" x="367.75" y="192.25">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;stone&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="113">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="115">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -11,6 +11,7 @@
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="22017" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="38401" source="../../../../common/maps/tileset/FarmFood.tsx"/>
+ <tileset firstgid="42497" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="50" height="30">
   <data encoding="base64" compression="zlib">
    eJzt0sEJgDAMheFcRBxAdCLHaLcRnEAn6lxFaC9Va0oDofoO36GCMX/RdUQOAAAAACCxDfo7SHVE2rtIdbTcc9fRYk+uo6UeTodEz9jr7x+tAber9N2z9a03nVPbsRuiw1z34t5B6T9QO+fJZIlmKzcPAP5rCbjPpb+dO6Pj+x0eRL8hLA==
@@ -158,7 +159,7 @@ ALL SUMMERS MUST BE VEILED&quot;,
    </properties>
   </object>
   <object id="103" template="../../../../common/maps/obj/gold.tx" x="721.333" y="459.333"/>
-  <object id="112" template="../../obj/stone.tx" x="726.333" y="464.333"/>
+  <object id="112" template="../../obj/stone.tx" x="752.954" y="393.231"/>
   <object id="104" template="../../../../common/maps/obj/gold.tx" x="672.667" y="460.667"/>
   <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="131.333" y="370"/>
   <object id="106" template="../../../../common/maps/obj/waypoint.tx" x="36" y="274.667"/>
@@ -213,6 +214,28 @@ ALL SUMMERS MUST BE VEILED&quot;,
   <object id="111" template="../../../../common/maps/obj/scroll.tx" x="7" y="260.667">
    <properties>
     <property name="reward" value="[ { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Idyllic Beachfront&quot;, &quot;editions&quot;: [ &quot;DMU&quot; ], &quot;count&quot;: 1 } ] "/>
+   </properties>
+  </object>
+  <object id="113" template="../../obj/wood.tx" x="173.294" y="380.871">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="114" template="../../obj/wood.tx" x="25.6977" y="300.671">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

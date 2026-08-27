@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="50" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="140">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="142">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -9,6 +9,7 @@
  <tileset firstgid="28289" name="Animated Tiles" tilewidth="16" tileheight="16" tilecount="16384" columns="128">
   <image source="../../../../common/maps/tileset/dungeon/animatedtiles.png" width="2048" height="2048"/>
  </tileset>
+ <tileset firstgid="44673" source="../../tileset/resource_drop.tsx"/>
  <layer id="8" name="Collision" width="50" height="35">
   <data encoding="base64" compression="zlib">
    eJzt1DEKgDAMhWFXsYMgulQ8jXguj+JRJYhQS7UBW5vE/OAgirxvqFVFN2tKL0iTFMckwAGGpS694l2ngbPDOgZ1hJuHNN9Zm/g7HBywK2bJeTZSOp4suc93akfI8sU/KoejRH9zbP1x3d1LcUBSHBB1B/XUoUlvNNeLQ+5Wf39pR9finvlbKTlgJ8YR2krJgU0dtMI6qIdxcCjm4JIUB8R1dygpDo1vOw96KgM=
@@ -45,7 +46,7 @@
   </object>
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="350.334" y="248.083"/>
   <object id="68" template="../../../../common/maps/obj/gold.tx" x="124.167" y="20.1667"/>
-  <object id="139" template="../../obj/wood.tx" x="129.167" y="25.1667"/>
+  <object id="139" template="../../obj/wood.tx" x="154.103" y="61.2232"/>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="79.2705" y="167.649">
    <properties>
     <property name="enemy" value="Mageripper"/>
@@ -128,5 +129,17 @@
   <object id="136" template="../../../../common/maps/obj/waypoint.tx" x="652" y="315"/>
   <object id="137" template="../../../../common/maps/obj/waypoint.tx" x="769.5" y="34"/>
   <object id="138" template="../../../../common/maps/obj/waypoint.tx" x="225.5" y="312.5"/>
+  <object id="140" template="../../obj/wood.tx" x="64.787" y="481.29"/>
+  <object id="141" template="../../obj/stone.tx" x="334.032" y="457.365">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;stone&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

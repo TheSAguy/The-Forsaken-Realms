@@ -166,7 +166,7 @@
   <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="338.459" y="75.3724"/>
   <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="423.948" y="76.9604"/>
   <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="434.271" y="171.978"/>
-  <object id="75" template="../../obj/stone.tx" x="452" y="72.5455"/>
-  <object id="76" template="../../obj/stone.tx" x="140.545" y="122"/>
+  <object id="75" template="../../obj/stone.tx" x="449.25" y="82.0455"/>
+  <object id="76" template="../../obj/stone.tx" x="143.295" y="138.75"/>
  </objectgroup>
 </map>

@@ -115,7 +115,7 @@
   </object>
   <object id="65" template="../../../../../common/maps/obj/entry_up.tx" x="355" y="543.5" width="44.5" height="52">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/main_story/castles/black_castle_f1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/castles/black_castle_f1.tmx"/>
    </properties>
   </object>
   <object id="66" template="../../../../../common/maps/obj/enemy.tx" x="89.5" y="601">

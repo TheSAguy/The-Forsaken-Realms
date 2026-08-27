@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="101">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="103">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
+ <tileset firstgid="16385" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Collision" width="30" height="25">
   <data encoding="base64" compression="zlib">
    eJzFVkFugzAQdEuaGh+qviofSSmBQ74JhZ6qPihewYhhswaSSmmkFTbYzO54dsghd24XnDvk/xdVjMY79/rgPL78cO3itR/jLzXoWNvzEub1+zgv4zgLwzO5/xnjOJ4R7lW0R2rAuPVTTanQewTzHMenG+rk/GQM3hp/jWXd5yjv4FfPkY/eky3oyVq/9Vw199Z65vY8agyc3dITqdyrxDyFyXm1lLv1zCe44br0HHi9gSlRjDnJPvQ5coCGUv0na2qlK8EUPPRFo2qSda1a1/t5H/F5LWkdc7yL68sIX+piLiwegCVrcQ7yjm8/9KDlH5wzcJi7HfGXwoSWkNtzmLBlj/zwzkLpQfDYg5BDS8/hO4yn+bA4zozzYD185BNPNWmo8zYvlv4tXPbAlC9if53bZ2r1OHO05Dusq5LOeyln4NaKT0uPnN9JnSX6D+sKlUMKV/us5SmaO/Q9gn3jibg65rZ2LZ/lfLZ4/Vqf657SPGId632Lh7POUtpHz3JP6T2avy2x9K3hWkVLP3H8G2Mf5v8f4Je4Wv9BUmHhcv8I7lscv4/9sw/2d2mtTmsPa67z835kb9G+uaYTDstr4eNcZxauPQPnrDWnfZV7Cn2L+xc+kCaU
@@ -40,7 +41,7 @@
   </object>
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="120.379" y="66.0833"/>
   <object id="63" template="../../../../common/maps/obj/gold.tx" x="19.8346" y="159.336"/>
-  <object id="100" template="../../obj/wood.tx" x="24.8346" y="164.336"/>
+  <object id="100" template="../../obj/wood.tx" x="48.2512" y="120.848"/>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="324.993" y="157.5">
    <properties>
     <property name="enemy" value="Giant Panda"/>
@@ -130,6 +131,18 @@
     <property name="enemy" value="Giant Panda"/>
     <property name="threatRange" type="int" value="30"/>
     <property name="waypoints" value="85,87,86,87"/>
+   </properties>
+  </object>
+  <object id="101" template="../../obj/wood.tx" x="408.592" y="103.508"/>
+  <object id="102" template="../../obj/stone.tx" x="451.188" y="378.039">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;stone&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

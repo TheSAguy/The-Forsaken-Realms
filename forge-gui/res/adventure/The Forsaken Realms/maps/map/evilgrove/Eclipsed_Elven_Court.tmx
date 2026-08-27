@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="170">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="172">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -10,6 +10,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="22017" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="SubBackground" width="30" height="35">
   <data encoding="base64" compression="zlib">
    eJztk00KgCAQRm1h4UGKTtJJOkKbNt1Ngs5VotEgaln5E82DDxeKb8ZBQiQdO+LCdq6mhLQqzZaRuXN235l3UutCZQTc4NbrCuHd3UNxBMIDeKE7FMJp6ze0FzJv3r6M4zbh43/6j2glo/tjeU1+Hbj/ttflj+H1qecOOXiv1JEjcJZXZv91byr0/mK+cwov8k1S/cW/eREEQZ6wAoAkL5I=
@@ -231,8 +232,8 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
    </properties>
   </object>
   <object id="160" template="../../../../common/maps/obj/gold.tx" x="176.5" y="320.5"/>
-  <object id="168" template="../../obj/wood.tx" x="119.167" y="325.833"/>
-  <object id="169" template="../../obj/wood.tx" x="171.5" y="325.5"/>
+  <object id="168" template="../../obj/wood.tx" x="33.9306" y="113.21"/>
+  <object id="169" template="../../obj/wood.tx" x="320.742" y="160.959"/>
   <object id="161" template="../../../../common/maps/obj/gold.tx" x="158" y="320.5"/>
   <object id="162" template="../../../../common/maps/obj/gold.tx" x="137" y="320"/>
   <object id="163" template="../../../../common/maps/obj/booster.tx" x="400.5" y="556">
@@ -278,6 +279,28 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
   <object id="167" template="../../../../common/maps/obj/scroll.tx" x="93.75" y="254">
    <properties>
     <property name="reward" value="[ { &quot;type&quot;: &quot;card&quot;, &quot;cardName&quot;: &quot;Morcant's Loyalist&quot;, &quot;editions&quot;: [ &quot;ECL&quot; ], &quot;count&quot;: 1 } ]"/>
+   </properties>
+  </object>
+  <object id="170" template="../../obj/wood.tx" x="379.467" y="401.946">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="171" template="../../obj/wood.tx" x="33.2132" y="449.716">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

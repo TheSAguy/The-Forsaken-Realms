@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="112">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="113">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/buildings-nocollide.tsx"/>
+ <tileset firstgid="13697" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="60" height="34">
   <data encoding="base64" compression="zlib">
    eJzl110OgjAMB/CFN6OX0Ddu5AW8whJeOKk30DtoSCDOpbBuXdt9NPlHjQH3W2GT6WTMxBCb+VxuOMabY3xU11G0jbm9mDkoxUkdTw09lhqPtp1r/pea11dsteDdi5ZZo78z8Fvc1vuZNxjvazTmPcp5reOG+ku1hrxbSXp93553WIM1+/fr8wLfv5LXc6iXgxdMX2NLy7vE91ESa+7JuxWnF1qfWvXu7bc5vSlmKSfFu1VpXszzSs39tRHOFryxVk4v9F+Zo78le6XXppa8KdZavf65ufcjzFol4cXMh/8ZekYo3Uu51jGGP8vt9/ZzNeaxBrMXSXmPzKHjIIf7vbQjxgu5Q8dp9YfDizmudm9KarNS06O3R7P2GHrxfgFBViDR
@@ -115,8 +116,8 @@
   </object>
   <object id="68" template="../../../../common/maps/obj/gold.tx" x="384.797" y="97.8895"/>
   <object id="109" template="../../obj/stone.tx" x="325.03" y="216.196"/>
-  <object id="110" template="../../obj/stone.tx" x="314.324" y="340.113"/>
-  <object id="111" template="../../obj/stone.tx" x="389.797" y="92.8895"/>
+  <object id="110" template="../../obj/stone.tx" x="593.324" y="217.113"/>
+  <object id="111" template="../../obj/stone.tx" x="379.464" y="223.889"/>
   <object id="70" template="../../../../common/maps/obj/enemy.tx" x="339.838" y="141.665">
    <properties>
     <property name="enemy" value="Skeleton Soldier"/>
@@ -218,6 +219,17 @@
     <property name="enemy" value="Zombie"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="112" template="../../obj/wood.tx" x="781.667" y="171.333">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

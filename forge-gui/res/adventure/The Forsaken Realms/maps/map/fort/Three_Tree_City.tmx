@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="136">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="138">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -9,6 +9,7 @@
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/FarmFood.tsx"/>
+ <tileset firstgid="16001" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="40" height="30">
   <data encoding="base64" compression="zlib">
    eJxL42RgSBvFgwrXskDwQLtjFI8sPJrmRgYeKvEswMXAkDcI3EHruBgq8UGqv7DRpOilNPwImYMsTyge0NXSM13A2MiYnvGIbi+6G7C5b7im61E8ikfxKB7Fo3gUDzwGAPU4Cs4=
@@ -499,6 +500,28 @@ Though uprooted from our home in Valley, still we stand together.&quot;,
    </properties>
   </object>
   <object id="135" template="../../obj/wood.tx" x="24.6494" y="172.91">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="136" template="../../obj/wood.tx" x="260.487" y="65.6402">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="137" template="../../obj/wood.tx" x="376.409" y="387.331">
    <properties>
     <property name="reward">[
   {

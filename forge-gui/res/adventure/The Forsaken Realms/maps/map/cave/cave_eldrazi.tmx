@@ -75,6 +75,6 @@
   <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="179.333" y="102.333"/>
   <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="229.667" y="43"/>
   <object id="90" template="../../obj/stone.tx" x="407.232" y="150.261"/>
-  <object id="91" template="../../obj/stone.tx" x="248.77" y="47.5123"/>
+  <object id="91" template="../../obj/stone.tx" x="248.77" y="64.2669"/>
  </objectgroup>
 </map>

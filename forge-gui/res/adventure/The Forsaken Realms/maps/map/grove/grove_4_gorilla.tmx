@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="36" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="90">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="36" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="91">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="8" name="Collision" width="36" height="35">
   <data encoding="base64" compression="zlib">
    eJztltEJwCAMRJ2g03S6ztJhix+ClRaamDNXuAf+aXiSC1qKEEIIkcu+ZRvcqT7jYoHJpfJXn6cez/Y6ul5f03sWgfdu6KxYvVZl9y0TiLx89bHsXdE3636kk6c20mlm/sesMRHlw1Ineoa9bxTbv4XFo8Hkw9YnBpc+v+fB4ZLNBQvIFwE=
@@ -112,7 +113,7 @@
   <object id="79" template="../../../../common/maps/obj/manashards.tx" x="528.818" y="432.909"/>
   <object id="80" template="../../../../common/maps/obj/manashards.tx" x="-0.727273" y="288.364"/>
   <object id="81" template="../../../../common/maps/obj/gold.tx" x="-0.272727" y="217.455"/>
-  <object id="89" template="../../obj/wood.tx" x="4.72727" y="222.455"/>
+  <object id="89" template="../../obj/wood.tx" x="54.0582" y="222.767"/>
   <object id="82" template="../../../../common/maps/obj/gold.tx" x="33.8182" y="528.364"/>
   <object id="83" template="../../../../common/maps/obj/gold.tx" x="523.364" y="240.182"/>
   <object id="84" template="../../../../common/maps/obj/treasure.tx" x="504.727" y="255.636"/>
@@ -120,5 +121,6 @@
   <object id="86" template="../../../../common/maps/obj/collision.tx" x="-3.76536" y="-15.7273" width="580.258" height="16"/>
   <object id="87" template="../../../../common/maps/obj/collision.tx" x="-15.2727" y="-13.7677" width="16" height="590.717"/>
   <object id="88" template="../../../../common/maps/obj/collision.tx" x="576.545" y="-10.3585" width="16" height="590.717"/>
+  <object id="90" template="../../obj/wood.tx" x="396.639" y="331.697"/>
  </objectgroup>
 </map>

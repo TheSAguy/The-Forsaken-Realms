@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="44" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="268">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="273">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/FarmFood.tsx"/>
+ <tileset firstgid="16001" source="../../tileset/resource_drop.tsx"/>
  <layer id="28" name="Collision" width="44" height="40">
   <data encoding="base64" compression="zlib">
    eJztmG1uwjAMhvsz+bPT7AoDxEU3Om7FRznGZHUWL1Y+nMTJQNorWYg0dR+5ttt646dpI0xKHk9ZTrvfPfvM3tlN09HVsewUHKcK3m+3muSa4b88pomPhhd9aXhRJ2Anu4g9yKy5l1pe9lfKqxEz51jnQA6lFPNF66W+UJzv2jrRKlavLawkrM+je8wfthpJXgtWEvJax7e0x2nUi1fKmtc6f3uJeh7lbW9eC9/vb3djn724rXhDfM/O2+J7ZM5bxPefN65n5A3xcD9oZejRS2K8KWYNR4/eJ5/fW6/jxXNHsaJv/i3hxXND673qrJW35Zuyllfmg1yv9TtKoVh9udUOynfqv+ZllXwDj5IFL/upvX7pfgvemmtrzsHjuVq/JnwtfrWDmFuUcGqfRVpeUijGN1jDPrNAv7Tqf628yDrDnIjXr/4e+wV6jbQRvDnW2PwwpG1BjLW8PNP4dHHWD/+4l6RhruFNCa9P381nMJwVMq/MmxSzxWyn1l+MlxRitmYtVYqXdBb3ZoSWRD3meEfrlukfzGtdP6XS9nquRTmvH6ne7+HWeiVW0g/3a5Vc
@@ -108,7 +109,7 @@
   <object id="197" template="../../../../common/maps/obj/door_up.tx" x="61.6753" y="66.9383" width="30" height="39.5">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/zedruu/zedruu_f1.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/zedruu/zedruu_f1.tmx"/>
    </properties>
   </object>
   <object id="198" template="../../../../common/maps/obj/waypoint.tx" x="146.842" y="557.938"/>
@@ -220,7 +221,7 @@
   <object id="229" template="../../../../common/maps/obj/waypoint.tx" x="423.509" y="521.439"/>
   <object id="230" template="../../../../common/maps/obj/waypoint.tx" x="227.509" y="528.105"/>
   <object id="231" template="../../../../common/maps/obj/gold.tx" x="357.509" y="467.439"/>
-  <object id="266" template="../../obj/stone.tx" x="620.213" y="39.537"/>
+  <object id="266" template="../../obj/stone.tx" x="577.546" y="213.87"/>
   <object id="267" template="../../obj/stone.tx" x="352.509" y="472.439"/>
   <object id="232" template="../../../../common/maps/obj/waypoint.tx" x="110.842" y="440.105"/>
   <object id="233" template="../../../../common/maps/obj/waypoint.tx" x="115.342" y="392.939"/>
@@ -363,7 +364,62 @@
   <object id="262" template="../../../../common/maps/obj/door_up.tx" x="457.509" y="16.3553" width="22.6667" height="22.5">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/zedruu/zedruu_f4.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/zedruu/zedruu_f4.tmx"/>
+   </properties>
+  </object>
+  <object id="268" template="../../obj/wood.tx" x="88.5088" y="551.105">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="269" template="../../obj/wood.tx" x="660.509" y="419.439">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="270" template="../../obj/wood.tx" x="670.842" y="369.439">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="271" template="../../obj/wood.tx" x="306.175" y="56.1053">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="272" template="../../obj/wood.tx" x="306.175" y="74.7719">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

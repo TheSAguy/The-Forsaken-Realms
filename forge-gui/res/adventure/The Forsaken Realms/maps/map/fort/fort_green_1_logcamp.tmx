@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="96">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="98">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="22017" source="../../tileset/resource_drop.tsx"/>
  <layer id="8" name="Outside" width="34" height="34">
   <data encoding="base64" compression="zlib">
    eJzt0cENgCAQRNE9mcg2ZiUUB8auwFgAd4ZgCUYu//Ayx/3Jxt0sAgAAAMArBbPH52Zp2/8NVfcv3T60p/b2NR1D8dkzGlb/BgC+0gHqZ/q4
@@ -138,7 +139,7 @@
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="29.75" y="415.75"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="153.75" y="543.5"/>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="29.5" y="544.5"/>
-  <object id="94" template="../../obj/wood.tx" x="78.5455" y="19.4545">
+  <object id="94" template="../../obj/wood.tx" x="82.3715" y="30.9326">
    <properties>
     <property name="reward">[
   {
@@ -149,7 +150,29 @@
 ]</property>
    </properties>
   </object>
-  <object id="95" template="../../obj/wood.tx" x="31.8182" y="426.182">
+  <object id="95" template="../../obj/wood.tx" x="31.1805" y="442.124">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="96" template="../../obj/wood.tx" x="439.966" y="385.445">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="97" template="../../obj/wood.tx" x="18.3333" y="148">
    <properties>
     <property name="reward">[
   {

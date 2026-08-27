@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="178">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="179">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -11,6 +11,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="22017" source="../../../../common/maps/tileset/buildings-nocollide.tsx"/>
+ <tileset firstgid="23809" source="../../tileset/resource_drop.tsx"/>
  <layer id="16" name="Collision" width="22" height="21">
   <data encoding="base64" compression="zlib">
    eJxjYBhY4MaJwJTqJ4RJNdeEjzAmx1xK/EWpuaTqHWhzsakjZC6yPIyNLkZO+OJSR0k6QzcHn93UNpeQHDnm0jIcCMkNBnOR/U6Nsg2fHdQ2FxufEnPx2UMNc6mRzsitLwAC3x8G
@@ -51,7 +52,7 @@
     <property name="spawn.Hard" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="177" template="../../obj/stone.tx" x="245.675" y="94.0923"/>
+  <object id="177" template="../../obj/stone.tx" x="271.152" y="102.522"/>
   <object id="150" template="../../../../common/maps/obj/enemy.tx" x="141.842" y="91.272">
    <properties>
     <property name="effect">{ &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Tibalt's Boss Effect&quot;]
@@ -115,14 +116,14 @@
   <object id="170" template="../../../../common/maps/obj/door_down.tx" x="124.811" y="303.18" width="32.3503" height="30.8105" rotation="0.284412">
    <properties>
     <property name="direction" value="up"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt_f3.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt_f3.tmx"/>
     <property name="teleportObjectId" value="198"/>
    </properties>
   </object>
   <object id="174" template="../../../../common/maps/obj/door_down.tx" x="261.1" y="80.3289" width="32.3503" height="30.8105" rotation="0.284412">
    <properties>
     <property name="direction" value="down"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt_f0.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt_f0.tmx"/>
     <property name="teleportObjectId" value="176"/>
    </properties>
   </object>
@@ -131,7 +132,7 @@
     <property name="activeQuestFlag" value="TibaltPortal"/>
     <property name="portalState" value="inactive"/>
     <property name="sprite" value="sprites/portal3.atlas"/>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/tibalt/tibalt.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt.tmx"/>
     <property name="teleportObjectId" value="222"/>
    </properties>
   </object>
@@ -156,6 +157,17 @@
       }
     ]
   }
+]</property>
+   </properties>
+  </object>
+  <object id="178" template="../../obj/wood.tx" x="81.9465" y="91.2596">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
 ]</property>
    </properties>
   </object>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="63">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="64">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="30">
   <data encoding="base64" compression="zlib">
    eJztlmEKgCAMhf0b1Qms63SIukv3quxuJTZYkkZtGcI+GIMt38NFLKUEIR1NRQuK71Arpfc8o+hrV4eMe+3Rp/qOpdPGaKTZevrW056h+vq6lgnVlou+Zpjzle8dufvqBxrwPOd9u+KcQ7Xc5wykvq+83zgcvuuL84ZpL8xIA/YCEOp/MefYXoB+zr6TpxHzXZi+o/XYwTgM0gz1qb5//OcIAoUNp+8uUA==
@@ -43,7 +44,7 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/treasure.tx" x="216.171" y="122.719"/>
   <object id="52" template="../../../../common/maps/obj/gold.tx" x="152.5" y="374.5"/>
-  <object id="62" template="../../obj/stone.tx" x="157.5" y="379.5"/>
+  <object id="62" template="../../obj/stone.tx" x="148.936" y="345.512"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="214.827" y="151.762">
    <properties>
     <property name="enemy" value="Sun Giant"/>
@@ -100,6 +101,17 @@
    <properties>
     <property name="enemy" value="Monk"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="63" template="../../obj/wood.tx" x="284.774" y="336.96">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

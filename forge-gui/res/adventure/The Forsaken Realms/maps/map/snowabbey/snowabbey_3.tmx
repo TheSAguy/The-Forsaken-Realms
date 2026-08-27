@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="66">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="67">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="17">
   <data encoding="base64" compression="zlib">
    eJzt0kEKgDAMBMDSm+ZDfsWP5nGepEighE2NsCqIh4Uclgy0qVJKBVmnI4vkYn2060rectuubc671mW4mrRbR4XnZuzeZLoj25tst7fVzb7Hds1G81dd/85PuP4/I5vpRjeEbJYbmZHNcM9MZN9xV5n8Ls4OYH1n9w==
@@ -49,7 +50,7 @@
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="199.84" y="21.8333"/>
-  <object id="65" template="../../obj/stone.tx" x="204.84" y="26.8333"/>
+  <object id="65" template="../../obj/stone.tx" x="199.988" y="45.6366"/>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="111.25" y="58.25">
    <properties>
     <property name="enemy" value="Magma Fire Elemental"/>
@@ -67,6 +68,17 @@
     <property name="enemy" value="Magma Fire Elemental"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="60,63"/>
+   </properties>
+  </object>
+  <object id="66" template="../../obj/wood.tx" x="115.738" y="162.443">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 10,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
    </properties>
   </object>
  </objectgroup>

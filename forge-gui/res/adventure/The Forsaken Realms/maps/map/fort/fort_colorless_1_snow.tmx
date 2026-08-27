@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="73">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="75">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -7,6 +7,7 @@
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
+ <tileset firstgid="38401" source="../../tileset/resource_drop.tsx"/>
  <layer id="9" name="Background" width="40" height="31">
   <data encoding="base64" compression="zlib">
    eJzt0MEJACAMBMG0bnWWkHZE0J/+Yi7CBuYr63kzcwAAUEZf1B23rl/65qmbTo37ot57taF6q4i2zH9U3Q0AAOQYfcV9Qw==
@@ -104,6 +105,28 @@
   <object id="70" template="../../../../common/maps/obj/collision.tx" x="357.653" y="178.198" width="42.4147" height="13.9149"/>
   <object id="71" template="../../../../common/maps/obj/collision.tx" x="410.405" y="243.67" width="39.4956" height="37.2679"/>
   <object id="72" template="../../obj/wood.tx" x="444.141" y="93.2132">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="73" template="../../obj/wood.tx" x="475.882" y="241.068">
+   <properties>
+    <property name="reward">[
+  {
+    &quot;type&quot;: &quot;wood&quot;,
+    &quot;count&quot;: 20,
+    &quot;addMaxCount&quot;: 10
+ }
+]</property>
+   </properties>
+  </object>
+  <object id="74" template="../../obj/wood.tx" x="46.2016" y="407.085">
    <properties>
     <property name="reward">[
   {

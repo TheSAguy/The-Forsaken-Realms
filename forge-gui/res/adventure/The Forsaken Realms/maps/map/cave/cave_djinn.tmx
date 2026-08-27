@@ -115,6 +115,6 @@
   </object>
   <object id="72" template="../../obj/stone.tx" x="76.3787" y="37.4192"/>
   <object id="73" template="../../obj/stone.tx" x="239.08" y="102.217"/>
-  <object id="74" template="../../obj/stone.tx" x="164.189" y="94.7483"/>
+  <object id="74" template="../../obj/stone.tx" x="163.583" y="108.071"/>
  </objectgroup>
 </map>

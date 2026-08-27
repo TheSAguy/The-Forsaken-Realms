@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="45" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="97">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="99">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -13,6 +13,7 @@
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <tileset firstgid="38401" source="../../../../common/maps/tileset/dungeon/animatedtiles.tsx"/>
+ <tileset firstgid="54785" source="../../tileset/resource_drop.tsx"/>
  <layer id="8" name="Collision" width="45" height="32">
   <data encoding="base64" compression="zlib">
    eJzt1ksKwCAMRVGnbsz9L8mhGSQaIUaUe6BU/PUJ2rYUAD9oddy1suynXVpbVuaXkPnO3rD25aremu+E6MwZvNm84zPsZPas5cV3HZntZ0ScoxvfQTKfNfv3sdplvdYHAAAAfh1lahra
@@ -123,7 +124,7 @@
   <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="574.733" y="127.586"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="341.74" y="240.593"/>
   <object id="82" template="../../../../common/maps/obj/gold.tx" x="204.396" y="151.505"/>
-  <object id="96" template="../../obj/wood.tx" x="209.396" y="156.505"/>
+  <object id="96" template="../../obj/wood.tx" x="181.191" y="157.415"/>
   <object id="83" template="../../../../common/maps/obj/gold.tx" x="388.495" y="14.421"/>
   <object id="84" template="../../../../common/maps/obj/collision.tx" x="-15.52" y="512.8" width="738.24" height="16"/>
   <object id="85" template="../../../../common/maps/obj/collision.tx" x="0.08" y="-16.4" width="720.24" height="16"/>
@@ -149,5 +150,7 @@
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="510.4" y="264.8"/>
   <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="580" y="185.2"/>
   <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="422" y="127.6"/>
+  <object id="97" template="../../obj/wood.tx" x="506.362" y="319.542"/>
+  <object id="98" template="../../obj/wood.tx" x="533.96" y="64.4837"/>
  </objectgroup>
 </map>

@@ -162,7 +162,7 @@
   <object id="89" template="../../../../common/maps/obj/collision.tx" x="271.899" y="216.908" width="16.2019" height="22.1834"/>
   <object id="90" template="../../../../common/maps/obj/collision.tx" x="319.232" y="216.242" width="16.2019" height="22.1834"/>
   <object id="91" template="../../../../common/maps/obj/collision.tx" x="272.899" y="274.533" width="63.3269" height="8.9334"/>
-  <object id="92" template="../../obj/wood.tx" x="317.818" y="75.5582">
+  <object id="92" template="../../obj/wood.tx" x="320.429" y="79.9762">
    <properties>
     <property name="reward">[
   {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="108">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="110">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="40" height="26">
   <data encoding="base64" compression="zlib">
    eJzN1lEKwjAMBuDCpmP38Cy9gQ89ieApPJkw8Ba7g0jBh9Il6Z80lAl5mHTma5K6pTWEZIz3fAxkDbWWu78nNHlba719VK64HnNTXnRvXERFrSifVA/Kr/Vxv4k693/k9fss+7jvkJrVPdHUsjVznI8zSj7rOUF86AxGB6vUt9bctc6L5Msfi4+aD03fpf729Nvq4/YXB/tqZ2sOPS3a+nHrymuqfiN86P0jfeX1Azx3iM97HrPN0+cZGpvGd7+M24Olf2fzbdM5fGfvL+rL587TiP4Pas6v5LO+A7+WEG5Xm6/Ol32WZzwSnLHlk56fz4D5vovdlwAflVtTq16f1FtNPz+TLkdpo3w/PdHxqw==
@@ -57,7 +58,7 @@
    </properties>
   </object>
   <object id="67" template="../../../../common/maps/obj/gold.tx" x="416.978" y="181.522"/>
-  <object id="107" template="../../obj/stone.tx" x="421.978" y="186.522"/>
+  <object id="107" template="../../obj/stone.tx" x="326.478" y="183.272"/>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="471" y="285">
    <properties>
     <property name="enemy" value="Kor Warrior"/>
@@ -95,7 +96,7 @@
   </object>
   <object id="79" template="../../../../common/maps/obj/door_down.tx" x="472.75" y="64.6667">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/nahiri/nahiricave.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/nahiri/nahiricave.tmx"/>
     <property name="teleportObjectId" value="71"/>
    </properties>
   </object>
@@ -121,9 +122,11 @@
   </object>
   <object id="106" template="../../../../common/maps/obj/door_down.tx" x="117" y="287">
    <properties>
-    <property name="teleport" value="../The Forgotten Realms/maps/map/nahiri/nahiricave.tmx"/>
+    <property name="teleport" value="../The Forsaken Realms/maps/map/nahiri/nahiricave.tmx"/>
     <property name="teleportObjectId" value="96"/>
    </properties>
   </object>
+  <object id="108" template="../../obj/stone.tx" x="175.25" y="72"/>
+  <object id="109" template="../../obj/stone.tx" x="166" y="350"/>
  </objectgroup>
 </map>
