@@ -1186,12 +1186,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 addShards(reward.getCount());
                 break;
             // Mod addition (The Forsaken Realms, 2026-08-10): Stone as a Reward type.
+            // Logged since 2026-08-27 - a playtest report ("reward screen vanished, not sure I
+            // got anything") was unanswerable from the log without a grant line.
             case Stone:
                 addStone(reward.getCount());
+                System.out.println("[TFR-Reward] stone +" + reward.getCount() + " (reward grant)");
                 break;
             // Mod addition (The Forsaken Realms, 2026-08-11): Wood as a Reward type.
             case Wood:
                 addWood(reward.getCount());
+                System.out.println("[TFR-Reward] wood +" + reward.getCount() + " (reward grant)");
                 break;
         }
     }

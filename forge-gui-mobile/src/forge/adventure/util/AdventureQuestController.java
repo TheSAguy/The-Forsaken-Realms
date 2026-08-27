@@ -43,6 +43,7 @@ public class AdventureQuestController implements Serializable {
                         extraSpawns.add(c.getTargetEnemyData());
                         continue;
                     }
+                    List<EnemyData> tagMatches = new ArrayList<>();
                     for (EnemyData enemy : WorldData.getAllEnemies()) {
                         List<String> candidateTags = Arrays.stream(enemy.questTags).collect(Collectors.toList());
                         boolean match = true;
@@ -59,13 +60,47 @@ public class AdventureQuestController implements Serializable {
                             }
                         }
                         if (match) {
-                            extraSpawns.add(enemy);
+                            tagMatches.add(enemy);
                         }
                     }
+                    // Filtered since 2026-08-27 ("Syr Faren (Master)" caught the player on day
+                    // 1): a mixedEnemies Defeat stage with empty enemyTags degenerated this scan
+                    // into "uniform random over the whole 1520-entry catalog, every spawn tick" -
+                    // 59% of which is spawnRate:0 legends. An empty filtered pool is fine:
+                    // BiomeData's caller treats null/empty as "no extra spawn this tick" and the
+                    // ordinary weighted roll proceeds alone.
+                    extraSpawns.addAll(filterQuestSpawnPool(tagMatches, difficultyFactor));
                 }
             }
         }
         return extraSpawns;
+    }
+
+    /** Shared sanity filter for quest-driven spawn pools (2026-08-27 playtest fix). Applies the
+     *  gates every ordinary roaming-spawn path already honors: no bosses or spawnRate<=0
+     *  "Legends" catalog entries (SpawnTierWeighting.isExempt), nothing above the player's
+     *  current difficulty rank, content-filter-table exclusions, and the weekly spawn-tier
+     *  bracket cap (same table TerritoryControl.clampDispatchTierToWeek uses; null owningColor
+     *  = the all-zero NEUTRAL delta, i.e. the bracket base). Hand-authored quest targets
+     *  (stage.targetEnemyData) deliberately do NOT come through here - quests may script any
+     *  enemy they like; this only guards pools built by generic tag scans. */
+    public static List<EnemyData> filterQuestSpawnPool(List<EnemyData> candidates, float difficultyFactor) {
+        List<EnemyData> filtered = new ArrayList<>();
+        forge.adventure.world.World world = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getWorld();
+        boolean weighting = SpawnTierWeighting.isEnabled() && world != null;
+        int week = weighting ? SpawnTierWeighting.currentWeek(world) : 0;
+        for (EnemyData enemy : candidates) {
+            if (enemy == null || SpawnTierWeighting.isExempt(enemy))
+                continue;
+            if (enemy.difficulty > difficultyFactor)
+                continue;
+            if (!ContentFilterTables.isEnemyIncluded(enemy.getName()))
+                continue;
+            if (weighting && SpawnTierWeighting.targetTierWeight(enemy.tier, week, null) <= 0f)
+                continue;
+            filtered.add(enemy);
+        }
+        return filtered;
     }
 
     public Map<String, Float> getBoostedSpawns(List<EnemyData> localSpawns, float totalWeightToAssign) {

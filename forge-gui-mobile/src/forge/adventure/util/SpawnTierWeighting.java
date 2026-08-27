@@ -64,8 +64,8 @@ public class SpawnTierWeighting {
         return config != null && config.weightedSpawnTiersEnabled;
     }
 
-    /** Bosses and quest-tagged enemies are exempt from tier-weighting AND kill-decay - they keep
-     *  their original spawnRate-only weighting untouched, same as with this whole system off.
+    /** Bosses are exempt from tier-weighting AND kill-decay - they keep their original
+     *  spawnRate-only weighting untouched, same as with this whole system off.
      *  Also exempts spawnRate<=0 enemies (2026-08-25 bug found via playtest: oversized "Legends"/
      *  commander-flavor enemies like Kothophed and Yargle and Multani, authored with spawnRate:0
      *  and no boss/questTags flag, started appearing as ordinary roaming encounters at roughly 2x
@@ -76,10 +76,17 @@ public class SpawnTierWeighting {
      *  authored with spawnRate 0 for the same reason) depended on. Restoring the exemption here
      *  means BiomeData.getEnemy()'s exempt branch gives these candidates their own (zero) weight
      *  again, matching pre-Layer-3 / feature-disabled behavior, without touching the weighting
-     *  math for any enemy that legitimately has spawnRate > 0. */
+     *  math for any enemy that legitimately has spawnRate > 0.
+     *  <p>
+     *  The original questTags exemption was REMOVED 2026-08-27 (playtest: two "(Master)"-shown
+     *  Rares roaming on day 1). It was meant to shield scripted quest enemies, but this plane
+     *  uses questTags as generic metadata ("BiomeGreen", "Human", "IdentityGreen", ...) - 1398
+     *  of 1520 enemies.json entries carried tags, so ~97% of the day-1 pool kept raw spawnRate
+     *  weighting and week 1's "rare: 0" bracket bound almost nothing. The clause also protected
+     *  nothing real: actual quest spawns route through BiomeData.getExtraSpawnEnemy()/
+     *  AdventureQuestController.getQuestSprites(), which never consult this weighting at all. */
     public static boolean isExempt(EnemyData data) {
-        return data != null && (data.boss || data.spawnRate <= 0f
-                || (data.questTags != null && data.questTags.length > 0));
+        return data != null && (data.boss || data.spawnRate <= 0f);
     }
 
     /** Current week number, 1-indexed (week 1 = days 1-7) - reuses the identical day/7 boundary

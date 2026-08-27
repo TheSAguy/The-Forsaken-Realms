@@ -316,6 +316,7 @@
   }
 ]</property>
     <property name="enemy" value="Adept Black Wizard"/>
+    <property name="displayNameOverride" value="The Warden"/>
    </properties>
   </object>
   <object id="70" template="../../../../common/maps/obj/entry_down.tx" x="192" y="160">

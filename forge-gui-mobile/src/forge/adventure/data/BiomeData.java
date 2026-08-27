@@ -117,9 +117,17 @@ public class BiomeData implements Serializable {
                 filteredEnemies.add(data);
             }
         }
-        // If no enemies match the criteria, fallback to a random enemy from the original list
+        // If no enemies match the criteria, fallback to a random enemy from the original list.
+        // Prefer spawnRate>0 entries (2026-08-27): enemyList carries a zero-spawn-rate clone of
+        // EVERY enemy in the game (see getEnemyList's quest-boost mechanism), so an unfiltered
+        // uniform pick here was a difficulty-blind side door for "Legends" catalog entries.
         if (filteredEnemies.isEmpty()) {
-            return Aggregates.random(enemyList);
+            List<EnemyData> spawnable = new ArrayList<>();
+            for (EnemyData data : enemyList) {
+                if (data.spawnRate > 0f)
+                    spawnable.add(data);
+            }
+            return Aggregates.random(spawnable.isEmpty() ? enemyList : spawnable);
         }
 
         // Weighted-spawn tier system (2026-08-23, opt-in via SpawnTierWeighting.isEnabled();

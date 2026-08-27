@@ -882,10 +882,37 @@ public class TerritoryControl {
     private static String rollDispatchMageTier(Random random, World world) {
         float[] cumulative = dispatchTierCumulative(world);
         float roll = random.nextFloat() * 100f;
-        for (int i = 0; i < cumulative.length; i++)
-            if (roll < cumulative[i])
-                return DISPATCH_TIERS[i];
-        return "Mythic"; // unreachable (last boundary is 100), kept as a safe fallback
+        String rolled = "Mythic"; // unreachable fallback (last boundary is 100)
+        for (int i = 0; i < cumulative.length; i++) {
+            if (roll < cumulative[i]) {
+                rolled = DISPATCH_TIERS[i];
+                break;
+            }
+        }
+        return clampDispatchTierToWeek(rolled, world);
+    }
+
+    /** Weekly tier cap on dispatched mages (2026-08-27, same playtest as the roaming-spawn
+     *  isExempt fix): the baseline roll allows Master 15% / Archmage 5% from the very first
+     *  dispatch (~day 4), ignoring the plane's spawn_tier_weighting week brackets entirely. Step
+     *  the rolled tier down while the current week's target weight for it is zero, so a week-1
+     *  "rare: 0 / mythic: 0" bracket means the earliest mages cap at Adept and the bracket table
+     *  stays the single authority on early-game tier pacing. owningColor=null reads the bracket
+     *  base with the all-zero NEUTRAL delta - the cap should not loosen or tighten with any one
+     *  color's standing. No-op when the weighting feature is off. */
+    private static String clampDispatchTierToWeek(String tier, World world) {
+        if (!SpawnTierWeighting.isEnabled() || world == null)
+            return tier;
+        int week = SpawnTierWeighting.currentWeek(world);
+        int idx = java.util.Arrays.asList(DISPATCH_TIERS).indexOf(tier);
+        if (idx < 0)
+            return tier;
+        while (idx > 0 && SpawnTierWeighting.targetTierWeight(DISPATCH_TIERS[idx], week, null) <= 0f)
+            idx--;
+        if (!DISPATCH_TIERS[idx].equals(tier))
+            System.out.println("[TerritoryControl] dispatch tier " + tier + " clamped to "
+                    + DISPATCH_TIERS[idx] + " by week " + week + " spawn-tier bracket");
+        return DISPATCH_TIERS[idx];
     }
 
     // No color has a Mythic-tier NAMED wizard ("Archmage <Color> Wizard" doesn't exist for any

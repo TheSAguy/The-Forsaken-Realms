@@ -503,6 +503,12 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             }
             case Life:
             case Shards:
+            // Wood/Stone (2026-08-27 playtest: quest-reward cards for the town-restore grant
+            // rendered as blank card-backs that vanished on click - this switch simply had no
+            // case for them, so the actor never built a face). The plane's items.atlas carries
+            // "Wood"/"Stone" regions (the economy resource glyphs), so the Gold path just works.
+            case Wood:
+            case Stone:
             case Gold: {
                 Sprite backSprite = Config.instance().getItemSprite("CardBack");
                 Sprite item = Config.instance().getItemSprite(reward.type.toString());
@@ -1184,6 +1190,8 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
             case Life:
             case Gold:
             case Shards:
+            case Wood:
+            case Stone:
                 display = reward.type.toString();
                 break;
             case Item:

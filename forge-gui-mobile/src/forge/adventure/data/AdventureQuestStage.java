@@ -60,6 +60,9 @@ public class AdventureQuestStage implements Serializable {
     private transient List<Integer> _parsedPrerequisiteNames;
     private transient List<PointOfInterest> validPOIs;
     public boolean allowInactivePOI = false;
+    // Navigation-only town filter for the world-map quest arrow ("ruinedTown"/"survivingTown",
+    // 2026-08-27 user request) - see getNavPOIs() for why this exists separately from validPOIs.
+    public String navPOIFilter = "";
 
     public UUID stageID;
 
@@ -259,6 +262,7 @@ public class AdventureQuestStage implements Serializable {
         this.deliveryItem = other.deliveryItem;
         this.worldMapOK = other.worldMapOK;
         this.allowInactivePOI = other.allowInactivePOI;
+        this.navPOIFilter = other.navPOIFilter;
     }
 
 
@@ -284,6 +288,50 @@ public class AdventureQuestStage implements Serializable {
             }
         }
         return validPOIs;
+    }
+
+    /** Navigation-only POI pool for the world-map quest arrow (2026-08-27 user request: the
+     *  "Find a ruined town"/"Find a surviving town" tutorial stages should guide the player the
+     *  way "find a dungeon" does). Those stages are worldMapOK character-flag stages, which
+     *  getValidPOIs() correctly hides from the arrow - and worldMapOK is load-bearing for their
+     *  completion (the CHARACTERFLAG event carries no POI), so it cannot be dropped. Instead
+     *  quests.json sets navPOIFilter on such a stage and the arrow calls this accessor; nothing
+     *  in completion logic (handleEvent/checkIfTargetLocation) reads this pool, by construction.
+     *  Recomputed per call: ruined-vs-surviving status changes at runtime (towns get restored),
+     *  and the peek lookups are plain hashmap gets - cheap enough per frame. */
+    public List<PointOfInterest> getNavPOIs() {
+        if (navPOIFilter == null || navPOIFilter.isEmpty())
+            return getValidPOIs();
+        List<PointOfInterest> pool = Current.world().getAllPointOfInterest();
+        pool.removeIf(q -> !q.getActive());
+        for (String tag : POITags) {
+            pool.removeIf(q -> Arrays.stream(q.getData().questTags).noneMatch(tag::equals));
+        }
+        pool.removeIf(q -> !matchesNavFilter(q));
+        return pool;
+    }
+
+    private boolean matchesNavFilter(PointOfInterest poi) {
+        try {
+            // peek, never get: getPointOfInterestChanges() is get-or-create and would grow the
+            // save with an empty entry for every town the arrow ever considered.
+            forge.adventure.pointofintrest.PointOfInterestChanges changes =
+                    forge.adventure.world.WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+            switch (navPOIFilter) {
+                case "ruinedTown":
+                    return forge.adventure.util.TownRestoration.isWastelandTown(poi.getData())
+                            && !forge.adventure.util.TownRestoration.isNeutralSeededTown(changes)
+                            && !forge.adventure.util.TownRestoration.isTownRestored(changes);
+                case "survivingTown":
+                    return forge.adventure.util.TownRestoration.isNeutralSeededTown(changes);
+                case "restoredTown":
+                    return forge.adventure.util.TownRestoration.isTownRestored(changes);
+                default:
+                    return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public AdventureQuestController.QuestStatus handleEvent(AdventureQuestEvent event) {

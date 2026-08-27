@@ -14029,3 +14029,107 @@ AdventureQuestStage.java, AdventureQuestData.java, TileMapScene.java, TownRestor
 EconomyBuildings.java, AdventurePlayer.java, ConsoleCommandInterpreter.java,
 DungeonRotation.java, InfoTextScene.java, ConfigData.java, WorldStage.java, config.json,
 MAIN_QUEST_PLAN.md.
+
+## Fifty-eighth round: upstream engine update to Forge 08.26 daily (2026-08-27)
+
+- **Committed the user's finished .tmx map pass** (293 town/dungeon files, held out of rounds
+  54-57 while in progress) so the tree was clean for the merge.
+- **Merged upstream `Card-Forge/forge` master @ `8c7e9afb8e6`** (08.26 daily build; 55 commits,
+  160 files since the 08.19 merge point). Full conflict-by-conflict detail in
+  `CORE_ENGINE_CHANGES.md` -> "Upstream merge log". Headlines:
+  - Upstream rewrote adventure movement input (per-source vectors + a central every-frame gate
+    that zeroes input while a dialog is up). The gate subsumes our two 2026-08-09
+    `dialogOnlyInput` fixes; both conflict hunks took upstream's side. Every other GameStage mod
+    edit (Capitol-defense trigger, showDialog stop, touch early-outs) survived.
+  - Kept: Auto-Sell/Buy Back buttons, tiered boss names, Fog of War + Inn-simulation settings
+    rows, 4x loading icon + worldgen skip, TFR logo (adv_logo.png).
+  - Adopted: upstream's `localizer` refactor on all kept lines, upstream's new
+    `sprite_adventure.png` atlas with our TFR logo re-baked into `ICO_ADVLOGO` (pixel-verified),
+    and upstream's full adventure art refresh - including the new start-menu background
+    (`title_bg.png`), duel backdrops, splash, and shop/tavern art, all auto-merged untouched.
+  - Upstream fixes now in: AI cloning shrink fix, Nori Teller of Tales, edition updates
+    (SLD/SLZ, Alchemy Karlov Manor renamed - no TFR data referenced the old name), Japanese
+    translations, card scripts.
+- **Version string** (user spec): `v2.0.15-SNAPSHOT-08.26 | TFR v1.02 - 08.27` via the plane
+  config.json's `engineBuildVersion`/`modVersionDate`.
+- **Repo-only round** (user testing the round-57 live build during the update): compiled and
+  packaged for verification but NOT deployed to the live folder; the standalone BASE_INSTALL
+  refresh from `E:\GAMES\Forge_2` + `--full` repackage happens at deploy time.
+
+## Fifty-ninth round: playtest fixes - spawn-tier leak, quest arrows, Warden, Discord button (2026-08-27)
+
+All from the 2026-08-27 morning playtest of the round-57 build; repo-only (user was
+mid-playtest on the live folder).
+
+- **Day-1 "Master" enemies root-caused and fixed.** Two Rare-tier enemies (shown as
+  "<Name> (Master)" by showEnemyTierInName) roamed the world map on day 1. The weighted
+  spawn-tier system's `isExempt()` treated any enemy with a non-empty `questTags` array as a
+  scripted quest enemy - but this plane uses questTags as generic metadata, so 1398/1520
+  enemies.json entries (~97% of the day-1 eligible pool) silently kept raw spawnRate weighting
+  and week 1's "rare: 0" bracket bound almost nothing. Confirmed in logs: prior session shows
+  `[TFR-Spawn] Clay Golem (tier=Rare ...) week=1`. Fix: exemption is now boss/spawnRate<=0 only
+  (quest spawns never routed through this weighting anyway). SpawnTierWeighting.java.
+- **Dispatched territory mages now respect the weekly tier brackets** (same table,
+  spawn_tier_weighting.json): the dispatch roll allowed Master 15%/Archmage 5% from the first
+  dispatch (~day 4). Rolled tiers now step down while the current week's bracket weight is 0 -
+  week 1 caps at Adept, weeks 2-3 at Master, open from week 4 - logged as
+  "[TerritoryControl] dispatch tier X clamped to Y". TerritoryControl.java.
+- **Spawn logs now print the on-screen name**: `[TFR-Spawn] ... shown="Clay Golem (Master)"` -
+  the original line only printed the raw name, which made the user's "Master" report
+  un-greppable. The quest-extra spawn path (previously the one completely silent world-map
+  spawn source) now logs too, marked `quest-extra`. WorldStage.java.
+- **Quest nav arrow for the tutorial town stages** ("Find a ruined town"/"Find a surviving
+  town"): new navigation-only POI pool (`navPOIFilter` stage field, values ruinedTown/
+  survivingTown) drives the existing world-map compass arrow to the nearest qualifying town,
+  live-classified via TownRestoration + peekPointOfInterestChanges (a restored town stops
+  counting as ruined mid-quest). Completion logic untouched by construction - those stages'
+  load-bearing `worldMapOK` flag is exactly why the arrow ignored them. AdventureQuestStage.java
+  (field + getNavPOIs(), copied in the copy-ctor), AdventureQuestData.getClosestValidPOI(),
+  quests.json Q30 stages 1-2.
+- **Welcome-popup Discord button moved above the fold**: it rendered after the full welcome
+  text, below the scroll cutoff, and read as missing. Now the first row under the title.
+  InfoTextScene.java.
+- **The Warden is named**: the spawn-cave mage's dialogs were headed "-Adept Black Wizard-"
+  (his EnemyData name); the actor now carries the already-supported `displayNameOverride`
+  map property = "The Warden". spawn.tmx.
+- **Log review of the session**: clean - no exceptions; retro-completion safeguard fired
+  correctly in the wild ("Find a surviving town" auto-completed on activation, the player had
+  entered Windlass Village pre-quest); ante re-roll/buy-back, DungeonRotation, town-restore
+  shop unlocks all behaving.
+
+### Round 59 addendum (same day, second playtest report)
+
+- **"Syr Faren (Master)" on the world map root-caused - the quest extra-spawn channel.** No
+  legend-swap exists: the Octopus and Syr Faren were two sprites spawned on the same tick. Q30's
+  "Win a duel" stage (Defeat, mixedEnemies, empty enemyTags) made
+  AdventureQuestController.getExtraQuestSpawns() degenerate into a uniform pick over 1438/1520
+  catalog entries - 59% spawnRate:0 legends, 52% Rare/Mythic, no difficulty/tier/content-filter
+  check, on ~80% of spawn ticks, silently. Syr Faren (speed 50 vs player 40) then outran the
+  player. Fixes:
+  - New shared `AdventureQuestController.filterQuestSpawnPool()`: drops bosses/spawnRate<=0
+    legends (isExempt), above-rank entries, content-filter exclusions, and tiers zeroed by the
+    current week bracket. Applied to the extra-spawn tag scan (empty pool = no extra spawn this
+    tick) and to `generateTargetEnemyData()`'s Hunt/Defeat target pools (falls back to the
+    unfiltered pool rather than returning nothing, with a log line).
+  - Hand-authored stage targets (targetEnemyData) intentionally bypass the filter - quests may
+    script any enemy.
+  - `BiomeData.getEnemy()`'s empty-filter fallback now prefers spawnRate>0 entries (the
+    enemyList contains a zero-rate clone of every enemy in the game - that uniform fallback was
+    a difficulty-blind side door for legends).
+  - `spawnQuestSprite()` (Hunt targets) now logs `[TFR-Spawn] quest-sprite ...` - it was the
+    last silent world-map spawn source.
+- **Arrow targeting from the playtest**: "Restore a ruined town" pointed at an already-
+  functioning neutral town - stage 6 now carries navPOIFilter=ruinedTown, stage 7 ("Build a
+  Trader") restoredTown, stage 8 ("Restore four more towns", previously arrow-less due to
+  worldMapOK) ruinedTown. New "restoredTown" filter value in matchesNavFilter().
+- **Vanishing reward card-backs fixed**: RewardActor's sprite switch had no Wood/Stone cases,
+  so the town-restore grant rendered blank card-backs that vanished on click. The grants DID
+  apply (RewardScene.clearGenerated() grants QuestReward-type on scene exit) - it was pure
+  rendering. Both switches extended; the plane items.atlas already carries Wood/Stone regions.
+  AdventurePlayer.addReward() now logs `[TFR-Reward] wood/stone +N` so "did I get it?" is
+  answerable from the log.
+- **Second log review**: clean - full Raise-the-Banner console speedrun exercised every hook
+  (townsRestored 1-6, capitolBuilt, guardHired, mineBuilt, Capitol shop init, player roads).
+- Cosmetic drift noted, not fixed: config tables/enemies.csv lists Octopus as Common while
+  enemies.json says Rare - only the Include column is ever read back, but the CSV is misleading
+  as a balance table.

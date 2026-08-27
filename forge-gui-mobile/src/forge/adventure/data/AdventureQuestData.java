@@ -404,12 +404,26 @@ public class AdventureQuestData implements Serializable {
                 matchesTags.add(data);
             }
         }
-        if (matchesTags.isEmpty()){
-            return new EnemyData(Aggregates.random(WorldData.getAllEnemies()));
+        // Sanity-filter the pool (2026-08-27, same bug class as getExtraQuestSpawns): the raw
+        // tag scan is full of spawnRate:0 legends and above-rank entries. Unlike the extra-spawn
+        // path, a Hunt/Defeat stage MUST get a target, so an over-filtered pool falls back to
+        // the unfiltered one rather than returning nothing.
+        java.util.List<EnemyData> pool;
+        if (matchesTags.isEmpty()) {
+            pool = new ArrayList<>();
+            for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies()))
+                pool.add(data);
+        } else {
+            pool = matchesTags;
         }
-        else{
-            return new EnemyData(Aggregates.random(matchesTags));
-        }
+        java.util.List<EnemyData> filtered = forge.adventure.util.AdventureQuestController
+                .filterQuestSpawnPool(pool, forge.adventure.util.Current.player().getStatistic().rank());
+        if (!filtered.isEmpty())
+            pool = filtered;
+        else
+            System.out.println("[TFR-Spawn] quest-target pool for stage \"" + stage.name
+                    + "\" empty after sanity filter - using unfiltered pool (" + pool.size() + " candidates)");
+        return new EnemyData(Aggregates.random(pool));
     }
 
 
@@ -511,7 +525,9 @@ public class AdventureQuestData implements Serializable {
     public PointOfInterest getClosestValidPOI(Vector2 pos) {
         List<PointOfInterest> validPOIs = new ArrayList<>();
         for (AdventureQuestStage stage : getActiveStages()) {
-            validPOIs.addAll(stage.getValidPOIs());
+            // getNavPOIs, not getValidPOIs: identical for every stage except the navPOIFilter
+            // world-map flag stages, whose arrow target is navigation-only (see its comment).
+            validPOIs.addAll(stage.getNavPOIs());
         }
         if (validPOIs.isEmpty())
             return null;

@@ -1053,7 +1053,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     int week = SpawnTierWeighting.currentWeek(world);
                     spawnTierInfo = ", week=" + week + ", permanentKills=" + SpawnTierWeighting.getPermanentKillCount(enemyData.getName());
                 }
+                // shown= is the tiered display name the player actually sees on screen (2026-08-27:
+                // a "day-1 Master" report was un-greppable because this line only had the raw name).
+                String shown = enemyData.getTieredDisplayName();
+                String shownInfo = shown.equals(enemyData.getName()) ? "" : ", shown=\"" + shown + "\"";
                 System.out.println("[TFR-Spawn] " + enemyData.getName() + " (tier=" + enemyData.tier
+                        + shownInfo
                         + ", colors=" + enemyData.colors + ", speed=" + enemyData.speed
                         + ", life=" + enemyData.life + ") in " + data.name + " territory (rank=" + difficultyFactor
                         + spawnTierInfo + ")");
@@ -1061,6 +1066,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         EnemyData extraSpawnForQuests = data.getExtraSpawnEnemy(difficultyFactor);
         if (extraSpawnForQuests != null) {
+            // This path (quest-tag extra spawns) bypasses the weighted tier system by design -
+            // quest-authored enemies spawn as authored. Logged since 2026-08-27 (it was the one
+            // completely silent world-map spawn path) so tier reports stay attributable.
+            System.out.println("[TFR-Spawn] quest-extra " + extraSpawnForQuests.getName()
+                    + " (tier=" + extraSpawnForQuests.tier + ", shown=\""
+                    + extraSpawnForQuests.getTieredDisplayName() + "\") in " + data.name + " territory");
             float spawnPicker = rand.nextFloat();
 
             if (spawnPicker > 0.5f) //todo: make this difficulty dependent, more enemies on harder difficulty
@@ -1146,6 +1157,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 if (sprite.getData().flying || !WorldSave.getCurrentSave().getWorld().collidingTile(sprite.boundingRect())) {
                     enemies.add(Pair.of(globalTimer, sprite));
                     foregroundSprites.addActor(sprite);
+                    // Was the last completely silent world-map spawn source (2026-08-27) -
+                    // Hunt-quest targets land here via AdventureQuestController.getQuestSprites().
+                    System.out.println("[TFR-Spawn] quest-sprite " + sprite.getData().getName()
+                            + " (tier=" + sprite.getData().tier + ", shown=\""
+                            + sprite.getData().getTieredDisplayName() + "\")");
                     return true;
                 }
             }

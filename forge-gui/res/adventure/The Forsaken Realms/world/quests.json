@@ -7260,6 +7260,7 @@
 			"description": "Enter one of the countless ruined towns scattered across the wastes.",
 			"anyPOI": true,
 			"worldMapOK": true,
+			"navPOIFilter": "ruinedTown",
 			"POITags": [
 				"Town"
 			],
@@ -7296,6 +7297,7 @@
 			"description": "Find one of the few towns that endured the Forsaking.",
 			"anyPOI": true,
 			"worldMapOK": true,
+			"navPOIFilter": "survivingTown",
 			"POITags": [
 				"Town"
 			],
@@ -7415,6 +7417,7 @@
 		{
 			"id": 6,
 			"name": "Restore a ruined town",
+			"navPOIFilter": "ruinedTown",
 			"description": "Pay to restore a ruined town and bring it under your banner.",
 			"anyPOI": true,
 			"POITags": [
@@ -7462,6 +7465,7 @@
 		{
 			"id": 7,
 			"name": "Build a Trader",
+			"navPOIFilter": "restoredTown",
 			"description": "Build a Trader on one of your restored town's empty lots.",
 			"anyPOI": true,
 			"POITags": [
@@ -7487,6 +7491,7 @@
 		{
 			"id": 8,
 			"name": "Restore four more towns",
+			"navPOIFilter": "ruinedTown",
 			"description": "Grow your realm to five restored towns.",
 			"anyPOI": true,
 			"worldMapOK": true,

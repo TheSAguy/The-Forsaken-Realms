@@ -63,21 +63,22 @@ public class InfoTextScene extends UIScene {
         titleLabel.setText(title);
         content.clear();
         content.row();
+        // Optional real link button (2026-08-26 user request: "Can the Discord link be an actual
+        // hyper link on the info page?") - inline clickable text is finicky in this UI stack, so
+        // a proper button that opens the system browser is the reliable cross-platform answer
+        // (Gdx.net.openURI works on both desktop and Android, which matters for the planned
+        // Android release). FIRST row, above the text: appended after it (2026-08-27 playtest)
+        // the button sat below the scroll fold on a full-length welcome text and read as absent.
+        if (linkUrl != null && !linkUrl.isEmpty()) {
+            content.add(Controls.newTextButton(linkLabel != null ? linkLabel : linkUrl,
+                    () -> com.badlogic.gdx.Gdx.net.openURI(linkUrl))).align(Align.left).padBottom(10).row();
+        }
         for (String paragraph : paragraphs) {
             TypingLabel label = Controls.newTypingLabel(paragraph);
             label.setWrap(true);
             label.setColor(Color.BLACK);
             label.skipToTheEnd();
             content.add(label).align(Align.left).expandX().fillX().padBottom(10).row();
-        }
-        // Optional real link button (2026-08-26 user request: "Can the Discord link be an actual
-        // hyper link on the info page?") - inline clickable text is finicky in this UI stack, so
-        // a proper button that opens the system browser is the reliable cross-platform answer
-        // (Gdx.net.openURI works on both desktop and Android, which matters for the planned
-        // Android release).
-        if (linkUrl != null && !linkUrl.isEmpty()) {
-            content.add(Controls.newTextButton(linkLabel != null ? linkLabel : linkUrl,
-                    () -> com.badlogic.gdx.Gdx.net.openURI(linkUrl))).align(Align.left).padBottom(10).row();
         }
     }
 
