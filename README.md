@@ -8,7 +8,7 @@ while you sleep, and the color you cross today decides whether its Capitol opens
 you — or charges you a toll to survive the visit. Underneath it all runs the full Forge rules engine,
 so every fight is a real card duel with real decks.
 
-**[⬇ Download the latest release](https://github.com/TheSAguy/The-Forgotten-Realms/releases/latest)** · **[💬 Join the Discord](https://discord.gg/TTRPKc9HYJ)** · **[☕ Support on Ko-fi](https://ko-fi.com/thesaguy)**
+**[⬇ Download the latest release](https://github.com/TheSAguy/The-Forsaken-Realms/releases/latest)** · **[💬 Join the Discord](https://discord.gg/TTRPKc9HYJ)** · **[☕ Support on Ko-fi](https://ko-fi.com/thesaguy)**
 
 ---
 

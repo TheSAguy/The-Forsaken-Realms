@@ -22,7 +22,7 @@ commit, none of which has been played yet on either machine.
 game.** Before testing anything below, run the full deploy checklist from
 `project_forge_adventure_mod` memory / this file's own build notes: `mvn -pl forge-gui-mobile -am
 compile -DskipTests -o`, splice the rebuilt `forge/adventure` package into the installed jar with
-`jar uf`, and mirror `forge-gui/res/adventure/The Forgotten Realms/` over the deployed copy's same
+`jar uf`, and mirror `forge-gui/res/adventure/The Forsaken Realms/` over the deployed copy's same
 folder (a plain recursive copy is fine).
 
 **Two console/HUD tools that make today's stuff testable without a multi-day real playthrough**
@@ -616,7 +616,7 @@ Fix: new `ItemData.excludeFromGeneralSale` boolean (+ copy-constructor line; con
 propagated the field correctly even without the copy-constructor edit, so that edit matters only
 for the offline `adventure-editor` tool's own copy path, not the live game). Wired into
 `getItemNamesByRarity()` alongside the existing `questItem` check. Set `true` on the 3 items in
-`The Forgotten Realms/world/items.json` (hand-edited via a small Python script rather than a
+`The Forsaken Realms/world/items.json` (hand-edited via a small Python script rather than a
 direct string-match edit - this file writes apostrophes as a Unicode numeric-character escape
 in the raw bytes, not a literal apostrophe, which broke naive exact-string matching against the
 visible name; verified the file is still valid JSON afterward, exactly 3 items flagged, and no
@@ -1252,7 +1252,7 @@ the variant roll, gated on `editionProgressionEnabled` so stock planes are untou
 **Data/content fixes:**
 - **46 items had broken icons** (user found 2 - Ichor Knife, Celestial Prism - full-catalog audit
   found 46 total, ported into `items.json` from Shandalar Old Border without their icon art ever
-  following). Copied all 46 16x16 icons into `The Forgotten Realms/sprites/items.png`'s free slots
+  following). Copied all 46 16x16 icons into `The Forsaken Realms/sprites/items.png`'s free slots
   and appended matching `items.atlas` regions - including fixing an upstream typo (`MantelofDenial`
   vs. the correct `MantleofDenial` items.json actually references).
 - **Challenge Coins removed from the Armory sale pool again** - the weighted-rarity catalog rework
@@ -1325,14 +1325,14 @@ confirming `rivalCastleKeepSkip` is fully absent post-revert. None of this has b
 the live game yet - the user's existing save still has the FoW over-reveal baked in until `fog
 reset` is run.
 
-## The mod plane: "The Forgotten Realms"
+## The mod plane: "The Forsaken Realms"
 
 Everything lives on its own selectable Adventure-mode plane at
-`forge-gui/res/adventure/The Forgotten Realms/`. It started as a copy of Shandalar's `world/`
+`forge-gui/res/adventure/The Forsaken Realms/`. It started as a copy of Shandalar's `world/`
 data (quests.json, shops.json, town_names_*.txt, world.json) as a placeholder - not yet
 customized for the mod's own content.
 
-**Critical gotcha:** `The Forgotten Realms/config.json` must be a full, independent copy of
+**Critical gotcha:** `The Forsaken Realms/config.json` must be a full, independent copy of
 `common/config.json`, not a small override file. Forge does NOT merge a plane's config.json
 with common's - see `Config.java` ~line 111-114 (`//TODO: Plane's config file should be merged
 with the common config file`). If a plane has its own config.json, it's used *instead of*
@@ -1340,7 +1340,7 @@ common's, entirely. If common/config.json's shared fields ever change, this file
 edit manually.
 
 All mod features are **opt-in per-plane boolean flags** on `ConfigData.java`, defaulting to
-`false` in code, turned `true` only in `The Forgotten Realms/config.json`:
+`false` in code, turned `true` only in `The Forsaken Realms/config.json`:
 - `fogOfWarEnabled`
 - `dayNightCycleEnabled`
 - `townReconstructionEnabled`
@@ -1364,7 +1364,7 @@ Files: `World.java` (state + rendering), `WorldBackground.java` (reveal-on-move)
   testing, and both are meant to be raised later via in-game items/upgrades (see
   `MOD_SCOPE.md` #3) - don't "fix" them back up without checking that scope item first.
 - `GameHUD.java` has a temporary debug checkbox (`fogOfWarDebugCheckBox`) to toggle fog of war
-  on/off at runtime without editing config.json. Scoped to only show on "The Forgotten Realms"
+  on/off at runtime without editing config.json. Scoped to only show on "The Forsaken Realms"
   plane. Meant to be deleted once the feature doesn't need frequent manual testing - it's not
   part of the intended final feature set.
 
@@ -1554,7 +1554,7 @@ Known/Visible confirmed working well in playtest. Two more items:
 First real (non-procedural) art in the mod, replacing `RubbleOverlay`'s tint for one specific
 piece: the overworld icon of a not-yet-restored wasteland town.
 
-- **Asset:** `The Forgotten Realms/maps/tileset/wastetown_broken.png` (192x192, a 4x4 grid of
+- **Asset:** `The Forsaken Realms/maps/tileset/wastetown_broken.png` (192x192, a 4x4 grid of
   16 hand-drawn ruined-castle variants, each 48x48 - matching the native size of the existing
   `WasteTown` icon exactly) + `wastetown_broken.atlas` (all 16 regions share the name
   `WasteTownBroken`, standard libGDX TextureAtlas format). Both plane-local, not in `common/`,
@@ -1727,7 +1727,7 @@ referencing real MTG cards via `effect.startBattleWithCard` (e.g. "Seal of Fire|
   just new named regions (`items.atlas` grows from 190 regions to 566) cropping the *existing*
   sheet differently. So "add the items" genuinely only required copying data + an atlas that
   re-slices art we already have, not sourcing anything new.
-- Copied verbatim into `The Forgotten Realms/`: `world/items.json`, `sprites/items.atlas`,
+- Copied verbatim into `The Forsaken Realms/`: `world/items.json`, `sprites/items.atlas`,
   `sprites/items.png` (the png is redundant with common's, but copied anyway per plane-local
   self-containment and because it must sit next to `items.atlas` for libGDX to resolve it -
   `TextureAtlas` loading resolves its image relative to the `.atlas` file's own folder, not
@@ -1743,7 +1743,7 @@ referencing real MTG cards via `effect.startBattleWithCard` (e.g. "Seal of Fire|
   items behaves oddly in testing, this is why.
 - **Scope boundary - not done:** items are now loadable and obtainable via the `give item
   <name>` console cheat, and are valid entries any future shop/reward table could reference by
-  name. Nothing currently *does* reference them though - no shop in `The Forgotten Realms`'
+  name. Nothing currently *does* reference them though - no shop in `The Forsaken Realms`'
   `world/shops.json` sells any of the 306 new items, and no reward table drops them. Wiring
   them into actual in-game acquisition (shops, quest rewards, loot) is separate, deliberately
   not done here since it wasn't asked for and involves real design choices (which items go in
@@ -1815,7 +1815,7 @@ of the prototype (see the section above) rather than new bugs - only one was a r
 specifically (the Job Board / `QuestActor` still uses `RubbleOverlay` - no dedicated art for it
 yet, this delivery was shop-only).
 
-- **Asset:** `The Forgotten Realms/maps/tileset/shop_broken.png` (256x256, 8x8 grid of 64
+- **Asset:** `The Forsaken Realms/maps/tileset/shop_broken.png` (256x256, 8x8 grid of 64
   variants, each 32x32) + `shop_broken.atlas` (all 64 regions share the name `ShopBroken`,
   generated via a PowerShell loop rather than hand-typed - same libGDX TextureAtlas format as
   every other atlas in the game).
@@ -1844,14 +1844,14 @@ yet, this delivery was shop-only).
 Real, registered 7th biome for Player territory (`MOD_SCOPE.md` #7). No new code - purely data,
 following the exact same pattern the 5 AI colors already use.
 
-- **Placeholder art:** `The Forgotten Realms/world/tilesets/player_terrain.png`/`.atlas` -
+- **Placeholder art:** `The Forsaken Realms/world/tilesets/player_terrain.png`/`.atlas` -
   cropped the Wasteland ("Colorless") band straight out of `common/world/tilesets/autotiles.png`
   and applied a gold/amber multiply tint (R×1.30, G×1.05, B×0.55, alpha untouched) via a
   one-off PowerShell + `System.Drawing` script, not hand-painted. Reuses Wasteland's own
   `spriteNames: ["Stone"]` for decorations; no structures.
 - **`world/biomes/player.json`:** same schema as `colorless.json`/`green.json`/etc, `name:
   "player"`, `tilesetAtlas`/`tilesetName` pointing at the new tinted asset, `color: "d4af37"`
-  (gold hex). Registered in `The Forgotten Realms/world/world.json`'s `biomesNames` (8th entry,
+  (gold hex). Registered in `The Forsaken Realms/world/world.json`'s `biomesNames` (8th entry,
   bit index 7 in `biomeMap`).
 - **`width: 0, height: 0` is deliberate, not a placeholder oversight:** `World.java`'s initial
   generation loop computes `biomeWidth = round(width * mapWidth)`, and when that's 0 the
@@ -2356,7 +2356,7 @@ precisely with a 16px grid overlay rendered over the region (`(320,272)` orange 
 own image tool landed a little off from these (their tool likely reports cursor position within a
 crop/zoom, not the raw file's absolute origin), so the match was confirmed visually (row order,
 colors, relative spacing to each other) rather than by trusting the numbers literally. Cropped
-both into a new small dedicated atlas, `The Forgotten Realms/maps/tileset/resource_icons.png`/
+both into a new small dedicated atlas, `The Forsaken Realms/maps/tileset/resource_icons.png`/
 `.atlas` (same pattern as `economy_buildings.png`), and `ResourceDisplayActor` now renders them
 as real `Image`+`TextureRegionDrawable` actors (the same proven technique
 `EconomyBuildings`/`TownRestoration`'s own custom art already uses) instead of inline font markup
@@ -2555,10 +2555,10 @@ few rows above it, except one residual roof tile near a single shop (harmless - 
 **Wired in scoped to this plane only**, not applied globally: `points_of_interest.json` (which
 drives the "map" file for every dungeon/town in the *entire* game, Shandalar included) is loaded
 via `Config.getFile()` - already plane-aware, just never had a plane-specific override before.
-Added one: `The Forgotten Realms/world/points_of_interest.json`, a full copy of the common file
+Added one: `The Forsaken Realms/world/points_of_interest.json`, a full copy of the common file
 (same "full copy, not a merge" pattern as `config.json`), with only the three Wasteland/Neutral
 entries changed - "Waste Town Generic"/"Identity"/"Tribal" now all point at
-`../The Forgotten Realms/maps/map/towns/waste_town_player.tmx` instead of their original
+`../The Forsaken Realms/maps/map/towns/waste_town_player.tmx` instead of their original
 `../common/maps/map/towns/waste_town_*.tmx`. (The relative-path convention here is odd but
 verified working: `TileMapScene`/`MapStage` resolve every "map" field via `getCommonFilePath()`,
 which unconditionally prepends `.../adventure/common/` regardless of which plane's `points_of_
@@ -2678,14 +2678,14 @@ region added to `economy_buildings.png`/`.atlas` (grew 128x64 -> 128x96, a 3rd r
 
 First real implementation of MOD_SCOPE.md #7, beyond the recolor-terrain prototype from
 2026-08-03/04. New opt-in flag `ConfigData.territoryControlEnabled` (default `false`, on in
-`The Forgotten Realms/config.json`), same pattern as every other mod flag. **Only affects newly
+`The Forsaken Realms/config.json`), same pattern as every other mod flag. **Only affects newly
 generated worlds** - world-gen changes (below) don't retroactively apply to an existing save.
 
 **World-gen: castle territory shrunk, colored starter content removed.** Each of the 5 AI
 colors used to claim a large (`width`/`height: 0.7`) home region at world-gen, pre-populated with
 its own themed Capital + 3 Town variants (e.g. green.json's "Forest Capital"/"Forest Town
 Generic/Identity/Tribal") plus ~30-40 unique dungeons (Groves, Merfolk Pools, Vampire Castles,
-etc.). New plane-specific overrides `The Forgotten Realms/world/biomes/{white,blue,black,red,
+etc.). New plane-specific overrides `The Forsaken Realms/world/biomes/{white,blue,black,red,
 green}.json` shrink `width`/`height` to `0.08` (first-guess constant, expect to tune after visual
 testing) so each color's terrain color now only shows up right around its own castle - Wasteland/
 colorless already covers ~85% of the map by default, so the shrunk color regions don't leave gaps.
@@ -2894,7 +2894,7 @@ impassable) by simple fallback, since nothing else claims those tiles anymore. T
 playable area shrank to roughly colorless's own always-had-been-smaller-than-advertised reach,
 exactly matching "the size of the neutral area only."
 
-**Fixed**: new plane-specific override `The Forgotten Realms/world/biomes/colorless.json`
+**Fixed**: new plane-specific override `The Forsaken Realms/world/biomes/colorless.json`
 (previously inherited unmodified from `common/`), `width`/`height` raised `0.85` -> `1.6` - worked
 through the same formula to confirm this comfortably covers the map's full half-width even in the
 worst-case noise roll (`distanceValue` at the map edge drops to ~0.625, `+noiseValue` up to 0.3
@@ -2939,7 +2939,7 @@ skips drawing entirely when `getActive()` is false - a completely separate code 
 minimap marker, which gets baked into the minimap's pixmap unconditionally at placement time
 regardless of `getActive()` (`World.java`'s `drawPixmapLater(...)` call, right after a POI
 successfully places) - explaining exactly why it showed on one and not the other. A fresh
-Forgotten Realms world starts with `mainQuest` below 2 (no main-story progress at all, especially
+Forsaken Realms world starts with `mainQuest` below 2 (no main-story progress at all, especially
 since Territory Control has nothing to do with Shandalar's own campaign), so every castle was
 structurally invisible on the real map by design, for a design that doesn't apply here.
 
@@ -3146,7 +3146,7 @@ dedicated "World Standings" page opened via a button, not a permanent fixture).
 - New `WorldStandingsScene.java` (`forge/adventure/scene/`), a real full-screen page following the
   same pattern as `QuestLogScene`/`SettingsScene` (`extends UIScene`, loads its own JSON layout,
   `ui.onButtonPress("return", this::back)`). Its layout
-  (`The Forgotten Realms/ui/world_standings.json`) is a **new file in the mod's own plane folder**,
+  (`The Forsaken Realms/ui/world_standings.json`) is a **new file in the mod's own plane folder**,
   not an edit to the shared `common/ui/` - same "new file, not a fork" pattern used everywhere else
   in this feature, extending it to UI layouts for the first time. Reuses the existing "paper"
   window style already used by `quests.json`, matching the parchment look in the user's mockup
@@ -3367,7 +3367,7 @@ investigated and confirmed against the actual code before fixing (not guessed fr
 "is my anchor point the *nearest* one to this tile" - a Voronoi-style assignment across all 5
 castles **and** the player's Spawn.
 
-- **Gave `player` real structures**: generated `The Forgotten Realms/world/structures/
+- **Gave `player` real structures**: generated `The Forsaken Realms/world/structures/
   player_structures.png`/`.atlas` by tinting a copy of `common/world/structures/
   colorless_structures.png` with the same gold/amber multiply formula already used for the ground
   (R×1.30, G×1.05, B×0.55 - a one-off PowerShell + `System.Drawing` script, not hand-painted, same
@@ -3468,7 +3468,7 @@ Current.player().avatar()));`), so it's genuinely "his little picture," not a ge
 This session's entire deploy-and-verify workflow (`jar uf` + byte-`cmp` against the installed jar)
 only ever covered compiled `.class` files. `E:\GAMES\FORGE\res\` is a **separate, non-symlinked
 copy** of `forge-gui/res/`, not a live view of the repo - confirmed directly (`Get-Item` showed no
-`LinkType`). A `diff -rq` between the repo's `The Forgotten Realms` folder and the deployed one
+`LinkType`). A `diff -rq` between the repo's `The Forsaken Realms` folder and the deployed one
 turned up multiple stale files, including this round's own `color_icons.png` (still the broken
 753-vs-1164-byte pre-fix version) and, critically, `player.json` - meaning the deployed game had
 been running **without player's structures the entire time this was tested**, which fully explains
@@ -3897,13 +3897,13 @@ touches either kind of file:**
    **not** inside the jar and were, for most of this session, never actually synced anywhere -
    `E:\GAMES\FORGE\res\` is a separate, real copy of the resource tree (confirmed via `Get-Item`:
    no `LinkType`, i.e. not a symlink/junction), not a live view of the repo checkout. Any round that
-   edits/adds a resource file needs `robocopy "<repo>\forge-gui\res\adventure\The Forgotten Realms"
-   "E:\GAMES\FORGE\res\adventure\The Forgotten Realms" /MIR` (mirror - also deletes files removed
+   edits/adds a resource file needs `robocopy "<repo>\forge-gui\res\adventure\The Forsaken Realms"
+   "E:\GAMES\FORGE\res\adventure\The Forsaken Realms" /MIR` (mirror - also deletes files removed
    from the repo side) as an explicit step, verified with `diff -rq` between the two folders coming
    back empty. Skipping this doesn't error or warn anywhere - the game just keeps running whatever
    was last actually copied there, which is exactly what silently invalidated a full round of
    playtesting this session (see "Territory Control playtest round 7, corrections" above). Scope
-   the mirror to the mod's own plane folder (`The Forgotten Realms`) unless a `common/` file was
+   the mirror to the mod's own plane folder (`The Forsaken Realms`) unless a `common/` file was
    also touched, which should be rare per this repo's own ground rules.
 
 ## Territory Control playtest round 8: score page, shop icons, haze, doodad consistency (2026-08-06)
@@ -5650,8 +5650,8 @@ was a map-load crash, exact cause from forge.log: `MapStage.loadObjects:779` cas
 attribute; untyped TMX properties load as String -> ClassCastException -> load aborts -> player
 left pinned against the POI on the world map). All 7 affected objects (armory + 6 land shops)
 fixed. Lesson recorded: any bool-typed TMX property written by tooling MUST carry `type="bool"`.
-Also: every user-facing "Shandalar" in the plane's quests.json replaced with "The Forgotten
-Realms" (18 spots incl. the "Welcome to Shandalar" story quest; possessives -> "The Forgotten
+Also: every user-facing "Shandalar" in the plane's quests.json replaced with "The Forsaken
+Realms" (18 spots incl. the "Welcome to Shandalar" story quest; possessives -> "The Forsaken
 Realms'"). Already-accepted quests on old saves keep their baked name; new games get the new
 text. items.json's one "Shandalar" mention (item flavor text) left as-is deliberately - flag if
 that should change too.
@@ -5798,7 +5798,7 @@ Found 9 of 51 placed tiles carrying collision:
   stripping collision from these tile ids directly in `main.tsx` would be a global change with an
   unknown blast radius across ~1000 other maps, not scoped to this one town. User chose (of 3
   options presented) a new sibling tileset mirroring the `buildings`/`buildings-nocollide` pattern
-  exactly: **`forge-gui/res/adventure/The Forgotten Realms/maps/tileset/main-nocollide.tsx`** -
+  exactly: **`forge-gui/res/adventure/The Forsaken Realms/maps/tileset/main-nocollide.tsx`** -
   same tilecount/columns/tilewidth/height as `main.tsx`, referencing the SAME shared
   `common/maps/tileset/main.png` image (no duplicated art), zero `<tile>` collision definitions.
   Kept in the mod's own plane folder per `CLAUDE.md`'s asset-placement ground rules (a derived
@@ -6073,10 +6073,10 @@ a 1-element array is a valid, working "animation" that always returns that one f
 rock/pebble art existed anywhere in the repo at the right scale (overworld `_structures.atlas`
 rock sprites are 48x64 biome decorations, wrong register entirely) - reused the existing
 `resource_icons.atlas` Stone icon (used elsewhere for the Exchange dialog/HUD readout), cropped
-into a new single-frame `Idle`-named atlas (`The Forgotten Realms/maps/tileset/
+into a new single-frame `Idle`-named atlas (`The Forsaken Realms/maps/tileset/
 stone_pickup.atlas`/`.png`) since that shared atlas's own region is named `"Stone"`, not `"Idle"`.
 
-**New reward template**: `The Forgotten Realms/maps/obj/stone.tx`, mirroring `common/maps/obj/
+**New reward template**: `The Forsaken Realms/maps/obj/stone.tx`, mirroring `common/maps/obj/
 gold.tx`'s structure (`type="reward"`, JSON `[{"type":"stone","count":10,"addMaxCount":5}]`,
 `spawn.Easy/Normal/Hard/Insane` all true, `sprite="maps/tileset/stone_pickup.atlas"`).
 
@@ -6087,12 +6087,12 @@ Shandalar", and Shandalar has no `points_of_interest.json` override of its own, 
 common's copy directly). Editing that file in place would have put a Stone pickup on stock
 Shandalar too - a real violation of `CLAUDE.md`'s "never affect a stock plane" rule, caught before
 deploying (first attempt briefly edited-then-`git checkout`-reverted the common file). Fixed
-properly: copied the pristine stock `spawn.tmx` into `The Forgotten Realms/maps/map/main_story/`,
+properly: copied the pristine stock `spawn.tmx` into `The Forsaken Realms/maps/map/main_story/`,
 fixed its five relative references (2 tileset, 3 object templates) from the 2-up `common/`-local
 style to the 4-up `../../../../common/...` style every other mod-plane map already uses to reach
 shared content, THEN applied the tile-removal + reward-object edit to that copy - `stone.tx`'s own
 reference shortens to a plain `../../obj/stone.tx` since it's mod-local now. The mod's `points_of_
-interest.json` "Spawn" entry's `map` field was repointed at `../The Forgotten Realms/maps/map/
+interest.json` "Spawn" entry's `map` field was repointed at `../The Forsaken Realms/maps/map/
 main_story/spawn.tmx` to match. `common/maps/map/main_story/spawn.tmx` itself is now byte-identical
 to stock again - verified via diff before deploying.
 
@@ -6270,7 +6270,7 @@ ones that weren't: imported 17 dungeon TMX files (+ `buildings.atlas`/`buildings
 other cross-plane borrow this mod has done: verified each file's `<tileset source>` only
 references shared `common/maps/tileset/*` before copying, checked for path collisions in both
 `common/` and this plane first. 16 matching POI entries added to `points_of_interest.json`
-(path-adjusted `Realm of Legends` -> `The Forgotten Realms`), plus 2-4 entries appended to each of
+(path-adjusted `Realm of Legends` -> `The Forsaken Realms`), plus 2-4 entries appended to each of
 the 6 `world/biomes/*.json` files (new plane-local full-copy overrides of common's, per the
 mod's standing "full copy, never merge" convention) so world-gen actually places the new POIs. A
 remaining ~15 quest items (Eldrazi Pentakey Shards, Ur-Dragon Keys, Cartouches, colored Gate
@@ -6441,7 +6441,7 @@ rewritten for the copy:
   - **Gitrog Bog is the one exception**: `Gitrog_Bog_1.tmx` <-> `Gitrog_Bog_2.tmx` both already
     exist in this plane (both were part of the original 17-file import) - only the internal
     cross-links between them were still pointing at `Realm of Legends`. Repointed both directions
-    to `../The Forgotten Realms/...` instead of disabling, since this pair actually works once
+    to `../The Forsaken Realms/...` instead of disabling, since this pair actually works once
     fixed.
 
 **Final result.** Re-ran the obtainability audit (this time scanning `shops.json` + `quests.json`
@@ -7067,12 +7067,12 @@ still works), zero `[TFR-Intrusion]`/`[TFR-WarBoss]`/`[TFR-ReTheme]`/`[TFR-Captu
 (each has narrow trigger conditions per the checklist - not evidence of breakage without knowing
 the player's actual reputation/capture history that session). **Real finding surfaced by the log,
 not the checklist**: 5 repeated `Error loading map...` / `FileNotFoundException` blocks for
-`.../The Forgotten Realms/maps/obj/treasure.tx`, thrown from `WorldStage.loadPOI()` - i.e. every
+`.../The Forsaken Realms/maps/obj/treasure.tx`, thrown from `WorldStage.loadPOI()` - i.e. every
 time the player collided with certain POIs, entering them crashed the map load. Traced to 6 of the
 7 new dungeon tmx files this session's earlier merge brought in (`Tarnation_1.tmx`,
 `Valors_Reach_Arena.tmx`, `Kenriths_Court.tmx`, `Omenport.tmx`, `Squirrel_Farm.tmx`,
 `Wizard_Palace_1.tmx`) referencing `treasure.tx` via `template="../../obj/treasure.tx"` - a path
-that only resolves if `treasure.tx` existed locally under `The Forgotten Realms/maps/obj/`, which
+that only resolves if `treasure.tx` existed locally under `The Forsaken Realms/maps/obj/`, which
 it never did (only `common/maps/obj/treasure.tx` exists). The 7th file in that same batch,
 `Eldrazi_Prison_0.tmx`, already used the CORRECT convention
 (`template="../../../../common/maps/obj/treasure.tx"`) - used as the reference to fix the other 6
@@ -7835,7 +7835,7 @@ of a bonus booster and a 5% chance of a bonus non-Mythic item, using the same fl
 **Modeled on Arena/Spellsmith, not Bank/Exchange/Armory.** Those three are shop.tx-based (a shop
 slot converted or pre-assigned to a special type); Archaeologist needs its own timer-driven
 gameplay entirely unrelated to buying/selling, so it got a dedicated template instead, same as
-Arena/Spellsmith already have. New `forge-gui/res/adventure/The Forgotten Realms/maps/obj/
+Arena/Spellsmith already have. New `forge-gui/res/adventure/The Forsaken Realms/maps/obj/
 archaeologist.tx` - deliberately placed under the FR plane's own `maps/obj/` folder rather than
 `common/maps/obj/` (where arena.tx/spellsmith.tx live), per the mod's standing "prefer plane-scoped
 storage" rule - there's already a precedent for a plane-scoped `.tx` template, `maps/obj/stone.tx`
@@ -8174,7 +8174,7 @@ construction cost, Arena/Armory Level 2 upgrade cost, Archaeologist expedition c
 Mirrors the index-lookup-against-`config.json`'s-`difficulties[]`-array pattern two other systems
 already established (`World.visionRadiusDifficultyOffset()`, #3's FoW vision scaling;
 `TerritoryControl.maxActiveMagesPerColor()`, #7's per-color mage cap) rather than inventing a new
-one. Confirmed directly, not assumed, that `The Forgotten Realms/config.json` defines exactly 4
+one. Confirmed directly, not assumed, that `The Forsaken Realms/config.json` defines exactly 4
 difficulty tiers in the order Easy/Normal/Hard/Insane - `0.75f + 0.25f * index` therefore lands
 exactly on the user's 4 requested numbers (0.75/1.00/1.25/1.50) as a single flat linear step, no
 special-casing needed. `scaledCost()` returns `Math.round(baseCost * difficultyPriceMultiplier())`;
@@ -8280,10 +8280,10 @@ and spawn immediately outside next to the campfire, skipping the whole find-town
 tutorial chain. Rather than guess at what "the wizard's reward" meant, traced the actual intro flow
 end to end first.
 
-**The intro/tutorial chain, as it actually exists in `quests.json` (The Forgotten Realms's own
+**The intro/tutorial chain, as it actually exists in `quests.json` (The Forsaken Realms's own
 copy, not yet renumbered/customized from its Shandalar-copy origin in several places - e.g. the
 Spawn wizard's dialog text still literally says "Shandalar"):** cave dialog (quest 28, "Entering
-The Forgotten Realms") -> picking "Where am I..." issues quest 53 ("Welcome to The Forgotten
+The Forsaken Realms") -> picking "Where am I..." issues quest 53 ("Welcome to The Forsaken
 Realms": talk to the cave mage, exit the cave) -> exiting issues quest 30 ("Where Am I?": travel to
 a town, leave town, find a dungeon, win a duel, find a cave, go to a town again - this is the exact
 "find a town/dungeon/cave" chain the user described). None of quests 28/53 contain any reward-
@@ -8372,7 +8372,7 @@ identical mechanism, just no longer collapsing every template-sharing town to th
 occurrence for consistency even though only one was user-facing: the upgrade notification text
 ("Orazca rises! Return to your new Capitol to see it rebuilt."), a console log line, and explanatory
 comments in `TownRestoration.java`/`TerritoryControl.java`. Confirmed zero "Camelot" references
-remain anywhere in the mod's Java source or `The Forgotten Realms` resource folder afterward.
+remain anywhere in the mod's Java source or `The Forsaken Realms` resource folder afterward.
 
 **Armory "Re-roll Inventory" button.** User spec: force a re-roll, once per week, 100 shards base,
 "independent from the weekly re-fresh" (the pre-existing automatic 7-day reseed). Confirmed the
@@ -8521,7 +8521,7 @@ single global card-pool filter - would have silently broken the discovery loop; 
 mechanism" below).
 
 ### Opt-in flag
-New `ConfigData.editionProgressionEnabled` (default false), on in `The Forgotten Realms/config.json`.
+New `ConfigData.editionProgressionEnabled` (default false), on in `The Forsaken Realms/config.json`.
 Same pattern as every other mod feature - inert on every other plane.
 
 ### Edition sharding (`EditionProgression.java`, new file)
@@ -8629,7 +8629,7 @@ and found a REAL, already-baked 3-tile decorative building at world x~144-192, y
 object or collision tied to it at all - a genuinely unused building, not empty ground needing new
 art.
 
-New `forge-gui/res/adventure/The Forgotten Realms/maps/obj/research_lab.tx` (plane-scoped, same
+New `forge-gui/res/adventure/The Forsaken Realms/maps/obj/research_lab.tx` (plane-scoped, same
 convention `stone.tx` already established), placed at (160, 96) on `player_capital.tmx` (object id
 103, `nextobjectid` bumped to 104). New `"researchlab"` case in `MapStage.java` - deliberately
 PLAIN single-arg `OnCollide` (no gate, no `withRebuiltIcon()`), unlike Arena/Spellsmith/the old
@@ -8843,7 +8843,7 @@ rows back within the visible screen without touching them directly. Not yet play
 User couldn't find `expansions.csv`/`items.csv`/`enemies.csv` (#41) anywhere in the mod folder.
 Root cause, confirmed by `git log --all -- "**/*.csv"` returning nothing: they were never checked
 in at all, on either machine - `ContentFilterTables.java` generates them lazily on first run with
-the flag on, writing into whichever machine's own deployed `res/adventure/The Forgotten Realms/
+the flag on, writing into whichever machine's own deployed `res/adventure/The Forsaken Realms/
 config tables/` happened to run the feature. This also explains this morning's "items.csv Notes
 column" commit (`adc7e0de5d4`) - that edit was made directly to a live-generated file that was
 never itself committed.
@@ -9110,7 +9110,7 @@ so the dated-comment convention stays trustworthy for future sessions tracing hi
 
 ### Compile/deploy status
 `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - BUILD SUCCESS. Spliced into both
-`forge-gui-mobile-dev-...jar` and `forge-gui-desktop-...jar`; `The Forgotten Realms` res folder
+`forge-gui-mobile-dev-...jar` and `forge-gui-desktop-...jar`; `The Forsaken Realms` res folder
 mirrored (the 5 AI capital `.tmx` files, `player_capital.tmx`, `config.json`). Spot-checked by
 extracting `ArenaScene.class`/`DeckTesterSimulator.class`/`ConsoleCommandInterpreter.class`/
 `EditionProgression.class` from the spliced mobile-dev jar and grepping each for a string literal
@@ -9379,7 +9379,7 @@ silently fail to resolve if ever rolled:
 ### Compile/deploy status
 
 `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - BUILD SUCCESS. Spliced into both
-`forge-gui-mobile-dev-...jar` and `forge-gui-desktop-...jar`; `The Forgotten Realms` res folder
+`forge-gui-mobile-dev-...jar` and `forge-gui-desktop-...jar`; `The Forsaken Realms` res folder
 mirrored (5 biome jsons only changed this round). Spot-checked by extracting `TerritoryControl.
 class`/`ColorReputation.class`/`MapStage.class`/`ConsoleCommandInterpreter.class`/`World.class`/
 `WorldStage.class` from the spliced mobile-dev jar and grepping each for a string literal unique to
@@ -9976,7 +9976,7 @@ reaches the HUD once that singleton already exists (e.g. testing Normal difficul
 in the same session). Fixed: added the two missing `emit()` calls at `AdventurePlayer.java:310-312`.
 
 **Doubled starting "coins"/teleport rune - a real, pre-existing bug, unrelated to Wood/Stone.**
-Every new character silently receives quest 28 ("Entering The Forgotten Realms"), whose "Skip
+Every new character silently receives quest 28 ("Entering The Forsaken Realms"), whose "Skip
 tutorial" dialog option one-time-grants a Colorless rune (teleport item) + several starting Challenge
 Coins. The re-trigger guard, `AdventureQuestData.prologueDisplayed`/`epilogueDisplayed`, was declared
 `private transient boolean` - Java's default serialization silently drops `transient` fields on every
@@ -10054,7 +10054,7 @@ distinguishes all 6 lines; unique marker shapes would need new art for comparati
 legibility). `modDetailsInfo` moved from below the old small chart up to y=46 (spanning both button
 columns) to free the taller vertical space the real chart needs.
 
-**Smaller fixes/polish, same round:** World Standings title -> "The Forgotten Realms Standings"
+**Smaller fixes/polish, same round:** World Standings title -> "The Forsaken Realms Standings"
 (scaled `[%55]` to fit); Mod Details page gained the full 16-race starting-expansion table plus how
 difficulty scales how many of those 4 sets you actually start with; Exchange dialog's plain-text
 "Gold: X  Shards: Y  Wood: Z  Stone: W" replaced with real icons (Gold/Shards via the standard
@@ -10320,7 +10320,7 @@ actually exists, rather than inventing sprite/map paths that would break at runt
   Details' own "Difficulty" section already claimed these effects in prose, but that page needs a
   live `World` to open and so is unreachable from the pre-game difficulty picker - this duplicates
   the concrete numbers at the one place a brand-new player can actually see them before committing.
-  The stock intro quest (id 28, "Entering The Forgotten Realms")'s mage-in-the-cave dialogue gained
+  The stock intro quest (id 28, "Entering The Forsaken Realms")'s mage-in-the-cave dialogue gained
   one sentence introducing the five-color territory premise and naming World Standings by name -
   the quest previously had zero TFR-specific content despite being every new player's first
   interaction with the mod.
@@ -10361,7 +10361,7 @@ the load path (`Config.java:113` even has a standing TODO admitting config-mergi
 unimplemented). Confirmed empirically too: Innistrad's own `new_game.json` override is a
 byte-for-byte full copy of common's file, differing only in the background image path - exactly
 the "full copy, not a diff" constraint this same mechanism imposes here. So both
-`The Forgotten Realms/ui/new_game.json` and `.../new_game_portrait.json` were created as full
+`The Forsaken Realms/ui/new_game.json` and `.../new_game_portrait.json` were created as full
 copies of their common counterparts, each with one added `raceHelp` `ImageButton` (style
 `roundhint`, positioned identically to `difficultyHelp`/`modeHelp` in that same layout) inserted
 right after the `raceL` label - landscape at `x:145`, portrait at `x:80`, matching the existing
@@ -10752,7 +10752,7 @@ First live-playtest feedback on round 15, plus two new user-authored art assets 
   show both `player` and AI color names (`white`/`blue`/`black`/`red`/`green`) over a few in-game
   days with `territoryControlEnabled` on.
 - **World Generation loading screen: new full-bleed background.** User created `Main_Image.png` (a
-  painterly "Welcome to The Forgotten Realms" scene, 1024x1024, fully opaque) specifically for this
+  painterly "Welcome to The Forsaken Realms" scene, 1024x1024, fully opaque) specifically for this
   screen. A third investigation agent mapped the existing rendering: `TransitionScreen`'s
   `BGAnimation.drawBackground()`, `isloading` branch, draws a black fill then the tiled
   `FSkinTexture.ADV_BG_TEXTURE` (a 99x99px repeating navy JPEG reused by 10+ other UI screens -
@@ -11061,7 +11061,7 @@ next session break.
   own `fort/`/`cave/` folders (which hold 4 unrelated custom dungeons each). Traced the exact
   resolution mechanism: `TileMapScene`/`MapStage`'s dungeon loader always calls `Config.
   getCommonFilePath()` (unconditionally prepends `common/`), so a POI's `"map"` string using a
-  `../The Forgotten Realms/...` relative path is the ONLY thing already redirecting some dungeons
+  `../The Forsaken Realms/...` relative path is the ONLY thing already redirecting some dungeons
   out of `common/` - confirmed there's no separate "check plane path, fall back to common"
   mechanism for maps specifically (unlike some other shared assets in this codebase). Recommended
   copy-and-repoint, scoped to just the specific templates about to be edited rather than all 202
@@ -11138,7 +11138,7 @@ Given the scale, this was executed as a one-off Python migration script (discove
     asset-drift risk of its own).
   - `<property name="teleport" value="...">` - when it pointed at another dungeon also being
     migrated, redirected to that dungeon's new plane-local copy using the same
-    `"../The Forgotten Realms/maps/map/..."` convention the plane's own pre-existing custom
+    `"../The Forsaken Realms/maps/map/..."` convention the plane's own pre-existing custom
     dungeons already established.
   Both computed via real relative-path math (Python's `os.path.relpath()`, resolved against each
   file's actual before/after location) rather than a hand-derived "count the folder depth" formula
@@ -11460,7 +11460,7 @@ Deployed 2026-08-19 on the user's go-ahead: jar spliced and byte-verified, the p
 `Realm of Legends/sprites` mirrored to `E:\GAMES\FORGE`, dead single-frame atlas files removed from
 the live install.
 
-- **Player guide authored (retroactive note):** `forge-gui/res/adventure/The Forgotten Realms/GUIDE.md`
+- **Player guide authored (retroactive note):** `forge-gui/res/adventure/The Forsaken Realms/GUIDE.md`
   - a player-facing manual written 2026-08-18 covering all mod systems (reputation tiers, territory
   control, the Orazca Capitol, Wood/Stone economy, buildings, progressive set unlocks, dungeon
   rotation, tournaments, shops) plus early/mid/late-game advice and a per-color dungeon guide. Ships
@@ -11553,7 +11553,7 @@ and Shandalar Old Border teams; all licensing in the mod folder too.
   Fixes: the plane's own STALE `sprites/buildingsbosses.atlas` (missing 2.0.15's `Ashling Domain`
   + `Universe Portal` regions - the round-24 crash fix had gone to the RoL copy because the POIs
   referenced the RoL path) replaced with the canonical copy, diff confirmed purely-additive;
-  the 8 POI refs repointed to `../The Forgotten Realms/sprites/...` (the plane's established
+  the 8 POI refs repointed to `../The Forsaken Realms/sprites/...` (the plane's established
   form); the 4 Innistrad `.tsx` + their 4 `.png`s copied to the plane's `maps/tileset/`
   (preserving the `INN_tiles/` subpath) and `autotiles.png` alongside, with all 14 map refs
   depth-corrected. Validated mechanically: JSON parses, all 12 changed `.tmx` parse with every
@@ -11565,7 +11565,7 @@ and Shandalar Old Border teams; all licensing in the mod folder too.
   defaulting to STOCK Forge's `pics/cards` (shared art; profile file still overrides);
   `AssetsDownloader.checkForUpdates()` desktop early-out kills the stock-Forge updater (a pinned
   fork would otherwise nag "New Version Available" near-daily, and accepting would install plain
-  Forge over the game); `GameLauncher` window title → "The Forgotten Realms (Forge <version>)".
+  Forge over the game); `GameLauncher` window title → "The Forsaken Realms (Forge <version>)".
 - **Packaging kit** (`standalone-packaging/`): player-facing `README.md` (run instructions, data
   locations, save migration, no-auto-update policy, GPL source link) and `CREDITS.md` (Forge dev
   team, Realm of Legends team, Shandalar Old Border team, Shandalar/Innistrad/Amonkhet plane
@@ -11576,8 +11576,8 @@ and Shandalar Old Border teams; all licensing in the mod folder too.
   `core.quotepath=off` so non-ASCII deck filenames don't confuse it) + docs, then self-verifies
   (title marker + dir-rebrand marker present inside the shipped jar's classes, adventure folder
   exactly 2 entries). `--zip` flag produces the release zip.
-- **First package BUILT and verified**: `F:\FORGE\TFR-Standalone\The Forgotten Realms\` (307 MB)
-  - `The Forgotten Realms.exe`/`.cmd` launchers, 2.0.15 jar with all mod code, TFR as the only
+- **First package BUILT and verified**: `F:\FORGE\TFR-Standalone\The Forsaken Realms\` (307 MB)
+  - `The Forsaken Realms.exe`/`.cmd` launchers, 2.0.15 jar with all mod code, TFR as the only
   world, LICENSE/CREDITS/GUIDE both at root and inside the plane folder. Ready for the user's
   side-by-side smoke test - the live 2.0.14 install at `E:\GAMES\FORGE` was not touched.
 
@@ -11739,7 +11739,7 @@ gates on mainQuest, set only by those two branches).
 
 ## Thirtieth round: public GitHub identity + v1.00 Release (2026-08-20)
 
-User made the fork public and renamed it: **github.com/TheSAguy/The-Forgotten-Realms**.
+User made the fork public and renamed it: **github.com/TheSAguy/The-Forsaken-Realms**.
 Root README.md rewritten as the game's own page (drawn from the promo/guide; Forge credited and
 linked at the end per user: "everyone who sees the mod knows it's Forge"; Discord + Ko-fi
 included). Old mtg-forge-mod URLs updated in the packaging docs; origin remote repointed.
@@ -11871,7 +11871,7 @@ Exchange) shipped everything except the upgrade action itself pending a design a
   126/127/154/155 2x2 tile block (the coordinates the user pulled from Tiled's tile inspector) at
   native 32x32 resolution - no upscaling needed, same "2x2 block, used as-is" precedent as
   Archaeologist/Spellsmith (as opposed to the older single-16x16-tile-then-2x-upscale approach).
-  Appended to `The Forgotten Realms/maps/tileset/new_buildings.png` (208x32 -> 240x32) and its
+  Appended to `The Forsaken Realms/maps/tileset/new_buildings.png` (208x32 -> 240x32) and its
   `.atlas` (region + header `size:` both updated - the atlas text format declares image dimensions
   redundantly with the PNG itself, easy to miss).
   - **"Upgrade to Exchange" row wired** (matches the user's own mockup) - held back initially
@@ -12023,7 +12023,7 @@ the only other file there, `cave_eldrazi.tmx`, is an unrelated generic filler ca
 **Cross-plane path fixes** (the exact "Six broken cross-plane dungeon exits" bug class from
 2026-08-10, applied to the newly-copied files this time):
 - Each of the 6 titan files has exactly one internal reference, its own `door_up` back to the hub
-  (`../Realm of Legends/maps/map/cave/Eldrazi_Prison_0.tmx`) - repointed to `../The Forgotten
+  (`../Realm of Legends/maps/map/cave/Eldrazi_Prison_0.tmx`) - repointed to `../The Forsaken
   Realms/...` in all 6.
 - `Hall_of_the_Unifier.tmx` had one broken-by-design internal link of its own, not in the 6-file
   list: a `door_down` (object id=150) to `Mirror_Gallery_1.tmx`, described in Jodah's own dialogue
@@ -12040,7 +12040,7 @@ the only other file there, `cave_eldrazi.tmx`, is an unrelated generic filler ca
 - One more player-facing fix in `Hall_of_the_Unifier.tmx`, found while reading the defeat dialogue:
   Jodah's victory text said "Congratulations on completing the Realm of Legends!" (both
   difficulty-variant copies of the line) - literal leftover branding from the source plane. Changed
-  to "The Forgotten Realms" in both. Left the same paragraph's "the Mirror Gallery you can now
+  to "The Forsaken Realms" in both. Left the same paragraph's "the Mirror Gallery you can now
   access" mention alone (see Uncertain section below) - the door behind it is deliberately disabled
   this round, but there genuinely is a door there, so the line isn't factually broken, just premature.
 
@@ -12147,10 +12147,10 @@ numbers pass.
   script-checking every path/reference, not by a live run through the dungeon.
 
 **Files touched**: `Eldrazi_Prison_{Azlask,Emrakul,Kozilek,Ulalek,Ulamog,Zhulodok}.tmx` (new) +
-`Hall_of_the_Unifier.tmx` (new), all under `The Forgotten Realms/maps/map/cave/`;
-`Eldrazi_Prison_0.tmx` (7 doors re-enabled, same folder); `The Forgotten Realms/decks/legends/
-{emrakul,kozilek}.dck` (new copies); `The Forgotten Realms/world/items.json` (+12 items); `The
-Forgotten Realms/world/enemies.json` (+2 entries, 6 tier/difficulty updates).
+`Hall_of_the_Unifier.tmx` (new), all under `The Forsaken Realms/maps/map/cave/`;
+`Eldrazi_Prison_0.tmx` (7 doors re-enabled, same folder); `The Forsaken Realms/decks/legends/
+{emrakul,kozilek}.dck` (new copies); `The Forsaken Realms/world/items.json` (+12 items); `The
+Forsaken Realms/world/enemies.json` (+2 entries, 6 tier/difficulty updates).
 
 ## Thirty-seventh round: enemy tier gap-fill + full whole-game reachability re-audit (2026-08-22)
 
@@ -12367,8 +12367,8 @@ loop; noted here so a future session doesn't waste time re-checking the same fal
 - Not playtested - both tasks verified by parsing/re-parsing the actual data and cross-reading the
   Java resolution code, not by a live run.
 
-**Files touched**: `The Forgotten Realms/world/enemies.json` (43 entries gained `tier`, 38 of those
-also gained `difficulty`; 1520 total, unchanged); `The Forgotten Realms/world/shops.json`
+**Files touched**: `The Forsaken Realms/world/enemies.json` (43 entries gained `tier`, 38 of those
+also gained `difficulty`; 1520 total, unchanged); `The Forsaken Realms/world/shops.json`
 (`"OmenStones"` template +1 entry, `Ghost rune`).
 
 ## Thirty-eighth round: external-fork review, macOS/Linux launchers, Tibalt boss-effect bug fix (2026-08-22)
@@ -12457,7 +12457,7 @@ is mid-session, not rebuilt this round.
   own confirmation rather than a fabricated implementation history).
 
 **Files touched**: `forge-gui-mobile/src/forge/adventure/data/TuningData.java`, `forge-gui-mobile/
-src/forge/adventure/scene/ResearchScene.java`, `forge-gui/res/adventure/The Forgotten Realms/
+src/forge/adventure/scene/ResearchScene.java`, `forge-gui/res/adventure/The Forsaken Realms/
 config tables/settings.json`, `MOD_SCOPE.md`.
 
 ## Fortieth round: Colorless rune now returns to the Capitol (2026-08-22)
@@ -12492,7 +12492,7 @@ above.
   flagging rather than silently assuming a clean build.
 
 **Files touched**: `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`,
-`forge-gui/res/adventure/The Forgotten Realms/world/items.json`.
+`forge-gui/res/adventure/The Forsaken Realms/world/items.json`.
 
 ## Forty-first round: RoL/Commander card-mixing fix, root-caused and closed (2026-08-22)
 
@@ -12545,8 +12545,8 @@ live game").
 **Files touched**: `forge-gui-mobile/src/forge/adventure/data/RewardData.java`,
 `forge-gui-mobile/src/forge/adventure/data/RestrictedCardsData.java` (new),
 `forge-gui-mobile/src/forge/adventure/util/Config.java`,
-`forge-gui\res\adventure\The Forgotten Realms\config.json`,
-`forge-gui\res\adventure\The Forgotten Realms\config tables\restricted_cards.json` (new).
+`forge-gui\res\adventure\The Forsaken Realms\config.json`,
+`forge-gui\res\adventure\The Forsaken Realms\config tables\restricted_cards.json` (new).
 
 **Outside the repo**: `C:\Users\User\.claude\settings.json` (this machine's global Claude Code
 config, not part of this repo) gained a `SessionStart` hook prepending
@@ -12575,7 +12575,7 @@ visually confirmed the Arena object itself was absent from the Objects layer (Fo
 it, id 71; Mountain didn't).
 
 **Actual root cause**: TFR has its own plane-specific override copies of all 5 capital `.tmx`
-files at `The Forgotten Realms/maps/map/main_story/*_capital.tmx`, separate from and taking
+files at `The Forsaken Realms/maps/map/main_story/*_capital.tmx`, separate from and taking
 priority over the shared `common/maps/map/main_story/*_capital.tmx` versions (same "plane file
 first, common as fallback" pattern config.json already uses). A full diff showed TFR's override
 files are near-total stale snapshots of the common/ files (different compressed tile-layer data
@@ -12621,7 +12621,7 @@ list - removed rather than guessed at a replacement. Both pools re-validated aft
 names missing from `enemies.json` in either.
 
 **Files touched**: `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (diagnostic logging
-added then removed, net no-op), `forge-gui/res/adventure/The Forgotten Realms/maps/map/main_story/
+added then removed, net no-op), `forge-gui/res/adventure/The Forsaken Realms/maps/map/main_story/
 island_capital.tmx`, `.../mountain_capital.tmx`, `.../plains_capital.tmx`, `.../swamp_capital.tmx`.
 
 ## Forty-second round, REVERTED same day: the Arena fix above caused a movement-blocking regression
@@ -12683,7 +12683,7 @@ field matches its own color (blue/red/white/black) - not green.
 
 Rebuilt (Java unchanged - `.tmx` content only, so packaging-only, no Maven step) and redeployed.
 
-**Files touched**: `forge-gui/res/adventure/The Forgotten Realms/maps/map/main_story/
+**Files touched**: `forge-gui/res/adventure/The Forsaken Realms/maps/map/main_story/
 island_capital.tmx`, `.../mountain_capital.tmx`, `.../plains_capital.tmx`, `.../swamp_capital.tmx`
 (object placement by the user directly in Tiled; loot/enemy data corrected here).
 
@@ -12754,7 +12754,7 @@ correctly-colored Arena object each before committing.
 
 **Files touched**: `CORE_ENGINE_CHANGES.md`, `forge-gui-mobile/src/forge/adventure/util/
 Config.java`, `.../EconomyBuildings.java`, `.../TownRestoration.java`, `forge-gui/res/adventure/
-The Forgotten Realms/config tables/restricted_cards.json`, `forge-gui/res/adventure/common/
+The Forsaken Realms/config tables/restricted_cards.json`, `forge-gui/res/adventure/common/
 custom_cards/tibalt_boss_effect.txt`, `standalone-packaging/build_standalone.py`, plus the 4
 capital `.tmx` re-stamps noted above.
 
@@ -12766,7 +12766,7 @@ patched on symptom alone.
 **New Game+ duplicate starting Challenge Coins - root-caused and fixed.** User report: doing
 New Game+ left them with exactly double the starting "coin" items (screenshot showed 10 items -
 6 Bronze/2 mid-tier/2 Silver Challenge Coins - where 5 is correct). Traced the actual grant:
-quest 28 ("Entering The Forgotten Realms")'s "Skip tutorial - just get me to the game" prologue
+quest 28 ("Entering The Forsaken Realms")'s "Skip tutorial - just get me to the game" prologue
 option grants a Colorless rune + 3x Bronze/1x/1x Silver Challenge Coin and sets a
 `freeChallengeCoins` character flag - but, unlike every OTHER place in this codebase that grants
 the same coins (the Spawn map's own wizard NPC in `spawn.tmx`, and even an unrelated Innistrad
@@ -12818,10 +12818,10 @@ Both fixes compiled clean (`mvn -pl forge-gui-mobile -am compile -DskipTests -o`
 verified as well-formed JSON/XML after editing. Repo-only per standing session pattern - live
 standalone folder untouched, nothing packaged or pushed.
 
-**Files touched**: `forge-gui/res/adventure/The Forgotten Realms/world/quests.json`,
+**Files touched**: `forge-gui/res/adventure/The Forsaken Realms/world/quests.json`,
 `forge-gui-mobile/src/forge/adventure/data/DialogData.java`,
 `forge-gui-mobile/src/forge/adventure/util/MapDialog.java`,
-`forge-gui/res/adventure/The Forgotten Realms/maps/map/lair/riddles_lair.tmx`.
+`forge-gui/res/adventure/The Forsaken Realms/maps/map/lair/riddles_lair.tmx`.
 
 ## Forty-sixth round: full enemy-roster tier recompute - one consistent method for all 1,520 enemies, replacing a three-way patchwork (2026-08-23, REPO-ONLY, not deployed)
 
@@ -13013,7 +13013,7 @@ this session's standing pattern. The throwaway tool itself was deleted after use
 as both prior rounds' own one-off tools) - its full methodology is captured above instead, same
 as how this round was able to rebuild the original from its own prose in the first place.
 
-**Files touched**: `forge-gui/res/adventure/The Forgotten Realms/world/enemies.json` (514 `tier`
+**Files touched**: `forge-gui/res/adventure/The Forsaken Realms/world/enemies.json` (514 `tier`
 values changed, nothing else - see validation above). No Java files persist from this round -
 `forge-lda/src/forge/lda/DeckRarityLookup.java` was created, used, and deleted within it.
 
@@ -13171,7 +13171,7 @@ decay maps + getters + persist/restore/reset wiring), `forge-gui-mobile/src/forg
 scene/DuelScene.java` (1 new call, guarded, win-only), `forge-gui-mobile/src/forge/adventure/
 stage/WorldStage.java` (`[TFR-Spawn]` log line extended), `forge-gui-mobile/src/forge/adventure/
 scene/WorldStandingsScene.java` (Reputation dialog + Mod Details paragraph updated); `forge-gui/
-res/adventure/The Forgotten Realms/config tables/spawn_tier_weighting.json` (new), `.../config
+res/adventure/The Forsaken Realms/config tables/spawn_tier_weighting.json` (new), `.../config
 tables/settings.json` (3 new fields + `dayLengthSeconds` 400->300), `.../config.json` (new flag
 enabled), `.../GUIDE.md` (Reputation section updated).
 
@@ -13278,7 +13278,7 @@ User suspected this was a base-game bug, not TFR-introduced - confirmed correct.
 ("Travel"), which does resolve one. Confirmed byte-identical in `Realm of Legends/world/
 quests.json` at the same line number, meaning this is inherited base-game data, not something
 this mod's own quest edits introduced, exactly as the user guessed. Fixed in both files (`The
-Forgotten Realms` and `Realm of Legends`) since both are actively played; other stock planes'
+Forsaken Realms` and `Realm of Legends`) since both are actively played; other stock planes'
 copies of the same quest were left untouched, matching this mod's standing rule against editing
 shared/stock content beyond what a plane actively uses.
 
@@ -13323,7 +13323,7 @@ InventoryScene.java` (new `sellButton`/`sellDialog` fields, `showSellConfirm()`/
 `sell()`, `setSelected()` extended in 3 branches), `forge-gui-mobile/src/forge/adventure/stage/
 WorldStage.java` (hold-Z run speed, done earlier this same round before compaction - imports,
 `RUN_KEY_SPEED_MULTIPLIER`, `isRunKeyHeld()`, wired into `onActing()` and
-`handleMonsterSpawn()`); `forge-gui/res/adventure/The Forgotten Realms/config tables/
+`handleMonsterSpawn()`); `forge-gui/res/adventure/The Forsaken Realms/config tables/
 settings.json` (`maxResourceSpawns` 30->50, new `innTournamentRerollShardCost` field), `.../ui/
 inn.json` (new), `.../ui/inn_portrait.json` (new), `.../ui/inventory.json` (new), `.../ui/
 inventory_portrait.json` (new), `.../world/quests.json` (`$(poi_1)` -> `$(poi_2)` fix); `forge-
@@ -13498,7 +13498,7 @@ TownRestoration.java` (`NEUTRAL_SEEDED_FLAG`, `isNeutralSeeded()`, `seedFunction
 both `buildPullSources()` protect-radius calculations), `forge-gui-mobile/src/forge/adventure/
 data/ConfigData.java` (`functioningNeutralTownsEnabled`), `forge-gui-mobile/src/forge/adventure/
 data/TuningData.java` (`functioningNeutralTownCount`, `townMaxTerritoryRadius` 20->25,
-`townProtectedRadiusCap`); `forge-gui/res/adventure/The Forgotten Realms/world/
+`townProtectedRadiusCap`); `forge-gui/res/adventure/The Forsaken Realms/world/
 points_of_interest.json` (town/capital counts), `.../config.json`
 (`functioningNeutralTownsEnabled: true`), `.../config tables/settings.json`
 (`townMaxTerritoryRadius`, new `townProtectedRadiusCap`, new `functioningNeutralTownCount`).
@@ -13652,7 +13652,7 @@ before the rest of this round), `forge-gui-mobile/src/forge/adventure/util/TownR
 (sign/overlay visibility extended for permanently-broken slots, both call sites),
 `forge-gui-mobile/src/forge/adventure/scene/InfoTextScene.java` (`ScrollPane` "nobg" style),
 `forge-gui-mobile/src/forge/adventure/data/TuningData.java` (`functioningNeutralTownCount` 10->20);
-`forge-gui/res/adventure/The Forgotten Realms/config tables/settings.json`
+`forge-gui/res/adventure/The Forsaken Realms/config tables/settings.json`
 (`functioningNeutralTownCount` 10->20).
 
 ## Fifty-first round: broken-shop popup fixed, edition-gating re-verified against real playtest logs (2026-08-24)
@@ -13796,9 +13796,9 @@ same existing art/regions Stone/Gravel/Flower/Bush/Stump already use - zero visu
 but now independently retunable without touching `common/` or any other biome.
 `world/biomes/player.json`'s `spriteNames` repointed at the new names.
 
-### Rebrand: "The Forgotten Realms" -> "The Forsaken Realms"
+### Rebrand: "The Forsaken Realms" -> "The Forsaken Realms"
 User: "go ahead and start the rebrand" (previously deferred behind the Chest feature/freeze fix).
-Plane folder renamed (`git mv`); every occurrence of the exact phrase "The Forgotten Realms"
+Plane folder renamed (`git mv`); every occurrence of the exact phrase "The Forsaken Realms"
 replaced with "The Forsaken Realms" throughout the renamed folder (134 files - mostly `.tmx` files'
 own internal relative image-source paths) and in the ~15 outside-repo files that reference the mod
 by name (`CLAUDE.md`, `MOD_SCOPE.md`, `DUNGEON_POOL_RESEARCH.md`, `README.md`, `standalone-packaging/
@@ -13813,7 +13813,7 @@ it only affects new games. Can't change existing games"), existing saves under t
 simply not migrated; the old folder is left untouched on disk, not deleted. Deliberately NOT
 touched: the `[TFR-...]` log-line prefix convention (already baked into hundreds of existing log
 statements - a separate, much larger, unrequested task), any of the real MTG "Adventures in the
-Forgotten Realms" set's own files (`editions/`, `cardsfolder/`, stock Quest/Conquest content), and
+Forsaken Realms" set's own files (`editions/`, `cardsfolder/`, stock Quest/Conquest content), and
 past entries in this changelog / `CORE_ENGINE_CHANGES.md` (historically accurate as originally
 written, left alone). Two clearly-orphaned untracked files from an earlier, separately-reverted
 player-terrain experiment (`world/tilesets/new_player_terrain.png`/`.atlas`, confirmed unreferenced
@@ -13823,7 +13823,7 @@ anywhere) were deleted per explicit user request in this same round.
 - `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0.
 - `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly; new
   output folder is `F:\FORGE\TFR-Standalone\The Forsaken Realms\`.
-- Repo-wide grep for `The Forgotten Realms` / `ForgottenRealms` / `forgottenrealms` re-run after
+- Repo-wide grep for `The Forsaken Realms` / `ForgottenRealms` / `forgottenrealms` re-run after
   every edit pass; only the two historical changelogs (by design) and one explanatory note in
   `PLAYTEST_LOG_CHECKLIST.md` (explaining why `[TFR-` stayed put) still match.
 

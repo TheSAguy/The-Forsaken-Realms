@@ -14,14 +14,14 @@ visibly changes over time instead of sitting static.
 
 ## Mod Plane: "The Forsaken Realms"
 
-All of this is being built as its own selectable plane, `forge-gui/res/adventure/The Forgotten
+All of this is being built as its own selectable plane, `forge-gui/res/adventure/The Forsaken
 Realms/` (currently a copy of Shandalar's `world/` data as a starting point). The plane has its
 own `config.json` (a full copy of `common/config.json`, since per-plane configs replace the
 common one entirely rather than merging with it) with our feature flags turned on:
 `fogOfWarEnabled`, `dayNightCycleEnabled`, `townReconstructionEnabled` — all `false` by default
 in the Java code, so every mod feature is opt-in per plane and **does not affect Shandalar or
 any other stock plane** unless that plane's own config.json also sets them. Select "The
-Forgotten Realms" in-game (New Game screen) to play/test the mod.
+Forsaken Realms" in-game (New Game screen) to play/test the mod.
 
 ## Color Alliances / Enemies
 
@@ -1316,7 +1316,7 @@ pattern/assets, not literal copy-paste, unless noted otherwise.
 - **Terrain reskin technique** (from `Amonkhet`) — smallest/cleanest example of overriding just
   `world/tilesets/autotiles.png` + `terrain.atlas` to give the whole overworld a different
   palette without touching decks/maps/mechanics. Worth reading as a how-to if we ever want The
-  Forgotten Realms to have its own terrain look distinct from Shandalar's, without a big content
+  Forsaken Realms to have its own terrain look distinct from Shandalar's, without a big content
   investment.
 - **Commander-style boss-deck library** (from `Realm of Legends`) — 887 decks under
   `decks/legends/`, one per MTG legendary creature, used as unique named encounters instead of

@@ -58,7 +58,7 @@ saves in `%APPDATA%\ForsakenRealms` carry over.
 
 Forge — and therefore this game — is licensed under the **GNU General Public
 License v3** (see `LICENSE.txt`). The complete modified source code is available
-at: **https://github.com/TheSAguy/The-Forgotten-Realms**
+at: **https://github.com/TheSAguy/The-Forsaken-Realms**
 
 See `CREDITS.md` — this game stands on a lot of other people's excellent work.
 

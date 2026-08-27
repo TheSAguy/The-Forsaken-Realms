@@ -1,7 +1,7 @@
 # Core Engine Changes — Upstream Update Tracking
 
 This repo tracks two very different kinds of changes: content that lives entirely under
-`forge-gui/res/adventure/The Forgotten Realms/` (safe — upstream Forge updates never touch that
+`forge-gui/res/adventure/The Forsaken Realms/` (safe — upstream Forge updates never touch that
 folder, so nothing there can ever conflict), and edits to **existing, shared Forge engine files**
 (risky — an upstream update could change the exact same file, method, or line).
 
@@ -29,7 +29,7 @@ master` (or `git rebase`) will still flag textual conflicts either way — this 
 *where to expect them* and *why our side looks the way it does*, so reconciling isn't a cold read.
 
 **Keeping this doc current is part of the workflow, not optional** (see `CLAUDE.md`'s ground
-rules): any session that edits a file **outside** `forge-gui/res/adventure/The Forgotten Realms/`
+rules): any session that edits a file **outside** `forge-gui/res/adventure/The Forsaken Realms/`
 or a wholly new file must add/update an entry here in the same round, the same way `MOD_CHANGELOG.
 md` already gets updated after every change.
 
@@ -856,7 +856,7 @@ One round: first Progressive Set Unlocks playtest fixes + a Fable deep-dive revi
   custom-cost `buildRebuildShopDialog` overload; dead gold-only helpers removed.
 - **`scene/RewardScene.java` / `scene/ArenaScene.java` / `scene/ResearchScene.java`** — upgrade/
   research buttons re-priced (stone/wood/shards) with glyph labels.
-- **Plane assets** (not engine, listed for completeness): `The Forgotten Realms/sprites/
+- **Plane assets** (not engine, listed for completeness): `The Forsaken Realms/sprites/
   items.png/.atlas` gained "Wood"/"Stone" 16x16 regions so [+Wood]/[+Stone] font tags resolve.
 
 ### 2026-08-12 dynamic armory item pools
@@ -1266,13 +1266,13 @@ Standings page" entry.)
 
 Under `forge-gui-mobile/src/forge/adventure/scene/`, same reasoning:
 `WorldStandingsScene.java` (#7) - its own JSON layout lives in the mod's plane folder
-(`The Forgotten Realms/ui/world_standings.json`), not `common/ui/`, so that part needs no tracking
+(`The Forsaken Realms/ui/world_standings.json`), not `common/ui/`, so that part needs no tracking
 here either - see "Everything else" below. `ResearchScene.java` (#4, 2026-08-12) - same reasoning,
-its own layout lives at `The Forgotten Realms/ui/research.json`/`research_portrait.json`.
+its own layout lives at `The Forsaken Realms/ui/research.json`/`research_portrait.json`.
 
 ## Everything else (not tracked here - genuinely safe)
 
-Every file under `forge-gui/res/adventure/The Forgotten Realms/` is mod-owned content (JSON
+Every file under `forge-gui/res/adventure/The Forsaken Realms/` is mod-owned content (JSON
 overrides, custom art, maps) - upstream Forge has no path collisions with that folder at all, so
 none of it needs tracking here. See `MOD_SCOPE.md`/`MOD_CHANGELOG.md` for what's in it and why.
 
@@ -1379,7 +1379,7 @@ from the plane's `config tables/settings.json`).
   `save()`'s default-comparison updated to match. A `forge.profile.properties` file still
   overrides all of it. NOTE for dev machines: 2.0.15+ builds of this fork read/write
   `%APPDATA%\ForgottenRealms` — existing test saves under `%APPDATA%\Forge\adventure\The
-  Forgotten Realms` must be copied over once (the old 2.0.14 install at `E:\GAMES\FORGE` is
+  Forsaken Realms` must be copied over once (the old 2.0.14 install at `E:\GAMES\FORGE` is
   unaffected, its jars predate this change).
 - **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** — `checkForUpdates()` gets a
   desktop-only early-out (`if (!GuiBase.isAndroid()) { run(runnable); return; }`) killing the
@@ -1390,7 +1390,7 @@ from the plane's `config tables/settings.json`).
   shipped) keeps stock behavior. Upstream-merge watch: if upstream ever moves desktop update
   logic out of this method, re-apply the kill there.
 - **`forge-gui-mobile-dev/src/forge/app/GameLauncher.java`** — window title `"Forge - <version>"`
-  → `"The Forgotten Realms (Forge <version>)"` (rebrand decision 2026-08-19; engine version kept
+  → `"The Forsaken Realms (Forge <version>)"` (rebrand decision 2026-08-19; engine version kept
   visible for bug reports).
 
 New non-engine files (repo root `standalone-packaging/`, no upstream collision):
@@ -1455,10 +1455,10 @@ plane folder alongside LICENSE.txt).
 
 ## Public-repo identity (2026-08-20, thirtieth round)
 
-- **`README.md`** (repo root) — upstream Forge's readme REPLACED with The Forgotten Realms' own
+- **`README.md`** (repo root) — upstream Forge's readme REPLACED with The Forsaken Realms' own
   page (pitch, features, install, Discord/Ko-fi, build-from-source, Forge credit + GPL). Upstream
   merges will conflict here every time upstream touches their readme - always resolve to OURS.
-- Repo renamed/made public: `TheSAguy/mtg-forge-mod` → **`TheSAguy/The-Forgotten-Realms`**
+- Repo renamed/made public: `TheSAguy/mtg-forge-mod` → **`TheSAguy/The-Forsaken-Realms`**
   (old URLs redirect; origin remote + all doc references updated).
 
 ## v1.00 feedback round (2026-08-21, thirty-first round)

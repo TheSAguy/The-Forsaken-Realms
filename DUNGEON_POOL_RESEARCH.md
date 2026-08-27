@@ -204,7 +204,7 @@ encounters rather than filler.
    where missing, wire each name into the right biome file(s) per its `BiomeX` tag (or several
    files / `colorless.json` if untagged).
 2. For the 11 asset-requiring imports: copy `.tmx` + atlas + backing `.png` files into `The
-   Forgotten Realms/maps/...` (not `common/`, per project convention), fixing relative paths as
+   Forsaken Realms/maps/...` (not `common/`, per project convention), fixing relative paths as
    you go (`../Shandalar Old Border/...` / `../Innistrad/...` → `../The Forsaken Realms/...`).
 3. **Check every copied `.tmx` for internal door/teleport properties pointing at the source
    plane** before wiring it in — this exact bug bit the 2026-08-10 Realm of Legends import ("Six

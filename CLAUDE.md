@@ -28,7 +28,7 @@ have in its own memory.
   live under `forge-gui/res/adventure/The Forsaken Realms/`. Both need to travel together
   (e.g. via git) for the mod to actually work on another machine - copying just one half is not
   enough.
-- **Prefer storing custom/edited assets and data under `forge-gui/res/adventure/The Forgotten
+- **Prefer storing custom/edited assets and data under `forge-gui/res/adventure/The Forsaken
   Realms/`, not `common/`, whenever the engine's plane-aware file resolution makes that possible**
   (the same "full copy, not merge" override pattern already used for `config.json`,
   `points_of_interest.json`, `world.json`, the biome jsons, and every custom `.png`/`.atlas` this

@@ -46,7 +46,7 @@ were built for this game by TheSAguy, with AI-assisted development
 ## License
 
 This game is free software under the **GNU General Public License v3**
-(`LICENSE.txt`). Complete modified source: https://github.com/TheSAguy/The-Forgotten-Realms
+(`LICENSE.txt`). Complete modified source: https://github.com/TheSAguy/The-Forsaken-Realms
 
 *Unofficial Fan Content permitted under the Wizards of the Coast Fan Content
 Policy. Not approved/endorsed by Wizards. Portions of the materials used are

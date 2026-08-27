@@ -30,7 +30,7 @@ in addition to the console. `USER_DIR` is the game's *deployed/installed* copy's
   still in the plain `forge.log` unless the user restarted the client multiple times since playing.
 
 Once you have the path, every check below is a `grep` (or PowerShell `Select-String`) against that
-file. All new log lines share the prefix `[TFR-` (originally for "The Forgotten Realms" - kept
+file. All new log lines share the prefix `[TFR-` (originally for "The Forsaken Realms" - kept
 as-is after the 2026-08-25 rename to "The Forsaken Realms" since renaming it would mean touching
 every already-existing `[TFR-...]` log line in the codebase, not just this doc) so the whole batch
 is findable at once: `grep "\[TFR-" forge.log` (PowerShell: `Select-String '\[TFR-' forge.log`).
