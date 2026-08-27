@@ -47,6 +47,7 @@ import forge.adventure.world.WorldSave;
 import forge.assets.FBufferedImage;
 import forge.assets.FImageComplex;
 import forge.assets.FSkinImage;
+import forge.card.CardImageRenderer;
 import forge.card.CardRenderer;
 import forge.card.ColorSet;
 import forge.deck.Deck;
@@ -76,6 +77,10 @@ public abstract class GameStage extends Stage {
     private float animationTimeout = 0;
     public static float maximumScrollDistance = 1.5f;
     public static float minimumScrollDistance = 0.3f;
+    private final Vector2 keyboardInput = new Vector2();
+    private final Vector2 controllerInput = new Vector2();
+    private final Vector2 touchInput = new Vector2();
+    protected final Vector2 touchKnobInput = new Vector2();
 
     private String extraAnnouncement = "";
 
@@ -207,7 +212,10 @@ public abstract class GameStage extends Stage {
         DeckProxy dp = new DeckProxy(deck, "Constructed", GameType.Constructed, null);
         FImageComplex cardArt = CardRenderer.getCardArt(dp.getHighestCMCCard());
         if (cardArt != null) {
-            Image art = new Image(cardArt.getTextureRegion());
+            TextureRegion textureRegion = cardArt.getTextureRegion();
+            if (CardImageRenderer.forgeArt == cardArt)
+                textureRegion.flip(false, true); // fix inverted
+            Image art = new Image(textureRegion);
             art.setWidth(58);
             art.setHeight(46);
             art.setPosition(25, 43);
@@ -255,17 +263,16 @@ public abstract class GameStage extends Stage {
         showDialog();
     }
 
-
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
         if (MapStage.getInstance().isDialogOnlyInput() || isPaused()) {
             return true;
         }
-        player.getMovementDirection().x = controller.getAxis(0);
-        player.getMovementDirection().y = -controller.getAxis(1);
-        if (player.getMovementDirection().len() < 0.2) {
-            player.stop();
-        }
+        controllerInput.set(controller.getAxis(0), -controller.getAxis(1));
         return true;
+    }
+
+    public void setTouchKnobInput(float x, float y) {
+        touchKnobInput.set(x, y);
     }
 
     enum PlayerModification {
@@ -274,7 +281,6 @@ public abstract class GameStage extends Stage {
         Fly
 
     }
-
 
     HashMap<PlayerModification, Float> currentModifications = new HashMap<>();
 
@@ -367,6 +373,7 @@ public abstract class GameStage extends Stage {
             animationTimeout -= delta;
             return;
         }
+
         Array<PlayerModification> modsToRemove = new Array<>();
         for (Map.Entry<PlayerModification, Float> mod : currentModifications.entrySet()) {
             mod.setValue(mod.getValue() - delta);
@@ -378,33 +385,70 @@ public abstract class GameStage extends Stage {
             onRemoveEffect(mod);
         }
 
-        if (isPaused()) {
-            return;
-        }
-
-
         if (onEndAction != null) {
-
             onEndAction.run();
             onEndAction = null;
         }
 
-        // dialogOnlyInput gate (2026-08-09): while a dialog is up, a recorded touch must not keep
-        // steering the player - clicking dialog buttons also reaches this stage's touchDown
-        // (input is multiplexed with the HUD stage the dialog actually lives on), so without this
-        // the player walked toward every button click behind the dialog (user-reported twice; the
-        // earlier showDialog() stop() only halted movement at open time, not input during).
-        if (touchX >= 0 && !dialogOnlyInput) {
-            Vector2 target = this.screenToStageCoordinates(new Vector2(touchX, touchY));
-            target.x -= player.getWidth() / 2f;
-            Vector2 diff = target.sub(player.pos());
-
-            if (diff.len() < 2) {
-                diff.setZero();
-                player.stop();
+        // Upstream 08.26 input rewrite: this central every-frame gate zeroes all input sources
+        // while a dialog is up, which subsumes the mod's 2026-08-09 dialogOnlyInput gates that
+        // used to sit on the touch-steering block here and on keyDown's movement keys.
+        if (isPaused() || isDialogOnlyInput() || Forge.advFreezePlayerControls) {
+            keyboardInput.setZero();
+            controllerInput.setZero();
+            touchInput.setZero();
+            touchKnobInput.setZero();
+            player.getMovementDirection().setZero();
+            player.stop();
+        } else {
+            keyboardInput.setZero();
+            if (KeyBinding.Left.isPressed()) {
+                keyboardInput.x -= 1;
             }
-            player.setMovementDirection(diff);
+
+            if (KeyBinding.Right.isPressed()) {
+                keyboardInput.x += 1;
+            }
+
+            if (KeyBinding.Up.isPressed()) {
+                keyboardInput.y += 1;
+            }
+
+            if (KeyBinding.Down.isPressed()) {
+                keyboardInput.y -= 1;
+            }
+
+            // Input priority: touch > controller > keyboard
+            Vector2 dir = new Vector2();
+            if (touchX >= 0 && touchInput.len() > 0.2f) {
+                dir.set(touchInput);
+            } else if (controllerInput.len() > 0.2f) {
+                dir.set(controllerInput);
+            } else if (touchKnobInput.len() > 0.2f) {
+                dir.set(touchKnobInput);
+            } else {
+                dir.set(keyboardInput);
+            }
+            if (dir.len() < 0.01f) {
+                player.stop();
+            } else {
+                player.getMovementDirection().set(dir);
+            }
+
+            if (touchX >= 0) {
+                Vector2 target = this.screenToStageCoordinates(new Vector2(touchX, touchY));
+                target.x -= player.getWidth() / 2f;
+                Vector2 diff = target.sub(player.pos());
+
+                if (diff.len() < 2) {
+                    touchInput.setZero();
+                    player.stop();
+                } else {
+                    touchInput.set(diff);
+                }
+            }
         }
+
         camera.position.x = Math.min(Math.max(Scene.getIntendedWidth() / 2f, player.pos().x), getViewport().getWorldWidth() - Scene.getIntendedWidth() / 2f);
         camera.position.y = Math.min(Math.max(Scene.getIntendedHeight() / 2f, player.pos().y), getViewport().getWorldHeight() - Scene.getIntendedHeight() / 2f);
 
@@ -437,27 +481,22 @@ public abstract class GameStage extends Stage {
 
     abstract protected void onActing(float delta);
 
-
     @Override
     public boolean keyDown(int keycode) {
         super.keyDown(keycode);
         if (isPaused())
             return true;
-        // Movement keys ignored while a dialog is up - same input-leak class as the touch gate in
-        // act(): the dialog's own stage handles navigation keys, this stage must not also walk.
-        if (!dialogOnlyInput) {
-            if (KeyBinding.Left.isPressed(keycode)) {
-                player.getMovementDirection().x = -1;
-            }
-            if (KeyBinding.Right.isPressed(keycode)) {
-                player.getMovementDirection().x = +1;
-            }
-            if (KeyBinding.Up.isPressed(keycode)) {
-                player.getMovementDirection().y = +1;
-            }
-            if (KeyBinding.Down.isPressed(keycode)) {
-                player.getMovementDirection().y = -1;
-            }
+        if (KeyBinding.Left.isPressed(keycode)) {
+            keyboardInput.x = -1;
+        }
+        if (KeyBinding.Right.isPressed(keycode)) {
+            keyboardInput.x = +1;
+        }
+        if (KeyBinding.Up.isPressed(keycode)) {
+            keyboardInput.y = +1;
+        }
+        if (KeyBinding.Down.isPressed(keycode)) {
+            keyboardInput.y = -1;
         }
         if (keycode == Input.Keys.F5)//todo config
         {
@@ -568,6 +607,10 @@ public abstract class GameStage extends Stage {
     public void stop() {
         WorldStage.getInstance().getPlayerSprite().setMovementDirection(Vector2.Zero);
         MapStage.getInstance().getPlayerSprite().setMovementDirection(Vector2.Zero);
+        touchInput.setZero();
+        touchKnobInput.setZero();
+        keyboardInput.setZero();
+        controllerInput.setZero();
         touchX = -1;
         touchY = -1;
         player.stop();
@@ -681,8 +724,10 @@ public abstract class GameStage extends Stage {
         PointOfInterest poi = Current.world().findPointsOfInterest("Spawn");
         if (poi != null) {
             Forge.advFreezePlayerControls = true;
-            getPlayerSprite().setAnimation(CharacterSprite.AnimationTypes.Death);
-            getPlayerSprite().playEffect(Paths.EFFECT_BLOOD, 0.5f);
+            PlayerSprite playerSprite = getPlayerSprite();
+            playerSprite.setAnimation(CharacterSprite.AnimationTypes.Death);
+            playerSprite.playEffect(Paths.EFFECT_BLOOD, 0.5f);
+            float deathDuration = playerSprite.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 1f);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -695,7 +740,7 @@ public abstract class GameStage extends Stage {
                         Forge.clearTransitionScreen();
                     }, Forge.takeScreenshot()))));
                 }
-            }, 1f);
+            }, deathDuration);
         }//Spawn shouldn't be null
     }
 
@@ -703,14 +748,16 @@ public abstract class GameStage extends Stage {
         if (!Current.player().hasEquippedItem())
             return;
         Forge.advFreezePlayerControls = true;
-        getPlayerSprite().setAnimation(CharacterSprite.AnimationTypes.Hit);
-        getPlayerSprite().playEffect(Paths.EFFECT_BLOOD, 0.5f);
+        PlayerSprite playerSprite = getPlayerSprite();
+        playerSprite.setAnimation(CharacterSprite.AnimationTypes.Hit);
+        playerSprite.playEffect(Paths.EFFECT_BLOOD, 0.5f);
+        float hitDuration = playerSprite.getActionAnimationDuration(CharacterSprite.AnimationTypes.Hit, 1f);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 showImageDialog(Current.generateDefeatMessage(false), getDefeatBadge(), () -> Forge.advFreezePlayerControls = false);
             }
-        }, 1f);
+        }, hitDuration);
     }
 
     private FBufferedImage getDefeatBadge() {

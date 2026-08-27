@@ -154,6 +154,9 @@ public class TransitionScreen extends FContainer {
                 float xmod = Forge.getScreenHeight() > 2000 ? 1.5f : 1f;
                 // Loading-icon size (user request 2026-08-17: "make it like 4x bigger" - the
                 // small circular icon on non-worldgen loading screens, e.g. "Loading World...").
+                // Upstream 08.26 draws its new full-art logo at 1x with landscape recentering;
+                // this fork keeps its own 300x300 TFR icon in adv_logo.png, so the 4x sizing and
+                // worldgen skip stay.
                 xmod *= 4f;//static logo only
                 float ymod = 0f;
                 if (isWorldGen) {

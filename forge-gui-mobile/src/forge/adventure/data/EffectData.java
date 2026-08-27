@@ -1,6 +1,7 @@
 package forge.adventure.data;
 
 import com.badlogic.gdx.utils.Array;
+import forge.Forge;
 import forge.item.IPaperCard;
 import forge.item.PaperCard;
 import forge.item.PaperToken;
@@ -112,7 +113,7 @@ public class EffectData implements Serializable {
         if(visionRadiusMultiplier != 0 && visionRadiusMultiplier != 1)
             description+="Vision radius: x" + (visionRadiusMultiplier) + "\n";
         if(cardRewardBonus > 0)
-            description += "Bonus enemy deck rewards: +" + (cardRewardBonus) + "\n";
+            description += Forge.getLocalizer().getMessage("advBonusEnemyDeckRewards", cardRewardBonus);
         if(this.opponent != null) {
             String oppEffect = this.opponent.getDescription();
             description += "Gives Opponent:\n";

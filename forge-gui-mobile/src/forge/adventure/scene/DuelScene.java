@@ -57,6 +57,7 @@ import forge.toolbox.FDisplayObject;
 import forge.toolbox.FOptionPane;
 import forge.trackable.TrackableCollection;
 import forge.util.Aggregates;
+import forge.util.Localizer;
 import forge.util.StreamUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -367,6 +368,7 @@ public class DuelScene extends ForgeScene {
     }
 
     private void showAnteCardPopup(String title, PaperCard card, boolean won, Runnable onDone) {
+        Localizer localizer = Forge.getLocalizer();
         CardView cardView = CardView.getCardForUi(card);
 
         FDisplayObject cardDisplay = new FDisplayObject() {
@@ -429,12 +431,12 @@ public class DuelScene extends ForgeScene {
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
             buttons = sellPrice > 0
-                    ? ImmutableList.of(Forge.getLocalizer().getMessage("lblOK"), "Auto-Sell (" + sellPrice + " gold)")
-                    : ImmutableList.of(Forge.getLocalizer().getMessage("lblOK"));
+                    ? ImmutableList.of(localizer.getMessage("lblOK"), "Auto-Sell (" + sellPrice + " gold)")
+                    : ImmutableList.of(localizer.getMessage("lblOK"));
         } else if (offerBuyBack) {
-            buttons = ImmutableList.of(Forge.getLocalizer().getMessage("lblOK"), "Buy Back (" + buyBackPrice + " gold)");
+            buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Buy Back (" + buyBackPrice + " gold)");
         } else {
-            buttons = ImmutableList.of(Forge.getLocalizer().getMessage("lblOK"));
+            buttons = ImmutableList.of(localizer.getMessage("lblOK"));
         }
 
         FOptionPane popup = new FOptionPane(message, null, title, null, cardDisplay, buttons, 0, result -> {
@@ -487,6 +489,7 @@ public class DuelScene extends ForgeScene {
 
     @Override
     public void enter() {
+        Localizer localizer = Forge.getLocalizer();
         SoundSystem.instance.stopBackgroundMusic();
         GameType mainGameType;
         boolean isDeckMissing = false;
@@ -617,7 +620,8 @@ public class DuelScene extends ForgeScene {
             if (deck == null) {
                 isDeckMissing = true;
                 boolean canUseGeneticAI = Config.instance().getConfigData().enableGeneticAI;
-                isDeckMissingMsg = "Deck for " + currentEnemy.getName() + " is missing! " + (this.eventData == null ? (canUseGeneticAI ? "Genetic AI deck will be used." : "Player deck will be used.") : "Player deck will be used.");
+                isDeckMissingMsg = localizer.getMessage("advDeckMissingForEnemy", currentEnemy.getName())
+                        + (this.eventData == null ? (canUseGeneticAI ? localizer.getMessage("advGeneticAiDeckWillBeUsed") : localizer.getMessage("advPlayerDeckWillBeUsed")) : localizer.getMessage("advPlayerDeckWillBeUsed"));
                 System.err.println(isDeckMissingMsg);
                 deck = this.eventData == null && canUseGeneticAI ? Aggregates.random(DeckProxy.getAllGeneticAIDecks()).getDeck() : this.playerDeck;
             }
@@ -740,7 +744,7 @@ public class DuelScene extends ForgeScene {
                 bossDialogue = createFOption((Intro), enemy.getTieredDisplayName(), fb, fb::dispose);
                 }
                 else {
-                bossDialogue = createFOption(isDeckMissing ? isDeckMissingMsg : Forge.getLocalizer().getMessage("AdvBossIntro" + Aggregates.randomInt(1, 35)),
+                bossDialogue = createFOption(isDeckMissing ? isDeckMissingMsg : localizer.getMessage("AdvBossIntro" + Aggregates.randomInt(1, 35)),
                 enemy.getTieredDisplayName(), fb, fb::dispose);
                 }
             matchOverlay = new LoadingOverlay(() -> FThreads.delayInEDT(300, () -> FThreads.invokeInEdtNowOrLater(() ->
