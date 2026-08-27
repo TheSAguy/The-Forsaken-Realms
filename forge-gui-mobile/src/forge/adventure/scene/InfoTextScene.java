@@ -59,7 +59,7 @@ public class InfoTextScene extends UIScene {
     /** Rebuilds the scrollable body from a fresh paragraph list - each String is one wrapped,
      *  black TypingLabel row, matching the plain-text style every other info dialog in this mod
      *  already uses (addContentRow() in EconomyBuildings.java, WorldStandingsScene's wiki dialogs). */
-    private void setContent(String title, List<String> paragraphs) {
+    private void setContent(String title, List<String> paragraphs, String linkLabel, String linkUrl) {
         titleLabel.setText(title);
         content.clear();
         content.row();
@@ -70,6 +70,15 @@ public class InfoTextScene extends UIScene {
             label.skipToTheEnd();
             content.add(label).align(Align.left).expandX().fillX().padBottom(10).row();
         }
+        // Optional real link button (2026-08-26 user request: "Can the Discord link be an actual
+        // hyper link on the info page?") - inline clickable text is finicky in this UI stack, so
+        // a proper button that opens the system browser is the reliable cross-platform answer
+        // (Gdx.net.openURI works on both desktop and Android, which matters for the planned
+        // Android release).
+        if (linkUrl != null && !linkUrl.isEmpty()) {
+            content.add(Controls.newTextButton(linkLabel != null ? linkLabel : linkUrl,
+                    () -> com.badlogic.gdx.Gdx.net.openURI(linkUrl))).align(Align.left).padBottom(10).row();
+        }
     }
 
     /** Entry point every caller uses - builds the content, then switches to this scene (pushing
@@ -77,7 +86,12 @@ public class InfoTextScene extends UIScene {
      *  elsewhere, so the "Back" button's inherited UIScene.back() -> Forge.switchToLast() returns
      *  to exactly whichever screen opened this one). */
     public static void show(String title, List<String> paragraphs) {
-        instance().setContent(title, paragraphs);
+        show(title, paragraphs, null, null);
+    }
+
+    /** As above, plus an optional link button appended after the text (null linkUrl = no button). */
+    public static void show(String title, List<String> paragraphs, String linkLabel, String linkUrl) {
+        instance().setContent(title, paragraphs, linkLabel, linkUrl);
         Forge.switchScene(instance(), true);
     }
 

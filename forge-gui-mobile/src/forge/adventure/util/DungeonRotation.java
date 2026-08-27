@@ -223,9 +223,34 @@ public class DungeonRotation {
             }
         }
         changed |= activateFromReserve(world, newDayCount);
+        // Batched minimap refresh (2026-08-26 perf, user-approved trade-off): the [TFR-DayTick]
+        // instrumentation attributed a steady ~120ms of every late-game day-rollover to this one
+        // call - refreshWorldMapMarkers() is a FULL minimap ground rebake + marker redraw + fog
+        // pixmap rebuild, and by mid-game the rotation genuinely changes something almost every
+        // day. Daily rotation changes now only mark the map dirty, and the heavy refresh runs at
+        // most once per MARKER_REFRESH_INTERVAL_DAYS - a despawned dungeon's minimap icon can
+        // linger up to that many days stale (it's already non-enterable and gone from the main
+        // map immediately; only the baked minimap pixels lag). Player-driven paths stay
+        // immediate: quest force-spawns (extendForQuestTarget) and the player personally
+        // clearing/defeating a dungeon (onDungeonDefeat/onDungeonClear) still call
+        // refreshWorldMapMarkers() directly - those are rare, player-visible moments.
         if (changed)
+            markerRefreshDirty = true;
+        if (markerRefreshDirty && newDayCount - lastMarkerRefreshDay >= MARKER_REFRESH_INTERVAL_DAYS) {
             world.refreshWorldMapMarkers();
+            markerRefreshDirty = false;
+            lastMarkerRefreshDay = newDayCount;
+        }
     }
+
+    // Session-local batching state for the daily marker refresh above. Static/transient by
+    // design: a fresh session's first dirty day refreshes immediately (lastMarkerRefreshDay
+    // starts far enough in the "past" that the interval check always passes - NOT Integer.
+    // MIN_VALUE, which would underflow the subtraction and never fire), which also covers
+    // loading a save whose minimap was left stale by a previous session's pending batch.
+    private static final int MARKER_REFRESH_INTERVAL_DAYS = 3;
+    private static boolean markerRefreshDirty = false;
+    private static int lastMarkerRefreshDay = -1_000_000;
 
     // Pool-swap: bring RESERVE locations into play until the visible count is back at the
     // target - a despawned dungeon is thereby replaced by one appearing somewhere ELSE on the

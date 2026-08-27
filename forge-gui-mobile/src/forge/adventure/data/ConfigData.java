@@ -71,6 +71,11 @@ public class ConfigData {
     // it there). Both null/absent on stock planes - no behavior change for them.
     public String modVersion;
     public String welcomePopupText;
+    // Optional URL rendered as a real "Join us on Discord" button on the welcome popup
+    // (2026-08-26 user request: "Can the Discord link be an actual hyper link?") - opens the
+    // system browser via Gdx.net.openURI, which also works on Android for the planned mobile
+    // release. Null/absent on stock planes - no button.
+    public String welcomePopupLink;
     // Start-menu version label overhaul (2026-08-22, user spec): the label now shows the last
     // upstream Forge snapshot merged (engineBuildVersion, e.g. "2.0.15-SNAPSHOT-08.19" - stays
     // static across TFR-only rounds, only bumped when a new engine merge happens) alongside

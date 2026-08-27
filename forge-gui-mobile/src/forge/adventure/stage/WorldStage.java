@@ -710,7 +710,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // this exact problem - see "How Guards Work"/"Mod Details") instead of a raw Dialog.
         // Paragraph breaks match how welcomePopupText is authored in config.json (blank-line-
         // separated), same convention InfoTextScene's other callers use for a hand-split list.
-        InfoTextScene.show("Welcome", Arrays.asList(text.split("\n\n")));
+        // welcomePopupLink (config.json, optional) renders as a real browser-opening button.
+        InfoTextScene.show("Welcome", Arrays.asList(text.split("\n\n")),
+                "Join us on Discord", Config.instance().getConfigData().welcomePopupLink);
     }
 
     // Side-quest timer expiry (user request 2026-08-08): a real blocking dialog, same pattern as
