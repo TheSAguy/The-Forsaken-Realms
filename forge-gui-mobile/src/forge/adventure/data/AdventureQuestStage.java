@@ -406,6 +406,56 @@ public class AdventureQuestStage implements Serializable {
         return status;
     }
 
+    /** Retroactive flag-objective completion (2026-08-26 user request: "add safeguards if the
+     *  player does something before a quest. Like builds a capitol, before the quest fires").
+     *  Flag objectives normally complete only on the live flag EVENT - a flag set BEFORE the
+     *  stage activated would otherwise never complete it (the event already fired, and the
+     *  stateless crossing can't recur unless the player repeats the action). Called from
+     *  AdventureQuestData.activateNextStages() the moment a stage turns ACTIVE - the same
+     *  activation-time retro-check pattern Fetch already uses via hasRequiredFetchItems().
+     *  Deliberately bypasses the location gate: this is a check of persisted STATE, not a live
+     *  event, so where the player happens to be standing is irrelevant. Returns true if the
+     *  stage was completed retroactively. */
+    public boolean retroCompleteIfFlagSatisfied() {
+        if (status != ACTIVE || mapFlag == null || mapFlag.isEmpty())
+            return false;
+        boolean satisfied = false;
+        try {
+            if (objective == CharacterFlag) {
+                satisfied = Current.player().getCharacterFlag(mapFlag) >= mapFlagValue;
+            } else if (objective == QuestFlag) {
+                satisfied = Current.player().getQuestFlag(mapFlag) >= mapFlagValue;
+            } else if (objective == MapFlag) {
+                // Per-POI flags: check the bound target if there is one, otherwise (anyPOI
+                // stages like "restore a town" / "build a Trader") scan every recorded POI's
+                // flags - bounded by POIs the player has actually interacted with, and this
+                // only runs once per stage activation.
+                if (targetPOI != null) {
+                    forge.adventure.pointofintrest.PointOfInterestChanges targetChanges =
+                            forge.adventure.world.WorldSave.getCurrentSave().peekPointOfInterestChanges(targetPOI.getID());
+                    satisfied = targetChanges != null
+                            && targetChanges.getMapFlags().getOrDefault(mapFlag, (byte) 0) >= mapFlagValue;
+                } else if (anyPOI) {
+                    for (forge.adventure.pointofintrest.PointOfInterestChanges anyChanges
+                            : forge.adventure.world.WorldSave.getCurrentSave().getAllPointOfInterestChanges()) {
+                        if (anyChanges.getMapFlags().getOrDefault(mapFlag, (byte) 0) >= mapFlagValue) {
+                            satisfied = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // a safeguard must never break quest activation
+        }
+        if (satisfied) {
+            status = COMPLETE;
+            System.out.println("[TFR-MainQuest] stage \"" + name + "\" retro-completed on activation (flag "
+                    + mapFlag + " already >= " + mapFlagValue + ")");
+        }
+        return satisfied;
+    }
+
     public boolean hasRequiredFetchItems() {
         if (objective != Fetch || itemNames == null || itemNames.isEmpty()) {
             return false;

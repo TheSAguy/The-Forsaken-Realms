@@ -1652,6 +1652,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             unlockedEditions.add(researchEditionInProgress);
             RewardData.invalidateCardPool();
             clearResearch();
+            // Main-quest hook (2026-08-26, "Raise the Banner" - user decision: the objective
+            // completes when the 7-day research actually FINISHES, not when it starts). The
+            // matching quest stage must set worldMapOK:true AND anyPOI:true - completion can
+            // fire from the daily overworld tick or lazily on ResearchScene.enter().
+            setCharacterFlag("researchComplete", 1);
+            System.out.println("[TFR-MainQuest] researchComplete -> 1");
         }
     }
 

@@ -461,15 +461,31 @@ public class AdventureQuestData implements Serializable {
 
     public void activateNextStages() {
         boolean showNotification = false;
-        for (AdventureQuestStage s : stages) {
-            if (s.getStatus() == INACTIVE){
-                s.checkPrerequisites(getCompletedStageIDs());
-                if (s.getStatus() == ACTIVE) {
-                    if (s.hasRequiredFetchItems()) {
-                        s.handleEvent(new AdventureQuestEvent());
+        // Stabilization loop (2026-08-26 user request: "add safeguards if the player does
+        // something before a quest. Like builds a capitol, before the quest fires"): a
+        // newly-activated flag stage whose flag is ALREADY satisfied retro-completes on the spot
+        // (AdventureQuestStage.retroCompleteIfFlagSatisfied(), same activation-time pattern as
+        // Fetch's inventory poll below) - and its completion may unlock the NEXT stage's
+        // prerequisites within this same call, so the pass repeats until nothing else activates
+        // or retro-completes. Bounded by the stage count; a player who already built their
+        // Capitol, hired a guard, and built a mine before "Raise the Banner" is issued sails
+        // straight through those stages the moment the quest activates.
+        boolean changedThisPass = true;
+        while (changedThisPass) {
+            changedThisPass = false;
+            for (AdventureQuestStage s : stages) {
+                if (s.getStatus() == INACTIVE){
+                    s.checkPrerequisites(getCompletedStageIDs());
+                    if (s.getStatus() == ACTIVE) {
+                        changedThisPass = true;
+                        if (s.hasRequiredFetchItems()) {
+                            s.handleEvent(new AdventureQuestEvent());
+                        }
+                        if (s.retroCompleteIfFlagSatisfied())
+                            continue; // completed instantly - no sprites/notification for it
+                        AdventureQuestController.instance().addQuestSprites(s);
+                        showNotification = true;
                     }
-                    AdventureQuestController.instance().addQuestSprites(s);
-                    showNotification = true;
                 }
             }
         }

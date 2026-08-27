@@ -13955,3 +13955,77 @@ Deep pass found the remaining - and biggest - costs were never the territory *sc
 `util/TerritoryControl.java`, `util/ChestEvents.java`, `player/AdventurePlayer.java`,
 `scene/ResearchScene.java`, `scene/RewardScene.java`, `scene/UIScene.java`,
 `data/RewardData.java`.
+
+## Fifty-seventh round: "Raise the Banner" main-quest rework, The Forsaking backstory (2026-08-26)
+
+The pre-release main-quest overhaul, implemented per the approved MAIN_QUEST_PLAN.md and the
+user's five design calls (drop voice files; strip named characters; research objective =
+7-day completion; 5 towns confirmed; quest name "Raise the Banner").
+
+### Story: "The Forsaking"
+Player = the realm's Guardian, sealed on the Night of Chains by five rival planeswalkers via
+the five Seals (the castle bosses' Moxen); the sealing drained the world's color (the grey
+wasteland), scattered the Weave's Volumes (researchable editions), and shattered it into
+Shards (the currency). The Five have returned to carve up the plane (Territory Control); the
+failing binding plus the last Warden (the Spawn mage) frees the player. Full bible + dialog
+drafts in MAIN_QUEST_PLAN.md.
+
+### Quest structure (mainQuest spine 0->1->2->3 unchanged)
+- Q28/Q53: awakening/Warden text rewrites (mechanics untouched).
+- Q30 "Where Am I?": rewritten 8-stage tutorial - find a ruined town, find a surviving town,
+  dungeon/duel/cave (kept), restore a ruined town (reward 50 Wood + 50 Stone via stage-epilogue
+  grantRewards), build a Trader, restore four more towns (townsRestored >= 5). Fixed the old
+  duplicate stage-id-5 bug. Epilogue chains to Q43.
+- Q43 "Raise the Banner" (rewritten in place; the old "Your First Job"/man-in-black content is
+  gone): build the Capitol -> hire a guard -> build a mine -> build a card shop -> complete a
+  research. Epilogue sets mainQuest=2 (re-homed from Q51 - keeps Emrakul's Castle + the two
+  Temples activating) and issues Q52.
+- Q44-51 (the old Donovan chain): now an OPTIONAL side chain - Q44 is board-offered (authored
+  offerDialog), 45-51 chain off it via their existing issueQuest links but carry questSourceTags
+  ["relic_trail_chain"] so boards never randomly draw them mid-chain; all storyQuest:false (20-day
+  side-quest expiry now applies); named characters stripped (The Courier/The Scholar/The Tinker;
+  the item "Sir Donovan's Amulet" deliberately kept intact - it's an item-name lookup). Q51 lost
+  its issueQuest-52/mainQuest=2 links; its exploreShand1=8 write (gates its own dungeon content)
+  kept. The internal exploreShand1 ladder is order-dependent (exact-match dialog conditions), so
+  the chain stays sequential by design.
+- Q52: reframed as reclaiming the five Seals; mechanics/flags untouched.
+- spawn.tmx: Warden dialog rewritten (4 voiceFile properties dropped per user decision - the
+  WizPAR mp3s no longer matched), both "barrens of Shandalar" lines and the Challenge Coin
+  "Spellcasters of Shandalar" line replaced, Chapter-1 ending rewritten with the older-doors
+  hook, the long-broken "[RED}" markup fixed. Embedded dialog JSON re-validated by parse before
+  and after.
+
+### Seven Java hooks (the quest engine had no events for mod mechanics)
+enteredRuinedTown/enteredSurvivingTown (TileMapScene.load, runtime-state distinction no Travel
+objective could see), townsRestored counter (TownRestoration.recolorTerrainForTesting, via
+setQuestFlag so the event fires), capitolBuilt (upgradeToCapitol - its map-flag write bypasses
+the event path), guardHired (Armory hire button), mineBuilt (any of the 4 mine types - the
+per-type map flags can't express OR), shopBuilt (plain Card Shop rebuild action), and
+researchComplete (checkResearchCompletion). All log as [TFR-MainQuest].
+
+### Retro-completion safeguard (user request: "safeguards if the player does something before
+a quest")
+New AdventureQuestStage.retroCompleteIfFlagSatisfied(): a flag-objective stage checks its
+flag's PERSISTED state the moment it activates and completes instantly if already satisfied -
+same activation-time pattern Fetch's inventory poll uses, bypassing the location gate
+(state-check, not live event). activateNextStages() now stabilization-loops so a chain of
+pre-satisfied stages (built Capitol + hired guard before the quest existed) completes in one
+pass. MapFlag stages retro-scan bound-target or all recorded POIs.
+
+### Testing aids (user request: "build in some F9 commands to help")
+New console commands: "set charflag <name> <value>" and "set questflag <name> <value>" - every
+new objective is a flag comparison, so each stage can be completed from the console exactly as
+the real event would (value 0 removes a flag). E.g.: set charflag capitolBuilt 1 / set
+questflag townsRestored 5 / set questflag mainQuest 2.
+
+### Also in this round
+- Dungeon-rotation minimap refresh batched to every 3 days (the ~120ms/day [TFR-DayTick]
+  remainder); quest force-spawns and player-cleared dungeons still refresh immediately.
+- Welcome popup's Discord link is a real "Join us on Discord" button (config-driven
+  welcomePopupLink, opens system browser, Android-compatible).
+
+**Files touched**: quests.json (Q28/30/43/44-53), maps/map/main_story/spawn.tmx,
+AdventureQuestStage.java, AdventureQuestData.java, TileMapScene.java, TownRestoration.java,
+EconomyBuildings.java, AdventurePlayer.java, ConsoleCommandInterpreter.java,
+DungeonRotation.java, InfoTextScene.java, ConfigData.java, WorldStage.java, config.json,
+MAIN_QUEST_PLAN.md.

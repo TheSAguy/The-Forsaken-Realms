@@ -169,6 +169,27 @@ public class TileMapScene extends HudScene {
             SoundSystem.instance.clearShelvedPlaylist();
         }
         rootPoint = point;
+        // Main-quest hooks (2026-08-26, "Where Am I?" tutorial extension): "ruined" vs
+        // "surviving" wasteland town is pure RUNTIME state (identical POI templates/tags), so a
+        // Travel objective can't distinguish them - the distinction only exists here, at actual
+        // map entry, via the same TownRestoration checks the town interior itself uses.
+        // setCharacterFlag re-fires harmlessly on every entry (idempotent value, quest stages
+        // complete once); guarded so a fresh save's spawn-dungeon entry can't NPE anything.
+        try {
+            if (TownRestoration.isWastelandTown(point.getData())) {
+                forge.adventure.pointofintrest.PointOfInterestChanges entryChanges =
+                        WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());
+                if (TownRestoration.isNeutralSeededTown(entryChanges)) {
+                    Current.player().setCharacterFlag("enteredSurvivingTown", 1);
+                    System.out.println("[TFR-MainQuest] enteredSurvivingTown -> 1 (" + point.getDisplayName() + ")");
+                } else if (!TownRestoration.isTownRestored(entryChanges)) {
+                    Current.player().setCharacterFlag("enteredRuinedTown", 1);
+                    System.out.println("[TFR-MainQuest] enteredRuinedTown -> 1 (" + point.getDisplayName() + ")");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // never let a tutorial convenience break map loading
+        }
         oldMap = point.getData().map;
         map = new TemplateTmxMapLoader().load(Config.instance().getCommonFilePath(point.getData().map));
         ((MapStage) stage).setPointOfInterest(getPointOfInterestChanges());

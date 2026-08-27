@@ -278,6 +278,49 @@ public class ConsoleCommandInterpreter {
             Current.player().addQuest(ID, false);
             return "Quest generated";
         });
+        // Main-quest testing commands (2026-08-26 user request: "some of the other stuff might
+        // be easier if you could build in some F9 commands to help"). Every new main-quest
+        // objective is a flag comparison, so setting the flag from the console completes the
+        // stage exactly as the real event would (set* fires the quest event; advance* wouldn't).
+        // e.g.: "set charflag capitolBuilt 1", "set questflag townsRestored 5",
+        //       "set charflag researchComplete 1", "set questflag mainQuest 2".
+        registerCommand(new String[]{"set", "charflag"}, s -> {
+            if (s.length < 2) return "Command needs 2 parameters: FlagName Value";
+            int value;
+            try {
+                value = Integer.parseInt(s[1]);
+            } catch (Exception e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+            Current.player().setCharacterFlag(s[0], value);
+            return "Character flag " + s[0] + " set to " + value + " (value 0 removes the flag)";
+        });
+        registerCommand(new String[]{"set", "questflag"}, s -> {
+            if (s.length < 2) return "Command needs 2 parameters: FlagName Value";
+            int value;
+            try {
+                value = Integer.parseInt(s[1]);
+            } catch (Exception e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+            Current.player().setQuestFlag(s[0], value);
+            return "Quest flag " + s[0] + " set to " + value + " (value 0 removes the flag)";
+        });
+        // Per-POI MAP flags (quest 30's "townRestored"/"economyBuilt_10" stages key these) -
+        // must be run while STANDING IN the target town's map, since the flag lives on that
+        // POI's own changes and the MAPFLAG quest event carries the current map's context.
+        registerCommand(new String[]{"set", "mapflag"}, s -> {
+            if (s.length < 2) return "Command needs 2 parameters: FlagName Value";
+            if (!MapStage.getInstance().isInMap()) return "Not in a map - enter the target town first";
+            int value;
+            try {
+                value = Integer.parseInt(s[1]);
+            } catch (Exception e) {
+                return "Can not convert " + s[1] + " to number";
+            }
+            MapStage.getInstance().setQuestFlag(s[0], value);
+            return "Map flag " + s[0] + " set to " + value + " on the current location";
+        });
         registerCommand(new String[]{"give", "shards"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: Amount.";
             int amount;

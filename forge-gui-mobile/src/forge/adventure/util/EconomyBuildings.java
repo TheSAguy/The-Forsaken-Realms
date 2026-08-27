@@ -467,6 +467,11 @@ public class EconomyBuildings {
                 if (shardCost > 0)
                     AdventurePlayer.current().takeShards(shardCost);
                 changes.hireGuard(tier, WorldSave.getCurrentSave().getWorld().getCurrentDay());
+                // Main-quest hook (2026-08-26, "Raise the Banner"): no flag of any kind existed
+                // for hiring. A CHARACTER flag deliberately (this runs in a UIScene, not a
+                // MapStage, so there's no map-flag context to fire from).
+                AdventurePlayer.current().setCharacterFlag("guardHired", 1);
+                System.out.println("[TFR-MainQuest] guardHired -> 1");
                 scene.removeDialog();
                 openManageGuardsDialog(scene, changes, poiName, objectId);
             });
@@ -1167,7 +1172,16 @@ public class EconomyBuildings {
             // indefinitely, since destroyBuilding() doesn't touch rewardData either.
             DialogData.ActionData refreshShops = new DialogData.ActionData();
             refreshShops.refreshShopRewardsTrigger = "shop-rebuild";
-            option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), refreshShops};
+            // Main-quest hook (2026-08-26, "Raise the Banner"): a generic "built a card shop"
+            // character flag - the existing shopRebuilt_<objectId> map flags are object-id-keyed,
+            // so no single quest key could ever match them. Routed through the dialog action
+            // system so it fires via AdventurePlayer.setCharacterFlag() (which emits the
+            // CHARACTERFLAG quest event) only when the buy actually completes.
+            DialogData.ActionData shopBuiltFlag = new DialogData.ActionData();
+            shopBuiltFlag.setCharacterFlag = new DialogData.ActionData.QuestFlag();
+            shopBuiltFlag.setCharacterFlag.key = "shopBuilt";
+            shopBuiltFlag.setCharacterFlag.val = 1;
+            option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), refreshShops, shopBuiltFlag};
         } else {
             option.condition = new DialogData.ConditionData[]{noBuildingOfTypeYetCondition(type)};
             option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), setEconomyTypeAction(type), setBuiltFlagAction(type)};
@@ -1311,6 +1325,15 @@ public class EconomyBuildings {
                     // (the cache-only version was the "built an Outlook, nothing happened" bug).
                     if (chosenType == OUTLOOK)
                         onOutlookChanged(0);
+                    // Main-quest hook (2026-08-26, "Raise the Banner"): a generic "any mine"
+                    // character flag - the per-type economyBuilt_<n> map flags can't express an
+                    // OR across the 4 mine types in a single quest stage (all stages must
+                    // complete; parallel-OR isn't expressible in the quest engine).
+                    if (chosenType == SHARD_MINE || chosenType == GOLD_MINE
+                            || chosenType == LUMBER_MILL || chosenType == STONE_MINE) {
+                        AdventurePlayer.current().setCharacterFlag("mineBuilt", 1);
+                        System.out.println("[TFR-MainQuest] mineBuilt -> 1 (type " + chosenType + ")");
+                    }
                 }
             }
         });

@@ -341,6 +341,13 @@ public class TownRestoration {
         // road to the player's nearest other town, routed through any towns between.
         updateTownLifeBonus(true);
         TerritoryControl.connectCapturedTownByRoad(world, point, "player");
+        // Main-quest hook (2026-08-26, "Raise the Banner" rework): publish the live restored-town
+        // count as a quest flag so quest stages can gate "restore N towns" on one numeric
+        // comparison. setQuestFlag (NOT advanceQuestFlag) deliberately - only the set* variant
+        // fires the QUESTFLAG event the quest-objective machinery listens for. Byte-capped at 127.
+        int restoredCount = Math.min(127, countPlayerTowns());
+        Current.player().setQuestFlag("townsRestored", restoredCount);
+        System.out.println("[TFR-MainQuest] townsRestored -> " + restoredCount);
     }
 
     /**
@@ -894,6 +901,12 @@ public class TownRestoration {
         // pixel-font size (same issue as the old PLAYER OWNED TOWN warning, reported again here).
         forge.adventure.stage.GameHUD.getInstance().addNotification("Orazca rises! Return to your new Capitol to see it rebuilt.");
         System.out.println("[TownRestoration] town upgraded to Capitol \"Orazca\"");
+        // Main-quest hook (2026-08-26, "Raise the Banner"): the existing TOWN_RESTORED_FLAG write
+        // above goes DIRECTLY into the changes map (never through the event-firing setQuestFlag
+        // path), so without this explicit character flag no quest objective could ever see the
+        // upgrade happen.
+        Current.player().setCharacterFlag("capitolBuilt", 1);
+        System.out.println("[TFR-MainQuest] capitolBuilt -> 1");
         // Kick to the world map so re-entry loads the capital layout.
         stage.exitDungeon(false, false);
     }

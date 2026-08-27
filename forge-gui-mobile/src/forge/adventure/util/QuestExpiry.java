@@ -44,6 +44,8 @@ public class QuestExpiry {
         for (AdventureQuestData quest : new ArrayList<>(Current.player().getQuests())) {
             if (quest.storyQuest || quest.completed || quest.failed)
                 continue;
+            if (isChainQuest(quest))
+                continue;
             String key = String.valueOf(quest.getID());
             Integer accepted = world.getQuestAcceptedDay().get(key);
             if (accepted == null) {
@@ -68,12 +70,27 @@ public class QuestExpiry {
             WorldStage.getInstance().showQuestsFailedDialog(failedNames);
     }
 
+    /** Chain side quests (the converted "relic trail" line, 2026-08-26 review finding) are
+     *  exempt from the expiry timer: quests 45-51 are only ever issued by their predecessor's
+     *  one-shot epilogue and are never board-offerable (their questSourceTags deliberately match
+     *  no town), so a mid-chain expiry could only be "recovered" by silently replaying the whole
+     *  chain from its board-offered opener - a trap, not a timer. The tag is cloned onto player
+     *  quest instances by AdventureQuestData's copy constructor, so it's checkable here. */
+    private static boolean isChainQuest(AdventureQuestData quest) {
+        if (quest.questSourceTags == null)
+            return false;
+        for (String tag : quest.questSourceTags)
+            if ("relic_trail_chain".equals(tag))
+                return true;
+        return false;
+    }
+
     /**
      * Days left before this quest fails, or null when no timer applies (feature off, story quest,
-     * or the clock simply hasn't been stamped yet). Never negative.
+     * chain quest, or the clock simply hasn't been stamped yet). Never negative.
      */
     public static Integer daysRemaining(AdventureQuestData quest) {
-        if (!isEnabled() || quest == null || quest.storyQuest)
+        if (!isEnabled() || quest == null || quest.storyQuest || isChainQuest(quest))
             return null;
         World world = WorldSave.getCurrentSave().getWorld();
         Integer accepted = world.getQuestAcceptedDay().get(String.valueOf(quest.getID()));

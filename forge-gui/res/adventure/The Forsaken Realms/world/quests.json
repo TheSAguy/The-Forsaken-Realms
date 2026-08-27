@@ -6903,11 +6903,11 @@
 	"description": "Learn about your surroundings.",
 	"offerDialog": {},
 	"prologue": {
-		"text": "Darkness and silence surrounds you. A vague sense of falling slows second by second.",
+		"text": "Darkness. Silence. The weight of stone and centuries. Then - a crack. A line of light. A voice, old and urgent, speaking a name you have not heard in three thousand years: yours.",
 		"options": [
 			{
 				"name": "Where am I? What am I? What is going on? (Tutorial and main quest)",
-				"text": "A flash of light brighter than anything you remember precedes a fall to a stone floor. This is almost as jarring as realizing that you actually don't remember much of anything at all.",
+				"text": "The stasis shatters and you fall to a cold stone floor. Your spark is dim, your memory fog - you know that you slept, and that you should not have. Everything else is fragments.",
 				"options": [
 					{
 						"action": [
@@ -6929,7 +6929,7 @@
 							}
 						],
 						"name": "Let's talk to the mage over there.",
-						"text": "A quiet crackling sound draws your eyes to the flickering light of a fire within the cave you now occupy. A hooded figure stands by the fire, facing you as if expecting your arrival. \"You've fallen into a realm where five rival colors each rule a Castle and carve up the land between them,\" the figure says, \"and where you choose to make your own stand matters. If you ever want to see who holds what at a glance, open the World Standings page from the menu.\" The figure continues: \"A word of counsel, if you'll take it. Build your own Capitol as soon as you're able - you'll need five towns of your own first, but a Capitol grants buildings no ordinary town can offer, and cards sell cheaper in any town that's yours. Guard it well once it stands; losing your Capitol is no small setback. And not every card in this realm will be available to you from the start - new expansions unlock as you find cards belonging to them and research what you've found, and different lands hold different expansions, so travel wide if you're after something specific.\""
+						"text": "A quiet crackling sound draws your eyes to a fire within the cave. A hooded figure stands by it, facing you as if he has waited a lifetime for exactly this moment. \"Easy - breathe. The stasis takes time to shed,\" he says. \"Five rival planeswalkers have returned to carve up your realm - five colors, five castles, claiming the ash mile by mile.\" \"Where you choose to make your stand matters. If you ever want to see who holds what at a glance, open the World Standings page from the menu.\" The figure continues: \"A word of counsel, if you'll take it. Build your own Capitol as soon as you're able - you'll need five towns of your own first, but a Capitol grants buildings no ordinary town can offer, and cards sell cheaper in any town that's yours. Guard it well once it stands; losing your Capitol is no small setback. And not every card in this realm will be available to you from the start - new expansions unlock as you find cards belonging to them and research what you've found, and different lands hold different expansions, so travel wide if you're after something specific.\""
 					}
 				]
 			},
@@ -7222,46 +7222,23 @@
 	"id": 30,
 	"isTemplate": true,
 	"name": "Where Am I?",
-	"description": "Get your bearings in the world around you.",
+	"description": "Get your bearings in the ruins of your realm.",
 	"offerDialog": {},
 	"prologue": {},
 	"epilogue": {
-		"text": "Like most small towns, there are more shops and market stalls than there are houses, with much of the town's occupants traveling in from the outlying areas each morning.",
+		"text": "Five towns stand under your banner, their colors bright against the ash. The land remembers its Guardian - and word of it will have reached the Five by now.",
 		"options": [
 			{
 				"name": "(Continue)",
-				"text": "Many merchants are peddling their wares, the most relevant to a wizard having colorful (if at times crude) signs in front of their shops advertising their specialties.",
+				"text": "The Warden's voice seems to reach you on the wind: \"A guardian with no realm is just a wanderer with a grudge. You have a realm again. Now give it a heart.\"",
 				"options": [
 					{
-						"name": "(Continue)",
-						"text": "The inn sounds just raucous enough to know that it is doing healthy business. You recall what you were told about the Challenge coins and contemplate putting them to use there.",
-						"options": [
+						"action": [
 							{
-								"name": "(Continue)",
-								"text": "Perhaps the most intriguing of all, however, is the town hall with a notice board out front, advertising work for adventurers. What better way to make some coin while you explore?",
-								"options": [
-									{
-										"action": [
-											{
-												"removeItem": "",
-												"setColorIdentity": "",
-												"advanceQuestFlag": "",
-												"advanceMapFlag": "",
-												"setQuestFlag": {
-													"key": ""
-												},
-												"setMapFlag": {
-													"key": ""
-												},
-												"issueQuest": "43",
-												"POIReference": ""
-											}
-										],
-										"name": "(Continue)"
-									}
-								]
+								"issueQuest": "43"
 							}
-						]
+						],
+						"name": "(Continue)"
 					}
 				]
 			}
@@ -7279,63 +7256,64 @@
 	"stages": [
 		{
 			"id": 1,
-			"name": "Travel to town",
-			"description": "Find a friendly settlement to be introduced to the services it offers.",
+			"name": "Find a ruined town",
+			"description": "Enter one of the countless ruined towns scattered across the wastes.",
 			"anyPOI": true,
-			"mapFlag": "",
-			"mapFlagValue": 1,
+			"worldMapOK": true,
 			"POITags": [
 				"Town"
 			],
-			"objective": "Travel",
+			"mapFlag": "enteredRuinedTown",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
 			"prologue": {
-				"text": "All major locations in The Forsaken Realms can be divided up into one of two categories: towns and dungeons.",
+				"text": "The grey wastes are littered with the bones of your realm - ruined towns whose people are long dead or scattered. A navigation arrow should appear around your character; follow it, and step inside the first ruin you find.",
 				"options": [
 					{
 						"name": "(Continue)",
-						"text": "A navigation arrow should now appear around your character. Follow it to a nearby town. Try to avoid any enemies that pop up along the way.",
+						"text": "Hint: Follow a road. All roads lead somewhere. You also move faster on roads and fewer enemies will appear.",
 						"options": [
 							{
-								"name": "(Continue)",
-								"text": "Hint: Follow a road. All roads lead to a town. You also move faster on roads and fewer enemies will appear.",
-								"options": [
-									{
-										"name": "(Continue)"
-									}
-								]
+								"name": "(Continue)"
 							}
 						]
 					}
 				]
 			},
-			"epilogue": {},
+			"epilogue": {
+				"text": "Rubble and silence. Whatever lived here is three thousand years gone - but the walls still stand, and walls can be rebuilt.",
+				"options": [
+					{
+						"name": "(Continue)"
+					}
+				]
+			},
 			"POIToken": ""
 		},
 		{
 			"id": 2,
-			"name": "Leave town",
-			"description": "Head back out into the wilderness when you are ready to proceed.",
+			"name": "Find a surviving town",
+			"description": "Find one of the few towns that endured the Forsaking.",
 			"anyPOI": true,
+			"worldMapOK": true,
 			"POITags": [
 				"Town"
 			],
-			"objective": "Leave",
-			"prerequisiteIDs": [ 1 ],
+			"mapFlag": "enteredSurvivingTown",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
+			"prerequisiteIDs": [
+				1
+			],
 			"prologue": {
-				"text": "Most towns in a given region of The Forsaken Realms will look very similar to one another, and offer the same basic services.",
+				"text": "Not everything died. A handful of towns endured the Forsaking, huddled around the last living mana springs. Find one - its people trade, take work from their notice boards, and keep the old ways barely alive.",
 				"options": [
 					{
 						"name": "(Continue)",
-						"text": "The inn contains some special events. You can also sell extra cards there, or buy temporary extra health.\n\nThe '?' sign denotes a town square or a job board where you can obtain side quests.\n\nAll of the other buildings with signs out front are shops, most of them sell cards.\n\nTo leave town, walk back toward the edge of the screen just below your current location.",
+						"text": "The inn contains some special events, and you can sell extra cards there or buy temporary extra health.\n\nThe '?' sign denotes a town square or a job board where you can obtain side quests.\n\nAll of the other buildings with signs out front are shops - most sell cards.\n\nEntering a friendly town also restores any missing hit points for free.",
 						"options": [
 							{
-								"name": "(Continue)",
-								"text": "Entering a friendly town will also restore any missing hit points for free.\n\nExplore the town if you want, and leave when you are ready to continue.",
-								"options": [
-									{
-										"name": "(Continue)"
-									}
-								]
+								"name": "(Continue)"
 							}
 						]
 					}
@@ -7355,7 +7333,9 @@
 				"Dungeon"
 			],
 			"objective": "Travel",
-			"prerequisiteIDs": [ 2 ],
+			"prerequisiteIDs": [
+				2
+			],
 			"prologue": {
 				"text": "Your navigation arrow should now direct you to the nearest dungeon. Many quests will send you to dungeons, but you are also free to enter them without a quest. Follow the arrow and travel to a dungeon.",
 				"options": [
@@ -7380,41 +7360,25 @@
 				"Leader",
 				"Large"
 			],
-			"prerequisiteIDs": [ 3 ],
+			"prerequisiteIDs": [
+				3
+			],
 			"prologue": {
-				"text": "Many quests you undertake in your adventure will send you to one or more dungeons just like this one. Dungeons are filled with enemies, but also treasure like gold, mana shards, and cards.",
+				"text": "Dungeons are filled with enemies, but also treasure like gold, mana shards, and cards. Your next objective is to defeat any single enemy in a duel - here, or wandering the world map. To begin a duel, simply walk into the enemy.",
 				"options": [
 					{
 						"name": "(Continue)",
-						"text": "Your next objective is to defeat any single enemy in a duel. You can find them in a dungeon like this one, or wandering around outside on the world map. To begin a duel, simply walk into the enemy.",
+						"text": "If you are defeated, that's okay. You will lose some health and a percentage of your gold, but you've learned what to expect from that enemy. Unlike on the world map, an enemy that defeats you in a dungeon remains on the map - retry, or run and pick another opponent.",
 						"options": [
 							{
-								"name": "(Continue)",
-								"text": "If you are defeated by the enemy, that's okay. If (when) that happens, you will lose some of your starting health and a percentage of your gold, but you've learned what to expect from that enemy in the future.",
-								"options": [
-									{
-										"name": "(Continue)",
-										"text": "Unlike on the world map, an enemy that defeats you in a dungeon will remain on the map; you can try to duel them again, or run away and seek out another opponent. If you want or need to heal yourself, go back to town.",
-										"options": [
-											{
-												"name": "(Continue)",
-												"text": "Some quests, like this one, have multiple objectives that can be achieved simultaneously. Your other current objective is to find and enter a cave on the world map. An enemy defeated in a cave or on the way there will count as the enemy to defeat for your first objective, so feel free to do these things in any order.",
-												"options": [
-													{
-														"name": "(Continue)"
-													}
-												]
-											}
-										]
-									}
-								]
+								"name": "(Continue)"
 							}
 						]
 					}
 				]
 			},
 			"epilogue": {
-				"text": "Winning a duel grants you rewards; usually a combination of gold and cards. Some enemies drop a wider assortment of cards for variety, but others specifically give cards from their own deck. If you still need to visit a cave, do that now. Otherwise, it's time to return to town.",
+				"text": "Winning a duel grants you rewards; usually a combination of gold and cards. Some enemies drop a wide assortment, others give cards from their own deck. If you still need to visit a cave, do that now.",
 				"options": [
 					{
 						"name": "(Continue)"
@@ -7434,17 +7398,60 @@
 				"Cave"
 			],
 			"objective": "Travel",
-			"prerequisiteIDs": [ 3 ],
+			"prerequisiteIDs": [
+				3
+			],
 			"prologue": {},
 			"epilogue": {
-				"text": "A cave is functionally identical to a dungeon, but can be classified separately for quest purposes; a cave would not have completed your objective to find a dungeon, nor would that dungeon count for this one.",
+				"text": "A cave is functionally identical to a dungeon, but classified separately for quest purposes - a cave would not have completed your objective to find a dungeon, nor the reverse.",
 				"options": [
 					{
-						"name": "(Continue)",
-						"text": "If you haven't defeated an enemy in a duel yet, you can pick a fight with an enemy here for that. Otherwise, you can return to town.",
-						"options": [
+						"name": "(Continue)"
+					}
+				]
+			},
+			"POIToken": ""
+		},
+		{
+			"id": 6,
+			"name": "Restore a ruined town",
+			"description": "Pay to restore a ruined town and bring it under your banner.",
+			"anyPOI": true,
+			"POITags": [
+				"Town"
+			],
+			"mapFlag": "townRestored",
+			"mapFlagValue": 1,
+			"objective": "MapFlag",
+			"prerequisiteIDs": [
+				4,
+				5
+			],
+			"prologue": {
+				"text": "Now the real work begins. Return to any ruined town and speak at its square - for a price in gold, its people will return and its walls will rise again. A restored town is YOURS: your color on the map, your shops, your ground.",
+				"options": [
+					{
+						"name": "(Continue)"
+					}
+				]
+			},
+			"epilogue": {
+				"text": "Color floods back into the streets as the townsfolk return. They send word of their gratitude - and a stockpile of salvaged building material.",
+				"options": [
+					{
+						"name": "(Take the materials)",
+						"action": [
 							{
-								"name": "(Continue)"
+								"grantRewards": [
+									{
+										"type": "wood",
+										"count": 50
+									},
+									{
+										"type": "stone",
+										"count": 50
+									}
+								]
 							}
 						]
 					}
@@ -7453,19 +7460,47 @@
 			"POIToken": ""
 		},
 		{
-			"id": 5,
-			"name": "Go to a town",
-			"description": "Go to one of the nearby settlements.",
+			"id": 7,
+			"name": "Build a Trader",
+			"description": "Build a Trader on one of your restored town's empty lots.",
 			"anyPOI": true,
-			"mapFlag": "",
-			"mapFlagValue": 1,
 			"POITags": [
 				"Town"
 			],
-			"objective": "Travel",
-			"prerequisiteIDs": [ 4, 5 ],
+			"mapFlag": "economyBuilt_10",
+			"mapFlagValue": 1,
+			"objective": "MapFlag",
+			"prerequisiteIDs": [
+				6
+			],
 			"prologue": {
-				"text": "It's not a bad idea to occasionally visit town to sell extra cards, browse the shops, or pick up new quests.\n\nEvery town has its own assortment of shops and thus its own unique collections of cards for sale.",
+				"text": "A town of yours can build what no ruin ever could. Inside your restored town, choose a ruined shop lot and raise a Trader on it - it will buy and sell the resources your realm runs on.",
+				"options": [
+					{
+						"name": "(Continue)"
+					}
+				]
+			},
+			"epilogue": {},
+			"POIToken": ""
+		},
+		{
+			"id": 8,
+			"name": "Restore four more towns",
+			"description": "Grow your realm to five restored towns.",
+			"anyPOI": true,
+			"worldMapOK": true,
+			"POITags": [
+				"Town"
+			],
+			"mapFlag": "townsRestored",
+			"mapFlagValue": 5,
+			"objective": "QuestFlag",
+			"prerequisiteIDs": [
+				7
+			],
+			"prologue": {
+				"text": "One town is a camp. Five towns are a realm - and five is what it takes before Orazca, your fallen Capitol, can rise again. Restore four more ruined towns, wherever you choose to plant your banner.",
 				"options": [
 					{
 						"name": "(Continue)"
@@ -9184,32 +9219,59 @@
 {
 	"id": 43,
 	"isTemplate": true,
-	"name": "Your First Job",
+	"name": "Raise the Banner",
+	"description": "Give your realm a heart: raise Orazca, garrison it, and begin recovering what was lost.",
 	"offerDialog": {},
-	"prologue": {},
-	"epilogue": {},
-	"failureDialog": {},
-	"declinedDialog": {
-		"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
+	"prologue": {
+		"text": "Five towns fly your colors. The old law of the realm is satisfied - the Guardian's seat may rise again. It is time to give your realm a capital, a garrison, an economy, and its memory back.",
 		"options": [
 			{
-				"name": "(Catching the not so subtle hint, you leave.)"
+				"name": "(Begin)"
 			}
 		]
 	},
+	"epilogue": {
+		"text": "Orazca stands. Your banner flies over a living realm - towns, trade, a garrison, and the first recovered Volume of the shattered Weave.",
+		"options": [
+			{
+				"name": "(Continue)",
+				"text": "And the Five have noticed. Their colors press harder against your borders; their wizards march with real intent now. The Warden's counsel arrives by messenger: \"You are no longer merely awake, Guardian - you are a rival. Come see me at the cave when you are ready to speak of the Seals.\"",
+				"options": [
+					{
+						"action": [
+							{
+								"setQuestFlag": {
+									"key": "mainQuest",
+									"val": 2
+								}
+							},
+							{
+								"issueQuest": "52"
+							}
+						],
+						"name": "(Continue)"
+					}
+				]
+			}
+		]
+	},
+	"failureDialog": {},
+	"declinedDialog": {},
 	"stages": [
 		{
 			"id": 1,
-			"name": "Complete a side quest",
-			"description": "Side quests are available in all towns (look for the question mark) and can be a great way to collect extra loot while exploring The Forsaken Realms.",
+			"name": "Raise Orazca - build your Capitol",
+			"description": "Upgrade one of your restored towns into your Capitol at its Job Board.",
 			"anyPOI": true,
-			"count3": 1,
+			"worldMapOK": true,
 			"POITags": [
-				"QuestSource"
+				"Town"
 			],
-			"objective": "CompleteQuest",
+			"mapFlag": "capitolBuilt",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
 			"prologue": {
-				"text": "Note: Since this quest objective is to complete other quests, your navigation arrow will lead you to quest sources while you are tracking it. Once you accept a side quest, go into your quest log and track that quest in order to update navigation hints.",
+				"text": "Choose your seat carefully - any of your restored towns can become Orazca reborn. Speak at its Job Board and pay the cost (gold, wood, stone, and shards). A Capitol grants buildings no ordinary town can offer... and losing it ends your reign, so choose ground you can hold.",
 				"options": [
 					{
 						"name": "(Continue)"
@@ -9221,72 +9283,123 @@
 		},
 		{
 			"id": 2,
-			"name": "Complete more side quests",
-			"description": "Side quests are available in all towns (look for the question mark) and can be a great way to collect extra loot while exploring The Forsaken Realms.",
+			"name": "Hire a guard",
+			"description": "Hire a guard at your Capitol's Armory to stand watch.",
 			"anyPOI": true,
-			"count3": 3,
-			"POITags": [
-				"QuestSource"
+			"worldMapOK": true,
+			"mapFlag": "guardHired",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
+			"prerequisiteIDs": [
+				1
 			],
-			"objective": "CompleteQuest",
-			"prerequisiteIDs": [ 1 ],
 			"prologue": {
-				"text": "Your first job complete, you feel the slightest bit more experienced. And hopefully a little bit more wealthy.",
+				"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then hire a guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage.",
 				"options": [
 					{
-						"name": "(Continue)",
-						"text": "The townsfolk offer you a small discount in their shops for having helped them and suggest that there may be more work available. Continue to explore via quests and build up a little bit more of a reputation in the process. Remember to track this quest to find more sources, or track the quests you take on to find their objectives.",
-						"options": [
-							{
-								"name": "(Continue"
-							}
-						]
+						"name": "(Continue)"
 					}
 				]
 			},
-			"epilogue": {
-				"text": "A human male approaches you, dressed in a well tailored black coat adorned with silver flourishes and details. \"You there! Yes, you, the $(playerrace). You are the one who just finished a job for the locals, yes?\"",
+			"epilogue": {},
+			"POIToken": ""
+		},
+		{
+			"id": 3,
+			"name": "Build a mine",
+			"description": "Build any mine (gold, shard, lumber, or stone) in one of your towns.",
+			"anyPOI": true,
+			"worldMapOK": true,
+			"mapFlag": "mineBuilt",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
+			"prerequisiteIDs": [
+				2
+			],
+			"prologue": {
+				"text": "A realm at war eats resources. On any empty shop lot in one of your towns, build a mine - gold, shard, lumber, or stone - and it will pay out every week. (If you built one before this task was given, building one more will complete it.)",
 				"options": [
 					{
-						"name": "\"Yes, that's right.\"",
-						"text": "\"I have another job for you, and I won't take no for an answer...\"",
-						"options": [
-							{
-								"action": [
-									{
-										"removeItem": "",
-										"setColorIdentity": "",
-										"advanceQuestFlag": "",
-										"advanceMapFlag": "",
-										"setQuestFlag": {
-											"key": ""
-										},
-										"setMapFlag": {
-											"key": ""
-										},
-										"issueQuest": "44",
-										"POIReference": ""
-									}
-								],
-								"name": "(Continue)"
-							}
-						]
+						"name": "(Continue)"
 					}
 				]
 			},
+			"epilogue": {},
+			"POIToken": ""
+		},
+		{
+			"id": 4,
+			"name": "Build a card shop",
+			"description": "Rebuild a ruined shop as a card shop in one of your towns.",
+			"anyPOI": true,
+			"worldMapOK": true,
+			"mapFlag": "shopBuilt",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
+			"prerequisiteIDs": [
+				3
+			],
+			"prologue": {
+				"text": "Rebuild one of your towns' ruined shops as a card shop. You'll notice its shelves run thin - the deep lore of this realm is still lost, and a shop can only sell what the realm remembers...",
+				"options": [
+					{
+						"name": "(Continue)"
+					}
+				]
+			},
+			"epilogue": {},
+			"POIToken": ""
+		},
+		{
+			"id": 5,
+			"name": "Research a lost Volume",
+			"description": "Complete a research at your Capitol's Research Lab to unlock an expansion.",
+			"anyPOI": true,
+			"worldMapOK": true,
+			"mapFlag": "researchComplete",
+			"mapFlagValue": 1,
+			"objective": "CharacterFlag",
+			"prerequisiteIDs": [
+				4
+			],
+			"prologue": {
+				"text": "The Weave's lost Volumes - whole expansions of magic - can be recovered. Collect enough cards from an expansion, then start researching it at your Capitol's Research Lab. Research takes seven days; return when the work is done and the Volume is yours.",
+				"options": [
+					{
+						"name": "(Continue)"
+					}
+				]
+			},
+			"epilogue": {},
 			"POIToken": ""
 		}
 	],
-	"storyQuest": true
+	"storyQuest": true,
+	"autoTrack": true
 },
 {
 	"id": 44,
 	"isTemplate": true,
 	"name": "Find the Caravan",
 	"description": "A shipment of mana shards is overdue to arrive at $(poi_1). Find the caravan carrying it and make sure the shipment arrives.",
-	"offerDialog": {},
+	"offerDialog": {
+	"text": "A notice in a courier's careful hand: \"Honest pay for capable hands. A shard shipment has gone missing on the wastes road. Find the caravan - or what is left of it. Ask for the Courier.\"",
+	"options": [
+		{
+			"action": [
+				{
+					"issueQuest": "44"
+				}
+			],
+			"name": "Take the job. (Accept Quest)"
+		},
+		{
+			"name": "Leave it for someone else. (Decline)"
+		}
+	]
+},
 	"prologue": {
-		"text": "\"My name is Donovan. Sir Donovan to most. And I have an urgent need for mana shards, far more than I can source in any one town.\" Realizing the financial implications of this, you suddenly feel as though his fine coat is Donovan's 'roughing it' attire despite the fact that it likely cost a year's wages for most people here in $(poi_1)",
+		"text": "\"My name is The Courier. The Courier to most. And I have an urgent need for mana shards, far more than I can source in any one town.\" Realizing the financial implications of this, you suddenly feel as though his fine coat is The Courier's 'roughing it' attire despite the fact that it likely cost a year's wages for most people here in $(poi_1)",
 		"options": [
 			{
 				"name": "\"I can't say I carry that many on me, but I suppose I could sell you some of what I have.\"",
@@ -9294,7 +9407,7 @@
 				"options": [
 					{
 						"name": "\"I see...\"",
-						"text": "\"Now then, you are already aware that I will not be taking no for an answer.\" Donovan hands you a sheet of paper from a stack that appears to have more copies of the same information. \"Here are the details on the caravan's planned route and my personal passphrase to use with the driver for identification. Go find my shipment. I must have it to continue my research.\"",
+						"text": "\"Now then, you are already aware that I will not be taking no for an answer.\" The Courier hands you a sheet of paper from a stack that appears to have more copies of the same information. \"Here are the details on the caravan's planned route and my personal passphrase to use with the driver for identification. Go find my shipment. I must have it to continue my research.\"",
 						"options": [
 							{
 								"name": "It seems as if he really isn't giving you an opportunity to say no."
@@ -9453,7 +9566,7 @@
 						"POIReference": "$(poi_1)"
 					}
 				],
-				"text": "After you explain what you found, and what you didn't find, Sir Donovan hands you a pouch of coins that are most certainly spendable. \"You didn't find anything, but that doesn't mean you put in no effort on my behalf.\" (+500 Gold)",
+				"text": "After you explain what you found, and what you didn't find, The Courier hands you a pouch of coins that are most certainly spendable. \"You didn't find anything, but that doesn't mean you put in no effort on my behalf.\" (+500 Gold)",
 				"options": [
 					{
 						"name": "(Continue)",
@@ -9478,7 +9591,7 @@
 									}
 								],
 								"name": "(Continue)",
-								"text": "Sir Donovan continues, \"You need not return here with your findings unless escorting the caravan. While my venture ultimately depends on having these shards, I have preparations to make elsewhere. Use this amulet once you have more information and I will be in touch.\" He hands you a small piece of iron jewelry, after which you nod and depart.",
+								"text": "The Courier continues, \"You need not return here with your findings unless escorting the caravan. While my venture ultimately depends on having these shards, I have preparations to make elsewhere. Use this amulet once you have more information and I will be in touch.\" He hands you a small piece of iron jewelry, after which you nod and depart.",
 								"options": [
 									{
 										"name": "(Continue)"
@@ -9492,13 +9605,14 @@
 			"POIToken": "$(poi_1)"
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 45,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "What's Yours Is Mine",
-	"description": "Still hunting for the missing mana shard shipment, Sir Donovan sends you to the mines from which they originate.",
+	"description": "Still hunting for the missing mana shard shipment, The Courier sends you to the mines from which they originate.",
 	"offerDialog": {},
 	"prologue": {},
 	"epilogue": {},
@@ -9538,7 +9652,7 @@
 						"POIReference": ""
 					}
 				],
-				"text": "Consulting your map, Sir Donovan's directions lead you into the mountains found to the southwest.",
+				"text": "Consulting your map, The Courier's directions lead you into the mountains found to the southwest.",
 				"options": [
 					{
 						"name": "(Continue)"
@@ -9565,7 +9679,7 @@
 				"Captain"
 			],
 			"prologue": {
-				"text": "Sir Donovan's directions are very precise, and you find the mining operation without much trouble. There is, however, an obvious sign of trouble when you arrive.",
+				"text": "The Courier's directions are very precise, and you find the mining operation without much trouble. There is, however, an obvious sign of trouble when you arrive.",
 				"options": [
 					{
 						"name": "(Continue)",
@@ -9608,7 +9722,7 @@
 							}
 						],
 						"name": "\"So much for making it rich on pirate treasure\"",
-						"text": "There may be some less industrial scale treasure to be found among any of the remaining pirates, but when you're ready you should contact Sir Donovan using his talisman.",
+						"text": "There may be some less industrial scale treasure to be found among any of the remaining pirates, but when you're ready you should contact The Courier using his talisman.",
 						"options": [
 							{
 								"name": "(Continue)"
@@ -9620,15 +9734,15 @@
 		},
 		{
 			"id": 4,
-			"name": "Contact Sir Donovan",
-			"description": "Use Donovan's amulet to contact him.",
+			"name": "Contact The Courier",
+			"description": "Use The Courier's amulet to contact him.",
 			"mapFlag": "Quest_ShardMines_EpilogueComplete",
 			"mapFlagValue": 1,
 			"worldMapOK": true,
 			"objective": "QuestFlag",
 			"prerequisiteIDs": [ 3 ],
 			"prologue": {
-				"text": "When you are ready, you should use the amulet he gave you to tell Sir Donovan about the pirates, and that they've been dealt with.",
+				"text": "When you are ready, you should use the amulet he gave you to tell The Courier about the pirates, and that they've been dealt with.",
 				"options": [
 					{
 						"name": "(Continue)",
@@ -9655,7 +9769,7 @@
 		{
 			"id": 5,
 			"name": "Go to a town",
-			"description": "The urge from Sir Donovan's amulet persists. It doesn't control you, speak to you, or anything else like that. You simply know somehow that it is what he wants you to do - go to a town.",
+			"description": "The urge from The Courier's amulet persists. It doesn't control you, speak to you, or anything else like that. You simply know somehow that it is what he wants you to do - go to a town.",
 			"anyPOI": true,
 			"POITags": [
 				"Town"
@@ -9664,7 +9778,7 @@
 			"prerequisiteIDs": [ 4 ],
 			"prologue": {},
 			"epilogue": {
-				"text": "Within moments of walking into town, a wiry young elf approaches you. Or at least he looks young, it's so hard to tell with elves. He briefly holds out an amulet identical to the one Donovan gave you, and beckons you to follow him to the inn.",
+				"text": "Within moments of walking into town, a wiry young elf approaches you. Or at least he looks young, it's so hard to tell with elves. He briefly holds out an amulet identical to the one The Courier gave you, and beckons you to follow him to the inn.",
 				"options": [
 					{
 						"action": [
@@ -9684,15 +9798,15 @@
 							}
 						],
 						"name": "(Continue)",
-						"text": "Taking a corner table at the inn, the elf leans forward on his elbows and studies you for a moment. \"Yeah, you're the one. The name's Acirxes. I work with Donovan.\"",
+						"text": "Taking a corner table at the inn, the elf leans forward on his elbows and studies you for a moment. \"Yeah, you're the one. The name's The Scholar. I work with The Courier.\"",
 						"options": [
 							{
 								"name": "(Continue)",
 								"text": "\"Seeing as you walked here, I take it you didn't find our shipment.\"",
 								"options": [
 									{
-										"name": "Explain to Acirxes about the state of the mine, the pirate crew you found holed up within it, and the expended mana shards.",
-										"text": "\"I hate when a good vein runs dry. Cidryl was loaded with crystals, and compared to other operations they were easy to get to. But when there's no mana left, there's no mana left.\" Acirxes pauses.",
+										"name": "Explain to The Scholar about the state of the mine, the pirate crew you found holed up within it, and the expended mana shards.",
+										"text": "\"I hate when a good vein runs dry. Cidryl was loaded with crystals, and compared to other operations they were easy to get to. But when there's no mana left, there's no mana left.\" The Scholar pauses.",
 										"options": [
 											{
 												"action": [
@@ -9719,17 +9833,18 @@
 			"POIToken": ""
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 46,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "Busy Work",
-	"description": "Having reported the state of matters in the shard mines to his contact, you await further word from Sir Donovan. Until then, you are free to take on other jobs.",
+	"description": "Having reported the state of matters in the shard mines to his contact, you await further word from The Courier. Until then, you are free to take on other jobs.",
 	"offerDialog": {},
 	"prologue": {},
 	"epilogue": {
-		"text": "A slight whistle alerts you to Acirxes' presence. You're not entirely sure if he has impeccable timing or if he watched you complete your most recent job, but it appears that Sir Donovan has more work for you.",
+		"text": "A slight whistle alerts you to The Scholar' presence. You're not entirely sure if he has impeccable timing or if he watched you complete your most recent job, but it appears that The Courier has more work for you.",
 		"options": [
 			{
 				"action": [
@@ -9765,7 +9880,7 @@
 		{
 			"id": 1,
 			"name": "Do Side Quests",
-			"description": "Complete 3 side quests while waiting for Acirxes to find you again.",
+			"description": "Complete 3 side quests while waiting for The Scholar to find you again.",
 			"anyPOI": true,
 			"count3": 3,
 			"POITags": [
@@ -9777,13 +9892,14 @@
 			"allowInactivePOI": true
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 47,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "Check Out The Library",
-	"description": "Sir Donovan wants you to search $(poi_1) for information on the mechanics of summoning.",
+	"description": "The Courier wants you to search $(poi_1) for information on the mechanics of summoning.",
 	"offerDialog": {},
 	"prologue": {},
 	"epilogue": {},
@@ -9800,13 +9916,13 @@
 		{
 			"id": 1,
 			"name": "Find $(poi_1)",
-			"description": "Follow Acirxes' directions to $(poi_1) in the island biome to the northeast.",
+			"description": "Follow The Scholar' directions to $(poi_1) in the island biome to the northeast.",
 			"POITags": [
 				"Quest_LibraryOfVarsil"
 			],
 			"objective": "Travel",
 			"prologue": {
-				"text": "Acirxes furrows his brow, which for a brief time makes his youthful appearance fade into maturity. \"Boss says you're no mere hedge wizard, so I presume you understand somewhat of what spells actually do.\"",
+				"text": "The Scholar furrows his brow, which for a brief time makes his youthful appearance fade into maturity. \"Boss says you're no mere hedge wizard, so I presume you understand somewhat of what spells actually do.\"",
 				"options": [
 					{
 						"name": "You wonder where this is going, but simply nod for the moment.",
@@ -9826,7 +9942,7 @@
 							},
 							{
 								"name": "\"Fine, but why send me?\"",
-								"text": "\"You are a clever one.\" Acirxes pauses before responding further in a carefully measured tone. \"Because one of my peers found the library. And another one found the library and her body. And a third one found all of them and escaped alive. It's not your average library.\"",
+								"text": "\"You are a clever one.\" The Scholar pauses before responding further in a carefully measured tone. \"Because one of my peers found the library. And another one found the library and her body. And a third one found all of them and escaped alive. It's not your average library.\"",
 								"options": [
 									{
 										"name": "\"No, apparently not.\"",
@@ -9911,8 +10027,8 @@
 				"text": "\"Welcome to $(poi_4), a shining beacon of civilization.\" You had just entered the tavern and it takes you a moment to realize that the voice from over your shoulder is speaking to you.",
 				"options": [
 					{
-						"name": "[/]But that's not Acirxes...[]",
-						"text": "\"I take it you were expecting my associate.\" Sir Donovan leads you to a table before continuing. \"Acirxes is on leave, indefinitely. Welcomed to return to my service, but only once he has fully overcome the grief of Guinneverre's passing; another of my employees whom he had somewhat of a relationship with.\"",
+						"name": "[/]But that's not The Scholar...[]",
+						"text": "\"I take it you were expecting my associate.\" The Courier leads you to a table before continuing. \"The Scholar is on leave, indefinitely. Welcomed to return to my service, but only once he has fully overcome the grief of Guinneverre's passing; another of my employees whom he had somewhat of a relationship with.\"",
 						"options": [
 							{
 								"condition": [
@@ -9923,8 +10039,8 @@
 										"checkQuestFlag": "libraryOfVarsilBonusAvailable"
 									}
 								],
-								"name": "\"About that...\" You hand him the research before telling Donovan about the giant automaton at the top of the library.",
-								"text": "\"Yes, Acirxes was quite adamant that I hold on to this for you.\" He hands you a small and ornate spellbook.",
+								"name": "\"About that...\" You hand him the research before telling The Courier about the giant automaton at the top of the library.",
+								"text": "\"Yes, The Scholar was quite adamant that I hold on to this for you.\" He hands you a small and ornate spellbook.",
 								"options": [
 									{
 										"action": [
@@ -9998,7 +10114,7 @@
 											}
 										],
 										"name": "(Continue)",
-										"text": "\"Now, about the golems. I'm curious if they are related to another incident.\" Donovan pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
+										"text": "\"Now, about the golems. I'm curious if they are related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
 										"options": [
 											{
 												"action": [
@@ -10023,8 +10139,8 @@
 										"not": true
 									}
 								],
-								"name": "\"About that...\" You hand him the research before telling Donovan about the giant automaton at the top of the library.",
-								"text": "\"I'm curious if this is related to another incident.\" Donovan pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
+								"name": "\"About that...\" You hand him the research before telling The Courier about the giant automaton at the top of the library.",
+								"text": "\"I'm curious if this is related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
 								"options": [
 									{
 										"action": [
@@ -10045,7 +10161,7 @@
 									}
 								],
 								"name": "Hand him the research and tell him about the occupants of the library.",
-								"text": "\"I'm curious if this is related to another incident.\" Donovan pilfers through his satchel for a moment before giving you a map and your latest wages (+500 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
+								"text": "\"I'm curious if this is related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+500 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
 								"options": [
 									{
 										"action": [
@@ -10064,11 +10180,12 @@
 			}
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 48,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "The Dig Site",
 	"description": "Determine if the golems you found previously are connected to those at $(poi_1)",
 	"offerDialog": {},
@@ -10087,13 +10204,13 @@
 		{
 			"id": 1,
 			"name": "Find $(poi_1)",
-			"description": "Follow Donovan's map to $(poi_1) in the wastelands.",
+			"description": "Follow The Courier's map to $(poi_1) in the wastelands.",
 			"POITags": [
 				"Quest_DigSite"
 			],
 			"objective": "Travel",
 			"prologue": {
-				"text": "Sir Donovan gives you a sense of deja vu as he hands you a map and another of his amulets. \"Explore the site. Look for signs that the two groups are connected or distinct. Use the amulet when you're done and we'll find somewhere to meet.\"",
+				"text": "The Courier gives you a sense of deja vu as he hands you a map and another of his amulets. \"Explore the site. Look for signs that the two groups are connected or distinct. Use the amulet when you're done and we'll find somewhere to meet.\"",
 				"options": [
 					{
 						"action": [
@@ -10149,15 +10266,15 @@
 		},
 		{
 			"id": 4,
-			"name": "Contact Sir Donovan",
-			"description": "Use Donovan's talisman to contact him.",
+			"name": "Contact The Courier",
+			"description": "Use The Courier's talisman to contact him.",
 			"mapFlag": "exploreShand1",
 			"mapFlagValue": 7,
 			"worldMapOK": true,
 			"objective": "QuestFlag",
 			"prerequisiteIDs": [ 3 ],
 			"prologue": {
-				"text": "When you are ready, you should use the amulet he gave you to contact Sir Donovan again.",
+				"text": "When you are ready, you should use the amulet he gave you to contact The Courier again.",
 				"options": [
 					{
 						"action": [
@@ -10195,11 +10312,11 @@
 			"prerequisiteIDs": [ 4 ],
 			"prologue": {},
 			"epilogue": {
-				"text": "\"$(playername)?\" A middle aged woman approaches you in what passes for a town square here, slipping a small but very identifiable portrait of you into her cloak. \"We share's the bossman.\" As Acirxes did upon meeting you, she pulls her hand back out of her cloak to flash an amulet matching yours.",
+				"text": "\"$(playername)?\" A middle aged woman approaches you in what passes for a town square here, slipping a small but very identifiable portrait of you into her cloak. \"We share's the bossman.\" As The Scholar did upon meeting you, she pulls her hand back out of her cloak to flash an amulet matching yours.",
 				"options": [
 					{
 						"name": "You wonder to yourself where she got the portrait. [/]Who drew me, and when?[]",
-						"text": "\"They calls me Viv. Those'n who knows me, it is.\"",
+						"text": "\"They calls me The Tinker. Those'n who knows me, it is.\"",
 						"options": [
 							{
 								"action": [
@@ -10208,19 +10325,19 @@
 									}
 								],
 								"name": "\"That's quite an unusual accent you have.\"",
-								"text": "Viv shrugs. \"I says that evah-time one's of you blabs the samewise. And me jingle works samewise.\" To demonstrate her point, she shakes the usual coin pouch before tossing it to you. (+500 Gold)\n\"So blabs it. Same metal men?\"",
+								"text": "The Tinker shrugs. \"I says that evah-time one's of you blabs the samewise. And me jingle works samewise.\" To demonstrate her point, she shakes the usual coin pouch before tossing it to you. (+500 Gold)\n\"So blabs it. Same metal men?\"",
 								"options": [
 									{
 										"name": "\"I don't think so.\"",
-										"text": "\"Thinks he do. Knows?\" For all the brevity of Viv's reply, it takes you a moment to realize she's asking if you're sure.",
+										"text": "\"Thinks he do. Knows?\" For all the brevity of The Tinker's reply, it takes you a moment to realize she's asking if you're sure.",
 										"options": [
 											{
 												"name": "\"Some of them were similar. More similar than most golems I've seen in the wild. But no big one this time. And there were several that were like nothing I saw in the library.\"",
-												"text": "\"No big one this time.\" Viv gives a very passing echo of your words, even coming close to matching your natural voice. \"Bossman due certain a'love that one. Mayhap sends me back for that jingle bag next.\"",
+												"text": "\"No big one this time.\" The Tinker gives a very passing echo of your words, even coming close to matching your natural voice. \"Bossman due certain a'love that one. Mayhap sends me back for that jingle bag next.\"",
 												"options": [
 													{
 														"name": "\"Look... I'm not an expert on antique golem provenance.\"",
-														"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. Viv to bring bossman's words.\"",
+														"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. The Tinker to bring bossman's words.\"",
 														"options": [
 															{
 																"action": [
@@ -10236,7 +10353,7 @@
 											},
 											{
 												"name": "\"Yes, some of them were. Like a different builder with the same parts and hearing the same description, but distinct from the other's design.\"",
-												"text": "Viv gives a knowing nod, as if she appreciates that description. \"Gets you the local jingle. Viv'll bring bossman's words.\" She then turns to leave.",
+												"text": "The Tinker gives a knowing nod, as if she appreciates that description. \"Gets you the local jingle. The Tinker'll bring bossman's words.\" She then turns to leave.",
 												"options": [
 													{
 														"action": [
@@ -10252,15 +10369,15 @@
 									},
 									{
 										"name": "\"I think so.\"",
-										"text": "\"Thinks he do. Knows?\" For all the brevity of Viv's reply, thanks to her unusual way of speaking it takes you a moment to realize she's asking if you're sure.",
+										"text": "\"Thinks he do. Knows?\" For all the brevity of The Tinker's reply, thanks to her unusual way of speaking it takes you a moment to realize she's asking if you're sure.",
 										"options": [
 											{
 												"name": "\"Some of them were similar. More similar than most golems I've seen in the wild. But no big one this time. And there were several that were like nothing I saw in the library.\"",
-												"text": "\"No big one this time.\" Viv gives a very passing echo of your words, even coming close to matching your natural voice. \"Bossman due certain a'love that one. Mayhap sends me back after that jingle bag.\"",
+												"text": "\"No big one this time.\" The Tinker gives a very passing echo of your words, even coming close to matching your natural voice. \"Bossman due certain a'love that one. Mayhap sends me back after that jingle bag.\"",
 												"options": [
 													{
 														"name": "\"Look... I'm not an expert on antique golem provenance.\"",
-														"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. Viv to bring bossman's words.\"",
+														"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. The Tinker to bring bossman's words.\"",
 														"options": [
 															{
 																"action": [
@@ -10276,7 +10393,7 @@
 											},
 											{
 												"name": "\"Like a different builder copying the same example, but both doing it very well.\"",
-												"text": "Viv gives a knowing nod, as if she appreciates that description. \"Gets you the local jingle. Viv'll bring bossman's words.\" She then turns to leave.",
+												"text": "The Tinker gives a knowing nod, as if she appreciates that description. \"Gets you the local jingle. The Tinker'll bring bossman's words.\" She then turns to leave.",
 												"options": [
 													{
 														"action": [
@@ -10293,12 +10410,12 @@
 								]
 							},
 							{
-								"name": "\"Donovan wanted to know if these two groups of automatons matched. I think don't think so. Similar, but different.\"",
-								"text": "\"Similar, but different.\" Viv gives a very passing echo of your words, even coming close to matching your natural voice. \"Makes samewise sense out Viv's mouth and yours, none. Mayhap bossman gets the words, or mayhap he sends me back after that jingle bag.\"",
+								"name": "\"The Courier wanted to know if these two groups of automatons matched. I think don't think so. Similar, but different.\"",
+								"text": "\"Similar, but different.\" The Tinker gives a very passing echo of your words, even coming close to matching your natural voice. \"Makes samewise sense out The Tinker's mouth and yours, none. Mayhap bossman gets the words, or mayhap he sends me back after that jingle bag.\"",
 								"options": [
 									{
 										"name": "\"Look... I'm not an expert on antique golem provenance.\"",
-										"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. Viv to bring bossman's words.\"",
+										"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. The Tinker to bring bossman's words.\"",
 										"options": [
 											{
 												"action": [
@@ -10312,7 +10429,7 @@
 									},
 									{
 										"name": "\"Like a different builder with the same parts and hearing the same description, but distinct from the other's design.\"",
-										"text": "Viv suddenly gives a knowing nod, as if she appreciates that description more than the first. \"Gets you the local jingle. Viv to bring bossman's words.\" She then turns to leave.",
+										"text": "The Tinker suddenly gives a knowing nod, as if she appreciates that description more than the first. \"Gets you the local jingle. The Tinker to bring bossman's words.\" She then turns to leave.",
 										"options": [
 											{
 												"action": [
@@ -10327,16 +10444,16 @@
 								]
 							},
 							{
-								"name": "\"Donovan wanted to know if these two groups of automatons matched. I think so. Mostly at least.\"",
-								"text": "\"Thinks he do. Knows?\" For all the brevity of Viv's reply, it takes you a moment to realize she's asking if you're sure.",
+								"name": "\"The Courier wanted to know if these two groups of automatons matched. I think so. Mostly at least.\"",
+								"text": "\"Thinks he do. Knows?\" For all the brevity of The Tinker's reply, it takes you a moment to realize she's asking if you're sure.",
 								"options": [
 									{
 										"name": "\"Some were very similar. More similar than most golems I've seen in the wild. No big one this time though, and several that I'd never seen anything like before.\"",
-										"text": "\"No big one this time.\" Viv gives a very passing echo of your words, even coming close to matching your natural voice. \"Bossman due certain a'love that one. Mayhap sends me back after that jingle bag.\"",
+										"text": "\"No big one this time.\" The Tinker gives a very passing echo of your words, even coming close to matching your natural voice. \"Bossman due certain a'love that one. Mayhap sends me back after that jingle bag.\"",
 										"options": [
 											{
 												"name": "\"Look... I'm not an expert on antique golem provenance.\"",
-												"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. Viv to bring bossman's words.\"",
+												"text": "\"Tell bossman that one instead, bigger laugh to hear.\" Before you can respond to that, she moves to walk off. \"Gets you the local jingle. The Tinker to bring bossman's words.\"",
 												"options": [
 													{
 														"action": [
@@ -10352,7 +10469,7 @@
 									},
 									{
 										"name": "\"Like a different builder copying the same example, and both doing it very well.\"",
-										"text": "Viv gives a knowing nod, as if she appreciates that description. \"Gets you the local jingle. Viv to bring bossman's words.\" She then turns to leave.",
+										"text": "The Tinker gives a knowing nod, as if she appreciates that description. \"Gets you the local jingle. The Tinker to bring bossman's words.\" She then turns to leave.",
 										"options": [
 											{
 												"action": [
@@ -10372,13 +10489,14 @@
 			}
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 49,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "Busy Work 2",
-	"description": "You await further word from Sir Donovan via your new contact, Viv. Until then, you are free to take on other jobs.",
+	"description": "You await further word from The Courier via your new contact, The Tinker. Until then, you are free to take on other jobs.",
 	"offerDialog": {},
 	"prologue": {},
 	"epilogue": {},
@@ -10395,7 +10513,7 @@
 		{
 			"id": 1,
 			"name": "Do Side Quests",
-			"description": "Complete 3 side quests while waiting for Viv to find you again.",
+			"description": "Complete 3 side quests while waiting for The Tinker to find you again.",
 			"anyPOI": true,
 			"count3": 3,
 			"POITags": [
@@ -10407,8 +10525,8 @@
 		},
 		{
 			"id": 2,
-			"name": "Wait for Viv",
-			"description": "Give Viv more time to contact you.",
+			"name": "Wait for The Tinker",
+			"description": "Give The Tinker more time to contact you.",
 			"anyPOI": true,
 			"count3": 3,
 			"POITags": [
@@ -10417,7 +10535,7 @@
 			"objective": "Travel",
 			"prerequisiteIDs": [ 1 ],
 			"prologue": {
-				"text": "No word from or sign of Viv yet, but you should expect to hear from her soon.",
+				"text": "No word from or sign of The Tinker yet, but you should expect to hear from her soon.",
 				"options": [
 					{
 						"name": "(Continue)"
@@ -10450,11 +10568,12 @@
 			}
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 50,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "Welcome To The Jungle",
 	"description": "Search the Primal Jungle for an artifact referenced in the research from The Library of Varsil.",
 	"offerDialog": {},
@@ -10467,15 +10586,15 @@
 				}
 			}
 		],
-		"text": "You have and take the opportunity to speak to Viv before she appears to notice you.",
+		"text": "You have and take the opportunity to speak to The Tinker before she appears to notice you.",
 		"options": [
 			{
-				"name": "\"There you are, Viv.\"",
-				"text": "Sir Donovan's voice replies to you from under her cloak. \"$(playername) will have to wait a little longer, I need you to fetch those materials for the next batch right now.\" Viv drops her hood and her imitation of your employer. \"Tinker he does, things he needs.\" Viv then shrugs. \"Viv focus for jingle he give samewise you take.\"",
+				"name": "\"There you are, The Tinker.\"",
+				"text": "The Courier's voice replies to you from under her cloak. \"$(playername) will have to wait a little longer, I need you to fetch those materials for the next batch right now.\" The Tinker drops her hood and her imitation of your employer. \"Tinker he does, things he needs.\" The Tinker then shrugs. \"The Tinker focus for jingle he give samewise you take.\"",
 				"options": [
 					{
 						"name": "\"So what now?\"",
-						"text": "\"Things bossman needs [i]again[].\" She emphasizes the word in a way that indicates it's your turn to fetch something. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. Viv summarily dismisses you by walking away before you can ask questions or read the note.",
+						"text": "\"Things bossman needs [i]again[].\" She emphasizes the word in a way that indicates it's your turn to fetch something. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. The Tinker summarily dismisses you by walking away before you can ask questions or read the note.",
 						"options": [
 							{
 								"name": "Continue"
@@ -10484,7 +10603,7 @@
 					},
 					{
 						"name": "Remain silent",
-						"text": "\"Bossman needs things [i]again[].\" It's difficult to tell with her, but there might have been a touch of amusement in her emphasis. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. Viv summarily dismisses you by walking away before you can ask questions or read the note.",
+						"text": "\"Bossman needs things [i]again[].\" It's difficult to tell with her, but there might have been a touch of amusement in her emphasis. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. The Tinker summarily dismisses you by walking away before you can ask questions or read the note.",
 						"options": [
 							{
 								"name": "Continue"
@@ -10495,11 +10614,11 @@
 			},
 			{
 				"name": "\"I was beginning to worry I was out of a job.\"",
-				"text": "Sir Donovan's voice replies to you from under her cloak. \"$(playername) will have to wait a little longer, I need you to fetch those materials for the next batch right now.\" Viv drops her hood and her imitation of your employer. \"Tinker he does, things he needs.\" Viv then shrugs. \"Viv focus for jingle he give samewise you take.\"",
+				"text": "The Courier's voice replies to you from under her cloak. \"$(playername) will have to wait a little longer, I need you to fetch those materials for the next batch right now.\" The Tinker drops her hood and her imitation of your employer. \"Tinker he does, things he needs.\" The Tinker then shrugs. \"The Tinker focus for jingle he give samewise you take.\"",
 				"options": [
 					{
 						"name": "\"So what now?\"",
-						"text": "\"Things bossman needs [i]again[].\" She emphasizes the word in a way that indicates it's your turn to fetch something. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. Viv summarily dismisses you by walking away before you can ask questions or read the note.",
+						"text": "\"Things bossman needs [i]again[].\" She emphasizes the word in a way that indicates it's your turn to fetch something. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. The Tinker summarily dismisses you by walking away before you can ask questions or read the note.",
 						"options": [
 							{
 								"name": "Continue"
@@ -10508,7 +10627,7 @@
 					},
 					{
 						"name": "Remain silent",
-						"text": "\"Bossman needs things [i]again[].\" It's difficult to tell with her, but there might have been a touch of amusement in her emphasis. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. Viv summarily dismisses you by walking away before you can ask questions or read the note.",
+						"text": "\"Bossman needs things [i]again[].\" It's difficult to tell with her, but there might have been a touch of amusement in her emphasis. \"Things told in samewise books you gave.\" You receive another map, another amulet, and a short note. The Tinker summarily dismisses you by walking away before you can ask questions or read the note.",
 						"options": [
 							{
 								"name": "Continue"
@@ -10533,7 +10652,7 @@
 		{
 			"id": 1,
 			"name": "Find The Primal Jungle",
-			"description": "Follow the given map to the area Sir Donovan suggested you search.",
+			"description": "Follow the given map to the area The Courier suggested you search.",
 			"POITags": [
 				"Quest_PrimalJungle"
 			],
@@ -10545,7 +10664,7 @@
 		{
 			"id": 2,
 			"name": "Search for the artifact",
-			"description": "Sir Donovan suspects that some form of magic staff can be found in this area, and he wants you to retrieve it.",
+			"description": "The Courier suspects that some form of magic staff can be found in this area, and he wants you to retrieve it.",
 			"mapFlag": "SearchedForArtifact",
 			"mapFlagValue": 1,
 			"POITags": [
@@ -10555,11 +10674,11 @@
 			"prerequisiteIDs": [ 1 ],
 			"prologue": {},
 			"epilogue": {
-				"text": "Along with the other items in the treasure chest you find a staff that matches the rough description from Donovan's note. Or at least it would if it hadn't been broken into pieces.",
+				"text": "Along with the other items in the treasure chest you find a staff that matches the rough description from The Courier's note. Or at least it would if it hadn't been broken into pieces.",
 				"options": [
 					{
 						"name": "Gather up the pieces",
-						"text": "You technically weren't asked to bring it back in one piece. Hopefully Sir Donovan will still want it.",
+						"text": "You technically weren't asked to bring it back in one piece. Hopefully The Courier will still want it.",
 						"options": [
 							{
 								"name": "(Continue)"
@@ -10573,16 +10692,16 @@
 		{
 			"id": 3,
 			"name": "Return to $(poi_3)",
-			"description": "Find Viv again in $(poi_3) to report what you found, and what you didn't.",
+			"description": "Find The Tinker again in $(poi_3) to report what you found, and what you didn't.",
 			"here": true,
 			"objective": "Travel",
 			"prerequisiteIDs": [ 2 ],
 			"prologue": {},
 			"epilogue": {
-				"text": "Viv frowns at you after listening to your explanation. \"Jingle bag to wait, staff already jingle. Very bad.\"",
+				"text": "The Tinker frowns at you after listening to your explanation. \"Jingle bag to wait, staff already jingle. Very bad.\"",
 				"options": [
 					{
-						"name": "\"You don't think Sir Donovan wants it anyway?\"",
+						"name": "\"You don't think The Courier wants it anyway?\"",
 						"text": "She shakes her head emphatically. \"We must make it new. I have a fix.\" She retrieves a pen and paper to scrawl a much rougher map than usual on short notice. \"Flower grows in cave here, scarlet. You must bring it here.\"",
 						"options": [
 							{
@@ -10609,13 +10728,14 @@
 			}
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 51,
 	"isTemplate": true,
+	"questSourceTags": ["relic_trail_chain"],
 	"name": "Flower Fetching",
-	"description": "Bring Viv a flower from Frostbitten Cavern.",
+	"description": "Bring The Tinker a flower from Frostbitten Cavern.",
 	"offerDialog": {},
 	"prologue": {},
 	"epilogue": {},
@@ -10632,7 +10752,7 @@
 		{
 			"id": 1,
 			"name": "Find $(poi_1)",
-			"description": "Viv's crude map shows the way to $(poi_1) in the $(biome_1) Biome.",
+			"description": "The Tinker's crude map shows the way to $(poi_1) in the $(biome_1) Biome.",
 			"POITags": [
 				"Quest_FrostbittenCavern"
 			],
@@ -10644,7 +10764,7 @@
 		{
 			"id": 2,
 			"name": "Retrieve the flower",
-			"description": "Viv said the flower would be located inside a cave.",
+			"description": "The Tinker said the flower would be located inside a cave.",
 			"mapFlag": "hasAFlower",
 			"mapFlagValue": 1,
 			"POITags": [
@@ -10659,16 +10779,16 @@
 		{
 			"id": 3,
 			"name": "Return to $(poi_3)",
-			"description": "Bring the flower back to Viv in $(poi_3).",
+			"description": "Bring the flower back to The Tinker in $(poi_3).",
 			"here": true,
 			"objective": "Travel",
 			"prerequisiteIDs": [ 2 ],
 			"prologue": {},
 			"epilogue": {
-				"text": "You find Viv right where you had agreed to meet, and Sir Donovan is there as well. He is staring intently at the newly repaired staff as Viv directs her gaze to you.",
+				"text": "You find The Tinker right where you had agreed to meet, and The Courier is there as well. He is staring intently at the newly repaired staff as The Tinker directs her gaze to you.",
 				"options": [
 					{
-						"name": "You interrupt Donovan's inspection. \"So what does the staff do?\"",
+						"name": "You interrupt The Courier's inspection. \"So what does the staff do?\"",
 						"text": "\"Nothing, not yet at least. Perhaps it will eventually.\" He runs his left hand across an engraving on the staff as if trying to draw out its secrets. \"But I believe we have something else to discuss, something potentially even more important than my research.\"",
 						"options": [
 							{
@@ -10689,7 +10809,7 @@
 														"options": [
 															{
 																"name": "\"So, this is the part where I do the 'direct application' thing, right?\"",
-																"text": "Donovan gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
+																"text": "The Courier gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
 																"options": [
 																	{
 																		"name": "\"I'm not sure that I follow your meaning.\"",
@@ -10710,8 +10830,7 @@
 																						"setQuestFlag": {
 																							"key": "exploreShand1",
 																							"val": 8
-																						},
-																						"issueQuest": "52"
+																						}
 																					}
 																				],
 																				"name": "\"Adventure calls. Who am I to say no?\" (Accept Quest)"
@@ -10740,7 +10859,7 @@
 							}
 						],
 						"name": "Give her both flowers",
-						"text": "Viv has a thankful look, but you note what might be a twinge of disappointment underneath it. \"Fix was gentle. Unexpectedly. Not to need those now.\" Donovan then clears his throat, redirecting your attention.",
+						"text": "The Tinker has a thankful look, but you note what might be a twinge of disappointment underneath it. \"Fix was gentle. Unexpectedly. Not to need those now.\" The Courier then clears his throat, redirecting your attention.",
 						"options": [
 							{
 								"name": "\"So what does the staff do?\"",
@@ -10764,7 +10883,7 @@
 																"options": [
 																	{
 																		"name": "\"So, this is the part where I do the 'direct application' thing, right?\"",
-																		"text": "Donovan gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
+																		"text": "The Courier gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
 																		"options": [
 																			{
 																				"name": "\"I'm not sure that I follow your meaning.\"",
@@ -10785,8 +10904,7 @@
 																								"setQuestFlag": {
 																									"key": "exploreShand1",
 																									"val": 8
-																								},
-																								"issueQuest": "52"
+																								}
 																							}
 																						],
 																						"name": "\"Adventure calls. Who am I to say no?\" (Accept Quest)"
@@ -10822,7 +10940,7 @@
 							}
 						],
 						"name": "Give her the violet flower",
-						"text": "Viv shakes her head. \"Headstrong adventurers... Not right. But we find that the flower had no need.\" Donovan then clears his throat, redirecting your attention.",
+						"text": "The Tinker shakes her head. \"Headstrong adventurers... Not right. But we find that the flower had no need.\" The Courier then clears his throat, redirecting your attention.",
 						"options": [
 							{
 								"name": "\"So what does the staff do?\"",
@@ -10846,7 +10964,7 @@
 																"options": [
 																	{
 																		"name": "\"So, this is the part where I do the 'direct application' thing, right?\"",
-																		"text": "Donovan gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
+																		"text": "The Courier gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
 																		"options": [
 																			{
 																				"name": "\"I'm not sure that I follow your meaning.\"",
@@ -10867,8 +10985,7 @@
 																								"setQuestFlag": {
 																									"key": "exploreShand1",
 																									"val": 8
-																								},
-																								"issueQuest": "52"
+																								}
 																							}
 																						],
 																						"name": "\"Adventure calls. Who am I to say no?\" (Accept Quest)"
@@ -10904,7 +11021,7 @@
 							}
 						],
 						"name": "Give her the crimson flower",
-						"text": "Viv smiles and takes the flower, tucking it behind her ear. \"[i]Jingle[] accepted. The bloom was not for the fix.\" Donovan then clears his throat, redirecting your attention.",
+						"text": "The Tinker smiles and takes the flower, tucking it behind her ear. \"[i]Jingle[] accepted. The bloom was not for the fix.\" The Courier then clears his throat, redirecting your attention.",
 						"options": [
 							{
 								"name": "\"So what does the staff do?\"",
@@ -10928,7 +11045,7 @@
 																"options": [
 																	{
 																		"name": "\"So, this is the part where I do the 'direct application' thing, right?\"",
-																		"text": "Donovan gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
+																		"text": "The Courier gives a hearty, if solemn, chuckle. \"Based on what I have seen of your work, I believe you to be capable of it. But this is not something I am asking of you. More that it is something I am offering to you.\"",
 																		"options": [
 																			{
 																				"name": "\"I'm not sure that I follow your meaning.\"",
@@ -10949,13 +11066,6 @@
 																								"setQuestFlag": {
 																									"key": "exploreShand1",
 																									"val": 8
-																								},
-																								"issueQuest": "52"
-																							},
-																							{
-																								"setQuestFlag": {
-																									"key": "mainQuest",
-																									"val": 2
 																								}
 																							}
 																						],
@@ -10981,13 +11091,13 @@
 			}
 		}
 	],
-	"storyQuest": true
+	"storyQuest": false
 },
 {
 	"id": 52,
 	"isTemplate": true,
 	"name": "The Enemy of My Enemy...",
-	"description": "Sir Donovan has given you a set of five locations where he believes that powerful wizards are being held.",
+	"description": "The five Seals that bound you - pearl, jet, sapphire, emerald, ruby - sit in the five invaders' castles. Storm each castle and take back what was forged from your stolen power.",
 	"offerDialog": {},
 	"prologue": {
 		"action": [
@@ -10998,7 +11108,7 @@
 				}
 			}
 		],
-		"text": "Good luck",
+		"text": "The Warden lays out five worn map-marks, one for each castle. \"Each of the Five keeps their Seal at the heart of their castle - the instruments of your imprisonment, cut from your own stolen power. Take them back, one throne at a time. Break their trials, defeat their champions, and reclaim what is yours. Then come home to Orazca.\"",
 		"options": [
 			{
 				"name": "(Continue)"
@@ -11211,7 +11321,7 @@
 				"prerequisiteIDs": [ 1 ],
 				"prologue": {},
 				"epilogue": {
-					"text": "You find yourself stranded on an unknown plane. It's time to get your bearings.",
+					"text": "The portal's light fades behind you. Grey ash to every horizon - and beneath it, faint as a pulse under skin, you feel the land recognize you. Far away, five alien presences press against your awareness: the Five, already carving up the corpse of your realm. Not for long.",
 					"options": [
 						{
 							"name": "(Continue)",
