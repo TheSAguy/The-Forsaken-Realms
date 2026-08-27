@@ -1321,6 +1321,36 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-08-27 — merged upstream `master` @ `8c7e9afb8e6` (Forge 2.0.15-SNAPSHOT, 08.26 daily
+  build; 55 commits, 160 files since the previous merge point `06019e99eed6`).** Seven textual
+  conflicts across four Java files plus two binary PNGs:
+  - `GameStage.java` (×2): upstream rewrote movement input around per-source vectors
+    (`keyboardInput`/`controllerInput`/`touchInput`/`touchKnobInput`) with a central every-frame
+    gate that zeroes everything while paused / dialog-up / controls-frozen. That gate SUBSUMES the
+    mod's 2026-08-09 `dialogOnlyInput` guards on touch-steering and keyDown movement, so both
+    hunks took upstream's side (a comment at the gate records the subsumption). The mod's
+    Capitol-defense check, showDialog `stop()`, and touchDown/touchDragged early-outs all
+    survived outside the conflicts.
+  - `DuelScene.java` (×2): upstream's `Localizer localizer` local-variable refactor vs the mod's
+    Auto-Sell/Buy Back buttons and tiered boss names - kept the mod's logic, adopted the
+    `localizer` naming. Upstream's plain `enemy.getName()` in the boss intro rejected in favor of
+    the mod's `enemy.getTieredDisplayName()`.
+  - `SettingsScene.java` (×2): same localizer refactor vs the mod's Fog of War and Inn-tournament
+    simulation setting rows - kept both rows, adopted `localizer`.
+  - `TransitionScreen.java`: upstream draws its new full-art logo at 1x with landscape
+    recentering; the fork keeps its 300x300 TFR icon, so the mod's 4x sizing + worldgen skip
+    stayed (kept HEAD).
+  - `adv_logo.png`: kept the fork's TFR icon (round-16 rebrand) over upstream's new logo art.
+  - `sprite_adventure.png`: upstream's art refresh grew the atlas 304x606 -> 320x620 and redrew
+    the lower half; `FSkinProp` regions unchanged. Took upstream's atlas and re-baked the TFR
+    icon into `ICO_ADVLOGO` (2,2,300,300); pixel-verified logo region == ours, everything
+    outside == upstream.
+  - Auto-merged art worth knowing about: upstream's adventure art refresh (`title_bg.png` /
+    `title_bg_portrait.png` start-menu background, `adv_bg_*.jpg` duel backdrops,
+    `adv_bg_splash.png`, shop/tavern/arena `common/ui` art) came in clean - the fork never
+    touched those files, and the plane has no overrides for them. `engineBuildVersion` bumped to
+    `2.0.15-SNAPSHOT-08.26` in the plane's config.json.
+
 - **2026-08-19 — merged upstream `master` @ `06019e99eed6` (Forge 2.0.15-SNAPSHOT, 2.0.15-08.19
   daily build; 200 commits, 732 files since merge-base `8c52e257e999`).** Only two textual
   conflicts: `GameLauncher.java` (upstream consolidated `setHdpiMode` while we added the
@@ -1338,8 +1368,10 @@ from the plane's `config tables/settings.json`).
 ## Standalone-game identity round (2026-08-19, MOD_SCOPE.md #89 part 2)
 
 - **`forge-gui/src/main/java/forge/localinstance/properties/ForgeProfileProperties.java`** —
-  the fork's data-dir identity: `getDefaultDirs()` now defaults to `ForgottenRealms` app folders
-  (`%APPDATA%\ForgottenRealms` / `%LOCALAPPDATA%\ForgottenRealms\Cache` on Windows, equivalent
+  the fork's data-dir identity: `getDefaultDirs()` now defaults to `ForsakenRealms` app folders
+  (originally `ForgottenRealms`; renamed with the round-53 "Forsaken Realms" rebrand, commit
+  3180f4aa6b7 - update greps accordingly)
+  (`%APPDATA%\ForsakenRealms` / `%LOCALAPPDATA%\ForsakenRealms\Cache` on Windows, equivalent
   renames on mac/linux) so a stock Forge install on the same machine is never touched; new private
   `getStockForgeCacheDir()` reproduces upstream's unrebranded cache logic, and `load()`'s
   `cardPicsDir` DEFAULT now points at stock Forge's `pics/cards` (user decision 2026-08-19: card
