@@ -72,12 +72,22 @@ public class Config {
         }
         if (settingsData.plane == null || settingsData.plane.isEmpty()) {
             if (adventures != null && adventures.length >= 1) {
-                //init Shandalar as default plane if found...
+                // TFR (2026-08-27, Android round): this game's own plane is the default. The
+                // stock code preferred Shandalar, which the Android assets.zip doesn't even
+                // ship - and wherever both exist, a fresh player must land in The Forsaken
+                // Realms, not stock Shandalar.
                 for (String plane : adventures) {
-                    if (plane.equalsIgnoreCase("Shandalar"))
+                    if (plane.equalsIgnoreCase("The Forsaken Realms"))
                         settingsData.plane = plane;
                 }
-                //if can't find shandalar, just get any random plane available
+                //init Shandalar as fallback default plane if found...
+                if (settingsData.plane == null || settingsData.plane.isEmpty()) {
+                    for (String plane : adventures) {
+                        if (plane.equalsIgnoreCase("Shandalar"))
+                            settingsData.plane = plane;
+                    }
+                }
+                //if can't find either, just get any random plane available
                 if (settingsData.plane == null || settingsData.plane.isEmpty())
                     settingsData.plane = Aggregates.random(adventures);
             }

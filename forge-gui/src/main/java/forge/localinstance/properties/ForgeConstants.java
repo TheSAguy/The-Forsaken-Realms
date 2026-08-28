@@ -27,11 +27,15 @@ import java.util.Map;
 
 public final class ForgeConstants {
     private static final Localizer localizer = Localizer.getInstance();
-    public static final String GITHUB_FORGE_URL                 = "https://github.com/Card-Forge/forge/";
+    // TFR (2026-08-27, Android round): the fork's own repo - the release atom, update APK, and
+    // Android assets.zip all resolve against this. Card imagery CDNs below (URL_PIC_DOWNLOAD /
+    // GITHUB_ASSETS_BASE) deliberately stay on Card-Forge's servers: card art is engine-level
+    // shared content this fork does not rehost.
+    public static final String GITHUB_FORGE_URL                 = "https://github.com/TheSAguy/The-Forsaken-Realms/";
     public static final String GITHUB_RELEASES_ATOM             = GITHUB_FORGE_URL + "releases.atom";
     public static final String GITHUB_COMMITS_ATOM              = GITHUB_FORGE_URL + "commits/master.atom";
     public static final String GITHUB_SNAPSHOT_URL              = GITHUB_FORGE_URL + "releases/download/daily-snapshots/";
-    public static final String NETWORK_PLAY_WIKI_URL            = GITHUB_FORGE_URL + "wiki/network-play";
+    public static final String NETWORK_PLAY_WIKI_URL            = "https://github.com/Card-Forge/forge/wiki/network-play";
     public static final String RELEASE_URL                      = "https://releases.cardforge.org/";
     public static final String PATH_SEPARATOR                   = File.separator;
     public static final String ASSETS_DIR                       = GuiBase.getInterface().getAssetsDir();

@@ -139,7 +139,10 @@ public class Forge implements ApplicationListener {
                 clipboard = clipboard0;
                 deviceAdapter = deviceAdapter0;
                 //obb directory on android uses the package name as entrypoint
-                GuiBase.setUsingAppDirectory(assetDir0.contains("forge.app"));
+                // TFR: renamed package (upstream sniffed "forge.app") - without this match,
+                // allowDeletion in AssetsDownloader silently goes false on Android 11+ and
+                // stale res files survive every update.
+                GuiBase.setUsingAppDirectory(assetDir0.contains("com.thesaguy.forsakenrealms"));
                 GuiBase.setInterface(new GuiMobile(assetDir0));
                 isPortraitMode = androidOrientation;
                 isTabletDevice = isTablet;

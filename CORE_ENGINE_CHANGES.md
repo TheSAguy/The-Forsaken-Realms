@@ -1483,3 +1483,16 @@ plane folder alongside LICENSE.txt).
 - **`scene/DuelScene.java`** — [TFR-AnteResult] probe extended: raw won/lost counts plus
   hasLost/anteZone/humanNotFound from the live Game, discriminating the two remaining suspects
   for the dungeon buy-back skip.
+
+## Android round (2026-08-27, round 61) - engine files touched
+
+Full rationale in MOD_CHANGELOG.md round 61; procedure in ANDROID_RELEASE.md. Files:
+`ForgeConstants.java` (GITHUB_FORGE_URL -> fork repo; NETWORK_PLAY_WIKI_URL pinned to
+Card-Forge), `AssetsDownloader.java` (tfr-v tags, GitHub release-download URLs, TFR update
+message, version.txt stamp guard), `GitLogs.java` (tfr-v tag parse), `Forge.java`
+(isUsingAppDirectory package sniff), `Config.java` (default plane prefers The Forsaken
+Realms), `ForgeProfileProperties.java` (stock-Forge cardPicsDir default now desktop-only),
+`AutoUpdater.java` (force-disabled - fork pins its engine), `HelpMenu.java` (wiki link pinned
+to Card-Forge), plus the whole forge-gui-android module (manifest identity, Main.java
+strings/paths/authority, pom release profile, icons, fallback skin). Upstream-merge watch:
+every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".

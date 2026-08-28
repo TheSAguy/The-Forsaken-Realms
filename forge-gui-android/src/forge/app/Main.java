@@ -110,7 +110,7 @@ public class Main extends AndroidApplication {
 
     // The package name the resources are compiled under (stable across dev/prod).
     // If you ever change the base app package, update this constant once.
-    private static final String RES_PKG_FALLBACK = "forge.app";
+    private static final String RES_PKG_FALLBACK = "com.thesaguy.forsakenrealms"; // TFR: matches the renamed manifest package (resources compile under it)
 
     private int resId(String type, String name) {
         // 1) Try fully-qualified with *runtime* package
@@ -311,14 +311,14 @@ public class Main extends AndroidApplication {
             SP = "Files & Media Permissions";
         }
 
-        String title = "Forge needs " + SP + " to run properly...\n" +
+        String title = "The Forsaken Realms needs " + SP + " to run properly...\n" +
                 "Follow these simple steps:\n\n";
         String steps = " 1) Tap \"App Settings\" Button.\n" +
                 " 2) Tap Permissions\n" +
                 " 3) Enable the " + SP + ".\n\n" +
                 "(You can tap anywhere to exit and restart the app)\n\n";
         if (ex) {
-            title = manageApp ? "Forge AutoUpdater Permission...\n" : "Forge didn't initialize!\n";
+            title = manageApp ? "The Forsaken Realms AutoUpdater Permission...\n" : "The Forsaken Realms didn't initialize!\n";
             steps = manageApp ? " 1) Tap \"App Settings\" Button.\n" +
                     " 2) Enable \"Allow apps from this source\"\n" +
                     "(You can tap anywhere to exit and restart the app)\n\n" : msg + "\n\n";
@@ -451,7 +451,7 @@ public class Main extends AndroidApplication {
                             gd2.setCornerRadius(100);
 
                             Button button = new Button(getContext());
-                            button.setText("Run Forge..");
+                            button.setText("Run The Forsaken Realms..");
                             button.setTypeface(Typeface.DEFAULT_BOLD);
 
                             StateListDrawable states = new StateListDrawable();
@@ -536,7 +536,7 @@ public class Main extends AndroidApplication {
             loadGame(hwInfo, "", "", false, adapter, permissiongranted, isTabletDevice, config, true, message);
             return;
         }
-        ASSETS_DIR = Build.VERSION.SDK_INT > Build.VERSION_CODES.Q ? getContext().getObbDir() + "/Forge/" : Environment.getExternalStorageDirectory() + "/Forge/";
+        ASSETS_DIR = Build.VERSION.SDK_INT > Build.VERSION_CODES.Q ? getContext().getObbDir() + "/ForsakenRealms/" : Environment.getExternalStorageDirectory() + "/ForsakenRealms/"; // TFR: own asset root - /Forge/ on Android <=10 is shared with a real Forge install
         if (!FileUtil.ensureDirectoryExists(ASSETS_DIR)) {
             String message = getDeviceName() + "\n" + "Android " + Build.VERSION.RELEASE + "\n" + "RAM " + totalRAM + "MB" + "\n" + "LibGDX " + Version.VERSION + "\n" + "Can't access external storage\nPath: " + ASSETS_DIR;
             Main.this.setRequestedOrientation(Main.this.getResources().getConfiguration().orientation);
@@ -660,7 +660,7 @@ public class Main extends AndroidApplication {
         @Override
         public void setContents(String contents0) {
             try {
-                cm.setPrimaryClip(ClipData.newPlainText("Forge", contents0));
+                cm.setPrimaryClip(ClipData.newPlainText("The Forsaken Realms", contents0));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -803,7 +803,7 @@ public class Main extends AndroidApplication {
                     return true;
                 } else {
                     Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                    intent.setData(PublicFileProvider.getUriForFile(getContext(), "com.mydomain.publicfileprovider", new File(filename)));
+                    intent.setData(PublicFileProvider.getUriForFile(getContext(), "com.thesaguy.forsakenrealms.publicfileprovider", new File(filename)));
                     intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
                     return true;

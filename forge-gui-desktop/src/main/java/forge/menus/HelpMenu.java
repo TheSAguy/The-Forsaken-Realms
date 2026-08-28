@@ -63,7 +63,9 @@ public final class HelpMenu {
         JMenu mnu = new JMenu(localizer.getMessage("lblGettingStarted"));
         mnu.add(getMenuItem_HowToPlayFile());
         mnu.addSeparator();
-        mnu.add(getMenuItem_UrlLink("Forge Wiki", GITHUB_FORGE_URL + "wiki", KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0)));
+        // TFR: keep pointing at upstream's wiki - GITHUB_FORGE_URL is this fork's repo now,
+        // which has no wiki; the engine documentation players want lives at Card-Forge's.
+        mnu.add(getMenuItem_UrlLink("Forge Wiki", "https://github.com/Card-Forge/forge/wiki", KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0)));
         return mnu;
     }
 

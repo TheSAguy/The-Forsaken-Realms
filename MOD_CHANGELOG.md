@@ -14133,3 +14133,44 @@ mid-playtest on the live folder).
 - Cosmetic drift noted, not fixed: config tables/enemies.csv lists Octopus as Common while
   enemies.json says Rare - only the Include column is ever read back, but the CSV is misleading
   as a balance table.
+
+## Sixty-first round: first Android release (2026-08-27)
+
+Community-test APK + assets.zip attached to the tfr-v1.03 release (untested on hardware - no
+Android device available; release notes say so and ask sideloaders to report). Full procedure,
+landmines, and keystore rules: ANDROID_RELEASE.md (authoritative). Highlights:
+
+- **Retargeted the entire Android update/asset pipeline at this fork's GitHub**: the stock APK
+  self-updates from Card-Forge's releases and downloads THEIR assets - built as-was it would
+  have offered "a new version of Forge" and installed stock Forge over the game.
+  ForgeConstants.GITHUB_FORGE_URL -> TheSAguy/The-Forsaken-Realms (atom feeds + snapshot URL
+  follow), GitLogs tag parse "tfr-v", AssetsDownloader APK/assets URLs rebuilt on GitHub
+  release-download paths keyed to the APK's own versionName, stale-assets version.txt stamp
+  guard (relaxed to parsed-date proof after adversarial review found the byte-exact version
+  could trap players in a forced-redownload loop).
+- **Own app identity**: package com.thesaguy.forsakenrealms (activities fully qualified,
+  RES_PKG_FALLBACK + Forge.java isUsingAppDirectory sniff in sync), label "The Forsaken
+  Realms", package-scoped PublicFileProvider authority, Sentry providers REMOVED (authorities
+  are literal strings - upstream's collide with real Forge at install), Sentry auto-init off,
+  /ForsakenRealms/ asset root, full launcher-icon set + boot splash from AppIcon.png, fallback
+  skin art from the game's own title/splash art.
+- **assets.zip payload slimmed**: only common + The Forsaken Realms planes (drops ~52MB of
+  stock planes), no sentry.properties, no desktop-module CHANGES.txt dependency. Config.java
+  default plane now prefers The Forsaken Realms.
+- **Review catches fixed before shipping** (4-dimension adversarial workflow, 19 agents):
+  Sentry authority collision (HIGH), Android card art broken by the desktop stock-art-sharing
+  default resolving to an uncreatable path (HIGH - now desktop-gated in
+  ForgeProfileProperties), version.txt loop risk (MEDIUM), desktop AutoUpdater left alive
+  against a dead snapshot URL (MEDIUM - now force-disabled), dead manifestVersionCode config
+  (MEDIUM), desktop Help>Forge Wiki pointing at the fork's nonexistent wiki (LOW).
+- **Windows build unblocked twice**: Card-Forge's patched android-maven-plugin 4.6.2 manually
+  installed to ~/.m2 ("Unknown packaging: apk" otherwise), and the d8 dex step's 10,073-char
+  command exceeds cmd.exe's 8,191 limit - fixed with C:\m2 junction + subst R: path
+  shortening. Both documented in ANDROID_RELEASE.md.
+- **Signing**: new permanent TFR keystore (alias Forge, CN=The Forsaken Realms, SHA-256
+  ee603925...) - gitignored at forge-gui-android/forge.keystore, backup at
+  F:\FORGE\TFR-Standalone\forsaken-realms-android.keystore. Every future APK must use it.
+- Verified before upload (no device): aapt badging (package/versionCode 10300/versionName
+  1.03/label), apksigner cert fingerprint, assets.zip layout (20,564 entries, top-level res/,
+  two planes only, build.txt + cardsfolder.zip present). upstream publish.bat (plaintext FTP
+  creds) deleted.

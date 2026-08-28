@@ -51,6 +51,15 @@ public class AutoUpdater {
     }
 
     public boolean attemptToUpdate(CompletableFuture<String> cf) {
+        // The Forsaken Realms (2026-08-27 review catch): this fork pins its engine version, so
+        // the desktop Swing auto-updater must never run - same reasoning as AssetsDownloader's
+        // desktop early-out. Left alive it now points at this fork's repo, which publishes no
+        // daily-snapshots release, producing a modal parse-error dialog on every snapshot-build
+        // launch - and before the URL retarget it would have offered to install STOCK Forge
+        // over this game.
+        if (true) {
+            return false;
+        }
         if (!verifyUpdateable()) {
             return false;
         }

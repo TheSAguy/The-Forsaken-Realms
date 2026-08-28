@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TFR (2026-08-27): own package id so this game installs cleanly alongside real Forge
+     (same-id install would fail on signature mismatch, and both apps would fight over the
+     same obb asset dir). Activity names below are fully qualified because the classes still
+     live in forge.app while the manifest package - and the generated R - moved. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="forge.app">
+    package="com.thesaguy.forsakenrealms">
 
     <uses-sdk
         android:minSdkVersion="26"
@@ -39,7 +43,7 @@
         android:largeHeap="true"
         android:resizeableActivity="false">
         <activity
-            android:name=".Launcher"
+            android:name="forge.app.Launcher"
             android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:theme="@style/Theme.Transparent"
             android:exported="true">
@@ -54,15 +58,16 @@
                 </intent-filter>
         </activity>
         <activity
-            android:name=".Main"
+            android:name="forge.app.Main"
             android:label="@string/app_name"
             android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:launchMode="singleInstance"
             android:theme="@style/NormalTheme"
             android:exported="false">
         </activity>
-        <meta-data android:name="io.sentry.dsn" android:value="https://a0b8dbad9b8a49cfa51bf65d462e8dae:b3f27d7461224cb8836eb5c6050c666c@sentry.asgardsrealm.net/2?buffer.enabled=false" />
-        <meta-data android:name="io.sentry.send-default-pii" android:value="true" />
+        <!-- TFR: Sentry disabled - upstream's DSN reports crashes to a Card-Forge-run server,
+             which is wrong for this fork in both directions (their noise, our players' data). -->
+        <meta-data android:name="io.sentry.auto-init" android:value="false" />
         <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
         <!-- meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" /-->
         <!-- enable screenshot for crashes -->
@@ -80,19 +85,18 @@
         <meta-data android:name="io.sentry.breadcrumbs.app-components" android:value="false" />
         <!-- To disable the user interaction breadcrumbs integration -->
         <meta-data android:name="io.sentry.breadcrumbs.user-interaction" android:value="false" />
-        <!-- manually added -->
-        <provider
-            android:name="io.sentry.android.core.SentryInitProvider"
-            android:authorities=".SentryInitProvider"
-            android:exported="false"/>
-        <provider
-            android:name="io.sentry.android.core.SentryPerformanceProvider"
-            android:authorities=".SentryPerformanceProvider"
-            android:initOrder="200"
-            android:exported="false"/>
+        <!-- TFR: upstream's two Sentry providers are REMOVED, not renamed - android:authorities
+             is a literal string (the leading-dot shorthand only applies to android:name), so
+             stock Forge declares these exact authorities and Android's global authority
+             uniqueness would block installing this game alongside it. Sentry is already
+             disabled via auto-init=false above. -->
+
+        <!-- TFR: package-scoped authority - upstream's absolute "com.mydomain..." string would
+             collide with an installed real Forge (INSTALL_FAILED_CONFLICTING_PROVIDER). Must
+             match the literal in Main.java's openFile(). -->
         <provider
                 android:name="de.cketti.fileprovider.PublicFileProvider"
-                android:authorities="com.mydomain.publicfileprovider"
+                android:authorities="com.thesaguy.forsakenrealms.publicfileprovider"
                 android:exported="true">
 
             <meta-data

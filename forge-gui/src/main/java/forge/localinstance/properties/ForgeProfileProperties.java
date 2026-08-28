@@ -70,11 +70,17 @@ public class ForgeProfileProperties {
         final Pair<String, String> defaults = getDefaultDirs();
         userDir     = getDir(props, USER_DIR_KEY,      defaults.getLeft());
         cacheDir    = getDir(props, CACHE_DIR_KEY,     defaults.getRight());
-        // The Forsaken Realms standalone: card art defaults to STOCK Forge's pics folder so
-        // players with an existing Forge install reuse gigabytes of already-downloaded art
-        // (and a fresh machine just creates it). Everything else stays in this game's own dirs.
-        // A cardPicsDir entry in forge.profile.properties still overrides this.
-        cardPicsDir = getDir(props, CARD_PICS_DIR_KEY, getStockForgeCacheDir() + "pics" + File.separator + "cards" + File.separator);
+        // The Forsaken Realms standalone: on DESKTOP, card art defaults to STOCK Forge's pics
+        // folder so players with an existing Forge install reuse gigabytes of already-downloaded
+        // art (and a fresh machine just creates it). Everything else stays in this game's own
+        // dirs, and a cardPicsDir entry in forge.profile.properties still overrides this.
+        // On Android (2026-08-27 review catch) getStockForgeCacheDir()'s os.name/user.home
+        // probing yields an uncreatable path like "/.cache/forge/" - card art silently broken -
+        // so mobile keeps upstream's own-cache default.
+        cardPicsDir = getDir(props, CARD_PICS_DIR_KEY,
+                GuiBase.getInterface().isRunningOnDesktop()
+                        ? getStockForgeCacheDir() + "pics" + File.separator + "cards" + File.separator
+                        : cacheDir + "pics" + File.separator + "cards" + File.separator);
         cardPicsSubDirs = getMap(props, CARD_PICS_SUB_DIRS_KEY);
         decksDir    = getDir(props, DECKS_DIR_KEY, userDir + "decks" + File.separator);
         decksConstructedDir = getDir(props, DECKS_CONSTRUCTED_DIR_KEY, decksDir + "constructed" + File.separator);

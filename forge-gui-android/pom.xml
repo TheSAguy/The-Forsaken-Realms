@@ -18,6 +18,10 @@
         <cardforge.server>ftp.cardforge.org</cardforge.server>
         <androidBuildTools>35.0.0</androidBuildTools>
         <androidPlatform>35</androidPlatform>
+        <!-- TFR: the game's own release version - MUST equal the GitHub release tag's number
+             ("tfr-v" + this) and the desktop modVersion; AssetsDownloader builds the assets.zip
+             URL from the APK's versionName. Bump every Android release. -->
+        <tfr.version>1.03</tfr.version>
     </properties>
 
     <parent>
@@ -95,8 +99,9 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-        <!-- append generated snapshot-version property -->
-        <finalName>forge-android-${snapshot-version}</finalName>
+        <!-- TFR: own APK name; the released asset is renamed to
+             forsaken-realms-<ver>-signed-aligned.apk at upload to match AssetsDownloader. -->
+        <finalName>forsaken-realms-${tfr.version}</finalName>
     </build>
     <dependencies>
         <dependency>
@@ -360,6 +365,9 @@
             <id>android-release-build</id>
             <properties>
                 <packaging.type>apk</packaging.type>
+                <!-- TFR: without this, the still-true global property makes manifest-merger
+                     derive versionCode from versionName and the explicit code below is dead. -->
+                <android.manifest.versionCodeUpdateFromVersion>false</android.manifest.versionCodeUpdateFromVersion>
             </properties>
             <build>
                 <plugins>
@@ -466,7 +474,12 @@
                                     <goal>manifest-merger</goal>
                                 </goals>
                                 <configuration>
-                                    <manifestVersionName>${snapshot-version}</manifestVersionName>
+                                    <!-- TFR: game version, not engine version - versionName must
+                                         equal the release tag's number (see tfr.version). Explicit
+                                         versionCode: 2-digit-per-segment scheme, 1.03 -> 10300;
+                                         must increase every release. -->
+                                    <manifestVersionName>${tfr.version}</manifestVersionName>
+                                    <manifestVersionCode>10300</manifestVersionCode>
                                 </configuration>
                             </execution>
                         </executions>
@@ -488,16 +501,25 @@
                                 <phase>package</phase>
                                 <configuration>
                                     <target>
+                                        <!-- TFR changes to the asset payload: no sentry.properties
+                                             (crash reporting disabled), no CHANGES.txt dependency
+                                             on the desktop module, and only THIS game's adventure
+                                             planes (common + The Forsaken Realms) instead of
+                                             upstream's seven - drops ~52MB of Shandalar/Innistrad/
+                                             RoL content a TFR player can never reach. -->
                                         <copy todir="${project.build.directory}/res">
                                             <fileset dir="${basedir}/../forge-gui/" includes="LICENSE.txt" />
                                             <fileset dir="${basedir}/../forge-gui/release-files/" includes="CONTRIBUTORS.txt" />
                                             <fileset dir="${basedir}/../forge-gui/release-files/" includes="INSTALLATION.txt" />
                                             <fileset dir="${basedir}/../forge-gui/release-files/" includes="ISSUES.txt" />
-                                            <fileset dir="${basedir}/../forge-gui-desktop/target/" includes="CHANGES.txt" />
-                                            <fileset dir="${basedir}/../forge-gui-mobile-dev/" includes="sentry.properties" />
                                             <fileset dir="${basedir}/../forge-gui/">
                                                 <include name="res/**" />
                                                 <exclude name="res/cardsfolder/**" />
+                                                <exclude name="res/adventure/**" />
+                                            </fileset>
+                                            <fileset dir="${basedir}/../forge-gui/">
+                                                <include name="res/adventure/common/**" />
+                                                <include name="res/adventure/The Forsaken Realms/**" />
                                             </fileset>
                                         </copy>
                                         <copy todir="${project.build.directory}/res/res">

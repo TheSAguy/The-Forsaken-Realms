@@ -81,12 +81,18 @@ public class AssetsDownloader {
             final String releaseTag = Forge.getDeviceAdapter().getReleaseTag(GITHUB_RELEASES_ATOM);
             try {
                 URL versionUrl = new URL(versionText);
-                String version = isSnapshots ? FileUtil.readFileToString(versionUrl) : releaseTag.replace("forge-", "");
+                // TFR (2026-08-27 Android round): release tags on this fork are "tfr-vX.YZ", not
+                // upstream's "forge-X.Y.Z" - and both the update APK and assets.zip live on the
+                // fork's own GitHub release (GITHUB_FORGE_URL now points there), NOT on
+                // releases.cardforge.org. Left as-was, a fresh install would have offered
+                // Card-Forge's newer "Forge" release as an update and installed stock Forge
+                // over this game.
+                String version = isSnapshots ? FileUtil.readFileToString(versionUrl) : releaseTag.replace("tfr-v", "");
                 String filename = "";
                 String installerURL = "";
                 if (GuiBase.isAndroid()) {
-                    filename = "forge-android-" + version + "-signed-aligned.apk";
-                    installerURL = isSnapshots ? snapsURL + filename : releaseURL + version + "/" + filename;
+                    filename = "forsaken-realms-" + version + "-signed-aligned.apk";
+                    installerURL = GITHUB_FORGE_URL + "releases/download/" + releaseTag + "/" + filename;
                 } else {
                     //current release on github is tar.bz2, update this to jar installer in the future...
                     filename = isSnapshots ? "forge-installer-" + version + ".jar" : releaseTag.replace("forge-", "forge-gui-desktop-") + ".tar.bz2";
@@ -120,7 +126,7 @@ public class AssetsDownloader {
                 if (verifyUpdatable) {
                     Forge.getSplashScreen().prepareForDialogs();
 
-                    message = "A new version of Forge is available.\n(v." + version + " | " + snapsBuildDate + ")\n" +
+                    message = "A new version of The Forsaken Realms is available.\n(v." + version + " | " + snapsBuildDate + ")\n" +
                             "You are currently on an older version.\n(v." + versionString + " | " + buildDate + ")\n" +
                             "Would you like to update to the new version now?";
                     if (!Forge.getDeviceAdapter().isConnectedToWifi()) {
@@ -283,7 +289,10 @@ public class AssetsDownloader {
 
         //allow deletion on Android 10 or if using app-specific directory
         boolean allowDeletion = Forge.androidVersion < 30 || GuiBase.isUsingAppDirectory();
-        String assetURL = isSnapshots ? snapsURL + "assets.zip" : releaseURL + versionString + "/" + "assets.zip";
+        // TFR: assets.zip is attached to the fork's own GitHub release whose tag matches THIS
+        // APK's version ("tfr-v" + versionName) - the app and its assets always update together.
+        String assetURL = isSnapshots ? snapsURL + "assets.zip"
+                : GITHUB_FORGE_URL + "releases/download/tfr-v" + versionString + "/assets.zip";
         new GuiDownloadZipService("", "resource files", assetURL,
                 ASSETS_DIR, RES_DIR, Forge.getSplashScreen().getProgressBar(), allowDeletion).downloadAndUnzip();
 
@@ -298,8 +307,28 @@ public class AssetsDownloader {
 
         //save version string to file once assets finish downloading
         //so they don't need to be re-downloaded until you upgrade again
+        // TFR guard (2026-08-27, relaxed same day after adversarial review): only skip the
+        // version.txt stamp when we can PROVE the extracted assets don't belong to this APK
+        // (both build.txt files present, parseable, and different timestamps - i.e. the download
+        // 404'd and the old tree survived, the case that used to lock the app onto stale assets
+        // forever). If either side is missing or unparseable, fall back to upstream's
+        // unconditional stamp: a byte-exact requirement here turned any APK/assets.zip pair
+        // built in separate mvn runs into a permanent forced-160MB-redownload loop with no
+        // Ignore button. Corollary for releases: ALWAYS build the APK and assets.zip in the
+        // same mvn invocation and upload them together.
         if (connectedToInternet) {
-            if (versionFile.exists())
+            boolean provenMismatch = false;
+            try {
+                FileHandle extractedBuild = resDir.child("build.txt");
+                if (buildTxtFileHandle.exists() && extractedBuild.exists()) {
+                    Date apkStamp = format.parse(buildTxtFileHandle.readString().trim());
+                    Date resStamp = format.parse(extractedBuild.readString().trim());
+                    provenMismatch = !apkStamp.equals(resStamp);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (versionFile.exists() && !provenMismatch)
                 FileUtil.writeFile(versionFile.file(), versionString);
         }
         //final check if temp.zip exists then extraction is not complete...

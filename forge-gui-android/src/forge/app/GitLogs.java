@@ -57,7 +57,10 @@ public class GitLogs {
                 if (entry.link != null) {
                     try {
                         String val = entry.link;
-                        tag = val.substring(val.lastIndexOf("forge"));
+                        // TFR: this fork's release tags are "tfr-vX.YZ" (upstream's are
+                        // "forge-..."); with the old marker lastIndexOf returned -1, the
+                        // substring threw, and the tag came back empty on every launch.
+                        tag = val.substring(val.lastIndexOf("tfr-v"));
                         break;
                     } catch (Exception e) {
                         e.printStackTrace();
