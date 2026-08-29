@@ -379,7 +379,9 @@ public class InventoryScene extends UIScene {
             deleteButton.setDisabled(true);
             equipButton.setDisabled(true);
             useButton.setDisabled(true);
-            sellButton.setDisabled(true);
+            // 2026-08-29 crash fix: null-guarded, not just here for symmetry - see the other two
+            // sellButton call sites below for why this can genuinely be null at runtime.
+            if (sellButton != null) sellButton.setDisabled(true);
             repairButton.setVisible(false);
             for (Button button : inventoryButtons) {
                 button.setChecked(false);
@@ -391,9 +393,15 @@ public class InventoryScene extends UIScene {
             if (data == null) return;
 
             deleteButton.setDisabled(data.questItem);
-            sellButton.setDisabled(data.questItem);
-            sellButton.setText("Sell " + sellPrice(data) + "[+GoldCoin]");
-            sellButton.layout();
+            // 2026-08-29 (user crash report, clicking a booster/deck entry): a stale/wrong-plane
+            // UI resource cache could leave this null - see setSelected()'s null-actor branch
+            // above for the same guard. Root cause under separate investigation; this keeps a
+            // missing "sell" widget from taking down the whole inventory screen either way.
+            if (sellButton != null) {
+                sellButton.setDisabled(data.questItem);
+                sellButton.setText("Sell " + sellPrice(data) + "[+GoldCoin]");
+                sellButton.layout();
+            }
 
             boolean isInPoi = MapStage.getInstance().isInMap();
             useButton.setDisabled(!(isInPoi && data.usableInPoi || !isInPoi && data.usableOnWorldMap));
@@ -438,7 +446,9 @@ public class InventoryScene extends UIScene {
             useButton.setText("Open");
             useButton.layout();
             equipButton.setDisabled(true);
-            sellButton.setDisabled(true);
+            // 2026-08-29 crash fix: this exact line was the reported crash - clicking a booster/
+            // deck entry with sellButton null (see setSelected()'s other null-actor branch).
+            if (sellButton != null) sellButton.setDisabled(true);
             repairButton.setVisible(false);
 
             itemDescription.setText(data.getName() + "\n[%98]" + (data.getComment() == null?"":data.getComment()+" - ") + data.getAllCardsInASinglePool(true, true).countAll() + " cards");

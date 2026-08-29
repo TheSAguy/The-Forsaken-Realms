@@ -14263,3 +14263,107 @@ quests.json (Q54-73).
   the game ends; the user's town fell in the same tick a neutral town was freshly created
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
+
+## Round 63: Inn tournament tutorial nudge, save-compat fix (2026-08-29)
+
+Local-repo-only round. Two parts:
+
+- **CRITICAL FIX: round 62 broke save compatibility.** `AdventureQuestData` had no explicit
+  `serialVersionUID` (unlike every sibling data class in this package), so adding
+  `offerProbability` silently changed its auto-generated UID - and this engine's save loader
+  (`SaveFileData.DecompressibleInputStream.readClassDescriptor()`) force-overrides UID
+  mismatches instead of rejecting them, which corrupts the byte stream rather than failing
+  cleanly whenever the class's actual field layout no longer matches the old save
+  (`StreamCorruptedException: invalid type code: 66`, confirmed against the user's real save
+  file and log). Fixed by pinning an explicit `serialVersionUID` on the class and marking
+  `offerProbability` `transient` (it was already template-only, never meant to be persisted -
+  the copy constructor deliberately excluded it too). Root-caused live against the user's
+  actual corrupted save, fixed, redeployed, confirmed loadable again.
+- **New: "Win a duel" now warns the player and points at the Inn.** Stage 4's epilogue (Q30)
+  now tells the player early monsters are the easiest they'll face and only get harder, and
+  that winning Inn tournaments beats grinding duels for an early deck - then auto-issues a new
+  quest 74, "Participate in an Inn Tournament" (single `EventFinish` stage - completes on ANY
+  tournament conclusion, win or lose).
+- **New: Coin-only refund on an early tournament loss, scoped to that one tutorial nudge.**
+  If the player entered with a Challenge/Silver/Bronze Coin (never gold or shards - those are
+  lost regardless) and loses before round 3 WHILE quest 74 is still active, the Coin is
+  refunded with an in-character note; winning gets a plain acknowledgment, no bonus reward.
+  Neither applies once quest 74 completes (fires on the player's very first attempt, one way or
+  another) - deliberately NOT a standing rule for every future tournament for the rest of the
+  game. New `AdventureEventData.enteredWithCoinItem` (which Coin, if any, paid for entry - no
+  existing field tracked this) and a gated check in `EventScene.setWinner()`'s win/loss
+  branches, reusing `AdventurePlayer.addItem()` for the refund itself.
+  - Surveyed every other adventure plane (Realm of Legends, Shandalar, Shandalar Old Border,
+    Innistrad, Crystal_Kingdoms, Amonkhet) for prior art first - none has a tournament
+    mechanic, economy quest chain, or any payment/refund pattern to reuse; this is original.
+  - Caught and fixed my own bug during implementation: an edit to `EventScene.setWinner()`'s
+    loss branch briefly dropped the `humanMatch.p2.wins++` line that was already there -
+    restored before compiling.
+
+**Files touched**: AdventureQuestData.java (save-compat fix), AdventureEventData.java,
+EventScene.java, quests.json (Q30 stage 4 epilogue, new Q74).
+
+### Round 63 correction (same day): the transient fix broke JSON loading
+
+The `transient` fix described above was itself wrong and shipped briefly - it fixed the
+save-file (`java.io.Serializable`) corruption but broke `quests.json` loading entirely for a
+completely different reason: libGDX's `Json` reflection-based loader *also* skips `transient`
+fields when building its field cache (unrelated to `java.io.Serializable`'s own semantics), so
+it could no longer find `offerProbability` to populate from the 20 quests that set it -
+`SerializationException: Field not found: offerProbability`, thrown while parsing the file, i.e.
+**zero quests loaded at all** (worse than the original bug, which only affected save files).
+Confirmed against the user's own post-deploy log.
+
+Real fix: removed `offerProbability` as an `AdventureQuestData` field entirely. It's now read
+out-of-band - `AdventureQuestController.loadData()` does a second, untyped `JsonReader`/
+`JsonValue` pass over the same `quests.json`, building a `Map<Integer,Float>` keyed by quest id,
+consulted directly in `getQuestNPCResponse()`'s offer-probability check instead of a field
+lookup. `Json.setIgnoreUnknownFields(true)` added to the typed loader so the (now-unrecognized)
+`"offerProbability"` JSON key is silently skipped there rather than erroring. This sidesteps
+both bugs at once: the field never existing on the class means `AdventureQuestData`'s
+`Serializable` shape is byte-identical to pre-round-62 (no transient/UID trickery needed for
+this field at all), and the out-of-band map means libGDX's Json never needs to know the field
+exists.
+
+**Verified by actually running the real load path**, not just re-reading the diff: compiled a
+standalone harness against the project's own compiled classes and ran
+`Json.fromJson(Array.class, AdventureQuestData.class, handle)` - the exact call
+`AdventureQuestController` makes - against the live `quests.json`. Confirmed: all 74 quests
+parse, all 20 `offerProbability` values extracted correctly by the second pass, Q74's stage/
+objective read back correctly. Redeployed after this confirmation, not before.
+
+## Round 64: inventory crash root-caused and fixed (2026-08-29)
+
+Local-repo-only round. User reported a crash clicking a just-bought booster in inventory.
+
+- **Immediate fix (symptom)**: `InventoryScene.setSelected()` unconditionally called
+  `sellButton.setDisabled(...)` in all three of its branches, including the `deckLocation`
+  (booster/deck) branch that crashed - `sellButton` was null on the user's session.
+  Null-guarded all three call sites so a missing "sell" widget degrades gracefully (sell just
+  stays unavailable) instead of taking down the whole inventory screen.
+- **Root cause (the real bug), found by a dedicated investigation**: the World/plane dropdown
+  in Settings (`SettingsScene.java`) persisted the selected plane to `settings.json`
+  **immediately and unconditionally**, via `Controls.newComboBox`'s own internal
+  ChangeListener - completely decoupled from the separate "restart required?" confirmation
+  dialog shown right after. Backing out of that dialog (or force-closing instead of
+  restarting) never undid the write. The CURRENT session kept working fine regardless (`Config`'s
+  `prefix` is locked in once at construction and never re-read), which is exactly why nothing
+  looked wrong at the time - the corruption only bites on the player's NEXT real launch, when
+  `Config()` reads the now-wrong `plane` from disk for the whole new session. Every TFR-only
+  UI/asset override that also has a same-path file under `common` (inventory.json's "sell"
+  button included - `common`'s copy lacks it) then silently serves the `common` fallback for
+  that entire session, since `Config.getFile()` only checks the TFR path first.
+  - Fixed at the actual source: the plane combobox's write-and-save callback is now a no-op:
+    the pending selection is tracked, and the actual `settingsData.plane` write +
+    `saveSettings()` only happens inside a dedicated confirmation dialog's OK branch;
+    declining reverts the dropdown's displayed selection back to the original plane. Built as
+    its OWN dialog rather than reusing the shared `restartForge()`/`restartDialog` (which
+    caches its OK callback across calls and is also used by the unrelated Android
+    landscape-mode setting - safer not to entangle the two).
+  - Systemic risk noted, not fully closed: ANY other TFR-only override with a same-path
+    `common` fallback was equally exposed to this same one-session mis-resolution if a player
+    ever touched the plane dropdown and declined the restart. This fix closes the actual
+    write-before-confirm gap that caused it, so it shouldn't recur - not something every
+    override file needed individual hardening for.
+
+**Files touched**: InventoryScene.java (symptom guard), SettingsScene.java (root-cause fix).

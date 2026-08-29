@@ -22,6 +22,18 @@ import static forge.adventure.util.AdventureQuestController.QuestStatus.*;
 
 public class AdventureQuestData implements Serializable {
 
+    // 2026-08-29 save-compat fix: this class had NO explicit serialVersionUID (unlike every
+    // sibling data class in this package - AdventureQuestStage/DialogData/RewardData all pin
+    // one). Without it, adding ANY field silently changes javac's auto-generated UID, and this
+    // engine's save loader (SaveFileData.DecompressibleInputStream) force-overrides UID
+    // mismatches instead of rejecting them - which corrupts the byte stream rather than
+    // rejecting cleanly, because the override only works when the class's actual field LAYOUT
+    // still matches what the old save was written with. Adding offerProbability (see below)
+    // broke every existing save's quest list this way. Pinning a UID here doesn't undo that by
+    // itself (see the field's own transient fix), but stops the NEXT field addition from
+    // repeating this failure silently.
+    private static final long serialVersionUID = 1L;
+
     private int id;
 
     public int getID(){
@@ -67,14 +79,14 @@ public class AdventureQuestData implements Serializable {
     Dictionary<String, EnemyData> enemyTokens = new Hashtable<>();
     Dictionary<String, String> otherTokens = new Hashtable<>();
     public boolean storyQuest = false;
-    // Low-probability quest offering (2026-08-29, faction-quest round): a Bernoulli gate on
-    // whether this TEMPLATE is even considered when a location rolls a side quest to offer -
-    // 0 (default) = always considered, matching every other quest's existing behavior;
-    // otherwise the fraction of offer-rolls where this quest is eligible to be picked (still
-    // via the normal uniform Aggregates.random() among whatever's eligible that roll). See
-    // AdventureQuestController.getQuestNPCResponse(). Read only at the template stage, before
-    // any player-side clone exists - deliberately not carried through the copy constructor.
-    public float offerProbability = 0f;
+    // NOTE (2026-08-29): low-probability quest offering ("offerProbability" in quests.json) is
+    // deliberately NOT a field on this class - see AdventureQuestController.questOfferProbability
+    // for why and how it's read instead. Adding it back here as a plain field reintroduces
+    // exactly the bug that field caused twice in one day: transient hides it from libGDX's Json
+    // loader too (not just java.io.Serializable), and non-transient corrupts every existing
+    // save's quest list (this class has no explicit-UID field-count slack - see the
+    // serialVersionUID comment above). Any future per-template-only quest metadata should
+    // follow the same out-of-band pattern, not a field here.
     public boolean isTracked = false;
     public boolean autoTrack = false;
     public String sourceID = "";

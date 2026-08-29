@@ -105,15 +105,39 @@ public class SettingsScene extends UIScene {
         selectSourcePlane = Controls.newComboBox();
         newPlaneName = Controls.newTextField("");
         selectSourcePlane.setItems(Config.instance().getAllAdventures());
-        SelectBox plane = Controls.newComboBox(Config.instance().getAllAdventures(), Config.instance().getSettingData().plane, o -> {
-            Config.instance().getSettingData().plane = (String) o;
-            Config.instance().saveSettings();
-            return null;
-        });
+        // 2026-08-29 fix (user report: a crash traced back to the wrong plane's assets loading
+        // for a whole session): the 3-arg newComboBox persists+saves via its own internal
+        // ChangeListener on every selection, UNCONDITIONALLY - firing BEFORE this widget's own
+        // second listener even shows the "restart required" dialog below. Aborting that dialog
+        // never undid the write, so settings.json could end up pointing at whatever plane was
+        // briefly selected even if the player declined to restart (or force-closed instead) -
+        // silently wrong on the NEXT real launch, well after the moment looked harmless. Fixed
+        // by making the combobox's own callback a no-op and doing the actual persist ONLY
+        // inside a dedicated confirm dialog's OK branch (not the shared restartForge()/
+        // restartDialog, which is also used by the unrelated Android landscape-mode setting and
+        // caches its OK callback across calls - reusing it here would risk that callback getting
+        // wired to whichever setting happened to trigger it first).
+        final String originalPlane = Config.instance().getSettingData().plane;
+        SelectBox<String> plane = Controls.newComboBox(Config.instance().getAllAdventures(), originalPlane, o -> null);
         plane.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                restartForge();
+                String selected = plane.getSelected();
+                if (selected == null || selected.equals(Config.instance().getSettingData().plane))
+                    return;
+                Localizer localizer = Forge.getLocalizer();
+                showDialog(createGenericDialog("",
+                        localizer.getMessage("lblAreYouSureYouWishRestartForge"),
+                        localizer.getMessage("lblOK"),
+                        localizer.getMessage("lblAbort"), () -> {
+                            Config.instance().getSettingData().plane = selected;
+                            Config.instance().saveSettings();
+                            Forge.restart(true);
+                            removeDialog();
+                        }, () -> {
+                            plane.setSelected(originalPlane);
+                            removeDialog();
+                        }));
             }
         });
         /*newPlane = Controls.newTextButton("Create own plane");

@@ -66,6 +66,11 @@ public class AdventureEventData implements Serializable {
     public String cardBlockName;
     public boolean playerWon;
     public int matchesWon, matchesLost;
+    // 2026-08-29 (Inn-tournament tutorial nudge): which specific Coin item, if any, paid for
+    // entry - null if the player paid with gold/shards instead. Lets an early loss refund ONLY
+    // an actually-spent Coin (never gold/shards, which are lost regardless of outcome). Set in
+    // EventScene's entry dialog callback, read in setWinner()'s loss branch.
+    public String enteredWithCoinItem;
     private Deck[] rewardPacks;
 
     public AdventureEventData(AdventureEventData other) {
@@ -88,6 +93,7 @@ public class AdventureEventData implements Serializable {
         playerWon = other.playerWon;
         matchesWon = other.matchesWon;
         matchesLost = other.matchesLost;
+        enteredWithCoinItem = other.enteredWithCoinItem;
     }
 
     public Deck[] getRewardPacks(int count) {

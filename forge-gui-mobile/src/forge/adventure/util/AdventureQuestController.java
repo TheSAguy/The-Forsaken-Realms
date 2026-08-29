@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Timer;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
@@ -368,12 +370,28 @@ public class AdventureQuestController implements Serializable {
         }
     }
 
+    // Low-probability quest offering (2026-08-29, faction-quest round), keyed by quest id -
+    // deliberately kept OUT of AdventureQuestData as a real field (see that class's own note):
+    // populated by a second, untyped pass over the same quests.json below, so it never touches
+    // AdventureQuestData's java.io.Serializable shape (old-save compat) or requires libGDX's
+    // typed Json.fromJson reflection to know about it (which - unrelated to Serializable -
+    // independently refuses to populate transient fields too, the second bug this same day).
+    // 0/absent = always eligible, matching every quest that predates this feature.
+    private final Map<Integer, Float> questOfferProbability = new HashMap<>();
+
     private void loadData(){
         Json json = new Json();
+        json.setIgnoreUnknownFields(true); // "offerProbability" in quests.json is read separately below, not as a class field
         FileHandle handle = Config.instance().getFile(Paths.QUESTS);
         if (handle.exists())
         {
             allQuests =json.fromJson(Array.class, AdventureQuestData.class, handle);
+            JsonValue root = new JsonReader().parse(handle);
+            for (JsonValue q = root.child; q != null; q = q.next) {
+                float probability = q.getFloat("offerProbability", 0f);
+                if (probability > 0f)
+                    questOfferProbability.put(q.getInt("id"), probability);
+            }
         }
 
         for (AdventureQuestData q : allQuests){
@@ -688,7 +706,8 @@ public class AdventureQuestController implements Serializable {
             }
             if (!tagMatch)
                 continue;
-            if (option.offerProbability > 0f && new Random().nextFloat() > option.offerProbability)
+            float offerProbability = questOfferProbability.getOrDefault(option.getID(), 0f);
+            if (offerProbability > 0f && new Random().nextFloat() > offerProbability)
                 continue;
             validSideQuests.add(option);
         }

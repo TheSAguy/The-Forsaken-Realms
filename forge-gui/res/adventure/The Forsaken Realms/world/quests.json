@@ -7380,10 +7380,15 @@
 				]
 			},
 			"epilogue": {
-				"text": "Winning a duel grants you rewards; usually a combination of gold and cards. Some enemies drop a wide assortment, others give cards from their own deck. If you still need to visit a cave, do that now.",
+				"text": "Winning a duel grants you rewards; usually a combination of gold and cards. Some enemies drop a wide assortment, others give cards from their own deck. Don\u0027t get too comfortable, though - these early monsters are the easiest you\u0027ll ever face, and they only get tougher from here. If you\u0027re looking to build a strong deck quickly, dueling wild monsters isn\u0027t the fastest way - winning an Inn tournament is. If you still need to visit a cave, do that now.",
 				"options": [
 					{
-						"name": "(Continue)"
+						"name": "(Continue)",
+						"action": [
+							{
+								"issueQuest": "74"
+							}
+						]
 					}
 				]
 			},
@@ -13254,5 +13259,48 @@
 			"forest_capital"
 		],
 		"offerProbability": 0.06
+	},
+	{
+		"id": 74,
+		"isTemplate": true,
+		"name": "Participate in an Inn Tournament",
+		"description": "Enter and play through an Inn tournament - win or lose, take part.",
+		"storyQuest": true,
+		"offerDialog": {},
+		"prologue": {
+			"text": "The Inn hosts tournaments year-round. Entering costs gold, mana shards, or a Challenge Coin if you happen to have one - and if coin is short, that's fine: your first attempt here has a safety net. Lose before round 3 and whatever Coin you paid with comes right back to you. Win or lose past that, it's yours to keep or spend. Just take part.",
+			"options": [
+				{
+					"name": "(Continue)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Tournament's over, one way or another. However it went, you've got the idea now - the Inn is worth your time.",
+			"options": [
+				{
+					"name": "(Continue)"
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Enter an Inn tournament",
+				"description": "Play through an Inn tournament to completion - the outcome doesn't matter.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"anyPOI": true,
+				"objective": "EventFinish",
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": []
 	}
 ]

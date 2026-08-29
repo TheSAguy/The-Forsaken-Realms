@@ -86,6 +86,11 @@ public class EventScene extends MenuScene implements IAfterMatch {
         hasShards.hasShards = Math.round(currentEvent.eventRules.shardsToEnter * townPriceModifier);
         enterWithShards.condition = new DialogData.ConditionData[]{hasShards};
 
+        // Which Coin item (if any) this entry option redeems - captured here so
+        // enterWithCoin.callback below can record it on currentEvent (2026-08-29 tutorial nudge:
+        // a Coin-only refund on an early loss needs to know which item to give back).
+        final String[] coinItemBox = new String[1];
+
         if (currentEvent.eventRules.acceptsChallengeCoin) {
             enterWithCoin.name = localizer.getMessage("advRedeemChallengeCoin");
 
@@ -96,6 +101,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
             DialogData.ActionData giveCoin = new DialogData.ActionData();
             giveCoin.removeItem = hasCoin.item;
             enterWithCoin.action = new DialogData.ActionData[]{giveCoin};
+            coinItemBox[0] = hasCoin.item;
         } else if (currentEvent.eventRules.acceptsSilverChallengeCoin) {
             enterWithCoin.name = localizer.getMessage("advRedeemSilverChallengeCoin");
             DialogData.ConditionData hasCoin = new DialogData.ConditionData();
@@ -105,6 +111,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
             DialogData.ActionData giveCoin = new DialogData.ActionData();
             giveCoin.removeItem = hasCoin.item;
             enterWithCoin.action = new DialogData.ActionData[]{giveCoin};
+            coinItemBox[0] = hasCoin.item;
         } else if (currentEvent.eventRules.acceptsBronzeChallengeCoin) {
             enterWithCoin.name = localizer.getMessage("advRedeemBronzeChallengeCoin");
             DialogData.ConditionData hasCoin = new DialogData.ConditionData();
@@ -114,6 +121,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
             DialogData.ActionData giveCoin = new DialogData.ActionData();
             giveCoin.removeItem = hasCoin.item;
             enterWithCoin.action = new DialogData.ActionData[]{giveCoin};
+            coinItemBox[0] = hasCoin.item;
 
         } else {
             DialogData.ConditionData alwaysFalse = new DialogData.ConditionData();
@@ -135,14 +143,17 @@ public class EventScene extends MenuScene implements IAfterMatch {
         decline.name = "Do not enter event";
 
         enterWithCoin.callback = (result) -> {
+            currentEvent.enteredWithCoinItem = coinItemBox[0];
             currentEvent.eventStatus = AdventureEventController.EventStatus.Entered;
             refresh();
         };
         enterWithShards.callback = (result) -> {
+            currentEvent.enteredWithCoinItem = null; // paid with shards, not a Coin - no refund-on-early-loss applies
             currentEvent.eventStatus = AdventureEventController.EventStatus.Entered;
             refresh();
         };
         enterWithGold.callback = (result) -> {
+            currentEvent.enteredWithCoinItem = null; // paid with gold, not a Coin - no refund-on-early-loss applies
             currentEvent.eventStatus = AdventureEventController.EventStatus.Entered;
             refresh();
         };
@@ -652,17 +663,41 @@ public class EventScene extends MenuScene implements IAfterMatch {
         }
     }
 
+    // Inn-tournament tutorial nudge (2026-08-29 user request, main quest "Win a duel" epilogue):
+    // main-quest id 74 auto-issues right after the player's first duel win, prompting them to
+    // try an Inn tournament. While that quest is still active (i.e. this is the player's first
+    // attempt since being nudged), an early loss refunds the Coin entry fee, and a win gets a
+    // plain acknowledgment - neither applies once the quest completes, so this stays a one-time
+    // tutorial lifeline, not a standing rule for every future tournament.
+    private static final int INN_TOURNAMENT_TUTORIAL_QUEST_ID = 74;
+
+    private boolean innTutorialQuestActive() {
+        return AdventurePlayer.current().getQuests().stream().anyMatch(q ->
+                q.getID() == INN_TOURNAMENT_TUTORIAL_QUEST_ID && !q.completed && !q.failed);
+    }
+
     public void setWinner(boolean winner, boolean isArena) {
         if (winner) {
             humanMatch.winner = humanMatch.p1;
             humanMatch.p1.wins++;
             humanMatch.p2.losses++;
             currentEvent.matchesWon++;
+            if (innTutorialQuestActive()) {
+                GameHUD.getInstance().addNotification("Good. Don't go updating your deck with "
+                        + "this loot just yet - the win itself is the real prize here.");
+            }
         } else {
             humanMatch.winner = humanMatch.p2;
             humanMatch.p2.wins++;
             humanMatch.p1.losses++;
             currentEvent.matchesLost++;
+            if (currentEvent.enteredWithCoinItem != null && currentEvent.currentRound < 3
+                    && innTutorialQuestActive()) {
+                AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
+                GameHUD.getInstance().addNotification("Tough luck - this one's on me. But "
+                        + "winning an Inn tournament is still the best way to build a good deck "
+                        + "early on.");
+            }
         }
 
 //        if (winner) {
