@@ -130,6 +130,17 @@ public abstract class GameStage extends Stage {
         dialogOnlyInput = false;
         selectedKey = null;
         dialog.clearListeners();
+        // Full movement stop, not just the showDialog()-time one (2026-08-29 user report: after
+        // repairing/interacting with a building, the player kept walking toward wherever they'd
+        // been heading before the collision). showDialog()'s stop() only zeroes the player's
+        // current direction/animation - it never clears touchX/touchY (the stored click-to-walk
+        // target), which isDialogOnlyInput() also leaves untouched while the dialog is up. The
+        // instant dialogOnlyInput flips back to false above, act()'s input recompute reads that
+        // still-stale target and resumes movement toward it. stop() (already used by
+        // touchUp/touchCancelled for the same reason) clears the target and every input vector
+        // for both player singletons, so every dialog close - building, quest, or NPC - now
+        // leaves the player standing still.
+        stop();
     }
 
     /**

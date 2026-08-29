@@ -14174,3 +14174,92 @@ landmines, and keystore rules: ANDROID_RELEASE.md (authoritative). Highlights:
   1.03/label), apksigner cert fingerprint, assets.zip layout (20,564 entries, top-level res/,
   two planes only, build.txt + cardsfolder.zip present). upstream publish.bat (plaintext FTP
   creds) deleted.
+
+## Sixty-second round: building-movement fix, player doodads sheet, faction quests (2026-08-29)
+
+Local-repo-only round (user: "Let's work/update on the local Repo only") - not pushed online.
+
+- **Fixed: player kept walking after a building interaction closed.** Root cause (independent
+  investigation): `GameStage.hideDialog()` cleared dialog state but never the stored click-to-
+  walk target (`touchX`/`touchY`) - the instant `dialogOnlyInput` flipped back off, the next
+  frame's input recompute read that stale target and resumed movement toward wherever the
+  player had been heading before colliding with the building. Single-chokepoint fix: `hideDialog()`
+  now calls the existing `GameStage.stop()` (already proven safe via touchUp/touchCancelled),
+  clearing the target and every input vector for both player singletons - fixes every building
+  interaction (repair, Bank, Exchange, Trader, mine info, Outlook, Teleporter, Archaeologist,
+  destroy-confirm) and any quest/NPC dialog in one place, not per building type.
+  GameStage.java.
+- **Player-only terrain doodads split into their own image sheet.** They were duplicate atlas
+  entries pointing at the SAME pixel coordinates as the generic Stone/Gravel/Flower/Bush/Stump
+  sprites - editing one edited both. New `BiomeSpriteData.atlas` optional per-entry override
+  (consumed by `BiomeSprites.getSprite()`, falls back to the container's shared atlas when
+  unset) - same pattern this plane already uses for player_structures.atlas/player_terrain.atlas.
+  New `world/sprites/player_doodads.png`/`.atlas` (128x80, 5 rows) carries genuinely separate
+  pixel data for PlayerStone/Gravel/Flower/Bush/Stump; map_sprites.json's Player* entries point
+  at it, and the now-orphaned duplicate regions were removed from map_sprites.atlas. Edit
+  player_doodads.png alone to change any player-town doodad - no code or JSON changes needed
+  for future swaps.
+- **20 new low-probability faction quests** (user spec): for each of the 5 AI colors, 2 quests
+  offered at that color's AI-owned TOWNS ("kill an enemy of [ally-enemy color]", 250 gold + 1
+  reputation with the issuing color) and 2 at that color's CAPITOL ("kill the dispatched attack
+  mage of [ally-enemy color]", 750 gold + 1 Rare card of the issuing color + 1 reputation).
+  Enemy-color pairing reuses `ColorReputation.ENEMIES`'s existing classic-pie table verbatim
+  (Green's enemies = Blue/Black, etc.). New quests ids 54-73 in quests.json.
+  - Town/Capitol scoping needed no new code - `questSourceTags` already tracks LIVE ownership
+    (a captured town's `.tmx`/questtype changes with it), and Capitol-only quests were already
+    a supported pattern (quest 34 precedent).
+  - **New: low-probability quest offering.** No weight/probability field existed anywhere on
+    `AdventureQuestData` - offers were pure uniform-random among tag-matching quests (there was
+    literally a `//todo - Should quest availability be weighted?` comment on the exact line).
+    Added `offerProbability` (0 = always eligible, matching `RewardData.probability`'s existing
+    idiom) as an extra Bernoulli gate before a candidate enters the offer pool; town quests
+    0.08, Capitol quests 0.06 - tunable per-quest in JSON, zero effect on any existing quest.
+  - **New: reliable "kill an enemy of color X."** The existing `BiomeX`/`IdentityX` questTags
+    only hand-tag ~15-22% of the catalog (`IdentityX` tracks card-flavor color, not the enemy's
+    real `colors` field - confirmed via a full-catalog audit, 307 mono-colored enemies mismatch
+    their own IdentityX tag). New `AdventureQuestStage.enemyColorLetter` reads the reliable,
+    ~98%-populated `EnemyData.colors` field directly in `checkIfTargetEnemy()`.
+  - **New: "kill the dispatched attack mage," not just any same-named roamer.** Dispatched
+    mages (`TerritoryControl.dispatch()`) and ordinary roaming wizards of the same tier/color
+    share the exact same catalog entry - the only distinguishing signal is the runtime
+    `EnemySprite.territoryColor` field, already threaded all the way to `checkIfTargetEnemy()`
+    but never read before now. New `AdventureQuestStage.territoryMageColor` checks it directly.
+  - **New: direct color-reputation quest reward.** No dialog/quest action touched
+    `ColorReputation`'s `colorReputationHalfPoints` at all (`addMapReputation` is a same-named
+    but unrelated single-POI-local number). New `DialogData.ActionData.addColorReputationColor`
+    /`addColorReputationAmount`, handled in `MapDialog.setEffects()`, mirrors the existing
+    non-zero-sum direct-grant precedent `ColorReputation.applyColorDefeatPenalty()` already
+    uses (no 5-color wheel redistribution).
+  - **Landmine avoided**: both new quest kinds set empty `enemyTags` (they don't use the tag
+    system) - which would have made `AdventureQuestController.getExtraQuestSpawns()`'s tag scan
+    match the ENTIRE 1520-enemy catalog as "extra spawn candidates" (an empty required-tags list
+    matches everything), the exact bug class the round-59/61 Android-round fixes closed. Both
+    new stage fields are explicitly excluded from that scan - these quests complete via ordinary
+    encounters or the mage's own independent dispatch spawn, never a forced extra spawn.
+  - Design call made without asking (flagged for confirmation): "the color" in the Capitol
+    reward and "rep with town/Cap" both read as the ISSUING color's own reputation/card, not
+    the killed enemy's color - easy to flip if that's wrong.
+  - Testing: `give quest 54` through `give quest 73` (existing console command) adds any new
+    quest directly, bypassing the low-probability roll.
+
+**Files touched**: GameStage.java, BiomeSpriteData.java, BiomeSprites.java, world/sprites/
+player_doodads.png+.atlas (new), map_sprites.json, map_sprites.atlas, AdventureQuestStage.java,
+AdventureQuestData.java, AdventureQuestController.java, DialogData.java, MapDialog.java,
+quests.json (Q54-73).
+
+### Round 62 addendum: Thief Merchant unaffordable-tile visual bug (same day)
+
+- **Fixed: priced reward tiles (Thief Merchant chest event) didn't grey out when unaffordable.**
+  `ChooseRewardButton.update()` already had the correct `setDisabled(gold < price)` check, but
+  nothing called it until AFTER the first successful purchase (to refresh the OTHER tiles) - so
+  on screen open every tile defaulted to enabled regardless of price. The purchase itself was
+  always safely gated (click handler re-checks gold before spending, confirmed - no free-item
+  exploit existed), but an unaffordable tile looked clickable and silently did nothing when
+  tapped. Mirrors the Shop screen's existing `updateBuyButtons()` call, which the RewardChoice
+  screen was simply missing. RewardScene.java.
+- **Also reviewed and confirmed correct in the same investigation**: the loss-condition report
+  ("lost my last town, no Capitol, game didn't end") - working as designed, not a bug. The
+  2026-08-15 rule requires zero player towns AND zero neutral towns anywhere on the map before
+  the game ends; the user's town fell in the same tick a neutral town was freshly created
+  elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
+  the rule exactly as-is, no code change.

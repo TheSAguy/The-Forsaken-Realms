@@ -974,6 +974,16 @@ public class RewardScene extends UIScene {
         if (type == Type.Shop) {
             updateBuyButtons();
             updateRestockButton();
+        } else if (type == Type.RewardChoice) {
+            // Priced RewardChoice (Thief Merchant chest event) initial affordability state
+            // (2026-08-29 user report): ChooseRewardButton.update() has the correct
+            // setDisabled(gold < price) check, but nothing called it until AFTER the first
+            // successful purchase (to refresh the OTHERS) - so on screen open every tile
+            // defaulted to enabled regardless of price. The purchase itself was always safely
+            // gated (the click handler re-checks gold before spending), but an unaffordable
+            // tile looked clickable and silently did nothing when tapped. Mirrors the Shop
+            // case's updateBuyButtons() call immediately above.
+            updateChooseRewardButtons();
         }
     }
 

@@ -220,6 +220,7 @@
 "density":0.01
 },{
 "name":"PlayerStone",
+"atlas":"world/sprites/player_doodads.atlas",
 "startArea":0.2,
 "endArea":0.7,
 "layer":-1,
@@ -227,6 +228,7 @@
 "density":0.01
 },{
 "name":"PlayerGravel",
+"atlas":"world/sprites/player_doodads.atlas",
 "startArea":0.2,
 "endArea":0.7,
 "layer":-1,
@@ -234,6 +236,7 @@
 "density":0.01
 },{
 "name":"PlayerFlower",
+"atlas":"world/sprites/player_doodads.atlas",
 "startArea":0.0,
 "endArea":0.2,
 "layer":-1,
@@ -241,6 +244,7 @@
 "density":0.2
 },{
 "name":"PlayerBush",
+"atlas":"world/sprites/player_doodads.atlas",
 "startArea":0.0,
 "endArea":0.2,
 "layer":1,
@@ -248,6 +252,7 @@
 "density":0.4
 },{
 "name":"PlayerStump",
+"atlas":"world/sprites/player_doodads.atlas",
 "startArea":0.0,
 "endArea":0.9,
 "layer":-1,

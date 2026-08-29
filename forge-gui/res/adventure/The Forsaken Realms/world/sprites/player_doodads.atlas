@@ -1,0 +1,59 @@
+player_doodads.png
+size: 128,80
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+PlayerStone
+  xy: 0, 0
+  size: 16, 16
+PlayerStone
+  xy: 16, 0
+  size: 16, 16
+PlayerStone
+  xy: 32, 0
+  size: 16, 16
+PlayerStone
+  xy: 48, 0
+  size: 16, 16
+PlayerStone
+  xy: 64, 0
+  size: 16, 16
+PlayerStone
+  xy: 80, 0
+  size: 16, 16
+PlayerStone
+  xy: 96, 0
+  size: 16, 16
+PlayerStone
+  xy: 112, 0
+  size: 16, 16
+PlayerGravel
+  xy: 0, 16
+  size: 16, 16
+PlayerGravel
+  xy: 16, 16
+  size: 16, 16
+PlayerGravel
+  xy: 32, 16
+  size: 16, 16
+PlayerGravel
+  xy: 48, 16
+  size: 16, 16
+PlayerFlower
+  xy: 0, 32
+  size: 16, 16
+PlayerFlower
+  xy: 16, 32
+  size: 16, 16
+PlayerFlower
+  xy: 32, 32
+  size: 16, 16
+PlayerFlower
+  xy: 48, 32
+  size: 16, 16
+PlayerBush
+  xy: 0, 48
+  size: 16, 16
+PlayerStump
+  xy: 0, 64
+  size: 16, 16

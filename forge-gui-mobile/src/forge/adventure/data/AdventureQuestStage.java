@@ -48,6 +48,15 @@ public class AdventureQuestStage implements Serializable {
     public List<Integer> prerequisiteIDs = new ArrayList<>();
     public List<String> enemyTags = new ArrayList<>(); //Tags defining potential targets
     public List<String> enemyExcludeTags = new ArrayList<>(); //Tags denoting invalid targets
+    // Native color-based Defeat filters (2026-08-29, faction-quest round). questTags-based color
+    // matching (BiomeX/IdentityX) only reliably covers a small hand-curated slice of the enemy
+    // catalog (verified: IdentityX tracks card-flavor color, not the enemy's own EnemyData.colors,
+    // and BiomeX only tags ~22% of enemies) - these read the real, ~98%-populated colors field
+    // directly instead. At most one of the two should be set per stage; deliberately excluded from
+    // AdventureQuestController.getExtraQuestSpawns()'s tag-scan (see that method's comment) so a
+    // stage using either of these never falls into "empty enemyTags matches the whole catalog."
+    public String enemyColorLetter; // single MTG color letter (W/U/B/R/G) - matches ANY enemy whose EnemyData.colors contains it
+    public String territoryMageColor; // lowercase color name (e.g. "black") - matches ONLY a live dispatched attack mage (EnemySprite.territoryColor) of that color, never an ordinary roamer
     public List<String> itemNames = new ArrayList<>(); //Tags defining items to use
     public List<String> equipNames = new ArrayList<>(); //Tags defining equipment to use
     public boolean prologueDisplayed = false;
@@ -204,6 +213,17 @@ public class AdventureQuestStage implements Serializable {
     }
 
     public boolean checkIfTargetEnemy(EnemySprite enemy) {
+        // Native color filters (see field comments) take priority and are mutually exclusive
+        // with the questTags path below - both new faction-quest stage kinds set neither
+        // targetEnemyData nor enemyTags, so falling through would otherwise degenerate into
+        // "any enemy at all" (empty enemyTags matches everything in the loop below).
+        if (territoryMageColor != null && !territoryMageColor.isEmpty()) {
+            return territoryMageColor.equalsIgnoreCase(enemy.territoryColor);
+        }
+        if (enemyColorLetter != null && !enemyColorLetter.isEmpty()) {
+            String colors = enemy.getData().colors;
+            return colors != null && colors.contains(enemyColorLetter);
+        }
         if (targetEnemyData != null) {
             return (enemy.getData().match(targetEnemyData));
         }
@@ -263,6 +283,8 @@ public class AdventureQuestStage implements Serializable {
         this.worldMapOK = other.worldMapOK;
         this.allowInactivePOI = other.allowInactivePOI;
         this.navPOIFilter = other.navPOIFilter;
+        this.enemyColorLetter = other.enemyColorLetter;
+        this.territoryMageColor = other.territoryMageColor;
     }
 
 

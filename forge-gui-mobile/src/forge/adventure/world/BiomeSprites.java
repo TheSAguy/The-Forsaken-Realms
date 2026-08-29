@@ -20,7 +20,14 @@ public class BiomeSprites {
         }
         Array<Sprite> sprites = spriteBuffer.get(name);
         if (sprites.isEmpty()) {
-            sprites.addAll(Config.instance().getAtlas(textureAtlas).createSprites(name));
+            // Per-sprite atlas override (2026-08-29, player-only doodads): a catalog entry may
+            // name its own atlas file instead of drawing from this container's shared one - lets
+            // e.g. the player-town doodad set live in its own easily-swappable sheet rather than
+            // duplicating pixel regions inside the generic map_sprites atlas.
+            BiomeSpriteData spriteData = getSpriteData(name);
+            String resolvedAtlas = (spriteData != null && spriteData.atlas != null && !spriteData.atlas.isEmpty())
+                    ? spriteData.atlas : textureAtlas;
+            sprites.addAll(Config.instance().getAtlas(resolvedAtlas).createSprites(name));
         }
         int index = seed % sprites.size;
         if (index >= sprites.size || index < 0) {

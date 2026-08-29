@@ -67,6 +67,14 @@ public class AdventureQuestData implements Serializable {
     Dictionary<String, EnemyData> enemyTokens = new Hashtable<>();
     Dictionary<String, String> otherTokens = new Hashtable<>();
     public boolean storyQuest = false;
+    // Low-probability quest offering (2026-08-29, faction-quest round): a Bernoulli gate on
+    // whether this TEMPLATE is even considered when a location rolls a side quest to offer -
+    // 0 (default) = always considered, matching every other quest's existing behavior;
+    // otherwise the fraction of offer-rolls where this quest is eligible to be picked (still
+    // via the normal uniform Aggregates.random() among whatever's eligible that roll). See
+    // AdventureQuestController.getQuestNPCResponse(). Read only at the template stage, before
+    // any player-side clone exists - deliberately not carried through the copy constructor.
+    public float offerProbability = 0f;
     public boolean isTracked = false;
     public boolean autoTrack = false;
     public String sourceID = "";

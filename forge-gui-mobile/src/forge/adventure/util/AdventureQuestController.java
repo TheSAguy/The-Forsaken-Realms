@@ -43,6 +43,16 @@ public class AdventureQuestController implements Serializable {
                         extraSpawns.add(c.getTargetEnemyData());
                         continue;
                     }
+                    // Native color-filter stages (enemyColorLetter/territoryMageColor, see
+                    // AdventureQuestStage) never reach the tag scan below: they set no enemyTags,
+                    // and an empty enemyTags list matches EVERY catalog entry in that loop -
+                    // exactly the "Syr Faren" bug class this method was already patched for once.
+                    // These quests complete via ordinary encounters (color stages) or the
+                    // territory-mage's own independent dispatch spawn (mage stages) - never via
+                    // a forced extra spawn here.
+                    if ((c.enemyColorLetter != null && !c.enemyColorLetter.isEmpty())
+                            || (c.territoryMageColor != null && !c.territoryMageColor.isEmpty()))
+                        continue;
                     List<EnemyData> tagMatches = new ArrayList<>();
                     for (EnemyData enemy : WorldData.getAllEnemies()) {
                         List<String> candidateTags = Arrays.stream(enemy.questTags).collect(Collectors.toList());
@@ -658,19 +668,29 @@ public class AdventureQuestController implements Serializable {
             ret.offerDialog = response;
             return ret;
         }
-        //todo - Should quest availability be weighted instead of uniform?
         nextQuestDate.put(pointID, LocalDate.now().toEpochDay());
 
+        // Availability is uniform random among tag-matching candidates (Aggregates.random below),
+        // EXCEPT low-probability quests (offerProbability > 0, 2026-08-29 faction-quest round)
+        // get an extra Bernoulli gate before they're even added to that pool - so they show up
+        // rarely without permanently disappearing, and every ordinary quest (offerProbability
+        // still 0) keeps its exact prior behavior.
         Array<AdventureQuestData> validSideQuests = new Array<>();
         for (AdventureQuestData option : allSideQuests){
-            if (option.questSourceTags.length == 0)
-                validSideQuests.add(option);
-            for (int i = 0; i < option.questSourceTags.length; i++){
-                if (option.questSourceTags[i] != null && option.questSourceTags[i].equals(questOrigin)){
-                    validSideQuests.add(option);
-                    break;
+            boolean tagMatch = option.questSourceTags.length == 0;
+            if (!tagMatch) {
+                for (int i = 0; i < option.questSourceTags.length; i++){
+                    if (option.questSourceTags[i] != null && option.questSourceTags[i].equals(questOrigin)){
+                        tagMatch = true;
+                        break;
+                    }
                 }
             }
+            if (!tagMatch)
+                continue;
+            if (option.offerProbability > 0f && new Random().nextFloat() > option.offerProbability)
+                continue;
+            validSideQuests.add(option);
         }
         if (validSideQuests.size > 0)
             ret = new AdventureQuestData(Aggregates.random(validSideQuests));

@@ -84,6 +84,16 @@ public class DialogData implements Serializable {
         public int addMapReputation = 0;  //Gives the player X reputation points in this POI. Negative to take.
         public String POIReference; //used with addMapReputation when a quest step affects reputation in another location
 
+        // Direct, non-zero-sum grant to an AI color's reputation score (2026-08-29, faction-quest
+        // round) - distinct from addMapReputation above, which is a single POI's own local
+        // reputation number, not this ColorReputation/colorReputationHalfPoints system. Mirrors
+        // the existing direct-grant precedent ColorReputation.applyColorDefeatPenalty() already
+        // uses (no 5-color wheel redistribution, just add to the one color). Amount is in DISPLAY
+        // points (matches what the player sees in the reputation UI), doubled internally to the
+        // half-point storage unit by AdventurePlayer.addColorReputationHalfPoints().
+        public String addColorReputationColor;  //"white"/"blue"/"black"/"red"/"green"
+        public int addColorReputationAmount = 0;
+
         // Mod addition (Skip Tutorial, 2026-08-11): runs an arbitrary ConsoleCommandInterpreter
         // command, e.g. "teleport to poi \"Spawn\"" - the same command an item's commandOnUse
         // already routes through (see InventoryScene.java), just reachable from a quest dialog
@@ -151,6 +161,8 @@ public class DialogData implements Serializable {
             issueQuest = other.issueQuest;
             addMapReputation = other.addMapReputation;
             POIReference = other.POIReference;
+            addColorReputationColor = other.addColorReputationColor;
+            addColorReputationAmount = other.addColorReputationAmount;
             runCommand = other.runCommand;
             refreshShopRewardsTrigger = other.refreshShopRewardsTrigger;
             triggerDungeonClear = other.triggerDungeonClear;

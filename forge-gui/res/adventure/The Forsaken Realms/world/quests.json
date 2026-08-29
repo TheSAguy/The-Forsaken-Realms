@@ -11354,5 +11354,1905 @@
 			}
 		],
 		"storyQuest": true
+	},
+	{
+		"id": 54,
+		"isTemplate": true,
+		"name": "Blot Out the Dark",
+		"description": "Defeat a Black-aligned enemy for White.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the White cause has little patience for Black incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "54"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Black-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through White territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "white",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Black enemy",
+				"description": "Find and defeat a Black-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "B",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on White's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 55,
+		"isTemplate": true,
+		"name": "Cool the Flames",
+		"description": "Defeat a Red-aligned enemy for White.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the White cause has little patience for Red incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "55"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Red-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through White territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "white",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Red enemy",
+				"description": "Find and defeat a Red-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "R",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on White's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 56,
+		"isTemplate": true,
+		"name": "Quench the Flames",
+		"description": "Defeat a Red-aligned enemy for Blue.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Blue cause has little patience for Red incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "56"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Red-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Blue territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "blue",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Red enemy",
+				"description": "Find and defeat a Red-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "R",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Blue's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 57,
+		"isTemplate": true,
+		"name": "Prune the Wilds",
+		"description": "Defeat a Green-aligned enemy for Blue.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Blue cause has little patience for Green incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "57"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Green-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Blue territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "blue",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Green enemy",
+				"description": "Find and defeat a Green-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "G",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Blue's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 58,
+		"isTemplate": true,
+		"name": "Wither the Green",
+		"description": "Defeat a Green-aligned enemy for Black.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Black cause has little patience for Green incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "58"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Green-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Black territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "black",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Green enemy",
+				"description": "Find and defeat a Green-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "G",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Black's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"swamp_town_generic",
+			"swamp_town_identity",
+			"swamp_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 59,
+		"isTemplate": true,
+		"name": "Silence the Faithful",
+		"description": "Defeat a White-aligned enemy for Black.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Black cause has little patience for White incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "59"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The White-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Black territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "black",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a White enemy",
+				"description": "Find and defeat a White-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "W",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Black's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"swamp_town_generic",
+			"swamp_town_identity",
+			"swamp_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 60,
+		"isTemplate": true,
+		"name": "Burn the Banners",
+		"description": "Defeat a White-aligned enemy for Red.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Red cause has little patience for White incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "60"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The White-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Red territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "red",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a White enemy",
+				"description": "Find and defeat a White-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "W",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Red's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 61,
+		"isTemplate": true,
+		"name": "Boil the Tides",
+		"description": "Defeat a Blue-aligned enemy for Red.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Red cause has little patience for Blue incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "61"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Blue-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Red territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "red",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Blue enemy",
+				"description": "Find and defeat a Blue-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "U",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Red's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 62,
+		"isTemplate": true,
+		"name": "Choke the Currents",
+		"description": "Defeat a Blue-aligned enemy for Green.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Green cause has little patience for Blue incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "62"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Blue-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Green territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "green",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Blue enemy",
+				"description": "Find and defeat a Blue-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "U",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Green's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 63,
+		"isTemplate": true,
+		"name": "Root Out Rot",
+		"description": "Defeat a Black-aligned enemy for Green.",
+		"offerDialog": {
+			"text": "The notice board here carries a standing request: the Green cause has little patience for Black incursions on these borders. Whoever thins their numbers earns the town's thanks.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "63"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Black-aligned threat is dealt with. You return to collect your due, and word of the favor spreads through Green territory.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 250
+								}
+							],
+							"addColorReputationColor": "green",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat a Black enemy",
+				"description": "Find and defeat a Black-aligned enemy anywhere in the wilds.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"enemyColorLetter": "B",
+				"prologue": {},
+				"epilogue": {
+					"text": "That's one less threat on Green's borders. Time to head back and report it.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal"
+		],
+		"offerProbability": 0.08
+	},
+	{
+		"id": 64,
+		"isTemplate": true,
+		"name": "Purge the Black Envoy",
+		"description": "Defeat a dispatched Black attack mage.",
+		"offerDialog": {
+			"text": "The White court speaks plainly: a Black agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "64"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Black mage's mission ends here. The White Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"White"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "white",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Black attack mage",
+				"description": "Find and defeat the Black mage dispatched against White territory - an ordinary Black-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "black",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the White Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"plains_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 65,
+		"isTemplate": true,
+		"name": "Repel the Red Vanguard",
+		"description": "Defeat a dispatched Red attack mage.",
+		"offerDialog": {
+			"text": "The White court speaks plainly: a Red agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "65"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Red mage's mission ends here. The White Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"White"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "white",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Red attack mage",
+				"description": "Find and defeat the Red mage dispatched against White territory - an ordinary Red-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "red",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the White Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"plains_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 66,
+		"isTemplate": true,
+		"name": "Douse the Red Vanguard",
+		"description": "Defeat a dispatched Red attack mage.",
+		"offerDialog": {
+			"text": "The Blue court speaks plainly: a Red agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "66"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Red mage's mission ends here. The Blue Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Blue"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "blue",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Red attack mage",
+				"description": "Find and defeat the Red mage dispatched against Blue territory - an ordinary Red-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "red",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Blue Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"island_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 67,
+		"isTemplate": true,
+		"name": "Cut Down the Green Scout",
+		"description": "Defeat a dispatched Green attack mage.",
+		"offerDialog": {
+			"text": "The Blue court speaks plainly: a Green agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "67"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Green mage's mission ends here. The Blue Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Blue"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "blue",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Green attack mage",
+				"description": "Find and defeat the Green mage dispatched against Blue territory - an ordinary Green-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "green",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Blue Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"island_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 68,
+		"isTemplate": true,
+		"name": "Bury the Green Scout",
+		"description": "Defeat a dispatched Green attack mage.",
+		"offerDialog": {
+			"text": "The Black court speaks plainly: a Green agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "68"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Green mage's mission ends here. The Black Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Black"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "black",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Green attack mage",
+				"description": "Find and defeat the Green mage dispatched against Black territory - an ordinary Green-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "green",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Black Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"swamp_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 69,
+		"isTemplate": true,
+		"name": "Silence the White Emissary",
+		"description": "Defeat a dispatched White attack mage.",
+		"offerDialog": {
+			"text": "The Black court speaks plainly: a White agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "69"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The White mage's mission ends here. The Black Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Black"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "black",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the White attack mage",
+				"description": "Find and defeat the White mage dispatched against Black territory - an ordinary White-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "white",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Black Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"swamp_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 70,
+		"isTemplate": true,
+		"name": "Burn the White Emissary",
+		"description": "Defeat a dispatched White attack mage.",
+		"offerDialog": {
+			"text": "The Red court speaks plainly: a White agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "70"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The White mage's mission ends here. The Red Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Red"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "red",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the White attack mage",
+				"description": "Find and defeat the White mage dispatched against Red territory - an ordinary White-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "white",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Red Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"mountain_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 71,
+		"isTemplate": true,
+		"name": "Sink the Blue Agent",
+		"description": "Defeat a dispatched Blue attack mage.",
+		"offerDialog": {
+			"text": "The Red court speaks plainly: a Blue agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "71"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Blue mage's mission ends here. The Red Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Red"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "red",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Blue attack mage",
+				"description": "Find and defeat the Blue mage dispatched against Red territory - an ordinary Blue-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "blue",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Red Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"mountain_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 72,
+		"isTemplate": true,
+		"name": "Drown the Blue Agent",
+		"description": "Defeat a dispatched Blue attack mage.",
+		"offerDialog": {
+			"text": "The Green court speaks plainly: a Blue agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "72"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Blue mage's mission ends here. The Green Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Green"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "green",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Blue attack mage",
+				"description": "Find and defeat the Blue mage dispatched against Green territory - an ordinary Blue-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "blue",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Green Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_capital"
+		],
+		"offerProbability": 0.06
+	},
+	{
+		"id": 73,
+		"isTemplate": true,
+		"name": "Uproot the Black Envoy",
+		"description": "Defeat a dispatched Black attack mage.",
+		"offerDialog": {
+			"text": "The Green court speaks plainly: a Black agent was dispatched against this Capitol, and its death would be worth more to the crown than the mage itself ever was.",
+			"options": [
+				{
+					"name": "Not right now. (Decline Quest)"
+				},
+				{
+					"name": "You accept the commission. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "73"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "The Black mage's mission ends here. The Green Capitol takes note of the deed.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"count": 750
+								},
+								{
+									"type": "card",
+									"count": 1,
+									"addMaxCount": 1,
+									"colors": [
+										"Green"
+									],
+									"rarity": [
+										"Rare"
+									],
+									"colorType": "MonoColor"
+								}
+							],
+							"addColorReputationColor": "green",
+							"addColorReputationAmount": 1
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold, a Rare Card, and Reputation",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Defeat the Black attack mage",
+				"description": "Find and defeat the Black mage dispatched against Green territory - an ordinary Black-aligned monster won't do.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 1,
+				"worldMapOK": true,
+				"objective": "Defeat",
+				"mixedEnemies": true,
+				"territoryMageColor": "black",
+				"prologue": {},
+				"epilogue": {
+					"text": "The mage is down. Report back to the Green Capitol.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"forest_capital"
+		],
+		"offerProbability": 0.06
 	}
 ]

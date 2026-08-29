@@ -382,59 +382,8 @@ WinterTree:
   xy: 64, 272
   size: 16, 16
 WinterTree:
+  xy: 64, 272
+  size: 16, 16
+WinterTree:
   xy: 80, 272
-  size: 16, 16
-PlayerStone
-  xy: 32, 32
-  size: 16, 16
-PlayerStone
-  xy: 48, 32
-  size: 16, 16
-PlayerStone
-  xy: 32, 48
-  size: 16, 16
-PlayerStone
-  xy: 48, 48
-  size: 16, 16
-PlayerStone
-  xy: 32, 64
-  size: 16, 16
-PlayerStone
-  xy: 48, 64
-  size: 16, 16
-PlayerStone
-  xy: 32, 80
-  size: 16, 16
-PlayerStone
-  xy: 48, 80
-  size: 16, 16
-PlayerGravel
-  xy: 64, 32
-  size: 16, 16
-PlayerGravel
-  xy: 80, 32
-  size: 16, 16
-PlayerGravel
-  xy: 64, 48
-  size: 16, 16
-PlayerGravel
-  xy: 80, 48
-  size: 16, 16
-PlayerFlower
-  xy: 0, 64
-  size: 16, 16
-PlayerFlower
-  xy: 16, 64
-  size: 16, 16
-PlayerFlower
-  xy: 0, 80
-  size: 16, 16
-PlayerFlower
-  xy: 16, 80
-  size: 16, 16
-PlayerBush
-  xy: 96, 160
-  size: 16, 16
-PlayerStump
-  xy: 112, 160
   size: 16, 16

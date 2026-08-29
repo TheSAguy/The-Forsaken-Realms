@@ -376,6 +376,9 @@ public class MapDialog {
                     stage.getChanges().addMapReputation(E.addMapReputation);
                 }
             }
+            if (E.addColorReputationColor != null && !E.addColorReputationColor.isEmpty() && E.addColorReputationAmount != 0) {
+                Current.player().addColorReputationHalfPoints(E.addColorReputationColor, E.addColorReputationAmount * 2);
+            }
             if (E.deleteMapObject != 0) { //Removes a dummy object from the map.
                 if (E.deleteMapObject < 0) stage.deleteObject(parentID);
                 else stage.deleteObject(E.deleteMapObject);

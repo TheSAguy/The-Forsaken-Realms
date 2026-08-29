@@ -15,6 +15,15 @@ public class BiomeSpriteData implements SaveFileContent {
     public double density;
     public double resolution;
     public int layer;
+    // Optional per-sprite atlas override (2026-08-29, player-only doodads): when set, this
+    // sprite draws from its own atlas file instead of the containing BiomeSprites' shared
+    // textureAtlas - see BiomeSprites.getSprite(). Populated by libGDX's Json reflection loader
+    // straight off the JSON entry (no plumbing needed beyond the field existing); intentionally
+    // NOT read/written by load()/save() below, since those persist per-instance PLACEMENT data
+    // for a save file (position/density/etc of an already-placed sprite) - texture resolution
+    // always re-reads the master catalog entry via BiomeSprites.getSpriteData(name), never the
+    // save-restored copy, so this field only ever needs to exist on the JSON-loaded catalog.
+    public String atlas;
 
     public String key() {
         return "BiomeSprite&" + name;
