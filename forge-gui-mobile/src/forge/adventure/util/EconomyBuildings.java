@@ -1155,7 +1155,7 @@ public class EconomyBuildings {
     // gold credit on a re-type, and Rare gated to the Capitol.
     //
     // Menu shape is TIER first, then category:
-    //     Card Shop > Common Shops (price) > By Colour / By Card Type / Tribal / Special > <type>
+    //     Card Shop > Common Shops (price) > By Color / By Card Type / Tribal / Special > <type>
     // Tier-first because (a) price is a property of the tier, so it can be shown once at the top
     // instead of repeated on 200+ leaf entries, and (b) the Capitol gate is then a single hidden
     // branch rather than a filter threaded through every category.
@@ -1202,13 +1202,13 @@ public class EconomyBuildings {
         return true;
     }
 
-    private static final String CAT_COLOUR = "By Colour";
+    private static final String CAT_COLOR = "By Color";
     private static final String CAT_CARD_TYPE = "By Card Type";
     private static final String CAT_TRIBAL = "Tribal";
     private static final String CAT_SPECIAL = "Special";
-    private static final String[] SHOP_CATEGORIES = {CAT_COLOUR, CAT_CARD_TYPE, CAT_TRIBAL, CAT_SPECIAL};
+    private static final String[] SHOP_CATEGORIES = {CAT_COLOR, CAT_CARD_TYPE, CAT_TRIBAL, CAT_SPECIAL};
 
-    private static final java.util.Set<String> COLOUR_NOUNS = new java.util.HashSet<>(Arrays.asList(
+    private static final java.util.Set<String> COLOR_NOUNS = new java.util.HashSet<>(Arrays.asList(
             "white", "blue", "black", "red", "green", "colorless", "colourless", "multicolor",
             "gold", "azorius", "boros", "dimir", "golgari", "gruul", "izzet", "orzhov", "rakdos",
             "selesnya", "simic"));
@@ -1243,8 +1243,8 @@ public class EconomyBuildings {
         for (String special : SPECIAL_NOUNS)
             if (lower.contains(special))
                 return CAT_SPECIAL;
-        if (COLOUR_NOUNS.contains(noun))
-            return CAT_COLOUR;
+        if (COLOR_NOUNS.contains(noun))
+            return CAT_COLOR;
         if (CARD_TYPE_NOUNS.contains(noun))
             return CAT_CARD_TYPE;
         return CAT_TRIBAL; // everything left is a creature-type shop (Sliver, Angel, Elf, ...)

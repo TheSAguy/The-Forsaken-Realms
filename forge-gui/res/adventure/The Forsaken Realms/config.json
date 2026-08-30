@@ -10,6 +10,7 @@
   // restrictedCards moved 2026-08-22 to "config tables/restricted_cards.json" - easier to
   // hand-edit there, same as settings.json. See RestrictedCardsData.java/Config.java.
   "restrictedEditions": [
+    "DBL",
     "HTR",
     "HTR17",
     "HTR18",

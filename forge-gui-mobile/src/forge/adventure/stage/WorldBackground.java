@@ -231,6 +231,21 @@ public class WorldBackground extends Actor {
         chunkSize = WorldSave.getCurrentSave().getWorld().getChunkSize();
         if (chunks != null) {
             stage.getSpriteGroup().clear();
+            // ALSO clear the BACKGROUND group (fix 2026-08-30, user report: "a lot of doodads
+            // bled over from the test game... it only appears to have affected the area I was
+            // near"). loadChunk() adds doodads to TWO groups - SpriteLayer actors go to
+            // getSpriteGroup() and BackgroundLayer actors to getBackgroundSprites() - but only
+            // the foreground one was ever cleared here. The background actors stayed parented in
+            // the stage while the arrays below were reallocated to null, which also put them
+            // permanently beyond unLoadChunk()'s reach (it removes actors by reading those very
+            // arrays). Result: every background-layer doodad from a previous game survived into
+            // the next one, for exactly the chunks that had been loaded - i.e. wherever the
+            // player had actually been, which is why the rest of the map looked fine and a single
+            // town could end up half old doodads and half new.
+            // This is the same "long-lived singleton outlives the game" family as the round-65
+            // load-bleed fixes; that round fixed the two per-chunk CACHES, this is the actor
+            // parenting they hand off to.
+            stage.getBackgroundSprites().clear();
             for (Texture[] chunk : chunks)
                 for (Texture texture : chunk)
                     if (texture != null)

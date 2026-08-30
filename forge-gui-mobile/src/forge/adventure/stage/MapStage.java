@@ -1215,6 +1215,34 @@ public class MapStage extends GameStage {
         return InnScene.instance(TileMapScene.instance(), TileMapScene.instance().rootPoint.getID(), changes, localInnID);
     }
 
+    /**
+     * Fires DungeonRotation.onDungeonClear() if the dungeon the player is leaving has nothing
+     * left in it - no live enemies AND no uncollected reward objects. See exitDungeon()'s own
+     * comment for why the combat-win trigger alone wasn't enough.
+     */
+    private void clearDungeonIfEmptied() {
+        PointOfInterest root = TileMapScene.instance().rootPoint;
+        // No isEnabled() check here - it is private, and onDungeonClear() already gates on it
+        // (plus rotatable/story) as its very first act, so calling in unconditionally is correct
+        // and keeps the rules in exactly one place.
+        if (root == null)
+            return;
+        for (EnemySprite enemy : enemies) {
+            // Same "still actually on the map" test updateQuestsWin() uses, and the same
+            // defeatDialog exemption: an enemy that can't be removed by defeating it must not
+            // hold the dungeon open forever.
+            if (enemy != null && enemy.getStage() != null && enemy.defeatDialog == null)
+                return;
+        }
+        for (MapActor actor : new Array.ArrayIterator<>(actors)) {
+            if (actor instanceof RewardSprite && actor.getStage() != null)
+                return; // loot still sitting there - not emptied
+        }
+        System.out.println("[TFR-DungeonClear] " + root.getDisplayName()
+                + " left with no enemies and no loot remaining - despawning via onDungeonClear");
+        DungeonRotation.onDungeonClear(root);
+    }
+
     public boolean exitDungeon(boolean defeated, boolean defeatedByBoss) {
         // Dungeon rotation's defeat hook is NOT here (an earlier version was, keyed on the
         // `defeated` parameter - it never fired in practice: a match loss with life remaining
@@ -1227,6 +1255,23 @@ public class MapStage extends GameStage {
             this.resetMapRecursive(AdventureQuestController.instance().mostRecentPOI.getData().map, new HashSet<>());
         }
 
+        // Despawn-on-exit for a dungeon that is now genuinely empty (2026-08-30 user report:
+        // "This cave did not disappear, even though I emptied out all the loot in it").
+        // DungeonRotation.onDungeonClear() previously had exactly ONE trigger - the combat win in
+        // AdventureQuestController.updateQuestsWin() where the killed enemy was the last one. That
+        // misses every other way a dungeon ends up empty: enemies killed on an EARLIER visit and
+        // only the loot collected on this one, enemies that were walked past, or a map whose
+        // remaining content was taken rather than fought. In all of those the win event either
+        // never happens or happened on a visit when loot still remained, so the despawn hook never
+        // rides along and the emptied dungeon sits on the map forever, occupying a rotation slot.
+        // Requires BOTH no enemies and no reward objects left, deliberately: "no enemies" alone
+        // would despawn a loot-only cave the moment the player first walked in and out, stranding
+        // its loot. onDungeonClear() is safe to call while still inside (see its own doc and
+        // DialogData.triggerDungeonClear's comment - it only touches World-level POI bookkeeping,
+        // not the loaded MapStage) and self-gates on rotatable/story/rotation-enabled, so a
+        // non-rotatable or story dungeon is unaffected.
+        if (!defeated && !defeatedByBoss)
+            clearDungeonIfEmptied();
         AdventureQuestController.instance().updateQuestsLeave();
         clearIsInMap();
         AdventureQuestController.instance().showQuestDialogs(this);

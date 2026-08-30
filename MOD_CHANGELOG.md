@@ -14751,3 +14751,100 @@ newest .java / plane resource, refuse if older) is still OPEN and recommended.
 **Files touched**: WorldStage.java, AdventurePlayer.java, ArenaScene.java, EconomyBuildings.java,
 MapStage.java, MapDialog.java, DialogData.java, RewardScene.java, GameHUD.java,
 WorldStandingsScene.java, ui/world_standings_portrait.json (new), items.json.
+
+## Round 70: doodad bleed, cave despawn, restricted-edition art, packaging guards (2026-08-30)
+
+Local-repo-only round.
+
+### CRITICAL: doodad bleed across games - round 65's fix was incomplete
+User loaded their active save after a test game and saw test-game doodads, "only... the area I was
+near", with one town half old / half new. `WorldBackground.initialize()` cleared
+`stage.getSpriteGroup()` (FOREGROUND) but never `stage.getBackgroundSprites()`. loadChunk() adds to
+BOTH groups - SpriteLayer -> foreground, BackgroundLayer -> background. The background actors
+stayed parented in the stage while the arrays were reallocated to null, which also put them
+permanently beyond unLoadChunk() (it removes actors by reading those very arrays). Only chunks
+actually LOADED in the prior session had ever added actors - hence "only the area I was near", and
+hence a single town disagreeing with itself layer-to-layer. Round 65 fixed the two per-chunk
+CACHES; this is the actor PARENTING they hand off to, which that sweep could never reach (by the
+time it ran the arrays were already null, so it correctly no-oped while orphans sat in the stage).
+Verified safe before changing: `backgroundSprites` is written by exactly one place, loadChunk().
+Save data was never wrong - World.load() builds a fresh SpritesDataMap; this was purely visual.
+
+### Cave/dungeon never despawned after being emptied
+User: "This cave did not disappear, even though I emptied out all the loot in it."
+`DungeonRotation.onDungeonClear()` had exactly ONE trigger - the combat win in `updateQuestsWin()`
+where the killed enemy was the last standing. That misses every other route to an empty dungeon:
+enemies killed on an EARLIER visit with only loot taken on this one, enemies walked past, or
+content taken rather than fought. Ruled out the other candidates first rather than assuming: NOT
+the Hostile tag (118 of 131 caves are rotatable; the 13 that are not are all Story, deliberately
+permanent), and NOT a from-inside restriction (onDungeonClear only touches World-level POI
+bookkeeping - its own docs say so).
+- Fix: `MapStage.clearDungeonIfEmptied()` on exitDungeon(). Requires BOTH no live enemies AND no
+  uncollected RewardSprites - deliberately, since "no enemies" alone would despawn a loot-only cave
+  the instant the player walked in and out, stranding its loot. Reuses the existing defeatDialog
+  exemption; skips defeat/boss-defeat exits; calls onDungeonClear() unconditionally so all
+  rotatable/story/enabled gating stays in ONE place (its isEnabled() is private anyway).
+  Logs [TFR-DungeonClear].
+
+### Restricted-edition ART remap + settings toggle (user request)
+Prompted by Innistrad: Double Feature ("DBL"), which Wizards genuinely printed in black-and-white.
+**I first recommended simply adding DBL to restrictedEditions and had to correct myself** - that
+does far less than I claimed. restrictedEditions behaves TWO different ways:
+- BOOSTER path (RewardData allEditions removeIf) is EDITION-level -> no DBL packs. Works.
+- CARD path (`PaperCardPredicates.isObtainableNotRestricted`) is CARD-level: keeps a card if it has
+  ANY printing in an unrestricted set, then passes it through as whatever printing it already was -
+  the restricted one included. Since every DBL card is a reprint, that predicate passes all of them
+  and the black-and-white printing is served anyway. The reason I gave as reassurance ("they are
+  all reprints") is precisely WHY it fails. The codebase already documented this:
+  remapToEditionList's own comment cites "a VOW-restricted shop selling the DBL reprint".
+- Real fix: `CardUtil.remapAwayFromRestrictedEditions()`, mirroring remapToEditionList. Hooked into
+  `finishCandidate()` - the single funnel for a reward printing - and placed AFTER the variant
+  roll, since useAllCardVariants can otherwise pick a fresh printing and undo it (the exact bug the
+  existing edition remap already had to fix).
+- COSMETIC ONLY, confirmed to the user: gameplay comes from CardRules keyed by NAME, so all
+  printings play identically; fails OPEN (a card existing only in restricted sets keeps its
+  printing, never dropped). Rarity IS per-printing and 4 things read it (ante buy-back floor,
+  reward sort, SpellSmith input, pool rarity filters), so same-rarity printings are PREFERRED and
+  any-rarity is a logged fallback - a rarity change can never happen silently.
+- New `SettingData.avoidRestrictedEditionArt` (default ON) + a Settings checkbox
+  (lblAvoidRestrictedEditionArt). No restart, no invalidateCardPool() - it changes which PRINTING
+  resolves, not which cards are in the pool. Inert on planes with an empty restrictedEditions.
+- "DBL" added to the plane restrictedEditions (17 entries) so the booster path benefits too.
+- Applies to NEWLY generated cards only; DBL printings already in a collection stay as they are.
+
+### Packaging: two guards added after a real incident
+While the user was PLAYTESTING, a package run deleted their live plane folder and died on the
+locked jar. The user was then stuck - could not enter a town. The log proved it exactly: 18 x
+`FileNotFoundException: ...maps/map/towns/player_town.tmx`, one per attempt. Cause: the fast-path
+branch does `shutil.rmtree(plane_dir)` BEFORE the jar removal that hit the lock, so the maps were
+already gone by the time it errored - the 2026-08-21 hang incident in a new form.
+- `assert_target_not_in_use()` - refuses to package while the game is running, ordered BEFORE the
+  PACKAGE_OK removal and before any delete. **My first implementation was WRONG and testing it
+  against the live running game is what caught it**: I probed with open(path, "a+b"), but a running
+  JVM shares write access, so it reported "not running". Windows blocks DELETE/RENAME (Java does
+  not share DELETE) - exactly why the real failure surfaced as os.remove(). Now probes by renaming
+  to a sibling temp name and back, with the restore in a finally.
+- `assert_jar_is_fresh()` (added earlier this session) also proved itself: a failed Maven build had
+  previously produced a confident "Package OK" over a STALE jar containing none of that round.
+
+### Smaller items
+- `ToDo` removed from the shop lists - 24 entries across player_town.tmx (8) and
+  player_capital.tmx (16). It was referenced by commonShopList but absent from shops.json, so the
+  chooser would have offered an unresolvable option. The 5 castle .tmx hits were FALSE POSITIVES
+  (TalkToDoorGreeter) and the script correctly refused to touch them.
+- "Colour" -> "Color" throughout the shop chooser, including internal identifiers.
+- **Dialog option lists now scroll** above 6 options (user: the shop list "fills the screen and I
+  can't see them all"). MapDialog's own TODO admitted it was designed for "4-5 options". Wrapped in
+  a vertical ScrollPane ONLY past the threshold, so every pre-existing dialog keeps the old
+  direct-add path byte-identical.
+- Neutral-town repel rate now SELF-REPORTS: each [TFR-CaptureOdds] neutral line carries a running
+  "session repels N/M = X% (expected Y = Z%)" tally, expected accumulated per-roll rather than
+  assumed so it stays correct as the Armory mix varies.
+  - **Corrected an earlier analysis**: I reported 37% vs a designed 15-20% and flagged possible
+    retuning. That figure was WRONG - I had grepped ALL CaptureOdds outcomes, mixing neutral towns
+    (flat 15-20%) with player/AI-town rolls (10-90% by mage tier). Neutral-only on a clean log:
+    6 repels / 25 attacks vs 4.8 expected = 0.6 sigma. On target. No retuning needed.
+
+**Files touched**: WorldBackground.java, MapStage.java, MapDialog.java, TerritoryControl.java,
+EconomyBuildings.java, CardUtil.java, SettingData.java, SettingsScene.java, en-US.properties,
+config.json, player_town.tmx, player_capital.tmx, build_standalone.py.

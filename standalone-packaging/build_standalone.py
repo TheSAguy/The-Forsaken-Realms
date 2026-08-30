@@ -139,6 +139,61 @@ def assert_jar_is_fresh(built_jar):
           f"(newest: {os.path.relpath(newest_name, REPO)})")
 
 
+def assert_target_not_in_use(game_dir):
+    """Refuse to start if the live game folder is currently in use - i.e. the game is RUNNING.
+
+    Added 2026-08-30 after this bit for real: a package was started while the user was
+    playtesting, and died partway with
+        PermissionError: [WinError 32] ... used by another process: ...jar
+    By then PACKAGE_OK.txt had ALREADY been removed (it is deliberately removed first), so the
+    abort left the live folder without its playability marker - the half-rebuilt state the
+    marker exists to warn about. The jar itself happened to survive because the lock is what
+    blocked the write, but that was luck, not design: a collision a few files earlier would
+    have deleted real content out from under a running game (the 2026-08-21 hang incident).
+
+    The probe must test RENAME/DELETE, not write. Verified empirically against a live running
+    game: open(path, "a+b") SUCCEEDS on the jar a running JVM has loaded (Java opens it sharing
+    read and write), so a write probe reports "not running" and is useless here. What Windows
+    actually refuses is unlink/rename, because Java does not share DELETE - which is precisely
+    why the real failure surfaced as os.remove(). Renaming to a sibling temp name and back
+    exercises the same permission the packaging step needs, scoped to THIS folder - unlike
+    scanning for java processes, which would also trip on an unrelated build or IDE.
+    """
+    if not os.path.isdir(game_dir):
+        return  # first ever build - nothing to collide with
+    locked = []
+    for name in sorted(os.listdir(game_dir)):
+        if not name.lower().endswith(".jar"):
+            continue
+        path = os.path.join(game_dir, name)
+        probe = path + ".locktest"
+        try:
+            os.rename(path, probe)
+        except PermissionError:
+            locked.append(name)
+            continue
+        except OSError:
+            continue  # anything else (missing, odd perms) is not the case we are guarding
+        finally:
+            # Always put it back. Restored in `finally` so an unexpected error between the two
+            # renames can never leave the live folder with a misnamed jar.
+            if os.path.exists(probe):
+                try:
+                    os.rename(probe, path)
+                except OSError:
+                    fail(f"could not restore {name} after a lock probe - it is currently named "
+                         f"{os.path.basename(probe)} in {game_dir}. Rename it back before retrying.")
+    if locked:
+        fail(
+            "GAME IS RUNNING - refusing to package.\n"
+            f"  locked: {', '.join(locked)}\n"
+            f"  in    : {game_dir}\n"
+            "  Close The Forsaken Realms, then run this again.\n"
+            "  Nothing has been touched - the live folder is exactly as it was, PACKAGE_OK.txt\n"
+            "  included, so the running game is unaffected and still safe to keep playing."
+        )
+
+
 def git_overlay_list():
     """Non-adventure files under forge-gui/res that the mod changed vs upstream."""
     mb = subprocess.check_output(
@@ -175,6 +230,8 @@ def main():
     assert_jar_is_fresh(built_jar)
 
     game_dir = os.path.join(OUT_DIR, GAME_NAME)
+    # Also before the marker comes off, for the same reason as the freshness check above.
+    assert_target_not_in_use(game_dir)
     # PACKAGE_OK.txt is the playability contract (2026-08-21 incident: the user launched the
     # game from this folder while a rebuild's slow rmtree was mid-deletion - stock splash, then
     # a hang as files vanished underneath it). Removed FIRST, written LAST: the folder is only

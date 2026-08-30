@@ -364,7 +364,75 @@ public class CardUtil {
             if (variant != null)
                 candidate = remapToEditionList(variant, data.editions, r);
         }
+        // LAST word on the printing, deliberately after the variant roll - for the same reason the
+        // edition remap is re-applied to the variant result above: useAllCardVariants can pick a
+        // fresh printing and silently undo an earlier decision.
+        candidate = remapAwayFromRestrictedEditions(candidate, r);
         return candidate;
+    }
+
+    /**
+     * Swaps a printing from a RESTRICTED edition for an unrestricted printing of the same card
+     * (user request 2026-08-30, prompted by Innistrad: Double Feature - "DBL" - whose cards are
+     * genuinely printed in black-and-white and look wrong beside everything else).
+     * <p>
+     * Needed because restrictedEditions does NOT do this by itself. The main pool filter
+     * (PaperCardPredicates.isObtainableNotRestricted) is CARD-level: it keeps a card if it has ANY
+     * printing in an unrestricted edition, then lets it through as whatever printing the candidate
+     * already was - the restricted one included. Since every DBL card is a reprint, that predicate
+     * passes all of them and the black-and-white printing is served regardless. Only the BOOSTER
+     * path treats restrictedEditions as edition-level (RewardData's allEditions removeIf), which
+     * is why restricting DBL stops DBL packs but not DBL cards.
+     * <p>
+     * COSMETIC ONLY - no card is lost and no gameplay changes:
+     * <ul>
+     *   <li>Gameplay comes from CardRules, resolved from the card NAME, so every printing of a
+     *       card plays identically; only edition/art/rarity-stamp differ.</li>
+     *   <li>Fails OPEN, like remapToEditionList: a card existing ONLY in restricted editions keeps
+     *       its original printing rather than being dropped.</li>
+     *   <li>Rarity is per-printing and four things read it (ante buy-back floor, reward sort,
+     *       SpellSmith input, reward-pool rarity filters), so a same-rarity printing is PREFERRED
+     *       and any-rarity is only a fallback - this cannot silently reclassify a card's rarity
+     *       while a matching printing exists.</li>
+     * </ul>
+     * Player-toggleable via SettingData.avoidRestrictedEditionArt, since it is purely taste.
+     */
+    public static PaperCard remapAwayFromRestrictedEditions(PaperCard candidate, Random r) {
+        if (candidate == null || !Config.instance().getSettingData().avoidRestrictedEditionArt)
+            return candidate;
+        ConfigData configData = Config.instance().getConfigData();
+        String[] restricted = configData == null ? null : configData.restrictedEditions;
+        if (restricted == null || restricted.length == 0)
+            return candidate;
+        Set<String> restrictedSet = new HashSet<>(Arrays.asList(restricted));
+        if (!restrictedSet.contains(candidate.getEdition()))
+            return candidate; // already an acceptable printing - nothing to do
+
+        List<PaperCard> sameRarity = new ArrayList<>();
+        List<PaperCard> anyRarity = new ArrayList<>();
+        for (PaperCard printing : FModel.getMagicDb().getCommonCards().getAllCards(candidate)) {
+            if (restrictedSet.contains(printing.getEdition()))
+                continue;
+            anyRarity.add(printing);
+            if (printing.getRarity() == candidate.getRarity())
+                sameRarity.add(printing);
+        }
+        List<PaperCard> pool = !sameRarity.isEmpty() ? sameRarity : anyRarity;
+        if (pool.isEmpty())
+            return candidate; // only exists in restricted editions - keep it, never drop it
+        PaperCard remapped = pool.get(r.nextInt(pool.size()));
+        // Same per-(card, from, to) dedup as remapToEditionList - shop rewards regenerate from a
+        // stable seed on every town re-entry, so an un-deduped line repeats endlessly and buries
+        // every other [TFR-*] tag.
+        String key = "restricted|" + candidate.getCardName() + "|" + candidate.getEdition() + "|" + remapped.getEdition();
+        if (loggedRemaps.add(key)) {
+            System.out.println("[TFR-PrintRemap] restricted art: " + candidate.getCardName() + ": "
+                    + candidate.getEdition() + " -> " + remapped.getEdition()
+                    + (sameRarity.isEmpty()
+                        ? " (NO same-rarity printing; rarity " + candidate.getRarity() + " -> " + remapped.getRarity() + ")"
+                        : " (same rarity)"));
+        }
+        return remapped;
     }
 
     /**

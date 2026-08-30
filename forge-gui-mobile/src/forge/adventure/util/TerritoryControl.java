@@ -1321,6 +1321,16 @@ public class TerritoryControl {
     // the player-town reputation weighting that already lives there.
     private static final float NEUTRAL_TOWN_TARGET_WEIGHT = 0.85f;
 
+    // Running tally so the log can answer "is the repel rate actually on target?" by itself,
+    // instead of needing the lines grepped and the binomial worked out by hand (2026-08-30 user
+    // request: "can we add more stuff to the log to nail this down"). Session-scoped and
+    // deliberately NOT persisted - it is a diagnostic, and a per-session sample is exactly the
+    // unit you want when comparing observed vs expected. Expected is accumulated per-roll rather
+    // than assumed, because the per-town rate varies with whether that town kept its Armory.
+    private static int neutralDefenseAttempts = 0;
+    private static int neutralDefenseRepels = 0;
+    private static float neutralDefenseExpectedRepels = 0f;
+
     /** Is this POI a seeded Functioning Neutral Town (shops, not a bare ruin)? */
     private static boolean isFunctioningNeutralTown(PointOfInterest poi) {
         PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
@@ -1803,10 +1813,19 @@ public class TerritoryControl {
                 float defense = NEUTRAL_TOWN_BASE_DEFENSE + (armory ? NEUTRAL_TOWN_ARMORY_DEFENSE : 0f);
                 float captureChance = Math.max(0f, 1f - defense);
                 boolean attackerWins = world.getRandom().nextFloat() < captureChance;
+                neutralDefenseAttempts++;
+                neutralDefenseExpectedRepels += defense;
+                if (!attackerWins)
+                    neutralDefenseRepels++;
                 System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
                         + ") attacking NEUTRAL " + target.getDisplayName() + " (defense=" + defense
                         + (armory ? ", working Armory" : ", no Armory") + ", chance=" + captureChance
-                        + ") -> " + (attackerWins ? "CAPTURED" : "REPELLED"));
+                        + ") -> " + (attackerWins ? "CAPTURED" : "REPELLED")
+                        + String.format(" | session repels %d/%d = %.1f%% (expected %.1f = %.1f%%)",
+                                neutralDefenseRepels, neutralDefenseAttempts,
+                                100f * neutralDefenseRepels / neutralDefenseAttempts,
+                                neutralDefenseExpectedRepels,
+                                100f * neutralDefenseExpectedRepels / neutralDefenseAttempts));
                 if (!attackerWins)
                     return; // town holds; the mage is spent (caller removes the sprite regardless)
                 // Deliberately NO attackerSacksInstead() roll here: sacking is an established

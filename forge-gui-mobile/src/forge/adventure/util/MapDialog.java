@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -47,6 +49,10 @@ public class MapDialog {
     private Array<DialogData> data;
     private final int parentID;
     private final static float WIDTH = 250f;
+    /** Option count above which the button list is wrapped in a vertical ScrollPane instead of
+     *  being added straight to the dialog's button table (2026-08-30). At or below this the old
+     *  direct-add path is used unchanged, so no existing dialog's layout shifts. */
+    private final static int MAX_UNSCROLLED_OPTIONS = 6;
     public String questAccepted = "";
     static private final String defaultJSON = "[\n" +
             "  {\n" +
@@ -225,6 +231,20 @@ public class MapDialog {
         }
         D.getContentTable().add(A).width(width); //Add() returns a Cell, which is what the width is being applied to.
         if (dialog.options != null) {
+            // Scrollable option list (2026-08-30, user report on the new Card Shop chooser: "The
+            // Shop List does not scroll, so it fills the screen and I can't see them all"). This
+            // dialog's own TODO below admitted it was only ever designed for "4-5 options"; a
+            // category of 40+ shop types runs straight off the screen with the tail unreachable.
+            // Deliberately conditional: at or under the threshold the buttons are still added
+            // DIRECTLY to the button table exactly as before, so every pre-existing dialog in the
+            // game (quest choices, repair prompts, building menus) is byte-identical and carries
+            // no regression risk. Only genuinely long lists get wrapped.
+            int visibleOptions = 0;
+            for (DialogData option : dialog.options)
+                if (isConditionOk(option.condition))
+                    visibleOptions++;
+            boolean scrollOptions = visibleOptions > MAX_UNSCROLLED_OPTIONS;
+            Table optionHost = scrollOptions ? new Table() : D.getButtonTable();
             int i = 0;
             for (DialogData option : dialog.options) {
                 if (isConditionOk(option.condition)) {
@@ -247,12 +267,24 @@ public class MapDialog {
                     B.getTextraLabel().setWrap(true); //We want this to wrap in case it's a wordy choice.
                     buttons.add(B);
                     B.setVisible(false);
-                    D.getButtonTable().add(B).width(WIDTH - 10); //The button table also returns a Cell when adding.
+                    optionHost.add(B).width(WIDTH - 10); //The button table also returns a Cell when adding.
                     //TODO: Reducing the space a tiny bit could help. But should be fine as long as there aren't more than 4-5 options.
-                    D.getButtonTable().row(); //Add a row. Tried to allow a few per row but it was a bit erratic.
+                    optionHost.row(); //Add a row. Tried to allow a few per row but it was a bit erratic.
                     i++;
                     B.setDisabled(option.isDisabled);
                 }
+            }
+            if (scrollOptions && i > 0) {
+                // "nobg" so the parchment dialog behind shows through instead of the default
+                // dark window texture double-layering (same reasoning as InfoTextScene's).
+                ScrollPane optionScroller = new ScrollPane(optionHost, Controls.getSkin(), "nobg");
+                optionScroller.setScrollingDisabled(true, false); // vertical only
+                optionScroller.setFadeScrollBars(false);          // keep the bar visible as an affordance
+                // Capped so the dialog can still show its text and stay on screen; the list
+                // scrolls inside that box rather than growing the dialog past the viewport.
+                float maxHeight = Math.max(80f, stage.getHeight() * 0.45f);
+                D.getButtonTable().add(optionScroller).width(WIDTH).height(maxHeight);
+                D.getButtonTable().row();
             }
             D.addListener(new ClickListener() {
                 @Override

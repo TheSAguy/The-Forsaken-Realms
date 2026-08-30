@@ -1599,3 +1599,34 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   `isFunctioningNeutralTown()`; a defense roll in `onMageArrived()`'s neutral branch (flat repel
   chance, deliberately NOT a modifier on `attackerWinChance()` - see its comment) and the
   targeting weight applied in `dispatch()`'s existing weighted pick.
+
+## Round 70 (2026-08-30) - doodad bleed, cave despawn, restricted-edition art
+
+- **`stage/WorldBackground.java`** - `initialize()` now also clears `stage.getBackgroundSprites()`,
+  not just `getSpriteGroup()`. loadChunk() parents doodads into BOTH groups (SpriteLayer ->
+  foreground, BackgroundLayer -> background); only the foreground was cleared on reset, so
+  background actors from a previous game survived into the next one for every chunk that had been
+  loaded, and the array reallocation put them permanently beyond unLoadChunk()'s reach. This is the
+  actor-parenting counterpart to round 65's two per-chunk cache resets.
+- **`stage/MapStage.java`** - new `clearDungeonIfEmptied()`, called from `exitDungeon()`. Fires
+  `DungeonRotation.onDungeonClear()` when a dungeon is left with no live enemies AND no uncollected
+  RewardSprites. Previously onDungeonClear had exactly one trigger (the combat win where the killed
+  enemy was the last standing), so a dungeon emptied any other way never despawned.
+- **`util/MapDialog.java`** - option lists above `MAX_UNSCROLLED_OPTIONS` (6) are wrapped in a
+  vertical ScrollPane instead of being added straight to the button table; at or below the
+  threshold the original direct-add path is used unchanged, so no existing dialog's layout shifts.
+  Also handles the new `DialogData.ActionData.pinShopType` action.
+- **`util/CardUtil.java`** - new `remapAwayFromRestrictedEditions()`, called last inside
+  `finishCandidate()` (after the variant roll, which can otherwise undo it). Swaps a
+  restricted-edition printing for an unrestricted printing of the same card, preferring matching
+  rarity and failing open. Needed because `isObtainableNotRestricted` is CARD-level and lets a
+  restricted PRINTING through whenever the card has any unrestricted printing.
+- **`data/SettingData.java` / `scene/SettingsScene.java`** - new `avoidRestrictedEditionArt`
+  (default true) plus its Settings checkbox; `en-US.properties` gains
+  `lblAvoidRestrictedEditionArt`.
+- **`util/TerritoryControl.java`** - neutral-town [TFR-CaptureOdds] lines now carry a running
+  session repel tally with the per-roll accumulated expectation, so the observed-vs-designed rate
+  is readable without grepping and hand-computing it.
+- **`standalone-packaging/build_standalone.py`** (not an engine file, but a revert-watch item all
+  the same) - `assert_jar_is_fresh()` and `assert_target_not_in_use()`, both ordered before
+  PACKAGE_OK.txt is removed and before any delete, so either abort leaves the live folder intact.

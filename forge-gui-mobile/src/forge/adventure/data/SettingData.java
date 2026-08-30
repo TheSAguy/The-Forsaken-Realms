@@ -33,6 +33,14 @@ public class SettingData {
     // 2026-08-19); the per-plane fogOfWar config flag still gates the feature, so stock planes
     // are unaffected regardless of this user setting.
     public boolean fogOfWarEnabled = true;
+    // Restricted-edition ART avoidance (2026-08-30 user request, prompted by Innistrad: Double
+    // Feature - "DBL" - being genuinely printed in black-and-white). When on, a reward card that
+    // resolved to a printing from config.json's restrictedEditions is swapped for an unrestricted
+    // printing of the SAME card, preferring matching rarity. Purely cosmetic - see
+    // CardUtil.remapAwayFromRestrictedEditions() for why no card can be lost and no gameplay
+    // changes. Default ON (that is the behaviour this was asked for), and inert on any plane
+    // whose restrictedEditions list is empty, so stock planes are untouched either way.
+    public boolean avoidRestrictedEditionArt = true;
     // Inn tournament AI-vs-AI match simulation (2026-08-17 user spec: "I assume, currently it's
     // just a coin flip... have the two AI's actually simulate their match, behind the science...
     // By Default, have this unchecked"). Confirmed the assumption was correct - EventScene.

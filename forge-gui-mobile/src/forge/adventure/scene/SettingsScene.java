@@ -292,6 +292,17 @@ public class SettingsScene extends UIScene {
                 RewardData.invalidateCardPool();
             }
         });
+        // Restricted-edition art (2026-08-30 user request) - purely cosmetic, so it gets a plain
+        // toggle rather than a restart prompt. No invalidateCardPool() needed: this changes which
+        // PRINTING a reward resolves to at generation time, not which cards are in the pool.
+        addSettingField(localizer.getMessage("lblAvoidRestrictedEditionArt"),
+                Config.instance().getSettingData().avoidRestrictedEditionArt, new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Config.instance().getSettingData().avoidRestrictedEditionArt = ((CheckBox) actor).isChecked();
+                Config.instance().saveSettings();
+            }
+        });
         addCheckBox(localizer.getMessage("lblEnableUnknownCards") + " (" +
             localizer.getMessage("lblRestartRequired") + ")", ForgePreferences.FPref.UI_LOAD_UNKNOWN_CARDS, this::restartForge);
         addCheckBox(localizer.getMessage("lblEnableNonLegalCards") + " (" +
