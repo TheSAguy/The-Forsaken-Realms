@@ -14416,7 +14416,8 @@ Quitting to the OS looked fine precisely because that destroys the singletons.
   - Deliberately NOT broken out: `world/structures/masks/circle.png`/`ring.png`. Those are
     geometric placement stencils shared by ALL SEVEN biomes (every AI color too), not
     player-vs-neutral duplicate art - flagged to the user as a separate call rather than
-    silently cloning them.
+    silently cloning them. **User CONFIRMED 2026-08-29: leave them shared, no split needed.**
+    Settled - don't re-raise this.
 
 **Files touched**: GameStage.java, WorldBackground.java, WorldStage.java, WorldSave.java,
 world/biomes/player.json, world/structures/models/player.png (new).
@@ -14475,7 +14476,9 @@ Confirmed correct, and it was a genuine DOUBLE-COUNT, not just a philosophical p
   - `AdventurePlayer`'s sell-price formula (`200 + 50 * winLossRatio()`) also read those totals.
   - `SpawnTierWeighting.registerKill()` sits inside the same guard and is therefore excluded too
     - deliberate, same reasoning: it decays an enemy's future OVERWORLD spawn share, which a win
-    piloting an event-built deck should not drive.
+    piloting an event-built deck should not drive. Raised as my own judgment call rather than an
+    explicit instruction; **user CONFIRMED 2026-08-29: "Yes, tournaments should be excluded from
+    SpawnTierWeighting.registerKill()."** Settled - keep the exclusion.
 - **`TransitionScreen`**: explicitly-passed records (the tournament BRACKET standings EventScene
   supplies) now win outright instead of falling through to the global-record lookup, which used
   to overwrite them whenever any record existed under that enemy name. Same principle - a
