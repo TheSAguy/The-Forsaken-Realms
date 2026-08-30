@@ -72,6 +72,9 @@ public class AdventureEventController implements Serializable {
         Abandoned  // Ended without completing all matches
     }
 
+    /** Total duel wins past which Inns stop offering Jumpstart events (see createEvent). */
+    private static final int JUMPSTART_MAX_WINS = 25;
+
     private static AdventureEventController object;
 
     public static AdventureEventController instance() {
@@ -101,8 +104,15 @@ public class AdventureEventController implements Serializable {
         Random random = new Random(eventSeed);
 
         AdventureEventData e;
-        // After a certain number of wins, stop offering Jumpstart events
-        if (Current.player().getStatistic().totalWins() < 10 &&
+        // After a certain number of wins, stop offering Jumpstart events.
+        // Raised 10 -> 25 (user request 2026-08-29): Jumpstart is the ONLY event format that
+        // accepts a Bronze Challenge Coin, and the player is handed 3 of them by the intro quest
+        // (quests.json "freeChallengeCoins" grant). With the old cutoff plus the 30% roll below,
+        // a player could easily pass 10 wins having been offered Jumpstart once or twice, leaving
+        // the remaining coins permanently unspendable - which is exactly what prompted this.
+        // See also the Bronze Coin ante-ransom option in DuelScene, added the same round, which
+        // gives them a second, non-expiring use.
+        if (Current.player().getStatistic().totalWins() < JUMPSTART_MAX_WINS &&
                 random.nextInt(10) <= 2) {
             e = new AdventureEventData(eventSeed, EventFormat.Jumpstart);
         } else {

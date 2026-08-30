@@ -1570,3 +1570,32 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   direct-grant path and its null-icon floating status message are gone; the stale comment that
   justified them (claimed no Reward.Type and no atlas art - both untrue since 2026-08-10/27) is
   replaced with the real history.
+
+## Round 67 (2026-08-30) - coin ransom, neutral town defense, engine crash fix
+
+- **`forge-game/src/main/java/forge/game/zone/Zone.java`** (NEW stock-engine file for this fork)
+  - `getCardsAdded()`'s empty-zone fast path returned an immutable `List.of()` while its other
+  two returns hand back mutable `ArrayList` copies; `CardProperty.cardHasProperty()`'s
+  "ExiledWithSourceLKI" branch sorts the result in place, so that path threw
+  `UnsupportedOperationException` and killed the AI's `chooseSpellAbilityToPlay` future mid-turn
+  (8 occurrences in one user session log). Now returns `Lists.newArrayList()`. Upstream
+  Card-Forge bug, fixed locally - **revert-watch on the next upstream merge.**
+- **`util/AdventureEventController.java`** - Jumpstart offer gate 10 -> 25 wins, extracted to
+  `JUMPSTART_MAX_WINS`.
+- **`player/AdventurePlayer.java`** - new persisted `coinRansomedEnemies` (Set<String>, saved as
+  an ArrayList like `unlockedEditions`, containsKey-guarded on load for old saves) +
+  `payCoinRansom()`/`owesCoinRansom()`/`reclaimCoinRansom()`/`BRONZE_COIN_ITEM`; new transient
+  `suppressDefeatGoldLoss` consumed one-shot inside `defeated()` (gold only - life loss still
+  applies). Both cleared in `clear()`.
+- **`scene/DuelScene.java`** - "Use Bronze Coin" button on the ante-loss popup beside Buy Back;
+  `coinRansomEligible()` (ordinary duels only - no events/Arena/bosses, and requires a coin),
+  `payCoinRansomForAll()` (refunds the WHOLE ante, restoring to the active deck like Buy Back
+  does, then skips the remaining per-card popups). `showAnteCardPopup()` gained an
+  `onCoinRansom` parameter. Reclaim-on-win added to `afterGameEnd()`'s existing guarded funnel.
+- **`util/TownRestoration.java`** - new `ARMORY_SHOP_OBJECT_ID` (48) + `hasWorkingArmory()`,
+  reading the same `permanentlyBrokenShop_<id>` flag `seedFunctioningNeutralTowns()` writes.
+- **`util/TerritoryControl.java`** - `NEUTRAL_TOWN_BASE_DEFENSE` (0.15) /
+  `NEUTRAL_TOWN_ARMORY_DEFENSE` (0.05) / `NEUTRAL_TOWN_TARGET_WEIGHT` (0.85) +
+  `isFunctioningNeutralTown()`; a defense roll in `onMageArrived()`'s neutral branch (flat repel
+  chance, deliberately NOT a modifier on `attackerWinChance()` - see its comment) and the
+  targeting weight applied in `dispatch()`'s existing weighted pick.

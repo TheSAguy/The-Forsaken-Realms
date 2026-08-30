@@ -177,6 +177,30 @@ public class TownRestoration {
         return stage.checkQuestFlag(permanentlyBrokenShopFlag(objectId));
     }
 
+    /**
+     * The Armory's fixed object id inside player_town.tmx - the one slot of the 9 in
+     * PLAYER_TOWN_SHOP_OBJECT_IDS whose commonShopList is the single value "Equipment"
+     * (see that array's own comment: "8 possible shops and 1 armory").
+     */
+    public static final int ARMORY_SHOP_OBJECT_ID = 48;
+
+    /**
+     * Does this town still have a WORKING Armory - i.e. its Armory slot wasn't one of the 1-5
+     * slots seedFunctioningNeutralTowns() permanently broke? (2026-08-29 user spec: a neutral
+     * town's base defense gets a bonus "if they have a working Armory inside".)
+     * <p>
+     * Meaningful precisely because that breakage is random per town: every functioning neutral
+     * town is rendered from the same player_town.tmx and therefore always HAS an Armory slot, so
+     * mere presence would be a constant. Whether it survived seeding is the real variable -
+     * roughly two thirds of towns keep it (1-5 of 9 slots broken, uniformly chosen).
+     * Permanently-broken is terminal by design - these towns are never restored, so there is no
+     * repair path back to working.
+     */
+    public static boolean hasWorkingArmory(PointOfInterestChanges changes) {
+        return changes != null
+                && changes.getMapFlags().get(permanentlyBrokenShopFlag(ARMORY_SHOP_OBJECT_ID)) == null;
+    }
+
     // Overworld icon for a wasteland town the PLAYER has personally restored (2026-08-25 user
     // spec: "Currently we're using the Neutral one... since we now have neutral towns that work,
     // we need our own" - a restored player town and a functioning-neutral-seeded town previously

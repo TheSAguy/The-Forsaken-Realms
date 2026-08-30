@@ -239,7 +239,16 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
         }
 
         if (cardsAdded.isEmpty()) {
-            return List.of();
+            // MUTABLE empty list, not List.of() (fix 2026-08-30, from a real crash in the user's
+            // forge.log). Both other returns here hand back a mutable ArrayList copy, so callers
+            // reasonably treat the result as their own to mutate - CardProperty's
+            // "ExiledWithSourceLKI" branch sorts it in place. The immutable fast path made that
+            // throw UnsupportedOperationException, but ONLY when the zone happened to have no
+            // cards added this turn, which is why it survived: the crash killed the AI's
+            // chooseSpellAbilityToPlay future mid-turn (8 occurrences in one session).
+            // Sorting/mutating an empty list is a no-op, so this only changes the failure mode.
+            // Upstream Card-Forge bug, not mod-specific - worth reporting upstream.
+            return Lists.newArrayList();
         }
 
         // all cards if key == null

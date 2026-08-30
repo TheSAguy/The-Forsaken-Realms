@@ -322,6 +322,14 @@ public class DuelScene extends ForgeScene {
             // AdventurePlayer's sell-price formula scales off winLossRatio().
             // Arena is deliberately NOT excluded here - it runs on the player's own deck
             // (eventData == null), so it belongs in the record.
+            // Bronze Coin ante ransom reclaim (user spec 2026-08-29, user decision on the
+            // trigger: the coin comes back when you DEFEAT that enemy again, not merely meet
+            // them). Keyed on the same raw enemyName the statistics record uses, so it survives
+            // tiered display names. Arena is deliberately allowed to reclaim (only PAYING is
+            // restricted to ordinary duels) - beating the enemy that holds your coin should
+            // return it wherever that rematch happens.
+            if (winner && eventData == null)
+                Current.player().reclaimCoinRansom(enemyName);
             if ((enemy == null || enemy.getData().fixedDeck == null) && eventData == null) {
                 Current.player().getStatistic().setResult(enemyName, winner);
                 // Weighted spawn tier system, Layer 3 (2026-08-23) - same guarded funnel as the
@@ -365,7 +373,44 @@ public class DuelScene extends ForgeScene {
         }
         PaperCard card = cards.get(index);
         Runnable next = () -> showAnteCardsSequentially(cards, index + 1, won, onDone);
-        showAnteCardPopup(won ? "Card Gained" : "Card Lost", card, won, next);
+        // Bronze Coin ante ransom (user spec 2026-08-29). ONE coin recovers the whole ante, not
+        // one card - the user called this out explicitly ("Best out of 3 matches, you'd get both
+        // back, so take that into account"). So paying it here refunds every card in this loss's
+        // list and jumps straight to onDone, skipping the remaining per-card popups: there is
+        // nothing left to decide about them, and showing "Card Lost" for a card just recovered
+        // would be a lie.
+        Runnable ransomAll = won ? null : () -> {
+            payCoinRansomForAll(cards);
+            onDone.run();
+        };
+        showAnteCardPopup(won ? "Card Gained" : "Card Lost", card, won, next, ransomAll);
+    }
+
+    /**
+     * Is the Bronze Coin ransom offered for this loss at all? Ordinary duels only (user spec):
+     * never in Inn tournaments or Arena brackets - those already have their own entry-fee and
+     * bracket economies - and never against a boss, so the mechanic can't be used to trivialize
+     * a set-piece fight. NOTE: `boss` is the only "this is a special enemy" flag EnemyData
+     * carries (78 entries); there is no separate "unique" marker to also exclude on.
+     */
+    private boolean coinRansomEligible() {
+        return eventData == null && !isArena
+                && enemy != null && !enemy.getData().boss
+                && Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM);
+    }
+
+    /** Pays one Bronze Coin: every ante card from this loss comes back, and the defeat's gold
+     *  penalty is waived (life loss still applies - see AdventurePlayer.defeated()). */
+    private void payCoinRansomForAll(List<PaperCard> lostCards) {
+        Current.player().payCoinRansom(enemy != null ? enemy.getName() : null);
+        for (PaperCard lost : lostCards) {
+            Current.player().addCard(lost);
+            // Same in-place restore Buy Back does (2026-08-20 user report) - the cards were part
+            // of this deck when they were ante'd away, so recovering them puts them back there
+            // rather than only into the collection.
+            if (Current.player().getSelectedDeck() != null)
+                Current.player().getSelectedDeck().getMain().add(lost);
+        }
     }
 
     // Ante Buy Back price floor by rarity (2026-08-17 user report: 150% of a heavily
@@ -384,7 +429,7 @@ public class DuelScene extends ForgeScene {
         return tuning.anteBuyBackMinCommon;
     }
 
-    private void showAnteCardPopup(String title, PaperCard card, boolean won, Runnable onDone) {
+    private void showAnteCardPopup(String title, PaperCard card, boolean won, Runnable onDone, Runnable onCoinRansom) {
         Localizer localizer = Forge.getLocalizer();
         CardView cardView = CardView.getCardForUi(card);
 
@@ -445,20 +490,53 @@ public class DuelScene extends ForgeScene {
             message += "\nBuy Back available for " + buyBackPrice + " gold - you only have "
                     + Current.player().getGold() + ".";
         }
+        // Bronze Coin ante ransom (user spec 2026-08-29), offered alongside Buy Back on a loss.
+        // Recovers EVERY card lost this duel and waives the defeat gold penalty for one coin.
+        boolean offerCoinRansom = onCoinRansom != null && coinRansomEligible();
+        // FOptionPane has no per-button disabled state (see the Buy Back comment above), so the
+        // requested "grey it out when you have no coin" is expressed the way this same dialog
+        // already handles an unaffordable Buy Back (2026-08-22 fix): the button is omitted and
+        // the message says the option existed, so "no coin" reads differently from "no such
+        // feature". Only surfaced when a coin is the ONLY thing missing - not on bosses/events,
+        // where the option genuinely does not apply and mentioning it would just confuse.
+        if (!won && onCoinRansom != null && !offerCoinRansom
+                && eventData == null && !isArena && enemy != null && !enemy.getData().boss) {
+            message += "\nA Bronze Challenge Coin would buy back your whole ante - you have none.";
+        }
+        if (!won)
+            System.out.println("[TFR-CoinRansom] offering=" + offerCoinRansom
+                    + " enemy=" + (enemy == null ? "(null)" : enemy.getName())
+                    + " boss=" + (enemy != null && enemy.getData().boss)
+                    + " arena=" + isArena + " event=" + (eventData != null)
+                    + " hasCoin=" + Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM));
+
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
             buttons = sellPrice > 0
                     ? ImmutableList.of(localizer.getMessage("lblOK"), "Auto-Sell (" + sellPrice + " gold)")
                     : ImmutableList.of(localizer.getMessage("lblOK"));
+        } else if (offerBuyBack && offerCoinRansom) {
+            buttons = ImmutableList.of(localizer.getMessage("lblOK"),
+                    "Buy Back (" + buyBackPrice + " gold)", "Use Bronze Coin");
         } else if (offerBuyBack) {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Buy Back (" + buyBackPrice + " gold)");
+        } else if (offerCoinRansom) {
+            buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Use Bronze Coin");
         } else {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"));
         }
+        // Which button index the coin lands on depends on whether Buy Back is also showing.
+        final int coinButtonIndex = offerCoinRansom ? (offerBuyBack ? 2 : 1) : -1;
 
         FOptionPane popup = new FOptionPane(message, null, title, null, cardDisplay, buttons, 0, result -> {
             if (won && result == 1) {
                 Current.player().autoSellCards.add(card);
+            }
+            if (coinButtonIndex >= 0 && result == coinButtonIndex) {
+                // Recovers the WHOLE ante and skips the remaining per-card popups - onCoinRansom
+                // calls the sequence's own onDone itself, so this must NOT also run onDone below.
+                onCoinRansom.run();
+                return;
             }
             if (offerBuyBack && result == 1) {
                 Current.player().takeGold(buyBackPrice);

@@ -126,6 +126,33 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         clear();
     }
 
+    /** Bronze Coin ante ransom (2026-08-29) - see coinRansomedEnemies. */
+    public void payCoinRansom(String enemyName) {
+        removeItem(BRONZE_COIN_ITEM);
+        suppressDefeatGoldLoss = true;
+        if (enemyName != null && !enemyName.isEmpty())
+            coinRansomedEnemies.add(enemyName);
+        System.out.println("[TFR-CoinRansom] paid a Bronze Challenge Coin to " + enemyName
+                + " - ante recovered, defeat gold loss waived; marked for reclaim on a future win");
+    }
+
+    /** Does this enemy still hold a Bronze Coin the player paid them? */
+    public boolean owesCoinRansom(String enemyName) {
+        return enemyName != null && coinRansomedEnemies.contains(enemyName);
+    }
+
+    /** Beating a marked enemy returns the coin. Returns true if one was actually reclaimed. */
+    public boolean reclaimCoinRansom(String enemyName) {
+        if (!owesCoinRansom(enemyName))
+            return false;
+        coinRansomedEnemies.remove(enemyName);
+        addItem(BRONZE_COIN_ITEM);
+        System.out.println("[TFR-CoinRansom] reclaimed a Bronze Challenge Coin from " + enemyName);
+        return true;
+    }
+
+    public static final String BRONZE_COIN_ITEM = "Bronze Challenge Coin";
+
     public PlayerStatistic getStatistic() {
         return statistic;
     }
@@ -180,6 +207,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         AdventureQuestController.clear();
         unsupportedCards.clear();
         unlockedEditions.clear();
+        coinRansomedEnemies.clear();
+        suppressDefeatGoldLoss = false;
         researchEditionInProgress = null;
         researchStartDay = -1;
     }
@@ -203,6 +232,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final Set<String> unlockedEditions = new HashSet<>();
     private String researchEditionInProgress = null;
     private int researchStartDay = -1;
+
+    // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
+    // ante back from with a Bronze Challenge Coin; beating an enemy of that name later reclaims
+    // the coin (user decision: on DEFEATING them, not merely meeting them again). Keyed by name
+    // rather than instance for the same reason PlayerStatistic's win/loss record is - roaming
+    // enemies are catalog entries respawned freely, so a name is the only durable identity.
+    // Persisted with the same shape unlockedEditions above uses (stored as an ArrayList).
+    private final Set<String> coinRansomedEnemies = new HashSet<>();
+    // Runtime-only, deliberately NOT saved: set when the ransom is paid, consumed by the very
+    // next defeated() call a few frames later (the ante popup resolves before WorldStage/
+    // MapStage.setWinner() runs). Nothing should carry it across a save/load.
+    private transient boolean suppressDefeatGoldLoss = false;
 
     public void create(String n, Deck startingDeck, boolean male, int race, int avatar, boolean isFantasy,
                        boolean isUsingCustomDeck, DifficultyData difficultyData, AdventureModes adventureMode) {
@@ -937,6 +978,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             //noinspection unchecked
             unlockedEditions.addAll((java.util.List<String>) data.readObject("unlockedEditions"));
         }
+        // Bronze Coin ante ransom (2026-08-29). Absent on every pre-round-67 save - the
+        // containsKey guard keeps those loading cleanly with an empty set (no marked enemies),
+        // same forward-compatible shape unlockedEditions above uses.
+        coinRansomedEnemies.clear();
+        if (data.containsKey("coinRansomedEnemies")) {
+            //noinspection unchecked
+            coinRansomedEnemies.addAll((java.util.List<String>) data.readObject("coinRansomedEnemies"));
+        }
+        suppressDefeatGoldLoss = false;
         researchEditionInProgress = data.containsKey("researchEditionInProgress") ? data.readString("researchEditionInProgress") : null;
         researchStartDay = data.containsKey("researchStartDay") ? data.readInt("researchStartDay") : -1;
         if (migration) {
@@ -990,6 +1040,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.store("announceCustom", announceCustom);
 
         data.storeObject("unlockedEditions", new ArrayList<>(unlockedEditions));
+        data.storeObject("coinRansomedEnemies", new ArrayList<>(coinRansomedEnemies));
         if (researchEditionInProgress != null)
             data.store("researchEditionInProgress", researchEditionInProgress);
         data.store("researchStartDay", researchStartDay);
@@ -1373,7 +1424,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public boolean defeated() {
-        gold = (int) (gold - (gold * difficultyData.goldLoss));
+        // Bronze Coin ante ransom (2026-08-29): paying the coin buys off the GOLD penalty only -
+        // the life loss still applies, so a loss is never consequence-free. One-shot: consumed
+        // here so it can never leak into a later, unrelated defeat.
+        if (suppressDefeatGoldLoss) {
+            suppressDefeatGoldLoss = false;
+            System.out.println("[TFR-CoinRansom] defeat gold loss waived by Bronze Coin (gold kept: " + gold + ")");
+        } else {
+            gold = (int) (gold - (gold * difficultyData.goldLoss));
+        }
         life = (int) (life - (maxLife * difficultyData.lifeLoss));
         onLifeTotalChangeList.emit();
         onGoldChangeList.emit();

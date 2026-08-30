@@ -14560,3 +14560,78 @@ player could get Wood/Stone, without showing an icon" - then asked for the duel 
   it falls through to the 1000 default.
 
 **Files touched**: EnemySprite.java.
+
+## Round 67: Bronze Coin ante ransom, neutral town defense, Jumpstart gate, engine crash fix (2026-08-30)
+
+Local-repo-only round.
+
+- **Jumpstart offer gate raised 10 -> 25 total wins** (`JUMPSTART_MAX_WINS`). Investigation that
+  prompted it: the user asked whether the 3 Bronze Challenge Coins from the intro quest are used
+  for anything. They are - but ONLY as free entry to Jumpstart events, which are offered only
+  while `totalWins() < 10` AND on a 30% roll. Checked the user's own save: 17 wins, so Jumpstart
+  was already permanently unavailable and all 3 coins were dead weight. (Round 65 also widens the
+  window slightly - tournament wins no longer count toward totalWins.)
+- **NEW: Bronze Coin ante ransom** (user spec). On an ordinary duel LOSS, a "Use Bronze Coin"
+  button sits beside Buy Back: one coin recovers EVERY ante card lost that duel (user: "Best out
+  of 3 matches, you'd get both back") and waives the defeat GOLD penalty. Life loss still
+  applies, so losing is never free.
+  - Excluded from Inn tournaments (`eventData != null`), Arena (`isArena`), and bosses. NOTE:
+    `boss` is the ONLY special-enemy flag EnemyData carries (78 entries) - there is no separate
+    "unique" marker to also exclude on. Flagged to the user.
+  - The enemy is marked BY NAME (`AdventurePlayer.coinRansomedEnemies`, persisted like
+    `unlockedEditions`); DEFEATING an enemy of that name later returns the coin (user decision on
+    the trigger, asked explicitly - not on merely meeting them again). Name-keyed for the same
+    reason PlayerStatistic's record is: roaming enemies are catalog entries, so a name is the
+    only durable identity. Reclaim is allowed in Arena too - only PAYING is restricted.
+  - Gold-loss waiver is a transient one-shot flag consumed inside `AdventurePlayer.defeated()`,
+    which runs a few frames AFTER the ante popup resolves. Never saved.
+  - **"Grey it out" was not possible**: `FOptionPane` has no per-button disabled state (an
+    existing comment in this same dialog says so). Used the idiom the dialog already uses for an
+    unaffordable Buy Back: omit the button, and add "A Bronze Challenge Coin would buy back your
+    whole ante - you have none." so "no coin" reads differently from "no such feature".
+- **NEW: Functioning Neutral Town defense** (user spec). Previously they fell with NO roll at
+  all, identical to bare ruins. Now a flat 15% repel chance, +5% with a working Armory.
+  - **Flat, NOT a modifier on `attackerWinChance()`** - deliberate: subtracting 15% would take a
+    Common mage from 10% to -5%, making neutral towns immune to weak mages, far more than the
+    user's "keep them alive a little longer". Constants at the top of TerritoryControl.
+  - **Scope: functioning neutral towns only** (user decision, asked explicitly). Bare ruins still
+    fall with no roll, so AI expansion into empty wasteland is unchanged.
+  - "Working Armory" is genuinely meaningful, not a constant: every neutral town is built from
+    the same player_town.tmx and ALWAYS has an Armory slot, but `seedFunctioningNeutralTowns()`
+    permanently breaks 1-5 of the 9 shop slots at random, and slot 48 IS the Armory. So the check
+    is "did it survive seeding" - roughly two thirds do. New `TownRestoration.hasWorkingArmory()`.
+  - Deliberately NOT made sackable: they were never razeable before and it was not requested.
+- **NEW: neutral towns 15% less likely to be targeted** - a 0.85 weight multiplier in dispatch()'s
+  existing weighted candidate pick, mutually exclusive with the player-town reputation weighting
+  by construction (a town cannot be both restored and neutral-seeded).
+
+### Round 67 log review (user supplied a live 200-day forge.log)
+
+- **ENGINE CRASH FIXED (upstream Card-Forge bug, not mod-specific)**: 8x
+  `UnsupportedOperationException` killing `AiController.chooseSpellAbilityToPlay` mid-turn.
+  `Zone.getCardsAdded()` returned an IMMUTABLE `List.of()` in its empty-zone fast path while both
+  other returns hand back mutable ArrayList copies; `CardProperty`'s "ExiledWithSourceLKI" branch
+  then sorts it in place. Only triggered when the zone had no cards added that turn, which is why
+  it survived upstream. Fixed by returning `Lists.newArrayList()` - sorting an empty list is a
+  no-op, so this only changes the failure mode. **Zone.java is a stock engine file - revert-watch
+  on the next upstream merge.** Worth reporting upstream.
+- **Validated the neutral-town change against real data**: 231 towns captured over 200 days
+  (Red 49 / Green 48 / White 47 / Black 45 / Blue 42), with **0 reverts and 0 sacks** - i.e.
+  every single one was a neutral/ruined town taken with no roll and no resistance, while the
+  player held 1 town. That branch logs nothing, which is why `[TFR-CaptureOdds]` never appears in
+  the log despite 504 targeting events (I initially misread this as "zero captures" and corrected
+  it after finding the 231 `connectCapturedTownByRoad` road-build lines).
+- **Perf anomaly flagged, not fixed**: days 75-85 ran 2.6-5.7s per day tick (worst: day 82,
+  territory=4045ms + dungeons=1617ms) against a 50-170ms baseline everywhere else, and it
+  resolved on its own afterward even though territory radius kept growing (100 -> 220 of 450).
+  Looks like several colors hitting "full re-contest" in the same window (298 total, largest
+  single claim 1371 tiles). Reported to the user rather than speculatively optimized.
+- **Resource spawns confirmed at 60, not 50** (user asked to check): `TuningData.maxResourceSpawns'
+  = 60`, and all 28 weekly refill lines in the log read `pool=60/60`. The user seeing "not many"
+  is expected, not a bug: 60 spawns over 287,211 land tiles at 2.1% explored works out to ~1.3
+  spawns inside their revealed area at any moment.
+- Also seen, left alone: 5x AI `TimeoutException` (self-recovering, thinking-budget), player spawn
+  rank still 0.5 (needs 20 wins, has 17).
+
+**Files touched**: AdventureEventController.java, DuelScene.java, AdventurePlayer.java,
+TerritoryControl.java, TownRestoration.java, Zone.java (stock engine).

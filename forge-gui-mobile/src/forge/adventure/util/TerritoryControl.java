@@ -1065,6 +1065,14 @@ public class TerritoryControl {
                 boolean playerOwned = TownRestoration.isTownRestored(
                         WorldSave.getCurrentSave().peekPointOfInterestChanges(candidate.getID()));
                 float weight = playerOwned ? ColorReputation.getPlayerTownAttackWeight(color) : 1f;
+                // Functioning Neutral Towns are 15% less likely to be picked (user spec
+                // 2026-08-29, same "keep neutral towns alive a little longer" goal as their new
+                // base defense). Mutually exclusive with the player-owned branch above by
+                // construction - isFunctioningNeutralTown() requires NOT restored - so the two
+                // weightings can never compound on one town. Bare ruins keep weight 1.0, so this
+                // also nudges expansion toward empty land rather than settled neutral towns.
+                if (!playerOwned && isFunctioningNeutralTown(candidate))
+                    weight *= NEUTRAL_TOWN_TARGET_WEIGHT;
                 weights.add(weight);
                 totalWeight += weight;
             }
@@ -1290,6 +1298,35 @@ public class TerritoryControl {
     // - same -5% value, no separate attacker-side bonus added to the capture roll (only the guard
     // fight got the +10% attacker buff; extending that too wasn't asked for).
     private static final float OUTLOOK_DEFENSE_BONUS = 0.05f;
+
+    // Functioning Neutral Town defense (user spec 2026-08-29: "Give Neutral towns a 15%
+    // Natural/Base Defense and an additional 5% if they have a working Armory inside... This
+    // should keep Neutral towns alive a little longer").
+    //
+    // Deliberately a FLAT repel chance, not a modifier on attackerWinChance(): these towns
+    // previously fell with no roll whatsoever (100% capture), and the user's framing is a
+    // property of the TOWN ("natural/base defense"), not a tier-vs-tier matchup. Subtracting 15%
+    // from attackerWinChance() instead would have made a Common-tier mage's 10% go negative -
+    // neutral towns would be outright immune to weak mages, which is far more than "a little
+    // longer". So: the attacker takes the town on 85% (80% with a working Armory), regardless of
+    // tier. Tunable here if that reads as too weak/strong in play.
+    //
+    // Scope (user decision, asked explicitly): FUNCTIONING neutral towns only - the seeded ones
+    // with working shops. Bare ruined/unclaimed wasteland towns still fall with no roll at all,
+    // so ordinary AI expansion into empty land is completely unchanged by this.
+    private static final float NEUTRAL_TOWN_BASE_DEFENSE = 0.15f;
+    private static final float NEUTRAL_TOWN_ARMORY_DEFENSE = 0.05f;
+    // Same round/spec: "give Neutral towns a -15% less likely to be targeted by AI attacks".
+    // Applied as a weight multiplier in dispatch()'s existing weighted candidate pick, alongside
+    // the player-town reputation weighting that already lives there.
+    private static final float NEUTRAL_TOWN_TARGET_WEIGHT = 0.85f;
+
+    /** Is this POI a seeded Functioning Neutral Town (shops, not a bare ruin)? */
+    private static boolean isFunctioningNeutralTown(PointOfInterest poi) {
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+        return TownRestoration.isNeutralSeededTown(changes)
+                && !TownRestoration.isTownRestored(changes);
+    }
 
     private static boolean townHasOutlook(PointOfInterest target) {
         PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID());
@@ -1756,6 +1793,26 @@ public class TerritoryControl {
                     return;
                 }
                 sackedInstead = attackerSacksInstead(world);
+            } else if (isFunctioningNeutralTown(target)) {
+                // Functioning Neutral Town defense (2026-08-29 user spec) - see the
+                // NEUTRAL_TOWN_BASE_DEFENSE comment for why this is a flat repel chance rather
+                // than a modifier on attackerWinChance(). Bare ruins never reach here: they fall
+                // through unchanged to the unconditional claim below, exactly as before.
+                PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID());
+                boolean armory = TownRestoration.hasWorkingArmory(changes);
+                float defense = NEUTRAL_TOWN_BASE_DEFENSE + (armory ? NEUTRAL_TOWN_ARMORY_DEFENSE : 0f);
+                float captureChance = Math.max(0f, 1f - defense);
+                boolean attackerWins = world.getRandom().nextFloat() < captureChance;
+                System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
+                        + ") attacking NEUTRAL " + target.getDisplayName() + " (defense=" + defense
+                        + (armory ? ", working Armory" : ", no Armory") + ", chance=" + captureChance
+                        + ") -> " + (attackerWins ? "CAPTURED" : "REPELLED"));
+                if (!attackerWins)
+                    return; // town holds; the mage is spent (caller removes the sprite regardless)
+                // Deliberately NO attackerSacksInstead() roll here: sacking is an established
+                // player-vs-AI war mechanic, and neutral towns were never sackable before this
+                // round. Adding the defense roll shouldn't quietly also make them razeable - a
+                // successful attack claims the town exactly as it always did.
             }
             if (sackedInstead) {
                 // Player-owned towns are renamed only at the DISPLAY level by restoration - the
