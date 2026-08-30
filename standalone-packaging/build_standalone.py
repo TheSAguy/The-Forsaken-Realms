@@ -79,6 +79,66 @@ def find_jar(folder):
     return jars[0]
 
 
+def assert_jar_is_fresh(built_jar):
+    """Refuse to package a jar older than the Java source it was supposedly built from.
+
+    Added 2026-08-30 after a real incident: a Maven build FAILED (a truncated
+    checkstyle-result.xml aborted the reactor at forge-ai), the calling shell chain read the
+    exit code of a pipeline's last command rather than Maven's and didn't notice, and this
+    script then happily packaged the PREVIOUS jar and wrote PACKAGE_OK.txt. The result was a
+    confident "safe to play" over a build containing none of that round's code - exactly the
+    failure mode the marker exists to prevent.
+
+    The pre-existing in-jar marker checks prove the jar is INTERNALLY consistent; nothing
+    proved it was CURRENT. Comparing mtimes catches "compile failed, stale artifact left
+    behind" without this script needing to interpret Maven exit codes, which is the case that
+    actually bit.
+
+    Deliberately checks .java only, not plane resources: those are copied into the game folder
+    by this script rather than compiled into the jar, so a resource edited after the last
+    compile is legitimately newer and must not trip the guard.
+    """
+    jar_mtime = os.path.getmtime(built_jar)
+    newest_name, newest_mtime = None, 0.0
+    for module in ("forge-gui-mobile", "forge-gui", "forge-game", "forge-core", "forge-ai"):
+        root = os.path.join(REPO, module)
+        if not os.path.isdir(root):
+            continue
+        for dirpath, dirnames, filenames in os.walk(root):
+            # Never walk into build output - target/ holds generated sources whose mtimes
+            # track the build itself and would make this check meaningless.
+            dirnames[:] = [d for d in dirnames if d != "target"]
+            for fn in filenames:
+                if not fn.endswith(".java"):
+                    continue
+                p = os.path.join(dirpath, fn)
+                try:
+                    m = os.path.getmtime(p)
+                except OSError:
+                    continue
+                if m > newest_mtime:
+                    newest_name, newest_mtime = p, m
+
+    if newest_name is None:
+        print("WARNING: no .java sources found to compare against - skipping freshness check")
+        return
+    if newest_mtime > jar_mtime:
+        fail(
+            "STALE JAR - refusing to package.\n"
+            f"  jar    : {built_jar}\n"
+            f"           {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(jar_mtime))}\n"
+            f"  source : {os.path.relpath(newest_name, REPO)}\n"
+            f"           {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(newest_mtime))}\n"
+            f"  Source is {(newest_mtime - jar_mtime) / 60.0:.1f} min newer than the jar, so the\n"
+            "  last build almost certainly FAILED and left the previous jar behind.\n"
+            "  Re-run:  mvn -pl forge-gui-mobile-dev -am package -DskipTests\n"
+            "  Confirm it prints BUILD SUCCESS, then package again.\n"
+            "  (The live game folder has NOT been touched - it is still whatever was there before.)"
+        )
+    print(f"jar freshness OK - jar is newer than every .java source "
+          f"(newest: {os.path.relpath(newest_name, REPO)})")
+
+
 def git_overlay_list():
     """Non-adventure files under forge-gui/res that the mod changed vs upstream."""
     mb = subprocess.check_output(
@@ -109,6 +169,10 @@ def main():
     if os.path.basename(built_jar) != jar_name:
         fail(f"version mismatch: built {os.path.basename(built_jar)} vs base install {jar_name} - "
              "the launcher shells target the base install's jar name exactly")
+    # Ordered deliberately BEFORE the PACKAGE_OK marker is removed and before anything is
+    # copied or deleted: a stale-jar abort must leave the existing live folder completely
+    # untouched and still playable, not half-rebuilt with its marker stripped.
+    assert_jar_is_fresh(built_jar)
 
     game_dir = os.path.join(OUT_DIR, GAME_NAME)
     # PACKAGE_OK.txt is the playability contract (2026-08-21 incident: the user launched the
