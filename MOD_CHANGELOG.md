@@ -14635,3 +14635,36 @@ Local-repo-only round.
 
 **Files touched**: AdventureEventController.java, DuelScene.java, AdventurePlayer.java,
 TerritoryControl.java, TownRestoration.java, Zone.java (stock engine).
+
+## Round 68: tournament refund message, Bronze Coin as Mythic Armory item, shard pickups restored (2026-08-30)
+
+Local-repo-only round. Three smaller items ahead of the card-shop-chooser build.
+
+- **Correction to round 67's tutorial analysis.** I reported that the tutorial path never grants
+  the Colorless rune / 5 Challenge Coins and only "Skip Tutorial" did. **That was wrong** - the
+  user tested both paths and gets the items either way. Root cause of my error: the sweep used
+  `--include=*.json`, but the Warden's grant lives in `maps/map/main_story/spawn.tmx`, a Tiled
+  map. Lesson: this plane keeps real dialog/actions inside .tmx files, not just quests.json -
+  never conclude "feature X is not granted anywhere" from a JSON-only search.
+- **Inn tournament coin refund now names the refund** (user request). The early-loss safety net
+  (round 63) handed the Coin back silently, so it just looked like the coin was lost. Message now
+  reads "...Here's your <item> back...", using the actual item name so it's correct for
+  Bronze/Silver/Gold. EventScene.java.
+- **Bronze Challenge Coin is now a Mythic Armory item** (user request). Two edits were needed,
+  not one: rarity Common -> Mythic, AND dropping `excludeFromGeneralSale` - `ItemListData.
+  getItemNamesByRarity()` filters that flag out, so the rarity change alone would have done
+  nothing. Verified the blast radius first: `itemRarity` pools feed ONLY the 4 Armory shop
+  variants (Equipment/EquipmentL2/ArmoryCommon/ArmoryCommonL2), so this stays Armory-scoped.
+  - Explicit `cost: 15000` added. `ItemData.cost` defaults to 1000, which would have made it
+    absurdly cheap next to Mythic peers (6,000-80,000). Mid-range chosen to reflect a strong but
+    RECOVERABLE insurance item; flagged to the user as tunable.
+  - Description rewritten - it was the only Coin whose text never said what it was for.
+  - Expected frequency: 2% Mythic roll x 1-of-28 sellable Mythics = ~0.5% per Armory restock.
+- **Dungeon shard pickups are pure shards again** (user request: "This was the jimmy rig we had
+  before we added those as their own resources"). NO code change needed - `resourceLootVarietyEnabled`
+  in config.json flipped true -> false. That flag gated `RewardData.shardsSubstituteType()`'s 25%
+  roll converting shards to Stone in `/cave/` maps and Wood in `/fort/` maps. The code stays
+  intact and per-plane opt-in, so it is one flag to reverse. Comment added at the code site
+  recording why it is off, so nobody re-enables it without the context.
+
+**Files touched**: EventScene.java, RewardData.java (comment only), config.json, items.json.

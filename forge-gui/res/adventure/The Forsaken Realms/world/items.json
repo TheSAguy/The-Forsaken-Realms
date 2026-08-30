@@ -5359,10 +5359,10 @@
     },
     {
         "name":  "Bronze Challenge Coin",
-        "excludeFromGeneralSale":  true,
-        "description":  "A lightweight coin made of bronze",
+        "description":  "Free entry to a Jumpstart event. Or, after losing a duel, hand it to the victor to buy back every card you anted and keep your gold - beat them later to take it back.",
         "iconName":  "BronzeChallengeCoin",
-        "rarity":  "Common"
+        "cost":  15000,
+        "rarity":  "Mythic"
     },
     {
         "name":  "Sir Donovan\u0027s Amulet",

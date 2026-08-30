@@ -694,9 +694,13 @@ public class EventScene extends MenuScene implements IAfterMatch {
             if (currentEvent.enteredWithCoinItem != null && currentEvent.currentRound < 3
                     && innTutorialQuestActive()) {
                 AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
-                GameHUD.getInstance().addNotification("Tough luck - this one's on me. But "
-                        + "winning an Inn tournament is still the best way to build a good deck "
-                        + "early on.");
+                // Name the refund explicitly (user request 2026-08-30): the coin was handed back
+                // silently, so the player had no way to tell the safety net had fired at all - it
+                // just looked like the coin was gone. Uses the actual item name so it reads
+                // correctly for Bronze/Silver/Gold alike.
+                GameHUD.getInstance().addNotification("Tough luck - this one's on me. Here's your "
+                        + currentEvent.enteredWithCoinItem + " back. Winning an Inn tournament is "
+                        + "still the best way to build a good deck early on.");
             }
         }
 

@@ -222,7 +222,7 @@
     "resourceSpawnsEnabled": true,
     "dungeonRotationEnabled": true,
     "sideQuestTimerEnabled": true,
-    "resourceLootVarietyEnabled": true,
+    "resourceLootVarietyEnabled": false,
     "editionProgressionEnabled": true,
     "armoryGuardsEnabled": true,
     "shopTypeRerollEnabled": true,

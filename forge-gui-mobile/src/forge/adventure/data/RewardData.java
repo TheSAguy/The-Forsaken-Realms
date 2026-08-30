@@ -531,6 +531,14 @@ public class RewardData implements Serializable {
         return ret;
     }
 
+    // DISABLED for The Forsaken Realms 2026-08-30 (config.json resourceLootVarietyEnabled ->
+    // false), user request: "When picking up Shards in Dungeons, I still sometimes get Wood or
+    // Stone. This was the jimmy rig we had before we added those as their own resources. So
+    // please restore all Shard pickups in dungeons as shards." Wood/Stone now have first-class
+    // reward types, their own world spawns and their own loot tiles, so a shard pickup quietly
+    // paying out something else is a leftover from before any of that existed. Code left intact
+    // and still opt-in per plane - flipping the flag back on restores it with no code change.
+    //
     // Resource loot variety (2026-08-11 user request, opt-in resourceLootVarietyEnabled - same
     // "must not affect Shandalar or any other stock plane" rule every mod feature follows):
     // "go through all Caves and replace 25% of Shards with Stone, and 25% of Shards in Forts with
