@@ -723,7 +723,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             started = false;
             duelScene.initDuels(WorldStage.getInstance().getPlayerSprite(), enemy, true, null);
             Forge.switchScene(duelScene);
-        }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())));
+        }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())
+                .withEnemyStatKey(enemy.getName())));
     }
 
     public boolean start() {

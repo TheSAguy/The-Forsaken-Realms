@@ -169,6 +169,16 @@ public class PlayerStatistic implements SaveFileContent {
 
     public void clear() {
         winLossRecord.clear();
+        // completedEvents was NOT cleared here (fixed 2026-08-29, user request that a New Game /
+        // New Game+ reset these values). It is persisted by save() and restored by load() just
+        // like winLossRecord, and it backs every event statistic on the Statistics screen
+        // (eventWins/eventLosses/eventMatchWins/eventMatchLosses). Because a new game reuses the
+        // static WorldSave's final AdventurePlayer - and therefore THIS same PlayerStatistic
+        // instance (see WorldSave.generateNewWorld -> player.create -> AdventurePlayer.clear) -
+        // a fresh character inherited the previous run's entire tournament history while its
+        // per-enemy record correctly started empty. Matters more since tournament results are now
+        // tracked ONLY here (see DuelScene.afterGameEnd).
+        completedEvents.clear();
     }
 
     public void setResult(AdventureEventData completedEvent) {

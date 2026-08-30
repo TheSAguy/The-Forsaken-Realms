@@ -308,10 +308,27 @@ public class DuelScene extends ForgeScene {
             // mode the recorded result was whatever the AI-piloted seat happened to do).
             // EnemyData.fixedDeck is only ever set on Deck Tester's synthetic per-fight clone
             // (see its own field comment), making it the reliable discriminator here.
-            if (enemy == null || enemy.getData().fixedDeck == null) {
+            // Inn tournament matches are excluded alongside Deck Tester (user decision
+            // 2026-08-29): a tournament is played with eventData.registeredDeck - the sealed/draft
+            // deck the EVENT built (see initDuels: playerDeck is overwritten with a copy of it) -
+            // not the player's own adventure deck, so those results say nothing about how the
+            // player's real deck fares against that enemy. They were also being DOUBLE-COUNTED:
+            // PlayerStatistic already tracks every event match independently via completedEvents
+            // (eventMatchWins()/eventMatchLosses() sum each event's own matchesWon/matchesLost),
+            // while this line additionally folded them into winLossRecord - the same map that
+            // totalWins()/totalLoss()/winLossRatio() sum. Two knock-on effects that also stop
+            // now: PlayerStatistic.rank() (overworld spawn difficulty) reads those summed wins, so
+            // grinding tournaments was quietly making the overworld harder, and
+            // AdventurePlayer's sell-price formula scales off winLossRatio().
+            // Arena is deliberately NOT excluded here - it runs on the player's own deck
+            // (eventData == null), so it belongs in the record.
+            if ((enemy == null || enemy.getData().fixedDeck == null) && eventData == null) {
                 Current.player().getStatistic().setResult(enemyName, winner);
                 // Weighted spawn tier system, Layer 3 (2026-08-23) - same guarded funnel as the
-                // win/loss record above (Deck Tester excluded, only a confirmed win registers).
+                // win/loss record above (Deck Tester + tournaments excluded, only a confirmed win
+                // registers). Tournaments are excluded for the same reason: registerKill() decays
+                // an enemy's future OVERWORLD spawn share, which a win piloting an event-built
+                // deck shouldn't drive.
                 // enemy can be null here (see the guard above); WorldData.getEnemy() resolves the
                 // EnemyData by name in that case - registerKill() itself is null-safe either way.
                 if (winner)

@@ -14367,3 +14367,146 @@ Local-repo-only round. User reported a crash clicking a just-bought booster in i
     override file needed individual hardening for.
 
 **Files touched**: InventoryScene.java (symptom guard), SettingsScene.java (root-cause fix).
+
+## Round 65: save/load state-bleed fixes, player WFC model breakout (2026-08-29)
+
+Local-repo-only round. User report: after changing the player doodads and capturing a neutral
+town, loading a save WITHOUT quitting to the OS left the player doodads/terrain on the neutral
+town's area instead of reverting - and separately, an F9-console `fly` was still active after
+the same load. Quitting fully and relaunching was always clean.
+
+**One root cause, two symptoms.** `WorldStage`/`WorldBackground`/`GameStage` are app-session
+singletons - `getInstance()` never tears them down between games - so the in-game Load menu
+swaps `World`'s data underneath them while every cache and timer they hold survives untouched.
+Quitting to the OS looked fine precisely because that destroys the singletons.
+
+- **Fixed: captured-town ground recolor survived a load.** `WorldBackground` caches per-chunk
+  rendering in TWO independent places: the decoration-Actor lists
+  (`chunksSprites`/`chunksSpritesBackground`, rocks/trees/flowers) and the baked GROUND texture
+  (`chunks[][]`, the biome-tinted terrain underneath). A 2026-08-25 fix already force-refreshed
+  the FIRST on every load - the second was never covered, so only the doodads reverted and the
+  `player`-gold ground stayed. New `WorldBackground.invalidateChunkTexture()` (dispose + null the
+  slot, letting `getChunkTexture()` rebuild lazily - the same evict pattern `onTileRevealed()`
+  already uses off-window) plus a `WorldStage.invalidateBackgroundChunkTexture()` bridge, both
+  wired into `WorldSave.load()`'s existing post-load chunk sweep alongside the doodad half.
+- **Fixed: `fly`/`sprint`/`hide` debug timers survived a load.** `GameStage.currentModifications`
+  is runtime-only and correctly never saved, but its `WorldSave.onLoad()` handler only reset the
+  `player` reference - the countdown just kept running across the load. Now cleared there too.
+  No `onRemoveEffect()` cleanup needed: the same handler discards and recreates the player Actor,
+  so Hide's alpha and Fly/Sprint's particles go with it.
+
+- **Player WFC structure model broken out** (user request, completes the round-62 doodad split).
+  Audited every asset the `player` biome references against `colorless` (waste/neutral): the
+  terrain tileset, structure art, and doodads were already fully separate files with their own
+  pixels (`player_terrain.png`, `player_structures.png`, `player_doodads.png` - md5-verified
+  distinct, and `terrain.atlas` in `common` carries no `Player` regions). The ONE remaining
+  shared asset was `world/structures/models/colorless.png`, the WFC source model both biomes'
+  `sourcePath` pointed at - exactly the round-62 "editing one edits both" situation, and the only
+  model in the catalog serving two biomes (every AI color already has its own).
+  New plane-local `world/structures/models/player.png` (verbatim copy, md5-identical, so
+  generation output is unchanged); `player.json`'s two `sourcePath` entries repointed.
+  `Config.getFile()` resolves per-FILE plane-then-common, so `colorless.png` keeps resolving from
+  `common` for the waste biome - verified, and `BiomeStructure.sourceImage()` goes through that
+  same call (its `sourceImagePath()` sibling, which does NOT fall back, has no callers).
+  - **Landmine checked**: `World.repaintBiomeAroundTown()`'s `keepWasteUnder` border trick is
+    documented as depending on "player's terrain/structure table layout is an exact colorless
+    clone (1+2+7+7 regions)". Re-verified after the change - still 2 terrain entries and 7+7
+    `mappingInfo` regions on both sides. Swapping `sourcePath` to an identical copy touches the
+    WFC layout blueprint only, never the region tables.
+  - Deliberately NOT broken out: `world/structures/masks/circle.png`/`ring.png`. Those are
+    geometric placement stencils shared by ALL SEVEN biomes (every AI color too), not
+    player-vs-neutral duplicate art - flagged to the user as a separate call rather than
+    silently cloning them.
+
+**Files touched**: GameStage.java, WorldBackground.java, WorldStage.java, WorldSave.java,
+world/biomes/player.json, world/structures/models/player.png (new).
+
+### Round 65 addendum: pre-fight VS screen always showed "0 - 0" (same day)
+
+User report: "the prefight screen seems to always show 0 - 0 for past records. I know I've
+fought these guys before. The other screen (quests or status) shows the correct record."
+
+- **Root cause: one field served as both the display label and the statistics identity key.**
+  `TransitionScreen.enemyAvatarName` is drawn on screen AND used as the `getWinLossRecord()` map
+  key. Every overworld/dungeon/Arena caller passes `getTieredDisplayName()` for that param, but
+  `DuelScene.afterGameEnd()` writes the record under the enemy's RAW `getName()`. With this
+  plane's `showEnemyTierInName: true`, the write key is `"Adept Red Wizard"` and the read key is
+  `"Red Wizard (Adept)"` - the `get()` always missed and fell through to the hardcoded "0 - 0"
+  default. `PlayerStatisticScene` iterates the map's entrySet directly rather than looking up by
+  name, which is exactly why the Statistics screen was right while the VS screen was wrong -
+  the discriminating detail in the report.
+  - Notable: `EnemyData.getTieredDisplayName()`'s own doc comment already declares it is "Never
+    used for identity - quest matching, deck-number keys, .tmx enemy references and
+    WorldData.getEnemy() lookups all use the raw name". This VS screen was the single place that
+    contract was violated, and only because label and key shared one variable.
+- **Fix**: new `TransitionScreen.enemyStatKey` + fluent `withEnemyStatKey()`, defaulting to
+  `enemyAvatarName` so nothing un-updated changes behavior. The 5 match-transition sites that
+  pass a tiered label (WorldStage x3 - roaming collision, forced Capitol duel, chest duel;
+  MapStage - dungeon/POI encounters; ArenaScene) now also pass the raw name as the key.
+- **Checked for collateral, deliberately left alone**: `EventScene` (Inn tournaments) passes the
+  RAW name plus its own bracket records - so it was never broken, and is untouched. Worth noting
+  for later though: the lookup at that call site UNCONDITIONALLY overrides the explicitly-passed
+  bracket records whenever a global record exists for that enemy name (stock behavior, predates
+  this fork, unreported). Left as-is rather than silently changing tournament display; flagged.
+
+### Round 65 addendum 2: tournament matches no longer count toward win/loss totals (same day)
+
+Follow-on from the VS-screen fix above - flagging the Inn-tournament record override prompted the
+user's call: "those should not be counted towards the totals, since they technically use
+different decks. Tournaments create the deck, so should not be added to the totals."
+
+Confirmed correct, and it was a genuine DOUBLE-COUNT, not just a philosophical point:
+- `DuelScene.initDuels()` (line ~943) overwrites `playerDeck` with a copy of
+  `eventData.registeredDeck` - in a tournament the player pilots the deck the EVENT built
+  (sealed/draft), never their adventure deck. Verified in code, not assumed.
+- `PlayerStatistic` ALREADY tracks event matches independently: `completedEvents` +
+  `eventMatchWins()`/`eventMatchLosses()`, which sum each event's own `matchesWon`/`matchesLost`.
+  `DuelScene.afterGameEnd()` was additionally folding each tournament match into `winLossRecord`,
+  the very map `totalWins()`/`totalLoss()`/`winLossRatio()` sum - so every tournament match hit
+  the statistics twice, in two different buckets.
+
+- **Fix**: `afterGameEnd()`'s statistics guard gained `&& eventData == null`, putting Inn
+  tournaments in the same excluded bucket Deck Tester already occupied. Arena deliberately still
+  counts - it runs on the player's own deck (`eventData == null`, `isArena` true).
+- **Two knock-on effects that also stop**, both worth knowing since neither was obvious:
+  - `PlayerStatistic.rank()` (the overworld enemy-spawn difficulty tier) sums the same
+    `winLossRecord` wins - so grinding Inn tournaments was quietly escalating overworld spawn
+    difficulty. Now only real adventure-deck fights move it.
+  - `AdventurePlayer`'s sell-price formula (`200 + 50 * winLossRatio()`) also read those totals.
+  - `SpawnTierWeighting.registerKill()` sits inside the same guard and is therefore excluded too
+    - deliberate, same reasoning: it decays an enemy's future OVERWORLD spawn share, which a win
+    piloting an event-built deck should not drive.
+- **`TransitionScreen`**: explicitly-passed records (the tournament BRACKET standings EventScene
+  supplies) now win outright instead of falling through to the global-record lookup, which used
+  to overwrite them whenever any record existed under that enemy name. Same principle - a
+  lifetime record earned with the player's own deck does not belong on a tournament VS screen.
+- **Forward-only, by necessity**: `winLossRecord` stores only name -> (wins, losses), with no
+  provenance per result, so tournament results already baked into an existing save cannot be
+  retroactively separated out. Existing totals/rank stay as they are; only new tournament matches
+  are excluded. Flagged to the user rather than attempting a lossy migration.
+
+### Round 65 addendum 3: New Game / New Game+ now reset the statistics (same day)
+
+User request while reviewing the tournament change: "a New Game or New Game + should re-set these
+values." Investigated both paths - each had its own, different gap.
+
+- **New Game+ reset NOTHING statistical.** `SaveLoadScene`'s `NewGamePlus` flow loads the chosen
+  save, regenerates the world, and resets quests/questFlags/quest items/bookmarks/position -
+  but never touched `PlayerStatistic`, because it deliberately does NOT call
+  `AdventurePlayer.clear()` (that would wipe the cards/decks New Game+ exists to carry over).
+  So an NG+ run inherited the previous run's entire win/loss record. Non-cosmetic: those tallies
+  feed `PlayerStatistic.rank()`, so a veteran save starting NG+ got late-game overworld spawn
+  difficulty from turn one. Added `Current.player().getStatistic().clear()` alongside the other
+  per-run resets there.
+- **New Game reset only HALF the statistics.** `PlayerStatistic.clear()` cleared `winLossRecord`
+  but not `completedEvents`, even though both are persisted by `save()`/restored by `load()` and
+  `completedEvents` backs every event stat on the Statistics screen (eventWins/eventLosses/
+  eventMatchWins/eventMatchLosses). This bites because a new game REUSES the static WorldSave's
+  `final` AdventurePlayer, and therefore the same `final` PlayerStatistic instance
+  (`generateNewWorld` -> `player.create()` -> `clear()`) - so a brand-new character showed the
+  previous character's tournament history while its per-enemy record correctly started empty.
+  `clear()` now clears both. Directly compounds addendum 2: tournaments are tracked ONLY in
+  `completedEvents` now, so a stale copy there is the whole tournament record.
+- Not touched: `secondPlayed` (the play-time field) - it is never written, never saved and never
+  loaded anywhere in the codebase, i.e. permanently 0 and cosmetic. Confirmed by grep rather than
+  assumed; left alone rather than adding a reset for a dead field.

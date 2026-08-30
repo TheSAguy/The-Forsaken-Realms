@@ -283,6 +283,26 @@ public class WorldBackground extends Actor {
         playerY = (int) y;
     }
 
+    // Forces a chunk's baked GROUND texture to rebuild from current biomeMap/terrainMap data - a
+    // second, independent cache from chunksSprites/chunksSpritesBackground below (same
+    // build-once-cache-forever pattern, see getChunkTexture()). Real, reported bug: WorldSave's
+    // post-load sweep already force-refreshed the decoration Actor cache for every chunk (see its
+    // own comment) but never this one, so loading a save that reverted a captured town's
+    // "player"-recolored ground back to neutral still showed the newer session's baked terrain
+    // colors - only the scattered rocks/trees actually reverted. Same cheap evict-and-lazily-
+    // rebuild pattern as onTileRevealed()'s off-window branch: dispose the GPU texture and null
+    // the slot, and getChunkTexture() rebuilds it next time this chunk is drawn - immediately, if
+    // it's in the live 3x3 window, since the render loop calls getChunkTexture() every frame.
+    void invalidateChunkTexture(int chunkX, int chunkY) {
+        if (chunks == null || chunkX < 0 || chunkY < 0 || chunkX >= chunks.length || chunkY >= chunks[0].length)
+            return;
+        Texture tex = chunks[chunkX][chunkY];
+        if (tex != null) {
+            tex.dispose();
+            chunks[chunkX][chunkY] = null;
+        }
+    }
+
     // Forces a chunk's decoration Actors (rocks/flowers/etc, from World.mapObjectIds) to refresh
     // from current data - unlike ground textures, loadChunk()/unLoadChunk() alone don't do this:
     // chunksSprites/chunksSpritesBackground are only populated once and cached, so a plain

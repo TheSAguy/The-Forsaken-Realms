@@ -128,21 +128,25 @@ public class WorldSave {
                     // WorldStage/WorldBackground are long-lived singletons for the whole app session
                     // (WorldStage.getInstance() never gets torn down between games) - loading a save
                     // mid-session (the in-game Load menu, no app restart) replaces World's own data
-                    // (biomeMap/terrainMap/mapObjectIds) outright, but WorldBackground's per-chunk
-                    // doodad Actor lists (chunksSprites/chunksSpritesBackground) are only ever built
-                    // once and cached (see WorldBackground.reloadChunkObjects()'s own comment) - nothing
-                    // about a plain load tells it any of that's now stale. Real, reported bug: loading
-                    // an earlier save while standing at the same spot still showed doodads from the
-                    // *later* session that was just left behind, because the chunk(s) right there had
-                    // already been cached from it. Force every chunk to rebuild its Actor list from the
-                    // freshly-loaded data - reloadBackgroundChunkObjects() already no-ops instantly for
-                    // any chunk that was never loaded in the first place, so this is cheap even for a
-                    // large map.
+                    // (biomeMap/terrainMap/mapObjectIds) outright, but WorldBackground caches its
+                    // per-chunk rendering in TWO independent places that are only ever built once
+                    // (see WorldBackground.reloadChunkObjects()'s and invalidateChunkTexture()'s own
+                    // comments) - nothing about a plain load tells either of them that's now stale.
+                    // Real, reported bugs: loading an earlier save while standing at the same spot
+                    // still showed decoration doodads from the *later* session (fixed first), then a
+                    // follow-up report showed a captured town's "player"-recolored GROUND also stuck
+                    // showing the later session's color after loading a save that should have reverted
+                    // it to neutral - the ground-texture cache is separate from the doodad Actor cache
+                    // and needed its own invalidation. Force every chunk to refresh both from the
+                    // freshly-loaded data - both methods already no-op instantly for any chunk that
+                    // was never loaded in the first place, so this is cheap even for a large map.
                     int chunksWide = currentSave.world.getWidthInChunks();
                     int chunksHigh = currentSave.world.getHeightInChunks();
                     for (int cx = 0; cx < chunksWide; cx++)
-                        for (int cy = 0; cy < chunksHigh; cy++)
+                        for (int cy = 0; cy < chunksHigh; cy++) {
                             WorldStage.getInstance().reloadBackgroundChunkObjects(cx, cy);
+                            WorldStage.getInstance().invalidateBackgroundChunkTexture(cx, cy);
+                        }
 
                 } catch (Exception e) {
                     System.err.println("Generating New World");

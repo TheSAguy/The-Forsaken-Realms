@@ -332,6 +332,13 @@ public abstract class GameStage extends Stage {
     public GameStage() {
         super(new ScalingViewport(Scaling.stretch, Scene.getIntendedWidth(), Scene.getIntendedHeight(), new OrthographicCamera()));
         WorldSave.getCurrentSave().onLoad(() -> {
+            // Real, reported bug: currentModifications (fly/sprint/hide debug timers) is a
+            // runtime-only field, never part of a save - but this singleton wasn't told the timer
+            // was now stale either, so loading a save mid-session (no app restart) left an active
+            // "fly 999" console command still flying afterward. No onRemoveEffect() cleanup needed
+            // here: the player Actor itself is discarded and recreated fresh below, so any visual
+            // side effect (Hide's alpha, Fly/Sprint's particle) goes with it.
+            currentModifications.clear();
             if (player == null)
                 return;
             foregroundSprites.removeActor(player);

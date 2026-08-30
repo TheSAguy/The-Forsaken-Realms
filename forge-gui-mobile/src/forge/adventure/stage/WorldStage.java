@@ -253,6 +253,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
             background.onTileRevealed(worldTileX, worldTileY);
     }
 
+    // Bridge for WorldSave's post-load sweep (see its own comment) - forces a chunk's cached
+    // ground texture to rebuild from the freshly-loaded biomeMap/terrainMap, same reasoning as
+    // reloadBackgroundChunkObjects below but for the separate ground-texture cache.
+    public void invalidateBackgroundChunkTexture(int chunkX, int chunkY) {
+        if (background != null)
+            background.invalidateChunkTexture(chunkX, chunkY);
+    }
+
     // Bridge for World.repaintBiomeAroundTown()'s onChunkNeedsReload callback - same reasoning
     // as refreshBackgroundTile above.
     public void reloadBackgroundChunkObjects(int chunkX, int chunkY) {
@@ -417,7 +425,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                                 collided = false;
                                 duelScene.initDuels(player, mob);
                                 Forge.switchScene(duelScene);
-                            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName()));
+                            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
+                                    .withEnemyStatKey(mob.getName()));
                             currentMob = mob;
                             WorldSave.getCurrentSave().autoSave();
                         });
@@ -622,7 +631,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 duelScene.initDuels(player, duelMage);
                 Forge.switchScene(duelScene);
             }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
-                    duelMage.getAtlasPath(), Current.player().getName(), duelMage.getTieredDisplayName()));
+                    duelMage.getAtlasPath(), Current.player().getName(), duelMage.getTieredDisplayName())
+                    .withEnemyStatKey(duelMage.getName()));
             WorldSave.getCurrentSave().autoSave();
         });
     }
@@ -643,7 +653,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 duelScene.initDuels(player, enemy);
                 Forge.switchScene(duelScene);
             }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
-                    enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName()));
+                    enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())
+                    .withEnemyStatKey(enemy.getName()));
             WorldSave.getCurrentSave().autoSave();
         });
     }

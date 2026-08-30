@@ -320,6 +320,15 @@ public class SaveLoadScene extends UIScene {
                                 Current.player().setWorldPosX((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosX * WorldSave.getCurrentSave().getWorld().getData().width * WorldSave.getCurrentSave().getWorld().getTileSize()));
                                 Current.player().getQuests().clear();
                                 Current.player().resetQuestFlags();
+                                // Win/loss + event statistics are a per-RUN record, not carried
+                                // progression like cards and decks (user request 2026-08-29).
+                                // New Game already resets them via AdventurePlayer.create() ->
+                                // clear(); this path never calls either (it deliberately loads an
+                                // existing save and keeps the player's collection), so a New Game+
+                                // run inherited the previous run's entire record - including its
+                                // per-enemy tallies, which then feed PlayerStatistic.rank() and
+                                // with it overworld spawn difficulty from turn one.
+                                Current.player().getStatistic().clear();
                                 Current.player().setCharacterFlag("newGamePlus", 1);
                                 Current.player().removeAllQuestItems();
                                 AdventurePlayer.current().addQuest("28", true);

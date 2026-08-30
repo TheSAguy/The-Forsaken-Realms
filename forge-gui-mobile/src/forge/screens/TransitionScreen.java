@@ -30,6 +30,11 @@ public class TransitionScreen extends FContainer {
     TextureRegion textureRegion, screenUIBackground, playerAvatar;
     Texture vsTexture;
     String enemyAtlasPath, playerAvatarName, enemyAvatarName;
+    // The key to look this enemy's win/loss record up under, kept SEPARATE from enemyAvatarName
+    // (the on-screen label) because those two are not the same string once a plane enables tiered
+    // display names. Defaults to enemyAvatarName, so every caller that doesn't set it behaves
+    // exactly as before - see withEnemyStatKey().
+    String enemyStatKey;
     private String message = "", playerRecord = "", enemyRecord = "";
     boolean matchTransition, isloading, isIntro, isFadeMusic, isArenaScene, isAlternate;
     GlyphLayout layout;
@@ -84,9 +89,30 @@ public class TransitionScreen extends FContainer {
         playerAvatar = player;
         playerAvatarName = playerName;
         enemyAvatarName = enemyName;
+        enemyStatKey = enemyName; // overridable via withEnemyStatKey() when label != identity
         enemyAtlasPath = enemyAtlas;
         vsTexture = Forge.getAssets().fallback_skins().get("vs");
         layout = new GlyphLayout();
+    }
+
+    /**
+     * Sets the key used to look up this enemy's win/loss record, when that differs from the name
+     * shown on screen. Real, reported bug (2026-08-29): the pre-fight VS screen always showed
+     * "0 - 0" even against enemies the player had beaten many times, while the Statistics screen
+     * showed the record correctly. The record is written under the enemy's RAW name
+     * (DuelScene.afterGameEnd), but every overworld/dungeon/Arena caller passes
+     * getTieredDisplayName() for the label - and this screen used that same string as the map key.
+     * With tiered names on, "Adept Red Wizard" is stored while "Red Wizard (Adept)" is looked up,
+     * so the get() always missed and fell through to the "0 - 0" default.
+     * EnemyData.getTieredDisplayName()'s own contract says it is "never used for identity" - this
+     * was the one place that rule was broken, because one field served as both label and key.
+     * Fluent so it can be chained onto the constructor call at the Forge.setTransitionScreen()
+     * sites without restructuring them.
+     */
+    public TransitionScreen withEnemyStatKey(String statKey) {
+        if (statKey != null && !statKey.isEmpty())
+            enemyStatKey = statKey;
+        return this;
     }
 
     public TransitionScreen() {
@@ -207,13 +233,22 @@ public class TransitionScreen extends FContainer {
                 String p2Record = "0 - 0";
                 //stats
                 if (playerRecord.length() > 0 && enemyRecord.length() > 0) {
+                    // Explicit records supplied by the caller (Inn tournaments pass the BRACKET
+                    // standings) now win outright. This used to fall through to the global
+                    // adventure record below, which overwrote them whenever the player had ever
+                    // fought an enemy of that name - showing a lifetime record earned with the
+                    // player's own deck on the VS screen of a tournament played with the event's
+                    // generated sealed/draft deck. Same principle as excluding tournaments from
+                    // the win/loss totals in DuelScene.afterGameEnd (user decision 2026-08-29):
+                    // a different deck's results don't belong in this matchup's record.
                     p1Record = playerRecord;
                     p2Record = enemyRecord;
-                }
-                Pair<Integer, Integer> winloss = Current.player().getStatistic().getWinLossRecord().get(enemyAvatarName);
-                if (winloss != null) {
-                    p1Record = winloss.getKey() + " - " + winloss.getValue();
-                    p2Record = winloss.getValue() + " - " + winloss.getKey();
+                } else {
+                    Pair<Integer, Integer> winloss = Current.player().getStatistic().getWinLossRecord().get(enemyStatKey);
+                    if (winloss != null) {
+                        p1Record = winloss.getKey() + " - " + winloss.getValue();
+                        p2Record = winloss.getValue() + " - " + winloss.getKey();
+                    }
                 }
                 if (Forge.isLandscapeMode()) {
                     //player

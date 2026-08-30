@@ -1496,3 +1496,66 @@ Realms), `ForgeProfileProperties.java` (stock-Forge cardPicsDir default now desk
 to Card-Forge), plus the whole forge-gui-android module (manifest identity, Main.java
 strings/paths/authority, pom release profile, icons, fallback skin). Upstream-merge watch:
 every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
+
+## Round 65 (2026-08-29) - save/load state-bleed fixes + player WFC model breakout
+
+- **`stage/GameStage.java`** - the `WorldSave.onLoad()` handler now also clears
+  `currentModifications` (the fly/sprint/hide debug-command timers). That map is runtime-only by
+  design and correctly never persisted, but nothing told this long-lived singleton the timer was
+  stale on a mid-session load, so an active `fly` survived loading a save. No `onRemoveEffect()`
+  cleanup needed - the same handler discards and recreates the player Actor, taking any visual
+  side effect with it.
+- **`stage/WorldBackground.java`** - new `invalidateChunkTexture(chunkX, chunkY)`: disposes a
+  chunk's baked GROUND texture and nulls the slot so `getChunkTexture()` lazily rebuilds it.
+  Same evict-and-rebuild pattern as `onTileRevealed()`'s off-window branch. This is a SECOND,
+  independent per-chunk cache from `chunksSprites`/`chunksSpritesBackground` (decoration Actors) -
+  the distinction that caused the bug below.
+- **`stage/WorldStage.java`** - new `invalidateBackgroundChunkTexture()` bridge, package-boundary
+  twin of the existing `reloadBackgroundChunkObjects()`.
+- **`world/WorldSave.java`** - `load()`'s post-load chunk sweep now refreshes BOTH per-chunk
+  caches, not just the decoration-Actor one. Real, reported bug: after capturing a neutral town
+  (which recolors terrain to the `player` biome) and then loading a save from before the capture
+  WITHOUT quitting, the ground stayed player-tinted - only the doodads reverted. The 2026-08-25
+  fix added the decoration-Actor half of this sweep; the ground-texture cache was never covered.
+
+  Both bugs share one root cause worth remembering: `WorldStage`/`WorldBackground` are app-session
+  singletons that outlive a save load, so ANY build-once cache or runtime timer they hold is a
+  bleed-over candidate unless `load()` explicitly resets it. Quitting to the OS always looked fine
+  precisely because that tears the singletons down.
+
+### Round 65 addendum (2026-08-29) - VS-screen win/loss record always "0 - 0"
+
+- **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** - new `enemyStatKey` field +
+  fluent `withEnemyStatKey()` setter; the win/loss lookup in `drawBackground()` now keys off it
+  instead of `enemyAvatarName`. `enemyAvatarName` was doing double duty as BOTH the on-screen
+  label AND the statistics map key - fine in stock Forge where they are the same string, wrong
+  here since `showEnemyTierInName` made the label `"Red Wizard (Adept)"` while
+  `DuelScene.afterGameEnd()` stores the record under the raw `"Adept Red Wizard"`. Defaults to
+  `enemyAvatarName`, so every un-updated caller (and stock planes) behave exactly as before.
+- **`stage/WorldStage.java` (x3), `stage/MapStage.java`, `scene/ArenaScene.java`** - the five
+  match-transition construction sites that pass `getTieredDisplayName()` as the label now chain
+  `.withEnemyStatKey(<sprite>.getName())` to supply the raw identity key alongside it.
+  `EventScene.java` deliberately NOT changed: it already passes the raw `getName()` and its own
+  bracket records, so it was never affected.
+
+### Round 65 addendum 2 (2026-08-29) - tournaments excluded from win/loss totals
+
+- **`scene/DuelScene.java`** - `afterGameEnd()`'s statistics guard now also requires
+  `eventData == null`, excluding Inn tournament matches from `PlayerStatistic.setResult()` and
+  (same block) `SpawnTierWeighting.registerKill()`. Tournaments are played with
+  `eventData.registeredDeck`, and `completedEvents`/`eventMatchWins()` already counted them
+  separately - they were being double-counted into `winLossRecord`. Knock-on: `rank()` (overworld
+  spawn difficulty) and the `winLossRatio()`-scaled sell price both read those totals.
+- **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** - the caller-supplied
+  `playerRecord`/`enemyRecord` branch and the global-record lookup are now if/else rather than
+  the lookup unconditionally overwriting the explicit values; lets EventScene's bracket standings
+  actually reach the screen.
+
+### Round 65 addendum 3 (2026-08-29) - New Game / New Game+ statistics reset
+
+- **`player/PlayerStatistic.java`** - `clear()` now also clears `completedEvents`, not just
+  `winLossRecord`. Both are persisted/restored; a new game reuses the same final PlayerStatistic
+  instance, so event stats leaked across characters.
+- **`scene/SaveLoadScene.java`** - the `NewGamePlus` branch now calls
+  `Current.player().getStatistic().clear()` with the other per-run resets. That path never calls
+  `AdventurePlayer.clear()` (by design - it keeps cards/decks), so nothing else reset stats there.
