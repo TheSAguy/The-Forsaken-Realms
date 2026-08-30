@@ -1559,3 +1559,14 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`scene/SaveLoadScene.java`** - the `NewGamePlus` branch now calls
   `Current.player().getStatistic().clear()` with the other per-run resets. That path never calls
   `AdventurePlayer.clear()` (by design - it keeps cards/decks), so nothing else reset stats there.
+
+## Round 66 (2026-08-29) - duel-win Wood/Stone loot tile
+
+- **`character/EnemySprite.java`** - `applyGoldVariance()` now substitutes the Gold reward in
+  place (`rewards.set(i, new Reward(Reward.Type.Wood|Stone, amount))`) instead of removing it from
+  the array and calling `addWood()`/`addStone()` directly. Routes duel-win resources through the
+  ordinary RewardScene/RewardActor loot-tile path (tile, glyph, grant on dismiss via
+  `clearGenerated()` -> `AdventurePlayer.addReward()`, which has real Stone/Wood arms). The old
+  direct-grant path and its null-icon floating status message are gone; the stale comment that
+  justified them (claimed no Reward.Type and no atlas art - both untrue since 2026-08-10/27) is
+  replaced with the real history.

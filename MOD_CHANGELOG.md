@@ -14513,3 +14513,50 @@ values." Investigated both paths - each had its own, different gap.
 - Not touched: `secondPlayed` (the play-time field) - it is never written, never saved and never
   loaded anywhere in the codebase, i.e. permanently 0 and cosmetic. Confirmed by grep rather than
   assumed; left alone rather than adding a reset for a dead field.
+
+## Round 66: duel-win Wood/Stone now shows a loot tile (2026-08-29)
+
+Local-repo-only round. User asked for an audit first: "we kinda jimmy rigged how you got wood and
+stone from wining duels. It was just added, without showing you any icons for winning. Since we
+added the quest rewards, we now have those. Can you look at all reward given and tell me when a
+player could get Wood/Stone, without showing an icon" - then asked for the duel path fixed.
+
+**Full audit of every Wood/Stone grant path** (9 sites found). Categorized:
+- **Silent, no icon**: duel wins (`EnemySprite.applyGoldVariance`), Mine/Lumber Mill weekly
+  income (`EconomyBuildings.java:1933`), starting resources at character creation
+  (`AdventurePlayer.java:251`).
+- **Text only, no icon**: dungeon walkover pickups (`MapStage.java:1523-1538` - passes `icon =
+  null` deliberately), world-map resource sparkles (`ResourceSpawns.java:313`).
+- **Already correct (tile + icon)**: quests.json `grantRewards`, multi-reward chests, and
+  shard-substituted enemy loot via `RewardData.shardsSubstituteType()`.
+- **Dead code**: `MapDialog.setEffects()`'s `addWood > 0` / `addStone > 0` branches - no JSON uses
+  them and the only producer (`EconomyBuildings.spendCostAction`) always writes negatives (costs).
+
+- **FIXED: duel-win Wood/Stone had no loot tile.** `EnemySprite.applyGoldVariance()` used to
+  `removeIndex()` the Gold reward and grant the resource directly, so the loot screen simply
+  showed one fewer card. Its own comment justified this by claiming Wood/Stone "have no
+  Reward.Type" and "no art in the shared items.atlas" - **both claims were stale**, verified
+  directly rather than trusted: `Reward.Type.Stone`/`Wood` exist (Reward.java:11-19, added
+  2026-08-10/11) and `items.atlas` carries `Wood`/`Stone` regions (lines 1703/1706), and
+  `RewardActor` already renders them (RewardActor.java:504-520, added 2026-08-27 when the
+  town-restore quest reward shipped blank card-backs for exactly this missing case).
+  The old floating status message was effectively invisible regardless: it passed a null icon AND
+  attached to the world/map stage that the caller switches away from a few statements later to
+  show RewardScene.
+  - Fix is a one-line in-place substitution: `rewards.set(i, new Reward(type, amount))` instead of
+    remove-and-grant. Mirrors `RewardData.shardsSubstituteType()`, the already-proven shape.
+  - **Verified the grant still happens** (the real risk - the fix moves granting from immediate to
+    on-dismiss): `AdventurePlayer.addReward()` has real `case Stone:`/`case Wood:` arms
+    (:1191-1199) calling addStone/addWood, and `RewardScene.clearGenerated()` drives it. Had those
+    been missing, this "fix" would have silently DELETED a quarter of all duel gold instead of
+    displaying it. Checked before compiling, not after.
+  - Behavior note: the resource now lands when the loot screen is dismissed rather than instantly -
+    identical to how Gold/Shards/Cards have always worked, so no new class of edge case.
+
+- Left alone, reported to the user rather than silently changed: the weekly mine/mill income
+  (zero feedback of any kind) and the two text-only paths. Also flagged: `MenuScene.setEffects()`
+  lacks the `addWood`/`addStone` arms its twin `MapDialog.setEffects()` has (latent - the two
+  copies of that switch have drifted), and `CardUtil.getRewardPrice()` has no Wood/Stone case so
+  it falls through to the 1000 default.
+
+**Files touched**: EnemySprite.java.

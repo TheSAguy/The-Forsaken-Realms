@@ -593,14 +593,23 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
 
     // Combat reward variance (2026-08-09, user spec): 25% of the time a Gold reward is swapped
     // for Wood or Stone instead (50/50 between the two), at 50% of the gold amount it would have
-    // been. Deliberately NOT routed through the stock Reward/RewardActor flip-card system - Wood/
-    // Stone have no Reward.Type (see Reward.java) and wiring one in would mean extending several
-    // of RewardActor's icon-lookup switch statements for a type that has no art in the shared
-    // items.atlas either. Granted immediately instead, with the same plain-text floating status
-    // message ResourceSpawns pickups already use for these two resources (no icon - Wood/Stone
-    // were deliberately never registered with the font, see EconomyBuildings.java's Exchange
-    // dialog comment on the same constraint) - consistent with how Wood/Stone already present
-    // elsewhere in this mod, rather than inventing a second, card-flip presentation for them.
+    // been.
+    //
+    // Originally this REMOVED the gold reward from the array and granted the resource directly,
+    // because at the time Wood/Stone had no Reward.Type and no art in items.atlas, so they could
+    // not be shown as loot tiles. Both of those constraints are long gone - Reward.Type.Stone/Wood
+    // were added 2026-08-10/11 (see RewardData's "stone"/"wood" cases) and RewardActor grew the
+    // matching icon case 2026-08-27 - but this method was never revisited, so a quarter of all
+    // duel gold silently turned into resources the player was never shown (user report
+    // 2026-08-29: "we kinda jimmy rigged how you got wood and stone from wining duels... it was
+    // just added, without showing you any icons"). The old floating status message it used was
+    // effectively invisible anyway: it passed a null icon AND attached itself to the world/map
+    // stage that the caller switches away from a few statements later to show RewardScene.
+    //
+    // Now substituted IN PLACE, so the resource rides the ordinary loot-tile path: RewardScene
+    // gives it its own tile, RewardActor draws the items.atlas glyph, and the grant happens on
+    // dismiss via clearGenerated() -> AdventurePlayer.addReward(). Same substitution shape
+    // RewardData.shardsSubstituteType() already uses for shards->Stone/Wood.
     private static final float GOLD_VARIANCE_CHANCE = 0.25f;
 
     private void applyGoldVariance(Array<Reward> rewards) {
@@ -612,13 +621,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 continue;
             boolean wood = MyRandom.getRandom().nextBoolean();
             int amount = Math.max(1, reward.getCount() / 2);
-            rewards.removeIndex(i);
-            if (wood)
-                AdventurePlayer.current().addWood(amount);
-            else
-                AdventurePlayer.current().addStone(amount);
-            AdventurePlayer.current().addStatusMessage(null, wood ? "Wood" : "Stone", amount,
-                    getX(), getY() + getHeight());
+            rewards.set(i, new Reward(wood ? Reward.Type.Wood : Reward.Type.Stone, amount));
         }
     }
 
