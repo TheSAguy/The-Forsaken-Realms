@@ -1,0 +1,96 @@
+{
+  "width": 270,
+  "height": 480,
+  "yDown": true,
+  "elements": [
+    {
+      "type": "Image",
+      "name": "lastScreen",
+      "width": 270,
+      "height": 480
+    },
+    {
+      "type": "Window",
+      "name": "standingsWindow",
+      "style": "paper",
+      "x": 10,
+      "y": 18,
+      "width": 250,
+      "height": 444
+    },
+    {
+      "type": "Label",
+      "name": "title",
+      "text": "[%55]The Forsaken Realms Standings",
+      "fontColor": "black",
+      "x": 20,
+      "y": 26,
+      "width": 230,
+      "height": 20
+    },
+    {
+      "type": "Table",
+      "name": "standingsList",
+      "x": 20,
+      "y": 52,
+      "width": 230,
+      "height": 190,
+      "fontColor": "black"
+    },
+    {
+      "type": "Label",
+      "name": "chartTitle",
+      "text": "[%75]Towns by Week",
+      "fontColor": "black",
+      "x": 20,
+      "y": 250,
+      "width": 230,
+      "height": 14
+    },
+    {
+      "type": "Table",
+      "name": "chartArea",
+      "x": 20,
+      "y": 268,
+      "width": 230,
+      "height": 124
+    },
+    {
+      "type": "TextButton",
+      "name": "reputationInfo",
+      "text": "[%80]Reputation",
+      "width": 112,
+      "height": 18,
+      "x": 20,
+      "y": 400
+    },
+    {
+      "type": "TextButton",
+      "name": "expansionInfo",
+      "text": "[%80]Expansion",
+      "width": 112,
+      "height": 18,
+      "x": 138,
+      "y": 400
+    },
+    {
+      "type": "TextButton",
+      "name": "modDetailsInfo",
+      "text": "[%80]Mod Details",
+      "width": 112,
+      "height": 18,
+      "x": 20,
+      "y": 422
+    },
+    {
+      "type": "TextButton",
+      "name": "return",
+      "text": "tr(lblBack)",
+      "binding": "Back",
+      "width": 112,
+      "height": 24,
+      "x": 138,
+      "y": 419
+    }
+  ]
+}

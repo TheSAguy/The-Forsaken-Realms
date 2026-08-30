@@ -583,6 +583,17 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     int roundsWon = 0;
 
     private void startArena() {
+        // Same setDisabled()-doesn't-gate-clicks trap the Capital toll had (2026-08-30 negative
+        // gold report - see WorldStage.showCapitalTollDialog and AdventurePlayer.takeGold): the
+        // only affordability check for the entry fee was startButton.setDisabled() in
+        // loadArenaData(), which greys the button without detaching its handler. Re-checked here,
+        // at the point the fee is actually taken, so a still-live click cannot start a run the
+        // player cannot pay for.
+        if (arenaData != null && arenaData.entryFee > Current.player().getGold()) {
+            System.out.println("[TFR-Gold] Arena start refused - entry fee " + arenaData.entryFee
+                    + " exceeds player gold " + Current.player().getGold());
+            return;
+        }
         enable = false;
         goldLabel.setVisible(false);
         arenaStarted = true;

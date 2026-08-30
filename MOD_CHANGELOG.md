@@ -14668,3 +14668,86 @@ Local-repo-only round. Three smaller items ahead of the card-shop-chooser build.
   recording why it is off, so nobody re-enables it without the context.
 
 **Files touched**: EventScene.java, RewardData.java (comment only), config.json, items.json.
+
+## Round 69: card shop chooser, negative-gold fix, Android portrait fixes (2026-08-30)
+
+Local-repo-only round.
+
+### NEGATIVE GOLD - root-caused from an Android tester screenshot showing -167 gold
+
+Capital entry toll is 500 and the tester ended on -167, so they paid holding exactly 333. Two
+independent failures had to line up, and both are fixed:
+- **`WorldStage.showCapitalTollDialog()`** built the pay button WITH its click handler and then
+  called `setDisabled()` - the SAME trap the round-44 review documented on Upgrade-to-Exchange:
+  this UI framework greys a button without detaching its handler. Now decides affordability first
+  and only attaches a handler when payable (the shape `MapDialog` already gets right - it creates
+  disabled options via `Controls.newTextButton(name)` with no callback at all), plus an
+  in-handler re-check.
+- **`AdventurePlayer.takeGold()` had no floor** (`gold -= price`), across ~20 call sites, several
+  of which pay first and trust a check made elsewhere. Now clamps at 0 and logs `[TFR-Gold]
+  refused overspend`. A negative balance is never legitimate - it silently breaks every
+  `getGold() >= cost` gate afterwards, so nothing works again until the debt is earned off.
+  Landmine handled: `addGold()` routes through `takeGold(-price)`, so the guard only clamps
+  positive spends or credits would break.
+- Swept for the same shape: **`ArenaScene.startArena()`** was identically exposed (entry fee
+  gated only by `startButton.setDisabled()`), now re-checks before taking the fee.
+
+### Card Shop Type chooser (user spec)
+- Menu is TIER first, then category: `Card Shop > Common Shops (price) > By Colour / By Card Type
+  / Tribal / Special > <type>`. Tier-first because price is a per-tier property (shown once
+  instead of on 200+ leaves) and the Capitol gate becomes one hidden branch.
+- **Cross-tier picking required an engine change**: a slot rolls its rarity ONCE at map load
+  (thresholds 95/85/55) and `shopCandidatePools` kept only that tier's list, so a "common" slot
+  could never become Rare - which the requested price ladder assumes it can. New
+  `MapStage.shopTierPools` captures all three lists per slot, de-duplicated (the raw lists repeat
+  names - commonShopList has "Colorless" twice).
+- Pricing (gold, wood, stone, shards): Common {100,5,0,0} - deliberately identical to the
+  pre-existing `buildCostFor(NONE)` so an ordinary rebuild costs what it always did - Uncommon
+  {150,10,0,0}, Rare {200,0,0,50}. Re-type credits 50% of the OLD shop's gold (gold only, per the
+  user's worked example: Uncommon -> Common = 25 gold + 5 wood). Ambiguous names resolve
+  Common->Uncommon->Rare so a name in two lists can never inflate the refund.
+- **Rare is Capitol-only** (user spec), hidden rather than shown-disabled - same treatment the
+  Bank restriction already gets in this menu.
+- Classifier: category by the name's leading noun (everything before the first digit), so
+  Artifact4Black -> artifact, Black3 -> black, Creature2Colorless -> creature. Special is checked
+  FIRST or "GreenBoosterPackShop" would classify as a colour.
+- New `DialogData.ActionData.pinShopType` ("<objectId>:<shopName>"), handled in
+  `MapDialog.setEffects()` - mirrors the existing `refreshShopRewardsTrigger` pattern but carries
+  an id, since it targets one slot rather than every shop in town.
+- "Re-roll Shop Type (50 shards)" renamed **"Re-assign Shop Type"** and re-costed: no flat shard
+  fee, you pay the chosen tier minus the credit. Opens the same chooser (shop screen closes first
+  - changing type replaces the shop's identity AND inventory, so the page behind would be stale).
+- **`isShopTypeUnlocked()` hook added** (returns true today). Every place the menu decides whether
+  to show a type routes through it, so the unlock mechanic the user is considering becomes one
+  method body rather than a menu rework. Suggested shape: mirror Progressive Set Unlocks
+  (a persisted Set<String> beside `unlockedEditions`).
+
+### Android portrait fixes (from a tester; user has no Android device)
+- **Info button sat 100% on top of the Menu button.** Real maths error, not a cosmetic nudge:
+  `worldStandingsActor` is sized/placed from the horizontal gap between the minimap and the menu
+  button, which only exists in LANDSCAPE. hud_portrait.json puts the minimap at the top
+  (x 0-80, y 0-80) and the bar at the bottom (y=450, menu x=68), so the subtraction went negative
+  (68-0-80-2 = -14), clamped to width 1, and landed at x=81 - inside menu's own 68-93 span.
+  Portrait now takes the next slot on the bar's own 25px grid.
+- **Standings page unusable on a phone**: `WorldStandingsScene` was the ONE mod UI still
+  hardcoding its landscape json - every sibling (research/inn/inventory/map/new_game/info_text)
+  already selects a `*_portrait.json`. It rendered a 480x270 layout into a 270x480 screen. Added
+  `world_standings_portrait.json` + the standard selector.
+- Checked and NO change needed: the Info page is already a vertical ScrollPane on a portrait
+  layout (user asked for "landscape or scrollable" - it is already scrollable).
+- NOT fixed, reported instead: the slightly misaligned wood/stone readout. Cosmetic pixel
+  positioning that cannot be verified without a device; guessing offsets blind risks breaking the
+  working PC layout.
+
+### Build-process finding (worth acting on)
+A failed Maven build followed by a successful package produced a confident "Package OK" over a
+STALE jar - none of the round's code in it. Two causes: (1) my own `&&` chain read the exit code
+of `tail` at the end of a pipeline rather than Maven's, and (2) **`build_standalone.py` verifies
+markers INSIDE the jar it ships but never checks the jar is newer than the source it came from**,
+so it cannot tell a fresh build from a stale one. The immediate build command now gates packaging
+behind an explicit `BUILD SUCCESS` grep. A freshness assertion in the script itself (jar mtime vs
+newest .java / plane resource, refuse if older) is still OPEN and recommended.
+
+**Files touched**: WorldStage.java, AdventurePlayer.java, ArenaScene.java, EconomyBuildings.java,
+MapStage.java, MapDialog.java, DialogData.java, RewardScene.java, GameHUD.java,
+WorldStandingsScene.java, ui/world_standings_portrait.json (new), items.json.

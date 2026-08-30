@@ -14,6 +14,8 @@ import com.github.tommyettinger.textra.TextraLabel;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.character.ShopActor;
+import forge.adventure.stage.MapStage;
+import forge.adventure.util.MapDialog;
 import forge.haptic.HapticEngine;
 import forge.localinstance.properties.ForgePreferences.FPref;
 import forge.adventure.data.RewardData;
@@ -131,7 +133,12 @@ public class RewardScene extends UIScene {
         // only. Reuses guardsButton/upgradeButton's row position: those are Armory-only, this is
         // Armory-exclusive (a shop resolves to exactly one ShopData at a time), so they never
         // need to show at the same time.
-        shopTypeRerollButton = Controls.newTextButton("[%80]Re-roll Shop Type (" + EconomyBuildings.scaledCost(EconomyBuildings.SHOP_TYPE_REROLL_SHARD_COST) + " [+Shards])", this::promptRerollShopType);
+        // Renamed from "Re-roll Shop Type" and re-costed 2026-08-30 (user spec): it no longer
+        // rolls a random type for a flat shard fee - it opens the same tier/category chooser the
+        // rebuild menu uses, and you pay the chosen shop's tier price minus 50% of the current
+        // shop's gold. The old flat SHOP_TYPE_REROLL_SHARD_COST no longer applies, so the button
+        // carries no price label: the price depends on what you pick.
+        shopTypeRerollButton = Controls.newTextButton("[%80]Re-assign Shop Type", this::promptRerollShopType);
         shopTypeRerollButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
         shopTypeRerollButton.setPosition(doneButton.getX() + doneButton.getWidth() - shopTypeRerollButton.getWidth(),
                 doneButton.getY() + doneButton.getHeight() * 2 + 20f);
@@ -139,10 +146,12 @@ public class RewardScene extends UIScene {
         ui.addActor(shopTypeRerollButton);
     }
 
-    /** Re-rolls this ordinary card shop's TYPE (2026-08-11, round 8, user spec). Delegates the
-     *  actual pick + persistence + live sign-sprite swap to MapStage.rerollShopType() (see its own
-     *  comment) - this method's own job is just the cost gate and refreshing what RewardScene
-     *  itself shows (the ShopActor's data/rewards, and this page's displayed inventory). */
+    /** Opens the tier/category chooser for an already-built card shop (2026-08-30 user spec,
+     *  replacing the old flat random re-roll for 50 shards). The shop screen closes first:
+     *  changing type replaces this shop's identity AND its whole inventory, so the page behind
+     *  the dialog would be stale, and the chooser is a MapStage dialog rather than a RewardScene
+     *  one. Price, the 50%-of-old-shop gold credit, the Capitol gate on Rare tiers and per-entry
+     *  affordability all live inside the chooser itself - this method just routes to it. */
     private void promptRerollShopType() {
         if (shopActor == null || changes == null)
             return;
@@ -151,44 +160,17 @@ public class RewardScene extends UIScene {
         // guards against any other path (e.g. controller/gamepad focus) still invoking it.
         if (!TownRestoration.isCurrentTownPlayerOwned(changes))
             return;
-        if (!shopActor.getMapStage().isShopTypeRerollable(shopActor.getObjectId()))
+        MapStage stage = shopActor.getMapStage();
+        int objectId = shopActor.getObjectId();
+        if (!stage.isShopTypeRerollable(objectId))
             return;
-        // Flat cost, no cooldown, no weekly surcharge (2026-08-15 user correction - the weekly-
-        // escalating surcharge belongs on the button that re-rolls a shop's CARD CONTENTS, not the
-        // one that changes what TYPE of shop this is; see restockShop() instead).
-        int cost = EconomyBuildings.scaledCost(EconomyBuildings.SHOP_TYPE_REROLL_SHARD_COST);
-        if (AdventurePlayer.current().getShards() < cost)
-            return;
-        showDialog(createGenericDialog("", "Re-roll this shop's type for " + cost
-                        + " [+Shards]?\nPicks a new random shop type and updates its sign.",
-                Forge.getLocalizer().getMessage("lblYes"), Forge.getLocalizer().getMessage("lblNo"), () -> {
-                    removeDialog();
-                    ShopData newData = shopActor.getMapStage().rerollShopType(shopActor.getObjectId(), shopActor.getShopData().name);
-                    if (newData == null)
-                        return; // nothing else this shop could become - no charge, no change
-                    AdventurePlayer.current().takeShards(cost);
-
-                    HapticEngine.vibrate(FPref.UI_VIBRATE_ON_SHOP_ACTION, 5);
-                    SoundSystem.instance.play(SoundEffectType.Shuffle, false);
-
-                    shopActor.setShopData(newData);
-                    // Fresh seed, not the old shop identity's - the old pool's picks don't apply
-                    // to a differently-themed shop, and this also clears cardsBought (2026-08-10
-                    // Item Economy design, see generateNewShopSeed()'s own comment) so nothing
-                    // reads as "already purchased" under the new identity.
-                    changes.generateNewShopSeed(shopActor.getObjectId());
-                    clearGenerated();
-                    Array<Reward> ret = new Array<>();
-                    long shopSeed = changes.getShopSeed(shopActor.getObjectId());
-                    WorldSave.getCurrentSave().getWorld().getRandom().setSeed(shopSeed);
-                    for (RewardData rdata : EditionProgression.restrictShopRewardsForCurrentTown(
-                            new Array.ArrayIterator<>(newData.rewards), changes, newData.name, "shop-reroll")) {
-                        ret.addAll(rdata.generate(false, false));
-                    }
-                    EconomyBuildings.injectGuaranteedTorchIfOwed(ret, newData, changes);
-                    shopActor.setRewardData(ret);
-                    loadRewards(ret, RewardScene.Type.Shop, shopActor);
-                }, this::removeDialog));
+        String currentName = shopActor.getShopData() == null ? null : shopActor.getShopData().name;
+        MapDialog dialog = EconomyBuildings.buildReassignShopTypeDialog(stage, objectId, currentName);
+        if (dialog == null)
+            return; // nothing this shop could become - no dialog shown, nothing charged
+        Forge.switchToLast();
+        if (dialog.activate())
+            stage.showDialog();
     }
 
     private void promptManageGuards() {
@@ -835,13 +817,13 @@ public class RewardScene extends UIScene {
                 shopTypeRerollButton.setVisible(Config.instance().getConfigData().shopTypeRerollEnabled
                         && !isArmory && playerOwnedTown && shopActor.getMapStage().isShopTypeRerollable(shopActor.getObjectId()));
                 if (shopTypeRerollButton.isVisible()) {
-                    // Flat cost (2026-08-15 user correction - reverted off the weekly-escalating
-                    // surcharge, which belongs on the card-content restock button instead).
-                    int cost = EconomyBuildings.scaledCost(EconomyBuildings.SHOP_TYPE_REROLL_SHARD_COST);
-                    shopTypeRerollButton.setText("[%80]Re-roll Shop Type (" + cost + " [+Shards])");
-                    // Greyed-out-when-unaffordable (2026-08-13 fix) - same missing-.setDisabled()
-                    // bug as upgradeButton above, same fix.
-                    shopTypeRerollButton.setDisabled(AdventurePlayer.current().getShards() < cost);
+                    // No flat price on the button any more (2026-08-30): the chooser prices per
+                    // tier and nets off the re-type credit, so a single number here would be
+                    // wrong for most picks. Individual entries inside the chooser carry their own
+                    // price and their own affordability greying, so the button itself is always
+                    // enabled - the gate moved one level in.
+                    shopTypeRerollButton.setText("[%80]Re-assign Shop Type");
+                    shopTypeRerollButton.setDisabled(false);
                     addToSelectable(shopTypeRerollButton);
                 }
                 break;

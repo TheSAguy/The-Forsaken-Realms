@@ -38,7 +38,12 @@ public class WorldStandingsScene extends UIScene {
     private final Table chartArea;
 
     private WorldStandingsScene() {
-        super("ui/world_standings.json");
+        // Portrait variant added 2026-08-30 (Android tester screenshot: the standings page had
+        // "a lot of buttons weird on the Phone"). This scene was the ONE mod UI still hardcoding
+        // its landscape layout - every sibling (research/inn/inventory/map/new_game/info_text)
+        // already picks a *_portrait.json here - so on a phone it rendered a 480x270 layout into
+        // a 270x480 screen, pushing the button column off the right edge.
+        super(Forge.isLandscapeMode() ? "ui/world_standings.json" : "ui/world_standings_portrait.json");
         standingsList = ui.findActor("standingsList");
         chartArea = ui.findActor("chartArea");
         ui.onButtonPress("return", WorldStandingsScene.this::back);

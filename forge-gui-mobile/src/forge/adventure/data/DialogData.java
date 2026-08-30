@@ -114,6 +114,14 @@ public class DialogData implements Serializable {
         // couldn't distinguish which of the 4 call sites actually fired).
         public String refreshShopRewardsTrigger = null;
 
+        // Card Shop Type chooser (mod addition, 2026-08-30): pins an explicitly-chosen shop type
+        // onto one shop slot when this option's purchase completes. Payload is
+        // "<objectId>:<shopName>" - unlike refreshShopRewardsTrigger above this DOES carry an id,
+        // since it targets a single slot rather than every shop in town. Handled in
+        // MapDialog.setEffects(); produced by EconomyBuildings.buildCardShopChooser(), ultimately
+        // calls MapStage.setShopType(). Null/empty = off.
+        public String pinShopType = null;
+
         // Generic dungeon-clear trigger (mod addition, 2026-08-23): manually fires the same
         // despawn-on-clear treatment DungeonRotation.onDungeonClear() already gives an ordinary
         // combat win (see AdventureQuestController.updateQuestsWin(), which only calls it from a
@@ -165,6 +173,7 @@ public class DialogData implements Serializable {
             addColorReputationAmount = other.addColorReputationAmount;
             runCommand = other.runCommand;
             refreshShopRewardsTrigger = other.refreshShopRewardsTrigger;
+            pinShopType = other.pinShopType;
             triggerDungeonClear = other.triggerDungeonClear;
         }
     }

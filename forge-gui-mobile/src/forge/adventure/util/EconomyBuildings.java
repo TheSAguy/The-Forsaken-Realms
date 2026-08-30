@@ -37,6 +37,7 @@ import forge.item.PaperCard;
 import forge.screens.CoverScreen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -1148,6 +1149,250 @@ public class EconomyBuildings {
         }
     }
 
+    // ===================== Card Shop Type chooser (2026-08-30, user spec) =====================
+    // "when you build a card shop, you get a drop-down menu of all types of card shops... so the
+    // player can choose what type they want to build", with per-tier pricing, a 50%-of-old-shop
+    // gold credit on a re-type, and Rare gated to the Capitol.
+    //
+    // Menu shape is TIER first, then category:
+    //     Card Shop > Common Shops (price) > By Colour / By Card Type / Tribal / Special > <type>
+    // Tier-first because (a) price is a property of the tier, so it can be shown once at the top
+    // instead of repeated on 200+ leaf entries, and (b) the Capitol gate is then a single hidden
+    // branch rather than a filter threaded through every category.
+    // Cost tuples are (gold, wood, stone, shards) - same order as buildCostFor()/costLabel().
+    // Common deliberately equals buildCostFor(NONE)'s existing {100, 5, 0, 0} so an ordinary
+    // rebuild costs exactly what it did before this feature.
+    private static int[] shopTierCost(String tier) {
+        if (MapStage.TIER_RARE.equals(tier))
+            return new int[]{200, 0, 0, 50};
+        if (MapStage.TIER_UNCOMMON.equals(tier))
+            return new int[]{150, 10, 0, 0};
+        return new int[]{100, 5, 0, 0};
+    }
+
+    /** Gold credited back when re-typing away from a shop of this tier (user spec: "you get 50%
+     *  of the initial shop gold cost back"). Gold only - the user's own worked example
+     *  (Uncommon -> Common = 25 gold + 5 wood) still pays the new shop's wood in full. */
+    private static int shopTierGoldRefund(String oldTier) {
+        return oldTier == null ? 0 : shopTierCost(oldTier)[0] / 2;
+    }
+
+    /** Which tier list a shop name belongs to, or null if unknown (no credit given). A handful of
+     *  names appear in more than one tier list; resolved Common -> Uncommon -> Rare, i.e. the
+     *  LOWEST tier wins, so an ambiguous name can never inflate the refund. */
+    private static String tierOfShopName(Map<String, Array<String>> pools, String shopName) {
+        if (pools == null || shopName == null)
+            return null;
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+            Array<String> names = pools.get(tier);
+            if (names != null && names.contains(shopName, false))
+                return tier;
+        }
+        return null;
+    }
+
+    /**
+     * Hook for a future "unlock card shop types" mechanic (user is considering one, 2026-08-30).
+     * Every place the chooser decides whether to show a type routes through here, so the mechanic
+     * becomes one method body rather than a menu rework. Returns true for everything today.
+     * A natural implementation would mirror Progressive Set Unlocks: a persisted
+     * Set&lt;String&gt; on AdventurePlayer alongside unlockedEditions.
+     */
+    private static boolean isShopTypeUnlocked(String shopName) {
+        return true;
+    }
+
+    private static final String CAT_COLOUR = "By Colour";
+    private static final String CAT_CARD_TYPE = "By Card Type";
+    private static final String CAT_TRIBAL = "Tribal";
+    private static final String CAT_SPECIAL = "Special";
+    private static final String[] SHOP_CATEGORIES = {CAT_COLOUR, CAT_CARD_TYPE, CAT_TRIBAL, CAT_SPECIAL};
+
+    private static final java.util.Set<String> COLOUR_NOUNS = new java.util.HashSet<>(Arrays.asList(
+            "white", "blue", "black", "red", "green", "colorless", "colourless", "multicolor",
+            "gold", "azorius", "boros", "dimir", "golgari", "gruul", "izzet", "orzhov", "rakdos",
+            "selesnya", "simic"));
+    private static final java.util.Set<String> CARD_TYPE_NOUNS = new java.util.HashSet<>(Arrays.asList(
+            "artifact", "creature", "enchantment", "instant", "sorcery", "land", "battle", "saga",
+            "vehicle", "equip", "equipment", "wand", "card", "planeswalker", "aura", "token"));
+    private static final java.util.Set<String> SPECIAL_NOUNS = new java.util.HashSet<>(Arrays.asList(
+            "booster", "boosterpack", "flipshop", "flip", "attractionshop", "attraction",
+            "contraptionshop", "contraption", "rotating"));
+
+    /**
+     * The classifying noun of a shop name: everything before the first digit. The lists use
+     * "&lt;noun&gt;&lt;n&gt;" and "&lt;noun&gt;&lt;n&gt;&lt;Colour&gt;" forms, so Artifact4Black -&gt; artifact,
+     * Black3 -&gt; black, Creature2Colorless -&gt; creature, Bird4Azorius -&gt; bird. Names with no digit
+     * (Sliver, Azorius, AttractionShop) classify whole.
+     */
+    private static String shopBaseNoun(String shopName) {
+        int cut = shopName.length();
+        for (int i = 0; i < shopName.length(); i++) {
+            if (Character.isDigit(shopName.charAt(i))) {
+                cut = i;
+                break;
+            }
+        }
+        return shopName.substring(0, cut).toLowerCase(java.util.Locale.ROOT);
+    }
+
+    private static String shopCategory(String shopName) {
+        String noun = shopBaseNoun(shopName);
+        // Special checked FIRST - "GreenBoosterPackShop" would otherwise classify as a colour.
+        String lower = shopName.toLowerCase(java.util.Locale.ROOT);
+        for (String special : SPECIAL_NOUNS)
+            if (lower.contains(special))
+                return CAT_SPECIAL;
+        if (COLOUR_NOUNS.contains(noun))
+            return CAT_COLOUR;
+        if (CARD_TYPE_NOUNS.contains(noun))
+            return CAT_CARD_TYPE;
+        return CAT_TRIBAL; // everything left is a creature-type shop (Sliver, Angel, Elf, ...)
+    }
+
+    /**
+     * The "Card Shop" branch of the rebuild menu, or of the re-assign flow. Returns null when this
+     * slot has no chooser pools at all (single-name shop objects, Rotating shops), so callers can
+     * fall back to the old flat option.
+     *
+     * @param currentShopName the type being replaced, or null for a rebuild-from-rubble (no credit)
+     */
+    public static DialogData buildCardShopChooser(MapStage stage, int objectId, String currentShopName) {
+        Map<String, Array<String>> pools = stage.getShopTierPools(objectId);
+        if (pools == null || pools.isEmpty())
+            return null;
+
+        String oldTier = tierOfShopName(pools, currentShopName);
+        int refund = shopTierGoldRefund(oldTier);
+        boolean isCapitol = TownRestoration.isCurrentTownCapitol();
+
+        DialogData root = new DialogData();
+        root.name = "Card Shop";
+        root.text = currentShopName == null
+                ? "What kind of card shop?"
+                : "Re-assign this shop's type." + (refund > 0
+                        ? " You're credited " + scaledCost(refund) + " [+Gold] for the current "
+                          + oldTier + " shop." : "");
+
+        List<DialogData> tierOptions = new ArrayList<>();
+        List<DialogData> categoryBacks = new ArrayList<>();
+        List<DialogData> tierBacks = new ArrayList<>();
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+            Array<String> names = pools.get(tier);
+            if (names == null || names.size == 0)
+                continue;
+            // Rare is Capitol-only (user spec 2026-08-30). Hidden rather than shown-disabled, the
+            // same treatment the Bank's Capitol restriction already gets in this menu.
+            if (MapStage.TIER_RARE.equals(tier) && !isCapitol)
+                continue;
+
+            int[] cost = shopTierCost(tier);
+            int goldDue = Math.max(0, cost[0] - refund);
+
+            DialogData tierNode = new DialogData();
+            tierNode.name = tier + " Shops (" + costLabel(goldDue, cost[1], cost[2], cost[3]) + ")";
+            tierNode.text = "Which " + tier.toLowerCase(java.util.Locale.ROOT) + " shop?";
+
+            List<DialogData> categoryOptions = new ArrayList<>();
+            for (String category : SHOP_CATEGORIES) {
+                List<DialogData> leaves = new ArrayList<>();
+                for (String shopName : new Array.ArrayIterator<>(names)) {
+                    if (!isShopTypeUnlocked(shopName) || !category.equals(shopCategory(shopName)))
+                        continue;
+                    if (shopName.equals(currentShopName))
+                        continue; // already this type - nothing to buy
+                    leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost));
+                }
+                if (leaves.isEmpty())
+                    continue;
+                DialogData categoryBack = new DialogData();
+                categoryBack.name = "Back";
+                categoryBacks.add(categoryBack);
+                leaves.add(categoryBack);
+                DialogData categoryNode = new DialogData();
+                categoryNode.name = category + " (" + (leaves.size() - 1) + ")";
+                categoryNode.text = tierNode.text;
+                categoryNode.options = leaves.toArray(new DialogData[0]);
+                categoryOptions.add(categoryNode);
+            }
+            if (categoryOptions.isEmpty())
+                continue;
+            DialogData tierBack = new DialogData();
+            tierBack.name = "Back";
+            tierBacks.add(tierBack);
+            categoryOptions.add(tierBack);
+            tierNode.options = categoryOptions.toArray(new DialogData[0]);
+            tierOptions.add(tierNode);
+            // Every category-level Back inside THIS tier returns to this tier's own category list.
+            // Wired here rather than at creation because a node's options array doesn't exist
+            // until its children are built - the same reason buildChooseBuildingDialog() defers
+            // its own back-button wiring to the end.
+            for (DialogData back : categoryBacks) {
+                back.text = tierNode.text;
+                back.options = tierNode.options;
+            }
+            categoryBacks.clear();
+        }
+        if (tierOptions.isEmpty())
+            return null;
+        DialogData rootBack = new DialogData();
+        rootBack.name = "Back";
+        tierOptions.add(rootBack);
+        root.options = tierOptions.toArray(new DialogData[0]);
+        // Tier-level Backs return to this chooser's own tier list. The rootBack is deliberately
+        // left unwired here - the CALLER owns what "back" means from the top of the chooser (the
+        // rebuild menu points it at the building menu; the re-assign flow just closes).
+        for (DialogData back : tierBacks) {
+            back.text = root.text;
+            back.options = root.options;
+        }
+        return root;
+    }
+
+    /** Standalone "Re-assign Shop Type" dialog for an already-built card shop (the shop screen's
+     *  button, 2026-08-30). Same chooser the rebuild menu embeds, wrapped as its own MapDialog so
+     *  it can be shown straight from the map after the shop screen closes. Null when this slot
+     *  has nothing to choose between. */
+    public static MapDialog buildReassignShopTypeDialog(MapStage stage, int objectId, String currentShopName) {
+        DialogData chooser = buildCardShopChooser(stage, objectId, currentShopName);
+        if (chooser == null)
+            return null;
+        DialogData cancel = new DialogData();
+        cancel.name = "Not now";
+        DialogData[] withCancel = Arrays.copyOf(chooser.options, chooser.options.length);
+        // The chooser's own trailing "Back" has no parent to return to here - repurpose that slot
+        // as the exit instead of leaving a dead button.
+        withCancel[withCancel.length - 1] = cancel;
+        chooser.options = withCancel;
+        return new MapDialog(chooser, stage, objectId, null);
+    }
+
+    /** One selectable shop type. Charges the tier price (already net of any re-type credit), pins
+     *  the chosen type, and reuses the exact same rebuild bookkeeping the flat Card Shop option
+     *  performs - shop-rebuilt flag, edition refresh, and the "shopBuilt" main-quest flag. */
+    private static DialogData shopChoiceOption(int objectId, String shopName, int goldDue, int[] cost) {
+        DialogData option = new DialogData();
+        option.name = shopName + " (" + costLabel(goldDue, cost[1], cost[2], cost[3]) + ")";
+        option.isDisabled = !canAffordCost(goldDue, cost[1], cost[2], cost[3]);
+
+        DialogData.ActionData pin = new DialogData.ActionData();
+        pin.pinShopType = objectId + ":" + shopName;
+        DialogData.ActionData refreshShops = new DialogData.ActionData();
+        refreshShops.refreshShopRewardsTrigger = "shop-chooser";
+        DialogData.ActionData shopBuiltFlag = new DialogData.ActionData();
+        shopBuiltFlag.setCharacterFlag = new DialogData.ActionData.QuestFlag();
+        shopBuiltFlag.setCharacterFlag.key = "shopBuilt";
+        shopBuiltFlag.setCharacterFlag.val = 1;
+
+        option.action = new DialogData.ActionData[]{
+                spendCostAction(goldDue, cost[1], cost[2], cost[3]),
+                setShopRebuiltAction(objectId),
+                pin,
+                refreshShops,
+                shopBuiltFlag};
+        return option;
+    }
+
     private static DialogData buildOption(int type, int objectId) {
         DialogData option = new DialogData();
         // One base-cost tuple feeds label, affordability, and deduction (each component
@@ -1222,7 +1467,18 @@ public class EconomyBuildings {
         boolean isCapitol = TownRestoration.isCurrentTownCapitol();
         List<DialogData> rootOptions = new ArrayList<>();
         List<DialogData> backButtons = new ArrayList<>();
-        rootOptions.add(buildOption(NONE, objectId));
+        // Card Shop Type chooser (2026-08-30): replaces the flat "Card Shop (100 Gold + 5 Wood)"
+        // option with a tier/category drill-down when this slot actually has types to choose
+        // between. Falls back to the original flat option for single-name shop objects (Armory,
+        // the fixed land shops) and Rotating shops, which have no pools - so nothing regresses
+        // for the slots this feature was never meant to cover.
+        DialogData cardShopChooser = buildCardShopChooser(stage, objectId, null);
+        if (cardShopChooser != null) {
+            rootOptions.add(cardShopChooser);
+            backButtons.add(cardShopChooser.options[cardShopChooser.options.length - 1]);
+        } else {
+            rootOptions.add(buildOption(NONE, objectId));
+        }
 
         // Bank stays Capitol-exclusive per the earlier 2026-08-08 decision. Trader (2026-08-22)
         // is the odd one out in this submenu - deliberately buildable in ANY town, not just the

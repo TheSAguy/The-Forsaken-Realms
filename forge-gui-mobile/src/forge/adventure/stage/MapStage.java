@@ -96,6 +96,68 @@ public class MapStage extends GameStage {
     private final Map<Integer, Array<String>> shopCandidatePools = new HashMap<>();
     private final Map<Integer, TextureSprite> shopSigns = new HashMap<>();
 
+    // Card Shop Type CHOOSER (2026-08-30, user request: "when you build a card shop, you get a
+    // drop-down menu of all types of card shops... so the player can choose what type they want").
+    // Unlike shopCandidatePools above - which holds only the ONE tier list this slot happened to
+    // roll into at load time - this keeps all three tiers separately, keyed tier -> names, so the
+    // player can deliberately buy ACROSS tiers (the user's own pricing example goes Uncommon ->
+    // Common). Without it a slot that rolled "common" could only ever become one of the 116 common
+    // types, which the requested Common/Uncommon/Rare price ladder assumes it can escape.
+    // Populated under the same guard as shopCandidatePools (non-rotating, real choice available).
+    private final Map<Integer, Map<String, Array<String>>> shopTierPools = new HashMap<>();
+    public static final String TIER_COMMON = "Common";
+    public static final String TIER_UNCOMMON = "Uncommon";
+    public static final String TIER_RARE = "Rare";
+
+    /** tier -> shop names for this slot, or null if this object has no chooser-eligible pools. */
+    public Map<String, Array<String>> getShopTierPools(int objectId) {
+        return shopTierPools.get(objectId);
+    }
+
+    /** Reads one tier's comma-list off a shop object's TMX properties, de-duplicated (the raw
+     *  lists repeat names - player_town.tmx's commonShopList has "Colorless" twice, and a chooser
+     *  must not show the same entry twice) and order-preserving. */
+    private static void addTierPool(Map<String, Array<String>> into, String tier,
+                                    MapProperties prop, String propertyName) {
+        if (!prop.containsKey(propertyName))
+            return;
+        String raw = prop.get(propertyName).toString();
+        if (raw.trim().isEmpty())
+            return;
+        Array<String> names = new Array<>();
+        for (String name : raw.split(",")) {
+            String trimmed = name.trim();
+            if (!trimmed.isEmpty() && !names.contains(trimmed, false))
+                names.add(trimmed);
+        }
+        if (names.size > 0)
+            into.put(tier, names);
+    }
+
+    /**
+     * Pins an EXPLICIT shop type on this slot (the chooser's counterpart to rerollShopType()'s
+     * random pick) and swaps the on-screen sign to match. Returns the resolved ShopData, or null
+     * if the name doesn't resolve - callers must treat null as "no change, charge nothing".
+     */
+    public ShopData setShopType(int objectId, String shopName) {
+        if (shopName == null || shopName.isEmpty())
+            return null;
+        ShopData newData = null;
+        for (ShopData candidate : new Array.ArrayIterator<>(WorldData.getShopList())) {
+            if (candidate.name.equals(shopName)) {
+                newData = candidate;
+                break;
+            }
+        }
+        if (newData == null)
+            return null;
+        getChanges().setPinnedShopName(objectId, newData.name);
+        TextureSprite sign = shopSigns.get(objectId);
+        if (sign != null)
+            sign.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.sprite));
+        return newData;
+    }
+
     private static class OverheadTile {
         final TiledMapTileLayer layer;
         final int col, row;
@@ -987,6 +1049,20 @@ public class MapStage extends GameStage {
                         // mechanism, not this one) - see the field's own comment.
                         if (!isRotatingShop && possibleShops.size > 1)
                             shopCandidatePools.put(id, possibleShops);
+                        // Card Shop Type chooser (2026-08-30) - capture ALL tier lists, not just
+                        // the one the rarity roll above happened to land on, so the chooser can
+                        // offer (and price) across tiers. Read straight off the same TMX
+                        // properties that roll consulted; deliberately does NOT include
+                        // mythicShopList (no price tier was specified for it, and it is not part
+                        // of the requested Common/Uncommon/Rare ladder).
+                        if (!isRotatingShop) {
+                            Map<String, Array<String>> tierPools = new java.util.LinkedHashMap<>();
+                            addTierPool(tierPools, TIER_COMMON, prop, "commonShopList");
+                            addTierPool(tierPools, TIER_UNCOMMON, prop, "uncommonShopList");
+                            addTierPool(tierPools, TIER_RARE, prop, "rareShopList");
+                            if (!tierPools.isEmpty())
+                                shopTierPools.put(id, tierPools);
+                        }
                         Array<String> filteredPossibleShops = new Array<>();
                         if (!isRotatingShop) {
                             for (String candidate : possibleShops) {

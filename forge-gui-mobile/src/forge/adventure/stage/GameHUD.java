@@ -253,8 +253,21 @@ public class GameHUD extends Stage {
         // the menu button, and anchored off the minimap's own right edge instead of the menu
         // button's left edge, so it can never overlap either neighbor regardless of hud.json
         // values changing later.
-        worldStandingsActor.setSize(Math.max(1, menuActor.getX() - miniMap.getX() - miniMap.getWidth() - 2), menuActor.getHeight());
-        worldStandingsActor.setPosition(miniMap.getX() + miniMap.getWidth() + 1, menuActor.getY());
+        // PORTRAIT FIX (Android tester report 2026-08-30: "the Info button is 100% over the Menu
+        // button"). Everything above is a LANDSCAPE assumption - it only works because hud.json
+        // puts the minimap and the button bar on the same row. hud_portrait.json puts the minimap
+        // at the TOP (x 0-80, y 0-80) and the bar at the BOTTOM (y=450, menu at x=68), so the
+        // subtraction goes negative (68 - 0 - 80 - 2 = -14), clamps to width 1, and the button
+        // lands at x=81 - squarely inside the menu button's own 68-93 span, which is exactly the
+        // 100% overlap reported. Portrait instead takes the next slot along the bar's own 25px
+        // grid, the same spacing every other bar button already uses.
+        if (Forge.isLandscapeMode()) {
+            worldStandingsActor.setSize(Math.max(1, menuActor.getX() - miniMap.getX() - miniMap.getWidth() - 2), menuActor.getHeight());
+            worldStandingsActor.setPosition(miniMap.getX() + miniMap.getWidth() + 1, menuActor.getY());
+        } else {
+            worldStandingsActor.setSize(menuActor.getWidth(), menuActor.getHeight());
+            worldStandingsActor.setPosition(Math.max(0, menuActor.getX() - menuActor.getWidth()), menuActor.getY());
+        }
         // Territory Control OR Color Reputation: the standings page is also the ONLY place the
         // Reputation/Status columns render, and reputation is documented as working with
         // territory control off (separate opt-in flags, MOD_SCOPE.md #1) - gating the sole way

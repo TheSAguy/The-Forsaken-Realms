@@ -447,6 +447,23 @@ public class MapDialog {
             if (E.refreshShopRewardsTrigger != null && !E.refreshShopRewardsTrigger.isEmpty()) { //Re-applies edition restriction to every shop in the current town (town/shop restoration).
                 stage.refreshAllShopRewards(E.refreshShopRewardsTrigger);
             }
+            // Card Shop Type chooser (2026-08-30): "<objectId>:<shopName>" - pins the player's
+            // explicitly-chosen type onto that one slot. Runs AFTER the cost has been spent by
+            // this same action list, so a declined/unaffordable option never reaches it.
+            if (E.pinShopType != null && !E.pinShopType.isEmpty()) {
+                int split = E.pinShopType.indexOf(':');
+                if (split > 0) {
+                    try {
+                        int objectId = Integer.parseInt(E.pinShopType.substring(0, split));
+                        String shopName = E.pinShopType.substring(split + 1);
+                        forge.adventure.data.ShopData pinned = stage.setShopType(objectId, shopName);
+                        System.out.println("[TFR-ShopChooser] pin object=" + objectId + " type=" + shopName
+                                + " -> " + (pinned != null ? "OK" : "UNRESOLVED (no change)"));
+                    } catch (NumberFormatException e) {
+                        System.err.println("[TFR-ShopChooser] malformed pinShopType payload: " + E.pinShopType);
+                    }
+                }
+            }
         }
     }
 

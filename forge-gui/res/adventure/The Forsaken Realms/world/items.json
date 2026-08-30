@@ -5361,7 +5361,7 @@
         "name":  "Bronze Challenge Coin",
         "description":  "Free entry to a Jumpstart event. Or, after losing a duel, hand it to the victor to buy back every card you anted and keep your gold - beat them later to take it back.",
         "iconName":  "BronzeChallengeCoin",
-        "cost":  15000,
+        "cost":  1000,
         "rarity":  "Mythic"
     },
     {

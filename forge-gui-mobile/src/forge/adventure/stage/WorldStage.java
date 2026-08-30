@@ -775,15 +775,30 @@ public class WorldStage extends GameStage implements SaveFileContent {
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
 
-        TextraButton payButton = Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " gold", () -> {
-            Current.player().takeGold(ColorReputation.CAPITAL_ENTRY_TOLL);
-            hideDialog();
-            WorldSave.getCurrentSave().autoSave();
-            loadPOI(poi);
-            point.getMapSprite().checkOut();
-            WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
-        });
-        payButton.setDisabled(Current.player().getGold() < ColorReputation.CAPITAL_ENTRY_TOLL);
+        // NEGATIVE GOLD BUG (Android tester report 2026-08-30, reproduced by arithmetic: toll 500,
+        // tester ended on -167, i.e. they paid with 333). This is the SAME latent trap the round-44
+        // review found on the Upgrade-to-Exchange button: this UI framework's setDisabled() greys a
+        // button but does NOT detach its click handler, so the handler below stayed live while the
+        // button looked unavailable - and takeGold() does not clamp at zero (`gold -= price`), so
+        // the payment simply went through into the negative.
+        // Fixed the way MapDialog already does it correctly: decide affordability FIRST and only
+        // attach a handler when it is actually payable, so there is no live handler to fire. The
+        // in-handler re-check is belt-and-braces in case gold changes between build and click.
+        boolean canAffordToll = Current.player().getGold() >= ColorReputation.CAPITAL_ENTRY_TOLL;
+        TextraButton payButton = canAffordToll
+                ? Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " gold", () -> {
+                    if (Current.player().getGold() < ColorReputation.CAPITAL_ENTRY_TOLL)
+                        return;
+                    Current.player().takeGold(ColorReputation.CAPITAL_ENTRY_TOLL);
+                    hideDialog();
+                    WorldSave.getCurrentSave().autoSave();
+                    loadPOI(poi);
+                    point.getMapSprite().checkOut();
+                    WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
+                })
+                : Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " gold (you have "
+                    + Current.player().getGold() + ")");
+        payButton.setDisabled(!canAffordToll);
         dialog.getButtonTable().add(payButton).width(240f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);

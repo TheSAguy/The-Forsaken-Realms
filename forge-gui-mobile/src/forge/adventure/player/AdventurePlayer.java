@@ -1476,7 +1476,23 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void takeGold(int price) {
-        gold -= price;
+        // Floor at zero (2026-08-30, Android tester reported -167 gold). The immediate cause was
+        // the Capital entry toll's pay button staying clickable while greyed (see
+        // WorldStage.showCapitalTollDialog - fixed there too), but the reason it could turn into a
+        // NEGATIVE BALANCE rather than a refused purchase is here: this was a bare `gold -= price`
+        // with no floor, and there are ~20 call sites, several of which pay first and trust an
+        // affordability check made elsewhere. A negative balance is never a legitimate game state -
+        // it silently breaks every `getGold() >= cost` gate afterwards, so no shop, build or toll
+        // works again until the player earns past the debt.
+        // NOTE: addGold() routes through here as takeGold(-price), so the guard must only clamp
+        // actual spends - a negative `price` is a credit and must pass through untouched.
+        if (price > 0 && price > gold) {
+            System.out.println("[TFR-Gold] refused overspend of " + price + " with only " + gold
+                    + " - clamping to 0 (a caller skipped its affordability check)");
+            gold = 0;
+        } else {
+            gold -= price;
+        }
         onGoldChangeList.emit();
         //play sfx
         SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
