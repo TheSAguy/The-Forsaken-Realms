@@ -95,6 +95,12 @@ public class AdventureEventController implements Serializable {
     }
 
     public AdventureEventData createEvent(String pointID) {
+        return createEvent(pointID, false);
+    }
+
+    /** @param playerTown true when this Inn is in a town the player owns - narrows the tournament
+     *                    pool to their race + unlocked sets (user spec 2026-08-31). */
+    public AdventureEventData createEvent(String pointID, boolean playerTown) {
         if (nextEventDate.containsKey(pointID) && nextEventDate.get(pointID) >= LocalDate.now().toEpochDay()) {
             // No event currently available here
             return null;
@@ -114,13 +120,13 @@ public class AdventureEventController implements Serializable {
         // gives them a second, non-expiring use.
         if (Current.player().getStatistic().totalWins() < JUMPSTART_MAX_WINS &&
                 random.nextInt(10) <= 2) {
-            e = new AdventureEventData(eventSeed, EventFormat.Jumpstart);
+            e = new AdventureEventData(eventSeed, EventFormat.Jumpstart, playerTown);
         } else {
             if (random.nextInt(4) == 3) {
                 // Experimental: 1 out of 4 chance for it to be a Sealed Deck event
-                e = new AdventureEventData(eventSeed, EventFormat.Sealed);
+                e = new AdventureEventData(eventSeed, EventFormat.Sealed, playerTown);
             } else {
-                e = new AdventureEventData(eventSeed, EventFormat.Draft);
+                e = new AdventureEventData(eventSeed, EventFormat.Draft, playerTown);
             }
         }
 
@@ -132,10 +138,18 @@ public class AdventureEventController implements Serializable {
     }
 
     public AdventureEventData createEvent(EventFormat format, CardBlock cardBlock, String pointID) {
+        return createEvent(format, cardBlock, pointID, false);
+    }
+
+    public AdventureEventData createEvent(EventFormat format, CardBlock cardBlock, String pointID, boolean playerTown) {
         long eventSeed = getEventSeed(pointID);
         AdventureEventData e = new AdventureEventData(eventSeed, format, cardBlock);
         if(e.cardBlock == null)
              return null;
+        // Stamp the re-rolled event too, or the very next Inn visit would see stamp 0, read it as
+        // legacy, and never refresh it when the player unlocks a set.
+        e.playerTownPoolStamp = playerTown
+                ? forge.adventure.util.EditionProgression.playerTownPoolStamp() : 0;
         return e;
     }
 
@@ -164,7 +178,7 @@ public class AdventureEventController implements Serializable {
             pairingStyle = AdventureEventData.PairingStyle.SingleElimination;
         }
 
-        e.eventRules = new AdventureEventData.AdventureEventRules(e.format, pairingStyle, changes == null ? 1f : changes.getTownPriceModifier());
+        e.eventRules = new AdventureEventData.AdventureEventRules(e.format, pairingStyle);
 
         e.generateParticipants();
 

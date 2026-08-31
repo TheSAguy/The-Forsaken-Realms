@@ -331,6 +331,13 @@ public class SaveLoadScene extends UIScene {
                                 Current.player().getStatistic().clear();
                                 Current.player().setCharacterFlag("newGamePlus", 1);
                                 Current.player().removeAllQuestItems();
+                                // Every run starts with a full challenge-coin purse (user spec
+                                // 2026-08-31). Deliberately AFTER removeAllQuestItems() so the
+                                // grant can never be swept up by it - the three coins are not
+                                // flagged questItem today, but ordering it this way means a later
+                                // data edit that does flag them cannot silently empty the purse.
+                                // Tops up only what is missing, so a hoarded surplus survives.
+                                Current.player().topUpChallengeCoins();
                                 AdventurePlayer.current().addQuest("28", true);
                                 WorldSave.getCurrentSave().clearBookmarks();
                                 WorldStage.getInstance().enterSpawnPOI();

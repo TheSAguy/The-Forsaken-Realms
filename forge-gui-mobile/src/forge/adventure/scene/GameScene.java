@@ -53,6 +53,10 @@ public class GameScene extends HudScene {
     @Override
     public void enter() {
         MapStage.getInstance().clearIsInMap();
+        // Leaving for the world map means no town context, so sell prices stop inheriting the
+        // last town's haggling reputation (2026-08-31 - see AdventurePlayer
+        // .setCurrentLocationChanges). null yields a neutral 1.0f multiplier.
+        Current.player().setCurrentLocationChanges(null);
         Forge.clearTransitionScreen();
         Forge.clearCurrentScreen();
         super.enter();

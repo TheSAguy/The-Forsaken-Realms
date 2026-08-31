@@ -1215,6 +1215,38 @@ public class EconomyBuildings {
         return known.contains(shopName);
     }
 
+    /**
+     * The five "Cartographer's Guild" basic-land shops - Plains, Island, Swamp, Mountain, Forest.
+     * <p>
+     * User spec 2026-08-31: these are excluded from the blueprint system entirely. They are a
+     * special case - the AI capitals each have one, and the player Capitol's own copies unlock by
+     * visiting a capital rather than by blueprint - so a blueprint for one is worth nothing.
+     * <p>
+     * Keyed on ShopData.sprite rather than the description or the name: "The Cartographer's Guild"
+     * is prose that a typo or a localisation pass would silently break, whereas sprite is a
+     * structural field the renderer already depends on. Verified: exactly these 5 shops carry
+     * sprite "LandShop" in this plane, and the twelve nonbasic/multi-colour land shops (Land,
+     * Land4Blue ... Land4Colorless) carry "NonbasicLandShop" instead, so they are untouched -
+     * the user explicitly asked that those be left alone.
+     * <p>
+     * Exact equality matters: contains("LandShop") would also match "NonbasicLandShop" and would
+     * silently take out all twelve.
+     */
+    public static boolean isBasicLandShop(ShopData data) {
+        return data != null && "LandShop".equals(data.sprite);
+    }
+
+    /** {@link #isBasicLandShop(ShopData)} by shop NAME, for the paths that only carry a name. */
+    public static boolean isBasicLandShopName(String shopName) {
+        if (shopName == null)
+            return false;
+        for (ShopData data : new Array.ArrayIterator<>(WorldData.getShopList())) {
+            if (shopName.equals(data.name))
+                return isBasicLandShop(data);
+        }
+        return false;
+    }
+
     // Global shop-name -> tier map, accumulated from every map loaded this session (2026-08-31).
     //
     // Needed because the per-slot pools this used to rely on exist ONLY where the town's tmx
@@ -1369,18 +1401,45 @@ public class EconomyBuildings {
         }
         int total = -1;
         if (shop != null && shop.rewards != null) {
-            java.util.Set<String> distinct = new java.util.HashSet<>();
+            // Per-BLOCK sum, mirroring what the shop will really stock (2026-08-31 fix).
+            //
+            // This used to union every block's legal pool into one distinct set, which answers a
+            // different question - "how many cards could this shop ever show me" - and reads far
+            // too high. A shop whose shelf asks for 6 cards from a 40-card pool stocks 6, not 40.
+            // It read too LOW in the opposite case too, because two shelves drawing from the same
+            // pool collapsed into one count. Found while explaining the user's 2026-08-31 question
+            // about "Destructive Urge" showing 5 cards: the menu had advertised 12.
+            //
+            // Each block contributes min(count, distinct legal names): CardUtil's shop dedup stocks
+            // each legal card at most once, so a sparse pool caps the block below its own count -
+            // which is the deliberate behaviour that produces short shelves under a tight edition
+            // restriction.
+            int sum = 0;
+            boolean sawCardBlock = false;
             Iterable<RewardData> rewards = EditionProgression.restrictShopRewardsForCurrentTown(
                     new Array.ArrayIterator<>(shop.rewards), changes, shop.name, "shop-count");
             for (RewardData reward : rewards) {
-                if (reward == null || !"card".equalsIgnoreCase(reward.type == null ? "card" : reward.type))
+                if (reward == null)
                     continue;
+                // RewardData.generate() MUTATES its own `type` from empty to "randomCard", so a
+                // shop counted after its first stock generation presents a different type string
+                // than before it. Accept both, plus empty, or the count silently vanishes.
+                String type = reward.type == null || reward.type.isEmpty() ? "card" : reward.type;
+                if (!"card".equalsIgnoreCase(type) && !"randomCard".equalsIgnoreCase(type))
+                    continue;
+                sawCardBlock = true;
+                if (reward.cardName != null && !reward.cardName.isEmpty()) {
+                    sum += Math.max(0, reward.count); // a named card is stocked count times
+                    continue;
+                }
+                java.util.Set<String> distinct = new java.util.HashSet<>();
                 CardUtil.CardPredicate predicate = new CardUtil.CardPredicate(reward, true);
                 for (PaperCard card : RewardData.getAllCards())
                     if (predicate.test(card))
                         distinct.add(card.getName());
+                sum += Math.min(Math.max(0, reward.count), distinct.size());
             }
-            total = distinct.isEmpty() ? -1 : distinct.size();
+            total = sawCardBlock ? sum : -1;
         }
         shopCardCountCache.put(shopName, total);
         return total;
@@ -1406,6 +1465,11 @@ public class EconomyBuildings {
                 for (String name : new Array.ArrayIterator<>(tierNames))
                     names.add(name);
         }
+        // The 5 Cartographer basic-land shops never belong in the blueprint universe (user spec
+        // 2026-08-31). Without this a Mystery/Chest pickup could hand out a "Forest" blueprint
+        // that no chooser will ever offer, so the unlock would be permanently dead - the exact
+        // thing this method's own comment claims cannot happen.
+        names.removeIf(EconomyBuildings::isBasicLandShopName);
         // ...plus every type any PREVIOUS map taught us (2026-08-31). Without this a chest opened
         // inside an AI capital saw an empty universe - those maps declare a flat shopList and have
         // no tier pools - so grantRandomBlueprint() found no candidates and silently fell through

@@ -396,7 +396,16 @@ public class DuelScene extends ForgeScene {
     private boolean coinRansomEligible() {
         return eventData == null && !isArena
                 && enemy != null && !enemy.getData().boss
-                && Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM);
+                && Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM)
+                // ONE COIN PER ENEMY (user spec 2026-08-31). coinRansomedEnemies is a Set keyed by
+                // enemy NAME, so a second coin paid to the same enemy was silently swallowed: it
+                // left the inventory, the Set.add() returned false, and nothing recorded it - so
+                // it could never be reclaimed. Two losses to the same fox cost two coins and
+                // returned exactly one. Refusing the second ante is what the player expected the
+                // mechanic to do, and it turns a silent coin sink into an explicit "not this
+                // time". The key expression is character-identical to the pay path below and the
+                // reclaim path, so the gate can never key differently from the mark.
+                && !Current.player().owesCoinRansom(enemy.getName());
     }
 
     /** Pays one Bronze Coin: every ante card from this loss comes back, and the defeat's gold
@@ -501,14 +510,24 @@ public class DuelScene extends ForgeScene {
         // where the option genuinely does not apply and mentioning it would just confuse.
         if (!won && onCoinRansom != null && !offerCoinRansom
                 && eventData == null && !isArena && enemy != null && !enemy.getData().boss) {
-            message += "\nA Bronze Challenge Coin would buy back your whole ante - you have none.";
+            // Two different reasons the button is missing, and they must not read the same
+            // (2026-08-22: "no coin" has to look different from "no such feature"). The
+            // one-coin-per-enemy rule added 2026-08-31 creates a THIRD case where the player does
+            // have coins - saying "you have none" there would read as the mechanic being broken.
+            if (Current.player().owesCoinRansom(enemy.getName())) {
+                message += "\n" + enemy.getName() + " already holds one of your Bronze Challenge "
+                        + "Coins. Beat them to win it back.";
+            } else {
+                message += "\nA Bronze Challenge Coin would buy back your whole ante - you have none.";
+            }
         }
         if (!won)
             System.out.println("[TFR-CoinRansom] offering=" + offerCoinRansom
                     + " enemy=" + (enemy == null ? "(null)" : enemy.getName())
                     + " boss=" + (enemy != null && enemy.getData().boss)
                     + " arena=" + isArena + " event=" + (eventData != null)
-                    + " hasCoin=" + Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM));
+                    + " hasCoin=" + Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM)
+                    + " alreadyOwes=" + (enemy != null && Current.player().owesCoinRansom(enemy.getName())));
 
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
@@ -1033,7 +1052,7 @@ public class DuelScene extends ForgeScene {
         this.eventData = eventData;
         this.aiControlsPlayerSide = aiControlsPlayerSide;
         if (eventData != null && eventData.eventRules == null)
-            eventData.eventRules = new AdventureEventData.AdventureEventRules(AdventureEventController.EventFormat.Constructed, 1.0f);
+            eventData.eventRules = new AdventureEventData.AdventureEventRules(AdventureEventController.EventFormat.Constructed);
         this.arenaBattleChallenge = isArena && Current.player().isHardorInsaneDifficulty();
         if (eventData != null && eventData.registeredDeck != null)
             this.playerDeck = (Deck) eventData.registeredDeck.copyTo("EventDeckCopy");

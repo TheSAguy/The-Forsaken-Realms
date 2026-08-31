@@ -179,8 +179,9 @@ public class RewardScene extends UIScene {
         if (shopActor == null || shopActor.getShopData() == null)
             return;
         final String shopName = shopActor.getShopData().name;
-        if (EconomyBuildings.isShopTypeUnlocked(shopName))
-            return; // already known - button should not have been visible
+        if (EconomyBuildings.isShopTypeUnlocked(shopName)
+                || EconomyBuildings.isBasicLandShop(shopActor.getShopData()))
+            return; // already known, or a Cartographer - button should not have been visible
         final String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(), shopActor.getObjectId(), shopName);
         // Re-checked here, not just on the button: this framework's setDisabled() does NOT detach
         // click handlers (the negative-gold lesson, round 44 and twice since), so a greyed button
@@ -908,6 +909,10 @@ public class RewardScene extends UIScene {
                 boolean blueprintOffered = Config.instance().getConfigData().shopBlueprintsEnabled
                         && !isArmory
                         && shopActor.getShopData() != null
+                        // The 5 Cartographer basic-land shops are outside the blueprint system
+                        // (user spec 2026-08-31) - the player Capitol's copies unlock by visiting
+                        // an AI capital, so a blueprint for one buys nothing.
+                        && !EconomyBuildings.isBasicLandShop(shopActor.getShopData())
                         && shopActor.getMapStage().isShopTypeRerollable(shopActor.getObjectId())
                         && !EconomyBuildings.isShopTypeUnlocked(shopActor.getShopData().name);
                 buyBlueprintButton.setVisible(blueprintOffered);

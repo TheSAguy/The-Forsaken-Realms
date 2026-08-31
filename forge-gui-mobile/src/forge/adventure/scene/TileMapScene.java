@@ -193,6 +193,12 @@ public class TileMapScene extends HudScene {
         oldMap = point.getData().map;
         map = new TemplateTmxMapLoader().load(Config.instance().getCommonFilePath(point.getData().map));
         ((MapStage) stage).setPointOfInterest(getPointOfInterestChanges());
+        // Sell prices follow the town you are STANDING IN (2026-08-31 fix). This field previously
+        // had exactly one writer - the Inn Sell Cards button - and was never cleared, so every
+        // quoted sell price came from whichever shop screen was opened last, in whatever town, and
+        // survived a save load. Two callers spend real gold on it: the ante Buy Back charge and
+        // the auto-sell payout on a Loot reward screen, which is where Inn tournament prizes land.
+        Current.player().setCurrentLocationChanges(getPointOfInterestChanges());
         stage.getPlayerSprite().setPosition(0, 0);
         WorldSave.getCurrentSave().getWorld().setSeed(point.getSeedOffset());
         tiledMapRenderer.loadMap(map, "", oldMap, 0);

@@ -262,6 +262,74 @@ public class EditionProgression {
      * means NO restriction: feature off, no world loaded yet, or nothing to restrict by (a
      * pre-feature save - consistent with restrictToEditions()' fail-open contract).
      */
+    /**
+     * The editions tied to the player's STARTING RACE in plane data ({@code raceEditions}), or an
+     * empty set when the race has no entry. Factored out of reservePlayerEditions(), which had
+     * this same lookup inline.
+     */
+    public static Set<String> raceEditionCodes(AdventurePlayer player) {
+        Set<String> raceCodes = new HashSet<>();
+        if (player == null)
+            return raceCodes;
+        String raceName = forge.adventure.data.HeroListData.getRawRaceName(player.getHeroRace());
+        forge.adventure.data.RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
+        if (raceName == null || raceEditions == null)
+            return raceCodes;
+        for (forge.adventure.data.RaceEditionData entry : raceEditions) {
+            if (entry != null && raceName.equalsIgnoreCase(entry.race)
+                    && entry.editions != null && entry.editions.length > 0) {
+                raceCodes.addAll(Arrays.asList(entry.editions));
+                break;
+            }
+        }
+        return raceCodes;
+    }
+
+    /**
+     * Event editions for a PLAYER-OWNED town's Inn (user spec 2026-08-31: "let's have those only
+     * have tournaments from the Players starting race and unlocked sets").
+     * <p>
+     * The player's own towns run on their own stock: the race's lore editions UNION everything
+     * they have researched - deliberately a union, not an intersection. unlockedEditions starts as
+     * a difficulty-scaled random subset of the race's own sets and then grows to arbitrary sets
+     * through the Lab, so an intersection would shrink to a fixed handful forever, while the union
+     * is monotonically growing and is what "your race and your unlocked sets" plainly reads as.
+     * <p>
+     * The neutral shard is deliberately NOT added here - that is exactly the wide pool this is
+     * meant to narrow away from. AI and neutral towns keep the no-arg method unchanged, so the
+     * player's towns feel like their own and rival towns still show you the wider world.
+     */
+    public static Set<String> playerTownEventEditionCodes() {
+        WorldSave save = WorldSave.getCurrentSave();
+        World world = save == null ? null : save.getWorld();
+        if (world == null || !world.isEditionProgressionEnabled())
+            return null;
+        AdventurePlayer player = AdventurePlayer.current();
+        if (player == null)
+            return null;
+        Set<String> allowed = new HashSet<>(raceEditionCodes(player));
+        if (player.getUnlockedEditions() != null)
+            allowed.addAll(player.getUnlockedEditions());
+        return allowed.isEmpty() ? null : allowed;
+    }
+
+    /**
+     * A cheap, order-independent fingerprint of the pool a player-town event would be built from.
+     * Stored on the event so a cached tournament can notice the player has researched a new set
+     * since it was rolled - the user asked that these "update as time passes to take into account
+     * newly unlocked sets", and an Available event otherwise sits in the save forever.
+     * Never 0 for a real pool, so 0 can mean "legacy event, leave alone".
+     */
+    public static int playerTownPoolStamp() {
+        Set<String> pool = playerTownEventEditionCodes();
+        if (pool == null || pool.isEmpty())
+            return 0;
+        int stamp = pool.size();
+        for (String code : pool)
+            stamp += code.hashCode(); // sum: order-independent, no sorting needed
+        return stamp == 0 ? 1 : stamp;
+    }
+
     public static Set<String> eventAllowedEditionCodes() {
         WorldSave save = WorldSave.getCurrentSave();
         World world = save == null ? null : save.getWorld();

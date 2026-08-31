@@ -14,6 +14,7 @@ import forge.adventure.util.ColorReputation;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
+import forge.adventure.util.EditionProgression;
 import forge.adventure.util.TownRestoration;
 import forge.adventure.world.WorldSave;
 import forge.model.CardBlock;
@@ -232,16 +233,42 @@ public class InnScene extends UIScene {
         Forge.switchScene(ShopScene.instance());
     }
 
+    /**
+     * Is this Inn in a town the player owns? Drives the narrowed tournament pool (user spec
+     * 2026-08-31: player towns run tournaments from the player's own race and unlocked sets).
+     * {@code changes} is assigned in instance() before this is ever consulted, and
+     * isCurrentTownPlayerOwned() is null-safe.
+     */
+    private static boolean isPlayerOwnedTown() {
+        return TownRestoration.isCurrentTownPlayerOwned(changes);
+    }
+
     private static void initLocalEvent() {
         localEvent = null;
+        boolean playerTown = isPlayerOwnedTown();
         for (AdventureEventData data :  AdventurePlayer.current().getEvents()){
             if (data.sourceID.equals(localPointOfInterestId) && data.eventOrigin == localObjectId){
+                // "Make sure they update as time passes to take into account newly unlocked sets"
+                // (user spec 2026-08-31). An event is cached in the save and initLocalEvent()
+                // otherwise returns it forever, so a tournament rolled before a research unlock
+                // would keep its old, narrower pool indefinitely. Re-roll it when the player-town
+                // pool has changed - but ONLY while it is still Available, so an entered or
+                // half-played tournament is never pulled out from under the player.
+                if (playerTown && data.eventStatus == AdventureEventController.EventStatus.Available
+                        && data.playerTownPoolStamp != 0
+                        && data.playerTownPoolStamp != EditionProgression.playerTownPoolStamp()) {
+                    System.out.println("[TFR-InnEditions] player-town pool changed (stamp "
+                            + data.playerTownPoolStamp + " -> " + EditionProgression.playerTownPoolStamp()
+                            + ") - re-rolling this Inn's Available tournament");
+                    AdventurePlayer.current().getEvents().remove(data);
+                    break; // fall through to the create path below
+                }
                 localEvent = data;
                 return;
             }
         }
         AdventureEventController controller = AdventureEventController.instance();
-        localEvent = controller.createEvent(localPointOfInterestId);
+        localEvent = controller.createEvent(localPointOfInterestId, playerTown);
         if(localEvent != null)
             controller.initializeEvent(localEvent, localPointOfInterestId, localObjectId, changes);
     }
@@ -278,7 +305,7 @@ public class InnScene extends UIScene {
                     String currentBlockName = localEvent.cardBlockName;
                     CardBlock newBlock = null;
                     for (int attempt = 0; attempt < MAX_REROLL_ATTEMPTS; attempt++) {
-                        CardBlock candidate = AdventureEventData.pickCardBlockByFormat(format);
+                        CardBlock candidate = AdventureEventData.pickCardBlockByFormat(format, isPlayerOwnedTown());
                         if (candidate == null)
                             break; // no legal pool to draw from at all
                         if (currentBlockName == null || !candidate.getName().equals(currentBlockName)) {
@@ -297,7 +324,7 @@ public class InnScene extends UIScene {
     public static void replaceLocalEvent(AdventureEventController.EventFormat format, CardBlock cardBlock) {
         AdventurePlayer.current().getEvents().removeIf((data) -> data.sourceID.equals(localPointOfInterestId) && data.eventOrigin == localObjectId);
         AdventureEventController controller = AdventureEventController.instance();
-        localEvent = controller.createEvent(format, cardBlock, localPointOfInterestId);
+        localEvent = controller.createEvent(format, cardBlock, localPointOfInterestId, isPlayerOwnedTown());
         if(localEvent != null)
             controller.initializeEvent(localEvent, localPointOfInterestId, localObjectId, changes);
     }

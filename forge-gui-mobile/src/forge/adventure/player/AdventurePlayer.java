@@ -242,6 +242,48 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public static final String BRONZE_COIN_ITEM = "Bronze Challenge Coin";
+    public static final String SILVER_COIN_ITEM = "Silver Challenge Coin";
+    /** The gold coin's data name really is just "Challenge Coin" - no colour word (world/items.json). */
+    public static final String GOLD_COIN_ITEM = "Challenge Coin";
+    // The loadout every run is meant to begin with (user spec 2026-08-31): 1 gold, 1 silver,
+    // 3 bronze. One coin per event format - gold a free draft, silver a free sealed, bronze a
+    // free Jumpstart - plus the bronze surplus that doubles as ante ransom.
+    private static final int START_GOLD_COINS = 1;
+    private static final int START_SILVER_COINS = 1;
+    private static final int START_BRONZE_COINS = 3;
+
+    /**
+     * Tops the challenge-coin purse back up to a full starting loadout, granting only what is
+     * MISSING (user spec 2026-08-31: "If you don't have 1 Gold, 1 Silver and 3 Bronze, you should
+     * be given the coins till you have that... so this way you always start with 1 Gold, 1 Silver
+     * and 3 Bronze for a Game Start").
+     * <p>
+     * Top-up rather than grant-outright, so a player who hoarded coins through the previous run
+     * keeps the surplus instead of having it clipped back to three. Additive and idempotent -
+     * running it twice grants nothing the second time.
+     * <p>
+     * Called on the New Game+ path only. An ordinary New Game already arrives at this loadout
+     * through the intro quest's own coin grant.
+     */
+    public void topUpChallengeCoins() {
+        grantMissingCoins(GOLD_COIN_ITEM, START_GOLD_COINS);
+        grantMissingCoins(SILVER_COIN_ITEM, START_SILVER_COINS);
+        grantMissingCoins(BRONZE_COIN_ITEM, START_BRONZE_COINS);
+    }
+
+    private void grantMissingCoins(String itemName, int target) {
+        int have = countItem(itemName);
+        int missing = target - have;
+        if (missing <= 0) {
+            System.out.println("[TFR-NewGamePlus] " + itemName + ": have " + have + "/" + target
+                    + " - nothing to grant");
+            return;
+        }
+        for (int i = 0; i < missing; i++)
+            addItem(itemName);
+        System.out.println("[TFR-NewGamePlus] " + itemName + ": had " + have + ", granted "
+                + missing + " -> " + countItem(itemName) + "/" + target);
+    }
 
     public PlayerStatistic getStatistic() {
         return statistic;
@@ -2338,6 +2380,28 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void loadChanges(PointOfInterestChanges changes) {
+        this.currentLocationChanges = changes;
+    }
+
+    /**
+     * Points {@link #cardSellPrice(PaperCard)} at the town the player is actually standing in.
+     * <p>
+     * Fixes a stale-state defect found 2026-08-31: {@code currentLocationChanges} had exactly one
+     * writer in the whole codebase - the Inn's Sell Cards button, via ShopScene.loadChanges() -
+     * and was never cleared, not even by {@link #clear()} on a save load. So every sell price the
+     * game quoted was computed from whichever town's shop screen was opened LAST, which after
+     * walking to another town is simply the wrong town, and on a fresh save load is the previous
+     * playthrough's.
+     * <p>
+     * That is not only a mislabelled price: two callers move real gold on it - the ante Buy Back
+     * charge in DuelScene and the auto-sell payout on a Loot reward screen, which is the screen
+     * Inn-tournament prizes arrive on.
+     * <p>
+     * Called on entering a map so the value means "here". A POI with no reputation yields exactly
+     * 1.0f from getTownPriceModifier(), so a dungeon or the world map is neutral rather than
+     * inheriting a town's haggling.
+     */
+    public void setCurrentLocationChanges(PointOfInterestChanges changes) {
         this.currentLocationChanges = changes;
     }
 }

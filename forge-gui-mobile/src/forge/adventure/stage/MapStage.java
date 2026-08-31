@@ -217,19 +217,23 @@ public class MapStage extends GameStage {
             EconomyBuildings.excludeMythicItemsForNeutralArmory(ret, newData, changes);
             actor.setRewardData(ret);
         }
-        refreshShopSignArt(objectId, newData);
+        String overlayOutcome = refreshShopSignArt(objectId, newData);
+        // Reports what happened to the sign ACTORS, not just what the JSON says (2026-08-31).
+        // The previous version printed newData.overlaySprite, which is a fact about shops.json and
+        // is identical whether the swap worked or wrote to a detached orphan - which is exactly why
+        // the colour-bar bug looked clean in the log.
         System.out.println("[TFR-ShopChooser] applied type " + newData.name + " to object " + objectId
                 + " (trigger=" + trigger + ", actor=" + (actor != null ? "live" : "none")
-                + ", overlay=" + (newData.overlaySprite == null || newData.overlaySprite.isEmpty() ? "none" : newData.overlaySprite) + ")");
+                + ", overlay=" + overlayOutcome + ")");
     }
 
     /** Repoints a slot's sign art AND its color bar at the given type. Creates the overlay actor
      *  on demand (a slot whose first type had no color bar still needs one if it becomes a type
      *  that does) and suppresses it when the new type has none. */
-    private void refreshShopSignArt(int objectId, ShopData newData) {
+    private String refreshShopSignArt(int objectId, ShopData newData) {
         TextureSprite sign = shopSigns.get(objectId);
         if (sign == null)
-            return; // this slot has no sign at all (hasSign false) - nothing to repoint
+            return "no-sign"; // this slot has no sign at all (hasSign false) - nothing to repoint
         try {
             sign.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.sprite));
         } catch (Exception e) {
@@ -240,24 +244,27 @@ public class MapStage extends GameStage {
         if (!hasOverlay) {
             if (overlay != null)
                 overlay.setSuppressed(true);
-            return;
+            return "suppressed";
         }
         try {
             if (overlay == null) {
                 Vector2 anchor = shopSignAnchors.get(objectId);
                 if (anchor == null)
-                    return;
+                    return "no-anchor";
                 overlay = new ShopSignSprite(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.overlaySprite), objectId);
                 overlay.setX(anchor.x);
                 overlay.setY(anchor.y);
                 addMapActor(overlay);
                 shopSignOverlays.put(objectId, overlay);
-            } else {
-                overlay.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.overlaySprite));
+                overlay.setSuppressed(false);
+                return "created:" + newData.overlaySprite;
             }
+            overlay.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.overlaySprite));
             overlay.setSuppressed(false);
+            return "swapped:" + newData.overlaySprite;
         } catch (Exception e) {
             System.err.println("[TFR-ShopChooser] no overlay sprite for " + newData.name + ": " + e);
+            return "FAILED:" + newData.overlaySprite;
         }
     }
 
@@ -642,6 +649,29 @@ public class MapStage extends GameStage {
         collisionRect.clear();
         waypoints.clear();
         shopOverheadTiles.clear();
+        // Per-map shop registries (2026-08-31 fix). MapStage is a PROCESS SINGLETON, and these
+        // five maps are keyed by tmx object id - a number that is reused by every town in the
+        // plane. The loop above detaches every actor from the stage, but these maps kept holding
+        // the detached corpses and the previous town's data, so a fresh town inherited whatever
+        // the last one left behind under the same id.
+        //
+        // That is the whole of the user's 2026-08-31 report ("the small lines on the card shop
+        // sign did not refresh till I left the town and came back in"): refreshShopSignArt()
+        // tests `overlay == null` as its ONLY liveness check, so a stale key looked live, it took
+        // the else-branch and called setRegion() on an actor that is no longer in the scene graph.
+        // Silent - no exception, nothing in the log. The base sign always refreshed because
+        // shopSigns.put() runs for EVERY signed slot at load, so its stale entry is always
+        // overwritten; shopSignOverlays.put() only runs when the slot's rolled type happens to
+        // have a colour bar (161 of 293 types do), so roughly half the slots kept an orphan.
+        //
+        // The same leak also let isShopTypeRerollable() answer with a DIFFERENT town's candidate
+        // pool, which is how a Buy Blueprint button appeared on a Cartographer's Guild - a
+        // single-name land slot that has no candidate pool of its own at all.
+        shopSigns.clear();
+        shopSignOverlays.clear();
+        shopSignAnchors.clear();
+        shopCandidatePools.clear();
+        shopTierPools.clear();
 
         if (collisionGroup != null)
             collisionGroup.remove();

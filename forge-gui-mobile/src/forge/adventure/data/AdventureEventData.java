@@ -48,6 +48,10 @@ public class AdventureEventData implements Serializable {
     public int rounds;
     public int currentRound;
     public AdventureEventRules eventRules = new AdventureEventRules();
+    // Player-town Inn pool fingerprint (2026-08-31). Non-transient so it persists with the event;
+    // a save written before this field existed deserializes it as 0, which reads as "legacy /
+    // not a player-town event - leave alone". See EditionProgression.playerTownPoolStamp().
+    public int playerTownPoolStamp = 0;
     public AdventureEventReward[] rewards;
     public int eventOrigin;
     public String sourceID;
@@ -111,7 +115,15 @@ public class AdventureEventData implements Serializable {
     }
 
     public AdventureEventData(Long seed, AdventureEventController.EventFormat selectedFormat) {
-        this(seed, selectedFormat, null, pickCardBlockByFormat(selectedFormat));
+        this(seed, selectedFormat, false);
+    }
+
+    public AdventureEventData(Long seed, AdventureEventController.EventFormat selectedFormat, boolean playerTown) {
+        this(seed, selectedFormat, null, pickCardBlockByFormat(selectedFormat, playerTown));
+        // Stamped so a cached Available event can tell that the player has unlocked a set since it
+        // was rolled - see InnScene.initLocalEvent(). 0 on a non-player town or a legacy event.
+        this.playerTownPoolStamp = playerTown
+                ? forge.adventure.util.EditionProgression.playerTownPoolStamp() : 0;
     }
 
     public AdventureEventData(Long seed, AdventureEventController.EventFormat selectedFormat, CardBlock cardBlock) {
@@ -183,25 +195,58 @@ public class AdventureEventData implements Serializable {
     // as the original roll (the gating lives inside pickWeightedCardBlock/pickJumpstartCardBlock
     // below, not duplicated in InnScene) - no other behavior change, still a pure pick.
     public static CardBlock pickCardBlockByFormat(AdventureEventController.EventFormat format) {
+        return pickCardBlockByFormat(format, false);
+    }
+
+    /** @param playerTown true for an Inn in a town the player owns - narrows the pool to the
+     *                    player's race editions plus their unlocked sets (user spec 2026-08-31). */
+    public static CardBlock pickCardBlockByFormat(AdventureEventController.EventFormat format, boolean playerTown) {
         return switch (format) {
-            case Draft, Sealed -> pickWeightedCardBlock(format.toString());
-            case Jumpstart -> pickJumpstartCardBlock();
+            case Draft, Sealed -> pickWeightedCardBlock(format.toString(), playerTown);
+            case Jumpstart -> pickJumpstartCardBlock(playerTown);
             case Constructed -> null;
         };
     }
 
+    /**
+     * The edition pool an event roll should use, and the fallback that keeps the Inn alive.
+     * <p>
+     * A player town narrows to race+unlocked. That pool is often SMALL, and a Draft block is only
+     * legal when EVERY set in it is inside the pool - so for most races, early on, no block
+     * qualifies at all and the Inn would just say "No events at this time" indefinitely. The
+     * callers therefore try the narrow pool first and fall back to the global one rather than
+     * offering nothing; as research unlocks more sets the narrow pool starts winning on its own.
+     */
+    private static java.util.Set<String> eventPool(boolean playerTown) {
+        if (!playerTown)
+            return forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
+        java.util.Set<String> narrow = forge.adventure.util.EditionProgression.playerTownEventEditionCodes();
+        return narrow != null ? narrow : forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
+    }
+
     // Diagnostic logging (2026-08-13, user request - "can we somehow create a log for future
     // testing" for edition-restriction decisions) - Inn tournament/event edition selection had NO
-    // TFR tag at all before this. Unlike [TFR-ShopEditions]/[TFR-LootEditions], this is NOT
-    // per-AI-color: EditionProgression.eventAllowedEditionCodes() computes one global
-    // playerUnlocked+neutralShard set regardless of which town's Inn is visited, so this log line
-    // reflects that - one entry per event roll, not a per-color breakdown.
+    // TFR tag at all before this. Still not per-AI-color: an AI or neutral town's Inn draws from
+    // one global playerUnlocked+neutralShard set regardless of which town it is.
+    //
+    // As of 2026-08-31 the town is no longer irrelevant, though: a PLAYER-OWNED town narrows to
+    // the player's race editions plus their unlocked sets, so the line now reports which kind of
+    // town rolled it and whether the narrow pool was empty enough to force the global fallback.
     private static void logInnEditions(String format, java.util.Set<String> allowed, CardBlock picked) {
+        logInnEditions(format, allowed, picked, false, false);
+    }
+
+    private static void logInnEditions(String format, java.util.Set<String> allowed, CardBlock picked,
+                                       boolean playerTown, boolean fellBack) {
         List<String> playerUnlocked = AdventurePlayer.current() != null
                 ? new ArrayList<>(AdventurePlayer.current().getUnlockedEditions()) : Collections.emptyList();
         List<String> neutralShard = forge.adventure.util.EditionProgression.getEditionsForColor(
                 forge.adventure.world.WorldSave.getCurrentSave().getWorld(), forge.adventure.util.EditionProgression.NEUTRAL);
+        java.util.Set<String> raceCodes = forge.adventure.util.EditionProgression.raceEditionCodes(AdventurePlayer.current());
         System.out.println("[TFR-InnEditions] format=" + format
+                + " town=" + (playerTown ? "PLAYER" : "ai/neutral")
+                + (playerTown ? " raceEditions(" + raceCodes.size() + ")=" + raceCodes : "")
+                + (fellBack ? " NARROW-POOL-EMPTY->fell back to the global pool" : "")
                 + " playerUnlocked(" + playerUnlocked.size() + ")=" + playerUnlocked
                 + " neutralShard(" + neutralShard.size() + ")=" + neutralShard
                 + " allowed(" + allowed.size() + ")=" + allowed
@@ -236,6 +281,10 @@ public class AdventureEventData implements Serializable {
     private static final Set<String> POWER_NINE = Set.of("Black Lotus", "Mox Emerald", "Mox Pearl", "Mox Ruby", "Mox Sapphire", "Mox Jet", "Ancestral Recall", "Timetwister", "Time Walk");
 
     private static CardBlock pickWeightedCardBlock(String formatForLogging) {
+        return pickWeightedCardBlock(formatForLogging, false);
+    }
+
+    private static CardBlock pickWeightedCardBlock(String formatForLogging, boolean playerTown) {
         CardEdition.Collection editions = FModel.getMagicDb().getEditions();
         ConfigData configData = Config.instance().getConfigData();
         Predicate<CardEdition> filter = CardEdition.Predicates.CAN_MAKE_BOOSTER;
@@ -272,9 +321,11 @@ public class AdventureEventData implements Serializable {
         // allowedEvents branch above deliberately - the progression lock must hold even when a
         // plane whitelists events. Null = feature off/unseeded, no restriction. An emptied
         // result is already graceful: no legal blocks -> null -> "No events at this time".
-        java.util.Set<String> progressionAllowed = forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
-        if (progressionAllowed != null)
-            filter = filter.and(q -> progressionAllowed.contains(q.getCode()));
+        final java.util.Set<String> narrowPool = eventPool(playerTown);
+        java.util.Set<String> loggedPool = narrowPool;
+        final Predicate<CardEdition> baseFilter = filter;
+        if (narrowPool != null)
+            filter = filter.and(q -> narrowPool.contains(q.getCode()));
 
         List<CardEdition> allEditions = new ArrayList<>();
         StreamUtil.stream(editions)
@@ -284,9 +335,29 @@ public class AdventureEventData implements Serializable {
 
         List<CardBlock> legalBlocks = getValidDraftBlocks(allEditions);
 
+        // Player-town fallback (2026-08-31). A draft block is legal only when EVERY set in it is
+        // inside the pool, so a narrow race+unlocked pool very often matches no block at all -
+        // especially early, when the player has two or three sets. Rather than leave the player's
+        // own Inn permanently empty, fall back to the ordinary global pool and say so in the log.
+        // The narrowing then starts biting on its own as research widens the pool.
+        boolean fellBack = false;
+        if (playerTown && legalBlocks.isEmpty()) {
+            final java.util.Set<String> wide = forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
+            Predicate<CardEdition> wideFilter = wide == null
+                    ? baseFilter : baseFilter.and(q -> wide.contains(q.getCode()));
+            List<CardEdition> wideEditions = new ArrayList<>();
+            StreamUtil.stream(editions)
+                    .filter(wideFilter)
+                    .filter(CardEdition::hasBoosterTemplate)
+                    .forEach(wideEditions::add);
+            legalBlocks = getValidDraftBlocks(wideEditions);
+            fellBack = true;
+            loggedPool = wide;
+        }
+
         CardBlock picked = legalBlocks.isEmpty() ? null : Aggregates.random(legalBlocks);
-        if (progressionAllowed != null)
-            logInnEditions(formatForLogging, progressionAllowed, picked);
+        if (loggedPool != null)
+            logInnEditions(formatForLogging, loggedPool, picked, playerTown, fellBack);
         return picked;
     }
 
@@ -320,6 +391,10 @@ public class AdventureEventData implements Serializable {
     }
 
     private static CardBlock pickJumpstartCardBlock() {
+        return pickJumpstartCardBlock(false);
+    }
+
+    private static CardBlock pickJumpstartCardBlock(boolean playerTown) {
         Iterable<CardBlock> src = AdventureOverrides.instance().allBlocks(); //all blocks
         List<CardBlock> legalBlocks = new ArrayList<>();
         ConfigData configData = Config.instance().getConfigData();
@@ -356,12 +431,25 @@ public class AdventureEventData implements Serializable {
         // via each jumpstart block's land-set CODE (this path is otherwise name-keyed - the
         // allowedEditions/restrictedEditions checks above compare block NAMES against set codes,
         // an effective no-op; the land set is what getJumpstartBoosters actually deals from).
-        java.util.Set<String> progressionAllowed = forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
-        if (progressionAllowed != null)
-            legalBlocks.removeIf(q -> q.getLandSet() == null || !progressionAllowed.contains(q.getLandSet().getCode()));
+        final java.util.Set<String> narrowPool = eventPool(playerTown);
+        java.util.Set<String> loggedPool = narrowPool;
+        List<CardBlock> beforeNarrowing = new ArrayList<>(legalBlocks);
+        if (narrowPool != null)
+            legalBlocks.removeIf(q -> q.getLandSet() == null || !narrowPool.contains(q.getLandSet().getCode()));
+        // Same player-town fallback as the draft path above - never leave the player's own Inn
+        // with nothing on offer just because their race pool is still narrow.
+        boolean fellBack = false;
+        if (playerTown && legalBlocks.isEmpty()) {
+            final java.util.Set<String> wide = forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
+            legalBlocks = beforeNarrowing;
+            if (wide != null)
+                legalBlocks.removeIf(q -> q.getLandSet() == null || !wide.contains(q.getLandSet().getCode()));
+            fellBack = true;
+            loggedPool = wide;
+        }
         CardBlock picked = legalBlocks.isEmpty() ? null : Aggregates.random(legalBlocks);
-        if (progressionAllowed != null)
-            logInnEditions("Jumpstart", progressionAllowed, picked);
+        if (loggedPool != null)
+            logInnEditions("Jumpstart", loggedPool, picked, playerTown, fellBack);
         return picked;
     }
 
@@ -1098,14 +1186,14 @@ public class AdventureEventData implements Serializable {
         public PairingStyle pairingStyle = PairingStyle.SingleElimination;
 
         public AdventureEventRules() {
-            this(AdventureEventController.EventFormat.Constructed, PairingStyle.SingleElimination, 1.0f);
+            this(AdventureEventController.EventFormat.Constructed, PairingStyle.SingleElimination);
         }
 
-        public AdventureEventRules(AdventureEventController.EventFormat format, float localPriceModifier) {
-            this(format, PairingStyle.SingleElimination, localPriceModifier);
+        public AdventureEventRules(AdventureEventController.EventFormat format) {
+            this(format, PairingStyle.SingleElimination);
         }
 
-        public AdventureEventRules(AdventureEventController.EventFormat format, PairingStyle pairingStyle, float localPriceModifier) {
+        public AdventureEventRules(AdventureEventController.EventFormat format, PairingStyle pairingStyle) {
             int baseGoldEntry = 99999;
             int baseShardEntry = 9999;
             this.pairingStyle = pairingStyle;
@@ -1147,6 +1235,13 @@ public class AdventureEventData implements Serializable {
                     allowsAddBasicLands = false;
                     break;
             }
+            // Entry fees are stored UNSCALED on purpose (2026-08-31). Every read of these two
+            // fields already multiplies by a LIVE town price modifier - four sites in
+            // getDescription() here and six in EventScene - so baking the modifier in at
+            // construction would apply it twice. It would also freeze the fee: eventRules is
+            // serialized with the event, so a stored value would stop tracking town reputation
+            // while the display path kept scaling it. The dead localPriceModifier parameter this
+            // constructor used to take was removed rather than made live, for both reasons.
             goldToEnter = baseGoldEntry;
             shardsToEnter = baseShardEntry;
         }
