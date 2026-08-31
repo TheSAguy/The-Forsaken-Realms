@@ -95,6 +95,16 @@ public class MapStage extends GameStage {
     // re-roll can swap its artwork live instead of requiring a fresh map reload to see the change.
     private final Map<Integer, Array<String>> shopCandidatePools = new HashMap<>();
     private final Map<Integer, TextureSprite> shopSigns = new HashMap<>();
+    // The sign's COLOUR BAR (ShopData.overlaySprite - e.g. "Overlay6Blue"), tracked from
+    // 2026-08-31 so a type change can swap it too. User playtest report: after buying three
+    // "Cloaks of Invisibility" the signs looked right "but one had a colored bar on the side - it
+    // was blue". setShopType() swapped only the base sign region and left the previous type's
+    // overlay actor sitting on top of it, so the bar advertised the shop the slot USED to be.
+    private final Map<Integer, ShopSignSprite> shopSignOverlays = new HashMap<>();
+    // The sign anchor (already offset by signXOffset/signYOffset), kept so an overlay can be
+    // CREATED later - a slot whose original type had no colour bar still needs one the moment it
+    // becomes a type that does.
+    private final Map<Integer, Vector2> shopSignAnchors = new HashMap<>();
 
     // Card Shop Type CHOOSER (2026-08-30, user request: "when you build a card shop, you get a
     // drop-down menu of all types of card shops... so the player can choose what type they want").
@@ -157,11 +167,160 @@ public class MapStage extends GameStage {
         }
         if (newData == null)
             return null;
-        getChanges().setPinnedShopName(objectId, newData.name);
-        TextureSprite sign = shopSigns.get(objectId);
-        if (sign != null)
-            sign.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.sprite));
+        applyShopType(objectId, newData, true, "chooser");
         return newData;
+    }
+
+    /**
+     * Makes a slot BE the given shop type, everywhere it shows, without a map reload.
+     * <p>
+     * This exists because the 2026-08-30 chooser only did two of the six things that identity is
+     * made of - it pinned the name and swapped the sign's base art - and left the live ShopActor
+     * still holding the type the slot rolled at load time. The player's 2026-08-31 report is
+     * exactly what that produces: "The shop I bought, does not match the shop that was built. In
+     * the first town, I bought 3 'Cloaks of Invisibility'" but walking in gave Library of Lat-Nam,
+     * Mistform Hive and Fresh Volunteers - three different shops, each with the wrong name, the
+     * wrong inventory and the previous type's colour bar still on its sign. Leaving and re-entering
+     * the town fixed it because THAT path rebuilds the actor from the pin.
+     * <p>
+     * The six: the persisted pin, the actor's ShopData (name/description/restock price), the
+     * inventory (regenerated under the new type's reward rules AND the town's edition
+     * restrictions), the sign art, the sign's colour-bar overlay, and the purchase history.
+     *
+     * @param freshSeed true to reroll the inventory seed and clear cardsBought - correct for a
+     *                  deliberate type change, since the new identity should not inherit the old
+     *                  shop's stock roll or what the player already bought from it.
+     */
+    public void applyShopType(int objectId, ShopData newData, boolean freshSeed, String trigger) {
+        if (newData == null)
+            return;
+        PointOfInterestChanges changes = getChanges();
+        changes.setPinnedShopName(objectId, newData.name);
+        if (freshSeed)
+            changes.generateNewShopSeed(objectId);
+
+        forge.adventure.character.ShopActor actor = getShopActor(objectId);
+        if (actor != null) {
+            // Same stale-price correction map load applies to a pinned slot: ShopData instances are
+            // SHARED between every slot resolving to that name, so restockPrice can be whatever
+            // some unrelated town last wrote. Keep this slot's own tier price.
+            int restockPrice = actor.getShopData() != null ? actor.getShopData().restockPrice : newData.restockPrice;
+            newData.restockPrice = restockPrice;
+            actor.setShopData(newData);
+            Array<Reward> ret = new Array<>();
+            WorldSave.getCurrentSave().getWorld().getRandom().setSeed(changes.getShopSeed(objectId));
+            for (RewardData rdata : EditionProgression.restrictShopRewardsForCurrentTown(
+                    new Array.ArrayIterator<>(newData.rewards), changes, newData.name, trigger)) {
+                ret.addAll(rdata.generate(false, false));
+            }
+            EconomyBuildings.injectGuaranteedTorchIfOwed(ret, newData, changes);
+            EconomyBuildings.excludeMythicItemsForNeutralArmory(ret, newData, changes);
+            actor.setRewardData(ret);
+        }
+        refreshShopSignArt(objectId, newData);
+        System.out.println("[TFR-ShopChooser] applied type " + newData.name + " to object " + objectId
+                + " (trigger=" + trigger + ", actor=" + (actor != null ? "live" : "none")
+                + ", overlay=" + (newData.overlaySprite == null || newData.overlaySprite.isEmpty() ? "none" : newData.overlaySprite) + ")");
+    }
+
+    /** Repoints a slot's sign art AND its colour bar at the given type. Creates the overlay actor
+     *  on demand (a slot whose first type had no colour bar still needs one if it becomes a type
+     *  that does) and suppresses it when the new type has none. */
+    private void refreshShopSignArt(int objectId, ShopData newData) {
+        TextureSprite sign = shopSigns.get(objectId);
+        if (sign == null)
+            return; // this slot has no sign at all (hasSign false) - nothing to repoint
+        try {
+            sign.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.sprite));
+        } catch (Exception e) {
+            System.err.println("[TFR-ShopChooser] no sign sprite for " + newData.name + ": " + e);
+        }
+        boolean hasOverlay = newData.overlaySprite != null && !newData.overlaySprite.isEmpty();
+        ShopSignSprite overlay = shopSignOverlays.get(objectId);
+        if (!hasOverlay) {
+            if (overlay != null)
+                overlay.setSuppressed(true);
+            return;
+        }
+        try {
+            if (overlay == null) {
+                Vector2 anchor = shopSignAnchors.get(objectId);
+                if (anchor == null)
+                    return;
+                overlay = new ShopSignSprite(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.overlaySprite), objectId);
+                overlay.setX(anchor.x);
+                overlay.setY(anchor.y);
+                addMapActor(overlay);
+                shopSignOverlays.put(objectId, overlay);
+            } else {
+                overlay.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.overlaySprite));
+            }
+            overlay.setSuppressed(false);
+        } catch (Exception e) {
+            System.err.println("[TFR-ShopChooser] no overlay sprite for " + newData.name + ": " + e);
+        }
+    }
+
+    public forge.adventure.character.ShopActor getShopActor(int objectId) {
+        for (forge.adventure.character.ShopActor actor : getShopActors()) {
+            if (actor.getObjectId() == objectId)
+                return actor;
+        }
+        return null;
+    }
+
+    /** Names of the card-shop types actually STANDING in this town right now - used by the
+     *  one-type-per-town rule in the chooser (user spec 2026-08-31). Rubble does not count: a
+     *  ruined slot still carries whatever type it rolled at load, but nothing is built there. */
+    public java.util.Set<String> getBuiltShopTypeNames() {
+        java.util.Set<String> built = new java.util.HashSet<>();
+        for (forge.adventure.character.ShopActor actor : getShopActors()) {
+            if (actor.getShopData() == null || actor.isDestroyed())
+                continue;
+            if (EconomyBuildings.getBuildingType(getChanges(), actor.getObjectId()) != EconomyBuildings.NONE)
+                continue; // slot is a Bank/Mine/etc now, not a card shop
+            built.add(actor.getShopData().name);
+        }
+        return built;
+    }
+
+    /**
+     * A shop's sign, or the colour bar that sits on top of it. Both used to be anonymous
+     * TextureSprite subclasses created inline at map load with copy-pasted visibility rules - and
+     * the two copies had DRIFTED: the overlay's copy was missing the isPermanentlyBrokenShop()
+     * clause the base sign had, which is why a ruined shop slot showed a naked colour bar with no
+     * sign under it (2026-08-31 user report: "I walked into a Neutral town and the shop color bars
+     * for the broken/ruined shops were still showing"). One class, one rule, both actors.
+     * <p>
+     * {@code suppressed} exists because a type change can take a slot from a type WITH a colour bar
+     * to one without: the overlay actor stays alive (so it can be reused if a later type has one
+     * again) but stops drawing.
+     */
+    private class ShopSignSprite extends TextureSprite {
+        private final int shopId;
+        private boolean suppressed;
+
+        ShopSignSprite(com.badlogic.gdx.graphics.g2d.TextureRegion region, int shopId) {
+            super(region);
+            this.shopId = shopId;
+        }
+
+        void setSuppressed(boolean suppressed) {
+            this.suppressed = suppressed;
+        }
+
+        @Override
+        public void act(float delta) {
+            super.act(delta);
+            // While a wasteland shop is still rubble the sign would give away what it sells before
+            // the player has rebuilt it; a permanently-broken slot never advertises anything at
+            // all; and once the slot becomes an economy building (Bank/Mine/Exchange) the sign art
+            // is keyed to a shop type that is no longer there.
+            setVisible(!suppressed
+                    && (!TownRestoration.isWastelandTown() || TownRestoration.isShopRebuilt(MapStage.this, shopId))
+                    && !TownRestoration.isPermanentlyBrokenShop(MapStage.this, shopId)
+                    && EconomyBuildings.getBuildingType(getChanges(), shopId) == EconomyBuildings.NONE);
+        }
     }
 
     private static class OverheadTile {
@@ -268,6 +427,12 @@ public class MapStage extends GameStage {
         // isBoosterShop(ShopData)'s own check (name-based) without needing to resolve currentShopName
         // to a ShopData first - only the name is available here.
         boolean currentIsBooster = currentShopName != null && currentShopName.contains("Booster");
+        // One type per town (user spec 2026-08-31). The chooser enforces this by greying built
+        // types, but this random re-type is the OTHER way a slot changes identity - the same
+        // destroy-and-rebuild bypass the blueprint filter below had to close. Without it, a
+        // rebuild could hand the town a second copy of a type the chooser would have refused.
+        java.util.Set<String> builtHere = getBuiltShopTypeNames();
+        builtHere.remove(currentShopName); // this slot is the one being replaced
         Array<ShopData> matches = new Array<>();
         for (ShopData candidateData : new Array.ArrayIterator<>(WorldData.getShopList())) {
             if (candidates.contains(candidateData.name, false) && !candidateData.name.equals(currentShopName)
@@ -276,7 +441,8 @@ public class MapStage extends GameStage {
                     // EconomyBuildings.destroyShopFromRewardScene() calls, so without this filter a
                     // player could reach any LOCKED shop type just by destroying and rebuilding -
                     // which would make the whole unlock system cosmetic.
-                    && EconomyBuildings.isShopTypeUnlocked(candidateData.name))
+                    && EconomyBuildings.isShopTypeUnlocked(candidateData.name)
+                    && !builtHere.contains(candidateData.name))
                 matches.add(candidateData);
         }
         if (matches.size == 0) {
@@ -285,10 +451,9 @@ public class MapStage extends GameStage {
             return null;
         }
         ShopData newData = matches.get(WorldSave.getCurrentSave().getWorld().getRandom().nextInt(matches.size));
-        getChanges().setPinnedShopName(objectId, newData.name);
-        TextureSprite sign = shopSigns.get(objectId);
-        if (sign != null)
-            sign.setRegion(Config.instance().getAtlasSprite(newData.spriteAtlas, newData.sprite));
+        // freshSeed=false: the only caller is destroyShopFromRewardScene(), which generates its own
+        // new seed straight after - doing it twice would just burn an extra roll.
+        applyShopType(objectId, newData, false, "reroll");
         return newData;
     }
 
@@ -1074,8 +1239,14 @@ public class MapStage extends GameStage {
                             addTierPool(tierPools, TIER_COMMON, prop, "commonShopList");
                             addTierPool(tierPools, TIER_UNCOMMON, prop, "uncommonShopList");
                             addTierPool(tierPools, TIER_RARE, prop, "rareShopList");
-                            if (!tierPools.isEmpty())
+                            if (!tierPools.isEmpty()) {
                                 shopTierPools.put(id, tierPools);
+                                // Feed the process-wide name -> tier map too (2026-08-31): the AI
+                                // capitals declare a flat shopList and have no tier pools of their
+                                // own, so blueprint pricing and the reputation ladder there depend
+                                // entirely on what other maps have taught us.
+                                EconomyBuildings.registerShopTiers(tierPools);
+                            }
                         }
                         Array<String> filteredPossibleShops = new Array<>();
                         if (!isRotatingShop) {
@@ -1180,34 +1351,21 @@ public class MapStage extends GameStage {
                         if (prop.containsKey("hasSign") && (boolean) prop.get("hasSign") && prop.containsKey("signYOffset") && prop.containsKey("signXOffset")) {
                             final int shopId = id;
                             try {
-                                TextureSprite sprite = new TextureSprite(Config.instance().getAtlasSprite(data.spriteAtlas, data.sprite)) {
-                                    @Override
-                                    public void act(float delta) {
-                                        super.act(delta);
-                                        // Permanently-broken slots (2026-08-24) never show a sign
-                                        // either - no point advertising a shop that can never open.
-                                        setVisible((!TownRestoration.isWastelandTown() || TownRestoration.isShopRebuilt(MapStage.this, shopId))
-                                                && !TownRestoration.isPermanentlyBrokenShop(MapStage.this, shopId)
-                                                && EconomyBuildings.getBuildingType(getChanges(), shopId) == EconomyBuildings.NONE);
-                                    }
-                                };
-                                sprite.setX(actor.getX() + Float.parseFloat(prop.get("signXOffset").toString()));
-                                sprite.setY(actor.getY() + Float.parseFloat(prop.get("signYOffset").toString()));
+                                float signX = actor.getX() + Float.parseFloat(prop.get("signXOffset").toString());
+                                float signY = actor.getY() + Float.parseFloat(prop.get("signYOffset").toString());
+                                ShopSignSprite sprite = new ShopSignSprite(Config.instance().getAtlasSprite(data.spriteAtlas, data.sprite), shopId);
+                                sprite.setX(signX);
+                                sprite.setY(signY);
                                 addMapActor(sprite);
                                 shopSigns.put(id, sprite); // Card Shop Type Re-Roll (round 8) - see rerollShopType()
+                                shopSignAnchors.put(id, new Vector2(signX, signY)); // so an overlay can be added later
 
                                 if (!(data.overlaySprite == null || data.overlaySprite.isEmpty())) {
-                                    TextureSprite overlay = new TextureSprite(Config.instance().getAtlasSprite(data.spriteAtlas, data.overlaySprite)) {
-                                        @Override
-                                        public void act(float delta) {
-                                            super.act(delta);
-                                            setVisible((!TownRestoration.isWastelandTown() || TownRestoration.isShopRebuilt(MapStage.this, shopId))
-                                                    && EconomyBuildings.getBuildingType(getChanges(), shopId) == EconomyBuildings.NONE);
-                                        }
-                                    };
-                                    overlay.setX(actor.getX() + Float.parseFloat(prop.get("signXOffset").toString()));
-                                    overlay.setY(actor.getY() + Float.parseFloat(prop.get("signYOffset").toString()));
+                                    ShopSignSprite overlay = new ShopSignSprite(Config.instance().getAtlasSprite(data.spriteAtlas, data.overlaySprite), shopId);
+                                    overlay.setX(signX);
+                                    overlay.setY(signY);
                                     addMapActor(overlay);
+                                    shopSignOverlays.put(id, overlay);
                                 }
                             } catch (Exception e) {
                                 System.err.print("Can not create Texture for " + data.sprite + " Obj:" + data);

@@ -14935,3 +14935,94 @@ Card shop TYPES must now be learned before the rebuild/re-assign chooser will bu
 MapStage.java, RewardScene.java, AdventurePlayer.java, NewGameScene.java, WorldSave.java,
 ConfigData.java, RaceShopData.java (new), ResourceSpawns.java, ChestEvents.java, config.json,
 shops.json.
+
+## Round 72: shop identity applied live, blueprint fixes, ruined-town Inn (2026-08-31)
+
+Local-repo-only round, all from one playtest report. Two of the eight items turned out to be the
+same root cause, and one "feature not working" was a pure layout bug.
+
+### FIXED: the shop you bought was not the shop you got
+User report: "I bought 3 'Cloaks of Invisibility'... the main picture is the same, but one had a
+colored bar on the side - it was blue", and walking in gave Library of Lat-Nam / Mistform Hive /
+Fresh Volunteers. Leaving the town and re-entering fixed everything.
+- Root cause: `MapStage.setShopType()` did TWO of the six things a type change means - it wrote the
+  persisted pin and swapped the sign's base art. It never re-pointed the live `ShopActor`, so the
+  actor kept the ShopData the slot rolled at map-load time: wrong name, wrong inventory, wrong
+  restock price. Re-entering the town worked because that path rebuilds the actor FROM the pin.
+- The blue bar is `ShopData.overlaySprite` (e.g. "Overlay6Blue"), a SECOND sprite actor on top of
+  the sign. Nothing ever swapped it, so it kept advertising the type the slot used to be.
+- New `MapStage.applyShopType()` does all six: pin, ShopActor's ShopData, inventory (regenerated
+  under the new type's reward rules AND the town's edition restrictions), sign art, colour-bar
+  overlay, purchase history. `setShopType()` and `rerollShopType()` both route through it.
+- The overlay is now CREATED on demand: a slot whose first type had no colour bar still needs one
+  the moment it becomes a type that does. Verified safe to swap regions in place without resizing -
+  all 290 sign sprites in this plane are 16x16 and all 24 overlays are 5x16.
+
+### FIXED: colour bars floating over ruined shops
+Separate bug, same family. The sign and the overlay were two anonymous `TextureSprite` subclasses
+created inline with COPY-PASTED visibility rules, and the copies had drifted: the overlay's was
+missing the `isPermanentlyBrokenShop()` clause. A permanently-broken slot therefore hid its sign and
+kept drawing its colour bar - the naked slivers in the user's screenshot. Both are now one
+`ShopSignSprite` class with one rule.
+
+### FIXED: no Buy Blueprint button at any AI shop
+Not a gating bug - a layout bug. The button was correctly made visible; it was positioned off the
+top of the screen. The layout is 480x270 with `doneButton` at stage y=120 height 30, so the button
+rows land at y=160/200/240/**280** - and row 4's 280 is past the 270-unit ceiling before its own
+height is even counted. Moved to row 3, the highest row that fits. Safe to share with the Armory's
+`rerollButton` there: that one is Armory-only and this one is explicitly `!isArmory`.
+
+### Blueprint reputation ladder (user spec)
+"Can't buy Rare... unless you are at Partner. Can't buy Uncommon, unless at Happy. Won't [sell] any
+blue-prints, unless Neutral or above. Blue-print cost should scale with reputation."
+- Gates on the town's owning colour; cost uses the SAME standing -> multiplier table card prices
+  already use (Partner 0.70, Happy 0.85), so the two can't drift. Effective: 14/28/70 at Partner,
+  17/34/85 at Happy, 20/40/100 at Neutral.
+- Player-owned towns are exempt (no colour is selling you anything), matching
+  `ShopActor.colorReputationModifier()`. Neutral/Spawn towns have no standing: base price, no gate.
+- **This needed a global shop-name -> tier map to work at all.** Tier came from per-slot tmx pools,
+  and the 5 AI capitals declare a flat `shopList` with NO tier lists - so every blueprint bought in
+  a rival capital priced as Common and skipped the ladder entirely, which is exactly where the gate
+  is meant to bite. `EconomyBuildings.registerShopTiers()` now accumulates name -> tier across every
+  map loaded this session; deliberately never cleared, since a tier is a fact about a shop TYPE.
+- Same gap silently broke blueprint DROPS in AI capitals: `allChooserShopNames()` built its universe
+  only from the current map's tier pools, so a chest opened in a rival capital saw zero candidates
+  and fell through to an ordinary reward. Now unions in the accumulated map.
+
+### Blueprint drops are now a card you turn over
+User: "I got a blue-print, but was not very obvious... Let's show a card or something with a
+Scroll/Blue-print on it that you need to click (Like when you get a card)". New `Reward.Type
+.Blueprint` rendered through the same Loot reward screen every card drop uses. The unlock still
+happens BEFORE the reveal, so closing the screen without clicking can never lose it - the reward
+card's own grant is idempotent. No dedicated art yet: it borrows the first existing scroll/map icon
+found in the plane's items.atlas (DungeonMap, then three fallbacks, then CardBack).
+
+### One shop type per town (user spec)
+- Chooser sorts **Available -> Built -> Locked**, alphabetical by display name within each group.
+  Built entries are greyed and labelled "(built)" rather than hidden, same decision as locked ones:
+  hiding a type reads as "that type does not exist here". Category counts read "(5 + 2 built + 9
+  locked)".
+- Enforced on the random re-type path too (`rerollShopType`), which is how destroy-and-rebuild picks
+  a type - otherwise a rebuild could hand the town a duplicate the chooser would have refused.
+
+### Smaller items
+- **Tier options greyed when unaffordable** (user request): "Common Shops (100 Gold + 5 Wood)" is
+  now disabled if you cannot pay it, instead of leading to a page where every leaf is individually
+  greyed for the same reason. Verified real, not cosmetic: `MapDialog` builds a disabled option with
+  NO click callback at all, so it genuinely cannot navigate.
+- **Shop name no longer clipped**: the `shopName` label sat at y=0 in a yDown layout, i.e. flush
+  against the top edge with its ascenders cut off. Nudged to y=7 in both items.json and
+  items_portrait.json.
+- **Gold Mine 50 -> 75 gold/week** (`mineWeeklyGoldPayout` in the plane's settings.json).
+- **Ruined-town Inn sells nothing** (user spec): no card sales, no Potion of False Life, tournament
+  only. Answering the user's own question first - there was NO difference between a ruined-town Inn
+  and a Neutral-town Inn before this, because the only town-dependent behaviour was colour
+  reputation and `colorOfTown()` returns null for both. `isRuinedTown()` needs BOTH halves:
+  `isWastelandTown()` alone stays true after the player rebuilds the place (which would cripple a
+  restored town's Inn forever), and it already exempts neutral-seeded towns so a functioning Neutral
+  town keeps every option. Both handlers re-check it - `setDisabled()` does not detach click
+  handlers in this framework.
+
+**Files touched**: MapStage.java, ShopActor.java, EconomyBuildings.java, RewardScene.java,
+InnScene.java, Reward.java, RewardActor.java, AdventurePlayer.java, ResourceSpawns.java,
+items.json, items_portrait.json, settings.json.

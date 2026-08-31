@@ -43,7 +43,7 @@
     "aiTerritoryWarSpeedPenalty": 0.10,
 
     // What each built Mine pays out on payday (weekly, on days 7/14/21/28).
-    "mineWeeklyGoldPayout": 50,
+    "mineWeeklyGoldPayout": 75,
     "mineWeeklyWoodPayout": 25,
     "mineWeeklyStonePayout": 25,
     "mineWeeklyShardPayout": 20,

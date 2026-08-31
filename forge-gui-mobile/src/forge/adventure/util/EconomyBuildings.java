@@ -1215,10 +1215,97 @@ public class EconomyBuildings {
         return known.contains(shopName);
     }
 
-    /** Which tier list a shop name belongs to on this slot, for blueprint pricing. */
+    // Global shop-name -> tier map, accumulated from every map loaded this session (2026-08-31).
+    //
+    // Needed because the per-slot pools this used to rely on exist ONLY where the town's tmx
+    // declares commonShopList/uncommonShopList/rareShopList. The 5 AI capitals do not: they use a
+    // single flat "shopList" property, so their slots have no tier pools at all. Without this map
+    // every blueprint bought in a rival capital priced as Common and skipped the reputation ladder
+    // entirely, which is precisely where the user's Partner/Happy gates are supposed to bite.
+    //
+    // Deliberately NOT cleared on map load (unlike chooserShopNames' cache below was): a tier is a
+    // fact about a shop TYPE, not about the map you happen to be standing on, and accumulating
+    // means an AI capital can price against the ladder the player's own town taught us.
+    private static final Map<String, String> globalShopTiers = new java.util.HashMap<>();
+
+    /** Called by MapStage for each slot's tier pools as a map loads. First tier wins, and the
+     *  caller feeds Common -> Uncommon -> Rare, so an ambiguous name settles on its lowest tier
+     *  exactly as tierOfShopName() resolves it per-slot. */
+    public static void registerShopTiers(Map<String, Array<String>> pools) {
+        if (pools == null)
+            return;
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+            Array<String> names = pools.get(tier);
+            if (names == null)
+                continue;
+            for (String name : new Array.ArrayIterator<>(names))
+                globalShopTiers.putIfAbsent(name, tier);
+        }
+    }
+
+    /** Which tier list a shop name belongs to on this slot, for blueprint pricing. Falls back to
+     *  the accumulated global map when this slot has no tier pools of its own (AI capitals). */
     public static String shopTierOf(MapStage stage, int objectId, String shopName) {
         Map<String, Array<String>> pools = stage == null ? null : stage.getShopTierPools(objectId);
-        return pools == null ? null : tierOfShopName(pools, shopName);
+        String tier = pools == null ? null : tierOfShopName(pools, shopName);
+        return tier != null ? tier : globalShopTiers.get(shopName);
+    }
+
+    // ---- Blueprint standing gate (user spec 2026-08-31) ----------------------------------------
+    // "Can't buy Rare Shop blue-print from 5 main AI's unless you are at Partner. Can't buy
+    // Uncommon, unless at Happy. Won't [sell] any blue-prints, unless Neutral or above. Blue-print
+    // cost should scale with reputation."
+    //
+    // Applies wherever the town belongs to one of the five colours - capital or ordinary colour
+    // town - since that is what "the 5 main AIs" owns. Neutral (Spawn) towns have no standing to
+    // measure, so they neither gate nor discount: base price, always available.
+
+    /** The colour whose standing governs blueprint sales here, or null where none does. */
+    private static String blueprintStandingColor() {
+        if (!ColorReputation.isEnabled())
+            return null;
+        PointOfInterest point = TileMapScene.instance().rootPoint;
+        if (point == null)
+            return null;
+        // A town the player has taken is theirs - no colour is selling them anything, so no gate
+        // and no discount. Same exemption ShopActor.colorReputationModifier() makes before reading
+        // colorOfTown(), and it matters here because a captured colour town would otherwise keep
+        // being judged by its FORMER owner's opinion of the player.
+        if (TownRestoration.isCurrentTownPlayerOwned(WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID())))
+            return null;
+        return ColorReputation.colorOfTown(point.getData());
+    }
+
+    /** Null when this blueprint may be bought here; otherwise the player-facing reason it may not.
+     *  Tier is the SHOP's tier - an unknown tier is treated as Common (the permissive end), same
+     *  fallback blueprintShardCost() already makes. */
+    public static String blueprintStandingBlock(String tier) {
+        String color = blueprintStandingColor();
+        if (color == null)
+            return null;
+        ColorReputation.Status status = ColorReputation.getStatus(color);
+        String who = Character.toUpperCase(color.charAt(0)) + color.substring(1);
+        // Enum order is PARTNER, HAPPY, NEUTRAL, UNHAPPY, WAR - lower ordinal is friendlier.
+        if (status.ordinal() > ColorReputation.Status.NEUTRAL.ordinal())
+            return who + " will not sell you blueprints while you are " + status.label
+                    + ".\nYou need to be at least Neutral with them.";
+        if (MapStage.TIER_RARE.equals(tier) && status != ColorReputation.Status.PARTNER)
+            return "A Rare blueprint is only sold to a Partner.\nYou are " + status.label + " with " + who + ".";
+        if (MapStage.TIER_UNCOMMON.equals(tier) && status.ordinal() > ColorReputation.Status.HAPPY.ordinal())
+            return "An Uncommon blueprint needs " + who + " to be Happy with you.\nYou are "
+                    + status.label + ".";
+        return null;
+    }
+
+    /** Blueprint price after the town colour's standing discount. Reuses the same standing ->
+     *  multiplier table card prices already use (Partner 0.70, Happy 0.85, Neutral 1.0), so the
+     *  two never drift apart. Neutral/player towns pay the flat tier price. */
+    public static int blueprintShardCostHere(String tier) {
+        int base = blueprintShardCost(tier);
+        String color = blueprintStandingColor();
+        if (color == null)
+            return base;
+        return Math.max(1, Math.round(base * ColorReputation.getShopPriceMultiplier(color)));
     }
 
     /** Blueprint price in SHARDS by tier (user spec 2026-08-30: 20 / 40 / 100). An unknown tier
@@ -1310,7 +1397,7 @@ public class EconomyBuildings {
             return chooserShopNames;
         java.util.TreeSet<String> names = new java.util.TreeSet<>();
         MapStage stage = MapStage.getInstance();
-        // Union of every slot's tier pools on the currently-loaded map.
+        // Union of every slot's tier pools on the currently-loaded map...
         for (int objectId : stage.getShopTierPoolObjectIds()) {
             Map<String, Array<String>> pools = stage.getShopTierPools(objectId);
             if (pools == null)
@@ -1319,6 +1406,11 @@ public class EconomyBuildings {
                 for (String name : new Array.ArrayIterator<>(tierNames))
                     names.add(name);
         }
+        // ...plus every type any PREVIOUS map taught us (2026-08-31). Without this a chest opened
+        // inside an AI capital saw an empty universe - those maps declare a flat shopList and have
+        // no tier pools - so grantRandomBlueprint() found no candidates and silently fell through
+        // to an ordinary reward. The player's own town always supplies the full ladder.
+        names.addAll(globalShopTiers.keySet());
         chooserShopNames = new ArrayList<>(names);
         System.out.println("[TFR-Blueprint] chooser shop-name universe: " + chooserShopNames.size() + " type(s)");
         return chooserShopNames;
@@ -1403,6 +1495,11 @@ public class EconomyBuildings {
         String oldTier = tierOfShopName(pools, currentShopName);
         int refund = shopTierGoldRefund(oldTier);
         boolean isCapitol = TownRestoration.isCurrentTownCapitol();
+        // One type per town (user spec 2026-08-31: "You should only be allowed to build one type
+        // of shop per town... you'll need to indicate, already built"). The type being re-assigned
+        // away from is excluded further down by the currentShopName check, so re-typing a shop
+        // never sees itself as a blocker.
+        java.util.Set<String> builtHere = stage.getBuiltShopTypeNames();
 
         DialogData root = new DialogData();
         root.name = "Card Shop";
@@ -1430,6 +1527,11 @@ public class EconomyBuildings {
             DialogData tierNode = new DialogData();
             tierNode.name = tier + " Shops (" + costLabel(goldDue, cost[1], cost[2], cost[3]) + ")";
             tierNode.text = "Which " + tier.toLowerCase(java.util.Locale.ROOT) + " shop?";
+            // Greyed when the tier itself is unaffordable (user request 2026-08-31: "Grey out the
+            // Common Shop / Uncommon Shop if you can't afford them, when you first click on Card
+            // Shop") - every leaf inside would have been individually greyed for the same reason,
+            // so the trip in was always a dead end.
+            tierNode.isDisabled = !canAffordCost(goldDue, cost[1], cost[2], cost[3]);
 
             List<DialogData> categoryOptions = new ArrayList<>();
             for (String category : SHOP_CATEGORIES) {
@@ -1446,21 +1548,29 @@ public class EconomyBuildings {
                         continue; // already this type - nothing to buy
                     inCategory.add(shopName);
                 }
+                // Available -> Built -> Locked (user spec 2026-08-31), alphabetical by DISPLAY
+                // name inside each group since that is what is actually on screen.
                 inCategory.sort((a, b) -> {
-                    boolean ua = isShopTypeUnlocked(a), ub = isShopTypeUnlocked(b);
-                    if (ua != ub)
-                        return ua ? -1 : 1; // unlocked ahead of locked
+                    int ra = chooserRank(a, builtHere), rb = chooserRank(b, builtHere);
+                    if (ra != rb)
+                        return Integer.compare(ra, rb);
                     return shopDisplayName(a).compareToIgnoreCase(shopDisplayName(b));
                 });
+                int builtInCategory = 0;
                 for (String shopName : inCategory) {
                     // Locked types are shown DISABLED, not hidden (user decision 2026-08-30): with
                     // only 5 starting unlocks a filtered menu collapses to almost nothing and the
                     // player can never see what progression is even available. Same
-                    // shown-but-disabled treatment unaffordable options already get below.
+                    // shown-but-disabled treatment unaffordable options already get below. A type
+                    // already standing in this town gets the same treatment for the same reason -
+                    // hiding it would read as "that type does not exist here".
                     boolean unlocked = isShopTypeUnlocked(shopName);
+                    boolean built = builtHere.contains(shopName);
                     if (!unlocked)
                         lockedInCategory++;
-                    leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost, unlocked, changes));
+                    else if (built)
+                        builtInCategory++;
+                    leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost, unlocked, built, changes));
                 }
                 if (leaves.isEmpty())
                     continue;
@@ -1469,8 +1579,9 @@ public class EconomyBuildings {
                 categoryBacks.add(categoryBack);
                 leaves.add(categoryBack);
                 DialogData categoryNode = new DialogData();
-                int available = leaves.size() - 1 - lockedInCategory;
+                int available = leaves.size() - 1 - lockedInCategory - builtInCategory;
                 categoryNode.name = category + " (" + available
+                        + (builtInCategory > 0 ? " + " + builtInCategory + " built" : "")
                         + (lockedInCategory > 0 ? " + " + lockedInCategory + " locked" : "") + ")";
                 categoryNode.text = tierNode.text;
                 categoryNode.options = leaves.toArray(new DialogData[0]);
@@ -1534,8 +1645,16 @@ public class EconomyBuildings {
     /** One selectable shop type. Charges the tier price (already net of any re-type credit), pins
      *  the chosen type, and reuses the exact same rebuild bookkeeping the flat Card Shop option
      *  performs - shop-rebuilt flag, edition refresh, and the "shopBuilt" main-quest flag. */
+    /** Sort rank for the chooser: 0 buildable now, 1 known but already standing in this town,
+     *  2 not yet learned. */
+    private static int chooserRank(String shopName, java.util.Set<String> builtHere) {
+        if (!isShopTypeUnlocked(shopName))
+            return 2;
+        return builtHere.contains(shopName) ? 1 : 0;
+    }
+
     private static DialogData shopChoiceOption(int objectId, String shopName, int goldDue, int[] cost,
-                                               boolean unlocked, PointOfInterestChanges changes) {
+                                               boolean unlocked, boolean built, PointOfInterestChanges changes) {
         DialogData option = new DialogData();
         // Player-facing name (the shop's own sign text) rather than the raw data key - user
         // request 2026-08-30, the menu was listing things like "Creature8Black".
@@ -1550,6 +1669,13 @@ public class EconomyBuildings {
             option.name = "[%88]" + label + " (locked)";
             option.isDisabled = true;
             return option; // no actions - a disabled option gets no click handler anyway
+        }
+        if (built) {
+            // One type per town (user spec 2026-08-31). Shown rather than hidden so the town's
+            // existing line-up is legible from the build menu itself.
+            option.name = "[%88]" + label + " (built)";
+            option.isDisabled = true;
+            return option;
         }
         option.name = label + " (" + costLabel(goldDue, cost[1], cost[2], cost[3]) + ")";
         option.isDisabled = !canAffordCost(goldDue, cost[1], cost[2], cost[3]);

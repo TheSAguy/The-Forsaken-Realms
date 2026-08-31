@@ -147,11 +147,23 @@ public class RewardScene extends UIScene {
         // Buy Blueprint (user spec 2026-08-30): learn the type of the shop you are STANDING IN.
         // Deliberately not a menu of unknown types - buying the shop in front of you makes AI-town
         // exploration the acquisition loop, is self-documenting, and cannot be farmed from one
-        // spot. Row 4; rows 2 and 3 are taken by the re-assign and restock/destroy rows.
+        // spot.
+        //
+        // ROW 3, not row 4 (2026-08-31 fix). User report: "There was no Buy Blue-print button on
+        // any of the AI shops, Neutral or 5 colors" - the button was being made visible correctly
+        // all along, it was just positioned off the top of the screen. The layout is 480x270 and
+        // doneButton sits at stage y=120 with height 30, so the rows land at y=160/200/240/280 -
+        // and row 4's 280 is past the 270-unit ceiling entirely, minus its own height on top of
+        // that. Row 3 (y=240) is the highest row that actually fits.
+        //
+        // Sharing row 3 with rerollButton is safe: that one is Armory-only (armoryFeatures) and
+        // this one is explicitly !isArmory, so a shop resolves to at most one of them - the same
+        // mutual exclusion guardsButton/upgradeButton/shopTypeRerollButton already rely on for
+        // row 2.
         buyBlueprintButton = Controls.newTextButton("[%80]Buy Blueprint", this::promptBuyBlueprint);
         buyBlueprintButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
         buyBlueprintButton.setPosition(doneButton.getX() + doneButton.getWidth() - buyBlueprintButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() * 4 + 40f);
+                doneButton.getY() + doneButton.getHeight() * 3 + 30f);
         buyBlueprintButton.setVisible(false);
         ui.addActor(buyBlueprintButton);
     }
@@ -170,7 +182,16 @@ public class RewardScene extends UIScene {
         if (EconomyBuildings.isShopTypeUnlocked(shopName))
             return; // already known - button should not have been visible
         final String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(), shopActor.getObjectId(), shopName);
-        final int cost = EconomyBuildings.blueprintShardCost(tier);
+        // Re-checked here, not just on the button: this framework's setDisabled() does NOT detach
+        // click handlers (the negative-gold lesson, round 44 and twice since), so a greyed button
+        // is still clickable and a gamepad can still focus it.
+        final String block = EconomyBuildings.blueprintStandingBlock(tier);
+        if (block != null) {
+            showDialog(createGenericDialog("", block,
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
+            return;
+        }
+        final int cost = EconomyBuildings.blueprintShardCostHere(tier);
         if (AdventurePlayer.current().getShards() < cost) {
             showDialog(createGenericDialog("", "A blueprint for " + EconomyBuildings.shopDisplayName(shopName)
                             + " costs " + cost + " [+Shards] - you have " + AdventurePlayer.current().getShards() + ".",
@@ -186,7 +207,8 @@ public class RewardScene extends UIScene {
                     // click handlers (the negative-gold lesson), and shards can change between
                     // the dialog opening and the confirm.
                     if (AdventurePlayer.current().getShards() < cost
-                            || EconomyBuildings.isShopTypeUnlocked(shopName))
+                            || EconomyBuildings.isShopTypeUnlocked(shopName)
+                            || EconomyBuildings.blueprintStandingBlock(tier) != null)
                         return;
                     AdventurePlayer.current().takeShards(cost);
                     AdventurePlayer.current().unlockShopType(shopName, "blueprint bought at " + shopName
@@ -892,9 +914,18 @@ public class RewardScene extends UIScene {
                 if (blueprintOffered) {
                     String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(),
                             shopActor.getObjectId(), shopActor.getShopData().name);
-                    int cost = EconomyBuildings.blueprintShardCost(tier);
-                    buyBlueprintButton.setText("[%80]Buy Blueprint (" + cost + " [+Shards])");
-                    buyBlueprintButton.setDisabled(false); // affordability re-checked on click
+                    // Standing-scaled price (user spec 2026-08-31) - Partner 30% off, Happy 15%,
+                    // reusing the same table card prices already use in a colour's town.
+                    int cost = EconomyBuildings.blueprintShardCostHere(tier);
+                    // Shown-but-greyed when this colour will not deal with you at this tier, so
+                    // the reputation ladder is visible rather than a mysteriously absent button.
+                    // The button stays ENABLED when merely unaffordable - promptBuyBlueprint()
+                    // explains the shortfall, which is more use than a dead control.
+                    String block = EconomyBuildings.blueprintStandingBlock(tier);
+                    buyBlueprintButton.setText(block == null
+                            ? "[%80]Buy Blueprint (" + cost + " [+Shards])"
+                            : "[%80][GRAY]Buy Blueprint (standing too low)");
+                    buyBlueprintButton.setDisabled(block != null);
                     addToSelectable(buyBlueprintButton);
                 }
                 break;

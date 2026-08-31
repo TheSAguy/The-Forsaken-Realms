@@ -501,6 +501,19 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 needsToBeDisposed = true;
                 break;
             }
+            // Shop blueprint (2026-08-31, user request: make a blueprint drop as obvious as a card
+            // drop). Its own case rather than joining the Gold family below because there is no
+            // "Blueprint" region in items.atlas to name-lookup - it borrows an existing scroll/map
+            // icon - and because the label has to be the shop's DISPLAY name, not a count.
+            case Blueprint: {
+                Sprite backSprite = Config.instance().getItemSprite("CardBack");
+                Sprite item = blueprintSprite();
+                setItemTooltips(item, backSprite, false);
+                processSprite(backSprite, item, Controls.newTextraLabel("[%200]Blueprint\n"
+                        + EconomyBuildings.shopDisplayName(reward.getBlueprintShopName())), 0, -10, false);
+                needsToBeDisposed = true;
+                break;
+            }
             case Life:
             case Shards:
             // Wood/Stone (2026-08-27 playtest: quest-reward cards for the town-restore grant
@@ -939,6 +952,24 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
         frameBuffer.dispose();
     }
 
+    // No dedicated blueprint art exists yet (MOD_SCOPE wishlist). These are real region names in
+    // the plane's own sprites/items.atlas, tried in order so a plane that ships only some of them
+    // still gets a sensible icon; CardBack is the last resort and always present.
+    private static final String[] BLUEPRINT_ICONS = {"DungeonMap", "LandscapeSketchbook", "MaptotheWorldTree", "SpellBook"};
+
+    private static Sprite blueprintSprite() {
+        for (String icon : BLUEPRINT_ICONS) {
+            try {
+                Sprite sprite = Config.instance().getItemSprite(icon);
+                if (sprite != null)
+                    return sprite;
+            } catch (Exception ignored) {
+                // region absent in this plane's atlas - try the next candidate
+            }
+        }
+        return Config.instance().getItemSprite("CardBack");
+    }
+
     private void setItemTooltips(Sprite icon, Sprite backSprite, boolean isBooster) {
         int align = Align.left;
         if (generatedTooltip == null) {
@@ -1196,6 +1227,10 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
                 break;
             case Item:
                 display = reward.getItem() != null ? reward.getItem().name : "";
+                break;
+            case Blueprint:
+                display = "Blueprint: " + EconomyBuildings.shopDisplayName(reward.getBlueprintShopName());
+                labelStyle = "dialog";
                 break;
             case CardPack:
                 display = reward.getDeck() != null ? "Card Pack (" + reward.getDeck().getComment() + ")" : "";

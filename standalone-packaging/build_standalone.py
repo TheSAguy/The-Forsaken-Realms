@@ -195,15 +195,52 @@ def assert_target_not_in_use(game_dir):
 
 
 def git_overlay_list():
-    """Non-adventure files under forge-gui/res that the mod changed vs upstream."""
+    """Files under forge-gui/res that the mod changed vs upstream and that the plane copy does
+    NOT already carry - i.e. everything inside the *stock* asset tree that we overwrite.
+
+    Two bugs fixed here on 2026-08-31, both found the same way: a UI edit
+    (res/adventure/common/ui/items.json, nudging the clipped shop-name label down) reported
+    "Package OK" and was simply not in the shipped folder.
+
+    1. The old exclusion dropped ALL of forge-gui/res/adventure/, but the static tree this
+       overlay exists to patch is "res minus adventure, PLUS adventure/common" (see --full's own
+       help text). So a change under adventure/common fell through both nets at once: skipped by
+       the stock-res copy because the tree "matches the current base install", and skipped by the
+       overlay because it lived under adventure/. Only the per-plane folders are copied wholesale
+       elsewhere, so only those should be excluded.
+
+    2. The old diff was `mb..HEAD`, which sees only COMMITTED changes. Packaging a round before
+       committing it therefore shipped the previous round's version of every res file with no
+       warning - the same class of silent-staleness the jar freshness check already guards
+       against for Java. Diffing merge-base against the WORKING TREE (no HEAD) covers committed
+       and uncommitted alike, and untracked files are unioned in separately since `git diff`
+       never lists them.
+    """
     mb = subprocess.check_output(
         ["git", "merge-base", "HEAD", "upstream/master"], cwd=REPO, text=True).strip()
     out = subprocess.check_output(
-        ["git", "-c", "core.quotepath=off", "diff", "--name-only", mb, "HEAD", "--", "forge-gui/res"],
+        ["git", "-c", "core.quotepath=off", "diff", "--name-only", mb, "--", "forge-gui/res"],
         cwd=REPO, text=True, encoding="utf-8")
-    files = [f for f in out.splitlines()
-             if f and not f.startswith("forge-gui/res/adventure/")]
-    return files
+    untracked = subprocess.check_output(
+        ["git", "-c", "core.quotepath=off", "ls-files", "--others", "--exclude-standard",
+         "--", "forge-gui/res"],
+        cwd=REPO, text=True, encoding="utf-8")
+
+    def wanted(f):
+        if not f:
+            return False
+        if not f.startswith("forge-gui/res/adventure/"):
+            return True  # ordinary stock res (languages, skins, ...)
+        # Inside adventure/: keep common/ (part of the static tree), drop the plane folders,
+        # which step 3 copies wholesale from the repo every single run.
+        return f.startswith("forge-gui/res/adventure/common/")
+
+    files = []
+    for f in out.splitlines() + untracked.splitlines():
+        f = f.strip()
+        if wanted(f) and f not in files:
+            files.append(f)
+    return sorted(files)
 
 
 def main():

@@ -2,11 +2,14 @@ package forge.adventure.util;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import forge.Forge;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.ConfigData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.WorldData;
 import forge.adventure.pointofintrest.PointOfInterest;
+import forge.adventure.scene.RewardScene;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.stage.WorldStage;
@@ -92,10 +95,20 @@ public class ResourceSpawns {
         }
         java.util.Collections.sort(candidates); // deterministic order before the seeded pick
         String picked = candidates.get(WorldSave.getCurrentSave().getWorld().getRandom().nextInt(candidates.size()));
+        // Unlock FIRST, reveal second (2026-08-31). The reveal is a RewardScene card the player
+        // turns over, and RewardScene's own grant happens on that click - granting here as well
+        // means closing the screen without clicking still keeps the blueprint. AdventurePlayer's
+        // Blueprint case is idempotent, so the click just re-learns something already known.
         AdventurePlayer.current().unlockShopType(picked, source);
         GameHUD.getInstance().addNotification("Blueprint found: "
                 + EconomyBuildings.shopDisplayName(picked) + "! You can now build this shop type.");
         SoundSystem.instance.play(SoundEffectType.FlipCard, false);
+        Array<Reward> reveal = new Array<>();
+        reveal.add(Reward.blueprint(picked));
+        // loadRewards() only fills the scene - it has to be switched to as well, same two-step
+        // ChestEvents.triggerLostCard() uses for its card reveal.
+        RewardScene.instance().loadRewards(reveal, RewardScene.Type.Loot, null);
+        Forge.switchScene(RewardScene.instance());
         return true;
     }
 

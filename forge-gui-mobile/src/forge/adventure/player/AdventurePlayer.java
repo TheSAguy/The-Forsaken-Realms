@@ -1382,6 +1382,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 addWood(reward.getCount());
                 System.out.println("[TFR-Reward] wood +" + reward.getCount() + " (reward grant)");
                 break;
+            // Mod addition (The Forsaken Realms, 2026-08-31): shop-type blueprint. Idempotent -
+            // the drop sites unlock the type BEFORE showing the reveal card so a player who closes
+            // the reward screen without turning the card over can never lose it, which makes this
+            // a no-op on the normal path and the real grant on any future path that only builds
+            // the Reward.
+            case Blueprint:
+                unlockShopType(reward.getBlueprintShopName(), "reward card");
+                break;
         }
     }
 

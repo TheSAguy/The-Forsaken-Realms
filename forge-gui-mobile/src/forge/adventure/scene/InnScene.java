@@ -83,6 +83,11 @@ public class InnScene extends UIScene {
     }
 
     public void potionOfFalseLife() {
+        // Ruined-town Inn (user spec 2026-08-31): tournaments only - no card sales, no extra life.
+        // Re-checked here rather than trusting refreshStatus()'s setDisabled(), which does NOT
+        // detach this click handler in this UI framework.
+        if (isRuinedTown())
+            return;
         // Color reputation (MOD_SCOPE.md #1): War-tier towns bar healing outright. (Partner-tier
         // needs no server-side guard here - the free overheal already puts life above maxLife,
         // and AdventurePlayer.potionOfFalseLife() only fires when life == maxLife.)
@@ -92,6 +97,21 @@ public class InnScene extends UIScene {
         if (Current.player().potionOfFalseLife()){
             refreshStatus();
         }
+    }
+
+    /**
+     * Is this Inn standing in a town that is still RUINED? (user spec 2026-08-31: "let's make
+     * ruined towns, the Inn, you can't Sell Cards and Buy Extra live. Only the Tournament option").
+     * <p>
+     * Both halves matter. isWastelandTown() alone is a question about the POI's own tags and stays
+     * true after the player rebuilds the place, which would leave a fully restored town's Inn
+     * permanently crippled; isTownRestored() alone is false in an ordinary colour town too. Note
+     * isWastelandTown() already exempts neutral-seeded towns, so a functioning Neutral town's Inn
+     * keeps every option - which until now was the ONLY behaviour either kind of town had, since
+     * ruined and Neutral towns both report no colour and were therefore indistinguishable here.
+     */
+    private boolean isRuinedTown() {
+        return TownRestoration.isWastelandTown() && !TownRestoration.isTownRestored(changes);
     }
 
     // Color reputation (MOD_SCOPE.md #1): the color of the town this Inn is in, or null if this
@@ -138,7 +158,16 @@ public class InnScene extends UIScene {
         // on entering this town) already covers it, so a purchase would be redundant.
         String repColor = currentRepColor();
         ColorReputation.Status repStatus = repColor == null ? null : ColorReputation.getStatus(repColor);
-        if (repStatus == ColorReputation.Status.WAR) {
+        // Ruined town: the innkeeper runs a tournament and nothing else. Checked before the colour
+        // tiers because a ruined town has no colour at all, so none of those branches would fire.
+        boolean ruined = isRuinedTown();
+        sell.setDisabled(ruined);
+        if (sellIcon != null)
+            sellIcon.setVisible(!ruined);
+        if (ruined) {
+            tempHitPointCost.setDisabled(true);
+            tempHitPointCost.setText("Closed");
+        } else if (repStatus == ColorReputation.Status.WAR) {
             tempHitPointCost.setDisabled(true);
             tempHitPointCost.setText("Barred");
         } else if (repStatus == ColorReputation.Status.PARTNER) {
@@ -196,6 +225,9 @@ public class InnScene extends UIScene {
     }
 
     private void sell() {
+        // See potionOfFalseLife() - setDisabled() does not detach the handler.
+        if (isRuinedTown())
+            return;
         ShopScene.instance().loadChanges(changes);
         Forge.switchScene(ShopScene.instance());
     }

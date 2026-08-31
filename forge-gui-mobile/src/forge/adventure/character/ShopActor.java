@@ -184,7 +184,7 @@ public class ShopActor extends MapActor {
                 && EconomyBuildings.getBuildingType(stage.getChanges(), objectId) == EconomyBuildings.NONE;
     }
 
-    private boolean isDestroyed() {
+    public boolean isDestroyed() {
         // Permanently-broken shop slots (2026-08-24, Functioning Neutral Towns) - OR'd in, not a
         // replacement for the ordinary ruin check below. Renders/behaves exactly like an ordinary
         // ruined shop (broken sprite, locked-dialog on collide) but has no repair path at all -

@@ -1661,3 +1661,35 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`util/ChestEvents.java`** - 25% blueprint roll ahead of the ordinary 1-of-6 event.
 - **`data/ConfigData.java` / `data/RaceShopData.java` (new)** - `shopBlueprintsEnabled`,
   `raceShops`, `startingColorShopSuffixes`, and the three blueprint shard costs.
+
+## Round 72 (2026-08-31) - live shop identity, blueprint fixes, ruined-town Inn
+
+- **`stage/MapStage.java`** - new `applyShopType()` applies a type change to all six places identity
+  lives (pin, ShopActor's ShopData, regenerated inventory, sign art, colour-bar overlay, purchase
+  history); `setShopType()`/`rerollShopType()` both delegate to it. New `ShopSignSprite` inner class
+  replaces two drifted anonymous copies of the sign-visibility rule - the overlay's copy was missing
+  `isPermanentlyBrokenShop()`, which is why ruined slots showed naked colour bars. New
+  `shopSignOverlays`/`shopSignAnchors` (so an overlay can be created later), `getShopActor(int)`,
+  `getBuiltShopTypeNames()`. `rerollShopType()` now also filters out types already standing in the
+  town. Feeds `EconomyBuildings.registerShopTiers()` as each map loads.
+- **`character/ShopActor.java`** - `isDestroyed()` made public (the one-type-per-town scan needs to
+  tell a built shop from rubble).
+- **`util/EconomyBuildings.java`** - process-wide `globalShopTiers` accumulator +
+  `registerShopTiers()`; `shopTierOf()` falls back to it (AI capitals have no per-slot tier pools);
+  `allChooserShopNames()` unions it in so blueprint drops work in AI capitals;
+  `blueprintStandingBlock()` / `blueprintShardCostHere()` implement the reputation ladder;
+  chooser gained tier-level affordability greying, built-type greying, and Available/Built/Locked
+  ranking via `chooserRank()`.
+- **`scene/RewardScene.java`** - Buy Blueprint moved from row 4 (off-screen, past the 270-unit
+  layout ceiling) to row 3; standing gate and standing-scaled price applied on the button, in the
+  prompt, and again inside the confirm handler.
+- **`scene/InnScene.java`** - new `isRuinedTown()`; card sales and Potion of False Life disabled in
+  a still-ruined town, tournament untouched. Guarded in both click handlers, not just the buttons.
+- **`util/Reward.java` / `util/RewardActor.java` / `player/AdventurePlayer.java`** - new
+  `Reward.Type.Blueprint` with a `blueprint(String)` factory, its own RewardActor face (borrowed
+  scroll/map icon with fallbacks) and label case, and an idempotent `addReward()` grant.
+- **`util/ResourceSpawns.java`** - blueprint drops now reveal through `RewardScene` (loadRewards +
+  `Forge.switchScene`, the two-step ChestEvents' card reveal already uses) instead of a HUD line.
+- **`res/adventure/common/ui/items.json` + `items_portrait.json`** - `shopName` label y 0 -> 7.
+- **`res/adventure/The Forsaken Realms/config tables/settings.json`** - `mineWeeklyGoldPayout`
+  50 -> 75.

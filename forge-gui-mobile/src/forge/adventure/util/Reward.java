@@ -16,13 +16,22 @@ public class Reward {
         Shards,
         CardPack,
         Stone,
-        Wood
+        Wood,
+        // Mod addition (The Forsaken Realms, 2026-08-31): a shop-type blueprint, so a drop can be
+        // REVEALED as a card the player turns over instead of a HUD notification that scrolls past
+        // unread. User report: "I got a blue-print, but was not very obvious. Might have missed the
+        // pop-up... Let's show a card or something with a Scroll/Blue-print on it that you need to
+        // click (Like when you get a card)".
+        Blueprint
     }
 
     Type type;
     PaperCard card;
     ItemData item;
     Deck deck;
+    // Blueprint only: the SHOP DATA NAME the blueprint teaches (e.g. "Creature8Black"), not its
+    // display name - the unlock set is keyed by data name.
+    String blueprintShopName;
     boolean isNoSell, isAutoSell;
     private final int count;
 
@@ -35,6 +44,19 @@ public class Reward {
     public Reward(int count) {
         type = Type.Gold;
         this.count = count;
+    }
+
+    /** A shop-type blueprint. Static factory rather than a constructor because {@code Reward} is
+     *  already overloaded on a bare String-free signature set and a second String constructor
+     *  would be ambiguous at the call site. */
+    public static Reward blueprint(String shopName) {
+        Reward reward = new Reward(Type.Blueprint, 1);
+        reward.blueprintShopName = shopName;
+        return reward;
+    }
+
+    public String getBlueprintShopName() {
+        return blueprintShopName;
     }
 
     public Reward(PaperCard card) {
