@@ -311,11 +311,11 @@ public class NewGameScene extends MenuScene {
     }
 
     /**
-     * The colour the player ACTUALLY picked, as the plane's own colour id ("W"/"U"/"B"/"R"/"G"),
+     * The color the player ACTUALLY picked, as the plane's own color id ("W"/"U"/"B"/"R"/"G"),
      * or null when the mode has no real pick. Deliberately separate from getStartingColor()
      * below: that returns a hardcoded White for Chaos/folder-deck modes and colorIds[0] for
      * Custom, which is fine for choosing a starter deck but must NOT be recorded as a deliberate
-     * colour choice - otherwise every Chaos player would be handed White's starting shops.
+     * color choice - otherwise every Chaos player would be handed White's starting shops.
      * Feeds the shop-type blueprint seeding (AdventurePlayer.seedStartingShopTypes).
      */
     private String getStartingColorId() {

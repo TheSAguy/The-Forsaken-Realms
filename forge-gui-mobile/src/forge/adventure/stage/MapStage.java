@@ -102,7 +102,7 @@ public class MapStage extends GameStage {
     // overlay actor sitting on top of it, so the bar advertised the shop the slot USED to be.
     private final Map<Integer, ShopSignSprite> shopSignOverlays = new HashMap<>();
     // The sign anchor (already offset by signXOffset/signYOffset), kept so an overlay can be
-    // CREATED later - a slot whose original type had no colour bar still needs one the moment it
+    // CREATED later - a slot whose original type had no color bar still needs one the moment it
     // becomes a type that does.
     private final Map<Integer, Vector2> shopSignAnchors = new HashMap<>();
 
@@ -180,12 +180,12 @@ public class MapStage extends GameStage {
      * exactly what that produces: "The shop I bought, does not match the shop that was built. In
      * the first town, I bought 3 'Cloaks of Invisibility'" but walking in gave Library of Lat-Nam,
      * Mistform Hive and Fresh Volunteers - three different shops, each with the wrong name, the
-     * wrong inventory and the previous type's colour bar still on its sign. Leaving and re-entering
+     * wrong inventory and the previous type's color bar still on its sign. Leaving and re-entering
      * the town fixed it because THAT path rebuilds the actor from the pin.
      * <p>
      * The six: the persisted pin, the actor's ShopData (name/description/restock price), the
      * inventory (regenerated under the new type's reward rules AND the town's edition
-     * restrictions), the sign art, the sign's colour-bar overlay, and the purchase history.
+     * restrictions), the sign art, the sign's color-bar overlay, and the purchase history.
      *
      * @param freshSeed true to reroll the inventory seed and clear cardsBought - correct for a
      *                  deliberate type change, since the new identity should not inherit the old
@@ -223,8 +223,8 @@ public class MapStage extends GameStage {
                 + ", overlay=" + (newData.overlaySprite == null || newData.overlaySprite.isEmpty() ? "none" : newData.overlaySprite) + ")");
     }
 
-    /** Repoints a slot's sign art AND its colour bar at the given type. Creates the overlay actor
-     *  on demand (a slot whose first type had no colour bar still needs one if it becomes a type
+    /** Repoints a slot's sign art AND its color bar at the given type. Creates the overlay actor
+     *  on demand (a slot whose first type had no color bar still needs one if it becomes a type
      *  that does) and suppresses it when the new type has none. */
     private void refreshShopSignArt(int objectId, ShopData newData) {
         TextureSprite sign = shopSigns.get(objectId);
@@ -285,14 +285,14 @@ public class MapStage extends GameStage {
     }
 
     /**
-     * A shop's sign, or the colour bar that sits on top of it. Both used to be anonymous
+     * A shop's sign, or the color bar that sits on top of it. Both used to be anonymous
      * TextureSprite subclasses created inline at map load with copy-pasted visibility rules - and
      * the two copies had DRIFTED: the overlay's copy was missing the isPermanentlyBrokenShop()
-     * clause the base sign had, which is why a ruined shop slot showed a naked colour bar with no
+     * clause the base sign had, which is why a ruined shop slot showed a naked color bar with no
      * sign under it (2026-08-31 user report: "I walked into a Neutral town and the shop color bars
      * for the broken/ruined shops were still showing"). One class, one rule, both actors.
      * <p>
-     * {@code suppressed} exists because a type change can take a slot from a type WITH a colour bar
+     * {@code suppressed} exists because a type change can take a slot from a type WITH a color bar
      * to one without: the overlay actor stays alive (so it can be reused if a later type has one
      * again) but stops drawing.
      */

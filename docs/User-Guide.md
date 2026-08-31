@@ -315,7 +315,7 @@ You can control the maximum number of cards included in a stack through the **Ma
 | Right-click the badge                        | Prompts for a count — declare N attackers/blockers, remove N from combat, or select N for targeting |
 
 > [!NOTE]
-> Grouping is a display feature only. The game engine still processes each permanent individually, so prompts that require per-card decisions (such as picking a mana colour when sacrificing a stack of Treasure tokens) will still appear one card at a time.
+> Grouping is a display feature only. The game engine still processes each permanent individually, so prompts that require per-card decisions (such as picking a mana color when sacrificing a stack of Treasure tokens) will still appear one card at a time.
 
 ### Tokens in Separate Row
 Toggle **Game > Tokens in Separate Row** to render tokens in a dedicated row below your non-token creatures, so a wide token board doesn't crowd out your other creatures.

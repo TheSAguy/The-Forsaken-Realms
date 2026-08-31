@@ -154,14 +154,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /**
      * Seeds the starting shop types at character creation (user spec 2026-08-30): the chosen
-     * colour's COMMON trio (e.g. Black -> Black1/Black3/Black5, per config's
+     * color's COMMON trio (e.g. Black -> Black1/Black3/Black5, per config's
      * startingColorShopSuffixes) plus the race's two tribal shops from config's raceShops - 5 in
      * total. The even/uncommon trio and the plain {@code <Color>} rare shop are deliberately left
      * out; those are the blueprint ladder.
      * <p>
-     * Colour comes from the PICK, not from getColorIdentity(): this plane's constructed starter
+     * Color comes from the PICK, not from getColorIdentity(): this plane's constructed starter
      * decks are guild pairs, so the deck identity of a White pick is Azorius and would grant two
-     * trios. A null colour (Chaos/Precon/Custom, which all report White) simply skips the colour
+     * trios. A null color (Chaos/Precon/Custom, which all report White) simply skips the color
      * half rather than silently granting White's.
      */
     private void seedStartingShopTypes(int raceIndex) {
@@ -201,8 +201,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + ", race=" + raceName + "): " + new java.util.TreeSet<>(unlockedShopTypes));
     }
 
-    /** "B" -> "Black" etc, matching the colour-numbered shop naming in shops.json. Returns null
-     *  for anything that is not one of the five single-letter mono colours. */
+    /** "B" -> "Black" etc, matching the color-numbered shop naming in shops.json. Returns null
+     *  for anything that is not one of the five single-letter mono colors. */
     private static String colorNameForId(String colorId) {
         if (colorId == null || colorId.length() != 1)
             return null;
@@ -333,7 +333,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // Persisted with the same shape unlockedEditions above uses (stored as an ArrayList).
     private final Set<String> coinRansomedEnemies = new HashSet<>();
     // Shop-type blueprints (user spec 2026-08-30): the card shop TYPES this player has learned.
-    // Seeded at character creation from the chosen colour (its common trio) plus the race's two
+    // Seeded at character creation from the chosen color (its common trio) plus the race's two
     // tribal shops - 5 total - then grown by buying blueprints in AI shops and by rare drops.
     // Same persistence shape as coinRansomedEnemies/unlockedEditions (stored as an ArrayList).
     //
@@ -345,13 +345,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // 5 types, so a legitimately-empty set only ever means "legacy save" - see
     // EconomyBuildings.isShopTypeUnlocked().
     private final Set<String> unlockedShopTypes = new HashSet<>();
-    // The colour picked on the new-game screen, e.g. "W"/"U"/"B"/"R"/"G", or null when the mode
+    // The color picked on the new-game screen, e.g. "W"/"U"/"B"/"R"/"G", or null when the mode
     // does not really have one (Chaos/Precon/CommanderPrecon/Custom all report White otherwise).
     // Stored because NOTHING else preserves it: NewGameScene hands a ColorSet to
     // WorldSave.generateNewWorld(), which uses it ONLY to pick the starter deck and then discards
     // it. AdventurePlayer.colorIdentity is NOT a substitute - it is derived from the starter DECK,
     // and this plane's constructed starters are guild PAIRS (pick White, get Azorius), so it would
-    // report two colours and hand out two trios.
+    // report two colors and hand out two trios.
     private String startingColorId = null;
     // Runtime-only, deliberately NOT saved: set when the ransom is paid, consumed by the very
     // next defeated() call a few frames later (the ante popup resolves before WorldStage/
@@ -457,7 +457,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
         }
 
-        // Shop-type blueprints (2026-08-30): 3 colour shops + 2 race tribal shops. Placed here,
+        // Shop-type blueprints (2026-08-30): 3 color shops + 2 race tribal shops. Placed here,
         // after heroRace is set above, since the race grant is keyed off it.
         seedStartingShopTypes(race);
 

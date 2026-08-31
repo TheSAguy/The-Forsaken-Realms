@@ -1642,7 +1642,7 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   never look like it has no way out.
 - **`data/DialogData.java`** - new `pinLastOption` flag (opt-in; quest dialogs unaffected).
 - **`player/AdventurePlayer.java`** - new persisted `unlockedShopTypes` (empty = legacy save = all
-  unlocked) and `startingColorId`; `seedStartingShopTypes()` grants the colour trio + race tribal
+  unlocked) and `startingColorId`; `seedStartingShopTypes()` grants the color trio + race tribal
   shops at creation; `create()` gained a `startingColorId` parameter.
 - **`world/WorldSave.java`** - `generateNewWorld()` gained a `startingColorId` parameter and passes
   it to `create()`. The ColorSet it already received is only a starter-deck lookup key.
@@ -1665,10 +1665,10 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 ## Round 72 (2026-08-31) - live shop identity, blueprint fixes, ruined-town Inn
 
 - **`stage/MapStage.java`** - new `applyShopType()` applies a type change to all six places identity
-  lives (pin, ShopActor's ShopData, regenerated inventory, sign art, colour-bar overlay, purchase
+  lives (pin, ShopActor's ShopData, regenerated inventory, sign art, color-bar overlay, purchase
   history); `setShopType()`/`rerollShopType()` both delegate to it. New `ShopSignSprite` inner class
   replaces two drifted anonymous copies of the sign-visibility rule - the overlay's copy was missing
-  `isPermanentlyBrokenShop()`, which is why ruined slots showed naked colour bars. New
+  `isPermanentlyBrokenShop()`, which is why ruined slots showed naked color bars. New
   `shopSignOverlays`/`shopSignAnchors` (so an overlay can be created later), `getShopActor(int)`,
   `getBuiltShopTypeNames()`. `rerollShopType()` now also filters out types already standing in the
   town. Feeds `EconomyBuildings.registerShopTiers()` as each map loads.

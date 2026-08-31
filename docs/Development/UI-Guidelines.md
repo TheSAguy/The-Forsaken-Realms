@@ -22,7 +22,7 @@ Forge is a volunteer project and creativity is encouraged! This page is not a ha
 - Involve a good mix of dynamic and static elements.
 - Use reasonable, context-driven default options.
 - User-facing elements should always use localisation keys, not hard-coded strings.
-- UI elements should be compatible with theme skinning — prefer skin-aware components and colours over hard-coded styles.
+- UI elements should be compatible with theme skinning — prefer skin-aware components and colors over hard-coded styles.
 - The default Forge skin should favour accessibility.
 
 ---

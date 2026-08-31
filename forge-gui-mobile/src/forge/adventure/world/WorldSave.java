@@ -198,7 +198,7 @@ public class WorldSave {
         return currentSave;
     }
 
-    /** @param startingColorId the plane colour id the player actually PICKED ("W"/"U"/"B"/"R"/"G"),
+    /** @param startingColorId the plane color id the player actually PICKED ("W"/"U"/"B"/"R"/"G"),
      *  or null for modes with no real pick. Separate from startingColorIdentity, which is only a
      *  starter-deck lookup key and reports White for Chaos/Precon/Custom - see
      *  NewGameScene.getStartingColorId() and AdventurePlayer.seedStartingShopTypes(). */

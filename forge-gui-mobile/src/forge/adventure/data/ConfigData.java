@@ -69,14 +69,14 @@ public class ConfigData {
     // rebuild/re-assign chooser will offer them. Opt-in like every flag above - a plane leaving
     // this false behaves exactly as before, with every type freely available.
     public boolean shopBlueprintsEnabled = false;
-    // Per-race starting shop types - see RaceShopData. Combined with the colour trio derived from
-    // the new game's chosen colour, this forms the player's starting unlock set.
+    // Per-race starting shop types - see RaceShopData. Combined with the color trio derived from
+    // the new game's chosen color, this forms the player's starting unlock set.
     public RaceShopData[] raceShops;
-    // Which colour-numbered shops the starting-colour grant hands out (user decision 2026-08-30:
+    // Which color-numbered shops the starting-color grant hands out (user decision 2026-08-30:
     // pick Black -> start with Black1/3/5, the COMMON tier trio; the even/uncommon trio and the
     // plain <Color> rare shop then become blueprint targets - a clean weak-to-strong ladder).
     // Data-driven so the ladder can be retuned without a rebuild. Each suffix is appended to the
-    // capitalised colour name.
+    // capitalised color name.
     public String[] startingColorShopSuffixes = {"1", "3", "5"};
     // Blueprint purchase price by the shop's own tier, in SHARDS (user spec 2026-08-30).
     public int blueprintShardCostCommon = 20;

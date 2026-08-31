@@ -915,9 +915,9 @@ public class RewardScene extends UIScene {
                     String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(),
                             shopActor.getObjectId(), shopActor.getShopData().name);
                     // Standing-scaled price (user spec 2026-08-31) - Partner 30% off, Happy 15%,
-                    // reusing the same table card prices already use in a colour's town.
+                    // reusing the same table card prices already use in a color's town.
                     int cost = EconomyBuildings.blueprintShardCostHere(tier);
-                    // Shown-but-greyed when this colour will not deal with you at this tier, so
+                    // Shown-but-greyed when this color will not deal with you at this tier, so
                     // the reputation ladder is visible rather than a mysteriously absent button.
                     // The button stays ENABLED when merely unaffordable - promptBuyBlueprint()
                     // explains the shortfall, which is more use than a dead control.

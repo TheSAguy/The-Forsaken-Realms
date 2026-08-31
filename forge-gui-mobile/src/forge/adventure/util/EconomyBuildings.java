@@ -1256,20 +1256,20 @@ public class EconomyBuildings {
     // Uncommon, unless at Happy. Won't [sell] any blue-prints, unless Neutral or above. Blue-print
     // cost should scale with reputation."
     //
-    // Applies wherever the town belongs to one of the five colours - capital or ordinary colour
+    // Applies wherever the town belongs to one of the five colors - capital or ordinary color
     // town - since that is what "the 5 main AIs" owns. Neutral (Spawn) towns have no standing to
     // measure, so they neither gate nor discount: base price, always available.
 
-    /** The colour whose standing governs blueprint sales here, or null where none does. */
+    /** The color whose standing governs blueprint sales here, or null where none does. */
     private static String blueprintStandingColor() {
         if (!ColorReputation.isEnabled())
             return null;
         PointOfInterest point = TileMapScene.instance().rootPoint;
         if (point == null)
             return null;
-        // A town the player has taken is theirs - no colour is selling them anything, so no gate
+        // A town the player has taken is theirs - no color is selling them anything, so no gate
         // and no discount. Same exemption ShopActor.colorReputationModifier() makes before reading
-        // colorOfTown(), and it matters here because a captured colour town would otherwise keep
+        // colorOfTown(), and it matters here because a captured color town would otherwise keep
         // being judged by its FORMER owner's opinion of the player.
         if (TownRestoration.isCurrentTownPlayerOwned(WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID())))
             return null;
@@ -1297,7 +1297,7 @@ public class EconomyBuildings {
         return null;
     }
 
-    /** Blueprint price after the town colour's standing discount. Reuses the same standing ->
+    /** Blueprint price after the town color's standing discount. Reuses the same standing ->
      *  multiplier table card prices already use (Partner 0.70, Happy 0.85, Neutral 1.0), so the
      *  two never drift apart. Neutral/player towns pay the flat tier price. */
     public static int blueprintShardCostHere(String tier) {
@@ -1450,7 +1450,7 @@ public class EconomyBuildings {
 
     /**
      * The classifying noun of a shop name: everything before the first digit. The lists use
-     * "&lt;noun&gt;&lt;n&gt;" and "&lt;noun&gt;&lt;n&gt;&lt;Colour&gt;" forms, so Artifact4Black -&gt; artifact,
+     * "&lt;noun&gt;&lt;n&gt;" and "&lt;noun&gt;&lt;n&gt;&lt;Color&gt;" forms, so Artifact4Black -&gt; artifact,
      * Black3 -&gt; black, Creature2Colorless -&gt; creature, Bird4Azorius -&gt; bird. Names with no digit
      * (Sliver, Azorius, AttractionShop) classify whole.
      */
@@ -1467,7 +1467,7 @@ public class EconomyBuildings {
 
     private static String shopCategory(String shopName) {
         String noun = shopBaseNoun(shopName);
-        // Special checked FIRST - "GreenBoosterPackShop" would otherwise classify as a colour.
+        // Special checked FIRST - "GreenBoosterPackShop" would otherwise classify as a color.
         String lower = shopName.toLowerCase(java.util.Locale.ROOT);
         for (String special : SPECIAL_NOUNS)
             if (lower.contains(special))

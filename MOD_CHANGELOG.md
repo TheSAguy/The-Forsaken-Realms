@@ -14693,7 +14693,7 @@ independent failures had to line up, and both are fixed:
   gated only by `startButton.setDisabled()`), now re-checks before taking the fee.
 
 ### Card Shop Type chooser (user spec)
-- Menu is TIER first, then category: `Card Shop > Common Shops (price) > By Colour / By Card Type
+- Menu is TIER first, then category: `Card Shop > Common Shops (price) > By Color / By Card Type
   / Tribal / Special > <type>`. Tier-first because price is a per-tier property (shown once
   instead of on 200+ leaves) and the Capitol gate becomes one hidden branch.
 - **Cross-tier picking required an engine change**: a slot rolls its rarity ONCE at map load
@@ -14710,7 +14710,7 @@ independent failures had to line up, and both are fixed:
   Bank restriction already gets in this menu.
 - Classifier: category by the name's leading noun (everything before the first digit), so
   Artifact4Black -> artifact, Black3 -> black, Creature2Colorless -> creature. Special is checked
-  FIRST or "GreenBoosterPackShop" would classify as a colour.
+  FIRST or "GreenBoosterPackShop" would classify as a color.
 - New `DialogData.ActionData.pinShopType` ("<objectId>:<shopName>"), handled in
   `MapDialog.setEffects()` - mirrors the existing `refreshShopRewardsTrigger` pattern but carries
   an id, since it targets one slot rather than every shop in town.
@@ -14832,7 +14832,7 @@ already gone by the time it errored - the 2026-08-21 hang incident in a new form
   player_capital.tmx (16). It was referenced by commonShopList but absent from shops.json, so the
   chooser would have offered an unresolvable option. The 5 castle .tmx hits were FALSE POSITIVES
   (TalkToDoorGreeter) and the script correctly refused to touch them.
-- "Colour" -> "Color" throughout the shop chooser, including internal identifiers.
+- "Color" -> "Color" throughout the shop chooser, including internal identifiers.
 - **Dialog option lists now scroll** above 6 options (user: the shop list "fills the screen and I
   can't see them all"). MapDialog's own TODO admitted it was designed for "4-5 options". Wrapped in
   a vertical ScrollPane ONLY past the threshold, so every pre-existing dialog keeps the old
@@ -14869,16 +14869,16 @@ still reach every button wherever it is nested.
 
 ### NEW: shop-type blueprints (user spec)
 Card shop TYPES must now be learned before the rebuild/re-assign chooser will build them.
-- **Starting 5**: the chosen colour's COMMON trio (Black -> Black1/3/5) + 2 race tribal shops.
+- **Starting 5**: the chosen color's COMMON trio (Black -> Black1/3/5) + 2 race tribal shops.
   User picked the odd/common trio deliberately, giving a weak->strong ladder: the even/uncommon
   trio and the plain <Color> rare shop are blueprint targets.
-- **CORRECTION that blocked the original plan**: the starting colour was NEVER STORED anywhere.
+- **CORRECTION that blocked the original plan**: the starting color was NEVER STORED anywhere.
   `WorldSave.generateNewWorld()` receives a ColorSet, uses it only for the starter-deck lookup at
   :216, and discards it; `AdventurePlayer.create()` had no ColorSet parameter. Threaded through as
-  a String colour id. `colorIdentity` is NOT a substitute - it derives from the starter DECK, and
+  a String color id. `colorIdentity` is NOT a substitute - it derives from the starter DECK, and
   this plane's constructed starters are guild PAIRS (pick White -> Azorius), so it reports two
-  colours and would have granted two trios. Chaos/Precon/CommanderPrecon/Custom all report a
-  hardcoded White, so those persist null and skip the colour half rather than all being "White".
+  colors and would have granted two trios. Chaos/Precon/CommanderPrecon/Custom all report a
+  hardcoded White, so those persist null and skip the color half rather than all being "White".
 - **All 16 races mapped** in plane data (`raceShops`, mirroring raceEditions), 2 shops each. Every
   one of the 32 names was VALIDATED before writing: exists in shops.json AND appears in a
   chooser-visible tier. Phyrexian is a forced substitution - all six Phyrexian shops are MYTHIC,
@@ -14952,17 +14952,17 @@ Fresh Volunteers. Leaving the town and re-entering fixed everything.
 - The blue bar is `ShopData.overlaySprite` (e.g. "Overlay6Blue"), a SECOND sprite actor on top of
   the sign. Nothing ever swapped it, so it kept advertising the type the slot used to be.
 - New `MapStage.applyShopType()` does all six: pin, ShopActor's ShopData, inventory (regenerated
-  under the new type's reward rules AND the town's edition restrictions), sign art, colour-bar
+  under the new type's reward rules AND the town's edition restrictions), sign art, color-bar
   overlay, purchase history. `setShopType()` and `rerollShopType()` both route through it.
-- The overlay is now CREATED on demand: a slot whose first type had no colour bar still needs one
+- The overlay is now CREATED on demand: a slot whose first type had no color bar still needs one
   the moment it becomes a type that does. Verified safe to swap regions in place without resizing -
   all 290 sign sprites in this plane are 16x16 and all 24 overlays are 5x16.
 
-### FIXED: colour bars floating over ruined shops
+### FIXED: color bars floating over ruined shops
 Separate bug, same family. The sign and the overlay were two anonymous `TextureSprite` subclasses
 created inline with COPY-PASTED visibility rules, and the copies had drifted: the overlay's was
 missing the `isPermanentlyBrokenShop()` clause. A permanently-broken slot therefore hid its sign and
-kept drawing its colour bar - the naked slivers in the user's screenshot. Both are now one
+kept drawing its color bar - the naked slivers in the user's screenshot. Both are now one
 `ShopSignSprite` class with one rule.
 
 ### FIXED: no Buy Blueprint button at any AI shop
@@ -14975,10 +14975,10 @@ height is even counted. Moved to row 3, the highest row that fits. Safe to share
 ### Blueprint reputation ladder (user spec)
 "Can't buy Rare... unless you are at Partner. Can't buy Uncommon, unless at Happy. Won't [sell] any
 blue-prints, unless Neutral or above. Blue-print cost should scale with reputation."
-- Gates on the town's owning colour; cost uses the SAME standing -> multiplier table card prices
+- Gates on the town's owning color; cost uses the SAME standing -> multiplier table card prices
   already use (Partner 0.70, Happy 0.85), so the two can't drift. Effective: 14/28/70 at Partner,
   17/34/85 at Happy, 20/40/100 at Neutral.
-- Player-owned towns are exempt (no colour is selling you anything), matching
+- Player-owned towns are exempt (no color is selling you anything), matching
   `ShopActor.colorReputationModifier()`. Neutral/Spawn towns have no standing: base price, no gate.
 - **This needed a global shop-name -> tier map to work at all.** Tier came from per-slot tmx pools,
   and the 5 AI capitals declare a flat `shopList` with NO tier lists - so every blueprint bought in
@@ -15016,7 +15016,7 @@ found in the plane's items.atlas (DungeonMap, then three fallbacks, then CardBac
 - **Gold Mine 50 -> 75 gold/week** (`mineWeeklyGoldPayout` in the plane's settings.json).
 - **Ruined-town Inn sells nothing** (user spec): no card sales, no Potion of False Life, tournament
   only. Answering the user's own question first - there was NO difference between a ruined-town Inn
-  and a Neutral-town Inn before this, because the only town-dependent behaviour was colour
+  and a Neutral-town Inn before this, because the only town-dependent behaviour was color
   reputation and `colorOfTown()` returns null for both. `isRuinedTown()` needs BOTH halves:
   `isWastelandTown()` alone stays true after the player rebuilds the place (which would cripple a
   restored town's Inn forever), and it already exempts neutral-seeded towns so a functioning Neutral

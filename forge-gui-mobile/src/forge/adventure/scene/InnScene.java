@@ -105,10 +105,10 @@ public class InnScene extends UIScene {
      * <p>
      * Both halves matter. isWastelandTown() alone is a question about the POI's own tags and stays
      * true after the player rebuilds the place, which would leave a fully restored town's Inn
-     * permanently crippled; isTownRestored() alone is false in an ordinary colour town too. Note
+     * permanently crippled; isTownRestored() alone is false in an ordinary color town too. Note
      * isWastelandTown() already exempts neutral-seeded towns, so a functioning Neutral town's Inn
      * keeps every option - which until now was the ONLY behaviour either kind of town had, since
-     * ruined and Neutral towns both report no colour and were therefore indistinguishable here.
+     * ruined and Neutral towns both report no color and were therefore indistinguishable here.
      */
     private boolean isRuinedTown() {
         return TownRestoration.isWastelandTown() && !TownRestoration.isTownRestored(changes);
@@ -158,8 +158,8 @@ public class InnScene extends UIScene {
         // on entering this town) already covers it, so a purchase would be redundant.
         String repColor = currentRepColor();
         ColorReputation.Status repStatus = repColor == null ? null : ColorReputation.getStatus(repColor);
-        // Ruined town: the innkeeper runs a tournament and nothing else. Checked before the colour
-        // tiers because a ruined town has no colour at all, so none of those branches would fire.
+        // Ruined town: the innkeeper runs a tournament and nothing else. Checked before the color
+        // tiers because a ruined town has no color at all, so none of those branches would fire.
         boolean ruined = isRuinedTown();
         sell.setDisabled(ruined);
         if (sellIcon != null)
