@@ -318,18 +318,27 @@ public class SaveLoadScene extends UIScene {
                                     Current.player().updateDifficulty(Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()]);
                                 Current.player().setWorldPosY((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosY * WorldSave.getCurrentSave().getWorld().getData().height * WorldSave.getCurrentSave().getWorld().getTileSize()));
                                 Current.player().setWorldPosX((int) (WorldSave.getCurrentSave().getWorld().getData().playerStartPosX * WorldSave.getCurrentSave().getWorld().getData().width * WorldSave.getCurrentSave().getWorld().getTileSize()));
-                                Current.player().getQuests().clear();
-                                Current.player().resetQuestFlags();
-                                // Win/loss + event statistics are a per-RUN record, not carried
-                                // progression like cards and decks (user request 2026-08-29).
-                                // New Game already resets them via AdventurePlayer.create() ->
-                                // clear(); this path never calls either (it deliberately loads an
-                                // existing save and keeps the player's collection), so a New Game+
-                                // run inherited the previous run's entire record - including its
-                                // per-enemy tallies, which then feed PlayerStatistic.rank() and
-                                // with it overworld spawn difficulty from turn one.
-                                Current.player().getStatistic().clear();
-                                Current.player().setCharacterFlag("newGamePlus", 1);
+                                // "A New Game+ should basically be a new game, + your Cards,
+                                // Equipment and resources" (user spec 2026-08-31). Everything that
+                                // used to be reset piecemeal here - quests, quest flags,
+                                // statistics - now lives in one place alongside clear()/create(),
+                                // together with the per-run state this path was silently
+                                // inheriting: shop-type unlocks, starting editions, character
+                                // flags, color reputation, research timers and Bronze Coin marks.
+                                //
+                                // Ordering is load-bearing: updateDifficulty() must already have
+                                // run (the edition seed is difficulty-scaled), and this must run
+                                // before reservePlayerEditions() below, which reads the re-seeded
+                                // set, and before addQuest("28"), which needs the cleared quest
+                                // list and the newGamePlus flag already in place.
+                                Current.player().resetForNewGamePlus();
+                                // Mirrors WorldSave's own New Game ordering: the color shards only
+                                // exist after generateNew() has re-seeded them, and the player's
+                                // own editions must be carved out of the AI colors' pools again -
+                                // the New Game path does this right after create(), and New Game+
+                                // had no equivalent, so the exclusivity pass never ran.
+                                forge.adventure.util.EditionProgression.reservePlayerEditions(
+                                        WorldSave.getCurrentSave().getWorld(), Current.player());
                                 Current.player().removeAllQuestItems();
                                 // Every run starts with a full challenge-coin purse (user spec
                                 // 2026-08-31). Deliberately AFTER removeAllQuestItems() so the

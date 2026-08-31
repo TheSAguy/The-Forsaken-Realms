@@ -164,10 +164,65 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * trios. A null color (Chaos/Precon/Custom, which all report White) simply skips the color
      * half rather than silently granting White's.
      */
+    /**
+     * The difficulty-scaled starting edition unlocks. Extracted from create() 2026-08-31 so New
+     * Game+ can re-seed through the same code path instead of duplicating the table - a New Game+
+     * previously carried the whole of the previous run's researched set into a fresh world, which
+     * started Progressive Set Unlocks already finished.
+     * <p>
+     * Reads {@code this.difficultyData.name}, so the caller must have applied the chosen difficulty
+     * first. Clears the set itself, making it a no-op for create() (which arrives from clear()).
+     */
+    private void seedStartingEditions(int race) {
+        unlockedEditions.clear();
+        if (Config.instance().getConfigData().editionProgressionEnabled) {
+            String[] pool = null;
+            String raceName = HeroListData.getRawRaceName(race);
+            RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
+            if (raceName != null && raceEditions != null) {
+                for (RaceEditionData entry : raceEditions) {
+                    if (entry != null && raceName.equalsIgnoreCase(entry.race)
+                            && entry.editions != null && entry.editions.length > 0) {
+                        pool = entry.editions;
+                        break;
+                    }
+                }
+            }
+            if (pool == null)
+                pool = Config.instance().getConfigData().starterEditions;
+            if (pool != null && pool.length > 0) {
+                int[] startingUnlockCountByDifficultyIndex = {4, 3, 2, 1};
+                DifficultyData[] allDifficulties = Config.instance().getConfigData().difficulties;
+                int difficultyIndex = 1; // default to Normal-equivalent if not found
+                if (allDifficulties != null) {
+                    for (int i = 0; i < allDifficulties.length; i++) {
+                        if (this.difficultyData.name.equals(allDifficulties[i].name)) {
+                            difficultyIndex = i;
+                            break;
+                        }
+                    }
+                }
+                int cappedIndex = Math.min(difficultyIndex, startingUnlockCountByDifficultyIndex.length - 1);
+                java.util.List<String> shuffled = new java.util.ArrayList<>(java.util.Arrays.asList(pool));
+                shuffled.remove("(All)"); // starterEditions carries this UI sentinel - not a set code
+                java.util.Collections.shuffle(shuffled, MyRandom.getRandom());
+                int startingUnlockCount = Math.min(shuffled.size(), startingUnlockCountByDifficultyIndex[cappedIndex]);
+                for (int i = 0; i < startingUnlockCount; i++)
+                    unlockedEditions.add(shuffled.get(i));
+                // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
+                System.out.println("[TFR-Research] new game, race=" + raceName + ", difficulty="
+                        + difficultyData.name + " -> starting unlocked editions: " + unlockedEditions);
+            }
+        }
+    }
+
     private void seedStartingShopTypes(int raceIndex) {
         ConfigData config = Config.instance().getConfigData();
         if (config == null || !config.shopBlueprintsEnabled)
             return;
+        // Self-contained so New Game+ can re-seed with the same code path. A no-op for create(),
+        // which always arrives here from clear() with the set already empty.
+        unlockedShopTypes.clear();
 
         if (startingColorId != null && !startingColorId.isEmpty()) {
             String colorName = colorNameForId(startingColorId);
@@ -176,6 +231,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 for (String suffix : suffixes)
                     unlockedShopTypes.add(colorName + suffix);
             }
+        } else {
+            // Permanent case, not just a legacy one: getStartingColorId() also returns null for
+            // Chaos/Precon/CommanderPrecon/Custom, which all report a hardcoded White. Loud,
+            // because "my color shops are missing" is otherwise invisible.
+            System.out.println("[TFR-Blueprint] startingColorId is null or empty (save predates it, "
+                    + "or a Chaos/Precon/Custom start) - seeding RACE tribal shops only, no color trio");
         }
 
         String raceName = forge.adventure.data.HeroListData.getRawRaceName(raceIndex);
@@ -459,45 +520,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // without an entry (or planes without the array) fall back to the flat starterEditions
         // list, picked randomly too for consistency. Same difficulty-index-lookup pattern
         // EconomyBuildings.difficultyPriceMultiplier() already uses.
-        if (Config.instance().getConfigData().editionProgressionEnabled) {
-            String[] pool = null;
-            String raceName = HeroListData.getRawRaceName(race);
-            RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
-            if (raceName != null && raceEditions != null) {
-                for (RaceEditionData entry : raceEditions) {
-                    if (entry != null && raceName.equalsIgnoreCase(entry.race)
-                            && entry.editions != null && entry.editions.length > 0) {
-                        pool = entry.editions;
-                        break;
-                    }
-                }
-            }
-            if (pool == null)
-                pool = Config.instance().getConfigData().starterEditions;
-            if (pool != null && pool.length > 0) {
-                int[] startingUnlockCountByDifficultyIndex = {4, 3, 2, 1};
-                DifficultyData[] allDifficulties = Config.instance().getConfigData().difficulties;
-                int difficultyIndex = 1; // default to Normal-equivalent if not found
-                if (allDifficulties != null) {
-                    for (int i = 0; i < allDifficulties.length; i++) {
-                        if (difficultyData.name.equals(allDifficulties[i].name)) {
-                            difficultyIndex = i;
-                            break;
-                        }
-                    }
-                }
-                int cappedIndex = Math.min(difficultyIndex, startingUnlockCountByDifficultyIndex.length - 1);
-                java.util.List<String> shuffled = new java.util.ArrayList<>(java.util.Arrays.asList(pool));
-                shuffled.remove("(All)"); // starterEditions carries this UI sentinel - not a set code
-                java.util.Collections.shuffle(shuffled, MyRandom.getRandom());
-                int startingUnlockCount = Math.min(shuffled.size(), startingUnlockCountByDifficultyIndex[cappedIndex]);
-                for (int i = 0; i < startingUnlockCount; i++)
-                    unlockedEditions.add(shuffled.get(i));
-                // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
-                System.out.println("[TFR-Research] new game, race=" + raceName + ", difficulty="
-                        + difficultyData.name + " -> starting unlocked editions: " + unlockedEditions);
-            }
-        }
+        seedStartingEditions(race);
 
         // Shop-type blueprints (2026-08-30): 3 color shops + 2 race tribal shops. Placed here,
         // after heroRace is set above, since the race grant is keyed off it.
@@ -564,6 +587,77 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
     }
 
+    /**
+     * Makes New Game+ mean what the player expects it to mean (user spec 2026-08-31: "a NG+ should
+     * basically be a new game, + your Cards, Equipment and resources").
+     * <p>
+     * New Game gets its per-run reset from clear() + create(). New Game+ deliberately calls
+     * NEITHER - it loads an existing save and keeps the collection - so every per-run field that
+     * is not carried progression was silently inheriting the previous run. The reported symptom
+     * was the shop blueprints: unlockedShopTypes was never re-seeded, and on a save written before
+     * that feature existed the empty set trips isShopTypeUnlocked()'s "legacy save = everything
+     * unlocked" escape hatch, so the whole mechanic looked switched off.
+     * <p>
+     * <b>Do NOT simplify this into a clear() or create() call.</b> clear() wipes cards, decks,
+     * inventory, equipment, boosters and every resource; it is survivable inside load() only
+     * because load() immediately repopulates from the save file. Called from the NG+ path it would
+     * destroy the run the player is trying to carry forward. Every reset here is therefore
+     * deliberate and individually chosen.
+     * <p>
+     * Must be called AFTER updateDifficulty(), because the edition seed is difficulty-scaled, and
+     * BEFORE EditionProgression.reservePlayerEditions(), which reads the re-seeded set.
+     * <p>
+     * One caveat worth knowing: clearing {@code events} discards an in-progress draft/sealed
+     * tournament, including cards drafted but not yet banked. A New Game already accepts this, and
+     * the entries point at POIs the regenerated world no longer has, so keeping them is not an
+     * option - but starting a New Game+ mid-tournament does cost that draft.
+     */
+    public void resetForNewGamePlus() {
+        System.out.println("[TFR-NewGamePlus] reset begin - race="
+                + forge.adventure.data.HeroListData.getRawRaceName(heroRace)
+                + ", startingColorId=" + startingColorId
+                + ", difficulty=" + difficultyData.name
+                + " | CARRYING " + cards.countAll() + " cards, " + decks.size() + " decks, "
+                + inventoryItems.size() + " items, " + gold + " gold, " + shards + " shards, "
+                + wood + " wood, " + stone + " stone");
+
+        // ---- narrative / progression bookkeeping -------------------------------------------
+        quests.clear();
+        questFlags.clear();
+        // Before the newGamePlus flag below, or quest 28's "Been here, done that (New Game+)"
+        // branch never fires. Also clears one-shot grant flags like firstArmoryTorchGranted, which
+        // otherwise deny the new run its first Armory torch forever.
+        characterFlags.clear();
+        events.clear();
+        AdventureQuestController.clear();
+        AdventureEventController.clear();
+        statistic.clear();
+        setCharacterFlag("newGamePlus", 1);
+
+        // ---- per-run combat / buff state ----------------------------------------------------
+        blessing = null;
+        partnerOverhealActive = false;
+        // Bronze Coin ante marks are keyed by enemy NAME, and every one of those names still
+        // exists in the new world's catalog - so carrying them would hand out free coins for
+        // enemies this run never took one from.
+        coinRansomedEnemies.clear();
+
+        // ---- gates a New Game re-rolls ------------------------------------------------------
+        // The five values must sum to zero (see the field's own comment), so clear-then-reseed
+        // through ColorReputation rather than zeroing entries by hand.
+        colorReputationHalfPoints.clear();
+        ColorReputation.applyStartingDeckBonus(colorIdentity);
+        // A research timer in flight would survive into a world whose day counter is back to 1,
+        // leaving a negative "days remaining" and every research button disabled for months.
+        clearResearch();
+        seedStartingEditions(heroRace);
+        seedStartingShopTypes(heroRace);
+
+        System.out.println("[TFR-NewGamePlus] reset done - shopTypes="
+                + new java.util.TreeSet<>(unlockedShopTypes)
+                + ", editions=" + new java.util.TreeSet<>(unlockedEditions));
+    }
+
     public void updateDifficulty(DifficultyData diff) {
         // New Game+ bug fix (2026-08-25 user report: Insane NG+ started at 7 life instead of the
         // expected 9): New Game+ regenerates the world (town/Capitol ownership wiped by
@@ -587,6 +681,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         this.difficultyData.shardSellRatio = diff.shardSellRatio;
         this.difficultyData.goldLoss = diff.goldLoss;
         this.difficultyData.lifeLoss = diff.lifeLoss;
+        // rewardMaxFactor was the one field this method forgot (found 2026-08-31 in the New Game+
+        // audit). It drives RewardData's random loot count and is shown on the new-game screen as
+        // "Random loot rate", so a player who picked Insane for a New Game+ off an Easy save kept
+        // Easy's loot rate for the whole run.
+        this.difficultyData.rewardMaxFactor = diff.rewardMaxFactor;
         resetToMaxLife();
     }
 
