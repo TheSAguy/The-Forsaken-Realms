@@ -39,7 +39,7 @@ import java.util.Comparator;
  * Displays the rewards of a fight or a treasure
  */
 public class RewardScene extends UIScene {
-    private TextraButton doneButton, detailButton, restockButton, destroyButton, guardsButton, upgradeButton, rerollButton, shopTypeRerollButton;
+    private TextraButton doneButton, detailButton, restockButton, destroyButton, guardsButton, upgradeButton, rerollButton, shopTypeRerollButton, buyBlueprintButton;
     private TextraLabel playerGold, playerShards;
     private TypingLabel headerLabel;
     private Vector2 headerLabelOrigPos;
@@ -144,6 +144,57 @@ public class RewardScene extends UIScene {
                 doneButton.getY() + doneButton.getHeight() * 2 + 20f);
         shopTypeRerollButton.setVisible(false);
         ui.addActor(shopTypeRerollButton);
+        // Buy Blueprint (user spec 2026-08-30): learn the type of the shop you are STANDING IN.
+        // Deliberately not a menu of unknown types - buying the shop in front of you makes AI-town
+        // exploration the acquisition loop, is self-documenting, and cannot be farmed from one
+        // spot. Row 4; rows 2 and 3 are taken by the re-assign and restock/destroy rows.
+        buyBlueprintButton = Controls.newTextButton("[%80]Buy Blueprint", this::promptBuyBlueprint);
+        buyBlueprintButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
+        buyBlueprintButton.setPosition(doneButton.getX() + doneButton.getWidth() - buyBlueprintButton.getWidth(),
+                doneButton.getY() + doneButton.getHeight() * 4 + 40f);
+        buyBlueprintButton.setVisible(false);
+        ui.addActor(buyBlueprintButton);
+    }
+
+    /**
+     * Buys the blueprint for the shop type the player is currently standing in (user spec
+     * 2026-08-30). Priced in SHARDS by the shop's own tier - 20 common / 40 uncommon / 100 rare.
+     * Shown at ANY shop whose type the player does not yet know, player-owned or AI: the point is
+     * that crawling rival towns is how you find new types. Hidden entirely once known, so a shop
+     * you have already learned looks exactly as it did before this feature.
+     */
+    private void promptBuyBlueprint() {
+        if (shopActor == null || shopActor.getShopData() == null)
+            return;
+        final String shopName = shopActor.getShopData().name;
+        if (EconomyBuildings.isShopTypeUnlocked(shopName))
+            return; // already known - button should not have been visible
+        final String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(), shopActor.getObjectId(), shopName);
+        final int cost = EconomyBuildings.blueprintShardCost(tier);
+        if (AdventurePlayer.current().getShards() < cost) {
+            showDialog(createGenericDialog("", "A blueprint for " + EconomyBuildings.shopDisplayName(shopName)
+                            + " costs " + cost + " [+Shards] - you have " + AdventurePlayer.current().getShards() + ".",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
+            return;
+        }
+        showDialog(createGenericDialog("", "Buy the blueprint for "
+                        + EconomyBuildings.shopDisplayName(shopName) + " for " + cost
+                        + " [+Shards]?\nYou will be able to build this shop type in your own towns.",
+                Forge.getLocalizer().getMessage("lblYes"), Forge.getLocalizer().getMessage("lblNo"), () -> {
+                    removeDialog();
+                    // Re-check inside the handler: this framework's setDisabled() does not detach
+                    // click handlers (the negative-gold lesson), and shards can change between
+                    // the dialog opening and the confirm.
+                    if (AdventurePlayer.current().getShards() < cost
+                            || EconomyBuildings.isShopTypeUnlocked(shopName))
+                        return;
+                    AdventurePlayer.current().takeShards(cost);
+                    AdventurePlayer.current().unlockShopType(shopName, "blueprint bought at " + shopName
+                            + " for " + cost + " shards (tier=" + tier + ")");
+                    HapticEngine.vibrate(FPref.UI_VIBRATE_ON_SHOP_ACTION, 5);
+                    SoundSystem.instance.play(SoundEffectType.Shuffle, false);
+                    buyBlueprintButton.setVisible(false); // known now - nothing left to buy here
+                }, this::removeDialog));
     }
 
     /** Opens the tier/category chooser for an already-built card shop (2026-08-30 user spec,
@@ -675,6 +726,7 @@ public class RewardScene extends UIScene {
         upgradeButton.setVisible(false); // re-enabled by the Shop case below when applicable
         rerollButton.setVisible(false); // re-enabled by the Shop case below when applicable
         shopTypeRerollButton.setVisible(false); // re-enabled by the Shop case below when applicable
+        buyBlueprintButton.setVisible(false);   // ditto
         if (type == Type.Shop) {
             this.shopActor = shopActor;
             this.changes = shopActor.getMapStage().getChanges();
@@ -825,6 +877,25 @@ public class RewardScene extends UIScene {
                     shopTypeRerollButton.setText("[%80]Re-assign Shop Type");
                     shopTypeRerollButton.setDisabled(false);
                     addToSelectable(shopTypeRerollButton);
+                }
+                // Buy Blueprint (2026-08-30) - deliberately NOT gated on playerOwnedTown, unlike
+                // every other button here: learning a type by visiting a RIVAL town is the whole
+                // point. Only shown for an ordinary card shop whose type is still unknown, and
+                // only when the slot is a real multi-type card-shop slot (isShopTypeRerollable
+                // excludes the Armory and the fixed Capitol land shops).
+                boolean blueprintOffered = Config.instance().getConfigData().shopBlueprintsEnabled
+                        && !isArmory
+                        && shopActor.getShopData() != null
+                        && shopActor.getMapStage().isShopTypeRerollable(shopActor.getObjectId())
+                        && !EconomyBuildings.isShopTypeUnlocked(shopActor.getShopData().name);
+                buyBlueprintButton.setVisible(blueprintOffered);
+                if (blueprintOffered) {
+                    String tier = EconomyBuildings.shopTierOf(shopActor.getMapStage(),
+                            shopActor.getObjectId(), shopActor.getShopData().name);
+                    int cost = EconomyBuildings.blueprintShardCost(tier);
+                    buyBlueprintButton.setText("[%80]Buy Blueprint (" + cost + " [+Shards])");
+                    buyBlueprintButton.setDisabled(false); // affordability re-checked on click
+                    addToSelectable(buyBlueprintButton);
                 }
                 break;
             case QuestReward:

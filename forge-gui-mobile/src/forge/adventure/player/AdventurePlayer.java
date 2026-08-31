@@ -126,6 +126,96 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         clear();
     }
 
+    // ===================== Shop-type blueprints (2026-08-30) =====================
+
+    /** Every shop type this player has learned. EMPTY means "legacy save - treat everything as
+     *  unlocked"; see the field's own comment and EconomyBuildings.isShopTypeUnlocked(). */
+    public Set<String> getUnlockedShopTypes() {
+        return unlockedShopTypes;
+    }
+
+    public boolean hasShopTypeUnlocked(String shopName) {
+        return shopName != null && unlockedShopTypes.contains(shopName);
+    }
+
+    /** Learns a shop type. Returns false if it was already known, so callers can refuse to charge
+     *  for a no-op and drop-sources can fall through to another reward. */
+    public boolean unlockShopType(String shopName, String source) {
+        if (shopName == null || shopName.isEmpty() || !unlockedShopTypes.add(shopName))
+            return false;
+        System.out.println("[TFR-Blueprint] learned \"" + shopName + "\" via " + source
+                + " - now knows " + unlockedShopTypes.size() + " shop type(s)");
+        return true;
+    }
+
+    public String getStartingColorId() {
+        return startingColorId;
+    }
+
+    /**
+     * Seeds the starting shop types at character creation (user spec 2026-08-30): the chosen
+     * colour's COMMON trio (e.g. Black -> Black1/Black3/Black5, per config's
+     * startingColorShopSuffixes) plus the race's two tribal shops from config's raceShops - 5 in
+     * total. The even/uncommon trio and the plain {@code <Color>} rare shop are deliberately left
+     * out; those are the blueprint ladder.
+     * <p>
+     * Colour comes from the PICK, not from getColorIdentity(): this plane's constructed starter
+     * decks are guild pairs, so the deck identity of a White pick is Azorius and would grant two
+     * trios. A null colour (Chaos/Precon/Custom, which all report White) simply skips the colour
+     * half rather than silently granting White's.
+     */
+    private void seedStartingShopTypes(int raceIndex) {
+        ConfigData config = Config.instance().getConfigData();
+        if (config == null || !config.shopBlueprintsEnabled)
+            return;
+
+        if (startingColorId != null && !startingColorId.isEmpty()) {
+            String colorName = colorNameForId(startingColorId);
+            String[] suffixes = config.startingColorShopSuffixes;
+            if (colorName != null && suffixes != null) {
+                for (String suffix : suffixes)
+                    unlockedShopTypes.add(colorName + suffix);
+            }
+        }
+
+        String raceName = forge.adventure.data.HeroListData.getRawRaceName(raceIndex);
+        boolean raceMatched = false;
+        if (raceName != null && config.raceShops != null) {
+            for (forge.adventure.data.RaceShopData entry : config.raceShops) {
+                if (entry == null || entry.race == null || !entry.race.equalsIgnoreCase(raceName))
+                    continue;
+                raceMatched = true;
+                if (entry.shops != null)
+                    unlockedShopTypes.addAll(Arrays.asList(entry.shops));
+                break;
+            }
+        }
+        // LOUD on an unmatched race, unlike raceEditions which silently falls through to a default
+        // - a typo in a config race key would otherwise cost that race its whole tribal grant with
+        // no visible symptom at all.
+        if (!raceMatched && raceName != null)
+            System.err.println("[TFR-Blueprint] no raceShops entry matches race \"" + raceName
+                    + "\" - that race starts with no tribal shops. Check config.json raceShops keys.");
+
+        System.out.println("[TFR-Blueprint] starting unlocks (color=" + startingColorId
+                + ", race=" + raceName + "): " + new java.util.TreeSet<>(unlockedShopTypes));
+    }
+
+    /** "B" -> "Black" etc, matching the colour-numbered shop naming in shops.json. Returns null
+     *  for anything that is not one of the five single-letter mono colours. */
+    private static String colorNameForId(String colorId) {
+        if (colorId == null || colorId.length() != 1)
+            return null;
+        switch (Character.toUpperCase(colorId.charAt(0))) {
+            case 'W': return "White";
+            case 'U': return "Blue";
+            case 'B': return "Black";
+            case 'R': return "Red";
+            case 'G': return "Green";
+            default:  return null;
+        }
+    }
+
     /** Bronze Coin ante ransom (2026-08-29) - see coinRansomedEnemies. */
     public void payCoinRansom(String enemyName) {
         removeItem(BRONZE_COIN_ITEM);
@@ -208,6 +298,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         unsupportedCards.clear();
         unlockedEditions.clear();
         coinRansomedEnemies.clear();
+        unlockedShopTypes.clear();
+        startingColorId = null;
         suppressDefeatGoldLoss = false;
         researchEditionInProgress = null;
         researchStartDay = -1;
@@ -240,14 +332,38 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // enemies are catalog entries respawned freely, so a name is the only durable identity.
     // Persisted with the same shape unlockedEditions above uses (stored as an ArrayList).
     private final Set<String> coinRansomedEnemies = new HashSet<>();
+    // Shop-type blueprints (user spec 2026-08-30): the card shop TYPES this player has learned.
+    // Seeded at character creation from the chosen colour (its common trio) plus the race's two
+    // tribal shops - 5 total - then grown by buying blueprints in AI shops and by rare drops.
+    // Same persistence shape as coinRansomedEnemies/unlockedEditions (stored as an ArrayList).
+    //
+    // IMPORTANT - EMPTY MEANS "ALL UNLOCKED", NOT "NONE" (user decision 2026-08-30, feature is
+    // New Game only). A save made before this feature loads with an empty set; treating that as
+    // "nothing unlocked" would lock the chooser down to nothing on an existing playthrough, which
+    // both kills the Re-assign button and can make a destroyed shop UNREBUILDABLE (the rebuild
+    // menu's card-shop branch disappears when every tier filters empty). A new game always seeds
+    // 5 types, so a legitimately-empty set only ever means "legacy save" - see
+    // EconomyBuildings.isShopTypeUnlocked().
+    private final Set<String> unlockedShopTypes = new HashSet<>();
+    // The colour picked on the new-game screen, e.g. "W"/"U"/"B"/"R"/"G", or null when the mode
+    // does not really have one (Chaos/Precon/CommanderPrecon/Custom all report White otherwise).
+    // Stored because NOTHING else preserves it: NewGameScene hands a ColorSet to
+    // WorldSave.generateNewWorld(), which uses it ONLY to pick the starter deck and then discards
+    // it. AdventurePlayer.colorIdentity is NOT a substitute - it is derived from the starter DECK,
+    // and this plane's constructed starters are guild PAIRS (pick White, get Azorius), so it would
+    // report two colours and hand out two trios.
+    private String startingColorId = null;
     // Runtime-only, deliberately NOT saved: set when the ransom is paid, consumed by the very
     // next defeated() call a few frames later (the ante popup resolves before WorldStage/
     // MapStage.setWinner() runs). Nothing should carry it across a save/load.
     private transient boolean suppressDefeatGoldLoss = false;
 
     public void create(String n, Deck startingDeck, boolean male, int race, int avatar, boolean isFantasy,
-                       boolean isUsingCustomDeck, DifficultyData difficultyData, AdventureModes adventureMode) {
+                       boolean isUsingCustomDeck, DifficultyData difficultyData, AdventureModes adventureMode,
+                       String startingColorId) {
         clear();
+        // Set AFTER clear() (which nulls it) and BEFORE seedStartingShopTypes() below reads it.
+        this.startingColorId = startingColorId;
         this.adventureMode = adventureMode;
         announceFantasy = fantasyMode = isFantasy; //Set Chaos mode first.
         announceCustom = usingCustomDeck = isUsingCustomDeck;
@@ -340,6 +456,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                         + difficultyData.name + " -> starting unlocked editions: " + unlockedEditions);
             }
         }
+
+        // Shop-type blueprints (2026-08-30): 3 colour shops + 2 race tribal shops. Placed here,
+        // after heroRace is set above, since the race grant is keyed off it.
+        seedStartingShopTypes(race);
 
         for (String s : difficultyData.startItems) {
             ItemData i = ItemListData.getItem(s);
@@ -986,6 +1106,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             //noinspection unchecked
             coinRansomedEnemies.addAll((java.util.List<String>) data.readObject("coinRansomedEnemies"));
         }
+        // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
+        // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
+        // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
+        unlockedShopTypes.clear();
+        if (data.containsKey("unlockedShopTypes")) {
+            //noinspection unchecked
+            unlockedShopTypes.addAll((java.util.List<String>) data.readObject("unlockedShopTypes"));
+        }
+        startingColorId = data.containsKey("startingColorId") ? data.readString("startingColorId") : null;
+        if (startingColorId != null && startingColorId.isEmpty())
+            startingColorId = null; // "" is the persisted form of null - see save()
         suppressDefeatGoldLoss = false;
         researchEditionInProgress = data.containsKey("researchEditionInProgress") ? data.readString("researchEditionInProgress") : null;
         researchStartDay = data.containsKey("researchStartDay") ? data.readInt("researchStartDay") : -1;
@@ -1041,6 +1172,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
         data.storeObject("unlockedEditions", new ArrayList<>(unlockedEditions));
         data.storeObject("coinRansomedEnemies", new ArrayList<>(coinRansomedEnemies));
+        data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
+        // store() with a null String throws (writeUTF) - persist "" and read it back as null.
+        data.store("startingColorId", startingColorId == null ? "" : startingColorId);
         if (researchEditionInProgress != null)
             data.store("researchEditionInProgress", researchEditionInProgress);
         data.store("researchStartDay", researchStartDay);

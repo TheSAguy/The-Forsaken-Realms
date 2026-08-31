@@ -310,6 +310,24 @@ public class NewGameScene extends MenuScene {
         }
     }
 
+    /**
+     * The colour the player ACTUALLY picked, as the plane's own colour id ("W"/"U"/"B"/"R"/"G"),
+     * or null when the mode has no real pick. Deliberately separate from getStartingColor()
+     * below: that returns a hardcoded White for Chaos/folder-deck modes and colorIds[0] for
+     * Custom, which is fine for choosing a starter deck but must NOT be recorded as a deliberate
+     * colour choice - otherwise every Chaos player would be handed White's starting shops.
+     * Feeds the shop-type blueprint seeding (AdventurePlayer.seedStartingShopTypes).
+     */
+    private String getStartingColorId() {
+        AdventureModes currentMode = modes.get(mode.getCurrentIndex());
+        if (currentMode.usesFolderDeckPicker() || currentMode == AdventureModes.Chaos
+                || currentMode == AdventureModes.Custom)
+            return null;
+        String[] colorSet = Config.instance().colorIds();
+        int idx = colorId.getCurrentIndex();
+        return colorSet != null && idx >= 0 && idx < colorSet.length ? colorSet[idx] : null;
+    }
+
     private ColorSet getStartingColor() {
         AdventureModes currentMode = modes.get(mode.getCurrentIndex());
         if (currentMode.usesFolderDeckPicker() || currentMode == AdventureModes.Chaos) {
@@ -350,7 +368,7 @@ public class NewGameScene extends MenuScene {
                     getStartingColor(),
                     Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()],
                     modes.get(mode.getCurrentIndex()), colorId.getCurrentIndex(),
-                    getStartingEdition(), 0);
+                    getStartingEdition(), 0, getStartingColorId());
             GamePlayerUtil.getGuiPlayer().setName(selectedName.getText());
             SoundSystem.instance.changeBackgroundTrack();
             WorldStage.getInstance().enterSpawnPOI();
@@ -398,7 +416,7 @@ public class NewGameScene extends MenuScene {
                     getStartingColor(),
                     Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()],
                     modes.get(mode.getCurrentIndex()), colorId.getCurrentIndex(),
-                    getStartingEdition(), 0);
+                    getStartingEdition(), 0, getStartingColorId());
             GamePlayerUtil.getGuiPlayer().setName(selectedName.getText());
             Forge.switchScene(GameScene.instance());
         }

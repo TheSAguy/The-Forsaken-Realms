@@ -20,6 +20,12 @@ public class DialogData implements Serializable {
     public String loctext= "";            //References a localized string for the text body.
     public DialogData[] options = new DialogData[0];      //List of sub-dialogs. Show up as options in the current one.
     public boolean isDisabled = false;
+    // Keep the LAST option out of the scrollable area when this dialog's option list is long
+    // enough to scroll (mod addition 2026-08-30, user report on the shop chooser: "There was no
+    // back/cancel option, I had to build a shop" - the Back button was simply below the scroll
+    // fold). Set on menus whose final entry is an escape hatch (Back / Not now); leave false for
+    // quest dialogs, where the last option is a real choice and belongs in the list with the rest.
+    public boolean pinLastOption = false;
 
     public transient Consumer callback;
 

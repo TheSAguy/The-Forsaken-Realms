@@ -14848,3 +14848,90 @@ already gone by the time it errored - the 2026-08-21 hang incident in a new form
 **Files touched**: WorldBackground.java, MapStage.java, MapDialog.java, TerritoryControl.java,
 EconomyBuildings.java, CardUtil.java, SettingData.java, SettingsScene.java, en-US.properties,
 config.json, player_town.tmx, player_capital.tmx, build_standalone.py.
+
+## Round 71: shop-type blueprints, dialog crash fix, shop chooser polish (2026-08-30)
+
+Local-repo-only round. Design reviewed by a 7-probe parallel investigation before any code was
+written - several of the user's premises did not match the codebase and are recorded below.
+
+### CRASH FIXED: every long dialog threw on open (regression from round 70)
+`ClassCastException: ScrollPane cannot be cast to TextraButton` at `GameStage.showDialog():118`,
+from the user's own playtest log. That method blind-casts EVERY button-table cell to TextraButton
+to build its controller-focus list; round 70's scrollable-option-list change put a ScrollPane in
+that table, so any dialog above the scroll threshold crashed - not just the shop chooser.
+Now descends through ScrollPane/Table via collectDialogButtons(), so gamepad and keyboard focus
+still reach every button wherever it is nested.
+- The same bug explains the user's second report ("There was no back/cancel option, I had to build
+  a shop"): Back is the LAST option, so it sat below the scroll fold, and the crash prevented
+  scrolling to it. New `DialogData.pinLastOption` keeps a menu's final escape hatch OUTSIDE the
+  scroll box, pinned below it. Opt-in, so quest dialogs (whose last option is a real choice) are
+  unaffected.
+
+### NEW: shop-type blueprints (user spec)
+Card shop TYPES must now be learned before the rebuild/re-assign chooser will build them.
+- **Starting 5**: the chosen colour's COMMON trio (Black -> Black1/3/5) + 2 race tribal shops.
+  User picked the odd/common trio deliberately, giving a weak->strong ladder: the even/uncommon
+  trio and the plain <Color> rare shop are blueprint targets.
+- **CORRECTION that blocked the original plan**: the starting colour was NEVER STORED anywhere.
+  `WorldSave.generateNewWorld()` receives a ColorSet, uses it only for the starter-deck lookup at
+  :216, and discards it; `AdventurePlayer.create()` had no ColorSet parameter. Threaded through as
+  a String colour id. `colorIdentity` is NOT a substitute - it derives from the starter DECK, and
+  this plane's constructed starters are guild PAIRS (pick White -> Azorius), so it reports two
+  colours and would have granted two trios. Chaos/Precon/CommanderPrecon/Custom all report a
+  hardcoded White, so those persist null and skip the colour half rather than all being "White".
+- **All 16 races mapped** in plane data (`raceShops`, mirroring raceEditions), 2 shops each. Every
+  one of the 32 names was VALIDATED before writing: exists in shops.json AND appears in a
+  chooser-visible tier. Phyrexian is a forced substitution - all six Phyrexian shops are MYTHIC,
+  which the chooser deliberately omits. Unmatched race keys are LOGGED loudly, unlike raceEditions
+  which silently falls through to a default.
+- **Buy Blueprint button** at any shop whose type is unknown - deliberately NOT gated on
+  playerOwnedTown, unlike every other button on that screen: learning a type by visiting a RIVAL
+  town is the entire acquisition loop. Priced in shards by tier (20/40/100), hidden once known,
+  affordability re-checked inside the click handler (the setDisabled-does-not-gate-clicks lesson).
+- **Blueprint drops** on Mystery pickups and Chests, 25% each. Uses the existing ambush
+  short-circuit idiom: `grantRandomBlueprint()` returns false when the feature is off or every type
+  is known, and the pickup falls through to its normal reward - so "remove the outcome once they
+  are all known" needs no bookkeeping and can never produce a dud pickup. Draws from the union of
+  LIVE tier pools, not all of shops.json, so a drop can never grant an Armory/fixed-land/test shop.
+- **Destroy-and-rebuild bypass patched**: `MapStage.rerollShopType()` (which
+  `destroyShopFromRewardScene` calls) picked from the raw candidate pool with no unlock filter, so
+  a player could reach any locked type by destroying and rebuilding. Without this the whole system
+  would have been cosmetic.
+- **EMPTY SET = ALL UNLOCKED** (user decision: New Game only). A pre-feature save has no set;
+  reading that as "nothing unlocked" would strip the chooser bare mid-playthrough and could leave a
+  destroyed shop UNREBUILDABLE. A new game always seeds 5, so empty only ever means "legacy save".
+
+### Shop chooser polish (user requests)
+- **Descriptive names**: the chooser listed raw keys like "Creature8Black". 279 of 293 shops carry
+  a ShopData `description` - the text their own sign shows in game ("Certain Death", "Library of
+  Lat-Nam", median 16 chars) - now used, with the raw name as fallback. The 14 without one are all
+  Armory/Equipment shops that never reach the chooser.
+- **Sorted known-first, then locked**, alphabetical by display name within each group.
+- **Locked types shown GREYED, not hidden** (user decision): with only 5 starting unlocks a
+  filtered menu collapses to nothing and progression is invisible. Category labels show
+  "(N + M locked)".
+- **Live card counts**: "Certain Death [47 cards] (100 Gold + 5 Wood)" - how many cards the shop
+  could actually stock given the player's unlocked editions and the current town's restrictions,
+  so it rises as sets are researched. Shown on locked entries too, so a blueprint's value is
+  visible before hunting it. CACHED and keyed on (town, unlocked editions), because it is a full
+  reward-pool scan per shop and the chooser builds its whole tree up front.
+
+### Data fixes found along the way
+- **Black5's filter was broken**: `regenerate\b` written with a SINGLE backslash, which JSON parses
+  as U+0008 BACKSPACE, not a regex word boundary - that clause could never match, so Black starters
+  got a 5-term shop advertised as 6. Verified the exact character before and after fixing.
+- `startingColorShopSuffixes` and the three blueprint costs were initially only Java defaults, so
+  behaviour was right but they were NOT tunable from config.json as documented. Added to the plane
+  config so the claim is actually true.
+
+### Process notes
+- A `Cannot read the array length because "<local4>" is null` Maven failure was NOT a code problem:
+  maven-compiler-plugin choking on incremental state corrupted by two concurrent compiles of the
+  same module (my error). Clearing target/classes + maven-status exposed the real errors beneath.
+- Config edits are now validated by comment-stripping and strict-parsing after every write, after
+  an earlier splice left both a missing comma AND a trailing comma.
+
+**Files touched**: GameStage.java, MapDialog.java, DialogData.java, EconomyBuildings.java,
+MapStage.java, RewardScene.java, AdventurePlayer.java, NewGameScene.java, WorldSave.java,
+ConfigData.java, RaceShopData.java (new), ResourceSpawns.java, ChestEvents.java, config.json,
+shops.json.

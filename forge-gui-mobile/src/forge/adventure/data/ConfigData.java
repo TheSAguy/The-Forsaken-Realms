@@ -65,6 +65,23 @@ public class ConfigData {
     // an entry here, it replaces the flat starterEditions first-N seeding; races without an
     // entry (and planes without this array) fall back to starterEditions.
     public RaceEditionData[] raceEditions;
+    // Shop-type blueprints (user spec 2026-08-30): card shop TYPES must be unlocked before the
+    // rebuild/re-assign chooser will offer them. Opt-in like every flag above - a plane leaving
+    // this false behaves exactly as before, with every type freely available.
+    public boolean shopBlueprintsEnabled = false;
+    // Per-race starting shop types - see RaceShopData. Combined with the colour trio derived from
+    // the new game's chosen colour, this forms the player's starting unlock set.
+    public RaceShopData[] raceShops;
+    // Which colour-numbered shops the starting-colour grant hands out (user decision 2026-08-30:
+    // pick Black -> start with Black1/3/5, the COMMON tier trio; the even/uncommon trio and the
+    // plain <Color> rare shop then become blueprint targets - a clean weak-to-strong ladder).
+    // Data-driven so the ladder can be retuned without a rebuild. Each suffix is appended to the
+    // capitalised colour name.
+    public String[] startingColorShopSuffixes = {"1", "3", "5"};
+    // Blueprint purchase price by the shop's own tier, in SHARDS (user spec 2026-08-30).
+    public int blueprintShardCostCommon = 20;
+    public int blueprintShardCostUncommon = 40;
+    public int blueprintShardCostRare = 100;
     // Standalone-game identity (MOD_SCOPE.md #89): the plane's own version string, appended to
     // the engine version on the start menu when set; and a one-time welcome popup shown on the
     // first map entry of a save (a new game starts inside the spawn dungeon, so new players see

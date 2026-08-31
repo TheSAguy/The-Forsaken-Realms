@@ -44,7 +44,18 @@ public class ChestEvents {
     private static final int EVENT_DUPLICATE = 4;
     private static final int EVENT_ILLEGAL_ARENA = 5;
 
+    // Shop blueprint from a chest (user spec 2026-08-30: "add it to diamond AND the Chest Drop").
+    private static final float CHEST_BLUEPRINT_CHANCE = 0.25f;
+
     public static void trigger(World world) {
+        // Rolled BEFORE the ordinary 1-of-6 so it does not have to displace an existing event, and
+        // it self-disables: grantRandomBlueprint() returns false when blueprints are off for this
+        // plane or every type is already known, and the chest then resolves completely normally.
+        if (world.getRandom().nextFloat() < CHEST_BLUEPRINT_CHANCE
+                && ResourceSpawns.grantRandomBlueprint("Chest")) {
+            System.out.println("[ChestEvents] Chest opened, event=blueprint");
+            return;
+        }
         int roll = world.getRandom().nextInt(6);
         System.out.println("[ChestEvents] Chest opened, event=" + roll);
         switch (roll) {

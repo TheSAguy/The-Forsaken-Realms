@@ -12,8 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -114,8 +117,14 @@ public abstract class GameStage extends Stage {
         if (getPlayerSprite() != null)
             getPlayerSprite().stop();
         dialogButtonMap.clear();
+        // CRASH FIX 2026-08-30: this used to blind-cast every button-table cell to TextraButton.
+        // That held only while the table contained nothing but buttons - the same day's
+        // scrollable-option-list change (MapDialog, for the 200-entry shop chooser) puts a
+        // ScrollPane in that table and every long dialog threw ClassCastException on open.
+        // Descends into ScrollPane/Table instead, so controller and keyboard focus still find
+        // every real button wherever it is nested.
         for (int i = 0; i < dialog.getButtonTable().getCells().size; i++) {
-            dialogButtonMap.add((TextraButton) dialog.getButtonTable().getCells().get(i).getActor());
+            collectDialogButtons(dialog.getButtonTable().getCells().get(i).getActor());
         }
         dialog.show(dialogStage, Actions.show());
         dialog.setPosition((dialogStage.getWidth() - dialog.getWidth()) / 2, (dialogStage.getHeight() - dialog.getHeight()) / 2);
@@ -123,6 +132,19 @@ public abstract class GameStage extends Stage {
 
         if (Forge.hasExternalInput() && !dialogButtonMap.isEmpty())
             dialogStage.setKeyboardFocus(dialogButtonMap.first());
+    }
+
+    /** Gathers every TextraButton under an actor for dialogButtonMap, descending through the
+     *  ScrollPane/Table wrappers a long option list is nested in. Anything else is ignored. */
+    private void collectDialogButtons(Actor actor) {
+        if (actor instanceof TextraButton) {
+            dialogButtonMap.add((TextraButton) actor);
+        } else if (actor instanceof ScrollPane) {
+            collectDialogButtons(((ScrollPane) actor).getActor());
+        } else if (actor instanceof Table) {
+            for (Cell<?> cell : ((Table) actor).getCells())
+                collectDialogButtons(cell.getActor());
+        }
     }
 
     public void hideDialog() {

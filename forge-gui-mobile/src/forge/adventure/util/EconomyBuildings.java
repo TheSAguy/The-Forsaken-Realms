@@ -16,6 +16,7 @@ import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.character.ShopActor;
+import forge.adventure.data.ConfigData;
 import forge.adventure.data.DialogData;
 import forge.adventure.data.DifficultyData;
 import forge.adventure.data.ItemData;
@@ -23,8 +24,10 @@ import forge.adventure.data.ItemListData;
 import forge.adventure.data.RewardData;
 import forge.adventure.data.ShopData;
 import forge.adventure.data.TuningData;
+import forge.adventure.data.WorldData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.scene.RewardScene;
+import forge.adventure.scene.TileMapScene;
 import forge.adventure.scene.UIScene;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
@@ -1198,8 +1201,142 @@ public class EconomyBuildings {
      * A natural implementation would mirror Progressive Set Unlocks: a persisted
      * Set&lt;String&gt; on AdventurePlayer alongside unlockedEditions.
      */
-    private static boolean isShopTypeUnlocked(String shopName) {
-        return true;
+    public static boolean isShopTypeUnlocked(String shopName) {
+        ConfigData config = Config.instance().getConfigData();
+        if (config == null || !config.shopBlueprintsEnabled)
+            return true; // feature off for this plane - everything available, exactly as before
+        java.util.Set<String> known = AdventurePlayer.current().getUnlockedShopTypes();
+        // EMPTY = legacy save (user decision 2026-08-30: this is a New Game only feature). A save
+        // predating blueprints has no set at all; reading that as "nothing unlocked" would strip
+        // the chooser bare mid-playthrough and could leave a destroyed shop unrebuildable. A new
+        // game always seeds 5 types, so a genuinely empty set only ever means "from before this".
+        if (known.isEmpty())
+            return true;
+        return known.contains(shopName);
+    }
+
+    /** Which tier list a shop name belongs to on this slot, for blueprint pricing. */
+    public static String shopTierOf(MapStage stage, int objectId, String shopName) {
+        Map<String, Array<String>> pools = stage == null ? null : stage.getShopTierPools(objectId);
+        return pools == null ? null : tierOfShopName(pools, shopName);
+    }
+
+    /** Blueprint price in SHARDS by tier (user spec 2026-08-30: 20 / 40 / 100). An unknown tier
+     *  falls back to the Common price rather than being free. */
+    public static int blueprintShardCost(String tier) {
+        ConfigData config = Config.instance().getConfigData();
+        if (config == null)
+            return 20;
+        if (MapStage.TIER_RARE.equals(tier))
+            return config.blueprintShardCostRare;
+        if (MapStage.TIER_UNCOMMON.equals(tier))
+            return config.blueprintShardCostUncommon;
+        return config.blueprintShardCostCommon;
+    }
+
+    /**
+     * The player-facing name of a shop type - its ShopData "description", which is what the shop's
+     * own sign shows in game ("Certain Death", "Library of Lat-Nam"), falling back to the raw data
+     * name. User request 2026-08-30: the chooser was listing raw keys like "Creature8Black".
+     * 279 of 293 shops carry one; the 14 without are all Armory/Equipment shops, which never reach
+     * the chooser anyway. Median length is 16 characters, so these fit a menu button.
+     */
+    // ---- "how many cards could I actually buy here" counts (user request 2026-08-30) ----------
+    // Cached because the count is a full scan of the reward pool per shop, and the chooser builds
+    // its WHOLE tree up front - without this, opening the menu would filter ~30k cards once per
+    // shop type. Keyed by shop name; the whole cache is dropped whenever the signature below
+    // changes, which is what makes the numbers "dynamic as you unlock more sets".
+    private static final Map<String, Integer> shopCardCountCache = new java.util.HashMap<>();
+    private static String shopCardCountSignature = null;
+
+    /** Anything that can change a shop's eligible card pool: which editions the player has
+     *  unlocked, and which town they are standing in (shops are edition-restricted per town). */
+    private static String currentCardCountSignature() {
+        AdventurePlayer player = AdventurePlayer.current();
+        PointOfInterest poi = TileMapScene.instance().rootPoint;
+        return (poi == null ? "-" : poi.getID()) + "|"
+                + new java.util.TreeSet<>(player.getUnlockedEditions());
+    }
+
+    /**
+     * How many distinct cards this shop type could currently offer, given the player's unlocked
+     * editions and the current town's restrictions. Returns -1 when it cannot be determined (no
+     * ShopData, or no reward block), so callers can omit the figure rather than print a wrong 0.
+     */
+    public static int buyableCardCount(String shopName, PointOfInterestChanges changes) {
+        String signature = currentCardCountSignature();
+        if (!signature.equals(shopCardCountSignature)) {
+            shopCardCountCache.clear();
+            shopCardCountSignature = signature;
+        }
+        Integer cached = shopCardCountCache.get(shopName);
+        if (cached != null)
+            return cached;
+
+        ShopData shop = null;
+        for (ShopData data : new Array.ArrayIterator<>(WorldData.getShopList())) {
+            if (shopName.equals(data.name)) {
+                shop = data;
+                break;
+            }
+        }
+        int total = -1;
+        if (shop != null && shop.rewards != null) {
+            java.util.Set<String> distinct = new java.util.HashSet<>();
+            Iterable<RewardData> rewards = EditionProgression.restrictShopRewardsForCurrentTown(
+                    new Array.ArrayIterator<>(shop.rewards), changes, shop.name, "shop-count");
+            for (RewardData reward : rewards) {
+                if (reward == null || !"card".equalsIgnoreCase(reward.type == null ? "card" : reward.type))
+                    continue;
+                CardUtil.CardPredicate predicate = new CardUtil.CardPredicate(reward, true);
+                for (PaperCard card : RewardData.getAllCards())
+                    if (predicate.test(card))
+                        distinct.add(card.getName());
+            }
+            total = distinct.isEmpty() ? -1 : distinct.size();
+        }
+        shopCardCountCache.put(shopName, total);
+        return total;
+    }
+
+    // Every shop name any town shop-slot could offer, cached for the process. Built from the LIVE
+    // tier pools of the currently loaded map plus the plane's town templates, so it can never
+    // include an Armory / fixed land / test shop that no chooser would show. Used by the blueprint
+    // drops to pick "a type you do not have yet".
+    private static java.util.List<String> chooserShopNames = null;
+
+    public static java.util.List<String> allChooserShopNames() {
+        if (chooserShopNames != null)
+            return chooserShopNames;
+        java.util.TreeSet<String> names = new java.util.TreeSet<>();
+        MapStage stage = MapStage.getInstance();
+        // Union of every slot's tier pools on the currently-loaded map.
+        for (int objectId : stage.getShopTierPoolObjectIds()) {
+            Map<String, Array<String>> pools = stage.getShopTierPools(objectId);
+            if (pools == null)
+                continue;
+            for (Array<String> tierNames : pools.values())
+                for (String name : new Array.ArrayIterator<>(tierNames))
+                    names.add(name);
+        }
+        chooserShopNames = new ArrayList<>(names);
+        System.out.println("[TFR-Blueprint] chooser shop-name universe: " + chooserShopNames.size() + " type(s)");
+        return chooserShopNames;
+    }
+
+    /** Dropped when a new map loads - a different town template can expose different pools. */
+    public static void invalidateChooserShopNames() {
+        chooserShopNames = null;
+    }
+
+    public static String shopDisplayName(String shopName) {
+        if (shopName == null)
+            return "";
+        for (ShopData data : new Array.ArrayIterator<>(WorldData.getShopList())) {
+            if (shopName.equals(data.name))
+                return data.description != null && !data.description.isEmpty() ? data.description : shopName;
+        }
+        return shopName;
     }
 
     private static final String CAT_COLOR = "By Color";
@@ -1258,6 +1395,7 @@ public class EconomyBuildings {
      * @param currentShopName the type being replaced, or null for a rebuild-from-rubble (no credit)
      */
     public static DialogData buildCardShopChooser(MapStage stage, int objectId, String currentShopName) {
+        PointOfInterestChanges changes = stage.getChanges();
         Map<String, Array<String>> pools = stage.getShopTierPools(objectId);
         if (pools == null || pools.isEmpty())
             return null;
@@ -1296,12 +1434,33 @@ public class EconomyBuildings {
             List<DialogData> categoryOptions = new ArrayList<>();
             for (String category : SHOP_CATEGORIES) {
                 List<DialogData> leaves = new ArrayList<>();
+                int lockedInCategory = 0;
+                // Known first, then locked (user request 2026-08-30) - so the things you can
+                // actually build are at the top and never buried under a wall of greyed entries.
+                // Alphabetical by DISPLAY name within each group, since that is what is on screen.
+                List<String> inCategory = new ArrayList<>();
                 for (String shopName : new Array.ArrayIterator<>(names)) {
-                    if (!isShopTypeUnlocked(shopName) || !category.equals(shopCategory(shopName)))
+                    if (!category.equals(shopCategory(shopName)))
                         continue;
                     if (shopName.equals(currentShopName))
                         continue; // already this type - nothing to buy
-                    leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost));
+                    inCategory.add(shopName);
+                }
+                inCategory.sort((a, b) -> {
+                    boolean ua = isShopTypeUnlocked(a), ub = isShopTypeUnlocked(b);
+                    if (ua != ub)
+                        return ua ? -1 : 1; // unlocked ahead of locked
+                    return shopDisplayName(a).compareToIgnoreCase(shopDisplayName(b));
+                });
+                for (String shopName : inCategory) {
+                    // Locked types are shown DISABLED, not hidden (user decision 2026-08-30): with
+                    // only 5 starting unlocks a filtered menu collapses to almost nothing and the
+                    // player can never see what progression is even available. Same
+                    // shown-but-disabled treatment unaffordable options already get below.
+                    boolean unlocked = isShopTypeUnlocked(shopName);
+                    if (!unlocked)
+                        lockedInCategory++;
+                    leaves.add(shopChoiceOption(objectId, shopName, goldDue, cost, unlocked, changes));
                 }
                 if (leaves.isEmpty())
                     continue;
@@ -1310,9 +1469,12 @@ public class EconomyBuildings {
                 categoryBacks.add(categoryBack);
                 leaves.add(categoryBack);
                 DialogData categoryNode = new DialogData();
-                categoryNode.name = category + " (" + (leaves.size() - 1) + ")";
+                int available = leaves.size() - 1 - lockedInCategory;
+                categoryNode.name = category + " (" + available
+                        + (lockedInCategory > 0 ? " + " + lockedInCategory + " locked" : "") + ")";
                 categoryNode.text = tierNode.text;
                 categoryNode.options = leaves.toArray(new DialogData[0]);
+                categoryNode.pinLastOption = true; // keep "Back" visible when the list scrolls
                 categoryOptions.add(categoryNode);
             }
             if (categoryOptions.isEmpty())
@@ -1322,6 +1484,7 @@ public class EconomyBuildings {
             tierBacks.add(tierBack);
             categoryOptions.add(tierBack);
             tierNode.options = categoryOptions.toArray(new DialogData[0]);
+            tierNode.pinLastOption = true; // keep "Back" visible when the list scrolls
             tierOptions.add(tierNode);
             // Every category-level Back inside THIS tier returns to this tier's own category list.
             // Wired here rather than at creation because a node's options array doesn't exist
@@ -1339,6 +1502,7 @@ public class EconomyBuildings {
         rootBack.name = "Back";
         tierOptions.add(rootBack);
         root.options = tierOptions.toArray(new DialogData[0]);
+        root.pinLastOption = true;
         // Tier-level Backs return to this chooser's own tier list. The rootBack is deliberately
         // left unwired here - the CALLER owns what "back" means from the top of the chooser (the
         // rebuild menu points it at the building menu; the re-assign flow just closes).
@@ -1370,9 +1534,24 @@ public class EconomyBuildings {
     /** One selectable shop type. Charges the tier price (already net of any re-type credit), pins
      *  the chosen type, and reuses the exact same rebuild bookkeeping the flat Card Shop option
      *  performs - shop-rebuilt flag, edition refresh, and the "shopBuilt" main-quest flag. */
-    private static DialogData shopChoiceOption(int objectId, String shopName, int goldDue, int[] cost) {
+    private static DialogData shopChoiceOption(int objectId, String shopName, int goldDue, int[] cost,
+                                               boolean unlocked, PointOfInterestChanges changes) {
         DialogData option = new DialogData();
-        option.name = shopName + " (" + costLabel(goldDue, cost[1], cost[2], cost[3]) + ")";
+        // Player-facing name (the shop's own sign text) rather than the raw data key - user
+        // request 2026-08-30, the menu was listing things like "Creature8Black".
+        String label = shopDisplayName(shopName);
+        // How many cards it could actually stock right now, given unlocked editions - shown on
+        // both locked and unlocked entries so the player can judge what a blueprint is worth.
+        int cards = buyableCardCount(shopName, changes);
+        if (cards >= 0)
+            label += " [" + cards + " cards]";
+        if (!unlocked) {
+            // Shown but unbuyable, so the player can see what exists to hunt blueprints for.
+            option.name = "[%88]" + label + " (locked)";
+            option.isDisabled = true;
+            return option; // no actions - a disabled option gets no click handler anyway
+        }
+        option.name = label + " (" + costLabel(goldDue, cost[1], cost[2], cost[3]) + ")";
         option.isDisabled = !canAffordCost(goldDue, cost[1], cost[2], cost[3]);
 
         DialogData.ActionData pin = new DialogData.ActionData();

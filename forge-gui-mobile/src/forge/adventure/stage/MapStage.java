@@ -114,6 +114,12 @@ public class MapStage extends GameStage {
         return shopTierPools.get(objectId);
     }
 
+    /** Object ids that have chooser tier pools on the currently-loaded map - lets the blueprint
+     *  drops enumerate every shop type a chooser could ever offer. */
+    public java.util.Set<Integer> getShopTierPoolObjectIds() {
+        return shopTierPools.keySet();
+    }
+
     /** Reads one tier's comma-list off a shop object's TMX properties, de-duplicated (the raw
      *  lists repeat names - player_town.tmx's commonShopList has "Colorless" twice, and a chooser
      *  must not show the same entry twice) and order-preserving. */
@@ -265,11 +271,19 @@ public class MapStage extends GameStage {
         Array<ShopData> matches = new Array<>();
         for (ShopData candidateData : new Array.ArrayIterator<>(WorldData.getShopList())) {
             if (candidates.contains(candidateData.name, false) && !candidateData.name.equals(currentShopName)
-                    && EconomyBuildings.isBoosterShop(candidateData) == currentIsBooster)
+                    && EconomyBuildings.isBoosterShop(candidateData) == currentIsBooster
+                    // Blueprint gate (2026-08-30): this random re-type is also what
+                    // EconomyBuildings.destroyShopFromRewardScene() calls, so without this filter a
+                    // player could reach any LOCKED shop type just by destroying and rebuilding -
+                    // which would make the whole unlock system cosmetic.
+                    && EconomyBuildings.isShopTypeUnlocked(candidateData.name))
                 matches.add(candidateData);
         }
-        if (matches.size == 0)
+        if (matches.size == 0) {
+            System.out.println("[TFR-Blueprint] rerollShopType(" + objectId + "): no UNLOCKED "
+                    + "alternative to \"" + currentShopName + "\" in this slot's pool - keeping current type");
             return null;
+        }
         ShopData newData = matches.get(WorldSave.getCurrentSave().getWorld().getRandom().nextInt(matches.size));
         getChanges().setPinnedShopName(objectId, newData.name);
         TextureSprite sign = shopSigns.get(objectId);

@@ -1630,3 +1630,34 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`standalone-packaging/build_standalone.py`** (not an engine file, but a revert-watch item all
   the same) - `assert_jar_is_fresh()` and `assert_target_not_in_use()`, both ordered before
   PACKAGE_OK.txt is removed and before any delete, so either abort leaves the live folder intact.
+
+## Round 71 (2026-08-30) - shop-type blueprints + dialog crash fix
+
+- **`stage/GameStage.java`** - `showDialog()` no longer blind-casts every button-table cell to
+  TextraButton; new `collectDialogButtons()` descends through ScrollPane/Table. Round 70's
+  scrollable option list put a ScrollPane in that table and made EVERY long dialog throw
+  ClassCastException on open.
+- **`util/MapDialog.java`** - honours `DialogData.pinLastOption`: when the list scrolls, the final
+  option (Back / Not now) is added BELOW the scroll pane instead of inside it, so a long menu can
+  never look like it has no way out.
+- **`data/DialogData.java`** - new `pinLastOption` flag (opt-in; quest dialogs unaffected).
+- **`player/AdventurePlayer.java`** - new persisted `unlockedShopTypes` (empty = legacy save = all
+  unlocked) and `startingColorId`; `seedStartingShopTypes()` grants the colour trio + race tribal
+  shops at creation; `create()` gained a `startingColorId` parameter.
+- **`world/WorldSave.java`** - `generateNewWorld()` gained a `startingColorId` parameter and passes
+  it to `create()`. The ColorSet it already received is only a starter-deck lookup key.
+- **`scene/NewGameScene.java`** - new `getStartingColorId()` returning the ACTUAL pick, or null for
+  Chaos/Precon/CommanderPrecon/Custom (which all report a hardcoded White in getStartingColor()).
+- **`util/EconomyBuildings.java`** - `isShopTypeUnlocked()` made public and given a real body;
+  `shopTierOf()`, `blueprintShardCost()`, `shopDisplayName()`, `buyableCardCount()` (cached),
+  `allChooserShopNames()`; chooser now sorts known-first, greys locked entries and shows card
+  counts.
+- **`stage/MapStage.java`** - `rerollShopType()` filters on `isShopTypeUnlocked` (closing the
+  destroy-and-rebuild bypass); new `getShopTierPoolObjectIds()`.
+- **`scene/RewardScene.java`** - new Buy Blueprint button, shown at ANY shop with an unknown type
+  including AI towns, priced by tier in shards.
+- **`util/ResourceSpawns.java`** - `grantRandomBlueprint()` + a 25% blueprint outcome on Mystery
+  pickups, self-disabling via the existing ambush short-circuit idiom.
+- **`util/ChestEvents.java`** - 25% blueprint roll ahead of the ordinary 1-of-6 event.
+- **`data/ConfigData.java` / `data/RaceShopData.java` (new)** - `shopBlueprintsEnabled`,
+  `raceShops`, `startingColorShopSuffixes`, and the three blueprint shard costs.

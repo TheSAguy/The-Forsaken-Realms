@@ -8,6 +8,7 @@ import forge.adventure.data.EnemyData;
 import forge.adventure.data.WorldData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.stage.GameHUD;
+import forge.adventure.player.AdventurePlayer;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
@@ -63,6 +64,40 @@ public class ResourceSpawns {
     // the user asked for it as a visibly distinct chest icon on the map, not a Mystery sub-case.
     public static final int TYPE_GOLD = 0, TYPE_SHARDS = 1, TYPE_WOOD = 2, TYPE_STONE = 3, TYPE_MYSTERY = 4, TYPE_CHEST = 5;
     private static final float MYSTERY_AMBUSH_CHANCE = 0.05f;
+    // Shop blueprint from a Mystery pickup (user spec 2026-08-30). Deliberately generous at 25%:
+    // the AI-shop Buy Blueprint button is the real acquisition route, so a drop is only ever
+    // filling in a type the player has not happened to walk past. Self-disabling once every type
+    // is known - see grantRandomBlueprint().
+    private static final float MYSTERY_BLUEPRINT_CHANCE = 0.25f;
+
+    /**
+     * Grants one random shop type the player does not already know. Returns false - so the caller
+     * falls through to its normal reward - when blueprints are off for this plane, or when every
+     * type in the game is already known. Shared by the Mystery pickup here and ChestEvents.
+     * <p>
+     * Draws from the union of every town shop-list pool rather than the whole shops.json catalog,
+     * so it can never hand out an Armory/land/test shop that no chooser would ever offer.
+     */
+    public static boolean grantRandomBlueprint(String source) {
+        if (!Config.instance().getConfigData().shopBlueprintsEnabled)
+            return false;
+        java.util.List<String> candidates = new java.util.ArrayList<>();
+        for (String name : EconomyBuildings.allChooserShopNames())
+            if (!AdventurePlayer.current().hasShopTypeUnlocked(name))
+                candidates.add(name);
+        if (candidates.isEmpty()) {
+            System.out.println("[TFR-Blueprint] " + source + ": every shop type already known - "
+                    + "falling through to an ordinary reward");
+            return false;
+        }
+        java.util.Collections.sort(candidates); // deterministic order before the seeded pick
+        String picked = candidates.get(WorldSave.getCurrentSave().getWorld().getRandom().nextInt(candidates.size()));
+        AdventurePlayer.current().unlockShopType(picked, source);
+        GameHUD.getInstance().addNotification("Blueprint found: "
+                + EconomyBuildings.shopDisplayName(picked) + "! You can now build this shop type.");
+        SoundSystem.instance.play(SoundEffectType.FlipCard, false);
+        return true;
+    }
 
     private static final String ITEMS_ATLAS = "sprites/items.atlas";
     private static final String RESOURCE_ICONS_ATLAS = "maps/tileset/resource_icons.atlas";
@@ -293,6 +328,13 @@ public class ResourceSpawns {
         }
         if (type == TYPE_MYSTERY) {
             if (world.getRandom().nextFloat() < MYSTERY_AMBUSH_CHANCE && spawnAmbush())
+                return;
+            // Shop blueprint (user spec 2026-08-30). Same short-circuit idiom as the ambush above:
+            // grantRandomBlueprint() returns false when the feature is off or every type is
+            // already known, and the pickup then falls through to an ordinary resource - so
+            // "drop the outcome once they are all known" needs no extra bookkeeping and can never
+            // produce a dud pickup.
+            if (world.getRandom().nextFloat() < MYSTERY_BLUEPRINT_CHANCE && grantRandomBlueprint("Mystery drop"))
                 return;
             // Otherwise it resolves into one of the four ordinary resources, value rolled now.
             type = world.getRandom().nextInt(4);

@@ -245,8 +245,20 @@ public class MapDialog {
                     visibleOptions++;
             boolean scrollOptions = visibleOptions > MAX_UNSCROLLED_OPTIONS;
             Table optionHost = scrollOptions ? new Table() : D.getButtonTable();
+            // When the list scrolls, a menu that opted in keeps its LAST option (the Back / Not
+            // now escape hatch) OUT of the scroll area, pinned under it - otherwise it sits below
+            // the fold and the menu looks like it has no way out, which is exactly what happened
+            // on the shop chooser's first playtest.
+            DialogData pinned = null;
+            if (scrollOptions && dialog.pinLastOption) {
+                for (DialogData option : dialog.options)
+                    if (isConditionOk(option.condition))
+                        pinned = option; // ends up holding the last visible option
+            }
             int i = 0;
             for (DialogData option : dialog.options) {
+                if (option == pinned)
+                    continue; // added after the scroll pane, below
                 if (isConditionOk(option.condition)) {
                     String name; //Get localized label if present.
                     if (option.locname != null && !option.locname.isEmpty()) name = L.getMessage(option.locname);
@@ -284,6 +296,22 @@ public class MapDialog {
                 // scrolls inside that box rather than growing the dialog past the viewport.
                 float maxHeight = Math.max(80f, stage.getHeight() * 0.45f);
                 D.getButtonTable().add(optionScroller).width(WIDTH).height(maxHeight);
+                D.getButtonTable().row();
+                // The pinned escape hatch goes BELOW the scroll box, always on screen.
+                if (pinned != null) {
+                    String pinnedName = pinned.locname != null && !pinned.locname.isEmpty()
+                            ? L.getMessage(pinned.locname) : pinned.name;
+                    final DialogData pinnedOption = pinned;
+                    TextraButton pinnedButton = pinned.isDisabled
+                            ? Controls.newTextButton("[%88]" + pinnedName)
+                            : Controls.newTextButton("[%88]" + pinnedName, () -> loadDialog(pinnedOption));
+                    pinnedButton.getTextraLabel().setWrap(true);
+                    pinnedButton.setDisabled(pinned.isDisabled);
+                    buttons.add(pinnedButton);
+                    pinnedButton.setVisible(false);
+                    D.getButtonTable().add(pinnedButton).width(WIDTH - 10);
+                    i++;
+                }
                 D.getButtonTable().row();
             }
             D.addListener(new ClickListener() {

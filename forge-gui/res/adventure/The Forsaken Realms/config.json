@@ -254,6 +254,33 @@
         { "race": "Blue Dragon",  "editions": ["DTK", "TDM", "M21", "MH1"] },
         { "race": "Green Dragon", "editions": ["DTK", "TDM", "IKO", "KHM"] },
         { "race": "Black Dragon", "editions": ["DTK", "TDM", "AFR", "VOW"] }
+    ],
+
+    "shopBlueprintsEnabled": true,
+    // Which colour-numbered shops a new game grants for the chosen colour. Odd = the COMMON
+    // tier trio; the even/uncommon trio and the plain <Color> rare shop are blueprint targets.
+    "startingColorShopSuffixes": ["1", "3", "5"],
+    // Blueprint purchase price in SHARDS, by the shop's own tier.
+    "blueprintShardCostCommon": 20,
+    "blueprintShardCostUncommon": 40,
+    "blueprintShardCostRare": 100,
+    "raceShops": [
+        { "race": "Devil",       "shops": ["Devil", "Demon"] },
+        { "race": "Kor",         "shops": ["Angel", "Eldrazi"] },
+        { "race": "Human",       "shops": ["Human", "Soldier"] },
+        { "race": "Elf",         "shops": ["Elf", "Druid"] },
+        { "race": "Metathran",   "shops": ["Wizard", "Sphinx"] },
+        { "race": "Undead",      "shops": ["Zombie", "Skeleton"] },
+        { "race": "Viashino",    "shops": ["Goblin", "Dinosaur"] },
+        { "race": "Phyrexian",   "shops": ["Horrors", "Mutants"] },
+        { "race": "Dwarf",       "shops": ["Dwarf", "Giant"] },
+        { "race": "Werewolf",    "shops": ["Wolf", "Spirit"] },
+        { "race": "Leonin",      "shops": ["SmallCats", "Knight"] },
+        { "race": "Red Dragon",  "shops": ["Dragon", "Minotaur"] },
+        { "race": "White Dragon", "shops": ["Dragon", "Angel"] },
+        { "race": "Blue Dragon", "shops": ["Dragon", "Sphinx"] },
+        { "race": "Green Dragon", "shops": ["Dragon", "Hydra"] },
+        { "race": "Black Dragon", "shops": ["Dragon", "Vampire"] }
     ]
 }
 

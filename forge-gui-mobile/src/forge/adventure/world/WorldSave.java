@@ -198,7 +198,11 @@ public class WorldSave {
         return currentSave;
     }
 
-    public static WorldSave generateNewWorld(String name, boolean male, int race, int avatarIndex, ColorSet startingColorIdentity, DifficultyData diff, AdventureModes mode, int customDeckIndex, CardEdition starterEdition, long seed) {
+    /** @param startingColorId the plane colour id the player actually PICKED ("W"/"U"/"B"/"R"/"G"),
+     *  or null for modes with no real pick. Separate from startingColorIdentity, which is only a
+     *  starter-deck lookup key and reports White for Chaos/Precon/Custom - see
+     *  NewGameScene.getStartingColorId() and AdventurePlayer.seedStartingShopTypes(). */
+    public static WorldSave generateNewWorld(String name, boolean male, int race, int avatarIndex, ColorSet startingColorIdentity, DifficultyData diff, AdventureModes mode, int customDeckIndex, CardEdition starterEdition, long seed, String startingColorId) {
         // Order fixed 2026-08-24 (real bug, user report: "10 working neutral towns" never
         // appeared in a fresh game) - this used to clear AFTER generateNew(), silently wiping any
         // pointOfInterestChanges writes generateNew() itself makes (TownRestoration.
@@ -214,7 +218,7 @@ public class WorldSave {
         boolean custom = mode == AdventureModes.Custom;
 
         Deck starterDeck = Config.instance().starterDeck(startingColorIdentity, diff, mode, customDeckIndex, starterEdition);
-        currentSave.player.create(name, starterDeck, male, race, avatarIndex, chaos, custom, diff, mode);
+        currentSave.player.create(name, starterDeck, male, race, avatarIndex, chaos, custom, diff, mode, startingColorId);
         // Player/AI edition exclusivity (2026-08-16 user spec) - the shard seeding inside
         // world.generateNew() above ran before this player existed, so the player's race
         // editions are pulled back OUT of the AI color shards here, right after create()
