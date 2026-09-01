@@ -311,8 +311,32 @@ public class CharacterSprite extends MapActor {
         return atlasPath;
     }
 
+    /** How many Avatar frames this sprite's atlas actually carries. 491 of the 493 enemy
+     *  atlases have exactly one; goblin_group.atlas has three (one per pack member) and
+     *  umber_hulk.atlas has zero. Callers sizing per-seat portraits for a multi-opponent duel
+     *  need this - see DuelScene's per-seat loop. */
+    public int getAvatarCount() {
+        return avatar == null ? 0 : avatar.size;
+    }
+
+    /**
+     * The Avatar frame for seat {@code index} of a multi-opponent duel, clamped to the last
+     * frame the atlas actually has, or null when the atlas has no Avatar region at all.
+     * <p>
+     * This used to be a bare {@code avatar.get(index)}, which threw IndexOutOfBoundsException
+     * for any chained ({@code EnemyData.nextEnemy}) fight whose atlas has a single Avatar frame
+     * - i.e. every enemy except Goblin Pack. That crash is the reason the 1-vs-N support has
+     * only ever been exercised once (2026-09-01 research, STAR_TOWNS_RESEARCH.md). Clamping
+     * means extra seats share the last portrait instead of crashing; a purpose-built pack atlas
+     * with N Avatar frames still gets distinct faces per seat.
+     * <p>
+     * The null case is not theoretical: umber_hulk.atlas ships with zero Avatar regions, and a
+     * clamp alone would underflow to index -1 there.
+     */
     public Sprite getAvatar(int index) {
-        return avatar.get(index);
+        if (avatar == null || avatar.isEmpty())
+            return null;
+        return avatar.get(Math.min(index, avatar.size - 1));
     }
 
     public enum AnimationTypes {

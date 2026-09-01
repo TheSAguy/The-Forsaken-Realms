@@ -1,6 +1,7 @@
 package forge.adventure.scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.google.common.collect.ImmutableList;
@@ -751,11 +752,33 @@ public class DuelScene extends ForgeScene {
             boolean tierNames = eventData == null;
             LobbyPlayer enemyPlayer = GamePlayerUtil.createAiPlayer(
                     tierNames ? currentEnemy.getTieredDisplayName() : currentEnemy.getName(), selectAI(currentEnemy.ai));
-            enemyPlayer.setName(tierNames ? enemy.getTieredDisplayName() : enemy.getName()); //Override name if defined in the map.(only supported for 1 enemy atm)
-            TextureRegion enemyAvatar = enemy.getAvatar(i);
-            enemyAvatar.flip(true, false); //flip facing left
-            FSkin.getAvatars().put(enemyAvatarKey + i, enemyAvatar);
-            enemyPlayer.setAvatarIndex(enemyAvatarKey + i);
+            // The head sprite's display-name override (a .tmx displayNameOverride - how "The
+            // Warden" is an Adept Black Wizard underneath) applies to seat 0 ONLY (2026-09-01
+            // fix). It used to overwrite EVERY seat's name with the head's, so a 1-vs-2 against
+            // a Fox chained with a Wolf showed "Fox" and "2nd Fox" - the old trailing comment
+            // ("only supported for 1 enemy atm") was the original author admitting exactly this.
+            // Later seats keep the name built from currentEnemy above; the engine de-dupes any
+            // genuine same-name pack to "2nd ...".
+            if (i == 0)
+                enemyPlayer.setName(tierNames ? enemy.getTieredDisplayName() : enemy.getName());
+            // Per-seat portrait (2026-09-01 fix). Three things changed here:
+            //  - getAvatar(i) now clamps instead of throwing IndexOutOfBoundsException on the
+            //    491-of-493 single-Avatar-frame atlases, which crashed every chained duel except
+            //    Goblin Pack the moment this scene opened;
+            //  - it can return null (umber_hulk.atlas has zero Avatar regions) - skip the wiring
+            //    and let the default AI avatar stand rather than NPE on the flip;
+            //  - the flip now happens on a COPY. The cached Sprite is shared process-wide
+            //    (CharacterSprite.load() addAll's Config's cached instances), so flipping it in
+            //    place made the portrait's facing ALTERNATE on every successive duel against the
+            //    same enemy type - and with the clamp, two seats sharing one frame would have
+            //    flipped it twice in a single fight.
+            Sprite seatAvatar = enemy.getAvatar(i);
+            if (seatAvatar != null) {
+                TextureRegion enemyAvatar = new TextureRegion(seatAvatar);
+                enemyAvatar.flip(true, false); //flip facing left
+                FSkin.getAvatars().put(enemyAvatarKey + i, enemyAvatar);
+                enemyPlayer.setAvatarIndex(enemyAvatarKey + i);
+            }
             aiPlayer.setPlayer(enemyPlayer);
             aiPlayer.setTeamNumber(currentEnemy.teamNumber);
             int enemyStartingLife = Math.round((float) currentEnemy.life * advPlayer.getDifficulty().enemyLifeFactor);
