@@ -75,6 +75,10 @@ public class RewardData implements Serializable {
     // (2026-08-15 review finding: this used to be stamped unconditionally inside the shared
     // helper, silently deduping ordinary enemy loot and unauthored dungeon chests too.)
     public transient boolean uniqueCards;
+    // Armory item-rarity venue (2026-08-31). NEVER set in JSON data - stamped only by
+    // EditionProgression.restrictShopRewardsForCurrentTown() onto its clones, so the per-slot
+    // rarity roll below can consult the plane's week/venue table. Null = use the flat odds.
+    public transient String armoryRarityVenue;
 
     public RewardData() { }
 
@@ -111,6 +115,8 @@ public class RewardData implements Serializable {
         sourceDeck       = rewardData.sourceDeck;
         minDate          = rewardData.minDate;
         uniqueCards      = rewardData.uniqueCards;
+        armoryRarityVenue = rewardData.armoryRarityVenue; // restrictToEditions() clones - without
+        // this line the stamp is dropped and the whole feature is a silent no-op.
     }
 
     /** Union-branch per-pick finishing (2026-08-15, extracted when the shop dedup split the pick
@@ -378,7 +384,11 @@ public class RewardData implements Serializable {
                         Set<String> alreadyPicked = new HashSet<>();
                         int slots = count + addedCount;
                         for (int i = 0; i < slots; i++) {
-                            String rolledRarity = rollWeightedItemRarity(rewardRandom);
+                            // Venue/week table first (2026-08-31); null means no table applies
+                            // and the historical flat odds below stand.
+                            String rolledRarity = forge.adventure.util.ArmoryRarity.roll(rewardRandom, armoryRarityVenue);
+                            if (rolledRarity == null)
+                                rolledRarity = rollWeightedItemRarity(rewardRandom);
                             List<String> rarityPool = new ArrayList<>(ItemListData.getItemNamesByRarity(rolledRarity));
                             rarityPool.removeAll(alreadyPicked); // same no-duplicate-within-one-roll guarantee as below
                             if (rarityPool.isEmpty())

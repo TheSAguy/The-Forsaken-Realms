@@ -223,6 +223,25 @@ public class TerritoryControl {
     // 9-tiles/day rate towns previously shared with AI castles/the Capitol. A per-day rate can't
     // express "1 tile per week" as a whole number, so town growth tracks each town's own last-grew
     // day (World.townLastGrowthDay) instead of a flat per-tick multiply - see its use below.
+    private static int capitolTargetCooldownDays() {
+        return Config.instance().getTuningData().capitolTargetCooldownDays;
+    }
+
+    /**
+     * May this color aim a mage at the player's Capitol today? (user spec 2026-08-31.)
+     * <p>
+     * Rolling window - "at least 7 days" - matching PointOfInterestChanges.canManuallyRerollShop()
+     * rather than the calendar-week idiom rerollSurcharge() uses, under which a day-6 hit could be
+     * followed by a day-8 hit and the player would feel two attacks in three days.
+     */
+    private static boolean capitolOffCooldown(World world, String color) {
+        int cooldown = capitolTargetCooldownDays();
+        if (cooldown <= 0)
+            return true;
+        Integer last = world.getCapitolTargetedDay(color);
+        return last == null || world.getCurrentDay() - last >= cooldown;
+    }
+
     private static int townExpansionDaysPerTile() {
         return Config.instance().getTuningData().townExpansionDaysPerTile;
     }
@@ -1009,6 +1028,35 @@ public class TerritoryControl {
             }
         }
 
+        // Capitol weekly lockout (user spec 2026-08-31) - filter site (a) of three.
+        //
+        // Deliberately AFTER the in-flight block above: that block self-waives when every
+        // attackable town is already targeted ("allowing a repeat target"), restoring the
+        // unfiltered list with the Capitol back in it. Filtering earlier would be undone there.
+        //
+        // The Capitol really is an ordinary distance-ranked candidate, despite what the comment
+        // further down claims: findAttackableTowns() admits it via isWastelandTown(), which is
+        // true for a "capital"-type POI carrying the BiomeColorless tag. So this filter is the
+        // load-bearing one; the two below only close the paths that call findCapitol() directly.
+        PointOfInterest lockedCapitol = TownRestoration.findCapitol();
+        if (lockedCapitol != null && !capitolOffCooldown(world, color) && attackable.contains(lockedCapitol)) {
+            List<PointOfInterest> withoutCapitol = new ArrayList<>(attackable);
+            withoutCapitol.remove(lockedCapitol);
+            if (withoutCapitol.isEmpty()) {
+                // Nothing else on the whole map is attackable. Rather than silently break the
+                // lockout, say so loudly - this should be unreachable while any wasteland town
+                // exists anywhere.
+                System.err.println("[TFR-CapitolCooldown] " + color + ": Capitol is the ONLY attackable target - "
+                        + "allowing it despite the cooldown (day " + world.getCurrentDay()
+                        + ", last targeted day " + world.getCapitolTargetedDay(color) + ")");
+            } else {
+                attackable = withoutCapitol;
+                System.out.println("[TFR-CapitolCooldown] " + color + ": Capitol excluded - targeted on day "
+                        + world.getCapitolTargetedDay(color) + ", today is day " + world.getCurrentDay()
+                        + ", cooldown " + capitolTargetCooldownDays() + " day(s)");
+            }
+        }
+
         PointOfInterest target = null;
         // Color Defeat forced-targeting (2026-08-14 user spec): a one-shot flag armed when a
         // neighboring color falls (see defeatColor()) forces this color's NEXT dispatch to hit a
@@ -1032,7 +1080,12 @@ public class TerritoryControl {
             // the intended uniform selection odds). Same dedup shape the pre-existing weighted-pick
             // Capitol handling below already uses via candidates.indexOf().
             PointOfInterest playerCapitol = TownRestoration.findCapitol();
-            if (playerCapitol != null && !playerTargets.contains(playerCapitol)
+            // Capitol weekly lockout - filter site (b). A forced attack does NOT punch through the
+            // cooldown: the flag stays armed when playerTargets ends up empty (see the comment
+            // above), so the guarantee is deferred rather than lost.
+            if (playerCapitol != null && !capitolOffCooldown(world, color))
+                playerTargets.remove(playerCapitol);
+            else if (playerCapitol != null && !playerTargets.contains(playerCapitol)
                     && !inFlightTargetIds.contains(playerCapitol.getID()))
                 playerTargets.add(playerCapitol);
             if (!playerTargets.isEmpty()) {
@@ -1090,6 +1143,11 @@ public class TerritoryControl {
             // attack by one of this color's mages doesn't get a second one rolled onto it.
             if (capitol != null && inFlightTargetIds.contains(capitol.getID()))
                 capitol = null;
+            // Capitol weekly lockout - filter site (c). Site (a) already removed it from
+            // `attackable`, so it cannot be among `candidates` by distance; this stops the War
+            // tier adding it back as a 6th candidate.
+            if (capitol != null && !capitolOffCooldown(world, color))
+                capitol = null;
             if (capitol != null && ColorReputation.getStatus(color) == ColorReputation.Status.WAR) {
                 float bonus = totalWeight / 19f; // solves bonus / (totalWeight + bonus) == 0.05
                 int existingIndex = candidates.indexOf(capitol);
@@ -1144,6 +1202,22 @@ public class TerritoryControl {
         mage.territoryTarget = target;
         mage.territoryColor = color;
         WorldStage.getInstance().spawnAt(mage, new Vector2(castle.getPosition()));
+
+        // Capitol weekly lockout (user spec 2026-08-31): stamp the moment the mage is provably
+        // launched. Placed AFTER the spawn, because dispatch() can still abort between choosing a
+        // target and getting here (the enemyData == null return above, reachable when a Mythic
+        // roll finds no grandmaster in this color's biome) - an aborted dispatch must not burn the
+        // color's week. And placed at dispatch rather than at resolution, because the spec counts
+        // the attack "regardless if the mage wins, loses, gets killed": the mage now walks to the
+        // Capitol over several in-game days and can be duelled en route without being stopped, so
+        // a resolution-time stamp would let this color re-target while its first mage was still
+        // on the road.
+        if (TownRestoration.CAPITOL_POI_NAME.equals(target.getData().name)) {
+            world.setCapitolTargetedDay(color, world.getCurrentDay());
+            System.out.println("[TFR-CapitolCooldown] " + color + ": dispatched at the Capitol on day "
+                    + world.getCurrentDay() + " - locked out until day "
+                    + (world.getCurrentDay() + capitolTargetCooldownDays()));
+        }
 
         // Diagnostic logging standard (user request 2026-08-13) - the outcome line below only
         // ever shows the WINNING candidate; without this, the weighting/reputation math above

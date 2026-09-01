@@ -210,6 +210,32 @@ public class World implements Disposable, SaveFileContent {
     // only writer, same as defeatedColors itself.
     private final java.util.Map<String, Integer> colorDefeatDay = new java.util.HashMap<>();
 
+    /**
+     * Per-color lockout on attacking the player's Capitol: color -> the in-game day that color
+     * last DISPATCHED a mage at it (user spec 2026-08-31: "The AI can only target the Player's
+     * capitol once a week. From each color. So 5 total attacks per week, 1 per AI player... if the
+     * capitol is Targeted, regardless if the mage wins, loses, gets killed, the Capitol can't be
+     * selected again from that color for at least 7 days").
+     * <p>
+     * Stamped at DISPATCH, never at resolution - that is what makes "regardless of outcome" true.
+     * A mage spawns at its castle and physically walks to the target over several in-game days,
+     * and the player can duel it en route without stopping it, so a resolution-time stamp would
+     * let a color re-target the Capitol while its first mage was still walking.
+     * <p>
+     * Lives on World rather than PointOfInterestChanges (which is per-POI, while this is
+     * per-COLOR) or AdventurePlayer (which deliberately survives New Game+). Same shape and same
+     * save/load/reset treatment as colorDefeatDay above.
+     */
+    private final java.util.Map<String, Integer> capitolTargetedDay = new java.util.HashMap<>();
+
+    public void setCapitolTargetedDay(String color, int day) {
+        capitolTargetedDay.put(color, day);
+    }
+
+    public Integer getCapitolTargetedDay(String color) {
+        return capitolTargetedDay.get(color);
+    }
+
     public void setColorDefeatDay(String color, int day) {
         colorDefeatDay.put(color, day);
     }
@@ -481,6 +507,14 @@ public class World implements Disposable, SaveFileContent {
             colorDefeatDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("colorDefeatDay"));
         }
 
+        // Absent key = empty map = no color on cooldown, which is the correct migration for a save
+        // written before this existed.
+        capitolTargetedDay.clear();
+        if (saveFileData.containsKey("capitolTargetedDay")) {
+            //noinspection unchecked
+            capitolTargetedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("capitolTargetedDay"));
+        }
+
         townTerritoryRadius.clear();
         if (saveFileData.containsKey("townTerritoryRadius")) {
             //noinspection unchecked
@@ -579,6 +613,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("defeatedColors", defeatedColors);
         data.storeObject("forcedPlayerTargetPending", forcedPlayerTargetPending);
         data.storeObject("colorDefeatDay", colorDefeatDay);
+        data.storeObject("capitolTargetedDay", capitolTargetedDay);
         data.storeObject("townTerritoryRadius", townTerritoryRadius);
         data.storeObject("townLastGrowthDay", townLastGrowthDay);
         data.storeObject("colorEditionShards", colorEditionShards);
@@ -835,6 +870,7 @@ public class World implements Disposable, SaveFileContent {
             defeatedColors.clear();
             forcedPlayerTargetPending.clear();
             colorDefeatDay.clear();
+            capitolTargetedDay.clear();
             townTerritoryRadius.clear();
             townLastGrowthDay.clear();
             colorEditionShards.clear(); // fresh world re-shards editions in generateNew(), not a stale split

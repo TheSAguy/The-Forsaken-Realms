@@ -43,6 +43,7 @@ public class Config {
     private ConfigData configData;
     private TuningData tuningData;
     private SpawnTierWeightData spawnTierWeightData;
+    private forge.adventure.data.ArmoryRarityData armoryRarityData;
     private final String[] adventures;
     private SettingData settingsData;
     private String Lang = "en-us";
@@ -211,6 +212,22 @@ public class Config {
                 spawnTierWeightData = null;
             }
         }
+
+        // Armory item-rarity weights by venue and week (2026-08-31 user spec) - same plane-local /
+        // fallback-to-common pattern. Absent or unparseable leaves armoryRarityData null, which
+        // ArmoryRarity treats as "use the flat Common 60 / Uncommon 30 / Rare 8 / Mythic 2".
+        FileHandle armoryRarityFile = new FileHandle(prefix + "config tables/armory_rarity.json");
+        if (!armoryRarityFile.exists())
+            armoryRarityFile = new FileHandle(commonPrefix + "config tables/armory_rarity.json");
+        if (armoryRarityFile.exists()) {
+            try {
+                armoryRarityData = new Json().fromJson(forge.adventure.data.ArmoryRarityData.class, armoryRarityFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-ArmoryRarity] armory_rarity.json failed to load - falling back to the flat "
+                        + "Common 60 / Uncommon 30 / Rare 8 / Mythic 2 with no time gating: " + e);
+                armoryRarityData = null;
+            }
+        }
     }
 
     private String resPath() {
@@ -236,6 +253,10 @@ public class Config {
 
     public TuningData getTuningData() {
         return tuningData;
+    }
+
+    public forge.adventure.data.ArmoryRarityData getArmoryRarityData() {
+        return armoryRarityData;
     }
 
     public SpawnTierWeightData getSpawnTierWeightData() {

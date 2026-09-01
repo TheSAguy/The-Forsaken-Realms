@@ -50,7 +50,7 @@
 
     // Ante re-roll: Shard cost of the first re-roll in a duel, and how much each
     // additional re-roll in the same duel multiplies the cost (1.5 = +50%).
-    "anteRerollBaseShardCost": 50,
+    "anteRerollBaseShardCost": 10,
     "anteRerollEscalationRate": 1.5,
     // Ante buy-back price = this multiplier x the card's normal sell value...
     "anteBuyBackMultiplier": 1.5,
@@ -98,5 +98,9 @@
     // user request). Their shops are still gated to editions the "neutral" shard has access to,
     // same as every other unrestored neutral town's shop - see TownRestoration.
     // seedFunctioningNeutralTowns().
+    // Per-color lockout on attacking the player's Capitol, in in-game days (user spec 2026-08-31:
+    // "once a week... from each color"). Rolling: a dispatch on day 6 blocks that color until 13.
+    // 0 disables the cooldown.
+    "capitolTargetCooldownDays": 7,
     "functioningNeutralTownCount": 20
 }

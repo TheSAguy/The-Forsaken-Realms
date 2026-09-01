@@ -156,5 +156,9 @@ public class TuningData {
     // Functioning Neutral Towns (2026-08-24 user spec, raised 10 -> 20 same day after the first
     // playtest found one: "that's a big map"). How many neutral ("Waste Town") POIs get
     // pre-seeded as functioning at world-gen - see TownRestoration.seedFunctioningNeutralTowns().
+    // Per-color lockout on attacking the player's Capitol, in in-game days (user spec 2026-08-31:
+    // "once a week... from each color"). Rolling window, not a calendar week: a dispatch on day 6
+    // blocks that color until day 13. 0 disables the cooldown entirely.
+    public int capitolTargetCooldownDays = 7;
     public int functioningNeutralTownCount = 20;
 }

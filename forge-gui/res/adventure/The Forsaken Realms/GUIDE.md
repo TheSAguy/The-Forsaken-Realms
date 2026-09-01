@@ -18,6 +18,7 @@ much or as little as you want before diving in.
 7. [Dungeon Guide, by Color](#dungeon-guide-by-color)
 8. [Item Guide](#item-guide)
 9. [Notes on Difficulty](#notes-on-difficulty)
+10. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
 
 ---
 
@@ -33,7 +34,7 @@ duel loop, not a replacement for it.
 doesn't wait for you, and losses have teeth. Digging yourself out is the fun — but go in knowing
 the early game is meant to be a fight.
 
-*The game is currently tested on Windows PC only.*
+*Windows, macOS and Linux launchers all ship. An Android build is available as a community test - it is playable but has had far less testing than the desktop builds.*
 
 ## Starting Out
 
@@ -103,9 +104,10 @@ for good measure.
 
 ### Wood & Stone
 
-Beyond Gold and Shards, you'll collect **Wood** and **Stone** - dedicated resources fed by Forts
-(wood) and Caves/dungeons (stone), and by the buildings you construct once you have a town of your
-own. They're spent on building and upgrading structures, and on the Capitol upgrade itself.
+Beyond Gold and Shards, you'll collect **Wood** and **Stone**. They come from winning duels,
+from world-map resource sparkles and dungeon pickups, from chests and quest rewards, and - once
+you own a town - as steady weekly income from a Lumber Mill or Stone Mine. They're spent on
+building and upgrading structures, and on the Capitol upgrade itself.
 
 ### Buildings & the Economy
 
@@ -121,8 +123,13 @@ rare items. Guards can be hired to defend a town, paid weekly out of your own co
 ### Progressive Set Unlocks
 
 Not every card set is available from turn one. Editions unlock gradually as you play (scaled by
-your starting race and difficulty), and you can actively research new editions at an Archaeologist
-or through play to speed things up.
+your starting race and difficulty), and the **Research Lab** in your Capitol lets you formally
+unlock one you have collected enough of. Research takes a week per edition. (Don't confuse this
+with the **Archaeologist**, who runs week-long expeditions for cards and items - a different
+building doing a different job.)
+
+*Full detail — what you start with, where the other sets live, and exactly how to unlock them —
+in [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).*
 
 ### Dungeons That Actually Rotate
 
@@ -274,9 +281,263 @@ best-of-three) are tuned to be a real test even with a well-built deck. If you'r
 specific new boss unfair, it's worth checking whether an easier difficulty changes that fight's
 deck tier before assuming it's just you.
 
+
 ---
 
-*This guide covers the state of The Forsaken Realms as of 2026-08-21. See `MOD_CHANGELOG.md` in
+## Appendix: Mechanics in Detail
+
+Everything above is the tour. This is the reference — the systems this plane adds that stock
+Adventure mode has no equivalent for, written out properly so you can look one up mid-game rather
+than guess. Nothing here is required reading.
+
+### Color Reputation, in Detail
+
+Five factions, one shared pool. **Your standing with the five colors always sums to zero** — the
+five are a wheel, and every action pushes one way and pulls the others. You cannot be everyone's
+friend; picking allies is the point.
+
+**The wheel.** Each color has two allies and two enemies:
+
+| Color | Allies | Enemies |
+|---|---|---|
+| White | Green, Blue | Black, Red |
+| Blue | White, Black | Red, Green |
+| Black | Blue, Red | Green, White |
+| Red | Black, Green | White, Blue |
+| Green | Red, White | Blue, Black |
+
+**What moves it.** Beating an enemy in a duel shifts the whole wheel relative to that enemy's
+color(s):
+
+- The color you beat: **−2**
+- Its two allies: **−1** each
+- Its two enemies: **+2** each
+
+So killing Black creatures makes Green and White like you, and annoys Blue and Red. A **boss**
+counts triple; a **territory attack mage** counts double. A multicolor enemy applies half the
+pattern for each of its colors. Your **starting deck** seeds the wheel the same way, which is why
+you begin already liked by some and disliked by others.
+
+**The five tiers**, and what each actually does:
+
+| Standing | Range | Card prices | Attacks on you | Other |
+|---|---|---|---|---|
+| **Partner** | 80+ | **30% off** | 25% less likely | Free Inn overheal; Rare blueprints unlocked |
+| **Happy** | 30 to 79 | 15% off | 5% less likely | Spellsmith opens; Uncommon blueprints unlocked |
+| **Neutral** | −29 to 29 | — | — | Blueprints purchasable at full price |
+| **Unhappy** | −30 to −79 | 25% dearer | 5% more likely | No blueprints sold |
+| **War** | −80 or worse | **40% dearer** | 25% more likely | Towns barred entirely; capitals charge a 500 gold toll; no Inn healing |
+
+Two consequences worth planning around. At **War** you are locked out of that color's towns
+completely — you can still buy your way into its capital, but at a toll and at the worst prices in
+the game. And at **Partner** that color's Spellsmith, its Rare shop blueprints and a free Inn
+overheal all open at once, which is a genuinely different game from Neutral.
+
+**Town reputation is a separate thing.** Each individual town also remembers how you've treated
+it, and that adjusts prices there by up to 10% either way. It goes up when you restore the town or
+complete work for it, and it is per-town — unlike color reputation, it is not zero-sum and costs
+you nothing elsewhere.
+
+### Shop Blueprints — learning what you're allowed to build
+
+Card shops have a **type** — Goblins, Instants, Azorius, Dragons and so on, around **215** of them
+— and the type decides what that shop sells. In this plane you can only build a type you actually
+know, so your towns are shaped by which blueprints you've collected.
+
+**What you start with, and why.** Five types, drawn from who you are:
+
+- **Three from your chosen color** — its Common-tier trio. Pick Red and you start able to build
+  the three basic Red shops.
+- **Two from your race** — its tribal shops. An Undead start knows Skeletons and Zombies.
+
+That's deliberately a weak opening hand. Your color's *Uncommon* trio and its Rare capstone are
+withheld, so there is an obvious ladder to climb within your own color before you ever look
+outward.
+
+**Where the other ~210 went.** Nowhere — they all exist, and the rebuild menu shows you every one
+of them, greyed out, with a live count of how many cards each could stock for you. Nothing is
+hidden; you can see exactly what you're missing and decide what's worth hunting.
+
+**Three ways to learn a new one:**
+
+1. **Buy the shop you're standing in.** Walk into any shop whose type you don't know — including
+   in a rival AI capital — and there's a **Buy Blueprint** button. Crawling other people's towns
+   is the main acquisition loop, and it's why exploring is worth doing even when you're not
+   shopping.
+2. **Find one.** Mystery pickups and chests each carry a **25%** chance of a blueprint, delivered
+   as a card you turn over.
+3. **Destroy and rebuild** — a rebuilt shop rerolls among types you already know, so this
+   reshuffles rather than expands.
+
+- **The rebuild menu shows everything**, sorted **Available → Built → Locked**. Locked types are
+  greyed rather than hidden, so you can see what exists to hunt for. Each entry shows how many
+  cards it could actually stock for you right now — a number that grows as you research more sets.
+- **Buy a blueprint where you find it.** Walk into any shop whose type you don't know — including
+  in a rival AI capital — and there's a **Buy Blueprint** button. That's the main way to learn new
+  types: exploring other people's towns.
+- **Blueprints also drop**, at 25%, from Mystery pickups and chests. A drop arrives as a card you
+  turn over, like any other reward.
+- **Prices are in Shards, by tier**: 20 Common, 40 Uncommon, 100 Rare.
+- **Reputation gates the rival capitals.** At one of the five colors' towns you need to be at
+  least **Neutral** with them to buy anything at all, **Happy** for an Uncommon blueprint, and
+  **Partner** for a Rare one. Standing also discounts the price — 30% off at Partner, 15% at
+  Happy. Neutral towns have no standing to check, so they sell at the flat price.
+- **One type per town.** A type already standing in a town can't be built there again, so each
+  town ends up with a spread rather than six copies of your favourite.
+- The five **Cartographer's Guild** basic-land shops are outside this system entirely — no
+  blueprint needed, and none is ever sold or dropped for them.
+
+### The Armory — what's on the shelf, and when
+
+Only **your own towns and your Capitol** have a working Armory you can develop. Neutral towns have
+one too, though roughly a third of them had theirs wrecked before you ever arrived, permanently.
+AI color *towns* have no Armory at all; the five AI *capitals* have equipment shops that work
+quite differently (fixed hand-picked stock, no rarity roll).
+
+Your Armory rolls each of its **6 slots independently** (8 once it's Level 2) — so it's six
+separate chances at something good, not one shop-wide rarity.
+
+**Stock improves over the first month.** The odds by week:
+
+| | Week 1 | Week 2 | Week 3 | Week 4+ |
+|---|---|---|---|---|
+| **Your Capitol** | 60/30/0/0 | 60/30/8/0 | 60/30/8/2 | **45/35/16/4** |
+| **Your towns** | 60/30/0/0 | 60/30/8/0 | 60/30/8/0 | 60/30/8/2 |
+| **Neutral towns** | 60/30/0/0 | 60/30/8/0 | 60/30/8/0 | 60/30/8/0 |
+
+*(Common/Uncommon/Rare/Mythic.)* In plain terms: **no Rare anywhere in week 1, no Mythic anywhere
+until week 3**, and then only in your Capitol. Your own towns catch up at week 4, when the Capitol
+also sharpens considerably. **Neutral towns never sell Mythics**, ever — that's what makes owning
+your own Capitol worth the trouble.
+
+Other Armory notes:
+- **Upgrading to Level 2** costs 150 Stone and takes the shelf from 6 items to 8. Player-owned
+  only — neither an AI nor a neutral Armory can ever be upgraded.
+- **Your first Torch is guaranteed.** A player-owned Armory keeps one in stock until you actually
+  buy one, so you'll often see 7 items rather than 6 early on.
+- **Everything refreshes weekly** on its own, everywhere. **Re-roll Inventory** (a paid, once-a-week
+  override) is player-owned only.
+- Prices are 25% cheaper in your own towns and 25% dearer in an AI color town, before reputation.
+
+### Card Sets: What You Have, and How to Get the Rest
+
+Not every card set is available to you, and this is the system most worth understanding early.
+
+**What you start with.** Each race is tied to four thematic editions. You begin with a random
+subset of *those four*, sized by difficulty:
+
+| Difficulty | Starting editions |
+|---|---|
+| Easy | 4 (all of them) |
+| Normal | 3 |
+| Hard | 2 |
+| Insane | 1 |
+
+Two runs as the same race on Hard can start with different sets. This is why race choice matters
+beyond flavour, and why the race-select `?` button is worth reading before you commit.
+
+**Where the other sets went.** Everything else is dealt out among six owners — the five colors and
+a neutral pool. Those aren't locked away in the abstract: they decide **what the shops sell**.
+
+- **Your own towns and Capitol** stock cards only from the editions *you* have unlocked.
+- **An AI color's town** stocks cards from that color's own share.
+- **A neutral town** stocks from the neutral pool.
+
+Your race's four editions are carved out of the AI shares deliberately, so they stay yours.
+
+The practical consequence: **travelling is how you shop.** If you want cards from a set you have
+not unlocked, you buy them in whichever faction's towns hold that set — which is exactly where
+your standing with that color starts to matter.
+
+**How to unlock a set properly.** The **Research Lab** in your Capitol is the formal route:
+
+1. **Collect the cards first.** A set becomes researchable once you own **10%** of it (minimum 5
+   cards). You'll get a popup the moment you cross that line. The Lab lists every edition with
+   your progress as `(owned/needed)`.
+2. **Pay 100 Shards** and start the research.
+3. **Wait a week.** One edition at a time — you can't research two at once.
+
+Once researched, that edition joins your unlocked pool permanently: your own shops start stocking
+it, and it becomes legal in your own towns' Inn tournaments.
+
+**Two things that don't wait for research.** Cards you own are always yours to play regardless of
+which sets are unlocked — the restriction governs what shops *sell*, never what your deck may
+*contain*. And loot, chests and enemy drops follow the territory they're found in, not your unlock
+list, so exploring hostile ground is a real way to pick up cards you couldn't buy.
+
+### The Bronze Challenge Coin
+
+You start with three, and they have two separate uses.
+
+1. **Free entry to a Jumpstart tournament** at an Inn.
+2. **Ante ransom.** Lose an ordinary duel and you can hand the winner a coin instead of losing
+   your anted cards — you get every anted card back *and* keep your gold. Beat that same enemy
+   later and you take the coin back as part of the reward.
+
+**One coin per enemy.** If a Fox already holds a coin of yours, the option won't be offered again
+against Foxes until you've won it back. (Bosses, Arena fights and tournament matches never take
+one at all.)
+
+The gold coin is a free draft entry; the silver a free sealed entry.
+
+### Inn Tournaments
+
+Every Inn runs one, refreshed on a cooldown. The entry fee scales with the town's opinion of you.
+
+- **Your own towns run on your own stock**: the card pool is your race's editions plus everything
+  you've researched. It widens as you unlock more sets, and a tournament you haven't entered yet
+  will re-roll itself when your pool changes. (If your pool is still too narrow to form a legal
+  draft block, the Inn falls back to the wider pool rather than offering nothing.)
+- **AI and neutral Inns** draw from the broader shared pool instead — which is a real reason to
+  travel if you want to draft sets you don't own.
+- **Re-roll** the offered tournament for 15 Shards; it's guaranteed to come back different.
+- Tournament wins **don't** count toward your win/loss record, and don't push up the enemy tiers
+  you meet in the world.
+- A **ruined town's** Inn runs tournaments and nothing else — no card sales, no Potion of False
+  Life.
+
+### Territory, and Defending What's Yours
+
+The five colors expand their borders over time and dispatch attack mages at towns — yours
+included. Each color sends one every 2–5 days.
+
+- **Your Capitol can only be targeted once a week by each color.** Once a color aims a mage at it,
+  that color can't pick it again for 7 days — win, lose, or kill the mage on the road. With five
+  colors that's a hard ceiling of five Capitol attacks a week.
+- Mages **walk** to their target, so you can intercept one in the field before it arrives.
+- **Guards** you've hired fight first. If they fall, you defend your Capitol in person in a forced
+  best-of-three — **and losing that ends your run.**
+- **Neutral towns defend themselves**: 15% base, 20% if the town still has a working Armory.
+- Your standing with a color changes how likely it is to come for you — 25% less at Partner, 25%
+  more at War.
+
+### New Game+
+
+A New Game+ is a **new game plus your collection**. You keep cards, decks, equipment, inventory
+and every resource — gold, shards, wood and stone. Everything else resets to a fresh run: shop
+blueprints, researched editions, research in progress, quests and story flags, color reputation,
+statistics, blessings, and any Bronze Coins enemies were holding. Your challenge-coin purse is
+topped back up to 1 gold / 1 silver / 3 bronze, keeping any surplus you'd hoarded.
+
+Two things worth knowing before you press it: your **max life returns to the difficulty's
+starting value** (accumulated bonuses are not carried), and an **in-progress tournament is
+discarded**, including cards you've drafted but not yet banked.
+
+### Smaller Things Worth Knowing
+
+- **Hold Z** to move at 1.5x on the overworld. Time moves faster too.
+- **Selling** cards pays a flat 25% of value; the town's opinion of you adjusts it.
+- The **blue dot** in the quest list marks the quest you're currently tracking.
+- Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
+  it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.
+- Settings has an **"avoid restricted edition art"** toggle (on by default) that steers card art
+  away from the black-and-white printings.
+- The game only truly ends when you hold **no towns and no neutral town exists anywhere** — or if
+  you lose a Capitol defense.
+
+---
+
+*This guide covers the state of The Forsaken Realms as of 2026-08-31. See `MOD_CHANGELOG.md` in
 the repository for the full history of how the mod got here, if you're curious.*
 
 ## Support & Community

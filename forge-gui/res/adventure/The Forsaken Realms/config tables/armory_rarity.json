@@ -1,0 +1,38 @@
+// Armory item-rarity weights by venue and in-game week (user spec 2026-08-31).
+//
+// "For the first 2 weeks, I want no Mythical items to appear and for the first week, no Rare.
+//  After week 2, Mythical can appear in Player Capitol, but not towns. From week 4 no restrictions
+//  to towns. Keep the No Mythical for Neutral towns though. Let's also update the capitol's odds
+//  a little, from Common 60 / Uncommon 30 / Rare 8 / Mythic 2 in week 2, to Common 45 /
+//  Uncommon 35 / Rare 16 / Mythic 4, starting week 4."
+//
+// The gate and the odds are the same mechanism: a banned rarity is simply a weight of 0. That is
+// why there is no separate "allowed rarities" list - a zero-weight tier can never be rolled, so
+// no slot is ever deleted or re-rolled, and every Armory keeps its full 6 (or 8 at Level 2) items.
+//
+// Weeks are 1-indexed and 7 days long: week 1 = days 1-7, week 2 = days 8-14, week 4 = day 22 on.
+// weekMax -1 means "this row onwards, forever". Weights do not have to sum to 100 - the roller
+// normalizes by each row's own total.
+//
+// Venues: CAPITOL = the player's Capitol. PLAYER_TOWN = any town the player has restored.
+// NEUTRAL_TOWN = a functioning neutral town. AI towns never reach this table - their Armory-family
+// shops use hand-written fixed item lists and no rarity roll at all.
+{
+  "venueBrackets": {
+    "CAPITOL": [
+      { "weekMin": 1, "weekMax":  1, "common": 60, "uncommon": 30, "rare":  0, "mythic": 0 },
+      { "weekMin": 2, "weekMax":  2, "common": 60, "uncommon": 30, "rare":  8, "mythic": 0 },
+      { "weekMin": 3, "weekMax":  3, "common": 60, "uncommon": 30, "rare":  8, "mythic": 2 },
+      { "weekMin": 4, "weekMax": -1, "common": 45, "uncommon": 35, "rare": 16, "mythic": 4 }
+    ],
+    "PLAYER_TOWN": [
+      { "weekMin": 1, "weekMax":  1, "common": 60, "uncommon": 30, "rare":  0, "mythic": 0 },
+      { "weekMin": 2, "weekMax":  3, "common": 60, "uncommon": 30, "rare":  8, "mythic": 0 },
+      { "weekMin": 4, "weekMax": -1, "common": 60, "uncommon": 30, "rare":  8, "mythic": 2 }
+    ],
+    "NEUTRAL_TOWN": [
+      { "weekMin": 1, "weekMax":  1, "common": 60, "uncommon": 30, "rare":  0, "mythic": 0 },
+      { "weekMin": 2, "weekMax": -1, "common": 60, "uncommon": 30, "rare":  8, "mythic": 0 }
+    ]
+  }
+}

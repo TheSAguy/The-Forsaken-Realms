@@ -58,6 +58,14 @@
     <property name="spawn" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="62" template="../../../../common/maps/obj/shop.tx" x="361" y="370">
+   <properties>
+    <property name="commonShopList" value="GreenEquipment"/>
+    <property name="hasSign" type="bool" value="true"/>
+    <property name="noRestock" type="bool" value="true"/>
+    <property name="signYOffset" type="float" value="0"/>
+   </properties>
+  </object>
   <object id="63" template="../../../../common/maps/obj/shop.tx" x="216" y="290">
    <properties>
     <property name="commonShopList" value="GreenItems"/>

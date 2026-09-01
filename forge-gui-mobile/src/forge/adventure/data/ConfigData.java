@@ -45,6 +45,10 @@ public class ConfigData {
     public boolean dungeonRotationEnabled = false;
     public boolean sideQuestTimerEnabled = false;
     public boolean resourceLootVarietyEnabled = false;
+    // Time- and venue-gated Armory item rarity (user spec 2026-08-31) - see the plane's
+    // "config tables/armory_rarity.json". Plane-opt-in like every other mod feature: stock planes
+    // keep the flat Common 60 / Uncommon 30 / Rare 8 / Mythic 2 roll.
+    public boolean armoryRarityGatingEnabled = false;
     public boolean editionProgressionEnabled = false;
     // 2026-08-12 review: these three shipped without flags and leaked into stock planes
     // (Shandalar's Equipment/*Items shops matched isArmoryShop, common-town multi-name shop

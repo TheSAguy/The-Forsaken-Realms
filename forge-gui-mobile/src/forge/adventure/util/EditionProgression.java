@@ -411,7 +411,29 @@ public class EditionProgression {
         System.out.println("[TFR-ShopEditions] shop=" + shopNameForLogging + " town=\"" + townName + "\""
                 + " owner=" + ownerLabel + " reason=" + reason + " trigger=" + trigger
                 + " restriction(" + editionRestriction.size() + ")=" + editionRestriction);
-        return restrictToEditions(source, editionRestriction, true);
+        List<RewardData> restricted = restrictToEditions(source, editionRestriction, true);
+
+        // Armory item-rarity venue stamp (user spec 2026-08-31). This is the single stamping
+        // point because all six shop-generation call sites route through this method, and it
+        // already holds both the town's changes and the shop name. The clones are fresh, so
+        // mutating them here cannot leak into the shared ShopData originals.
+        //
+        // Only Armory-family shops carry a venue; ordinary card shops never roll an item rarity,
+        // and the AI capitals' Armory shops use hand-written fixed item lists that never reach
+        // the roll at all (classifyVenue returns null for an AI town anyway).
+        if (EconomyBuildings.isArmoryShopName(shopNameForLogging)) {
+            String venue = ArmoryRarity.classifyVenue(changes);
+            if (venue != null) {
+                for (RewardData clone : restricted)
+                    if (clone != null)
+                        clone.armoryRarityVenue = venue;
+                System.out.println("[TFR-ArmoryRarity] shop=" + shopNameForLogging + " town=\"" + townName + "\""
+                        + " venue=" + venue + " day=" + world.getCurrentDay()
+                        + " week=" + SpawnTierWeighting.currentWeek(world)
+                        + " trigger=" + trigger + " weights=" + ArmoryRarity.describe(venue));
+            }
+        }
+        return restricted;
     }
 
     /**
