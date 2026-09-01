@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.tommyettinger.textra.TextraButton;
@@ -472,7 +473,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     currentMob.resetCollisionHeight();
                     float deathDuration = currentMob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 0.3f);
                     startPause(deathDuration, () -> {
-                        RewardScene.instance().loadRewards(currentMob.getRewards(), RewardScene.Type.Loot, null);
+                        Array<Reward> loot = currentMob.getRewards();
+                        // Bronze Coin ransom reclaim as a visible loot tile (user request
+                        // 2026-09-01) - see AdventurePlayer.appendCoinRansomReward. Keyed on the
+                        // RAW name, matching what DuelScene stamped the mark with.
+                        Current.player().appendCoinRansomReward(loot, currentMob.getName());
+                        RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
                         WorldStage.this.removeEnemy(currentMob);
                         AdventureQuestController.instance().updateQuestsWin(currentMob);
                         AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
@@ -1066,7 +1072,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }
         }
         if (enemyData == null) {
-            enemyData = data.getEnemy(difficultyFactor);
+            enemyData = pickNonClusteringEnemy(data, difficultyFactor);
             if (enemyData != null) {
                 // Diagnostic-only (user request 2026-08-10) - the bulk of the log; see
                 // MOD_CHANGELOG.md's "Playtest logging" entry for how to summarize this instead of
@@ -1114,6 +1120,82 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
         }
         else spawn(enemyData);
+    }
+
+    /**
+     * The ordinary weighted biome pick, re-rolled while it keeps landing on an enemy the player
+     * already has too many of standing next to them.
+     * <p>
+     * User report 2026-09-01: "I found 3 instances where there were multiples of the exact same
+     * enemy. There was 3 Khenra Warriors close to each other" - confirmed in forge.log, which
+     * shows three consecutive {@code [TFR-Spawn] Khenra Warrior} lines in the same week and
+     * territory. Nothing was broken: {@code BiomeData.getEnemy()} is a memoryless weighted draw
+     * over the biome's list, so a common entry naturally comes up several rolls running, and no
+     * code had ever looked at what was already on screen.
+     * <p>
+     * Deliberately a RE-ROLL, never a skipped spawn. Refusing to spawn would silently thin the
+     * world wherever a biome list is short, and would be invisible in play - a rarer bug than the
+     * one being fixed but a worse one. After {@code sameEnemySpawnRerolls} attempts the duplicate
+     * is spawned regardless, so a one-entry biome list still populates normally.
+     * <p>
+     * Only the ORDINARY pick routes through here. War-tier bosses (already ~4% of eligible rolls)
+     * and quest-tag extra spawns are authored encounters and keep spawning as authored.
+     *
+     * @return the chosen enemy, or null if the biome list itself yields nothing
+     */
+    private EnemyData pickNonClusteringEnemy(BiomeData data, float difficultyFactor) {
+        EnemyData pick = data.getEnemy(difficultyFactor);
+        ConfigData config = Config.instance().getConfigData();
+        if (pick == null || config == null || !config.spawnDuplicateLimitEnabled)
+            return pick;
+        TuningData tuning = Config.instance().getTuningData();
+        int limit = tuning == null ? 2 : tuning.maxSameEnemyNearby;
+        int rerolls = tuning == null ? 4 : tuning.sameEnemySpawnRerolls;
+        float radius = tuning == null ? 220f : tuning.sameEnemyNearbyRadius;
+        if (limit <= 0 || rerolls <= 0)
+            return pick;
+        for (int attempt = 0; attempt < rerolls; attempt++) {
+            int nearby = countSameEnemyNearby(pick.getName(), radius);
+            if (nearby < limit)
+                return pick;
+            EnemyData retry = data.getEnemy(difficultyFactor);
+            // A null retry means the list stopped yielding - keep what we already had rather than
+            // losing the spawn entirely.
+            if (retry == null)
+                break;
+            System.out.println("[TFR-SpawnDedupe] " + pick.getName() + " already has " + nearby
+                    + " within " + radius + " units (limit " + limit + ") - re-rolled to "
+                    + retry.getName() + " (attempt " + (attempt + 1) + "/" + rerolls + ")");
+            pick = retry;
+        }
+        int finalNearby = countSameEnemyNearby(pick.getName(), radius);
+        if (finalNearby >= limit)
+            System.out.println("[TFR-SpawnDedupe] gave up after " + rerolls + " re-rolls - spawning "
+                    + pick.getName() + " anyway with " + finalNearby + " already nearby (biome '"
+                    + data.name + "' may not have enough distinct entries at this difficulty)");
+        return pick;
+    }
+
+    /** Live roaming enemies of this exact name within {@code radius} world units of the player.
+     *  Keyed on the RAW catalog name, not the tiered display name - two different tiers of the
+     *  same creature are what the player sees as "the same enemy". */
+    private int countSameEnemyNearby(String enemyName, float radius) {
+        if (enemyName == null)
+            return 0;
+        float radiusSq = radius * radius;
+        float px = player.getX();
+        float py = player.getY();
+        int count = 0;
+        for (Pair<Float, EnemySprite> entry : enemies) {
+            EnemySprite other = entry.getValue();
+            if (other == null || other.getData() == null || !enemyName.equals(other.getData().getName()))
+                continue;
+            float dx = other.getX() - px;
+            float dy = other.getY() - py;
+            if (dx * dx + dy * dy <= radiusSq)
+                count++;
+        }
+        return count;
     }
 
     private static BiomeData findBiomeByName(List<BiomeData> biomes, String name) {

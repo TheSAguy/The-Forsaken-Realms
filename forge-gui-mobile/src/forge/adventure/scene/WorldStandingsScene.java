@@ -36,6 +36,10 @@ public class WorldStandingsScene extends UIScene {
 
     private final Table standingsList;
     private final Table chartArea;
+    /** Where PlayerStatisticScene's own Back button should return to - the town/world scene the
+     *  player opened this page from, NOT this page. Same contract as QuestLogScene's identically
+     *  named field, and the reason instance() now takes a parameter (2026-09-01). */
+    private Scene lastGameScene;
 
     private WorldStandingsScene() {
         // Portrait variant added 2026-08-30 (Android tester screenshot: the standings page had
@@ -57,6 +61,17 @@ public class WorldStandingsScene extends UIScene {
         // same scrollable-page pattern Guard Info uses) since this page runs far longer than the
         // wrapped-Dialog wiki popups above can hold.
         ui.onButtonPress("modDetailsInfo", this::showModDetails);
+        // Player statistics (user request 2026-09-01): the same Status button the quest log
+        // already carries, duplicated here so the two "how am I doing" pages link to each other
+        // instead of both needing a trip back through the HUD. Identical name/binding as
+        // common/ui/quests.json's, so the Q hotkey works the same on both pages, and it hands
+        // PlayerStatisticScene the same lastGameScene the quest log does - so its Back returns to
+        // the town/world you came from, not to this page.
+        ui.onButtonPress("status", this::status);
+    }
+
+    private void status() {
+        Forge.switchScene(PlayerStatisticScene.instance(lastGameScene), true);
     }
 
     // Reputation tier table (2026-08-11, round 8) - values cross-checked directly against
@@ -201,7 +216,16 @@ public class WorldStandingsScene extends UIScene {
     private static WorldStandingsScene object;
 
     public static WorldStandingsScene instance() {
+        return instance(null);
+    }
+
+    /** @param lastGameScene the scene the player opened this page from, forwarded to
+     *  PlayerStatisticScene by the Status button so its Back lands somewhere sensible. Null is
+     *  accepted (PlayerStatisticScene falls back to GameScene) - the no-arg overload above keeps
+     *  any caller that does not care compiling unchanged. */
+    public static WorldStandingsScene instance(Scene lastGameScene) {
         object = new WorldStandingsScene();
+        object.lastGameScene = lastGameScene;
         return object;
     }
 

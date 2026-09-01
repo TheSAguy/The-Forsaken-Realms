@@ -646,6 +646,21 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // The player's opponent this round is always the LAST enemy (see startRound()) -
             // remembered for the Challenge Arena's last-defeated-foe card drop in done().
             lastDefeatedEnemyData = enemies.get(enemies.size - 1).getData();
+            // Bronze Coin ransom (user request 2026-09-01): note the foe now, pay the coin out in
+            // done() with the rest of the bracket's loot. Only recorded - owesCoinRansom() is
+            // re-checked at payout time, so a name noted here that somehow stops being owed
+            // simply pays nothing.
+            //
+            // Keyed on the SPRITE's getName(), not lastDefeatedEnemyData.getName(): the mark was
+            // written by DuelScene from `enemy.getName()`, which returns a map-authored
+            // nameOverride when one is present and only falls through to EnemyData's name
+            // otherwise. Arena enemies do not carry overrides today, so the two agree - but
+            // reading it off the sprite means they cannot silently diverge later, and a
+            // mismatched key here would fail by never returning the coin.
+            String beatenName = enemies.get(enemies.size - 1).getName();
+            if (Current.player().owesCoinRansom(beatenName)
+                    && !coinRansomFoesBeaten.contains(beatenName, false))
+                coinRansomFoesBeaten.add(beatenName);
         } else {
             markLostFighter(fighters.get(fighters.size - 1).actor);
             moveFighter(fighters.get(fighters.size - 2).actor, true);
@@ -738,6 +753,17 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 .withEnemyStatKey(enemy.getName())));
     }
 
+    /**
+     * Raw names of coin-holding enemies the player has beaten in the bracket currently running.
+     * The mark itself is deliberately NOT cleared when the round is won - only in done(), where
+     * the coin is actually paid out (user request 2026-09-01: "For Arena matches, add it to the
+     * final arena payout"). Clearing early would lose the coin outright for a player who wins the
+     * round and then quits the arena without collecting, since the bracket's rewards are assembled
+     * once, at the end. Cleared at the start of every bracket so a previous run's names cannot
+     * leak into this one's payout.
+     */
+    private final Array<String> coinRansomFoesBeaten = new Array<>();
+
     public boolean start() {
         return true;
     }
@@ -781,8 +807,19 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                     foeDrop.colors = foeColors;
                 data.addAll(foeDrop.generate(false, null, true));
             }
+            // Bronze Coin ransom reclaim (user request 2026-09-01), paid with the bracket's own
+            // loot rather than silently at the moment the round was won. Placed AFTER every other
+            // table so the coin reads as a distinct extra rather than getting lost mid-page.
+            for (String foe : new Array.ArrayIterator<>(coinRansomFoesBeaten))
+                Current.player().appendCoinRansomReward(data, foe);
+            coinRansomFoesBeaten.clear();
             RewardScene.instance().loadRewards(data, RewardScene.Type.Loot, null);
             Forge.switchScene(RewardScene.instance());
+        } else {
+            // roundsWon == 0: no reward screen is shown at all, so there is nowhere to put a coin.
+            // Nothing is lost - the marks were never cleared, so the coins stay claimable on a
+            // future win. Just drop the notes so they cannot leak into the next bracket.
+            coinRansomFoesBeaten.clear();
         }
         return true;
     }
@@ -829,6 +866,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         bracketChampions.clear();
         lastDefeatedEnemyData = null;
         roundsWon = 0;
+        coinRansomFoesBeaten.clear();
         int numberOfEnemies = (int) (Math.pow(2f, data.rounds) - 1);
 
 

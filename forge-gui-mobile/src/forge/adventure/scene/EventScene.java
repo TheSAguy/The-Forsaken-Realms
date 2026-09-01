@@ -20,6 +20,8 @@ import forge.Forge;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.AdventureEventData;
 import forge.adventure.data.DialogData;
+import forge.adventure.data.ItemData;
+import forge.adventure.data.ItemListData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.stage.GameHUD;
@@ -694,13 +696,8 @@ public class EventScene extends MenuScene implements IAfterMatch {
             if (currentEvent.enteredWithCoinItem != null && currentEvent.currentRound < 3
                     && innTutorialQuestActive()) {
                 AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
-                // Name the refund explicitly (user request 2026-08-30): the coin was handed back
-                // silently, so the player had no way to tell the safety net had fired at all - it
-                // just looked like the coin was gone. Uses the actual item name so it reads
-                // correctly for Bronze/Silver/Gold alike.
-                GameHUD.getInstance().addNotification("Tough luck - this one's on me. Here's your "
-                        + currentEvent.enteredWithCoinItem + " back. Winning an Inn tournament is "
-                        + "still the best way to build a good deck early on.");
+                // Deferred to the end of setWinner - see showPendingCoinRefundDialog().
+                pendingCoinRefundItem = currentEvent.enteredWithCoinItem;
             }
         }
 
@@ -713,6 +710,44 @@ public class EventScene extends MenuScene implements IAfterMatch {
 //        }
 
         finishRound();
+        // Shown last, after finishRound() has rebuilt the bracket display, so the dialog is not
+        // wiped by the refresh() that follows a round change.
+        showPendingCoinRefundDialog();
+    }
+
+    /** The Coin item refunded by the tutorial safety net this round, or null. Held rather than
+     *  announced inline so the dialog can be raised after finishRound(); see setWinner(). */
+    private String pendingCoinRefundItem;
+
+    /**
+     * Tells the player, unmissably, that the tutorial safety net just handed their Coin back
+     * (user report 2026-09-01: "Currently they don't know they are getting it back").
+     * <p>
+     * Round 68 already named the refund, but did it through
+     * {@code GameHUD.addNotification(...)} - and GameHUD's stage is NOT being rendered while the
+     * player is sitting in this scene. That notification is a timed slide-in Action queued onto
+     * that stage, so it animated and expired against a screen nobody was looking at. Exactly the
+     * failure mode round 66 found for the duel-win Wood/Stone message: the right words attached
+     * to the wrong stage. A blocking dialog on THIS scene cannot be missed.
+     * <p>
+     * The icon token and the name both come from the item itself, so this stays correct for the
+     * Bronze, Silver and Gold Coins alike - the entry option the player actually used decides
+     * which one is refunded.
+     */
+    private void showPendingCoinRefundDialog() {
+        if (pendingCoinRefundItem == null)
+            return;
+        String item = pendingCoinRefundItem;
+        pendingCoinRefundItem = null;
+        ItemData coin = ItemListData.getItem(item);
+        String icon = coin != null && coin.iconName != null && !coin.iconName.isEmpty()
+                ? "[+" + coin.iconName + "] " : "";
+        showDialog(createGenericDialog("Coin Returned",
+                icon + "Tough luck - this one's on me.\n\n"
+                        + "Here's your " + item + " back, so you are no worse off for trying. "
+                        + "Winning an Inn tournament is still the best way to build a good deck "
+                        + "early on.",
+                Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
     }
 
     public void finishRound() {

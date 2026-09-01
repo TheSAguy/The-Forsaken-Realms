@@ -292,13 +292,58 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return enemyName != null && coinRansomedEnemies.contains(enemyName);
     }
 
-    /** Beating a marked enemy returns the coin. Returns true if one was actually reclaimed. */
+    /** Beating a marked enemy returns the coin. Returns true if one was actually reclaimed.
+     *  <p>
+     *  Grants the item immediately and silently. As of 2026-09-01 this is only the FALLBACK for
+     *  {@link #appendCoinRansomReward} - every ordinary win routes the coin through a loot tile
+     *  instead, because a silent add is exactly what the user could not see happening
+     *  ("I beat a snail and got my bronze coin back, so that worked. But there was nothing that
+     *  told me i got it back"). Kept because losing the coin outright is far worse than showing
+     *  it undramatically. */
     public boolean reclaimCoinRansom(String enemyName) {
         if (!owesCoinRansom(enemyName))
             return false;
         coinRansomedEnemies.remove(enemyName);
         addItem(BRONZE_COIN_ITEM);
-        System.out.println("[TFR-CoinRansom] reclaimed a Bronze Challenge Coin from " + enemyName);
+        System.out.println("[TFR-CoinRansom] reclaimed a Bronze Challenge Coin from " + enemyName
+                + " (direct grant - no loot screen on this path)");
+        return true;
+    }
+
+    /**
+     * Beating a marked enemy returns the coin AS LOOT (user request 2026-09-01): "We need to give
+     * it as a reward. Part of the loot at the end of the battle... A little card with the bronze
+     * coin on it". Appends a {@link Reward.Type#Item} tile for the Bronze Challenge Coin and
+     * clears the mark; returns true if a coin was appended.
+     * <p>
+     * The grant now happens when the loot screen is dismissed rather than the instant the duel
+     * ends - identical to how Gold, Shards, Cards and (since round 66) Wood/Stone have always
+     * behaved, driven by {@code RewardScene.clearGenerated()} -> {@link #addReward}. Clearing the
+     * mark and appending the tile happen together here so the two can never disagree.
+     * <p>
+     * If the item lookup ever fails (a renamed/removed items.json entry) this falls back to the
+     * old direct grant rather than dropping the coin on the floor, and says so in the log. Losing
+     * a coin the player is owed is a strictly worse failure than showing it without ceremony.
+     *
+     * @param rewards   the loot array being assembled for this win; nothing happens if null
+     * @param enemyName the RAW enemy name (the same key the mark was written under - never the
+     *                  tiered display name)
+     */
+    public boolean appendCoinRansomReward(Array<Reward> rewards, String enemyName) {
+        if (!owesCoinRansom(enemyName))
+            return false;
+        ItemData coin = ItemListData.getItem(BRONZE_COIN_ITEM);
+        if (rewards == null || coin == null) {
+            System.out.println("[TFR-CoinRansom] cannot show " + BRONZE_COIN_ITEM
+                    + " as loot (rewards=" + (rewards == null ? "null" : "ok")
+                    + ", item=" + (coin == null ? "MISSING FROM items.json" : "ok")
+                    + ") - falling back to a direct grant");
+            return reclaimCoinRansom(enemyName);
+        }
+        coinRansomedEnemies.remove(enemyName);
+        rewards.add(new Reward(coin));
+        System.out.println("[TFR-CoinRansom] reclaimed a Bronze Challenge Coin from " + enemyName
+                + " - added to this win's loot (granted when the reward screen is dismissed)");
         return true;
     }
 

@@ -102,5 +102,16 @@
     // "once a week... from each color"). Rolling: a dispatch on day 6 blocks that color until 13.
     // 0 disables the cooldown.
     "capitolTargetCooldownDays": 7,
-    "functioningNeutralTownCount": 20
+    "functioningNeutralTownCount": 20,
+
+    // Roaming-spawn duplicate limiting (user report 2026-09-01: three Khenra Warriors standing
+    // together). A fresh roll of an enemy that already has maxSameEnemyNearby of itself alive
+    // within sameEnemyNearbyRadius world units of the player is re-rolled up to
+    // sameEnemySpawnRerolls times; after that it spawns anyway, so a short biome list still
+    // populates. Set maxSameEnemyNearby or sameEnemySpawnRerolls to 0 to switch the rule off
+    // without touching config.json. Roaming spawns land 45-180 units out, so 220 covers the whole
+    // spawn ring. Grep forge.log for "[TFR-SpawnDedupe]" to see it firing.
+    "maxSameEnemyNearby": 2,
+    "sameEnemyNearbyRadius": 220,
+    "sameEnemySpawnRerolls": 4
 }

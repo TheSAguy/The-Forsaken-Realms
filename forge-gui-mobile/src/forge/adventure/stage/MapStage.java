@@ -1717,7 +1717,12 @@ public class MapStage extends GameStage {
 
     protected void getReward() {
         isLoadingMatch = false;
-        RewardScene.instance().loadRewards(currentMob.getRewards(), RewardScene.Type.Loot, null);
+        Array<Reward> loot = currentMob.getRewards();
+        // Bronze Coin ransom reclaim as a visible loot tile (user request 2026-09-01) - the
+        // dungeon/town twin of WorldStage.setWinner's call. See
+        // AdventurePlayer.appendCoinRansomReward.
+        Current.player().appendCoinRansomReward(loot, currentMob.getName());
+        RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
         Forge.switchScene(RewardScene.instance());
         if (currentMob.defeatDialog == null) {
             currentMob.remove();

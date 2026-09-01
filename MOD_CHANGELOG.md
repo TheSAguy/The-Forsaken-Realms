@@ -15026,3 +15026,297 @@ found in the plane's items.atlas (DungeonMap, then three fallbacks, then CardBac
 **Files touched**: MapStage.java, ShopActor.java, EconomyBuildings.java, RewardScene.java,
 InnScene.java, Reward.java, RewardActor.java, AdventurePlayer.java, ResourceSpawns.java,
 items.json, items_portrait.json, settings.json.
+
+## Round 73: map registry leak, Cartographer/coin/Inn rules, NG+ coin top-up (2026-08-31)
+
+> *Backfilled 2026-09-01. Rounds 73-76 shipped with their engineering detail in the commit
+> messages instead of here - a four-round gap in this file, caught at the start of round 77. The
+> entries below are reconstructed from those commit messages and the diffs, not re-derived from
+> scratch. Commits: `6928447a` (73), `cd4dc1416` (74), `0b2e4b88a` (75), `7fd6eeed4` (76).*
+
+### ROOT CAUSE: MapStage's shop registries leaked between towns
+The colour-bar report, and more besides. `MapStage` is a process singleton and its five shop
+registries are keyed by tmx object id - a number every town reuses - but `loadMap()` cleared only
+positions/actors/collisionRect/waypoints/shopOverheadTiles. `shopSigns`, `shopSignOverlays`,
+`shopSignAnchors`, `shopCandidatePools` and `shopTierPools` kept the PREVIOUS town's entries, so a
+fresh town inherited whatever the last one left under the same id.
+- `refreshShopSignArt()` tests `overlay == null` as its only liveness check, so a stale key looked
+  live: it took the else-branch and called `setRegion()` on an actor no longer in the scene graph.
+  Silent - no exception, nothing in the log.
+- The base sign always refreshed because `shopSigns.put()` runs for EVERY signed slot at load and
+  its stale entry is always overwritten; `shopSignOverlays.put()` only runs when the rolled type
+  happens to have a colour bar (161 of 293 types), so about half the slots kept an orphan.
+- The same leak let `isShopTypeRerollable()` answer from another town's candidate pool - which is
+  how a Buy Blueprint button appeared on a Cartographer's Guild, a single-name land slot with no
+  candidate pool at all.
+- Round 72's diagnostic could not tell success from this failure: it printed
+  `newData.overlaySprite`, a fact about shops.json, identical either way. It now reports what
+  happened to the ACTOR (created/swapped/suppressed/FAILED).
+
+### Other round-73 items
+- **Cartographer land shops are out of the blueprint system** (user spec). Keyed on
+  `ShopData.sprite == "LandShop"` - exactly the 5 basics; the twelve nonbasic land shops carry
+  `"NonbasicLandShop"` and are untouched, as asked. Also filtered out of `allChooserShopNames()`,
+  closing a live leak where a Mystery/Chest pickup could grant a "Forest" blueprint no chooser
+  would ever let you build.
+- **Bronze Coin, one per enemy** (user spec). `coinRansomedEnemies` is a Set keyed by enemy name,
+  so a second coin paid to the same enemy was silently swallowed - it left the inventory,
+  `Set.add()` returned false, nothing recorded it, and it could never be reclaimed. Two losses to
+  one fox cost two coins and returned one. The ante is now refused when that enemy already holds a
+  coin, and the dialog says so rather than claiming "you have none" while the player is holding
+  three.
+- **Player-town Inn tournaments** now draw from the player's race editions UNION their unlocked
+  sets - union, not intersection, since `unlockedEditions` grows through the Lab and an
+  intersection would shrink to a fixed handful forever. A cached Available event is re-rolled when
+  the pool fingerprint changes, so it tracks new research; an entered tournament is never pulled
+  out from under the player. CRITICAL: a draft block is legal only when EVERY set in it is inside
+  the pool, so a narrow race pool often matches no block at all - falls back to the global pool
+  rather than leaving the player's own Inn permanently empty, and logs which.
+- **New Game+ tops the challenge-coin purse** up to 1 gold / 1 silver / 3 bronze, granting only
+  what is missing so a hoarded surplus survives.
+- Two approved fixes: the dead `localPriceModifier` parameter removed (making it live would
+  double-scale - all ten readers already apply a live modifier - and would freeze the fee, since
+  `eventRules` is serialized); and `currentLocationChanges` now tracks the map you are standing in
+  instead of whichever shop screen was opened last, which two callers spend real gold on.
+- Fixed `buyableCardCount()`, a round-71 regression: it unioned every shelf's legal pool instead of
+  summing `min(count, pool)` per shelf, so the build menu advertised 12 cards for a shop stocking 5.
+
+**Files touched**: AdventureEventData.java, AdventurePlayer.java, DuelScene.java, GameScene.java,
+InnScene.java, RewardScene.java, SaveLoadScene.java, TileMapScene.java, MapStage.java,
+AdventureEventController.java, EconomyBuildings.java, EditionProgression.java.
+
+## Round 74: New Game+ is now a new game (2026-08-31)
+
+User report: "I started a NG+ and it seems none of the shop mechanics are working... with NG+
+everything is unlocked."
+
+**ROOT CAUSE**: `seedStartingShopTypes()` is called only from `create()`, and the New Game+ path
+never calls `create()` - it deliberately loads an existing save to keep the collection. So
+`unlockedShopTypes` was whatever the save held, and on a save written before the blueprint feature
+that set is EMPTY, which `isShopTypeUnlocked()` reads as "legacy save = everything unlocked". The
+mechanic looked switched off because it had switched itself off.
+
+An audit of every per-run field found the same gap in eight more places, so this fixes the class
+rather than the instance. New `resetForNewGamePlus()` re-runs what a New Game resets and NG+ was
+silently inheriting:
+- `unlockedShopTypes` - re-seeded (the reported bug)
+- `unlockedEditions` - was carrying the whole researched set, so Progressive Set Unlocks started
+  finished
+- research timers - a timer in flight survived into a world whose day counter is back to 1,
+  leaving negative days remaining and every research button disabled for months
+- `characterFlags` - one-shot story and grant flags were already set; the new run never got its
+  first Armory torch again
+- `colorReputation` - old standing carried into a freshly re-rolled political map; re-seeded from
+  the starter deck
+- `coinRansomedEnemies` - marks are keyed by enemy NAME and every name still exists, so old marks
+  handed out free Bronze Coins
+- `events`, `blessing`, `partnerOverhealActive`
+- `reservePlayerEditions()` - the player/AI edition exclusivity pass had no NG+ equivalent at all
+
+Deliberately NOT reset, and logged at reset time so a bad future edit is visible in forge.log
+rather than in a player's save: cards, decks, inventory, equipment, boosters, gold/shards/wood/
+stone, max life, name/race/avatar, `startingColorId`.
+
+The fix is surgical by necessity. `clear()` wipes the entire collection and is survivable only
+inside `load()`, which repopulates immediately - calling `clear()` or `create()` from the NG+ path
+would destroy the run the player is carrying forward. The javadoc says so, because it is the
+obvious "simplification" to reach for.
+
+Also fixed: `updateDifficulty()` never copied `rewardMaxFactor`, so a player picking Insane for a
+New Game+ off an Easy save kept Easy's loot rate all run. (Insane's own `rewardMaxFactor` of 0.0 is
+correct and intended - user-confirmed 2026-09-01, so no follow-up is owed there.)
+
+`startingColorId` is null on pre-round-71 saves AND permanently for Chaos/Precon/Custom starts;
+that case seeds race tribal shops only and now says so loudly. `colorIdentity` is still not a
+substitute - it is a guild PAIR for this plane's starters, and it is re-derived from the selected
+deck on every slot switch, so on a mature save it reflects the current deck, not the starter.
+
+Known cost, stated rather than hidden: clearing events discards an in-progress draft/sealed
+tournament, including drafted-but-unbanked cards. A New Game already accepts this, and the entries
+point at POIs the regenerated world no longer has.
+
+**Files touched**: AdventurePlayer.java, SaveLoadScene.java.
+
+## Round 75: forest capital shop, timed Armory rarity, Capitol cooldown, guide (2026-08-31)
+
+- **GreenEquipment restored to the forest capital.** A REGRESSION, not a design gap: object 62 at
+  x=361 y=370 was deleted by commit `8796396fd1e`, whose stated map intent was only "stray stone
+  pickups removed" - it took three other objects with it. Restored with its ORIGINAL id,
+  deliberately not a fresh one: the only other free id (82) was a stone REWARD pickup, and picking
+  a reward up writes its object id into the save's persisted `deletedObjects` set, so a shop given
+  id 82 would be invisible forever in any save that had collected it. Green was the one faction you
+  could not buy equipment from.
+- **Timed Armory rarity** (user spec). No Rare anywhere in week 1, no Mythic until week 3 and then
+  only in the Capitol; player towns catch up at week 4, when the Capitol also sharpens to
+  45/35/16/4. Neutral towns never sell Mythics.
+  - Expressed as ONE table (`config tables/armory_rarity.json`), not a gate plus an odds table,
+    because they are the same thing: a banned rarity is a zero weight. That collapses the
+    delete-vs-reroll question entirely - a zero-weight tier is never rolled, so no slot is dropped
+    and the Armory keeps its full 6 (or 8) items, unlike the old post-generation Mythic strip which
+    left a hole. Still one `nextFloat()` per slot, so the seeded weekly stock stays reproducible.
+  - Venue is stamped onto the cloned `RewardData` in `restrictShopRewardsForCurrentTown` - the
+    single point all six shop-generation call sites route through, and it already holds the town's
+    changes. AI capitals are untouched: their Armory shops use hand-written fixed item lists and
+    never roll a rarity at all.
+- **Capitol weekly lockout** (user spec): each color may target the player's Capitol once per 7
+  days, stamped at DISPATCH so it counts "regardless if the mage wins, loses, gets killed". That
+  ordering matters - a mage walks to its target over several in-game days and can be duelled en
+  route without being stopped, so a resolution-time stamp would let a color re-target while its
+  first mage was still on the road. Stamped after the spawn, since dispatch can still abort between
+  choosing a target and launching.
+  - Three filter sites, because the Capitol reaches the target pool three ways. The load-bearing
+    one sits AFTER the in-flight exclusion block, which self-waives when every attackable town is
+    already targeted and would otherwise undo an earlier filter. Note the code comment claiming the
+    Capitol "is never a normal candidate" is false - `findAttackableTowns()` admits it via
+    `isWastelandTown()`.
+- Ante re-roll base 50 -> 10 shards (plane config only; the Java default is left alone since it
+  affects other planes). On Hard that is 63 -> 12 for the first re-roll.
+- **GUIDE**: new "Appendix: Mechanics in Detail" - nine reference sections written from a full audit
+  of what the mod added, answering a player's "the info for whats actually here and different is
+  kinda hard to parse". Also fixed three factually wrong statements in the shipped guide: research
+  happens at the Research Lab, not the Archaeologist; Wood/Stone no longer come from Forts/Caves
+  (switched off in round 68); and the game is no longer Windows-only.
+
+**Files touched**: ArmoryRarityData.java (new), ArmoryRarity.java (new), ConfigData.java,
+RewardData.java, TuningData.java, Config.java, EditionProgression.java, TerritoryControl.java,
+World.java, GUIDE.md, armory_rarity.json (new), settings.json, config.json, forest_capital.tmx.
+
+## Round 76: spawn dialog rebuilt, Archaeologist blueprints, coin marker (2026-08-31)
+
+- **Spawn dialog: three options down to two** (user spec). "Do the intro" is unchanged; the new
+  "Skip the introduction" replaces BOTH the old `freeChallengeCoins`-gated skip and the New Game+
+  branch, and is always shown.
+  - The old New Game+ branch was a trap. It issued NO quest and set `noQuest`, so a New Game+
+    player silently lost the entire main story with no in-game way back - story quests are
+    `storyQuest:true`, so no job board or NPC will ever offer them - and because it never set
+    `mainQuest`, Emrakul's Castle and both Temples stayed permanently invisible for that save.
+  - Skip now issues quest 43 "Raise the Banner" directly, per the user: "skip the find stuff, go
+    directly to build your capitol". That drops quest 53 and quest 30's find-a-dungeon /
+    win-a-duel / find-a-cave busywork - exactly what a returning player is skipping for - while
+    keeping the thread intact, since 43's epilogue sets `mainQuest = 2` (un-hiding those three
+    POIs) and issues 52.
+  - Edited as a TEXT SPLICE rather than a JSON round-trip: `json.dumps` reformatted all 13,305
+    lines for a one-quest change, which would have buried the edit and fought every future upstream
+    merge. The splice is 6 insertions, 54 deletions, with asserts proving the excised slice is
+    exactly the two options intended.
+- **Archaeologist can turn up a shop-type blueprint**, 15% per expedition - between the booster's
+  25% and the item roll's 5%. Draws from the same live chooser pool the Mystery/Chest drops use, so
+  it can never hand out an Armory, fixed-land or Cartographer type, and it self-disables once every
+  type is known. Deliberately does NOT unlock on generation: the Reward goes onto a RewardScene
+  page, which grants what it shows, so unlocking here too would double-grant.
+- **Player stats: enemies holding one of your Bronze Coins now show the coin** next to their
+  avatar. Drawn into the 16px spacer cell that row already reserved, so no other row moves. Keyed
+  on the statistic's own map key, which is the same enemy name DuelScene stamps the ransom with -
+  if a name ever drifted the marker simply would not appear rather than pointing at the wrong row.
+
+**Files touched**: PlayerStatisticScene.java, EconomyBuildings.java, quests.json.
+
+## Round 77: 1-vs-N unblocked, Bronze Coin as loot, Status button, spawn declustering (2026-09-01)
+
+Local-repo-only round. Two user bug reports (both confirmed in `forge.log` before touching code),
+two UI requests, and the four-round documentation gap above closed.
+
+### Multi-opponent duels: the crash that hid a shipped feature
+`EnemyData.nextEnemy` has always built a real simultaneous 1-vs-N match, and "Goblin Pack" ships
+one - but opening `DuelScene` for any OTHER chained fight threw `IndexOutOfBoundsException` at seat
+2, because 491 of the 493 enemy atlases carry exactly one `Avatar` region. See
+`STAR_TOWNS_RESEARCH.md` for the full survey; this is step 1 of its build order.
+- `CharacterSprite.getAvatar(i)` clamps to the last frame the atlas actually has; new
+  `getAvatarCount()` exposes the size. The null case is NOT theoretical -
+  `monstrosity/umber_hulk.atlas` ships with ZERO Avatar regions, where a bare clamp underflows to
+  index -1. A null return now skips the avatar wiring and lets the default AI portrait stand.
+- **The flip now happens on a COPY.** The cached `Sprite` is shared process-wide
+  (`CharacterSprite.load()` addAll's Config's cached instances), so flipping it in place made the
+  portrait's facing ALTERNATE on every successive duel against the same enemy type - a pre-existing
+  bug in 1-vs-1 too, not just a consequence of the clamp. With the clamp, two seats sharing one
+  frame would also have flipped it twice in a single fight.
+- The head sprite's `displayNameOverride` (how "The Warden" is an Adept Black Wizard underneath)
+  now applies to seat 0 only. It used to overwrite EVERY seat's name, so a Fox chained with a Wolf
+  showed "Fox" and "2nd Fox"; the old trailing comment - *"only supported for 1 enemy atm"* - was
+  the original author admitting exactly this. Later seats keep their own name and the engine
+  de-dupes a genuine same-name pack to "2nd ...".
+
+### FIXED: reclaiming a Bronze Coin was invisible
+User report: "I beat a snail and got my bronze coin back, so that worked. But there was nothing
+that told me i got it back." Confirmed in `forge.log`:
+`[TFR-CoinRansom] reclaimed a Bronze Challenge Coin from Snail`, with no player-facing anything.
+The reclaim called `addItem()` straight from `DuelScene`'s exit runnable - the coin appeared in the
+inventory and nowhere else.
+
+Per the user - "We need to give it as a reward. Part of the loot at the end of the battle... A
+little card with the bronze coin on it" - it is now a `Reward.Type.Item` tile on the loot screen,
+using the coin's own `BronzeChallengeCoin` art. No new Reward type was needed; the coin has always
+been a real inventory item.
+- New `AdventurePlayer.appendCoinRansomReward(rewards, enemyName)` clears the mark AND appends the
+  tile **in the same call**, so the two can never disagree. The grant then happens when the loot
+  screen is dismissed - identical to Gold/Shards/Cards and, since round 66, Wood/Stone.
+- Wired at all three payout sites rather than inside `EnemySprite.getRewards()`: `WorldStage
+  .setWinner` (overworld), `MapStage.getReward` (dungeon/town), `ArenaScene.done` (bracket).
+  Deliberately NOT hidden in the getter - a getter with a side effect that consumes a persisted
+  mark is a trap for the next caller who wants to preview an enemy's loot.
+- **Arena pays at the end of the bracket** (user spec: "For Arena matches, add it to the final
+  arena payout"). `setWinner` only NOTES the beaten foe's name; the mark is cleared and the coin
+  appended in `done()`, with the round tables and the champion bounty. That ordering is the safe
+  one: clearing at round-win time would destroy the coin for a player who wins the round and then
+  leaves without collecting, since arena rewards are assembled once, at the end. If `roundsWon` is
+  0 there is no reward screen, so the notes are simply dropped and every mark stays claimable.
+- `reclaimCoinRansom()` survives as the fallback for a failed item lookup, and says so in the log.
+  Losing a coin the player is owed is a strictly worse failure than showing it without ceremony.
+
+### FIXED: the Inn tutorial coin refund was announced to a stage nobody was watching
+User: "On the Inn Loss message, from our quest. Tell the player you're giving them their coin back.
+Currently they don't know they are getting it back."
+
+Round 68 already wrote the right words - but sent them through
+`GameHUD.getInstance().addNotification(...)`, and **GameHUD's stage is not rendered while the
+player is sitting in `EventScene`**. That notification is a timed slide-in Action queued onto that
+stage, so it animated and expired against a screen nobody was looking at. Exactly the failure round
+66 found for the duel-win Wood/Stone message: right words, wrong stage.
+
+Now a blocking dialog on `EventScene` itself, raised AFTER `finishRound()` so the bracket refresh
+cannot wipe it. Icon token and item name both come from the `ItemData`, so it stays correct for the
+Bronze, Silver and Gold Coins alike - the entry option the player used decides which is refunded.
+
+### Roaming spawns no longer cluster the same enemy
+User report: "I found 3 instances where there were multiples of the exact same enemy. There was 3
+Khenra Warriors close to each other." Confirmed - `forge.log` has three consecutive
+`[TFR-Spawn] Khenra Warrior` lines in the same week and territory.
+
+Nothing was broken. `BiomeData.getEnemy()` is a memoryless weighted draw, so a common entry comes
+up several rolls running by design, and no code had ever looked at what was already on screen.
+
+**Measured, not guessed** - over the 251 roaming spawns in this session's logs there were 18 runs
+of the same enemy twice in a row and **exactly 3 runs of three in a row** (Khenra Warrior, Fox,
+Falcon). That is precisely the user's "3 instances where there were multiples of the exact same
+enemy", and it is what set the threshold: pairs happen constantly and read as normal, triples are
+the thing that reads as broken. Hence `maxSameEnemyNearby = 2` - a pair is allowed, a third is
+pushed away.
+- New `WorldStage.pickNonClusteringEnemy()` re-rolls the pick while the chosen enemy already has
+  `maxSameEnemyNearby` (2) of itself alive within `sameEnemyNearbyRadius` (220 world units, which
+  covers the whole 45-180 unit spawn ring) of the player, up to `sameEnemySpawnRerolls` (4) times.
+- **Deliberately a re-roll, never a skipped spawn.** Refusing to spawn would silently thin the
+  world wherever a biome list is short - a rarer bug than the one being fixed, but a worse one,
+  because it is invisible in play. After the re-rolls the duplicate spawns anyway, and says so.
+- Only the ORDINARY pick routes through it. War-tier bosses and quest-tag extra spawns are authored
+  encounters and keep spawning as authored.
+- Plane-opt-in behind `spawnDuplicateLimitEnabled`; all three numbers live in the plane's
+  `settings.json`. `[TFR-SpawnDedupe]` logs both a re-roll and a give-up.
+
+### Status button on the World Standings page
+User request: make "Mod Details" half width and put the quest log's Status button beside it. Same
+name, same `Status` binding, so the Q hotkey behaves identically on both pages, and it hands
+`PlayerStatisticScene` the same `lastGameScene` the quest log does - so its Back returns to the
+town or world you came from, not to the standings page. `WorldStandingsScene.instance()` gained a
+`Scene` overload for that; `GameHUD.openWorldStandings()` now passes `Forge.getCurrentScene()`,
+mirroring its own `logbook()` sibling. Portrait gets the button on its own row (Mod Details was
+already half width there, and Back occupies the slot beside it).
+
+### Answered, no change needed
+Insane difficulty's `rewardMaxFactor = 0.0` is **correct and intended** (user-confirmed). Round
+74's note about `updateDifficulty()` not copying that field was a real bug in the copy; the value
+itself was never wrong.
+
+**Files touched**: CharacterSprite.java, DuelScene.java, AdventurePlayer.java, WorldStage.java,
+MapStage.java, ArenaScene.java, EventScene.java, WorldStandingsScene.java, GameHUD.java,
+ConfigData.java, TuningData.java, world_standings.json, world_standings_portrait.json, config.json,
+settings.json, CLAUDE.md.

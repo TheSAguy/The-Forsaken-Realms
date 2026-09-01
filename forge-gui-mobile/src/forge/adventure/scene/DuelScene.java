@@ -329,8 +329,15 @@ public class DuelScene extends ForgeScene {
             // tiered display names. Arena is deliberately allowed to reclaim (only PAYING is
             // restricted to ordinary duels) - beating the enemy that holds your coin should
             // return it wherever that rematch happens.
-            if (winner && eventData == null)
-                Current.player().reclaimCoinRansom(enemyName);
+            //
+            // The reclaim itself MOVED OUT of this scene on 2026-09-01. It used to grant the item
+            // right here, which worked but was invisible: the player saw the loot screen, no coin
+            // on it, and had to open the inventory to discover the mechanic had fired at all
+            // ("there was nothing that told me i got it back"). It is now appended as a loot tile
+            // by whichever payout site this win reaches - WorldStage.setWinner (overworld),
+            // MapStage.getReward (dungeon/town) or ArenaScene.done (bracket payout) - each of
+            // which clears the mark and adds the tile in the same statement, so the two cannot
+            // drift apart. Nothing is done here beyond leaving the mark standing for them.
             if ((enemy == null || enemy.getData().fixedDeck == null) && eventData == null) {
                 Current.player().getStatistic().setResult(enemyName, winner);
                 // Weighted spawn tier system, Layer 3 (2026-08-23) - same guarded funnel as the

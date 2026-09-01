@@ -1693,3 +1693,110 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`res/adventure/common/ui/items.json` + `items_portrait.json`** - `shopName` label y 0 -> 7.
 - **`res/adventure/The Forsaken Realms/config tables/settings.json`** - `mineWeeklyGoldPayout`
   50 -> 75.
+
+## Round 73 (2026-08-31) - map registry leak, Cartographer/coin/Inn rules, NG+ coin top-up
+
+> *Rounds 73-76 were backfilled on 2026-09-01; they shipped with their detail in the commit
+> messages rather than in this file. Reconstructed from those commits and their diffs.*
+
+- **`stage/MapStage.java`** - `loadMap()` now also clears `shopSigns`, `shopSignOverlays`,
+  `shopSignAnchors`, `shopCandidatePools` and `shopTierPools`. These are keyed by tmx object id, a
+  number every town reuses, so a fresh town was inheriting the previous town's entries under the
+  same id (stale sign overlays, and `isShopTypeRerollable()` answering from another town's pool).
+  `refreshShopSignArt()`'s diagnostic now reports what happened to the ACTOR
+  (created/swapped/suppressed/FAILED) rather than a fact about shops.json.
+- **`util/EconomyBuildings.java`** - Cartographer land shops excluded from the blueprint system,
+  keyed on `ShopData.sprite == "LandShop"` (the 5 basics only; `"NonbasicLandShop"` untouched), and
+  filtered out of `allChooserShopNames()`. `buyableCardCount()` fixed to sum `min(count, pool)` per
+  shelf instead of unioning every shelf's legal pool.
+- **`data/AdventureEventData.java`** + **`util/AdventureEventController.java`** - player-town
+  tournaments draw from race editions UNION unlocked sets; new `playerTownPoolStamp` re-rolls a
+  cached Available event when the pool fingerprint changes; draft-block legality requires EVERY set
+  in the block to be inside the pool, with a logged fallback to the global pool. Dead
+  `localPriceModifier` parameter removed.
+- **`scene/DuelScene.java`** - Bronze Coin ante refused when that enemy already holds one, with the
+  dialog saying so instead of claiming "you have none".
+- **`player/AdventurePlayer.java`** - New Game+ challenge-coin top-up (1 gold / 1 silver / 3
+  bronze, granting only what is missing).
+- **`scene/InnScene.java`**, **`scene/RewardScene.java`**, **`scene/SaveLoadScene.java`**,
+  **`scene/GameScene.java`**, **`scene/TileMapScene.java`**, **`util/EditionProgression.java`** -
+  `currentLocationChanges` now tracks the map the player is standing in rather than whichever shop
+  screen was opened last (two callers spend real gold on it).
+
+## Round 74 (2026-08-31) - New Game+ is now a new game
+
+- **`player/AdventurePlayer.java`** - new `resetForNewGamePlus()` re-runs the nine per-run resets
+  New Game does and NG+ was silently inheriting (`unlockedShopTypes`, `unlockedEditions`, research
+  timers, `characterFlags`, `colorReputation`, `coinRansomedEnemies`, `events`, `blessing`,
+  `partnerOverhealActive`, plus `reservePlayerEditions()`), and LOGS what it deliberately keeps.
+  Root cause: `seedStartingShopTypes()` runs only from `create()`, which the NG+ path never calls.
+  `updateDifficulty()` now copies `rewardMaxFactor`.
+- **`scene/SaveLoadScene.java`** - NG+ branch calls `resetForNewGamePlus()`. Deliberately NOT
+  `clear()`/`create()` - either would destroy the collection the player is carrying forward.
+
+## Round 75 (2026-08-31) - timed Armory rarity, Capitol cooldown
+
+- **`data/ArmoryRarityData.java`** (NEW) and **`util/ArmoryRarity.java`** (NEW) - week/venue rarity
+  weight table. A banned rarity is expressed as a zero weight rather than a separate gate, so no
+  Armory slot is ever dropped. Still exactly one `nextFloat()` per slot, preserving the seeded
+  weekly stock.
+- **`util/Config.java`** - loader for the plane's `config tables/armory_rarity.json`.
+- **`data/ConfigData.java`** - new `armoryRarityGatingEnabled` flag (default false).
+- **`data/TuningData.java`** - new `capitolTargetCooldownDays` (default 7).
+- **`data/RewardData.java`** - `armoryRarityVenue` stamp; rarity roll swapped for the table lookup.
+- **`util/EditionProgression.java`** - venue stamped onto the cloned `RewardData` in
+  `restrictShopRewardsForCurrentTown`, the single point all six shop-generation call sites route
+  through.
+- **`util/TerritoryControl.java`** - per-color Capitol-attack cooldown, stamped at DISPATCH (not at
+  resolution - a mage can be in transit for days). Three filter sites, the load-bearing one AFTER
+  the in-flight exclusion block, which self-waives and would otherwise undo an earlier filter.
+- **`world/World.java`** - `capitolTargetedDay` persistence for the above.
+
+## Round 76 (2026-08-31) - Archaeologist blueprints, coin marker
+
+- **`scene/PlayerStatisticScene.java`** - enemies holding one of the player's Bronze Coins draw the
+  coin in the 16px spacer cell that row already reserved, so no other row moves. Keyed on the
+  statistic's own map key, the same name DuelScene stamps the ransom with.
+- **`util/EconomyBuildings.java`** - Archaeologist expeditions can return a shop-type blueprint
+  (15%), drawn from the live chooser pool so Armory/fixed-land/Cartographer types can never appear;
+  self-disables once every type is known. Does NOT unlock on generation - the RewardScene page
+  grants what it shows, so unlocking here too would double-grant.
+- *(The quest-28 spawn-dialog rework lives entirely in the plane's own `world/quests.json` - no
+  engine file involved.)*
+
+## Round 77 (2026-09-01) - 1-vs-N unblocked, Bronze Coin loot, Status button, spawn declustering
+
+- **`character/CharacterSprite.java`** - `getAvatar(int)` clamps to the last Avatar frame the atlas
+  actually carries and returns null when it has none (`monstrosity/umber_hulk.atlas` has zero);
+  new `getAvatarCount()`. Unblocks every chained `EnemyData.nextEnemy` duel, which previously threw
+  `IndexOutOfBoundsException` at seat 2 on 491 of 493 atlases.
+- **`scene/DuelScene.java`** - per-seat avatar wiring flips a COPY of the cached Sprite (it is
+  shared process-wide, so the in-place flip was alternating the portrait's facing between duels),
+  skips wiring entirely for a null avatar, and applies the head sprite's `displayNameOverride` to
+  seat 0 only. The Bronze Coin reclaim was REMOVED from here - it now happens at the payout sites.
+- **`player/AdventurePlayer.java`** - new `appendCoinRansomReward(Array<Reward>, String)` clears
+  the ransom mark and appends a `Reward.Type.Item` tile for the coin in one call;
+  `reclaimCoinRansom()` demoted to its fallback for a failed item lookup.
+- **`stage/WorldStage.java`** - calls `appendCoinRansomReward` on the overworld win payout (plus a
+  new `com.badlogic.gdx.utils.Array` import). New `pickNonClusteringEnemy()` /
+  `countSameEnemyNearby()`: re-rolls the ordinary weighted biome pick while the chosen enemy
+  already has too many of itself alive near the player. War-tier bosses and quest-tag extra spawns
+  are untouched.
+- **`stage/MapStage.java`** - `getReward()` calls `appendCoinRansomReward` for dungeon/town wins.
+- **`scene/ArenaScene.java`** - new `coinRansomFoesBeaten` notes coin-holding foes as rounds are
+  won; the marks are cleared and the coins appended in `done()` with the bracket payout. Cleared at
+  bracket start and on a zero-round exit so notes cannot leak between runs.
+- **`scene/EventScene.java`** - the Inn tutorial coin refund is now a blocking dialog on this scene
+  (new `showPendingCoinRefundDialog()` + `pendingCoinRefundItem`), raised after `finishRound()`.
+  It was a `GameHUD.addNotification(...)`, and GameHUD's stage is not rendered while the player is
+  in this scene, so the message animated and expired unseen.
+- **`scene/WorldStandingsScene.java`** - new `status` button handler and a `lastGameScene` field;
+  `instance()` gained a `Scene` overload (the no-arg one delegates).
+- **`stage/GameHUD.java`** - `openWorldStandings()` passes `Forge.getCurrentScene()`, mirroring
+  `logbook()`.
+- **`data/ConfigData.java`** - new `spawnDuplicateLimitEnabled` flag (default false).
+- **`data/TuningData.java`** - new `maxSameEnemyNearby` (2), `sameEnemyNearbyRadius` (220f),
+  `sameEnemySpawnRerolls` (4).
+- **`CLAUDE.md`** (repo root, not an engine file but tracked here for completeness) - Deploy
+  section rewritten for the standalone packaging workflow; the retired `E:\GAMES\FORGE` splice
+  procedure removed; `origin` corrected to `TheSAguy/The-Forsaken-Realms`.

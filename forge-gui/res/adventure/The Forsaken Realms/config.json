@@ -226,6 +226,7 @@
     "resourceLootVarietyEnabled": false,
     // Time- and venue-gated Armory item rarity - see "config tables/armory_rarity.json".
     "armoryRarityGatingEnabled": true,
+    "spawnDuplicateLimitEnabled": true,
     "editionProgressionEnabled": true,
     "armoryGuardsEnabled": true,
     "shopTypeRerollEnabled": true,

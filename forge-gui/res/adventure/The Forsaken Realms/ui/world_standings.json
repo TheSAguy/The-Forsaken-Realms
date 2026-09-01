@@ -57,11 +57,21 @@
     },
     {
       "type": "TextButton",
-      "name": "modDetailsInfo",
-      "text": "[%80]Mod Details",
-      "width": 133,
+      "name": "status",
+      "text": "[%80]Status",
+      "binding": "Status",
+      "width": 65,
       "height": 18,
       "x": 272,
+      "y": 46
+    },
+    {
+      "type": "TextButton",
+      "name": "modDetailsInfo",
+      "text": "[%80]Mod Details",
+      "width": 65,
+      "height": 18,
+      "x": 340,
       "y": 46
     },
     {

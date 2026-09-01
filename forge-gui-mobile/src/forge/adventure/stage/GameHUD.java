@@ -390,7 +390,7 @@ public class GameHUD extends Stage {
             return;
         if (Forge.advFreezePlayerControls)
             return;
-        Forge.switchScene(WorldStandingsScene.instance());
+        Forge.switchScene(WorldStandingsScene.instance(Forge.getCurrentScene()));
     }
 
     private boolean isTerritoryControlEnabled() {

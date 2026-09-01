@@ -49,6 +49,11 @@ public class ConfigData {
     // "config tables/armory_rarity.json". Plane-opt-in like every other mod feature: stock planes
     // keep the flat Common 60 / Uncommon 30 / Rare 8 / Mythic 2 roll.
     public boolean armoryRarityGatingEnabled = false;
+    // Roaming-spawn duplicate limiting (user report 2026-09-01: "I found 3 instances where there
+    // were multiples of the exact same enemy. There was 3 Khenra Warriors close to each other").
+    // Plane-opt-in: stock planes keep the unconstrained weighted pick, which really can hand out
+    // the same enemy several rolls in a row. See WorldStage.pickNonClusteringEnemy().
+    public boolean spawnDuplicateLimitEnabled = false;
     public boolean editionProgressionEnabled = false;
     // 2026-08-12 review: these three shipped without flags and leaked into stock planes
     // (Shandalar's Equipment/*Items shops matched isArmoryShop, common-town multi-name shop

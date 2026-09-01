@@ -161,4 +161,18 @@ public class TuningData {
     // blocks that color until day 13. 0 disables the cooldown entirely.
     public int capitolTargetCooldownDays = 7;
     public int functioningNeutralTownCount = 20;
+    // Roaming-spawn duplicate limiting (user report 2026-09-01), gated by
+    // ConfigData.spawnDuplicateLimitEnabled. How many of the SAME enemy may already be alive
+    // within sameEnemyNearbyRadius before a fresh roll of that same enemy gets re-rolled. 2 means
+    // a pair is fine and a third is what gets pushed away - the user's report was three.
+    public int maxSameEnemyNearby = 2;
+    // World units around the player counted for the rule above. Roaming spawns land 45-180 units
+    // out (WorldStage.spawn(): unit = intendedHeight/6, distance = unit..unit*4), so 220 covers
+    // the whole spawn annulus plus a margin, i.e. everything that could read as "close to each
+    // other" on one screen. Enemies further out than this are not competing for the same space.
+    public float sameEnemyNearbyRadius = 220f;
+    // How many times to re-roll the biome's weighted pick looking for a different enemy before
+    // giving up and spawning the duplicate anyway. Deliberately finite and deliberately NOT a
+    // skipped spawn: a biome whose list is genuinely one or two entries long must still populate.
+    public int sameEnemySpawnRerolls = 4;
 }
