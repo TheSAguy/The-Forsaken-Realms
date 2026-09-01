@@ -6934,21 +6934,26 @@
 				]
 			},
 			{
-				"action": [
-					{ "addItem": "Colorless rune" },
-					{ "addItem": "Bronze Challenge Coin" },
-					{ "addItem": "Bronze Challenge Coin" },
-					{ "addItem": "Bronze Challenge Coin" },
-					{ "addItem": "Challenge Coin" },
-					{ "addItem": "Silver Challenge Coin" },
-					{ "setCharacterFlag": { "key": "freeChallengeCoins", "val": 1 } },
-					{ "setQuestFlag": { "key": "mainQuest", "val": 1 } },
-					{ "setCharacterFlag": { "key": "noQuest", "val": 1 } },
-					{ "issueQuest": "43" },
-					{ "runCommand": "teleport to poi Spawn" }
-				],
 				"name": "Skip the introduction - straight to building your Capitol",
-				"text": "You have walked this ash before. The stasis sloughs away and the cave mouth stands open - no lecture required. What matters has not changed: five rivals hold five castles, and the realm answers to whoever plants a banner first. Go build your Capitol."
+				"text": "You have walked this ash before. The stasis sloughs away and the cave mouth stands open - no lecture required. What matters has not changed: five rivals hold five castles, and the realm answers to whoever plants a banner first. Go build your Capitol.",
+				"options": [
+					{
+						"name": "(Continue)",
+						"action": [
+							{ "addItem": "Colorless rune" },
+							{ "addItem": "Bronze Challenge Coin" },
+							{ "addItem": "Bronze Challenge Coin" },
+							{ "addItem": "Bronze Challenge Coin" },
+							{ "addItem": "Challenge Coin" },
+							{ "addItem": "Silver Challenge Coin" },
+							{ "setCharacterFlag": { "key": "freeChallengeCoins", "val": 1 } },
+							{ "setQuestFlag": { "key": "mainQuest", "val": 1 } },
+							{ "setCharacterFlag": { "key": "noQuest", "val": 1 } },
+							{ "issueQuest": "43" },
+							{ "runCommand": "teleport to poi Spawn" }
+						]
+					}
+				]
 			}
 		]
 	},

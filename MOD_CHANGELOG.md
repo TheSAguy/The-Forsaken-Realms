@@ -15333,3 +15333,142 @@ itself was never wrong.
 MapStage.java, ArenaScene.java, EventScene.java, WorldStandingsScene.java, GameHUD.java,
 ConfigData.java, TuningData.java, world_standings.json, world_standings_portrait.json, config.json,
 settings.json, CLAUDE.md.
+
+## Round 78: pre-release code review - 14 confirmed findings fixed, v1.04 stamped (2026-09-01)
+
+> *Backfilled 2026-09-01 in round 79. Round 78 shipped its detail in the commit message only and
+> never got an entry here - the exact failure this file exists to prevent, and the second time in
+> two days (rounds 73-76 were backfilled the same way earlier today). Caught by round 79's own
+> regression sweep, which flagged "round 78's 14 fixes exist only in the git commit message".
+> Commit `4d8dfeffa02`.*
+
+A six-lens adversarial review of `tfr-v1.03..HEAD` (23 commits, 125 files, +8,687 lines) run as a
+workflow: 12 agents, 87 areas checked, 19 findings -> **14 CONFIRMED, 3 PARTLY_WRONG, 2 REFUTED**.
+All 14 fixed the same round. The previous attempt at this review (2026-09-01 06:26) died on a
+session rate limit with all six reviewers lost; what made the re-run finish was dropping reviewer
+effort from xhigh to high and correcting the stale context block first.
+
+### RELEASE BLOCKER: a blueprint drop on a pre-v1.03 save permanently collapsed shop unlocks
+Found independently by TWO lenses, the strongest corroboration in the run. Both blueprint DROP
+filters called the raw `AdventurePlayer.hasShopTypeUnlocked()` instead of the legacy-aware
+`EconomyBuildings.isShopTypeUnlocked()`. An empty `unlockedShopTypes` means "legacy save, everything
+already known" - so the raw lookup read it as "nothing unlocked" and every name looked like a valid
+drop candidate. Granting one made the set non-empty, which flipped the predicate out of its legacy
+branch and left that single type as the player's ENTIRE unlocked list. Permanent, and every
+upgrading v1.03 player would have hit it on their first Chest.
+- Fix: both filters routed through the legacy-aware predicate. `hasShopTypeUnlocked()` now has zero
+  callers anywhere in the tree.
+- **Generalizable lesson worth keeping**: an "empty set means everything" convention has to be read
+  through its predicate at EVERY site. A raw `Set.contains()` anywhere near it is a latent bug.
+
+### Other confirmed fixes
+- **Blueprint pool filter was defeated by statement order.** The round-73 Cartographer `removeIf`
+  ran BEFORE the `addAll(globalShopTiers)` that re-added the same names - a real filter that did
+  nothing. Moved after the union and widened to also strip the 12 Armory-family types (never
+  filtered at all, even before the ordering bug) and any name with no `ShopData` behind it
+  (`plains_town_generic` declares an "Everything" slot absent from shops.json). New
+  `shopTypeExists()`; the reviewer's proposed `WorldData.getShopData()` does not exist.
+- **`invalidateChooserShopNames()` was never called by anything.** It existed and documented itself
+  as "dropped when a new map loads". `MapStage.loadMap()` now calls it, and an empty universe is no
+  longer cached - a Mystery diamond picked up before entering any town froze blueprint drops off for
+  the whole process.
+- **The Inn pool-change "re-roll" was a DELETE.** It removed the cached event and fell through to
+  `createEvent()`, which refuses while `nextEventDate` still holds the stamp written when that same
+  event was initialized. Finish a research, walk back into your own Inn, tournament gone until
+  tomorrow. Both halves fixed: a `clearNextEventDate()` escape for the replace-not-create case, plus
+  a fallback that restores the old event if `createEvent` still returns null.
+- **Tutorial Coin refund could fire twice.** `enteredWithCoinItem` was never cleared and the guard
+  is `currentRound < 3`, so a RoundRobin pod refunded on both losable rounds and the player finished
+  holding more Coins than they entered with.
+- **Ante card duplicated** when Buy Back preceded Use Bronze Coin in the same loss -
+  `payCoinRansomForAll` ran over the full lost list. Tracked via `anteAlreadyRecovered`, using
+  `List.remove(Object)` not `contains` so anting two copies and buying back one still returns the
+  other.
+- **The Inn tournament WIN nudge still posted to GameHUD**, whose stage is not rendered in
+  EventScene - round 77 fixed the refund message and missed its sibling four lines away.
+- **`suppressDefeatGoldLoss` survived a Capitol-defense loss** (that path ends the run through
+  `triggerCapitolDefeat()` and never reaches `defeated()`, which is what consumes the flag), waiving
+  an unrelated later defeat. Cleared on that branch; `load()` deliberately untouched - the verifier
+  confirmed it already clears the flag.
+- **`build_standalone.py`'s stale-jar guard did not walk `forge-gui-mobile-dev`** - the module whose
+  build it tells you to re-run. A round touching only that module could fail to build and still sail
+  past the guard: precisely the 2026-08-30 incident the guard was added to prevent.
+- **GUIDE.md told players selling pays "a flat 25%"** - it is 60/50/25/5% by difficulty and the
+  new-game screen shows the real number. Plus five British spellings in shipped prose.
+
+### v1.04 stamped
+All four fields that must move together: `tfr.version`, `manifestVersionCode` 10400, `modVersion`,
+`modVersionDate` 09.01. Out of step, the Android APK fetches the PREVIOUS release's assets.zip -
+a round-78 engine paired with round-61 content.
+
+### Decisions recorded rather than coded around
+- **Bronze Coin price stays 1,000.** Round 68 set 15,000 and round 69 silently reverted it to the
+  class default; the review flagged the tree as self-contradictory. User confirmed 1,000 is intended
+  and the round-69 retune simply went unlogged. Round 68's entry now carries a dated correction.
+- **Two PARTLY_WRONG findings documented, not fixed**, per the verifiers: the Armory can re-roll its
+  shelf mid-restock-window on a week 2/3/4 boundary day (self-correcting, stops after week 4), and
+  `armoryRarityGatingEnabled` is inert unless `editionProgressionEnabled` is also on.
+- Insane's `rewardMaxFactor = 0.0` confirmed correct and intended (user).
+
+**Files touched**: EconomyBuildings.java, ResourceSpawns.java, MapStage.java, InnScene.java,
+AdventureEventController.java, EventScene.java, DuelScene.java, AdventurePlayer.java,
+WorldStage.java, ArmoryRarityData.java, build_standalone.py, forge-gui-android/pom.xml, config.json,
+armory_rarity.json, GUIDE.md, MOD_CHANGELOG.md, MOD_SCOPE.md.
+
+## Round 79: scope status pass, Skip Tutorial dialog fix, round-78 doc backfill (2026-09-01)
+
+Driven by a user scope review ("give me the current scope status... let me see what I can mark as
+done"), backed by an 8-agent audit workflow: 5 agents verifying every non-Done MOD_SCOPE item
+against the real code and the shipped jar, 3 sweeping long-Done items for regressions introduced by
+rounds 62-78. 16 items audited, 41 areas swept, 5 regressions reported - **1 real, 4 doc-drift**.
+
+### FIXED: the Skip Tutorial option showed the player no text at all
+The one genuine regression the sweep found, and it had been live since round 76. Quest 28's rebuilt
+"Skip the introduction" option was given a 250-character `text` body, but the option carries no
+`options` array - and `DialogData.options` defaults to a zero-length array, never null. So in
+`MapDialog.loadDialog()`:
+- the early-return at `:159` (`options.length == 0 && text.isEmpty() && action.length > 0`) is
+  SKIPPED, because `text` is now non-empty;
+- the method builds the label, iterates zero options, and hits `if (i == 0) { hideDialog(); return
+  false; }` - the dialog is hidden the same frame it is built.
+
+Worse, `loadDialog()` calls `setEffects(dialog.action)` FIRST, so the option's eleven actions -
+including `teleport to poi Spawn` - had already fired. A returning player picking Skip got no text
+whatsoever and landed outside the cave with an unexplained quest in their log.
+
+Fixed as a data-only text splice (no JSON round-trip - `json.dumps` reformats all 13,258 lines and
+would bury the edit and fight every future upstream merge, the same reasoning as round 76's own
+splice). The eleven actions moved onto a nested `(Continue)` option, so the sequence is now: click
+Skip -> text renders with a Continue button -> click Continue -> actions fire, and the nested option
+hits `loadDialog`'s early-return branch cleanly, which is exactly the case that branch was written
+for. 19 insertions, 14 deletions, verified structurally after the splice (quest 28 found, no action
+left on the skip option, exactly 11 actions on Continue, teleport still last).
+
+### Scope status pass (user decisions)
+`MOD_SCOPE.md` moved from 75 Done / 8 Not Started to **82 Done / 3 Not Started** across 100 items.
+- **Marked Done**: #42 Challenge Arena Champions, #54 Mysterious Mage warnings, #81 Capitol Upgrade
+  Rep +2, #90 Trader Building - the four that had sat unconfirmed for two to three weeks.
+- **Closed as already satisfied**, with the satisfying work named so nobody reopens them: #12 Random
+  Events (the Chest system became this - `ChestEvents.java` rolls a 1-of-6 world event per pickup),
+  #25 Player Deck-Building Engine (the existing 1,164-line `AdventureDeckEditor` covers it), #31
+  Custom Building Ruin Art (the 16 town-icon + 64 shop-level variants already shipped under #2).
+- **#11 Map Polish -> In Progress.**
+- **#86 Additional AI Diplomacy -> Removed** (user decision), with rationale, matching how #5, #8
+  and #26 were retired.
+- **#84 Building Upgrades** gained four named targets: Mine Upgrades, City Walls, Mage War Camp,
+  Armory Upgrade. Recorded that City Walls is adjacent to the REMOVED #8 "Town Fortifications" but
+  genuinely distinct - a player-town construction, not AI-town fortification.
+- **#87 More Attacking Options** gained *"AI end-game objective: capture the centre of the map"* as
+  an explicit requirement rather than a research note - the AI currently has exactly one way to win.
+
+### Doc drift corrected (4 findings, no code involved)
+Three Done markers described mechanics that later rounds replaced, which would have sent a playtest
+chasing phantom regressions:
+- **#32 Shop Type Re-Roll** described a flat 50-shard random re-roll button deleted in round 71.
+- **#10 Buildings** promised an unconditional plain "Card Shop" rebuild option; since round 71 a
+  rubble slot can legitimately have no buildable card-shop type left.
+- **#18 Item Economy** documented a flat 4-tier Armory rarity spread that round 75's week/venue
+  table overrides - any check before in-game day 8 sees no Rares at all, by design.
+The fourth was this file: round 78 had no entry (see above).
+
+**Files touched**: quests.json, MOD_SCOPE.md, MOD_CHANGELOG.md, CORE_ENGINE_CHANGES.md.

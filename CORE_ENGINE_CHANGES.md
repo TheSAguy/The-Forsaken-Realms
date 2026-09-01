@@ -1800,3 +1800,39 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`CLAUDE.md`** (repo root, not an engine file but tracked here for completeness) - Deploy
   section rewritten for the standalone packaging workflow; the retired `E:\GAMES\FORGE` splice
   procedure removed; `origin` corrected to `TheSAguy/The-Forsaken-Realms`.
+
+## Round 78 (2026-09-01) - pre-release review fixes, v1.04 stamped
+
+> *Backfilled in round 79 - round 78 shipped with its detail in the commit message only.*
+
+- **`util/EconomyBuildings.java`** - both blueprint drop filters now use the legacy-aware
+  `isShopTypeUnlocked()` (the raw `hasShopTypeUnlocked()` now has zero callers); the three pool
+  `removeIf` calls moved AFTER the `globalShopTiers` union that was re-adding what they stripped,
+  and widened to cover Armory-family names and names with no ShopData; new `shopTypeExists()`;
+  `allChooserShopNames()` refuses to cache an empty universe.
+- **`util/ResourceSpawns.java`** - same legacy-aware predicate on `grantRandomBlueprint`'s filter.
+- **`stage/MapStage.java`** - `loadMap()` now calls `EconomyBuildings.invalidateChooserShopNames()`
+  alongside the shop-pool clears; that method had never been called by anything.
+- **`util/AdventureEventController.java`** - new `clearNextEventDate(String)` so an Inn pool-change
+  re-roll can replace an event instead of deleting it.
+- **`scene/InnScene.java`** - the re-roll path clears the date gate and restores the previous event
+  if `createEvent()` still returns null.
+- **`scene/EventScene.java`** - tutorial Coin refund clears `enteredWithCoinItem` (one refund per
+  entry, not per losable round); the WIN nudge moved off `GameHUD.addNotification` onto a dialog via
+  new `pendingWinNudge` / `showPendingWinNudgeDialog()`.
+- **`scene/DuelScene.java`** - new `anteAlreadyRecovered` list stops a Buy Back followed by a Bronze
+  Coin ransom duplicating the same ante card.
+- **`player/AdventurePlayer.java`** - new `clearSuppressDefeatGoldLoss()`.
+- **`stage/WorldStage.java`** - the Capitol-defense loss branch clears that flag before ending the
+  run; it never reaches `defeated()`, which is what normally consumes it.
+- **`data/ArmoryRarityData.java`** - javadoc records that `armoryRarityGatingEnabled` is inert
+  unless `editionProgressionEnabled` is also true.
+- **`standalone-packaging/build_standalone.py`** - the stale-jar guard now walks
+  `forge-gui-mobile-dev`, the module whose build it instructs you to re-run.
+- **`forge-gui-android/pom.xml`** - `tfr.version` 1.03 -> 1.04, `manifestVersionCode` 10300 -> 10400.
+
+## Round 79 (2026-09-01) - Skip Tutorial dialog fix
+
+- **No engine files changed.** The one code-adjacent fix is data: the plane's own
+  `world/quests.json` (quest 28's skip option restructured so its text renders before its actions
+  fire). Recorded here only to state that explicitly - the round's other work is documentation.

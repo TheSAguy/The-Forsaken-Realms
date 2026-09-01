@@ -6,9 +6,10 @@ change — add ideas, cross things off, revise scope.
 
 **Status legend:** `Not Started` · `In Progress` · `Done` · `Open Question` (design not settled yet)
 
-**Currency:** caught up to **round 77 (2026-09-01)**. This file went stale between rounds 61 and 77
+**Currency:** caught up to **round 79 (2026-09-01)**. This file went stale between rounds 61 and 77
 while `MOD_CHANGELOG.md` kept running; items **#92-#100** were backfilled in one pass on 2026-09-01
-to close that gap, and #87 updated. Per-round engineering detail always lives in `MOD_CHANGELOG.md`
+to close that gap. A user status pass the same day closed #12/#25/#31/#42/#54/#81/#90, moved #11 to
+In Progress, removed #86, and added named targets to #84 and #87. Per-round engineering detail always lives in `MOD_CHANGELOG.md`
 and every engine-file edit in `CORE_ENGINE_CHANGES.md` - this file is the feature list and its
 status, nothing more. **Nothing since the v1.03 release (2026-08-27) has shipped to players**:
 rounds 62-77 are all local-only, awaiting a test pass.
@@ -292,7 +293,7 @@ assumption are in `MOD_CHANGELOG.md`'s "Progressive Set Unlocks" entry - summary
   same "always works" pattern as the Inn) at (160, 96). New `ResearchScene` (modeled on
   `QuestLogScene`'s simpler list pattern once actually compared against `SpellSmithScene`'s fuller
   layout): shows every edition the player has found at least one card from (not yet researched),
-  sorted by progress toward the threshold, greyed out below it. Threshold is 10% of that edition's
+  sorted by progress toward the threshold, grayed out below it. Threshold is 10% of that edition's
   own real card count (floor 5) - the user's own refinement over a flat "10 cards," so it's
   consistent across small and large sets. Research costs 300g (difficulty-scaled, Claude's own
   proposal) and takes 7 days; completion is automatic (checked lazily on screen-entry and from the
@@ -1094,7 +1095,7 @@ needs its own design pass before any of this gets built:**
     `config.json` - every other plane still reads the original common file, untouched). With
     nothing baked in to hide, the runtime hide/cover code above is now mostly a no-op for these
     towns, kept only as the right fallback for any future template that still has baked art.
-- **Build menu now always shows all options, cost included, greyed out if unaffordable** -
+- **Build menu now always shows all options, cost included, grayed out if unaffordable** -
   matches the pattern the Bank/Exchange dialogs already used (`addButtonRow`'s `enabled` flag);
   previously an option was hidden entirely if the player was short on gold, via a `hasGold`
   dialog condition. "Already have one of this type in town" is still a hard hide, not a grey-out
@@ -1142,8 +1143,15 @@ needs its own design pass before any of this gets built:**
   testable until territory capture itself exists.
 - Research lab (ties into #4), Fortifications (ties into #8), Roads (ties into #2), Teleporter -
   still `Not Started`, unrelated to the economy buildings above.
+- **AMENDED 2026-09-01 (doc drift caught by the round-79 audit).** This item's Done entry promises
+  that any rubble slot can always be rebuilt as a plain "Card Shop". Since round 71 that is
+  conditional: the primary path is now the blueprint chooser (#92), and a slot can legitimately have
+  NO buildable card-shop type left - the types you know read "(built)" because of one-type-per-town,
+  and everything else reads "(locked)". That slot can then only become a Bank/Mine/Trader/Outlook or
+  stay rubble. This is intended #92 behavior, not a break in #10, but it will read in play as "I
+  cannot rebuild this shop" - so it is recorded here rather than left to be re-discovered as a bug.
 
-### 11. Map Polish & Terrain Customization — `Not Started` (absorbed #36, 2026-08-12 - same ask)
+### 11. Map Polish & Terrain Customization — `In Progress` (absorbed #36, 2026-08-12 - same ask)
 - More visually diverse map, prettier overall; more terrain variety (new structure/doodad sets
   per biome - ties to #7's Terrain Switch-Out reskinning machinery, which would pick them up
   automatically).
@@ -1153,11 +1161,17 @@ needs its own design pass before any of this gets built:**
   maps built in Tiled). itch.io is the best hunting ground (Kenney.nl, LimeZu, Sanctumpixel,
   etc.) — check each pack's license (CC0 vs CC-BY vs no-commercial-redistribution) before use.
 
-### 12. Random Events — `Not Started`
+### 12. Random Events — `Done (2026-09-01, user decision - satisfied by the Chest event system)`
 - General random world events (could tie into the Time System's periodic-event hook, #6).
 - Re-raised 2026-08-11 (wishlist batch) as "Random events" - treating as the same ask, not a new
-  entry, since the description matches exactly. Still needs its own design pass: what kinds of
-  events (economic, combat, weather/terrain, quest-triggering?), how often, opt-in or automatic.
+  entry, since the description matches exactly.
+- **CLOSED 2026-09-01 (user decision): this is what the Chest system became.** Built across rounds
+  52-56, `util/ChestEvents.java` rolls a uniform 1-of-6 random world event on every Chest pickup -
+  Gold Chest, Lost Card, Dangerous Enemy, Thief Merchant, Duplicate, and Illegal Arena - plus a
+  25% shop-blueprint roll ahead of it (round 71). That covers the economic, combat and
+  quest-triggering event kinds this item asked about; weather/terrain events were never pursued
+  and are not planned. If more event VARIETY is wanted later, extend ChestEvents rather than
+  reopening this item.
 
 ### 13. Capitol City — `Done (playtest-confirmed 2026-08-18)` (2026-08-08: upgrade flow + layout swap + building migration shipped; 2026-08-09: 6 fixed land shops, Arena/Spellsmith broken-shop rubble art, Inn starts repaired, Outlook + Teleporter + universal Destroy building added (see #10) - Teleporter is the Capitol-gated building this section long speculated about; 2026-08-10: game-over-on-loss built, see #7; Armory + dedicated Booster shop made permanent fixed slots same day; 2026-08-11: Armory UI polish, see below)
 - **Armory UI polish (2026-08-11, two small user requests):** the restore dialog's label changed
@@ -1481,6 +1495,13 @@ concept. Built out over one long round:
   Coin"/"Silver Challenge Coin"/"Bronze Challenge Coin" (the 3 items every player starts with)
   don't make sense as something to buy - removed from the 2 `shops.json` pools that had them
   (the generic player-town "Equipment" shop, "ArmoryCommon"). No other Armory-family pool had them.
+- **AMENDED 2026-09-01 (doc drift caught by the round-79 audit).** The flat item-rarity weighting
+  described in this item is no longer what the Armory rolls. Round 75's #94 week/venue table
+  overrides it: **week 1 has `rare: 0, mythic: 0` at every venue**, so no amount of re-rolling
+  (#33) can produce a Rare before in-game day 8, and Mythics need week 3 and the Capitol. The flat
+  table survives only as the fallback when the venue is unstamped. Any verification of #18, #33 or
+  #51 run in the first in-game week will observe odds that contradict the text above - that is #94
+  working, not #18 broken.
 
 ### 19. Roaming-Enemy Bestiary + Mage Difficulty Tiers — `Done (playtest-confirmed 2026-08-18)`
 User-driven: player territory's roaming spawns felt dead once Wasteland is fully replaced by
@@ -1972,7 +1993,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   never visually confirmed.~~ Moot - there's no fixed map placement anymore (see the
   Utility-submenu redesign above), so this question no longer applies.
 
-### 25. Player Deck-Building Engine — `Not Started`
+### 25. Player Deck-Building Engine — `Done (2026-09-01, user decision - existing deck editor is sufficient)`
 - User idea (2026-08-11, wishlist batch): "Building your own engine to play your decks." Not yet
   scoped or discussed in detail - reads as wanting in-game tools to construct/tune a deck around a
   specific strategy ("an engine"), distinct from #20's Deck Tester (which pits two ALREADY-BUILT
@@ -1980,6 +2001,11 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   archetype suggestions to a guided deckbuilding wizard - needs a scoping conversation before
   design, ideally against `AdventureDeckEditor.java` (the mod's existing in-game deck editor) to
   see what's already there versus what this would add.
+- **CLOSED 2026-09-01 (user decision): the existing in-game deck editor covers this.**
+  `scene/AdventureDeckEditor.java` is a full 1,164-line editor with search, filtering and
+  collection browsing, and #20's Deck Tester sits alongside it for evaluating what you build. No
+  separate "engine" is wanted on top. Reopen only if a specific missing capability turns up in
+  play, and scope THAT rather than this broad ask.
 
 ### 26. Research: External Feature Requests — `Removed (2026-08-12, user decision)`
 - Was: a research task to mine Forge community channels for feature ideas. Cut from scope.
@@ -2036,7 +2062,7 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   "AI deck builds - add to arena" ask; the alternative genetic-AI-per-bracket idea sketched here
   is dropped with it.
 
-### 31. Custom Building Ruin Art Variety — `Not Started`
+### 31. Custom Building Ruin Art Variety — `Done (2026-09-01, user decision - existing ruin art is sufficient)`
 - User idea (2026-08-11, wishlist batch): "Custom building ruins." Ties directly to #2 (Central
   Wasteland & Town Reconstruction), which already has real hand-made ruin art for both the town-icon
   level (16 variants) and the shop level (64 variants, `RubbleOverlay`/destroyed-shop art) - not yet
@@ -2044,6 +2070,10 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   that still fall back to the generic Job Board rubble overlay (per #2, the Job Board itself has no
   dedicated art yet), or something else entirely (e.g. ruins that visually reflect the building type
   that stood there, not just a generic broken-shop look). Needs clarification.
+- **CLOSED 2026-09-01 (user decision): the art already shipped under #2 is enough.** 16 town-icon
+  ruin variants and 64 shop-level destroyed-shop variants (`util/RubbleOverlay.java` plus the
+  per-shop rubble art), and round 72 gave ruined slots one shared visibility rule so signs and
+  color bars hide correctly. No further per-building-type ruin art is planned.
 
 ### 32. Shop Type Re-Roll — `Done (playtest-confirmed 2026-08-18)`
 - User idea (2026-08-11, wishlist batch): "Shop type re-roll." Ties to #10 (Economy Buildings) - a
@@ -2067,7 +2097,16 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   setPinnedShopName()` the Capitol migration already established, regenerates the displayed
   inventory (`RewardData.generate()`, same pattern `restockShop()` uses), and swaps the live sign
   sprite's texture in place via a new `TextureSprite.setRegion()` (the sign was previously an
-  immutable-region sprite with no way to change its art after construction). Not yet playtested.
+  immutable-region sprite with no way to change its art after construction).
+- **SUPERSEDED 2026-09-01 (doc drift caught by the round-79 audit).** Everything above describes the
+  mechanic as it was in v1.03, and it no longer exists. Round 71 DELETED the flat 50-shard random
+  re-roll: `RewardScene.promptRerollShopType()` is gone, and the button now reads **"Re-assign Shop
+  Type"**, charges **gold + wood** rather than shards, offers a **menu** rather than a random pick,
+  and refuses entries that are blueprint-locked (see #92). The underlying `MapStage.rerollShopType()`
+  survives as the destroy-and-rebuild path only. Do not go looking for a "Re-roll Shop Type
+  (50 [+Shards])" button - its absence is correct, not a regression. The Done marker above refers to
+  the ORIGINAL feature as shipped and playtested on 2026-08-18; the replacement is covered by #92
+  and has its own (unconfirmed) status there.
 
 ### 33. Early Armory Inventory Re-Roll — `Done (playtest-confirmed 2026-08-13)`
 - User idea (2026-08-11, wishlist batch): "Re-roll armory inventory early." The Armory's item stock
@@ -2219,7 +2258,7 @@ from the game. Quest content protected; user edits survive updates; see MOD_CHAN
   machines share it. All-`Y` baselines have zero functional effect either way (the exclusion set is
   empty until the user actually flips a row to `N`) - the two seeded tables are ready to edit now.
 
-### 42. Challenge Arena Champions + Themed Drops — `Built (2026-08-12), not yet playtested`
+### 42. Challenge Arena Champions + Themed Drops — `Done (playtest-confirmed 2026-09-01)`
 5 hand-built champion decks (Dovin Baan WU, Kaervek BR, Sidar Kondo GW, Meren BG, Domri Rade RG -
 script-validated for color/rarity/legality constraints) added to the Challenge pool as
 arena-exclusive enemies; full-bracket wins pay their signature bounty, and every Challenge run
@@ -2433,7 +2472,7 @@ near Spawn. Use the debug console `spawn resource` command (radius 4 tiles) to v
 art works right now without waiting/relocating.
 
 ### 50. Buttons Not Greyed Out When Unaffordable — `Fixed (playtest-confirmed 2026-08-14)`
-User report: "Upgrade Armory" button stayed fully lit (not greyed out) when the player couldn't
+User report: "Upgrade Armory" button stayed fully lit (not grayed out) when the player couldn't
 afford it, unlike most other cost-gated buttons - asked for a full audit. Found two instances of
 the same bug in `RewardScene.java`: `upgradeButton` ("Upgrade Armory") and `shopTypeRerollButton`
 ("Re-roll Shop Type") were both built/shown with `.setVisible(...)` only, never `.setDisabled(...)`
@@ -2539,7 +2578,7 @@ when a POI is BOTH `type="castle"` AND not tagged "Boss", matching exactly the 7
 landmark POIs. Not yet playtested - needs a NEW game (not the current save) to confirm the 7
 landmarks now show the dungeon icon and Spawn/the 5 boss castles are unaffected.
 
-### 54. "Mysterious Mage Not Found" Warnings — `Fixed (2026-08-13), not yet playtested`
+### 54. "Mysterious Mage Not Found" Warnings — `Fixed (playtest-confirmed 2026-09-01)`
 Found via direct forge.log review (not a user report) while investigating #53 above - the same 4+
 Story `.tmx` maps (Tarnation, Gitrog Bog, Squirrel Farm, Wizard Palace) each have a spawn-point
 object property `enemy="Mysterious Mage"`, but that enemy was only ever defined in a DIFFERENT
@@ -3982,7 +4021,7 @@ than trusting an earlier stage's cached list, and never assume a shell `cd` pers
 separate tool invocations - verify directly (e.g. `pwd`, or just use absolute paths throughout)
 rather than assuming.
 
-### 81. Capitol Upgrade Reputation Bonus Raised to +2 — `Deployed (2026-08-18), not yet playtested`
+### 81. Capitol Upgrade Reputation Bonus Raised to +2 — `Done (playtest-confirmed 2026-09-01)`
 User spec (2026-08-18): "When you build your capitol, let's give +2 reputation to the town vs. the
 current +1." The +1 itself was a 2026-08-17 addition (see #13's history) - `TownRestoration.
 upgradeToCapitol()` carries the pre-upgrade town's accumulated reputation total across the
@@ -4189,15 +4228,30 @@ User wishlist addition (2026-08-18): tiered upgrades for existing economy buildi
 Armory's own level system (#22) - e.g. Mines producing more per level, a bigger Bank/Exchange
 tier. Needs its own design pass on which buildings, how many tiers, and cost curve.
 
+**Named targets (user, 2026-09-01)** - the four things this item should actually deliver:
+- **Mine Upgrades** - tiers that raise the weekly payout (`mineWeeklyGoldPayout`, currently a flat
+  75 gold/week per mine in the plane's settings.json), presumably with Wood/Stone build costs.
+- **City Walls** - a new defensive building. Note this is adjacent to #8 "Town Fortifications",
+  which was REMOVED by user decision 2026-08-12; walls here would be a player-town construction
+  rather than the AI-town fortification that item described, so it is a genuinely new design.
+- **Mage War Camp** - a new building; purpose still to be defined (offensive staging for #87's
+  attacking options is the obvious reading, and would tie the two items together).
+- **Armory Upgrade** - extends the existing Level 1/2 system in #22 with further tiers.
+
 ### 85. New Quests — `Not Started`
 User wishlist addition (2026-08-18): additional quest content beyond the existing story/side-quest
 system (#16's timers, the main story chain). Scope (new story arcs vs. more side-quest variety
 vs. both) not yet defined.
 
-### 86. Additional AI Diplomacy Interaction — `Not Started`
+### 86. Additional AI Diplomacy Interaction — `Removed (2026-09-01, user decision)`
 User wishlist addition (2026-08-18): more player-facing interaction with AI colors beyond the
 existing Reputation/Territory Control levers (#1, #7) - e.g. direct negotiation, alliances,
 trade offers. Needs a design pass on what "diplomacy" concretely means as a player action here.
+
+**Removed 2026-09-01 (user decision).** Not pursued. The reputation system (#1) already gives every
+color a standing that the player moves through play, and territory control (#7) gives the
+consequences; a separate negotiation layer on top was never scoped and is not wanted. Kept here
+rather than deleted, matching how #5, #8 and #26 were retired.
 
 ### 87. More Attacking Options — `Not Started (researched 2026-08-31, see STAR_TOWNS_RESEARCH.md)`
 User wishlist addition (2026-08-18): expand the player's offensive options against AI
@@ -4214,7 +4268,11 @@ groundwork, every claim cited to `file:line` and independently re-verified:
   applied to the AI side, and in a chained fight to every AI seat. Caveat: it lives on the sprite,
   not on `EnemyData`, so it is a `.tmx`-only channel and cannot be authored per catalog enemy.
 - **1-vs-2 needs no new engine work** - see #98, unblocked in round 77.
-- The same document researches a second, related user idea: **five "star" towns around the central
+- **AI end-game objective: capture the centre of the map (user, 2026-09-01).** This is now an
+  explicit requirement of this item, not just a research note - the AI currently has exactly ONE
+  way to win (taking the player's Capitol), and this gives it a second. The research below is the
+  groundwork for it.
+- The same document researches this idea in its built form: **five "star" towns around the central
   campfire as a genuine AI win condition** (the AI currently has only one way to win - taking your
   Capitol). Placement is achievable with `radiusFactor: 0` and no code at all, at a
   seed-tested-safe radius of 45 tiles, and the loss check has one obvious home. Its open design
@@ -4324,7 +4382,7 @@ work committed first as `d6b5caea863` and tagged `tfr-v0.9-base-2.0.14`; then up
   obligation (GitHub untouched until the user says so).
 - Each public release = git tag + zip, always rebuildable.
 
-### 90. Trader Building — `Done (built 2026-08-22), not yet playtested`
+### 90. Trader Building — `Done (playtest-confirmed 2026-09-01)`
 
 User request: a cheaper, earlier-game way to convert gold into Wood/Stone than the Capitol-only
 Exchange, buildable in any ordinary town. Built as a new Economy Building type alongside
@@ -4379,7 +4437,7 @@ Not yet packaged/deployed for testing as of this entry - repo-only.
 
 
 
-### 92. Shop Type Blueprints — `Done (built 2026-08-30/31, rounds 71-76), not yet playtest-confirmed`
+### 92. Shop Type Blueprints — `Mostly done (rounds 71-76 + round-78 fixes, verified in the shipped jar) - one known gap, not yet playtest-confirmed`
 Backfilled 2026-09-01. The largest feature built since v1.03, and the one this file was missing
 entirely. Shop types are no longer just whatever a town slot happened to roll: each type must be
 **unlocked** before the player can build it, and unlocked types are chosen deliberately.
@@ -4392,7 +4450,7 @@ entirely. Shop types are no longer just whatever a town slot happened to roll: e
   Neutral. Player-owned towns are exempt (no color is selling you anything); Neutral/Spawn towns
   have no standing, so base price and no gate.
 - **One type per town** (user spec). The chooser sorts Available -> Built -> Locked, alphabetical
-  within each group, and shows built/locked entries greyed and labelled rather than hiding them -
+  within each group, and shows built/locked entries grayed and labelled rather than hiding them -
   hiding a type reads as "that type does not exist here". Enforced on the random re-type path too
   (see #32), so a destroy-and-rebuild cannot slip in a duplicate the chooser would have refused.
 - **Cartographer land shops are outside the system entirely** (user spec, round 73), keyed on
@@ -4405,6 +4463,22 @@ you left and re-entered the town (round 72); `MapStage`'s five shop registries l
 because they key on tmx object ids that every town reuses (round 73 - see the "Recurring root cause"
 note in `MOD_CHANGELOG.md`); and the whole ladder silently no-opped in the 5 AI capitals, which
 declare a flat `shopList` with no tier lists, until a global shop-name -> tier map was added.
+
+**KNOWN GAP (found by the round-79 audit, 2026-09-01, NOT fixed).** The headline user spec - "can't
+buy a Rare blueprint unless you are at Partner" - can be bypassed. `globalShopTiers` is a per-process
+in-memory accumulator populated only by maps that declare `commonShopList`/`uncommonShopList`/
+`rareShopList`. Five live town templates (`plains_town.tmx`, `island_town.tmx`, `forest_town.tmx`,
+`mountain_town.tmx`, `swamp_town.tmx`) declare a flat `shopList` instead. Their card-shop slots still
+have a candidate pool, so the Buy Blueprint button appears - but `shopTierOf()` finds no tier, and
+`blueprintStandingBlock(null)` skips BOTH the Rare-Partner and Uncommon-Happy branches while
+`blueprintShardCost(null)` charges the Common 20. So on a freshly launched process, going straight to
+one of those five towns sells a Rare blueprint for 20 shards with no standing requirement. Entering
+the Capitol (or any `_generic`/`_identity`/`_tribal` town) first populates the map and the gate works
+correctly. Not save-corrupting, and it errs in the player's favor, so play will never report it.
+Fix options, both small: seed `globalShopTiers` from the plane's town templates at world load, or
+give `shopTierOf()` a static name -> tier fallback. Deliberately deferred rather than changed on
+release eve. (Related: the comment above `allChooserShopNames()` claims the universe is built from
+"the plane's town templates" - nothing reads templates; that stale comment helped hide this.)
 
 ### 93. Bronze Coin Ante Ransom — `Done (built 2026-08-30 to 2026-09-01, rounds 67/68/73/76/77), not yet playtest-confirmed`
 Backfilled 2026-09-01. A recoverable insurance item against a bad ante. Lose a duel while holding a
@@ -4458,15 +4532,21 @@ rather than in a player's save: cards, decks, inventory, equipment, boosters, al
 max life, name/race/avatar. Known accepted cost: an in-progress draft/sealed tournament is
 discarded, exactly as a New Game already does.
 
-### 97. Android Release — `Shipped experimental 2026-08-27 (round 61); no user-side device, awaiting Discord tester reports`
+### 97. Android Release — `Blocked on a device/tester, not on code - v1.03 APK shipped 2026-08-27; v1.04 version fields pre-bumped, no v1.04 APK built`
 Backfilled 2026-09-01. Signed APK plus a paired assets.zip, attached to the `tfr-v1.03` release and
 marked experimental/community-test. **`ANDROID_RELEASE.md` in the repo root is the authoritative
 per-release procedure** - read it before any Android work; it carries the keystore rules (the SAME
 key must sign every future APK), the cmd.exe command-length workaround, the APK/assets.zip
 same-build pairing rule, and the upstream-merge revert-watch list. Portrait-layout fixes for phone
 screens followed in rounds 69 and 70.
+- **Status as of 2026-09-01 (round-79 audit).** Round 78 bumped `tfr.version` to 1.04 and
+  `manifestVersionCode` to 10400 - `ANDROID_RELEASE.md` steps 1 and 2, matching `config.json`'s
+  modVersion 1.04. Nothing else has happened: `forge-gui-android/target/` still holds only the
+  1.03 APK and assets.zip from 2026-08-27, there is no `tfr-v1.04` tag, and step 0 (cut the desktop
+  release first - the APK attaches to that same GitHub release) is not done either. This item cannot
+  move past "shipped experimental" without a tester, since the user has no Android device.
 
-### 98. Multi-Opponent (1-vs-N) Duels — `Unblocked 2026-09-01 (round 77); feature exists, essentially unused`
+### 98. Multi-Opponent (1-vs-N) Duels — `Engine support Done (round 77); content Not Started - zero reachable 1-vs-N fights exist`
 Backfilled 2026-09-01. Research finding, not a new build: `EnemyData.nextEnemy` has ALWAYS built a
 real simultaneous multiplayer match (up to 1-vs-8, full Forge N-player rules, multi-opponent-aware
 AI, dedicated 3- and 4-player match layouts). "Goblin Pack" is the only entry in 1,520 TFR enemies
@@ -4482,6 +4562,16 @@ Two known costs before leaning on it: only the head enemy's rewards pay out, and
 defaults to -1, which silently makes a chained fight a three-way free-for-all instead of you
 against a team. Set it explicitly on every seat. Full survey in `STAR_TOWNS_RESEARCH.md` Part 4.
 
+**Split into engine vs content 2026-09-01, after the round-79 audit parsed the shipped catalogs
+rather than grepping them.** The ENGINE half is done and verified. The CONTENT half is empty, and
+more comprehensively than previously understood: of 1,520 TFR enemies and 464 common ones, exactly
+one (Goblin Pack) has a `nextEnemy` chain - and **Goblin Pack is in no biome spawn list**, appearing
+in the whole plane only in `world/enemies.json` and one content-filter row. Innistrad, Realm of
+Legends and Shandalar Old Border have zero chained enemies. So there is currently **no way to
+encounter a 1-vs-N fight in normal play at all**, and round 77's crash fix, while correct and
+necessary, cannot be observed by playing. Making this reachable means authoring content - the
+obvious home is #87's town assault, where a defended town is the natural set-piece.
+
 ### 99. Roaming-Spawn Declustering — `Done (built 2026-09-01, round 77), not yet playtest-confirmed`
 Backfilled 2026-09-01. User report: "3 Khenra Warriors close to each other." Nothing was broken -
 the biome enemy pick is a memoryless weighted draw, so a common entry naturally comes up several
@@ -4495,7 +4585,7 @@ units of the player is re-rolled, up to 4 times, then spawned anyway - deliberat
 never a skipped spawn, since refusing to spawn would silently thin the world wherever a biome list
 is short. War-tier bosses and quest-tag extra spawns are authored encounters and are left alone.
 
-### 100. Post-v1.03 Fix Rounds (62-77) — `Ongoing; all local-only, none released`
+### 100. Post-v1.03 Fix Rounds (62-79) — `Ongoing; all local-only, none released - closes when v1.04 ships`
 Backfilled 2026-09-01, as a pointer rather than a re-listing. Everything since the v1.03 release has
 been local-repo work awaiting a test pass - sixteen rounds of playtest fixes and the features above.
 The per-round engineering detail lives in `MOD_CHANGELOG.md` (rounds 62-77) and every engine-file
@@ -4503,4 +4593,7 @@ edit in `CORE_ENGINE_CHANGES.md`. Highlights not already given their own item ab
 bleeds traced to three app-session singletons, the inventory crash, tournament stat double-counting,
 the day-end freeze, chest reworks, the "Raise the Banner" main-quest rework and Forsaking backstory,
 the spawn-dialog rebuild (which fixed a New Game+ branch that silently deleted the whole main story
-from a save), ruined-town Inn rules, and the restored Green capital equipment shop.
+from a save), ruined-town Inn rules, and the restored Green capital equipment shop. Round 78 was a
+six-lens pre-release code review (14 confirmed defects fixed, including a save-integrity blocker)
+and round 79 this scope pass plus the Skip Tutorial dialog fix. This item closes when v1.04 is
+actually released; until then "none released" stays literally true.
