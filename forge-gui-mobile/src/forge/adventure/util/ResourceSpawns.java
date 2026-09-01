@@ -86,7 +86,16 @@ public class ResourceSpawns {
             return false;
         java.util.List<String> candidates = new java.util.ArrayList<>();
         for (String name : EconomyBuildings.allChooserShopNames())
-            if (!AdventurePlayer.current().hasShopTypeUnlocked(name))
+            // isShopTypeUnlocked(), NOT the raw hasShopTypeUnlocked() set lookup (2026-09-01
+            // release review, save-integrity). An EMPTY unlockedShopTypes means "legacy save -
+            // everything is already available"; the raw lookup reads it as "nothing is unlocked",
+            // so on a pre-blueprint save EVERY name looked like a valid drop candidate. Granting
+            // one then made the set non-empty, which flipped isShopTypeUnlocked() out of its
+            // legacy branch and left that single type as the player's ENTIRE unlocked list -
+            // permanently, and for every v1.03 player who upgrades. Routing through the same
+            // predicate the chooser uses means a legacy save yields no candidates at all and
+            // falls through to an ordinary reward, exactly as it should.
+            if (!EconomyBuildings.isShopTypeUnlocked(name))
                 candidates.add(name);
         if (candidates.isEmpty()) {
             System.out.println("[TFR-Blueprint] " + source + ": every shop type already known - "

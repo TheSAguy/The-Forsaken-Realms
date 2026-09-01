@@ -355,7 +355,7 @@ withheld, so there is an obvious ladder to climb within your own color before yo
 outward.
 
 **Where the other ~210 went.** Nowhere — they all exist, and the rebuild menu shows you every one
-of them, greyed out, with a live count of how many cards each could stock for you. Nothing is
+of them, grayed out, with a live count of how many cards each could stock for you. Nothing is
 hidden; you can see exactly what you're missing and decide what's worth hunting.
 
 **Three ways to learn a new one:**
@@ -370,7 +370,7 @@ hidden; you can see exactly what you're missing and decide what's worth hunting.
    reshuffles rather than expands.
 
 - **The rebuild menu shows everything**, sorted **Available → Built → Locked**. Locked types are
-  greyed rather than hidden, so you can see what exists to hunt for. Each entry shows how many
+  grayed rather than hidden, so you can see what exists to hunt for. Each entry shows how many
   cards it could actually stock for you right now — a number that grows as you research more sets.
 - **Buy a blueprint where you find it.** Walk into any shop whose type you don't know — including
   in a rival AI capital — and there's a **Buy Blueprint** button. That's the main way to learn new
@@ -383,7 +383,7 @@ hidden; you can see exactly what you're missing and decide what's worth hunting.
   **Partner** for a Rare one. Standing also discounts the price — 30% off at Partner, 15% at
   Happy. Neutral towns have no standing to check, so they sell at the flat price.
 - **One type per town.** A type already standing in a town can't be built there again, so each
-  town ends up with a spread rather than six copies of your favourite.
+  town ends up with a spread rather than six copies of your favorite.
 - The five **Cartographer's Guild** basic-land shops are outside this system entirely — no
   blueprint needed, and none is ever sold or dropped for them.
 
@@ -434,7 +434,7 @@ subset of *those four*, sized by difficulty:
 | Insane | 1 |
 
 Two runs as the same race on Hard can start with different sets. This is why race choice matters
-beyond flavour, and why the race-select `?` button is worth reading before you commit.
+beyond flavor, and why the race-select `?` button is worth reading before you commit.
 
 **Where the other sets went.** Everything else is dealt out among six owners — the five colors and
 a neutral pool. Those aren't locked away in the abstract: they decide **what the shops sell**.
@@ -445,7 +445,7 @@ a neutral pool. Those aren't locked away in the abstract: they decide **what the
 
 Your race's four editions are carved out of the AI shares deliberately, so they stay yours.
 
-The practical consequence: **travelling is how you shop.** If you want cards from a set you have
+The practical consequence: **traveling is how you shop.** If you want cards from a set you have
 not unlocked, you buy them in whichever faction's towns hold that set — which is exactly where
 your standing with that color starts to matter.
 
@@ -526,7 +526,9 @@ discarded**, including cards you've drafted but not yet banked.
 ### Smaller Things Worth Knowing
 
 - **Hold Z** to move at 1.5x on the overworld. Time moves faster too.
-- **Selling** cards pays a flat 25% of value; the town's opinion of you adjusts it.
+- **Selling** cards pays a share of value set by your difficulty - 60% Easy, 50% Normal,
+  25% Hard, 5% Insane (shown as the sale price on the new-game screen); the town's opinion of
+  you adjusts it from there.
 - The **blue dot** in the quest list marks the quest you're currently tracking.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.

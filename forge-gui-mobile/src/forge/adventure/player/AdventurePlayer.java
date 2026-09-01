@@ -287,6 +287,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " - ante recovered, defeat gold loss waived; marked for reclaim on a future win");
     }
 
+    /**
+     * Drops an unconsumed Bronze Coin gold-loss waiver (2026-09-01 release review).
+     * <p>
+     * Only one caller: a Capitol-defense loss ends the run through triggerCapitolDefeat() and
+     * never reaches defeated(), so a coin paid on that duel left the flag armed. It survived into
+     * the next loaded game in the same process and silently waived an unrelated defeat's gold
+     * penalty. load() already clears the flag, so this only has to cover the in-process path.
+     */
+    public void clearSuppressDefeatGoldLoss() {
+        suppressDefeatGoldLoss = false;
+    }
+
     /** Does this enemy still hold a Bronze Coin the player paid them? */
     public boolean owesCoinRansom(String enemyName) {
         return enemyName != null && coinRansomedEnemies.contains(enemyName);

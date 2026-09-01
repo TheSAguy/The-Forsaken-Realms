@@ -4418,7 +4418,9 @@ and you take the coin back.
   wherever that rematch happens.
 - **One coin per enemy** (user spec, round 73). A second coin paid to the same enemy used to be
   silently swallowed - two losses to one fox cost two coins and returned one.
-- Available as a Mythic Armory item at 15,000 gold (round 68), and marked on the player statistics
+- Available as a Mythic Armory item at **1,000 gold** (Mythic rarity from round 68; priced 15,000
+  that round, retuned to 1,000 in round 69 and confirmed intended 2026-09-01), and marked on the
+  player statistics
   page next to any enemy currently holding one (round 76).
 - **Reclaiming is a loot tile** (user request, round 77): the coin appears as a card on the win's
   reward screen rather than appearing silently in the inventory. Arena pays it out with the final

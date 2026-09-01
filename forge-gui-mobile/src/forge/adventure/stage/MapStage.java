@@ -672,6 +672,11 @@ public class MapStage extends GameStage {
         shopSignAnchors.clear();
         shopCandidatePools.clear();
         shopTierPools.clear();
+        // The blueprint drop universe is DERIVED from those pools, so its cache has to go too
+        // (2026-09-01 release review). invalidateChooserShopNames() existed and documented itself
+        // as "dropped when a new map loads" - but nothing had ever called it, so the universe
+        // stayed frozen at whatever the first pickup of the session happened to see.
+        EconomyBuildings.invalidateChooserShopNames();
 
         if (collisionGroup != null)
             collisionGroup.remove();

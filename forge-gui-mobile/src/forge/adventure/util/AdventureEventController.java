@@ -90,6 +90,16 @@ public class AdventureEventController implements Serializable {
 
     private final Map<String, Long> nextEventDate = new HashMap<>();
 
+    /**
+     * Lets InnScene's pool-change re-roll bypass the once-per-day availability gate
+     * (2026-09-01 release review). That path is REPLACING an event that already existed, not
+     * creating an extra one, so the gate - which exists to stop a player farming fresh
+     * tournaments - does not apply, and must not be allowed to turn the re-roll into a deletion.
+     */
+    public void clearNextEventDate(String pointID) {
+        nextEventDate.remove(pointID);
+    }
+
     public static void clear() {
         object = null;
     }

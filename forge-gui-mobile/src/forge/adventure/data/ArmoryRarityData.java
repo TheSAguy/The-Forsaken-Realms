@@ -10,6 +10,15 @@ import com.badlogic.gdx.utils.ObjectMap;
  * Config load and never mutated. A missing or unparseable file leaves this null, and
  * {@link forge.adventure.util.ArmoryRarity} falls back to the historical flat
  * Common 60 / Uncommon 30 / Rare 8 / Mythic 2.
+ * <p>
+ * <b>DEPENDENCY (2026-09-01 release review):</b> {@code armoryRarityGatingEnabled} has no effect
+ * on its own - {@code editionProgressionEnabled} must ALSO be true for this table to be consulted
+ * at all. The venue stamp that selects a bracket is written inside
+ * {@code EditionProgression.restrictShopRewardsForCurrentTown()}, past that method's
+ * edition-progression early return, so with edition progression off the venue is never stamped and
+ * every Armory silently falls back to the flat odds. Harmless for The Forsaken Realms, which
+ * enables both - but a second plane wanting timed rarity without edition progression would get a
+ * completely dead feature whose only symptom is the absence of a [TFR-ArmoryRarity] log line.
  */
 public class ArmoryRarityData {
 

@@ -10,6 +10,19 @@
 // why there is no separate "allowed rarities" list - a zero-weight tier can never be rolled, so
 // no slot is ever deleted or re-rolled, and every Armory keeps its full 6 (or 8 at Level 2) items.
 //
+// REQUIRES BOTH FLAGS (2026-09-01 release review): this table is only consulted when config.json
+// has armoryRarityGatingEnabled AND editionProgressionEnabled true. The venue stamp that picks a
+// bracket is written inside EditionProgression.restrictShopRewardsForCurrentTown(), past its
+// edition-progression early return, so with edition progression off every Armory silently uses the
+// flat fallback odds instead. Both are true for The Forsaken Realms.
+//
+// KNOWN COSMETIC EDGE (2026-09-01 release review, deliberately not fixed): the bracket is chosen
+// from the CURRENT in-game week, but an Armory's stock is seeded from its own restock window. On
+// the day the calendar week ticks over, an Armory whose window did not start on a week boundary
+// re-rolls its shelf mid-window with no restock having happened - an item you saw yesterday can be
+// gone today. Self-correcting at the next genuine restock, and only possible on the week 2/3/4
+// boundary days; after week 4 the open-ended row makes it stop entirely.
+//
 // Weeks are 1-indexed and 7 days long: week 1 = days 1-7, week 2 = days 8-14, week 4 = day 22 on.
 // weekMax -1 means "this row onwards, forever". Weights do not have to sum to 100 - the roller
 // normalizes by each row's own total.

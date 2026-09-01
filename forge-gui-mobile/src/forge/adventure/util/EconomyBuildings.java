@@ -389,7 +389,9 @@ public class EconomyBuildings {
         if (random.nextFloat() < ARCHAEOLOGIST_BLUEPRINT_CHANCE) {
             List<String> unknown = new ArrayList<>();
             for (String name : allChooserShopNames())
-                if (!AdventurePlayer.current().hasShopTypeUnlocked(name))
+                // Legacy-aware predicate, not the raw set lookup - see the twin call in
+                // ResourceSpawns.grantRandomBlueprint() for why (2026-09-01 release review).
+                if (!isShopTypeUnlocked(name))
                     unknown.add(name);
             if (!unknown.isEmpty()) {
                 Collections.sort(unknown); // deterministic order before the seeded pick
@@ -1265,6 +1267,26 @@ public class EconomyBuildings {
         return data != null && "LandShop".equals(data.sprite);
     }
 
+    /**
+     * Does a ShopData with this exact name actually exist in shops.json?
+     * <p>
+     * Not hypothetical (2026-09-01 release review): a town template can declare a tier-pool name
+     * that was never authored - {@code plains_town_generic.tmx} lists an "Everything" slot with no
+     * matching ShopData. MapStage skips such a slot when it builds the actor, but it has already
+     * registered the name into the tier maps by then, so the name reaches the blueprint universe.
+     * A blueprint for a type that does not exist can never be built and would sit in the player's
+     * unlocked set forever.
+     */
+    public static boolean shopTypeExists(String shopName) {
+        if (shopName == null)
+            return false;
+        for (ShopData data : new Array.ArrayIterator<>(WorldData.getShopList())) {
+            if (shopName.equals(data.name))
+                return true;
+        }
+        return false;
+    }
+
     /** {@link #isBasicLandShop(ShopData)} by shop NAME, for the paths that only carry a name. */
     public static boolean isBasicLandShopName(String shopName) {
         if (shopName == null)
@@ -1494,18 +1516,37 @@ public class EconomyBuildings {
                 for (String name : new Array.ArrayIterator<>(tierNames))
                     names.add(name);
         }
-        // The 5 Cartographer basic-land shops never belong in the blueprint universe (user spec
-        // 2026-08-31). Without this a Mystery/Chest pickup could hand out a "Forest" blueprint
-        // that no chooser will ever offer, so the unlock would be permanently dead - the exact
-        // thing this method's own comment claims cannot happen.
-        names.removeIf(EconomyBuildings::isBasicLandShopName);
-        // ...plus every type any PREVIOUS map taught us (2026-08-31). Without this a chest opened
-        // inside an AI capital saw an empty universe - those maps declare a flat shopList and have
-        // no tier pools - so grantRandomBlueprint() found no candidates and silently fell through
-        // to an ordinary reward. The player's own town always supplies the full ladder.
+        // Every type any PREVIOUS map taught us (2026-08-31). Without this a chest opened inside
+        // an AI capital saw an empty universe - those maps declare a flat shopList and have no
+        // tier pools - so grantRandomBlueprint() found no candidates and silently fell through to
+        // an ordinary reward. The player's own town always supplies the full ladder.
         names.addAll(globalShopTiers.keySet());
+        // FILTER AFTER THE UNION, never before it (2026-09-01 release review). The removeIf below
+        // used to sit ABOVE the addAll, so every name it stripped walked straight back in from
+        // globalShopTiers on the next line - the filter was real code that did nothing. Measured
+        // at the time: 18 of 269 accumulated names were types no chooser can ever offer.
+        //
+        // Three families are excluded, all of them verified to appear ONLY in single-name tmx
+        // pools (i.e. none is legitimately choosable anywhere):
+        //  - the 5 Cartographer basic-land shops (user spec 2026-08-31),
+        //  - the 12 Armory-family shops, which route to buildSimpleRepairDialog and never reach a
+        //    chooser at all - this family was never filtered here even before the ordering bug,
+        //  - any name with no ShopData behind it (plains_town_generic declares an "Everything"
+        //    slot that does not exist in shops.json; MapStage skips the slot but registers the
+        //    tier first). A blueprint for a nonexistent type is dead on arrival.
+        names.removeIf(EconomyBuildings::isBasicLandShopName);
+        names.removeIf(EconomyBuildings::isArmoryShopName);
+        names.removeIf(n -> !shopTypeExists(n));
         chooserShopNames = new ArrayList<>(names);
         System.out.println("[TFR-Blueprint] chooser shop-name universe: " + chooserShopNames.size() + " type(s)");
+        // Do NOT cache an empty universe (2026-09-01 release review). A Mystery diamond picked up
+        // before any town has been entered this session sees no tier pools and no globalShopTiers,
+        // and caching that zero froze blueprint drops off for the whole process.
+        if (chooserShopNames.isEmpty()) {
+            java.util.List<String> empty = chooserShopNames;
+            chooserShopNames = null;
+            return empty;
+        }
         return chooserShopNames;
     }
 

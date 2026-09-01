@@ -14658,6 +14658,10 @@ Local-repo-only round. Three smaller items ahead of the card-shop-chooser build.
   - Explicit `cost: 15000` added. `ItemData.cost` defaults to 1000, which would have made it
     absurdly cheap next to Mythic peers (6,000-80,000). Mid-range chosen to reflect a strong but
     RECOVERABLE insurance item; flagged to the user as tunable.
+  - **CORRECTION (2026-09-01):** it was retuned back to **1,000** in round 69 and that is the
+    intended price - user-confirmed when the release review flagged the tree as self-contradictory.
+    This entry is left as the record of the original reasoning; `items.json`'s 1,000 is the live
+    value and MOD_SCOPE #93 says so. The round-69 edit simply went unlogged at the time.
   - Description rewritten - it was the only Coin whose text never said what it was for.
   - Expected frequency: 2% Mythic roll x 1-of-28 sellable Mythics = ~0.5% per Armory restock.
 - **Dungeon shard pickups are pure shards again** (user request: "This was the jimmy rig we had
@@ -15158,6 +15162,15 @@ point at POIs the regenerated world no longer has.
     single point all six shop-generation call sites route through, and it already holds the town's
     changes. AI capitals are untouched: their Armory shops use hand-written fixed item lists and
     never roll a rarity at all.
+  - **Two limitations found by the 2026-09-01 release review, both accepted rather than fixed.**
+    (1) The bracket comes from the current week but the stock is seeded from the Armory's own
+    restock window, so on a week 2/3/4 boundary day an Armory whose window did not start on a
+    boundary re-rolls its shelf mid-window with no restock - an item can vanish between visits.
+    Self-correcting at the next real restock, and it stops after week 4. Note `cardsBought` is
+    index-keyed, so a re-roll also re-points any "already bought" mask.
+    (2) `armoryRarityGatingEnabled` silently does nothing unless `editionProgressionEnabled` is
+    also true, because the venue stamp is written past that feature's early return. Both are on
+    for this plane; documented at both code and table so a future plane does not trip on it.
 - **Capitol weekly lockout** (user spec): each color may target the player's Capitol once per 7
   days, stamped at DISPATCH so it counts "regardless if the mage wins, loses, gets killed". That
   ordering matters - a mage walks to its target over several in-game days and can be duelled en

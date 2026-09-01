@@ -685,8 +685,12 @@ public class EventScene extends MenuScene implements IAfterMatch {
             humanMatch.p2.losses++;
             currentEvent.matchesWon++;
             if (innTutorialQuestActive()) {
-                GameHUD.getInstance().addNotification("Good. Don't go updating your deck with "
-                        + "this loot just yet - the win itself is the real prize here.");
+                // Deferred and shown as a dialog for exactly the reason the refund message was
+                // (2026-09-01 release review): GameHUD's stage is neither acted nor drawn while
+                // this scene is up, so the notification animated and expired against a screen
+                // nobody was looking at. Round 77 fixed the refund message and missed its sibling
+                // four lines away.
+                pendingWinNudge = true;
             }
         } else {
             humanMatch.winner = humanMatch.p2;
@@ -698,6 +702,12 @@ public class EventScene extends MenuScene implements IAfterMatch {
                 AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
                 // Deferred to the end of setWinner - see showPendingCoinRefundDialog().
                 pendingCoinRefundItem = currentEvent.enteredWithCoinItem;
+                // ONE refund per entry (2026-09-01 release review). enteredWithCoinItem was never
+                // cleared and the guard is `currentRound < 3`, so in a RoundRobin pod - where the
+                // player can lose round 1 AND round 2 - the Coin was handed back TWICE and the
+                // player finished the tournament holding more Coins than they entered with. The
+                // quest prologue promises one safety net, not one per losable round.
+                currentEvent.enteredWithCoinItem = null;
             }
         }
 
@@ -711,8 +721,24 @@ public class EventScene extends MenuScene implements IAfterMatch {
 
         finishRound();
         // Shown last, after finishRound() has rebuilt the bracket display, so the dialog is not
-        // wiped by the refresh() that follows a round change.
+        // wiped by the refresh() that follows a round change. The two are mutually exclusive
+        // anyway - one fires on a loss, the other on a win.
         showPendingCoinRefundDialog();
+        showPendingWinNudgeDialog();
+    }
+
+    /** Set on a tutorial-quest round WIN; consumed after finishRound(). */
+    private boolean pendingWinNudge;
+
+    /** The win-side twin of {@link #showPendingCoinRefundDialog()} - same wrong-stage fix. */
+    private void showPendingWinNudgeDialog() {
+        if (!pendingWinNudge)
+            return;
+        pendingWinNudge = false;
+        showDialog(createGenericDialog("Well Played",
+                "Good. Do not go updating your deck with this loot just yet - the win itself is "
+                        + "the real prize here.",
+                Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
     }
 
     /** The Coin item refunded by the tutorial safety net this round, or null. Held rather than

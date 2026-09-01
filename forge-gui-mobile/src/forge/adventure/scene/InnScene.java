@@ -245,6 +245,7 @@ public class InnScene extends UIScene {
 
     private static void initLocalEvent() {
         localEvent = null;
+        AdventureEventData replacingStaleEvent = null;
         boolean playerTown = isPlayerOwnedTown();
         for (AdventureEventData data :  AdventurePlayer.current().getEvents()){
             if (data.sourceID.equals(localPointOfInterestId) && data.eventOrigin == localObjectId){
@@ -261,6 +262,14 @@ public class InnScene extends UIScene {
                             + data.playerTownPoolStamp + " -> " + EditionProgression.playerTownPoolStamp()
                             + ") - re-rolling this Inn's Available tournament");
                     AdventurePlayer.current().getEvents().remove(data);
+                    // Both halves below are required (2026-09-01 release review). Removing the
+                    // event and falling through only WORKS if createEvent() can actually produce a
+                    // replacement - and it refuses while nextEventDate still holds the stamp put
+                    // there when this very event was initialized. Without that clear, the
+                    // "re-roll" silently became a DELETE: finish a research, walk back into your
+                    // own Inn, and the tournament was simply gone until the next day.
+                    AdventureEventController.instance().clearNextEventDate(localPointOfInterestId);
+                    replacingStaleEvent = data;
                     break; // fall through to the create path below
                 }
                 localEvent = data;
@@ -269,8 +278,21 @@ public class InnScene extends UIScene {
         }
         AdventureEventController controller = AdventureEventController.instance();
         localEvent = controller.createEvent(localPointOfInterestId, playerTown);
-        if(localEvent != null)
+        if (localEvent != null) {
             controller.initializeEvent(localEvent, localPointOfInterestId, localObjectId, changes);
+        } else if (replacingStaleEvent != null) {
+            // createEvent() can still return null for a reason the re-roll cannot fix - most
+            // plausibly no draft block sitting entirely inside the freshly-changed pool. Putting
+            // the old event back is strictly better than leaving the player's own Inn empty: its
+            // pool is narrower than it should be, but it is playable. The stamp is refreshed so
+            // the same failing re-roll is not retried on every future visit.
+            System.out.println("[TFR-InnEditions] re-roll produced no event - restoring the "
+                    + "previous tournament rather than leaving this Inn empty");
+            replacingStaleEvent.playerTownPoolStamp = EditionProgression.playerTownPoolStamp();
+            AdventurePlayer.current().getEvents().add(replacingStaleEvent);
+            localEvent = replacingStaleEvent;
+        }
+        replacingStaleEvent = null;
     }
 
     // Inn Tournament Re-roll (2026-08-24, user spec: "let the player be able to re-roll the

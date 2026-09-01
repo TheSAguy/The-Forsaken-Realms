@@ -100,7 +100,12 @@ def assert_jar_is_fresh(built_jar):
     """
     jar_mtime = os.path.getmtime(built_jar)
     newest_name, newest_mtime = None, 0.0
-    for module in ("forge-gui-mobile", "forge-gui", "forge-game", "forge-core", "forge-ai"):
+    # forge-gui-mobile-dev FIRST, and it was missing entirely until 2026-09-01: it is the module
+    # whose `mvn -pl forge-gui-mobile-dev -am package` actually produces this jar, so a round that
+    # touched only its sources (the desktop launcher/adapter) could fail to build and still sail
+    # past this guard - the precise 2026-08-30 incident the guard exists to prevent.
+    for module in ("forge-gui-mobile-dev", "forge-gui-mobile", "forge-gui", "forge-game",
+                   "forge-core", "forge-ai"):
         root = os.path.join(REPO, module)
         if not os.path.isdir(root):
             continue

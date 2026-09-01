@@ -501,6 +501,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // persistence) entirely, they're meaningless once the game is over.
                 if (isCapitolDefense) {
                     currentMob = null;
+                    // This path never reaches defeated(), which is what normally consumes the
+                    // Bronze Coin gold-loss waiver - drop it here or it survives into the next
+                    // loaded game and waives an unrelated defeat (2026-09-01 release review).
+                    Current.player().clearSuppressDefeatGoldLoss();
                     triggerCapitolDefeat();
                     return;
                 }
