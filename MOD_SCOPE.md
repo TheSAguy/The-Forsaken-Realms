@@ -6,6 +6,13 @@ change — add ideas, cross things off, revise scope.
 
 **Status legend:** `Not Started` · `In Progress` · `Done` · `Open Question` (design not settled yet)
 
+**Currency:** caught up to **round 77 (2026-09-01)**. This file went stale between rounds 61 and 77
+while `MOD_CHANGELOG.md` kept running; items **#92-#100** were backfilled in one pass on 2026-09-01
+to close that gap, and #87 updated. Per-round engineering detail always lives in `MOD_CHANGELOG.md`
+and every engine-file edit in `CORE_ENGINE_CHANGES.md` - this file is the feature list and its
+status, nothing more. **Nothing since the v1.03 release (2026-08-27) has shipped to players**:
+rounds 62-77 are all local-only, awaiting a test pass.
+
 ## Theme
 
 Make the Shandalar-style overworld a lot more dynamic and interactive — the five colors
@@ -4192,10 +4199,27 @@ User wishlist addition (2026-08-18): more player-facing interaction with AI colo
 existing Reputation/Territory Control levers (#1, #7) - e.g. direct negotiation, alliances,
 trade offers. Needs a design pass on what "diplomacy" concretely means as a player action here.
 
-### 87. More Attacking Options — `Not Started`
+### 87. More Attacking Options — `Not Started (researched 2026-08-31, see STAR_TOWNS_RESEARCH.md)`
 User wishlist addition (2026-08-18): expand the player's offensive options against AI
 towns/castles beyond the current Territory Control capture mechanism (#7). Scope not yet defined -
 could mean new attack types, mercenary/ally forces, siege mechanics, or something else.
+
+**Researched but not built (2026-08-31).** `STAR_TOWNS_RESEARCH.md` in the repo root answers the
+groundwork, every claim cited to `file:line` and independently re-verified:
+- **The player cannot attack an AI town today** - confirmed, no siege mechanic exists in code or
+  data. All 20 color-town maps contain zero enemy objects, and "siege" appears once in the whole
+  adventure tree as an unimplemented enum value. The only route into a color's territory is
+  wholesale: clear its castle boss, which reverts every town it owns to neutral ruins.
+- **Giving the defending AI a head start already works.** `EffectData.startBattleWithCard` is
+  applied to the AI side, and in a chained fight to every AI seat. Caveat: it lives on the sprite,
+  not on `EnemyData`, so it is a `.tmx`-only channel and cannot be authored per catalog enemy.
+- **1-vs-2 needs no new engine work** - see #98, unblocked in round 77.
+- The same document researches a second, related user idea: **five "star" towns around the central
+  campfire as a genuine AI win condition** (the AI currently has only one way to win - taking your
+  Capitol). Placement is achievable with `radiusFactor: 0` and no code at all, at a
+  seed-tested-safe radius of 45 tiles, and the loss check has one obvious home. Its open design
+  questions (which anchor the arms point at, starting ownership, win threshold, whether the player
+  can retake one) are listed there and are the real blocker, not the code.
 
 ### 88. Post-Playtest Polish: Quiet Despawns, Tutorial Additions, Real Resource Sparkle, Two Log-Review Bugs Fixed — `Done (playtest-confirmed 2026-08-22)`
 Two user messages in one thread: a request to quiet down routine dungeon-despawn notifications
@@ -4354,3 +4378,127 @@ Two things a numbers pass alone couldn't fix, also resolved same day:
 Not yet packaged/deployed for testing as of this entry - repo-only.
 
 
+
+### 92. Shop Type Blueprints — `Done (built 2026-08-30/31, rounds 71-76), not yet playtest-confirmed`
+Backfilled 2026-09-01. The largest feature built since v1.03, and the one this file was missing
+entirely. Shop types are no longer just whatever a town slot happened to roll: each type must be
+**unlocked** before the player can build it, and unlocked types are chosen deliberately.
+
+- **Unlock currency is a blueprint.** Found as a drop (Mystery/Chest pickups, and from round 76 the
+  Archaeologist at 15% per expedition, see #24), or bought at a shop's Buy Blueprint button.
+- **Reputation ladder on purchases** (user spec): Rare types need Partner standing, Uncommon needs
+  Happy, nothing at all is sold below Neutral. Cost scales on the SAME standing -> multiplier table
+  card prices use, so the two can never drift: 14/28/70 at Partner, 17/34/85 at Happy, 20/40/100 at
+  Neutral. Player-owned towns are exempt (no color is selling you anything); Neutral/Spawn towns
+  have no standing, so base price and no gate.
+- **One type per town** (user spec). The chooser sorts Available -> Built -> Locked, alphabetical
+  within each group, and shows built/locked entries greyed and labelled rather than hiding them -
+  hiding a type reads as "that type does not exist here". Enforced on the random re-type path too
+  (see #32), so a destroy-and-rebuild cannot slip in a duplicate the chooser would have refused.
+- **Cartographer land shops are outside the system entirely** (user spec, round 73), keyed on
+  `ShopData.sprite == "LandShop"` - the 5 basics only; the twelve nonbasic land shops are untouched.
+- Blueprint drops are revealed as a card you turn over (`Reward.Type.Blueprint`), not a HUD line
+  that scrolls past unread.
+
+Three bugs of note along the way, all fixed: shops whose identity changed only half-applied until
+you left and re-entered the town (round 72); `MapStage`'s five shop registries leaked between towns
+because they key on tmx object ids that every town reuses (round 73 - see the "Recurring root cause"
+note in `MOD_CHANGELOG.md`); and the whole ladder silently no-opped in the 5 AI capitals, which
+declare a flat `shopList` with no tier lists, until a global shop-name -> tier map was added.
+
+### 93. Bronze Coin Ante Ransom — `Done (built 2026-08-30 to 2026-09-01, rounds 67/68/73/76/77), not yet playtest-confirmed`
+Backfilled 2026-09-01. A recoverable insurance item against a bad ante. Lose a duel while holding a
+**Bronze Challenge Coin** and you may hand it to the victor: every card you anted this duel comes
+back and the defeat's gold penalty is waived (life loss still applies). Beat that same enemy later
+and you take the coin back.
+
+- Ordinary duels only - never in Inn tournaments or Arena brackets (those have their own entry-fee
+  economies), and never against a boss, so it cannot trivialize a set-piece fight. Reclaiming is
+  allowed anywhere, including the Arena: beating the enemy holding your coin should return it
+  wherever that rematch happens.
+- **One coin per enemy** (user spec, round 73). A second coin paid to the same enemy used to be
+  silently swallowed - two losses to one fox cost two coins and returned one.
+- Available as a Mythic Armory item at 15,000 gold (round 68), and marked on the player statistics
+  page next to any enemy currently holding one (round 76).
+- **Reclaiming is a loot tile** (user request, round 77): the coin appears as a card on the win's
+  reward screen rather than appearing silently in the inventory. Arena pays it out with the final
+  bracket loot.
+
+### 94. Timed Armory Rarity Gating — `Done (built 2026-08-31, round 75), not yet playtest-confirmed`
+Backfilled 2026-09-01. Extends #22/#33: what the Armory can stock is gated by how long the run has
+been going and by where the shop is. No Rare anywhere in week 1; no Mythic until week 3, and then
+only in the Capitol; player towns catch up at week 4, when the Capitol also sharpens to 45/35/16/4.
+Neutral towns never sell Mythics.
+
+Expressed as ONE weight table (`config tables/armory_rarity.json`), not a gate plus an odds table,
+because a banned rarity is simply a zero weight. That means no Armory slot is ever dropped - unlike
+the old post-generation Mythic strip, which left a hole - and the seeded weekly stock stays
+reproducible because it is still one RNG draw per slot. AI capitals are unaffected: their Armory
+shops use hand-written fixed item lists and never roll a rarity at all.
+
+### 95. Per-Color Capitol Attack Cooldown — `Done (built 2026-08-31, round 75), not yet playtest-confirmed`
+Backfilled 2026-09-01. Extends #7. Each color may target the player's Capitol at most once per 7
+in-game days (`capitolTargetCooldownDays`, rolling window, 0 disables). Stamped at **dispatch**, not
+at resolution, so it counts "regardless if the mage wins, loses, gets killed" per the user spec -
+a mage walks to its target over several days and can be duelled en route, so a resolution-time
+stamp would let a color re-target while its first mage was still on the road.
+
+### 96. New Game+ Is Now Genuinely a New Game — `Done (built 2026-08-31, round 74), not yet playtest-confirmed`
+Backfilled 2026-09-01. User report: "I started a NG+ and it seems none of the shop mechanics are
+working... with NG+ everything is unlocked." Root cause: the NG+ path deliberately loads an existing
+save to keep the collection, and therefore never called `create()` - where every per-run field is
+seeded. An audit found the same gap in nine places, so the fix addresses the class, not the
+instance: shop-type unlocks, edition unlocks, research timers, character flags, color reputation,
+coin-ransom marks, events, blessing, and the player/AI edition exclusivity pass are all re-run now.
+
+Deliberately carried forward, and logged at reset time so a future bad edit shows up in `forge.log`
+rather than in a player's save: cards, decks, inventory, equipment, boosters, all four currencies,
+max life, name/race/avatar. Known accepted cost: an in-progress draft/sealed tournament is
+discarded, exactly as a New Game already does.
+
+### 97. Android Release — `Shipped experimental 2026-08-27 (round 61); no user-side device, awaiting Discord tester reports`
+Backfilled 2026-09-01. Signed APK plus a paired assets.zip, attached to the `tfr-v1.03` release and
+marked experimental/community-test. **`ANDROID_RELEASE.md` in the repo root is the authoritative
+per-release procedure** - read it before any Android work; it carries the keystore rules (the SAME
+key must sign every future APK), the cmd.exe command-length workaround, the APK/assets.zip
+same-build pairing rule, and the upstream-merge revert-watch list. Portrait-layout fixes for phone
+screens followed in rounds 69 and 70.
+
+### 98. Multi-Opponent (1-vs-N) Duels — `Unblocked 2026-09-01 (round 77); feature exists, essentially unused`
+Backfilled 2026-09-01. Research finding, not a new build: `EnemyData.nextEnemy` has ALWAYS built a
+real simultaneous multiplayer match (up to 1-vs-8, full Forge N-player rules, multi-opponent-aware
+AI, dedicated 3- and 4-player match layouts). "Goblin Pack" is the only entry in 1,520 TFR enemies
+and 464 common enemies that uses it.
+
+It went unused because opening a chained duel **crashed**: 491 of the 493 enemy atlases carry
+exactly one avatar frame, and the duel scene asked for one per seat. Round 77 fixed that (clamp,
+plus a null guard for the one atlas with zero avatar frames, plus per-seat nameplates and a
+shared-sprite flip bug). The feature is now reachable with no data-file changes - setting
+`nextEnemy` on a cloned `EnemyData` is the entire "make this a 1-vs-2".
+
+Two known costs before leaning on it: only the head enemy's rewards pay out, and `teamNumber`
+defaults to -1, which silently makes a chained fight a three-way free-for-all instead of you
+against a team. Set it explicitly on every seat. Full survey in `STAR_TOWNS_RESEARCH.md` Part 4.
+
+### 99. Roaming-Spawn Declustering — `Done (built 2026-09-01, round 77), not yet playtest-confirmed`
+Backfilled 2026-09-01. User report: "3 Khenra Warriors close to each other." Nothing was broken -
+the biome enemy pick is a memoryless weighted draw, so a common entry naturally comes up several
+rolls running, and no code had ever looked at what was already on screen.
+
+Measured before tuning: across 251 roaming spawns in one session's log there were 18 runs of the
+same enemy twice in a row and exactly **3** runs of three in a row (Khenra Warrior, Fox, Falcon) -
+matching the user's "3 instances" precisely. Pairs are constant and read as normal; triples are what
+reads as broken. So a fresh roll of an enemy that already has 2 of itself alive within 220 world
+units of the player is re-rolled, up to 4 times, then spawned anyway - deliberately a re-roll and
+never a skipped spawn, since refusing to spawn would silently thin the world wherever a biome list
+is short. War-tier bosses and quest-tag extra spawns are authored encounters and are left alone.
+
+### 100. Post-v1.03 Fix Rounds (62-77) — `Ongoing; all local-only, none released`
+Backfilled 2026-09-01, as a pointer rather than a re-listing. Everything since the v1.03 release has
+been local-repo work awaiting a test pass - sixteen rounds of playtest fixes and the features above.
+The per-round engineering detail lives in `MOD_CHANGELOG.md` (rounds 62-77) and every engine-file
+edit in `CORE_ENGINE_CHANGES.md`. Highlights not already given their own item above: save/load state
+bleeds traced to three app-session singletons, the inventory crash, tournament stat double-counting,
+the day-end freeze, chest reworks, the "Raise the Banner" main-quest rework and Forsaking backstory,
+the spawn-dialog rebuild (which fixed a New Game+ branch that silently deleted the whole main story
+from a save), ruined-town Inn rules, and the restored Green capital equipment shop.
