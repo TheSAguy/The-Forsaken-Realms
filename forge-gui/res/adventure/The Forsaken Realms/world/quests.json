@@ -6934,12 +6934,6 @@
 				]
 			},
 			{
-				"condition": [
-					{
-						"checkCharacterFlag": "freeChallengeCoins",
-						"not": true
-					}
-				],
 				"action": [
 					{ "addItem": "Colorless rune" },
 					{ "addItem": "Bronze Challenge Coin" },
@@ -6947,56 +6941,14 @@
 					{ "addItem": "Bronze Challenge Coin" },
 					{ "addItem": "Challenge Coin" },
 					{ "addItem": "Silver Challenge Coin" },
-					{
-						"setCharacterFlag": {
-							"key": "freeChallengeCoins",
-							"val": 1
-						}
-					},
-					{
-						"setQuestFlag": {
-							"key": "mainQuest",
-							"val": 1
-						}
-					},
-					{
-						"setCharacterFlag": {
-							"key": "noQuest",
-							"val": 1
-						}
-					},
+					{ "setCharacterFlag": { "key": "freeChallengeCoins", "val": 1 } },
+					{ "setQuestFlag": { "key": "mainQuest", "val": 1 } },
+					{ "setCharacterFlag": { "key": "noQuest", "val": 1 } },
+					{ "issueQuest": "43" },
 					{ "runCommand": "teleport to poi Spawn" }
 				],
-				"name": "Skip tutorial - just get me to the game"
-			},
-			{
-				"condition": [
-					{
-						"checkCharacterFlag": "newGamePlus"
-					}
-				],
-				"name": "Been here, done that. Show me to the enemies. (New Game+)",
-				"text": "Okay, skipping all that hard work somebody put into dialog, the portal opens and you can leave.",
-				"options": [
-					{
-						"action": [
-							{
-								"removeItem": "",
-								"addItem": "Colorless rune",
-								"setColorIdentity": "",
-								"advanceQuestFlag": "",
-								"advanceMapFlag": "",
-								"setCharacterFlag": {
-									"key": "noQuest",
-									"val": "1"
-								},
-								"issueQuest": "",
-								"POIReference": ""
-							}
-						],
-						"name": "(Continue)"
-					}
-				]
+				"name": "Skip the introduction - straight to building your Capitol",
+				"text": "You have walked this ash before. The stasis sloughs away and the cave mouth stands open - no lecture required. What matters has not changed: five rivals hold five castles, and the realm answers to whoever plants a banner first. Go build your Capitol."
 			}
 		]
 	},

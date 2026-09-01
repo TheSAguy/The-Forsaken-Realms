@@ -1,5 +1,6 @@
 package forge.adventure.scene;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
@@ -16,6 +18,8 @@ import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.EnemyData;
+import forge.adventure.data.ItemData;
+import forge.adventure.data.ItemListData;
 import forge.adventure.data.WorldData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.stage.GameHUD;
@@ -259,7 +263,28 @@ public class PlayerStatisticScene extends UIScene {
             Image enemyImage = new Image(new EnemySprite(data).getAvatar());
             enemyImage.setScaling(Scaling.stretch);
             scrollContainer.add(enemyImage).pad(5).size(16).fillY();
-            scrollContainer.add().width(16);
+            // Bronze Coin marker (user spec 2026-08-31: "put a little star/coin next to the enemy
+            // that has one of your bronze coins, so you know"). This enemy is holding a coin you
+            // handed over as an ante ransom - beating them returns it.
+            //
+            // Drawn into the 16px spacer cell this row already reserved, so no other row moves and
+            // the column alignment is untouched. Keyed on the statistic's own map key, which is the
+            // same enemy name DuelScene stamps the ransom with, so the two cannot disagree; if a
+            // name ever did drift the marker simply would not appear, rather than pointing at the
+            // wrong row.
+            if (Current.player().owesCoinRansom(entry.getKey())) {
+                ItemData coinItem = ItemListData.getItem(AdventurePlayer.BRONZE_COIN_ITEM);
+                Sprite coinSprite = coinItem == null ? null : coinItem.sprite();
+                if (coinSprite != null) {
+                    Image coinImage = new Image(new SpriteDrawable(coinSprite));
+                    coinImage.setScaling(Scaling.fit);
+                    scrollContainer.add(coinImage).pad(2).size(16).fillY();
+                } else {
+                    scrollContainer.add().width(16);
+                }
+            } else {
+                scrollContainer.add().width(16);
+            }
             scrollContainer.add(data.getName()).fillX().pad(5).width(120);
             scrollContainer.add(entry.getValue().getLeft().toString() + "/" + entry.getValue().getRight().toString()).pad(5);
             scrollContainer.row();
