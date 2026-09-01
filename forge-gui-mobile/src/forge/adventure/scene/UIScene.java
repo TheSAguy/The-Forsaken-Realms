@@ -243,12 +243,47 @@ public class UIScene extends Scene {
         return createGenericDialog(title, label, stringYes, stringNo, runnableYes, runnableNo, false, "");
     }
 
+    /** Widest a generic dialog's body label may get before it is wrapped, in stage units.
+     *  <p>
+     *  Derived from the LIVE viewport, never a constant: Scene.getIntendedWidth() is config.json's
+     *  screenWidth (480) in landscape but screenHeight (270) in portrait, and EventScene, InnScene
+     *  and SettingsScene all ship *_portrait.json layouts - so a fixed 400f would leave the very
+     *  dialog this repairs off-screen on a phone, which is the whole failure being fixed. 400f
+     *  matches what WorldStandingsScene.showInfoDialog() has shipped in landscape since the first
+     *  report; the 60f margin keeps the window inside the stage with its padding. */
+    protected float dialogBodyMaxWidth() {
+        return Math.min(400f, stage.getWidth() - 60f);
+    }
+
     public Dialog createGenericDialog(String title, String label, String stringYes, String stringNo, Runnable runnableYes, Runnable runnableNo, boolean cancelButton, String stringCancel) {
         Dialog dialog = new Dialog(title == null ? "" : title, Controls.getSkin());
         textboxOpen = true;
 
-        if (label != null)
-            dialog.getContentTable().add(Controls.newTextraLabel(label));
+        if (label != null) {
+            // Wrap ONLY what actually overflows (2026-09-01). An unwrapped label let Dialog.pack()
+            // size the window to the label's full single-line width, so a long body grew the
+            // dialog past the stage and carried its own OK button off the edge - an undismissable
+            // dialog. Reported twice now: 2026-08-12 (World Standings wiki texts, fixed locally in
+            // WorldStandingsScene.showInfoDialog) and 2026-09-01 (the Inn coin refund). Fixing it
+            // HERE instead of at the call site covers the 10 call sites a sweep found carrying
+            // 95-150 character bodies, and every future one.
+            //
+            // Measure first, wrap second: TextraLabel.getPrefWidth() returns 0 once wrap is on, so
+            // a wrapped label must be handed an explicit cell width - and giving every dialog that
+            // width would stretch the short one-line confirms that are the common caller. The
+            // constructor has already run Font.markup(), so this is the real laid-out width and
+            // already accounts for resolved "[+Icon]" glyphs.
+            // Deliberately no .row() here: SettingsScene.createNewPlane and DeckSelectScene.rename
+            // append further cells to this same content table and call row() themselves.
+            TextraLabel body = Controls.newTextraLabel(label);
+            float maxWidth = dialogBodyMaxWidth();
+            if (body.getPrefWidth() > maxWidth) {
+                body.setWrap(true);
+                dialog.getContentTable().add(body).width(maxWidth);
+            } else {
+                dialog.getContentTable().add(body);
+            }
+        }
 
         dialog.button(Controls.newTextButton(stringYes, runnableYes));
 

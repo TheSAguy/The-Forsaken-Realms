@@ -1311,6 +1311,106 @@ public class EconomyBuildings {
     // means an AI capital can price against the ladder the player's own town taught us.
     private static final Map<String, String> globalShopTiers = new java.util.HashMap<>();
 
+
+    // ---- Static tier fallback for the flat-`shopList` town templates (#92, 2026-09-01) --------
+    //
+    // WHERE THIS TABLE COMES FROM. Nothing in shops.json carries a tier - ShopData is
+    // name/description/sprite/rewards/overlay, 293 entries, no rarity field. Tier exists ONLY as
+    // membership of a tmx common/uncommon/rareShopList, and it is a per-TOWN fact, not a per-TYPE
+    // one: of the 262 names the plane's 35 tier-declaring maps list, 120 sit in more than one
+    // tier ("White" is Common in a White town, Uncommon in its tribal variant, Rare in the
+    // player's own towns). So "the tier of a shop name" only has an answer once you say tier FOR
+    // WHAT, and a vote across the whole plane is unstable - recomputing one over every map instead
+    // of towns/ alone flips all five mono-colors from Rare to Common. That mapping would rot.
+    //
+    // A blueprint buys exactly one thing: the right to build this type IN YOUR OWN TOWNS, which is
+    // what promptBuyBlueprint()'s confirm dialog promises. So the tier that prices it is the tier
+    // it occupies in the player's own templates - player_town.tmx (also what every restored town
+    // renders from) and player_capital.tmx - resolved lowest-tier-first exactly as
+    // tierOfShopName() resolves a live slot. One authored source, internally consistent, and it
+    // agrees with config.json's own summary of the ladder ("...the plain <Color> rare shop [is a]
+    // blueprint target"). auditFlatTownTierFallback() re-checks it whenever those maps load.
+    //
+    // Scope is the 39 names the five flat-shopList templates can offer - plains/island/forest/
+    // mountain/swamp_town.tmx, which points_of_interest.json spawns 50 times EACH, i.e. 250 of the
+    // plane's ~500 towns and the most-visited town type in the game. Of those 39: 5 are
+    // Cartographer basic-land shops, refused by both blueprint call sites before a tier is ever
+    // asked for; 1 ("Horror") has no ShopData at all - the authored shop is "Horrors" - so
+    // MapStage never builds it; the other 33 are below. That count INCLUDES the 5 color booster
+    // shops, which the player templates do not list and which are Common in every map that does.
+    // NO entry is Uncommon: no type these five towns offer is Uncommon in the player's own towns.
+    // That is the data, not an omission.
+    private static final Map<String, String> FLAT_TOWN_SHOP_TIERS = buildFlatTownShopTiers();
+
+    private static Map<String, String> buildFlatTownShopTiers() {
+        Map<String, String> tiers = new java.util.HashMap<>();
+        // Rare in player_town.tmx / player_capital.tmx - the five plain mono-color shops and the
+        // ten guild shops. These 15 are exactly what the Partner gate exists for.
+        for (String name : new String[]{
+                "White", "Blue", "Black", "Red", "Green",
+                "Azorius", "Boros", "Dimir", "Golgari", "Gruul",
+                "Izzet", "Orzhov", "Rakdos", "Selesnya", "Simic"})
+            tiers.put(name, MapStage.TIER_RARE);
+        // Common in the player templates - the two generic card shops and the tribal shops these
+        // five towns offer, plus the booster shops.
+        for (String name : new String[]{
+                "Creature", "Instant",
+                "Angel", "Elf", "Goblin", "Human", "Merfolk", "Zombie",
+                "BoosterPackShop", "AlphaBoosterPackShop", "BetaBoosterPackShop",
+                "GammaBoosterPackShop", "DeltaBoosterPackShop",
+                // Not listed by the player templates; Common in every map that does list them.
+                "WhiteBoosterPackShop", "BlueBoosterPackShop", "BlackBoosterPackShop",
+                "RedBoosterPackShop", "GreenBoosterPackShop"})
+            tiers.put(name, MapStage.TIER_COMMON);
+        return tiers;
+    }
+
+    /** One line per unrecognised name per process - shopTierOf() runs on every shop screen open. */
+    private static final java.util.Set<String> unknownTierLogged = new java.util.HashSet<>();
+    private static final java.util.Set<String> tierDriftLogged = new java.util.HashSet<>();
+
+    /**
+     * Re-derives the fallback from its own source and reports drift, so a tmx edit that moves a
+     * type between tiers shows up in forge.log the next time the player walks into their own town
+     * instead of silently mispricing blueprints in 250 towns for a whole release.
+     * <p>
+     * Per-MAP, not per-slot: the table is the union over a whole file resolved lowest-tier-first,
+     * so comparing one slot at a time would report drift the next slot in the same file
+     * contradicts - and tierDriftLogged would then suppress the correction forever.
+     * <p>
+     * Catches a type MOVING tier. A type ADDED to a flat template instead shows up as the one-shot
+     * "no tier for shop type" line in shopTierOf().
+     */
+    public static void auditFlatTownTierFallback(
+            java.util.Collection<Map<String, Array<String>>> allPools, String mapPath) {
+        if (allPools == null || mapPath == null)
+            return;
+        String file = mapPath.replace('\\', '/');
+        if (!file.endsWith("player_town.tmx") && !file.endsWith("player_capital.tmx"))
+            return;
+        // Tier OUTER, slots INNER - that is what makes lowest-tier-win across the whole file.
+        Map<String, String> live = new java.util.HashMap<>();
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+            for (Map<String, Array<String>> pools : allPools) {
+                Array<String> names = pools == null ? null : pools.get(tier);
+                if (names == null)
+                    continue;
+                for (String name : new Array.ArrayIterator<>(names))
+                    live.putIfAbsent(name, tier);
+            }
+        }
+        for (Map.Entry<String, String> entry : FLAT_TOWN_SHOP_TIERS.entrySet()) {
+            String now = live.get(entry.getKey());
+            if (now == null || now.equals(entry.getValue()))
+                continue; // this template does not list it (the other one may), or it agrees
+            if (tierDriftLogged.add(entry.getKey()))
+                System.out.println("[TFR-Blueprint] tier fallback is STALE: " + entry.getKey()
+                        + " is " + now + " in " + file + " but FLAT_TOWN_SHOP_TIERS says "
+                        + entry.getValue() + " - the flat-shopList towns price and gate this type"
+                        + " from the table, not from this map. Regenerate the table.");
+        }
+    }
+
     /** Called by MapStage for each slot's tier pools as a map loads. First tier wins, and the
      *  caller feeds Common -> Uncommon -> Rare, so an ambiguous name settles on its lowest tier
      *  exactly as tierOfShopName() resolves it per-slot. */
@@ -1326,12 +1426,38 @@ public class EconomyBuildings {
         }
     }
 
-    /** Which tier list a shop name belongs to on this slot, for blueprint pricing. Falls back to
-     *  the accumulated global map when this slot has no tier pools of its own (AI capitals). */
+    /**
+     * Which tier a shop name counts as HERE, for blueprint pricing and the standing gate.
+     * Three sources, in this order:
+     * <ol>
+     *   <li>the slot's own tmx tier pools - the map you are standing on is authored truth;</li>
+     *   <li>{@link #FLAT_TOWN_SHOP_TIERS} - the static fallback for any slot with no tier pools of
+     *       its own. In practice that is the five flat-`shopList` town templates; Rotating slots
+     *       are the only other pool-less kind and isShopTypeRerollable() already keeps the Buy
+     *       Blueprint button off them;</li>
+     *   <li>{@link #globalShopTiers} - whatever other maps happen to have taught us this session.</li>
+     * </ol>
+     * The static table deliberately OUTRANKS the accumulator. globalShopTiers is order-dependent
+     * (putIfAbsent, first map visited wins) and holds context-flavoured answers: walk into any
+     * plains_town_generic before a plain White town and it has ALREADY learned White=Common, so a
+     * fallback placed below it would never fire and the Rare/Partner gate would still be
+     * bypassable - by a different route than the one #92 documented. Static first makes the gate
+     * identical in every save and every visit order.
+     */
     public static String shopTierOf(MapStage stage, int objectId, String shopName) {
         Map<String, Array<String>> pools = stage == null ? null : stage.getShopTierPools(objectId);
         String tier = pools == null ? null : tierOfShopName(pools, shopName);
-        return tier != null ? tier : globalShopTiers.get(shopName);
+        if (tier != null)
+            return tier;
+        tier = FLAT_TOWN_SHOP_TIERS.get(shopName);
+        if (tier != null)
+            return tier;
+        tier = globalShopTiers.get(shopName);
+        if (tier == null && shopName != null && unknownTierLogged.add(shopName))
+            System.out.println("[TFR-Blueprint] no tier for shop type \"" + shopName + "\" - it is"
+                    + " in no loaded map's tier pools and not in FLAT_TOWN_SHOP_TIERS, so it will"
+                    + " price as Common and skip the standing gate. Add it to the table.");
+        return tier;
     }
 
     // ---- Blueprint standing gate (user spec 2026-08-31) ----------------------------------------

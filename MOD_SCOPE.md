@@ -4437,7 +4437,7 @@ Not yet packaged/deployed for testing as of this entry - repo-only.
 
 
 
-### 92. Shop Type Blueprints — `Mostly done (rounds 71-76 + round-78 fixes, verified in the shipped jar) - one known gap, not yet playtest-confirmed`
+### 92. Shop Type Blueprints — `Done (rounds 71-76, round-78 fixes, round-80 tier gate) - not yet playtest-confirmed`
 Backfilled 2026-09-01. The largest feature built since v1.03, and the one this file was missing
 entirely. Shop types are no longer just whatever a town slot happened to roll: each type must be
 **unlocked** before the player can build it, and unlocked types are chosen deliberately.
@@ -4464,7 +4464,19 @@ because they key on tmx object ids that every town reuses (round 73 - see the "R
 note in `MOD_CHANGELOG.md`); and the whole ladder silently no-opped in the 5 AI capitals, which
 declare a flat `shopList` with no tier lists, until a global shop-name -> tier map was added.
 
-**KNOWN GAP (found by the round-79 audit, 2026-09-01, NOT fixed).** The headline user spec - "can't
+**GAP CLOSED IN ROUND 80 (2026-09-01)** - `FLAT_TOWN_SHOP_TIERS`, a static shop-name -> tier table
+derived from `player_town.tmx`/`player_capital.tmx` (the templates that decide what a blueprint
+actually buys you), now sits between the slot's own pools and `globalShopTiers` in `shopTierOf()`.
+It deliberately OUTRANKS the accumulator, because round 80 found a SECOND bypass the note below
+missed: `registerShopTiers()` uses `putIfAbsent`, so the first map visited wins forever, and "White"
+is Common in a generic White town but Rare in the player's own - a fallback placed below
+`globalShopTiers` would never have fired on that route. `auditFlatTownTierFallback()` re-derives the
+table from its source on every player-town map load and logs drift. Round 80 also corrected two
+errors in the description below: the flat-`shopList` maps are NOT the AI capitals (all five
+capitals carry full tier lists) - they are the ORDINARY color towns, 250 of the plane's ~500, so
+the bypass was the default path rather than an exotic one.
+
+**The original gap, as found by the round-79 audit (kept for the record):** The headline user spec - "can't
 buy a Rare blueprint unless you are at Partner" - can be bypassed. `globalShopTiers` is a per-process
 in-memory accumulator populated only by maps that declare `commonShopList`/`uncommonShopList`/
 `rareShopList`. Five live town templates (`plains_town.tmx`, `island_town.tmx`, `forest_town.tmx`,

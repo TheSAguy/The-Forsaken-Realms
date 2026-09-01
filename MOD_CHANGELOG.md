@@ -15472,3 +15472,98 @@ chasing phantom regressions:
 The fourth was this file: round 78 had no entry (see above).
 
 **Files touched**: quests.json, MOD_SCOPE.md, MOD_CHANGELOG.md, CORE_ENGINE_CHANGES.md.
+
+## Round 80: dialog soft-lock killed, generic dialogs wrap, #92 tier gate closed (2026-09-01)
+
+User-reported soft-lock during a playtest of the round-77 Inn coin refund, on an EXISTING save:
+"The first page shows you getting the coin back, but the text is off the screen. Then a second bar
+appears and I can't exit at all. Had to Hard Quit the game."
+
+Two screenshots, **two independent defects**, only one of which was mine. Root-caused by a 7-agent
+workflow (4 investigators, 3 adversarial verifiers), all four findings at `certain` confidence.
+
+### FIXED: the empty second bar - a dialog-stack leak older than the code that triggered it
+`MenuScene` holds ONE reusable `Dialog` instance for every node of a `DialogData` tree.
+`loadDialog()` clears its title/content/button tables, refills them, and for any node that HAS
+options calls `showDialog(getDialog())` - which PUSHES that shared instance onto `UIScene.dialogs`.
+But a LEAF node (no options) ended the tree with a bare `hideDialog()`, and `hideDialog()` only did
+`dialog.hide(); dialog.clearListeners();` - it never popped `dialogs`, never touched
+`possibleSelectionStack`. Nothing anywhere in the tree ever cleared that stack.
+
+So entering an Inn tournament with a Coin left a permanent corpse on it: intro dialog pushed the
+shared instance, "Redeem Challenge Coin" was a leaf that cleared the tables and hid the actor
+without popping. Later, dismissing the "Coin Returned" dialog ran `removeDialog()`, which
+unconditionally does `dialogs.peek().show(stage)` - **re-raising the emptied instance**.
+
+Why that was unrecoverable, confirmed against gdx-1.13.5 bytecode rather than assumed:
+- `Dialog.initialize()` sets `setModal(true)`, and `Window.hit()` returns itself for EVERY point
+  when modal - the blank bar swallowed clicks anywhere on screen.
+- Its button table had been cleared and never refilled, so nothing on it could call
+  `removeDialog()`.
+- `dialogShowing()` was still true, which gates the `ui.buttonPressed(keycode)` branch - so the
+  Back/ESC keybind was dead too.
+- `Controls.newDialog()` sets `setMovable(false)` - it could not even be dragged aside.
+Empty title + empty body + zero buttons + modal + immovable = hard quit, exactly as reported.
+
+`hideDialog()` now unwinds every stack entry for the shared dialog (a cyclic DialogData tree can
+push the same instance more than once) and the matching `possibleSelectionStack` frame, logging
+`[TFR-Dialog]` when it finds one. `MenuScene.showDialog(Array<DialogData>)` also gained a guard
+against re-showing an instance that is no longer on the stack - no caller reaches it today, but the
+next one cannot reintroduce this.
+
+**The leak predates round 77.** `NewGameScene`'s three `loadDialog()` calls and
+`EventScene.validateDeck()` leak identically; they simply had never been followed by a
+`removeDialog()`. Round 77's coin dialog was the first code on that scene to stack a second dialog
+and collect on the debt.
+
+### FIXED: generic dialogs can grow wider than the screen - centrally this time
+`UIScene.createGenericDialog()` added `Controls.newTextraLabel(label)` with no `setWrap(true)` and
+no cell width, so `Dialog.pack()` sized the window to the label's full single-line layout width. A
+long body grew the dialog past the stage and carried its own OK button off the edge.
+
+**This is the second report of the same defect.** The first (2026-08-12, World Standings wiki texts)
+was fixed LOCALLY in `WorldStandingsScene.showInfoDialog()`, whose javadoc describes the failure
+exactly - and round 77 then used the raw helper anyway. A sweep of all 42 `createGenericDialog`
+call sites found **10 at risk**, carrying 95-150 character bodies, in `StartScene` (x3),
+`SettingsScene`, `InventoryScene`, `ArenaScene`, `RewardScene`, `WorldStandingsScene` and
+`EventScene` (x2). So the fix belongs in the helper, not at any call site.
+
+- New `UIScene.dialogBodyMaxWidth()`, derived from the LIVE viewport rather than a constant:
+  `stage.getWidth()` is 480 in landscape but 270 in portrait, and EventScene/InnScene/SettingsScene
+  all ship `*_portrait.json` layouts - a hardcoded 400f would have left the very dialog being
+  repaired off-screen on a phone.
+- Measure first, wrap second. `TextraLabel.getPrefWidth()` returns 0 once wrap is on, so a wrapped
+  label must be handed an explicit cell width - and giving every dialog that width would stretch
+  the short one-line confirms ("Are you sure?") that are the common caller. Only labels that
+  actually overflow get wrapped; short ones lay out byte-identically to before.
+- No `.row()` added: `SettingsScene.createNewPlane` and `DeckSelectScene.rename` append further
+  cells to the same content table and call `row()` themselves.
+
+### FIXED: #92's Rare/Partner blueprint gate could be bypassed (user asked for the static fallback)
+Two corrections to what round 79 recorded, both from scanning the shipped data rather than trusting
+the note:
+1. **The flat-`shopList` maps are NOT the AI capitals.** All five `*_capital.tmx` carry full tier
+   lists. The flat ones are the ORDINARY color towns - `points_of_interest.json` spawns Plains/
+   Island/Forest/Mountain/Swamp Town **50 times EACH, 250 of the plane's ~500 towns**. The bypass
+   was the default path, not an exotic fresh-process one.
+2. **Visit order was a second, undocumented bypass.** `registerShopTiers()` uses `putIfAbsent` with
+   Common fed first, so the FIRST map visited wins forever - and "White" is Common in
+   `plains_town_generic`, Uncommon in the tribal variant, Rare in the player's own towns. Walking
+   into a generic White town before a plain one already taught the accumulator White=Common.
+
+New `FLAT_TOWN_SHOP_TIERS`, and it deliberately **outranks** `globalShopTiers` - a fallback placed
+below the accumulator would never fire on the visit-order route. Derivation matters here because
+nothing in `shops.json` carries a tier at all (293 entries, no rarity field): tier exists only as
+membership of a tmx tier list, and it is a per-TOWN fact - 120 of the 262 listed names sit in more
+than one tier. Since a blueprint buys the right to build a type **in your own towns**, the tier
+that prices it is the tier it occupies in `player_town.tmx` / `player_capital.tmx`, resolved
+lowest-tier-first exactly as `tierOfShopName()` resolves a live slot. 33 entries: the 15 mono-color
+and guild shops Rare, the rest Common. No entry is Uncommon - that is the data, not an omission.
+
+Because a static table can rot, `auditFlatTownTierFallback()` re-derives it from that same source
+whenever `player_town.tmx` or `player_capital.tmx` loads and logs `[TFR-Blueprint] tier fallback is
+STALE` on any drift. Per-MAP, not per-slot: the table is a union over a whole file, so a per-slot
+comparison would report drift the next slot contradicts. A type added to a flat template instead
+surfaces as a one-shot "no tier for shop type" line.
+
+**Files touched**: MenuScene.java, UIScene.java, EconomyBuildings.java, MapStage.java.

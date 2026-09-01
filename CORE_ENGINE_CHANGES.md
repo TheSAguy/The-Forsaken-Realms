@@ -1836,3 +1836,26 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **No engine files changed.** The one code-adjacent fix is data: the plane's own
   `world/quests.json` (quest 28's skip option restructured so its text renders before its actions
   fire). Recorded here only to state that explicitly - the round's other work is documentation.
+
+## Round 80 (2026-09-01) - dialog soft-lock, central dialog wrapping, #92 tier gate
+
+- **`scene/MenuScene.java`** - `hideDialog()` now unwinds EVERY `UIScene.dialogs` entry for the
+  shared Dialog instance plus the matching `possibleSelectionStack` frame, with a `[TFR-Dialog]`
+  log line. It previously only faded the actor and cleared listeners, leaving a stack entry that
+  `UIScene.removeDialog()` would later `show(stage)` again - resurrecting an emptied, buttonless,
+  MODAL, immovable window that nothing could dismiss (user-reported hard-quit soft-lock).
+  `showDialog(Array<DialogData>)` gained a guard refusing to re-show an instance that is no longer
+  on the stack. **This leak predates the mod's own dialogs** - NewGameScene and
+  EventScene.validateDeck() leak identically and are fixed by the same change.
+- **`scene/UIScene.java`** - `createGenericDialog()` measures its body label and, only when it
+  overflows, sets wrap and an explicit cell width; new `dialogBodyMaxWidth()` derives that cap from
+  the live viewport (480 landscape / 270 portrait) rather than a constant. Fixes 10 at-risk call
+  sites across StartScene, SettingsScene, InventoryScene, ArenaScene, RewardScene,
+  WorldStandingsScene and EventScene; short one-line confirms lay out unchanged.
+- **`util/EconomyBuildings.java`** - new `FLAT_TOWN_SHOP_TIERS` static tier table + its
+  `buildFlatTownShopTiers()` generator and `auditFlatTownTierFallback()` drift check;
+  `shopTierOf()` now consults slot pools -> static table -> `globalShopTiers` in that order, and
+  logs once per unrecognised shop name. The static table deliberately outranks the accumulator,
+  which is visit-order dependent (`putIfAbsent`).
+- **`stage/MapStage.java`** - calls `EconomyBuildings.auditFlatTownTierFallback()` once per map
+  load, after the layer loop so the pools describe the whole file.

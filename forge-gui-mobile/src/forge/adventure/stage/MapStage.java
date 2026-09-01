@@ -728,6 +728,12 @@ public class MapStage extends GameStage {
                 loadObjects(layer, sourceMap, targetMap);
             }
         }
+        // Blueprint tier-fallback drift check (#92, 2026-09-01). AFTER the layer loop, so
+        // shopTierPools holds the whole map: FLAT_TOWN_SHOP_TIERS is a union over an entire file
+        // resolved lowest-tier-first, so a per-slot comparison would report drift that the next
+        // slot in the same file contradicts. No-ops unless this map is player_town.tmx or
+        // player_capital.tmx, the two templates the table is derived from.
+        EconomyBuildings.auditFlatTownTierFallback(shopTierPools.values(), targetMap);
         spawn(spawnTargetId);
 
         if (effect != null && enemies.size() > 0) {

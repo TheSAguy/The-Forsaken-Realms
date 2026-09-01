@@ -301,6 +301,13 @@ public class MenuScene extends UIScene {
         if (!activate(data)) {
             return;
         }
+        // The tree may have ended on a leaf, which calls hideDialog() and unwinds the stack.
+        // Re-showing the shared Dialog below would put an emptied, buttonless, MODAL window back
+        // on the stage that UIScene.removeDialog() can never reach (2026-09-01 soft-lock).
+        // No caller exercises this path today - the guard is here so the next one cannot.
+        if (!dialogs.contains(dialog, true)) {
+            return;
+        }
 
         dialogButtonMap.clear();
         for (int i = 0; i < dialog.getButtonTable().getCells().size; i++) {
@@ -312,7 +319,42 @@ public class MenuScene extends UIScene {
             stage.setKeyboardFocus(dialogButtonMap.first());
     }
 
+    /**
+     * Hides the shared dialog AND unwinds UIScene's dialog stack for it.
+     * <p>
+     * 2026-09-01 soft-lock, user-reported: "a second bar appears and I can't exit at all. Had to
+     * Hard Quit the game." MenuScene reuses ONE Dialog instance for every node of a DialogData
+     * tree - loadDialog() clears its three tables, refills them, and calls showDialog(getDialog())
+     * for any node that HAS options, which pushes that instance onto UIScene.dialogs. The LEAF
+     * node (no options) used to end the tree with a bare dialog.hide(), so the stack entry stayed
+     * forever, pointing at a Window whose tables had since been cleared. The next
+     * UIScene.removeDialog() then called show(stage) on it and re-raised an empty, titleless,
+     * BUTTONLESS, MODAL, non-movable window: nothing on it could call removeDialog(), libGDX's
+     * Window.hit() swallowed every click elsewhere on screen, and dialogShowing() disabled the
+     * Back keybind. Hard quit was the only way out.
+     * <p>
+     * Surfaced by EventScene's Inn "Coin Returned" dialog (round 77), whose OK button sat on the
+     * entry-fee dialog's corpse - but the leak is older than that code and every MenuScene
+     * subclass had it. NewGameScene and EventScene.validateDeck() leak identically; they simply
+     * never happened to be followed by a removeDialog().
+     */
     public void hideDialog() {
+        // A cyclic DialogData tree pushes the SAME instance once per visited node that had
+        // options, so unwind EVERY entry - and the possibleSelectionStack frame each one pushed
+        // alongside it. Index 0 of that stack is the scene's own ui.selectActors (UIScene ctor),
+        // never a dialog's, so it must survive: showDialog() pushes both together, which makes
+        // dialogs[i] the owner of possibleSelectionStack[i + 1].
+        int index, removed = 0;
+        while ((index = dialogs.indexOf(dialog, true)) != -1) {
+            dialogs.removeIndex(index);
+            if (index + 1 < possibleSelectionStack.size)
+                possibleSelectionStack.removeIndex(index + 1);
+            removed++;
+        }
+        if (removed > 0)
+            System.out.println("[TFR-Dialog] hideDialog unwound " + removed + " stale stack entr"
+                    + (removed == 1 ? "y" : "ies") + "; dialogs=" + dialogs.size
+                    + " selStack=" + possibleSelectionStack.size);
         dialog.hide();
         dialog.clearListeners();
     }
