@@ -17,6 +17,32 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
+## IN FLIGHT when the last thread closed (2026-09-02) - CHECK THIS FIRST
+
+**Round 83 exists as uncommitted source changes and has NOT been compile-verified.** The previous
+session added two diagnostic log lines at the user's request and the thread ended while Maven was
+still running. Before anything else:
+
+```
+git -C "F:/FORGE/C--Users-vicwaver-MTG-Forge" status --short
+mvn -pl forge-gui-mobile -am compile -DskipTests -o > /tmp/c.log 2>&1; echo "EXIT=$?"
+```
+
+What is uncommitted, and why:
+- **`player/AdventurePlayer.java`** - the `[TFR-NewGamePlus] reset done` line was expanded from 2
+  fields to all 9 the round-74 audit found leaking, each with its POST-reset value, so one grep
+  proves or disproves a New Game+ reset. Prints `SET(LEAK)` if `blessing` survived.
+- **`scene/ArenaScene.java`** - new `[TFR-ArenaCoin]` at three points: the round-win note, the
+  bracket payout (naming paid vs not-paid), and the 0-rounds-won branch that drops pending notes
+  unpaid. Logged at both ends deliberately - note and payout are separated by the whole bracket.
+
+Both are pure `System.out.println` additions. If the compile is green, commit as round 83, rebuild
+the live folder, and it goes toward v1.05. If it fails, the likely cause is a field name in the
+NG+ summary (`difficultyData.startingLife`, `colorReputationHalfPoints`, `partnerOverhealActive`).
+
+**The live game folder is one round BEHIND the repo** until that rebuild happens - it currently
+holds released v1.04. Say so before telling the user to test anything from round 83.
+
 ## Where things stand (2026-09-02)
 
 **v1.04 is released.** PC + Android, both live at
