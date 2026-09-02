@@ -59,7 +59,7 @@
 &quot;cardName&quot;: &quot;Staff of the Sun Magus&quot;}]</property>
    </properties>
   </object>
-  <object id="86" template="../../obj/stone.tx" x="224.156" y="48.4235"/>
+  <object id="86" template="../../obj/stone.tx" x="244.156" y="44.423"/>
   <object id="67" template="../../../../common/maps/obj/booster.tx" x="208.5" y="78">
    <properties>
     <property name="reward">[
@@ -151,7 +151,7 @@
    </properties>
   </object>
   <object id="85" template="../../../../common/maps/obj/manashards.tx" x="98.5" y="144"/>
-  <object id="87" template="../../obj/wood.tx" x="166.891" y="79.3444">
+  <object id="87" template="../../obj/wood.tx" x="166.891" y="91.344">
    <properties>
     <property name="reward">[
   {

@@ -115,7 +115,7 @@
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/gold.tx" x="384.797" y="97.8895"/>
-  <object id="109" template="../../obj/stone.tx" x="325.03" y="216.196"/>
+  <object id="109" template="../../obj/stone.tx" x="321.03" y="240.196"/>
   <object id="110" template="../../obj/stone.tx" x="593.324" y="217.113"/>
   <object id="111" template="../../obj/stone.tx" x="379.464" y="223.889"/>
   <object id="70" template="../../../../common/maps/obj/enemy.tx" x="339.838" y="141.665">

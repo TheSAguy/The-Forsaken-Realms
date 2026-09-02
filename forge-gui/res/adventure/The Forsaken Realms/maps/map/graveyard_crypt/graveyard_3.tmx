@@ -126,7 +126,7 @@
    </properties>
   </object>
   <object id="71" template="../../../../common/maps/obj/gold.tx" x="220" y="76"/>
-  <object id="102" template="../../obj/stone.tx" x="167" y="166"/>
+  <object id="102" template="../../obj/stone.tx" x="167" y="126"/>
   <object id="103" template="../../obj/stone.tx" x="342.849" y="52.9298"/>
   <object id="72" template="../../../../common/maps/obj/enemy.tx" x="30.5" y="61">
    <properties>

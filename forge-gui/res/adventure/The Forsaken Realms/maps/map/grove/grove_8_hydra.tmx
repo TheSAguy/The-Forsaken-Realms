@@ -79,7 +79,7 @@
   },
   {
     &quot;editions&quot;: [ &quot;BFZ&quot; ],
-    &quot;type&quot;: &quot;Green&quot;,
+    &quot;type&quot;: &quot;card&quot;,
     &quot;count&quot;: 1,
     &quot;colors&quot;: [&quot;Colorless&quot;],
     &quot;rarity&quot;: [ &quot;Rare&quot;, &quot;Mythic Rare&quot; ]

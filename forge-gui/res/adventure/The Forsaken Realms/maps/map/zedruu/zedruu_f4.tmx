@@ -68,7 +68,7 @@
   <object id="180" template="../../../../common/maps/obj/waypoint.tx" x="105.695" y="175.417"/>
   <object id="184" template="../../../../common/maps/obj/waypoint.tx" x="335.19" y="156.503"/>
   <object id="188" template="../../../../common/maps/obj/manashards.tx" x="534.233" y="208.667"/>
-  <object id="243" template="../../obj/stone.tx" x="539.233" y="213.667"/>
+  <object id="243" template="../../obj/stone.tx" x="527.233" y="237.667"/>
   <object id="189" template="../../../../common/maps/obj/waypoint.tx" x="531.114" y="135.498"/>
   <object id="191" template="../../../../common/maps/obj/waypoint.tx" x="173.909" y="220.488"/>
   <object id="194" template="../../../../common/maps/obj/collision.tx" x="-3.9079" y="521.105" width="704" height="16"/>
@@ -236,7 +236,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="246" template="../../obj/wood.tx" x="363.751" y="407.196">
+  <object id="246" template="../../obj/wood.tx" x="367.751" y="415.196">
    <properties>
     <property name="reward">[
   {
@@ -247,7 +247,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="247" template="../../obj/wood.tx" x="333.933" y="407.378">
+  <object id="247" template="../../obj/wood.tx" x="321.933" y="407.378">
    <properties>
     <property name="reward">[
   {

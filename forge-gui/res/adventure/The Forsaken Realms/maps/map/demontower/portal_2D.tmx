@@ -50,7 +50,7 @@
   <object id="56" template="../../../../common/maps/obj/door_up.tx" x="207.5" y="270.5">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/demontower/portal_2B.tmx"/>
-    <property name="teleportObjectId" value="71"/>
+    <property name="teleportObjectId" value="118"/>
    </properties>
   </object>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="247.046" y="135.271">

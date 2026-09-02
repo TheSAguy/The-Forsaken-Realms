@@ -53,7 +53,7 @@
    </properties>
   </object>
   <object id="77" template="../../../../../common/maps/obj/manashards.tx" x="206" y="239"/>
-  <object id="85" template="../../../obj/stone.tx" x="211" y="244"/>
+  <object id="85" template="../../../obj/stone.tx" x="235" y="236"/>
   <object id="78" template="../../../../../common/maps/obj/manashards.tx" x="282" y="510"/>
   <object id="79" template="../../../../../common/maps/obj/booster.tx" x="352" y="296">
    <properties>

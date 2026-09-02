@@ -48,7 +48,7 @@
    </properties>
   </object>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="241.585" y="89.9901"/>
-  <object id="77" template="../../obj/wood.tx" x="246.585" y="94.9901"/>
+  <object id="77" template="../../obj/wood.tx" x="270.585" y="94.99"/>
   <object id="56" template="../../../../common/maps/obj/collision.tx" x="-16" y="0" width="16" height="272"/>
   <object id="57" template="../../../../common/maps/obj/collision.tx" x="480" y="0" width="16" height="272"/>
   <object id="58" template="../../../../common/maps/obj/collision.tx" x="-16" y="272" width="512" height="16"/>

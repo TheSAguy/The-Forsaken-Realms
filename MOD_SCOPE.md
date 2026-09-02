@@ -4602,7 +4602,9 @@ units of the player is re-rolled, up to 4 times, then spawned anyway - deliberat
 never a skipped spawn, since refusing to spawn would silently thin the world wherever a biome list
 is short. War-tier bosses and quest-tag extra spawns are authored encounters and are left alone.
 
-### 101. Resource-Drop Placement Sweep (the +5/+5 cluster bug) — `In Progress (25 of 75 done 2026-09-01)`
+### 101. Resource-Drop Placement Sweep (the +5/+5 cluster bug) — `Done (2026-09-02, round 85)`
+**Closed 2026-09-02 (round 85):** a full scan of all 339 maps found the remaining 50 plus 18 more on the other three diagonals (the first scan only looked at +5/+5) and 26 non-clustered drops buried 25-100% in collision; all 94 relocated by script onto verified open floor, and the same scan fixed 11 broken door links, 50 mis-keyed card rewards, three mistyped boosters, a misspelled item, a broken effect string and a broken dialog. Detail in MOD_CHANGELOG round 85; four design questions left there for the user.
+
 Added 2026-09-01 from a mod-wide audit of the user's own dungeon pass. A large number of stone/wood
 resource drops were authored sitting at **exactly +5.000px / +5.000px** from another object - a
 bulk-placement artifact, not a design choice. The offset is identical to three decimal places

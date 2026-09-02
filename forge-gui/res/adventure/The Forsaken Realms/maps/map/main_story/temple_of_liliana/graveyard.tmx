@@ -459,7 +459,7 @@
    </properties>
   </object>
   <object id="259" template="../../../../../common/maps/obj/gold.tx" x="161" y="48"/>
-  <object id="271" template="../../../obj/stone.tx" x="166" y="53"/>
+  <object id="271" template="../../../obj/stone.tx" x="190" y="53"/>
   <object id="260" template="../../../../../common/maps/obj/manashards.tx" x="400.75" y="368.75"/>
   <object id="261" template="../../../../../common/maps/obj/gold.tx" x="80" y="161"/>
   <object id="262" template="../../../../../common/maps/obj/treasure.tx" x="383.833" y="114.833">
@@ -545,7 +545,7 @@
     <property name="activeQuestFlag" value="lilianaGraveyardPortal"/>
     <property name="direction" value="left"/>
     <property name="teleport" value="../The Forsaken Realms/maps/map/main_story/temple_of_liliana/keep.tmx"/>
-    <property name="teleportObjectId" value="267"/>
+    <property name="teleportObjectId" value="227"/>
    </properties>
   </object>
   <object id="270" template="../../../../../common/maps/obj/dialog.tx" x="176" y="320" width="48" height="16">

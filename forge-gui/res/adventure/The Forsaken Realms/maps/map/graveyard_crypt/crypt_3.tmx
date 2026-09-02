@@ -164,9 +164,9 @@
   <object id="97" template="../../../../common/maps/obj/gold.tx" x="495.667" y="339.333"/>
   <object id="98" template="../../../../common/maps/obj/gold.tx" x="544" y="176"/>
   <object id="99" template="../../../../common/maps/obj/gold.tx" x="249" y="32.3333"/>
-  <object id="155" template="../../obj/stone.tx" x="500.667" y="344.333"/>
-  <object id="156" template="../../obj/stone.tx" x="539" y="181"/>
-  <object id="157" template="../../obj/stone.tx" x="254" y="27.3333"/>
+  <object id="155" template="../../obj/stone.tx" x="524.667" y="328.333"/>
+  <object id="156" template="../../obj/stone.tx" x="539" y="205"/>
+  <object id="157" template="../../obj/stone.tx" x="254" y="107.333"/>
   <object id="100" template="../../../../common/maps/obj/gold.tx" x="79.6667" y="173.667"/>
   <object id="107" template="../../../../common/maps/obj/enemy.tx" x="530.667" y="241">
    <properties>

@@ -1482,7 +1482,7 @@
   </object>
   <object id="231" template="../../../../../common/maps/obj/manashards.tx" x="624" y="16"/>
   <object id="232" template="../../../../../common/maps/obj/gold.tx" x="166" y="25"/>
-  <object id="290" template="../../../obj/stone.tx" x="171" y="30"/>
+  <object id="290" template="../../../obj/stone.tx" x="171" y="78"/>
   <object id="233" template="../../../../../common/maps/obj/treasure.tx" x="335" y="83">
    <properties>
     <property name="reward">[{

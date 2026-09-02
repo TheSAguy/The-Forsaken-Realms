@@ -223,7 +223,7 @@
    </properties>
   </object>
   <object id="47" template="../../../../common/maps/obj/treasure.tx" x="304" y="272"/>
-  <object id="48" template="../../obj/stone.tx" x="309" y="277"/>
+  <object id="48" template="../../obj/stone.tx" x="273" y="253"/>
   <object id="1" template="../../../../common/maps/obj/collision.tx" x="-32" y="0" width="32" height="320"/>
   <object id="2" template="../../../../common/maps/obj/collision.tx" x="-32" y="320" width="544" height="32"/>
   <object id="3" template="../../../../common/maps/obj/collision.tx" x="480" y="0" width="32" height="320"/>

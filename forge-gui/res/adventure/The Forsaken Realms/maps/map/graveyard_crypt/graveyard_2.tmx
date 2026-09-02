@@ -44,7 +44,7 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/gold.tx" x="1.5" y="33"/>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="422.5" y="63"/>
-  <object id="87" template="../../obj/stone.tx" x="6.5" y="38"/>
+  <object id="87" template="../../obj/stone.tx" x="30.5" y="46"/>
   <object id="88" template="../../obj/stone.tx" x="338.553" y="56.4032"/>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="303.5" y="127" visible="1">
    <properties>

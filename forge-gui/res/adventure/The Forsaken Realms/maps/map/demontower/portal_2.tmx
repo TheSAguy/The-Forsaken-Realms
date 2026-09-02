@@ -41,7 +41,7 @@
   <object id="78" template="../../../../common/maps/obj/door_down.tx" x="232.5" y="235.5">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/demontower/portal_2B.tmx"/>
-    <property name="teleportObjectId" value="69"/>
+    <property name="teleportObjectId" value="116"/>
    </properties>
   </object>
   <object id="83" template="../../../../common/maps/obj/dialog.tx" type="dialog" gid="11530" x="258" y="288.667" width="16" height="16" visible="1">
@@ -49,9 +49,8 @@
     <property name="dialog">[
   {
     &quot;text&quot;:&quot;The inscription reads: Congratulations Adventurer! Just for finding this place you have won a prize!&quot;,
-    &quot;options&quot;:Happily walk toward your prize&quot; }
-]
-}
+    &quot;options&quot;:[ { &quot;name&quot;:&quot;Happily walk toward your prize&quot; } ]
+  }
 ]</property>
    </properties>
   </object>

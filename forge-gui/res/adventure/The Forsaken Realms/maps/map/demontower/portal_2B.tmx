@@ -100,7 +100,7 @@
   <object id="131" template="../../../../common/maps/obj/manashards.tx" x="661.513" y="317.179"/>
   <object id="132" template="../../../../common/maps/obj/manashards.tx" x="751.105" y="105.711"/>
   <object id="133" template="../../../../common/maps/obj/treasure.tx" x="441.167" y="320.408"/>
-  <object id="158" template="../../obj/stone.tx" x="446.167" y="325.408"/>
+  <object id="158" template="../../obj/stone.tx" x="470.167" y="325.408"/>
   <object id="134" template="../../../../common/maps/obj/treasure.tx" x="122.351" y="46.7903"/>
   <object id="135" template="../../../../common/maps/obj/booster.tx" x="805.99" y="72.6184">
    <properties>

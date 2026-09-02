@@ -57,7 +57,7 @@
    <properties>
     <property name="direction" value="right"/>
     <property name="teleport" value="../The Forsaken Realms/maps/map/tibalt/tibalt_f2.tmx"/>
-    <property name="teleportObjectId" value="144"/>
+    <property name="teleportObjectId" value="114"/>
    </properties>
   </object>
   <object id="115" template="../../../../common/maps/obj/gold.tx" x="525.88" y="209.537"/>

@@ -517,9 +517,9 @@
   <object id="20" template="../../../../common/maps/obj/gold.tx" x="34" y="649.33"/>
   <object id="21" template="../../../../common/maps/obj/gold.tx" x="7" y="675.67"/>
   <object id="22" template="../../../../common/maps/obj/gold.tx" x="524" y="607"/>
-  <object id="188" template="../../obj/stone.tx" x="39" y="654.33"/>
-  <object id="189" template="../../obj/stone.tx" x="2" y="680.67"/>
-  <object id="190" template="../../obj/stone.tx" x="529" y="602"/>
+  <object id="188" template="../../obj/stone.tx" x="63" y="654.33"/>
+  <object id="189" template="../../obj/stone.tx" x="6" y="704.67"/>
+  <object id="190" template="../../obj/stone.tx" x="557" y="606"/>
   <object id="23" template="../../../../common/maps/obj/gold.tx" x="717" y="126"/>
   <object id="24" template="../../../../common/maps/obj/manashards.tx" x="193" y="222"/>
   <object id="25" template="../../../../common/maps/obj/manashards.tx" x="290" y="558.5"/>

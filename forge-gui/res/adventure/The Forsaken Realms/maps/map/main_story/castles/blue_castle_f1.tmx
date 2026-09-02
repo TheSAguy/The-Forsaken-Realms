@@ -69,7 +69,7 @@
     &quot;type&quot;: &quot;item&quot;,
     &quot;probability&quot;: 0.10,
     &quot;count&quot;: 1,
-    &quot;itemName&quot;: &quot;Mantel of Denial&quot;
+    &quot;itemName&quot;: &quot;Mantle of Denial&quot;
   },
   {
     &quot;type&quot;: &quot;cardPackShop&quot;,
@@ -88,7 +88,7 @@
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>
-  <object id="57" template="../../../obj/stone.tx" x="199.663" y="287.618"/>
+  <object id="57" template="../../../obj/stone.tx" x="199.663" y="311.618"/>
   <object id="51" template="../../../../../common/maps/obj/entry_up.tx" x="209" y="480">
    <properties>
     <property name="teleport" value=""/>

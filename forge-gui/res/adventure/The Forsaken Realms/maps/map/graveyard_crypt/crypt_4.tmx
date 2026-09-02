@@ -96,7 +96,7 @@
   <object id="68" template="../../../../common/maps/obj/treasure.tx" x="93.5" y="206"/>
   <object id="70" template="../../../../common/maps/obj/treasure.tx" x="364.917" y="201.25"/>
   <object id="71" template="../../../../common/maps/obj/gold.tx" x="90.75" y="139"/>
-  <object id="94" template="../../obj/stone.tx" x="95.75" y="144"/>
+  <object id="94" template="../../obj/stone.tx" x="119.75" y="144"/>
   <object id="72" template="../../../../common/maps/obj/gold.tx" x="57.5" y="65.75"/>
   <object id="73" template="../../../../common/maps/obj/manashards.tx" x="488.5" y="235"/>
   <object id="74" template="../../../../common/maps/obj/manashards.tx" x="326.5" y="288"/>

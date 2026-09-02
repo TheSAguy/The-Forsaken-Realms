@@ -68,7 +68,7 @@
     &quot;type&quot;: &quot;item&quot;,
     &quot;probability&quot;: 0.10,
     &quot;count&quot;: 1,
-    &quot;itemName&quot;: &quot;Mantel of Denial&quot;
+    &quot;itemName&quot;: &quot;Mantle of Denial&quot;
   },
   {
     &quot;type&quot;: &quot;cardPackShop&quot;,
@@ -188,7 +188,7 @@
     &quot;type&quot;: &quot;item&quot;,
     &quot;probability&quot;: 0.10,
     &quot;count&quot;: 1,
-    &quot;itemName&quot;: &quot;Mantel of Denial&quot;
+    &quot;itemName&quot;: &quot;Mantle of Denial&quot;
   },
   {
     &quot;type&quot;: &quot;cardPackShop&quot;,
@@ -323,7 +323,7 @@
     &quot;type&quot;: &quot;item&quot;,
     &quot;probability&quot;: 0.10,
     &quot;count&quot;: 1,
-    &quot;itemName&quot;: &quot;Mantel of Denial&quot;
+    &quot;itemName&quot;: &quot;Mantle of Denial&quot;
   },
   {
     &quot;type&quot;: &quot;cardPackShop&quot;,
@@ -461,7 +461,7 @@
     &quot;type&quot;: &quot;item&quot;,
     &quot;probability&quot;: 0.10,
     &quot;count&quot;: 1,
-    &quot;itemName&quot;: &quot;Mantel of Denial&quot;
+    &quot;itemName&quot;: &quot;Mantle of Denial&quot;
   },
   {
     &quot;type&quot;: &quot;cardPackShop&quot;,
@@ -483,7 +483,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="90" template="../../../obj/stone.tx" x="318" y="472"/>
+  <object id="90" template="../../../obj/stone.tx" x="318" y="496"/>
   <object id="89" template="../../../../../common/maps/obj/treasure.tx" x="424.5" y="461.5">
    <properties>
     <property name="reward">[
@@ -509,7 +509,7 @@
     &quot;type&quot;: &quot;item&quot;,
     &quot;probability&quot;: 0.10,
     &quot;count&quot;: 1,
-    &quot;itemName&quot;: &quot;Mantel of Denial&quot;
+    &quot;itemName&quot;: &quot;Mantle of Denial&quot;
   },
   {
     &quot;type&quot;: &quot;cardPackShop&quot;,

@@ -87,13 +87,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 1,
 		&quot;count&quot;: 2,
-		&quot;itemName&quot;: &quot;Fumigate&quot;
+		&quot;cardName&quot;: &quot;Fumigate&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 2,
-		&quot;itemName&quot;: &quot;Favored Enemy&quot;
+		&quot;cardName&quot;: &quot;Favored Enemy&quot;
 	}
 ]</property>
    </properties>

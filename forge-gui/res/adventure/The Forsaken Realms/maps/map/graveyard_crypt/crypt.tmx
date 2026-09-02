@@ -62,7 +62,7 @@
   <object id="53" template="../../../../common/maps/obj/treasure.tx" x="495.667" y="65.3333"/>
   <object id="54" template="../../../../common/maps/obj/treasure.tx" x="48" y="367"/>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="64.3333" y="126.667"/>
-  <object id="86" template="../../obj/stone.tx" x="325.333" y="153"/>
+  <object id="86" template="../../obj/stone.tx" x="289.333" y="153"/>
   <object id="87" template="../../obj/stone.tx" x="308.467" y="93.3557"/>
   <object id="88" template="../../obj/stone.tx" x="207.797" y="92.1815"/>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="56.3333" y="125.333"/>

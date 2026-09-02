@@ -222,7 +222,7 @@
   <object id="230" template="../../../../common/maps/obj/waypoint.tx" x="227.509" y="528.105"/>
   <object id="231" template="../../../../common/maps/obj/gold.tx" x="357.509" y="467.439"/>
   <object id="266" template="../../obj/stone.tx" x="577.546" y="213.87"/>
-  <object id="267" template="../../obj/stone.tx" x="352.509" y="472.439"/>
+  <object id="267" template="../../obj/stone.tx" x="336.509" y="496.439"/>
   <object id="232" template="../../../../common/maps/obj/waypoint.tx" x="110.842" y="440.105"/>
   <object id="233" template="../../../../common/maps/obj/waypoint.tx" x="115.342" y="392.939"/>
   <object id="234" template="../../../../common/maps/obj/manashards.tx" x="22.8421" y="576.772"/>
@@ -378,7 +378,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="269" template="../../obj/wood.tx" x="660.509" y="419.439">
+  <object id="269" template="../../obj/wood.tx" x="600.509" y="415.439">
    <properties>
     <property name="reward">[
   {
@@ -389,7 +389,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="270" template="../../obj/wood.tx" x="670.842" y="369.439">
+  <object id="270" template="../../obj/wood.tx" x="606.842" y="365.439">
    <properties>
     <property name="reward">[
   {
@@ -400,7 +400,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="271" template="../../obj/wood.tx" x="306.175" y="56.1053">
+  <object id="271" template="../../obj/wood.tx" x="254.175" y="56.105">
    <properties>
     <property name="reward">[
   {

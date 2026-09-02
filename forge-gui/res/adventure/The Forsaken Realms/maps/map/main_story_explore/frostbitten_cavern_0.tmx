@@ -33,7 +33,7 @@
   <object id="10" template="../../../../common/maps/obj/treasure.tx" x="288" y="288"/>
   <object id="11" template="../../../../common/maps/obj/treasure.tx" x="464" y="186"/>
   <object id="12" template="../../../../common/maps/obj/gold.tx" x="240" y="176"/>
-  <object id="32" template="../../obj/stone.tx" x="245" y="181"/>
+  <object id="32" template="../../obj/stone.tx" x="245" y="205"/>
   <object id="1" template="../../../../common/maps/obj/collision.tx" x="-32" y="0" width="32" height="320"/>
   <object id="2" template="../../../../common/maps/obj/collision.tx" x="-32" y="320" width="544" height="32"/>
   <object id="3" template="../../../../common/maps/obj/collision.tx" x="480" y="0" width="32" height="320"/>

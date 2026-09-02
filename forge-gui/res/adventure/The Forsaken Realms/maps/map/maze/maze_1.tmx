@@ -125,7 +125,7 @@
   <object id="160" template="../../obj/stone.tx" x="20.1577" y="113.097"/>
   <object id="161" template="../../obj/stone.tx" x="121.381" y="53.3662"/>
   <object id="162" template="../../obj/stone.tx" x="350.255" y="170.82"/>
-  <object id="163" template="../../obj/stone.tx" x="174.821" y="405.53"/>
+  <object id="163" template="../../obj/stone.tx" x="174.821" y="381.53"/>
   <object id="79" template="../../../../common/maps/obj/gold.tx" x="11.5215" y="521.448"/>
   <object id="80" template="../../../../common/maps/obj/gold.tx" x="614.027" y="375.036"/>
   <object id="81" template="../../../../common/maps/obj/gold.tx" x="419.107" y="58.8465"/>

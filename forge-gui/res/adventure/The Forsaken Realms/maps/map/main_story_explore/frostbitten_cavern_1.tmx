@@ -110,7 +110,7 @@
    </properties>
   </object>
   <object id="13" template="../../../../common/maps/obj/gold.tx" x="96" y="304"/>
-  <object id="27" template="../../obj/stone.tx" x="101" y="309"/>
+  <object id="27" template="../../obj/stone.tx" x="49" y="277"/>
   <object id="14" template="../../../../common/maps/obj/enemy.tx" x="143" y="304">
    <properties>
     <property name="enemy" value="Polar Bear"/>

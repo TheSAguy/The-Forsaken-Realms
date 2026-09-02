@@ -284,8 +284,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="272" template="../../../obj/stone.tx" x="453" y="117"/>
-  <object id="273" template="../../../obj/stone.tx" x="395" y="405"/>
+  <object id="272" template="../../../obj/stone.tx" x="425" y="117"/>
+  <object id="273" template="../../../obj/stone.tx" x="355" y="381"/>
   <object id="229" template="../../../../../common/maps/obj/gold.tx" x="448" y="320"/>
   <object id="230" template="../../../../../common/maps/obj/treasure.tx" x="14.75" y="275.25">
    <properties>

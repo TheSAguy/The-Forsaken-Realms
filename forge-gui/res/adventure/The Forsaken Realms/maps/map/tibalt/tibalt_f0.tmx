@@ -113,7 +113,7 @@
   </object>
   <object id="177" template="../../../../common/maps/obj/gold.tx" x="362.842" y="499.605"/>
   <object id="178" template="../../../../common/maps/obj/gold.tx" x="379.342" y="510.605"/>
-  <object id="195" template="../../obj/stone.tx" x="367.842" y="504.605"/>
+  <object id="195" template="../../obj/stone.tx" x="327.842" y="588.605"/>
   <object id="196" template="../../obj/stone.tx" x="304.761" y="588.754"/>
   <object id="179" template="../../../../common/maps/obj/gold.tx" x="336.342" y="547.105"/>
   <object id="180" template="../../../../common/maps/obj/gold.tx" x="353.342" y="541.105"/>

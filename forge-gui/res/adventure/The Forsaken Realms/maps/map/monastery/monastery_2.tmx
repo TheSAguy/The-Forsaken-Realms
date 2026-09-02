@@ -42,7 +42,7 @@
   </object>
   <object id="65" template="../../../../common/maps/obj/treasure.tx" x="199.167" y="48.8333"/>
   <object id="66" template="../../../../common/maps/obj/gold.tx" x="216.501" y="48.2141"/>
-  <object id="82" template="../../obj/stone.tx" x="227.162" y="65.1431"/>
+  <object id="82" template="../../obj/stone.tx" x="207.162" y="97.143"/>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="172.923" y="219.563">
    <properties>
     <property name="enemy" value="Apprentice White Wizard"/>
@@ -122,7 +122,7 @@
     <property name="waypoints" value="73,74"/>
    </properties>
   </object>
-  <object id="83" template="../../obj/wood.tx" x="164.263" y="82.5794">
+  <object id="83" template="../../obj/wood.tx" x="164.263" y="90.579">
    <properties>
     <property name="reward">[
   {

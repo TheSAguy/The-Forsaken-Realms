@@ -15832,3 +15832,67 @@ BEFORE any release work, as its own round.
   curated list and was left unchanged.
 - **Everything must be re-playtested** - this swaps the rules engine and the reward/scene layer
   under whatever was tested for v1.04.
+
+## Round 85: dungeon audit - every map scanned, 94 drops relocated, 28 data defects fixed (2026-09-02)
+
+The user's standing note to "review all dungeons for potential issues", done as a full scan rather
+than a spot-check: a Python scanner parsed all 339 `.tmx` files (9,118 objects) the way the game
+does - tile layers decoded, tileset collision rectangles resolved per `MapStage.loadCollision`,
+templates merged, teleport targets and reward/enemy names resolved against the plane's own
+`world/*.json`. An independent second checker, written from scratch against libGDX 1.14.2's actual
+loader, cross-checked it and caught what the first scanner missed. The same tooling then made the
+fixes and re-verified them. The scripts lived in the session scratchpad; the method is recorded
+here and the results are in the maps.
+
+### Resource drops (MOD_SCOPE #101, now closed)
+- **94 stone/wood drops relocated in 92 maps.** 68 were the bulk-placement artifact (exactly five
+  pixels diagonal from another object - the previous scan counted 50 because it only looked at
+  +5/+5; the -5/-5, +5/-5 and -5/+5 diagonals and one 4.997 rounding case were the rest), 2 of those
+  were outside the map bounds, and 26 more were not clustered at all but sat at least 25% inside
+  collision geometry - three of them 100%, unobtainable (Zedruu's keep).
+- Placement rule: nearest open floor from the old spot, at least 4px inside the map edge, zero
+  overlap with collision, no overlap with any other object plus a 12px clearance, never at an exact
+  5px diagonal from anything, and not across a wall (a line-of-sight check keeps the drop in the
+  same room). Twelve drops in dense maps needed the clearance relaxed to 6px and the line-of-sight
+  loosened; the last four (Zedruu's keep) needed it dropped entirely, so those may sit in the
+  adjacent corridor. Every relocation was re-verified after writing: 0 clustered, 0 out of bounds,
+  0 buried, 0 overlapping.
+- Edits are surgical: only the `x`/`y` attributes of the named object changed; object counts, ids,
+  `nextobjectid`, tile layers and line endings are byte-identical, verified per file against
+  `HEAD`. (The 8796396fd1e precedent - a "stray stone" commit that silently deleted a shop - is why
+  that check exists.)
+
+### Data defects found by the same scan, all fixed
+- **11 broken door links.** `teleportObjectId` pointed at an id that does not exist in the target
+  map, or at an enemy: cave_kobold_floor2 -> cave_kobold (pointed at the Kobold Shaman), both
+  directions of cave_16BL1 <-> cave_16BL2, four Demon Tower portal rooms (2, 2C, 2C2, 2D -> 2B),
+  Temple of Liliana graveyard -> keep, tibalt_f3 -> f2, vampirecastle_4B -> 4C and -> 4 (pointed at
+  a Vampire), zedruu_f3 -> f4. The game silently fell back to another door, so the player arrived
+  somewhere else. Each now targets the unique door in the target map that leads back.
+- **50 card rewards that paid a random card instead of the named one.** `"type": "card"` entries
+  carrying `itemName` (`Murder`, `Deadly Dispute`, `Village Rites`, ...) - `RewardData` reads only
+  `cardName` for that type, so the name was ignored. Renamed to `cardName` in the three vampire
+  castle floors, three graves, the Sliver Queen skep and fort_colorless_6_study.
+- **Three boosters typed `"Green"`** (grove_7_snake, grove_8_hydra, grove_12_faeriedragon): not a
+  reward type, so the Rare/Mythic slot produced nothing. Now `"card"`.
+- **`Mantel of Denial`** in six blue-castle rewards - the item is `Mantle of Denial`; the 10% drop
+  never happened.
+- **Court of Paliano:** Queen Marchesa's `startBattleWithCard` list had a missing quote, so its
+  third card (`Deadly Designs|CN2`) failed lookup. Restored.
+- **Demon Tower portal_2:** the "Congratulations Adventurer!" inscription dialog was broken JSON and
+  never showed. Rewritten to the `DialogData` shape.
+
+### Left for the user (design calls, not defects a script should decide)
+- `cave/inn_cave_river_entrance.tmx` object 16 is an enemy with an EMPTY `enemy` property -
+  nothing spawns there. Which enemy belongs?
+- Five castle maps' basement doors (`*_castle.tmx` id 65 -> `*_castle_f1.tmx`) carry no
+  `teleportObjectId`; each f1 map has exactly one entry so it works, but that entry exits straight
+  to the world map rather than back up into the castle. Intentional?
+- `main_story_explore/library_of_varsil_3.tmx` enemy 49 "Book Mimic" sits above the map at
+  (512,-32), invisible, with a defeat dialog - looks parked for a script; verify it is reachable.
+- `The Forsaken Realms/maps/tileset/inn_dungeon_floor.tsx` declares polygon collision shapes and a
+  `collides` tile property on 74 tiles; the game reads neither, so those tiles have no collision.
+- Cosmetic, not fixed: 33 further stone/wood drops stacked on another pickup or enemy without
+  being clustered, and ~90 with sub-25% collision overlap (all still collectable).
+
+**Files touched**: 92 `.tmx` files under the plane's `maps/` folder. No engine file.

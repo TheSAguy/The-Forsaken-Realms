@@ -92,7 +92,7 @@
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>
-  <object id="57" template="../../../obj/stone.tx" x="200.509" y="269.061"/>
+  <object id="57" template="../../../obj/stone.tx" x="200.509" y="301.061"/>
   <object id="56" template="../../../../../common/maps/obj/enemy.tx" x="195.103" y="271.379" width="32" height="32">
    <properties>
     <property name="defeatDialog">[{

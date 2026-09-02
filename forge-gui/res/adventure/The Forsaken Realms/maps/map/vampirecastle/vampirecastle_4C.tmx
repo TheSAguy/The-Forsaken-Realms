@@ -33,7 +33,7 @@
   <object id="75" template="../../../../common/maps/obj/treasure.tx" x="784.167" y="63.75"/>
   <object id="76" template="../../../../common/maps/obj/treasure.tx" x="704.5" y="64.6667"/>
   <object id="77" template="../../../../common/maps/obj/gold.tx" x="744.5" y="62.9167"/>
-  <object id="88" template="../../obj/stone.tx" x="749.5" y="67.9167"/>
+  <object id="88" template="../../obj/stone.tx" x="749.5" y="91.917"/>
   <object id="78" template="../../../../common/maps/obj/enemy.tx" x="374.417" y="306.667">
    <properties>
     <property name="enemy" value="Vampire"/>
@@ -87,13 +87,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Deadly Dispute&quot;
+		&quot;cardName&quot;: &quot;Deadly Dispute&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Village Rites&quot;
+		&quot;cardName&quot;: &quot;Village Rites&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -111,7 +111,7 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Murder&quot;
+		&quot;cardName&quot;: &quot;Murder&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -129,13 +129,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Deadly Dispute&quot;
+		&quot;cardName&quot;: &quot;Deadly Dispute&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Village Rites&quot;
+		&quot;cardName&quot;: &quot;Village Rites&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -153,7 +153,7 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Murder&quot;
+		&quot;cardName&quot;: &quot;Murder&quot;
 	}
 ]</property>
    </properties>
@@ -177,13 +177,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Deadly Dispute&quot;
+		&quot;cardName&quot;: &quot;Deadly Dispute&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Village Rites&quot;
+		&quot;cardName&quot;: &quot;Village Rites&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -201,7 +201,7 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Murder&quot;
+		&quot;cardName&quot;: &quot;Murder&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -219,13 +219,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Deadly Dispute&quot;
+		&quot;cardName&quot;: &quot;Deadly Dispute&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Village Rites&quot;
+		&quot;cardName&quot;: &quot;Village Rites&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -243,7 +243,7 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Murder&quot;
+		&quot;cardName&quot;: &quot;Murder&quot;
 	}
 ]</property>
    </properties>

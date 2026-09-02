@@ -56,7 +56,7 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/gold.tx" x="165" y="207"/>
   <object id="55" template="../../../../common/maps/obj/gold.tx" x="322" y="192"/>
-  <object id="89" template="../../obj/stone.tx" x="170" y="212"/>
+  <object id="89" template="../../obj/stone.tx" x="166" y="336"/>
   <object id="90" template="../../obj/stone.tx" x="308.793" y="117.428"/>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="458.5" y="385.5"/>
   <object id="57" template="../../../../common/maps/obj/gold.tx" x="167" y="384.5"/>

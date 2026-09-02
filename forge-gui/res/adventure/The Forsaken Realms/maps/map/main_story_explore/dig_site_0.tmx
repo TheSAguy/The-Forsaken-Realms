@@ -57,7 +57,7 @@
     <property name="enemy" value="Archaeologist"/>
    </properties>
   </object>
-  <object id="68" template="../../obj/stone.tx" x="413" y="214"/>
+  <object id="68" template="../../obj/stone.tx" x="413" y="238"/>
   <object id="62" template="../../../../common/maps/obj/collision.tx" x="-16" y="-16" width="16" height="304"/>
   <object id="63" template="../../../../common/maps/obj/collision.tx" x="0" y="-16" width="480" height="16"/>
   <object id="64" template="../../../../common/maps/obj/collision.tx" x="0" y="272" width="480" height="16"/>

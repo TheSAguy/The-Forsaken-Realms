@@ -40,13 +40,13 @@
   <object id="66" template="../../../../common/maps/obj/door_up.tx" x="802.112" y="297.76">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/vampirecastle/vampirecastle_4C.tmx"/>
-    <property name="teleportObjectId" value="65"/>
+    <property name="teleportObjectId" value="66"/>
    </properties>
   </object>
   <object id="67" template="../../../../common/maps/obj/door_down.tx" x="48.9816" y="304.041">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/vampirecastle/vampirecastle_4.tmx"/>
-    <property name="teleportObjectId" value="66"/>
+    <property name="teleportObjectId" value="65"/>
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="517.558" y="531.191">
@@ -82,13 +82,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Deadly Dispute&quot;
+		&quot;cardName&quot;: &quot;Deadly Dispute&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Village Rites&quot;
+		&quot;cardName&quot;: &quot;Village Rites&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -106,7 +106,7 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Murder&quot;
+		&quot;cardName&quot;: &quot;Murder&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -124,13 +124,13 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Deadly Dispute&quot;
+		&quot;cardName&quot;: &quot;Deadly Dispute&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Village Rites&quot;
+		&quot;cardName&quot;: &quot;Village Rites&quot;
 	},
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -148,7 +148,7 @@
 		&quot;type&quot;: &quot;card&quot;,
 		&quot;probability&quot;: 0.5,
 		&quot;count&quot;: 1,
-		&quot;itemName&quot;: &quot;Murder&quot;
+		&quot;cardName&quot;: &quot;Murder&quot;
 	}
 ]</property>
    </properties>

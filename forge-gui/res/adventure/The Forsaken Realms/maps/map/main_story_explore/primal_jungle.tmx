@@ -231,8 +231,8 @@
   <object id="7" template="../../../../common/maps/obj/entry_up.tx" x="35" y="640" width="126" height="16"/>
   <object id="27" template="../../../../common/maps/obj/treasure.tx" x="64" y="96"/>
   <object id="28" template="../../../../common/maps/obj/gold.tx" x="432" y="224"/>
-  <object id="48" template="../../obj/stone.tx" x="309" y="117"/>
-  <object id="49" template="../../obj/stone.tx" x="427" y="229"/>
+  <object id="48" template="../../obj/stone.tx" x="309" y="153"/>
+  <object id="49" template="../../obj/stone.tx" x="403" y="225"/>
   <object id="29" template="../../../../common/maps/obj/gold.tx" x="32" y="400"/>
   <object id="30" template="../../../../common/maps/obj/gold.tx" x="224" y="496"/>
  </objectgroup>

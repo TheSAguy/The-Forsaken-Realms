@@ -485,7 +485,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="89" template="../../../obj/stone.tx" x="431.955" y="467.554"/>
+  <object id="89" template="../../../obj/stone.tx" x="431.955" y="491.554"/>
   <object id="88" template="../../../../../common/maps/obj/treasure.tx" x="309.155" y="469.027">
    <properties>
     <property name="reward">[

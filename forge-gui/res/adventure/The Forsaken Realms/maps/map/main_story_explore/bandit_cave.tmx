@@ -35,7 +35,7 @@
  </layer>
  <objectgroup id="5" name="Objects">
   <object id="8" template="../../../../common/maps/obj/gold.tx" x="272" y="64"/>
-  <object id="29" template="../../obj/stone.tx" x="277" y="69"/>
+  <object id="29" template="../../obj/stone.tx" x="245" y="33"/>
   <object id="9" template="../../../../common/maps/obj/gold.tx" x="176" y="288"/>
   <object id="10" template="../../../../common/maps/obj/booster.tx" x="432" y="48">
    <properties>

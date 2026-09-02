@@ -1014,7 +1014,7 @@
     <property name="enemy" value="Khenra Warrior"/>
    </properties>
   </object>
-  <object id="48" template="../../obj/stone.tx" x="142" y="401"/>
+  <object id="48" template="../../obj/stone.tx" x="122" y="433"/>
   <object id="43" template="../../../../common/maps/obj/enemy.tx" name="QuestGiver" x="594" y="112" visible="1">
    <properties>
     <property name="dialog">[

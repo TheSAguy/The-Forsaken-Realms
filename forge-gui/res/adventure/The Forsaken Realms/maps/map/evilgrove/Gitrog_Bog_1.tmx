@@ -233,9 +233,9 @@
    </properties>
   </object>
   <object id="200" template="../../../../common/maps/obj/gold.tx" x="607.5" y="610"/>
-  <object id="284" template="../../obj/wood.tx" x="435.333" y="498.833"/>
+  <object id="284" template="../../obj/wood.tx" x="399.333" y="506.833"/>
   <object id="285" template="../../obj/wood.tx" x="952.335" y="843.05"/>
-  <object id="286" template="../../obj/wood.tx" x="612.5" y="605"/>
+  <object id="286" template="../../obj/wood.tx" x="608.5" y="641"/>
   <object id="210" template="../../../../common/maps/obj/manashards.tx" x="64.3333" y="451.333"/>
   <object id="217" template="../../../../common/maps/obj/enemy.tx" x="648.5" y="179.33" width="16" height="17.6724">
    <properties>

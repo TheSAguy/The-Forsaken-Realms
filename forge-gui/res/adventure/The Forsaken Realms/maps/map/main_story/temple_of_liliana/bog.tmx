@@ -374,7 +374,7 @@
   </object>
   <object id="231" template="../../../../../common/maps/obj/manashards.tx" x="400" y="576"/>
   <object id="232" template="../../../../../common/maps/obj/gold.tx" x="352" y="592"/>
-  <object id="273" template="../../../obj/stone.tx" x="357" y="597"/>
+  <object id="273" template="../../../obj/stone.tx" x="321" y="585"/>
   <object id="233" template="../../../../../common/maps/obj/treasure.tx" x="224" y="352"/>
   <object id="235" template="../../../../../common/maps/obj/enemy.tx" x="272" y="528">
    <properties>

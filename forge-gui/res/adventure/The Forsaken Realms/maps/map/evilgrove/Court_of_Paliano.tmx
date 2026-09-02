@@ -117,7 +117,7 @@
     ]
    }
 ]</property>
-    <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Throne of the High City&quot;, &quot;Marchesa's Emissary|CNS&quot;, Deadly Designs|CN2&quot;]}"/>
+    <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Throne of the High City&quot;, &quot;Marchesa's Emissary|CNS&quot;, &quot;Deadly Designs|CN2&quot;]}"/>
     <property name="enemy" value="Queen Marchesa"/>
     <property name="reward">[
   {

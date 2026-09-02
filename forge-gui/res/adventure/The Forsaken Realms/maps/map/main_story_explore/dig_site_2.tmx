@@ -97,7 +97,7 @@
   </object>
   <object id="95" template="../../../../common/maps/obj/treasure.tx" x="293.5" y="117"/>
   <object id="97" template="../../../../common/maps/obj/gold.tx" x="377" y="44"/>
-  <object id="116" template="../../obj/stone.tx" x="382" y="49"/>
+  <object id="116" template="../../obj/stone.tx" x="342" y="65"/>
   <object id="98" template="../../../../common/maps/obj/entry_down.tx" x="316" y="37" width="26" height="25">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/main_story_explore/dig_site_1.tmx"/>
