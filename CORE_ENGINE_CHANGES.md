@@ -1881,3 +1881,12 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - *(Quest 74's prologue reword is in the plane's own `world/quests.json` - no engine file.)*
 - **`CLAUDE.md`** (not an engine file; tracked here for completeness) - new "Release rule: take the
   upstream engine update FIRST" section ahead of Build/toolchain.
+
+## New folder (2026-09-02) - dev-tools/save-editing/
+
+- **`dev-tools/save-editing/`** (NEW, outside the plane folder, hence recorded here) - `README.md`,
+  `Inspect.java` (read-only save dump: player, deck slots, full collection with counts),
+  `BuildDecks2.java` (writes decklists into deck slots; dry-run by default, takes its own .bak),
+  `DumpSave.java` (lower-level structural dump). Not part of any build - these are compiled ad hoc
+  against the shipped game jar. Moved out of an ephemeral session scratchpad because the method had
+  already been lost once that way; see MOD_CHANGELOG's "Technique: editing a save file".

@@ -1,3 +1,77 @@
+# START HERE — read this first, every session
+
+**You do NOT need to read previous chat threads.** They are expensive and they are not the source
+of truth. Everything a session needs is in five files, and they are kept current by a standing rule
+that every round updates them in the same action as its commit. If you find something missing, fix
+the docs rather than going back to chat history.
+
+Read in this order, and stop when you have what you need:
+
+| Read | For |
+|---|---|
+| **this file (`CLAUDE.md`)** | ground rules, release workflow, deploy path, build commands |
+| **`MOD_SCOPE.md`** | the feature list — 101 numbered items with live status. Start at the Currency line |
+| **`MOD_CHANGELOG.md`** | the engineering log. Newest rounds at the **bottom**. ~15k lines — read the last few rounds, then grep by keyword |
+| **`CORE_ENGINE_CHANGES.md`** | every stock-engine file this mod edits, for upstream-merge conflict work |
+| **`ANDROID_RELEASE.md`** | the authoritative Android release procedure. Read before ANY Android work |
+
+Then run `git log --oneline -15` and `git status` — those two tell you the rest.
+
+## Where things stand (2026-09-02)
+
+**v1.04 is released.** PC + Android, both live at
+`https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.04`. Tag `tfr-v1.04` is on
+`7018e12235f`, `main` is level with `origin/master`, working tree clean, and the live folder at
+`F:\FORGE\TFR-Standalone\The Forsaken Realms\` is built and `PACKAGE_OK`. Rounds 62-82 all shipped
+in that release, which was the first push since v1.03.
+
+## What v1.05 starts with — NOT open to reordering
+
+**Step 0 is the upstream engine merge.** Standing user rule as of 2026-09-01: always take the latest
+`upstream/master` BEFORE cutting a release, as its own round. Measured 2026-09-01 at **34 commits /
+1,812 files / 174 `.java`** behind. See the "Release rule" section below for why it must be its own
+round, and note it **blocks packaging until the user reinstalls `E:\GAMES\Forge_2`** at the matching
+engine version — only they can do that step, so raise it early rather than discovering it mid-build.
+
+## Open items
+
+- **MOD_SCOPE #101** — the resource-drop placement sweep is 25 of 75 done. 50 clustered `+5/+5`
+  drops remain in 49 maps: 2 out of bounds and uncollectable, 15 partially buried in collision, 33
+  merely stacked. Full triage is in the item.
+- **MOD_SCOPE #84 / #85 / #87** — the only Not Started items. #87 (More Attacking Options) has real
+  research behind it in `STAR_TOWNS_RESEARCH.md` and carries the AI end-game objective ("capture the
+  centre of the map"). #84 has four named targets: Mine Upgrades, City Walls, Mage War Camp, Armory
+  Upgrade.
+- **MOD_SCOPE #98** — 1-vs-N duels work at the engine level but have **zero reachable content**:
+  one chained enemy exists in 1,520 and it is in no biome spawn list. Making it reachable means
+  authoring content, most naturally as part of #87.
+- **Shipped in v1.04 but never playtested by the user**: the Arena bracket coin payout, #94 Armory
+  rarity, #95 Capitol cooldown, #96 New Game+, and the round-79 Skip Tutorial text (new games only).
+- **Android has real testers** (24 downloads on the v1.03 APK) and the user has no Android device —
+  feedback arrives via Discord.
+
+## Hard-won lessons that will bite you again
+
+- **Read Maven's own exit code, never a pipe's.** `mvn ... | grep ...; echo $?` reports *grep's*
+  status. A round-78 compile reported success while Maven had failed. Redirect to a file and read
+  `$?` immediately.
+- **Never run two Maven builds against this tree at once.** Round 81 produced impossible errors in
+  files nobody had touched; it was two builds sharing `target/`.
+- **`--zip` packaging always does the full stock-asset copy** and takes well over ten minutes. Do
+  not give it a short timeout — killing it mid-run strips `PACKAGE_OK.txt` and leaves the live
+  folder in the half-rebuilt state that marker exists to catch.
+- **Read `PACKAGE_OK.txt` before telling the user it is safe to play.** File-existence checks are
+  not a substitute; the packager deletes it first and writes it last for exactly this reason.
+- **Edit saves with Java, never Python.** See `dev-tools/save-editing/README.md`.
+- **Write the changelog entry in the SAME action as the code commit.** Rounds 73-76 and then round
+  78 all shipped with detail only in commit messages and had to be backfilled. A thorough commit
+  message is not a substitute and reads as done when it is not.
+- **An "empty set means everything" convention must be read through its predicate at every site.**
+  A raw `Set.contains()` near one is a latent bug — that pattern was a save-corrupting release
+  blocker caught in round 78.
+- Diagnostic logging is not optional. Anything probabilistic, AI-driven, or off-screen gets a
+  `[TFR-<Name>]` line **as part of building it**. Round 82 exists because a feature shipped without
+  one and a user report could not be diagnosed from `forge.log`.
 # This Repo
 
 This is a fork of [Card-Forge/forge](https://github.com/Card-Forge/forge) (the open-source MTG

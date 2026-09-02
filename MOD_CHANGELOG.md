@@ -15684,3 +15684,42 @@ swaps the rules engine under whatever was just playtested, it **blocks packaging
 reinstalls `E:\GAMES\Forge_2`** at the matching version, and it clobbers our Android branding and
 version stamps. v1.04 shipped without it by explicit user decision - the merge would have
 invalidated a full day of playtesting - and it is the first work of v1.05.
+
+## Technique: editing a save file (documented 2026-09-02, after losing it twice)
+
+Not a round - a permanent reference, written because this method has now been developed once and
+re-derived once, and the second time a session wrongly concluded it was impossible. **Full detail
+and the working tools are in `dev-tools/save-editing/` (README + Inspect/BuildDecks2/DumpSave).**
+This entry exists so the technique is findable from the engineering log too.
+
+### The rule
+**Edit saves with Java, against the game's own classes. Never byte-patch from Python.**
+
+A `.sav` is zlib-compressed Java serialization (`SaveFileData` wrapping `EnumMap` / `CardPool` /
+`ConcurrentHashMap`). Java serialization uses back-reference handles, so inserting or resizing
+anything by hand shifts every later handle and corrupts the stream. On 2026-09-01 a session found
+exactly that, concluded "save writing is unsafe", and told the user so - the correct conclusion was
+"use Java", which is what round 66 had already done. The user corrected it by quoting round 66's own
+output back.
+
+Reading has a matching trap: string-scraping a save **under-reports**, because each unique string is
+written once and back-referenced after. A scrape of a save holding 847 distinct cards found ~401 and
+no quantities at all. Read through `SaveFileData` and the counts are exact.
+
+### What round 82 did with it
+Wrote two decks into save 1 at the user's request, both 46 cards, both verified after writing:
+- **slot 2 "Dawn Offensive"** - mono-White aggro, 18 Plains, curve topping at four.
+- **slot 3 "Gallows Procession"** - W/B midrange, six removal spells and fliers, deliberately a
+  different angle from slot 1's defensive "Ninefold Vigil".
+
+### Facts worth not re-learning
+- Collection: `player.readObject("cards")`, a `String[]` of `"<count> <Name>|<SET>|[art]"`.
+- Decks: same format under `deck_0`..`deck_9`; `deck_name_<n>` alongside; an unused slot is named
+  `"Empty Deck"` with a zero-length array. `deckCount` is 10.
+- **Decks do NOT own their cards** - verified 2026-09-02, slots 0 and 1 shared four identical
+  printings. The collection is a shared pool; do not try to reserve cards across decks.
+- **The game must be closed before writing** - it autosaves on its own schedule and will clobber an
+  edit made while it is open.
+- Verify AFTER writing: re-deserialize, confirm the target slot, confirm the OTHER slots are
+  untouched, confirm collection size and life/gold/resources. A write returning cleanly proves
+  nothing about a valid save.
