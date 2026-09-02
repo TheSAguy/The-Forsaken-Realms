@@ -4492,7 +4492,7 @@ give `shopTierOf()` a static name -> tier fallback. Deliberately deferred rather
 release eve. (Related: the comment above `allChooserShopNames()` claims the universe is built from
 "the plane's town templates" - nothing reads templates; that stale comment helped hide this.)
 
-### 93. Bronze Coin Ante Ransom — `Done (built 2026-08-30 to 2026-09-01, rounds 67/68/73/76/77), not yet playtest-confirmed`
+### 93. Bronze Coin Ante Ransom — `Done (playtest-confirmed 2026-09-01)`
 Backfilled 2026-09-01. A recoverable insurance item against a bad ante. Lose a duel while holding a
 **Bronze Challenge Coin** and you may hand it to the victor: every card you anted this duel comes
 back and the defeat's gold penalty is waived (life loss still applies). Beat that same enemy later
@@ -4511,6 +4511,11 @@ and you take the coin back.
 - **Reclaiming is a loot tile** (user request, round 77): the coin appears as a card on the win's
   reward screen rather than appearing silently in the inventory. Arena pays it out with the final
   bracket loot.
+- **PLAYTEST-CONFIRMED 2026-09-01.** User tested both coin flows end to end - the Bronze Coin
+  reclaim-as-loot on a duel win, and the Inn tutorial Coin refund - and both behave correctly. That
+  same test also confirms round 80's dialog fixes, since the refund dialog is what exposed the
+  hard-quit soft-lock: the body now wraps inside the screen and dismissing it no longer resurrects
+  an empty modal window. The Arena bracket payout path has NOT been separately exercised.
 
 ### 94. Timed Armory Rarity Gating — `Done (built 2026-08-31, round 75), not yet playtest-confirmed`
 Backfilled 2026-09-01. Extends #22/#33: what the Armory can stock is gated by how long the run has

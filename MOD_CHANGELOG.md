@@ -15566,4 +15566,12 @@ STALE` on any drift. Per-MAP, not per-slot: the table is a union over a whole fi
 comparison would report drift the next slot contradicts. A type added to a flat template instead
 surfaces as a one-shot "no tier for shop type" line.
 
+### Playtest result (2026-09-01, same day)
+User re-ran the exact repro plus the duel-win path: **both the Inn tutorial Coin refund and the
+Bronze Coin reclaim work correctly, and the soft-lock is gone** - the dialog body wraps inside the
+screen and dismissing it no longer resurrects an empty modal window. MOD_SCOPE #93 moved to
+playtest-confirmed on the strength of it. Not covered by that test and still unconfirmed: the Arena
+bracket coin payout, and #92's tier gate (a separate check - fresh launch, straight into a plain
+color town, Rare blueprint should demand Partner and cost 100 shards).
+
 **Files touched**: MenuScene.java, UIScene.java, EconomyBuildings.java, MapStage.java.
