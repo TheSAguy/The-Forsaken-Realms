@@ -1859,3 +1859,15 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   which is visit-order dependent (`putIfAbsent`).
 - **`stage/MapStage.java`** - calls `EconomyBuildings.auditFlatTownTierFallback()` once per map
   load, after the layer loop so the pools describe the whole file.
+
+## Round 81 (2026-09-01) - Inn tutorial messaging and Coin refund threshold
+
+- **`scene/EventScene.java`** - the tutorial win nudge is now a FINAL-ROUND nudge that fires on a
+  win or a loss (`pendingWinNudge` -> `pendingFinalRoundNudge`, `showPendingWinNudgeDialog` ->
+  `showPendingFinalRoundDialog`), gated by new `isFinalRound()`. The Coin refund no longer uses a
+  hardcoded `currentRound < 3`: new `coinRewardWinThreshold()` reads the lowest `minWins` of any
+  reward tier whose `itemRewards` names a Coin (Draft 2, Sealed 2, Jumpstart none) and
+  `hasEarnedCoinFromEvent()` compares it to `matchesWon`, so the rule is keyed on wins rather than
+  rounds and is therefore correct under RoundRobin as well as SingleElimination. The refund
+  suppresses the wrap-up when both would fire in one round.
+- *(The quest-74 prologue reword lives in the plane's own `world/quests.json` - no engine file.)*

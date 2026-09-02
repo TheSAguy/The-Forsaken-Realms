@@ -15575,3 +15575,68 @@ bracket coin payout, and #92's tier gate (a separate check - fresh launch, strai
 color town, Rare blueprint should demand Partner and cost 100 shards).
 
 **Files touched**: MenuScene.java, UIScene.java, EconomyBuildings.java, MapStage.java.
+
+## Round 81: Inn tutorial messaging retimed, Coin refund threshold derived from the event (2026-09-01)
+
+Two user reports from playtesting the round-80 build, plus the soft-lock confirmed fixed.
+
+### CONFIRMED FIXED: the dialog soft-lock
+User re-tested the Inn and hit no soft-lock. Worth recording precisely WHICH half fixed it,
+because the answer is not what round 80 assumed. `[TFR-Dialog]` - the instrumentation on
+`MenuScene.hideDialog()`'s stack unwind - has printed **zero times in every log on disk**, including
+a session that provably ran tournament rounds (`[TFR-AnteResult] ... event=true` on both a won and
+a lost match). So the unwind finds nothing on this path: **the wrap fix is what resolved the
+reported symptom**, by stopping the dialog growing past the stage and carrying its own OK button
+off-screen. The unwind stays as a no-op guard - it is a strict no-op when the stack is clean, and
+the leak it defends against is real in `MenuScene`'s own tree walker even if this path never hits it.
+
+### FIXED: the tutorial win nudge fired after every round
+User: "It gave me a message after winning round 1... We don't need that message. The player is still
+busy with the tournament and did not yet receive the booster." Correct - the boosters arrive when
+the EVENT finishes, not per round, so the message was talking about loot the player had not been
+handed. It now fires only when the FINAL round resolves, win or lose, and the copy is neutral to
+suit both ("However that went, you are walking out with a good deal more cards than you walked in
+with"). New `isFinalRound()` compares `currentRound` to the event's own `rounds`; it is called from
+`setWinner()`, which runs BEFORE `finishRound()` advances the counter, so it names the round just
+played.
+
+### FIXED: the Coin refund threshold was a hardcoded round number
+User: "I've actually never played a round robin tournament. Can you change it so that you check at
+what round the player gets his coin back and refund it if he loses before that round."
+
+The old guard was `currentEvent.currentRound < 3`. The real rule is readable straight off the
+event's own reward table, and it differs by format:
+- **Draft** pays a "Challenge Coin" at **2 wins** (`setupDraftRewards`, tier r2);
+- **Sealed** pays a "Silver Challenge Coin" at **2 wins** (`setupSealedRewards`, tier r2);
+- **Jumpstart** never pays a Coin - its three tiers are gold only (100/200/500).
+
+New `coinRewardWinThreshold()` finds the lowest `minWins` of any tier whose `itemRewards` names a
+Coin, and `hasEarnedCoinFromEvent()` compares it to `matchesWon`. Matched on the name containing
+"Coin" so a future reward table paying a Bronze or a new Coin is picked up automatically rather
+than silently falling through.
+
+**Keyed on WINS, not rounds** - which is exactly what makes it correct for the pairing style the
+user had never played. Under SingleElimination wins and rounds-survived are the same number; under
+RoundRobin the player plays every round and can reach the last one with any record, so a
+round-based rule would have refunded in the wrong places. Jumpstart, having no Coin tier, refunds
+on any loss: the player has no other route back to the Coin they paid.
+
+Unchanged and re-confirmed: **gold and shard entry never refund.** `enteredWithCoinItem` is only set
+on the Coin entry path and both other callbacks explicitly null it.
+
+Quest 74's prologue promised "Lose before round 3 and whatever Coin you paid with comes right back"
+- a literal falsehood under RoundRobin once the rule changed. Reworded to "Lose before you have won
+enough to earn a Coin of your own".
+
+The refund dialog now takes precedence over the wrap-up when both would fire in the same round -
+reachable only in a RoundRobin, by reaching the Final on fewer than two wins. One dialog per round:
+the refund is the more actionable news, and stacking two modals is what produced the 2026-09-01
+soft-lock in the first place.
+
+### Note on the build
+The first compile of this round reported `MAVEN_EXIT=1` with symbol errors in `forge-gui` files
+nobody had touched (`cannot access forge.card.mana.ManaCost`). Cause was two Maven runs writing the
+same `target/` directories concurrently, not the code - a clean sequential re-run returned
+`BUILD SUCCESS`. Do not run overlapping Maven builds against this tree.
+
+**Files touched**: EventScene.java, quests.json.

@@ -690,25 +690,44 @@ public class EventScene extends MenuScene implements IAfterMatch {
                 // this scene is up, so the notification animated and expired against a screen
                 // nobody was looking at. Round 77 fixed the refund message and missed its sibling
                 // four lines away.
-                pendingWinNudge = true;
+                // FINAL ROUND ONLY (user spec 2026-09-01): "It gave me a message after winning
+                // round 1... We don't need that message. The player is still busy with the
+                // tournament and did not yet receive the booster." It used to fire on EVERY round
+                // win, interrupting a run in progress to talk about loot the player has not been
+                // handed yet - the boosters arrive when the event finishes, not per round.
+                if (isFinalRound())
+                    pendingFinalRoundNudge = true;
             }
         } else {
             humanMatch.winner = humanMatch.p2;
             humanMatch.p2.wins++;
             humanMatch.p1.losses++;
             currentEvent.matchesLost++;
-            if (currentEvent.enteredWithCoinItem != null && currentEvent.currentRound < 3
+            // Refund while the player has NOT yet earned a Coin of their own from this event
+            // (user spec 2026-09-01: "check at what round the player gets his coin back and refund
+            // it if he loses before that round"). Derived from the event's own reward table rather
+            // than assumed - see coinRewardWinThreshold().
+            if (currentEvent.enteredWithCoinItem != null && !hasEarnedCoinFromEvent()
                     && innTutorialQuestActive()) {
                 AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
                 // Deferred to the end of setWinner - see showPendingCoinRefundDialog().
                 pendingCoinRefundItem = currentEvent.enteredWithCoinItem;
                 // ONE refund per entry (2026-09-01 release review). enteredWithCoinItem was never
-                // cleared and the guard is `currentRound < 3`, so in a RoundRobin pod - where the
-                // player can lose round 1 AND round 2 - the Coin was handed back TWICE and the
-                // player finished the tournament holding more Coins than they entered with. The
-                // quest prologue promises one safety net, not one per losable round.
+                // cleared, so in a RoundRobin pod - where the player plays every round and can
+                // therefore lose more than one - the Coin was handed back TWICE and the player
+                // finished holding more Coins than they entered with. The quest prologue promises
+                // one safety net, not one per losable round.
                 currentEvent.enteredWithCoinItem = null;
             }
+            // A loss IN the Final ends the tournament, so it gets the same wrap-up as a win there
+            // (user spec: "Win or lose in round 3, say good you got a lot more cards now").
+            // Losing earlier says nothing extra beyond the Coin refund above.
+            // The refund takes precedence when both would fire - possible in a RoundRobin pod,
+            // where the player plays every round and can reach the Final on fewer than the two
+            // wins that earn a Coin. One dialog per round: the refund is the more actionable news,
+            // and stacking two modals is what produced the 2026-09-01 soft-lock.
+            if (isFinalRound() && pendingCoinRefundItem == null && innTutorialQuestActive())
+                pendingFinalRoundNudge = true;
         }
 
 //        if (winner) {
@@ -721,23 +740,83 @@ public class EventScene extends MenuScene implements IAfterMatch {
 
         finishRound();
         // Shown last, after finishRound() has rebuilt the bracket display, so the dialog is not
-        // wiped by the refresh() that follows a round change. The two are mutually exclusive
-        // anyway - one fires on a loss, the other on a win.
+        // wiped by the refresh() that follows a round change. Still mutually exclusive, but for a
+        // different reason since 2026-09-01: the Coin refund fires only on a loss BEFORE the
+        // Final, and the wrap-up fires only ON the Final - so no round can raise both.
         showPendingCoinRefundDialog();
-        showPendingWinNudgeDialog();
+        showPendingFinalRoundDialog();
     }
 
-    /** Set on a tutorial-quest round WIN; consumed after finishRound(). */
-    private boolean pendingWinNudge;
+    /**
+     * Is the round that just finished the LAST one of this event?
+     * <p>
+     * Called from setWinner(), which runs BEFORE finishRound() - and finishRound() is what either
+     * advances currentRound or ends the event. So at this point currentRound still names the round
+     * just played, and comparing it to the event's total is exactly "was that the Final".
+     */
+    private boolean isFinalRound() {
+        return currentEvent != null && currentEvent.currentRound == currentEvent.rounds;
+    }
 
-    /** The win-side twin of {@link #showPendingCoinRefundDialog()} - same wrong-stage fix. */
-    private void showPendingWinNudgeDialog() {
-        if (!pendingWinNudge)
+    /**
+     * How many match wins this event requires before it hands the player a Coin of its own, or -1
+     * if this format never does.
+     * <p>
+     * Read from the event's OWN reward table rather than hardcoded, because it genuinely differs
+     * by format (user request 2026-09-01, after noting they had never played a RoundRobin and the
+     * old fixed "round 3" rule was an assumption):
+     * <ul>
+     *   <li><b>Draft</b> - 2 wins pays a "Challenge Coin" (setupDraftRewards, tier r2);</li>
+     *   <li><b>Sealed</b> - 2 wins pays a "Silver Challenge Coin" (setupSealedRewards, tier r2);</li>
+     *   <li><b>Jumpstart</b> - never. Its three tiers pay gold only (100/200/500).</li>
+     * </ul>
+     * Matched on the item name containing "Coin" so a future reward table that pays a Bronze or
+     * some new Coin is picked up automatically instead of silently falling through.
+     */
+    private int coinRewardWinThreshold() {
+        if (currentEvent == null || currentEvent.rewards == null)
+            return -1;
+        int lowest = -1;
+        for (AdventureEventData.AdventureEventReward reward : currentEvent.rewards) {
+            if (reward == null || reward.itemRewards == null)
+                continue;
+            for (String item : reward.itemRewards) {
+                if (item == null || !item.contains("Coin"))
+                    continue;
+                if (lowest < 0 || reward.minWins < lowest)
+                    lowest = reward.minWins;
+            }
+        }
+        return lowest;
+    }
+
+    /**
+     * Has the player already won enough matches that this event owes them a Coin regardless? If so
+     * the tutorial safety net stands down - they are not walking away empty-handed.
+     * <p>
+     * Keyed on WINS, not rounds, which is what makes it correct for both pairing styles: under
+     * SingleElimination wins and rounds-survived are the same number, but under RoundRobin the
+     * player plays every round and can reach the last one with any record.
+     * <p>
+     * A format that never pays a Coin (Jumpstart) returns false always, so the net covers every
+     * loss there - the player has no other route back to the Coin they paid.
+     */
+    private boolean hasEarnedCoinFromEvent() {
+        int threshold = coinRewardWinThreshold();
+        return threshold >= 0 && currentEvent.matchesWon >= threshold;
+    }
+
+    /** Set when the FINAL round resolves, win or lose; consumed after finishRound(). */
+    private boolean pendingFinalRoundNudge;
+
+    /** Tutorial wrap-up, shown once the tournament is actually over - see isFinalRound(). */
+    private void showPendingFinalRoundDialog() {
+        if (!pendingFinalRoundNudge)
             return;
-        pendingWinNudge = false;
-        showDialog(createGenericDialog("Well Played",
-                "Good. Do not go updating your deck with this loot just yet - the win itself is "
-                        + "the real prize here.",
+        pendingFinalRoundNudge = false;
+        showDialog(createGenericDialog("Tournament Over",
+                "However that went, you are walking out with a good deal more cards than you "
+                        + "walked in with.\n\nNow is the time to work them into your deck.",
                 Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
     }
 
