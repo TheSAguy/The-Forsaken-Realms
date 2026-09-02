@@ -659,8 +659,16 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // mismatched key here would fail by never returning the coin.
             String beatenName = enemies.get(enemies.size - 1).getName();
             if (Current.player().owesCoinRansom(beatenName)
-                    && !coinRansomFoesBeaten.contains(beatenName, false))
+                    && !coinRansomFoesBeaten.contains(beatenName, false)) {
                 coinRansomFoesBeaten.add(beatenName);
+                // Noted now, paid in done(). Logged at BOTH ends (user request 2026-09-02) because
+                // the two are separated by the rest of the bracket - if the coin never arrives,
+                // this line tells you whether the problem was noticing the foe or paying out.
+                System.out.println("[TFR-ArenaCoin] noted " + beatenName + " holds a Bronze Coin"
+                        + " - beaten in round " + roundsWon + "/" + arenaData.rounds
+                        + ", pending payout at bracket end (" + coinRansomFoesBeaten.size
+                        + " pending)");
+            }
         } else {
             markLostFighter(fighters.get(fighters.size - 1).actor);
             moveFighter(fighters.get(fighters.size - 2).actor, true);
@@ -810,8 +818,15 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // Bronze Coin ransom reclaim (user request 2026-09-01), paid with the bracket's own
             // loot rather than silently at the moment the round was won. Placed AFTER every other
             // table so the coin reads as a distinct extra rather than getting lost mid-page.
-            for (String foe : new Array.ArrayIterator<>(coinRansomFoesBeaten))
-                Current.player().appendCoinRansomReward(data, foe);
+            for (String foe : new Array.ArrayIterator<>(coinRansomFoesBeaten)) {
+                boolean paid = Current.player().appendCoinRansomReward(data, foe);
+                System.out.println("[TFR-ArenaCoin] bracket payout: " + foe + " -> "
+                        + (paid ? "Bronze Coin added to the loot page"
+                                : "NOT paid - the mark was already gone (check [TFR-CoinRansom])"));
+            }
+            if (coinRansomFoesBeaten.isEmpty())
+                System.out.println("[TFR-ArenaCoin] bracket payout: no coin-holding foes were"
+                        + " beaten this bracket - nothing owed");
             coinRansomFoesBeaten.clear();
             RewardScene.instance().loadRewards(data, RewardScene.Type.Loot, null);
             Forge.switchScene(RewardScene.instance());
@@ -819,6 +834,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // roundsWon == 0: no reward screen is shown at all, so there is nowhere to put a coin.
             // Nothing is lost - the marks were never cleared, so the coins stay claimable on a
             // future win. Just drop the notes so they cannot leak into the next bracket.
+            if (!coinRansomFoesBeaten.isEmpty())
+                System.out.println("[TFR-ArenaCoin] bracket ended with 0 rounds won - dropping "
+                        + coinRansomFoesBeaten.size + " pending note(s) UNPAID. The ransom marks"
+                        + " themselves are untouched, so those coins stay claimable on a later win.");
             coinRansomFoesBeaten.clear();
         }
         return true;

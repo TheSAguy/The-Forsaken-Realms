@@ -1890,3 +1890,16 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   `DumpSave.java` (lower-level structural dump). Not part of any build - these are compiled ad hoc
   against the shipped game jar. Moved out of an ephemeral session scratchpad because the method had
   already been lost once that way; see MOD_CHANGELOG's "Technique: editing a save file".
+
+## Round 83 (2026-09-02) - New Game+ and Arena-coin diagnostics
+
+- **`player/AdventurePlayer.java`** - the `[TFR-NewGamePlus] reset done` summary now prints all nine
+  fields the round-74 audit found leaking, each with its POST-reset value (`SET(LEAK)` if `blessing`
+  survived), so one grep proves or disproves a New Game+ reset.
+- **`scene/ArenaScene.java`** - new `[TFR-ArenaCoin]` lines at the round-win note, the bracket
+  payout (paid vs mark-already-gone, plus an explicit "nothing owed" line) and the 0-rounds-won
+  branch that drops pending notes unpaid.
+- **`CLAUDE.md`, `ANDROID_RELEASE.md`** (not engine files; tracked for completeness) - the Android
+  release build leaves `forge-game`/`forge-core` `target/classes` partial and the next desktop
+  compile fails in untouched files; `mvn -pl forge-gui-mobile -am clean compile -DskipTests` is now
+  the mandatory final step of every Android release. Round 81's concurrent-Maven diagnosis corrected.

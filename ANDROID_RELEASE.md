@@ -160,3 +160,21 @@ Consequences:
 > 4. On first launch, tap Download when offered the resource files (~180MB — use Wi-Fi).
 >    The app restarts itself when done. After that it plays offline.
 > 5. Problems? Report on Discord with your device model + Android version.
+
+## AFTER the Android build: reset the desktop build state (added 2026-09-02)
+
+The release build (`-pl forge-gui-android -am clean install -Dmaven.repo.local=C:/m2`) succeeds and
+produces correct artifacts, but it **leaves the repo unable to compile normally**. It cleans the
+shared modules and rebuilds them against `C:/m2` instead of the default local repository, so the
+dependency modules' `target/classes` are left partial - `forge-game` was measured at 83 `.class`
+files afterwards - and the next ordinary desktop compile fails with `cannot find symbol: class Card
+in package forge.game.card` in files nobody touched (`CardZoom.java`, `CardRenderer.java`).
+
+This is a near-perfect imitation of concurrent-Maven corruption. It is not that. Before any further
+desktop work:
+
+```
+mvn -pl forge-gui-mobile -am clean compile -DskipTests
+```
+
+The `clean` is the part that matters. Do this as the final step of every Android release.

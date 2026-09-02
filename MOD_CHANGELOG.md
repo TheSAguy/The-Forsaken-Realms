@@ -15639,6 +15639,12 @@ nobody had touched (`cannot access forge.card.mana.ManaCost`). Cause was two Mav
 same `target/` directories concurrently, not the code - a clean sequential re-run returned
 `BUILD SUCCESS`. Do not run overlapping Maven builds against this tree.
 
+**Correction (2026-09-02, round 83): that diagnosis was probably wrong.** The identical failure
+reproduced on 2026-09-02 with a single Maven process, immediately after the v1.04 Android release
+build - which cleans the shared modules and rebuilds them against `C:/m2`, leaving `forge-game` /
+`forge-core` `target/classes` partial. `clean` fixes it either way; the real cause and the rule are
+in round 83 below and in `ANDROID_RELEASE.md`.
+
 **Files touched**: EventScene.java, quests.json.
 
 ## Round 82: the Coin safety net says it is one-time, and now logs (2026-09-01)
@@ -15723,3 +15729,48 @@ Wrote two decks into save 1 at the user's request, both 46 cards, both verified 
 - Verify AFTER writing: re-deserialize, confirm the target slot, confirm the OTHER slots are
   untouched, confirm collection size and life/gold/resources. A write returning cleanly proves
   nothing about a valid save.
+
+## Round 83: New Game+ and Arena-coin diagnostics, and a build trap named (2026-09-02)
+
+Two diagnostic log lines requested by the user on 2026-09-02, written by the previous session and
+left uncommitted and un-compiled when that thread closed. Compile-verified and committed here.
+
+### `[TFR-NewGamePlus] reset done` now prints every audited field
+`AdventurePlayer.resetForNewGamePlus()`'s one-line summary grew from 2 fields to all 9 the round-74
+audit found leaking, each with its POST-reset value, so a single grep answers "did New Game+
+actually start a new run": the RESEEDED group (`shopTypes`, `editions`, with counts), the CLEARED
+group (`characterFlags`, `events`, `coinRansomMarks`, `colorRepEntries`, `blessing` - which prints
+`SET(LEAK)` if it survived - and `partnerOverheal`), and the difficulty trio (`difficulty`,
+`rewardMaxFactor`, `startingLife`). Anything non-zero or non-empty in the CLEARED group is a leak
+from the previous run. Verifying NG+ by playing it is slow and easy to get wrong; this makes it
+a log check.
+
+### `[TFR-ArenaCoin]` at three points in the bracket
+The Arena bracket coin payout is the one Bronze Coin path the user has never playtested (see
+round 80's note). `ArenaScene` now logs at BOTH ends, because the note and the payout are
+separated by the rest of the bracket:
+- **round win** - "noted <foe> holds a Bronze Coin - beaten in round N/M, pending payout at bracket
+  end (K pending)";
+- **bracket payout** (`done()`, roundsWon > 0) - one line per pending foe saying whether
+  `appendCoinRansomReward` paid or found the mark already gone (with a pointer at
+  `[TFR-CoinRansom]`), plus an explicit "nothing owed" line when no coin-holding foe was beaten;
+- **0 rounds won** - "dropping K pending note(s) UNPAID", with the reminder that the ransom marks
+  themselves are untouched so the coins stay claimable on a later win.
+If the coin never arrives, the log says whether the failure was noticing the foe or paying out.
+
+### Build trap: the Android release build leaves the desktop build unable to compile
+Found by the previous session while compiling this round, and worth more than the round itself.
+`mvn -pl forge-gui-android -am clean install -P android-release-build -Dmaven.repo.local=C:/m2`
+succeeds and ships correct artifacts, but it cleans the shared dependency modules and rebuilds
+them against a DIFFERENT local repository, leaving `forge-game/target/classes` partial (measured at
+83 `.class` files) and `forge-core/target/classes` likewise. The next ordinary
+`mvn -pl forge-gui-mobile -am compile -o` then fails with `cannot find symbol` / `cannot access ...
+NoSuchFileException` in files nobody edited (`CardZoom.java`, `CardRenderer.java`, and in this
+session's own first attempt `GameAction.java` -> `forge.util.ThreadUtil`).
+
+**This is a near-perfect imitation of the concurrent-Maven corruption round 81 blamed, and it is
+not that** - round 81's diagnosis was probably wrong; the Android release of v1.04 had just run.
+Fix: `mvn -pl forge-gui-mobile -am clean compile -DskipTests` - the `clean` is the load-bearing
+part. Recorded in `CLAUDE.md` (hard-won lessons) and as the final step of `ANDROID_RELEASE.md`.
+
+**Files touched**: AdventurePlayer.java, ArenaScene.java, CLAUDE.md, ANDROID_RELEASE.md.

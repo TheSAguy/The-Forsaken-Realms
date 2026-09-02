@@ -710,9 +710,23 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         seedStartingEditions(heroRace);
         seedStartingShopTypes(heroRace);
 
-        System.out.println("[TFR-NewGamePlus] reset done - shopTypes="
-                + new java.util.TreeSet<>(unlockedShopTypes)
-                + ", editions=" + new java.util.TreeSet<>(unlockedEditions));
+        // ONE line that proves or disproves the whole reset (user request 2026-09-02: verifying
+        // New Game+ by playing it is slow and easy to get wrong, so make it greppable instead).
+        // Every field the round-74 audit found leaking is printed with its POST-reset value, so a
+        // single grep answers "did NG+ actually start a new run". Anything non-zero/non-empty in
+        // the "should be clear" group is a leak from the previous run.
+        System.out.println("[TFR-NewGamePlus] reset done"
+                + " | RESEEDED shopTypes(" + unlockedShopTypes.size() + ")=" + new java.util.TreeSet<>(unlockedShopTypes)
+                + " editions(" + unlockedEditions.size() + ")=" + new java.util.TreeSet<>(unlockedEditions)
+                + " | CLEARED characterFlags=" + characterFlags.size()
+                + " events=" + events.size()
+                + " coinRansomMarks=" + coinRansomedEnemies.size()
+                + " colorRepEntries=" + colorReputationHalfPoints.size()
+                + " blessing=" + (blessing == null ? "null" : "SET(LEAK)")
+                + " partnerOverheal=" + partnerOverhealActive
+                + " | difficulty=" + difficultyData.name
+                + " rewardMaxFactor=" + difficultyData.rewardMaxFactor
+                + " startingLife=" + difficultyData.startingLife);
     }
 
     public void updateDifficulty(DifficultyData diff) {

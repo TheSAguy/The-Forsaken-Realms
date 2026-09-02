@@ -17,32 +17,6 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## IN FLIGHT when the last thread closed (2026-09-02) - CHECK THIS FIRST
-
-**Round 83 exists as uncommitted source changes and has NOT been compile-verified.** The previous
-session added two diagnostic log lines at the user's request and the thread ended while Maven was
-still running. Before anything else:
-
-```
-git -C "F:/FORGE/C--Users-vicwaver-MTG-Forge" status --short
-mvn -pl forge-gui-mobile -am compile -DskipTests -o > /tmp/c.log 2>&1; echo "EXIT=$?"
-```
-
-What is uncommitted, and why:
-- **`player/AdventurePlayer.java`** - the `[TFR-NewGamePlus] reset done` line was expanded from 2
-  fields to all 9 the round-74 audit found leaking, each with its POST-reset value, so one grep
-  proves or disproves a New Game+ reset. Prints `SET(LEAK)` if `blessing` survived.
-- **`scene/ArenaScene.java`** - new `[TFR-ArenaCoin]` at three points: the round-win note, the
-  bracket payout (naming paid vs not-paid), and the 0-rounds-won branch that drops pending notes
-  unpaid. Logged at both ends deliberately - note and payout are separated by the whole bracket.
-
-Both are pure `System.out.println` additions. If the compile is green, commit as round 83, rebuild
-the live folder, and it goes toward v1.05. If it fails, the likely cause is a field name in the
-NG+ summary (`difficultyData.startingLife`, `colorReputationHalfPoints`, `partnerOverhealActive`).
-
-**The live game folder is one round BEHIND the repo** until that rebuild happens - it currently
-holds released v1.04. Say so before telling the user to test anything from round 83.
-
 ## Where things stand (2026-09-02)
 
 **v1.04 is released.** PC + Android, both live at
@@ -81,8 +55,20 @@ engine version — only they can do that step, so raise it early rather than dis
 - **Read Maven's own exit code, never a pipe's.** `mvn ... | grep ...; echo $?` reports *grep's*
   status. A round-78 compile reported success while Maven had failed. Redirect to a file and read
   `$?` immediately.
-- **Never run two Maven builds against this tree at once.** Round 81 produced impossible errors in
-  files nobody had touched; it was two builds sharing `target/`.
+- **The Android release build leaves the desktop build unable to compile.** `mvn -pl
+  forge-gui-android -am clean install -P android-release-build -Dmaven.repo.local=C:/m2` cleans the
+  shared modules and rebuilds them against a different local repo, leaving `forge-game` /
+  `forge-core` `target/classes` partial. The next ordinary compile then fails with `cannot find
+  symbol` / `cannot access ... NoSuchFileException` in files nobody edited. Round 81 blamed this
+  exact symptom on two concurrent Maven builds; that was wrong (reproduced 2026-09-02 with ONE
+  Maven, right after the v1.04 Android release). Fix: `mvn -pl forge-gui-mobile -am clean compile
+  -DskipTests` - the `clean` is load-bearing. Still never run two builds at once, but when untouched
+  files stop compiling, suspect a stale `target/` first.
+- **Another Claude session may be live on this same checkout.** On 2026-09-02 two sessions worked
+  the tree at once; the tells were a `java.exe` running Maven that this session had not started, and
+  doc edits appearing in `git status` unbidden. Before committing, merging or building, run
+  `ListAgents`; if a peer session is listed, message it to stand down and wait for its build to
+  exit. Never kill a build you did not start.
 - **`--zip` packaging always does the full stock-asset copy** and takes well over ten minutes. Do
   not give it a short timeout — killing it mid-run strips `PACKAGE_OK.txt` and leaves the live
   folder in the half-rebuilt state that marker exists to catch.
