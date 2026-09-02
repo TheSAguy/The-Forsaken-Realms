@@ -673,6 +673,19 @@ public class EventScene extends MenuScene implements IAfterMatch {
     // tutorial lifeline, not a standing rule for every future tournament.
     private static final int INN_TOURNAMENT_TUTORIAL_QUEST_ID = 74;
 
+    /**
+     * The Coin refund is a ONE-TIME safety net, not a standing rule of the Inn - user decision,
+     * re-confirmed 2026-09-01 after they hit exactly the confusion it causes.
+     * <p>
+     * Quest 74's only objective is {@code EventFinish} with a count of 1, so the quest completes
+     * the moment the player finishes their FIRST tournament - including by being knocked out of
+     * it. A player who loses round 1, gets the Coin back, and then enters a second tournament has
+     * already spent the net, and that second one refunds nothing. Correct, but it reads as a bug
+     * from the outside - which is why the quest prologue and the refund dialog now both say
+     * plainly that it fires once, and why [TFR-InnRefund] names every gate on each loss.
+     * Do NOT "fix" this by dropping the gate without asking: Coin entry staying a real risk after
+     * the tutorial is the point.
+     */
     private boolean innTutorialQuestActive() {
         return AdventurePlayer.current().getQuests().stream().anyMatch(q ->
                 q.getID() == INN_TOURNAMENT_TUTORIAL_QUEST_ID && !q.completed && !q.failed);
@@ -707,8 +720,22 @@ public class EventScene extends MenuScene implements IAfterMatch {
             // (user spec 2026-09-01: "check at what round the player gets his coin back and refund
             // it if he loses before that round"). Derived from the event's own reward table rather
             // than assumed - see coinRewardWinThreshold().
-            if (currentEvent.enteredWithCoinItem != null && !hasEarnedCoinFromEvent()
-                    && innTutorialQuestActive()) {
+            // Diagnostic (2026-09-01): this refund has THREE independent gates and used to print
+            // nothing at all, so a player reporting "I lost round 2 and got no coin back" could not
+            // be diagnosed from forge.log - which is exactly the situation the project's standing
+            // [TFR-*] logging rule exists to prevent. One line per loss, naming every gate.
+            boolean paidWithCoin = currentEvent.enteredWithCoinItem != null;
+            boolean alreadyEarned = hasEarnedCoinFromEvent();
+            boolean tutorialActive = innTutorialQuestActive();
+            System.out.println("[TFR-InnRefund] loss in round " + currentEvent.currentRound + "/"
+                    + currentEvent.rounds + " wins=" + currentEvent.matchesWon
+                    + " coinRewardAt=" + coinRewardWinThreshold()
+                    + " | paidWithCoin=" + paidWithCoin
+                    + (paidWithCoin ? "(" + currentEvent.enteredWithCoinItem + ")" : "")
+                    + " alreadyEarnedCoin=" + alreadyEarned
+                    + " tutorialQuestActive=" + tutorialActive
+                    + " -> refund=" + (paidWithCoin && !alreadyEarned && tutorialActive));
+            if (paidWithCoin && !alreadyEarned && tutorialActive) {
                 AdventurePlayer.current().addItem(currentEvent.enteredWithCoinItem);
                 // Deferred to the end of setWinner - see showPendingCoinRefundDialog().
                 pendingCoinRefundItem = currentEvent.enteredWithCoinItem;
@@ -850,8 +877,8 @@ public class EventScene extends MenuScene implements IAfterMatch {
         showDialog(createGenericDialog("Coin Returned",
                 icon + "Tough luck - this one's on me.\n\n"
                         + "Here's your " + item + " back, so you are no worse off for trying. "
-                        + "Winning an Inn tournament is still the best way to build a good deck "
-                        + "early on.",
+                        + "That was the one on the house, mind - from here on, the Coin "
+                        + "you put down is the Coin you stand to lose.",
                 Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
     }
 

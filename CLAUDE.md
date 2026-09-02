@@ -62,6 +62,27 @@ have in its own memory.
   feature, not as an afterthought - it's what lets a future session validate a change the user
   can't easily reproduce themselves.
 
+## Release rule: take the upstream engine update FIRST
+
+**Standing user preference (2026-09-01): always merge the latest `upstream/master` before cutting a
+release.** It has to be its own round, planned ahead of the release rather than bolted onto it:
+
+- An engine merge is large - measured 2026-09-01 at 34 commits / 1,812 files / 174 `.java` - and it
+  swaps the rules engine underneath whatever was just playtested. **Everything must be re-tested
+  after it.** Round 58 was the last one, and round 59 immediately after it was a playtest-fix round.
+- **It blocks packaging until `E:\GAMES\Forge_2` is reinstalled** at the matching engine version.
+  `build_standalone.py`'s first step verifies its jar version against the repo's and aborts on a
+  mismatch. Only the user can do that step - flag it early, do not discover it mid-build.
+- **Upstream clobbers our Android branding and version stamps** - `forge-gui-android/pom.xml`, the
+  launcher icons, the splash art, `Zone.java`. `ANDROID_RELEASE.md` carries the revert-watch list;
+  read it as part of the merge, not afterwards.
+- Resolve `README.md` conflicts to OURS (it is the game's readme, not upstream Forge's).
+  `CORE_ENGINE_CHANGES.md` exists to make the conflict pass fast - grep it per conflicting file.
+
+So the release order is: **merge upstream -> reinstall BASE_INSTALL -> rebuild -> user re-tests ->
+then tag and publish.** v1.04 shipped WITHOUT the merge by explicit user decision, because the merge
+would have invalidated a full day of playtesting; it is the first work of v1.05.
+
 ## Build/toolchain
 
 Maven + JDK are installed portably on each machine (not tracked in git). Verify with

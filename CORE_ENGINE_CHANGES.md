@@ -1871,3 +1871,13 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   rounds and is therefore correct under RoundRobin as well as SingleElimination. The refund
   suppresses the wrap-up when both would fire in one round.
 - *(The quest-74 prologue reword lives in the plane's own `world/quests.json` - no engine file.)*
+
+## Round 82 (2026-09-01) - Inn Coin refund diagnostics and one-time messaging
+
+- **`scene/EventScene.java`** - new `[TFR-InnRefund]` line on every tournament loss, naming all
+  three refund gates (paidWithCoin / alreadyEarnedCoin / tutorialQuestActive) plus round, wins and
+  the event's coin-reward threshold. The refund dialog copy now states the net is one-time, and
+  `innTutorialQuestActive()` carries a javadoc explaining why the quest gate must not be removed.
+- *(Quest 74's prologue reword is in the plane's own `world/quests.json` - no engine file.)*
+- **`CLAUDE.md`** (not an engine file; tracked here for completeness) - new "Release rule: take the
+  upstream engine update FIRST" section ahead of Build/toolchain.

@@ -13225,7 +13225,7 @@
 		"storyQuest": true,
 		"offerDialog": {},
 		"prologue": {
-			"text": "The Inn hosts tournaments year-round. Entering costs gold, mana shards, or a Challenge Coin if you happen to have one - and if coin is short, that's fine: your first attempt here has a safety net. Lose before you have won enough to earn a Coin of your own and whatever Coin you paid with comes right back to you. Get that far and it's yours to keep or spend. Just take part.",
+			"text": "The Inn hosts tournaments year-round. Entering costs gold, mana shards, or a Challenge Coin if you happen to have one - and if coin is short, that's fine, because this first tournament carries a safety net. Once, and once only: if you pay with a Coin and go out before you have won enough to earn a Coin of your own, the one you paid comes straight back. After this tournament the net is gone, and the Coin you put down is the Coin you stand to lose. Just take part.",
 			"options": [
 				{
 					"name": "(Continue)"

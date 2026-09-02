@@ -15640,3 +15640,47 @@ same `target/` directories concurrently, not the code - a clean sequential re-ru
 `BUILD SUCCESS`. Do not run overlapping Maven builds against this tree.
 
 **Files touched**: EventScene.java, quests.json.
+
+## Round 82: the Coin safety net says it is one-time, and now logs (2026-09-01)
+
+User report: "I Won round 1, all silent, but lost round 2. Did not get my coin back."
+
+**Not a bug - the safety net had already been spent, and nothing said so.** The refund has three
+gates, and the third is `innTutorialQuestActive()`. Quest 74's only objective is `EventFinish` with
+a count of **1**, so the quest completes the moment the player finishes their FIRST tournament -
+including by being knocked out of it. The user's earlier test (lose round 1, coin returned) both
+proved the feature worked AND consumed it. Every tournament since had no net.
+
+The user confirmed the one-time design is what they want; the fix is to stop it reading as broken.
+
+### The real defect was the missing diagnostics
+This mechanic had **no logging at all**, so a player report of "I lost and got no coin" could not be
+diagnosed from `forge.log` - which is exactly the situation the project's standing `[TFR-*]` rule
+exists to prevent. Adding the feature and skipping the logging is what turned a five-second answer
+into an investigation. New `[TFR-InnRefund]`, one line per tournament loss, naming every gate and
+the numbers behind it:
+
+```
+[TFR-InnRefund] loss in round 2/3 wins=1 coinRewardAt=2 | paidWithCoin=true(Challenge Coin)
+                alreadyEarnedCoin=false tutorialQuestActive=false -> refund=false
+```
+
+### Both in-game promises now state the one-time nature
+- **Quest 74's prologue**: "...this first tournament carries a safety net. Once, and once only... After
+  this tournament the net is gone, and the Coin you put down is the Coin you stand to lose."
+- **The refund dialog itself** now signs off "That was the one on the house, mind - from here on,
+  the Coin you put down is the Coin you stand to lose." Previously nothing told the player it was
+  expendable, so the second time it silently did not fire looked identical to a defect.
+- The rationale is pinned in `innTutorialQuestActive()`'s own javadoc, warning against "fixing" this
+  by dropping the gate: keeping Coin entry a real risk after the tutorial is the design.
+
+**Files touched**: EventScene.java, quests.json, CLAUDE.md (the upstream-first release rule below).
+
+### Standing rule recorded: take the upstream engine update FIRST
+User, this round: "in the future, we should always update to the latest Forge version before
+releasing." Recorded in `CLAUDE.md` as step 0 of the release workflow, with the reasons it must be
+its own round: measured 2026-09-01 at **34 commits / 1,812 files / 174 `.java`** behind upstream, it
+swaps the rules engine under whatever was just playtested, it **blocks packaging until the user
+reinstalls `E:\GAMES\Forge_2`** at the matching version, and it clobbers our Android branding and
+version stamps. v1.04 shipped without it by explicit user decision - the merge would have
+invalidated a full day of playtesting - and it is the first work of v1.05.
