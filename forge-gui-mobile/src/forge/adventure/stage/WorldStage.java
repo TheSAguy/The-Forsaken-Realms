@@ -19,12 +19,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
+import forge.OverlayText;
 import forge.adventure.character.CharacterSprite;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.*;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.scene.DuelScene;
 import forge.adventure.scene.InfoTextScene;
+import forge.adventure.scene.GameScene;
 import forge.adventure.scene.RewardScene;
 import forge.adventure.scene.Scene;
 import forge.adventure.scene.StartScene;
@@ -39,6 +41,7 @@ import forge.screens.TransitionScreen;
 import forge.sound.SoundEffectType;
 import forge.sound.SoundSystem;
 import forge.util.MyRandom;
+import forge.util.ScreenUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -426,7 +429,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                                 collided = false;
                                 duelScene.initDuels(player, mob);
                                 Forge.switchScene(duelScene);
-                            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
+                            }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
                                     .withEnemyStatKey(mob.getName()));
                             currentMob = mob;
                             WorldSave.getCurrentSave().autoSave();
@@ -574,10 +577,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         showLegendaryWarningDialog(point.getPointOfInterest(), point);
                         continue;
                     }
-                    WorldSave.getCurrentSave().autoSave();
-                    loadPOI(point.getPointOfInterest());
-                    point.getMapSprite().checkOut();
-                    WorldSave.getCurrentSave().getPointOfInterestChanges(point.getPointOfInterest().getID()).visit();
+                    // The loadPOI generates booster and other things that may take time to load, so show a little loading text.
+                    OverlayText.getInstance().update("[%240]" + GameScene.instance().getLocationColorID() + "{CAROUSEL} L O A D I N G ");
+                    startPause(1f, ()-> {
+                        WorldSave.getCurrentSave().autoSave();
+                        loadPOI(point.getPointOfInterest());
+                        point.getMapSprite().checkOut();
+                        WorldSave.getCurrentSave().getPointOfInterestChanges(point.getPointOfInterest().getID()).visit();
+                    });
                     return true;
                 } else {
                     if (point == collidingPoint) {
@@ -640,7 +647,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 Forge.advFreezePlayerControls = false;
                 duelScene.initDuels(player, duelMage);
                 Forge.switchScene(duelScene);
-            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+            }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     duelMage.getAtlasPath(), Current.player().getName(), duelMage.getTieredDisplayName())
                     .withEnemyStatKey(duelMage.getName()));
             WorldSave.getCurrentSave().autoSave();
@@ -662,7 +669,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 Forge.advFreezePlayerControls = false;
                 duelScene.initDuels(player, enemy);
                 Forge.switchScene(duelScene);
-            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+            }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())
                     .withEnemyStatKey(enemy.getName()));
             WorldSave.getCurrentSave().autoSave();

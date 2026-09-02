@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.google.common.collect.ImmutableList;
+import forge.Adventure;
 import forge.Forge;
 import forge.Graphics;
 import forge.LobbyPlayer;
@@ -59,6 +60,7 @@ import forge.toolbox.FOptionPane;
 import forge.trackable.TrackableCollection;
 import forge.util.Aggregates;
 import forge.util.Localizer;
+import forge.util.ScreenUtil;
 import forge.util.StreamUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -358,7 +360,7 @@ public class DuelScene extends ForgeScene {
     }
 
     public void exitDuelScene() {
-        Forge.setTransitionScreen(new TransitionScreen(endRunnable, Forge.takeScreenshot(), false, false));
+        Forge.setTransitionScreen(new TransitionScreen(endRunnable, ScreenUtil.getInstance().takeScreenshot(), false, false));
     }
 
     private FOptionPane createFOption(String message, String title, FBufferedImage icon, Runnable runnable) {
@@ -631,6 +633,7 @@ public class DuelScene extends ForgeScene {
 
     @Override
     public void enter() {
+        Adventure.getInstance().renderTransitionScreen = false;
         Localizer localizer = Forge.getLocalizer();
         SoundSystem.instance.stopBackgroundMusic();
         GameType mainGameType;
@@ -1078,6 +1081,12 @@ public class DuelScene extends ForgeScene {
     @Override
     public FScreen getScreen() {
         return MatchController.getView();
+    }
+
+    @Override
+    public boolean leave() {
+        Adventure.getInstance().renderTransitionScreen = true;
+        return super.leave();
     }
 
     public void initDuels(PlayerSprite playerSprite, EnemySprite enemySprite) {

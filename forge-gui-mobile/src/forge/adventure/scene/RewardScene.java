@@ -33,7 +33,9 @@ import forge.sound.SoundEffectType;
 import forge.sound.SoundSystem;
 import forge.util.ItemPool;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Displays the rewards of a fight or a treasure
@@ -455,12 +457,8 @@ public class RewardScene extends UIScene {
         } else {
             return;
         }
-        if (actor.toolTipIsVisible()) {
-            actor.hideTooltip();
-        } else {
-            if (!actor.isFlipped())
-                actor.showTooltip();
-        }
+        if (!actor.isFlipped())
+            performTouch(actor);
 
     }
 
@@ -532,6 +530,20 @@ public class RewardScene extends UIScene {
             } catch (Exception e) {
             }
         }
+    }
+
+    public List<RewardActor> getGeneratedRewards() {
+        List<RewardActor> rewards = new ArrayList<>();
+        for (Actor actor : new Array.ArrayIterator<>(generated)) {
+            if (!(actor instanceof RewardActor)) {
+                continue;
+            }
+            RewardActor reward = (RewardActor) actor;
+            if (!reward.frontSideUp())
+                continue;
+            rewards.add(reward);
+        }
+        return rewards;
     }
 
     @Override

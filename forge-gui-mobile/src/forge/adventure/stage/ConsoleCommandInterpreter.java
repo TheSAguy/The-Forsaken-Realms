@@ -33,6 +33,7 @@ import forge.model.CardBlock;
 import forge.model.FModel;
 import forge.screens.CoverScreen;
 import forge.util.Aggregates;
+import forge.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,7 +161,7 @@ public class ConsoleCommandInterpreter {
                 WorldStage.getInstance().setPosition(new Vector2(poi.getPosition().x - 16f, poi.getPosition().y + 16f));
                 WorldStage.getInstance().loadPOI(poi);
                 Forge.clearTransitionScreen();
-            }, Forge.takeScreenshot())));
+            }, ScreenUtil.getInstance().takeScreenshot())));
             return "Teleported to " + s[0] + "(" + poi.getPosition() + ")";
         });
         // Colorless rune (MOD_CHANGELOG.md 2026-08-22, user request: "take you to the spawn area,
@@ -183,7 +184,7 @@ public class ConsoleCommandInterpreter {
                     WorldStage.getInstance().setPosition(new Vector2(spawn.getPosition().x - 16f, spawn.getPosition().y + 16f));
                     WorldStage.getInstance().loadPOI(spawn);
                     Forge.clearTransitionScreen();
-                }, Forge.takeScreenshot())));
+                }, ScreenUtil.getInstance().takeScreenshot())));
                 return "Teleported to Spawn(" + spawn.getPosition() + ")";
             }
             WorldStage.getInstance().setPosition(new Vector2(capitol.getPosition().x - 16f, capitol.getPosition().y + 16f));

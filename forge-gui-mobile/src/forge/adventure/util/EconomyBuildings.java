@@ -38,6 +38,7 @@ import forge.adventure.world.WorldSave;
 import forge.gui.FThreads;
 import forge.item.PaperCard;
 import forge.screens.CoverScreen;
+import forge.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -889,7 +890,7 @@ public class EconomyBuildings {
             Forge.advFreezePlayerControls = false;
             WorldStage.getInstance().setPosition(new Vector2(destination.getPosition().x - 16f, destination.getPosition().y + 16f));
             Forge.clearTransitionScreen();
-        }, Forge.takeScreenshot())));
+        }, ScreenUtil.getInstance().takeScreenshot())));
     }
 
     /** Is the Capitol's own Teleporter built? Towns can't offer the option until this is true. */

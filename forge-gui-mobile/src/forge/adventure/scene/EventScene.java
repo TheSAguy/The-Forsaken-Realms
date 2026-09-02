@@ -39,6 +39,7 @@ import forge.gui.FThreads;
 import forge.screens.TransitionScreen;
 import forge.util.Localizer;
 import forge.util.MyRandom;
+import forge.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -658,7 +659,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
                 duelScene.initDuels(WorldStage.getInstance().getPlayerSprite(), enemy, false, currentEvent);
                 advance.setDisabled(false);
                 Forge.switchScene(duelScene);
-            }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), enemy.getAtlasPath(), Current.player().getName(), enemy.getName(), humanMatch.p1.getRecord(), humanMatch.p2.getRecord())));
+            }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), enemy.getAtlasPath(), Current.player().getName(), enemy.getName(), humanMatch.p1.getRecord(), humanMatch.p2.getRecord())));
         } else {
             finishRound();
             advance.setDisabled(false);

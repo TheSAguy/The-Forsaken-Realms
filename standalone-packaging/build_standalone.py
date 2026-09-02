@@ -248,6 +248,16 @@ def git_overlay_list():
     return sorted(files)
 
 
+def read_base_build_stamp():
+    """BASE_INSTALL/build.txt is the stock installer's build timestamp (e.g. '2026-09-01 18:24:43')
+    and is the only thing that distinguishes one 2.0.15-SNAPSHOT install from the next. Missing
+    file -> empty stamp, which still forces a full copy the first time this marker format is seen."""
+    path = os.path.join(BASE_INSTALL, "build.txt")
+    if not os.path.exists(path):
+        return ""
+    return open(path, encoding="utf-8", errors="replace").read().strip()
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--zip", action="store_true", help="also write a release zip")
@@ -292,11 +302,21 @@ def main():
     # otherwise (e.g. suspected corruption).
     static_res_dir = os.path.join(game_dir, "res")
     version_marker = os.path.join(static_res_dir, ".base_install_version")
+    # 2026-09-02: the marker is jar name PLUS BASE_INSTALL's build.txt stamp. Every 2.0.15
+    # daily snapshot ships the SAME jar filename, so a jar-name-only marker could not tell a
+    # freshly reinstalled Forge_2 (09.01) from the previous one (08.26) and would silently keep
+    # the old snapshot's cardsfolder/editions/skins on the fast path. The engine-update
+    # workflow reinstalls Forge_2 at a new snapshot precisely when those static assets change.
+    base_build_stamp = read_base_build_stamp()
+    marker_value = jar_name + "|" + base_build_stamp
     have_current_static = (
         os.path.isdir(os.path.join(static_res_dir, "adventure", "common"))
         and os.path.exists(version_marker)
-        and open(version_marker, encoding="utf-8").read().strip() == jar_name
+        and open(version_marker, encoding="utf-8").read().strip() == marker_value
     )
+    if not have_current_static and os.path.exists(version_marker):
+        print(f"static-asset marker mismatch (on disk: {open(version_marker, encoding='utf-8').read().strip()!r}, "
+              f"base install now: {marker_value!r}) - forcing the full stock-asset copy")
     full_rebuild = args.full or args.zip or not have_current_static
 
     if full_rebuild:
@@ -365,7 +385,7 @@ def main():
         shutil.copytree(os.path.join(BASE_INSTALL, "res", "adventure", "common"),
                         os.path.join(adv, "common"))
         with open(version_marker, "w", encoding="utf-8") as vm:
-            vm.write(jar_name)
+            vm.write(marker_value)
     # 4b. adventure/<plane> (changes every round - always fresh)
     print("copying the plane folder from the repo...")
     shutil.copytree(os.path.join(REPO, "forge-gui", "res", "adventure", PLANE),

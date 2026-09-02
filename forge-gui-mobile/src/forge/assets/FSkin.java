@@ -96,7 +96,7 @@ public class FSkin {
         } else {
             if (!isThemeValid(themeDir, themeName, false)) {
                 System.err.println(themeName + " theme is missing some files to work properly.");
-                final FileHandle def = Assets.getFileHandle(ForgeConstants.DEFAULT_SKINS_DIR);
+                final FileHandle def = Forge.getAssets().getFileHandle(ForgeConstants.DEFAULT_SKINS_DIR);
                 if (def.exists() && def.isDirectory() && isThemeValid(def, "", true)) {
                     FSkinFont.deleteCachedFiles();
                     //use default skin if valid
@@ -137,7 +137,7 @@ public class FSkin {
             v2File = Gdx.files.local("fonts/v2");
         } else {
             // Other platforms: the standard location
-            v2File = Assets.getFileHandle(ForgeConstants.FONTS_DIR + "v2");
+            v2File = Forge.getAssets().getFileHandle(ForgeConstants.FONTS_DIR + "v2");
         }
 
         if (v2File == null || !v2File.exists()) {
@@ -164,7 +164,7 @@ public class FSkin {
         //created it: on a fresh cache dir the missing folder short-circuited EVERY launch to
         //the jar's fallback_skin before res/skins/default was even considered (found on the
         //standalone build's first runs, where the rebranded cache dir starts empty).
-        final FileHandle dir = Assets.getFileHandle(ForgeConstants.CACHE_SKINS_DIR);
+        final FileHandle dir = Forge.getAssets().getFileHandle(ForgeConstants.CACHE_SKINS_DIR);
         if (!GuiBase.isIOS() && (!dir.exists() || !dir.isDirectory())) {
             dir.mkdirs();
         }
@@ -187,7 +187,7 @@ public class FSkin {
                 }
 
                 // Non-default (preferred) skin name and dir.
-                preferredDir = Assets.getFileHandle(preferredName.equalsIgnoreCase("default") ? ForgeConstants.BASE_SKINS_DIR + preferredName : ForgeConstants.CACHE_SKINS_DIR + preferredName);
+                preferredDir = Forge.getAssets().getFileHandle(preferredName.equalsIgnoreCase("default") ? ForgeConstants.BASE_SKINS_DIR + preferredName : ForgeConstants.CACHE_SKINS_DIR + preferredName);
                 if (!preferredDir.exists() || !preferredDir.isDirectory()) {
                     preferredDir.mkdirs();
                 }
@@ -597,14 +597,14 @@ public class FSkin {
      * Gets a FileHandle for a file within the directory where the default skin files should be stored
      */
     public static FileHandle getDefaultSkinFile(String filename) {
-        return Assets.getFileHandle(ForgeConstants.DEFAULT_SKINS_DIR + filename);
+        return Forge.getAssets().getFileHandle(ForgeConstants.DEFAULT_SKINS_DIR + filename);
     }
 
     /**
      * Gets a FileHandle for a file within the planechase cache directory
      */
     public static FileHandle getCachePlanechaseFile(String filename) {
-        return Assets.getFileHandle(ForgeConstants.CACHE_PLANECHASE_PICS_DIR + filename);
+        return Forge.getAssets().getFileHandle(ForgeConstants.CACHE_PLANECHASE_PICS_DIR + filename);
     }
 
     public static FileHandle getSkinDir() {
@@ -619,7 +619,7 @@ public class FSkin {
     public static Array<String> getSkinDirectoryNames() {
         final Array<String> mySkins = new Array<>();
 
-        final FileHandle dir = Assets.getFileHandle(ForgeConstants.CACHE_SKINS_DIR);
+        final FileHandle dir = Forge.getAssets().getFileHandle(ForgeConstants.CACHE_SKINS_DIR);
         for (FileHandle skinFile : dir.list()) {
             String skinName = skinFile.name();
             if (skinName.equalsIgnoreCase(".svn")) { continue; }

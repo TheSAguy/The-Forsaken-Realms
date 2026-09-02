@@ -1321,6 +1321,37 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-09-02 — merged upstream `master` @ `c817743ecbd` (Forge 2.0.15-SNAPSHOT, 09.01 daily
+  build - the exact commit `E:\GAMES\Forge_2` was built from; 34 commits, 133 files, 80 `.java`
+  since the previous merge point `8c7e9afb8e6`).** Four textual conflicts, all one cause: upstream
+  renamed `Forge.takeScreenshot()` -> `ScreenUtil.getInstance().takeScreenshot()` and
+  `Assets.getFileHandle()` -> `Forge.getAssets().getFileHandle()` on lines the mod had extended.
+  - `ArenaScene.java`, `MapStage.java`, `WorldStage.java` (x1 each): the `TransitionScreen` duel
+    intro line where the mod passes `getTieredDisplayName()` and `.withEnemyStatKey()` - kept OURS,
+    adopted the `ScreenUtil` call. The mod's other `Forge.takeScreenshot()` sites in the same files
+    (Arena rematch/leave, Capitol-defense and chest duels, console `teleport`) were outside the
+    conflicts and were renamed by hand, as was the mod-new `EconomyBuildings.travelTo()`.
+  - `WorldStage.java` imports: upstream added `GameScene` on the line the mod added `InfoTextScene`
+    - kept both.
+  - `WorldStage.java` POI-entry block: the mod's color-standing entry bar, capital toll and
+    Legendary warning checks precede upstream's new `OverlayText` "L O A D I N G" + `startPause(1f)`
+    wrapper around `autoSave/loadPOI/checkOut/visit` - kept the mod's checks (each `continue`s
+    before the load) and adopted upstream's wrapper for the load itself.
+  - `FSkin.java`: the mod's `mkdirs()` fix for the missing skins cache dir (2026-08-19) vs
+    upstream's accessor rename - kept the fix with the new accessor.
+  - Verified: a script re-checked every mod-added line (merge-base -> round 83) in the 19 files
+    both sides touched - 4,422 lines, all present, the only differences being the six deliberate
+    rewrites above. Android identity trio, `GITHUB_FORGE_URL`, `AssetsDownloader` tags,
+    `forge-gui-android/pom.xml` stamps, icons, splash, `Zone.java`: none in upstream's delta, all
+    intact. `README.md` untouched by upstream.
+  - Data consequence: Conflux's edition code is now `CFX` (`Alias=CON`). The plane's 20 `CON`
+    references (enemy reward `editions`, `Kaleidostone|CON` item printing, 17 legend decks) were
+    swept to `CFX` - plane data, so not otherwise tracked here, but the trigger was upstream.
+  - `engineBuildVersion` bumped to `2.0.15-SNAPSHOT-09.01` in the plane's config.json.
+  - `standalone-packaging/build_standalone.py` (not an engine file; listed because it gates
+    deploys): the static-asset marker now includes `BASE_INSTALL/build.txt`'s stamp, so a
+    same-jar-name snapshot reinstall forces the full stock-asset copy.
+
 - **2026-08-27 — merged upstream `master` @ `8c7e9afb8e6` (Forge 2.0.15-SNAPSHOT, 08.26 daily
   build; 55 commits, 160 files since the previous merge point `06019e99eed6`).** Seven textual
   conflicts across four Java files plus two binary PNGs:

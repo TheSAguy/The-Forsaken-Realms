@@ -15774,3 +15774,61 @@ Fix: `mvn -pl forge-gui-mobile -am clean compile -DskipTests` - the `clean` is t
 part. Recorded in `CLAUDE.md` (hard-won lessons) and as the final step of `ANDROID_RELEASE.md`.
 
 **Files touched**: AdventurePlayer.java, ArenaScene.java, CLAUDE.md, ANDROID_RELEASE.md.
+
+## Round 84: upstream engine update to Forge 09.01 daily (2026-09-02)
+
+Step 0 of v1.05, per the standing rule recorded in round 82: take the upstream engine update
+BEFORE any release work, as its own round.
+
+- **Merged upstream `Card-Forge/forge` master @ `c817743ecbd`** - the exact commit the user's
+  `E:\GAMES\Forge_2` install was built from (`build.txt` 2026-09-01 18:24:43, Snapshot 09.01).
+  34 commits / 133 files / 80 `.java` since the 08.26 merge point `8c7e9afb8e6`. Upstream's
+  `master` had moved five more commits past that by the time of the merge (a card, a clean-up,
+  headless sim mode, a Realm of Legends castle rebalance); they were deliberately NOT taken so the
+  repo jar matches the installed base exactly - the packager's version guard and the static-asset
+  copy both key off `Forge_2`. They will come with the next update.
+- **Four textual conflicts, one cause.** Upstream moved `Forge.takeScreenshot()` to
+  `ScreenUtil.getInstance().takeScreenshot()` and `Assets.getFileHandle()` to
+  `Forge.getAssets().getFileHandle()`, on lines the mod had already extended. Resolved as OURS with
+  upstream's renamed calls in every case; full detail in `CORE_ENGINE_CHANGES.md` -> "Upstream
+  merge log". A mechanical check afterwards confirmed all 4,422 mod-added lines across the 19
+  files both sides touched are still present (the only differences are the six deliberate
+  rewrites).
+- **Adopted from upstream in the merge:** the `Adventure`/`Classic` split of `Forge.java` with
+  per-mode sprite batches, the `RewardActor` refactor (hold-tooltips gone; long-press now opens the
+  new `ViewRewardsScene` card viewer), `OverlayText` plus a one-second "L O A D I N G" pause before
+  `loadPOI()` on the overworld (the booster generation that made towns feel frozen on entry), the
+  touchpad z-order fix over notifications, `MarqueeButton` layout invalidation, a null-texture
+  guard in the statistics scene, the `MapStage` world-dispose fix, AI improvements (PumpAi timing,
+  reveal-count handling, Embargo/Donate, land-sacrifice preference, mana-ritual source count),
+  `StaticAbilityManaRestriction`, MSH Jumpstart, edition updates (CMB1/FRA/SLD/PMEI/SLZ), Japanese
+  translations, and the CON -> CFX Conflux rename.
+- **Regression caught and fixed: Conflux's edition code changed from `CON` to `CFX`.** Upstream's
+  own Realm of Legends note says a shop with `"editions": ["CON"]` "suddenly broke, preventing this
+  plot-critical map from loading". TFR carried 20 references of the same kind: the Ur-Dragon-style
+  enemy reward `Child of Alara` with `"editions": ["CON"]` in `world/enemies.json`, the
+  `Kaleidostone|CON` printing in `items.csv` / `items.json`, and one `|CON` printing in each of 17
+  legend decks (`decks/legends/*.dck`). All swept to `CFX`; every affected printing confirmed
+  present in the renamed `Conflux.txt`. `Alias=CON` remains in the edition file, so deck loading
+  might have survived on its own - the reward filter path would not have.
+- **Post-merge API breaks in mod-owned code, fixed:** `EconomyBuildings.travelTo()` and the
+  console `teleport` command still called `Forge.takeScreenshot()`.
+- **Version string** (user spec): `v2.0.15-SNAPSHOT-09.01 | TFR v1.04 - 09.01` via the plane
+  config.json's `engineBuildVersion`. `modVersion` stays 1.04 until v1.05 is stamped at release.
+- **Packager hardening** (`standalone-packaging/build_standalone.py`): the static-asset marker
+  `res/.base_install_version` now records the jar name PLUS `BASE_INSTALL/build.txt`'s stamp.
+  Every 2.0.15 daily snapshot ships the same jar filename, so the old jar-name-only marker could
+  not tell a reinstalled `Forge_2` (09.01) from the previous one (08.26) and would have kept the
+  older snapshot's `cardsfolder` / editions / skins on the fast path. (It did not bite this time
+  only because v1.04's `--zip` release build forced the full copy after the 09.01 reinstall.) The
+  first package after this round therefore does the full copy once.
+- **Android revert-watch list checked:** none of the identity files (`forge-gui-android/pom.xml`,
+  manifest package, `strings.xml`, `Main.java` identity trio, `ForgeConstants.GITHUB_FORGE_URL`,
+  `AssetsDownloader` tags, icons, splash, `Zone.java`) were in upstream's delta; all verified
+  intact after the merge. Upstream's only Android change (dispose the app on destroy, exit via
+  `Gdx.app.exit()`) auto-merged cleanly.
+- **Not taken, flagged for the user:** upstream added `MSH` (Marvel Superheroes Jumpstart) to
+  `common/config.json`'s `starterEditions`; TFR's config is a full standalone copy with its own
+  curated list and was left unchanged.
+- **Everything must be re-playtested** - this swaps the rules engine and the reward/scene layer
+  under whatever was tested for v1.04.

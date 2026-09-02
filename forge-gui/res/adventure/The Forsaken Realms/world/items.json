@@ -2289,7 +2289,7 @@
         "effect":  {
                        "lifeModifier":  5,
                        "startBattleWithCard":  [
-                                                   "Kaleidostone|CON"
+                                                   "Kaleidostone|CFX"
                                                ]
                    },
         "rarity":  "Rare"

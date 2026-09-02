@@ -26,6 +26,7 @@ import forge.adventure.world.WorldSave;
 import forge.deck.Deck;
 import forge.gui.FThreads;
 import forge.screens.TransitionScreen;
+import forge.util.ScreenUtil;
 
 import java.util.Random;
 
@@ -500,7 +501,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         Current.player().setSelectedDeckSlot(originalSlot);
         FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new TransitionScreen(() ->
                 Forge.switchScene(duelScene),
-                Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+                ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                 testerEnemy.getAtlasPath(), Current.player().getName(), testerEnemy.getName())));
     }
 
@@ -532,7 +533,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         Current.player().setSelectedDeckSlot(originalSlot);
         FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new TransitionScreen(() ->
                 Forge.switchScene(duelScene),
-                Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+                ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                 testerEnemy.getAtlasPath(), Current.player().getName(), testerEnemy.getName())));
     }
 
@@ -757,7 +758,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             started = false;
             duelScene.initDuels(WorldStage.getInstance().getPlayerSprite(), enemy, true, null);
             Forge.switchScene(duelScene);
-        }, Forge.takeScreenshot(), true, false, false, false, "", Current.player().avatar(), enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())
+        }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())
                 .withEnemyStatKey(enemy.getName())));
     }
 
