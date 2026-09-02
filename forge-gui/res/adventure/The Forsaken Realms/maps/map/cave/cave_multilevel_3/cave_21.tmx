@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="68">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="69">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="60">
   <data encoding="base64" compression="zlib">
    eJztwzENAAAMA6C+M1f/cipkkNBLqqqqqqqqqr446Chj1w==
@@ -29,12 +30,13 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="67" template="../../../obj/stone.tx" x="221.98" y="964.379"/>
+  <object id="67" template="../../../obj/stone.tx" x="280.321" y="654.477"/>
   <object id="65" template="../../../../../common/maps/obj/door_down.tx" x="224.166" y="17">
    <properties>
     <property name="teleport" value="../The Forsaken Realms/maps/map/cave/cave_multilevel_3/cave_21B.tmx"/>
     <property name="teleportObjectId" value="66"/>
    </properties>
   </object>
+  <object id="68" template="../../../obj/stone.tx" x="200.207" y="177.727"/>
  </objectgroup>
 </map>

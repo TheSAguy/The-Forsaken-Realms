@@ -4602,6 +4602,33 @@ units of the player is re-rolled, up to 4 times, then spawned anyway - deliberat
 never a skipped spawn, since refusing to spawn would silently thin the world wherever a biome list
 is short. War-tier bosses and quest-tag extra spawns are authored encounters and are left alone.
 
+### 101. Resource-Drop Placement Sweep (the +5/+5 cluster bug) — `In Progress (25 of 75 done 2026-09-01)`
+Added 2026-09-01 from a mod-wide audit of the user's own dungeon pass. A large number of stone/wood
+resource drops were authored sitting at **exactly +5.000px / +5.000px** from another object - a
+bulk-placement artifact, not a design choice. The offset is identical to three decimal places
+across every instance, which is what identifies them.
+
+Scanning all 339 `.tmx` files (722 stone/wood objects) found **75**. The user hand-fixed **25** on
+2026-09-01 across the cave_16 / cave_18 / cave_21 chains, dragging each onto open floor. **50
+remain in 49 other maps**, and they are not new - they have shipped in every release to date
+including v1.03, which is why this was scoped as a follow-up rather than a v1.04 blocker
+(user decision).
+
+Severity split of the remaining 50, for triage:
+- **2 are out of bounds** and cannot be collected at all: `minibosses/camelboss/entrance.tmx` stone
+  id 66 at (214,277) - 5px below a 272px floor, and byte-for-byte the same bug as the `cave_16.tmx`
+  instance that WAS fixed, because it is a duplicate of the same base map; and
+  `main_story/temple_of_liliana/bog.tmx` stone id 273 at (357,597) on a 592px-tall map.
+- **15 are partially buried in collision geometry.** Worst: `main_story_defend/
+  waste_town_abandoned.tmx` id 118 (52% buried), `grolnok/grolnok_f1.tmx` id 211 (48%),
+  `graveyard_crypt/graveyard_5.tmx` id 89 (36%), `graveyard_crypt/crypt.tmx` id 86 (31%). All five
+  castle main-story maps and all five castle_f1 maps have one each.
+- **33 are on open floor but stacked** on another pickup or an enemy - cosmetic, still collectable.
+- Note `cave/cave_multilevel_3/cave_21C.tmx` id 85 is among the 50 *despite* being edited in the
+  2026-09-01 pass - a new stone (id 86) was added to that file while the clustered one was left.
+
+Unrelated to #99 (Roaming-Spawn Declustering), which is overworld enemy draws, not static pickups.
+
 ### 100. Post-v1.03 Fix Rounds (62-79) — `Ongoing; all local-only, none released - closes when v1.04 ships`
 Backfilled 2026-09-01, as a pointer rather than a re-listing. Everything since the v1.03 release has
 been local-repo work awaiting a test pass - sixteen rounds of playtest fixes and the features above.

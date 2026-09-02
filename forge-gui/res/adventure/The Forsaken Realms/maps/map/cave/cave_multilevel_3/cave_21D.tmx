@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="95">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="96">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../tileset/resource_drop.tsx"/>
  <layer id="1" name="Background" width="30" height="60">
   <data encoding="base64" compression="zlib">
    eJzt07EJwDAMRUFXgSzn7b1PijTGhdx9Q3LFtXpIoH631qEwrle6d7qb7Ke78/z0vlX7q/fe9U91//DXazvZndvpLgAAAABA5QG+x34j
@@ -27,7 +28,7 @@
   <object id="74" template="../../../../../common/maps/obj/treasure.tx" x="150.833" y="44.3333"/>
   <object id="75" template="../../../../../common/maps/obj/treasure.tx" x="103.417" y="347.25"/>
   <object id="77" template="../../../../../common/maps/obj/gold.tx" x="132.333" y="42.25"/>
-  <object id="94" template="../../../obj/stone.tx" x="137.333" y="47.25"/>
+  <object id="94" template="../../../obj/stone.tx" x="184.969" y="150.551"/>
   <object id="78" template="../../../../../common/maps/obj/gold.tx" x="56.6667" y="936.667"/>
   <object id="79" template="../../../../../common/maps/obj/gold.tx" x="442.667" y="270"/>
   <object id="80" template="../../../../../common/maps/obj/enemy.tx" x="153.334" y="109.667">
@@ -100,5 +101,6 @@
   <object id="91" template="../../../../../common/maps/obj/waypoint.tx" x="254" y="405.333"/>
   <object id="92" template="../../../../../common/maps/obj/waypoint.tx" x="279.333" y="538"/>
   <object id="93" template="../../../../../common/maps/obj/waypoint.tx" x="298" y="650.667"/>
+  <object id="95" template="../../../obj/stone.tx" x="302.437" y="573.802"/>
  </objectgroup>
 </map>

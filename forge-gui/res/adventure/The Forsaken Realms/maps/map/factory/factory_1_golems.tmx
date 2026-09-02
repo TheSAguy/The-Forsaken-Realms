@@ -31,7 +31,7 @@
    <property name="spriteLayer" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYBhYEEeiODK4oIGdjQ6eajIwPNPEFJdnZ2BQYMdkEwJvNLCz0QGjFgMDkxam+F6gPfvYMdmDBaCHPbHhjAvQOpxxgYEIZ1LSMzFpHB08VGdgeKROhkYKwV+gnf8GwF5qAPRwzhNBFQ9jh2BSgTYjA0M0lB1LptsoAX/obN8vKB0MDKsYLPLo4RzEjl0cHXwE5u1PZORvSgEvsE7gw1IvjAQAAIzTIcg=
+   eJxjYBhYEEeiODK4oIGdjQ6eajIwPNPEFJdnZ2BQYMdkEwJvNLCz0QGjFgMDkxam+F6gPfvYMdmDBaCHPbHhjAvQOpxxgYEIZ1LSMzFpHB08VGdgeKROhkYKwV+gnf8GwF5qAPRwzhPBLk4q0GZkYIiGsmMpNIsc8IfO9v2C0sHAfBSDRR49PIPYsYujg4/AvP2JjPxNKeAF1gl8WOqFkQAAaO8hDg==
   </data>
  </layer>
  <objectgroup id="4" name="Objects">
