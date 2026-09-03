@@ -15998,8 +15998,9 @@ migration dialog is that path's normal message.
 **Fix.** `EffectData` now declares `serialVersionUID = -5573686949131910962L` (the v1.04 value),
 so every pre-round-88 save deserializes again; the new field simply reads as null from old
 streams. Every other `Serializable` class under `forge.adventure` that lacked a UID is now pinned
-at its current derived value (unchanged since v1.04 for all of them; `WorldSaveHeader` verified by
-compiling the v1.04 source): `PointOfInterestData`, `WorldData`, `BiomeData`, `AdventurePlayer`,
+at its current derived value (unchanged since v1.04 for all of them; `WorldSaveHeader`'s pin verified by reading a
+pre-update save's header with the pinned build, since its v1.04 source no longer compiles against the
+merged engine): `PointOfInterestData`, `WorldData`, `BiomeData`, `AdventurePlayer`,
 `PointOfInterest`, `AdventureEventController`, `AdventureQuestController`, `BiomeTexture`,
 `WorldSaveHeader`. Adding a field or public method to any of them can no longer break saves.
 
