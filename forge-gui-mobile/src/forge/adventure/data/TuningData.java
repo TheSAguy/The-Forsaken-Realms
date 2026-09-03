@@ -160,6 +160,14 @@ public class TuningData {
     // A given AI town can be attacked once per this many in-game days (user spec 2026-09-03: "once
     // a week"); the barred dialog tells the player how many days remain.
     public int aiTownAssaultCooldownDays = 7;
+    // Town-assault defender life multiplier by difficulty index (Easy, Normal, Hard, Insane), applied
+    // to the defender's catalog life BEFORE the normal difficulty enemyLifeFactor (user spec 2026-09-03).
+    public float[] townDefenderLifeFactorByDifficulty = {1.0f, 1.5f, 1.75f, 2.0f};
+    // Reputation hit (display points) with the attacked color for STARTING an assault, and the
+    // additional hit for CAPTURING the town; both follow the standing spread (allies half, enemies
+    // the opposite sign in full) - user spec 2026-09-03.
+    public int townAssaultReputationPenalty = 4;
+    public int townCaptureReputationPenalty = 8;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

@@ -977,9 +977,42 @@ public class TerritoryControl {
                 System.out.println("[TFR-TownAssault] no " + tier + "-tier roamer in the " + color + " pool - falling back to any tier");
                 candidates = anyTier;
             }
-            return candidates.get(forge.util.MyRandom.getRandom().nextInt(candidates.size()));
+            // Same kill-decay rule as overworld spawns (user spec 2026-09-03): an enemy the player has
+            // killed k times permanently weighs 0.5^k, exactly like SpawnTierWeighting.rawSpawnWeight.
+            float total = 0f;
+            float[] weights = new float[candidates.size()];
+            for (int i = 0; i < candidates.size(); i++) {
+                weights[i] = (float) Math.pow(0.5, SpawnTierWeighting.getPermanentKillCount(candidates.get(i).name));
+                total += weights[i];
+            }
+            float roll = forge.util.MyRandom.getRandom().nextFloat() * total;
+            for (int i = 0; i < candidates.size(); i++) {
+                roll -= weights[i];
+                if (roll <= 0f)
+                    return candidates.get(i);
+            }
+            return candidates.get(candidates.size() - 1);
         }
         return null;
+    }
+
+    /** 0 Easy, 1 Normal, 2 Hard, 3 Insane - the index of the player's difficulty in config.json's
+     *  difficulties table (same derivation the attacking-mage cap uses). */
+    public static int difficultyIndex() {
+        DifficultyData playerDifficulty = Current.player().getDifficulty();
+        DifficultyData[] allDifficulties = Config.instance().getConfigData().difficulties;
+        if (playerDifficulty != null && playerDifficulty.name != null && allDifficulties != null)
+            for (int i = 0; i < allDifficulties.length; i++)
+                if (playerDifficulty.name.equals(allDifficulties[i].name))
+                    return i;
+        return 0;
+    }
+
+    /** A captured town's former owner answers at once with an attacking mage, using the standard
+     *  dispatch/targeting logic (user spec 2026-09-03). */
+    public static void dispatchRetaliation(World world, String color, String townName) {
+        System.out.println("[TFR-TownAssault] " + color + " dispatches a mage in retaliation for the loss of " + townName);
+        dispatch(world, color);
     }
 
     public static final int AI_GUARD_MAX_LEVEL = 4;

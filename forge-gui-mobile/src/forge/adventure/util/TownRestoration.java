@@ -370,6 +370,9 @@ public class TownRestoration {
         TerritoryControl.connectCapturedTownByRoad(world, target, "player");
         updateTownLifeBonus(true);
         world.refreshWorldMapMarkers();
+        ColorReputation.applyTownAssaultPenalty(fromColor, Config.instance().getTuningData().townCaptureReputationPenalty,
+                "captured " + shownName);
+        TerritoryControl.dispatchRetaliation(world, fromColor, shownName);
         System.out.println("[TFR-TownAssault] " + shownName + " captured from " + fromColor
                 + " -> player-owned restored town (radius " + repaintRadius + "), buildings start broken except the inn");
         forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding.", true);

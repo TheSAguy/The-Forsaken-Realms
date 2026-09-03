@@ -2003,3 +2003,13 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`stage/WorldStage.java`** - `showEntryBarredDialog()` gates Attack on the cooldown and shows the
   remaining days; `startTownAssault()` records the attempt.
 - **`data/TuningData.java`** - `aiTownAssaultCooldownDays`.
+
+## Round 94 (2026-09-03) - assault defender rules
+
+- **`util/ColorReputation.java`** (mod-new) - `applyTownAssaultPenalty()`.
+- **`util/TerritoryControl.java`** (mod-new) - kill-decay weighted `pickRandomRoamer`, `difficultyIndex()`,
+  `dispatchRetaliation()`.
+- **`util/TownRestoration.java`** (mod-new) - capture penalty + retaliation in `captureTownForPlayer`.
+- **`stage/WorldStage.java`** - defender life factor and attack penalty in `startTownAssault`.
+- **`data/TuningData.java`** - `townDefenderLifeFactorByDifficulty`, `townAssaultReputationPenalty`,
+  `townCaptureReputationPenalty`.

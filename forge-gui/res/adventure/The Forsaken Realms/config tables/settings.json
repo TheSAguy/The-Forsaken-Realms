@@ -94,6 +94,13 @@
     // A given AI town can be attacked once per this many in-game days; the guards' dialog says
     // how many days remain if you come back sooner.
     "aiTownAssaultCooldownDays": 7,
+    // Town-assault defender life multiplier per difficulty [Easy, Normal, Hard, Insane], on top of
+    // the usual difficulty enemy life factor.
+    "townDefenderLifeFactorByDifficulty": [1.0, 1.5, 1.75, 2.0],
+    // Reputation lost with the attacked color when you START an assault, and the extra loss when
+    // you CAPTURE the town (allies lose half, that color's enemies gain the same).
+    "townAssaultReputationPenalty": 4,
+    "townCaptureReputationPenalty": 8,
 
     // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
     // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via

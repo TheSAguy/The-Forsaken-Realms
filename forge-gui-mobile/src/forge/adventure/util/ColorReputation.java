@@ -296,6 +296,17 @@ public class ColorReputation {
 
     // One zero-sum wheel application: target gets targetDelta, its 2 allies allyDelta each, its 2
     // enemies enemyDelta each. Callers pass amounts satisfying target + 2*ally + 2*enemy == 0.
+    /** Town assault (MOD_SCOPE #87, user spec 2026-09-03): lose {@code displayPoints} with the
+     *  attacked color, half with its allies, and its enemies gain the full amount - the same spread
+     *  the starting-deck bonus uses, with the sign flipped. Half-points internally (x2). */
+    public static void applyTownAssaultPenalty(String targetColor, int displayPoints, String why) {
+        if (!isEnabled() || targetColor == null || displayPoints <= 0)
+            return;
+        applyPattern(targetColor, -displayPoints * 2, -displayPoints, displayPoints * 2);
+        System.out.println("[TFR-Reputation] " + why + ": " + targetColor + " -" + displayPoints
+                + ", its allies -" + (displayPoints / 2.0f) + ", its enemies +" + displayPoints);
+    }
+
     private static void applyPattern(String targetColor, int targetDelta, int allyDelta, int enemyDelta) {
         AdventurePlayer player = AdventurePlayer.current();
         player.addColorReputationHalfPoints(targetColor, targetDelta);

@@ -675,12 +675,24 @@ public class WorldStage extends GameStage implements SaveFileContent {
             return;
         }
         EnemyData duelData = new EnemyData(base);
+        // Defender life by difficulty (user spec 2026-09-03: 1x Easy, 1.5x Normal, 1.75x Hard, 2x
+        // Insane), applied to the catalog life; DuelScene's normal enemyLifeFactor still applies on top.
+        float[] lifeFactors = Config.instance().getTuningData().townDefenderLifeFactorByDifficulty;
+        int diffIndex = TerritoryControl.difficultyIndex();
+        float lifeFactor = (lifeFactors != null && lifeFactors.length > 0)
+                ? lifeFactors[Math.min(diffIndex, lifeFactors.length - 1)] : 1f;
+        int rawLife = duelData.life;
+        duelData.life = Math.max(1, Math.round(duelData.life * lifeFactor));
         EnemySprite defender = new EnemySprite(duelData);
         defender.effect = new EffectData();
         String land = TerritoryControl.basicLandFor(color);
         defender.effect.startBattleWithCardTapped = lands == 2 ? new String[]{land, land} : new String[]{land};
         System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " guard level " + guardLevel
-                + " -> defender tier " + defenderTier + " (" + EnemyData.tierDisplayName(defenderTier) + "), " + lands + " starting land(s)");
+                + " -> defender tier " + defenderTier + " (" + EnemyData.tierDisplayName(defenderTier) + "), " + lands + " starting land(s)"
+                + ", life " + rawLife + " x" + lifeFactor + " (difficulty index " + diffIndex + ") = " + duelData.life
+                + ", permanentKills=" + SpawnTierWeighting.getPermanentKillCount(duelData.name));
+        ColorReputation.applyTownAssaultPenalty(color, Config.instance().getTuningData().townAssaultReputationPenalty,
+                "attacked " + poi.getDisplayName());
         currentMob = defender;
         currentMobIsTownAssault = true;
         townAssaultTownName = poi.getDisplayName();

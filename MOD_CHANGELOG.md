@@ -16091,3 +16091,25 @@ the next attack is possible if he tries a second time."
 
 **Files touched**: PointOfInterestChanges.java, TerritoryControl.java, WorldStage.java,
 TuningData.java, settings.json.
+
+## Round 94: assault defenders follow spawn rules, scale with difficulty, cost reputation, and provoke a mage (2026-09-03)
+
+Four user specs from 2026-09-03:
+- **Kill decay applies to defenders.** `TerritoryControl.pickRandomRoamer` now draws weighted by
+  `0.5^permanentKills` per candidate - the same rule `SpawnTierWeighting.rawSpawnWeight` uses for
+  overworld spawns - so an enemy the player has farmed rarely turns up as a town's defender.
+- **Defender life by difficulty**: catalog life x 1.0 / 1.5 / 1.75 / 2.0 for Easy / Normal / Hard /
+  Insane (`townDefenderLifeFactorByDifficulty` in settings.json), applied to the cloned EnemyData
+  before DuelScene's normal `enemyLifeFactor` scaling. `TerritoryControl.difficultyIndex()` is the
+  shared 0-3 derivation (same as the attacking-mage cap).
+- **Reputation**: starting an assault costs 4 with the attacked color; capturing the town costs 8
+  more. Both use the standing spread via new `ColorReputation.applyTownAssaultPenalty` (allies half,
+  that color's enemies gain the full amount, half-points internally). Tunables
+  `townAssaultReputationPenalty` / `townCaptureReputationPenalty`. Logged `[TFR-Reputation]`.
+- **Retaliation**: capturing a town makes its former owner dispatch an attacking mage at once through
+  the standard `dispatch()` targeting (`TerritoryControl.dispatchRetaliation`). Logged.
+- `[TFR-TownAssault]` now prints raw life x factor = final, the difficulty index and the
+  defender's permanent kill count.
+
+**Files touched**: TuningData.java, settings.json, ColorReputation.java, TerritoryControl.java,
+TownRestoration.java, WorldStage.java.
