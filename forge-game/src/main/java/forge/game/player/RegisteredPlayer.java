@@ -26,6 +26,9 @@ public class RegisteredPlayer {
     private int startingHand = 7;
     private int manaShards = 0;
     private Iterable<IPaperCard> extraCardsOnBattlefield = null;
+    // TFR (2026-09-03): cards that start on the battlefield TAPPED - the town-assault defender's
+    // basic land. Placed by Player.initVariantsZones() exactly like extraCardsOnBattlefield.
+    private Iterable<IPaperCard> extraCardsOnBattlefieldTapped = null;
     private Iterable<IPaperCard> extraCardsInCommandZone = null;
     private Iterable<? extends IPaperCard> schemes = null;
     private Iterable<PaperCard> planes = null;
@@ -84,6 +87,15 @@ public class RegisteredPlayer {
         return extraCardsInCommandZone == null ? EmptyList : extraCardsInCommandZone;
     }
 
+    public final Iterable<? extends IPaperCard> getCardsOnBattlefieldTapped() {
+        return extraCardsOnBattlefieldTapped == null ? EmptyList : extraCardsOnBattlefieldTapped;
+    }
+    public final void addExtraCardsOnBattlefieldTapped(Iterable<IPaperCard> extraTapped) {
+        if (this.extraCardsOnBattlefieldTapped == null)
+            this.extraCardsOnBattlefieldTapped = extraTapped;
+        else
+            this.extraCardsOnBattlefieldTapped = Iterables.concat(this.extraCardsOnBattlefieldTapped, extraTapped);
+    }
     public final void addExtraCardsOnBattlefield(Iterable<IPaperCard> extraCardsonTable) {
         if (this.extraCardsOnBattlefield == null)
             this.extraCardsOnBattlefield = extraCardsonTable;

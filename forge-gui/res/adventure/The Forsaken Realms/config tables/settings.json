@@ -82,6 +82,11 @@
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this
     // value, so a tiny supplemental set can't become a 1-2 card unlock.
     "researchThresholdFraction": 0.10,
+    // Research Lab: in-game days from clicking Research until an edition unlocks. Each edition
+    // runs on its own timer, so several can be in progress at once.
+    "researchDays": 7,
+    // Research Lab: base shard price per edition (difficulty scaling applies on top).
+    "researchShardCost": 100,
 
     // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
     // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via

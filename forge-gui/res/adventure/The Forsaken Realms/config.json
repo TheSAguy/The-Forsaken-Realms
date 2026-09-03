@@ -216,6 +216,7 @@
       "(All)"
     ],
     "fogOfWarEnabled": true,
+    "warTownAssaultEnabled": true,
     "dayNightCycleEnabled": true,
     "townReconstructionEnabled": true,
     "territoryControlEnabled": true,

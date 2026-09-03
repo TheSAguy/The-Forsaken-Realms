@@ -20,6 +20,7 @@ public class EffectData implements Serializable {
     public int lifeModifier = 0;         //Amount to add to starting Life.
     public int changeStartCards = 0;     //Amount to add to starting hand size.
     public String[] startBattleWithCard; //Cards that start in the Battlefield.
+    public String[] startBattleWithCardTapped; //TFR: cards that start in the Battlefield TAPPED (town-assault defender's land).
     public String[] startBattleWithCardInCommandZone; //Cards that start in the Command Zone of the Battlefield.
 
     //Map only effects.
@@ -39,15 +40,22 @@ public class EffectData implements Serializable {
         lifeModifier=effect.lifeModifier;
         changeStartCards=effect.changeStartCards;
         startBattleWithCard=effect.startBattleWithCard;
+        startBattleWithCardTapped=effect.startBattleWithCardTapped;
         colorView=effect.colorView;
         opponent = (effect.opponent == null) ? null : new EffectData(effect.opponent);
         extraManaShards = effect.extraManaShards;
     }
 
     public Array<IPaperCard> startBattleWithCards() {
+        return resolveCards(startBattleWithCard);
+    }
+    public Array<IPaperCard> startBattleWithCardsTapped() {
+        return resolveCards(startBattleWithCardTapped);
+    }
+    private static Array<IPaperCard> resolveCards(String[] names) {
         Array<IPaperCard> startCards=new Array<>(IPaperCard.class);
-        if(startBattleWithCard != null) {
-            for (String name:startBattleWithCard) {
+        if(names != null) {
+            for (String name:names) {
                 PaperCard C = FModel.getMagicDb().getCommonCards().getCard(name);
                 if(C != null)
                     startCards.add(C);

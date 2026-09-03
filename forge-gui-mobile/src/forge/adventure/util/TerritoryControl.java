@@ -948,6 +948,38 @@ public class TerritoryControl {
     // Made public 2026-08-25: reused by ChestEvents (Chest loot spawn's "Dangerous Enemy" and
     // "Illegal Arena Match" events) for the same "strongest real roaming threat for this color"
     // pick - no behavior change, only widened visibility.
+    /** Town assault (MOD_SCOPE #87, 2026-09-03): a random non-boss, non-quest roamer from this
+     *  color's biome pool, any tier - "for now, just choose a random enemy from that AI's color
+     *  pool" (user spec; a tier system comes later). Null if the pool is empty. */
+    public static EnemyData pickRandomRoamer(World world, String color) {
+        for (BiomeData biome : world.getData().GetBiomes()) {
+            if (!color.equals(biome.name))
+                continue;
+            List<EnemyData> candidates = new ArrayList<>();
+            for (EnemyData e : biome.getEnemyList()) {
+                if (e == null || e.boss || (e.questTags != null && e.questTags.length > 0))
+                    continue;
+                candidates.add(e);
+            }
+            if (candidates.isEmpty())
+                return null;
+            return candidates.get(forge.util.MyRandom.getRandom().nextInt(candidates.size()));
+        }
+        return null;
+    }
+
+    /** The basic land a town-assault defender starts with (tapped) for its color. */
+    public static String basicLandFor(String color) {
+        switch (color) {
+            case "white": return "Plains";
+            case "blue": return "Island";
+            case "black": return "Swamp";
+            case "red": return "Mountain";
+            case "green": return "Forest";
+            default: return null;
+        }
+    }
+
     public static EnemyData pickGrandmasterMage(World world, String color) {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))

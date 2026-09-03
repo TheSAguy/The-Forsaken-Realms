@@ -188,10 +188,11 @@ public class ResearchScene extends UIScene {
         scrollContainer.clear();
         AdventurePlayer player = AdventurePlayer.current();
         int currentDay = Current.world().getCurrentDay();
-        String inProgress = player.getResearchEditionInProgress();
+        java.util.Map<String, Integer> inProgressAll = player.getResearchInProgress();
+        boolean anyInProgress = !inProgressAll.isEmpty();
 
-        if (inProgress != null) {
-            int daysLeft = Math.max(0, AdventurePlayer.RESEARCH_DAYS - (currentDay - player.getResearchStartDay()));
+        for (String inProgress : inProgressAll.keySet()) {
+            int daysLeft = player.getResearchDaysLeft(inProgress, currentDay);
             TypingLabel header = Controls.newTypingLabel("Researching: " + editionDisplayName(inProgress)
                     + " - " + daysLeft + (daysLeft == 1 ? " day" : " days") + " remaining");
             header.skipToTheEnd();
@@ -240,7 +241,7 @@ public class ResearchScene extends UIScene {
         candidates.sort((a, b) -> Integer.compare(
                 ownedByEdition.getOrDefault(b.getCode(), 0), ownedByEdition.getOrDefault(a.getCode(), 0)));
 
-        int cost = EconomyBuildings.scaledCost(COST_SHARDS);
+        int cost = EconomyBuildings.scaledCost(AdventurePlayer.researchShardCost());
         for (CardEdition ed : candidates) {
             String code = ed.getCode();
             int owned = ownedByEdition.getOrDefault(code, 0);
@@ -270,19 +271,23 @@ public class ResearchScene extends UIScene {
             } else {
                 // Resource glyph, not a letter suffix - standing standard for cost UI
                 // (user spec 2026-08-12; cost switched gold -> shards same day, user table).
-                TextraButton researchButton = Controls.newTextButton("Research (" + cost + "[+Shards])", () -> {
+                TextraButton researchButton = Controls.newTextButton(player.isResearching(code)
+                        ? "Researching (" + player.getResearchDaysLeft(code, currentDay) + "d)"
+                        : "Research (" + cost + "[+Shards])", () -> {
                     player.takeShards(cost);
                     player.startResearch(code, currentDay);
                     buildList();
                 });
-                researchButton.setDisabled(!eligible || inProgress != null || !canAfford);
+                // Several editions may be researched at once (user spec 2026-09-03); only the one
+                // already running is locked out.
+                researchButton.setDisabled(!eligible || player.isResearching(code) || !canAfford);
                 scrollContainer.add(researchButton).align(Align.left).expandX().padLeft(6);
                 addToSelectable(researchButton);
             }
             scrollContainer.row().padTop(5);
         }
 
-        if (candidates.isEmpty() && inProgress == null) {
+        if (candidates.isEmpty() && !anyInProgress) {
             TypingLabel empty = Controls.newTypingLabel(
                     "Explore the world and defeat monsters to discover cards from new expansions - "
                     + "they'll show up here once you've found at least one.");

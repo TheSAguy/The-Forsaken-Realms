@@ -462,6 +462,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         startingColorId = null;
         suppressDefeatGoldLoss = false;
         researchEditionInProgress = null;
+        researchInProgress.clear();
         researchStartDay = -1;
     }
 
@@ -483,6 +484,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // pattern - one edition being researched at a time, null/-1 = none active.
     private final Set<String> unlockedEditions = new HashSet<>();
     private String researchEditionInProgress = null;
+    // 2026-09-03 (user spec): several editions can be researched at once, each on its own timer
+    // counted from its own start day. Insertion-ordered so the Lab lists them in start order.
+    // researchEditionInProgress/researchStartDay above survive only to read pre-round-88 saves.
+    private final java.util.LinkedHashMap<String, Integer> researchInProgress = new java.util.LinkedHashMap<>();
     private int researchStartDay = -1;
 
     // Bronze Coin ante ransom (user spec 2026-08-29). Enemy NAMES the player has bought their
@@ -1343,6 +1348,19 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         suppressDefeatGoldLoss = false;
         researchEditionInProgress = data.containsKey("researchEditionInProgress") ? data.readString("researchEditionInProgress") : null;
         researchStartDay = data.containsKey("researchStartDay") ? data.readInt("researchStartDay") : -1;
+        researchInProgress.clear();
+        if (data.containsKey("researchInProgressList")) {
+            // "CODE:startDay;CODE:startDay" - see save()
+            for (String entry : data.readString("researchInProgressList").split(";")) {
+                int sep = entry.lastIndexOf(':');
+                if (sep > 0)
+                    try { researchInProgress.put(entry.substring(0, sep), Integer.parseInt(entry.substring(sep + 1))); }
+                    catch (NumberFormatException ignored) { }
+            }
+        } else if (researchEditionInProgress != null) {
+            researchInProgress.put(researchEditionInProgress, researchStartDay); // pre-round-88 single slot
+        }
+        researchEditionInProgress = null;
         if (migration) {
             getCurrentGameStage().setExtraAnnouncement(Forge.getLocalizer().getMessage("lblDataMigrationMsg"));
         }
@@ -1398,9 +1416,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
         // store() with a null String throws (writeUTF) - persist "" and read it back as null.
         data.store("startingColorId", startingColorId == null ? "" : startingColorId);
-        if (researchEditionInProgress != null)
-            data.store("researchEditionInProgress", researchEditionInProgress);
-        data.store("researchStartDay", researchStartDay);
+        StringBuilder researchList = new StringBuilder();
+        for (java.util.Map.Entry<String, Integer> r : researchInProgress.entrySet())
+            researchList.append(researchList.length() == 0 ? "" : ";").append(r.getKey()).append(':').append(r.getValue());
+        data.store("researchInProgressList", researchList.toString());
 
         data.store("worldPosX", worldPosX);
         data.store("worldPosY", worldPosY);
@@ -1636,7 +1655,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             if (world == null || !world.isEditionProgressionEnabled())
                 return;
             String code = card.getEdition();
-            if (code == null || hasUnlockedEdition(code) || code.equals(getResearchEditionInProgress()))
+            if (code == null || hasUnlockedEdition(code) || isResearching(code))
                 return;
             int threshold = forge.adventure.scene.ResearchScene.thresholdForEditionCode(code);
             if (threshold == Integer.MAX_VALUE)
@@ -2057,7 +2076,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     // ---- Progressive Set Unlocks (MOD_SCOPE.md #4) ----
 
-    public static final int RESEARCH_DAYS = 7;
+    /** Tunable via config tables/settings.json (researchDays); falls back to 7. */
+    public static int researchDays() {
+        int d = Config.instance().getTuningData().researchDays;
+        return d > 0 ? d : 7;
+    }
+    /** Tunable via config tables/settings.json (researchShardCost); falls back to 100. */
+    public static int researchShardCost() {
+        int c = Config.instance().getTuningData().researchShardCost;
+        return c > 0 ? c : 100;
+    }
 
     public int getHeroRace() {
         return heroRace;
@@ -2075,25 +2103,29 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         unlockedEditions.add(editionCode);
     }
 
-    public String getResearchEditionInProgress() {
-        return researchEditionInProgress;
+    /** Editions currently being researched, in start order, mapped to their start day. */
+    public java.util.Map<String, Integer> getResearchInProgress() {
+        return java.util.Collections.unmodifiableMap(researchInProgress);
     }
 
-    public int getResearchStartDay() {
-        return researchStartDay;
+    public boolean isResearching(String editionCode) {
+        return researchInProgress.containsKey(editionCode);
+    }
+
+    public int getResearchDaysLeft(String editionCode, int currentDay) {
+        Integer start = researchInProgress.get(editionCode);
+        return start == null ? -1 : Math.max(0, researchDays() - (currentDay - start));
     }
 
     public void startResearch(String editionCode, int currentDay) {
-        researchEditionInProgress = editionCode;
-        researchStartDay = currentDay;
+        researchInProgress.put(editionCode, currentDay);
         // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
         System.out.println("[TFR-Research] started " + editionCode + " on day " + currentDay
-                + " (completes day " + (currentDay + RESEARCH_DAYS) + ")");
+                + " (completes day " + (currentDay + researchDays()) + "; " + researchInProgress.size() + " in progress)");
     }
 
     public void clearResearch() {
-        researchEditionInProgress = null;
-        researchStartDay = -1;
+        researchInProgress.clear();
     }
 
     /** Auto-completes a finished research (no separate "collect" step, unlike the Archaeologist's
@@ -2103,15 +2135,21 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      *  happens to revisit the Lab. Idempotent - safe to call every day even with no research
      *  active. */
     public void checkResearchCompletion(int currentDay) {
-        if (researchEditionInProgress == null)
+        if (researchInProgress.isEmpty())
             return;
-        if (currentDay - researchStartDay >= RESEARCH_DAYS) {
+        // Several editions at once (2026-09-03): each completes researchDays() after its OWN start.
+        java.util.Iterator<java.util.Map.Entry<String, Integer>> it = researchInProgress.entrySet().iterator();
+        while (it.hasNext()) {
+            java.util.Map.Entry<String, Integer> r = it.next();
+            if (currentDay - r.getValue() < researchDays())
+                continue;
+            String done = r.getKey();
+            it.remove();
             // Diagnostic-only logging - greppable in forge.log as "[TFR-Research]".
-            System.out.println("[TFR-Research] completed " + researchEditionInProgress + " on day " + currentDay
+            System.out.println("[TFR-Research] completed " + done + " on day " + currentDay
                     + " - now unlocked (" + (unlockedEditions.size() + 1) + " total)");
-            unlockedEditions.add(researchEditionInProgress);
+            unlockedEditions.add(done);
             RewardData.invalidateCardPool();
-            clearResearch();
             // Main-quest hook (2026-08-26, "Raise the Banner" - user decision: the objective
             // completes when the 7-day research actually FINISHES, not when it starts). The
             // matching quest stage must set worldMapOK:true AND anyPOI:true - completion can

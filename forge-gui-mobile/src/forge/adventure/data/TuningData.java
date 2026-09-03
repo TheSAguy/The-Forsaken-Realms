@@ -145,6 +145,12 @@ public class TuningData {
     // unlock) stays a fixed constant - not asked to be tunable, and unlike the fraction it isn't a
     // single "how hard should this be" knob.
     public float researchThresholdFraction = 0.10f;
+    // Research Lab timing and price (user request 2026-09-03: "add to settings.json the 7 days and
+    // the shard cost so people can change that"). Days are counted from each edition's OWN start
+    // day - several editions can be researched at once. Shards are the base price before the
+    // difficulty scaling every other building cost gets (EconomyBuildings.scaledCost()).
+    public int researchDays = 7;
+    public int researchShardCost = 100;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

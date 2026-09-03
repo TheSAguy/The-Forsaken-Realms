@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 88 (2026-09-03): multi-slot research + settings.json researchDays/researchShardCost;
+  War town assault first cut (Attack/Leave at a War town, random roamer, tapped basic land via new
+  engine plumbing). NOT playtested. Follow-ups the user announced: defender tier system, town
+  capture. Live folder rebuilt at the end of that round - verify PACKAGE_OK.
 - Round 87 `(see git log)`: `[TFR-Life]` logging at every life mutation - the diagnostic for the
   next item; live folder rebuilt with it (check PACKAGE_OK).
 - OPEN USER REPORT (2026-09-02 evening): player life total wrong after losing a fight and

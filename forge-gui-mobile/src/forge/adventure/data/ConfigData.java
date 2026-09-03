@@ -37,6 +37,9 @@ public class ConfigData {
     public String chaosDeckFormat;
     public boolean usePriceListPrices = true;
     public boolean fogOfWarEnabled = false;
+    // MOD_SCOPE #87 (2026-09-03): at War, entering an AI town offers Attack (a random roamer from
+    // that color's pool, starting with its basic land tapped) instead of only being barred.
+    public boolean warTownAssaultEnabled = false;
     public boolean dayNightCycleEnabled = false;
     public boolean townReconstructionEnabled = false;
     public boolean territoryControlEnabled = false;

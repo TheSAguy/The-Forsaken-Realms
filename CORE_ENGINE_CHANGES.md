@@ -1951,3 +1951,20 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 
 - **`player/AdventurePlayer.java`** - `logLife()` helper; `[TFR-Life]` at every life/maxLife
   mutation and on load. Diagnostic only, no behavior change.
+
+## Round 88 (2026-09-03) - multi-slot research, War town assault
+
+- **`forge-game/.../player/RegisteredPlayer.java`** - `extraCardsOnBattlefieldTapped` +
+  `getCardsOnBattlefieldTapped()` / `addExtraCardsOnBattlefieldTapped()`.
+- **`forge-game/.../player/Player.java`** - `initVariantsZones()` places the tapped list and
+  `setTapped(true)` on each (before the stock untapped loop).
+- **`data/EffectData.java`** - `startBattleWithCardTapped`, copy ctor, `startBattleWithCardsTapped()`;
+  the resolver is now a shared private `resolveCards()`.
+- **`scene/DuelScene.java`** - `addEffects()` plumbs the tapped list.
+- **`data/ConfigData.java`** - `warTownAssaultEnabled` (default false; on in the plane config).
+- **`data/TuningData.java`** - `researchDays`, `researchShardCost`.
+- **`player/AdventurePlayer.java`** - research map (see MOD_CHANGELOG), save key `researchInProgressList`.
+- **`scene/ResearchScene.java`** (mod-new) - multi-edition list, tunable cost.
+- **`stage/WorldStage.java`** - Attack button in `showEntryBarredDialog`, `startTownAssault()`,
+  `[TFR-TownAssault]` in `setWinner()`.
+- **`util/TerritoryControl.java`** (mod-new) - `pickRandomRoamer()`, `basicLandFor()`.

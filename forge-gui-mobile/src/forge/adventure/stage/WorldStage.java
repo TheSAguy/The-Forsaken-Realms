@@ -57,6 +57,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // one-shot mage duel triggered by TerritoryControl.checkPendingCapitolDefense() - losing it
     // ends the run (triggerCapitolDefeat()) instead of the ordinary life/gold-penalty loss path.
     private boolean currentMobIsCapitolDefense = false;
+    // Town assault (MOD_SCOPE #87, 2026-09-03): set by startTownAssault(), read once by setWinner()
+    // for the [TFR-TownAssault] outcome line. Consequences beyond the ordinary duel win/loss
+    // (capture, tiers) are deliberately not built yet - user: "for now, just choose a random enemy".
+    private boolean currentMobIsTownAssault = false;
+    private String townAssaultTownName = null;
     protected Random rand = MyRandom.getRandom();
     WorldBackground background;
     private float spawnDelay = 0;
@@ -462,6 +467,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
     public void setWinner(boolean playerIsWinner, boolean isArena) {
         boolean isCapitolDefense = currentMobIsCapitolDefense;
         currentMobIsCapitolDefense = false;
+        if (currentMobIsTownAssault) {
+            currentMobIsTownAssault = false;
+            System.out.println("[TFR-TownAssault] " + townAssaultTownName + " vs " + currentMob.getName()
+                    + " -> " + (playerIsWinner ? "WON" : "LOST") + " (ordinary duel rewards/penalties apply)");
+            townAssaultTownName = null;
+        }
         if (playerIsWinner) {
             currentMob.clearCollisionHeight();
             Current.player().win();
@@ -633,6 +644,44 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // reputation bonus still applies on a win. Reuses the same transition-screen/initDuels
     // sequence the ordinary player-collision path uses (WorldStage.onActing()), just triggered
     // directly rather than from a live collision.
+    /**
+     * Town assault (MOD_SCOPE #87, first cut 2026-09-03): fight a random roamer from the town's color
+     * pool; the defender starts with its color's basic land on the battlefield, tapped, whoever goes
+     * first (EffectData.startBattleWithCardTapped -> RegisteredPlayer -> Player.initVariantsZones).
+     * Win/loss then flow through the ordinary setWinner() branches (loot, life/gold penalty).
+     * Capture of the town and a defender tier system are the announced follow-ups, not built here.
+     */
+    public void startTownAssault(PointOfInterest poi, String color) {
+        EnemyData base = TerritoryControl.pickRandomRoamer(Current.world(), color);
+        if (base == null) {
+            System.out.println("[TFR-TownAssault] no eligible defender in the " + color + " pool for " + poi.getDisplayName());
+            GameHUD.getInstance().addNotification("No defenders answer the call at " + poi.getDisplayName() + ".", true);
+            return;
+        }
+        EnemyData duelData = new EnemyData(base);
+        EnemySprite defender = new EnemySprite(duelData);
+        defender.effect = new EffectData();
+        defender.effect.startBattleWithCardTapped = new String[]{TerritoryControl.basicLandFor(color)};
+        currentMob = defender;
+        currentMobIsTownAssault = true;
+        townAssaultTownName = poi.getDisplayName();
+        System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " (" + color + "): defender "
+                + defender.getName() + " (tier=" + duelData.tier + ") starts with a tapped "
+                + TerritoryControl.basicLandFor(color));
+        Forge.advFreezePlayerControls = true;
+        DuelScene duelScene = DuelScene.instance();
+        FThreads.invokeInEdtNowOrLater(() -> {
+            Forge.setTransitionScreen(new TransitionScreen(() -> {
+                Forge.advFreezePlayerControls = false;
+                duelScene.initDuels(player, defender);
+                Forge.switchScene(duelScene);
+            }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+                    defender.getAtlasPath(), Current.player().getName(), defender.getTieredDisplayName())
+                    .withEnemyStatKey(defender.getName()));
+            WorldSave.getCurrentSave().autoSave();
+        });
+    }
+
     public void startForcedCapitolDuel(EnemySprite mage) {
         EnemyData duelData = new EnemyData(mage.getData());
         duelData.gamesPerMatch = 3;
@@ -726,12 +775,21 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
 
+        boolean canAttack = Config.instance().getConfigData().warTownAssaultEnabled
+                && TerritoryControl.basicLandFor(barredColor) != null;
         TypingLabel label = Controls.newTypingLabel("The guards of " + poi.getDisplayName()
-                + " bar you from entering - you are at [RED]War[] with " + capitalizeColor(barredColor) + "!");
+                + " bar you from entering - you are at [RED]War[] with " + capitalizeColor(barredColor) + "!"
+                + (canAttack ? " Their defenders stand ready; you may leave, or attack the town." : ""));
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
 
+        if (canAttack) {
+            dialog.getButtonTable().add(Controls.newTextButton("Attack", () -> {
+                hideDialog();
+                startTownAssault(poi, barredColor);
+            })).width(240f).row();
+        }
         dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();

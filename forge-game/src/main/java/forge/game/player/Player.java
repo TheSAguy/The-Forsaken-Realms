@@ -2921,6 +2921,17 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     public void initVariantsZones(RegisteredPlayer registeredPlayer) {
         PlayerZone bf = getZone(ZoneType.Battlefield);
+        // TFR (2026-09-03): starting permanents that begin the game tapped (town-assault defender's
+        // basic land) - same placement as the untapped list below, then tapped. Tapped regardless of
+        // who takes the first turn: this runs before turn 1 for both seats.
+        for (final IPaperCard cp : registeredPlayer.getCardsOnBattlefieldTapped()) {
+            Card c = Card.fromPaperCard(cp, this);
+            bf.add(c);
+            c.setCollectible(false);
+            c.setSickness(true);
+            c.setStartsGameInPlay(true);
+            c.setTapped(true);
+        }
         Iterable<? extends IPaperCard> cards = registeredPlayer.getCardsOnBattlefield();
         if (cards != null) {
             for (final IPaperCard cp : cards) {

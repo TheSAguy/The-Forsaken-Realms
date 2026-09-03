@@ -15943,3 +15943,39 @@ townLifeBonus, partnerOverheal grant/clear, updateDifficulty, plus a `load:` lin
 grep `[TFR-Life]` around the `[TFR-AnteResult] winner=false` line and the following `load:`.
 
 **Files touched**: AdventurePlayer.java.
+
+## Round 88: multi-slot research, tunable research days/cost, first cut of War town assault (2026-09-03)
+
+Four user items from the 2026-09-03 message, plus the spawn-rate and life follow-ups.
+
+- **Spawn rate confirmed from forge.log.** `[TFR-KillDecay]` halves an enemy's baseline spawn
+  share per permanent kill: after the user's 3rd Goblin Rager kill the multiplier was 0.125, a 4th
+  spawned on that 12.5% share, and after killing it the multiplier is 0.0625. Working as designed.
+- **Research Lab now runs several editions at once.** `AdventurePlayer` keeps a start-ordered map
+  `edition -> startDay` instead of one slot; each edition completes `researchDays` after ITS OWN
+  start. Saved as `researchInProgressList` ("CODE:day;CODE:day"); a pre-round-88 save's single slot
+  is migrated on load. `ResearchScene` lists every running edition with days left, locks out only
+  an edition already running, and labels its button "Researching (Nd)".
+- **Research days and shard cost are tunable** in `config tables/settings.json`
+  (`researchDays` 7, `researchShardCost` 100 - the previous hard-coded values; difficulty scaling
+  still applies on top of the shard price as for every building cost).
+- **Life-total report:** did not reproduce in the user's current game; the user's recollection is
+  lose -> life down -> Load -> life normal -> win the same fight -> life goes down. Round 87's
+  `[TFR-Life]` lines will show which mutation fires; one candidate worth knowing is the town life
+  bonus (`applyTownLifeBonus` clamps life when a town is lost while fighting - logged as
+  `townLifeBonus(target=N)`), another is `partnerOverhealCleared`.
+- **War town assault, first cut (MOD_SCOPE #87 -> In Progress).** With `warTownAssaultEnabled`
+  (plane config.json), the "guards bar you" dialog at a War-status AI town now offers **Attack** or
+  **Leave**. Attack picks a random non-boss, non-quest roamer from that color's biome pool
+  (`TerritoryControl.pickRandomRoamer`, any tier - tiers come later per user) and starts a duel
+  in which the defender begins with its color's basic land **on the battlefield, tapped**, whoever
+  goes first. Win and loss then run the ordinary `setWinner()` branches (loot, life/gold penalty);
+  capturing the town is deliberately not built yet. `[TFR-TownAssault]` logs the pick and the
+  outcome.
+  - Engine support for tapped starting permanents: `EffectData.startBattleWithCardTapped` ->
+    `DuelScene.addEffects` -> `RegisteredPlayer.addExtraCardsOnBattlefieldTapped` ->
+    `Player.initVariantsZones` places them like the untapped list and calls `setTapped(true)`.
+
+**Files touched**: AdventurePlayer.java, ResearchScene.java, TuningData.java, settings.json,
+EffectData.java, DuelScene.java, RegisteredPlayer.java, Player.java (forge-game), ConfigData.java,
+config.json, TerritoryControl.java, WorldStage.java.
