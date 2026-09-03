@@ -168,6 +168,9 @@ public class TuningData {
     // the opposite sign in full) - user spec 2026-09-03.
     public int townAssaultReputationPenalty = 4;
     public int townCaptureReputationPenalty = 8;
+    // Center Towns (MOD_SCOPE #102, user spec 2026-09-03): the run is lost when ONE AI color holds
+    // this many of the five star towns around the campfire. New worlds only (no migration).
+    public int starTownsLossCount = 3;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

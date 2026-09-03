@@ -4643,3 +4643,13 @@ from a save), ruined-town Inn rules, and the restored Green capital equipment sh
 six-lens pre-release code review (14 confirmed defects fixed, including a save-integrity blocker)
 and round 79 this scope pass plus the Skip Tutorial dialog fix. This item closes when v1.04 is
 actually released; until then "none released" stays literally true.
+
+### 102. Center Towns - the Star around the campfire — `In Progress (first cut 2026-09-03, new worlds only; awaiting playtest)`
+User spec 2026-09-03: five towns in a star around the campfire, roads radiating from the fire to
+each, one arm pointing at each AI capital; the user's own castle art per owner color
+(`Center_Town_<color>.png`, neutral by default); ordinary neutral towns for targeting, capture,
+restoration and guard hiring; **the player loses when any one AI color holds three of them**.
+Built in round 95 on the STAR_TOWNS_RESEARCH.md placement math (R = 45 tiles, `radiusFactor 0`).
+Open: bespoke interiors ("will need to build an actual inside later"), a tighter no-neighbors
+rule around the arms (placement only guarantees the 8x8-tile box), and whether the star towns
+should ever seed as functioning neutral towns.

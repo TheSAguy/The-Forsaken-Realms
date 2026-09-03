@@ -2180,6 +2180,54 @@ public class TerritoryControl {
             WorldStage.getInstance().triggerGameLost("[RED]The last free town has fallen![]\n"
                     + "Every town in the realm now flies an enemy banner, and none fly yours. "
                     + "With nothing left to liberate and nowhere to build, your cause is lost.");
+        } else {
+            checkStarTownLoss(world); // Center Towns (MOD_SCOPE #102) - else-branch so two run-over dialogs never stack
+        }
+    }
+
+    /** Owner color of the star town at a recorded tile, or null (neutral / player / missing). */
+    private static String starTownOwner(World world, int[] tile) {
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if ((int) (poi.getPosition().x / world.getTileSize()) != tile[0] || (int) (poi.getPosition().y / world.getTileSize()) != tile[1])
+                continue;
+            if (TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID())))
+                return null;
+            return ColorReputation.colorOfTown(poi.getData());
+        }
+        return null;
+    }
+
+    /**
+     * Center Towns (MOD_SCOPE #102, user spec 2026-09-03): the run is lost when ONE AI color holds
+     * TuningData.starTownsLossCount of the five star towns around the campfire. Runs from
+     * onMageArrived()'s tail like the other loss path; inert on worlds without recorded star tiles.
+     */
+    private static void checkStarTownLoss(World world) {
+        java.util.List<int[]> tiles = world.getStarTownTiles();
+        if (tiles == null || tiles.isEmpty())
+            return;
+        int needed = Config.instance().getTuningData().starTownsLossCount;
+        if (needed <= 0)
+            needed = 3;
+        Map<String, Integer> held = new HashMap<>();
+        for (int[] tile : tiles) {
+            String owner = starTownOwner(world, tile);
+            if (owner != null)
+                held.merge(owner, 1, Integer::sum);
+        }
+        System.out.println("[TFR-StarTowns] holdings " + held + " (loss at " + needed + " of " + tiles.size() + ")");
+        for (Map.Entry<String, Integer> h : held.entrySet()) {
+            String colorName = Character.toUpperCase(h.getKey().charAt(0)) + h.getKey().substring(1);
+            if (h.getValue() >= needed) {
+                System.out.println("[TFR-GameLost] " + h.getKey() + " holds " + h.getValue() + " Center Towns - run over");
+                WorldStage.getInstance().triggerGameLost("[RED]The Star has fallen![]\n"
+                        + colorName + " now holds " + h.getValue() + " of the " + tiles.size()
+                        + " Center Towns around the campfire. With the heart of the realm in enemy hands, your cause is lost.");
+                return;
+            }
+            if (h.getValue() == needed - 1)
+                GameHUD.getInstance().addNotification("[RED]" + colorName + " holds " + h.getValue()
+                        + " Center Towns - one more and the realm falls![]", true);
         }
     }
 

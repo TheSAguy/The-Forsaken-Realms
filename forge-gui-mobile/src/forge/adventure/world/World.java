@@ -337,6 +337,20 @@ public class World implements Disposable, SaveFileContent {
     // DungeonRotation.initializeNewWorld(), or locked to the current visible count on first tick
     // for a save predating the pool. 0 = not yet initialized.
     private int poiActiveTarget = 0;
+    // Center Towns (MOD_SCOPE #102): the five star towns' TILE positions, recorded once at world
+    // generation and persisted. Position, not POI id, because every capture re-keys the POI
+    // (transformInto) - see STAR_TOWNS_RESEARCH.md 1.7. Empty on pre-feature saves = feature inert.
+    private final java.util.List<int[]> starTownTiles = new java.util.ArrayList<>();
+    public java.util.List<int[]> getStarTownTiles() { return starTownTiles; }
+    private void recordStarTowns() {
+        starTownTiles.clear();
+        for (PointOfInterest poi : getAllPointOfInterest()) {
+            if (poi.getData() == null || poi.getData().name == null || !poi.getData().name.startsWith("Waste Town Center"))
+                continue;
+            starTownTiles.add(new int[]{(int) (poi.getPosition().x / getTileSize()), (int) (poi.getPosition().y / getTileSize())});
+        }
+        System.out.println("[TFR-StarTowns] recorded " + starTownTiles.size() + " Center Town(s) at generation");
+    }
 
     public int getPoiActiveTarget() {
         return poiActiveTarget;
@@ -574,6 +588,15 @@ public class World implements Disposable, SaveFileContent {
             enemyPermanentKillCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyPermanentKillCount"));
         }
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
+        starTownTiles.clear();
+        if (saveFileData.containsKey("starTownTiles")) {
+            for (String pair : saveFileData.readString("starTownTiles").split(";")) {
+                String[] xy = pair.split(",");
+                if (xy.length == 2)
+                    try { starTownTiles.add(new int[]{Integer.parseInt(xy[0].trim()), Integer.parseInt(xy[1].trim())}); }
+                    catch (NumberFormatException ignored) { }
+            }
+        }
         questAcceptedDay.clear();
         if (saveFileData.containsKey("questAcceptedDay")) {
             //noinspection unchecked
@@ -626,6 +649,10 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.store("poiActiveTarget", poiActiveTarget);
+        StringBuilder star = new StringBuilder();
+        for (int[] t : starTownTiles)
+            star.append(star.length() == 0 ? "" : ";").append(t[0]).append(',').append(t[1]);
+        data.store("starTownTiles", star.toString());
         data.storeObject("questAcceptedDay", questAcceptedDay);
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         return data;
@@ -894,6 +921,7 @@ public class World implements Disposable, SaveFileContent {
             // carry into the new one.
             enemyPermanentKillCount.clear();
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
+            starTownTiles.clear();
             questAcceptedDay.clear();
 
             for (int x = 0; x < width; x++) {
@@ -1215,6 +1243,7 @@ public class World implements Disposable, SaveFileContent {
 
             // Hide the reserve 4/5 of the rotation pool BEFORE anything bakes markers or picks
             // quest targets - see the placement loop's POOL_MULTIPLIER comment above.
+            recordStarTowns(); // Center Towns (MOD_SCOPE #102): positions are final once placement is done
             DungeonRotation.initializeNewWorld(this);
 
 //////////////////
@@ -1386,6 +1415,21 @@ public class World implements Disposable, SaveFileContent {
                 usedEdges.add((long) i << 32 | ((long) secondSmallestIndex));
                 //allSortedTowns.add(Pair.of(current, towns.get(secondSmallestIndex)));
             }
+            // Center Towns (MOD_SCOPE #102): a road from the campfire straight to each star town, drawn
+            // by the same pass as every other town road - the star's spokes.
+            PointOfInterest campfire = null;
+            List<PointOfInterest> starTowns = new ArrayList<>();
+            for (PointOfInterest t : towns) {
+                if (t.getData() == null || t.getData().name == null)
+                    continue;
+                if ("Spawn".equals(t.getData().name))
+                    campfire = t;
+                else if (t.getData().name.startsWith("Waste Town Center"))
+                    starTowns.add(t);
+            }
+            if (campfire != null)
+                for (PointOfInterest st : starTowns)
+                    allSortedTowns.add(Pair.of(campfire, st));
             List<Pair<PointOfInterest, PointOfInterest>> allPOIPathsToNextTown = new ArrayList<>();
             for (int i = 0; i < notTowns.size() - 1; i++) {
 

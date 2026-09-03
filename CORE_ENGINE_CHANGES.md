@@ -2013,3 +2013,10 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`stage/WorldStage.java`** - defender life factor and attack penalty in `startTownAssault`.
 - **`data/TuningData.java`** - `townDefenderLifeFactorByDifficulty`, `townAssaultReputationPenalty`,
   `townCaptureReputationPenalty`.
+
+## Round 95 (2026-09-03) - Center Towns
+
+- **`world/World.java`** - `starTownTiles` (+ save/load/reset), `recordStarTowns()` before
+  `DungeonRotation.initializeNewWorld`, campfire->star edges added to the road pass.
+- **`util/TerritoryControl.java`** (mod-new) - `checkStarTownLoss()`, `starTownOwner()`.
+- **`data/TuningData.java`** - `starTownsLossCount`.

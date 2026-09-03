@@ -16113,3 +16113,33 @@ Four user specs from 2026-09-03:
 
 **Files touched**: TuningData.java, settings.json, ColorReputation.java, TerritoryControl.java,
 TownRestoration.java, WorldStage.java.
+
+## Round 95: the Center Towns - five star towns around the campfire, and a third way to lose (2026-09-03)
+
+User spec (2026-09-03), built on STAR_TOWNS_RESEARCH.md (2026-08-31, re-verified 2026-09-02).
+NEW WORLDS ONLY by user decision - no migration; an existing save has no recorded star tiles and
+the whole feature is inert there.
+- **Art.** The user's six 340x340 castle images (`Center_Town_Neutral/White/Blue/Black/Red/Green`)
+  are resized to the capital sprite size (64x64, LANCZOS) and packed into
+  `maps/tileset/center_towns.png` + `.atlas` (regions `CenterTownNeutral`, `CenterTownWhite`...).
+- **Data.** Five neutral entries `Waste Town Center1..5` (display names Northstar / Eastwatch /
+  Southshadow / Emberwest / Westwood Keep) with `radiusFactor 0` and the research's arm offsets
+  (R = 45 tiles, one arm pointing at each color's capital), listed in `colorless.json` right after
+  `Spawn` so they place before the ordinary waste towns. Twenty-five color variants
+  `<Noun> Town Center1..5` carry the colored castle art so a capture (`matchingTownData`: "<Noun>
+  Town <suffix>") and the neutral sweep (`matchingWasteData`) keep the custom sprite through every
+  change of hands. Interiors: the neutral `player_town.tmx` layout and each color's generic town map
+  for now ("will need to build an actual inside later"). They are ordinary towns for targeting,
+  capture, restoration and guard hiring.
+- **Roads.** The world-gen road pass gains one edge from the campfire (`Spawn`) to each star town,
+  so the star's five spokes are drawn (and their collision cleared) by the same code as every other
+  town road.
+- **Loss.** `World.starTownTiles` (recorded once at generation, persisted as "x,y;...") drives
+  `TerritoryControl.checkStarTownLoss()`, run from `onMageArrived()`'s tail in the else-branch of
+  the "no towns left" check so two run-over dialogs cannot stack. A color holding
+  `starTownsLossCount` (3, settings.json) of them ends the run through `triggerGameLost`; at two
+  the HUD warns "one more and the realm falls". Player-restored star towns count for nobody.
+  Logged `[TFR-StarTowns]`.
+
+**Files touched**: center_towns.png/.atlas (new), points_of_interest.json, colorless.json,
+settings.json, TuningData.java, World.java, TerritoryControl.java.
