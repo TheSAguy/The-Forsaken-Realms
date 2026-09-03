@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 89 (2026-09-03): user's player-biome art update (player_terrain/doodads/structures PNGs,
+  same dimensions as before). `*_original.png` backups sit UNTRACKED in the plane folder - they
+  ship in the live folder until moved; do not delete them without asking.
 - Round 88 (2026-09-03): multi-slot research + settings.json researchDays/researchShardCost;
   War town assault first cut (Attack/Leave at a War town, random roamer, tapped basic land via new
   engine plumbing). NOT playtested. Follow-ups the user announced: defender tier system, town
