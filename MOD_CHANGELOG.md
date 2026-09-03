@@ -16143,3 +16143,11 @@ the whole feature is inert there.
 
 **Files touched**: center_towns.png/.atlas (new), points_of_interest.json, colorless.json,
 settings.json, TuningData.java, World.java, TerritoryControl.java.
+
+## Round 96: the star's rim - roads between all five Center Towns (2026-09-03)
+
+User spec: "add a road from each of these 5 towns to each other of these 5 and to the center camp
+fire". The round-95 spokes stay; the road pass now also gets the ten pairwise Center Town edges,
+so the star is drawn as a full mesh (15 edges) and every tile on them is walkable.
+
+**Files touched**: World.java.

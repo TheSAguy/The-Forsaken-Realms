@@ -50,6 +50,7 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 96 (2026-09-03): Center Towns also road-linked to each other (full 15-edge star mesh).
 - Round 95 (2026-09-03): Center Towns (MOD_SCOPE #102) - 5 star towns around the campfire with
   the user's castle art, spoke roads, loss at 3 held by one color. NEW WORLDS ONLY. NOT playtested.
 - Round 94 (2026-09-03): defenders follow kill decay, life x1/1.5/1.75/2 by difficulty, -4 rep on

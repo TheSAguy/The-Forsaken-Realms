@@ -2020,3 +2020,7 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   `DungeonRotation.initializeNewWorld`, campfire->star edges added to the road pass.
 - **`util/TerritoryControl.java`** (mod-new) - `checkStarTownLoss()`, `starTownOwner()`.
 - **`data/TuningData.java`** - `starTownsLossCount`.
+
+## Round 96 (2026-09-03) - star rim roads
+
+- **`world/World.java`** - road pass adds the ten pairwise Center Town edges next to the five spokes.

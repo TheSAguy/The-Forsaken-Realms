@@ -1430,6 +1430,11 @@ public class World implements Disposable, SaveFileContent {
             if (campfire != null)
                 for (PointOfInterest st : starTowns)
                     allSortedTowns.add(Pair.of(campfire, st));
+            // ... and the star's rim: every Center Town joined to every other (user spec 2026-09-03),
+            // ten edges for five towns - explicit pairs bypass maxRoadDistance like the spokes do.
+            for (int a = 0; a < starTowns.size(); a++)
+                for (int b = a + 1; b < starTowns.size(); b++)
+                    allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
             List<Pair<PointOfInterest, PointOfInterest>> allPOIPathsToNextTown = new ArrayList<>();
             for (int i = 0; i < notTowns.size() - 1; i++) {
 
