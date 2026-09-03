@@ -266,9 +266,35 @@ def main():
                           "adventure, plus adventure/common) even if it looks current - use "
                           "after pointing BASE_INSTALL at a new engine version. A --zip release "
                           "build always does this automatically regardless of the flag.")
+    ap.add_argument("--allow-base-mismatch", action="store_true",
+                     help="package even if BASE_INSTALL's build.txt daily differs from the plane's "
+                          "engineBuildVersion daily (normally an abort - see the check in main)")
     args = ap.parse_args()
 
     jar_name = find_jar(os.path.join(BASE_INSTALL))
+    # 2026-09-02 (round 86, review finding): the jar-NAME check below cannot tell one 2.0.15 daily
+    # snapshot from another, so a BASE_INSTALL reinstalled at a different daily than the repo's
+    # merge point would be accepted and its res tree shipped under the other engine. The plane's
+    # config.json records the merged snapshot as engineBuildVersion "<ver>-SNAPSHOT-MM.DD"; the
+    # base install's build.txt starts "YYYY-MM-DD". They must agree (override: --allow-base-mismatch).
+    base_build_stamp = read_base_build_stamp()
+    cfg_path = os.path.join(REPO, "forge-gui", "res", "adventure", PLANE, "config.json")
+    m_engine = re.search(r'"engineBuildVersion"\s*:\s*"[^"]*-(\d\d)\.(\d\d)"',
+                         open(cfg_path, encoding="utf-8").read()) if os.path.exists(cfg_path) else None
+    m_stamp = re.match(r"\d{4}-(\d\d)-(\d\d)", base_build_stamp)
+    if m_engine and m_stamp and m_engine.groups() != m_stamp.groups():
+        msg = (f"BASE_INSTALL build.txt says {base_build_stamp!r} but the plane's engineBuildVersion "
+               f"is the {m_engine.group(1)}.{m_engine.group(2)} daily - reinstall E:/GAMES/Forge_2 at the "
+               "snapshot the repo was merged to (or merge the repo to the installed one)")
+        if args.allow_base_mismatch:
+            print("WARNING: " + msg + " - continuing because --allow-base-mismatch was given")
+        else:
+            fail(msg)
+    # Launcher shells are read later, after the live folder has been emptied; make sure they exist
+    # NOW so a missing one cannot strand the folder half-rebuilt without its PACKAGE_OK marker.
+    for f in ["forge-adventure.cmd", "forge-adventure.command", "forge-adventure.sh"] + ROOT_INCLUDE:
+        if not os.path.exists(os.path.join(BASE_INSTALL, f)):
+            fail(f"{f} missing from BASE_INSTALL - refusing before touching the live folder")
     built_jar_dir = os.path.join(REPO, "forge-gui-mobile-dev", "target")
     if not os.path.isdir(built_jar_dir):
         fail("repo not built - run: mvn -pl forge-gui-mobile-dev -am package -DskipTests")
@@ -307,7 +333,6 @@ def main():
     # freshly reinstalled Forge_2 (09.01) from the previous one (08.26) and would silently keep
     # the old snapshot's cardsfolder/editions/skins on the fast path. The engine-update
     # workflow reinstalls Forge_2 at a new snapshot precisely when those static assets change.
-    base_build_stamp = read_base_build_stamp()
     marker_value = jar_name + "|" + base_build_stamp
     have_current_static = (
         os.path.isdir(os.path.join(static_res_dir, "adventure", "common"))

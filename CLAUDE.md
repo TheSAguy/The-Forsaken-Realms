@@ -17,7 +17,44 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## Where things stand (2026-09-02)
+## STATE 2026-09-02 EVENING (round 86) - READ THIS FIRST, DO NOT REPEAT WORK
+
+**Token budget warning.** This session hit the 5-hour usage limit THREE times running multi-agent
+Workflows (each attempt burned ~1.3M tokens before dying). Do NOT relaunch review/research
+workflows. Work solo or with single agents; the user asked for economy.
+
+Done today (committed):
+- Round 83 `d76f3f343ff`: NG+ and Arena-coin log lines (Array.size fix), Android-build trap docs.
+- Round 84 `4509df9c0ae`: **upstream merge @ c817743ecbd = Forge_2's Snapshot 09.01**. 4 conflicts
+  resolved, CON->CFX edition sweep (20 plane refs), engineBuildVersion 09.01, packager marker.
+- Round 85 `99b6856e9a9`: dungeon audit - 94 stone/wood drops relocated (verified in bounds, no
+  collision, no overlap), 11 teleports retargeted, 50 card rewards re-keyed cardName, Mantle of
+  Denial typo, 3 boosters, 1 effect, 1 dialog. MOD_SCOPE #101 updated. Left by design: 4 zedruu
+  drops, inn_cave_river_entrance enemy id 16 (empty enemy name).
+- Round 86 (this commit): World.generateNew resets fogOfWarStage2Revealed; DungeonRotation.
+  resetSessionState() + TerritoryControl.clearPendingCapitolDefense() from WorldStage.clearCache();
+  triggerGameLost clears suppressDefeatGoldLoss for every loss path; [TFR-MageCap] de-duplicated;
+  NG+ log labels fixed; build_standalone.py daily-stamp guard (--allow-base-mismatch) + early
+  launcher checks. STAR_TOWNS_RESEARCH.md has the re-verification addendum.
+- Live folder: PACKAGE_OK with the round-85 jar (built 11:29). **After round 86 the jar must be
+  rebuilt** (`mvn -pl forge-gui-mobile-dev -am package -DskipTests -o`, ~15 min, ALWAYS backgrounded)
+  and `python standalone-packaging/build_standalone.py` re-run. Check the live jar's mtime against
+  the round-86 commit before assuming it was done.
+- Game log reviewed (forge.log 10:54-11:09, idle 139-day Viashino game): no exceptions; only the
+  MageCap spam (fixed). Session #11 (Opus) stood down; its save backup
+  `1_save_slot.sav.prededit2.bak` in the profile dir must NOT be deleted.
+- Code review: only the newgameplus and android/packaging lenses ever completed. Never run:
+  merge-integration, save-compat, economy, ui-dialogs, territory-spawns, data-integrity. If wanted,
+  run ONE lens as a single agent.
+- NOT pushed. Standing rule: the user playtests the live folder first, then `git push origin
+  main:master`.
+- Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
+  reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- OPEN USER REPORT (2026-09-02 evening): player life total wrong after losing a fight and
+  loading. Screenshots in C:/Users/User/Pictures/Screenshots/LOG. Investigation notes, if any,
+  are in MOD_CHANGELOG round 86/87.
+
+## Where things stood after v1.04 (2026-09-02 morning)
 
 **v1.04 is released.** PC + Android, both live at
 `https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.04`. Tag `tfr-v1.04` is on

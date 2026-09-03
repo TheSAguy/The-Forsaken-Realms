@@ -718,10 +718,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         System.out.println("[TFR-NewGamePlus] reset done"
                 + " | RESEEDED shopTypes(" + unlockedShopTypes.size() + ")=" + new java.util.TreeSet<>(unlockedShopTypes)
                 + " editions(" + unlockedEditions.size() + ")=" + new java.util.TreeSet<>(unlockedEditions)
-                + " | CLEARED characterFlags=" + characterFlags.size()
+                + " colorRepEntries=" + colorReputationHalfPoints.size() + "(reseeded from the deck)"
+                + " | CLEARED characterFlags=" + characterFlags.size() + "(expect 1: newGamePlus)"
                 + " events=" + events.size()
                 + " coinRansomMarks=" + coinRansomedEnemies.size()
-                + " colorRepEntries=" + colorReputationHalfPoints.size()
                 + " blessing=" + (blessing == null ? "null" : "SET(LEAK)")
                 + " partnerOverheal=" + partnerOverhealActive
                 + " | difficulty=" + difficultyData.name

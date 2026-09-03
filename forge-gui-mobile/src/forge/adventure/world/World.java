@@ -880,6 +880,9 @@ public class World implements Disposable, SaveFileContent {
             playerTownVisionAreas.clear(); // fresh world, no owned towns yet
             resourceSpawns.clear();
             resourceSpawnsSeeded = false; // fresh world reseeds its 20 on the first tick
+            // 2026-09-02 review finding: the one-shot full-map reveal flag survived into a New Game
+            // or New Game+ started from a finished run, so the reveal could never fire again.
+            fogOfWarStage2Revealed = false;
             ResourceSpawns.forceResync();
             poiDespawnDay.clear();
             poiRespawnDay.clear();

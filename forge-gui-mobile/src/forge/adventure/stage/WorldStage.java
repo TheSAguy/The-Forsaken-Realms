@@ -691,6 +691,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
      *  (TerritoryControl.onMageArrived()'s post-capture check) can end the run through the exact
      *  same mechanism with its own explanation. Public: TerritoryControl lives in another package. */
     public void triggerGameLost(String message) {
+        // Every loss path shares this exit, so the Bronze Coin ransom's defeat-gold suppression is
+        // cleared HERE for all of them (2026-09-02 research re-verification: round 78 cleared it on
+        // the Capitol-defense path only; the "no towns left" path did not).
+        Current.player().clearSuppressDefeatGoldLoss();
         Forge.advFreezePlayerControls = true;
         Dialog dialog = getDialog();
         dialog.getContentTable().clear();
@@ -1428,6 +1432,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
             foregroundSprites.removeActor(actor);
         resourceSpawnActors.clear();
         ResourceSpawns.forceResync();
+        // Session-static state in the mod's world-level helpers (2026-09-02 review): neither is
+        // persisted, both must forget the previous run/save here.
+        DungeonRotation.resetSessionState();
+        TerritoryControl.clearPendingCapitolDefense();
         background.clear();
         player = null;
         // A loaded save's first tile should always get its own log line, not get silently

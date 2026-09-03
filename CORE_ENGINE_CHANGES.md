@@ -1934,3 +1934,15 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   release build leaves `forge-game`/`forge-core` `target/classes` partial and the next desktop
   compile fails in untouched files; `mvn -pl forge-gui-mobile -am clean compile -DskipTests` is now
   the mandatory final step of every Android release. Round 81's concurrent-Maven diagnosis corrected.
+
+## Round 86 (2026-09-02) - post-merge review/research fixes
+
+- **`world/World.java`** - `generateNew()` resets `fogOfWarStage2Revealed` (new-run reveal re-armed).
+- **`util/DungeonRotation.java`** (mod-new) - `resetSessionState()`.
+- **`util/TerritoryControl.java`** (mod-new) - `clearPendingCapitolDefense()`; `[TFR-MageCap]` line
+  de-duplicated via `lastMageCapLine`.
+- **`stage/WorldStage.java`** - `clearCache()` calls both resets; `triggerGameLost()` clears the
+  Bronze Coin defeat-gold suppression for all loss paths.
+- **`player/AdventurePlayer.java`** - `[TFR-NewGamePlus]` label fix only.
+- **`standalone-packaging/build_standalone.py`** (not engine; deploy gate) - daily-stamp guard,
+  early launcher checks, `--allow-base-mismatch`.

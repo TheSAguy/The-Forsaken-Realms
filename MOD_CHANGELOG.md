@@ -15896,3 +15896,35 @@ here and the results are in the maps.
   being clustered, and ~90 with sub-25% collision overlap (all still collectable).
 
 **Files touched**: 92 `.tmx` files under the plane's `maps/` folder. No engine file.
+
+## Round 86: post-merge fixes from the review and research passes, packager guard (2026-09-02)
+
+Five small engine fixes, each backed by a line read directly (the multi-agent review died on the
+usage limit three times; only its New Game+ and Android/packaging lenses completed):
+- **`World.generateNew()` re-arms `fogOfWarStage2Revealed`.** The one-shot full-map reveal flag was
+  reset only by the console fog rebuild, so a New Game or New Game+ started after a run that had
+  earned the reveal could never earn it again.
+- **`DungeonRotation.resetSessionState()`** (new, called from `WorldStage.clearCache()` on every
+  Load and new world): `lastMarkerRefreshDay` was session-static, so after NG+ from a day-500 run or
+  an in-game Load of an earlier save, `newDayCount - lastMarkerRefreshDay` went negative and the
+  batched minimap marker refresh was suppressed until the day count caught up.
+- **`TerritoryControl.clearPendingCapitolDefense()`** (new, same call site): the queued
+  Capitol-defense mage was only ever consumed, never reset - a mage queued in one run could start
+  its forced duel in the next save loaded in the same session.
+- **`WorldStage.triggerGameLost()` clears `suppressDefeatGoldLoss`** for every loss path; round 78
+  had cleared it on the Capitol-defense path only, not on "no towns left".
+- **`[TFR-MageCap]` prints only when its inputs or result change** (an idle 139-day session wrote
+  the identical line 194 times). **`[TFR-NewGamePlus]` labels corrected**: `characterFlags` is
+  expected at 1 (`newGamePlus`) and `colorRepEntries` is reseeded, not cleared.
+- **`build_standalone.py`**: aborts when `BASE_INSTALL/build.txt`'s daily (MM-DD) differs from the
+  plane's `engineBuildVersion` daily (override `--allow-base-mismatch`), and checks the three
+  launcher shells exist BEFORE `PACKAGE_OK.txt` is removed - previously a missing shell could strand
+  the live folder half-rebuilt.
+- **Game log review** (forge.log, 10:54-11:09, fresh Viashino game idled day 2 -> 140): zero
+  exceptions/warnings; capture odds, targeting, spawn de-dup, neutral seeding and edition shards
+  all sane. The shipped v1.04 already runs on Forge_2's 09.01 editions (the log lists CFX), which
+  is why round 84's CON->CFX sweep mattered for released players too.
+- **Research re-verification** appended to `STAR_TOWNS_RESEARCH.md` (all four parts).
+
+**Files touched**: World.java, DungeonRotation.java, TerritoryControl.java, WorldStage.java,
+AdventurePlayer.java, build_standalone.py, STAR_TOWNS_RESEARCH.md, CLAUDE.md.

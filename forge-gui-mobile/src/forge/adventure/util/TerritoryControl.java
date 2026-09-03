@@ -35,6 +35,9 @@ import java.util.Random;
  * removes it, nothing extra needed on that path.
  */
 public class TerritoryControl {
+    /** Last [TFR-MageCap] line printed; identical repeats are suppressed (see attacking-mage cap). */
+    private static String lastMageCapLine = null;
+
     // Public: World.java's placement pass (Territory Control #7 v2, spatially-aware) reads this
     // directly, rather than duplicating the list - it and this class must never disagree about
     // which biomes are "AI colors."
@@ -1290,9 +1293,16 @@ public class TerritoryControl {
         // Diagnostic logging standard (user request 2026-08-13) - the town-count scaling term is
         // otherwise invisible: the caller only ever sees the final cap, with no way to tell how
         // much of it came from the flat difficulty base vs. this rubber-band bonus.
-        System.out.println("[TFR-MageCap] base=" + base + " difficultyOffset=" + difficultyOffset
+        // Printed only when the inputs or the result CHANGE (2026-09-02 log review: one idle
+        // 139-day session wrote this identical line 194 times). The first call of a process
+        // always prints, so a log still shows the cap in force for that session.
+        String line = "[TFR-MageCap] base=" + base + " difficultyOffset=" + difficultyOffset
                 + " playerTowns=" + playerTowns
-                + " divisor=" + (11 - index) + " townBonus=" + townBonus + " defeatBonus=" + defeatBonus + " -> cap=" + cap);
+                + " divisor=" + (11 - index) + " townBonus=" + townBonus + " defeatBonus=" + defeatBonus + " -> cap=" + cap;
+        if (!line.equals(lastMageCapLine)) {
+            System.out.println(line);
+            lastMageCapLine = line;
+        }
         return cap;
     }
 
@@ -1784,6 +1794,13 @@ public class TerritoryControl {
     // WorldStage's normal arrival handling right after this method returns, same as any other
     // capture - only its EnemyData/territoryColor need to survive that, which this reference does.
     private static EnemySprite pendingCapitolDefenseMage;
+
+    /** Drop a queued Capitol-defense duel (WorldStage.clearCache(): Load / new world). 2026-09-02
+     *  research re-verification: the field was only ever consumed, never reset, so a mage queued in
+     *  one run could start its forced duel in the next save loaded in the same session. */
+    public static void clearPendingCapitolDefense() {
+        pendingCapitolDefenseMage = null;
+    }
 
     /** Called every frame (GameStage.act(), both WorldStage and MapStage) once it's safe to
      *  interrupt whatever the player is doing. No-op unless a mage reached the Capitol since the

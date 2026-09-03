@@ -368,3 +368,62 @@ but it carries the cosmetic tax above and, unfixed, the reward semantics of a si
   as far as `WorldStage.handlePointsOfInterestCollision`.
 - The "AI ground control reaches the centre in ~225–290 in-game days" figure is arithmetic from the
   tuning constants, not observed.
+
+
+---
+
+## Re-verification 2026-09-02 (post Forge 09.01 merge, rounds 77-86)
+
+Every claim was re-read against HEAD (round 85/86). Line citations above are stale by design;
+current lines are given here where they matter.
+
+**Part 1 - map generation: all claims hold.** `generateNew()` now spans `World.java:827-1650`; the
+placement formula (1062-1072), the three constraints (1074, 1082-1088), the post-placement terrain
+overwrite, the `radiusFactor: 0` math, the biome pentagon and the Spawn/campfire position are
+unchanged and nothing in rounds 77-86 or the merge touched world generation. Two additions: the
+doc omits the y line of the formula (`World.java:1067-1071`, with the y flip), and on an 8x8-box
+overlap the loop first tries a 3x3 one-tile nudge (1091-1107) before rejecting. The 7.8-degree
+anchor spread was not recomputed; the 45-tile radius and the seed harness were not re-run.
+
+**Part 2 - game over: holds; two defects found and FIXED in round 86.** `triggerGameLost` is now
+`WorldStage.java:693-713` (permadeath comment 679-684); the Capitol-defense loss branch is 500-513;
+the poll is `GameStage.java:503-504` and is gated on `!isDialogOnlyInput() &&
+!advFreezePlayerControls` (the doc says "every frame"); Path B is `TerritoryControl.java:2011-2030`.
+Found: `pendingCapitolDefenseMage` was never reset on Load/new game, and Path B did not clear
+`suppressDefeatGoldLoss` (round 78 cleared it on Path A only) - both fixed. Also: the Color Defeat
+fizzle sits ABOVE the Capitol branch, so a defeated color's mage reaches neither path;
+`defeatColor()` changes ownership outside the tail (safe for a loss check, it only reduces AI
+holdings); the merge's 1-second `startPause` before `loadPOI` suppresses the Path A poll for that
+second. Implementation advice: put the star check in the tail AFTER Path B with an `else if` so two
+dialogs cannot stack, count AI-held star towns by name prefix (a swept town is renamed
+"Waste Town ..."), warn per fallen arm with `GameHUD.addNotification(msg, true)`, and log a
+`[TFR-GameLost]`-style line.
+
+**Part 3 - AI starting cards: holds, with two corrections.** (1) "All 20 color-town maps contain
+zero enemy objects" was wrong when written: `plains_town.tmx` carries one gate NPC (enemy.tx id 54,
+Apprentice White Wizard, dialog-only); MOD_SCOPE #87 repeats the wrong sentence. (2) "The launcher
+template exists twice" overstates it: `startForcedCapitolDuel` is the clone-and-mutate template;
+`startChestDuel` launches directly without cloning. New findings: a PER-SEAT starting-card channel
+already exists - `DuelScene` applies each seat's `EnemyData.equipment` item effects inside the seat
+loop, gated by `eventRules.allowsItems` - so per-catalog starting cards may not need a new field;
+`EffectData`'s copy constructor is lossy (drops `startBattleWithCardInCommandZone`, `moveSpeed`,
+`goldModifier`, `cardRewardBonus`, `visionRadiusMultiplier`) - fix before cloning effects per
+seat; enemy-equipment `opponent` effects are added after the human's effects were already applied
+(latent upstream bug, harmless today); `MapDialog`'s `setEffect` action can arm an effect at
+runtime. The merge's `renderTransitionScreen` toggles in `DuelScene.enter/leave` are inert for
+seat setup.
+
+**Part 4 - 1-vs-N: build-order step 1 is DONE (round 77, commit 4ef14cecd9a).** The avatar clamp
+shipped inside `CharacterSprite.getAvatar(int)` (zero-region case guarded; `getAvatarCount()`
+exists but nothing calls it) and the nameplate gate `i == 0` shipped as proposed; the flip now acts
+on a `TextureRegion` copy. The atlas census (493 / 491 single-frame / goblin_group 3 / umber_hulk 0)
+holds - measure with a whitespace-tolerant match, 61 atlases are CRLF. Every seat still draws the
+HEAD sprite's portrait; distinct faces need a multi-frame pack atlas. The chain walk caps at 8
+seats. Goblin Pack remains in no biome list (it is in `config tables/enemies.csv`), so 1-vs-N is
+still unobservable in play. Steps 2-6 are not started. Cheapest smoke test: list "Goblin Pack" in
+one biome temporarily. Add a `[TFR-Duel]` seat log (index, name, teamNumber, avatar frame) when the
+first pack content is authored.
+
+**Open decisions (unchanged, still the real blocker for steps 2-6):** anchor (fixed Capital POI vs
+Chapter-1 castle), radius, visibility from turn one, starting ownership, restored vs ruined state,
+win threshold and its Color Defeat interaction, player capture/retake, count.

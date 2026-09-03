@@ -252,6 +252,17 @@ public class DungeonRotation {
     private static boolean markerRefreshDirty = false;
     private static int lastMarkerRefreshDay = -1_000_000;
 
+    /**
+     * Forget the session-local batching baseline. Called from WorldStage.clearCache() (every Load
+     * and every new world) - 2026-09-02 review finding: after a New Game+ from a day-500 run, or an
+     * in-game Load of an earlier save, {@code newDayCount - lastMarkerRefreshDay} went negative and
+     * the batched minimap refresh was suppressed until the new run caught up with the old day count.
+     */
+    public static void resetSessionState() {
+        markerRefreshDirty = false;
+        lastMarkerRefreshDay = -1_000_000;
+    }
+
     // Pool-swap: bring RESERVE locations into play until the visible count is back at the
     // target - a despawned dungeon is thereby replaced by one appearing somewhere ELSE on the
     // map (user redesign 2026-08-08), not by the same spot returning later. A just-hidden
