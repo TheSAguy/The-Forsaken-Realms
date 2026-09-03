@@ -16075,3 +16075,19 @@ User spec (2026-09-03), all five design questions answered by the user:
 
 **Files touched**: TuningData.java, settings.json, PointOfInterestChanges.java,
 PointOfInterestMapSprite.java, TerritoryControl.java, WorldStage.java.
+
+## Round 93: one town assault per town per week (2026-09-03)
+
+User spec: "A town can only be attacked once a week. Tell the player how many days remain before
+the next attack is possible if he tries a second time."
+- `PointOfInterestChanges.aiLastAssaultDay` (key-based, missing-key default -1) is stamped when an
+  assault starts (`TerritoryControl.recordAssault`). `assaultCooldownDaysLeft()` returns the days
+  until the town may be attacked again; tunable `aiTownAssaultCooldownDays` (7) in
+  `config tables/settings.json`.
+- The "guards bar you" dialog drops the Attack button while the cooldown runs and says "you can
+  attack again in N day(s)"; `[TFR-TownAssault] <town> on cooldown - N day(s) left` is logged. A
+  captured town is re-keyed by `transformInto`, so the record disappears with the AI's ownership,
+  and a failed attack that finds no defender is not recorded.
+
+**Files touched**: PointOfInterestChanges.java, TerritoryControl.java, WorldStage.java,
+TuningData.java, settings.json.

@@ -1995,3 +1995,11 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   tier-filtered `pickRandomRoamer()`, `AI_GUARD_MAX_LEVEL`.
 - **`stage/WorldStage.java`** - `startTownAssault()` maps guard level -> defender tier / lands.
 - **`data/TuningData.java`** - `aiTownGuardDaysPerLevel`.
+
+## Round 93 (2026-09-03) - town assault weekly cooldown
+
+- **`pointofintrest/PointOfInterestChanges.java`** - `aiLastAssaultDay` (+ save/load key, accessors).
+- **`util/TerritoryControl.java`** (mod-new) - `assaultCooldownDaysLeft()`, `recordAssault()`.
+- **`stage/WorldStage.java`** - `showEntryBarredDialog()` gates Attack on the cooldown and shows the
+  remaining days; `startTownAssault()` records the attempt.
+- **`data/TuningData.java`** - `aiTownAssaultCooldownDays`.

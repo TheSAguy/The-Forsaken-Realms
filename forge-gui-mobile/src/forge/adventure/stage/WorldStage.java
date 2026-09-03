@@ -686,6 +686,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         townAssaultTownName = poi.getDisplayName();
         townAssaultPoi = poi;
         townAssaultColor = color;
+        TerritoryControl.recordAssault(poi, Current.world().getCurrentDay()); // starts the weekly cooldown
         System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " (" + color + "): defender "
                 + defender.getName() + " (tier=" + duelData.tier + ") starts with a tapped "
                 + TerritoryControl.basicLandFor(color));
@@ -796,11 +797,21 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
 
-        boolean canAttack = Config.instance().getConfigData().warTownAssaultEnabled
+        boolean assaultEnabled = Config.instance().getConfigData().warTownAssaultEnabled
                 && TerritoryControl.basicLandFor(barredColor) != null;
+        // Once a week per town (user spec 2026-09-03): a repeat visit inside the cooldown gets the
+        // remaining days instead of the Attack button.
+        int cooldownLeft = assaultEnabled ? TerritoryControl.assaultCooldownDaysLeft(poi, Current.world().getCurrentDay()) : 0;
+        boolean canAttack = assaultEnabled && cooldownLeft <= 0;
+        if (assaultEnabled && cooldownLeft > 0)
+            System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " on cooldown - " + cooldownLeft + " day(s) left");
         TypingLabel label = Controls.newTypingLabel("The guards of " + poi.getDisplayName()
                 + " bar you from entering - you are at [RED]War[] with " + capitalizeColor(barredColor) + "!"
-                + (canAttack ? " Their defenders stand ready; you may leave, or attack the town." : ""));
+                + (canAttack ? " Their defenders stand ready; you may leave, or attack the town."
+                   : (assaultEnabled && cooldownLeft > 0
+                      ? " You struck at this town recently and its defenders are on guard - you can attack again in "
+                        + cooldownLeft + (cooldownLeft == 1 ? " day." : " days.")
+                      : "")));
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();

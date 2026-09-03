@@ -157,6 +157,9 @@ public class TuningData {
     // retroactively. Level -> assault defender: 0 Apprentice, 1 Adept, 2 Master, 3 Archmage,
     // 4 Archmage with two starting lands.
     public int aiTownGuardDaysPerLevel = 28;
+    // A given AI town can be attacked once per this many in-game days (user spec 2026-09-03: "once
+    // a week"); the barred dialog tells the player how many days remain.
+    public int aiTownAssaultCooldownDays = 7;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

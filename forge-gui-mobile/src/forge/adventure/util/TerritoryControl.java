@@ -984,6 +984,24 @@ public class TerritoryControl {
 
     public static final int AI_GUARD_MAX_LEVEL = 4;
 
+    /** Days until this town may be assaulted again (0 = now). Once a week per town (user spec
+     *  2026-09-03), tunable via TuningData.aiTownAssaultCooldownDays. A captured town is re-keyed
+     *  by transformInto, so its record is gone along with the AI's ownership. */
+    public static int assaultCooldownDaysLeft(PointOfInterest poi, int today) {
+        forge.adventure.pointofintrest.PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+        int last = changes == null ? -1 : changes.getAiLastAssaultDay();
+        if (last < 0)
+            return 0;
+        int cooldown = Config.instance().getTuningData().aiTownAssaultCooldownDays;
+        if (cooldown <= 0)
+            cooldown = 7;
+        return Math.max(0, cooldown - (today - last));
+    }
+
+    public static void recordAssault(PointOfInterest poi, int today) {
+        WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).setAiLastAssaultDay(today);
+    }
+
     /**
      * AI guard dots (MOD_SCOPE #87, user spec 2026-09-03). Once per day tick: every AI-held color
      * TOWN (capitals are fixed at two Archmage dots and stay unattackable) gains one level per

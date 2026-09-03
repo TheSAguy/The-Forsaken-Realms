@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 93 (2026-09-03): one assault per town per week (aiTownAssaultCooldownDays), the barred
+  dialog states the remaining days. NOT playtested.
 - Round 92 (2026-09-03): AI guard dots (28 days/level, 4 levels, capitals two Archmage) drive the
   assault defender tier; clock starts at first sight (save load/capture). NOT playtested.
 - Round 91 (2026-09-03): assault win captures the town (restored-ruin state). Dungeon-on-load report

@@ -66,6 +66,7 @@ public class PointOfInterestChanges implements SaveFileContent  {
     // (transformInto) re-keys the POI and starts from a fresh entry, so both reset to 0 / unset.
     private int aiGuardLevel = 0;
     private int aiHeldSinceDay = -1;
+    private int aiLastAssaultDay = -1; // town assault cooldown (once a week, user spec 2026-09-03)
     // Pinned shop identity per Tiled shop object id (shop's ShopData name). Normally a shop
     // object's type is re-rolled from its tmx lists at every map load - the Capitol migration
     // pins each migrated slot to the exact shop the source town actually had (user report
@@ -160,6 +161,7 @@ public class PointOfInterestChanges implements SaveFileContent  {
         bankBalance = data.containsKey("bankBalance") ? data.readInt("bankBalance") : 0;
         aiGuardLevel = data.containsKey("aiGuardLevel") ? data.readInt("aiGuardLevel") : 0;
         aiHeldSinceDay = data.containsKey("aiHeldSinceDay") ? data.readInt("aiHeldSinceDay") : -1;
+        aiLastAssaultDay = data.containsKey("aiLastAssaultDay") ? data.readInt("aiLastAssaultDay") : -1;
         archaeologistExpeditionSentDay = data.containsKey("archaeologistExpeditionSentDay")
                 ? data.readInt("archaeologistExpeditionSentDay") : -1;
         pinnedShopNames.clear();
@@ -221,6 +223,7 @@ public class PointOfInterestChanges implements SaveFileContent  {
         data.store("bankBalance", bankBalance);
         data.store("aiGuardLevel", aiGuardLevel);
         data.store("aiHeldSinceDay", aiHeldSinceDay);
+        data.store("aiLastAssaultDay", aiLastAssaultDay);
         data.store("archaeologistExpeditionSentDay", archaeologistExpeditionSentDay);
         data.storeObject("pinnedShopNames", new HashMap<>(pinnedShopNames));
         data.storeObject("shopLastRefreshDay", new HashMap<>(shopLastRefreshDay));
@@ -257,6 +260,8 @@ public class PointOfInterestChanges implements SaveFileContent  {
     public void setAiGuardLevel(int level) { aiGuardLevel = Math.max(0, level); }
     public int getAiHeldSinceDay() { return aiHeldSinceDay; }
     public void setAiHeldSinceDay(int day) { aiHeldSinceDay = day; }
+    public int getAiLastAssaultDay() { return aiLastAssaultDay; }
+    public void setAiLastAssaultDay(int day) { aiLastAssaultDay = day; }
 
     public int getGuardCount() {
         return guardTiers.size();

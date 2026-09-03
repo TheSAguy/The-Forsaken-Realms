@@ -91,6 +91,9 @@
     // starts when the town is first seen held, not retroactively). Level sets the assault defender:
     // none = Apprentice, 1 = Adept, 2 = Master, 3 = Archmage, 4 = Archmage with two starting lands.
     "aiTownGuardDaysPerLevel": 28,
+    // A given AI town can be attacked once per this many in-game days; the guards' dialog says
+    // how many days remain if you come back sooner.
+    "aiTownAssaultCooldownDays": 7,
 
     // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
     // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via
