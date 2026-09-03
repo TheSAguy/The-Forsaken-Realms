@@ -339,6 +339,42 @@ public class TownRestoration {
     // or they drift apart (the exact class of mismatch already caught once for the 20-vs-10 cap).
     private static final int RECOLOR_RADIUS = TerritoryControl.RECOLOR_RADIUS;
 
+    /**
+     * Town assault win (MOD_SCOPE #87, 2026-09-03 user spec): "When you win the fight, you should get
+     * the city. It should be just like a newly restored ruined city - all buildings besides the inn
+     * broken." The AI color town becomes the matching Waste Town (same name, same mechanism the
+     * post-generation sweep and AI captures use), flagged TOWN_RESTORED so it is player-owned from
+     * this moment, then gets the ownership side effects an AI capture gets (TerritoryControl.
+     * onMageArrived): territory radius, terrain repaint, vision, road, town life bonus.
+     */
+    public static void captureTownForPlayer(forge.adventure.world.World world, PointOfInterest target, String fromColor) {
+        PointOfInterestData wasteData = TerritoryControl.matchingWasteData(target.getData(), fromColor);
+        if (wasteData == null) {
+            System.out.println("[TFR-TownAssault] no Waste Town template matches " + target.getData().name + " - town not captured");
+            return;
+        }
+        String shownName = target.getDisplayName();
+        Integer oldRadius = world.getTownTerritoryRadius(target.getID());
+        int repaintRadius = Math.max(TerritoryControl.RECOLOR_RADIUS, oldRadius != null ? oldRadius : TerritoryControl.RECOLOR_RADIUS);
+        target.transformInto(wasteData, world.getRandom(), true); // ownership changes, the town keeps its name
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID());
+        changes.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);
+        world.setTownTerritoryRadius(target.getID(), repaintRadius);
+        world.rebuildPlayerTownVision();
+        world.repaintBiomeAroundTown(target, TEST_RECOLOR_BIOME, repaintRadius,
+                WorldStage.getInstance()::refreshBackgroundTile,
+                WorldStage.getInstance()::reloadBackgroundChunkObjects);
+        world.revealArea((int) (target.getPosition().x / world.getTileSize()),
+                (int) (target.getPosition().y / world.getTileSize()),
+                repaintRadius, WorldStage.getInstance()::refreshBackgroundTile);
+        TerritoryControl.connectCapturedTownByRoad(world, target, "player");
+        updateTownLifeBonus(true);
+        world.refreshWorldMapMarkers();
+        System.out.println("[TFR-TownAssault] " + shownName + " captured from " + fromColor
+                + " -> player-owned restored town (radius " + repaintRadius + "), buildings start broken except the inn");
+        forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding.", true);
+    }
+
     public static void recolorTerrainForTesting() {
         PointOfInterest point = TileMapScene.instance().rootPoint;
         if (point == null)

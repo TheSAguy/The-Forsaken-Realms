@@ -1979,3 +1979,19 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   `world/BiomeTexture.java`, `world/WorldSaveHeader.java`** - explicit `serialVersionUID` pinned at
   each class's current derived value (all unchanged since v1.04). Upstream merges may re-touch
   these files; keep the pins.
+
+## Round 91 (2026-09-03) - town assault capture
+
+- **`util/TownRestoration.java`** (mod-new) - `captureTownForPlayer()`.
+- **`util/TerritoryControl.java`** (mod-new) - `matchingWasteData()` package-private.
+- **`stage/WorldStage.java`** - `townAssaultPoi`/`townAssaultColor`; `setWinner()` win path calls
+  the capture; `startTownAssault()` records the POI.
+
+## Round 92 (2026-09-03) - AI guard dots
+
+- **`pointofintrest/PointOfInterestChanges.java`** - `aiGuardLevel` / `aiHeldSinceDay` (+ save/load keys, accessors).
+- **`stage/PointOfInterestMapSprite.java`** - `drawGuardIndicator()` draws AI dots (`aiGuardDots()`).
+- **`util/TerritoryControl.java`** (mod-new) - `updateAiTownGuardLevels()` from `processDaysPassed()`,
+  tier-filtered `pickRandomRoamer()`, `AI_GUARD_MAX_LEVEL`.
+- **`stage/WorldStage.java`** - `startTownAssault()` maps guard level -> defender tier / lands.
+- **`data/TuningData.java`** - `aiTownGuardDaysPerLevel`.

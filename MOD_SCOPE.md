@@ -4253,7 +4253,7 @@ color a standing that the player moves through play, and territory control (#7) 
 consequences; a separate negotiation layer on top was never scoped and is not wanted. Kept here
 rather than deleted, matching how #5, #8 and #26 were retired.
 
-### 87. More Attacking Options — `In Progress (first cut 2026-09-03: Attack/Leave at a War-status AI town, random roamer from the color pool, defender starts with its basic land tapped; town capture and defender tiers pending; researched 2026-08-31, see STAR_TOWNS_RESEARCH.md)`
+### 87. More Attacking Options — `In Progress (2026-09-03: Attack/Leave at a War-status AI town; win captures the town as a restored ruin; AI guard dots 1-4 by 28-day ownership set the defender tier, capitals two Archmage dots and unattackable; awaiting playtest; researched 2026-08-31, see STAR_TOWNS_RESEARCH.md)`
 User wishlist addition (2026-08-18): expand the player's offensive options against AI
 towns/castles beyond the current Territory Control capture mechanism (#7). Scope not yet defined -
 could mean new attack types, mercenary/ally forces, siege mechanics, or something else.

@@ -62,6 +62,10 @@ public class PointOfInterestChanges implements SaveFileContent  {
     // migration needed, same as guardLastPaidDay's own graceful-default handling.
     private final java.util.Map<Integer, Integer> economyBuildingLastPayoutDay = new HashMap<>();
     private int bankBalance = 0;
+    // AI guard dots (MOD_SCOPE #87, 2026-09-03). Only meaningful on AI-held color towns; a capture
+    // (transformInto) re-keys the POI and starts from a fresh entry, so both reset to 0 / unset.
+    private int aiGuardLevel = 0;
+    private int aiHeldSinceDay = -1;
     // Pinned shop identity per Tiled shop object id (shop's ShopData name). Normally a shop
     // object's type is re-rolled from its tmx lists at every map load - the Capitol migration
     // pins each migrated slot to the exact shop the source town actually had (user report
@@ -154,6 +158,8 @@ public class PointOfInterestChanges implements SaveFileContent  {
                 economyBuildingLastPayoutDay.putAll((java.util.Map<Integer, Integer>) obj);
         }
         bankBalance = data.containsKey("bankBalance") ? data.readInt("bankBalance") : 0;
+        aiGuardLevel = data.containsKey("aiGuardLevel") ? data.readInt("aiGuardLevel") : 0;
+        aiHeldSinceDay = data.containsKey("aiHeldSinceDay") ? data.readInt("aiHeldSinceDay") : -1;
         archaeologistExpeditionSentDay = data.containsKey("archaeologistExpeditionSentDay")
                 ? data.readInt("archaeologistExpeditionSentDay") : -1;
         pinnedShopNames.clear();
@@ -213,6 +219,8 @@ public class PointOfInterestChanges implements SaveFileContent  {
         data.storeObject("economyBuildingObjectIds", economyBuildingObjectIds);
         data.storeObject("economyBuildingLastPayoutDay", economyBuildingLastPayoutDay);
         data.store("bankBalance", bankBalance);
+        data.store("aiGuardLevel", aiGuardLevel);
+        data.store("aiHeldSinceDay", aiHeldSinceDay);
         data.store("archaeologistExpeditionSentDay", archaeologistExpeditionSentDay);
         data.storeObject("pinnedShopNames", new HashMap<>(pinnedShopNames));
         data.storeObject("shopLastRefreshDay", new HashMap<>(shopLastRefreshDay));
@@ -244,6 +252,11 @@ public class PointOfInterestChanges implements SaveFileContent  {
     }
 
     // ---- Armory Guards (2026-08-11, MOD_SCOPE.md #22) ----
+
+    public int getAiGuardLevel() { return aiGuardLevel; }
+    public void setAiGuardLevel(int level) { aiGuardLevel = Math.max(0, level); }
+    public int getAiHeldSinceDay() { return aiHeldSinceDay; }
+    public void setAiHeldSinceDay(int day) { aiHeldSinceDay = day; }
 
     public int getGuardCount() {
         return guardTiers.size();

@@ -100,7 +100,13 @@ public class PointOfInterestMapSprite extends MapSprite {
 
     private void drawGuardIndicator(Batch batch, float parentAlpha) {
         PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(pointOfInterest.getID());
-        if (changes == null || changes.getGuardCount() == 0)
+        // AI guard dots (MOD_SCOPE #87, user spec 2026-09-03): AI color towns show ONE dot whose
+        // tier is their guard level (Apprentice..Archmage); AI capitals always show TWO Archmage
+        // dots. Neutral/ruined towns and the player's own towns never get these (the player's
+        // towns show their hired guards below instead).
+        String[] aiDots = aiGuardDots(changes);
+        boolean hasHired = changes != null && changes.getGuardCount() > 0;
+        if (aiDots == null && !hasHired)
             return;
         // batch.getColor() returns the batch's *internal* Color by reference, not a copy -
         // snapshot the primitive components before calling setColor and restore from those
@@ -110,13 +116,39 @@ public class PointOfInterestMapSprite extends MapSprite {
         float pr = prevRef.r, pg = prevRef.g, pb = prevRef.b, pa = prevRef.a;
         batch.setColor(pr, pg, pb, parentAlpha);
         float xOffset = 0f;
-        for (int i = 0; i < changes.getGuardCount(); i++) {
-            TextureRegion icon = EconomyBuildings.getGuardTierIconSprite(changes.getGuardTier(i));
-            if (icon == null)
-                continue;
-            batch.draw(icon, getX() + xOffset, getY(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE);
-            xOffset += GUARD_ICON_DRAW_SIZE;
+        if (aiDots != null) {
+            for (String tier : aiDots) {
+                TextureRegion icon = EconomyBuildings.getGuardTierIconSprite(tier);
+                if (icon == null)
+                    continue;
+                batch.draw(icon, getX() + xOffset, getY(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE);
+                xOffset += GUARD_ICON_DRAW_SIZE;
+            }
+        } else {
+            for (int i = 0; i < changes.getGuardCount(); i++) {
+                TextureRegion icon = EconomyBuildings.getGuardTierIconSprite(changes.getGuardTier(i));
+                if (icon == null)
+                    continue;
+                batch.draw(icon, getX() + xOffset, getY(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE);
+                xOffset += GUARD_ICON_DRAW_SIZE;
+            }
         }
         batch.setColor(pr, pg, pb, pa);
+    }
+
+    /** Tier names of the AI guard dots for this POI, or null when it shows none. */
+    private String[] aiGuardDots(PointOfInterestChanges changes) {
+        forge.adventure.data.PointOfInterestData data = pointOfInterest.getData();
+        if (data == null || forge.adventure.util.ColorReputation.colorOfTown(data) == null)
+            return null; // not an AI color town/capital (Waste/ruined/neutral, Spawn, player Capitol)
+        if (TownRestoration.isTownRestored(changes))
+            return null; // captured by the player - now theirs
+        if ("capital".equals(data.type))
+            return new String[]{"Mythic", "Mythic"};
+        int level = changes == null ? 0 : changes.getAiGuardLevel();
+        if (level <= 0)
+            return null;
+        String[] tiers = EconomyBuildings.GUARD_TIERS_ASCENDING;
+        return new String[]{tiers[Math.min(level, tiers.length) - 1]};
     }
 }

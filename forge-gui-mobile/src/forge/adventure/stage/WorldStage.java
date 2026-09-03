@@ -62,6 +62,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // (capture, tiers) are deliberately not built yet - user: "for now, just choose a random enemy".
     private boolean currentMobIsTownAssault = false;
     private String townAssaultTownName = null;
+    private PointOfInterest townAssaultPoi = null;
+    private String townAssaultColor = null;
     protected Random rand = MyRandom.getRandom();
     WorldBackground background;
     private float spawnDelay = 0;
@@ -467,11 +469,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
     public void setWinner(boolean playerIsWinner, boolean isArena) {
         boolean isCapitolDefense = currentMobIsCapitolDefense;
         currentMobIsCapitolDefense = false;
+        final PointOfInterest assaultPoi = currentMobIsTownAssault ? townAssaultPoi : null;
+        final String assaultColor = townAssaultColor;
         if (currentMobIsTownAssault) {
             currentMobIsTownAssault = false;
             System.out.println("[TFR-TownAssault] " + townAssaultTownName + " vs " + currentMob.getName()
-                    + " -> " + (playerIsWinner ? "WON" : "LOST") + " (ordinary duel rewards/penalties apply)");
+                    + " -> " + (playerIsWinner ? "WON - town captured" : "LOST") + " (ordinary duel rewards/penalties apply)");
             townAssaultTownName = null;
+            townAssaultPoi = null;
+            townAssaultColor = null;
         }
         if (playerIsWinner) {
             currentMob.clearCollisionHeight();
@@ -488,6 +494,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     float deathDuration = currentMob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 0.3f);
                     startPause(deathDuration, () -> {
                         Array<Reward> loot = currentMob.getRewards();
+                        if (assaultPoi != null) // town assault won: the town changes hands (user spec 2026-09-03)
+                            TownRestoration.captureTownForPlayer(Current.world(), assaultPoi, assaultColor);
                         // Bronze Coin ransom reclaim as a visible loot tile (user request
                         // 2026-09-01) - see AdventurePlayer.appendCoinRansomReward. Keyed on the
                         // RAW name, matching what DuelScene stamped the mark with.
@@ -652,7 +660,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
      * Capture of the town and a defender tier system are the announced follow-ups, not built here.
      */
     public void startTownAssault(PointOfInterest poi, String color) {
-        EnemyData base = TerritoryControl.pickRandomRoamer(Current.world(), color);
+        // Guard dots (MOD_SCOPE #87, user spec 2026-09-03): the town's AI guard level picks the
+        // defender's tier one step above the dot - none Apprentice, 1 Adept, 2 Master, 3 Archmage,
+        // 4 Archmage with two starting lands.
+        forge.adventure.pointofintrest.PointOfInterestChanges assaultChanges = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+        int guardLevel = assaultChanges == null ? 0 : assaultChanges.getAiGuardLevel();
+        String[] tiers = EconomyBuildings.GUARD_TIERS_ASCENDING;
+        String defenderTier = tiers[Math.min(guardLevel, tiers.length - 1)];
+        int lands = guardLevel >= TerritoryControl.AI_GUARD_MAX_LEVEL ? 2 : 1;
+        EnemyData base = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier);
         if (base == null) {
             System.out.println("[TFR-TownAssault] no eligible defender in the " + color + " pool for " + poi.getDisplayName());
             GameHUD.getInstance().addNotification("No defenders answer the call at " + poi.getDisplayName() + ".", true);
@@ -661,10 +677,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
         EnemyData duelData = new EnemyData(base);
         EnemySprite defender = new EnemySprite(duelData);
         defender.effect = new EffectData();
-        defender.effect.startBattleWithCardTapped = new String[]{TerritoryControl.basicLandFor(color)};
+        String land = TerritoryControl.basicLandFor(color);
+        defender.effect.startBattleWithCardTapped = lands == 2 ? new String[]{land, land} : new String[]{land};
+        System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " guard level " + guardLevel
+                + " -> defender tier " + defenderTier + " (" + EnemyData.tierDisplayName(defenderTier) + "), " + lands + " starting land(s)");
         currentMob = defender;
         currentMobIsTownAssault = true;
         townAssaultTownName = poi.getDisplayName();
+        townAssaultPoi = poi;
+        townAssaultColor = color;
         System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " (" + color + "): defender "
                 + defender.getName() + " (tier=" + duelData.tier + ") starts with a tapped "
                 + TerritoryControl.basicLandFor(color));

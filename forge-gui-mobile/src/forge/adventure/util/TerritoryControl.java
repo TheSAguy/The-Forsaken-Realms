@@ -428,6 +428,7 @@ public class TerritoryControl {
 
     /** Called from WorldStage.onActing() whenever the in-game day counter advances. */
     public static void processDaysPassed(int daysPassed, int newDayCount) {
+        updateAiTownGuardLevels(WorldSave.getCurrentSave().getWorld(), newDayCount); // AI guard dots (#87)
         if (daysPassed <= 0 || !isEnabled())
             return;
         World world = WorldSave.getCurrentSave().getWorld();
@@ -952,20 +953,72 @@ public class TerritoryControl {
      *  color's biome pool, any tier - "for now, just choose a random enemy from that AI's color
      *  pool" (user spec; a tier system comes later). Null if the pool is empty. */
     public static EnemyData pickRandomRoamer(World world, String color) {
+        return pickRandomRoamer(world, color, null);
+    }
+
+    /** Tier-filtered variant ("Common".."Mythic"); falls back to any tier when the color pool has
+     *  no eligible roamer of that tier, so an assault always finds a defender. */
+    public static EnemyData pickRandomRoamer(World world, String color, String tier) {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))
                 continue;
             List<EnemyData> candidates = new ArrayList<>();
+            List<EnemyData> anyTier = new ArrayList<>();
             for (EnemyData e : biome.getEnemyList()) {
                 if (e == null || e.boss || (e.questTags != null && e.questTags.length > 0))
                     continue;
-                candidates.add(e);
+                anyTier.add(e);
+                if (tier == null || tier.equals(e.tier))
+                    candidates.add(e);
             }
-            if (candidates.isEmpty())
-                return null;
+            if (candidates.isEmpty()) {
+                if (anyTier.isEmpty())
+                    return null;
+                System.out.println("[TFR-TownAssault] no " + tier + "-tier roamer in the " + color + " pool - falling back to any tier");
+                candidates = anyTier;
+            }
             return candidates.get(forge.util.MyRandom.getRandom().nextInt(candidates.size()));
         }
         return null;
+    }
+
+    public static final int AI_GUARD_MAX_LEVEL = 4;
+
+    /**
+     * AI guard dots (MOD_SCOPE #87, user spec 2026-09-03). Once per day tick: every AI-held color
+     * TOWN (capitals are fixed at two Archmage dots and stay unattackable) gains one level per
+     * TuningData.aiTownGuardDaysPerLevel days of unbroken ownership, up to AI_GUARD_MAX_LEVEL.
+     * The clock starts the first time a town is SEEN held - on save load or after a capture -
+     * never retroactively from world generation (user decision: not a migration). Any change of
+     * hands re-keys the POI (transformInto) and therefore restarts from a fresh entry.
+     */
+    static void updateAiTownGuardLevels(World world, int today) {
+        int perLevel = Config.instance().getTuningData().aiTownGuardDaysPerLevel;
+        if (perLevel <= 0)
+            perLevel = 28;
+        boolean changed = false;
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            PointOfInterestData data = poi.getData();
+            if (data == null || !"town".equals(data.type) || ColorReputation.colorOfTown(data) == null)
+                continue; // neutral / ruined / Waste towns and capitals: no upgrading dot (user spec)
+            forge.adventure.pointofintrest.PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID());
+            if (TownRestoration.isTownRestored(changes))
+                continue; // the player's now
+            if (changes.getAiHeldSinceDay() < 0) {
+                changes.setAiHeldSinceDay(today); // clock starts now
+                continue;
+            }
+            int level = Math.min(AI_GUARD_MAX_LEVEL, (today - changes.getAiHeldSinceDay()) / perLevel);
+            if (level != changes.getAiGuardLevel()) {
+                System.out.println("[TFR-AiGuard] " + poi.getDisplayName() + " (" + ColorReputation.colorOfTown(data)
+                        + ") guard level " + changes.getAiGuardLevel() + " -> " + level + " (held since day "
+                        + changes.getAiHeldSinceDay() + ", day " + today + ", " + perLevel + " days/level)");
+                changes.setAiGuardLevel(level);
+                changed = true;
+            }
+        }
+        if (changed)
+            world.refreshWorldMapMarkers();
     }
 
     /** The basic land a town-assault defender starts with (tapped) for its color. */
@@ -2111,7 +2164,7 @@ public class TerritoryControl {
     // Capital" has no direct Waste Town equivalent (colorless has no "capital" POI type at all) -
     // falls back to "Waste Town Generic" rather than being left as a color's own capital sitting
     // on now-neutral ground.
-    private static PointOfInterestData matchingWasteData(PointOfInterestData colorData, String color) {
+    static PointOfInterestData matchingWasteData(PointOfInterestData colorData, String color) { // package-private: TownRestoration.captureTownForPlayer()
         String noun = COLOR_TOWN_NOUN.get(color);
         if (noun == null || colorData.name == null)
             return null;

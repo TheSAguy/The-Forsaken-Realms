@@ -50,6 +50,11 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 92 (2026-09-03): AI guard dots (28 days/level, 4 levels, capitals two Archmage) drive the
+  assault defender tier; clock starts at first sight (save load/capture). NOT playtested.
+- Round 91 (2026-09-03): assault win captures the town (restored-ruin state). Dungeon-on-load report
+  was by design (single-enemy cave). OPEN questions to the user: tapped-land intent; AI guard-dot
+  tier system spec (see MOD_CHANGELOG round 91) - do not build the dot system before they answer.
 - Round 90 (2026-09-03): SAVE-WIPE REGRESSION from round 88 fixed (EffectData serialVersionUID
   pinned to the v1.04 value; nine other save-bound classes pinned). Saves written by the round-88
   build (today 10:02-10:10) are unrecoverable; pre-update saves load again. Rebuilt + PACKAGE_OK.

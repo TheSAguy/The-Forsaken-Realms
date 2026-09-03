@@ -16018,3 +16018,60 @@ v1.0x save before packaging. Round 88 did neither.
 **Files touched**: EffectData.java, PointOfInterestData.java, WorldData.java, BiomeData.java,
 AdventurePlayer.java, PointOfInterest.java, AdventureEventController.java,
 AdventureQuestController.java, BiomeTexture.java, WorldSaveHeader.java, CLAUDE.md.
+
+## Round 91: town assault captures the town; dungeon-on-load report resolved (2026-09-03)
+
+- **Dungeon "kicked out and disappears after Load" - not a bug.** Logs (10:24 and 10:42 sessions):
+  the cave in question holds exactly ONE enemy (a Mimic). Pre-load the player lost to it and the
+  cave despawned (correct). After loading the pre-entry save the player BEAT the Mimic; with no
+  enemy left, `AdventureQuestController.updateQuestsWin()` fired `onDungeonClear` and the cave
+  despawned under the round-45 emptied-dungeon rule while the player collected the wood loot and
+  walked out. Same respawn day both times because the world RNG is restored by the load. No code
+  change; the `[TFR-DungeonClear]` line also prints for towns (`Shimmering Port left with no
+  enemies...`) before `isRotatable` rejects them - cosmetic, left as is.
+- **Town assault: winning now captures the town** (user spec: "just like a newly restored ruined
+  city - all buildings besides inn broken"). `TownRestoration.captureTownForPlayer()` transforms the
+  AI color town into its matching Waste Town (same name, same `transformInto` mechanism AI captures
+  use), sets `TOWN_RESTORED_FLAG` on the new POI's changes, then applies the AI-capture side effects
+  from `TerritoryControl.onMageArrived`: territory radius, terrain repaint to the player biome,
+  vision rebuild + reveal, road, `updateTownLifeBonus(true)`, marker refresh. Called from the
+  `WorldStage.setWinner` win path (`assaultPoi` captured before the animation timers). Logged as
+  `[TFR-TownAssault] <town> captured from <color>`. `TerritoryControl.matchingWasteData` made
+  package-private for it.
+- **Open from the user's test:** the defender's starting land showed untapped. `Player.
+  initVariantsZones` does tap it at setup, but if the AI takes the first turn its untap step untaps
+  it before anything is visible (rules-correct). Awaiting the user's intent (visual only vs.
+  "unusable on the AI's first turn", which needs a one-turn "doesn't untap" effect).
+- **Planned, awaiting answers (MOD_SCOPE #87 tier system):** AI guard dots on towns held 28+ days,
+  one level per 28 days up to Archmage, dot level -> defender tier (none=Apprentice, 1=Adept,
+  2=Master, 3=Archmage, 4=Archmage + 2 lands); AI capitals show two Archmage dots and stay
+  unattackable. Rendering can reuse `PointOfInterestChanges.hireGuard()` + the existing dot sprite.
+
+**Files touched**: TownRestoration.java, TerritoryControl.java, WorldStage.java.
+
+## Round 92: AI guard dots and tiered town-assault defenders (2026-09-03)
+
+User spec (2026-09-03), all five design questions answered by the user:
+- **AI color towns earn one guard dot** after 28 days of unbroken AI ownership, upgrading one tier
+  every 28 days: Apprentice -> Adept -> Master -> Archmage (levels 1-4). The dot reuses the hired-
+  guard icons (`PointOfInterestMapSprite.drawGuardIndicator`), so it reads the same way as the
+  player's guards. **AI capitals always show two Archmage dots** and stay unattackable (toll
+  dialog unchanged). **Neutral, ruined and player towns never show AI dots.**
+- **The clock starts from save load** (or the first day tick after a town is captured), never
+  retroactively from world generation - user: "not intended to be a migration item". A town that
+  changes hands in ANY direction (player, AI, neutral sweep) is re-keyed by `transformInto` and so
+  starts over at level 0 automatically.
+- **Assault defender tier = one step above the dot:** none -> Apprentice (Common), 1 -> Adept
+  (Uncommon), 2 -> Master (Rare), 3 -> Archmage (Mythic), 4 -> Archmage with TWO starting lands
+  (all others one). `TerritoryControl.pickRandomRoamer(world, color, tier)` filters the color pool
+  by tier and falls back to any tier if the pool has none of that tier (logged).
+- Tunable: `aiTownGuardDaysPerLevel` (28) in `config tables/settings.json`.
+- Persistence: two ints on `PointOfInterestChanges` (`aiGuardLevel`, `aiHeldSinceDay`), key-based
+  `SaveFileContent` with missing-key defaults - save-format safe (the round-90 rule applies to
+  Java-serialized classes; this one is not).
+- Diagnostics: `[TFR-AiGuard]` on every level change (town, color, old -> new, since-day, rate);
+  `[TFR-TownAssault]` now prints the guard level, defender tier and land count.
+- Tapped starting land: left as is per the user (Magic's untap step untaps it if the AI moves first).
+
+**Files touched**: TuningData.java, settings.json, PointOfInterestChanges.java,
+PointOfInterestMapSprite.java, TerritoryControl.java, WorldStage.java.

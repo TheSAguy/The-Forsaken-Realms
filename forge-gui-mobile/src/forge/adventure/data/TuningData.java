@@ -151,6 +151,12 @@ public class TuningData {
     // difficulty scaling every other building cost gets (EconomyBuildings.scaledCost()).
     public int researchDays = 7;
     public int researchShardCost = 100;
+    // AI town guard dots (MOD_SCOPE #87, user spec 2026-09-03): an AI-held color town gains one
+    // guard level every this many in-game days of unbroken AI ownership (default 4 weeks), up to
+    // level 4. The clock starts when the town is first seen held (save load / capture), never
+    // retroactively. Level -> assault defender: 0 Apprentice, 1 Adept, 2 Master, 3 Archmage,
+    // 4 Archmage with two starting lands.
+    public int aiTownGuardDaysPerLevel = 28;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an
