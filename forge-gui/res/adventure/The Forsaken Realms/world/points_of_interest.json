@@ -4767,7 +4767,7 @@
 		"map": "../The Forsaken Realms/maps/map/towns/player_town.tmx",
 		"radiusFactor": 0,
 		"offsetX": 0.000000,
-		"offsetY": 0.075630,
+		"offsetY": 0.033613,
 		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
 	},
 	{
@@ -4829,8 +4829,8 @@
 		"sprite": "CenterTownNeutral",
 		"map": "../The Forsaken Realms/maps/map/towns/player_town.tmx",
 		"radiusFactor": 0,
-		"offsetX": 0.073519,
-		"offsetY": 0.017746,
+		"offsetX": 0.032675,
+		"offsetY": 0.007887,
 		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
 	},
 	{
@@ -4892,8 +4892,8 @@
 		"sprite": "CenterTownNeutral",
 		"map": "../The Forsaken Realms/maps/map/towns/player_town.tmx",
 		"radiusFactor": 0,
-		"offsetX": 0.043959,
-		"offsetY": -0.061543,
+		"offsetX": 0.019537,
+		"offsetY": -0.027352,
 		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
 	},
 	{
@@ -4955,8 +4955,8 @@
 		"sprite": "CenterTownNeutral",
 		"map": "../The Forsaken Realms/maps/map/towns/player_town.tmx",
 		"radiusFactor": 0,
-		"offsetX": -0.042466,
-		"offsetY": -0.062582,
+		"offsetX": -0.018874,
+		"offsetY": -0.027814,
 		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
 	},
 	{
@@ -5018,8 +5018,8 @@
 		"sprite": "CenterTownNeutral",
 		"map": "../The Forsaken Realms/maps/map/towns/player_town.tmx",
 		"radiusFactor": 0,
-		"offsetX": -0.073372,
-		"offsetY": 0.018343,
+		"offsetX": -0.032610,
+		"offsetY": 0.008152,
 		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
 	},
 	{

@@ -171,6 +171,8 @@ public class TuningData {
     // Center Towns (MOD_SCOPE #102, user spec 2026-09-03): the run is lost when ONE AI color holds
     // this many of the five star towns around the campfire. New worlds only (no migration).
     public int starTownsLossCount = 3;
+    // No other town may generate within this many tiles of the campfire (the star sits at 20).
+    public int starTownExclusionRadiusTiles = 24;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

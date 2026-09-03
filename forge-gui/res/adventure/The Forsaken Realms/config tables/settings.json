@@ -104,6 +104,8 @@
     // Center Towns: you lose the game when a single AI color holds this many of the five star
     // towns around the campfire (new worlds only).
     "starTownsLossCount": 3,
+    // Center Towns: no other town may generate within this many tiles of the campfire.
+    "starTownExclusionRadiusTiles": 24,
 
     // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
     // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via

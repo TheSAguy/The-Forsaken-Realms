@@ -342,6 +342,15 @@ public class World implements Disposable, SaveFileContent {
     // (transformInto) - see STAR_TOWNS_RESEARCH.md 1.7. Empty on pre-feature saves = feature inert.
     private final java.util.List<int[]> starTownTiles = new java.util.ArrayList<>();
     public java.util.List<int[]> getStarTownTiles() { return starTownTiles; }
+    /** Center Towns (MOD_SCOPE #102): ordinary towns (not Spawn, not the star towns themselves) are kept
+     *  out of the star's disc - see the placement loop in generateNew(). */
+    private static boolean isOrdinaryTownData(PointOfInterestData d) {
+        return d != null && "town".equals(d.type) && d.name != null && !"Spawn".equals(d.name) && !d.name.startsWith("Waste Town Center");
+    }
+    private static int starTownExclusionRadius() {
+        int r = Config.instance().getTuningData().starTownExclusionRadiusTiles;
+        return r > 0 ? r : 24;
+    }
     private void recordStarTowns() {
         starTownTiles.clear();
         for (PointOfInterest poi : getAllPointOfInterest()) {
@@ -1105,6 +1114,10 @@ public class World implements Disposable, SaveFileContent {
                                 if ((int) x < 0 || (int) y <= 0 || (int) y >= height || (int) x >= width || biomeIndex2 != highestBiome(getBiome((int) x, (int) y))) {
                                     continue;
                                 }
+                                // Center Towns (MOD_SCOPE #102, user spec 2026-09-03): no other town inside the star's disc
+                                if (isOrdinaryTownData(poi) && Math.hypot(x - width / 2.0, y - height / 2.0) < starTownExclusionRadius()) {
+                                    continue;
+                                }
 
                                 x *= data.tileSize;
                                 y *= data.tileSize;
@@ -1828,6 +1841,18 @@ public class World implements Disposable, SaveFileContent {
             // overworld campfire sprite (buildings.atlas "Spawn" region, 16x16 - the same native
             // size as the generic marker, so no scaling is needed) instead of the shared marker
             // atlas, same idea as the Capitol special case above.
+            if (poi.getData().name != null && poi.getData().name.contains(" Town Center") && poi.getSprite() != null) {
+                // Center Towns (MOD_SCOPE #102): their own castle art on the minimap, at the capital glyph's 32x32
+                com.badlogic.gdx.graphics.g2d.TextureRegion starSprite = poi.getSprite();
+                Pixmap starPixmap = markerPixmapFor(pixmapCache, starSprite.getTexture());
+                int starSize = 32;
+                int sx = (int) ((poi.getPosition().x / data.tileSize) * mm) - starSize / 2;
+                int sy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - starSize / 2;
+                biomeImage.drawPixmap(starPixmap, starSprite.getRegionX(), starSprite.getRegionY(),
+                        starSprite.getRegionWidth(), starSprite.getRegionHeight(), sx, sy, starSize, starSize);
+                refreshFogForMarkerRect(sx, sy, starSize, starSize);
+                continue;
+            }
             if ("Spawn".equals(poi.getData().name) && poi.getSprite() != null) {
                 com.badlogic.gdx.graphics.g2d.TextureRegion spawnSprite = poi.getSprite();
                 Pixmap spawnPixmap = markerPixmapFor(pixmapCache, spawnSprite.getTexture());

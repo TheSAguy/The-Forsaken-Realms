@@ -125,6 +125,19 @@ public class TownRestoration {
         }
         int target = Config.instance().getTuningData().functioningNeutralTownCount;
         java.util.Collections.shuffle(candidates, world.getRandom());
+        // Center Towns (MOD_SCOPE #102, user spec 2026-09-03): the five star towns are ALWAYS functioning
+        // neutral towns - moved to the front so the seeding loop below takes them first, and added to
+        // the target so they do not eat into the ordinary random count.
+        java.util.List<PointOfInterest> starFirst = new java.util.ArrayList<>();
+        for (java.util.Iterator<PointOfInterest> it = candidates.iterator(); it.hasNext(); ) {
+            PointOfInterest c = it.next();
+            if (c.getData().name != null && c.getData().name.startsWith("Waste Town Center")) {
+                starFirst.add(c);
+                it.remove();
+            }
+        }
+        candidates.addAll(0, starFirst);
+        target += starFirst.size();
         int seeded = 0;
         int totalBroken = 0;
         for (int i = 0; i < candidates.size() && seeded < target; i++) {
@@ -422,6 +435,8 @@ public class TownRestoration {
     public static TextureRegion getBrokenTownSprite(PointOfInterest point) {
         if (point == null || isNeutralSeeded(point.getID()) || !isWastelandTown(point.getData()))
             return null;
+        if (point.getData().name != null && point.getData().name.startsWith("Waste Town Center"))
+            return null; // Center Towns keep their own castle art (MOD_SCOPE #102)
         // peek, not get - a pure read for every wasteland town icon drawn on the map; the
         // get-or-create accessor would materialize an empty changes entry per town just for
         // rendering (see WorldSave.peekPointOfInterestChanges()).

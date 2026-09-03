@@ -2132,6 +2132,8 @@ public class TerritoryControl {
         Integer oldRadius = world.getTownTerritoryRadius(target.getID());
         int repaintRadius = Math.max(RECOLOR_RADIUS, oldRadius != null ? oldRadius : RECOLOR_RADIUS);
         target.transformInto(newData, world.getRandom(), true); // ownership changes, the town keeps its name
+        if (newData.name != null && newData.name.startsWith("Waste Town Center")) // Center Towns revert to FUNCTIONING neutral towns
+            WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID()).getMapFlags().put(TownRestoration.NEUTRAL_SEEDED_FLAG, (byte) 1);
         // Seed the captured town's territory at everything the repaint below actually paints
         // (keyed on the NEW id - getID() derives from data.name, which the transform just
         // changed), and refresh the fog-of-war Revealed cache BEFORE the repaint: if this capture

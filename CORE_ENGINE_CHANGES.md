@@ -2024,3 +2024,12 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 ## Round 96 (2026-09-03) - star rim roads
 
 - **`world/World.java`** - road pass adds the ten pairwise Center Town edges next to the five spokes.
+
+## Round 97 (2026-09-03) - Center Towns fixes
+
+- **`world/World.java`** - placement-loop exclusion (`isOrdinaryTownData`, `starTownExclusionRadius`);
+  minimap draws Center Town art at 32x32.
+- **`util/TownRestoration.java`** (mod-new) - star towns seeded first in `seedFunctioningNeutralTowns`;
+  `getBrokenTownSprite` skips them.
+- **`util/TerritoryControl.java`** (mod-new) - `onMageArrived` re-flags a reverted star town neutral-seeded.
+- **`data/TuningData.java`** - `starTownExclusionRadiusTiles`.

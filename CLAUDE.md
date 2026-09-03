@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 97 (2026-09-03): Center Towns at 20 tiles, always functioning-neutral with their own art (map +
+  minimap), 24-tile no-other-town zone. Awaiting playtest on a NEW game.
 - Round 96 (2026-09-03): Center Towns also road-linked to each other (full 15-edge star mesh).
 - Round 95 (2026-09-03): Center Towns (MOD_SCOPE #102) - 5 star towns around the campfire with
   the user's castle art, spoke roads, loss at 3 held by one color. NEW WORLDS ONLY. NOT playtested.

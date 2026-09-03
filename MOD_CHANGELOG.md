@@ -16151,3 +16151,24 @@ fire". The round-95 spokes stay; the road pass now also gets the ten pairwise Ce
 so the star is drawn as a full mesh (15 edges) and every tile on them is walkable.
 
 **Files touched**: World.java.
+
+## Round 97: Center Towns playtest fixes - radius 20, own art, functioning neutral, exclusion zone (2026-09-03)
+
+User playtest of round 95/96 ("Star worked"), with three corrections:
+- **Own castle art was not showing.** The five keeps rendered with the ruined waste-town art because
+  `TownRestoration.getBrokenTownSprite` overrides every un-seeded wasteland town's sprite. Fixed two
+  ways: the star towns are now ALWAYS seeded as functioning neutral towns (moved to the front of
+  `seedFunctioningNeutralTowns`' candidate list and added to its target, so the ordinary random
+  count is unchanged), and `getBrokenTownSprite` skips them outright. A star town swept back to
+  neutral after an AI capture is re-flagged functioning neutral in `onMageArrived`. On the minimap
+  they draw their own art at the capital glyph's 32x32 (World marker pass, next to the Spawn
+  special case) instead of the generic town hut.
+- **Radius 45 -> 20 tiles** (user spec): the five arm offsets scaled by 20/45. The round-95 log
+  showed one full-pass placement restart at 45 ("Can not place POI Waste Town Center5"); 20 tiles
+  sits well inside the measured safe radius.
+- **Exclusion zone**: no other town (any color, Spawn and the star towns exempt) may generate
+  within `starTownExclusionRadiusTiles` (24) of the map centre - one extra reject in the placement
+  loop, so the star's disc holds only the campfire and the five keeps.
+
+**Files touched**: points_of_interest.json, settings.json, TuningData.java, World.java,
+TownRestoration.java, TerritoryControl.java.
