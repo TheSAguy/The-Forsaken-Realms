@@ -1968,3 +1968,14 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`stage/WorldStage.java`** - Attack button in `showEntryBarredDialog`, `startTownAssault()`,
   `[TFR-TownAssault]` in `setWinner()`.
 - **`util/TerritoryControl.java`** (mod-new) - `pickRandomRoamer()`, `basicLandFor()`.
+
+## Round 90 (2026-09-03) - serialVersionUID pins (save-integrity fix)
+
+- **`data/EffectData.java`** - `serialVersionUID = -5573686949131910962L` (the v1.04 derived value;
+  round 88's added field had changed it and wiped inventories on load).
+- **`data/PointOfInterestData.java`, `data/WorldData.java`, `data/BiomeData.java`,
+  `player/AdventurePlayer.java`, `pointofintrest/PointOfInterest.java`,
+  `util/AdventureEventController.java`, `util/AdventureQuestController.java`,
+  `world/BiomeTexture.java`, `world/WorldSaveHeader.java`** - explicit `serialVersionUID` pinned at
+  each class's current derived value (all unchanged since v1.04). Upstream merges may re-touch
+  these files; keep the pins.

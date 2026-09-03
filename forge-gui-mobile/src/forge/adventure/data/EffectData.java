@@ -14,6 +14,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EffectData implements Serializable {
+    // Save compatibility: EffectData is embedded in every serialized inventory ItemData; round 88 changed its derived UID and wiped inventories on load (round 90).
+    private static final long serialVersionUID = -5573686949131910962L;
+
     public String name = null;           //Effect name. Can be checked for.
 
     //Duel effects.

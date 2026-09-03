@@ -23,6 +23,9 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class AdventureEventController implements Serializable {
+    // Save compatibility: pinned 2026-09-03 (round 90) at the value derived from the v1.04 class shape so save compatibility no longer depends on the class not changing.
+    private static final long serialVersionUID = -8111985415988509005L;
+
     public void finalizeEvent(AdventureEventData completedEvent) {
         Current.player().getStatistic().setResult(completedEvent);
         Current.player().removeEvent(completedEvent);

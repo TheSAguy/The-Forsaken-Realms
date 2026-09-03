@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 90 (2026-09-03): SAVE-WIPE REGRESSION from round 88 fixed (EffectData serialVersionUID
+  pinned to the v1.04 value; nine other save-bound classes pinned). Saves written by the round-88
+  build (today 10:02-10:10) are unrecoverable; pre-update saves load again. Rebuilt + PACKAGE_OK.
 - Round 89 (2026-09-03): user's player-biome art update (player_terrain/doodads/structures PNGs,
   same dimensions as before). `*_original.png` backups sit UNTRACKED in the plane folder - they
   ship in the live folder until moved; do not delete them without asking.
@@ -98,6 +101,12 @@ engine version — only they can do that step, so raise it early rather than dis
 
 ## Hard-won lessons that will bite you again
 
+- **Every class that goes into a `.sav` needs an explicit `serialVersionUID`, and changing one is a
+  save-format change.** Round 88 added a field to `EffectData` (embedded in every inventory
+  `ItemData`); Java's derived UID changed and EVERY existing save loaded with an empty inventory
+  behind a "Data Migration completed" dialog. All ten save-bound classes are pinned since round 90.
+  Before packaging a build that touches `forge/adventure/data`, `player`, `pointofintrest`, `world`
+  or the two controllers, LOAD a v1.0x save and check the inventory.
 - **Read Maven's own exit code, never a pipe's.** `mvn ... | grep ...; echo $?` reports *grep's*
   status. A round-78 compile reported success while Maven had failed. Redirect to a file and read
   `$?` immediately.

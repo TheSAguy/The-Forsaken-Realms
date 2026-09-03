@@ -21,6 +21,9 @@ import java.util.Date;
  * Header information for the save file like a preview image, save name and saved date.
  */
 public class WorldSaveHeader implements java.io.Serializable, Disposable {
+    // Save compatibility: pinned 2026-09-03 (round 90) at the value derived from the v1.04 class shape so save compatibility no longer depends on the class not changing.
+    private static final long serialVersionUID = 7676320057945211217L;
+
     public static int previewImageWidth = 512;
     public Pixmap preview;
     public String name;

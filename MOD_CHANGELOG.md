@@ -15979,3 +15979,41 @@ Four user items from the 2026-09-03 message, plus the spawn-rate and life follow
 **Files touched**: AdventurePlayer.java, ResearchScene.java, TuningData.java, settings.json,
 EffectData.java, DuelScene.java, RegisteredPlayer.java, Player.java (forge-game), ConfigData.java,
 config.json, TerritoryControl.java, WorldStage.java.
+
+## Round 90: SAVE-INTEGRITY REGRESSION FIXED - inventory wiped on load by round 88 (2026-09-03)
+
+User report: loading an existing game on the round-88 build showed the stock "Data Migration
+completed" dialog and the inventory was EMPTY (equipment gone too; a New Game+ from that state
+then handed out the standard coin set, so the "double coins" were all new).
+
+**Root cause.** The save stores the inventory as serialized `ItemData` objects
+(`data.storeObject("inventory", ItemData[])`), and every `ItemData` embeds an `EffectData`.
+`EffectData` had no explicit `serialVersionUID`, so Java derived one from the class shape. Round
+88 added `startBattleWithCardTapped` plus two methods to `EffectData`, which changed that derived
+UID from `-5573686949131910962L` (v1.04) to `4571672360754634569L`. Deserializing the inventory
+then threw `InvalidClassException`, `AdventurePlayer.load()` caught it as "old String[] format",
+set `migration = true`, the String[] cast failed as well, and the inventory stayed empty. The
+migration dialog is that path's normal message.
+
+**Fix.** `EffectData` now declares `serialVersionUID = -5573686949131910962L` (the v1.04 value),
+so every pre-round-88 save deserializes again; the new field simply reads as null from old
+streams. Every other `Serializable` class under `forge.adventure` that lacked a UID is now pinned
+at its current derived value (unchanged since v1.04 for all of them; `WorldSaveHeader` verified by
+compiling the v1.04 source): `PointOfInterestData`, `WorldData`, `BiomeData`, `AdventurePlayer`,
+`PointOfInterest`, `AdventureEventController`, `AdventureQuestController`, `BiomeTexture`,
+`WorldSaveHeader`. Adding a field or public method to any of them can no longer break saves.
+
+**What is lost.** Saves WRITTEN by the round-88 build (today 10:02-10:10: `1_save_slot.sav`,
+`2_save_slot.sav`, `auto_save.sav`) already contain the emptied inventory and the wrong UID; they
+are not recoverable and will not load under the pinned UID. Pre-update files were untouched:
+`3_save_slot.sav` (2026-09-03 07:16), `4_save_slot.sav` (2026-09-02 13:32), `quick_save.sav`
+(2026-08-26) and session #11's `1_save_slot.sav.prededit2.bak` (2026-09-02 07:11, slot 1 before
+the deck edit). The user decides which to restore.
+
+**Rule, now in CLAUDE.md:** any class that ends up in a `.sav` must carry an explicit
+`serialVersionUID`, and a change to one of them is a save-format change to be tested by LOADING a
+v1.0x save before packaging. Round 88 did neither.
+
+**Files touched**: EffectData.java, PointOfInterestData.java, WorldData.java, BiomeData.java,
+AdventurePlayer.java, PointOfInterest.java, AdventureEventController.java,
+AdventureQuestController.java, BiomeTexture.java, WorldSaveHeader.java, CLAUDE.md.

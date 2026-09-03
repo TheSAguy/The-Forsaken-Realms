@@ -19,6 +19,9 @@ import java.util.List;
  * contains the definition of the world
  */
 public class WorldData implements Serializable {
+    // Save compatibility: pinned 2026-09-03 (round 90) at the value derived from the v1.04 class shape so save compatibility no longer depends on the class not changing.
+    private static final long serialVersionUID = -5258048440545372856L;
+
 
     public int width;
     public int height;

@@ -14,6 +14,9 @@ import java.io.Serializable;
  * contains the information for the point of interests like towns and dungeons
  */
 public class PointOfInterestData implements Serializable {
+    // Save compatibility: pinned 2026-09-03 (round 90) at the value derived from the v1.04 class shape so save compatibility no longer depends on the class not changing.
+    private static final long serialVersionUID = -986253670258331930L;
+
     public String name;
     public String type;
     public int count;

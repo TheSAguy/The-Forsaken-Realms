@@ -38,6 +38,9 @@ import java.util.function.Predicate;
  * Class that represents the player (not the player sprite)
  */
 public class AdventurePlayer implements Serializable, SaveFileContent {
+    // Save compatibility: pinned 2026-09-03 (round 90) at the value derived from the v1.04 class shape so save compatibility no longer depends on the class not changing.
+    private static final long serialVersionUID = -1789065646640642258L;
+
     public static final int MIN_DECK_COUNT = 10;
     // this is a purely arbitrary limit, could be higher or lower; just meant as some sort of reasonable limit for the user
     private int maxDeckCount = 20;
