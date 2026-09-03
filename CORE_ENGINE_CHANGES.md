@@ -1946,3 +1946,8 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`player/AdventurePlayer.java`** - `[TFR-NewGamePlus]` label fix only.
 - **`standalone-packaging/build_standalone.py`** (not engine; deploy gate) - daily-stamp guard,
   early launcher checks, `--allow-base-mismatch`.
+
+## Round 87 (2026-09-02) - life-total diagnostics
+
+- **`player/AdventurePlayer.java`** - `logLife()` helper; `[TFR-Life]` at every life/maxLife
+  mutation and on load. Diagnostic only, no behavior change.

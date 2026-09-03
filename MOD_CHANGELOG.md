@@ -15928,3 +15928,18 @@ usage limit three times; only its New Game+ and Android/packaging lenses complet
 
 **Files touched**: World.java, DungeonRotation.java, TerritoryControl.java, WorldStage.java,
 AdventurePlayer.java, build_standalone.py, STAR_TOWNS_RESEARCH.md, CLAUDE.md.
+
+## Round 87: [TFR-Life] diagnostics for the life-total report (2026-09-02)
+
+User report: "When I lose a fight, and load, or something like that the life total is not
+correct." The four logs from today show the fights and the loads but no life values at all - the
+defeat path never logged life, so the report could not be diagnosed from forge.log. Code read: a
+loss subtracts `maxLife * lifeLoss` (`defeated()`), dying respawns at the campfire whose POI entry
+runs `fullHeal()` unless reputation blocks it, and Load restores the saved `life`/`maxLife`
+verbatim before `updateTownLifeBonus(false)` reconciles the town bonus. Nothing obviously wrong on
+paper, so per the standing rule every life/maxLife mutation now logs `[TFR-Life] <reason>: a/b ->
+c/d (townLifeBonus=, partnerOverheal=)`: fullHeal, heal(int/percent), defeated, addMaxLife,
+townLifeBonus, partnerOverheal grant/clear, updateDifficulty, plus a `load:` line. Next repro:
+grep `[TFR-Life]` around the `[TFR-AnteResult] winner=false` line and the following `load:`.
+
+**Files touched**: AdventurePlayer.java.

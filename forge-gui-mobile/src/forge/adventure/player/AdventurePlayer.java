@@ -740,7 +740,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // maxLife/life. Mirrors the reset clear() already does for a fresh New Game.
         townLifeBonus = 0;
         System.out.println("[TFR-NGPlusLife] updateDifficulty: reset townLifeBonus to 0, starting life now " + diff.startingLife);
+        int lb = life, mb = maxLife;
         maxLife = diff.startingLife;
+        logLife("updateDifficulty", lb, mb);
         this.difficultyData.startingShards = diff.startingShards;
         this.difficultyData.startingLife = diff.startingLife;
         this.difficultyData.startingMoney = diff.startingMoney;
@@ -831,6 +833,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public int getGold() {
         return gold;
+    }
+
+    /** [TFR-Life] diagnostic (user report 2026-09-02: life total wrong after a lost fight + Load).
+     *  One line per life/maxLife mutation with before -> after, so forge.log alone can reconstruct
+     *  the total. Standing [TFR-*] rule: hard-to-observe mechanics log as they are built. */
+    private void logLife(String reason, int lifeBefore, int maxBefore) {
+        System.out.println("[TFR-Life] " + reason + ": " + lifeBefore + "/" + maxBefore + " -> " + life + "/" + maxLife
+                + " (townLifeBonus=" + townLifeBonus + ", partnerOverheal=" + partnerOverhealActive + ")");
     }
 
     public int getLife() {
@@ -978,6 +988,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         wood = data.containsKey("wood") ? data.readInt("wood") : 0;
         stone = data.containsKey("stone") ? data.readInt("stone") : 0;
         townLifeBonus = data.containsKey("townLifeBonus") ? data.readInt("townLifeBonus") : 0;
+        System.out.println("[TFR-Life] load: " + life + "/" + maxLife + " (townLifeBonus=" + townLifeBonus + ")");
         partnerOverhealActive = data.containsKey("partnerOverhealActive") && data.readBool("partnerOverhealActive");
         // Default true for saves predating this feature (2026-08-13) - inverted containsKey guard.
         payGuardsFromBankFirst = !data.containsKey("payGuardsFromBankFirst") || data.readBool("payGuardsFromBankFirst");
@@ -1706,7 +1717,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void resetToMaxLife() {
+        int lb = life, mb = maxLife;
         life = maxLife;
+        logLife("fullHeal", lb, mb);
         onLifeTotalChangeList.emit();
     }
 
@@ -1730,7 +1743,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void heal(int amount) {
+        int lb = life, mb = maxLife;
         life = Math.min(life + amount, maxLife);
+        logLife("heal(" + amount + ")", lb, mb);
         onLifeTotalChangeList.emit();
     }
 
@@ -1758,8 +1773,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      *  town/capital. Re-grants (refreshes back to maxLife+2) even if already active or already at
      *  maxLife+2, so re-entering doesn't stack past +2. */
     public void grantPartnerOverheal() {
+        int lb = life, mb = maxLife;
         life = maxLife + 2;
         partnerOverhealActive = true;
+        logLife("partnerOverheal", lb, mb);
         onLifeTotalChangeList.emit();
     }
 
@@ -1767,13 +1784,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void clearPartnerOverhealIfActive() {
         if (!partnerOverhealActive)
             return;
+        int lb = life, mb = maxLife;
         life = Math.min(life, maxLife);
         partnerOverhealActive = false;
+        logLife("partnerOverhealCleared", lb, mb);
         onLifeTotalChangeList.emit();
     }
 
     public void heal(float percent) {
+        int lb = life, mb = maxLife;
         life = Math.min(life + (int) (maxLife * percent), maxLife);
+        logLife("heal(" + percent + ")", lb, mb);
         onLifeTotalChangeList.emit();
     }
 
@@ -1787,7 +1808,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         } else {
             gold = (int) (gold - (gold * difficultyData.goldLoss));
         }
+        int lb = life, mb = maxLife;
         life = (int) (life - (maxLife * difficultyData.lifeLoss));
+        logLife("defeated(lifeLoss=" + difficultyData.lifeLoss + ")", lb, mb);
         onLifeTotalChangeList.emit();
         onGoldChangeList.emit();
         return life < 1;
@@ -1799,8 +1822,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void addMaxLife(int count) {
+        int lb = life, mb = maxLife;
         maxLife += count;
         life += count;
+        logLife("addMaxLife(" + count + ")", lb, mb);
         onLifeTotalChangeList.emit();
     }
 
@@ -1815,12 +1840,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         int delta = target - townLifeBonus;
         if (delta == 0)
             return 0;
+        int lb = life, mb = maxLife;
         townLifeBonus = target;
         maxLife += delta;
         if (delta > 0)
             life += delta;
         else
             life = Math.max(1, Math.min(life, maxLife));
+        logLife("townLifeBonus(target=" + target + ")", lb, mb);
         onLifeTotalChangeList.emit();
         return delta;
     }

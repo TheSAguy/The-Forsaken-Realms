@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 87 `(see git log)`: `[TFR-Life]` logging at every life mutation - the diagnostic for the
+  next item; live folder rebuilt with it (check PACKAGE_OK).
 - OPEN USER REPORT (2026-09-02 evening): player life total wrong after losing a fight and
   loading. Screenshots in C:/Users/User/Pictures/Screenshots/LOG. Investigation notes, if any,
   are in MOD_CHANGELOG round 86/87.
