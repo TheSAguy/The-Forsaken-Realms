@@ -16366,3 +16366,21 @@ drive (volume flagged dirty, "Full Repair Needed"), not the game - no Java error
 
 **Files touched**: TuningData.java, settings.json, World.java, AdventureQuestStage.java,
 TerritoryControl.java, TownRestoration.java, AdventurePlayer.java, spawn.tmx, quests.json.
+
+## Round 103: Warden soft-lock fixed, rune as a reward card, skip-intro gifts granted directly (2026-09-04)
+
+User playtest of round 102:
+- **Tutorial soft-lock.** The Warden's rune node had two follow-ups: the coin offer (retired in round
+  102) and a "Thank you." that only showed once the coins had been taken. With the coins moved to
+  Llanowar both were hidden, so "(Continue)" closed the dialog and the portal step (`mainQuest`
+  flag + `activateMapObject 78`) never ran. The rune node now hands the Colorless rune over as a
+  REWARD CARD ("If you ever need to get back to me, use it...") and leads straight to "Thank you." ->
+  "I will reopen the portal now" -> (Leave), with the coin branch removed. The map's dialog JSON was
+  rewritten through the JSON model and round-trip checked.
+- **Skip-intro gifts.** `grantRingGift "all"` had opened a RewardScene inside the new-game intro
+  dialog, which is switched away before the cards can be collected ("no resources, items or life").
+  The "all" path now grants gold / shards / wood / stone / items directly, counts every Ring City as
+  visited so the +1-life-per-city bonus applies (+5), and posts one HUD line with the resource glyphs.
+  The per-city tutorial gifts keep the reward-card screen.
+
+**Files touched**: spawn.tmx, AdventurePlayer.java.

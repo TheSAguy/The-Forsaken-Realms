@@ -58,90 +58,22 @@
                 &quot;options&quot;: [
                   {
                     &quot;name&quot;: &quot;(Continue)&quot;,
-                    &quot;text&quot;: &quot;Take this rune. You can use it anytime to return here. The realm waited three thousand years for you, Guardian - it can wait until you are ready.&quot;,
+                    &quot;text&quot;: &quot;Take this rune. If you ever need to get back to me, use it - it will carry you home to this fire, from anywhere in the realm. The realm waited three thousand years for you, Guardian; do not make it wait again.&quot;,
                     &quot;action&quot;: [
                       {
-                        &quot;addItem&quot;: &quot;Colorless rune&quot;
+                        &quot;grantRewards&quot;: [
+                          {
+                            &quot;type&quot;: &quot;item&quot;,
+                            &quot;count&quot;: 1,
+                            &quot;itemName&quot;: &quot;Colorless rune&quot;
+                          }
+                        ]
                       }
                     ],
                     &quot;options&quot;: [
                       {
-                        &quot;name&quot;: &quot;(Continue)&quot;,
-                        &quot;text&quot;: &quot;I have something else for you, {var=player_name}. Take these coins, but do not spend them with merchants.&quot;,
-                        &quot;condition&quot;: [
-                          {
-                            &quot;checkCharacterFlag&quot;: &quot;wardenCoinsRetired&quot;,
-                            &quot;not&quot;: false
-                          }
-                        ],
-                        &quot;options&quot;: [
-                          {
-                            &quot;action&quot;: [
-                              {
-                                &quot;grantRewards&quot;: [
-                                  {
-                                    &quot;type&quot;: &quot;item&quot;,
-                                    &quot;count&quot;: 3,
-                                    &quot;itemName&quot;: &quot;Bronze Challenge Coin&quot;
-                                  },
-                                  {
-                                    &quot;type&quot;: &quot;item&quot;,
-                                    &quot;count&quot;: 1,
-                                    &quot;itemName&quot;: &quot;Challenge Coin&quot;
-                                  },
-                                  {
-                                    &quot;type&quot;: &quot;item&quot;,
-                                    &quot;count&quot;: 1,
-                                    &quot;itemName&quot;: &quot;Silver Challenge Coin&quot;
-                                  }
-                                ]
-                              },
-                              {
-                                &quot;setCharacterFlag&quot;: {
-                                  &quot;key&quot;: &quot;freeChallengeCoins&quot;,
-                                  &quot;val&quot;: 1
-                                }
-                              }
-                            ],
-                            &quot;name&quot;: &quot;What are they, then? What are they for?&quot;,
-                            &quot;text&quot;: &quot;These are Challenge Coins. The realm's surviving spellcasters still gather to hold tests of skill. These coins will grant you entry to contests, and the prizes available can help you on your journey.&quot;,
-                            &quot;options&quot;: [
-                              {
-                                &quot;name&quot;: &quot;Where are these contests?&quot;,
-                                &quot;text&quot;: &quot;Show the coin to innkeepers. If there is a group in the town, the innkeeper will direct you to them.&quot;,
-                                &quot;options&quot;: [
-                                  {
-                                    &quot;name&quot;: &quot;Thank you&quot;,
-                                    &quot;text&quot;: &quot;I will reopen the portal now. On the other side lie the ash-barrens of the Forsaken Realms - your realm, Guardian, grey as it is. Bring the color back.&quot;,
-                                    &quot;options&quot;: [
-                                      {
-                                        &quot;name&quot;: &quot;(Leave)&quot;,
-                                        &quot;action&quot;: [
-                                          {
-                                            &quot;setQuestFlag&quot;: {
-                                              &quot;key&quot;: &quot;mainQuest&quot;,
-                                              &quot;val&quot;: 1
-                                            },
-                                            &quot;activateMapObject&quot;: 78
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
                         &quot;name&quot;: &quot;Thank you.&quot;,
                         &quot;text&quot;: &quot;I will reopen the portal now. On the other side lie the ash-barrens of the Forsaken Realms - your realm, Guardian, grey as it is. Bring the color back.&quot;,
-                        &quot;condition&quot;: [
-                          {
-                            &quot;checkCharacterFlag&quot;: &quot;freeChallengeCoins&quot;
-                          }
-                        ],
                         &quot;options&quot;: [
                           {
                             &quot;name&quot;: &quot;(Leave)&quot;,
@@ -273,45 +205,57 @@
     &quot;text&quot;: &quot;Hello again&quot;,
     &quot;options&quot;: [
       {
-       &quot;name&quot;: &quot;I want to trade in the five colored keys for a mox of my choice and the key to Emrakul's room&quot;,
-       &quot;action&quot;: [
+        &quot;name&quot;: &quot;I want to trade in the five colored keys for a mox of my choice and the key to Emrakul's room&quot;,
+        &quot;action&quot;: [
           {
-        &quot;grantRewardsChoice&quot;: [
-          {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;count&quot;: 1,
-            &quot;cardName&quot;: &quot;Mox Jet&quot;
+            &quot;grantRewardsChoice&quot;: [
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Jet&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Ruby&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Sapphire&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Pearl&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Emerald&quot;
+              }
+            ]
           },
           {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;count&quot;: 1,
-            &quot;cardName&quot;: &quot;Mox Ruby&quot;
+            &quot;removeItem&quot;: &quot;Blue Key&quot;
           },
           {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;count&quot;: 1,
-            &quot;cardName&quot;: &quot;Mox Sapphire&quot;
+            &quot;removeItem&quot;: &quot;Green Key&quot;
           },
           {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;count&quot;: 1,
-            &quot;cardName&quot;: &quot;Mox Pearl&quot;
+            &quot;removeItem&quot;: &quot;Black Key&quot;
           },
           {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;count&quot;: 1,
-            &quot;cardName&quot;: &quot;Mox Emerald&quot;
-          }         
+            &quot;removeItem&quot;: &quot;White Key&quot;
+          },
+          {
+            &quot;removeItem&quot;: &quot;Red Key&quot;
+          },
+          {
+            &quot;addItem&quot;: &quot;Strange Key&quot;
+          }
         ]
-        },
-        { &quot;removeItem&quot;: &quot;Blue Key&quot; },
-		{ &quot;removeItem&quot;: &quot;Green Key&quot; },
-		{ &quot;removeItem&quot;: &quot;Black Key&quot; },
-		{ &quot;removeItem&quot;: &quot;White Key&quot; },
-		{ &quot;removeItem&quot;: &quot;Red Key&quot; },
-                       { &quot;addItem&quot;: &quot;Strange Key&quot; }
-         ]
-         }    
+      }
     ]
   }
 ]</property>

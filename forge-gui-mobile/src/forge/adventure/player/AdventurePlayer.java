@@ -1899,6 +1899,38 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 setCharacterFlag("freeChallengeCoins", 1);
             }
         }
+        if (everything) {
+            // Round 103: the skip-intro path runs inside the new-game intro dialog, where a RewardScene is switched
+            // away before it can be collected (round-102 playtest: "no resources, items or life") - grant directly,
+            // and count every Ring City as visited so the +1-life-per-city bonus applies as if the Ring was walked.
+            giveGold(cfg.startingMoney);
+            addShards(cfg.startingShards);
+            addWood(cfg.startingWood);
+            addStone(cfg.startingStone);
+            int items = 0;
+            for (String s : cfg.startItems) {
+                ItemData i = ItemListData.getItem(s);
+                if (i != null) {
+                    inventoryItems.add(i);
+                    items++;
+                }
+            }
+            int ringCities = 0;
+            forge.adventure.world.World world = Current.world();
+            if (world != null && world.getStarTownTiles() != null) {
+                for (int[] tile : world.getStarTownTiles())
+                    world.markRingVisited(tile[0], tile[1]);
+                ringCities = world.getStarTownTiles().size();
+            }
+            forge.adventure.util.TownRestoration.updateRingLifeBonus(false);
+            System.out.println("[TFR-RingGift] all (difficulty " + cfg.name + "): granted directly - gold " + cfg.startingMoney + ", shards "
+                    + cfg.startingShards + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + ", items " + items
+                    + ", Ring Cities counted as visited: " + ringCities);
+            forge.adventure.stage.GameHUD.getInstance().addNotification("The Ring's gifts: [+Gold] " + cfg.startingMoney + "  [+Shards] "
+                    + cfg.startingShards + "  [+Wood] " + cfg.startingWood + "  [+Stone] " + cfg.startingStone + "  and " + items
+                    + " item(s). [+Life] Max life +" + ringCities + ".", true);
+            return;
+        }
         com.badlogic.gdx.utils.Array<forge.adventure.util.Reward> rewards = new com.badlogic.gdx.utils.Array<>();
         for (forge.adventure.data.RewardData r : gifts)
             if (r.count > 0)

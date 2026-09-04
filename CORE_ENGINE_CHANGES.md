@@ -2083,3 +2083,7 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`util/TerritoryControl.java`** (mod-new) - victory uses `getDefeatedColorCount`; checked in `defeatColor` too.
 - **`world/World.java`** - `tooCloseToPlacedTown` per-neighbor minimum (Ring Cities 14 tiles).
 - **`data/TuningData.java`** - `ringCityTownExclusionTiles`.
+
+## Round 103 (2026-09-04) - skip-intro direct grants
+
+- **`player/AdventurePlayer.java`** - `grantRingGift("all")` grants directly + marks the Ring visited.
