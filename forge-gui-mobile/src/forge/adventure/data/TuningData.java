@@ -176,6 +176,9 @@ public class TuningData {
     // Round 98 (user spec 2026-09-03): an ordinary town keeps at least this many tiles from every
     // town placed before it (the only rule before was the 8x8-tile box, about 4 tiles).
     public int townMinSpacingTiles = 10;
+    // Round 102 (user spec 2026-09-04): an ordinary town keeps at least this many tiles from every Ring City
+    // (40% more than the 10-tile general spacing that applied before).
+    public int ringCityTownExclusionTiles = 14;
     // Round 99 (user spec 2026-09-03): world-gen town roads are the nearest-neighbor network again,
     // with this share of its edges skipped ("reduce the number of roads by 25%"). Star roads never skip.
     public float initialTownRoadSkipFraction = 0.25f;

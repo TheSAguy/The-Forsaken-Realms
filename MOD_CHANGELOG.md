@@ -16335,3 +16335,34 @@ city, back when it is neutral or the player's again). Logged `[TFR-RingGift]`.
 **Files touched**: quests.json (rewritten through the JSON model - tabs/CRLF kept, control
 characters now escaped), config.json, points_of_interest.json, ConfigData.java, DialogData.java,
 MenuScene.java, MapDialog.java, AdventurePlayer.java.
+
+## Round 102: Ring gift fixes (reward cards), nav arrows, Ring spacing, victory by castles (2026-09-04)
+
+User playtest of round 101 on Easy and Insane:
+- **Gifts were wrong** ("only 1 shard, no wood or stone"). Root cause: `AdventurePlayer.difficultyData`
+  is a partial copy of the config entry (life, money, factors) - shards / wood / stone / items were
+  the class defaults (1 / 0 / 0 / none). `grantRingGift` now reads the CONFIG difficulty by name.
+- **Gifts are reward cards.** Each city's gift opens the RewardScene with icon cards (gold, shards,
+  wood, stone, items), the same screen as duel loot, instead of silent adds. Llanowar's card set is
+  the difficulty's start items (Easy: Manasight Amulet + Leather Boots, Normal: Leather Boots) plus
+  the Warden's Challenge Coins (3 Bronze, 1 plain, 1 Silver). The Colorless rune (teleport to the
+  campfire) stays with the Warden (user decision 2026-09-04); only his coin dialog in the cave is
+  retired (its condition now checks a flag that is never set). The skip-intro path keeps handing out
+  its own coins and rune.
+- **Navigation arrows** for the five Ring stages: new `navPOIFilter: "tagged"` (every POI carrying
+  the stage's tags) - the stages were `anyPOI` + `worldMapOK`, which never sets a target.
+- **Ring spacing**: ordinary towns keep `ringCityTownExclusionTiles` (14) from every Ring City,
+  40% more than the 10-tile general spacing that applied before ("Close.png").
+- **Victory** = all five Ring Cities player-held AND all five AI colors defeated (their CASTLES,
+  the chapter-2 path that calls `defeatColor`). Capitals are no longer part of it; taking one still
+  halves that color's mages. The check also runs when a color is defeated, so the last castle can
+  complete the win. `[TFR-Victory]` now logs "AI colors defeated n/5".
+- **Notifications**: the +1 life pop-up and the realm/capital ones use the `[+Life]` heart glyph in
+  plain text - green on parchment was unreadable. Resource gifts carry their icons on the cards.
+
+Log review (07:15 session, Insane): no exceptions; five visits, five gifts fired (with the wrong
+amounts, above); `[TFR-Roads]` 272-274 edges, 19-21 towns rescued. The 06:49 "crash" was the F: USB
+drive (volume flagged dirty, "Full Repair Needed"), not the game - no Java error, no crash dump.
+
+**Files touched**: TuningData.java, settings.json, World.java, AdventureQuestStage.java,
+TerritoryControl.java, TownRestoration.java, AdventurePlayer.java, spawn.tmx, quests.json.

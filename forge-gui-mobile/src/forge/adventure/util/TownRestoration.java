@@ -389,8 +389,8 @@ public class TownRestoration {
         if (wasCapital) {
             world.markCapitolLost(fromColor);
             System.out.println("[TFR-MageCap] " + fromColor + " capital " + shownName + " taken by the player - this color's active-mage cap is halved from now on");
-            forge.adventure.stage.GameHUD.getInstance().addNotification("[GREEN]" + Character.toUpperCase(fromColor.charAt(0)) + fromColor.substring(1)
-                    + "'s capital has fallen! Their war mages are cut in half.[]", true);
+            forge.adventure.stage.GameHUD.getInstance().addNotification(Character.toUpperCase(fromColor.charAt(0)) + fromColor.substring(1)
+                    + "'s capital has fallen! Their war mages are cut in half.", true);
         }
         if (TerritoryControl.isRingTown(target))
             updateRingLifeBonus(true);
@@ -1313,8 +1313,8 @@ public class TownRestoration {
         System.out.println("[TownRestoration] ring life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
         if (notify)
             forge.adventure.stage.GameHUD.getInstance().addNotification(delta > 0
-                    ? "[GREEN]The Ring Cities lend you their strength - max life +" + delta + ".[]"
-                    : "[RED]A Ring City has fallen under enemy rule - max life " + delta + ".[]", true);
+                    ? "[+Life] Max life +" + delta + " - the Ring Cities lend you their strength."
+                    : "[+Life] Max life " + delta + " - a Ring City has fallen under enemy rule.", true);
     }
     private static final int TOWNS_PER_LIFE = 5;
 
@@ -1326,9 +1326,9 @@ public class TownRestoration {
         System.out.println("[TownRestoration] town life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
         if (notify) {
             if (delta > 0)
-                forge.adventure.stage.GameHUD.getInstance().addNotification("Your realm prospers! Max life +" + delta + ".");
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[+Life] Max life +" + delta + " - your realm prospers!", true);
             else
-                forge.adventure.stage.GameHUD.getInstance().addNotification("Your realm shrinks... Max life " + delta + ".");
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[+Life] Max life " + delta + " - your realm shrinks...", true);
         }
     }
 }

@@ -348,6 +348,8 @@ public class AdventureQuestStage implements Serializable {
                     return forge.adventure.util.TownRestoration.isNeutralSeededTown(changes);
                 case "restoredTown":
                     return forge.adventure.util.TownRestoration.isTownRestored(changes);
+                case "tagged": // round 102: any POI that carries the stage's POITags (the Ring City stages of quest 75)
+                    return true;
                 default:
                     return false;
             }

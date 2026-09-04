@@ -70,8 +70,8 @@
                         &quot;text&quot;: &quot;I have something else for you, {var=player_name}. Take these coins, but do not spend them with merchants.&quot;,
                         &quot;condition&quot;: [
                           {
-                            &quot;checkCharacterFlag&quot;: &quot;freeChallengeCoins&quot;,
-                            &quot;not&quot;: true
+                            &quot;checkCharacterFlag&quot;: &quot;wardenCoinsRetired&quot;,
+                            &quot;not&quot;: false
                           }
                         ],
                         &quot;options&quot;: [

@@ -1870,25 +1870,53 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void grantRingGift(String kind) {
         if (difficultyData == null || kind == null)
             return;
+        // Round 102: read the CONFIG difficulty - the player's own copy only carries life/money/factors
+        // (round 101 shipped 1 shard and no wood/stone/items because of that), and hand the gift over as
+        // reward cards with icons, exactly like a duel's loot (RewardScene), instead of silent adds.
+        DifficultyData cfg = difficultyData;
+        DifficultyData[] all = forge.adventure.util.Config.instance().getConfigData().difficulties;
+        if (all != null)
+            for (DifficultyData d : all)
+                if (d != null && d.name != null && d.name.equals(difficultyData.name)) { cfg = d; break; }
         String k = kind.trim().toLowerCase();
-        boolean all = "all".equals(k);
-        if (all || "gold".equals(k))
-            giveGold(difficultyData.startingMoney);
-        if (all || "shards".equals(k))
-            addShards(difficultyData.startingShards);
-        if (all || "wood".equals(k))
-            addWood(difficultyData.startingWood);
-        if (all || "stone".equals(k))
-            addStone(difficultyData.startingStone);
-        if (all || "items".equals(k)) {
-            for (String s : difficultyData.startItems) {
-                ItemData i = ItemListData.getItem(s);
-                if (i != null)
-                    inventoryItems.add(i);
+        boolean everything = "all".equals(k);
+        java.util.List<forge.adventure.data.RewardData> gifts = new java.util.ArrayList<>();
+        if (everything || "gold".equals(k))
+            gifts.add(rewardOf("gold", cfg.startingMoney, null));
+        if (everything || "shards".equals(k))
+            gifts.add(rewardOf("shards", cfg.startingShards, null));
+        if (everything || "wood".equals(k))
+            gifts.add(rewardOf("wood", cfg.startingWood, null));
+        if (everything || "stone".equals(k))
+            gifts.add(rewardOf("stone", cfg.startingStone, null));
+        if (everything || "items".equals(k)) {
+            for (String s : cfg.startItems)
+                gifts.add(rewardOf("item", 1, s));
+            if (!everything) { // the "all" (skip-intro) path already hands these out itself
+                gifts.add(rewardOf("item", 3, "Bronze Challenge Coin"));
+                gifts.add(rewardOf("item", 1, "Challenge Coin"));
+                gifts.add(rewardOf("item", 1, "Silver Challenge Coin"));
+                setCharacterFlag("freeChallengeCoins", 1);
             }
         }
-        System.out.println("[TFR-RingGift] " + k + " granted (difficulty " + difficultyData.name + ") -> gold " + gold + ", shards " + shards
-                + ", wood " + wood + ", stone " + stone + (all || "items".equals(k) ? ", items +" + difficultyData.startItems.length : ""));
+        com.badlogic.gdx.utils.Array<forge.adventure.util.Reward> rewards = new com.badlogic.gdx.utils.Array<>();
+        for (forge.adventure.data.RewardData r : gifts)
+            if (r.count > 0)
+                rewards.addAll(r.generate(false, true));
+        System.out.println("[TFR-RingGift] " + k + " (difficulty " + cfg.name + "): gold " + cfg.startingMoney + ", shards " + cfg.startingShards
+                + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + ", start items " + cfg.startItems.length
+                + " -> " + rewards.size + " reward card(s)");
+        if (rewards.size == 0)
+            return;
+        forge.adventure.scene.RewardScene.instance().loadRewards(rewards, forge.adventure.scene.RewardScene.Type.QuestReward, null);
+        forge.Forge.switchScene(forge.adventure.scene.RewardScene.instance());
+    }
+    private static forge.adventure.data.RewardData rewardOf(String type, int count, String itemName) {
+        forge.adventure.data.RewardData r = new forge.adventure.data.RewardData();
+        r.type = type;
+        r.count = count;
+        r.itemName = itemName;
+        return r;
     }
     public void addMaxLife(int count) {
         int lb = life, mb = maxLife;

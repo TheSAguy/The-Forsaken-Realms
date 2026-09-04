@@ -372,10 +372,13 @@ public class World implements Disposable, SaveFileContent {
     /** Round 98 (user spec 2026-09-03): ordinary towns keep TuningData.townMinSpacingTiles from every town placed so far. */
     private boolean tooCloseToPlacedTown(List<PointOfInterest> placed, double x, double y) {
         int min = Config.instance().getTuningData().townMinSpacingTiles;
-        if (min <= 0)
+        int ringMin = Math.max(min, Config.instance().getTuningData().ringCityTownExclusionTiles); // round 102
+        if (min <= 0 && ringMin <= 0)
             return false;
         for (PointOfInterest t : placed) {
-            if (Math.hypot(x - t.getPosition().x / data.tileSize, y - t.getPosition().y / data.tileSize) < min)
+            boolean ring = t.getData() != null && t.getData().name != null && t.getData().name.contains(" Town Center");
+            int limit = ring ? ringMin : min;
+            if (limit > 0 && Math.hypot(x - t.getPosition().x / data.tileSize, y - t.getPosition().y / data.tileSize) < limit)
                 return true;
         }
         return false;

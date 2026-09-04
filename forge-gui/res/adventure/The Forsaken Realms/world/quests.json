@@ -13510,7 +13510,7 @@
 				],
 				"objective": "Travel",
 				"prologue": {
-					"text": "Due north of your fire stand the white walls of Benalia - once the realm's court of law, seat of the pearl Seal. Follow the road.",
+					"text": "Due north of your fire stand the white walls of Benalia - once the realm's court of law, seat of the pearl Seal. Follow the road. Follow the arrow.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -13531,7 +13531,8 @@
 					]
 				},
 				"POIToken": "",
-				"worldMapOK": true
+				"worldMapOK": true,
+				"navPOIFilter": "tagged"
 			},
 			{
 				"id": 2,
@@ -13548,7 +13549,7 @@
 					1
 				],
 				"prologue": {
-					"text": "East, where the road meets the water: Tolaria, the academy city, keeper of the sapphire Seal.",
+					"text": "East, where the road meets the water: Tolaria, the academy city, keeper of the sapphire Seal. Follow the arrow.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -13569,7 +13570,8 @@
 					]
 				},
 				"POIToken": "",
-				"worldMapOK": true
+				"worldMapOK": true,
+				"navPOIFilter": "tagged"
 			},
 			{
 				"id": 3,
@@ -13586,7 +13588,7 @@
 					2
 				],
 				"prologue": {
-					"text": "Southeast, into the drowned lands: Urborg, the city that bargained with the jet Seal.",
+					"text": "Southeast, into the drowned lands: Urborg, the city that bargained with the jet Seal. Follow the arrow.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -13607,7 +13609,8 @@
 					]
 				},
 				"POIToken": "",
-				"worldMapOK": true
+				"worldMapOK": true,
+				"navPOIFilter": "tagged"
 			},
 			{
 				"id": 4,
@@ -13624,7 +13627,7 @@
 					3
 				],
 				"prologue": {
-					"text": "Southwest, where the ground smokes: Shiv, the forge city, whose furnaces held the ruby Seal.",
+					"text": "Southwest, where the ground smokes: Shiv, the forge city, whose furnaces held the ruby Seal. Follow the arrow.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -13645,7 +13648,8 @@
 					]
 				},
 				"POIToken": "",
-				"worldMapOK": true
+				"worldMapOK": true,
+				"navPOIFilter": "tagged"
 			},
 			{
 				"id": 5,
@@ -13662,7 +13666,7 @@
 					4
 				],
 				"prologue": {
-					"text": "West, under the great trees: Llanowar, the grove city, where the emerald Seal was planted like a seed.",
+					"text": "West, under the great trees: Llanowar, the grove city, where the emerald Seal was planted like a seed. Follow the arrow.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -13670,13 +13674,19 @@
 					]
 				},
 				"epilogue": {
-					"text": "Llanowar's elders meet you among roots older than your prison. \"We planted the emerald Seal,\" the grove-mother says, \"and told ourselves it would grow into a shield for the whole realm. It grew into the Green Lord - and he uprooted it and carried it to his castle.\" They bring out the wardens' old kit, kept oiled for three thousand years. \"What your keepers carried, Guardian. It is yours again.\" The last heart-fire joins the others - five cities, five flames, yours while they stand free.",
+					"text": "Llanowar's elders meet you among roots older than your prison. \"We planted the emerald Seal,\" the grove-mother says, \"and told ourselves it would grow into a shield for the whole realm. It grew into the Green Lord - and he uprooted it and carried it to his castle.\" They bring out the wardens' old kit, kept oiled for three thousand years - and with it the Warden's Challenge Coins, tokens for the realm's tests of skill. \"What your keepers carried, Guardian. It is yours again.\" The last heart-fire joins the others - five cities, five flames, yours while they stand free.",
 					"options": [
 						{
 							"name": "(Accept the wardens' kit)",
 							"action": [
 								{
 									"grantRingGift": "items"
+								},
+								{
+									"setCharacterFlag": {
+										"key": "freeChallengeCoins",
+										"val": 1
+									}
 								},
 								{
 									"issueQuest": "30"
@@ -13686,7 +13696,8 @@
 					]
 				},
 				"POIToken": "",
-				"worldMapOK": true
+				"worldMapOK": true,
+				"navPOIFilter": "tagged"
 			}
 		],
 		"storyQuest": true,

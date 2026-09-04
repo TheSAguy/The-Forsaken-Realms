@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 102 (2026-09-04): Ring gifts fixed (config difficulty, not the player's partial copy) and shown as
+  RewardScene cards; Llanowar also gives the Warden's coins (rune stays with the Warden; coin node retired in spawn.tmx);
+  nav arrows via navPOIFilter 'tagged'; ringCityTownExclusionTiles 14; VICTORY = 5 Ring Cities + 5 colors
+  DEFEATED (castles), capitals only halve mages; [+Life] glyph notifications. Needs a NEW game.
 - Round 101 (2026-09-03): NEW STORY OPENING - quest 75 'Oaths at the Ring' (53 -> 75 -> 30): start with
   nothing (ringGiftStart), five Ring Cities hand over the difficulty's gold/shards/wood/stone/items via the
   grantRingGift dialog action; life ladder 20/15/10/5 (+5 Ring). quests.json was re-serialized (strict JSON

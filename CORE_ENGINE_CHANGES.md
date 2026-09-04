@@ -2075,3 +2075,11 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`scene/MenuScene.java`, `util/MapDialog.java`** - execute `grantRingGift` next to the resource actions.
 - **`player/AdventurePlayer.java`** - `grantRingGift(kind)`, creation grants nothing when `ringGiftStart`.
 - **`data/ConfigData.java`** - `ringGiftStart`.
+
+## Round 102 (2026-09-04) - gifts as rewards, nav filter, victory by castles
+
+- **`player/AdventurePlayer.java`** - `grantRingGift` builds RewardData from the config difficulty and opens the RewardScene.
+- **`data/AdventureQuestStage.java`** - `navPOIFilter` case "tagged".
+- **`util/TerritoryControl.java`** (mod-new) - victory uses `getDefeatedColorCount`; checked in `defeatColor` too.
+- **`world/World.java`** - `tooCloseToPlacedTown` per-neighbor minimum (Ring Cities 14 tiles).
+- **`data/TuningData.java`** - `ringCityTownExclusionTiles`.

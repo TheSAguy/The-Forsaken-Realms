@@ -2313,11 +2313,13 @@ public class TerritoryControl {
         for (int[] tile : tiles)
             if (ringTownPlayerHeld(world, tile))
                 held++;
-        int capitals = world.getCapitolLostColors().size();
-        System.out.println("[TFR-Victory] Ring Cities held " + held + "/" + tiles.size() + ", AI capitals taken " + capitals + "/" + COLOR_TOWN_NOUN.size());
-        if (held >= tiles.size() && capitals >= COLOR_TOWN_NOUN.size())
+        // Round 102 (user spec 2026-09-04): the Lords die with their CASTLES (defeatColor, chapter 2), not their
+        // capitals - a taken capital only halves that color's mages.
+        int defeated = world.getDefeatedColorCount();
+        System.out.println("[TFR-Victory] Ring Cities held " + held + "/" + tiles.size() + ", AI colors defeated " + defeated + "/" + COLOR_TOWN_NOUN.size());
+        if (held >= tiles.size() && defeated >= COLOR_TOWN_NOUN.size())
             WorldStage.getInstance().triggerGameWon("[GREEN]The Ring is whole![]\n"
-                    + "All five Ring Cities stand under your banner and every Lord's capital has fallen. "
+                    + "All five Ring Cities stand under your banner and every Lord's castle has fallen. "
                     + "The Ring's councils reach for their seals - and find you are no longer someone who can be sealed. "
                     + "The Forsaken Realms are yours to keep.");
     }
@@ -2547,6 +2549,7 @@ public class TerritoryControl {
         }
 
         world.setColorDefeated(color);
+        checkPlayerVictory(world); // round 102: the last castle may fall after the Ring is already held
         // Discoverability (2026-08-15 review finding): WorldStandingsScene reads this to tag the
         // defeated color's row instead of showing a bare, indistinguishable-from-"hasn't expanded
         // yet" 0.
