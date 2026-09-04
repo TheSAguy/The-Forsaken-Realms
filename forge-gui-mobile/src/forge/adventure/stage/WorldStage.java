@@ -616,6 +616,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
     }
 
     public void loadPOI(PointOfInterest poi) {
+        if (TerritoryControl.isRingTown(poi)) { // round 100: a visited Ring City lends +1 max life while neutral/player-held
+            int tx = (int) (poi.getPosition().x / Current.world().getTileSize()), ty = (int) (poi.getPosition().y / Current.world().getTileSize());
+            if (Current.world().markRingVisited(tx, ty)) {
+                System.out.println("[TFR-RingVisit] first visit to " + poi.getDisplayName());
+                TownRestoration.updateRingLifeBonus(true);
+            }
+        }
         try {
             stop();
             TileMapScene.instance().load(poi);
@@ -669,8 +676,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         forge.adventure.pointofintrest.PointOfInterestChanges assaultChanges = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
         int guardLevel = assaultChanges == null ? 0 : assaultChanges.getAiGuardLevel();
         String[] tiers = EconomyBuildings.GUARD_TIERS_ASCENDING;
-        String defenderTier = tiers[Math.min(guardLevel, tiers.length - 1)];
-        int lands = guardLevel >= TerritoryControl.AI_GUARD_MAX_LEVEL ? 2 : 1;
+        boolean capitalAssault = "capital".equals(poi.getData().type); // round 100: capitals field two Archmages with two lands each
+        String defenderTier = capitalAssault ? "Mythic" : tiers[Math.min(guardLevel, tiers.length - 1)];
+        int lands = capitalAssault || guardLevel >= TerritoryControl.AI_GUARD_MAX_LEVEL ? 2 : 1;
         EnemyData base = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier);
         if (base == null) {
             System.out.println("[TFR-TownAssault] no eligible defender in the " + color + " pool for " + poi.getDisplayName());
@@ -688,15 +696,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
         duelData.life = Math.max(1, Math.round(duelData.life * lifeFactor));
         // Ring Towns (round 99, user test request 2026-09-03): 1-vs-2 - a second defender of the same tier
         // joins the first on one team (EnemyData.nextEnemy is how DuelScene seats extra opponents).
-        if (TerritoryControl.isRingTown(poi)) {
-            EnemyData secondBase = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier);
+        if (TerritoryControl.isRingTown(poi) || capitalAssault) {
+            EnemyData secondBase = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier, base.name); // round 100: a different champion when the pool allows
             if (secondBase != null) {
                 EnemyData second = new EnemyData(secondBase);
                 second.life = Math.max(1, Math.round(second.life * lifeFactor));
                 second.teamNumber = 1;
                 duelData.teamNumber = 1;
                 duelData.nextEnemy = second;
-                System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " is a Ring Town - 1v2: second defender "
+                System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + (capitalAssault ? " is a capital" : " is a Ring City") + " - 1v2: second defender "
                         + second.getName() + " (life " + second.life + ")");
             } else {
                 System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " is a Ring Town but no second defender was available - 1v1");
@@ -822,6 +830,31 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // corner notification was easy to miss, so a barred town just read as "I walk right through
     // this area" with no explanation of why it never opens). Same dialog styling as the capital
     // toll below, single Leave button - there's nothing to pay here, ordinary towns bar outright.
+    /** Round 100 (user spec 2026-09-03): the run is won - all five Ring Cities held and all five capitals taken. */
+    public void triggerGameWon(String message) {
+        Forge.advFreezePlayerControls = true;
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+        TypingLabel label = Controls.newTypingLabel(message);
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Keep Playing", () -> {
+            Forge.advFreezePlayerControls = false;
+            hideDialog();
+        })).width(240f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Return to Main Menu", () -> {
+            Forge.advFreezePlayerControls = false;
+            hideDialog();
+            WorldSave.getCurrentSave().header.createPreview();
+            Forge.switchScene(StartScene.instance());
+        })).width(240f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+        System.out.println("[TFR-Victory] game won dialog shown");
+    }
     private void showEntryBarredDialog(PointOfInterest poi, String barredColor) {
         Dialog dialog = getDialog();
         dialog.getContentTable().clear();
@@ -946,6 +979,21 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     + Current.player().getGold() + ")");
         payButton.setDisabled(!canAffordToll);
         dialog.getButtonTable().add(payButton).width(240f).row();
+        // Round 100 (user spec 2026-09-03): storm the capital - a 1-vs-2 against two Archmages (weekly cooldown as for towns)
+        String capitalColor = ColorReputation.colorOfTown(poi.getData());
+        boolean capitalAssault = Config.instance().getConfigData().warTownAssaultEnabled
+                && capitalColor != null && TerritoryControl.basicLandFor(capitalColor) != null;
+        int capitalCooldown = capitalAssault ? TerritoryControl.assaultCooldownDaysLeft(poi, Current.world().getCurrentDay()) : 0;
+        if (capitalAssault && capitalCooldown <= 0) {
+            dialog.getButtonTable().add(Controls.newTextButton("Attack (two Archmages)", () -> {
+                hideDialog();
+                startTownAssault(poi, capitalColor);
+            })).width(240f).row();
+        } else if (capitalAssault) {
+            TextraButton cooldownButton = Controls.newTextButton("Attack again in " + capitalCooldown + (capitalCooldown == 1 ? " day" : " days"));
+            cooldownButton.setDisabled(true);
+            dialog.getButtonTable().add(cooldownButton).width(240f).row();
+        }
         dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();

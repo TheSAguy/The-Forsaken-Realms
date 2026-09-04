@@ -179,6 +179,9 @@ public class TuningData {
     // Round 99 (user spec 2026-09-03): world-gen town roads are the nearest-neighbor network again,
     // with this share of its edges skipped ("reduce the number of roads by 25%"). Star roads never skip.
     public float initialTownRoadSkipFraction = 0.25f;
+    // Round 100 (user spec 2026-09-03): world-gen link rules - every town gets at least one road, no town
+    // more than this many. Edges touching a Ring City or Spawn count for nobody.
+    public int townMaxRoadLinks = 5;
     // Ring Towns (the five Center Towns): each AI color may target a given Ring Town at most once per
     // this many days (all five in one week is fine, the same one twice is not)...
     public int ringTownTargetCooldownDays = 7;

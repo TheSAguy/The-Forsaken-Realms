@@ -101,6 +101,7 @@ public class ResearchScene extends UIScene {
         root.row().padTop(4);
 
         scrollContainer = new Table(Controls.getSkin());
+        scrollContainer.top().left(); // round 100: never center a too-wide row (Android portrait cut the left edge)
         scrollContainer.row();
         ScrollPane scroller = new ScrollPane(scrollContainer);
         // Vertical only - matches QuestLogScene's detailScroller.setScrollingDisabled(true, false).
@@ -261,7 +262,10 @@ public class ResearchScene extends UIScene {
             nameLabel.skipToTheEnd();
             nameLabel.setWrap(true);
             nameLabel.setColor(researched ? Color.DARK_GRAY : (eligible ? Color.BLACK : Color.GRAY));
-            scrollContainer.add(nameLabel).align(Align.left).width(250f);
+            boolean portrait = !Forge.isLandscapeMode(); // round 100: 258px pane in portrait - set line on its own row, button below
+            scrollContainer.add(nameLabel).align(Align.left).width(portrait ? 236f : 250f).colspan(portrait ? 2 : 1);
+            if (portrait)
+                scrollContainer.row();
 
             if (researched) {
                 TypingLabel doneLabel = Controls.newTypingLabel("Researched");
@@ -294,7 +298,7 @@ public class ResearchScene extends UIScene {
             empty.skipToTheEnd();
             empty.setWrap(true);
             empty.setColor(Color.DARK_GRAY);
-            scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(340);
+            scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
         }
     }
 

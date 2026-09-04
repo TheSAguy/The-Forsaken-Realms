@@ -351,6 +351,15 @@ public class World implements Disposable, SaveFileContent {
     public void recordRingTargeted(String color, int tileX, int tileY, int day) {
         ringTargetDays.put(color + "|" + tileX + "," + tileY, day);
     }
+    // Round 100 (user spec 2026-09-03): colors whose capital the player has taken (their active-mage cap is
+    // halved) and the Ring City tiles the player has visited (+1 max life each while neutral/player-held).
+    private final java.util.Set<String> capitolLostColors = new java.util.HashSet<>();
+    private final java.util.Set<String> ringVisitedTiles = new java.util.HashSet<>();
+    public boolean isCapitolLost(String color) { return color != null && capitolLostColors.contains(color); }
+    public void markCapitolLost(String color) { if (color != null) capitolLostColors.add(color); }
+    public java.util.Set<String> getCapitolLostColors() { return capitolLostColors; }
+    public boolean isRingVisited(int tileX, int tileY) { return ringVisitedTiles.contains(tileX + "," + tileY); }
+    public boolean markRingVisited(int tileX, int tileY) { return ringVisitedTiles.add(tileX + "," + tileY); }
     /** Center Towns (MOD_SCOPE #102): ordinary towns (not Spawn, not the star towns themselves) are kept
      *  out of the star's disc - see the placement loop in generateNew(). */
     private static boolean isOrdinaryTownData(PointOfInterestData d) {
@@ -419,6 +428,22 @@ public class World implements Disposable, SaveFileContent {
                     }
         }
         return reached;
+    }
+    /** Round 100: Ring Cities and Spawn are exempt from the world-gen link rules (their star roads are explicit). */
+    private static boolean isRingOrSpawnTown(PointOfInterest t) {
+        PointOfInterestData d = t.getData();
+        return d != null && d.name != null && ("Spawn".equals(d.name) || d.name.contains(" Town Center"));
+    }
+    private static boolean roadLinkFull(List<PointOfInterest> towns, int[] degree, int idx, int maxLinks) {
+        return !isRingOrSpawnTown(towns.get(idx)) && degree[idx] >= maxLinks;
+    }
+    private static void countRoadLink(List<PointOfInterest> towns, int[] degree, boolean[] anyLink, int a, int b) {
+        anyLink[a] = true;
+        anyLink[b] = true;
+        if (!isRingOrSpawnTown(towns.get(a)) && !isRingOrSpawnTown(towns.get(b))) {
+            degree[a]++;
+            degree[b]++;
+        }
     }
     private void recordStarTowns() {
         starTownTiles.clear();
@@ -666,6 +691,16 @@ public class World implements Disposable, SaveFileContent {
             enemyPermanentKillCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyPermanentKillCount"));
         }
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
+        capitolLostColors.clear();
+        if (saveFileData.containsKey("capitolLostColors"))
+            for (String c : saveFileData.readString("capitolLostColors").split(";"))
+                if (!c.trim().isEmpty())
+                    capitolLostColors.add(c.trim());
+        ringVisitedTiles.clear();
+        if (saveFileData.containsKey("ringVisitedTiles"))
+            for (String t : saveFileData.readString("ringVisitedTiles").split(";"))
+                if (!t.trim().isEmpty())
+                    ringVisitedTiles.add(t.trim());
         ringTargetDays.clear();
         if (saveFileData.containsKey("ringTargetDays")) {
             for (String entry : saveFileData.readString("ringTargetDays").split(";")) {
@@ -744,6 +779,8 @@ public class World implements Disposable, SaveFileContent {
         for (java.util.Map.Entry<String, Integer> re : ringTargetDays.entrySet())
             ring.append(ring.length() == 0 ? "" : ";").append(re.getKey()).append('=').append(re.getValue());
         data.store("ringTargetDays", ring.toString());
+        data.store("capitolLostColors", String.join(";", capitolLostColors));
+        data.store("ringVisitedTiles", String.join(";", ringVisitedTiles));
         data.storeObject("questAcceptedDay", questAcceptedDay);
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         return data;
@@ -1014,6 +1051,8 @@ public class World implements Disposable, SaveFileContent {
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
             starTownTiles.clear();
             ringTargetDays.clear();
+            capitolLostColors.clear();
+            ringVisitedTiles.clear();
             questAcceptedDay.clear();
 
             for (int x = 0; x < width; x++) {
@@ -1489,10 +1528,17 @@ public class World implements Disposable, SaveFileContent {
             // capital (TerritoryControl.connectCapturedTownByRoad). The star's explicit edges never skip.
             float roadSkip = Config.instance().getTuningData().initialTownRoadSkipFraction;
             int skippedRoadSources = 0;
-            HashSet<Long> usedEdges = new HashSet<>();//edge is first 32 bits id of first id and last 32 bits id of second
+            HashSet<Long> usedEdges = new HashSet<>();
+            int[] roadDegree = new int[towns.size()]; // round 100: links per town; edges touching a Ring City or Spawn count for nobody
+            boolean[] anyRoadLink = new boolean[towns.size()];
+            int maxLinks = Config.instance().getTuningData().townMaxRoadLinks;
+            if (maxLinks <= 0)
+                maxLinks = 5;//edge is first 32 bits id of first id and last 32 bits id of second
             for (int i = 0; i < towns.size() - 1; i++) {
 
                 PointOfInterest current = towns.get(i);
+                if (roadLinkFull(towns, roadDegree, i, maxLinks))
+                    continue; // round 100: this town already has its maximum links
                 if (roadSkip > 0f && random.nextFloat() < roadSkip) {
                     skippedRoadSources++;
                     continue; // round 99: fewer world-gen roads
@@ -1502,7 +1548,7 @@ public class World implements Disposable, SaveFileContent {
                 float smallestDistance = Float.MAX_VALUE;
                 for (int j = 0; j < towns.size(); j++) {
 
-                    if (i == j || usedEdges.contains((long) i | ((long) j << 32)))
+                    if (i == j || usedEdges.contains((long) i | ((long) j << 32)) || roadLinkFull(towns, roadDegree, j, maxLinks))
                         continue;
                     float dist = current.getPosition().dst(towns.get(j).getPosition());
                     if (dist > data.maxRoadDistance)
@@ -1519,12 +1565,39 @@ public class World implements Disposable, SaveFileContent {
                 usedEdges.add((long) i | ((long) smallestIndex << 32));
                 usedEdges.add((long) i << 32 | ((long) smallestIndex));
                 allSortedTowns.add(Pair.of(current, towns.get(smallestIndex)));
+                countRoadLink(towns, roadDegree, anyRoadLink, i, smallestIndex);
 
                 if (secondSmallestIndex < 0)
                     continue;
                 usedEdges.add((long) i | ((long) secondSmallestIndex << 32));
                 usedEdges.add((long) i << 32 | ((long) secondSmallestIndex));
                 //allSortedTowns.add(Pair.of(current, towns.get(secondSmallestIndex)));
+            }
+            // Round 100 (user spec 2026-09-03): every town starts with at least one link. A town left
+            // without one (skipped source and nobody's nearest) joins its nearest town that still has
+            // room - any distance. Ring Cities and Spawn are exempt (the star's own roads cover them).
+            int rescuedTowns = 0;
+            for (int i = 0; i < towns.size(); i++) {
+                if (anyRoadLink[i] || isRingOrSpawnTown(towns.get(i)))
+                    continue;
+                int nearest = -1;
+                float nearestDist = Float.MAX_VALUE;
+                for (int j = 0; j < towns.size(); j++) {
+                    if (i == j || roadLinkFull(towns, roadDegree, j, maxLinks))
+                        continue;
+                    float dist = towns.get(i).getPosition().dst(towns.get(j).getPosition());
+                    if (dist < nearestDist) {
+                        nearestDist = dist;
+                        nearest = j;
+                    }
+                }
+                if (nearest < 0)
+                    continue;
+                usedEdges.add((long) i | ((long) nearest << 32));
+                usedEdges.add((long) i << 32 | ((long) nearest));
+                allSortedTowns.add(Pair.of(towns.get(i), towns.get(nearest)));
+                countRoadLink(towns, roadDegree, anyRoadLink, i, nearest);
+                rescuedTowns++;
             }
             // Center Towns (MOD_SCOPE #102): a road from the campfire straight to each star town, drawn
             // by the same pass as every other town road - the star's spokes.
@@ -1547,7 +1620,8 @@ public class World implements Disposable, SaveFileContent {
                 for (int b = a + 1; b < starTowns.size(); b++)
                     allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
             System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
-                    + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + ")");
+                    + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + "), "
+                    + rescuedTowns + " unlinked town(s) rescued, max " + maxLinks + " links per town");
             List<Pair<PointOfInterest, PointOfInterest>> allPOIPathsToNextTown = new ArrayList<>();
             for (int i = 0; i < notTowns.size() - 1; i++) {
 

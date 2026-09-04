@@ -367,6 +367,7 @@ public class TownRestoration {
             return;
         }
         String shownName = target.getDisplayName();
+        boolean wasCapital = "capital".equals(target.getData().type); // round 100: a taken capital cripples its color
         Integer oldRadius = world.getTownTerritoryRadius(target.getID());
         int repaintRadius = Math.max(TerritoryControl.RECOLOR_RADIUS, oldRadius != null ? oldRadius : TerritoryControl.RECOLOR_RADIUS);
         target.transformInto(wasteData, world.getRandom(), true); // ownership changes, the town keeps its name
@@ -374,14 +375,26 @@ public class TownRestoration {
         changes.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);
         world.setTownTerritoryRadius(target.getID(), repaintRadius);
         world.rebuildPlayerTownVision();
+        long perfRepaint = System.nanoTime();
         world.repaintBiomeAroundTown(target, TEST_RECOLOR_BIOME, repaintRadius,
                 WorldStage.getInstance()::refreshBackgroundTile,
                 WorldStage.getInstance()::reloadBackgroundChunkObjects);
+        System.out.println("[TFR-Perf] player capture repaint of " + shownName + " (radius " + repaintRadius + ") took "
+                + (System.nanoTime() - perfRepaint) / 1_000_000 + " ms");
         world.revealArea((int) (target.getPosition().x / world.getTileSize()),
                 (int) (target.getPosition().y / world.getTileSize()),
                 repaintRadius, WorldStage.getInstance()::refreshBackgroundTile);
         TerritoryControl.connectCapturedTownByRoad(world, target, "player");
         updateTownLifeBonus(true);
+        if (wasCapital) {
+            world.markCapitolLost(fromColor);
+            System.out.println("[TFR-MageCap] " + fromColor + " capital " + shownName + " taken by the player - this color's active-mage cap is halved from now on");
+            forge.adventure.stage.GameHUD.getInstance().addNotification("[GREEN]" + Character.toUpperCase(fromColor.charAt(0)) + fromColor.substring(1)
+                    + "'s capital has fallen! Their war mages are cut in half.[]", true);
+        }
+        if (TerritoryControl.isRingTown(target))
+            updateRingLifeBonus(true);
+        TerritoryControl.checkPlayerVictory(world);
         world.refreshWorldMapMarkers();
         ColorReputation.applyTownAssaultPenalty(fromColor, Config.instance().getTuningData().townCaptureReputationPenalty,
                 "captured " + shownName);
@@ -1272,6 +1285,37 @@ public class TownRestoration {
     // the Capitol. Recomputed whenever ownership changes (restore, capture loss, Capitol upgrade)
     // and once at load; AdventurePlayer tracks the currently-applied bonus so only the DELTA is
     // ever added/removed - re-running this is always safe.
+    /**
+     * Round 100 (user spec 2026-09-03): +1 max life per Ring City the player has VISITED while it is neutral
+     * or player-held - lost while an AI holds it. Recomputed on visit, on every change of hands and on load.
+     */
+    public static void updateRingLifeBonus(boolean notify) {
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null || world.getStarTownTiles() == null)
+            return;
+        int target = 0;
+        for (int[] tile : world.getStarTownTiles()) {
+            if (!world.isRingVisited(tile[0], tile[1]))
+                continue;
+            for (PointOfInterest poi : world.getAllPointOfInterest()) {
+                if ((int) (poi.getPosition().x / world.getTileSize()) != tile[0] || (int) (poi.getPosition().y / world.getTileSize()) != tile[1])
+                    continue;
+                boolean aiHeld = ColorReputation.colorOfTown(poi.getData()) != null
+                        && !isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
+                if (!aiHeld)
+                    target++;
+                break;
+            }
+        }
+        int delta = Current.player().applyRingLifeBonus(target);
+        if (delta == 0)
+            return;
+        System.out.println("[TownRestoration] ring life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
+        if (notify)
+            forge.adventure.stage.GameHUD.getInstance().addNotification(delta > 0
+                    ? "[GREEN]The Ring Cities lend you their strength - max life +" + delta + ".[]"
+                    : "[RED]A Ring City has fallen under enemy rule - max life " + delta + ".[]", true);
+    }
     private static final int TOWNS_PER_LIFE = 5;
 
     public static void updateTownLifeBonus(boolean notify) {

@@ -73,6 +73,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // updateTownLifeBonus(): +1 per 5 owned towns, +1 for the Capitol). Tracked so ownership
     // changes apply only the DELTA to maxLife - recomputing is always safe/idempotent.
     private int townLifeBonus = 0;
+    private int ringLifeBonus = 0; // round 100: +1 per visited Ring City while neutral/player-held
     // Player reputation with the 5 AI colors (MOD_SCOPE.md #1), keyed "white"/"blue"/"black"/
     // "red"/"green". Stored in INTERNAL HALF-POINTS (user-facing value x2) so that multicolor
     // fights' half-strength effects stay exact integers and the 5 values always sum to exactly
@@ -440,6 +441,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         wood = 0;
         stone = 0;
         townLifeBonus = 0;
+        ringLifeBonus = 0;
         colorReputationHalfPoints.clear();
         maxDeckCount = 20;
         clearDecks();
@@ -747,6 +749,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // lost in the new world) silently subtracts the OLD playthrough's stale bonus from
         // maxLife/life. Mirrors the reset clear() already does for a fresh New Game.
         townLifeBonus = 0;
+        ringLifeBonus = 0;
         System.out.println("[TFR-NGPlusLife] updateDifficulty: reset townLifeBonus to 0, starting life now " + diff.startingLife);
         int lb = life, mb = maxLife;
         maxLife = diff.startingLife;
@@ -1843,6 +1846,22 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         Current.player().addShards(1);
     }
 
+    /** Round 100: mirrors applyTownLifeBonus for the Ring City life bonus. Returns the delta applied. */
+    public int applyRingLifeBonus(int target) {
+        int delta = target - ringLifeBonus;
+        if (delta == 0)
+            return 0;
+        int lb = life, mb = maxLife;
+        ringLifeBonus = target;
+        maxLife += delta;
+        if (delta > 0)
+            life += delta;
+        else
+            life = Math.max(1, Math.min(life, maxLife));
+        logLife("ringLifeBonus(target=" + target + ")", lb, mb);
+        onLifeTotalChangeList.emit();
+        return delta;
+    }
     public void addMaxLife(int count) {
         int lb = life, mb = maxLife;
         maxLife += count;

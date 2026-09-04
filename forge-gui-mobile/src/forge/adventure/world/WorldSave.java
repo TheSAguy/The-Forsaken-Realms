@@ -107,6 +107,7 @@ public class WorldSave {
                     // requirement as the Capitol repair above (reads pointOfInterestChanges flags).
                     forge.adventure.util.TownRestoration.repairAllTownVisionReveal(currentSave.world);
                     forge.adventure.util.TownRestoration.updateTownLifeBonus(false);
+                    forge.adventure.util.TownRestoration.updateRingLifeBonus(false);
                     // Player/AI edition-shard exclusivity (2026-08-16) - idempotent migration for
                     // saves whose shards were seeded before the race-edition reservation existed
                     // (same pattern as the two repair calls above): strips the player's race

@@ -2054,3 +2054,17 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`data/TuningData.java`** - `initialTownRoadSkipFraction`, `ringTownTargetCooldownDays`,
   `ringTownTargetWeightBonus`, `aiTownGuardDefenseEnabled`, `aiGuardTwoLandPowerFactor`;
   `debugStarTownTargetChance` removed.
+
+## Round 100 (2026-09-03) - road links, capital assaults, victory, Ring life, perf, portrait layout
+
+- **`world/World.java`** - degree-capped nearest-neighbor pass + rescue pass; `capitolLostColors`,
+  `ringVisitedTiles` (+ save/load/reset).
+- **`util/TerritoryControl.java`** (mod-new) - mage cap halved for capital-lost colors; `pickRandomRoamer`
+  exclusion overload; `checkPlayerVictory`; `[TFR-Perf]` timings.
+- **`util/TownRestoration.java`** (mod-new) - capital-lost marking, victory check, `updateRingLifeBonus`.
+- **`stage/WorldStage.java`** - capital toll dialog Attack; `startTownAssault` capital/1v2/distinct defenders;
+  `triggerGameWon`; Ring visit hook in `loadPOI`.
+- **`player/AdventurePlayer.java`** - `ringLifeBonus` + `applyRingLifeBonus` (serialVersionUID pinned, additive field).
+- **`world/WorldSave.java`** - ring life recompute on load.
+- **`scene/ResearchScene.java`, `util/EconomyBuildings.java`, `scene/WorldStandingsScene.java`** - portrait sizing.
+- **`data/TuningData.java`** - `townMaxRoadLinks`.

@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 100 (2026-09-03): Ring Cities named Benalia/Tolaria/Urborg/Shiv/Llanowar; world-gen roads min 1 /
+  max townMaxRoadLinks 5 (Ring/Spawn edges uncounted); capital Attack = 1v2 Archmages -> player town +
+  halved mage cap; victory = 5 Ring Cities + 5 capitals (triggerGameWon); ring life bonus; [TFR-Perf];
+  portrait layout fixes. Story/tutorial rewrite PENDING user answers (see MOD_CHANGELOG r100 notes).
 - Round 99 (2026-09-03): Ring Towns - weekly per-color targeting cooldown, x1.25 weight when among the
   5 nearest, never sacked; roads back to nearest-neighbor minus 25% + capture roads go to the closest
   SEAT-connected town (road flood fill); AI-vs-AI guard fights (table in MOD_CHANGELOG); 1v2 assault at

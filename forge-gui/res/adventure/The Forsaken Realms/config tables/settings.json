@@ -110,6 +110,8 @@
     "townMinSpacingTiles": 10,
     // World-gen town roads: this share of the nearest-neighbor edges is skipped (star roads never are).
     "initialTownRoadSkipFraction": 0.25,
+    // World-gen: every town starts with at least one road link and never more than this many (Ring/Spawn edges uncounted).
+    "townMaxRoadLinks": 5,
     // Ring Towns (the five Center Towns): an AI color may target a given Ring Town once per this many days.
     "ringTownTargetCooldownDays": 7,
     // Once a Ring Town is among a color's five nearest candidates, its pick weight is multiplied by 1 + this.

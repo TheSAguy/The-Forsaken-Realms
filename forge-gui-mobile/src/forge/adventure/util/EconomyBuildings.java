@@ -2367,7 +2367,7 @@ public class EconomyBuildings {
         TypingLabel label = Controls.newTypingLabel(text);
         label.setWrap(true);
         label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(250f).row();
+        dialog.getContentTable().add(label).width(forge.Forge.isLandscapeMode() ? 250f : 230f).row(); // round 100: portrait fit
     }
 
     // (Gold->Shard, Shard->Gold, Gold->Wood, Wood->Gold, Gold->Stone, Stone->Gold). Standardized
@@ -2686,7 +2686,7 @@ public class EconomyBuildings {
         // Widened 118 -> 140 (round 5 bug fix, alongside the [%75] scale + "/wk" abbreviation at
         // this method's only two call sites) - 118 was already marginal for "Hire <tier> (<cost>)"
         // before resource icons existed, and clearly overflowing after.
-        Cell<TextraButton> cell = dialog.getButtonTable().add(button).width(140f);
+        Cell<TextraButton> cell = dialog.getButtonTable().add(button).width(forge.Forge.isLandscapeMode() ? 140f : 118f); // round 100: 2 x 140 overflowed the 270px portrait screen
         column[0]++;
         if (column[0] % 2 == 0)
             cell.row();

@@ -4759,7 +4759,7 @@
 	},
 	{
 		"name": "Waste Town Center1",
-		"displayName": "Northstar Keep",
+		"displayName": "Benalia",
 		"type": "town",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/center_towns.atlas",
@@ -4822,7 +4822,7 @@
 	},
 	{
 		"name": "Waste Town Center2",
-		"displayName": "Eastwatch Keep",
+		"displayName": "Tolaria",
 		"type": "town",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/center_towns.atlas",
@@ -4885,7 +4885,7 @@
 	},
 	{
 		"name": "Waste Town Center3",
-		"displayName": "Southshadow Keep",
+		"displayName": "Urborg",
 		"type": "town",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/center_towns.atlas",
@@ -4948,7 +4948,7 @@
 	},
 	{
 		"name": "Waste Town Center4",
-		"displayName": "Emberwest Keep",
+		"displayName": "Shiv",
 		"type": "town",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/center_towns.atlas",
@@ -5011,7 +5011,7 @@
 	},
 	{
 		"name": "Waste Town Center5",
-		"displayName": "Westwood Keep",
+		"displayName": "Llanowar",
 		"type": "town",
 		"count": 1,
 		"spriteAtlas": "../The Forsaken Realms/maps/tileset/center_towns.atlas",

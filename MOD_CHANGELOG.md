@@ -16251,3 +16251,40 @@ Arena, Duel, Event, Inn, Inventory, Reward, Shop, ... none for defeat); `trigger
 plus return-to-menu is the mod's own. A dedicated full-screen defeat scene is a small follow-up.
 
 **Files touched**: settings.json, TuningData.java, World.java, TerritoryControl.java, WorldStage.java.
+
+## Round 100: road links, capital assaults, victory, Ring life, perf logs, Android layout (2026-09-03)
+
+User playtest of round 99 ("I like the roads", "the 1vs2 actually worked!!") plus mid-turn
+clarifications: a Ring City the player takes from an AI becomes a PLAYER city (neutral ones cannot
+be attacked), and holding all five plus taking the five AI capitals wins the game.
+- **Ring City names** (hard-coded, MTG lore - Dominaria's five color homelands, one per arm):
+  Benalia (white, top), Tolaria (blue), Urborg (black), Shiv (red), Llanowar (green).
+- **Road links at world-gen.** Every non-Ring town starts with at least one link (a town left without
+  one after the 25% thinning joins its nearest non-full town, any distance) and no town exceeds
+  `townMaxRoadLinks` (5) links. Edges touching a Ring City or Spawn count for nobody. `[TFR-Roads]`
+  reports edges, skipped sources and rescued towns.
+- **Capital assaults.** At War, the capital toll dialog offers Attack (weekly cooldown as for towns):
+  a 1-vs-2 against TWO Archmages (Mythic roamers, two tapped lands each). Winning turns the capital
+  into a normal player town (Waste Town Generic template) and marks the color's capital lost:
+  its active-mage cap is halved, rounded down (`World.capitolLostColors`, persisted; logged
+  `[TFR-MageCap]`). Both capital and Ring City defenders are now different enemies when the pool
+  allows (`pickRandomRoamer` exclusion).
+- **Victory.** After any player capture, `checkPlayerVictory`: all five Ring Cities player-held AND
+  all five AI capitals taken -> `triggerGameWon` (Keep Playing / Return to Main Menu). Logged
+  `[TFR-Victory]`. There is no official Adventure victory scene either; a full-screen one is a follow-up.
+- **Ring life.** +1 max life per Ring City the player has visited while it is neutral or player-held;
+  lost while an AI holds it (`AdventurePlayer.ringLifeBonus`, `World.ringVisitedTiles`, recomputed on
+  visit, capture, AI capture and load; logged via `[TFR-Life]`). Assumption to confirm: player-held
+  counts like neutral.
+- **Perf logs.** `[TFR-Perf]` timings around the territory repaint (radius up to 450 tiles), the
+  capture road build and the road flood fill - the likeliest lag-spike sources. The round-99 log had
+  no exceptions and no timing data; the largest capture road was 253 tiles.
+- **Android / portrait layout.** Research list: in portrait the set line spans the full row and the
+  Research button sits on its own right-aligned row (the 250px label plus a button overflowed the
+  258px pane and the centered table cut the left edge); the list is top-left aligned. Guard/building
+  dialogs: half buttons 118px in portrait (2 x 140 exceeded the 270px screen), content rows 230px.
+  World standings text 240px in portrait (was 400).
+
+**Files touched**: points_of_interest.json, settings.json, TuningData.java, World.java,
+TerritoryControl.java, TownRestoration.java, WorldStage.java, WorldSave.java, AdventurePlayer.java,
+ResearchScene.java, EconomyBuildings.java, WorldStandingsScene.java.

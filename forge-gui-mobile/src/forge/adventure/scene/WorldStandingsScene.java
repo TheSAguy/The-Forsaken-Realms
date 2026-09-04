@@ -89,7 +89,7 @@ public class WorldStandingsScene extends UIScene {
         TypingLabel label = Controls.newTypingLabel(text);
         label.setWrap(true);
         label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(400f).row();
+        dialog.getContentTable().add(label).width(Forge.isLandscapeMode() ? 400f : 240f).row(); // round 100: portrait fit
         showDialog(dialog);
     }
 

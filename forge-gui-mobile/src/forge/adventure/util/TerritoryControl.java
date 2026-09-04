@@ -959,6 +959,10 @@ public class TerritoryControl {
     /** Tier-filtered variant ("Common".."Mythic"); falls back to any tier when the color pool has
      *  no eligible roamer of that tier, so an assault always finds a defender. */
     public static EnemyData pickRandomRoamer(World world, String color, String tier) {
+        return pickRandomRoamer(world, color, tier, null);
+    }
+    /** Round 100: excludeName keeps a second defender different from the first whenever the pool allows it. */
+    public static EnemyData pickRandomRoamer(World world, String color, String tier, String excludeName) {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))
                 continue;
@@ -971,6 +975,8 @@ public class TerritoryControl {
                 if (tier == null || tier.equals(e.tier))
                     candidates.add(e);
             }
+            if (excludeName != null && candidates.size() > 1)
+                candidates.removeIf(c -> excludeName.equals(c.name));
             if (candidates.isEmpty()) {
                 if (anyTier.isEmpty())
                     return null;
@@ -1128,6 +1134,11 @@ public class TerritoryControl {
             if (color.equals(mage.territoryColor))
                 activeMages++;
         int cap = maxActiveMagesPerColor(world);
+        if (world.isCapitolLost(color)) { // round 100 (user spec 2026-09-03): capital taken by the player - half the mages, rounded down
+            int halved = cap / 2;
+            System.out.println("[TFR-MageCap] " + color + ": capital lost to the player - active-mage cap " + cap + " -> " + halved);
+            cap = halved;
+        }
         if (activeMages >= cap) {
             System.out.println("[TerritoryControl] " + color + ": " + activeMages + " mage(s) already in flight (cap " + cap + "), skipping dispatch");
             return;
@@ -1893,8 +1904,11 @@ public class TerritoryControl {
         if (seat == null && !"player".equals(owner))
             for (PointOfInterest poi : nodes)
                 if ("capital".equals(poi.getData().type) && isColorTownOrCapital(poi.getData(), owner)) { seat = poi; break; }
+        long perfFlood = System.nanoTime();
         java.util.Set<String> connected = seat == null ? null
                 : world.roadConnectedTownIds((int) (seat.getPosition().x / world.getTileSize()), (int) (seat.getPosition().y / world.getTileSize()));
+        if (connected != null)
+            System.out.println("[TFR-Perf] road flood fill from " + seat.getDisplayName() + " took " + (System.nanoTime() - perfFlood) / 1_000_000 + " ms");
         if (connected != null)
             connected.add(seat.getID());
         boolean[] owned = new boolean[n];
@@ -1961,7 +1975,9 @@ public class TerritoryControl {
         for (int i = reached; i >= 0; i = prev[i])
             waypoints.add(nodes.get(i));
         java.util.Collections.reverse(waypoints); // source -> ... -> reached (cosmetic; roads are undirected)
+        long perfRoad = System.nanoTime();
         int tiles = world.buildRoad(waypoints, WorldStage.getInstance()::refreshBackgroundTile);
+        System.out.println("[TFR-Perf] road build (" + owner + ") took " + (System.nanoTime() - perfRoad) / 1_000_000 + " ms for " + tiles + " new tile(s)");
         StringBuilder route = new StringBuilder();
         for (PointOfInterest poi : waypoints) {
             if (route.length() > 0)
@@ -2197,9 +2213,12 @@ public class TerritoryControl {
         // (order bug found by the pre-commit review).
         world.setTownTerritoryRadius(target.getID(), repaintRadius);
         world.rebuildPlayerTownVision();
+        long perfRepaint = System.nanoTime();
         world.repaintBiomeAroundTown(target, repaintColor, repaintRadius,
                 WorldStage.getInstance()::refreshBackgroundTile,
                 WorldStage.getInstance()::reloadBackgroundChunkObjects);
+        System.out.println("[TFR-Perf] AI capture repaint of " + target.getDisplayName() + " (radius " + repaintRadius + ") took "
+                + (System.nanoTime() - perfRepaint) / 1_000_000 + " ms");
         // AFTER the repaint - repaint preserves road bits, and the road endpoints key off the
         // town's post-transform identity. Safe to call for a "colorless" revert too -
         // connectCapturedTownByRoad() no-ops cleanly (COLOR_TOWN_NOUN has no "colorless" entry,
@@ -2207,6 +2226,8 @@ public class TerritoryControl {
         connectCapturedTownByRoad(world, target, repaintColor);
         if (wasPlayerOwned)
             TownRestoration.updateTownLifeBonus(true);
+        if (isRingTown(target))
+            TownRestoration.updateRingLifeBonus(true); // round 100: a Ring City's +1 life follows its owner
 
         String message;
         if (isSacked)
@@ -2278,6 +2299,35 @@ public class TerritoryControl {
             changes.setAiHeldSinceDay(world.getCurrentDay());
         }
         return attackerWins;
+    }
+
+    /**
+     * Round 100 (user spec 2026-09-03): the run is WON when the player holds all five Ring Cities and has
+     * taken all five AI capitals. Checked after every player capture. Logged [TFR-Victory].
+     */
+    public static void checkPlayerVictory(World world) {
+        java.util.List<int[]> tiles = world.getStarTownTiles();
+        if (tiles == null || tiles.isEmpty())
+            return;
+        int held = 0;
+        for (int[] tile : tiles)
+            if (ringTownPlayerHeld(world, tile))
+                held++;
+        int capitals = world.getCapitolLostColors().size();
+        System.out.println("[TFR-Victory] Ring Cities held " + held + "/" + tiles.size() + ", AI capitals taken " + capitals + "/" + COLOR_TOWN_NOUN.size());
+        if (held >= tiles.size() && capitals >= COLOR_TOWN_NOUN.size())
+            WorldStage.getInstance().triggerGameWon("[GREEN]The Ring is whole![]\n"
+                    + "All five Ring Cities stand under your banner and every Lord's capital has fallen. "
+                    + "The Ring's councils reach for their seals - and find you are no longer someone who can be sealed. "
+                    + "The Forsaken Realms are yours to keep.");
+    }
+    private static boolean ringTownPlayerHeld(World world, int[] tile) {
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if ((int) (poi.getPosition().x / world.getTileSize()) != tile[0] || (int) (poi.getPosition().y / world.getTileSize()) != tile[1])
+                continue;
+            return TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
+        }
+        return false;
     }
 
     /** Owner color of the star town at a recorded tile, or null (neutral / player / missing). */
