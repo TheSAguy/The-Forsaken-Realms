@@ -706,7 +706,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         String[] tiers = EconomyBuildings.GUARD_TIERS_ASCENDING;
         boolean capitalAssault = "capital".equals(poi.getData().type); // round 100: capitals field two Archmages with two lands each
         String defenderTier = capitalAssault ? "Mythic" : tiers[Math.min(guardLevel, tiers.length - 1)];
-        int lands = capitalAssault || guardLevel >= TerritoryControl.AI_GUARD_MAX_LEVEL ? 2 : 1;
+        int lands = TerritoryControl.isRingTown(poi) ? 0 : (capitalAssault || guardLevel >= TerritoryControl.AI_GUARD_MAX_LEVEL ? 2 : 1); // round 106: Ring Cities - a plain 1v2, no bonus lands
         EnemyData base = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier);
         if (base == null) {
             System.out.println("[TFR-TownAssault] no eligible defender in the " + color + " pool for " + poi.getDisplayName());
@@ -739,9 +739,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }
         }
         EnemySprite defender = new EnemySprite(duelData);
-        defender.effect = new EffectData();
-        String land = TerritoryControl.basicLandFor(color);
-        defender.effect.startBattleWithCardTapped = lands == 2 ? new String[]{land, land} : new String[]{land};
+        if (lands > 0) {
+            defender.effect = new EffectData();
+            String land = TerritoryControl.basicLandFor(color);
+            defender.effect.startBattleWithCardTapped = lands == 2 ? new String[]{land, land} : new String[]{land};
+        }
         System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " guard level " + guardLevel
                 + " -> defender tier " + defenderTier + " (" + EnemyData.tierDisplayName(defenderTier) + "), " + lands + " starting land(s)"
                 + ", life " + rawLife + " x" + lifeFactor + " (difficulty index " + diffIndex + ") = " + duelData.life

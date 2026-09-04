@@ -1313,8 +1313,8 @@ public class TownRestoration {
         System.out.println("[TownRestoration] ring life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
         if (notify)
             forge.adventure.stage.GameHUD.getInstance().addNotification(delta > 0
-                    ? "[+Life] Max life +" + delta + " - the Ring Cities lend you their strength."
-                    : "[+Life] Max life " + delta + " - a Ring City has fallen under enemy rule.", false); // round 105: black text
+                    ? "[WHITE][+Life][] Max life +" + delta + " - the Ring Cities lend you their strength."
+                    : "[WHITE][+Life][] Max life " + delta + " - a Ring City has fallen under enemy rule.", false); // round 106: red heart, black text
     }
     private static final int TOWNS_PER_LIFE = 5;
 
@@ -1326,9 +1326,9 @@ public class TownRestoration {
         System.out.println("[TownRestoration] town life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
         if (notify) {
             if (delta > 0)
-                forge.adventure.stage.GameHUD.getInstance().addNotification("[+Life] Max life +" + delta + " - your realm prospers!", false);
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[WHITE][+Life][] Max life +" + delta + " - your realm prospers!", false);
             else
-                forge.adventure.stage.GameHUD.getInstance().addNotification("[+Life] Max life " + delta + " - your realm shrinks...", false);
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[WHITE][+Life][] Max life " + delta + " - your realm shrinks...", false);
         }
     }
 }

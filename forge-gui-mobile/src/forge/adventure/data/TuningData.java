@@ -179,6 +179,12 @@ public class TuningData {
     // Round 102 (user spec 2026-09-04): an ordinary town keeps at least this many tiles from every Ring City
     // (40% more than the 10-tile general spacing that applied before).
     public int ringCityTownExclusionTiles = 14;
+    // Round 106 (user spec 2026-09-04): Ring City shops - cards cost this many times the normal price, a paid
+    // restock costs ringShopRestockMultiplier x a normal shop's and multiplies again with every restock that
+    // week; a Ring City's territory pull is ringCityPullFactor x a regular town's.
+    public float ringShopPriceMultiplier = 2f;
+    public float ringShopRestockMultiplier = 3f;
+    public float ringCityPullFactor = 3f;
     // Round 99 (user spec 2026-09-03): world-gen town roads are the nearest-neighbor network again,
     // with this share of its edges skipped ("reduce the number of roads by 25%"). Star roads never skip.
     public float initialTownRoadSkipFraction = 0.25f;

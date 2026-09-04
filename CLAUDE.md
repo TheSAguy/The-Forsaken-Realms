@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 106 (2026-09-04): Ring City layouts (ring_city_<color>.tmx + player variants with Armory lot 48,
+  TileMapScene.resolveMapPath), 15 'Ring*' shops (mono inner / dual outer, all editions, 2x price, 3x escalating
+  restock, no blueprints), quest 30 surviving-first, [WHITE] glyph wrap for the red heart, ringCityPullFactor 3,
+  no lands at Ring 1v2, MapDialog pane height from the HUD stage. Needs a NEW game. Awaiting playtest.
 - Round 105 (2026-09-04): win/lose back-splash images (ui/*_splash.jpg, WorldStage.showEndSplash; victory
   deferred while inside a map); Ring stages now CharacterFlag enteredRingCity1..5 (set in TileMapScene on
   entry - Travel fired outside the gate); [+Life] pop-ups black (authoredMarkup=false); factory_4_large.tmx

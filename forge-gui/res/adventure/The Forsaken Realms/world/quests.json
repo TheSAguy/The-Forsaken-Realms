@@ -7318,6 +7318,36 @@
 		},
 		"stages": [
 			{
+				"id": 2,
+				"name": "Find a surviving town",
+				"description": "Find one of the few towns that endured the Forsaking.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"navPOIFilter": "survivingTown",
+				"POITags": [
+					"Town"
+				],
+				"mapFlag": "enteredSurvivingTown",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"prologue": {
+					"text": "Not everything died. A handful of towns endured the Forsaking, huddled around the last living mana springs. Find one - its people trade, take work from their notice boards, and keep the old ways barely alive.",
+					"options": [
+						{
+							"name": "(Continue)",
+							"text": "The inn contains some special events, and you can sell extra cards there or buy temporary extra health.\n\nThe '?' sign denotes a town square or a job board where you can obtain side quests.\n\nAll of the other buildings with signs out front are shops - most sell cards.\n\nEntering a friendly town also restores any missing hit points for free.",
+							"options": [
+								{
+									"name": "(Continue)"
+								}
+							]
+						}
+					]
+				},
+				"epilogue": {},
+				"POIToken": ""
+			},
+			{
 				"id": 1,
 				"name": "Find a ruined town",
 				"description": "Enter one of the countless ruined towns scattered across the wastes.",
@@ -7352,40 +7382,10 @@
 						}
 					]
 				},
-				"POIToken": ""
-			},
-			{
-				"id": 2,
-				"name": "Find a surviving town",
-				"description": "Find one of the few towns that endured the Forsaking.",
-				"anyPOI": true,
-				"worldMapOK": true,
-				"navPOIFilter": "survivingTown",
-				"POITags": [
-					"Town"
-				],
-				"mapFlag": "enteredSurvivingTown",
-				"mapFlagValue": 1,
-				"objective": "CharacterFlag",
+				"POIToken": "",
 				"prerequisiteIDs": [
-					1
-				],
-				"prologue": {
-					"text": "Not everything died. A handful of towns endured the Forsaking, huddled around the last living mana springs. Find one - its people trade, take work from their notice boards, and keep the old ways barely alive.",
-					"options": [
-						{
-							"name": "(Continue)",
-							"text": "The inn contains some special events, and you can sell extra cards there or buy temporary extra health.\n\nThe '?' sign denotes a town square or a job board where you can obtain side quests.\n\nAll of the other buildings with signs out front are shops - most sell cards.\n\nEntering a friendly town also restores any missing hit points for free.",
-							"options": [
-								{
-									"name": "(Continue)"
-								}
-							]
-						}
-					]
-				},
-				"epilogue": {},
-				"POIToken": ""
+					2
+				]
 			},
 			{
 				"id": 3,
@@ -7399,7 +7399,7 @@
 				],
 				"objective": "Travel",
 				"prerequisiteIDs": [
-					2
+					1
 				],
 				"prologue": {
 					"text": "Your navigation arrow should now direct you to the nearest dungeon. Many quests will send you to dungeons, but you are also free to enter them without a quest. Follow the arrow and travel to a dungeon.",

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="63">
+ <editorsettings>
+  <export format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
+ <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
+ <tileset firstgid="11905" source="../../../../common/maps/tileset/buildings-nocollide.tsx"/>
+ <layer id="1" name="Background" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJyz4GRgsKQztgLia0B8nc74xqi9A2YvEzf18ai9o/aO2jtq76i9o/aO2js47SUG4zOTGEyJvcg0veylFI/aO/ztLeFiYCjFgqlhPjZzQbgMiAFNf9HB
+  </data>
+ </layer>
+ <layer id="2" name="Ground" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztVktOAkEQrZ1Mw8w9uIG6I0TiXXT0ABAPIiyJ10E3Mks1s/MSdseuWBTV09WdmZAYXvKSSVM1r+vDA4DTo7W8HeC9y1J+ptiNAF575NtId5+6AHjokY/FodYqUO/YAEx6ZGkO3/8dLh+e7Z3WlpvA3WII5dfmlwg+68sK4MryuvLxiT3l+Vq82/i9ZePztL3HnvJ8ClrjE6t3R3Yxdb9pTtcuS6hJ39zz1vJCwReSI+0yn2fNdo7rzpR9dnFdulxbo3szBVhM5f7gZxpdPtOYrgYaXQruyRrd0FnKfDmG0o2B636Y492dC2dfibpH+138+YDkGfe+B3eF7B2Yk1Mvep1E539ONxaTo4teJ7HxurEYrsu/r1Kf0ffobD+NPF967maMuZIu16aI/Q6U3ps0cV315kDrJV3I+S/HdVtFjiYGEepNbr0xz3JIuR9FbH+k+CGhqfWM/4Ef+y6Z4Q==
+  </data>
+ </layer>
+ <layer id="3" name="Walls" width="30" height="30">
+  <properties>
+   <property name="spriteLayer" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBhYMF+GgYGJhnihDHZ7bWRp6y9c5o9Uex2YGBgWM1IPOzERZ+9dJuzyBQao/Nca+OVh4C6F9pILRu0devY+1WJgeAbEz4H4hRb97GXUBpZ9QMwMxCza9LOXFDBq76i96PaCytxPSOkVxEYvhwmpGUr+pae9NczE16nE1NV1zMTZSwiA4g7mBxCNq94l1nxS2jnI9hILBpu9t2WJawczy6Day0hk+/kuFdqN1cyo9CgYvAAATMVigA==
+  </data>
+ </layer>
+ <layer id="5" name="Overlay" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhYMF+GgYGJhnihDHZ7bWQR7PMaCPYSZuqII5uPy97XQPU6ULYTC6o4A5q4Ki9EHEQji7fyoKonxl5aAGrZixyG9LAXFH66UPYpKJ8e9pILhrK9a7UYGNYB8Xog3qBFW3s1NRkYtDQh7JNAu04B8WkgPqOFKkepvTrYlRENdNH4xNqrTaG9p8i0F1b+kAvQ89dQTs+0tHcWMJxn48BzeIlXQ6q9MHBNGzubVDWDPZxH7R21dyjbe1uWuHYwM1o7mJHI9vNdGvtrFAwuAADuF0Cm
+  </data>
+ </layer>
+ <objectgroup id="4" name="Objects">
+  <object id="38" template="../../../../common/maps/obj/entry_up.tx" x="219" y="383" width="28" height="16"/>
+  <object id="50" template="../../../../common/maps/obj/shop.tx" x="272.364" y="305.636">
+   <properties>
+    <property name="commonShopList" value="RingWhite"/>
+    <property name="fixedShop" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="51" template="../../../../common/maps/obj/shop.tx" x="175.636" y="305.636">
+   <properties>
+    <property name="commonShopList" value="RingWhite"/>
+    <property name="fixedShop" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="52" template="../../../../common/maps/obj/shop.tx" x="127.636" y="306">
+   <properties>
+    <property name="commonShopList" value="RingWhiteGreen"/>
+    <property name="fixedShop" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="58" template="../../../../common/maps/obj/quest.tx" x="223.182" y="209.352" width="34" height="16">
+   <properties>
+    <property name="questtype" value="plains_town_identity"/>
+   </properties>
+  </object>
+  <object id="62" template="../../../../common/maps/obj/shop.tx" x="319.636" y="308">
+   <properties>
+    <property name="commonShopList" value="RingWhiteBlue"/>
+    <property name="fixedShop" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

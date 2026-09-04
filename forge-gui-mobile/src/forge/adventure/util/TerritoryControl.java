@@ -569,7 +569,7 @@ public class TerritoryControl {
                 int protect = Math.max(1, Math.min(radius != null ? radius : RECOLOR_RADIUS, townProtectedRadiusCap()) / 2);
                 boolean isCapital = poi.getData().name != null && poi.getData().name.endsWith("Capital");
                 list.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
-                        isCapital ? CAPITAL_PULL_WEIGHT : TOWN_PULL_WEIGHT, protect});
+                        (isCapital ? CAPITAL_PULL_WEIGHT : TOWN_PULL_WEIGHT) / ringPullDivisor(poi), protect});
             }
             sources.put(color, list);
         }
@@ -586,7 +586,7 @@ public class TerritoryControl {
             Integer radius = world.getTownTerritoryRadius(poi.getID());
             int protect = Math.max(1, Math.min(radius != null ? radius : RECOLOR_RADIUS, townProtectedRadiusCap()) / 2);
             playerList.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
-                    PLAYER_TOWN_PULL_WEIGHT, protect});
+                    PLAYER_TOWN_PULL_WEIGHT / ringPullDivisor(poi), protect});
         }
         sources.put("player", playerList);
         return sources;
@@ -2263,6 +2263,13 @@ public class TerritoryControl {
         }
     }
 
+    /** Round 106 (user spec 2026-09-04): a Ring City pulls ringCityPullFactor (3) x as hard as a regular town - lower weight projects further. */
+    private static float ringPullDivisor(PointOfInterest poi) {
+        if (!isRingTown(poi))
+            return 1f;
+        float f = Config.instance().getTuningData().ringCityPullFactor;
+        return f > 0f ? f : 3f;
+    }
     /** Ring Towns (round 99): the five Center Towns, whatever their current owner. */
     public static boolean isRingTown(PointOfInterest poi) {
         return poi != null && poi.getData() != null && poi.getData().name != null && poi.getData().name.contains(" Town Center");

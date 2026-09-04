@@ -294,7 +294,9 @@ public class MapDialog {
                 optionScroller.setFadeScrollBars(false);          // keep the bar visible as an affordance
                 // Capped so the dialog can still show its text and stay on screen; the list
                 // scrolls inside that box rather than growing the dialog past the viewport.
-                float maxHeight = Math.max(80f, stage.getHeight() * 0.45f);
+                // Round 106: the dialog is laid out on the HUD stage, not the map stage - the map's height made the pane taller than the screen
+                float maxHeight = Math.max(80f, forge.adventure.stage.GameHUD.getInstance().getHeight() * 0.45f);
+                optionScroller.setScrollY(0f);
                 D.getButtonTable().add(optionScroller).width(WIDTH).height(maxHeight);
                 D.getButtonTable().row();
                 // The pinned escape hatch goes BELOW the scroll box, always on screen.

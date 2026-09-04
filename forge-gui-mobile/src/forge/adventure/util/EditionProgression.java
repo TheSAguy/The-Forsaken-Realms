@@ -384,6 +384,10 @@ public class EditionProgression {
         World world = WorldSave.getCurrentSave().getWorld();
         if (!world.isEditionProgressionEnabled())
             return source;
+        if (shopNameForLogging != null && shopNameForLogging.startsWith("Ring")) { // round 106: Ring City shops see EVERY edition
+            System.out.println("[TFR-ShopEditions] shop=" + shopNameForLogging + " is a Ring City shop - no edition restriction (" + trigger + ")");
+            return source;
+        }
         // Single guarded read (adversarial review, 2026-08-13) - an earlier version of this log
         // line null-checked rootPoint only for the townName log field, five lines after the
         // else-branch's color lookup already dereferenced it unguarded; that guard could never

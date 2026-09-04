@@ -16421,3 +16421,37 @@ User playtest of rounds 103/104:
 
 **Files touched**: WorldStage.java, TownRestoration.java, AdventurePlayer.java, TileMapScene.java,
 quests.json, factory_4_large.tmx, ui/victory_splash.jpg + ui/defeat_splash.jpg (new).
+
+## Round 106: Ring City layouts and shops, quest order, red heart, pull weight, no assault lands, chooser fix (2026-09-04)
+
+- **Ring City layouts** (user's `5_City_<Color>.tmx` + `5_City_Player.tmx`, 30x30, shipped as
+  `maps/map/towns/ring_city_<color>.tmx` and `ring_city_player_<color>.tmx`; the relative tileset
+  and template links already resolve from that folder). `TileMapScene.resolveMapPath` picks the
+  arm's layout for a Ring City whoever holds it (white at the top, then blue/black/red/green), and
+  the player variant once the player holds it. The player variant's fifth lot is the **Armory**
+  (object id 48, `ArmoryCommon`, noRestock/noMigrate - the same lot id `hasWorkingArmory` and the
+  guard code key on).
+- **Ring City shops** (15 new `Ring*` entries in shops.json, `fixedShop` lots): the two inner shops
+  sell the city's color only (`RingWhite`...: 8 cards, colors [white]); the far-left shop the
+  color + its "left" ally and the far-right the "right" ally (`RingWhiteGreen` / `RingWhiteBlue`,
+  `RingBlackRed` / `RingBlackBlue`, Blue: Black/White, Red: Green/Black, Green: Red/White - the
+  user's two examples, left = the ally later in WUBRG order), 4 cards of either color + 4 gold cards.
+  They see EVERY edition (`restrictShopRewardsForCurrentTown` bypass, logged `[TFR-ShopEditions]`),
+  cost `ringShopPriceMultiplier` (2x), restock at `ringShopRestockMultiplier` (3x) times a normal
+  shop's price and triple again per restock that week (`RewardScene.restockPriceNow`), can never
+  be learned as blueprints (`unlockShopType` guard) and are `isSpecialShop` (never randomized).
+- **Quest 30**: "Find a surviving town" now comes first, "Find a ruined town" second. (The log showed
+  the surviving stage DID complete - retroactively, the moment it activated - which is why no
+  popup was seen.)
+- **Red heart**: the `[+Life]` glyph (and the gift line's resource glyphs) are wrapped in
+  `[WHITE]...[]` so they keep their own colors while the text stays black.
+- **Territory**: a Ring City's pull weight is divided by `ringCityPullFactor` (3) - three times a
+  regular town's pull, for AI-held and player-held alike.
+- **Ring assaults**: the 1-vs-2 at a Ring City has no bonus lands (capitals keep two).
+- **Build-on-lot chooser**: the option scroll pane was sized from the MAP stage's height, which made
+  it taller than the screen on the HUD stage; it now uses the HUD stage (45%) and starts at the top.
+
+**Files touched**: shops.json, quests.json, settings.json, 10 new tmx layouts, TuningData.java,
+EconomyBuildings.java, AdventurePlayer.java, TownRestoration.java, EditionProgression.java,
+ShopActor.java, RewardScene.java, TileMapScene.java, MapStage.java, TerritoryControl.java,
+WorldStage.java, MapDialog.java.

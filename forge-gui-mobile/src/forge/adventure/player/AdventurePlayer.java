@@ -145,6 +145,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     /** Learns a shop type. Returns false if it was already known, so callers can refuse to charge
      *  for a no-op and drop-sources can fall through to another reward. */
     public boolean unlockShopType(String shopName, String source) {
+        if (shopName != null && shopName.startsWith("Ring"))
+            return false; // round 106: the Ring Cities' shops cannot be learned as blueprints
         if (shopName == null || shopName.isEmpty() || !unlockedShopTypes.add(shopName))
             return false;
         System.out.println("[TFR-Blueprint] learned \"" + shopName + "\" via " + source
@@ -1926,9 +1928,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             System.out.println("[TFR-RingGift] all (difficulty " + cfg.name + "): granted directly - gold " + cfg.startingMoney + ", shards "
                     + cfg.startingShards + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + ", items " + items
                     + ", Ring Cities counted as visited: " + ringCities);
-            forge.adventure.stage.GameHUD.getInstance().addNotification("The Ring's gifts: [+Gold] " + cfg.startingMoney + "  [+Shards] "
-                    + cfg.startingShards + "  [+Wood] " + cfg.startingWood + "  [+Stone] " + cfg.startingStone + "  and " + items
-                    + " item(s). [+Life] Max life +" + ringCities + ".", false); // round 105: black text
+            forge.adventure.stage.GameHUD.getInstance().addNotification("The Ring's gifts: [WHITE][+Gold][] " + cfg.startingMoney + "  [WHITE][+Shards][] "
+                    + cfg.startingShards + "  [WHITE][+Wood][] " + cfg.startingWood + "  [WHITE][+Stone][] " + cfg.startingStone + "  and " + items
+                    + " item(s). [WHITE][+Life][] Max life +" + ringCities + ".", false); // round 106: glyphs keep their own colors, text stays black
             return;
         }
         com.badlogic.gdx.utils.Array<forge.adventure.util.Reward> rewards = new com.badlogic.gdx.utils.Array<>();

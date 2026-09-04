@@ -2093,3 +2093,12 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`stage/WorldStage.java`** - `showEndSplash`/`hideEndSplash`, `showGameWonDialog` + deferral in `enter()`.
 - **`scene/TileMapScene.java`** - `enteredRingCity<N>` character flags on Ring City entry.
 - **`util/TownRestoration.java`, `player/AdventurePlayer.java`** - black notification text.
+
+## Round 106 (2026-09-04) - Ring City layouts/shops
+
+- **`scene/TileMapScene.java`** - `resolveMapPath` (Ring City layouts); **`stage/MapStage.java`** uses it for map resets.
+- **`character/ShopActor.java`** - Ring shop price multiplier; **`scene/RewardScene.java`** - `restockPriceNow`.
+- **`util/EditionProgression.java`** - Ring shops bypass the edition restriction.
+- **`util/EconomyBuildings.java`** - `isRingShop` (special); **`player/AdventurePlayer.java`** - no Ring blueprints.
+- **`util/TerritoryControl.java`** - `ringPullDivisor`; **`stage/WorldStage.java`** - no lands at Ring assaults.
+- **`util/MapDialog.java`** - option pane height from the HUD stage.

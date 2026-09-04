@@ -59,7 +59,8 @@ public class ShopActor extends MapActor {
         PointOfInterestChanges changes = stage.getChanges();
         float townPricemodifier = changes == null ? 1f : changes.getTownPriceModifier();
         float shopPriceModifier = changes == null ? 1f : changes.getShopPriceModifier(objectId);
-        return shopPriceModifier * townPricemodifier * colorReputationModifier() * ownershipBaseModifier(changes);
+        float ringPrice = EconomyBuildings.isRingShop(shopData) ? Math.max(0.1f, Config.instance().getTuningData().ringShopPriceMultiplier) : 1f; // round 106
+        return shopPriceModifier * townPricemodifier * colorReputationModifier() * ownershipBaseModifier(changes) * ringPrice;
     }
 
     // Ownership base price adjustment (2026-08-17 user spec: "cards bought at AI shops 25% more

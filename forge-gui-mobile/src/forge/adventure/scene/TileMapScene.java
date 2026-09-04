@@ -162,6 +162,22 @@ public class TileMapScene extends HudScene {
         return super.leave();
     }
 
+    /** Round 106 (user spec 2026-09-04): the map file for a POI. A Ring City gets its arm's layout
+     *  (ring_city_<color>.tmx, white at the top) whoever holds it - the player's variant, with an Armory, once captured. */
+    public static String resolveMapPath(PointOfInterest point) {
+        if (point == null || point.getData() == null)
+            return null;
+        if (forge.adventure.util.TerritoryControl.isRingTown(point)) {
+            String[] colors = {"white", "blue", "black", "red", "green"};
+            String name = point.getData().name;
+            int arm = name.charAt(name.length() - 1) - '1';
+            if (arm >= 0 && arm < colors.length) {
+                boolean playerHeld = TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID()));
+                return "../The Forsaken Realms/maps/map/towns/ring_city_" + (playerHeld ? "player_" : "") + colors[arm] + ".tmx";
+            }
+        }
+        return point.getData().map;
+    }
     public void load(PointOfInterest point) {
         AdventureQuestController.instance().mostRecentPOI = point;
         if (rootPoint != point) {
@@ -196,8 +212,9 @@ public class TileMapScene extends HudScene {
         } catch (Exception e) {
             e.printStackTrace(); // never let a tutorial convenience break map loading
         }
-        oldMap = point.getData().map;
-        map = new TemplateTmxMapLoader().load(Config.instance().getCommonFilePath(point.getData().map));
+        String mapPath = resolveMapPath(point); // round 106: Ring Cities use their own layouts
+        oldMap = mapPath;
+        map = new TemplateTmxMapLoader().load(Config.instance().getCommonFilePath(mapPath));
         ((MapStage) stage).setPointOfInterest(getPointOfInterestChanges());
         // Sell prices follow the town you are STANDING IN (2026-08-31 fix). This field previously
         // had exactly one writer - the Inn Sell Cards button - and was never cleared, so every

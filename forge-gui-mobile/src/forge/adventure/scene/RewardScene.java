@@ -620,6 +620,15 @@ public class RewardScene extends UIScene {
      *  that re-rolls the cards available in the shop" is what should carry the +1/week cost, same
      *  schedule as Guard pay: day 7/14/21). 0 when changes is null (a shop with no persisted
      *  PointOfInterestChanges can't track a surcharge). */
+    /** Round 106: Ring City shops restock at ringShopRestockMultiplier (3) x a normal shop's price, multiplied again by every restock this week. */
+    private int restockPriceNow() {
+        if (EconomyBuildings.isRingShop(shopActor.getShopData())) {
+            float mult = Math.max(1f, forge.adventure.util.Config.instance().getTuningData().ringShopRestockMultiplier);
+            double price = Math.max(2, shopActor.getRestockPrice()) * mult * Math.pow(mult, restockSurcharge());
+            return (int) Math.min(Integer.MAX_VALUE / 2, Math.round(price));
+        }
+        return shopActor.getRestockPrice() + restockSurcharge();
+    }
     private int restockSurcharge() {
         if (changes == null)
             return 0;
@@ -630,7 +639,7 @@ public class RewardScene extends UIScene {
     void updateRestockButton() {
         if (!shopActor.canRestock())
             return;
-        int price = shopActor.getRestockPrice() + restockSurcharge();
+        int price = restockPriceNow();
         restockButton.setText("[+Refresh][+shards]" + price);
         restockButton.setDisabled(WorldSave.getCurrentSave().getPlayer().getShards() < price);
     }
@@ -649,7 +658,7 @@ public class RewardScene extends UIScene {
                     Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
             return;
         }
-        int price = shopActor.getRestockPrice() + restockSurcharge();
+        int price = restockPriceNow();
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         if (changes != null) {
             changes.generateNewShopSeed(shopActor.getObjectId());

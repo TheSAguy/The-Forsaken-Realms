@@ -7996,5 +7996,21 @@
     "startDate": 2021
    }
   ]
- }
+ },
+
+  {"name": "RingWhite", "description": "Benalia: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "WhiteShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["white"]}]},
+  {"name": "RingWhiteGreen", "description": "Benalia: the Selesnya Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "SelesnyaShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["white", "green"]}, {"count": 4, "colors": ["white", "green"], "colorType": "MultiColor"}]},
+  {"name": "RingWhiteBlue", "description": "Benalia: the Azorius Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "AzoriusShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["white", "blue"]}, {"count": 4, "colors": ["white", "blue"], "colorType": "MultiColor"}]},
+  {"name": "RingBlue", "description": "Tolaria: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "BlueShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["blue"]}]},
+  {"name": "RingBlueBlack", "description": "Tolaria: the Dimir Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "DimirShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["blue", "black"]}, {"count": 4, "colors": ["blue", "black"], "colorType": "MultiColor"}]},
+  {"name": "RingBlueWhite", "description": "Tolaria: the Azorius Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "AzoriusShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["blue", "white"]}, {"count": 4, "colors": ["blue", "white"], "colorType": "MultiColor"}]},
+  {"name": "RingBlack", "description": "Urborg: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "BlackShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["black"]}]},
+  {"name": "RingBlackRed", "description": "Urborg: the Rakdos Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "RakdosShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["black", "red"]}, {"count": 4, "colors": ["black", "red"], "colorType": "MultiColor"}]},
+  {"name": "RingBlackBlue", "description": "Urborg: the Dimir Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "DimirShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["black", "blue"]}, {"count": 4, "colors": ["black", "blue"], "colorType": "MultiColor"}]},
+  {"name": "RingRed", "description": "Shiv: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "RedShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["red"]}]},
+  {"name": "RingRedGreen", "description": "Shiv: the Gruul Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "GruulShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["red", "green"]}, {"count": 4, "colors": ["red", "green"], "colorType": "MultiColor"}]},
+  {"name": "RingRedBlack", "description": "Shiv: the Rakdos Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "RakdosShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["red", "black"]}, {"count": 4, "colors": ["red", "black"], "colorType": "MultiColor"}]},
+  {"name": "RingGreen", "description": "Llanowar: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "GreenShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["green"]}]},
+  {"name": "RingGreenRed", "description": "Llanowar: the Gruul Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "GruulShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["green", "red"]}, {"count": 4, "colors": ["green", "red"], "colorType": "MultiColor"}]},
+  {"name": "RingGreenWhite", "description": "Llanowar: the Selesnya Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "SelesnyaShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["green", "white"]}, {"count": 4, "colors": ["green", "white"], "colorType": "MultiColor"}]}
 ]

@@ -691,7 +691,11 @@ public class EconomyBuildings {
     }
 
     public static boolean isSpecialShop(ShopData data) {
-        return isBoosterShop(data) || isArmoryShop(data);
+        return isBoosterShop(data) || isArmoryShop(data) || isRingShop(data);
+    }
+    /** Round 106: the Ring Cities' fixed shops (shops.json "Ring*") - never randomized, never a blueprint. */
+    public static boolean isRingShop(ShopData data) {
+        return data != null && data.name != null && data.name.startsWith("Ring");
     }
 
     public static TextureRegion getPlainShopSprite() {

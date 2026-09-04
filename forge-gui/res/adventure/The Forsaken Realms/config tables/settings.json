@@ -110,6 +110,11 @@
     "townMinSpacingTiles": 10,
     // Minimum distance (tiles) between an ordinary town and any of the five Ring Cities.
     "ringCityTownExclusionTiles": 14,
+    // Ring City shops: card price multiplier, restock multiplier (applied again per restock that week), and the
+    // Ring City territory pull factor (x a regular town).
+    "ringShopPriceMultiplier": 2.0,
+    "ringShopRestockMultiplier": 3.0,
+    "ringCityPullFactor": 3.0,
     // World-gen town roads: this share of the nearest-neighbor edges is skipped (star roads never are).
     "initialTownRoadSkipFraction": 0.25,
     // World-gen: every town starts with at least one road link and never more than this many (Ring/Spawn edges uncounted).

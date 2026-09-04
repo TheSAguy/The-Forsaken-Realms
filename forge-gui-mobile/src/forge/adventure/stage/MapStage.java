@@ -1478,7 +1478,7 @@ public class MapStage extends GameStage {
         if (mustClearOnExit) {
             mustClearOnExit = false;
 
-            this.resetMapRecursive(AdventureQuestController.instance().mostRecentPOI.getData().map, new HashSet<>());
+            this.resetMapRecursive(forge.adventure.scene.TileMapScene.resolveMapPath(AdventureQuestController.instance().mostRecentPOI), new HashSet<>()); // round 106
         }
 
         // Despawn-on-exit for a dungeon that is now genuinely empty (2026-08-30 user report:
