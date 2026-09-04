@@ -173,6 +173,12 @@ public class TuningData {
     public int starTownsLossCount = 3;
     // No other town may generate within this many tiles of the campfire (the star sits at 20).
     public int starTownExclusionRadiusTiles = 24;
+    // Round 98 (user spec 2026-09-03): an ordinary town keeps at least this many tiles from every
+    // town placed before it (the only rule before was the 8x8-tile box, about 4 tiles).
+    public int townMinSpacingTiles = 10;
+    // TEST ONLY (user request 2026-09-03, remove after testing): chance that a mage dispatch targets
+    // a random attackable Center Town instead of the normal weighted roll. 0 = off.
+    public float debugStarTownTargetChance = 0f;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an

@@ -2033,3 +2033,11 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   `getBrokenTownSprite` skips them.
 - **`util/TerritoryControl.java`** (mod-new) - `onMageArrived` re-flags a reverted star town neutral-seeded.
 - **`data/TuningData.java`** - `starTownExclusionRadiusTiles`.
+
+## Round 98 (2026-09-03) - spacing, road trees, water-preserving repaint
+
+- **`world/World.java`** - `tooCloseToPlacedTown` + placement reject; per-capital road tree before the
+  nearest-neighbor pass (which now skips tree-covered towns as sources); `repaintBiomeAroundTown`
+  skips water tiles.
+- **`util/TerritoryControl.java`** (mod-new) - TEST-ONLY Center Town targeting override before the roll.
+- **`data/TuningData.java`** - `townMinSpacingTiles`, `debugStarTownTargetChance` (TEST ONLY).

@@ -16172,3 +16172,36 @@ User playtest of round 95/96 ("Star worked"), with three corrections:
 
 **Files touched**: points_of_interest.json, settings.json, TuningData.java, World.java,
 TownRestoration.java, TerritoryControl.java.
+
+## Round 98: star at 17 tiles, town spacing, road trees, water kept, unbounded borders, TEST star targeting (2026-09-03)
+
+User playtest of round 97 (new game, "Star Worked"), six requests:
+- **Star radius 20 -> 17 tiles** (arm offsets = research values x 17/45).
+- **Town spacing.** An ordinary town now keeps `townMinSpacingTiles` (10, settings.json) from every
+  town placed before it. The only rule before was the 8x8-tile box (about 4 tiles), which is why so
+  many neutral towns sat side by side. Spawn, the Center Towns and the capitals are exempt as
+  candidates but count as neighbors.
+- **Road trees.** The road pass builds one tree per color: starting at the capital, each of that
+  color's towns joins the closest town already connected (Prim's order), so a color's roads never
+  double up. The old nearest-neighbor pass now only STARTS edges from towns no tree covers (waste
+  towns, Spawn, the Center Towns) and may still end them at any town, so the network stays joined.
+  Logged `[TFR-Roads]` once per capital.
+- **Water preserved.** `repaintBiomeAroundTown` skips water tiles (no biome bit, or a biome named
+  ocean/water), so a capture no longer paints land over a lake. Root cause: `highestBiome` returns a
+  negative index for a bit-less tile and `translateStructure` passed such tiles through unchanged,
+  straight into the new biome.
+- **Borders keep growing.** `townMaxTerritoryRadius` 25 -> 450 (the castle value). A player town's
+  disc stopped at 25 tiles with neutral terrain left; it now grows until it meets another border and
+  the existing push/contest rules take over. The rates stay asymmetric: a town grows one tile per
+  `townExpansionDaysPerTile` (7) days, an AI castle `aiCastleExpansionTilesPerDay` (1) per day.
+- **TEST ONLY - remove after testing.** `debugStarTownTargetChance` (0.5 in settings.json, 0 = off)
+  sends that share of mage dispatches at a random attackable Center Town, logged
+  `[TFR-Targeting] <color>: TEST Center Town override`. The hook sits in `TerritoryControl` right
+  before the weighted roll; delete it (and the two tunables) once the star has been exercised.
+
+Log review of the round-97 game: no exceptions; five Center Towns recorded; 25/25 functioning
+neutral towns seeded; `[TFR-StarTowns] holdings {}` firing. `[TFR-AiGuard]` wrote 606 lines - worth
+quieting later.
+
+**Files touched**: points_of_interest.json, settings.json, TuningData.java, World.java,
+TerritoryControl.java.

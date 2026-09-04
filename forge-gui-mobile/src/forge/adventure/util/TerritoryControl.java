@@ -1242,6 +1242,21 @@ public class TerritoryControl {
         List<Float> weights = new ArrayList<>();
         float originalRoll = 0f;
         float totalWeight = 0f;
+        // TEST ONLY (user request 2026-09-03) - REMOVE AFTER TESTING: TuningData.debugStarTownTargetChance
+        // (settings.json, 0 = off) sends this share of dispatches at a random attackable Center Town.
+        float starChance = Config.instance().getTuningData().debugStarTownTargetChance;
+        if (target == null && starChance > 0f && world.getRandom().nextFloat() < starChance) {
+            List<PointOfInterest> starTargets = new ArrayList<>();
+            for (PointOfInterest candidate : attackable)
+                if (candidate.getData().name != null && candidate.getData().name.contains(" Town Center"))
+                    starTargets.add(candidate);
+            if (starTargets.isEmpty())
+                System.out.println("[TFR-Targeting] " + color + ": TEST Center Town override rolled, but none is attackable");
+            else {
+                target = starTargets.get(world.getRandom().nextInt(starTargets.size()));
+                System.out.println("[TFR-Targeting] " + color + ": TEST Center Town override (" + Math.round(starChance * 100) + "%) -> " + target.getDisplayName());
+            }
+        }
         if (target == null) {
             attackable.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
             int candidateCount = Math.min(NEAREST_CANDIDATES, attackable.size());

@@ -23,7 +23,7 @@
     // count reduction to 50/color - fewer towns need to reach further to keep total map coverage
     // from shrinking. Freely retune this number directly - see townProtectedRadiusCap below for
     // why raising this alone no longer also grows a town's inviolable protected core.
-    "townMaxTerritoryRadius": 25,
+    "townMaxTerritoryRadius": 450,
     // Cap on a town's PROTECTED core (rivals can never touch it), kept separate from the growth
     // cap above (2026-08-24 user spec: "increase how far... towns can grow... starting radius and
     // protected radius should stay unchanged"). Protected radius = min(currentRadius, this) / 2,
@@ -106,6 +106,10 @@
     "starTownsLossCount": 3,
     // Center Towns: no other town may generate within this many tiles of the campfire.
     "starTownExclusionRadiusTiles": 24,
+    // Minimum distance (tiles) between an ordinary town and every town placed before it.
+    "townMinSpacingTiles": 10,
+    // TEST ONLY - REMOVE AFTER TESTING: share of mage dispatches sent at a random Center Town (0 = off).
+    "debugStarTownTargetChance": 0.5,
 
     // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
     // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via

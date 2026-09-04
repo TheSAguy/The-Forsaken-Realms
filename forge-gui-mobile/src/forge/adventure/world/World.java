@@ -351,6 +351,17 @@ public class World implements Disposable, SaveFileContent {
         int r = Config.instance().getTuningData().starTownExclusionRadiusTiles;
         return r > 0 ? r : 24;
     }
+    /** Round 98 (user spec 2026-09-03): ordinary towns keep TuningData.townMinSpacingTiles from every town placed so far. */
+    private boolean tooCloseToPlacedTown(List<PointOfInterest> placed, double x, double y) {
+        int min = Config.instance().getTuningData().townMinSpacingTiles;
+        if (min <= 0)
+            return false;
+        for (PointOfInterest t : placed) {
+            if (Math.hypot(x - t.getPosition().x / data.tileSize, y - t.getPosition().y / data.tileSize) < min)
+                return true;
+        }
+        return false;
+    }
     private void recordStarTowns() {
         starTownTiles.clear();
         for (PointOfInterest poi : getAllPointOfInterest()) {
@@ -1118,6 +1129,10 @@ public class World implements Disposable, SaveFileContent {
                                 if (isOrdinaryTownData(poi) && Math.hypot(x - width / 2.0, y - height / 2.0) < starTownExclusionRadius()) {
                                     continue;
                                 }
+                                // Round 98: ordinary towns keep townMinSpacingTiles from every town already placed
+                                if (isOrdinaryTownData(poi) && tooCloseToPlacedTown(towns, x, y)) {
+                                    continue;
+                                }
 
                                 x *= data.tileSize;
                                 y *= data.tileSize;
@@ -1395,9 +1410,51 @@ public class World implements Disposable, SaveFileContent {
 //////////////////
             List<Pair<PointOfInterest, PointOfInterest>> allSortedTowns = new ArrayList<>();
 
+            // Round 98 (user spec 2026-09-03): one road TREE per color. Each of a color's towns joins the
+            // closest town that is already connected to that color's capital (Prim's order), so a color's
+            // roads never double up. The nearest-neighbor pass below then only STARTS edges from towns no
+            // tree covers (waste towns, Spawn, the Center Towns); those may still end at any town.
+            java.util.Set<Integer> treeCovered = new java.util.HashSet<>();
+            for (int c = 0; c < towns.size(); c++) {
+                PointOfInterestData capData = towns.get(c).getData();
+                if (capData == null || capData.name == null || !capData.name.endsWith(" Capital"))
+                    continue;
+                String noun = capData.name.substring(0, capData.name.length() - " Capital".length()) + " ";
+                List<Integer> connected = new ArrayList<>();
+                List<Integer> pending = new ArrayList<>();
+                connected.add(c);
+                for (int k = 0; k < towns.size(); k++) {
+                    PointOfInterestData kd = towns.get(k).getData();
+                    if (k != c && kd != null && kd.name != null && kd.name.startsWith(noun) && !treeCovered.contains(k))
+                        pending.add(k);
+                }
+                int treeEdges = 0;
+                while (!pending.isEmpty()) {
+                    int bestFrom = -1, bestTo = -1;
+                    float best = Float.MAX_VALUE;
+                    for (int from : connected) {
+                        for (int to : pending) {
+                            float d = towns.get(from).getPosition().dst(towns.get(to).getPosition());
+                            if (d < best) {
+                                best = d;
+                                bestFrom = from;
+                                bestTo = to;
+                            }
+                        }
+                    }
+                    allSortedTowns.add(Pair.of(towns.get(bestFrom), towns.get(bestTo)));
+                    pending.remove(Integer.valueOf(bestTo));
+                    connected.add(bestTo);
+                    treeEdges++;
+                }
+                treeCovered.addAll(connected);
+                System.out.println("[TFR-Roads] " + capData.name + ": road tree with " + treeEdges + " edge(s) linking " + connected.size() + " town(s)");
+            }
             HashSet<Long> usedEdges = new HashSet<>();//edge is first 32 bits id of first id and last 32 bits id of second
             for (int i = 0; i < towns.size() - 1; i++) {
 
+                if (treeCovered.contains(i))
+                    continue; // round 98: this color's road tree already links it
                 PointOfInterest current = towns.get(i);
                 int smallestIndex = -1;
                 int secondSmallestIndex = -1;
@@ -2740,6 +2797,13 @@ public class World implements Disposable, SaveFileContent {
         for (int i = 0; i < biomes.size(); i++)
             if ("waste".equalsIgnoreCase(biomes.get(i).name)) { colorlessIdx = i; break; }
         boolean keepWasteUnder = "player".equalsIgnoreCase(biomeName) && colorlessIdx >= 0;
+        // Round 98 (user spec 2026-09-03): water bodies are never painted over. A water tile carries no
+        // biome bit at all (highestBiome() then returns a negative index and translateStructure() passes
+        // the tile through unchanged - straight into the new biome), or belongs to a biome named
+        // ocean/water if the plane defines one.
+        int oceanIdx = -1;
+        for (int i = 0; i < biomes.size(); i++)
+            if ("ocean".equalsIgnoreCase(biomes.get(i).name) || "water".equalsIgnoreCase(biomes.get(i).name)) { oceanIdx = i; break; }
         for (int wx = centerWorldX - radius; wx <= centerWorldX + radius; wx++) {
             if (wx < 0 || wx >= width)
                 continue;
@@ -2755,6 +2819,8 @@ public class World implements Disposable, SaveFileContent {
                 long existingRoadBit = biomeMap[wx][rawY] & roadBit;
 
                 int oldBiomeIndex = highestBiome(biomeMap[wx][rawY]); // read before overwriting below
+                if ((biomeMap[wx][rawY] & ~roadBit) == 0L || oldBiomeIndex == oceanIdx)
+                    continue; // round 98: water stays water
                 Integer newTerrain = translateStructure(oldBiomeIndex, biomeIndex, terrainMap[wx][rawY]);
                 if (newTerrain == null)
                     continue;
