@@ -26,6 +26,11 @@
                         "Shell"
                     ],
     "enemies":  [
+                    "Kor Firewalker",
+                    "Kor Spiritdancer",
+                    "Kor Celebrant",
+                    "Kor Sky Climber",
+                    "Ochre Jelly",
                     "Coral Crab",
                     "Croaking Toad",
                     "Honking Goose",

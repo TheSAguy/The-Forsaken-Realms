@@ -16535,3 +16535,40 @@ DISTRIBUTION colors x tier (152 enemies)
 
 **Files touched**: enemies.json (rewritten through the JSON model - same content, 2-space style),
 biomes/*.json, 105 new sprite pairs, 152 decks, ENEMY_ROSTER_R108.md (new).
+
+## Round 109: gentler Common/Uncommon decks for the 152 new enemies (2026-09-04)
+
+User note: "try not to go too hard on the Common and Uncommon decks. The player should have a
+chance." The rarity rule rates card rarity, not tuning - Forge's quest duel decks carry their own
+`Difficulty` tag (easy / medium / hard / very hard) and are built as AI opponents. Round 109 re-picks
+every deck with a difficulty gate on top of the rarity tier: Common = precons or easy duels only,
+Uncommon = precons or easy/medium duels (precons preferred for both), Rare = precons or
+medium/hard duels, Mythic = hard/very hard. The tier LABEL also gets a floor from the deck's own
+difficulty tag (easy -> Common, medium -> Uncommon, hard -> Rare, very hard -> Mythic), so a hard
+list can never sit in a Common or Uncommon slot; life, speed and difficulty follow the final tier.
+Result: every Common is a precon or an easy duel deck, every Uncommon a precon or easy/medium duel
+deck. Same theme and color rules; the 152 decks are regenerated in place (same file names),
+enemies.json entries updated by name, biome lists extended where a color changed,
+`ENEMY_ROSTER_R108.md` refreshed (the deck column now shows kind/difficulty).
+
+DISTRIBUTION colors x tier (152 enemies)
+  W      total  26 | C 12  U 6  R 8  M 0
+  B      total  23 | C 6  U 7  R 10  M 0
+  R      total  19 | C 9  U 4  R 4  M 2
+  G      total  17 | C 5  U 8  R 4  M 0
+  WU     total  13 | C 9  U 1  R 3  M 0
+  BR     total   9 | C 5  U 1  R 3  M 0
+  RG     total   9 | C 3  U 2  R 4  M 0
+  U      total   9 | C 1  U 6  R 2  M 0
+  UB     total   9 | C 3  U 3  R 3  M 0
+  BG     total   7 | C 4  U 1  R 2  M 0
+  WG     total   4 | C 2  U 2  R 0  M 0
+  UG     total   3 | C 2  U 1  R 0  M 0
+  UR     total   2 | C 1  U 0  R 0  M 1
+  WB     total   1 | C 0  U 0  R 1  M 0
+  WR     total   1 | C 0  U 0  R 1  M 0
+  tiers: Common 62, Uncommon 42, Rare 45, Mythic 3
+  themed decks: 115 / 152
+  color presence (multi counted per color): W 45, U 36, B 49, R 40, G 40
+
+**Files touched**: 152 decks (rewritten), enemies.json (152 entries), biomes/*.json, ENEMY_ROSTER_R108.md.

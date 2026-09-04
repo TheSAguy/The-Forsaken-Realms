@@ -1,35 +1,31 @@
 [metadata]
 Name=Honking Goose
 [Main]
-4 Plains|ODY
-3 Plains|ODY
-3 Plains|ODY
-3 Island|ODY
-3 Island|ODY
-3 Island|ODY
-1 Abandoned Outpost|ODY
-1 Seafloor Debris|ODY
-1 Angelic Wall|ODY
-2 Aven Windreader|ODY
-1 Beloved Chaplain|ODY
-2 Blessed Orator|ODY
-2 Cephalid Broker|ODY
-2 Cephalid Looter|ODY
-1 Cephalid Retainer|ODY
-2 Cephalid Scout|ODY
-1 Mystic Crusader|ODY
-1 Mystic Penitent|ODY
-2 Mystic Visionary|ODY
-3 Mystic Zealot|ODY
-1 Nomad Decoy|ODY
-1 Pilgrim of Justice|ODY
-1 Puppeteer|ODY
-1 Embolden|ODY
-2 Kirtar's Desire|ODY
-2 Millikin|ODY
-1 Peek|ODY
-1 Second Thoughts|ODY
-1 Shelter|ODY
-1 Skycloud Egg|ODY
-2 Syncopate|ODY
-2 Think Tank|ODY
+5 Island|MIR
+5 Island|MIR
+4 Island|MIR
+4 Plains|MIR
+3 Plains|MIR
+3 Plains|MIR
+1 Alabaster Dragon|WTH
+3 Benalish Knight|WTH
+1 Cloud Djinn|WTH
+1 Fog Elemental|WTH
+2 Heavy Ballista|WTH
+1 Man-o'-War|VIS
+2 Mistmoon Griffin|WTH
+3 Ophidian|WTH
+1 Sage Owl|WTH
+3 Serrated Biskelion|WTH
+1 Suq'Ata Firewalker|MIR
+3 Vodalian Illusionist|WTH
+1 Waterspout Djinn|VIS
+1 Abduction|WTH
+2 Empyrial Armor|WTH
+2 Pacifism|MIR
+1 Debt of Loyalty|WTH
+1 Disrupt|WTH
+1 Dissipate|MIR
+2 Impulse|VIS
+2 Memory Lapse|MIR
+1 Power Sink|MIR

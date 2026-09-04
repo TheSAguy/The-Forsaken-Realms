@@ -1,33 +1,35 @@
 [metadata]
 Name=Kor Skyknight
 [Main]
-1 Alhammarret, High Arbiter+|ORI
-1 Aven Battle Priest|ORI
-1 Celestial Flare|ORI
-2 Charging Griffin|ORI
-2 Claustrophobia|ORI
-1 Evolving Wilds|ORI
-3 Faerie Miscreant|ORI
-2 Healing Hands|ORI
-2 Hydrolash|ORI
-4 Island|ORI
-4 Island|ORI
-3 Island|ORI
-3 Island|ORI
-1 Murder Investigation|ORI
-1 Negate|ORI
-2 Nivix Barrier|ORI
-3 Plains|ORI
-3 Plains|ORI
-2 Plains|ORI
-2 Plains|ORI
-2 Sigiled Starfish|ORI
-1 Soulblade Djinn|ORI
-1 Stratus Walk|ORI
-2 Suppression Bonds|ORI
-2 Thunderclap Wyvern|ORI
-2 Totem-Guide Hartebeest|ORI
-2 Tower Geist|ORI
-1 Turn to Frog|ORI
-2 Watercourser|ORI
-2 Yoked Ox|ORI
+4 Plains|ONS
+4 Plains|ONS
+3 Plains|ONS
+4 Island|ONS
+4 Island|ONS
+3 Island|ONS
+2 Lonely Sandbar|ONS
+2 Secluded Steppe|ONS
+2 Ascending Aven|ONS
+1 Aven Redeemer|LGN
+1 Chromeshell Crab|LGN
+1 Daru Mender|LGN
+1 Daru Lancer|ONS
+2 Deftblade Elite|LGN
+2 Echo Tracer|LGN
+4 Glory Seeker|ONS
+1 Imagecrafter|ONS
+1 Ironfist Crusher|ONS
+1 Liege of the Axe|LGN
+1 Master of the Veil|LGN
+1 Mistform Mutant|ONS
+1 Swooping Talon|LGN
+2 Voidmage Apprentice|LGN
+1 Wall of Deceit|LGN
+1 Weaver of Lies|LGN
+1 Whipcorder|ONS
+2 Willbender|LGN
+2 Wingbeat Warrior|LGN
+1 Akroma's Blessing|ONS
+1 Discombobulate|ONS
+1 Improvised Armor|ONS
+2 Pacifism|MIR
