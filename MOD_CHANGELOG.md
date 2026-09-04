@@ -16488,3 +16488,50 @@ WorldStage.java, MapDialog.java.
 **Files touched**: TownRestoration.java, AdventurePlayer.java, TileMapScene.java,
 AdventureQuestData.java, AdventureQuestController.java, quests.json, enemies.json, biomes/*.json,
 sprites/enemy/heroes/* (new).
+
+## Round 108: 105 new enemies from the 'Enemy Art' pack, 152 thematic decks, rarity-rated tiers (2026-09-04)
+
+User request: turn the Enemy Art pack (7 classes x 15 creatures, one 64x16 four-frame strip each)
+into enemies, give every new enemy (these 105 plus round 107's 47 hero-based ones) its own deck,
+rate each by the card-rarity tier rule, balance colors and levels, no duplicate names, multi-color
+welcome.
+- **Sprites**: each strip becomes `sprites/enemy/basic/<class>/<key>.png` + `.atlas`; the four frames
+  serve as Idle/Walk/Attack/Hit/Death and the first frame as the Avatar. Eight art names clashed with
+  existing enemies and were renamed (Elder Green Dragon, Goblin Zealot, Mire Troll, Dune Ghoul,
+  Unwinding Crawler, Loam/Ember/Tide Elemental).
+- **Decks**: from Forge's own thematic libraries (505 quest precons + 1,145 quest duel decks; 1,229
+  usable after dropping decks with restricted cards, unknown cards or odd sizes). Each creature has
+  allowed color combos (its own color must be in the deck), theme words and a target tier; the pick
+  prefers a deck within one tier of the target, then a theme hit in the deck name/description, then
+  precons. 124 of 152 landed on a themed deck. Decks are copied to `decks/standard/<key>.dck` in the
+  adventure format (sideboards dropped). mtgdecks.net was not used - Forge's decks are already
+  validated card lists.
+- **Rating**: `ENEMY_ROSTER_R108.md` (repo root) lists every enemy with class, colors, tier, life,
+  speed and deck. Tier = the deck's rarity average (C1/U2/R4/M8, lands excluded; <2 C, <3 U, <4.5 R,
+  else M); difficulty 0.1/1/2/3, life/speed 12/20, 20/28, 30/38, 48/45 with class flavor (animals
+  lighter and faster, dragons tougher, undead slower, monsters tougher and slower). Only one Mythic:
+  the library holds just eight Mythic-rated decks and the theme/color rules rarely reach them.
+- **Spawns**: every enemy is listed in the biome of each of its colors and in the colorless waste.
+
+DISTRIBUTION colors x tier (152 enemies)
+  W      total  29 | C 12  U 7  R 10  M 0
+  B      total  22 | C 6  U 10  R 6  M 0
+  G      total  17 | C 4  U 11  R 2  M 0
+  R      total  17 | C 9  U 4  R 3  M 1
+  RG     total  11 | C 3  U 4  R 4  M 0
+  U      total  10 | C 0  U 6  R 4  M 0
+  WU     total  10 | C 8  U 1  R 1  M 0
+  BR     total   9 | C 4  U 1  R 4  M 0
+  UB     total   9 | C 3  U 3  R 3  M 0
+  BG     total   7 | C 4  U 1  R 2  M 0
+  WG     total   4 | C 2  U 2  R 0  M 0
+  UG     total   3 | C 2  U 1  R 0  M 0
+  UR     total   2 | C 1  U 0  R 1  M 0
+  WB     total   1 | C 0  U 0  R 1  M 0
+  WR     total   1 | C 0  U 0  R 1  M 0
+  tiers: Common 58, Uncommon 51, Rare 42, Mythic 1
+  themed decks: 124 / 152
+  color presence (multi counted per color): W 45, U 34, B 48, R 40, G 42
+
+**Files touched**: enemies.json (rewritten through the JSON model - same content, 2-space style),
+biomes/*.json, 105 new sprite pairs, 152 decks, ENEMY_ROSTER_R108.md (new).

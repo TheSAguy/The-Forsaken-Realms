@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 108 (2026-09-04): 105 'Enemy Art' enemies (sprites/enemy/basic/<class>/) + decks for all 152 new
+  enemies from Forge precons/duels (generator r108_gen.py in the session scratchpad; roster in
+  ENEMY_ROSTER_R108.md), rarity-rated tiers, biome spawn lists. Data-only. Needs a NEW game for spawns.
 - Round 107 (2026-09-04): glyph notifications = authored markup + [BLACK] text (actor color multiplies images);
   Ring shops never broken (seed 0, guard, flag strip on entry); capital quests 76-85 (Partner-only, capturedFrom_<color>
   flag reset on accept, 3 rares + 1500g + 100 shards); 47 hero-based enemies (sprites/enemy/heroes, 2-page atlases).
