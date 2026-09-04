@@ -16384,3 +16384,17 @@ User playtest of round 102:
   The per-city tutorial gifts keep the reward-card screen.
 
 **Files touched**: spawn.tmx, AdventurePlayer.java.
+
+## Round 104: "your shops stock only unlocked sets" - quest popup, refund, guide (2026-09-04)
+
+User request: make it clear that a shop the player builds only carries cards from unlocked sets, and
+that the player's shops are cheaper. Data-only round (no Java).
+- **Quest 43 "Raise the Banner", stage "Build a card shop"** (it already existed, after the Capitol;
+  the Trader stage stays in quest 30) now has a completion popup: shops you build stock ONLY cards
+  from the sets you have unlocked, find + research sets to fill them, your shops sell 25% under a
+  neutral town and 40% under an AI town (`playerShopPriceMultiplier` 0.75 vs `aiShopPriceMultiplier`
+  1.25), and the townsfolk refund a common shop's price: 100 gold + 5 shards as reward cards.
+- **GUIDE.md / GAME_GUIDE.md**: the same rule stated in Progressive Set Unlocks, Shop Blueprints and
+  the "where the other sets went" bullets.
+
+**Files touched**: quests.json, GUIDE.md.

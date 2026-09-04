@@ -128,6 +128,10 @@ unlock one you have collected enough of. Research takes a week per edition. (Don
 with the **Archaeologist**, who runs week-long expeditions for cards and items - a different
 building doing a different job.)
 
+**Your shops stock only what you have unlocked.** A card shop you build sells cards from the sets
+*you* have unlocked - nothing else. Unlock more sets to stock your shops. In return they sell cheaper
+than anyone else's: 25% under a neutral town's prices and 40% under an AI town's.
+
 *Full detail — what you start with, where the other sets live, and exactly how to unlock them —
 in [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).*
 
@@ -342,7 +346,8 @@ you nothing elsewhere.
 
 Card shops have a **type** — Goblins, Instants, Azorius, Dragons and so on, around **215** of them
 — and the type decides what that shop sells. In this plane you can only build a type you actually
-know, so your towns are shaped by which blueprints you've collected.
+know, so your towns are shaped by which blueprints you've collected. Whatever the type, a shop you
+build stocks ONLY cards from the sets you have unlocked - unlock more sets to fill its shelves.
 
 **What you start with, and why.** Five types, drawn from who you are:
 
@@ -439,7 +444,8 @@ beyond flavor, and why the race-select `?` button is worth reading before you co
 **Where the other sets went.** Everything else is dealt out among six owners — the five colors and
 a neutral pool. Those aren't locked away in the abstract: they decide **what the shops sell**.
 
-- **Your own towns and Capitol** stock cards only from the editions *you* have unlocked.
+- **Your own towns and Capitol** stock cards only from the editions *you* have unlocked. Unlock more
+  sets to stock your shops - and they sell cheaper than any neutral or AI shop (25% and 40% under).
 - **An AI color's town** stocks cards from that color's own share.
 - **A neutral town** stocks from the neutral pool.
 

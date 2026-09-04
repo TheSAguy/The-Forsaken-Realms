@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 104 (2026-09-04): data-only - card shop quest popup (stock = unlocked sets, cheaper shops, 100g+5
+  shard refund) + GUIDE.md wording. Packager-only chain (no Maven).
 - Round 103 (2026-09-04): Warden soft-lock fixed (rune node -> reward card -> Thank you -> portal; coin branch
   removed from spawn.tmx); skip-intro 'all' gift grants directly + counts the Ring as visited (+5 life).
   Lesson: a RewardScene opened from the new-game intro dialog is lost. Needs a NEW game.

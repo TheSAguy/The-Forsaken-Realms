@@ -9448,7 +9448,28 @@
 						}
 					]
 				},
-				"epilogue": {},
+				"epilogue": {
+					"text": "Your card shop is open - and its shelves tell the truth of this realm. A shop you build stocks ONLY cards from the sets you have unlocked; nothing else exists for it to sell. Find a set's cards in the world, research the set at your Capitol's Research Lab, and the shelves fill. There is an upside to owning the counter: your shops sell cheaper than anyone else's - a quarter under a neutral town's prices, and forty percent under an AI town's. The townsfolk, grateful for a shop of their own, return what a common shop costs to raise.",
+					"options": [
+						{
+							"name": "(Take the refund)",
+							"action": [
+								{
+									"grantRewards": [
+										{
+											"type": "gold",
+											"count": 100
+										},
+										{
+											"type": "shards",
+											"count": 5
+										}
+									]
+								}
+							]
+						}
+					]
+				},
 				"POIToken": ""
 			},
 			{
