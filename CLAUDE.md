@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 101 (2026-09-03): NEW STORY OPENING - quest 75 'Oaths at the Ring' (53 -> 75 -> 30): start with
+  nothing (ringGiftStart), five Ring Cities hand over the difficulty's gold/shards/wood/stone/items via the
+  grantRingGift dialog action; life ladder 20/15/10/5 (+5 Ring). quests.json was re-serialized (strict JSON
+  now). Needs a NEW game. Awaiting playtest + the user's read of the story text.
 - Round 100 (2026-09-03): Ring Cities named Benalia/Tolaria/Urborg/Shiv/Llanowar; world-gen roads min 1 /
   max townMaxRoadLinks 5 (Ring/Spawn edges uncounted); capital Attack = 1v2 Archmages -> player town +
   halved mage cap; victory = 5 Ring Cities + 5 capitals (triggerGameWon); ring life bonus; [TFR-Perf];

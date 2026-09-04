@@ -2068,3 +2068,10 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`world/WorldSave.java`** - ring life recompute on load.
 - **`scene/ResearchScene.java`, `util/EconomyBuildings.java`, `scene/WorldStandingsScene.java`** - portrait sizing.
 - **`data/TuningData.java`** - `townMaxRoadLinks`.
+
+## Round 101 (2026-09-03) - Ring gifts / start with nothing
+
+- **`data/DialogData.java`** - `ActionData.grantRingGift` (serialVersionUID pinned; additive).
+- **`scene/MenuScene.java`, `util/MapDialog.java`** - execute `grantRingGift` next to the resource actions.
+- **`player/AdventurePlayer.java`** - `grantRingGift(kind)`, creation grants nothing when `ringGiftStart`.
+- **`data/ConfigData.java`** - `ringGiftStart`.

@@ -559,7 +559,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         this.difficultyData.goldLoss = difficultyData.goldLoss;
         this.difficultyData.lifeLoss = difficultyData.lifeLoss;
 
-        gold = difficultyData.startingMoney;
+        gold = ringGiftStart() ? 0 : difficultyData.startingMoney; // round 101: the Ring Cities hand the kit over
         name = n;
         heroRace = race;
         avatarIndex = avatar;
@@ -574,9 +574,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         ColorReputation.applyStartingDeckBonus(colorIdentity);
 
         life = maxLife = difficultyData.startingLife;
-        shards = difficultyData.startingShards;
-        wood = difficultyData.startingWood;
-        stone = difficultyData.startingStone;
+        shards = ringGiftStart() ? 0 : difficultyData.startingShards;
+        wood = ringGiftStart() ? 0 : difficultyData.startingWood;
+        stone = ringGiftStart() ? 0 : difficultyData.startingStone;
 
         // Progressive Set Unlocks (MOD_SCOPE.md #4): difficulty-scaled starting unlocked
         // editions - Easy 4, Normal 3, Hard 2, Insane 1. Race-driven (user spec 2026-08-12,
@@ -593,7 +593,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // after heroRace is set above, since the race grant is keyed off it.
         seedStartingShopTypes(race);
 
-        for (String s : difficultyData.startItems) {
+        for (String s : (ringGiftStart() ? new String[0] : difficultyData.startItems)) { // round 101: Llanowar hands the kit over
             ItemData i = ItemListData.getItem(s);
             if (i == null)
                 continue;
@@ -1861,6 +1861,34 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         logLife("ringLifeBonus(target=" + target + ")", lb, mb);
         onLifeTotalChangeList.emit();
         return delta;
+    }
+    /** Round 101: "start with nothing" - the five Ring Cities hand the difficulty's starting kit over instead. */
+    private static boolean ringGiftStart() {
+        return forge.adventure.util.Config.instance().getConfigData().ringGiftStart;
+    }
+    /** Round 101: a Ring City's gift - kind is gold / shards / wood / stone / items / all (the difficulty's starting amounts). */
+    public void grantRingGift(String kind) {
+        if (difficultyData == null || kind == null)
+            return;
+        String k = kind.trim().toLowerCase();
+        boolean all = "all".equals(k);
+        if (all || "gold".equals(k))
+            giveGold(difficultyData.startingMoney);
+        if (all || "shards".equals(k))
+            addShards(difficultyData.startingShards);
+        if (all || "wood".equals(k))
+            addWood(difficultyData.startingWood);
+        if (all || "stone".equals(k))
+            addStone(difficultyData.startingStone);
+        if (all || "items".equals(k)) {
+            for (String s : difficultyData.startItems) {
+                ItemData i = ItemListData.getItem(s);
+                if (i != null)
+                    inventoryItems.add(i);
+            }
+        }
+        System.out.println("[TFR-RingGift] " + k + " granted (difficulty " + difficultyData.name + ") -> gold " + gold + ", shards " + shards
+                + ", wood " + wood + ", stone " + stone + (all || "items".equals(k) ? ", items +" + difficultyData.startItems.length : ""));
     }
     public void addMaxLife(int count) {
         int lb = life, mb = maxLife;

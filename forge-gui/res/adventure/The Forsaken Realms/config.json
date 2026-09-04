@@ -43,8 +43,8 @@
   "difficulties": [
     {
       "name": "Easy",
-      "startingLife": 21,
-      "startingShards": 5,
+      "startingLife": 20,
+      "startingShards": 15,
       "startingMoney": 500,
       "startingWood": 200,
       "startingStone": 200,
@@ -82,8 +82,8 @@
       ]
     },{
       "name": "Normal",
-      "startingLife": 16,
-      "startingShards": 2,
+      "startingLife": 15,
+      "startingShards": 10,
       "startingMoney": 250,
       "startingWood": 100,
       "startingStone": 100,
@@ -121,10 +121,10 @@
       ]
     },{
       "name": "Hard",
-      "startingLife": 11,
+      "startingLife": 10,
       "startingWood": 50,
       "startingStone": 50,
-      "startingShards": 0,
+      "startingShards": 7,
       "startingMoney": 125,
       "enemyLifeFactor": 1.5,
       "rewardMaxFactor" : 0.5,
@@ -156,11 +156,11 @@
       }
     },{
       "name": "Insane",
-      "startingLife": 9,
+      "startingLife": 5,
       "startingWood": 25,
       "startingStone": 25,
-      "startingShards": 0,
-      "startingMoney": 0,
+      "startingShards": 5,
+      "startingMoney": 50,
       "enemyLifeFactor": 2.5,
       "rewardMaxFactor" : 0.0,
       "spawnRank": 3,
@@ -217,6 +217,8 @@
     ],
     "fogOfWarEnabled": true,
     "warTownAssaultEnabled": true,
+    // Round 101: the player starts with nothing - the five Ring Cities hand over the difficulty's starting gold/shards/wood/stone/items.
+    "ringGiftStart": true,
     "dayNightCycleEnabled": true,
     "townReconstructionEnabled": true,
     "territoryControlEnabled": true,

@@ -4768,7 +4768,7 @@
 		"radiusFactor": 0,
 		"offsetX": 0.000000,
 		"offsetY": 0.028571,
-		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown", "RingWhite"]
 	},
 	{
 		"name": "Plains Town Center1",
@@ -4778,7 +4778,7 @@
 		"sprite": "CenterTownWhite",
 		"map": "../The Forsaken Realms/maps/map/towns/plains_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingWhite"]
 	},
 	{
 		"name": "Island Town Center1",
@@ -4788,7 +4788,7 @@
 		"sprite": "CenterTownBlue",
 		"map": "../The Forsaken Realms/maps/map/towns/island_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingWhite"]
 	},
 	{
 		"name": "Swamp Town Center1",
@@ -4798,7 +4798,7 @@
 		"sprite": "CenterTownBlack",
 		"map": "../The Forsaken Realms/maps/map/towns/swamp_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingWhite"]
 	},
 	{
 		"name": "Mountain Town Center1",
@@ -4808,7 +4808,7 @@
 		"sprite": "CenterTownRed",
 		"map": "../The Forsaken Realms/maps/map/towns/mountain_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingWhite"]
 	},
 	{
 		"name": "Forest Town Center1",
@@ -4818,7 +4818,7 @@
 		"sprite": "CenterTownGreen",
 		"map": "../The Forsaken Realms/maps/map/towns/forest_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingWhite"]
 	},
 	{
 		"name": "Waste Town Center2",
@@ -4831,7 +4831,7 @@
 		"radiusFactor": 0,
 		"offsetX": 0.027774,
 		"offsetY": 0.006704,
-		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown", "RingBlue"]
 	},
 	{
 		"name": "Plains Town Center2",
@@ -4841,7 +4841,7 @@
 		"sprite": "CenterTownWhite",
 		"map": "../The Forsaken Realms/maps/map/towns/plains_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlue"]
 	},
 	{
 		"name": "Island Town Center2",
@@ -4851,7 +4851,7 @@
 		"sprite": "CenterTownBlue",
 		"map": "../The Forsaken Realms/maps/map/towns/island_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlue"]
 	},
 	{
 		"name": "Swamp Town Center2",
@@ -4861,7 +4861,7 @@
 		"sprite": "CenterTownBlack",
 		"map": "../The Forsaken Realms/maps/map/towns/swamp_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlue"]
 	},
 	{
 		"name": "Mountain Town Center2",
@@ -4871,7 +4871,7 @@
 		"sprite": "CenterTownRed",
 		"map": "../The Forsaken Realms/maps/map/towns/mountain_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlue"]
 	},
 	{
 		"name": "Forest Town Center2",
@@ -4881,7 +4881,7 @@
 		"sprite": "CenterTownGreen",
 		"map": "../The Forsaken Realms/maps/map/towns/forest_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlue"]
 	},
 	{
 		"name": "Waste Town Center3",
@@ -4894,7 +4894,7 @@
 		"radiusFactor": 0,
 		"offsetX": 0.016607,
 		"offsetY": -0.023250,
-		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown", "RingBlack"]
 	},
 	{
 		"name": "Plains Town Center3",
@@ -4904,7 +4904,7 @@
 		"sprite": "CenterTownWhite",
 		"map": "../The Forsaken Realms/maps/map/towns/plains_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlack"]
 	},
 	{
 		"name": "Island Town Center3",
@@ -4914,7 +4914,7 @@
 		"sprite": "CenterTownBlue",
 		"map": "../The Forsaken Realms/maps/map/towns/island_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlack"]
 	},
 	{
 		"name": "Swamp Town Center3",
@@ -4924,7 +4924,7 @@
 		"sprite": "CenterTownBlack",
 		"map": "../The Forsaken Realms/maps/map/towns/swamp_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlack"]
 	},
 	{
 		"name": "Mountain Town Center3",
@@ -4934,7 +4934,7 @@
 		"sprite": "CenterTownRed",
 		"map": "../The Forsaken Realms/maps/map/towns/mountain_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlack"]
 	},
 	{
 		"name": "Forest Town Center3",
@@ -4944,7 +4944,7 @@
 		"sprite": "CenterTownGreen",
 		"map": "../The Forsaken Realms/maps/map/towns/forest_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingBlack"]
 	},
 	{
 		"name": "Waste Town Center4",
@@ -4957,7 +4957,7 @@
 		"radiusFactor": 0,
 		"offsetX": -0.016043,
 		"offsetY": -0.023642,
-		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown", "RingRed"]
 	},
 	{
 		"name": "Plains Town Center4",
@@ -4967,7 +4967,7 @@
 		"sprite": "CenterTownWhite",
 		"map": "../The Forsaken Realms/maps/map/towns/plains_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingRed"]
 	},
 	{
 		"name": "Island Town Center4",
@@ -4977,7 +4977,7 @@
 		"sprite": "CenterTownBlue",
 		"map": "../The Forsaken Realms/maps/map/towns/island_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingRed"]
 	},
 	{
 		"name": "Swamp Town Center4",
@@ -4987,7 +4987,7 @@
 		"sprite": "CenterTownBlack",
 		"map": "../The Forsaken Realms/maps/map/towns/swamp_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingRed"]
 	},
 	{
 		"name": "Mountain Town Center4",
@@ -4997,7 +4997,7 @@
 		"sprite": "CenterTownRed",
 		"map": "../The Forsaken Realms/maps/map/towns/mountain_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingRed"]
 	},
 	{
 		"name": "Forest Town Center4",
@@ -5007,7 +5007,7 @@
 		"sprite": "CenterTownGreen",
 		"map": "../The Forsaken Realms/maps/map/towns/forest_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingRed"]
 	},
 	{
 		"name": "Waste Town Center5",
@@ -5020,7 +5020,7 @@
 		"radiusFactor": 0,
 		"offsetX": -0.027718,
 		"offsetY": 0.006930,
-		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "TownGeneric", "BiomeColorless", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
 	},
 	{
 		"name": "Plains Town Center5",
@@ -5030,7 +5030,7 @@
 		"sprite": "CenterTownWhite",
 		"map": "../The Forsaken Realms/maps/map/towns/plains_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeWhite", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
 	},
 	{
 		"name": "Island Town Center5",
@@ -5040,7 +5040,7 @@
 		"sprite": "CenterTownBlue",
 		"map": "../The Forsaken Realms/maps/map/towns/island_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlue", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
 	},
 	{
 		"name": "Swamp Town Center5",
@@ -5050,7 +5050,7 @@
 		"sprite": "CenterTownBlack",
 		"map": "../The Forsaken Realms/maps/map/towns/swamp_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeBlack", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
 	},
 	{
 		"name": "Mountain Town Center5",
@@ -5060,7 +5060,7 @@
 		"sprite": "CenterTownRed",
 		"map": "../The Forsaken Realms/maps/map/towns/mountain_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeRed", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
 	},
 	{
 		"name": "Forest Town Center5",
@@ -5070,6 +5070,6 @@
 		"sprite": "CenterTownGreen",
 		"map": "../The Forsaken Realms/maps/map/towns/forest_town_generic.tmx",
 		"radiusFactor": 0,
-		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown"]
+		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
 	}
 ]

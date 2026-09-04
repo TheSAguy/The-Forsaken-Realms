@@ -68,6 +68,7 @@ public class DialogData implements Serializable {
         public int addGold = 0;           //Gives the player X gold. Negative to take.
         public int addShards = 0;           //Gives the player X shards. Negative to take.
         public int addWood = 0;           //Gives the player X wood. Negative to take. (mod: multi-resource building costs)
+        public String grantRingGift;      //mod round 101: "gold"|"shards"|"wood"|"stone"|"items"|"all" - the difficulty's starting amounts, handed over by the Ring Cities.
         public int addStone = 0;          //Gives the player X stone. Negative to take. (mod)
 
         public int deleteMapObject = 0;   //Remove ID from the map. -1 for self.

@@ -40,6 +40,9 @@ public class ConfigData {
     // MOD_SCOPE #87 (2026-09-03): at War, entering an AI town offers Attack (a random roamer from
     // that color's pool, starting with its basic land tapped) instead of only being barred.
     public boolean warTownAssaultEnabled = false;
+    // Round 101 (user spec 2026-09-03): the player starts with NOTHING; the five Ring Cities hand over the
+    // difficulty's starting gold / shards / wood / stone / items during the tutorial (grantRingGift action).
+    public boolean ringGiftStart = false;
     public boolean dayNightCycleEnabled = false;
     public boolean townReconstructionEnabled = false;
     public boolean territoryControlEnabled = false;

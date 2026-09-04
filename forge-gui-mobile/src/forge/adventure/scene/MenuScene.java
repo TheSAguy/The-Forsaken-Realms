@@ -72,6 +72,8 @@ public class MenuScene extends UIScene {
                 if (E.addGold > 0) Current.player().giveGold(E.addGold);
                 else Current.player().takeGold(-E.addGold);
             }
+            if (E.grantRingGift != null && !E.grantRingGift.isEmpty()) // round 101: a Ring City hands over part of the starting kit
+                Current.player().grantRingGift(E.grantRingGift);
             if (E.addShards != 0) { //Gives (positive or negative) mana shards to the player.
                 if (E.addShards > 0) Current.player().addShards(E.addShards);
                 else Current.player().takeShards(-E.addShards);

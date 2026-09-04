@@ -16288,3 +16288,50 @@ be attacked), and holding all five plus taking the five AI capitals wins the gam
 **Files touched**: points_of_interest.json, settings.json, TuningData.java, World.java,
 TerritoryControl.java, TownRestoration.java, WorldStage.java, WorldSave.java, AdventurePlayer.java,
 ResearchScene.java, EconomyBuildings.java, WorldStandingsScene.java.
+
+## Round 101: the new main quest opening - "Oaths at the Ring" (2026-09-03)
+
+User request (2026-09-03, "use your creative skills... use your best judgement with any questions"):
+a new story for the main quest built on the five Ring Cities, a reworked tutorial in which the
+player starts with NOTHING and receives the starting kit from the five cities, hard-coded lore names,
+and +1 life per city while it stays free.
+
+**Story (woven into the existing lore - the Guardian, the five Seals, Orazca, the Weave, the Five).**
+Three thousand years ago the realm sealed the Guardian (the player) away; their power was cut into
+five Seals - pearl, jet, sapphire, emerald, ruby - and given to the five Ring Cities to keep. In
+their hubris the councils tried to wield what they were meant to guard: Benalia wrote the pearl
+Seal's virtue into law, Tolaria opened the sapphire Seal to study it, Urborg bargained with the jet
+Seal, Shiv fed the ruby Seal to its furnace, Llanowar planted the emerald Seal. Each Seal answered
+to a rival planeswalker instead - the Five - who took the Seals to their castles and now carve up
+the realm. Desperate, the councils cracked the Guardian's prison. They need the Guardian and fear
+them: "the Seals go back on when it is done." The victory message answers that ("...find you are
+no longer someone who can be sealed"). Chapter 2 ("The Enemy of My Enemy...", the Seals in the
+castles) already fits this frame and is untouched.
+
+**Tutorial flow.** Intro (quest 28, rewritten): the Warden explains the Ring and the councils'
+bargain. Quest 53 (talk to the mage, leave the cave) now issues **quest 75 "Oaths at the Ring"**:
+walk the star's five roads in order - Benalia (white, north) gives GOLD, Tolaria (blue) SHARDS,
+Urborg (black) WOOD, Shiv (red) STONE, Llanowar (green) the difficulty's starting ITEMS - each with
+its story; the last gift issues quest 30 (ruined town, surviving town, dungeon...) as before. New
+Ring quest tags `RingWhite/Blue/Black/Red/Green` on all 30 Ring City entries drive the Travel
+stages. The "Skip the introduction" path grants all five gifts at once.
+
+**Start with nothing.** `ringGiftStart` (config.json, true): a new character starts with 0 gold /
+shards / wood / stone and no items; `grantRingGift` (new dialog action: gold | shards | wood | stone
+| items | all) hands over the DIFFICULTY's amounts, so the config table is now the gift table.
+Ladder (judgment call - the user gave Easy and Insane for resources and Easy 20 / "Hard" 5 for
+life; read as an even 20/15/10/5 ladder):
+
+  | difficulty | life (+5 Ring) | gold | shards | wood | stone | items |
+  |---|---|---|---|---|---|---|
+  | Easy   | 20 (25) | 500 | 15 | 200 | 200 | the difficulty's start items |
+  | Normal | 15 (20) | 250 | 10 | 100 | 100 | " |
+  | Hard   | 10 (15) | 125 |  7 |  50 |  50 | " |
+  | Insane |  5 (10) |  50 |  5 |  25 |  25 | " |
+
+The +1 life per visited free Ring City is round 100's ring life bonus (lost while an AI holds the
+city, back when it is neutral or the player's again). Logged `[TFR-RingGift]`.
+
+**Files touched**: quests.json (rewritten through the JSON model - tabs/CRLF kept, control
+characters now escaped), config.json, points_of_interest.json, ConfigData.java, DialogData.java,
+MenuScene.java, MapDialog.java, AdventurePlayer.java.
