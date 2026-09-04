@@ -63,6 +63,34 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private boolean currentMobIsTownAssault = false;
     private String townAssaultTownName = null;
     private PointOfInterest townAssaultPoi = null;
+    // Round 105 (user request 2026-09-04): full-screen back-splash behind the win/lose dialog - the user's
+    // Victory.jpg / Lose_Image.jpg shipped as ui/victory_splash.jpg + ui/defeat_splash.jpg (1344x768).
+    private com.badlogic.gdx.scenes.scene2d.ui.Image endSplash;
+    private String pendingVictoryMessage;
+    private void showEndSplash(String file) {
+        hideEndSplash();
+        try {
+            if (dialogStage == null)
+                setDialogStage(GameHUD.getInstance());
+            com.badlogic.gdx.graphics.Texture tex = Forge.getAssets().getTexture(Config.instance().getFile(file));
+            if (tex == null)
+                return;
+            endSplash = new com.badlogic.gdx.scenes.scene2d.ui.Image(new com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable(
+                    new com.badlogic.gdx.graphics.g2d.TextureRegion(tex)));
+            endSplash.setScaling(com.badlogic.gdx.utils.Scaling.fill);
+            endSplash.setSize(dialogStage.getWidth(), dialogStage.getHeight());
+            endSplash.setPosition(0, 0);
+            dialogStage.addActor(endSplash); // the dialog is shown afterwards, so it lands on top
+        } catch (Exception e) {
+            System.err.println("[TFR-Splash] could not show " + file + ": " + e);
+        }
+    }
+    private void hideEndSplash() {
+        if (endSplash != null) {
+            endSplash.remove();
+            endSplash = null;
+        }
+    }
     private String townAssaultColor = null;
     protected Random rand = MyRandom.getRandom();
     WorldBackground background;
@@ -806,6 +834,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // the Capitol-defense path only; the "no towns left" path did not).
         Current.player().clearSuppressDefeatGoldLoss();
         Forge.advFreezePlayerControls = true;
+        showEndSplash("ui/defeat_splash.jpg");
         Dialog dialog = getDialog();
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
@@ -819,6 +848,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().add(Controls.newTextButton("Return to Main Menu", () -> {
             Forge.advFreezePlayerControls = false;
             hideDialog();
+            hideEndSplash();
             WorldSave.getCurrentSave().header.createPreview();
             Forge.switchScene(StartScene.instance());
         })).width(240f).row();
@@ -832,7 +862,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // toll below, single Leave button - there's nothing to pay here, ordinary towns bar outright.
     /** Round 100 (user spec 2026-09-03): the run is won - all five Ring Cities held and all five capitals taken. */
     public void triggerGameWon(String message) {
+        if (forge.adventure.stage.MapStage.getInstance().isInMap()) { // round 105: the last castle falls INSIDE its map - show the win on the world map
+            pendingVictoryMessage = message;
+            System.out.println("[TFR-Victory] inside a map - the victory dialog is deferred to the world map");
+            return;
+        }
+        showGameWonDialog(message);
+    }
+    private void showGameWonDialog(String message) {
         Forge.advFreezePlayerControls = true;
+        showEndSplash("ui/victory_splash.jpg");
         Dialog dialog = getDialog();
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
@@ -844,10 +883,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().add(Controls.newTextButton("Keep Playing", () -> {
             Forge.advFreezePlayerControls = false;
             hideDialog();
+            hideEndSplash();
         })).width(240f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Return to Main Menu", () -> {
             Forge.advFreezePlayerControls = false;
             hideDialog();
+            hideEndSplash();
             WorldSave.getCurrentSave().header.createPreview();
             Forge.switchScene(StartScene.instance());
         })).width(240f).row();
@@ -1491,6 +1532,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     @Override
     public void enter() {
+        if (pendingVictoryMessage != null) { // round 105: victory earned inside a castle map
+            String won = pendingVictoryMessage;
+            pendingVictoryMessage = null;
+            showGameWonDialog(won);
+        }
         getPlayerSprite().LoadPos();
         getPlayerSprite().setMovementDirection(Vector2.Zero);
         if (enterSpawnPOI) {

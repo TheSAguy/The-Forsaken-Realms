@@ -16398,3 +16398,26 @@ that the player's shops are cheaper. Data-only round (no Java).
   the "where the other sets went" bullets.
 
 **Files touched**: quests.json, GUIDE.md.
+
+## Round 105: win/lose back-splashes, Ring stages on entry, black pop-up text, factory map (2026-09-04)
+
+User playtest of rounds 103/104:
+- **Ring gifts fired outside the gate.** The five stages were `Travel` objectives, which complete on
+  reaching the city's map sprite - the Llanowar kit popped up while standing outside. They are now
+  `CharacterFlag` objectives on `enteredRingCity1..5`, set in `TileMapScene` when the player is
+  actually inside (same hook as `enteredSurvivingTown`); arrows (`navPOIFilter "tagged"`) unchanged.
+  The retroactive flag completion covers a city entered before its stage became active.
+- **Pop-up text black.** `GameHUD.addNotification(text, authoredMarkup=true)` paints the text WHITE;
+  the `[+Life]` pop-ups (Ring life, realm life, capital fallen, skip-intro gifts) now pass `false`, so
+  the glyph stays and the text is black like every other notification.
+- **Victory / defeat back-splashes.** The user's `Victory.jpg` and `Lose_Image.jpg` (2688x1536) are
+  shipped as `ui/victory_splash.jpg` and `ui/defeat_splash.jpg` (1344x768, JPEG q88, ~300 KB each).
+  `WorldStage.showEndSplash` puts a stage-filling `Image` on the dialog stage under the win/lose
+  dialog (`Scaling.fill`), removed by every dialog button. A victory earned INSIDE a castle map is
+  deferred (`pendingVictoryMessage`) and shown on the next `WorldStage.enter()`, so the map's controls
+  are never frozen under an invisible dialog.
+- **Factory dungeon layout** `factory_4_large.tmx` replaced with the user's edit (collision layer and
+  three wood-drop positions; diffed before copying).
+
+**Files touched**: WorldStage.java, TownRestoration.java, AdventurePlayer.java, TileMapScene.java,
+quests.json, factory_4_large.tmx, ui/victory_splash.jpg + ui/defeat_splash.jpg (new).

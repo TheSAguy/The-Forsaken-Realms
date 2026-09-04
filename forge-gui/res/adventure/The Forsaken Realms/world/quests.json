@@ -13524,12 +13524,12 @@
 				"name": "Benalia - the White Ring City",
 				"description": "Find and enter any dungeon.",
 				"anyPOI": true,
-				"mapFlag": "",
+				"mapFlag": "enteredRingCity1",
 				"mapFlagValue": 1,
 				"POITags": [
 					"RingWhite"
 				],
-				"objective": "Travel",
+				"objective": "CharacterFlag",
 				"prologue": {
 					"text": "Due north of your fire stand the white walls of Benalia - once the realm's court of law, seat of the pearl Seal. Follow the road. Follow the arrow.",
 					"options": [
@@ -13560,12 +13560,12 @@
 				"name": "Tolaria - the Blue Ring City",
 				"description": "Find and enter any dungeon.",
 				"anyPOI": true,
-				"mapFlag": "",
+				"mapFlag": "enteredRingCity2",
 				"mapFlagValue": 1,
 				"POITags": [
 					"RingBlue"
 				],
-				"objective": "Travel",
+				"objective": "CharacterFlag",
 				"prerequisiteIDs": [
 					1
 				],
@@ -13599,12 +13599,12 @@
 				"name": "Urborg - the Black Ring City",
 				"description": "Find and enter any dungeon.",
 				"anyPOI": true,
-				"mapFlag": "",
+				"mapFlag": "enteredRingCity3",
 				"mapFlagValue": 1,
 				"POITags": [
 					"RingBlack"
 				],
-				"objective": "Travel",
+				"objective": "CharacterFlag",
 				"prerequisiteIDs": [
 					2
 				],
@@ -13638,12 +13638,12 @@
 				"name": "Shiv - the Red Ring City",
 				"description": "Find and enter any dungeon.",
 				"anyPOI": true,
-				"mapFlag": "",
+				"mapFlag": "enteredRingCity4",
 				"mapFlagValue": 1,
 				"POITags": [
 					"RingRed"
 				],
-				"objective": "Travel",
+				"objective": "CharacterFlag",
 				"prerequisiteIDs": [
 					3
 				],
@@ -13677,12 +13677,12 @@
 				"name": "Llanowar - the Green Ring City",
 				"description": "Find and enter any dungeon.",
 				"anyPOI": true,
-				"mapFlag": "",
+				"mapFlag": "enteredRingCity5",
 				"mapFlagValue": 1,
 				"POITags": [
 					"RingGreen"
 				],
-				"objective": "Travel",
+				"objective": "CharacterFlag",
 				"prerequisiteIDs": [
 					4
 				],

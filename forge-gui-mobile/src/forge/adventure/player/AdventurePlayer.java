@@ -1928,7 +1928,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     + ", Ring Cities counted as visited: " + ringCities);
             forge.adventure.stage.GameHUD.getInstance().addNotification("The Ring's gifts: [+Gold] " + cfg.startingMoney + "  [+Shards] "
                     + cfg.startingShards + "  [+Wood] " + cfg.startingWood + "  [+Stone] " + cfg.startingStone + "  and " + items
-                    + " item(s). [+Life] Max life +" + ringCities + ".", true);
+                    + " item(s). [+Life] Max life +" + ringCities + ".", false); // round 105: black text
             return;
         }
         com.badlogic.gdx.utils.Array<forge.adventure.util.Reward> rewards = new com.badlogic.gdx.utils.Array<>();

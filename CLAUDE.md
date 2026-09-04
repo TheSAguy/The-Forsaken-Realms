@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 105 (2026-09-04): win/lose back-splash images (ui/*_splash.jpg, WorldStage.showEndSplash; victory
+  deferred while inside a map); Ring stages now CharacterFlag enteredRingCity1..5 (set in TileMapScene on
+  entry - Travel fired outside the gate); [+Life] pop-ups black (authoredMarkup=false); factory_4_large.tmx
+  from the user. Needs a NEW game for the quest change.
 - Round 104 (2026-09-04): data-only - card shop quest popup (stock = unlocked sets, cheaper shops, 100g+5
   shard refund) + GUIDE.md wording. Packager-only chain (no Maven).
 - Round 103 (2026-09-04): Warden soft-lock fixed (rune node -> reward card -> Thank you -> portal; coin branch

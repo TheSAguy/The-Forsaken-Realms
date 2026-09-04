@@ -2087,3 +2087,9 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 ## Round 103 (2026-09-04) - skip-intro direct grants
 
 - **`player/AdventurePlayer.java`** - `grantRingGift("all")` grants directly + marks the Ring visited.
+
+## Round 105 (2026-09-04) - end-game splashes, Ring entry flags
+
+- **`stage/WorldStage.java`** - `showEndSplash`/`hideEndSplash`, `showGameWonDialog` + deferral in `enter()`.
+- **`scene/TileMapScene.java`** - `enteredRingCity<N>` character flags on Ring City entry.
+- **`util/TownRestoration.java`, `player/AdventurePlayer.java`** - black notification text.

@@ -176,6 +176,12 @@ public class TileMapScene extends HudScene {
         // setCharacterFlag re-fires harmlessly on every entry (idempotent value, quest stages
         // complete once); guarded so a fresh save's spawn-dungeon entry can't NPE anything.
         try {
+            if (forge.adventure.util.TerritoryControl.isRingTown(point)) { // round 105: quest 75's stages complete on ENTERING a Ring City
+                String ringName = point.getData().name;
+                char arm = ringName.charAt(ringName.length() - 1);
+                Current.player().setCharacterFlag("enteredRingCity" + arm, 1);
+                System.out.println("[TFR-MainQuest] enteredRingCity" + arm + " -> 1 (" + point.getDisplayName() + ")");
+            }
             if (TownRestoration.isWastelandTown(point.getData())) {
                 forge.adventure.pointofintrest.PointOfInterestChanges entryChanges =
                         WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());

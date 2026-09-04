@@ -8,7 +8,7 @@
  <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="60" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmW0OgyAMhvt3EU/Adp0dwp1l27l07G6LmWRmkSryVWmfpL8k0hew4AuAIKTl3gA8HPFsSmcXH60ABkdcVPr+DdK/jfdKHoNHnhppm0Pvlj6wHDGWxqFmvb7vyqG3awFurXst2+exKK03N9z09khdfFWoV0hPSL2NWatzIXpx5mfcmHtTDo6Yc0zmc33EteoLN73c4Da/3PRSwOV5jD5DjR5PP/13Lnlaa96KIAj74eRXrJ3FbQ2iArf9lpJes8HXD6WU3uvpFxZ7xsDahEJJ7542vlDSe1bfwNqEYgh9v7HvMf4ZteoMNYIK3TSWnLwsn3tbQRDK8gFeVUDo
+   eJztmVEOwiAMhvtqxk6AXsdDzLM4z+XEu5lFiYuRbowC3dov6dMa2h9YIQVAUfJybQD6gN2a2tnRYw3AELCTyR/fIfG9PWfyGCLytIhvCb1LYmA5Yvybhz3rjR2rhN6uBbi04b3sv1NRW29ppOm9I3XxsUO9Sn5S6i1lrS6F6sWZ3nEpz6YSbDFnSqZrvcW9Gos0vdKQtr7S9CqKokhBUr9i7i4+9r56Rj10aectJ71uQV8/lVp6z4eveXzPDvNJhZPeNT6xcNJ7NG/DfFJxjP5f6neMX0attkCN4EL3mUtJvayYd1tFUeryAnc3Nu4=
   </data>
  </layer>
  <layer id="7" name="Floor and Walls" width="60" height="40">
@@ -172,7 +172,7 @@
    </properties>
   </object>
   <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="654.667" y="166"/>
-  <object id="114" template="../../obj/wood.tx" x="644.252" y="363.214">
+  <object id="114" template="../../obj/wood.tx" x="646.616" y="364.487">
    <properties>
     <property name="reward">[
   {
@@ -183,7 +183,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="115" template="../../obj/wood.tx" x="666.493" y="364.427">
+  <object id="115" template="../../obj/wood.tx" x="668.675" y="364.245">
    <properties>
     <property name="reward">[
   {
@@ -194,7 +194,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="116" template="../../obj/wood.tx" x="690.351" y="361.596">
+  <object id="116" template="../../obj/wood.tx" x="690.351" y="364.687">
    <properties>
     <property name="reward">[
   {
