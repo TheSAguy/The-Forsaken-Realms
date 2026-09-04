@@ -108,8 +108,16 @@
     "starTownExclusionRadiusTiles": 24,
     // Minimum distance (tiles) between an ordinary town and every town placed before it.
     "townMinSpacingTiles": 10,
-    // TEST ONLY - REMOVE AFTER TESTING: share of mage dispatches sent at a random Center Town (0 = off).
-    "debugStarTownTargetChance": 0.5,
+    // World-gen town roads: this share of the nearest-neighbor edges is skipped (star roads never are).
+    "initialTownRoadSkipFraction": 0.25,
+    // Ring Towns (the five Center Towns): an AI color may target a given Ring Town once per this many days.
+    "ringTownTargetCooldownDays": 7,
+    // Once a Ring Town is among a color's five nearest candidates, its pick weight is multiplied by 1 + this.
+    "ringTownTargetWeightBonus": 0.25,
+    // AI-vs-AI assaults: the defending AI town's guard dot fights first (table in MOD_CHANGELOG round 99).
+    "aiTownGuardDefenseEnabled": true,
+    // An Archmage with two lands (guard level 4) defends at Mythic power x this factor.
+    "aiGuardTwoLandPowerFactor": 1.5,
 
     // Weighted spawn tier system, Layer 3 - per-enemy kill-decay (2026-08-23, redesigned
     // 2026-08-25 to a permanent, uncapped halving with no time recovery - no longer tunable via

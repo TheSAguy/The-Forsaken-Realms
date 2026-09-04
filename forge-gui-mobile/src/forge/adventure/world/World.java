@@ -342,6 +342,15 @@ public class World implements Disposable, SaveFileContent {
     // (transformInto) - see STAR_TOWNS_RESEARCH.md 1.7. Empty on pre-feature saves = feature inert.
     private final java.util.List<int[]> starTownTiles = new java.util.ArrayList<>();
     public java.util.List<int[]> getStarTownTiles() { return starTownTiles; }
+    // Ring Towns (round 99): per (AI color, ring tile) day of the last targeting, persisted with the world.
+    private final java.util.Map<String, Integer> ringTargetDays = new java.util.HashMap<>();
+    public int ringTargetDay(String color, int tileX, int tileY) {
+        Integer d = ringTargetDays.get(color + "|" + tileX + "," + tileY);
+        return d == null ? Integer.MIN_VALUE : d;
+    }
+    public void recordRingTargeted(String color, int tileX, int tileY, int day) {
+        ringTargetDays.put(color + "|" + tileX + "," + tileY, day);
+    }
     /** Center Towns (MOD_SCOPE #102): ordinary towns (not Spawn, not the star towns themselves) are kept
      *  out of the star's disc - see the placement loop in generateNew(). */
     private static boolean isOrdinaryTownData(PointOfInterestData d) {
@@ -361,6 +370,55 @@ public class World implements Disposable, SaveFileContent {
                 return true;
         }
         return false;
+    }
+    /**
+     * Round 99 (user spec 2026-09-03): ids of the towns/capitals reachable by road from the tile
+     * (startTileX, startTileY). Flood fill over road-bit tiles (8-neighborhood); a town counts as
+     * reached when the flood touches any tile within two tiles of it, and the flood then also continues
+     * from the road tiles around that town (world-gen roads may stop at a town's edge). Used by
+     * TerritoryControl.connectCapturedTownByRoad to link a new holding to the closest town that is
+     * already road-connected to the owner's capital.
+     */
+    public java.util.Set<String> roadConnectedTownIds(int startTileX, int startTileY) {
+        java.util.Set<String> reached = new java.util.HashSet<>();
+        long roadBit = 1L << data.GetBiomes().size();
+        int w = getWidthInTiles(), h = getHeightInTiles(), ts = getTileSize();
+        java.util.Map<Long, PointOfInterest> townAt = new java.util.HashMap<>();
+        for (PointOfInterest poi : getAllPointOfInterest()) {
+            String type = poi.getData() == null ? null : poi.getData().type;
+            if (!"town".equals(type) && !"capital".equals(type))
+                continue;
+            int tx = (int) (poi.getPosition().x / ts), ty = (int) (poi.getPosition().y / ts);
+            townAt.put(((long) tx << 32) | (ty & 0xffffffffL), poi);
+        }
+        boolean[][] seen = new boolean[w][h];
+        java.util.ArrayDeque<int[]> queue = new java.util.ArrayDeque<>();
+        java.util.function.BiConsumer<Integer, Integer> seed = (sx, sy) -> {
+            for (int nx = sx - 2; nx <= sx + 2; nx++)
+                for (int ny = sy - 2; ny <= sy + 2; ny++)
+                    if (nx >= 0 && ny >= 0 && nx < w && ny < h && !seen[nx][ny] && (getBiome(nx, ny) & roadBit) != 0) {
+                        seen[nx][ny] = true;
+                        queue.add(new int[]{nx, ny});
+                    }
+        };
+        seed.accept(startTileX, startTileY);
+        while (!queue.isEmpty()) {
+            int[] t = queue.poll();
+            for (int nx = t[0] - 2; nx <= t[0] + 2; nx++) {
+                for (int ny = t[1] - 2; ny <= t[1] + 2; ny++) {
+                    PointOfInterest town = townAt.get(((long) nx << 32) | (ny & 0xffffffffL));
+                    if (town != null && reached.add(town.getID()))
+                        seed.accept(nx, ny);
+                }
+            }
+            for (int nx = t[0] - 1; nx <= t[0] + 1; nx++)
+                for (int ny = t[1] - 1; ny <= t[1] + 1; ny++)
+                    if (nx >= 0 && ny >= 0 && nx < w && ny < h && !seen[nx][ny] && (getBiome(nx, ny) & roadBit) != 0) {
+                        seen[nx][ny] = true;
+                        queue.add(new int[]{nx, ny});
+                    }
+        }
+        return reached;
     }
     private void recordStarTowns() {
         starTownTiles.clear();
@@ -608,6 +666,15 @@ public class World implements Disposable, SaveFileContent {
             enemyPermanentKillCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyPermanentKillCount"));
         }
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
+        ringTargetDays.clear();
+        if (saveFileData.containsKey("ringTargetDays")) {
+            for (String entry : saveFileData.readString("ringTargetDays").split(";")) {
+                int eq = entry.lastIndexOf('=');
+                if (eq > 0)
+                    try { ringTargetDays.put(entry.substring(0, eq), Integer.parseInt(entry.substring(eq + 1).trim())); }
+                    catch (NumberFormatException ignored) { }
+            }
+        }
         starTownTiles.clear();
         if (saveFileData.containsKey("starTownTiles")) {
             for (String pair : saveFileData.readString("starTownTiles").split(";")) {
@@ -673,6 +740,10 @@ public class World implements Disposable, SaveFileContent {
         for (int[] t : starTownTiles)
             star.append(star.length() == 0 ? "" : ";").append(t[0]).append(',').append(t[1]);
         data.store("starTownTiles", star.toString());
+        StringBuilder ring = new StringBuilder();
+        for (java.util.Map.Entry<String, Integer> re : ringTargetDays.entrySet())
+            ring.append(ring.length() == 0 ? "" : ";").append(re.getKey()).append('=').append(re.getValue());
+        data.store("ringTargetDays", ring.toString());
         data.storeObject("questAcceptedDay", questAcceptedDay);
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         return data;
@@ -942,6 +1013,7 @@ public class World implements Disposable, SaveFileContent {
             enemyPermanentKillCount.clear();
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
             starTownTiles.clear();
+            ringTargetDays.clear();
             questAcceptedDay.clear();
 
             for (int x = 0; x < width; x++) {
@@ -1410,52 +1482,21 @@ public class World implements Disposable, SaveFileContent {
 //////////////////
             List<Pair<PointOfInterest, PointOfInterest>> allSortedTowns = new ArrayList<>();
 
-            // Round 98 (user spec 2026-09-03): one road TREE per color. Each of a color's towns joins the
-            // closest town that is already connected to that color's capital (Prim's order), so a color's
-            // roads never double up. The nearest-neighbor pass below then only STARTS edges from towns no
-            // tree covers (waste towns, Spawn, the Center Towns); those may still end at any town.
-            java.util.Set<Integer> treeCovered = new java.util.HashSet<>();
-            for (int c = 0; c < towns.size(); c++) {
-                PointOfInterestData capData = towns.get(c).getData();
-                if (capData == null || capData.name == null || !capData.name.endsWith(" Capital"))
-                    continue;
-                String noun = capData.name.substring(0, capData.name.length() - " Capital".length()) + " ";
-                List<Integer> connected = new ArrayList<>();
-                List<Integer> pending = new ArrayList<>();
-                connected.add(c);
-                for (int k = 0; k < towns.size(); k++) {
-                    PointOfInterestData kd = towns.get(k).getData();
-                    if (k != c && kd != null && kd.name != null && kd.name.startsWith(noun) && !treeCovered.contains(k))
-                        pending.add(k);
-                }
-                int treeEdges = 0;
-                while (!pending.isEmpty()) {
-                    int bestFrom = -1, bestTo = -1;
-                    float best = Float.MAX_VALUE;
-                    for (int from : connected) {
-                        for (int to : pending) {
-                            float d = towns.get(from).getPosition().dst(towns.get(to).getPosition());
-                            if (d < best) {
-                                best = d;
-                                bestFrom = from;
-                                bestTo = to;
-                            }
-                        }
-                    }
-                    allSortedTowns.add(Pair.of(towns.get(bestFrom), towns.get(bestTo)));
-                    pending.remove(Integer.valueOf(bestTo));
-                    connected.add(bestTo);
-                    treeEdges++;
-                }
-                treeCovered.addAll(connected);
-                System.out.println("[TFR-Roads] " + capData.name + ": road tree with " + treeEdges + " edge(s) linking " + connected.size() + " town(s)");
-            }
+            // Round 99 (user spec 2026-09-03): back to the nearest-neighbor network (the round-98 per-color
+            // trees drew 49 edges per color - far too many roads at the start), thinned by
+            // TuningData.initialTownRoadSkipFraction. Roads then grow with the game: every capture, AI or
+            // player, links the new town to the closest town already road-connected to that owner's
+            // capital (TerritoryControl.connectCapturedTownByRoad). The star's explicit edges never skip.
+            float roadSkip = Config.instance().getTuningData().initialTownRoadSkipFraction;
+            int skippedRoadSources = 0;
             HashSet<Long> usedEdges = new HashSet<>();//edge is first 32 bits id of first id and last 32 bits id of second
             for (int i = 0; i < towns.size() - 1; i++) {
 
-                if (treeCovered.contains(i))
-                    continue; // round 98: this color's road tree already links it
                 PointOfInterest current = towns.get(i);
+                if (roadSkip > 0f && random.nextFloat() < roadSkip) {
+                    skippedRoadSources++;
+                    continue; // round 99: fewer world-gen roads
+                }
                 int smallestIndex = -1;
                 int secondSmallestIndex = -1;
                 float smallestDistance = Float.MAX_VALUE;
@@ -1505,6 +1546,8 @@ public class World implements Disposable, SaveFileContent {
             for (int a = 0; a < starTowns.size(); a++)
                 for (int b = a + 1; b < starTowns.size(); b++)
                     allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
+            System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
+                    + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + ")");
             List<Pair<PointOfInterest, PointOfInterest>> allPOIPathsToNextTown = new ArrayList<>();
             for (int i = 0; i < notTowns.size() - 1; i++) {
 

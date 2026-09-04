@@ -632,7 +632,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // or a player-owned town - exempt per explicit user decision).
     private String entryBarredColor(PointOfInterest poi) {
         String color = ColorReputation.colorOfTown(poi.getData());
-        if (color == null || !ColorReputation.isEntryBarred(color))
+        // Ring Towns (round 99, user test request 2026-09-03): an AI-held Ring Town always challenges the
+        // player at the gate - a 1-vs-2 assault - whatever the standing with its color.
+        boolean ringChallenge = color != null && TerritoryControl.isRingTown(poi);
+        if (color == null || (!ringChallenge && !ColorReputation.isEntryBarred(color)))
             return null;
         if (TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID())))
             return null;
@@ -683,6 +686,22 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 ? lifeFactors[Math.min(diffIndex, lifeFactors.length - 1)] : 1f;
         int rawLife = duelData.life;
         duelData.life = Math.max(1, Math.round(duelData.life * lifeFactor));
+        // Ring Towns (round 99, user test request 2026-09-03): 1-vs-2 - a second defender of the same tier
+        // joins the first on one team (EnemyData.nextEnemy is how DuelScene seats extra opponents).
+        if (TerritoryControl.isRingTown(poi)) {
+            EnemyData secondBase = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier);
+            if (secondBase != null) {
+                EnemyData second = new EnemyData(secondBase);
+                second.life = Math.max(1, Math.round(second.life * lifeFactor));
+                second.teamNumber = 1;
+                duelData.teamNumber = 1;
+                duelData.nextEnemy = second;
+                System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " is a Ring Town - 1v2: second defender "
+                        + second.getName() + " (life " + second.life + ")");
+            } else {
+                System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " is a Ring Town but no second defender was available - 1v1");
+            }
+        }
         EnemySprite defender = new EnemySprite(duelData);
         defender.effect = new EffectData();
         String land = TerritoryControl.basicLandFor(color);
@@ -817,8 +836,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         boolean canAttack = assaultEnabled && cooldownLeft <= 0;
         if (assaultEnabled && cooldownLeft > 0)
             System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " on cooldown - " + cooldownLeft + " day(s) left");
-        TypingLabel label = Controls.newTypingLabel("The guards of " + poi.getDisplayName()
-                + " bar you from entering - you are at [RED]War[] with " + capitalizeColor(barredColor) + "!"
+        boolean ring = TerritoryControl.isRingTown(poi);
+        TypingLabel label = Controls.newTypingLabel((ring
+                ? "The garrison of " + poi.getDisplayName() + " bars the gate - " + capitalizeColor(barredColor)
+                  + " holds this Ring Town, and two of its champions answer any challenge together!"
+                : "The guards of " + poi.getDisplayName()
+                + " bar you from entering - you are at [RED]War[] with " + capitalizeColor(barredColor) + "!")
                 + (canAttack ? " Their defenders stand ready; you may leave, or attack the town."
                    : (assaultEnabled && cooldownLeft > 0
                       ? " You struck at this town recently and its defenders are on guard - you can attack again in "

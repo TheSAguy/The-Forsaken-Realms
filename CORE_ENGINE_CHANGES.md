@@ -2041,3 +2041,16 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
   skips water tiles.
 - **`util/TerritoryControl.java`** (mod-new) - TEST-ONLY Center Town targeting override before the roll.
 - **`data/TuningData.java`** - `townMinSpacingTiles`, `debugStarTownTargetChance` (TEST ONLY).
+
+## Round 99 (2026-09-03) - Ring Towns, roads, AI guard fights, 1v2
+
+- **`world/World.java`** - nearest-neighbor road pass restored and thinned (round-98 tree removed);
+  `ringTargetDays` (+ save/load/reset); `roadConnectedTownIds` flood fill.
+- **`util/TerritoryControl.java`** (mod-new) - ring cooldown filter + weight bonus + targeting record;
+  `isRingTown`; `resolveAiGuardDefense` in the AI-vs-AI branch; no sacking of Ring Towns;
+  `connectCapturedTownByRoad` targets only seat-connected towns; TEST override removed.
+- **`stage/WorldStage.java`** - `entryBarredColor` challenges at AI-held Ring Towns; gate text;
+  `startTownAssault` seats a second defender (`nextEnemy`, team 1) at Ring Towns.
+- **`data/TuningData.java`** - `initialTownRoadSkipFraction`, `ringTownTargetCooldownDays`,
+  `ringTownTargetWeightBonus`, `aiTownGuardDefenseEnabled`, `aiGuardTwoLandPowerFactor`;
+  `debugStarTownTargetChance` removed.

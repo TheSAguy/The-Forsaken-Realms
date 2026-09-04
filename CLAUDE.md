@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 99 (2026-09-03): Ring Towns - weekly per-color targeting cooldown, x1.25 weight when among the
+  5 nearest, never sacked; roads back to nearest-neighbor minus 25% + capture roads go to the closest
+  SEAT-connected town (road flood fill); AI-vs-AI guard fights (table in MOD_CHANGELOG); 1v2 assault at
+  AI-held Ring Towns (test); TEST targeting hook REMOVED. Needs a NEW game. Awaiting playtest.
 - Round 98 (2026-09-03): star 17 tiles; townMinSpacingTiles 10; per-color road trees; repaint keeps
   water; townMaxTerritoryRadius 450; TEST-ONLY debugStarTownTargetChance 0.5 (REMOVE after testing).
   Needs a NEW game. Awaiting playtest.

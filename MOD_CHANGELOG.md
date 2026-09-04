@@ -16205,3 +16205,49 @@ quieting later.
 
 **Files touched**: points_of_interest.json, settings.json, TuningData.java, World.java,
 TerritoryControl.java.
+
+## Round 99: Ring Towns rules, roads back to nearest-neighbor, AI guard fights, 1-vs-2 test (2026-09-03)
+
+User playtest of round 98 (new game; black took three Ring Towns and the loss fired as designed).
+The five Center Towns are now called **Ring Towns** in code comments and logs.
+- **Roads.** Round 98's per-color trees drew 49 edges per color - far too many roads at the start.
+  World-gen is back to the nearest-neighbor network, thinned by `initialTownRoadSkipFraction`
+  (0.25, settings.json - a quarter of the towns start no edge; the star's 15 explicit edges never
+  skip; `[TFR-Roads]` logs the count). Roads then grow with play: every capture, AI or player,
+  links the new town to the closest town that is ALREADY road-connected to the owner's seat (AI
+  Capital / Player Capitol) - `World.roadConnectedTownIds` flood-fills the road tiles from the
+  seat, `connectCapturedTownByRoad` restricts its targets to that set and falls back to any owned
+  town only when nothing is connected yet (logged).
+- **Ring Town targeting.** Each AI color may target a given Ring Town at most once per
+  `ringTownTargetCooldownDays` (7); all five in a week is fine. Persisted per (color, tile) in the
+  world save (`ringTargetDays`), logged `[TFR-RingCooldown]`; if only cooled-down Ring Towns are
+  attackable, the color skips the dispatch. Once a Ring Town is among a color's five nearest
+  candidates its pick weight is x(1 + `ringTownTargetWeightBonus`) = x1.25 ("they found their
+  target"). The round-98 TEST override (`debugStarTownTargetChance`) is REMOVED.
+- **Ring Towns are never sacked.** An AI attack on a Ring Town (player-held or AI-held) either
+  captures it or is repelled - the 20% "sack to neutral" roll no longer applies to them.
+- **AI-vs-AI guard fights** (`aiTownGuardDefenseEnabled`, true). When an AI mage attacks another
+  AI's town, the town's guard dot fights first with the hired-guard formula
+  `attacker / (attacker + defender) + 0.10` (tier power Common 1, Uncommon 2, Rare 4, Mythic 8;
+  Archmage with two lands = Mythic x `aiGuardTwoLandPowerFactor` 1.5); the winner then rolls the
+  ordinary capture (Common 10% / Uncommon 30% / Rare 70% / Mythic 90%). A beaten guard falls and the
+  town's guard clock restarts at level 0. Logged `[TFR-AiGuardFight]`. Overall capture odds:
+
+  | attacker \ guard | none | Apprentice | Adept | Master | Archmage | Archmage, 2 lands |
+  |---|---|---|---|---|---|---|
+  | Common  | 10% | 6%  | 4%  | 3%  | 2%  | 2%  |
+  | Uncommon| 30% | 23% | 18% | 13% | 9%  | 7%  |
+  | Rare    | 70% | 63% | 54% | 42% | 30% | 25% |
+  | Mythic  | 90% | 89% | 81% | 69% | 54% | 45% |
+
+- **1-vs-2 test at AI-held Ring Towns** (user test request). Walking into a Ring Town held by an AI
+  now always shows the gate dialog (any standing, not only War) and Attack seats TWO defenders of the
+  guard tier on one team (`EnemyData.nextEnemy`, the duel scene's own multi-opponent path;
+  `teamNumber` 1 for both). Winning captures the town as usual. Logged `[TFR-TownAssault] ... 1v2`.
+
+Log review of the round-98 game: no exceptions; the TEST override fired 46 times; loss dialog at
+black's third Ring Town. There is no official Adventure "You Lost" scene in Forge (scene list:
+Arena, Duel, Event, Inn, Inventory, Reward, Shop, ... none for defeat); `triggerGameLost`'s dialog
+plus return-to-menu is the mod's own. A dedicated full-screen defeat scene is a small follow-up.
+
+**Files touched**: settings.json, TuningData.java, World.java, TerritoryControl.java, WorldStage.java.

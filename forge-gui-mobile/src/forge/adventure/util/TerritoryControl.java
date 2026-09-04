@@ -1141,6 +1141,27 @@ public class TerritoryControl {
         List<PointOfInterest> attackable = findAttackableTowns(world, color);
         if (attackable.isEmpty())
             return; // nothing left to capture - the natural "done" state, quietly no-op forever
+        // Ring Towns (round 99, user spec 2026-09-03): each AI color may target a given Ring Town at most
+        // once per ringTownTargetCooldownDays - all five in one week is fine, the same one twice is not.
+        int ringCooldown = Config.instance().getTuningData().ringTownTargetCooldownDays;
+        if (ringCooldown > 0) {
+            List<PointOfInterest> offCooldown = new ArrayList<>();
+            List<String> held = new ArrayList<>();
+            for (PointOfInterest candidate : attackable) {
+                int last = isRingTown(candidate) ? world.ringTargetDay(color, ringTileX(world, candidate), ringTileY(world, candidate)) : Integer.MIN_VALUE;
+                if (last != Integer.MIN_VALUE && world.getCurrentDay() - last < ringCooldown)
+                    held.add(candidate.getDisplayName() + " (" + (ringCooldown - (world.getCurrentDay() - last)) + "d)");
+                else
+                    offCooldown.add(candidate);
+            }
+            if (!held.isEmpty()) {
+                System.out.println("[TFR-RingCooldown] " + color + ": Ring Town(s) on targeting cooldown " + held
+                        + (offCooldown.isEmpty() ? " - nothing else attackable, no dispatch" : ""));
+                if (offCooldown.isEmpty())
+                    return;
+                attackable = offCooldown;
+            }
+        }
 
         // In-flight target exclusion (2026-08-26, user report: "I was black, send 3 mages, all
         // to the same town" - each dispatch independently rolled from the same nearest-5 pool
@@ -1242,21 +1263,6 @@ public class TerritoryControl {
         List<Float> weights = new ArrayList<>();
         float originalRoll = 0f;
         float totalWeight = 0f;
-        // TEST ONLY (user request 2026-09-03) - REMOVE AFTER TESTING: TuningData.debugStarTownTargetChance
-        // (settings.json, 0 = off) sends this share of dispatches at a random attackable Center Town.
-        float starChance = Config.instance().getTuningData().debugStarTownTargetChance;
-        if (target == null && starChance > 0f && world.getRandom().nextFloat() < starChance) {
-            List<PointOfInterest> starTargets = new ArrayList<>();
-            for (PointOfInterest candidate : attackable)
-                if (candidate.getData().name != null && candidate.getData().name.contains(" Town Center"))
-                    starTargets.add(candidate);
-            if (starTargets.isEmpty())
-                System.out.println("[TFR-Targeting] " + color + ": TEST Center Town override rolled, but none is attackable");
-            else {
-                target = starTargets.get(world.getRandom().nextInt(starTargets.size()));
-                System.out.println("[TFR-Targeting] " + color + ": TEST Center Town override (" + Math.round(starChance * 100) + "%) -> " + target.getDisplayName());
-            }
-        }
         if (target == null) {
             attackable.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
             int candidateCount = Math.min(NEAREST_CANDIDATES, attackable.size());
@@ -1280,6 +1286,9 @@ public class TerritoryControl {
                 // also nudges expansion toward empty land rather than settled neutral towns.
                 if (!playerOwned && isFunctioningNeutralTown(candidate))
                     weight *= NEUTRAL_TOWN_TARGET_WEIGHT;
+                // Ring Towns (round 99): once among the five nearest, "they found their target" - x(1 + bonus)
+                if (isRingTown(candidate))
+                    weight *= 1f + Config.instance().getTuningData().ringTownTargetWeightBonus;
                 weights.add(weight);
                 totalWeight += weight;
             }
@@ -1382,6 +1391,8 @@ public class TerritoryControl {
             if (i > 0) candidateDump.append(", ");
             candidateDump.append(candidates.get(i).getDisplayName()).append("=").append(weights.get(i));
         }
+        if (isRingTown(target)) // Ring Towns: start this color's weekly targeting cooldown for THIS ring town
+            world.recordRingTargeted(color, ringTileX(world, target), ringTileY(world, target), world.getCurrentDay());
         System.out.println("[TFR-Targeting] " + color + " mage (tier=" + enemyData.tier
                 + ", speed=" + enemyData.speed + ", life=" + enemyData.life + ") candidates=["
                 + candidateDump + "] roll=" + originalRoll + "/" + totalWeight + " -> picked "
@@ -1874,19 +1885,43 @@ public class TerritoryControl {
         int n = nodes.size();
         boolean[] isTarget = new boolean[n];
         boolean anyTarget = false;
+        // Round 99 (user spec 2026-09-03): the road goes to the closest town that is ALREADY road-connected
+        // to the owner's seat (AI: its Capital; player: the Player Capitol), so every owner grows one network
+        // from its seat instead of stray links between isolated holdings. Falls back to any owned town when
+        // there is no seat yet or nothing is road-connected to it.
+        PointOfInterest seat = "player".equals(owner) ? TownRestoration.findCapitol() : null;
+        if (seat == null && !"player".equals(owner))
+            for (PointOfInterest poi : nodes)
+                if ("capital".equals(poi.getData().type) && isColorTownOrCapital(poi.getData(), owner)) { seat = poi; break; }
+        java.util.Set<String> connected = seat == null ? null
+                : world.roadConnectedTownIds((int) (seat.getPosition().x / world.getTileSize()), (int) (seat.getPosition().y / world.getTileSize()));
+        if (connected != null)
+            connected.add(seat.getID());
+        boolean[] owned = new boolean[n];
+        boolean anyOwned = false;
         for (int i = 0; i < n; i++) {
             if (i == source)
                 continue;
             PointOfInterest poi = nodes.get(i);
             if ("player".equals(owner))
-                isTarget[i] = TownRestoration.isTownRestored(
+                owned[i] = TownRestoration.isTownRestored(
                         WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
             else
-                isTarget[i] = isColorTownOrCapital(poi.getData(), owner);
+                owned[i] = isColorTownOrCapital(poi.getData(), owner);
+            if (seat != null && poi.getID().equals(seat.getID()))
+                owned[i] = true;
+            anyOwned |= owned[i];
+            isTarget[i] = owned[i] && (connected == null || connected.contains(poi.getID()));
             anyTarget |= isTarget[i];
         }
-        if (!anyTarget)
+        if (!anyOwned)
             return; // first holding of this owner - nothing to connect to yet
+        if (!anyTarget) {
+            System.out.println("[TerritoryControl] road (" + owner + "): nothing is road-connected to the seat yet - linking to the nearest owned town instead");
+            System.arraycopy(owned, 0, isTarget, 0, n);
+        } else if (connected != null) {
+            System.out.println("[TerritoryControl] road (" + owner + "): " + (connected.size() - 1) + " town(s) road-connected to " + seat.getDisplayName());
+        }
         double[] best = new double[n];
         int[] prev = new int[n];
         boolean[] done = new boolean[n];
@@ -2044,7 +2079,7 @@ public class TerritoryControl {
                             + "'s attack on " + target.getDisplayName() + "!", true);
                     return;
                 }
-                sackedInstead = attackerSacksInstead(world);
+                sackedInstead = !isRingTown(target) && attackerSacksInstead(world); // Ring Towns are captured, never sacked (round 99)
             } else if (isFunctioningNeutralTown(target)) {
                 // Functioning Neutral Town defense (2026-08-29 user spec) - see the
                 // NEUTRAL_TOWN_BASE_DEFENSE comment for why this is a flat repel chance rather
@@ -2104,11 +2139,16 @@ public class TerritoryControl {
             // revert-to-neutral (design from MOD_SCOPE.md #7, activated alongside cross-color
             // targeting; reweighted 2026-08-10 by the attacking mage's deck-rarity tier, once
             // mage tiers existed - replaces the original flat 50/50 coin flip).
+            // Round 99 (user spec 2026-09-03): the defending AI town's guard dot fights first, exactly like a
+            // hired player guard (tier power ratio + the same +10% attacker bonus); the winner then rolls the
+            // ordinary capture. A beaten guard falls and the town's guard clock restarts at level 0.
+            if (!resolveAiGuardDefense(world, mage, target))
+                return; // repelled by the guard; the mage is spent (caller removes the sprite regardless)
             float captureChance = attackerWinChance(mage.getData().tier);
             boolean attackerWins = world.getRandom().nextFloat() < captureChance;
             // Diagnostic-only logging (user request 2026-08-10, "hard to test in-game") -
             // greppable in forge.log as "[TFR-CaptureOdds]".
-            boolean sackedInstead = attackerWins && attackerSacksInstead(world);
+            boolean sackedInstead = attackerWins && !isRingTown(target) && attackerSacksInstead(world); // Ring Towns: captured or repelled only (round 99)
             System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
                     + ", chance=" + captureChance + ") attacking " + target.getDisplayName() + " (" + targetOwnerColor
                     + ") -> " + (sackedInstead ? "CAPTURED but SACKED" : attackerWins ? "CAPTURED" : "REVERTED to neutral"));
@@ -2200,6 +2240,44 @@ public class TerritoryControl {
         } else {
             checkStarTownLoss(world); // Center Towns (MOD_SCOPE #102) - else-branch so two run-over dialogs never stack
         }
+    }
+
+    /** Ring Towns (round 99): the five Center Towns, whatever their current owner. */
+    public static boolean isRingTown(PointOfInterest poi) {
+        return poi != null && poi.getData() != null && poi.getData().name != null && poi.getData().name.contains(" Town Center");
+    }
+    private static int ringTileX(World world, PointOfInterest poi) { return (int) (poi.getPosition().x / world.getTileSize()); }
+    private static int ringTileY(World world, PointOfInterest poi) { return (int) (poi.getPosition().y / world.getTileSize()); }
+
+    /**
+     * Round 99 (user spec 2026-09-03): AI-vs-AI guard fight. Guard level -> tier (Apprentice = Common ...
+     * Archmage = Mythic; level 4 = Archmage with two lands, Mythic power x aiGuardTwoLandPowerFactor), then
+     * the hired-guard formula: attacker / (attacker + defender) + GUARD_FIGHT_ATTACKER_BONUS. Returns false
+     * when the guard repels the attacker. When the guard falls the town's guard clock restarts (level 0,
+     * held since today). Logged [TFR-AiGuardFight].
+     */
+    private static boolean resolveAiGuardDefense(World world, EnemySprite mage, PointOfInterest target) {
+        if (!Config.instance().getTuningData().aiTownGuardDefenseEnabled)
+            return true;
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID());
+        int level = changes == null ? 0 : changes.getAiGuardLevel();
+        if (level <= 0)
+            return true;
+        String[] tiers = EconomyBuildings.GUARD_TIERS_ASCENDING;
+        String guardTier = tiers[Math.min(level, tiers.length - 1)];
+        float twoLands = level >= AI_GUARD_MAX_LEVEL ? Math.max(1f, Config.instance().getTuningData().aiGuardTwoLandPowerFactor) : 1f;
+        float attackerPower = tierPower(mage.getData().tier);
+        float defenderPower = tierPower(guardTier) * twoLands;
+        float chance = Math.max(0f, Math.min(1f, attackerPower / (attackerPower + defenderPower) + GUARD_FIGHT_ATTACKER_BONUS));
+        boolean attackerWins = world.getRandom().nextFloat() < chance;
+        System.out.println("[TFR-AiGuardFight] " + mage.territoryColor + " mage (tier=" + mage.getData().tier + ") vs level " + level
+                + " " + EconomyBuildings.guardTierDisplayName(guardTier) + (twoLands > 1f ? " (two lands)" : "") + " guard at "
+                + target.getDisplayName() + " (chance=" + chance + ") -> " + (attackerWins ? "GUARD FALLS" : "REPELLED"));
+        if (attackerWins) {
+            changes.setAiGuardLevel(0);
+            changes.setAiHeldSinceDay(world.getCurrentDay());
+        }
+        return attackerWins;
     }
 
     /** Owner color of the star town at a recorded tile, or null (neutral / player / missing). */

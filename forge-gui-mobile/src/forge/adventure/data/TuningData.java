@@ -176,9 +176,18 @@ public class TuningData {
     // Round 98 (user spec 2026-09-03): an ordinary town keeps at least this many tiles from every
     // town placed before it (the only rule before was the 8x8-tile box, about 4 tiles).
     public int townMinSpacingTiles = 10;
-    // TEST ONLY (user request 2026-09-03, remove after testing): chance that a mage dispatch targets
-    // a random attackable Center Town instead of the normal weighted roll. 0 = off.
-    public float debugStarTownTargetChance = 0f;
+    // Round 99 (user spec 2026-09-03): world-gen town roads are the nearest-neighbor network again,
+    // with this share of its edges skipped ("reduce the number of roads by 25%"). Star roads never skip.
+    public float initialTownRoadSkipFraction = 0.25f;
+    // Ring Towns (the five Center Towns): each AI color may target a given Ring Town at most once per
+    // this many days (all five in one week is fine, the same one twice is not)...
+    public int ringTownTargetCooldownDays = 7;
+    // ...and once a Ring Town is among a color's five nearest candidates its pick weight is x(1 + bonus).
+    public float ringTownTargetWeightBonus = 0.25f;
+    // AI-vs-AI assaults: the defending AI town's guard dot fights first, like a hired player guard.
+    // Level 4 (Archmage with two lands) defends at Mythic power x aiGuardTwoLandPowerFactor.
+    public boolean aiTownGuardDefenseEnabled = true;
+    public float aiGuardTwoLandPowerFactor = 1.5f;
 
     // Inn Tournament Re-roll (2026-08-24 user spec: "let the player be able to re-roll the
     // tournament draft set. for 15 gems"). Flat cost, no difficulty scaling - the user gave an
