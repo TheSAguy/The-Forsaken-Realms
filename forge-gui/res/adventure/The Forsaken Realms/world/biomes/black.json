@@ -32,6 +32,11 @@
                         "Shroom2"
                     ],
     "enemies":  [
+                    "Undead Renegade",
+                    "Undead Wanderer",
+                    "Phyrexian Renegade",
+                    "Phyrexian Wanderer",
+                    "Black Dragonkin Renegade",
                     "Adept Black Wizard",
                     "Apprentice Black Wizard",
                     "Bat",

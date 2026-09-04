@@ -155,7 +155,7 @@ public class TownRestoration {
             java.util.List<Integer> shopIds = new java.util.ArrayList<>();
             for (int id : PLAYER_TOWN_SHOP_OBJECT_IDS) shopIds.add(id);
             java.util.Collections.shuffle(shopIds, world.getRandom());
-            int brokenCount = 1 + world.getRandom().nextInt(5); // 1-5 inclusive
+            int brokenCount = TerritoryControl.isRingTown(poi) ? 0 : 1 + world.getRandom().nextInt(5); // 1-5 inclusive; round 107: Ring Cities never have broken shops
             for (int b = 0; b < brokenCount; b++)
                 changes.getMapFlags().put(permanentlyBrokenShopFlag(shopIds.get(b)), (byte) 1);
             totalBroken += brokenCount;
@@ -187,6 +187,8 @@ public class TownRestoration {
     /** Used by ShopActor (rendering/interaction, has a live MapStage) - same access pattern as
      *  isShopRebuilt(MapStage, int). */
     public static boolean isPermanentlyBrokenShop(MapStage stage, int objectId) {
+        if (TerritoryControl.isRingTown(TileMapScene.instance().rootPoint))
+            return false; // round 107 (user spec 2026-09-04): the Ring Cities' shops always work
         return stage.checkQuestFlag(permanentlyBrokenShopFlag(objectId));
     }
 
@@ -394,6 +396,8 @@ public class TownRestoration {
         }
         if (TerritoryControl.isRingTown(target))
             updateRingLifeBonus(true);
+        Current.player().advanceCharacterFlag("capturedFrom_" + fromColor); // round 107: the capitals' "capture an enemy town" quests
+        System.out.println("[TFR-MainQuest] capturedFrom_" + fromColor + " -> " + Current.player().getCharacterFlag("capturedFrom_" + fromColor));
         TerritoryControl.checkPlayerVictory(world);
         world.refreshWorldMapMarkers();
         ColorReputation.applyTownAssaultPenalty(fromColor, Config.instance().getTuningData().townCaptureReputationPenalty,
@@ -1313,8 +1317,8 @@ public class TownRestoration {
         System.out.println("[TownRestoration] ring life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
         if (notify)
             forge.adventure.stage.GameHUD.getInstance().addNotification(delta > 0
-                    ? "[WHITE][+Life][] Max life +" + delta + " - the Ring Cities lend you their strength."
-                    : "[WHITE][+Life][] Max life " + delta + " - a Ring City has fallen under enemy rule.", false); // round 106: red heart, black text
+                    ? "[WHITE][+Life][BLACK] Max life +" + delta + " - the Ring Cities lend you their strength."
+                    : "[WHITE][+Life][BLACK] Max life " + delta + " - a Ring City has fallen under enemy rule.", true); // round 107: authored markup - the label's own color stays white so glyphs keep their colors, the text is black via markup
     }
     private static final int TOWNS_PER_LIFE = 5;
 
@@ -1326,9 +1330,9 @@ public class TownRestoration {
         System.out.println("[TownRestoration] town life bonus now " + target + " (" + (delta > 0 ? "+" : "") + delta + ")");
         if (notify) {
             if (delta > 0)
-                forge.adventure.stage.GameHUD.getInstance().addNotification("[WHITE][+Life][] Max life +" + delta + " - your realm prospers!", false);
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[WHITE][+Life][BLACK] Max life +" + delta + " - your realm prospers!", true);
             else
-                forge.adventure.stage.GameHUD.getInstance().addNotification("[WHITE][+Life][] Max life " + delta + " - your realm shrinks...", false);
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[WHITE][+Life][BLACK] Max life " + delta + " - your realm shrinks...", true);
         }
     }
 }

@@ -30,6 +30,11 @@
                         "Wood"
                     ],
     "enemies":  [
+                    "Elf Renegade",
+                    "Elf Wanderer",
+                    "Werewolf Renegade",
+                    "Werewolf Wanderer",
+                    "Green Dragonkin Renegade",
                     "Adept Green Wizard",
                     "Ape",
                     "Apprentice Green Wizard",

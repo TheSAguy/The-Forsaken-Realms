@@ -13723,5 +13723,935 @@
 		],
 		"storyQuest": true,
 		"autoTrack": true
+	},
+	{
+		"id": 76,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Black's Hand",
+		"description": "Take a Black town for the Plains Capital - the Sovereign of the Plains wants the Lord of the Mire bled.",
+		"questSourceTags": [
+			"plains_capital"
+		],
+		"giverColor": "white",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare White cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Plains Capital draws you aside. \"Partners share enemies, Guardian. The Lord of the Mire holds towns that should burn. Take one of Black's towns - any of them - and the Sovereign of the Plains will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_black",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "76"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Black town reaches the Plains Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Sovereign of the Plains's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"white"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Black town",
+				"description": "Attack and capture any town held by Black (you must be at War with them), then return to the Plains Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_black",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 77,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Red's Hand",
+		"description": "Take a Red town for the Plains Capital - the Sovereign of the Plains wants the Ember Lord bled.",
+		"questSourceTags": [
+			"plains_capital"
+		],
+		"giverColor": "white",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare White cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Plains Capital draws you aside. \"Partners share enemies, Guardian. The Ember Lord holds towns that should burn. Take one of Red's towns - any of them - and the Sovereign of the Plains will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_red",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "77"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Red town reaches the Plains Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Sovereign of the Plains's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"white"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Red town",
+				"description": "Attack and capture any town held by Red (you must be at War with them), then return to the Plains Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_red",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 78,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Red's Hand",
+		"description": "Take a Red town for the Island Capital - the Tide-Lord of the Isles wants the Ember Lord bled.",
+		"questSourceTags": [
+			"island_capital"
+		],
+		"giverColor": "blue",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Blue cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Island Capital draws you aside. \"Partners share enemies, Guardian. The Ember Lord holds towns that should burn. Take one of Red's towns - any of them - and the Tide-Lord of the Isles will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_red",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "78"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Red town reaches the Island Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Tide-Lord of the Isles's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"blue"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Red town",
+				"description": "Attack and capture any town held by Red (you must be at War with them), then return to the Island Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_red",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 79,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Green's Hand",
+		"description": "Take a Green town for the Island Capital - the Tide-Lord of the Isles wants the Verdant Lord bled.",
+		"questSourceTags": [
+			"island_capital"
+		],
+		"giverColor": "blue",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Blue cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Island Capital draws you aside. \"Partners share enemies, Guardian. The Verdant Lord holds towns that should burn. Take one of Green's towns - any of them - and the Tide-Lord of the Isles will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_green",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "79"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Green town reaches the Island Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Tide-Lord of the Isles's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"blue"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Green town",
+				"description": "Attack and capture any town held by Green (you must be at War with them), then return to the Island Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_green",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 80,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Green's Hand",
+		"description": "Take a Green town for the Swamp Capital - the Lord of the Mire wants the Verdant Lord bled.",
+		"questSourceTags": [
+			"swamp_capital"
+		],
+		"giverColor": "black",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Black cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Swamp Capital draws you aside. \"Partners share enemies, Guardian. The Verdant Lord holds towns that should burn. Take one of Green's towns - any of them - and the Lord of the Mire will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_green",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "80"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Green town reaches the Swamp Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Lord of the Mire's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"black"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Green town",
+				"description": "Attack and capture any town held by Green (you must be at War with them), then return to the Swamp Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_green",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 81,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from White's Hand",
+		"description": "Take a White town for the Swamp Capital - the Lord of the Mire wants the Sovereign of the Plains bled.",
+		"questSourceTags": [
+			"swamp_capital"
+		],
+		"giverColor": "black",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Black cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Swamp Capital draws you aside. \"Partners share enemies, Guardian. The Sovereign of the Plains holds towns that should burn. Take one of White's towns - any of them - and the Lord of the Mire will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_white",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "81"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen White town reaches the Swamp Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Lord of the Mire's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"black"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a White town",
+				"description": "Attack and capture any town held by White (you must be at War with them), then return to the Swamp Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_white",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 82,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from White's Hand",
+		"description": "Take a White town for the Mountain Capital - the Ember Lord wants the Sovereign of the Plains bled.",
+		"questSourceTags": [
+			"mountain_capital"
+		],
+		"giverColor": "red",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Red cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Mountain Capital draws you aside. \"Partners share enemies, Guardian. The Sovereign of the Plains holds towns that should burn. Take one of White's towns - any of them - and the Ember Lord will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_white",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "82"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen White town reaches the Mountain Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Ember Lord's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"red"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a White town",
+				"description": "Attack and capture any town held by White (you must be at War with them), then return to the Mountain Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_white",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 83,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Blue's Hand",
+		"description": "Take a Blue town for the Mountain Capital - the Ember Lord wants the Tide-Lord of the Isles bled.",
+		"questSourceTags": [
+			"mountain_capital"
+		],
+		"giverColor": "red",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Red cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Mountain Capital draws you aside. \"Partners share enemies, Guardian. The Tide-Lord of the Isles holds towns that should burn. Take one of Blue's towns - any of them - and the Ember Lord will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_blue",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "83"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Blue town reaches the Mountain Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Ember Lord's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"red"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Blue town",
+				"description": "Attack and capture any town held by Blue (you must be at War with them), then return to the Mountain Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_blue",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 84,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Blue's Hand",
+		"description": "Take a Blue town for the Forest Capital - the Verdant Lord wants the Tide-Lord of the Isles bled.",
+		"questSourceTags": [
+			"forest_capital"
+		],
+		"giverColor": "green",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Green cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Forest Capital draws you aside. \"Partners share enemies, Guardian. The Tide-Lord of the Isles holds towns that should burn. Take one of Blue's towns - any of them - and the Verdant Lord will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_blue",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "84"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Blue town reaches the Forest Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Verdant Lord's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"green"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Blue town",
+				"description": "Attack and capture any town held by Blue (you must be at War with them), then return to the Forest Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_blue",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 85,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "A Town from Black's Hand",
+		"description": "Take a Black town for the Forest Capital - the Verdant Lord wants the Lord of the Mire bled.",
+		"questSourceTags": [
+			"forest_capital"
+		],
+		"giverColor": "green",
+		"requiredColorStatus": "Partner",
+		"offerProbability": 0.25,
+		"rewardDescription": "3 rare Green cards, 1500 gold, 100 shards",
+		"offerDialog": {
+			"text": "The war-chancellor of the Forest Capital draws you aside. \"Partners share enemies, Guardian. The Lord of the Mire holds towns that should burn. Take one of Black's towns - any of them - and the Verdant Lord will open the vaults for you.\"",
+			"options": [
+				{
+					"name": "\"Consider it done.\" (Accept Quest)",
+					"action": [
+						{
+							"setCharacterFlag": {
+								"key": "capturedFrom_black",
+								"val": 0
+							}
+						},
+						{
+							"issueQuest": "85"
+						}
+					]
+				},
+				{
+					"name": "\"Not today.\" (Decline Quest)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"Then the offer keeps until you find your nerve.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "Word of the fallen Black town reaches the Forest Capital before you do. The war-chancellor meets you at the gate with a strongbox: rare spells of the Verdant Lord's own color, a purse of gold and a pouch of shards. \"Partners share spoils too.\"",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 3,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"green"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 1500
+								},
+								{
+									"type": "shards",
+									"count": 100
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Capture a Black town",
+				"description": "Attack and capture any town held by Black (you must be at War with them), then return to the Forest Capital.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "capturedFrom_black",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
 	}
 ]

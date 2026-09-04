@@ -26,6 +26,9 @@
                         "Shell"
                     ],
     "enemies":  [
+                    "Metathran Renegade",
+                    "Metathran Wanderer",
+                    "Blue Dragonkin Renegade",
                     "Adept Blue Wizard",
                     "Aether Channeler",
                     "Angel Overseer",

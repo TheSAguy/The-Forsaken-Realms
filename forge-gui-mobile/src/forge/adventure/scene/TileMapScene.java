@@ -197,6 +197,8 @@ public class TileMapScene extends HudScene {
                 char arm = ringName.charAt(ringName.length() - 1);
                 Current.player().setCharacterFlag("enteredRingCity" + arm, 1);
                 System.out.println("[TFR-MainQuest] enteredRingCity" + arm + " -> 1 (" + point.getDisplayName() + ")");
+                // round 107: a Ring City's shops are never ruined - drop any broken-slot flags an older world seeded
+                WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID()).getMapFlags().keySet().removeIf(k -> k.startsWith("permanentlyBrokenShop_"));
             }
             if (TownRestoration.isWastelandTown(point.getData())) {
                 forge.adventure.pointofintrest.PointOfInterestChanges entryChanges =

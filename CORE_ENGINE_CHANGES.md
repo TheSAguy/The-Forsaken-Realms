@@ -2102,3 +2102,10 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`util/EconomyBuildings.java`** - `isRingShop` (special); **`player/AdventurePlayer.java`** - no Ring blueprints.
 - **`util/TerritoryControl.java`** - `ringPullDivisor`; **`stage/WorldStage.java`** - no lands at Ring assaults.
 - **`util/MapDialog.java`** - option pane height from the HUD stage.
+
+## Round 107 (2026-09-04) - capture quests, hero enemies
+
+- **`data/AdventureQuestData.java`** - `giverColor`, `requiredColorStatus` (UID pinned 1L; additive).
+- **`util/AdventureQuestController.java`** - Partner gate in the board template selection.
+- **`util/TownRestoration.java`** - Ring Cities: 0 broken slots, `isPermanentlyBrokenShop` guard; `capturedFrom_<color>` flag.
+- **`scene/TileMapScene.java`** - drops stale broken-slot flags in Ring Cities.

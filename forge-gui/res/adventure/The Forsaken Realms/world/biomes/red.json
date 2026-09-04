@@ -26,6 +26,13 @@
                         "Gravel"
                     ],
     "enemies":  [
+                    "Devil Renegade",
+                    "Devil Wanderer",
+                    "Viashino Renegade",
+                    "Viashino Wanderer",
+                    "Dwarf Renegade",
+                    "Dwarf Wanderer",
+                    "Red Dragonkin Renegade",
                     "Armadillo",
                     "Adept Red Wizard",
                     "Amonkhet Minotaur Warrior",

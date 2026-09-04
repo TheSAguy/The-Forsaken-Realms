@@ -70,6 +70,10 @@ public class AdventureQuestData implements Serializable {
 
     public AdventureQuestStage[] stages = new AdventureQuestStage[0];
     public String[] questSourceTags = new String[0];
+    // Round 107 (user spec 2026-09-04): template-only gates for the AI capitals' "capture an enemy town" quests -
+    // offered only while the player's standing with giverColor equals requiredColorStatus ("Partner").
+    public String giverColor;
+    public String requiredColorStatus;
     public String[] questEnemyTags = new String[0];
     public String[] questPOITags = new String[0];
     private transient EnemySprite targetEnemySprite = null;

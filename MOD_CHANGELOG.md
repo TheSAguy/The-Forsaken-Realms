@@ -16455,3 +16455,36 @@ quests.json, factory_4_large.tmx, ui/victory_splash.jpg + ui/defeat_splash.jpg (
 EconomyBuildings.java, AdventurePlayer.java, TownRestoration.java, EditionProgression.java,
 ShopActor.java, RewardScene.java, TileMapScene.java, MapStage.java, TerritoryControl.java,
 WorldStage.java, MapDialog.java.
+
+## Round 107: colored glyphs, unbreakable Ring shops, capital capture quests, 47 hero-based enemies (2026-09-04)
+
+- **Notification glyphs in color.** `GameHUD.addNotification(text, false)` paints the whole label
+  black - the actor color multiplies every glyph, images included, which is why the hearts and coins
+  came out black. The glyph notifications now pass `true` (label color white) and color the TEXT
+  through markup: `[WHITE][+Life][BLACK] Max life +1 ...`. Round 106's `[]` reset is gone.
+- **Ring City shops never break.** `seedFunctioningNeutralTowns` seeds 0 broken slots for a Ring
+  City, `isPermanentlyBrokenShop` returns false inside one, and entering a Ring City drops any
+  `permanentlyBrokenShop_*` flags an older world seeded (the round-106 playtest saw ruined lots
+  because the neutral-town seeding used the player_town slot ids, which overlap the Ring layouts').
+- **Capital capture quests** (ids 76-85, two per color, one per enemy color: White -> Black/Red,
+  Blue -> Red/Green, Black -> Green/White, Red -> White/Blue, Green -> Blue/Black). Offered on the AI
+  capital job boards (`<noun>_capital`), only while the player is at **Partner** with that color
+  (`giverColor` + `requiredColorStatus` template fields, filtered in
+  `AdventureQuestController`), `offerProbability` 0.25. Accepting resets `capturedFrom_<enemy>`;
+  `captureTownForPlayer` now advances that flag, so capturing any town of the named color completes
+  the stage. Reward on turn-in: 3 rare cards of the giver's color, 1500 gold, 100 shards (epilogue
+  `grantRewards`).
+- **Hero sprites as enemies.** Every hero atlas has the five down-facing animations an enemy needs
+  (Idle/Walk/Attack/Hit/Death, 4 frames each), so `sprites/enemy/heroes/<key>.atlas` is a two-page
+  atlas: page one the copied hero sheet with those five regions, page two a copied face sheet with
+  the `Avatar` region. 27 from avatar.png (one per race and sex, one dragonkin per color) + 20 from
+  `Old Kor Portraits.png` (16x16 grid, 10 male + 10 female Kor bodies, named after Kor cards) =
+  **47 new enemies** in enemies.json ("<Race> Renegade" / "<Race> Wanderer", "<Color> Dragonkin
+  Renegade", "Kor Hookmaster"...), Uncommon tier, life 15, speed 20, decks and rewards copied from
+  the matching Adept wizard, tags `Renegade` + identity/biome; added to their color's biome list
+  and the colorless waste. Race colors: Devil/Dwarf/Viashino R, Elf/Werewolf G, Human/Kor/Leonin W,
+  Metathran U, Undead/Phyrexian B.
+
+**Files touched**: TownRestoration.java, AdventurePlayer.java, TileMapScene.java,
+AdventureQuestData.java, AdventureQuestController.java, quests.json, enemies.json, biomes/*.json,
+sprites/enemy/heroes/* (new).

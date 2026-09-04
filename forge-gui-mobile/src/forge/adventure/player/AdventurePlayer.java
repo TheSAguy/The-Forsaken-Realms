@@ -1928,9 +1928,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             System.out.println("[TFR-RingGift] all (difficulty " + cfg.name + "): granted directly - gold " + cfg.startingMoney + ", shards "
                     + cfg.startingShards + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + ", items " + items
                     + ", Ring Cities counted as visited: " + ringCities);
-            forge.adventure.stage.GameHUD.getInstance().addNotification("The Ring's gifts: [WHITE][+Gold][] " + cfg.startingMoney + "  [WHITE][+Shards][] "
-                    + cfg.startingShards + "  [WHITE][+Wood][] " + cfg.startingWood + "  [WHITE][+Stone][] " + cfg.startingStone + "  and " + items
-                    + " item(s). [WHITE][+Life][] Max life +" + ringCities + ".", false); // round 106: glyphs keep their own colors, text stays black
+            forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]The Ring's gifts: [WHITE][+Gold][BLACK] " + cfg.startingMoney + "  [WHITE][+Shards][BLACK] "
+                    + cfg.startingShards + "  [WHITE][+Wood][BLACK] " + cfg.startingWood + "  [WHITE][+Stone][BLACK] " + cfg.startingStone + "  and " + items
+                    + " item(s). [WHITE][+Life][BLACK] Max life +" + ringCities + ".", true); // round 107: authored markup - glyphs keep their colors, text black
             return;
         }
         com.badlogic.gdx.utils.Array<forge.adventure.util.Reward> rewards = new com.badlogic.gdx.utils.Array<>();

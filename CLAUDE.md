@@ -50,6 +50,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 107 (2026-09-04): glyph notifications = authored markup + [BLACK] text (actor color multiplies images);
+  Ring shops never broken (seed 0, guard, flag strip on entry); capital quests 76-85 (Partner-only, capturedFrom_<color>
+  flag reset on accept, 3 rares + 1500g + 100 shards); 47 hero-based enemies (sprites/enemy/heroes, 2-page atlases).
+  Needs a NEW game for the quests/spawns. Awaiting playtest.
 - Round 106 (2026-09-04): Ring City layouts (ring_city_<color>.tmx + player variants with Armory lot 48,
   TileMapScene.resolveMapPath), 15 'Ring*' shops (mono inner / dual outer, all editions, 2x price, 3x escalating
   restock, no blueprints), quest 30 surviving-first, [WHITE] glyph wrap for the red heart, ringCityPullFactor 3,

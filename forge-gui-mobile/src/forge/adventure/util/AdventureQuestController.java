@@ -709,6 +709,11 @@ public class AdventureQuestController implements Serializable {
             }
             if (!tagMatch)
                 continue;
+            if (option.requiredColorStatus != null && !option.requiredColorStatus.isEmpty() && option.giverColor != null) { // round 107
+                ColorReputation.Status status = ColorReputation.isEnabled() ? ColorReputation.getStatus(option.giverColor) : null;
+                if (status == null || !option.requiredColorStatus.equalsIgnoreCase(status.name()))
+                    continue;
+            }
             float offerProbability = questOfferProbability.getOrDefault(option.getID(), 0f);
             if (offerProbability > 0f && new Random().nextFloat() > offerProbability)
                 continue;
