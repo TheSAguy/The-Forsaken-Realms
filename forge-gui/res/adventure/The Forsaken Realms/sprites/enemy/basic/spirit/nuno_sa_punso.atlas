@@ -1,0 +1,41 @@
+nuno_sa_punso.png
+size: 48,106
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 65
+  size: 45, 41
+Idle
+  xy: 0, 0
+  size: 12, 13
+Walk
+  xy: 0, 13
+  size: 12, 13
+Walk
+  xy: 12, 13
+  size: 12, 13
+Walk
+  xy: 24, 13
+  size: 12, 13
+Walk
+  xy: 36, 13
+  size: 12, 13
+Attack
+  xy: 0, 26
+  size: 12, 13
+Attack
+  xy: 12, 26
+  size: 12, 13
+Attack
+  xy: 24, 26
+  size: 12, 13
+Attack
+  xy: 36, 26
+  size: 12, 13
+Hit
+  xy: 0, 39
+  size: 12, 13
+Death
+  xy: 0, 52
+  size: 12, 13

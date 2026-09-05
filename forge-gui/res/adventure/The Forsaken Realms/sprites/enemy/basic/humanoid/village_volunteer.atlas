@@ -1,0 +1,62 @@
+village_volunteer.png
+size: 216,160
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 36, 32
+Idle
+  xy: 0, 0
+  size: 36, 32
+Idle
+  xy: 36, 0
+  size: 36, 32
+Idle
+  xy: 72, 0
+  size: 36, 32
+Walk
+  xy: 0, 32
+  size: 36, 32
+Walk
+  xy: 36, 32
+  size: 36, 32
+Walk
+  xy: 72, 32
+  size: 36, 32
+Attack
+  xy: 0, 64
+  size: 36, 32
+Attack
+  xy: 36, 64
+  size: 36, 32
+Attack
+  xy: 72, 64
+  size: 36, 32
+Hit
+  xy: 0, 96
+  size: 36, 32
+Hit
+  xy: 36, 96
+  size: 36, 32
+Hit
+  xy: 72, 96
+  size: 36, 32
+Death
+  xy: 0, 128
+  size: 36, 32
+Death
+  xy: 36, 128
+  size: 36, 32
+Death
+  xy: 72, 128
+  size: 36, 32
+Death
+  xy: 108, 128
+  size: 36, 32
+Death
+  xy: 144, 128
+  size: 36, 32
+Death
+  xy: 180, 128
+  size: 36, 32

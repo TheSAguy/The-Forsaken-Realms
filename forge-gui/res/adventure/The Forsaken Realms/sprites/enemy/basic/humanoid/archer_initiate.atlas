@@ -1,0 +1,86 @@
+archer_initiate.png
+size: 360,290
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 45, 58
+Idle
+  xy: 0, 0
+  size: 45, 58
+Walk
+  xy: 0, 58
+  size: 45, 58
+Walk
+  xy: 45, 58
+  size: 45, 58
+Walk
+  xy: 90, 58
+  size: 45, 58
+Walk
+  xy: 135, 58
+  size: 45, 58
+Walk
+  xy: 180, 58
+  size: 45, 58
+Walk
+  xy: 225, 58
+  size: 45, 58
+Walk
+  xy: 270, 58
+  size: 45, 58
+Walk
+  xy: 315, 58
+  size: 45, 58
+Attack
+  xy: 0, 116
+  size: 45, 58
+Attack
+  xy: 45, 116
+  size: 45, 58
+Attack
+  xy: 90, 116
+  size: 45, 58
+Attack
+  xy: 135, 116
+  size: 45, 58
+Attack
+  xy: 180, 116
+  size: 45, 58
+Attack
+  xy: 225, 116
+  size: 45, 58
+Attack
+  xy: 270, 116
+  size: 45, 58
+Attack
+  xy: 315, 116
+  size: 45, 58
+Hit
+  xy: 0, 174
+  size: 45, 58
+Hit
+  xy: 45, 174
+  size: 45, 58
+Hit
+  xy: 90, 174
+  size: 45, 58
+Death
+  xy: 0, 232
+  size: 45, 58
+Death
+  xy: 45, 232
+  size: 45, 58
+Death
+  xy: 90, 232
+  size: 45, 58
+Death
+  xy: 135, 232
+  size: 45, 58
+Death
+  xy: 180, 232
+  size: 45, 58
+Death
+  xy: 225, 232
+  size: 45, 58

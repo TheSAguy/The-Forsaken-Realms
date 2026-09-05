@@ -1,0 +1,86 @@
+lizardfolk_guard.png
+size: 280,250
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 35, 50
+Idle
+  xy: 0, 0
+  size: 35, 50
+Walk
+  xy: 0, 50
+  size: 35, 50
+Walk
+  xy: 35, 50
+  size: 35, 50
+Walk
+  xy: 70, 50
+  size: 35, 50
+Walk
+  xy: 105, 50
+  size: 35, 50
+Walk
+  xy: 140, 50
+  size: 35, 50
+Walk
+  xy: 175, 50
+  size: 35, 50
+Walk
+  xy: 210, 50
+  size: 35, 50
+Walk
+  xy: 245, 50
+  size: 35, 50
+Attack
+  xy: 0, 100
+  size: 35, 50
+Attack
+  xy: 35, 100
+  size: 35, 50
+Attack
+  xy: 70, 100
+  size: 35, 50
+Attack
+  xy: 105, 100
+  size: 35, 50
+Attack
+  xy: 140, 100
+  size: 35, 50
+Attack
+  xy: 175, 100
+  size: 35, 50
+Attack
+  xy: 210, 100
+  size: 35, 50
+Attack
+  xy: 245, 100
+  size: 35, 50
+Hit
+  xy: 0, 150
+  size: 35, 50
+Hit
+  xy: 35, 150
+  size: 35, 50
+Hit
+  xy: 70, 150
+  size: 35, 50
+Death
+  xy: 0, 200
+  size: 35, 50
+Death
+  xy: 35, 200
+  size: 35, 50
+Death
+  xy: 70, 200
+  size: 35, 50
+Death
+  xy: 105, 200
+  size: 35, 50
+Death
+  xy: 140, 200
+  size: 35, 50
+Death
+  xy: 175, 200
+  size: 35, 50

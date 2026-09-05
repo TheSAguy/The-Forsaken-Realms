@@ -1,0 +1,41 @@
+hex_witch.png
+size: 62,176
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 135
+  size: 62, 41
+Idle
+  xy: 0, 0
+  size: 14, 27
+Walk
+  xy: 0, 27
+  size: 14, 27
+Walk
+  xy: 14, 27
+  size: 14, 27
+Walk
+  xy: 28, 27
+  size: 14, 27
+Walk
+  xy: 42, 27
+  size: 14, 27
+Attack
+  xy: 0, 54
+  size: 14, 27
+Attack
+  xy: 14, 54
+  size: 14, 27
+Attack
+  xy: 28, 54
+  size: 14, 27
+Attack
+  xy: 42, 54
+  size: 14, 27
+Hit
+  xy: 0, 81
+  size: 14, 27
+Death
+  xy: 0, 108
+  size: 14, 27

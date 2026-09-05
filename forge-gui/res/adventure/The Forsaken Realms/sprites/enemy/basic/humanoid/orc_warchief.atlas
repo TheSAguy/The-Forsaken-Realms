@@ -1,0 +1,80 @@
+orc_warchief.png
+size: 328,250
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 50
+Idle
+  xy: 0, 0
+  size: 41, 50
+Walk
+  xy: 0, 50
+  size: 41, 50
+Walk
+  xy: 41, 50
+  size: 41, 50
+Walk
+  xy: 82, 50
+  size: 41, 50
+Walk
+  xy: 123, 50
+  size: 41, 50
+Walk
+  xy: 164, 50
+  size: 41, 50
+Walk
+  xy: 205, 50
+  size: 41, 50
+Walk
+  xy: 246, 50
+  size: 41, 50
+Walk
+  xy: 287, 50
+  size: 41, 50
+Attack
+  xy: 0, 100
+  size: 41, 50
+Attack
+  xy: 41, 100
+  size: 41, 50
+Attack
+  xy: 82, 100
+  size: 41, 50
+Attack
+  xy: 123, 100
+  size: 41, 50
+Attack
+  xy: 164, 100
+  size: 41, 50
+Attack
+  xy: 205, 100
+  size: 41, 50
+Hit
+  xy: 0, 150
+  size: 41, 50
+Hit
+  xy: 41, 150
+  size: 41, 50
+Hit
+  xy: 82, 150
+  size: 41, 50
+Death
+  xy: 0, 200
+  size: 41, 50
+Death
+  xy: 41, 200
+  size: 41, 50
+Death
+  xy: 82, 200
+  size: 41, 50
+Death
+  xy: 123, 200
+  size: 41, 50
+Death
+  xy: 164, 200
+  size: 41, 50
+Death
+  xy: 205, 200
+  size: 41, 50

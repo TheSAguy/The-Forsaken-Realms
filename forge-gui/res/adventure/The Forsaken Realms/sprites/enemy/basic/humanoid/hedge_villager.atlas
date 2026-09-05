@@ -1,0 +1,86 @@
+hedge_villager.png
+size: 280,255
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 35, 51
+Idle
+  xy: 0, 0
+  size: 35, 51
+Walk
+  xy: 0, 51
+  size: 35, 51
+Walk
+  xy: 35, 51
+  size: 35, 51
+Walk
+  xy: 70, 51
+  size: 35, 51
+Walk
+  xy: 105, 51
+  size: 35, 51
+Walk
+  xy: 140, 51
+  size: 35, 51
+Walk
+  xy: 175, 51
+  size: 35, 51
+Walk
+  xy: 210, 51
+  size: 35, 51
+Walk
+  xy: 245, 51
+  size: 35, 51
+Attack
+  xy: 0, 102
+  size: 35, 51
+Attack
+  xy: 35, 102
+  size: 35, 51
+Attack
+  xy: 70, 102
+  size: 35, 51
+Attack
+  xy: 105, 102
+  size: 35, 51
+Attack
+  xy: 140, 102
+  size: 35, 51
+Attack
+  xy: 175, 102
+  size: 35, 51
+Attack
+  xy: 210, 102
+  size: 35, 51
+Attack
+  xy: 245, 102
+  size: 35, 51
+Hit
+  xy: 0, 153
+  size: 35, 51
+Hit
+  xy: 35, 153
+  size: 35, 51
+Hit
+  xy: 70, 153
+  size: 35, 51
+Death
+  xy: 0, 204
+  size: 35, 51
+Death
+  xy: 35, 204
+  size: 35, 51
+Death
+  xy: 70, 204
+  size: 35, 51
+Death
+  xy: 105, 204
+  size: 35, 51
+Death
+  xy: 140, 204
+  size: 35, 51
+Death
+  xy: 175, 204
+  size: 35, 51

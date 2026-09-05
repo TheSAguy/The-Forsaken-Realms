@@ -1,0 +1,74 @@
+grey_pilgrim.png
+size: 96,65
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 12, 13
+Idle
+  xy: 0, 0
+  size: 12, 13
+Idle
+  xy: 12, 0
+  size: 12, 13
+Idle
+  xy: 24, 0
+  size: 12, 13
+Idle
+  xy: 36, 0
+  size: 12, 13
+Walk
+  xy: 0, 13
+  size: 12, 13
+Walk
+  xy: 12, 13
+  size: 12, 13
+Walk
+  xy: 24, 13
+  size: 12, 13
+Walk
+  xy: 36, 13
+  size: 12, 13
+Walk
+  xy: 48, 13
+  size: 12, 13
+Walk
+  xy: 60, 13
+  size: 12, 13
+Walk
+  xy: 72, 13
+  size: 12, 13
+Walk
+  xy: 84, 13
+  size: 12, 13
+Attack
+  xy: 0, 26
+  size: 12, 13
+Attack
+  xy: 12, 26
+  size: 12, 13
+Attack
+  xy: 24, 26
+  size: 12, 13
+Attack
+  xy: 36, 26
+  size: 12, 13
+Hit
+  xy: 0, 39
+  size: 12, 13
+Hit
+  xy: 12, 39
+  size: 12, 13
+Death
+  xy: 0, 52
+  size: 12, 13
+Death
+  xy: 12, 52
+  size: 12, 13
+Death
+  xy: 24, 52
+  size: 12, 13
+Death
+  xy: 36, 52
+  size: 12, 13

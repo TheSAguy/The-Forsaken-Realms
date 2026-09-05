@@ -1,0 +1,41 @@
+taong_tuod.png
+size: 68,170
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 120
+  size: 65, 50
+Idle
+  xy: 0, 0
+  size: 17, 24
+Walk
+  xy: 0, 24
+  size: 17, 24
+Walk
+  xy: 17, 24
+  size: 17, 24
+Walk
+  xy: 34, 24
+  size: 17, 24
+Walk
+  xy: 51, 24
+  size: 17, 24
+Attack
+  xy: 0, 48
+  size: 17, 24
+Attack
+  xy: 17, 48
+  size: 17, 24
+Attack
+  xy: 34, 48
+  size: 17, 24
+Attack
+  xy: 51, 48
+  size: 17, 24
+Hit
+  xy: 0, 72
+  size: 17, 24
+Death
+  xy: 0, 96
+  size: 17, 24

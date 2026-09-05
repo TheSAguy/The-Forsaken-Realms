@@ -1,0 +1,80 @@
+chainmail_knight.png
+size: 352,255
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 51
+Idle
+  xy: 0, 0
+  size: 44, 51
+Walk
+  xy: 0, 51
+  size: 44, 51
+Walk
+  xy: 44, 51
+  size: 44, 51
+Walk
+  xy: 88, 51
+  size: 44, 51
+Walk
+  xy: 132, 51
+  size: 44, 51
+Walk
+  xy: 176, 51
+  size: 44, 51
+Walk
+  xy: 220, 51
+  size: 44, 51
+Walk
+  xy: 264, 51
+  size: 44, 51
+Walk
+  xy: 308, 51
+  size: 44, 51
+Attack
+  xy: 0, 102
+  size: 44, 51
+Attack
+  xy: 44, 102
+  size: 44, 51
+Attack
+  xy: 88, 102
+  size: 44, 51
+Attack
+  xy: 132, 102
+  size: 44, 51
+Attack
+  xy: 176, 102
+  size: 44, 51
+Attack
+  xy: 220, 102
+  size: 44, 51
+Hit
+  xy: 0, 153
+  size: 44, 51
+Hit
+  xy: 44, 153
+  size: 44, 51
+Hit
+  xy: 88, 153
+  size: 44, 51
+Death
+  xy: 0, 204
+  size: 44, 51
+Death
+  xy: 44, 204
+  size: 44, 51
+Death
+  xy: 88, 204
+  size: 44, 51
+Death
+  xy: 132, 204
+  size: 44, 51
+Death
+  xy: 176, 204
+  size: 44, 51
+Death
+  xy: 220, 204
+  size: 44, 51

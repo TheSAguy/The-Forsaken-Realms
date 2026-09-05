@@ -1,0 +1,41 @@
+tiyanak.png
+size: 56,86
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 70
+  size: 18, 16
+Idle
+  xy: 0, 0
+  size: 14, 14
+Walk
+  xy: 0, 14
+  size: 14, 14
+Walk
+  xy: 14, 14
+  size: 14, 14
+Walk
+  xy: 28, 14
+  size: 14, 14
+Walk
+  xy: 42, 14
+  size: 14, 14
+Attack
+  xy: 0, 28
+  size: 14, 14
+Attack
+  xy: 14, 28
+  size: 14, 14
+Attack
+  xy: 28, 28
+  size: 14, 14
+Attack
+  xy: 42, 28
+  size: 14, 14
+Hit
+  xy: 0, 42
+  size: 14, 14
+Death
+  xy: 0, 56
+  size: 14, 14

@@ -1,0 +1,41 @@
+aghoy.png
+size: 44,76
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 55
+  size: 27, 21
+Idle
+  xy: 0, 0
+  size: 11, 11
+Walk
+  xy: 0, 11
+  size: 11, 11
+Walk
+  xy: 11, 11
+  size: 11, 11
+Walk
+  xy: 22, 11
+  size: 11, 11
+Walk
+  xy: 33, 11
+  size: 11, 11
+Attack
+  xy: 0, 22
+  size: 11, 11
+Attack
+  xy: 11, 22
+  size: 11, 11
+Attack
+  xy: 22, 22
+  size: 11, 11
+Attack
+  xy: 33, 22
+  size: 11, 11
+Hit
+  xy: 0, 33
+  size: 11, 11
+Death
+  xy: 0, 44
+  size: 11, 11

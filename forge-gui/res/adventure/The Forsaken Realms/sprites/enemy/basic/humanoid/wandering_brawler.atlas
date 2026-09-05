@@ -1,0 +1,80 @@
+wandering_brawler.png
+size: 328,260
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 52
+Idle
+  xy: 0, 0
+  size: 41, 52
+Walk
+  xy: 0, 52
+  size: 41, 52
+Walk
+  xy: 41, 52
+  size: 41, 52
+Walk
+  xy: 82, 52
+  size: 41, 52
+Walk
+  xy: 123, 52
+  size: 41, 52
+Walk
+  xy: 164, 52
+  size: 41, 52
+Walk
+  xy: 205, 52
+  size: 41, 52
+Walk
+  xy: 246, 52
+  size: 41, 52
+Walk
+  xy: 287, 52
+  size: 41, 52
+Attack
+  xy: 0, 104
+  size: 41, 52
+Attack
+  xy: 41, 104
+  size: 41, 52
+Attack
+  xy: 82, 104
+  size: 41, 52
+Attack
+  xy: 123, 104
+  size: 41, 52
+Attack
+  xy: 164, 104
+  size: 41, 52
+Attack
+  xy: 205, 104
+  size: 41, 52
+Hit
+  xy: 0, 156
+  size: 41, 52
+Hit
+  xy: 41, 156
+  size: 41, 52
+Hit
+  xy: 82, 156
+  size: 41, 52
+Death
+  xy: 0, 208
+  size: 41, 52
+Death
+  xy: 41, 208
+  size: 41, 52
+Death
+  xy: 82, 208
+  size: 41, 52
+Death
+  xy: 123, 208
+  size: 41, 52
+Death
+  xy: 164, 208
+  size: 41, 52
+Death
+  xy: 205, 208
+  size: 41, 52

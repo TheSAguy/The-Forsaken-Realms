@@ -1,0 +1,83 @@
+grey_scholar.png
+size: 400,255
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 50, 51
+Idle
+  xy: 0, 0
+  size: 50, 51
+Walk
+  xy: 0, 51
+  size: 50, 51
+Walk
+  xy: 50, 51
+  size: 50, 51
+Walk
+  xy: 100, 51
+  size: 50, 51
+Walk
+  xy: 150, 51
+  size: 50, 51
+Walk
+  xy: 200, 51
+  size: 50, 51
+Walk
+  xy: 250, 51
+  size: 50, 51
+Walk
+  xy: 300, 51
+  size: 50, 51
+Walk
+  xy: 350, 51
+  size: 50, 51
+Attack
+  xy: 0, 102
+  size: 50, 51
+Attack
+  xy: 50, 102
+  size: 50, 51
+Attack
+  xy: 100, 102
+  size: 50, 51
+Attack
+  xy: 150, 102
+  size: 50, 51
+Attack
+  xy: 200, 102
+  size: 50, 51
+Attack
+  xy: 250, 102
+  size: 50, 51
+Attack
+  xy: 300, 102
+  size: 50, 51
+Hit
+  xy: 0, 153
+  size: 50, 51
+Hit
+  xy: 50, 153
+  size: 50, 51
+Hit
+  xy: 100, 153
+  size: 50, 51
+Death
+  xy: 0, 204
+  size: 50, 51
+Death
+  xy: 50, 204
+  size: 50, 51
+Death
+  xy: 100, 204
+  size: 50, 51
+Death
+  xy: 150, 204
+  size: 50, 51
+Death
+  xy: 200, 204
+  size: 50, 51
+Death
+  xy: 250, 204
+  size: 50, 51

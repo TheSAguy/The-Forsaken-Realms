@@ -1,0 +1,41 @@
+malakat.png
+size: 56,130
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 14, 26
+Idle
+  xy: 0, 0
+  size: 14, 26
+Walk
+  xy: 0, 26
+  size: 14, 26
+Walk
+  xy: 14, 26
+  size: 14, 26
+Walk
+  xy: 28, 26
+  size: 14, 26
+Walk
+  xy: 42, 26
+  size: 14, 26
+Attack
+  xy: 0, 52
+  size: 14, 26
+Attack
+  xy: 14, 52
+  size: 14, 26
+Attack
+  xy: 28, 52
+  size: 14, 26
+Attack
+  xy: 42, 52
+  size: 14, 26
+Hit
+  xy: 0, 78
+  size: 14, 26
+Death
+  xy: 0, 104
+  size: 14, 26

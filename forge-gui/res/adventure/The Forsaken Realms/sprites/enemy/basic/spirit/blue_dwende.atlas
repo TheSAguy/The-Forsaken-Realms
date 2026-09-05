@@ -1,0 +1,41 @@
+blue_dwende.png
+size: 40,60
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 10, 12
+Idle
+  xy: 0, 0
+  size: 10, 12
+Walk
+  xy: 0, 12
+  size: 10, 12
+Walk
+  xy: 10, 12
+  size: 10, 12
+Walk
+  xy: 20, 12
+  size: 10, 12
+Walk
+  xy: 30, 12
+  size: 10, 12
+Attack
+  xy: 0, 24
+  size: 10, 12
+Attack
+  xy: 10, 24
+  size: 10, 12
+Attack
+  xy: 20, 24
+  size: 10, 12
+Attack
+  xy: 30, 24
+  size: 10, 12
+Hit
+  xy: 0, 36
+  size: 10, 12
+Death
+  xy: 0, 48
+  size: 10, 12

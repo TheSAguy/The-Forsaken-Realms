@@ -1,0 +1,80 @@
+shieldmaiden_captain.png
+size: 376,250
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 47, 50
+Idle
+  xy: 0, 0
+  size: 47, 50
+Walk
+  xy: 0, 50
+  size: 47, 50
+Walk
+  xy: 47, 50
+  size: 47, 50
+Walk
+  xy: 94, 50
+  size: 47, 50
+Walk
+  xy: 141, 50
+  size: 47, 50
+Walk
+  xy: 188, 50
+  size: 47, 50
+Walk
+  xy: 235, 50
+  size: 47, 50
+Walk
+  xy: 282, 50
+  size: 47, 50
+Walk
+  xy: 329, 50
+  size: 47, 50
+Attack
+  xy: 0, 100
+  size: 47, 50
+Attack
+  xy: 47, 100
+  size: 47, 50
+Attack
+  xy: 94, 100
+  size: 47, 50
+Attack
+  xy: 141, 100
+  size: 47, 50
+Attack
+  xy: 188, 100
+  size: 47, 50
+Attack
+  xy: 235, 100
+  size: 47, 50
+Hit
+  xy: 0, 150
+  size: 47, 50
+Hit
+  xy: 47, 150
+  size: 47, 50
+Hit
+  xy: 94, 150
+  size: 47, 50
+Death
+  xy: 0, 200
+  size: 47, 50
+Death
+  xy: 47, 200
+  size: 47, 50
+Death
+  xy: 94, 200
+  size: 47, 50
+Death
+  xy: 141, 200
+  size: 47, 50
+Death
+  xy: 188, 200
+  size: 47, 50
+Death
+  xy: 235, 200
+  size: 47, 50

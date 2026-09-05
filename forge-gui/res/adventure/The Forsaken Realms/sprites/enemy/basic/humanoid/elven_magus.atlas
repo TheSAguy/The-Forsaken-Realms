@@ -1,0 +1,83 @@
+elven_magus.png
+size: 408,290
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 51, 58
+Idle
+  xy: 0, 0
+  size: 51, 58
+Walk
+  xy: 0, 58
+  size: 51, 58
+Walk
+  xy: 51, 58
+  size: 51, 58
+Walk
+  xy: 102, 58
+  size: 51, 58
+Walk
+  xy: 153, 58
+  size: 51, 58
+Walk
+  xy: 204, 58
+  size: 51, 58
+Walk
+  xy: 255, 58
+  size: 51, 58
+Walk
+  xy: 306, 58
+  size: 51, 58
+Walk
+  xy: 357, 58
+  size: 51, 58
+Attack
+  xy: 0, 116
+  size: 51, 58
+Attack
+  xy: 51, 116
+  size: 51, 58
+Attack
+  xy: 102, 116
+  size: 51, 58
+Attack
+  xy: 153, 116
+  size: 51, 58
+Attack
+  xy: 204, 116
+  size: 51, 58
+Attack
+  xy: 255, 116
+  size: 51, 58
+Attack
+  xy: 306, 116
+  size: 51, 58
+Hit
+  xy: 0, 174
+  size: 51, 58
+Hit
+  xy: 51, 174
+  size: 51, 58
+Hit
+  xy: 102, 174
+  size: 51, 58
+Death
+  xy: 0, 232
+  size: 51, 58
+Death
+  xy: 51, 232
+  size: 51, 58
+Death
+  xy: 102, 232
+  size: 51, 58
+Death
+  xy: 153, 232
+  size: 51, 58
+Death
+  xy: 204, 232
+  size: 51, 58
+Death
+  xy: 255, 232
+  size: 51, 58

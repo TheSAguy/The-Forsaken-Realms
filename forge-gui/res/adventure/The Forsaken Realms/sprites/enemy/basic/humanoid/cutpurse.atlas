@@ -1,0 +1,80 @@
+cutpurse.png
+size: 328,255
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 51
+Idle
+  xy: 0, 0
+  size: 41, 51
+Walk
+  xy: 0, 51
+  size: 41, 51
+Walk
+  xy: 41, 51
+  size: 41, 51
+Walk
+  xy: 82, 51
+  size: 41, 51
+Walk
+  xy: 123, 51
+  size: 41, 51
+Walk
+  xy: 164, 51
+  size: 41, 51
+Walk
+  xy: 205, 51
+  size: 41, 51
+Walk
+  xy: 246, 51
+  size: 41, 51
+Walk
+  xy: 287, 51
+  size: 41, 51
+Attack
+  xy: 0, 102
+  size: 41, 51
+Attack
+  xy: 41, 102
+  size: 41, 51
+Attack
+  xy: 82, 102
+  size: 41, 51
+Attack
+  xy: 123, 102
+  size: 41, 51
+Attack
+  xy: 164, 102
+  size: 41, 51
+Attack
+  xy: 205, 102
+  size: 41, 51
+Hit
+  xy: 0, 153
+  size: 41, 51
+Hit
+  xy: 41, 153
+  size: 41, 51
+Hit
+  xy: 82, 153
+  size: 41, 51
+Death
+  xy: 0, 204
+  size: 41, 51
+Death
+  xy: 41, 204
+  size: 41, 51
+Death
+  xy: 82, 204
+  size: 41, 51
+Death
+  xy: 123, 204
+  size: 41, 51
+Death
+  xy: 164, 204
+  size: 41, 51
+Death
+  xy: 205, 204
+  size: 41, 51

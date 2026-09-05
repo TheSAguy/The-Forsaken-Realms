@@ -1,0 +1,80 @@
+ratfolk_scavenger.png
+size: 328,225
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 45
+Idle
+  xy: 0, 0
+  size: 41, 45
+Walk
+  xy: 0, 45
+  size: 41, 45
+Walk
+  xy: 41, 45
+  size: 41, 45
+Walk
+  xy: 82, 45
+  size: 41, 45
+Walk
+  xy: 123, 45
+  size: 41, 45
+Walk
+  xy: 164, 45
+  size: 41, 45
+Walk
+  xy: 205, 45
+  size: 41, 45
+Walk
+  xy: 246, 45
+  size: 41, 45
+Walk
+  xy: 287, 45
+  size: 41, 45
+Attack
+  xy: 0, 90
+  size: 41, 45
+Attack
+  xy: 41, 90
+  size: 41, 45
+Attack
+  xy: 82, 90
+  size: 41, 45
+Attack
+  xy: 123, 90
+  size: 41, 45
+Attack
+  xy: 164, 90
+  size: 41, 45
+Attack
+  xy: 205, 90
+  size: 41, 45
+Hit
+  xy: 0, 135
+  size: 41, 45
+Hit
+  xy: 41, 135
+  size: 41, 45
+Hit
+  xy: 82, 135
+  size: 41, 45
+Death
+  xy: 0, 180
+  size: 41, 45
+Death
+  xy: 41, 180
+  size: 41, 45
+Death
+  xy: 82, 180
+  size: 41, 45
+Death
+  xy: 123, 180
+  size: 41, 45
+Death
+  xy: 164, 180
+  size: 41, 45
+Death
+  xy: 205, 180
+  size: 41, 45

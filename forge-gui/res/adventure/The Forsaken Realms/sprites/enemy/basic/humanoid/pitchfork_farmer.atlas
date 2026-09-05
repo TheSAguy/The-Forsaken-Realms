@@ -1,0 +1,89 @@
+pitchfork_farmer.png
+size: 256,100
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 32, 20
+Idle
+  xy: 0, 0
+  size: 32, 20
+Idle
+  xy: 32, 0
+  size: 32, 20
+Idle
+  xy: 64, 0
+  size: 32, 20
+Idle
+  xy: 96, 0
+  size: 32, 20
+Idle
+  xy: 128, 0
+  size: 32, 20
+Idle
+  xy: 160, 0
+  size: 32, 20
+Walk
+  xy: 0, 20
+  size: 32, 20
+Walk
+  xy: 32, 20
+  size: 32, 20
+Walk
+  xy: 64, 20
+  size: 32, 20
+Walk
+  xy: 96, 20
+  size: 32, 20
+Walk
+  xy: 128, 20
+  size: 32, 20
+Walk
+  xy: 160, 20
+  size: 32, 20
+Walk
+  xy: 192, 20
+  size: 32, 20
+Walk
+  xy: 224, 20
+  size: 32, 20
+Attack
+  xy: 0, 40
+  size: 32, 20
+Attack
+  xy: 32, 40
+  size: 32, 20
+Attack
+  xy: 64, 40
+  size: 32, 20
+Attack
+  xy: 96, 40
+  size: 32, 20
+Attack
+  xy: 128, 40
+  size: 32, 20
+Attack
+  xy: 160, 40
+  size: 32, 20
+Hit
+  xy: 0, 60
+  size: 32, 20
+Hit
+  xy: 32, 60
+  size: 32, 20
+Death
+  xy: 0, 80
+  size: 32, 20
+Death
+  xy: 32, 80
+  size: 32, 20
+Death
+  xy: 64, 80
+  size: 32, 20
+Death
+  xy: 96, 80
+  size: 32, 20
+Death
+  xy: 128, 80
+  size: 32, 20

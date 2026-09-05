@@ -1,0 +1,89 @@
+plumed_knight.png
+size: 256,115
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 32, 23
+Idle
+  xy: 0, 0
+  size: 32, 23
+Idle
+  xy: 32, 0
+  size: 32, 23
+Idle
+  xy: 64, 0
+  size: 32, 23
+Idle
+  xy: 96, 0
+  size: 32, 23
+Idle
+  xy: 128, 0
+  size: 32, 23
+Idle
+  xy: 160, 0
+  size: 32, 23
+Walk
+  xy: 0, 23
+  size: 32, 23
+Walk
+  xy: 32, 23
+  size: 32, 23
+Walk
+  xy: 64, 23
+  size: 32, 23
+Walk
+  xy: 96, 23
+  size: 32, 23
+Walk
+  xy: 128, 23
+  size: 32, 23
+Walk
+  xy: 160, 23
+  size: 32, 23
+Walk
+  xy: 192, 23
+  size: 32, 23
+Walk
+  xy: 224, 23
+  size: 32, 23
+Attack
+  xy: 0, 46
+  size: 32, 23
+Attack
+  xy: 32, 46
+  size: 32, 23
+Attack
+  xy: 64, 46
+  size: 32, 23
+Attack
+  xy: 96, 46
+  size: 32, 23
+Attack
+  xy: 128, 46
+  size: 32, 23
+Attack
+  xy: 160, 46
+  size: 32, 23
+Hit
+  xy: 0, 69
+  size: 32, 23
+Hit
+  xy: 32, 69
+  size: 32, 23
+Death
+  xy: 0, 92
+  size: 32, 23
+Death
+  xy: 32, 92
+  size: 32, 23
+Death
+  xy: 64, 92
+  size: 32, 23
+Death
+  xy: 96, 92
+  size: 32, 23
+Death
+  xy: 128, 92
+  size: 32, 23

@@ -1,0 +1,86 @@
+elf_wayfinder.png
+size: 272,275
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 34, 55
+Idle
+  xy: 0, 0
+  size: 34, 55
+Walk
+  xy: 0, 55
+  size: 34, 55
+Walk
+  xy: 34, 55
+  size: 34, 55
+Walk
+  xy: 68, 55
+  size: 34, 55
+Walk
+  xy: 102, 55
+  size: 34, 55
+Walk
+  xy: 136, 55
+  size: 34, 55
+Walk
+  xy: 170, 55
+  size: 34, 55
+Walk
+  xy: 204, 55
+  size: 34, 55
+Walk
+  xy: 238, 55
+  size: 34, 55
+Attack
+  xy: 0, 110
+  size: 34, 55
+Attack
+  xy: 34, 110
+  size: 34, 55
+Attack
+  xy: 68, 110
+  size: 34, 55
+Attack
+  xy: 102, 110
+  size: 34, 55
+Attack
+  xy: 136, 110
+  size: 34, 55
+Attack
+  xy: 170, 110
+  size: 34, 55
+Attack
+  xy: 204, 110
+  size: 34, 55
+Attack
+  xy: 238, 110
+  size: 34, 55
+Hit
+  xy: 0, 165
+  size: 34, 55
+Hit
+  xy: 34, 165
+  size: 34, 55
+Hit
+  xy: 68, 165
+  size: 34, 55
+Death
+  xy: 0, 220
+  size: 34, 55
+Death
+  xy: 34, 220
+  size: 34, 55
+Death
+  xy: 68, 220
+  size: 34, 55
+Death
+  xy: 102, 220
+  size: 34, 55
+Death
+  xy: 136, 220
+  size: 34, 55
+Death
+  xy: 170, 220
+  size: 34, 55

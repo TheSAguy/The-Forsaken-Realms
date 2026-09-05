@@ -1,0 +1,41 @@
+kapre_old_balete.png
+size: 92,215
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 145
+  size: 92, 70
+Idle
+  xy: 0, 0
+  size: 20, 29
+Walk
+  xy: 0, 29
+  size: 20, 29
+Walk
+  xy: 20, 29
+  size: 20, 29
+Walk
+  xy: 40, 29
+  size: 20, 29
+Walk
+  xy: 60, 29
+  size: 20, 29
+Attack
+  xy: 0, 58
+  size: 20, 29
+Attack
+  xy: 20, 58
+  size: 20, 29
+Attack
+  xy: 40, 58
+  size: 20, 29
+Attack
+  xy: 60, 58
+  size: 20, 29
+Hit
+  xy: 0, 87
+  size: 20, 29
+Death
+  xy: 0, 116
+  size: 20, 29

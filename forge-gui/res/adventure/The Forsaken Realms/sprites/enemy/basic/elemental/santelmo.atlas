@@ -1,0 +1,41 @@
+santelmo.png
+size: 72,159
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 135
+  size: 27, 24
+Idle
+  xy: 0, 0
+  size: 18, 27
+Walk
+  xy: 0, 27
+  size: 18, 27
+Walk
+  xy: 18, 27
+  size: 18, 27
+Walk
+  xy: 36, 27
+  size: 18, 27
+Walk
+  xy: 54, 27
+  size: 18, 27
+Attack
+  xy: 0, 54
+  size: 18, 27
+Attack
+  xy: 18, 54
+  size: 18, 27
+Attack
+  xy: 36, 54
+  size: 18, 27
+Attack
+  xy: 54, 54
+  size: 18, 27
+Hit
+  xy: 0, 81
+  size: 18, 27
+Death
+  xy: 0, 108
+  size: 18, 27

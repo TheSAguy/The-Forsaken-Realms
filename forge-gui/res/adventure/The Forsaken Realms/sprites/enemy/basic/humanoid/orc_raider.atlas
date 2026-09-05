@@ -1,0 +1,80 @@
+orc_raider.png
+size: 328,230
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 46
+Idle
+  xy: 0, 0
+  size: 41, 46
+Walk
+  xy: 0, 46
+  size: 41, 46
+Walk
+  xy: 41, 46
+  size: 41, 46
+Walk
+  xy: 82, 46
+  size: 41, 46
+Walk
+  xy: 123, 46
+  size: 41, 46
+Walk
+  xy: 164, 46
+  size: 41, 46
+Walk
+  xy: 205, 46
+  size: 41, 46
+Walk
+  xy: 246, 46
+  size: 41, 46
+Walk
+  xy: 287, 46
+  size: 41, 46
+Attack
+  xy: 0, 92
+  size: 41, 46
+Attack
+  xy: 41, 92
+  size: 41, 46
+Attack
+  xy: 82, 92
+  size: 41, 46
+Attack
+  xy: 123, 92
+  size: 41, 46
+Attack
+  xy: 164, 92
+  size: 41, 46
+Attack
+  xy: 205, 92
+  size: 41, 46
+Hit
+  xy: 0, 138
+  size: 41, 46
+Hit
+  xy: 41, 138
+  size: 41, 46
+Hit
+  xy: 82, 138
+  size: 41, 46
+Death
+  xy: 0, 184
+  size: 41, 46
+Death
+  xy: 41, 184
+  size: 41, 46
+Death
+  xy: 82, 184
+  size: 41, 46
+Death
+  xy: 123, 184
+  size: 41, 46
+Death
+  xy: 164, 184
+  size: 41, 46
+Death
+  xy: 205, 184
+  size: 41, 46

@@ -1,0 +1,86 @@
+ranger_of_the_wood.png
+size: 360,245
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 45, 49
+Idle
+  xy: 0, 0
+  size: 45, 49
+Walk
+  xy: 0, 49
+  size: 45, 49
+Walk
+  xy: 45, 49
+  size: 45, 49
+Walk
+  xy: 90, 49
+  size: 45, 49
+Walk
+  xy: 135, 49
+  size: 45, 49
+Walk
+  xy: 180, 49
+  size: 45, 49
+Walk
+  xy: 225, 49
+  size: 45, 49
+Walk
+  xy: 270, 49
+  size: 45, 49
+Walk
+  xy: 315, 49
+  size: 45, 49
+Attack
+  xy: 0, 98
+  size: 45, 49
+Attack
+  xy: 45, 98
+  size: 45, 49
+Attack
+  xy: 90, 98
+  size: 45, 49
+Attack
+  xy: 135, 98
+  size: 45, 49
+Attack
+  xy: 180, 98
+  size: 45, 49
+Attack
+  xy: 225, 98
+  size: 45, 49
+Attack
+  xy: 270, 98
+  size: 45, 49
+Attack
+  xy: 315, 98
+  size: 45, 49
+Hit
+  xy: 0, 147
+  size: 45, 49
+Hit
+  xy: 45, 147
+  size: 45, 49
+Hit
+  xy: 90, 147
+  size: 45, 49
+Death
+  xy: 0, 196
+  size: 45, 49
+Death
+  xy: 45, 196
+  size: 45, 49
+Death
+  xy: 90, 196
+  size: 45, 49
+Death
+  xy: 135, 196
+  size: 45, 49
+Death
+  xy: 180, 196
+  size: 45, 49
+Death
+  xy: 225, 196
+  size: 45, 49

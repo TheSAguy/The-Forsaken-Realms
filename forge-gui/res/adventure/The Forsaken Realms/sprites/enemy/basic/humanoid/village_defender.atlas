@@ -1,0 +1,62 @@
+village_defender.png
+size: 192,170
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 32, 34
+Idle
+  xy: 0, 0
+  size: 32, 34
+Idle
+  xy: 32, 0
+  size: 32, 34
+Idle
+  xy: 64, 0
+  size: 32, 34
+Walk
+  xy: 0, 34
+  size: 32, 34
+Walk
+  xy: 32, 34
+  size: 32, 34
+Walk
+  xy: 64, 34
+  size: 32, 34
+Attack
+  xy: 0, 68
+  size: 32, 34
+Attack
+  xy: 32, 68
+  size: 32, 34
+Attack
+  xy: 64, 68
+  size: 32, 34
+Hit
+  xy: 0, 102
+  size: 32, 34
+Hit
+  xy: 32, 102
+  size: 32, 34
+Hit
+  xy: 64, 102
+  size: 32, 34
+Death
+  xy: 0, 136
+  size: 32, 34
+Death
+  xy: 32, 136
+  size: 32, 34
+Death
+  xy: 64, 136
+  size: 32, 34
+Death
+  xy: 96, 136
+  size: 32, 34
+Death
+  xy: 128, 136
+  size: 32, 34
+Death
+  xy: 160, 136
+  size: 32, 34

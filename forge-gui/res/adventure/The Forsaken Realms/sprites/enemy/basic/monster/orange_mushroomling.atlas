@@ -1,0 +1,62 @@
+orange_mushroomling.png
+size: 156,120
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 26, 24
+Idle
+  xy: 0, 0
+  size: 26, 24
+Idle
+  xy: 26, 0
+  size: 26, 24
+Idle
+  xy: 52, 0
+  size: 26, 24
+Walk
+  xy: 0, 24
+  size: 26, 24
+Walk
+  xy: 26, 24
+  size: 26, 24
+Walk
+  xy: 52, 24
+  size: 26, 24
+Attack
+  xy: 0, 48
+  size: 26, 24
+Attack
+  xy: 26, 48
+  size: 26, 24
+Attack
+  xy: 52, 48
+  size: 26, 24
+Hit
+  xy: 0, 72
+  size: 26, 24
+Hit
+  xy: 26, 72
+  size: 26, 24
+Hit
+  xy: 52, 72
+  size: 26, 24
+Death
+  xy: 0, 96
+  size: 26, 24
+Death
+  xy: 26, 96
+  size: 26, 24
+Death
+  xy: 52, 96
+  size: 26, 24
+Death
+  xy: 78, 96
+  size: 26, 24
+Death
+  xy: 104, 96
+  size: 26, 24
+Death
+  xy: 130, 96
+  size: 26, 24

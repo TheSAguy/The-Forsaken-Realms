@@ -1,0 +1,74 @@
+woodland_rover.png
+size: 96,70
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 12, 14
+Idle
+  xy: 0, 0
+  size: 12, 14
+Idle
+  xy: 12, 0
+  size: 12, 14
+Idle
+  xy: 24, 0
+  size: 12, 14
+Idle
+  xy: 36, 0
+  size: 12, 14
+Walk
+  xy: 0, 14
+  size: 12, 14
+Walk
+  xy: 12, 14
+  size: 12, 14
+Walk
+  xy: 24, 14
+  size: 12, 14
+Walk
+  xy: 36, 14
+  size: 12, 14
+Walk
+  xy: 48, 14
+  size: 12, 14
+Walk
+  xy: 60, 14
+  size: 12, 14
+Walk
+  xy: 72, 14
+  size: 12, 14
+Walk
+  xy: 84, 14
+  size: 12, 14
+Attack
+  xy: 0, 28
+  size: 12, 14
+Attack
+  xy: 12, 28
+  size: 12, 14
+Attack
+  xy: 24, 28
+  size: 12, 14
+Attack
+  xy: 36, 28
+  size: 12, 14
+Hit
+  xy: 0, 42
+  size: 12, 14
+Hit
+  xy: 12, 42
+  size: 12, 14
+Death
+  xy: 0, 56
+  size: 12, 14
+Death
+  xy: 12, 56
+  size: 12, 14
+Death
+  xy: 24, 56
+  size: 12, 14
+Death
+  xy: 36, 56
+  size: 12, 14

@@ -1,0 +1,80 @@
+forge_blacksmith.png
+size: 432,240
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 54, 48
+Idle
+  xy: 0, 0
+  size: 54, 48
+Walk
+  xy: 0, 48
+  size: 54, 48
+Walk
+  xy: 54, 48
+  size: 54, 48
+Walk
+  xy: 108, 48
+  size: 54, 48
+Walk
+  xy: 162, 48
+  size: 54, 48
+Walk
+  xy: 216, 48
+  size: 54, 48
+Walk
+  xy: 270, 48
+  size: 54, 48
+Walk
+  xy: 324, 48
+  size: 54, 48
+Walk
+  xy: 378, 48
+  size: 54, 48
+Attack
+  xy: 0, 96
+  size: 54, 48
+Attack
+  xy: 54, 96
+  size: 54, 48
+Attack
+  xy: 108, 96
+  size: 54, 48
+Attack
+  xy: 162, 96
+  size: 54, 48
+Attack
+  xy: 216, 96
+  size: 54, 48
+Attack
+  xy: 270, 96
+  size: 54, 48
+Hit
+  xy: 0, 144
+  size: 54, 48
+Hit
+  xy: 54, 144
+  size: 54, 48
+Hit
+  xy: 108, 144
+  size: 54, 48
+Death
+  xy: 0, 192
+  size: 54, 48
+Death
+  xy: 54, 192
+  size: 54, 48
+Death
+  xy: 108, 192
+  size: 54, 48
+Death
+  xy: 162, 192
+  size: 54, 48
+Death
+  xy: 216, 192
+  size: 54, 48
+Death
+  xy: 270, 192
+  size: 54, 48

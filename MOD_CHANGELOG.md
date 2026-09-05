@@ -17201,3 +17201,150 @@ every value outside tier/life/speed/difficulty are unchanged - the diff is large
 the reformat.
 
 **Files touched**: world/enemies.json only.
+
+## Round 117: the remaining sprite packs - 86 more enemies, 7 more Mythics for Blue and Green, tiers re-sliced (2026-09-05, REPO ONLY)
+
+The user confirmed every sheet in "More Animations" is a free sample, so the packs round 115 held
+back are in: the **PUNY MYTH Creatures** set (30 Philippine-folklore overworld walk cycles plus 9
+side-view hero battlers), the **LPC-style 64px universal sheets** (39 humanoids: the Sprites
+folder, the Archer / Elven Mage / Knight / Female Knight level ladders, Lizard Warrior), **The
+Pixel Character Pack** (Farmer, Knight, Orc) and the **Dark and sharp** 16px adventurers. The
+`rpgcritter` sheet was left out - its 16px grid does not line up cleanly - and the projectile strip
+has no use. Not packaged: the user was playing.
+
+### Sprites
+
+- LPC sheets follow the universal layout (spellcast / thrust / walk / slash / shoot / hurt, four
+  directions each, down-facing rows 2 / 6 / 10 / 14 / 18 / 20); the extended sheets keep those 21
+  rows first. Idle = the standing walk frame, Walk = 8 frames, Attack = slash / thrust / cast /
+  shoot per character, Hit = the first three hurt frames, Death = all six. Drawn at scale 0.45.
+- PUNY overworld charsets (24x32, three-frame walk cycles, row 0 faces down): Idle / Hit / Death
+  are the standing frame, Walk and Attack cycle the walk - the same one-row approach round 108's
+  Enemy Art uses. Where the pack ships a battle portrait for the creature, it becomes the atlas's
+  `Avatar` region (its own size), so the duel intro shows the big painted version.
+- PUNY side-view battlers: wait / walk / swing-thrust-spell / damage / dying+dead motions, three
+  frames each, scale 0.5. Pixel Character Pack: 28px idle and 32px walk strips, scale 0.8. Dark
+  and sharp: Idle 4 + Run 8 at 16px.
+
+### Roster (86 - the round-116 slice may have moved the intended tiers, see below)
+
+```
+Sirena, Tide-Singer        U Mythic   life 48  speed 45  scale 0.5  deck: hand-built Mythic deck
+Elven Archmage of the Mists U Mythic   life 48  speed 47  scale 0.45 deck: hand-built Mythic deck
+Aswang Sorcerer            U Mythic   life 48  speed 47  scale 0.5  deck: hand-built Mythic deck
+Kapre of the Old Balete    G Mythic   life 52  speed 45  scale 1.0  deck: hand-built Mythic deck
+Troll Warlord              G Mythic   life 52  speed 45  scale 0.5  deck: hand-built Mythic deck
+Tikbalang, Wild Hunter     G Mythic   life 48  speed 45  scale 1.0  deck: hand-built Mythic deck
+Marksman of the Deep Wood  G Mythic   life 48  speed 45  scale 0.45 deck: hand-built Mythic deck
+Forge Blacksmith           W Uncommon life 20  speed 28  scale 0.45 deck: Wonder Woman 2 [duel/medium 1.76]
+Elf Wayfinder              G Uncommon life 20  speed 28  scale 0.45 deck: Swan 2 [duel/medium 1.62]
+Goblin Shieldbearer        R Uncommon life 20  speed 28  scale 0.45 deck: Krenko's Mob 1 [duel/easy 2.39]
+Goblin Skulker             R Common   life 12  speed 20  scale 0.45 deck: Fiery Fury [precon/precon 1.51]
+Lizardfolk Guard           G Uncommon life 20  speed 28  scale 0.45 deck: Guardians of Nissa 2 [duel/medium 2.49]
+Lizardfolk Champion        G Rare     life 30  speed 38  scale 0.45 deck: Morkus Rex 2 [duel/medium 2.94]
+Wandering Brawler          R Common   life 12  speed 20  scale 0.45 deck: Into the Breach [precon/precon 1.92]
+Farmhand Militia           W Common   life 12  speed 20  scale 0.45 deck: Blinding Fury [precon/precon 1.52]
+Cutpurse                   B Common   life 12  speed 20  scale 0.45 deck: Assassin [precon/precon 1.43]
+Hooded Skulk               B Uncommon life 20  speed 28  scale 0.45 deck: Wei Kingdom [precon/precon 1.60]
+Market Trader              W Uncommon life 20  speed 28  scale 0.45 deck: Imperial Guard 2 [duel/medium 2.83]
+Apprentice Scribe          U Common   life 12  speed 22  scale 0.45 deck: Spellweaver [precon/precon 1.60]
+Grey Scholar               U Uncommon life 20  speed 30  scale 0.45 deck: Harry Potter 1 [duel/easy 2.00]
+Hedge Villager             G Common   life 12  speed 20  scale 0.45 deck: Wicked Big [precon/precon 1.53]
+Orc Raider                 R Uncommon life 20  speed 28  scale 0.45 deck: Lightning Aggro [precon/precon 2.32]
+Orc Warchief               R Rare     life 30  speed 38  scale 0.45 deck: Urabrask's Frenzy 2 [duel/medium 3.11]
+Orc Deathcaller            B Rare     life 30  speed 38  scale 0.45 deck: Darkseid 2 [duel/medium 3.42]
+Ratfolk Scavenger          B Uncommon life 20  speed 28  scale 0.45 deck: Rat's Nest [precon/precon 1.53]
+Boar Knight                G Rare     life 33  speed 38  scale 0.45 deck: Vorinclex's Terraforming 2 [duel/medium 3.06]
+Archer Initiate            G Common   life 12  speed 20  scale 0.45 deck: Pummel [precon/precon 1.48]
+Hooded Archer              G Uncommon life 20  speed 28  scale 0.45 deck: Thrun's Trolling Troupe 1 [duel/easy 2.08]
+Ranger of the Wood         G Rare     life 30  speed 38  scale 0.45 deck: Tom Bombadil 3 [duel/hard 3.80]
+Elven Apprentice           U Common   life 12  speed 22  scale 0.45 deck: Dominator [precon/precon 1.53]
+Elven Spellweaver          U Uncommon life 20  speed 30  scale 0.45 deck: Minerva McGonagall 2 [duel/medium 2.50]
+Elven Magus                U Rare     life 30  speed 40  scale 0.45 deck: Nox 2 [duel/medium 3.59]
+Squire-at-Arms             W Common   life 13  speed 20  scale 0.45 deck: Life Boost [precon/precon 1.57]
+Chainmail Knight           W Uncommon life 22  speed 28  scale 0.45 deck: Data 2 [duel/medium 1.98]
+Knight Bowman              W Uncommon life 20  speed 28  scale 0.45 deck: United Assault [precon/precon 2.49]
+Plate Knight               W Rare     life 33  speed 38  scale 0.45 deck: Ajani's Immortality 3 [duel/hard 3.03]
+Knight Sharpshooter        W Rare     life 30  speed 38  scale 0.45 deck: The Wanderer's Entourage 3 [duel/hard 3.15]
+Knight Commander           W Rare     life 33  speed 38  scale 0.45 deck: Elesh Norn's Evangelification 3 [duel/hard 3.50]
+Knight Longbowman          W Rare     life 30  speed 38  scale 0.45 deck: The Thing 2 [duel/medium 3.08]
+Shieldmaiden Recruit       W Common   life 13  speed 20  scale 0.45 deck: Seabiscuit 1 [duel/easy 1.37]
+Shieldmaiden               W Uncommon life 22  speed 28  scale 0.45 deck: Elesh Norn's Evangelification 1 [duel/easy 2.20]
+Shieldmaiden Captain       W Rare     life 33  speed 38  scale 0.45 deck: Severus Snape 3 [duel/hard 3.08]
+Shieldmaiden Paragon       W Rare     life 33  speed 38  scale 0.45 deck: Avacyn's Angelic Assault 2 [duel/medium 4.00]
+Aghoy                      G Common   life 12  speed 22  scale 1.0  deck: Heavy Hitters [precon/precon 1.57]
+Amaranhig                  B Uncommon life 20  speed 24  scale 1.0  deck: Jafar 2 [duel/medium 3.25]
+Amomongo                   G Uncommon life 20  speed 28  scale 1.0  deck: Garruk, Beast Master 2 [duel/medium 2.87]
+Wild Boar                  G Common   life 12  speed 20  scale 1.0  deck: Way Wild [precon/precon 1.50]
+Bristleback Boar           R Common   life 12  speed 20  scale 1.0  deck: Kamahl's Temper [precon/precon 1.57]
+Bungisngis                 R Rare     life 33  speed 38  scale 1.0  deck: King Goldemar 2 [duel/medium 3.14]
+Busaw                      B Uncommon life 20  speed 24  scale 1.0  deck: Sheoldred's Contagion Carriers 1 [duel/easy 2.28]
+Buwaya                     G Uncommon life 20  speed 28  scale 1.0  deck: Garruk's Hunter's Strength 1 [duel/easy 2.31]
+Barnyard Hen               W Common   life 12  speed 20  scale 1.0  deck: Myr of Mirrodin [precon/precon 1.43]
+Blue Dwende                U Common   life 12  speed 22  scale 1.0  deck: Wu Kingdom [precon/precon 1.60]
+Ember Dwende               R Common   life 12  speed 22  scale 1.0  deck: Gleeful Flames [precon/precon 1.44]
+Red Dwende                 R Uncommon life 20  speed 30  scale 1.0  deck: Rocky 2 [duel/medium 2.20]
+Golden Dwende              W Common   life 12  speed 22  scale 1.0  deck: Armada [precon/precon 1.52]
+Evil Dwende                B Uncommon life 20  speed 30  scale 1.0  deck: Da Vinci 2 [duel/medium 2.61]
+Ekek                       B Rare     life 36  speed 33  scale 1.0  deck: Baron's Bloodthirst 3 [duel/hard 3.56]
+Kolyog                     G Uncommon life 20  speed 28  scale 1.0  deck: Nissa Revane 1 [duel/easy 2.91]
+Malakat                    B Uncommon life 24  speed 23  scale 1.0  deck: Homer Simpson 2 [duel/medium 2.57]
+Manananggal                B Rare     life 36  speed 33  scale 1.0  deck: The Man in Black 3 [duel/hard 3.47]
+Nuno sa Punso              G Rare     life 30  speed 40  scale 1.0  deck: Totoro 2 [duel/medium 2.35]
+Fighting Rooster           R Common   life 12  speed 20  scale 1.0  deck: Master Blaster [precon/precon 1.45]
+Santelmo                   R Uncommon life 20  speed 28  scale 1.0  deck: Koth's Terramancy 1 [duel/easy 3.33]
+Sigbin                     B Uncommon life 20  speed 28  scale 1.0  deck: Saruman 2 [duel/medium 2.43]
+Sirena                     U Rare     life 30  speed 38  scale 1.0  deck: Jack Sparrow 2 [duel/medium 2.48]
+Syokoy                     U Uncommon life 20  speed 28  scale 1.0  deck: Zatanna 2 [duel/medium 2.40]
+Taong Tuod                 G Rare     life 33  speed 38  scale 1.0  deck: Dr Watson 3 [duel/hard 3.36]
+Tiburones                  U Rare     life 30  speed 38  scale 1.0  deck: Namor 3 [duel/hard 2.87]
+Tiyanak                    B Common   life 14  speed 15  scale 1.0  deck: Decay [precon/precon 1.54]
+Hex Witch                  B Rare     life 30  speed 40  scale 1.0  deck: Ned Flanders 3 [duel/hard 2.16]
+Katipunero Scout           G Uncommon life 20  speed 28  scale 0.5  deck: Fat Albert 2 [duel/medium 2.53]
+Katipunero Marine          U Uncommon life 20  speed 28  scale 0.5  deck: Katara 2 [duel/medium 2.69]
+Katipunero Firebrand       R Uncommon life 20  speed 28  scale 0.5  deck: Crocodile Dundee 2 [duel/medium 2.49]
+Village Volunteer          W Common   life 12  speed 20  scale 0.5  deck: Cho-Manno's Resolve [precon/precon 1.57]
+Village Defender           W Common   life 12  speed 20  scale 0.5  deck: Eight-and-a-Half-Tails's Vulpine Veh [duel/easy 1.58]
+Mulawin Warrior            W Rare     life 33  speed 38  scale 0.5  deck: Aladdin 2 [duel/medium 3.11]
+Orange Mushroomling        G Common   life 12  speed 20  scale 0.5  deck: Tendershoot Dryad 1 [duel/easy 2.39]
+Pitchfork Farmer           G Common   life 12  speed 20  scale 0.8  deck: Painflow [precon/precon 1.48]
+Plumed Knight              W Uncommon life 22  speed 28  scale 0.8  deck: Avacyn's Angelic Assault 1 [duel/easy 2.50]
+Axe Orc                    R Uncommon life 20  speed 28  scale 0.8  deck: Frodo 2 [duel/medium 2.36]
+Woodland Rover             G Common   life 12  speed 20  scale 1.0  deck: Molimo's Might [precon/precon 1.54]
+Traveling Conjurer         U Common   life 12  speed 22  scale 1.0  deck: Arcanis's Guile [precon/precon 1.57]
+Red-Cloak Duelist          R Common   life 12  speed 20  scale 1.0  deck: Crocodile Dundee 1 [duel/easy 1.92]
+Grey Pilgrim               W Common   life 12  speed 20  scale 1.0  deck: Teyo's Defiant Defense 1 [duel/easy 2.36]
+Alley Knife                B Common   life 12  speed 20  scale 1.0  deck: Nightstalkers [precon/precon 1.60]
+biome blue + 14
+biome green + 23
+biome white + 21
+biome colorless + 79
+biome red + 14
+biome black + 14
+```
+
+### The seven new Mythic decks (hand-built, mono-colour, 60 cards, validated)
+
+Blue: **Sirena, Tide-Singer** (sea monsters and counters), **Elven Archmage of the Mists**
+(Faeries), **Aswang Sorcerer** (Illusions). Green: **Kapre of the Old Balete** (Treefolk), **Troll
+Warlord** (Trolls and pump), **Tikbalang, Wild Hunter** (Wolves), **Marksman of the Deep Wood**
+(Elf archers). All seven are pinned as Mythic in the slice.
+
+### Tier slice re-run
+
+Round 116's per-colour slice was re-run over the grown pools (30/30/30/rest, Black 40/40/40/rest)
+with the seven new Mythics pinned alongside round 115's. The jitter step is now idempotent: only
+enemies still carrying untouched template stats (exactly 12/20, 20/28, 30/38 or 48/45) are
+jittered, so re-running never compounds an earlier jitter.
+
+```
+W pool 132: before C/U/R/M  38/ 36/ 37/ 21 -> after  30/ 30/ 30/ 42
+U pool 116: before C/U/R/M  34/ 34/ 33/ 15 -> after  30/ 30/ 30/ 26
+B pool 167: before C/U/R/M  43/ 47/ 44/ 33 -> after  40/ 40/ 40/ 47
+R pool 134: before C/U/R/M  36/ 36/ 32/ 30 -> after  30/ 30/ 30/ 44
+G pool 132: before C/U/R/M  37/ 37/ 35/ 23 -> after  30/ 30/ 30/ 42
+tier changes: 182 | stat jitter only: 42
+```
+
+**Files touched**: enemies.json (+86, re-sliced), world/biomes/*.json, 86 atlases (+png), 86 decks,
+CREDITS.md.

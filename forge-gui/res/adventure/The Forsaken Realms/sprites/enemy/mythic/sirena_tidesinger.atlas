@@ -1,0 +1,62 @@
+sirena_tidesinger.png
+size: 240,170
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 40, 34
+Idle
+  xy: 0, 0
+  size: 40, 34
+Idle
+  xy: 40, 0
+  size: 40, 34
+Idle
+  xy: 80, 0
+  size: 40, 34
+Walk
+  xy: 0, 34
+  size: 40, 34
+Walk
+  xy: 40, 34
+  size: 40, 34
+Walk
+  xy: 80, 34
+  size: 40, 34
+Attack
+  xy: 0, 68
+  size: 40, 34
+Attack
+  xy: 40, 68
+  size: 40, 34
+Attack
+  xy: 80, 68
+  size: 40, 34
+Hit
+  xy: 0, 102
+  size: 40, 34
+Hit
+  xy: 40, 102
+  size: 40, 34
+Hit
+  xy: 80, 102
+  size: 40, 34
+Death
+  xy: 0, 136
+  size: 40, 34
+Death
+  xy: 40, 136
+  size: 40, 34
+Death
+  xy: 80, 136
+  size: 40, 34
+Death
+  xy: 120, 136
+  size: 40, 34
+Death
+  xy: 160, 136
+  size: 40, 34
+Death
+  xy: 200, 136
+  size: 40, 34

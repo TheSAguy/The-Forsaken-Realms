@@ -1,0 +1,41 @@
+sirena.png
+size: 66,206
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 125
+  size: 66, 81
+Idle
+  xy: 0, 0
+  size: 16, 25
+Walk
+  xy: 0, 25
+  size: 16, 25
+Walk
+  xy: 16, 25
+  size: 16, 25
+Walk
+  xy: 32, 25
+  size: 16, 25
+Walk
+  xy: 48, 25
+  size: 16, 25
+Attack
+  xy: 0, 50
+  size: 16, 25
+Attack
+  xy: 16, 50
+  size: 16, 25
+Attack
+  xy: 32, 50
+  size: 16, 25
+Attack
+  xy: 48, 50
+  size: 16, 25
+Hit
+  xy: 0, 75
+  size: 16, 25
+Death
+  xy: 0, 100
+  size: 16, 25

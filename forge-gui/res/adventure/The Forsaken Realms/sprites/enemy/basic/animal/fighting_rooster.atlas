@@ -1,0 +1,41 @@
+fighting_rooster.png
+size: 48,135
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 12, 27
+Idle
+  xy: 0, 0
+  size: 12, 27
+Walk
+  xy: 0, 27
+  size: 12, 27
+Walk
+  xy: 12, 27
+  size: 12, 27
+Walk
+  xy: 24, 27
+  size: 12, 27
+Walk
+  xy: 36, 27
+  size: 12, 27
+Attack
+  xy: 0, 54
+  size: 12, 27
+Attack
+  xy: 12, 54
+  size: 12, 27
+Attack
+  xy: 24, 54
+  size: 12, 27
+Attack
+  xy: 36, 54
+  size: 12, 27
+Hit
+  xy: 0, 81
+  size: 12, 27
+Death
+  xy: 0, 108
+  size: 12, 27

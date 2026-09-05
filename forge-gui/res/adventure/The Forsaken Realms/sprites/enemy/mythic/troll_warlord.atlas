@@ -1,0 +1,80 @@
+troll_warlord.png
+size: 352,235
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 47
+Idle
+  xy: 0, 0
+  size: 44, 47
+Walk
+  xy: 0, 47
+  size: 44, 47
+Walk
+  xy: 44, 47
+  size: 44, 47
+Walk
+  xy: 88, 47
+  size: 44, 47
+Walk
+  xy: 132, 47
+  size: 44, 47
+Walk
+  xy: 176, 47
+  size: 44, 47
+Walk
+  xy: 220, 47
+  size: 44, 47
+Walk
+  xy: 264, 47
+  size: 44, 47
+Walk
+  xy: 308, 47
+  size: 44, 47
+Attack
+  xy: 0, 94
+  size: 44, 47
+Attack
+  xy: 44, 94
+  size: 44, 47
+Attack
+  xy: 88, 94
+  size: 44, 47
+Attack
+  xy: 132, 94
+  size: 44, 47
+Attack
+  xy: 176, 94
+  size: 44, 47
+Attack
+  xy: 220, 94
+  size: 44, 47
+Hit
+  xy: 0, 141
+  size: 44, 47
+Hit
+  xy: 44, 141
+  size: 44, 47
+Hit
+  xy: 88, 141
+  size: 44, 47
+Death
+  xy: 0, 188
+  size: 44, 47
+Death
+  xy: 44, 188
+  size: 44, 47
+Death
+  xy: 88, 188
+  size: 44, 47
+Death
+  xy: 132, 188
+  size: 44, 47
+Death
+  xy: 176, 188
+  size: 44, 47
+Death
+  xy: 220, 188
+  size: 44, 47

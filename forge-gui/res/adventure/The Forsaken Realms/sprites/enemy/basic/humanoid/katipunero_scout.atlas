@@ -1,0 +1,62 @@
+katipunero_scout.png
+size: 264,230
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 46
+Idle
+  xy: 0, 0
+  size: 44, 46
+Idle
+  xy: 44, 0
+  size: 44, 46
+Idle
+  xy: 88, 0
+  size: 44, 46
+Walk
+  xy: 0, 46
+  size: 44, 46
+Walk
+  xy: 44, 46
+  size: 44, 46
+Walk
+  xy: 88, 46
+  size: 44, 46
+Attack
+  xy: 0, 92
+  size: 44, 46
+Attack
+  xy: 44, 92
+  size: 44, 46
+Attack
+  xy: 88, 92
+  size: 44, 46
+Hit
+  xy: 0, 138
+  size: 44, 46
+Hit
+  xy: 44, 138
+  size: 44, 46
+Hit
+  xy: 88, 138
+  size: 44, 46
+Death
+  xy: 0, 184
+  size: 44, 46
+Death
+  xy: 44, 184
+  size: 44, 46
+Death
+  xy: 88, 184
+  size: 44, 46
+Death
+  xy: 132, 184
+  size: 44, 46
+Death
+  xy: 176, 184
+  size: 44, 46
+Death
+  xy: 220, 184
+  size: 44, 46

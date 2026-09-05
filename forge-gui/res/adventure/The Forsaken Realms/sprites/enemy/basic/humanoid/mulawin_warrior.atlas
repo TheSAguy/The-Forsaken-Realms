@@ -1,0 +1,62 @@
+mulawin_warrior.png
+size: 216,190
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 36, 38
+Idle
+  xy: 0, 0
+  size: 36, 38
+Idle
+  xy: 36, 0
+  size: 36, 38
+Idle
+  xy: 72, 0
+  size: 36, 38
+Walk
+  xy: 0, 38
+  size: 36, 38
+Walk
+  xy: 36, 38
+  size: 36, 38
+Walk
+  xy: 72, 38
+  size: 36, 38
+Attack
+  xy: 0, 76
+  size: 36, 38
+Attack
+  xy: 36, 76
+  size: 36, 38
+Attack
+  xy: 72, 76
+  size: 36, 38
+Hit
+  xy: 0, 114
+  size: 36, 38
+Hit
+  xy: 36, 114
+  size: 36, 38
+Hit
+  xy: 72, 114
+  size: 36, 38
+Death
+  xy: 0, 152
+  size: 36, 38
+Death
+  xy: 36, 152
+  size: 36, 38
+Death
+  xy: 72, 152
+  size: 36, 38
+Death
+  xy: 108, 152
+  size: 36, 38
+Death
+  xy: 144, 152
+  size: 36, 38
+Death
+  xy: 180, 152
+  size: 36, 38

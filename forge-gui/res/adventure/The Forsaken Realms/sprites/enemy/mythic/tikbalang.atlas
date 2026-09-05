@@ -1,0 +1,41 @@
+tikbalang.png
+size: 67,202
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 125
+  size: 67, 77
+Idle
+  xy: 0, 0
+  size: 14, 25
+Walk
+  xy: 0, 25
+  size: 14, 25
+Walk
+  xy: 14, 25
+  size: 14, 25
+Walk
+  xy: 28, 25
+  size: 14, 25
+Walk
+  xy: 42, 25
+  size: 14, 25
+Attack
+  xy: 0, 50
+  size: 14, 25
+Attack
+  xy: 14, 50
+  size: 14, 25
+Attack
+  xy: 28, 50
+  size: 14, 25
+Attack
+  xy: 42, 50
+  size: 14, 25
+Hit
+  xy: 0, 75
+  size: 14, 25
+Death
+  xy: 0, 100
+  size: 14, 25

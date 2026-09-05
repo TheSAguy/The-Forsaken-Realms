@@ -1,0 +1,86 @@
+knight_bowman.png
+size: 336,255
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 42, 51
+Idle
+  xy: 0, 0
+  size: 42, 51
+Walk
+  xy: 0, 51
+  size: 42, 51
+Walk
+  xy: 42, 51
+  size: 42, 51
+Walk
+  xy: 84, 51
+  size: 42, 51
+Walk
+  xy: 126, 51
+  size: 42, 51
+Walk
+  xy: 168, 51
+  size: 42, 51
+Walk
+  xy: 210, 51
+  size: 42, 51
+Walk
+  xy: 252, 51
+  size: 42, 51
+Walk
+  xy: 294, 51
+  size: 42, 51
+Attack
+  xy: 0, 102
+  size: 42, 51
+Attack
+  xy: 42, 102
+  size: 42, 51
+Attack
+  xy: 84, 102
+  size: 42, 51
+Attack
+  xy: 126, 102
+  size: 42, 51
+Attack
+  xy: 168, 102
+  size: 42, 51
+Attack
+  xy: 210, 102
+  size: 42, 51
+Attack
+  xy: 252, 102
+  size: 42, 51
+Attack
+  xy: 294, 102
+  size: 42, 51
+Hit
+  xy: 0, 153
+  size: 42, 51
+Hit
+  xy: 42, 153
+  size: 42, 51
+Hit
+  xy: 84, 153
+  size: 42, 51
+Death
+  xy: 0, 204
+  size: 42, 51
+Death
+  xy: 42, 204
+  size: 42, 51
+Death
+  xy: 84, 204
+  size: 42, 51
+Death
+  xy: 126, 204
+  size: 42, 51
+Death
+  xy: 168, 204
+  size: 42, 51
+Death
+  xy: 210, 204
+  size: 42, 51

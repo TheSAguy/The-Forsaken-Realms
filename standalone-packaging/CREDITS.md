@@ -57,6 +57,12 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   archer, crossbowman, cavalier, horseman) - author to be confirmed.
 - **Molfar, Opiven, Rusalka** (48px folklore strips) - author to be confirmed.
 - **Minotaur charset** (Mino2) - author to be confirmed.
+- **PUNY MYTH Creatures** (Philippine folklore overworld sprites, battle portraits and side-view
+  heroes) - free sample pack; author not named in the files.
+- **LPC-style character sheets** (the archers, elven mages, knights, shieldmaidens, villagers,
+  orcs, goblins, lizardfolk, troll, boar knight) - free samples in the Liberated Pixel Cup format.
+- **The Pixel Character Pack - Free Version** (farmer, plumed knight, axe orc) - pidroudays.itch.io.
+- **Dark and sharp Player Characters** (the five 16px adventurers) - oCosity.
 
 ## License
 

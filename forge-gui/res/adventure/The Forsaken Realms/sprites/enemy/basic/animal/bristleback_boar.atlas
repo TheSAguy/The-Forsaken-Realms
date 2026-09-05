@@ -1,0 +1,41 @@
+bristleback_boar.png
+size: 48,115
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 85
+  size: 41, 30
+Idle
+  xy: 0, 0
+  size: 12, 17
+Walk
+  xy: 0, 17
+  size: 12, 17
+Walk
+  xy: 12, 17
+  size: 12, 17
+Walk
+  xy: 24, 17
+  size: 12, 17
+Walk
+  xy: 36, 17
+  size: 12, 17
+Attack
+  xy: 0, 34
+  size: 12, 17
+Attack
+  xy: 12, 34
+  size: 12, 17
+Attack
+  xy: 24, 34
+  size: 12, 17
+Attack
+  xy: 36, 34
+  size: 12, 17
+Hit
+  xy: 0, 51
+  size: 12, 17
+Death
+  xy: 0, 68
+  size: 12, 17

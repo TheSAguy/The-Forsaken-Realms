@@ -1,0 +1,86 @@
+deepwood_marksman.png
+size: 376,270
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 47, 54
+Idle
+  xy: 0, 0
+  size: 47, 54
+Walk
+  xy: 0, 54
+  size: 47, 54
+Walk
+  xy: 47, 54
+  size: 47, 54
+Walk
+  xy: 94, 54
+  size: 47, 54
+Walk
+  xy: 141, 54
+  size: 47, 54
+Walk
+  xy: 188, 54
+  size: 47, 54
+Walk
+  xy: 235, 54
+  size: 47, 54
+Walk
+  xy: 282, 54
+  size: 47, 54
+Walk
+  xy: 329, 54
+  size: 47, 54
+Attack
+  xy: 0, 108
+  size: 47, 54
+Attack
+  xy: 47, 108
+  size: 47, 54
+Attack
+  xy: 94, 108
+  size: 47, 54
+Attack
+  xy: 141, 108
+  size: 47, 54
+Attack
+  xy: 188, 108
+  size: 47, 54
+Attack
+  xy: 235, 108
+  size: 47, 54
+Attack
+  xy: 282, 108
+  size: 47, 54
+Attack
+  xy: 329, 108
+  size: 47, 54
+Hit
+  xy: 0, 162
+  size: 47, 54
+Hit
+  xy: 47, 162
+  size: 47, 54
+Hit
+  xy: 94, 162
+  size: 47, 54
+Death
+  xy: 0, 216
+  size: 47, 54
+Death
+  xy: 47, 216
+  size: 47, 54
+Death
+  xy: 94, 216
+  size: 47, 54
+Death
+  xy: 141, 216
+  size: 47, 54
+Death
+  xy: 188, 216
+  size: 47, 54
+Death
+  xy: 235, 216
+  size: 47, 54

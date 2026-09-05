@@ -1,0 +1,41 @@
+amomongo.png
+size: 64,188
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 135
+  size: 53, 53
+Idle
+  xy: 0, 0
+  size: 16, 27
+Walk
+  xy: 0, 27
+  size: 16, 27
+Walk
+  xy: 16, 27
+  size: 16, 27
+Walk
+  xy: 32, 27
+  size: 16, 27
+Walk
+  xy: 48, 27
+  size: 16, 27
+Attack
+  xy: 0, 54
+  size: 16, 27
+Attack
+  xy: 16, 54
+  size: 16, 27
+Attack
+  xy: 32, 54
+  size: 16, 27
+Attack
+  xy: 48, 54
+  size: 16, 27
+Hit
+  xy: 0, 81
+  size: 16, 27
+Death
+  xy: 0, 108
+  size: 16, 27

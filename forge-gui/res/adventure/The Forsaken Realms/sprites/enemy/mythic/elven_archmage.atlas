@@ -1,0 +1,83 @@
+elven_archmage.png
+size: 352,245
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 49
+Idle
+  xy: 0, 0
+  size: 44, 49
+Walk
+  xy: 0, 49
+  size: 44, 49
+Walk
+  xy: 44, 49
+  size: 44, 49
+Walk
+  xy: 88, 49
+  size: 44, 49
+Walk
+  xy: 132, 49
+  size: 44, 49
+Walk
+  xy: 176, 49
+  size: 44, 49
+Walk
+  xy: 220, 49
+  size: 44, 49
+Walk
+  xy: 264, 49
+  size: 44, 49
+Walk
+  xy: 308, 49
+  size: 44, 49
+Attack
+  xy: 0, 98
+  size: 44, 49
+Attack
+  xy: 44, 98
+  size: 44, 49
+Attack
+  xy: 88, 98
+  size: 44, 49
+Attack
+  xy: 132, 98
+  size: 44, 49
+Attack
+  xy: 176, 98
+  size: 44, 49
+Attack
+  xy: 220, 98
+  size: 44, 49
+Attack
+  xy: 264, 98
+  size: 44, 49
+Hit
+  xy: 0, 147
+  size: 44, 49
+Hit
+  xy: 44, 147
+  size: 44, 49
+Hit
+  xy: 88, 147
+  size: 44, 49
+Death
+  xy: 0, 196
+  size: 44, 49
+Death
+  xy: 44, 196
+  size: 44, 49
+Death
+  xy: 88, 196
+  size: 44, 49
+Death
+  xy: 132, 196
+  size: 44, 49
+Death
+  xy: 176, 196
+  size: 44, 49
+Death
+  xy: 220, 196
+  size: 44, 49

@@ -1,0 +1,86 @@
+boar_knight.png
+size: 424,225
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 53, 45
+Idle
+  xy: 0, 0
+  size: 53, 45
+Walk
+  xy: 0, 45
+  size: 53, 45
+Walk
+  xy: 53, 45
+  size: 53, 45
+Walk
+  xy: 106, 45
+  size: 53, 45
+Walk
+  xy: 159, 45
+  size: 53, 45
+Walk
+  xy: 212, 45
+  size: 53, 45
+Walk
+  xy: 265, 45
+  size: 53, 45
+Walk
+  xy: 318, 45
+  size: 53, 45
+Walk
+  xy: 371, 45
+  size: 53, 45
+Attack
+  xy: 0, 90
+  size: 53, 45
+Attack
+  xy: 53, 90
+  size: 53, 45
+Attack
+  xy: 106, 90
+  size: 53, 45
+Attack
+  xy: 159, 90
+  size: 53, 45
+Attack
+  xy: 212, 90
+  size: 53, 45
+Attack
+  xy: 265, 90
+  size: 53, 45
+Attack
+  xy: 318, 90
+  size: 53, 45
+Attack
+  xy: 371, 90
+  size: 53, 45
+Hit
+  xy: 0, 135
+  size: 53, 45
+Hit
+  xy: 53, 135
+  size: 53, 45
+Hit
+  xy: 106, 135
+  size: 53, 45
+Death
+  xy: 0, 180
+  size: 53, 45
+Death
+  xy: 53, 180
+  size: 53, 45
+Death
+  xy: 106, 180
+  size: 53, 45
+Death
+  xy: 159, 180
+  size: 53, 45
+Death
+  xy: 212, 180
+  size: 53, 45
+Death
+  xy: 265, 180
+  size: 53, 45

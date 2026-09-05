@@ -1,0 +1,41 @@
+syokoy.png
+size: 64,170
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 130
+  size: 37, 40
+Idle
+  xy: 0, 0
+  size: 16, 26
+Walk
+  xy: 0, 26
+  size: 16, 26
+Walk
+  xy: 16, 26
+  size: 16, 26
+Walk
+  xy: 32, 26
+  size: 16, 26
+Walk
+  xy: 48, 26
+  size: 16, 26
+Attack
+  xy: 0, 52
+  size: 16, 26
+Attack
+  xy: 16, 52
+  size: 16, 26
+Attack
+  xy: 32, 52
+  size: 16, 26
+Attack
+  xy: 48, 52
+  size: 16, 26
+Hit
+  xy: 0, 78
+  size: 16, 26
+Death
+  xy: 0, 104
+  size: 16, 26

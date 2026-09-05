@@ -1,0 +1,41 @@
+tiburones.png
+size: 96,160
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 24, 32
+Idle
+  xy: 0, 0
+  size: 24, 32
+Walk
+  xy: 0, 32
+  size: 24, 32
+Walk
+  xy: 24, 32
+  size: 24, 32
+Walk
+  xy: 48, 32
+  size: 24, 32
+Walk
+  xy: 72, 32
+  size: 24, 32
+Attack
+  xy: 0, 64
+  size: 24, 32
+Attack
+  xy: 24, 64
+  size: 24, 32
+Attack
+  xy: 48, 64
+  size: 24, 32
+Attack
+  xy: 72, 64
+  size: 24, 32
+Hit
+  xy: 0, 96
+  size: 24, 32
+Death
+  xy: 0, 128
+  size: 24, 32

@@ -1,0 +1,41 @@
+ekek.png
+size: 88,221
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 150
+  size: 55, 71
+Idle
+  xy: 0, 0
+  size: 22, 30
+Walk
+  xy: 0, 30
+  size: 22, 30
+Walk
+  xy: 22, 30
+  size: 22, 30
+Walk
+  xy: 44, 30
+  size: 22, 30
+Walk
+  xy: 66, 30
+  size: 22, 30
+Attack
+  xy: 0, 60
+  size: 22, 30
+Attack
+  xy: 22, 60
+  size: 22, 30
+Attack
+  xy: 44, 60
+  size: 22, 30
+Attack
+  xy: 66, 60
+  size: 22, 30
+Hit
+  xy: 0, 90
+  size: 22, 30
+Death
+  xy: 0, 120
+  size: 22, 30

@@ -1,0 +1,41 @@
+busaw.png
+size: 71,198
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 140
+  size: 71, 58
+Idle
+  xy: 0, 0
+  size: 16, 28
+Walk
+  xy: 0, 28
+  size: 16, 28
+Walk
+  xy: 16, 28
+  size: 16, 28
+Walk
+  xy: 32, 28
+  size: 16, 28
+Walk
+  xy: 48, 28
+  size: 16, 28
+Attack
+  xy: 0, 56
+  size: 16, 28
+Attack
+  xy: 16, 56
+  size: 16, 28
+Attack
+  xy: 32, 56
+  size: 16, 28
+Attack
+  xy: 48, 56
+  size: 16, 28
+Hit
+  xy: 0, 84
+  size: 16, 28
+Death
+  xy: 0, 112
+  size: 16, 28

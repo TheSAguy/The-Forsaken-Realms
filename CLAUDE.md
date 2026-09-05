@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 117 (2026-09-05, repo only): remaining packs (PUNY MYTH, LPC 64px, Pixel Character Pack, Dark and sharp) -> 86 enemies
+  incl. 7 pinned Mythics (U x3, G x4, hand-built decks); LPC rows 2/6/10/14/18/20 are the down-facing spellcast/thrust/walk/slash/shoot/hurt;
+  PUNY battle portraits as Avatar regions; slice re-run with an idempotent jitter (template stats only).
 - Round 116 (2026-09-04, PACKAGED with 112-115): per-colour tier slice by deck strength 30/30/30/rest (B 40/40/40/rest),
   wizard families + bosses pinned, r115 Mythics pinned, promoted enemies never weaker; life/speed jitter (name-seeded);
   enemies.json re-serialised uniformly (json.dumps indent 4) - edit it via json from now on.

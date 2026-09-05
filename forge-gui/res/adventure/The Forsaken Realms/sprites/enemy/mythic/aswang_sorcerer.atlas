@@ -1,0 +1,62 @@
+aswang_sorcerer.png
+size: 252,200
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 42, 40
+Idle
+  xy: 0, 0
+  size: 42, 40
+Idle
+  xy: 42, 0
+  size: 42, 40
+Idle
+  xy: 84, 0
+  size: 42, 40
+Walk
+  xy: 0, 40
+  size: 42, 40
+Walk
+  xy: 42, 40
+  size: 42, 40
+Walk
+  xy: 84, 40
+  size: 42, 40
+Attack
+  xy: 0, 80
+  size: 42, 40
+Attack
+  xy: 42, 80
+  size: 42, 40
+Attack
+  xy: 84, 80
+  size: 42, 40
+Hit
+  xy: 0, 120
+  size: 42, 40
+Hit
+  xy: 42, 120
+  size: 42, 40
+Hit
+  xy: 84, 120
+  size: 42, 40
+Death
+  xy: 0, 160
+  size: 42, 40
+Death
+  xy: 42, 160
+  size: 42, 40
+Death
+  xy: 84, 160
+  size: 42, 40
+Death
+  xy: 126, 160
+  size: 42, 40
+Death
+  xy: 168, 160
+  size: 42, 40
+Death
+  xy: 210, 160
+  size: 42, 40

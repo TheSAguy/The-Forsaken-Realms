@@ -1,0 +1,80 @@
+lizardfolk_champion.png
+size: 392,250
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 49, 50
+Idle
+  xy: 0, 0
+  size: 49, 50
+Walk
+  xy: 0, 50
+  size: 49, 50
+Walk
+  xy: 49, 50
+  size: 49, 50
+Walk
+  xy: 98, 50
+  size: 49, 50
+Walk
+  xy: 147, 50
+  size: 49, 50
+Walk
+  xy: 196, 50
+  size: 49, 50
+Walk
+  xy: 245, 50
+  size: 49, 50
+Walk
+  xy: 294, 50
+  size: 49, 50
+Walk
+  xy: 343, 50
+  size: 49, 50
+Attack
+  xy: 0, 100
+  size: 49, 50
+Attack
+  xy: 49, 100
+  size: 49, 50
+Attack
+  xy: 98, 100
+  size: 49, 50
+Attack
+  xy: 147, 100
+  size: 49, 50
+Attack
+  xy: 196, 100
+  size: 49, 50
+Attack
+  xy: 245, 100
+  size: 49, 50
+Hit
+  xy: 0, 150
+  size: 49, 50
+Hit
+  xy: 49, 150
+  size: 49, 50
+Hit
+  xy: 98, 150
+  size: 49, 50
+Death
+  xy: 0, 200
+  size: 49, 50
+Death
+  xy: 49, 200
+  size: 49, 50
+Death
+  xy: 98, 200
+  size: 49, 50
+Death
+  xy: 147, 200
+  size: 49, 50
+Death
+  xy: 196, 200
+  size: 49, 50
+Death
+  xy: 245, 200
+  size: 49, 50

@@ -1,0 +1,80 @@
+goblin_shieldbearer.png
+size: 376,265
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 47, 53
+Idle
+  xy: 0, 0
+  size: 47, 53
+Walk
+  xy: 0, 53
+  size: 47, 53
+Walk
+  xy: 47, 53
+  size: 47, 53
+Walk
+  xy: 94, 53
+  size: 47, 53
+Walk
+  xy: 141, 53
+  size: 47, 53
+Walk
+  xy: 188, 53
+  size: 47, 53
+Walk
+  xy: 235, 53
+  size: 47, 53
+Walk
+  xy: 282, 53
+  size: 47, 53
+Walk
+  xy: 329, 53
+  size: 47, 53
+Attack
+  xy: 0, 106
+  size: 47, 53
+Attack
+  xy: 47, 106
+  size: 47, 53
+Attack
+  xy: 94, 106
+  size: 47, 53
+Attack
+  xy: 141, 106
+  size: 47, 53
+Attack
+  xy: 188, 106
+  size: 47, 53
+Attack
+  xy: 235, 106
+  size: 47, 53
+Hit
+  xy: 0, 159
+  size: 47, 53
+Hit
+  xy: 47, 159
+  size: 47, 53
+Hit
+  xy: 94, 159
+  size: 47, 53
+Death
+  xy: 0, 212
+  size: 47, 53
+Death
+  xy: 47, 212
+  size: 47, 53
+Death
+  xy: 94, 212
+  size: 47, 53
+Death
+  xy: 141, 212
+  size: 47, 53
+Death
+  xy: 188, 212
+  size: 47, 53
+Death
+  xy: 235, 212
+  size: 47, 53
