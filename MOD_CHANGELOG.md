@@ -16961,3 +16961,243 @@ placeholders are in the file for the user to fill in.
 **Files touched**: `data/AdventureQuestStage.java`, `player/AdventurePlayer.java`,
 `util/ResourceSpawns.java`; enemies.json (+29), world/biomes/*.json, 29 atlases (+png) under
 `sprites/enemy/mythic/` and `sprites/enemy/basic/<class>/`, 29 decks, CREDITS.md.
+
+## Round 116: per-colour tier rebalance to 30/30/30/rest (Black 40/40/40/rest), stat variety, PACKAGED (2026-09-04)
+
+User request (after the Mythic batch): "It looks like there could be roughly 30 per tier besides
+Mythical. Per colour, tweak the decks to get the numbers a little closer to 30/30/30/rest (Black,
+with more mages, closer to 40/40/40/rest)", and "remember to update life/speed/rank; add a +/- to
+each so they feel unique". The user had stopped for the night, so this round is packaged and the
+live game carries rounds 112-116.
+
+### Method
+
+For each mono colour, every non-boss enemy outside the five wizard dispatch families (their
+Apprentice/Adept/Master/Grandmaster names ARE their tiers) is ranked by the strength of the deck it
+actually runs - the rarity-weighted average the round-108 generator uses (Common 1, Uncommon 2,
+Rare 4, Mythic 8, basics excluded; the plane's and the common folder's `.dck` files, legends
+included; generator `.json` decks score at their current tier's midpoint) - and the ranking is
+sliced 30 / 30 / 30 / rest into Common / Uncommon / Rare / Mythic (40s for Black). Ties keep their
+old tier. The fifteen round-115 Mythics are pinned. Decks are NOT swapped: the ranking is by deck,
+so each enemy's tier now agrees with the list it plays, and the curated legend decks stay intact.
+Multicolour enemies (1,010, mostly legends) and the colourless pool were left alone - "per colour"
+was the brief; say the word and the same slice runs over them.
+
+Stats: an enemy whose tier changed gets the new tier's life / speed / difficulty (12/20/0.1,
+20/28/1, 30/38/2, 48/45/3); a promotion never weakens an authored encounter (life and speed are
+the larger of the old value and the new one). Every pooled enemy then gets a deterministic jitter
+seeded by its name - life +/-12-15%, speed +/-8-10% - so the roster no longer has hundreds of
+identical 12/20 and 20/28 bodies.
+
+```
+W pool 111: before C/U/R/M  27/ 28/ 50/  6 -> after  30/ 30/ 30/ 21
+U pool 102: before C/U/R/M  12/ 47/ 39/  4 -> after  30/ 30/ 30/ 12
+B pool 153: before C/U/R/M  27/ 61/ 59/  6 -> after  40/ 40/ 40/ 33
+R pool 120: before C/U/R/M  22/ 45/ 47/  6 -> after  30/ 30/ 30/ 30
+G pool 109: before C/U/R/M  21/ 44/ 40/  4 -> after  30/ 30/ 30/ 19
+tier changes: 192 | stat jitter only: 403
+```
+
+Full move list (old -> new tier, deck strength, new life/speed):
+
+```
+W | Dog                                Uncommon -> Common   deck 1.82  life 11 speed 20
+W | Kor Firewalker                     Uncommon -> Common   deck 1.89  life 11 speed 18
+W | Halfling Rogue                     Uncommon -> Common   deck 2.03  life 11 speed 19
+W | Sram                               Rare     -> Uncommon deck 2.94  life 21 speed 27
+W | Crossbow Marksman                  Rare     -> Uncommon deck 3.00  life 17 speed 28
+W | Delney                             Rare     -> Uncommon deck 3.00  life 18 speed 31
+W | Kemba                              Rare     -> Uncommon deck 3.04  life 23 speed 26
+W | Haliya                             Rare     -> Uncommon deck 3.06  life 22 speed 29
+W | Sun Titan                          Rare     -> Mythic   deck 4.11  life 53 speed 44
+W | Mangara                            Rare     -> Mythic   deck 4.12  life 46 speed 50
+W | Heliod                             Rare     -> Mythic   deck 4.17  life 55 speed 45
+W | Radiant                            Rare     -> Mythic   deck 4.21  life 48 speed 50
+W | Akroma and Keleth                  Rare     -> Mythic   deck 4.22  life 53 speed 50
+W | Holy Apparition                    Rare     -> Mythic   deck 4.23  life 45 speed 49
+W | Priest Fanatic                     Rare     -> Mythic   deck 4.24  life 53 speed 44
+W | Sephara                            Rare     -> Mythic   deck 4.29  life 49 speed 50
+W | General Jarkeld                    Rare     -> Mythic   deck 4.29  life 50 speed 48
+W | Mondrak                            Rare     -> Mythic   deck 4.29  life 53 speed 60
+W | Avacyn                             Rare     -> Mythic   deck 4.31  life 53 speed 49
+W | Human Renegade                     Rare     -> Mythic   deck 4.35  life 44 speed 43
+W | Elder White Dragon                 Rare     -> Mythic   deck 4.47  life 42 speed 46
+W | Angel Warrior                      Rare     -> Mythic   deck 4.50  life 49 speed 48
+W | Beza                               Rare     -> Mythic   deck 4.50  life 49 speed 60
+U | Orvar                              Uncommon -> Common   deck 2.05  life 12 speed 22
+U | Water Elemental                    Uncommon -> Common   deck 2.08  life 12 speed 22
+U | Merfolk Soldier                    Uncommon -> Common   deck 2.13  life 13 speed 18
+U | Thought Invoker of Shandalar       Uncommon -> Common   deck 2.13  life 13 speed 21
+U | Snow Fox                           Uncommon -> Common   deck 2.16  life 12 speed 21
+U | Geralf                             Uncommon -> Common   deck 2.20  life 11 speed 18
+U | Heart-Piercer Manticore            Uncommon -> Common   deck 2.24  life 11 speed 22
+U | Court Mage                         Rare     -> Common   deck 2.27  life 11 speed 18
+U | Geistmage                          Uncommon -> Common   deck 2.27  life 12 speed 22
+U | Spirit                             Uncommon -> Common   deck 2.33  life 12 speed 21
+U | Earth Elemental                    Uncommon -> Common   deck 2.35  life 14 speed 20
+U | Emry                               Uncommon -> Common   deck 2.35  life 12 speed 18
+U | Siani and Esior                    Uncommon -> Common   deck 2.38  life 11 speed 20
+U | Alandra                            Uncommon -> Common   deck 2.40  life 11 speed 20
+U | Tide Elemental                     Uncommon -> Common   deck 2.47  life 13 speed 19
+U | Metathran Renegade                 Uncommon -> Common   deck 2.49  life 11 speed 20
+U | Bird                               Uncommon -> Common   deck 2.50  life 11 speed 22
+U | Gitaxian Underling                 Uncommon -> Common   deck 2.50  life 12 speed 21
+U | Illusionist                        Rare     -> Uncommon deck 2.62  life 18 speed 27
+U | Pol Jamaar                         Rare     -> Uncommon deck 2.94  life 19 speed 25
+U | Ojer Pakpatiq                      Rare     -> Uncommon deck 3.00  life 21 speed 26
+U | Kira                               Uncommon -> Rare     deck 3.03  life 30 speed 44
+U | Azami                              Uncommon -> Rare     deck 3.04  life 30 speed 50
+U | Bruvac                             Uncommon -> Rare     deck 3.38  life 33 speed 35
+U | Sakashima                          Rare     -> Mythic   deck 3.70  life 53 speed 42
+U | Storm Titan                        Rare     -> Mythic   deck 3.83  life 41 speed 42
+U | The Mindskinner                    Rare     -> Mythic   deck 3.87  life 50 speed 50
+U | Mill Mole                          Rare     -> Mythic   deck 4.00  life 49 speed 44
+U | Atemsis                            Rare     -> Mythic   deck 4.01  life 43 speed 50
+U | Artifact Warrior                   Rare     -> Mythic   deck 4.03  life 42 speed 42
+U | Urza                               Rare     -> Mythic   deck 4.07  life 50 speed 49
+U | Green Golem                        Rare     -> Mythic   deck 4.13  life 46 speed 42
+B | Wild Rat                           Uncommon -> Common   deck 1.77  life 12 speed 20
+B | Dementia Beast                     Uncommon -> Common   deck 1.89  life 11 speed 21
+B | Reassembling Skeleton              Uncommon -> Common   deck 2.05  life 11 speed 20
+B | Cateran Slaver                     Uncommon -> Common   deck 2.06  life 13 speed 21
+B | Flying Witch                       Uncommon -> Common   deck 2.09  life 11 speed 19
+B | Skeleton Soldier                   Uncommon -> Common   deck 2.17  life 12 speed 20
+B | Cloaker                            Uncommon -> Common   deck 2.19  life 12 speed 19
+B | Eye                                Uncommon -> Common   deck 2.20  life 11 speed 22
+B | Bog Witch                          Uncommon -> Common   deck 2.23  life 13 speed 20
+B | Kinzu                              Uncommon -> Common   deck 2.24  life 12 speed 21
+B | Zombie                             Uncommon -> Common   deck 2.26  life 12 speed 20
+B | Vampire                            Uncommon -> Common   deck 2.27  life 12 speed 21
+B | Dark Spirit                        Uncommon -> Common   deck 2.28  life 12 speed 19
+B | Pirate Captain 2                   Uncommon -> Common   deck 2.29  life 12 speed 19
+B | Hexcaller Warlock                  Rare     -> Uncommon deck 2.37  life 17 speed 30
+B | Skewering Stalker                  Rare     -> Uncommon deck 2.40  life 22 speed 30
+B | Jakub Šlemr '99                    Rare     -> Uncommon deck 2.78  life 19 speed 27
+B | Lord Pestilence                    Rare     -> Uncommon deck 2.86  life 18 speed 28
+B | Arnyn                              Uncommon -> Rare     deck 2.87  life 30 speed 40
+B | Witch                              Uncommon -> Rare     deck 2.88  life 27 speed 40
+B | Hythonia                           Uncommon -> Rare     deck 2.92  life 40 speed 40
+B | Endrek                             Uncommon -> Rare     deck 2.94  life 32 speed 40
+B | Syr Konrad                         Uncommon -> Rare     deck 2.97  life 30 speed 50
+B | Kothophed                          Uncommon -> Rare     deck 2.98  life 30 speed 50
+B | Aclazotz                           Uncommon -> Rare     deck 2.99  life 31 speed 50
+B | Karumonix                          Common   -> Rare     deck 3.20  life 27 speed 45
+B | Varragoth                          Uncommon -> Rare     deck 3.39  life 31 speed 39
+B | Shauku                             Uncommon -> Rare     deck 3.41  life 30 speed 40
+B | Gix                                Rare     -> Mythic   deck 3.51  life 44 speed 43
+B | Vile Witch                         Rare     -> Mythic   deck 3.57  life 49 speed 44
+B | Ihsan's Shade                      Rare     -> Mythic   deck 3.58  life 50 speed 47
+B | Drivnod                            Rare     -> Mythic   deck 3.62  life 55 speed 50
+B | Yawgmoth                           Rare     -> Mythic   deck 3.64  life 48 speed 42
+B | Erebos                             Rare     -> Mythic   deck 3.67  life 54 speed 50
+B | Timothar                           Rare     -> Mythic   deck 3.71  life 43 speed 50
+B | Gonti                              Rare     -> Mythic   deck 3.71  life 50 speed 43
+B | Jadar                              Rare     -> Mythic   deck 3.72  life 46 speed 45
+B | Abyssal Baron                      Rare     -> Mythic   deck 3.75  life 48 speed 47
+B | Belzenlok                          Rare     -> Mythic   deck 3.76  life 44 speed 50
+B | Necromancer                        Rare     -> Mythic   deck 3.80  life 50 speed 44
+B | Ayara                              Rare     -> Mythic   deck 3.81  life 48 speed 50
+B | Razaketh                           Rare     -> Mythic   deck 3.83  life 47 speed 50
+B | Necrogoyf                          Rare     -> Mythic   deck 3.83  life 53 speed 45
+B | Junji                              Rare     -> Mythic   deck 3.84  life 52 speed 50
+B | Egon                               Uncommon -> Mythic   deck 3.88  life 54 speed 50
+B | Vilis                              Rare     -> Mythic   deck 3.88  life 50 speed 48
+B | Taborax                            Uncommon -> Mythic   deck 3.89  life 41 speed 45
+B | Zombie Master                      Rare     -> Mythic   deck 3.90  life 46 speed 41
+B | Sengir                             Rare     -> Mythic   deck 3.90  life 48 speed 42
+B | Ghost                              Rare     -> Mythic   deck 4.00  life 45 speed 41
+B | High Vampire                       Rare     -> Mythic   deck 4.00  life 53 speed 46
+B | Valgavoth                          Rare     -> Mythic   deck 4.07  life 50 speed 45
+B | Henrika                            Rare     -> Mythic   deck 4.11  life 52 speed 50
+B | Sheoldred                          Rare     -> Mythic   deck 4.18  life 47 speed 46
+B | Demon of Tibalt                    Rare     -> Mythic   deck 4.28  life 51 speed 48
+R | Minotaur                           Uncommon -> Common   deck 1.93  life 13 speed 20
+R | Magma Fire Elemental               Uncommon -> Common   deck 1.98  life 11 speed 22
+R | Rosnakht                           Uncommon -> Common   deck 2.01  life 12 speed 21
+R | Laelia                             Uncommon -> Common   deck 2.13  life 13 speed 20
+R | Ben Rubin '98                      Uncommon -> Common   deck 2.19  life 12 speed 21
+R | Fire Elemental                     Uncommon -> Common   deck 2.19  life 10 speed 21
+R | Pyromancer                         Uncommon -> Common   deck 2.36  life 12 speed 20
+R | Zurzoth                            Uncommon -> Common   deck 2.40  life 13 speed 20
+R | Goblin King                        Rare     -> Uncommon deck 2.87  life 18 speed 28
+R | Squee                              Rare     -> Uncommon deck 2.91  life 22 speed 26
+R | Barbarian                          Uncommon -> Rare     deck 3.00  life 30 speed 41
+R | Tahngarth                          Uncommon -> Rare     deck 3.00  life 26 speed 40
+R | Crag Hydra of Shandalar            Uncommon -> Rare     deck 3.05  life 28 speed 39
+R | Flame Elemental                    Uncommon -> Rare     deck 3.11  life 27 speed 35
+R | War Mage of Shandalar              Uncommon -> Rare     deck 3.19  life 30 speed 36
+R | Minotaur Warcaller                 Uncommon -> Rare     deck 3.28  life 29 speed 35
+R | Farid                              Uncommon -> Rare     deck 3.29  life 30 speed 50
+R | Santa                              Uncommon -> Rare     deck 3.34  life 40 speed 37
+R | Green Dragonkin Renegade           Mythic   -> Rare     deck 3.37  life 28 speed 35
+R | Arni                               Uncommon -> Rare     deck 3.38  life 29 speed 34
+R | Hazoret                            Rare     -> Mythic   deck 3.38  life 54 speed 50
+R | Tannuk                             Rare     -> Mythic   deck 3.45  life 47 speed 42
+R | Calamity                           Rare     -> Mythic   deck 3.49  life 48 speed 50
+R | Chandra's Acolyte                  Rare     -> Mythic   deck 3.61  life 43 speed 41
+R | Fire Dragon                        Rare     -> Mythic   deck 3.61  life 52 speed 47
+R | Torbran                            Rare     -> Mythic   deck 3.63  life 48 speed 50
+R | Nogi                               Rare     -> Mythic   deck 3.65  life 50 speed 45
+R | Kai Budde '99                      Rare     -> Mythic   deck 3.66  life 46 speed 44
+R | Krenko                             Rare     -> Mythic   deck 3.67  life 50 speed 42
+R | Goblin Artificer                   Rare     -> Mythic   deck 3.68  life 41 speed 49
+R | Ilharg                             Rare     -> Mythic   deck 3.72  life 42 speed 50
+R | Ryusei                             Rare     -> Mythic   deck 3.74  life 55 speed 50
+R | Bone Dragon                        Rare     -> Mythic   deck 3.74  life 41 speed 45
+R | Humongous Ettin                    Rare     -> Mythic   deck 3.75  life 48 speed 41
+R | Phoenix                            Rare     -> Mythic   deck 3.90  life 47 speed 49
+R | Márton Stromgald                   Rare     -> Mythic   deck 3.91  life 50 speed 41
+R | Volcano Dragon                     Rare     -> Mythic   deck 3.91  life 47 speed 46
+R | Young Red Dragon                   Rare     -> Mythic   deck 3.95  life 45 speed 41
+R | Gladiator                          Rare     -> Mythic   deck 4.00  life 52 speed 45
+R | Red Beast                          Rare     -> Mythic   deck 4.00  life 50 speed 47
+R | Etali                              Rare     -> Mythic   deck 4.01  life 50 speed 50
+R | Atsushi                            Rare     -> Mythic   deck 4.03  life 47 speed 50
+R | Toralf                             Rare     -> Mythic   deck 4.09  life 42 speed 50
+R | Dragonhawk                         Rare     -> Mythic   deck 4.21  life 48 speed 50
+R | Drakuseth                          Rare     -> Mythic   deck 4.23  life 54 speed 41
+G | Matt Linde '99                     Uncommon -> Common   deck 2.00  life 11 speed 21
+G | Treefolk Guardian                  Uncommon -> Common   deck 2.03  life 13 speed 20
+G | Rishkar                            Uncommon -> Common   deck 2.07  life 11 speed 22
+G | Worm                               Uncommon -> Common   deck 2.09  life 14 speed 21
+G | Geonid Death-Cap                   Uncommon -> Common   deck 2.11  life 13 speed 18
+G | Timber Wolf                        Uncommon -> Common   deck 2.12  life 10 speed 19
+G | Elf Renegade                       Uncommon -> Common   deck 2.19  life 13 speed 19
+G | Longbow Yeoman                     Uncommon -> Common   deck 2.21  life 11 speed 20
+G | Halfling Ranger                    Uncommon -> Common   deck 2.28  life 13 speed 20
+G | Eladamri                           Uncommon -> Common   deck 2.31  life 11 speed 18
+G | Ayula                              Common   -> Uncommon deck 2.32  life 20 speed 30
+G | Expert Druid                       Rare     -> Uncommon deck 2.82  life 22 speed 29
+G | Mire Troll                         Rare     -> Uncommon deck 2.84  life 20 speed 27
+G | Oviya                              Rare     -> Uncommon deck 2.86  life 21 speed 26
+G | Yeva                               Uncommon -> Rare     deck 2.90  life 31 speed 38
+G | Naked Mole Rat                     Uncommon -> Rare     deck 2.93  life 32 speed 36
+G | Treefolk Elite                     Uncommon -> Rare     deck 2.98  life 27 speed 38
+G | Penguin                            Uncommon -> Rare     deck 3.00  life 28 speed 36
+G | Polar Bear                         Uncommon -> Rare     deck 3.04  life 28 speed 35
+G | Penguin Elite                      Uncommon -> Rare     deck 3.30  life 28 speed 36
+G | Goreclaw                           Uncommon -> Rare     deck 3.53  life 30 speed 40
+G | Aeve                               Uncommon -> Rare     deck 3.55  life 34 speed 40
+G | Six                                Rare     -> Mythic   deck 3.56  life 53 speed 49
+G | Saryth                             Rare     -> Mythic   deck 3.59  life 54 speed 50
+G | Giant Fly                          Rare     -> Mythic   deck 3.65  life 46 speed 48
+G | Forest Giant                       Rare     -> Mythic   deck 3.88  life 46 speed 41
+G | Autumn Willow (An-Havva)           Rare     -> Mythic   deck 3.92  life 54 speed 45
+G | Kolvori                            Rare     -> Mythic   deck 3.94  life 45 speed 50
+G | Gargos                             Rare     -> Mythic   deck 3.98  life 41 speed 49
+G | Green Beast                        Rare     -> Mythic   deck 4.00  life 47 speed 47
+G | Hydra                              Rare     -> Mythic   deck 4.00  life 46 speed 42
+G | Treefolk                           Rare     -> Mythic   deck 4.00  life 50 speed 47
+G | Wolf                               Rare     -> Mythic   deck 4.00  life 42 speed 45
+G | Yorvo                              Rare     -> Mythic   deck 4.10  life 47 speed 50
+G | Ojer Kaslem                        Rare     -> Mythic   deck 4.16  life 47 speed 42
+G | Azusa                              Rare     -> Mythic   deck 4.29  life 47 speed 45
+G | Zopandrel                          Rare     -> Mythic   deck 4.37  life 46 speed 50
+```
+
+**enemies.json was re-serialised** in one uniform 4-space pretty-printed style (it was a mix of
+the stock pretty style and the compact one-line entries rounds 107-115 appended); key order and
+every value outside tier/life/speed/difficulty are unchanged - the diff is large only because of
+the reformat.
+
+**Files touched**: world/enemies.json only.

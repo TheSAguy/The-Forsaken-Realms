@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 116 (2026-09-04, PACKAGED with 112-115): per-colour tier slice by deck strength 30/30/30/rest (B 40/40/40/rest),
+  wizard families + bosses pinned, r115 Mythics pinned, promoted enemies never weaker; life/speed jitter (name-seeded);
+  enemies.json re-serialised uniformly (json.dumps indent 4) - edit it via json from now on.
 - Round 115 (2026-09-04, repo only): 29 enemies from the 'More Animations' packs (15 Mythic, 3 per colour, hand-built 60-card
   decks; 14 ordinary with library decks) via r115_sprites/r115_decks/r115_apply; quest-30 arrows skip Ring Cities;
   addGold/addWood/addStone play the pickup sound (dungeon drops were silent). PUNY MYTH + LPC packs NOT used (licences).
