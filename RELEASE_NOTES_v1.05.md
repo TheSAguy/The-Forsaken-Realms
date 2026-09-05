@@ -1,16 +1,13 @@
-# The Forsaken Realms — v1.05 (draft release notes)
+## The Forsaken Realms — v1.05 — Fight Back
 
-*Draft prepared 2026-09-05 from rounds 83–118. Paste into the GitHub release once the build is
-tagged; the checklist at the end is what still has to happen before that.*
-
-## The Forsaken Realms — v1.05 — The Ring
-
-The world has a shape now. Five Ring Cities stand in a star around the Warden's cave, the story
-opens on them instead of on a pile of starting gold, and the Five you freed can be beaten for good:
-hold all five Ring Cities and take all five castles and the run is **won**. Around that, the biggest
-bestiary expansion the game has had (267 new enemies with real animations and 22 hand-built Mythic
-decks), a rebalanced roster where every colour has a real Common-to-Mythic ladder, a rules engine
-brought up to Forge's 2026-09-05 daily, and three weeks of fixes from playtesting.
+For four releases the five colours have been the ones doing the attacking. Not any more. **You can
+now attack AI towns** - walk up to the gate of a colour you are at War with and take the town, or take
+its capital in a duel against two Archmages at once - and the world finally has a shape to fight over:
+five Ring Cities in a star around the Warden's cave, a new opening built on them, and a way to
+**win** the run. Around that, the biggest bestiary expansion the game has had (267 new enemies with
+real animations and 22 hand-built Mythic decks), a rebalanced roster where every colour has a real
+Common-to-Mythic ladder, a rules engine brought up to Forge's 2026-09-05 daily, and three weeks of
+fixes from playtesting.
 
 ---
 
@@ -22,6 +19,24 @@ quests are laid down when a **world is generated**, so an old world simply does 
 is the release to start over on.
 
 ---
+
+## New: Fight Back — attack AI towns
+
+Until now the map only ever moved one way. At **War** with a colour, walk to the gate of one of its
+towns and the barred-entry dialog now offers **Attack**:
+
+- **Win the duel and the town is yours**, as a restored ruin you can rebuild - roads to your seat
+  and all. One assault per town per week; the attack costs reputation with that colour and the
+  former owner sends a mage after you.
+- **Their capitals can fall too.** Attack an AI capital and you face two distinct Archmages at
+  once; win and it becomes your town, and that colour can only field half as many mages for the
+  rest of the run. Taking one also unlocks Partner-only capture quests at its rivals' capitals
+  (three rares, 1,500 gold, 100 shards).
+- **The defenders are real.** AI towns grow guards - one level every 28 days, four levels, capitals
+  fielding two Archmages - and those guards are the assault's defenders, scaling with difficulty.
+- **The colours fight each other properly as well.** When a mage reaches a rival's town the
+  defending guard fights first, with the same odds table your hired guards use; the winner then
+  rolls the capture.
 
 ## New: the Ring Cities
 
@@ -51,22 +66,8 @@ once (with the +5 life). Starting life is now 20 / 15 / 10 / 5 by difficulty, pl
 ## New: a way to win, and a third way to lose
 
 - **Victory:** hold all five Ring Cities **and** defeat all five colours at their castles.
-- **Capitals can be assaulted.** Attack an AI capital and you face two distinct Archmages at once;
-  win and it becomes your town, and that colour's active-mage cap is halved for the rest of the run.
-  Capturing one also unlocks **Partner-only capture quests** at that colour's rivals' capitals
-  (three rares, 1,500 gold, 100 shards).
 - **Defeat:** losing the Capitol duel, running out of life — or an AI colour holding three of the
   five Ring Cities.
-
-## New: town assaults, guards and AI-versus-AI fights
-
-- At **War** you can assault a colour's town from its gate. Win and the town is yours (as a
-  restored ruin); once per town per week; the assault costs reputation and provokes a mage from the
-  former owner.
-- **AI towns grow guards** — one level every 28 days, four levels, capitals fielding two Archmages
-  — and those guards are the assault's defenders, scaling with difficulty.
-- **AI colours fight each other properly.** When a mage reaches a rival's town the defending guard
-  fights first, with the same odds table your hired guards use; the winner then rolls the capture.
 
 ## New: 267 enemies, 22 hand-built Mythic decks
 
@@ -145,16 +146,20 @@ waechter-19 (designed for *Nekomata* by @Jitsu) and waechter-20 (TheRealFusion),
 charset, PUNY MYTH Creatures, LPC-format character sheets, The Pixel Character Pack (pidroudays)
 and Dark and sharp Player Characters (oCosity). Full list in `CREDITS.md`.
 
----
+## 📱 Android
 
-## Release checklist (not yet done)
+**Install:**
+1. On your Android device (Android 8.0+), download `forsaken-realms-1.05-signed-aligned.apk` from the
+   assets below.
+2. Tap the downloaded file and allow your browser/file manager to install unknown apps when
+   prompted (the game is signed by us, not the Play Store).
+3. Grant the storage permission the app asks for - it stores the game data it downloads.
+4. On first launch, tap **Download** when offered the resource files (~180 MB - use Wi-Fi). The app
+   restarts itself when finished. After that it plays offline.
+5. Works alongside the official Forge app - different app, different data. Updating over v1.03 or
+   v1.04 keeps your saves.
 
-1. Playtest the packaged 117/118 build — it is the first live build on the 09.05 engine.
-2. Stamp `modVersion` to `1.05` (and `modVersionDate`) in the plane `config.json`; commit.
-3. `mvn -pl forge-gui-mobile-dev -am package -DskipTests -o`, then
-   `python standalone-packaging/build_standalone.py --zip` → `The-Forsaken-Realms-v1.05.zip`.
-4. Android per `ANDROID_RELEASE.md` (APK + assets.zip), if shipping.
-5. `git tag tfr-v1.05 && git push origin tfr-v1.05`; `gh release create tfr-v1.05 -R
-   TheSAguy/The-Forsaken-Realms --title "The Forsaken Realms v1.05 — The Ring" --notes-file
-   RELEASE_NOTES_v1.05.md` with the zip attached.
-6. Close MOD_SCOPE items 100, 102 and 103.
+Known: in the portrait Armory the hire-guard buttons sit behind the item cards (reported by a
+tester - being fixed). Please keep reporting on Discord (https://discord.gg/TTRPKc9HYJ) with your
+device model and Android version. `assets.zip` in the file list is downloaded by the app
+automatically - you don't need to grab it yourself.

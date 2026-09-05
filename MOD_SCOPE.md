@@ -4631,7 +4631,7 @@ Severity split of the remaining 50, for triage:
 
 Unrelated to #99 (Roaming-Spawn Declustering), which is overworld enemy draws, not static pickups.
 
-### 100. Post-v1.03 Fix Rounds (62-79) — `Ongoing; all local-only, none released - closes when v1.04 ships`
+### 100. Post-v1.03 Fix Rounds (62-79) — `Done (shipped in v1.04, 2026-09-02)`
 Backfilled 2026-09-01, as a pointer rather than a re-listing. Everything since the v1.03 release has
 been local-repo work awaiting a test pass - sixteen rounds of playtest fixes and the features above.
 The per-round engineering detail lives in `MOD_CHANGELOG.md` (rounds 62-77) and every engine-file
@@ -4644,7 +4644,7 @@ six-lens pre-release code review (14 confirmed defects fixed, including a save-i
 and round 79 this scope pass plus the Skip Tutorial dialog fix. This item closes when v1.04 is
 actually released; until then "none released" stays literally true.
 
-### 102. Center Towns / Ring Cities - the Star around the campfire — `In Progress (first cut 2026-09-03, new worlds only; awaiting playtest)`
+### 102. Center Towns / Ring Cities - the Star around the campfire — `Done (released in v1.05 Fight Back, 2026-09-05)`
 User spec 2026-09-03: five towns in a star around the campfire, roads radiating from the fire to
 each, one arm pointing at each AI capital; the user's own castle art per owner color
 (`Center_Town_<color>.png`, neutral by default); ordinary neutral towns for targeting, capture,
@@ -4654,7 +4654,7 @@ Open: bespoke interiors ("will need to build an actual inside later"), a tighter
 rule around the arms (placement only guarantees the 8x8-tile box), and whether the star towns
 should ever seed as functioning neutral towns.
 
-### 103. Main quest opening - "Oaths at the Ring" — `In Progress (first cut 2026-09-03, awaiting playtest)`
+### 103. Main quest opening - "Oaths at the Ring" — `Done (released in v1.05 Fight Back, 2026-09-05)`
 The five Ring Cities (Benalia, Tolaria, Urborg, Shiv, Llanowar) woke the Guardian after letting the
 Five loose through the Seals they were meant to keep. Tutorial: start with nothing, walk the Ring for
 the difficulty's gold / shards / wood / stone / items and +1 life per free city, then the old chain

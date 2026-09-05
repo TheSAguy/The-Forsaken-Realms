@@ -21,7 +21,7 @@
         <!-- TFR: the game's own release version - MUST equal the GitHub release tag's number
              ("tfr-v" + this) and the desktop modVersion; AssetsDownloader builds the assets.zip
              URL from the APK's versionName. Bump every Android release. -->
-        <tfr.version>1.04</tfr.version>
+        <tfr.version>1.05</tfr.version>
     </properties>
 
     <parent>
@@ -479,7 +479,7 @@
                                          versionCode: 2-digit-per-segment scheme, 1.03 -> 10300;
                                          must increase every release. -->
                                     <manifestVersionName>${tfr.version}</manifestVersionName>
-                                    <manifestVersionCode>10400</manifestVersionCode>
+                                    <manifestVersionCode>10500</manifestVersionCode>
                                 </configuration>
                             </execution>
                         </executions>

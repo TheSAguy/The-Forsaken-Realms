@@ -259,8 +259,13 @@ def read_base_build_stamp():
 
 
 def main():
+    global OUT_DIR
     ap = argparse.ArgumentParser()
     ap.add_argument("--zip", action="store_true", help="also write a release zip")
+    ap.add_argument("--out", default=None,
+                     help="assemble into this folder instead of OUT_DIR (round 119: lets a release zip be built "
+                          "while the live folder is being played - the lock probe and PACKAGE_OK marker then apply "
+                          "to the alternate folder, the live game is never touched)")
     ap.add_argument("--full", action="store_true",
                      help="force a full rebuild of the static stock-asset tree (res minus "
                           "adventure, plus adventure/common) even if it looks current - use "
@@ -270,6 +275,10 @@ def main():
                      help="package even if BASE_INSTALL's build.txt daily differs from the plane's "
                           "engineBuildVersion daily (normally an abort - see the check in main)")
     args = ap.parse_args()
+    if args.out:
+        OUT_DIR = os.path.abspath(args.out)
+        os.makedirs(OUT_DIR, exist_ok=True)
+        print(f"output folder overridden: {OUT_DIR}")
 
     jar_name = find_jar(os.path.join(BASE_INSTALL))
     # 2026-09-02 (round 86, review finding): the jar-NAME check below cannot tell one 2.0.15 daily
