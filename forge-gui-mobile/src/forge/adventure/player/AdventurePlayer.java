@@ -1001,7 +1001,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         wood = data.containsKey("wood") ? data.readInt("wood") : 0;
         stone = data.containsKey("stone") ? data.readInt("stone") : 0;
         townLifeBonus = data.containsKey("townLifeBonus") ? data.readInt("townLifeBonus") : 0;
-        System.out.println("[TFR-Life] load: " + life + "/" + maxLife + " (townLifeBonus=" + townLifeBonus + ")");
+        // Round 112: ringLifeBonus was never persisted, so every load re-applied the full Ring City bonus on top
+        // of a maxLife that already contained it (user on Insane reached 25). -1 marks a save from before this
+        // fix; applyRingLifeBonus() adopts the current target without adding it again.
+        ringLifeBonus = data.containsKey("ringLifeBonus") ? data.readInt("ringLifeBonus") : -1;
+        System.out.println("[TFR-Life] load: " + life + "/" + maxLife + " (townLifeBonus=" + townLifeBonus + ", ringLifeBonus=" + ringLifeBonus + ")");
         partnerOverhealActive = data.containsKey("partnerOverhealActive") && data.readBool("partnerOverhealActive");
         // Default true for saves predating this feature (2026-08-13) - inverted containsKey guard.
         payGuardsFromBankFirst = !data.containsKey("payGuardsFromBankFirst") || data.readBool("payGuardsFromBankFirst");
@@ -1438,6 +1442,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.store("wood", wood);
         data.store("stone", stone);
         data.store("townLifeBonus", townLifeBonus);
+        data.store("ringLifeBonus", Math.max(0, ringLifeBonus)); // round 112
         data.store("partnerOverhealActive", partnerOverhealActive);
         data.store("payGuardsFromBankFirst", payGuardsFromBankFirst);
         data.store("goldMineDepositsToBankDirectly", goldMineDepositsToBankDirectly);
@@ -1850,6 +1855,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /** Round 100: mirrors applyTownLifeBonus for the Ring City life bonus. Returns the delta applied. */
     public int applyRingLifeBonus(int target) {
+        if (ringLifeBonus < 0) { // round 112: pre-fix save - the bonus is already inside maxLife (applied in-session before it was saved)
+            ringLifeBonus = target;
+            System.out.println("[TFR-Life] ringLifeBonus: pre-round-112 save, adopting " + target + " as already applied (" + life + "/" + maxLife + ")");
+            return 0;
+        }
         int delta = target - ringLifeBonus;
         if (delta == 0)
             return 0;
@@ -1954,8 +1964,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
     public void addMaxLife(int count) {
         int lb = life, mb = maxLife;
-        maxLife += count;
-        life += count;
+        maxLife = Math.max(1, maxLife + count);
+        life = Math.max(1, Math.min(life + count, maxLife)); // round 112: a negative amount (dungeon cost, console) can no longer push life below 1
         logLife("addMaxLife(" + count + ")", lb, mb);
         onLifeTotalChangeList.emit();
     }

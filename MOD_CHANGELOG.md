@@ -16716,3 +16716,55 @@ a minute), and under Git Bash pass the jar as `/f/...` to javac but `F:/...;C:/.
 
 **Files touched**: `scene/TileMapScene.java`; quests.json (quest 75 epilogue); enemies.json (24
 entries); 23 new decks; points_of_interest.json (14 entries); maps/tileset/towers.atlas + .png.
+
+## Round 112: Ring City life bonus re-applied on every load; targeting odds retuned and documented (2026-09-04)
+
+Repo only - the user was mid-session, so nothing was packaged. Needs the next package to reach the
+live game.
+
+### 1. "How much life should I have on Insane? I have 25." (engine)
+
+The user's log answered it in two lines, twice:
+
+```
+[TFR-Life] load: 15/15 (townLifeBonus=0)
+[TFR-Life] ringLifeBonus(target=5): 15/15 -> 20/20
+...
+[TFR-Life] load: 20/20 (townLifeBonus=0)
+[TFR-Life] ringLifeBonus(target=5): 20/20 -> 25/25
+```
+
+Round 100 added `AdventurePlayer.ringLifeBonus` (+1 max life per visited Ring City while it is
+neutral or player-held) and tracked the applied amount so only deltas are ever added - but never
+saved it. Every load started from 0, `WorldSave.load()` re-ran `updateRingLifeBonus(false)`, and
+the full +5 landed on a maxLife that already contained it. Four loads took an Insane start of 5 to
+25; the -2 in the same log is a Demon's Bargain reward, deliberate. Correct value for that save:
+5 (Insane) + 5 (five Ring Cities) - 2 = 8.
+
+Fix: `ringLifeBonus` is stored with the player and read back; a save from before this round loads
+as -1 and `applyRingLifeBonus()` then ADOPTS the current target without adding it (the bonus was
+always applied in-session before any save could be written, so it is already inside maxLife). That
+stops the growth but does not undo it - an inflated save is corrected with the existing console
+command `give life -N` (heal first: `addMaxLife()` now clamps life to [1, max] on negative amounts,
+so the correction can no longer drive current life below 1; the shipped build lacks that clamp, so
+heal to full before using it there).
+
+### 2. Reputation targeting weights (user tuning) and the guide
+
+`ColorReputation.getPlayerTownAttackWeight`: Partner x0.25 (was 0.75), Happy x0.50 (0.95),
+Neutral x1.00, Unhappy x1.15 (1.05), War x1.50 (1.25). The standings screen's reputation text,
+the guide's reputation table, MOD_SCOPE #1 (which also still quoted the old 20-point thresholds)
+and the enum comments all say the new numbers. With one player town among four AI towns in the
+nearest-five pool that is roughly 6% / 11% / 20% / 22% / 27% per dispatch from Partner to War.
+
+The guide gained "How the AI Picks Its Targets" under Territory: the 2-5 day clock and the
+difficulty mage cap (+1 per 11/10/9/8 player towns, halved after a capital falls), what is
+attackable (wasteland towns incl. the player's, the two enemy colors' towns, never allies/own/AI
+capitals), the three pre-roll filters (Ring City 7-day per-color cooldown, in-flight exclusion,
+Capitol weekly lockout), the nearest-5 weighted roll with the full weight table (reputation, x0.85
+working neutral, x1.25 Ring City), the War-only 5% Capitol candidate, the forced player-town attack
+after a neighbor's defeat, and the arrival math (guard fights 1/2/4/8 +10% attacker -5% Outlook,
+capture 10/30/70/90 by tier, 20% sack, neutral 15%/20% self-defense, Ring Cities never sacked).
+
+**Files touched**: `player/AdventurePlayer.java` (save/load/applyRingLifeBonus/addMaxLife),
+`util/ColorReputation.java`, `scene/WorldStandingsScene.java`, GUIDE.md, MOD_SCOPE.md.

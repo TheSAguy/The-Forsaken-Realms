@@ -77,11 +77,11 @@ public class ColorReputation {
     // tier, War the SEVERE one (final answer, 2026-08-07 - the effects were always bound to the
     // scale rows; only these display strings moved around). ----
     public enum Status {
-        PARTNER("Partner"),   // rep >= 80: 30% cheaper, town 25% less likely to be mage-targeted, free Inn overheal
-        HAPPY("Happy"),       // 30..79:    15% cheaper, 5% less likely
+        PARTNER("Partner"),   // rep >= 80: 30% cheaper, town 75% less likely to be mage-targeted (weight x0.25), free Inn overheal
+        HAPPY("Happy"),       // 30..79:    15% cheaper, 50% less likely (x0.50)
         NEUTRAL("Neutral"),   // -29..29:   no effect
-        UNHAPPY("Unhappy"),   // -79..-30:  25% pricier, 5% more likely
-        WAR("War");           // <= -80:    towns barred (capitals charge a toll), 40% pricier, 25% more likely, Inn heal barred
+        UNHAPPY("Unhappy"),   // -79..-30:  25% pricier, 15% more likely (x1.15)
+        WAR("War");           // <= -80:    towns barred (capitals charge a toll), 40% pricier, 50% more likely (x1.50), Inn heal barred
 
         public final String label;
         Status(String label) { this.label = label; }
@@ -123,10 +123,10 @@ public class ColorReputation {
         if (!isEnabled() || color == null)
             return 1f;
         switch (getStatus(color)) {
-            case PARTNER: return 0.75f;
-            case HAPPY: return 0.95f;
-            case UNHAPPY: return 1.05f;
-            case WAR: return 1.25f;
+            case PARTNER: return 0.25f; // round 112 user tuning (was 0.75 / 0.95 / 1.05 / 1.25)
+            case HAPPY: return 0.50f;
+            case UNHAPPY: return 1.15f;
+            case WAR: return 1.50f;
             default: return 1f;
         }
     }

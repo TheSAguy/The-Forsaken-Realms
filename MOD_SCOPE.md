@@ -58,11 +58,11 @@ Helping a color angers its two enemies, not its allies.
   MODERATE negative tier, War the SEVERE one):**
   | Status | Scale | Effects |
   |--------|-------|---------|
-  | Partner | ≥ 80 | 30% cheaper card shops in that color's towns; player-owned towns 25% less likely to be mage-targeted by that color |
-  | Happy | 20 to 79 | 15% cheaper; 5% less likely |
-  | Neutral | -19 to 19 | none |
-  | Unhappy | -20 to -79 | 25% pricier; 5% more likely |
-  | War | ≤ -80 | barred from that color's towns (capitals charge a 500-gold entry toll instead, prices 40% up inside); 25% more likely |
+  | Partner | ≥ 80 | 30% cheaper card shops in that color's towns; player-owned towns 75% less likely to be mage-targeted by that color (weight x0.25, round 112 tuning) |
+  | Happy | 30 to 79 | 15% cheaper; 50% less likely (x0.50) |
+  | Neutral | -29 to 29 | none |
+  | Unhappy | -30 to -79 | 25% pricier; 15% more likely (x1.15) |
+  | War | ≤ -80 | barred from that color's towns (capitals charge a 500-gold entry toll instead, prices 40% up inside); 50% more likely (x1.50) |
   - **Console command for testing**: `give rep <color> <amount>` (negative allowed) shifts one
     color by a display amount, spreading the negation across the other 4 so net-zero holds -
     added because reaching ±80 legitimately takes ~40 duel wins. (For force-winning actual

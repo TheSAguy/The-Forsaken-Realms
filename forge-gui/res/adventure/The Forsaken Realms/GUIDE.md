@@ -326,11 +326,11 @@ you begin already liked by some and disliked by others.
 
 | Standing | Range | Card prices | Attacks on you | Other |
 |---|---|---|---|---|
-| **Partner** | 80+ | **30% off** | 25% less likely | Free Inn overheal; Rare blueprints unlocked |
-| **Happy** | 30 to 79 | 15% off | 5% less likely | Spellsmith opens; Uncommon blueprints unlocked |
+| **Partner** | 80+ | **30% off** | 75% less likely | Free Inn overheal; Rare blueprints unlocked |
+| **Happy** | 30 to 79 | 15% off | 50% less likely | Spellsmith opens; Uncommon blueprints unlocked |
 | **Neutral** | −29 to 29 | — | — | Blueprints purchasable at full price |
-| **Unhappy** | −30 to −79 | 25% dearer | 5% more likely | No blueprints sold |
-| **War** | −80 or worse | **40% dearer** | 25% more likely | Towns barred entirely; capitals charge a 500 gold toll; no Inn healing |
+| **Unhappy** | −30 to −79 | 25% dearer | 15% more likely | No blueprints sold |
+| **War** | −80 or worse | **40% dearer** | 50% more likely | Towns barred entirely; capitals charge a 500 gold toll; no Inn healing |
 
 Two consequences worth planning around. At **War** you are locked out of that color's towns
 completely — you can still buy your way into its capital, but at a toll and at the worst prices in
@@ -514,8 +514,63 @@ included. Each color sends one every 2–5 days.
 - **Guards** you've hired fight first. If they fall, you defend your Capitol in person in a forced
   best-of-three — **and losing that ends your run.**
 - **Neutral towns defend themselves**: 15% base, 20% if the town still has a working Armory.
-- Your standing with a color changes how likely it is to come for you — 25% less at Partner, 25%
-  more at War.
+- Your standing with a color changes how likely it is to come for you — the exact weights are in
+  the next section.
+
+### How the AI Picks Its Targets
+
+Every color runs the same routine, so most of it can be predicted.
+
+**When.** Each color attacks on its own clock, waiting 2–5 days between mages. It can only have so
+many mages on the road at once — 2 on Easy, 3 on Normal, 4 on Hard, 5 on Insane — plus one more
+for every 11 / 10 / 9 / 8 towns you own (Easy through Insane). Take a color's capital and that cap
+is halved.
+
+**What it may attack.** Any wasteland town — untouched ruins, working neutral towns, and every town
+you own — plus the ordinary towns of its two *enemy* colors on the wheel (White fights Black and
+Red, Blue fights Red and Green, Black fights Green and White, Red fights White and Blue, Green
+fights Blue and Black). It never touches an ally's towns, its own, or another color's capital.
+Your Capitol is a special case — see below.
+
+**Before the roll**, three things leave the list: any Ring City this color already went for in the
+last 7 days, any town one of its mages is already marching toward, and your Capitol for 7 days
+after that color last sent a mage at it.
+
+**The pick.** What's left is sorted by distance to the color's *nearest* holding — castle, capital
+or any town, so its reach grows with its borders — and the **5 nearest** go into a weighted roll.
+The mage itself always sets out from the castle. Every candidate starts at weight 1, then:
+
+| Candidate | Weight |
+|---|---|
+| Your town — Partner | ×0.25 |
+| Your town — Happy | ×0.50 |
+| Your town — Neutral | ×1.00 |
+| Your town — Unhappy | ×1.15 |
+| Your town — War | ×1.50 |
+| Working neutral town (not yours) | ×0.85 |
+| A Ring City (on top of the above) | ×1.25 |
+| Enemy-color town or bare ruin | ×1.00 |
+
+So one town of yours sitting among four AI towns is picked about 6% of the time at Partner, 11% at
+Happy, 20% at Neutral, 22% at Unhappy and 27% at War. Reputation only ever changes *your* towns'
+share — it never makes a color prefer one rival over another; distance does that.
+
+**Your Capitol** is never a normal candidate. Only at **War** does a color add it to the roll, as a
+sixth option worth 5% of the pool.
+
+**The one guaranteed attack.** When a color's *neighbor* is wiped out, that color's next mage goes
+to a random town of yours, anywhere on the map, Capitol included if it's off cooldown. If you own
+nothing yet, the debt waits until you do.
+
+**On arrival.** Your hired guards fight first, strongest first — each fight pits the guard's rarity
+weight against the mage's (Common 1, Uncommon 2, Rare 4, Mythic 8), with a flat 10% edge to the
+attacker and 5% back to you if the town has an Outlook. Then the capture roll uses the mage's own
+rarity: Common 10%, Uncommon 30%, Rare 70%, Mythic 90%, again minus 5% for an Outlook. A
+successful capture has a 20% chance to sack the town to ruins instead of keeping it. Working
+neutral towns repel 15% of attacks on their own (20% with an Armory). Against a rival color, the
+defending town's guard fights the same way and the same rarity roll then decides capture or a
+revert to neutral. Ring Cities are captured or repelled, never sacked. A mage that reaches your
+Capitol past both guards forces the duel described above.
 
 ### New Game+
 

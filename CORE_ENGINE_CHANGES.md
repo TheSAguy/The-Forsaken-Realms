@@ -2100,6 +2100,7 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`character/ShopActor.java`** - Ring shop price multiplier; **`scene/RewardScene.java`** - `restockPriceNow`.
 - **`util/EditionProgression.java`** - Ring shops bypass the edition restriction.
 - **`util/EconomyBuildings.java`** - `isRingShop` (special); **`player/AdventurePlayer.java`** - no Ring blueprints.
+- **`player/AdventurePlayer.java`** - round 112: `ringLifeBonus` saved/loaded (-1 = pre-fix save, adopted without re-adding); `addMaxLife` clamps life to [1, max] on negative amounts.
 - **`util/TerritoryControl.java`** - `ringPullDivisor`; **`stage/WorldStage.java`** - no lands at Ring assaults.
 - **`util/MapDialog.java`** - option pane height from the HUD stage.
 

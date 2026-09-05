@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 112 (2026-09-04, repo only - not packaged): ringLifeBonus now persisted (every load re-added +5; pre-fix
+  saves load as -1 and adopt the target); addMaxLife clamps life to [1,max]; reputation targeting weights
+  Partner .25 / Happy .50 / Unhappy 1.15 / War 1.50; guide section 'How the AI Picks Its Targets'.
 - Round 111 (2026-09-04): 23 legacy decks deduped (r111_dedupe picks, roster-wide hash exclusion); quest 30 fix =
   TileMapScene skips enteredSurvivingTown for Ring Cities + quest 75 epilogue resets both entry flags before
   issueQuest 30; towers.atlas (5 user towers, 26x50) on 14 mage-tower/wizard-fort dungeons.
