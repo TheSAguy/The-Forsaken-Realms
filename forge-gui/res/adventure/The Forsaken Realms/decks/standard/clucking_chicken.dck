@@ -1,28 +1,30 @@
 [metadata]
 Name=Clucking Chicken
 [Main]
-7 Plains|MMQ
-7 Plains|MMQ
-6 Plains|MMQ
-1 Fountain of Cho|MMQ
-2 Ballista Squad|MMQ
-2 Charm Peddler|MMQ
-1 Cho-Manno, Revolutionary|MMQ
-2 Devout Witness|MMQ
-2 Jhovall Rider|MMQ
-2 Nightwind Glider|MMQ
-2 Pious Warrior|MMQ
-2 Ramosian Captain|MMQ
-2 Ramosian Commander|MMQ
-2 Ramosian Lieutenant|MMQ
-3 Ramosian Sergeant|MMQ
-1 Ramosian Sky Marshal|MMQ
-2 Steadfast Guard|MMQ
-2 Task Force|MMQ
-2 Thermal Glider|MMQ
-2 Arrest|MMQ
-2 Cho-Manno's Blessing|MMQ
-1 Moonlit Wake|MMQ
-1 Afterlife|MMQ
-2 Disenchant|MMQ
-2 Ramosian Rally|MMQ
+1 Arrest|MRD
+4 Echoing Courage|DST
+4 Forest|MRD
+4 Forest|MRD
+4 Forest|MRD
+4 Forest|MRD
+4 Gold Myr|MRD
+2 Infested Roothold|DST
+1 Myr Matrix|DST
+2 One Dozen Eyes|MRD
+3 Plains|MRD
+3 Plains|MRD
+2 Plains|MRD
+2 Pteron Ghost|DST
+1 Pulse of the Tangle|DST
+1 Purge|DST
+2 Raise the Alarm|MRD
+2 Spawning Pit|DST
+1 Stir the Pride|DST
+3 Tangle Golem|DST
+2 Tangle Spider|DST
+1 Tel-Jilad Archers|MRD
+2 Tel-Jilad Outrider|DST
+1 Test of Faith|DST
+1 Thunderstaff|DST
+2 Viridian Shaman|MRD
+1 Wirefly Hive|DST

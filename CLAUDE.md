@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 110 (2026-09-04): generator excludes library decks identical (sorted card list) to any deck the older
+  roster uses; 63 picks changed; verified zero identical lists. Roster 1672 enemies. Data-only.
 - Round 109 (2026-09-04): decks re-picked with a difficulty gate (C = precons/easy duels, U = +medium, R = medium/hard,
   M = hard/very hard; precons first for C/U) - user: 'the player should have a chance'. Data-only.
 - Round 108 (2026-09-04): 105 'Enemy Art' enemies (sprites/enemy/basic/<class>/) + decks for all 152 new

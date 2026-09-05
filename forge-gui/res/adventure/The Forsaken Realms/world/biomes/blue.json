@@ -26,6 +26,10 @@
                         "Shell"
                     ],
     "enemies":  [
+                    "Phyrexian Renegade",
+                    "Kor Outfitter",
+                    "Kor Dirgewarden",
+                    "Leaping Frog",
                     "Kor Firewalker",
                     "Kor Spiritdancer",
                     "Kor Celebrant",

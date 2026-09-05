@@ -16572,3 +16572,42 @@ DISTRIBUTION colors x tier (152 enemies)
   color presence (multi counted per color): W 45, U 36, B 49, R 40, G 40
 
 **Files touched**: 152 decks (rewritten), enemies.json (152 entries), biomes/*.json, ENEMY_ROSTER_R108.md.
+
+## Round 110: no duplicate decks anywhere in the roster (2026-09-04)
+
+User request: confirm the counts and that there are no duplicate decks. The 152 new enemies never
+shared a deck FILE, but 12 of their lists were card-for-card identical to lists older enemies already
+run (the mod's wizard and Challenger decks were copied from the same Forge library the generator
+draws from). The generator now hashes the sorted card list of every deck the pre-existing roster
+references (plane and common folders) and skips any library deck with an identical list; 63 picks
+changed, the theme/color/difficulty rules are unchanged, and a verification pass confirms zero
+identical lists between the 152 new decks and the rest of the roster, and none among themselves.
+
+Roster after this round: 1,672 enemies (78 bosses). Non-boss by tier: Common 201, Uncommon 624,
+Rare 819, Mythic 28. Color presence (multi-color counted once per color): Black 638, Green 608,
+Red 604, Blue 562, White 551. The pre-existing roster keeps its 28 deliberately shared deck files
+(Adept wizards etc.) and 16 legacy identical-list pairs, e.g. `kobold.dck` / `koboldworker.dck` -
+those predate this work and were left alone.
+
+DISTRIBUTION colors x tier (152 enemies)
+  W      total  26 | C 14  U 6  R 6  M 0
+  B      total  19 | C 7  U 5  R 6  M 1
+  R      total  18 | C 10  U 0  R 6  M 2
+  G      total  16 | C 3  U 8  R 5  M 0
+  WU     total  13 | C 8  U 2  R 3  M 0
+  BR     total  11 | C 6  U 2  R 3  M 0
+  UB     total  10 | C 3  U 3  R 4  M 0
+  RG     total   8 | C 2  U 3  R 3  M 0
+  BG     total   7 | C 4  U 1  R 2  M 0
+  U      total   7 | C 1  U 3  R 3  M 0
+  UG     total   6 | C 4  U 2  R 0  M 0
+  WG     total   4 | C 3  U 1  R 0  M 0
+  WB     total   3 | C 0  U 1  R 2  M 0
+  UR     total   2 | C 1  U 0  R 1  M 0
+  WR     total   2 | C 1  U 0  R 1  M 0
+  tiers: Common 67, Uncommon 37, Rare 45, Mythic 3
+  themed decks: 116 / 152
+  color presence (multi counted per color): W 48, U 38, B 50, R 41, G 41
+
+**Files touched**: the 152 generated decks (rewritten in place), enemies.json (152 entries), biomes/*.json,
+ENEMY_ROSTER_R108.md (refreshed).

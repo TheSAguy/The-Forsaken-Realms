@@ -1,24 +1,19 @@
 [metadata]
 Name=Royal Scarab
 [Main]
-2 Bottomless Pit|STH
-3 Coercion|TMP
-1 Dark Banishing|TMP
-1 Dark Ritual|TMP
-4 Dauthi Horror|TMP
-1 Dauthi Mindripper|TMP
-2 Dauthi Slayer|TMP
-4 Death Stroke|STH
-2 Diabolic Edict|TMP
-1 Ensnaring Bridge|STH
-4 Foul Imp|STH
-1 Hornet Cannon|STH
-3 Megrim|STH
-2 Mind Peel|STH
-1 Mindwarper|STH
-2 Pit Imp|TMP
-1 Portcullis|STH
-1 Rabid Rats|STH
-8 Swamp|TMP
-8 Swamp|TMP
-8 Swamp|TMP
+2 Lashwrithe|NPH
+24 Swamp|AVR
+1 Cemetery Reaper|M12
+2 Crypt Creeper|AVR
+4 Diregraf Ghoul|ISD
+1 Geralf's Messenger|DKA
+3 Ghoulraiser|ISD
+1 Gloom Surgeon|AVR
+1 Gravecrawler|DKA
+4 Highborn Ghoul|DKA
+4 Skinrender|SOM
+3 Altar's Reap|ISD
+2 Dismember|NPH
+2 Doom Blade|M12
+3 Go for the Throat|MBS
+3 Despise|NPH
