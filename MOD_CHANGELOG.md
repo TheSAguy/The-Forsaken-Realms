@@ -16768,3 +16768,35 @@ capture 10/30/70/90 by tier, 20% sack, neutral 15%/20% self-defense, Ring Cities
 
 **Files touched**: `player/AdventurePlayer.java` (save/load/applyRingLifeBonus/addMaxLife),
 `util/ColorReputation.java`, `scene/WorldStandingsScene.java`, GUIDE.md, MOD_SCOPE.md.
+
+## Round 113: New Game+ no longer re-grants the Challenge Coins; side-boss lairs get the unvisited marker (2026-09-04)
+
+Packaged (rounds 112 and 113 together - 112 was repo-only while the user played).
+
+### 1. NG+ tutorial handed the coins out twice (engine)
+
+User report: after a New Game+ with the tutorial, Llanowar's item gift delivered the five Challenge
+Coins on top of the purse the run already carried. The live log confirms both halves:
+`[TFR-NewGamePlus] Bronze Challenge Coin: have 3/3 - nothing to grant` at the reset (the top-up to
+1 gold / 1 silver / 3 bronze from round 83), then `[TFR-RingGift] items ... -> 5 reward card(s)` at
+the fifth Ring City. `grantRingGift("items")` now checks the `newGamePlus` character flag: the coins
+are skipped (logged), starting equipment is only offered when the player does not already carry
+it, and if nothing is left to give the HUD says "Llanowar's gift: you already carry everything the
+Ring gives a newcomer" instead of silently doing nothing. The skip-intro option is unchanged - per
+the user, skipping still hands over everything at once with the summary line.
+
+The user also reported the all-at-once "The Ring's gifts" line appearing during an NG+ tutorial.
+The log does not support that reading: the NG+ run (`[TFR-NewGamePlus] reset begin` at line 313)
+took the per-city path with five separate `[TFR-RingGift] gold/shards/wood/stone/items` lines and
+no `all`, while the two `all` lines in the same session belong to two fresh games started a few
+minutes earlier (lines 181 Easy, 242 Insane - no NG+ reset before either), and `grantRingGift: all`
+exists in exactly one place, quest 28's "Skip the introduction" option. Left as observed; if it
+recurs, the log line to look for is `[TFR-RingGift] all`.
+
+### 2. No magnifier on Slobad's Factory (engine)
+
+`MapSprite` only draws the unvisited magnifier for POI types `cave` and `dungeon`; the 18
+side-boss lairs (`sidebosseasy/moderate/hard`) never had one. They do now. As before, the marker
+goes away once the player has cleared something inside (`hasDeletedObjects`), not merely on entry.
+
+**Files touched**: `player/AdventurePlayer.java` (grantRingGift), `stage/MapSprite.java`.

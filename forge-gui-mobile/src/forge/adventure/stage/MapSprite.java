@@ -32,7 +32,9 @@ public class MapSprite extends Actor {
         if (point != null) {
             PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());
             setBookmarked(changes.isBookmarked(), point);
-            isCaveDungeon = "cave".equalsIgnoreCase(point.getData().type) || "dungeon".equalsIgnoreCase(point.getData().type);
+            String poiType = point.getData().type;
+            isCaveDungeon = "cave".equalsIgnoreCase(poiType) || "dungeon".equalsIgnoreCase(poiType)
+                    || (poiType != null && poiType.toLowerCase().startsWith("sideboss")); // round 113: side-boss lairs get the unvisited marker too
             if (point.getData().map != null && point.getID() != null) {
                 isOldorVisited = changes.hasDeletedObjects();
             }

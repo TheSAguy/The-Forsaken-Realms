@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 113 (2026-09-04): grantRingGift('items') skips the Challenge Coins and already-owned start items when the
+  newGamePlus flag is set (NG+ reset already tops the purse up); side-boss POI types get the unvisited magnifier.
 - Round 112 (2026-09-04, repo only - not packaged): ringLifeBonus now persisted (every load re-added +5; pre-fix
   saves load as -1 and adopt the target); addMaxLife clamps life to [1,max]; reputation targeting weights
   Partner .25 / Happy .50 / Unhappy 1.15 / War 1.50; guide section 'How the AI Picks Its Targets'.

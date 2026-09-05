@@ -1901,13 +1901,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             gifts.add(rewardOf("wood", cfg.startingWood, null));
         if (everything || "stone".equals(k))
             gifts.add(rewardOf("stone", cfg.startingStone, null));
+        // Round 113 (user report 2026-09-04): a New Game+ run keeps its inventory and resetForNewGamePlus() already
+        // tops the coin purse up to 1 gold / 1 silver / 3 bronze - Llanowar handing out five more was a double grant.
+        // In NG+ the item gift skips the coins and only offers starting equipment the player does not already carry.
+        boolean newGamePlus = getCharacterFlag("newGamePlus") > 0;
         if (everything || "items".equals(k)) {
-            for (String s : cfg.startItems)
+            for (String s : cfg.startItems) {
+                if (newGamePlus && countItem(s) > 0) {
+                    System.out.println("[TFR-RingGift] New Game+: already carrying " + s + " - not granted again");
+                    continue;
+                }
                 gifts.add(rewardOf("item", 1, s));
+            }
             if (!everything) { // the "all" (skip-intro) path already hands these out itself
-                gifts.add(rewardOf("item", 3, "Bronze Challenge Coin"));
-                gifts.add(rewardOf("item", 1, "Challenge Coin"));
-                gifts.add(rewardOf("item", 1, "Silver Challenge Coin"));
+                if (newGamePlus) {
+                    System.out.println("[TFR-RingGift] New Game+: Challenge Coins kept from the previous run (purse topped up at reset) - not granted again");
+                } else {
+                    gifts.add(rewardOf("item", 3, "Bronze Challenge Coin"));
+                    gifts.add(rewardOf("item", 1, "Challenge Coin"));
+                    gifts.add(rewardOf("item", 1, "Silver Challenge Coin"));
+                }
                 setCharacterFlag("freeChallengeCoins", 1);
             }
         }
@@ -1950,8 +1963,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         System.out.println("[TFR-RingGift] " + k + " (difficulty " + cfg.name + "): gold " + cfg.startingMoney + ", shards " + cfg.startingShards
                 + ", wood " + cfg.startingWood + ", stone " + cfg.startingStone + ", start items " + cfg.startItems.length
                 + " -> " + rewards.size + " reward card(s)");
-        if (rewards.size == 0)
+        if (rewards.size == 0) {
+            if ("items".equals(k)) // round 113: NG+ with nothing new to hand over - say so instead of a silent nothing
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]Llanowar's gift: you already carry everything the Ring gives a newcomer.", true);
             return;
+        }
         forge.adventure.scene.RewardScene.instance().loadRewards(rewards, forge.adventure.scene.RewardScene.Type.QuestReward, null);
         forge.Forge.switchScene(forge.adventure.scene.RewardScene.instance());
     }
