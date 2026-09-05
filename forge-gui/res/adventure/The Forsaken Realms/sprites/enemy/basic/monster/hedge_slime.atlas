@@ -1,0 +1,56 @@
+hedge_slime.png
+size: 88,50
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 22, 10
+Idle
+  xy: 0, 0
+  size: 22, 10
+Idle
+  xy: 22, 0
+  size: 22, 10
+Idle
+  xy: 44, 0
+  size: 22, 10
+Idle
+  xy: 66, 0
+  size: 22, 10
+Walk
+  xy: 0, 10
+  size: 22, 10
+Walk
+  xy: 22, 10
+  size: 22, 10
+Walk
+  xy: 44, 10
+  size: 22, 10
+Attack
+  xy: 0, 20
+  size: 22, 10
+Hit
+  xy: 0, 30
+  size: 22, 10
+Hit
+  xy: 22, 30
+  size: 22, 10
+Hit
+  xy: 44, 30
+  size: 22, 10
+Hit
+  xy: 66, 30
+  size: 22, 10
+Death
+  xy: 0, 40
+  size: 22, 10
+Death
+  xy: 22, 40
+  size: 22, 10
+Death
+  xy: 44, 40
+  size: 22, 10
+Death
+  xy: 66, 40
+  size: 22, 10

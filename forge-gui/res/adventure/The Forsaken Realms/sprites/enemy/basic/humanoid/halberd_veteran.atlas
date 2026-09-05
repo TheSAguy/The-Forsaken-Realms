@@ -1,0 +1,77 @@
+halberd_veteran.png
+size: 150,95
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 25, 19
+Idle
+  xy: 0, 0
+  size: 25, 19
+Idle
+  xy: 25, 0
+  size: 25, 19
+Idle
+  xy: 50, 0
+  size: 25, 19
+Idle
+  xy: 75, 0
+  size: 25, 19
+Walk
+  xy: 0, 19
+  size: 25, 19
+Walk
+  xy: 25, 19
+  size: 25, 19
+Walk
+  xy: 50, 19
+  size: 25, 19
+Walk
+  xy: 75, 19
+  size: 25, 19
+Walk
+  xy: 100, 19
+  size: 25, 19
+Walk
+  xy: 125, 19
+  size: 25, 19
+Attack
+  xy: 0, 38
+  size: 25, 19
+Attack
+  xy: 25, 38
+  size: 25, 19
+Attack
+  xy: 50, 38
+  size: 25, 19
+Attack
+  xy: 75, 38
+  size: 25, 19
+Attack
+  xy: 100, 38
+  size: 25, 19
+Attack
+  xy: 125, 38
+  size: 25, 19
+Hit
+  xy: 0, 57
+  size: 25, 19
+Hit
+  xy: 25, 57
+  size: 25, 19
+Hit
+  xy: 50, 57
+  size: 25, 19
+Death
+  xy: 0, 76
+  size: 25, 19
+Death
+  xy: 25, 76
+  size: 25, 19
+Death
+  xy: 50, 76
+  size: 25, 19
+Death
+  xy: 75, 76
+  size: 25, 19

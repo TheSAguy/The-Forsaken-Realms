@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 115 (2026-09-04, repo only): 29 enemies from the 'More Animations' packs (15 Mythic, 3 per colour, hand-built 60-card
+  decks; 14 ordinary with library decks) via r115_sprites/r115_decks/r115_apply; quest-30 arrows skip Ring Cities;
+  addGold/addWood/addStone play the pickup sound (dungeon drops were silent). PUNY MYTH + LPC packs NOT used (licences).
 - Round 114 (2026-09-04, repo only): upstream merge @ 042b3267af7 = Forge_2's Snapshot 09.05 (25 commits/101 files/63 java);
   one conflict (WorldSaveHeader serialVersionUID pin vs upstream comment); 2,010 mod lines verified; stamps 09.05. Not packaged.
 - Round 113 (2026-09-04): grantRingGift('items') skips the Challenge Coins and already-owned start items when the

@@ -1,0 +1,110 @@
+goblin_warlord.png
+size: 328,130
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 26
+Idle
+  xy: 0, 0
+  size: 41, 26
+Idle
+  xy: 41, 0
+  size: 41, 26
+Idle
+  xy: 82, 0
+  size: 41, 26
+Idle
+  xy: 123, 0
+  size: 41, 26
+Idle
+  xy: 164, 0
+  size: 41, 26
+Idle
+  xy: 205, 0
+  size: 41, 26
+Walk
+  xy: 0, 26
+  size: 41, 26
+Walk
+  xy: 41, 26
+  size: 41, 26
+Walk
+  xy: 82, 26
+  size: 41, 26
+Walk
+  xy: 123, 26
+  size: 41, 26
+Walk
+  xy: 164, 26
+  size: 41, 26
+Walk
+  xy: 205, 26
+  size: 41, 26
+Walk
+  xy: 246, 26
+  size: 41, 26
+Walk
+  xy: 287, 26
+  size: 41, 26
+Attack
+  xy: 0, 52
+  size: 41, 26
+Attack
+  xy: 41, 52
+  size: 41, 26
+Attack
+  xy: 82, 52
+  size: 41, 26
+Attack
+  xy: 123, 52
+  size: 41, 26
+Attack
+  xy: 164, 52
+  size: 41, 26
+Attack
+  xy: 205, 52
+  size: 41, 26
+Attack
+  xy: 246, 52
+  size: 41, 26
+Attack
+  xy: 287, 52
+  size: 41, 26
+Hit
+  xy: 0, 78
+  size: 41, 26
+Hit
+  xy: 41, 78
+  size: 41, 26
+Hit
+  xy: 82, 78
+  size: 41, 26
+Hit
+  xy: 123, 78
+  size: 41, 26
+Death
+  xy: 0, 104
+  size: 41, 26
+Death
+  xy: 41, 104
+  size: 41, 26
+Death
+  xy: 82, 104
+  size: 41, 26
+Death
+  xy: 123, 104
+  size: 41, 26
+Death
+  xy: 164, 104
+  size: 41, 26
+Death
+  xy: 205, 104
+  size: 41, 26
+Death
+  xy: 246, 104
+  size: 41, 26
+Death
+  xy: 287, 104
+  size: 41, 26

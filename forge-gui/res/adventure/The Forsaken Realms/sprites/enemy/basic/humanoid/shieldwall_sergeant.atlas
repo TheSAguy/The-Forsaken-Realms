@@ -1,0 +1,77 @@
+shieldwall_sergeant.png
+size: 168,90
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 28, 18
+Idle
+  xy: 0, 0
+  size: 28, 18
+Idle
+  xy: 28, 0
+  size: 28, 18
+Idle
+  xy: 56, 0
+  size: 28, 18
+Idle
+  xy: 84, 0
+  size: 28, 18
+Walk
+  xy: 0, 18
+  size: 28, 18
+Walk
+  xy: 28, 18
+  size: 28, 18
+Walk
+  xy: 56, 18
+  size: 28, 18
+Walk
+  xy: 84, 18
+  size: 28, 18
+Walk
+  xy: 112, 18
+  size: 28, 18
+Walk
+  xy: 140, 18
+  size: 28, 18
+Attack
+  xy: 0, 36
+  size: 28, 18
+Attack
+  xy: 28, 36
+  size: 28, 18
+Attack
+  xy: 56, 36
+  size: 28, 18
+Attack
+  xy: 84, 36
+  size: 28, 18
+Attack
+  xy: 112, 36
+  size: 28, 18
+Attack
+  xy: 140, 36
+  size: 28, 18
+Hit
+  xy: 0, 54
+  size: 28, 18
+Hit
+  xy: 28, 54
+  size: 28, 18
+Hit
+  xy: 56, 54
+  size: 28, 18
+Death
+  xy: 0, 72
+  size: 28, 18
+Death
+  xy: 28, 72
+  size: 28, 18
+Death
+  xy: 56, 72
+  size: 28, 18
+Death
+  xy: 84, 72
+  size: 28, 18

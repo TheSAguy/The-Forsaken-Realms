@@ -1,0 +1,83 @@
+dawnblade_prince.png
+size: 132,85
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 22, 17
+Idle
+  xy: 0, 0
+  size: 22, 17
+Idle
+  xy: 22, 0
+  size: 22, 17
+Idle
+  xy: 44, 0
+  size: 22, 17
+Idle
+  xy: 66, 0
+  size: 22, 17
+Walk
+  xy: 0, 17
+  size: 22, 17
+Walk
+  xy: 22, 17
+  size: 22, 17
+Walk
+  xy: 44, 17
+  size: 22, 17
+Walk
+  xy: 66, 17
+  size: 22, 17
+Walk
+  xy: 88, 17
+  size: 22, 17
+Walk
+  xy: 110, 17
+  size: 22, 17
+Attack
+  xy: 0, 34
+  size: 22, 17
+Attack
+  xy: 22, 34
+  size: 22, 17
+Attack
+  xy: 44, 34
+  size: 22, 17
+Attack
+  xy: 66, 34
+  size: 22, 17
+Attack
+  xy: 88, 34
+  size: 22, 17
+Attack
+  xy: 110, 34
+  size: 22, 17
+Hit
+  xy: 0, 51
+  size: 22, 17
+Hit
+  xy: 22, 51
+  size: 22, 17
+Hit
+  xy: 44, 51
+  size: 22, 17
+Hit
+  xy: 66, 51
+  size: 22, 17
+Hit
+  xy: 88, 51
+  size: 22, 17
+Death
+  xy: 0, 68
+  size: 22, 17
+Death
+  xy: 22, 68
+  size: 22, 17
+Death
+  xy: 44, 68
+  size: 22, 17
+Death
+  xy: 66, 68
+  size: 22, 17

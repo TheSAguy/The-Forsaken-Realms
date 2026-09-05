@@ -1,0 +1,50 @@
+onyx_minotaur_lord.png
+size: 216,390
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 72, 78
+Idle
+  xy: 0, 0
+  size: 72, 78
+Idle
+  xy: 72, 0
+  size: 72, 78
+Idle
+  xy: 144, 0
+  size: 72, 78
+Walk
+  xy: 0, 78
+  size: 72, 78
+Walk
+  xy: 72, 78
+  size: 72, 78
+Walk
+  xy: 144, 78
+  size: 72, 78
+Attack
+  xy: 0, 156
+  size: 72, 78
+Attack
+  xy: 72, 156
+  size: 72, 78
+Attack
+  xy: 144, 156
+  size: 72, 78
+Hit
+  xy: 0, 234
+  size: 72, 78
+Hit
+  xy: 72, 234
+  size: 72, 78
+Death
+  xy: 0, 312
+  size: 72, 78
+Death
+  xy: 72, 312
+  size: 72, 78
+Death
+  xy: 144, 312
+  size: 72, 78

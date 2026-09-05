@@ -1,0 +1,83 @@
+crossbow_marksman.png
+size: 144,70
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 18, 14
+Idle
+  xy: 0, 0
+  size: 18, 14
+Idle
+  xy: 18, 0
+  size: 18, 14
+Idle
+  xy: 36, 0
+  size: 18, 14
+Idle
+  xy: 54, 0
+  size: 18, 14
+Walk
+  xy: 0, 14
+  size: 18, 14
+Walk
+  xy: 18, 14
+  size: 18, 14
+Walk
+  xy: 36, 14
+  size: 18, 14
+Walk
+  xy: 54, 14
+  size: 18, 14
+Walk
+  xy: 72, 14
+  size: 18, 14
+Walk
+  xy: 90, 14
+  size: 18, 14
+Attack
+  xy: 0, 28
+  size: 18, 14
+Attack
+  xy: 18, 28
+  size: 18, 14
+Attack
+  xy: 36, 28
+  size: 18, 14
+Attack
+  xy: 54, 28
+  size: 18, 14
+Attack
+  xy: 72, 28
+  size: 18, 14
+Attack
+  xy: 90, 28
+  size: 18, 14
+Attack
+  xy: 108, 28
+  size: 18, 14
+Attack
+  xy: 126, 28
+  size: 18, 14
+Hit
+  xy: 0, 42
+  size: 18, 14
+Hit
+  xy: 18, 42
+  size: 18, 14
+Hit
+  xy: 36, 42
+  size: 18, 14
+Death
+  xy: 0, 56
+  size: 18, 14
+Death
+  xy: 18, 56
+  size: 18, 14
+Death
+  xy: 36, 56
+  size: 18, 14
+Death
+  xy: 54, 56
+  size: 18, 14

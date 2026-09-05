@@ -1,0 +1,89 @@
+aegis_paladin.png
+size: 352,105
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 21
+Idle
+  xy: 0, 0
+  size: 44, 21
+Idle
+  xy: 44, 0
+  size: 44, 21
+Idle
+  xy: 88, 0
+  size: 44, 21
+Idle
+  xy: 132, 0
+  size: 44, 21
+Walk
+  xy: 0, 21
+  size: 44, 21
+Walk
+  xy: 44, 21
+  size: 44, 21
+Walk
+  xy: 88, 21
+  size: 44, 21
+Walk
+  xy: 132, 21
+  size: 44, 21
+Walk
+  xy: 176, 21
+  size: 44, 21
+Walk
+  xy: 220, 21
+  size: 44, 21
+Walk
+  xy: 264, 21
+  size: 44, 21
+Walk
+  xy: 308, 21
+  size: 44, 21
+Attack
+  xy: 0, 42
+  size: 44, 21
+Attack
+  xy: 44, 42
+  size: 44, 21
+Attack
+  xy: 88, 42
+  size: 44, 21
+Attack
+  xy: 132, 42
+  size: 44, 21
+Attack
+  xy: 176, 42
+  size: 44, 21
+Attack
+  xy: 220, 42
+  size: 44, 21
+Attack
+  xy: 264, 42
+  size: 44, 21
+Hit
+  xy: 0, 63
+  size: 44, 21
+Hit
+  xy: 44, 63
+  size: 44, 21
+Hit
+  xy: 88, 63
+  size: 44, 21
+Hit
+  xy: 132, 63
+  size: 44, 21
+Death
+  xy: 0, 84
+  size: 44, 21
+Death
+  xy: 44, 84
+  size: 44, 21
+Death
+  xy: 88, 84
+  size: 44, 21
+Death
+  xy: 132, 84
+  size: 44, 21

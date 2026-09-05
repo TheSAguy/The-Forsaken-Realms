@@ -1,0 +1,95 @@
+unblinking_eye.png
+size: 224,115
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 28, 23
+Idle
+  xy: 0, 0
+  size: 28, 23
+Idle
+  xy: 28, 0
+  size: 28, 23
+Idle
+  xy: 56, 0
+  size: 28, 23
+Idle
+  xy: 84, 0
+  size: 28, 23
+Walk
+  xy: 0, 23
+  size: 28, 23
+Walk
+  xy: 28, 23
+  size: 28, 23
+Walk
+  xy: 56, 23
+  size: 28, 23
+Walk
+  xy: 84, 23
+  size: 28, 23
+Walk
+  xy: 112, 23
+  size: 28, 23
+Walk
+  xy: 140, 23
+  size: 28, 23
+Attack
+  xy: 0, 46
+  size: 28, 23
+Attack
+  xy: 28, 46
+  size: 28, 23
+Attack
+  xy: 56, 46
+  size: 28, 23
+Attack
+  xy: 84, 46
+  size: 28, 23
+Attack
+  xy: 112, 46
+  size: 28, 23
+Attack
+  xy: 140, 46
+  size: 28, 23
+Attack
+  xy: 168, 46
+  size: 28, 23
+Hit
+  xy: 0, 69
+  size: 28, 23
+Hit
+  xy: 28, 69
+  size: 28, 23
+Hit
+  xy: 56, 69
+  size: 28, 23
+Hit
+  xy: 84, 69
+  size: 28, 23
+Death
+  xy: 0, 92
+  size: 28, 23
+Death
+  xy: 28, 92
+  size: 28, 23
+Death
+  xy: 56, 92
+  size: 28, 23
+Death
+  xy: 84, 92
+  size: 28, 23
+Death
+  xy: 112, 92
+  size: 28, 23
+Death
+  xy: 140, 92
+  size: 28, 23
+Death
+  xy: 168, 92
+  size: 28, 23
+Death
+  xy: 196, 92
+  size: 28, 23

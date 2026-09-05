@@ -1,0 +1,53 @@
+ember_urchin.png
+size: 372,305
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 124, 61
+Idle
+  xy: 0, 0
+  size: 124, 61
+Idle
+  xy: 124, 0
+  size: 124, 61
+Idle
+  xy: 248, 0
+  size: 124, 61
+Walk
+  xy: 0, 61
+  size: 124, 61
+Walk
+  xy: 124, 61
+  size: 124, 61
+Walk
+  xy: 248, 61
+  size: 124, 61
+Attack
+  xy: 0, 122
+  size: 124, 61
+Attack
+  xy: 124, 122
+  size: 124, 61
+Attack
+  xy: 248, 122
+  size: 124, 61
+Hit
+  xy: 0, 183
+  size: 124, 61
+Hit
+  xy: 124, 183
+  size: 124, 61
+Hit
+  xy: 248, 183
+  size: 124, 61
+Death
+  xy: 0, 244
+  size: 124, 61
+Death
+  xy: 124, 244
+  size: 124, 61
+Death
+  xy: 248, 244
+  size: 124, 61

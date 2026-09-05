@@ -16843,3 +16843,121 @@ release work. The user installed the matching stock Forge into `E:\GAMES\Forge_2
   `Forge_2/build.txt`, which changed).
 - **Everything must be re-playtested** after the next package - this swaps the rules engine and
   the deck-rule layer under the current save.
+
+## Round 115: 29 enemies from the "More Animations" packs, 15 hand-built Mythic decks, quest-arrow and pickup-sound fixes (2026-09-04, REPO ONLY)
+
+Not packaged - the user was playtesting. Ships with the next package together with rounds 112-114.
+
+### 1. Frames per enemy - the answer
+
+The engine (`CharacterSprite`) keys animations by region name - `Idle`, `Walk`, `Attack`, `Hit`,
+`Death`, plus one `Avatar` frame - and plays however many frames a region has; there is no
+minimum. Round 108's Enemy Art atlases use four identical frames for every animation because
+those sheets only had one row. The packs used here carry real animations, so the new atlases keep
+up to eight frames per animation (Tiny Fantasy 4-8, the Mini soldiers 3-8, the 48px folklore
+strips 6-8, the side-view battlers and the minotaurs 3). Frame cells are cropped to the union
+bounding box of the frames actually used; bigger sources are shrunk in-game with the entry's
+`scale` (48px strips 0.6, minotaurs 0.4, the two battlers 0.5 / 0.3) rather than resampled, so
+the pixel art stays crisp.
+
+### 2. What was used, and what was not
+
+Used: **Tiny Fantasy** (Knight, Eye, Reaper, Elite/Advanced/Basic Goblin, Skeleton, Slime,
+Warlock - 64x32 cells, labelled rows), the **Mini** soldier set (Outline variant: King, Prince,
+ArchMage, Mage, Sword/Spear/Shield/Halberd/Archer/CrossBow/Cavalier/HorseMan), the three
+48x48 folklore strips (**Molfar**, **Opiven**, **Rusalka**), the two RPG-Maker side-view battlers
+(**waechter-19**, **waechter-20** - plain / breath-attack / plain per row) and **Mino2** (the
+axe-wielding minotaur charset, brown / black / red variants).
+
+Not used, pending the user's call: the **PUNY MYTH Creatures** pack (Philippine folklore, 30
+overworld walk cycles + 9 hero battlers - it is labelled `RPGMAKER_v1`, packs like that are often
+licensed for RPG Maker projects only), the **LPC-style 64px universal sheets** (Archer / Elven
+Mage / Knight / Female Knight / the whole `Sprites` folder / Lizard Warrior / Troll / Mino1 - LPC
+art is CC-BY-SA, which needs attribution and share-alike), the 16px **Dark and sharp Player
+Characters** and the **Pixel Character Pack** (player-style humans with Idle/Run only), the
+`rpgcritter` sheet and the projectile strip.
+
+### 3. The 29 enemies (data)
+
+Fifteen Mythics, three per colour, plus fourteen ordinary enemies from the leftover sheets. Stats
+follow the round-108 table (Mythic 48 life / 45 speed / difficulty 3, with class flavour);
+rewards copy the Dragonkin Renegade (Mythic) or the round-108 tier templates, recoloured. Every
+enemy joins its colour's spawn list; the fourteen non-Mythics also join the colorless list. Note
+that Mythic entries in a colour's list are also the pool `pickGrandmasterMage` draws from, so
+Grandmaster territory mages now have 3 more faces per colour.
+
+```
+Aegis Paladin              W Mythic   life 52  speed 45  scale 1.0  deck: hand-built Mythic deck
+The Ivory Sovereign        W Mythic   life 48  speed 45  scale 1.0  deck: hand-built Mythic deck
+Dawnblade Prince           W Mythic   life 48  speed 45  scale 1.0  deck: hand-built Mythic deck
+Rusalka of the Drowned Mere U Mythic   life 48  speed 47  scale 0.6  deck: hand-built Mythic deck
+The Unblinking Eye         U Mythic   life 57  speed 40  scale 1.0  deck: hand-built Mythic deck
+Archmage of the Tides      U Mythic   life 48  speed 47  scale 1.0  deck: hand-built Mythic deck
+The Reaper                 B Mythic   life 48  speed 41  scale 1.0  deck: hand-built Mythic deck
+Maw of the Abyss           B Mythic   life 57  speed 40  scale 0.3  deck: hand-built Mythic deck
+Onyx Minotaur Lord         B Mythic   life 52  speed 45  scale 0.4  deck: hand-built Mythic deck
+Goblin Warlord             R Mythic   life 48  speed 45  scale 1.0  deck: hand-built Mythic deck
+Crimson Minotaur Lord      R Mythic   life 52  speed 45  scale 0.4  deck: hand-built Mythic deck
+Ember Urchin               R Mythic   life 57  speed 40  scale 0.5  deck: hand-built Mythic deck
+Molfar of the High Peaks   G Mythic   life 48  speed 47  scale 0.6  deck: hand-built Mythic deck
+Wildwood Minotaur          G Mythic   life 52  speed 45  scale 0.4  deck: hand-built Mythic deck
+Bog Opiven                 G Mythic   life 48  speed 45  scale 0.6  deck: hand-built Mythic deck
+Bone Raider                B Rare     life 30  speed 34  scale 1.0  deck: Liliana's Unliving Hordes 3 [duel/hard 3.40]
+Hedge Slime                G Common   life 13  speed 14  scale 1.0  deck: MTGA Forest's Might [precon/precon 1.44]
+Goblin Cutthroat           R Common   life 12  speed 20  scale 1.0  deck: Speed Scorch [precon/precon 1.57]
+Goblin Reaver              R Uncommon life 20  speed 28  scale 1.0  deck: Krenko's Mob 2 [duel/medium 2.75]
+Hexcaller Warlock          B Rare     life 30  speed 40  scale 1.0  deck: Ned Flanders 2 [duel/medium 2.37]
+Levy Swordsman             R Common   life 12  speed 20  scale 1.0  deck: Spiritbane [precon/precon 1.53]
+Levy Spearman              W Common   life 12  speed 20  scale 1.0  deck: Legion of Glory [precon/precon 1.51]
+Shieldwall Sergeant        W Uncommon life 20  speed 28  scale 1.0  deck: Gunnery Sergeant Hartman 2 [duel/medium 2.30]
+Halberd Veteran            R Uncommon life 20  speed 28  scale 1.0  deck: Hazoret Aggro [precon/precon 2.65]
+Longbow Yeoman             G Uncommon life 20  speed 28  scale 1.0  deck: Guardians of Nissa 1 [duel/easy 2.21]
+Crossbow Marksman          W Rare     life 30  speed 38  scale 1.0  deck: Anakin Skywalker 2 [duel/medium 3.00]
+Cavalier Captain           W Rare     life 33  speed 38  scale 1.0  deck: Solaire 3 [duel/hard 3.11]
+Outrider                   G Rare     life 33  speed 38  scale 1.0  deck: Joker 2 [duel/medium 3.03]
+Court Mage                 U Rare     life 30  speed 40  scale 1.0  deck: Blue Devil 2 [duel/medium 2.27]
+biome white + 7
+biome blue + 4
+biome black + 5
+biome red + 7
+biome green + 6
+biome colorless + 14
+```
+
+### 4. The Mythic decks (hand-built, 60 cards, mono-colour)
+
+Aegis Paladin (knights and equipment), The Ivory Sovereign (angels and wraths), Dawnblade Prince
+(tokens and anthems); Rusalka (merfolk tempo), The Unblinking Eye (mill and walls), Archmage of
+the Tides (wizards and counters); The Reaper (reanimator), Maw of the Abyss (discard and
+Obliterator), Onyx Minotaur Lord (recursive aggro); Goblin Warlord (goblins), Crimson Minotaur
+Lord (minotaur tribal), Ember Urchin (burn); Molfar (elves into Craterhoof), Wildwood Minotaur
+(stompy), Bog Opiven (+1/+1 counters and hydras). Every card was checked against the edition
+index, the restricted list and the card-script folder (transform / adventure cards carry both
+names in the file name - the checker knows).
+
+### 5. Quest 30 arrow pointed at a Ring City (engine)
+
+User report: "Find a surviving town" navigated to one of the five Ring Cities. Ring Cities are
+neutral-seeded towns, so they satisfied the `survivingTown` navigation filter. Both the
+`survivingTown` and `ruinedTown` filters in `AdventureQuestStage` now exclude
+`TerritoryControl.isRingTown`, matching the round-111 flag fix.
+
+### 6. Pickup sounds in dungeons (engine)
+
+User report: shards play a sound on pickup, gold does not, and it seemed to be a dungeon thing.
+Confirmed: the overworld walk-over pickups add a sound by hand for wood and stone, but the
+reward-grant path that dungeon drops use (`AdventurePlayer.addReward`) calls the silent
+`addGold` / `addWood` / `addStone`. Those three now play the coin-drop sound themselves when the
+amount is positive (shards already played `take_shard` from `takeShards`), and the overworld's
+duplicate calls were removed so nothing plays twice.
+
+### 7. Credits
+
+`standalone-packaging/CREDITS.md` gained an "Enemy art packs" section. Known attributions:
+waechter-19 ("designed for Nekomata, created by @Jitsu"), waechter-20 (TheRealFusion). The Tiny
+Fantasy, Mini soldier, Molfar/Opiven/Rusalka and Mino2 authors are not named in the folder -
+placeholders are in the file for the user to fill in.
+
+**Files touched**: `data/AdventureQuestStage.java`, `player/AdventurePlayer.java`,
+`util/ResourceSpawns.java`; enemies.json (+29), world/biomes/*.json, 29 atlases (+png) under
+`sprites/enemy/mythic/` and `sprites/enemy/basic/<class>/`, 29 decks, CREDITS.md.

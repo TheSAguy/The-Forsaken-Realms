@@ -1,0 +1,92 @@
+hexcaller_warlock.png
+size: 336,115
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 42, 23
+Idle
+  xy: 0, 0
+  size: 42, 23
+Idle
+  xy: 42, 0
+  size: 42, 23
+Idle
+  xy: 84, 0
+  size: 42, 23
+Idle
+  xy: 126, 0
+  size: 42, 23
+Walk
+  xy: 0, 23
+  size: 42, 23
+Walk
+  xy: 42, 23
+  size: 42, 23
+Walk
+  xy: 84, 23
+  size: 42, 23
+Walk
+  xy: 126, 23
+  size: 42, 23
+Attack
+  xy: 0, 46
+  size: 42, 23
+Attack
+  xy: 42, 46
+  size: 42, 23
+Attack
+  xy: 84, 46
+  size: 42, 23
+Attack
+  xy: 126, 46
+  size: 42, 23
+Attack
+  xy: 168, 46
+  size: 42, 23
+Attack
+  xy: 210, 46
+  size: 42, 23
+Attack
+  xy: 252, 46
+  size: 42, 23
+Attack
+  xy: 294, 46
+  size: 42, 23
+Hit
+  xy: 0, 69
+  size: 42, 23
+Hit
+  xy: 42, 69
+  size: 42, 23
+Hit
+  xy: 84, 69
+  size: 42, 23
+Hit
+  xy: 126, 69
+  size: 42, 23
+Death
+  xy: 0, 92
+  size: 42, 23
+Death
+  xy: 42, 92
+  size: 42, 23
+Death
+  xy: 84, 92
+  size: 42, 23
+Death
+  xy: 126, 92
+  size: 42, 23
+Death
+  xy: 168, 92
+  size: 42, 23
+Death
+  xy: 210, 92
+  size: 42, 23
+Death
+  xy: 252, 92
+  size: 42, 23
+Death
+  xy: 294, 92
+  size: 42, 23

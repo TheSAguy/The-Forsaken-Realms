@@ -43,6 +43,21 @@ dungeon rotation, the bestiary tiers, fog of war, day/night, and the rest —
 were built for this game by TheSAguy, with AI-assisted development
 (Claude, by Anthropic).
 
+## Enemy art packs
+
+Some enemies use free sprite packs, adapted into the game's atlas format:
+
+- **waechter-19** (the spined orb, "Ember Urchin") - free to use and edit; designed for
+  *Nekomata*, created by **@Jitsu**.
+- **waechter-20** (the tentacled maw, "Maw of the Abyss") - free to use, edit and use
+  commercially; credit **TheRealFusion**.
+- **Tiny Fantasy** (knight, eye, reaper, goblins, skeleton, slime, warlock) - author to be
+  confirmed.
+- **Mini soldier set** (king, prince, archmage, mage, swordsman, spearman, shieldman, halberdier,
+  archer, crossbowman, cavalier, horseman) - author to be confirmed.
+- **Molfar, Opiven, Rusalka** (48px folklore strips) - author to be confirmed.
+- **Minotaur charset** (Mino2) - author to be confirmed.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

@@ -1,0 +1,101 @@
+cavalier_captain.png
+size: 200,140
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 25, 28
+Idle
+  xy: 0, 0
+  size: 25, 28
+Idle
+  xy: 25, 0
+  size: 25, 28
+Idle
+  xy: 50, 0
+  size: 25, 28
+Idle
+  xy: 75, 0
+  size: 25, 28
+Idle
+  xy: 100, 0
+  size: 25, 28
+Idle
+  xy: 125, 0
+  size: 25, 28
+Idle
+  xy: 150, 0
+  size: 25, 28
+Idle
+  xy: 175, 0
+  size: 25, 28
+Walk
+  xy: 0, 28
+  size: 25, 28
+Walk
+  xy: 25, 28
+  size: 25, 28
+Walk
+  xy: 50, 28
+  size: 25, 28
+Walk
+  xy: 75, 28
+  size: 25, 28
+Walk
+  xy: 100, 28
+  size: 25, 28
+Walk
+  xy: 125, 28
+  size: 25, 28
+Attack
+  xy: 0, 56
+  size: 25, 28
+Attack
+  xy: 25, 56
+  size: 25, 28
+Attack
+  xy: 50, 56
+  size: 25, 28
+Hit
+  xy: 0, 84
+  size: 25, 28
+Hit
+  xy: 25, 84
+  size: 25, 28
+Hit
+  xy: 50, 84
+  size: 25, 28
+Hit
+  xy: 75, 84
+  size: 25, 28
+Hit
+  xy: 100, 84
+  size: 25, 28
+Hit
+  xy: 125, 84
+  size: 25, 28
+Death
+  xy: 0, 112
+  size: 25, 28
+Death
+  xy: 25, 112
+  size: 25, 28
+Death
+  xy: 50, 112
+  size: 25, 28
+Death
+  xy: 75, 112
+  size: 25, 28
+Death
+  xy: 100, 112
+  size: 25, 28
+Death
+  xy: 125, 112
+  size: 25, 28
+Death
+  xy: 150, 112
+  size: 25, 28
+Death
+  xy: 175, 112
+  size: 25, 28

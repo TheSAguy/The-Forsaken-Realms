@@ -1,0 +1,101 @@
+goblin_reaver.png
+size: 296,115
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 37, 23
+Idle
+  xy: 0, 0
+  size: 37, 23
+Idle
+  xy: 37, 0
+  size: 37, 23
+Idle
+  xy: 74, 0
+  size: 37, 23
+Idle
+  xy: 111, 0
+  size: 37, 23
+Idle
+  xy: 148, 0
+  size: 37, 23
+Idle
+  xy: 185, 0
+  size: 37, 23
+Walk
+  xy: 0, 23
+  size: 37, 23
+Walk
+  xy: 37, 23
+  size: 37, 23
+Walk
+  xy: 74, 23
+  size: 37, 23
+Walk
+  xy: 111, 23
+  size: 37, 23
+Walk
+  xy: 148, 23
+  size: 37, 23
+Walk
+  xy: 185, 23
+  size: 37, 23
+Walk
+  xy: 222, 23
+  size: 37, 23
+Walk
+  xy: 259, 23
+  size: 37, 23
+Attack
+  xy: 0, 46
+  size: 37, 23
+Attack
+  xy: 37, 46
+  size: 37, 23
+Attack
+  xy: 74, 46
+  size: 37, 23
+Attack
+  xy: 111, 46
+  size: 37, 23
+Attack
+  xy: 148, 46
+  size: 37, 23
+Hit
+  xy: 0, 69
+  size: 37, 23
+Hit
+  xy: 37, 69
+  size: 37, 23
+Hit
+  xy: 74, 69
+  size: 37, 23
+Hit
+  xy: 111, 69
+  size: 37, 23
+Death
+  xy: 0, 92
+  size: 37, 23
+Death
+  xy: 37, 92
+  size: 37, 23
+Death
+  xy: 74, 92
+  size: 37, 23
+Death
+  xy: 111, 92
+  size: 37, 23
+Death
+  xy: 148, 92
+  size: 37, 23
+Death
+  xy: 185, 92
+  size: 37, 23
+Death
+  xy: 222, 92
+  size: 37, 23
+Death
+  xy: 259, 92
+  size: 37, 23

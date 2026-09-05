@@ -1,0 +1,95 @@
+bone_raider.png
+size: 224,95
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 28, 19
+Idle
+  xy: 0, 0
+  size: 28, 19
+Idle
+  xy: 28, 0
+  size: 28, 19
+Idle
+  xy: 56, 0
+  size: 28, 19
+Idle
+  xy: 84, 0
+  size: 28, 19
+Walk
+  xy: 0, 19
+  size: 28, 19
+Walk
+  xy: 28, 19
+  size: 28, 19
+Walk
+  xy: 56, 19
+  size: 28, 19
+Walk
+  xy: 84, 19
+  size: 28, 19
+Walk
+  xy: 112, 19
+  size: 28, 19
+Walk
+  xy: 140, 19
+  size: 28, 19
+Walk
+  xy: 168, 19
+  size: 28, 19
+Walk
+  xy: 196, 19
+  size: 28, 19
+Attack
+  xy: 0, 38
+  size: 28, 19
+Attack
+  xy: 28, 38
+  size: 28, 19
+Attack
+  xy: 56, 38
+  size: 28, 19
+Attack
+  xy: 84, 38
+  size: 28, 19
+Attack
+  xy: 112, 38
+  size: 28, 19
+Hit
+  xy: 0, 57
+  size: 28, 19
+Hit
+  xy: 28, 57
+  size: 28, 19
+Hit
+  xy: 56, 57
+  size: 28, 19
+Hit
+  xy: 84, 57
+  size: 28, 19
+Death
+  xy: 0, 76
+  size: 28, 19
+Death
+  xy: 28, 76
+  size: 28, 19
+Death
+  xy: 56, 76
+  size: 28, 19
+Death
+  xy: 84, 76
+  size: 28, 19
+Death
+  xy: 112, 76
+  size: 28, 19
+Death
+  xy: 140, 76
+  size: 28, 19
+Death
+  xy: 168, 76
+  size: 28, 19
+Death
+  xy: 196, 76
+  size: 28, 19

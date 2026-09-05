@@ -1698,6 +1698,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private void addGold(int goldCount) {
         gold += goldCount;
         onGoldChangeList.emit();
+        if (goldCount > 0) // round 115: reward-path gold (dungeon drops, quest grants) was silent; overworld pickups use giveGold which already plays
+            SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
     }
 
     public void onShardsChange(Runnable o) {
@@ -2057,6 +2059,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public void addWood(int number) {
         takeWood(-number);
+        if (number > 0) // round 115: every pickup makes a sound, in dungeons too
+            SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
     }
 
     public void takeWood(int number) {
@@ -2066,6 +2070,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public void addStone(int number) {
         takeStone(-number);
+        if (number > 0) // round 115: every pickup makes a sound, in dungeons too
+            SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
     }
 
     public void takeStone(int number) {

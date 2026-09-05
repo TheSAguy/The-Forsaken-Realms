@@ -1,0 +1,89 @@
+bog_opiven.png
+size: 304,165
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 38, 33
+Idle
+  xy: 0, 0
+  size: 38, 33
+Idle
+  xy: 38, 0
+  size: 38, 33
+Idle
+  xy: 76, 0
+  size: 38, 33
+Idle
+  xy: 114, 0
+  size: 38, 33
+Walk
+  xy: 0, 33
+  size: 38, 33
+Walk
+  xy: 38, 33
+  size: 38, 33
+Walk
+  xy: 76, 33
+  size: 38, 33
+Walk
+  xy: 114, 33
+  size: 38, 33
+Walk
+  xy: 152, 33
+  size: 38, 33
+Walk
+  xy: 190, 33
+  size: 38, 33
+Walk
+  xy: 228, 33
+  size: 38, 33
+Walk
+  xy: 266, 33
+  size: 38, 33
+Attack
+  xy: 0, 66
+  size: 38, 33
+Attack
+  xy: 38, 66
+  size: 38, 33
+Attack
+  xy: 76, 66
+  size: 38, 33
+Attack
+  xy: 114, 66
+  size: 38, 33
+Attack
+  xy: 152, 66
+  size: 38, 33
+Attack
+  xy: 190, 66
+  size: 38, 33
+Attack
+  xy: 228, 66
+  size: 38, 33
+Hit
+  xy: 0, 99
+  size: 38, 33
+Hit
+  xy: 38, 99
+  size: 38, 33
+Death
+  xy: 0, 132
+  size: 38, 33
+Death
+  xy: 38, 132
+  size: 38, 33
+Death
+  xy: 76, 132
+  size: 38, 33
+Death
+  xy: 114, 132
+  size: 38, 33
+Death
+  xy: 152, 132
+  size: 38, 33
+Death
+  xy: 190, 132
+  size: 38, 33

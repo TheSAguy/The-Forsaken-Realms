@@ -1,0 +1,95 @@
+goblin_cutthroat.png
+size: 312,120
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 39, 24
+Idle
+  xy: 0, 0
+  size: 39, 24
+Idle
+  xy: 39, 0
+  size: 39, 24
+Idle
+  xy: 78, 0
+  size: 39, 24
+Idle
+  xy: 117, 0
+  size: 39, 24
+Idle
+  xy: 156, 0
+  size: 39, 24
+Idle
+  xy: 195, 0
+  size: 39, 24
+Walk
+  xy: 0, 24
+  size: 39, 24
+Walk
+  xy: 39, 24
+  size: 39, 24
+Walk
+  xy: 78, 24
+  size: 39, 24
+Walk
+  xy: 117, 24
+  size: 39, 24
+Walk
+  xy: 156, 24
+  size: 39, 24
+Walk
+  xy: 195, 24
+  size: 39, 24
+Walk
+  xy: 234, 24
+  size: 39, 24
+Walk
+  xy: 273, 24
+  size: 39, 24
+Attack
+  xy: 0, 48
+  size: 39, 24
+Attack
+  xy: 39, 48
+  size: 39, 24
+Attack
+  xy: 78, 48
+  size: 39, 24
+Attack
+  xy: 117, 48
+  size: 39, 24
+Attack
+  xy: 156, 48
+  size: 39, 24
+Attack
+  xy: 195, 48
+  size: 39, 24
+Hit
+  xy: 0, 72
+  size: 39, 24
+Hit
+  xy: 39, 72
+  size: 39, 24
+Hit
+  xy: 78, 72
+  size: 39, 24
+Hit
+  xy: 117, 72
+  size: 39, 24
+Death
+  xy: 0, 96
+  size: 39, 24
+Death
+  xy: 39, 96
+  size: 39, 24
+Death
+  xy: 78, 96
+  size: 39, 24
+Death
+  xy: 117, 96
+  size: 39, 24
+Death
+  xy: 156, 96
+  size: 39, 24

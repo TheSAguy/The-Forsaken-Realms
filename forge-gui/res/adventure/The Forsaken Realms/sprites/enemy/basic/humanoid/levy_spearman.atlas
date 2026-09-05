@@ -1,0 +1,80 @@
+levy_spearman.png
+size: 161,85
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 23, 17
+Idle
+  xy: 0, 0
+  size: 23, 17
+Idle
+  xy: 23, 0
+  size: 23, 17
+Idle
+  xy: 46, 0
+  size: 23, 17
+Idle
+  xy: 69, 0
+  size: 23, 17
+Walk
+  xy: 0, 17
+  size: 23, 17
+Walk
+  xy: 23, 17
+  size: 23, 17
+Walk
+  xy: 46, 17
+  size: 23, 17
+Walk
+  xy: 69, 17
+  size: 23, 17
+Walk
+  xy: 92, 17
+  size: 23, 17
+Walk
+  xy: 115, 17
+  size: 23, 17
+Attack
+  xy: 0, 34
+  size: 23, 17
+Attack
+  xy: 23, 34
+  size: 23, 17
+Attack
+  xy: 46, 34
+  size: 23, 17
+Attack
+  xy: 69, 34
+  size: 23, 17
+Attack
+  xy: 92, 34
+  size: 23, 17
+Attack
+  xy: 115, 34
+  size: 23, 17
+Attack
+  xy: 138, 34
+  size: 23, 17
+Hit
+  xy: 0, 51
+  size: 23, 17
+Hit
+  xy: 23, 51
+  size: 23, 17
+Hit
+  xy: 46, 51
+  size: 23, 17
+Death
+  xy: 0, 68
+  size: 23, 17
+Death
+  xy: 23, 68
+  size: 23, 17
+Death
+  xy: 46, 68
+  size: 23, 17
+Death
+  xy: 69, 68
+  size: 23, 17

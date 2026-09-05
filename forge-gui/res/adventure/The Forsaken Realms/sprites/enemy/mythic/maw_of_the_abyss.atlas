@@ -1,0 +1,53 @@
+maw_of_the_abyss.png
+size: 432,515
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 144, 103
+Idle
+  xy: 0, 0
+  size: 144, 103
+Idle
+  xy: 144, 0
+  size: 144, 103
+Idle
+  xy: 288, 0
+  size: 144, 103
+Walk
+  xy: 0, 103
+  size: 144, 103
+Walk
+  xy: 144, 103
+  size: 144, 103
+Walk
+  xy: 288, 103
+  size: 144, 103
+Attack
+  xy: 0, 206
+  size: 144, 103
+Attack
+  xy: 144, 206
+  size: 144, 103
+Attack
+  xy: 288, 206
+  size: 144, 103
+Hit
+  xy: 0, 309
+  size: 144, 103
+Hit
+  xy: 144, 309
+  size: 144, 103
+Hit
+  xy: 288, 309
+  size: 144, 103
+Death
+  xy: 0, 412
+  size: 144, 103
+Death
+  xy: 144, 412
+  size: 144, 103
+Death
+  xy: 288, 412
+  size: 144, 103

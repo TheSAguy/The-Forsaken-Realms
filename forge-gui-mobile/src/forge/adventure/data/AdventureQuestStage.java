@@ -343,9 +343,11 @@ public class AdventureQuestStage implements Serializable {
                 case "ruinedTown":
                     return forge.adventure.util.TownRestoration.isWastelandTown(poi.getData())
                             && !forge.adventure.util.TownRestoration.isNeutralSeededTown(changes)
-                            && !forge.adventure.util.TownRestoration.isTownRestored(changes);
+                            && !forge.adventure.util.TownRestoration.isTownRestored(changes)
+                            && !forge.adventure.util.TerritoryControl.isRingTown(poi); // round 115: never a Ring City
                 case "survivingTown":
-                    return forge.adventure.util.TownRestoration.isNeutralSeededTown(changes);
+                    return forge.adventure.util.TownRestoration.isNeutralSeededTown(changes)
+                            && !forge.adventure.util.TerritoryControl.isRingTown(poi); // round 115: an independent town, not one of the five Ring Cities
                 case "restoredTown":
                     return forge.adventure.util.TownRestoration.isTownRestored(changes);
                 case "tagged": // round 102: any POI that carries the stage's POITags (the Ring City stages of quest 75)

@@ -1,0 +1,86 @@
+molfar.png
+size: 246,180
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 36
+Idle
+  xy: 0, 0
+  size: 41, 36
+Idle
+  xy: 41, 0
+  size: 41, 36
+Idle
+  xy: 82, 0
+  size: 41, 36
+Idle
+  xy: 123, 0
+  size: 41, 36
+Idle
+  xy: 164, 0
+  size: 41, 36
+Idle
+  xy: 205, 0
+  size: 41, 36
+Walk
+  xy: 0, 36
+  size: 41, 36
+Walk
+  xy: 41, 36
+  size: 41, 36
+Walk
+  xy: 82, 36
+  size: 41, 36
+Walk
+  xy: 123, 36
+  size: 41, 36
+Walk
+  xy: 164, 36
+  size: 41, 36
+Walk
+  xy: 205, 36
+  size: 41, 36
+Attack
+  xy: 0, 72
+  size: 41, 36
+Attack
+  xy: 41, 72
+  size: 41, 36
+Attack
+  xy: 82, 72
+  size: 41, 36
+Attack
+  xy: 123, 72
+  size: 41, 36
+Attack
+  xy: 164, 72
+  size: 41, 36
+Attack
+  xy: 205, 72
+  size: 41, 36
+Hit
+  xy: 0, 108
+  size: 41, 36
+Hit
+  xy: 41, 108
+  size: 41, 36
+Death
+  xy: 0, 144
+  size: 41, 36
+Death
+  xy: 41, 144
+  size: 41, 36
+Death
+  xy: 82, 144
+  size: 41, 36
+Death
+  xy: 123, 144
+  size: 41, 36
+Death
+  xy: 164, 144
+  size: 41, 36
+Death
+  xy: 205, 144
+  size: 41, 36

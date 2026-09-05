@@ -1,0 +1,83 @@
+longbow_yeoman.png
+size: 160,85
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 20, 17
+Idle
+  xy: 0, 0
+  size: 20, 17
+Idle
+  xy: 20, 0
+  size: 20, 17
+Idle
+  xy: 40, 0
+  size: 20, 17
+Idle
+  xy: 60, 0
+  size: 20, 17
+Walk
+  xy: 0, 17
+  size: 20, 17
+Walk
+  xy: 20, 17
+  size: 20, 17
+Walk
+  xy: 40, 17
+  size: 20, 17
+Walk
+  xy: 60, 17
+  size: 20, 17
+Walk
+  xy: 80, 17
+  size: 20, 17
+Walk
+  xy: 100, 17
+  size: 20, 17
+Attack
+  xy: 0, 34
+  size: 20, 17
+Attack
+  xy: 20, 34
+  size: 20, 17
+Attack
+  xy: 40, 34
+  size: 20, 17
+Attack
+  xy: 60, 34
+  size: 20, 17
+Attack
+  xy: 80, 34
+  size: 20, 17
+Attack
+  xy: 100, 34
+  size: 20, 17
+Attack
+  xy: 120, 34
+  size: 20, 17
+Attack
+  xy: 140, 34
+  size: 20, 17
+Hit
+  xy: 0, 51
+  size: 20, 17
+Hit
+  xy: 20, 51
+  size: 20, 17
+Hit
+  xy: 40, 51
+  size: 20, 17
+Death
+  xy: 0, 68
+  size: 20, 17
+Death
+  xy: 20, 68
+  size: 20, 17
+Death
+  xy: 40, 68
+  size: 20, 17
+Death
+  xy: 60, 68
+  size: 20, 17

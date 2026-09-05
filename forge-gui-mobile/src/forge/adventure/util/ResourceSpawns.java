@@ -375,13 +375,11 @@ public class ResourceSpawns {
                 what = "Shards";
                 break;
             case TYPE_WOOD:
-                Current.player().addWood(value);
-                SoundSystem.instance.play(SoundEffectType.CoinsDrop, false); // addWood is silent (user request: every pickup makes a sound)
+                Current.player().addWood(value); // plays CoinsDrop itself since round 115
                 what = "Wood";
                 break;
             case TYPE_STONE:
-                Current.player().addStone(value);
-                SoundSystem.instance.play(SoundEffectType.CoinsDrop, false); // addStone is silent, same as wood
+                Current.player().addStone(value); // plays CoinsDrop itself since round 115
                 what = "Stone";
                 break;
             default:
