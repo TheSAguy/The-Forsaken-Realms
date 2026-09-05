@@ -203,7 +203,7 @@ public class TileMapScene extends HudScene {
             if (TownRestoration.isWastelandTown(point.getData())) {
                 forge.adventure.pointofintrest.PointOfInterestChanges entryChanges =
                         WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());
-                if (TownRestoration.isNeutralSeededTown(entryChanges)) {
+                if (TownRestoration.isNeutralSeededTown(entryChanges) && !forge.adventure.util.TerritoryControl.isRingTown(point)) { // round 111: Ring Cities do not count
                     Current.player().setCharacterFlag("enteredSurvivingTown", 1);
                     System.out.println("[TFR-MainQuest] enteredSurvivingTown -> 1 (" + point.getDisplayName() + ")");
                 } else if (!TownRestoration.isTownRestored(entryChanges)) {

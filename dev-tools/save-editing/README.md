@@ -25,6 +25,7 @@ A `.sav` is zlib-compressed **Java serialization** (`forge.adventure.util.SaveFi
 | `Inspect.java` | **Read-only.** Dumps player stats, every deck slot, and the full collection with counts. Safe to run while the game is open. |
 | `BuildDecks2.java` | Writes decklists into deck slots. Dry-run by default; `--write` to apply; takes its own `.bak`. |
 | `DumpSave.java` | Lower-level structural dump, for when you need to see keys rather than decks. |
+| `WriteDecks.java` | **Generic** deck writer (2026-09-04): `java WriteDecks <save> [--show] [--write] slot=<n>:<Deck Name>:<listfile> ...` - list files are `<count> <Card Name>` lines (`mono_white.txt` etc. here are the round-111 examples); resolves owned printings, adds free unsellable TRK basics to the collection for any shortfall exactly like the editor's Add Basic Lands, dry run by default, `.prededit3.bak`, re-reads and prints every slot after writing. |
 
 ## Running them
 

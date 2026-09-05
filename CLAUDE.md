@@ -50,6 +50,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 111 (2026-09-04): 23 legacy decks deduped (r111_dedupe picks, roster-wide hash exclusion); quest 30 fix =
+  TileMapScene skips enteredSurvivingTown for Ring Cities + quest 75 epilogue resets both entry flags before
+  issueQuest 30; towers.atlas (5 user towers, 26x50) on 14 mage-tower/wizard-fort dungeons.
 - Round 110 (2026-09-04): generator excludes library decks identical (sorted card list) to any deck the older
   roster uses; 63 picks changed; verified zero identical lists. Roster 1672 enemies. Data-only.
 - Round 109 (2026-09-04): decks re-picked with a difficulty gate (C = precons/easy duels, U = +medium, R = medium/hard,

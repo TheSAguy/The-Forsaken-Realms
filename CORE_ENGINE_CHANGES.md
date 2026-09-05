@@ -2109,3 +2109,4 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`util/AdventureQuestController.java`** - Partner gate in the board template selection.
 - **`util/TownRestoration.java`** - Ring Cities: 0 broken slots, `isPermanentlyBrokenShop` guard; `capturedFrom_<color>` flag.
 - **`scene/TileMapScene.java`** - drops stale broken-slot flags in Ring Cities.
+- **`scene/TileMapScene.java`** - round 111: `enteredSurvivingTown` is not set for Ring Cities (quest 30 pre-completion fix).

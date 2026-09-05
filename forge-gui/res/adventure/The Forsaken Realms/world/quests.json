@@ -13710,6 +13710,18 @@
 									}
 								},
 								{
+									"setCharacterFlag": {
+										"key": "enteredSurvivingTown",
+										"val": 0
+									}
+								},
+								{
+									"setCharacterFlag": {
+										"key": "enteredRuinedTown",
+										"val": 0
+									}
+								},
+								{
 									"issueQuest": "30"
 								}
 							]

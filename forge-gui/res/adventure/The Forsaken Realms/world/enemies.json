@@ -1775,7 +1775,6 @@
                      "decks/standard/redwizard_easy.json",
                      "decks/standard/redwizard_easy_1.dck",
                      "decks/standard/redwizard_easy_2.dck",
-                     "decks/standard/redwizard_apprentice_1.dck",
                      "decks/standard/redwizard_easy_3.dck"
                  ],
         "ai":  "",
@@ -3002,9 +3001,7 @@
         "name":  "Bandit Scoundrel",
         "sprite":  "sprites/enemy/humanoid/human/bandit/bandit.atlas",
         "deck":  [
-                     "decks/standard/bandit_monor.dck",
-                     "decks/standard/bandit_mutate.dck",
-                     "decks/standard/bandit_zoo.dck"
+                     "decks/standard/bandit_scoundrel_r111.dck"
                  ],
         "ai":  "",
         "randomizeDeck":  true,
@@ -4172,7 +4169,7 @@
         "name":  "Bog Witch",
         "sprite":  "sprites/enemy/humanoid/human/wizard/black_wiz3.atlas",
         "deck":  [
-                     "decks/standard/witch.dck"
+                     "decks/standard/bog_witch_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -6134,7 +6131,7 @@
         "name":  "Chandra\u0027s Scorcher",
         "sprite":  "sprites/enemy/humanoid/human/wizard/red_wiz2.atlas",
         "deck":  [
-                     "decks/standard/chandra6.dck"
+                     "decks/standard/chandra_s_scorcher_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -7381,7 +7378,7 @@
         "name":  "Criosphinx",
         "sprite":  "sprites/enemy/monstrosity/criosphinx.atlas",
         "deck":  [
-                     "decks/standard/sphinx amonkhet.dck"
+                     "decks/standard/criosphinx_r111.dck"
                  ],
         "ai":  "",
         "flying":  true,
@@ -7794,7 +7791,7 @@
         "name":  "Dark Knight",
         "sprite":  "sprites/enemy/humanoid/human/knight/death_knight.atlas",
         "deck":  [
-                     "decks/standard/death_knight.dck"
+                     "decks/standard/dark_knight_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  0.8,
@@ -8889,7 +8886,7 @@
         "name":  "Doppelganger",
         "sprite":  "sprites/enemy/undead/doppelganger.atlas",
         "deck":  [
-                     "decks/standard/mimic.dck"
+                     "decks/standard/doppelganger_r111.dck"
                  ],
         "copyPlayerDeck":  true,
         "ai":  "",
@@ -10159,7 +10156,7 @@
         "name":  "Eldrazi Floater",
         "sprite":  "sprites/enemy/aberration/eldrazi/eldrazi_2.atlas",
         "deck":  [
-                     "decks/standard/eldrazilarge.dck"
+                     "decks/standard/eldrazi_floater_r111.dck"
                  ],
         "ai":  "",
         "flying":  true,
@@ -11476,7 +11473,7 @@
         "name":  "False Knight",
         "sprite":  "sprites/enemy/humanoid/human/knight/false_knight.atlas",
         "deck":  [
-                     "decks/standard/death_knight.dck"
+                     "decks/standard/false_knight_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -11560,7 +11557,7 @@
         "name":  "False Monk",
         "sprite":  "sprites/enemy/humanoid/human/warlock/false_monk.atlas",
         "deck":  [
-                     "decks/standard/cultist.dck"
+                     "decks/standard/false_monk_r111.dck"
                  ],
         "spawnRate":  1,
         "difficulty":  0.1,
@@ -12115,7 +12112,7 @@
         "name":  "Flying Witch",
         "sprite":  "sprites/enemy/humanoid/human/warlock/flyingwitch.atlas",
         "deck":  [
-                     "decks/standard/witch.dck"
+                     "decks/standard/flying_witch_r111.dck"
                  ],
         "ai":  "",
         "flying":  true,
@@ -13709,7 +13706,7 @@
         "name":  "Giant Fly",
         "sprite":  "sprites/enemy/beast/insect/giantfly.atlas",
         "deck":  [
-                     "decks/standard/insect.dck"
+                     "decks/standard/giant_fly_r111.dck"
                  ],
         "ai":  "",
         "flying":  true,
@@ -19088,7 +19085,7 @@
         "nameOverride":  "",
         "sprite":  "sprites/enemy/humanoid/kobold/koboldpyromancer.atlas",
         "deck":  [
-                     "decks/standard/pyromancer.dck"
+                     "decks/standard/kobold_pyromancer_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -19358,7 +19355,7 @@
         "nameOverride":  "",
         "sprite":  "sprites/enemy/humanoid/kobold/koboldwarrior.atlas",
         "deck":  [
-                     "decks/standard/kobold.dck"
+                     "decks/standard/kobold_warrior_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -19423,7 +19420,7 @@
         "name":  "Kobold Worker",
         "sprite":  "sprites/enemy/humanoid/kobold/koboldworker.atlas",
         "deck":  [
-                     "decks/standard/koboldworker.dck"
+                     "decks/standard/kobold_worker_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -20972,7 +20969,7 @@
         "name":  "Magma Fire Elemental",
         "sprite":  "sprites/enemy/elemental/magmafireelemental.atlas",
         "deck":  [
-                     "decks/standard/magma_elemental.dck"
+                     "decks/standard/magma_fire_elemental_r111.dck"
                  ],
         "ai":  "",
         "flying":  true,
@@ -25067,7 +25064,7 @@
         "name":  "Plaguelord",
         "sprite":  "sprites/enemy/undead/zombiepoisoner.atlas",
         "deck":  [
-                     "decks/standard/zombie_black_easy.dck"
+                     "decks/standard/plaguelord_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -26141,7 +26138,7 @@
         "name":  "Royal Sentinel",
         "sprite":  "sprites/enemy/undead/royalsentinel.atlas",
         "deck":  [
-                     "decks/standard/trap.dck"
+                     "decks/standard/royal_sentinel_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -29156,7 +29153,7 @@
         "name":  "Sunmare",
         "sprite":  "sprites/enemy/beast/horse/horsearabian.atlas",
         "deck":  [
-                     "decks/standard/horse.dck"
+                     "decks/standard/sunmare_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  1,
@@ -33897,12 +33894,9 @@
         "name":  "Cloaked Old Man",
         "sprite":  "sprites/enemy/humanoid/human/wizard/black_wiz2.atlas",
         "deck":  [
-                     "decks/standard/blackwizard_medium_demonicpact.dck",
-                     "decks/standard/blackwizard_medium_fear.dck",
-                     "decks/standard/blackwizard_medium_goblins.dck",
-                     "decks/standard/blackwizard_easy_artifact.dck",
-                     "decks/standard/blackwizard_easy_badmoon.dck",
-                     "decks/standard/blackwizard_easy_mill.dck"
+                     "decks/standard/cloaked_old_man_1_r111.dck",
+                     "decks/standard/cloaked_old_man_2_r111.dck",
+                     "decks/standard/cloaked_old_man_3_r111.dck"
                  ],
         "ai":  "",
         "randomizeDeck":  true,
@@ -33966,8 +33960,7 @@
         "name":  "Escaped Skaab",
         "sprite":  "sprites/enemy/undead/zombie.atlas",
         "deck":  [
-                     "decks/standard/INN/inn_skaab_easy.dck",
-                     "decks/standard/INN/inn_skaab_easy3.dck"
+                     "decks/standard/escaped_skaab_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  0.7,
@@ -34810,9 +34803,7 @@
         "name":  "Shrieking Skaab",
         "sprite":  "sprites/enemy/undead/ghoul.atlas",
         "deck":  [
-                     "decks/standard/INN/inn_skaab_easy2.dck",
-                     "decks/standard/INN/inn_skaab_easy3.dck",
-                     "decks/standard/INN/inn_skaab_shrieking.dck"
+                     "decks/standard/shrieking_skaab_r111.dck"
                  ],
         "ai":  "",
         "spawnRate":  0.7,

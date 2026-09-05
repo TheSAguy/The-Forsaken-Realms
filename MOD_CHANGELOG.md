@@ -16611,3 +16611,108 @@ DISTRIBUTION colors x tier (152 enemies)
 
 **Files touched**: the 152 generated decks (rewritten in place), enemies.json (152 entries), biomes/*.json,
 ENEMY_ROSTER_R108.md (refreshed).
+
+## Round 111: legacy deck dedupe, quest 30 no longer pre-completes, tower icons for the mage towers (2026-09-04)
+
+User requests: dedupe the identical decks found in the older roster; the first two stages of quest
+30 ("Find a surviving town" / "Find a ruined town") were already checked the moment the quest
+arrived; use the five tower images in Pictures/Screenshots/Tower as dungeon entrances, replacing
+dungeons that share an icon where a tower is thematically right.
+
+### 1. Legacy deck dedupe (data only)
+
+The round-110 audit found 18 groups of pre-existing enemies running card-for-card identical lists
+and 4 identical `.dck` pairs. Every secondary member of those groups now has its own library deck:
+same tier, the enemy's own colors, name-themed where the library allows, difficulty-gated exactly
+like the round-109/110 picks (Common = precons/easy duels, Uncommon adds medium, Rare = medium/hard,
+Mythic = hard/very hard), and hashed against EVERY list the whole 1,672-enemy roster runs so nothing
+new repeats an existing list. 23 new files (`decks/standard/<enemy>_r111.dck`); the picks:
+
+```
+Cloaked Old Man        B      Uncommon -> Baron's Bloodthirst 1 [duel/easy 2.36] themed=True
+Cloaked Old Man        B      Uncommon -> Ned Flanders 1 [duel/easy 2.14] themed=False
+Cloaked Old Man        B      Uncommon -> Wolverine 2 [duel/medium 2.67] themed=False
+Bog Witch              B      Uncommon -> Silas's Faithful 1 [duel/easy 2.23] themed=False
+Flying Witch           B      Uncommon -> Erebos's Dark Realm 1 [duel/easy 2.09] themed=False
+Criosphinx             WU     Uncommon -> Power of Prophecy [precon/precon 1.47] themed=True
+Dark Knight            B      Uncommon -> Silas's Faithful 2 [duel/medium 2.62] themed=True
+False Knight           B      Uncommon -> Freddy's Nightmares 1 [duel/easy 2.37] themed=False
+Doppelganger           C      Uncommon -> Karn's Modular Constructs 1 [duel/easy 2.13] themed=False
+Giant Fly              G      Rare     -> Vegeta 3 [duel/hard 3.65] themed=False
+Eldrazi Floater        BGU    Rare     -> Hookah-Smoking Caterpillar 2 [duel/medium 3.74] themed=False
+False Monk             B      Rare     -> Kokusho's Unending Return 3 [duel/hard 3.08] themed=False
+Sunmare                GW     Uncommon -> Ajani's Immortality 1 [duel/easy 2.78] themed=True
+Kobold Pyromancer      RB     Uncommon -> Blood and Fire [precon/precon 1.43] themed=True
+Kobold Warrior         RB     Rare     -> Bladewing's Arisen Brethren 2 [duel/medium 3.92] themed=True
+Kobold Worker          RB     Rare     -> Daretti's Improvisation 3 [duel/hard 3.74] themed=False
+Royal Sentinel         UB     Rare     -> Davriel's Mindtwister 3 [duel/hard 3.00] themed=False
+Magma Fire Elemental   R      Uncommon -> Chandra's Firewave 2 [duel/medium 1.98] themed=True
+Plaguelord             UB     Uncommon -> Relentless Dead [precon/precon 1.41] themed=True
+Escaped Skaab          U      Common   -> Transference [precon/precon 1.49] themed=False
+Shrieking Skaab        U      Common   -> Time Curse [precon/precon 1.52] themed=False
+Bandit Scoundrel       BR     Uncommon -> Owlman 2 [duel/medium 2.19] themed=True
+Chandra's Scorcher     R      Rare     -> Chandra's Firewave 3 [duel/hard 3.28] themed=True
+Apprentice Red Wizard: dropped the duplicate reference redwizard_apprentice_1.dck (identical to redwizard_easy_3.dck)
+```
+
+Left alone on purpose: bosses, minibosses and legends that share `mystery_list.dck` /
+`copperhostbrutalizer.dck` / `valyx.dck` (those are cast lists, not accidents), the Adept wizard
+families that share the `blackwizard_*` etc. files by design, and Hidden Snake's `snake.json`
+generator spec (a generator, not a list). Apprentice Red Wizard listed the same list twice
+(`redwizard_apprentice_1.dck` = `redwizard_easy_3.dck`); the duplicate reference was dropped.
+
+### 2. Quest 30 arrived with two stages already checked (engine + data)
+
+The user's log shows the cause directly:
+
+```
+[TFR-MainQuest] enteredRingCity2 -> 1 (Tolaria)
+[TFR-MainQuest] enteredSurvivingTown -> 1 (Tolaria)
+```
+
+Ring Cities are neutral-seeded towns, so entering each of them during "Oaths at the Ring" set
+`enteredSurvivingTown`, and walking past any ruin on the way set `enteredRuinedTown`; quest 30's
+CharacterFlag stages then retro-completed on activation. Two-part fix:
+
+- `TileMapScene` no longer sets `enteredSurvivingTown` for a Ring City
+  (`TerritoryControl.isRingTown`) - the five cities are the tutorial's own stops.
+- Quest 75's final epilogue (Llanowar's gift) resets both flags to 0 immediately before
+  `issueQuest 30`, so whatever the player wandered through beforehand no longer counts. The
+  dungeon stage was never affected. Saves already holding quest 30 with those stages checked keep
+  them - the reset only runs when 30 is issued.
+
+### 3. Tower icons (data only)
+
+`maps/tileset/towers.atlas` + `towers.png`: the five user images (200x382, real alpha) scaled with
+their own proportions into 26x50 regions - the footprint of the plane's existing `MageTower`
+region - standing on the region floor, nearest filtering like every other building sheet. Fourteen
+dungeons that previously shared one per-color mage-tower or fort icon now show a tower:
+
+| Region | Image | Dungeons |
+|---|---|---|
+| TowerRed | tower_1_red | MageTowerC3, MageTowerU2 (red wizard towers) |
+| TowerRedTwin | tower_4_red_twin | DemonTower (portal), MageTowerC6, MageTowerU5 (infernal genesis) |
+| TowerPurple | tower_2_purple | MageTowerC2, MageTowerU1 (black wizard towers), Lich's Mirror |
+| TowerBlue | tower_3_blue | MageTowerC8, MageTowerU7 (illusion), Dream Halls, MageTowerU (djinn) |
+| TowerGrey | tower_5_blue_grey | Fort2 (colorless wizards' fort), Fort6 (wizard's study) |
+
+Crawlspace, the horror/doppelganger towers, the ninja-rat tower and the white monastery/church
+towers keep their old icons, so each color still has a mix. Only `spriteAtlas` / `sprite` changed
+on those 14 entries; maps, loot and spawns are untouched.
+
+### 4. Save tooling: generic deck writer (dev-tools/save-editing/WriteDecks.java)
+
+The user asked for three decks built from save 2's collection (Insane, 15 life, 185 cards / 156
+names, no Swamps owned). `WriteDecks` generalises round 82's BuildDecks2: deck lists come from text
+files, cards resolve to owned printings, and any basic-land shortfall becomes free unsellable
+`|TRK|...|#{noSellValue=true}` copies added to the collection - the exact rows the editor's Add
+Basic Lands creates - so the save is in the state the player would have reached by hand. Written
+into slots 1-3 of save 2 ("Dawn Bulwark" mono-W 17 Plains, "Gravetithe" mono-B 16 Swamps,
+"Orzhov Vigil" W/B 9+7 + Darksteel Ingot; 40 cards each, the plane minimum), verified by re-reading
+every slot; slot 0 and the active deck index untouched. Facts learned: an unused slot is a 1-row
+array holding an empty string, not a zero-length array; compile the tools against
+`forge-gui-mobile-dev/target/...jar` while the packager is copying the live jar (it is missing for
+a minute), and under Git Bash pass the jar as `/f/...` to javac but `F:/...;C:/...` to java's -cp.
+
+**Files touched**: `scene/TileMapScene.java`; quests.json (quest 75 epilogue); enemies.json (24
+entries); 23 new decks; points_of_interest.json (14 entries); maps/tileset/towers.atlas + .png.

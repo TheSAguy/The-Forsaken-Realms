@@ -1,0 +1,40 @@
+towers.png
+size: 142,54
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+TowerRed
+  rotate: false
+  xy: 2, 2
+  size: 26, 50
+  orig: 26, 50
+  offset: 0, 0
+  index: -1
+TowerPurple
+  rotate: false
+  xy: 30, 2
+  size: 26, 50
+  orig: 26, 50
+  offset: 0, 0
+  index: -1
+TowerBlue
+  rotate: false
+  xy: 58, 2
+  size: 26, 50
+  orig: 26, 50
+  offset: 0, 0
+  index: -1
+TowerRedTwin
+  rotate: false
+  xy: 86, 2
+  size: 26, 50
+  orig: 26, 50
+  offset: 0, 0
+  index: -1
+TowerGrey
+  rotate: false
+  xy: 114, 2
+  size: 26, 50
+  orig: 26, 50
+  offset: 0, 0
+  index: -1
