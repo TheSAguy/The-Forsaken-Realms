@@ -2114,6 +2114,11 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`data/AdventureQuestStage.java`** - round 115: `survivingTown` / `ruinedTown` nav filters exclude Ring Cities; **`player/AdventurePlayer.java`** - `addGold` / `addWood` / `addStone` play `CoinsDrop` on positive amounts; **`util/ResourceSpawns.java`** - the explicit wood/stone sound calls removed (now inside the adds).
 - **`scene/TileMapScene.java`** - round 118: the ruined-town flag skips Ring Cities too; **`util/AdventureEventController.java`** - Jumpstart roll gated on the `jumpstartPlayed` flag; **`data/AdventureEventData.java`** - `startEvent()` sets `jumpstartPlayed` for Jumpstart events.
 - **`scene/UIScene.java`** - round 120: `showDialog()` ends with `toFront()`; `act()` re-asserts the top dialog's z-order each frame (RewardScene re-adds card actors above open dialogs).
+- **`util/EconomyBuildings.java`** - round 121: the Financial submenu offers the Trader only while neither TRADER nor EXCHANGE is built (the Exchange upgrade clears the Trader flag); the Trader build option carries both not-built conditions.
+- **`world/World.java`** - round 121: new `flashArea(cx, cy, radius, cb)` - flashes every tile in the circle bright for `TEMPORARY_REVEAL_SECONDS` (explored or not) after a `revealArea()` for permanence.
+- **`stage/WorldBackground.java`** - round 121: `flashDiscoveryAround(poi)` replays the discovery burst on demand with the POI's discovery radius; `isTownLikePoi` is package-private now.
+- **`stage/WorldStage.java`** - round 121: `flashDiscoveryAround(poi)` delegate to the background.
+- **`stage/MapStage.java`** - round 121: `exitDungeon()` fires the town-exit flash for town/capital/castle maps when the player was not defeated.
 - **`util/TerritoryControl.java`** - `ringPullDivisor`; **`stage/WorldStage.java`** - no lands at Ring assaults.
 - **`util/MapDialog.java`** - option pane height from the HUD stage.
 

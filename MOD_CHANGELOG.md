@@ -17707,3 +17707,27 @@ dialog's z-order every frame (cheap: one index comparison). Every UIScene dialog
 Armory re-roll, blueprint and destroy confirmations included.
 
 **Files touched**: `scene/UIScene.java`.
+
+## Round 121: one Trading Post or Exchange per town; leaving a town replays its discovery flash (2026-09-05, repo only)
+
+Two user reports from the live v1.05 game. Repo only - the live folder is being played.
+
+- **A second Trader was offered beside an Exchange.** `EconomyBuildings.upgradeTraderToExchange()`
+  re-registers the building under EXCHANGE and clears `economyBuilt_10` (the Trader flag), so the
+  Financial submenu's per-type "not built yet" gate saw no Trader and offered a fresh Trading Post in a
+  Capitol that already had the Exchange. The Trader is now offered only while the town has neither a
+  Trader nor an Exchange, and the Trader build option itself carries both not-built conditions. One
+  Trading Post or Exchange per town.
+- **Leaving a town briefly reveals its surroundings, like the first discovery did.** The discovery burst
+  in `WorldBackground.draw()` only ever flashed tiles that were not yet explored (`revealArea()` skips
+  the rest), so it could not simply be replayed for a known town. New `World.flashArea()` flashes every
+  tile in the radius bright for the usual 3 s, explored or not, and marks any still-unknown ones
+  explored; `WorldBackground.flashDiscoveryAround(poi)` runs it with the POI's discovery radius (11
+  tiles for towns); `WorldStage.flashDiscoveryAround()` exposes it; `MapStage.exitDungeon()` fires it
+  when the map being left is a town, the Capitol or a castle - not on defeat, and not for dungeons or
+  caves, which leave quietly as before. `isTownLikePoi` became package-private for that type check.
+- Guide: the Buildings paragraph says a town holds one Trader or Exchange, never both; "Smaller Things"
+  mentions the exit flash; the footer date moved to 2026-09-05.
+
+**Files touched**: `util/EconomyBuildings.java`, `world/World.java`, `stage/WorldBackground.java`,
+`stage/WorldStage.java`, `stage/MapStage.java`, plane `GUIDE.md`.

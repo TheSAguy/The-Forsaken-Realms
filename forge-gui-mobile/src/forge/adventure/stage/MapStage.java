@@ -1501,6 +1501,14 @@ public class MapStage extends GameStage {
             WorldStage.getInstance().resetPlayerLocation();
         else if (defeatedByBoss)
             WorldStage.getInstance().defeatedFromBoss();
+        else {
+            // Round 121 (user request): walking out of a town replays its first-discovery burst - the area
+            // around it flares bright for a moment, then settles back to the dimmed "explored" tier. Town,
+            // Capitol and castle maps only (the town-like discovery tier); dungeons and caves leave quietly.
+            PointOfInterest leaving = TileMapScene.instance().rootPoint;
+            if (leaving != null && leaving.getData() != null && WorldBackground.isTownLikePoi(leaving))
+                WorldStage.getInstance().flashDiscoveryAround(leaving);
+        }
         Forge.switchScene(GameScene.instance());
         isPlayerLeavingDungeon = false;
         dialogOnlyInput = false;

@@ -44,9 +44,29 @@ public class WorldBackground extends Actor {
 
     // Town/capital/castle POIs get the larger discovery radius above; everything else (dungeon,
     // cave, sidebossEasy/Moderate/Hard, etc) gets the smaller one.
-    private static boolean isTownLikePoi(PointOfInterest poi) {
+    static boolean isTownLikePoi(PointOfInterest poi) { // package-private since round 121: MapStage's town-exit flash uses it
         String type = poi.getData().type;
         return "town".equalsIgnoreCase(type) || "capital".equalsIgnoreCase(type) || "castle".equalsIgnoreCase(type);
+    }
+
+    /**
+     * Round 121: the discovery burst replayed on demand - every tile within the POI's discovery radius flares
+     * bright for a moment (still-unknown tiles become explored as well), then settles back to the dimmed tier.
+     * WorldStage.flashDiscoveryAround() routes here when the player walks out of a town. Reads the tile size
+     * from the World rather than the tileSize field, which initialize() only sets on the first draw().
+     */
+    public void flashDiscoveryAround(PointOfInterest poi) {
+        if (poi == null || WorldSave.getCurrentSave() == null)
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null)
+            return;
+        int ts = world.getTileSize();
+        Rectangle bounds = poi.getBoundingRectangle();
+        int poiTileX = (int) ((bounds.x + bounds.width / 2f) / ts);
+        int poiTileY = (int) ((bounds.y + bounds.height / 2f) / ts);
+        int radius = isTownLikePoi(poi) ? DISCOVERY_REVEAL_RADIUS_TOWN : DISCOVERY_REVEAL_RADIUS_DUNGEON;
+        world.flashArea(poiTileX, poiTileY, radius, this::onTileRevealed);
     }
 
     // Throttles the per-frame "keep the visible-vs-hazed boundary accurate" repatch below to only

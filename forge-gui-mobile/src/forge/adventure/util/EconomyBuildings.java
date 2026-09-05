@@ -1998,7 +1998,9 @@ public class EconomyBuildings {
             shopBuiltFlag.setCharacterFlag.val = 1;
             option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), refreshShops, shopBuiltFlag};
         } else {
-            option.condition = new DialogData.ConditionData[]{noBuildingOfTypeYetCondition(type)};
+            option.condition = type == TRADER // round 121: an Exchange is the town's (upgraded) Trader - never a second one
+                    ? new DialogData.ConditionData[]{noBuildingOfTypeYetCondition(TRADER), noBuildingOfTypeYetCondition(EXCHANGE)}
+                    : new DialogData.ConditionData[]{noBuildingOfTypeYetCondition(type)};
             option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), setEconomyTypeAction(type), setBuiltFlagAction(type)};
         }
         return option;
@@ -2058,7 +2060,11 @@ public class EconomyBuildings {
         // You can't build an Exchange without a trade first, so remove the Exchange build
         // option") - the ONLY route to an Exchange is upgrading a Capitol Trader in place (see
         // refreshTraderDialog()'s "Upgrade to Exchange" row / upgradeTraderToExchange()).
-        boolean traderOffered = typeAvailable(stage, TRADER);
+        // Round 121 (user report: "I have an Exchange in my Capitol, but it's still giving me the option to
+        // build a Trading Post"): upgradeTraderToExchange() clears builtFlag(TRADER) when it re-registers the
+        // building under EXCHANGE, so the per-type gate alone happily offered a SECOND Trader. One Trading
+        // Post or Exchange per town - an Exchange occupies the town's Trader slot.
+        boolean traderOffered = typeAvailable(stage, TRADER) && typeAvailable(stage, EXCHANGE);
         boolean bankOffered = isCapitol && typeAvailable(stage, BANK);
         if (traderOffered || bankOffered) {
             DialogData financialBack = new DialogData();

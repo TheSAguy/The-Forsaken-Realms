@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 121 (2026-09-05, repo only): one Trading Post OR Exchange per town (Trader gate also checks EXCHANGE); leaving a
+  town/Capitol/castle replays the discovery flash (World.flashArea -> WorldBackground.flashDiscoveryAround, from MapStage.exitDungeon).
 - Round 120 (2026-09-05): UIScene keeps the top dialog in front every frame + toFront after show - fixes the portrait Armory
   Guards dialog hidden behind RewardScene's re-added card actors (Android tester report). Android gets it with the next APK.
 - Round 119 (2026-09-05): **v1.05 'Fight Back' RELEASED** - tag tfr-v1.05 @ 5f520118bdd, desktop zip + Android APK/assets.zip on

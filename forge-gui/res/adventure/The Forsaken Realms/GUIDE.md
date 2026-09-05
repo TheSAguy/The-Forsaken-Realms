@@ -115,7 +115,8 @@ Towns you restore can be built up with dedicated economy buildings: **Gold/Wood/
 Mines** for steady weekly income, a **Trader** (any town, including your Capitol) for converting
 Gold into Wood/Stone at a markup, a **Bank** and **Exchange** (Capitol-only - a Trader built at
 your Capitol can also be upgraded into an Exchange, which trades at better rates and adds
-Shards), an **Outlook** (expands your fog-of-war vision radius - 2x in a town, 3x in your
+Shards - the Exchange takes over the Trader's slot, so a town has one or the other, never
+both), an **Outlook** (expands your fog-of-war vision radius - 2x in a town, 3x in your
 Capitol), a **Teleporter** network for fast travel between any two Teleporter-equipped locations,
 and an **Archaeologist** who can be sent on week-long expeditions for a chance at boosters and
 rare items. Guards can be hired to defend a town, paid weekly out of your own coffers.
@@ -593,6 +594,8 @@ discarded**, including cards you've drafted but not yet banked.
 - **Selling** cards pays a share of value set by your difficulty - 60% Easy, 50% Normal,
   25% Hard, 5% Insane (shown as the sale price on the new-game screen); the town's opinion of
   you adjusts it from there.
+- **Leaving a town** lights up the land around it for a moment - the same flash as when you first
+  discovered it - so you can re-orient before setting off.
 - The **blue dot** in the quest list marks the quest you're currently tracking.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.
@@ -603,7 +606,7 @@ discarded**, including cards you've drafted but not yet banked.
 
 ---
 
-*This guide covers the state of The Forsaken Realms as of 2026-08-31. See `MOD_CHANGELOG.md` in
+*This guide covers the state of The Forsaken Realms as of 2026-09-05. See `MOD_CHANGELOG.md` in
 the repository for the full history of how the mod got here, if you're curious.*
 
 ## Support & Community

@@ -4118,6 +4118,33 @@ public class World implements Disposable, SaveFileContent {
         temporaryRevealTimers.put(packWorldTile(wx, wy), TEMPORARY_REVEAL_SECONDS);
     }
 
+    /**
+     * Round 121 (user request: leaving a town should "briefly reveal the surrounding area, just like when
+     * first discovered"). The first-discovery burst in WorldBackground.draw() only flashes tiles that were
+     * NOT yet explored - revealArea() skips the rest - so replaying it around a known town would show
+     * nothing. This flashes EVERY tile in the circle bright for TEMPORARY_REVEAL_SECONDS, explored or not,
+     * marks the still-unknown ones explored on the way (the same permanence the discovery burst gives them)
+     * and repaints each through onTileChanged; tickTemporaryReveals() then drops them back to their
+     * ordinary tier. Costs one getBiomeSprite() composition per tile, like the discovery burst itself.
+     */
+    public void flashArea(int centerWorldX, int centerWorldY, int radius, BiConsumer<Integer, Integer> onTileChanged) {
+        if (!isFogOfWarEnabled() || explored == null)
+            return;
+        revealArea(centerWorldX, centerWorldY, radius, null); // every tile is repainted below anyway
+        int radiusSq = radius * radius;
+        for (int wx = Math.max(0, centerWorldX - radius); wx <= Math.min(width - 1, centerWorldX + radius); wx++) {
+            int dx = wx - centerWorldX;
+            for (int wy = Math.max(0, centerWorldY - radius); wy <= Math.min(height - 1, centerWorldY + radius); wy++) {
+                int dy = wy - centerWorldY;
+                if (dx * dx + dy * dy > radiusSq)
+                    continue;
+                temporarilyReveal(wx, wy);
+                if (onTileChanged != null)
+                    onTileChanged.accept(wx, wy);
+            }
+        }
+    }
+
     public boolean isTemporarilyRevealed(int wx, int wy) {
         // Called per tile from isCurrentlyVisible() during chunk builds - the isEmpty() check
         // skips the Long autoboxing + map lookup in the near-permanent no-flash-active state

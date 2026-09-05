@@ -1566,6 +1566,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         super.enter();
     }
 
+    /** Round 121: replays a town's discovery burst when the player walks back out of it - see WorldBackground.flashDiscoveryAround(). */
+    public void flashDiscoveryAround(PointOfInterest poi) {
+        if (background != null)
+            background.flashDiscoveryAround(poi);
+    }
+
     @Override
     public void leave() {
         getPlayerSprite().storePos();
