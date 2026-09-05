@@ -99,7 +99,7 @@ public class UIScene extends Scene {
         dialogs.add(dialog);
         selectFirst();
         dialog.show(stage);
-
+        dialog.toFront(); // round 120: above whatever the scene added meanwhile (RewardScene's card grid in portrait)
     }
 
     private void requestTextInput(String text, KeyBoardDialog.ScreenKeyboardFinished e) {
@@ -321,6 +321,14 @@ public class UIScene extends Scene {
     @Override
     public void act(float delta) {
         stage.act(delta);
+        // Round 120 (Android tester report: "hire guard buttons behind items"): RewardScene rebuilds its card actors
+        // with stage.addActor() while a dialog is open, which re-orders them above the dialog - the modal dialog then
+        // neither draws on top nor blocks the cards' touches. Re-assert the top dialog's z-order every frame.
+        if (!dialogs.isEmpty()) {
+            Dialog top = dialogs.get(dialogs.size - 1);
+            if (top.getStage() == stage && top.getZIndex() != stage.getActors().size - 1)
+                top.toFront();
+        }
         if (timeOfDay < targetTime) {
             timeOfDay += (delta * 1.5f);
             if (timeOfDay > targetTime)

@@ -17690,3 +17690,20 @@ from if needed."
 - `The-Forsaken-Realms-v1.05.zip` (227.9 MB)
 - Live folder untouched throughout (the user was playing round 118's package, which is the same
   content minus the version stamp).
+
+## Round 120: Armory "Guards" dialog no longer hides behind the shop cards (2026-09-05 - packaged)
+
+Android tester screenshot (portrait Armory): the hire-guard button bar sat behind the item card
+grid, only its edge visible between two rows of cards, and taps went to the cards. Root cause is
+not the layout at all: `EconomyBuildings.openManageGuardsDialog()` shows a modal libGDX `Dialog`
+on the RewardScene stage, and RewardScene rebuilds its card actors with `stage.addActor()` while
+the dialog is open (page rebuild / portrait scroll), which re-orders every card above the dialog.
+A modal window only blocks touches for actors *below* it, so the cards both drew over it and
+swallowed its touches. Landscape hid the symptom because the dialog and the cards rarely overlap
+there.
+
+Fix in `UIScene`: `showDialog()` calls `toFront()` after `show()`, and `act()` re-asserts the top
+dialog's z-order every frame (cheap: one index comparison). Every UIScene dialog benefits - the
+Armory re-roll, blueprint and destroy confirmations included.
+
+**Files touched**: `scene/UIScene.java`.
