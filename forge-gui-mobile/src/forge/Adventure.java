@@ -7,11 +7,12 @@ import com.badlogic.gdx.utils.Disposable;
 import forge.util.ScreenUtil;
 
 public class Adventure implements Disposable {
-    private static Adventure instance;
+    public static Adventure instance;
     private float transitionTimeout;
     boolean sceneWasSwapped;
     private SpriteBatch transitionBatch, uiBatch;
     public boolean renderTransitionScreen = true;
+    private boolean isDisposed = false;
 
     private Adventure() {
         sceneWasSwapped = false;
@@ -84,9 +85,9 @@ public class Adventure implements Disposable {
     }
     @Override
     public void dispose() {
-        if (transitionBatch != null)
-            transitionBatch.dispose();
-        if (uiBatch != null)
-            uiBatch.dispose();
+        if (!isDisposed) {
+            isDisposed = true;
+            Forge.safeDispose(transitionBatch, uiBatch);
+        }
     }
 }

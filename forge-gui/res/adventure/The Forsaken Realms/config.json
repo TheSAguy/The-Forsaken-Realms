@@ -239,8 +239,8 @@
     "weightedSpawnTiersEnabled": true,
     "functioningNeutralTownsEnabled": true,
     "modVersion": "1.04",
-    "modVersionDate": "09.01",
-    "engineBuildVersion": "2.0.15-SNAPSHOT-09.01",
+    "modVersionDate": "09.05",
+    "engineBuildVersion": "2.0.15-SNAPSHOT-09.05",
     "welcomePopupText": "Thanks for trying out The Forsaken Realms!\n\nThis is an early release - your feedback on balance, bugs, and anything else is very much appreciated. Join us on Discord: discord.gg/TTRPKc9HYJ\n\nRecommended settings (already ON by default): Fog of War, Play for Ante, and Match Ante Rarity - visit Settings if you'd like to change them.\n\nPlaying for ante means you can lose a card - but you're not defenseless: Re-roll lets you swap out a risky ante before the duel starts, and Buy Back lets you repurchase a card you lost right after you lose it. Both cost gold/shards, and both are explained in the full guide.\n\nGood luck out there, planeswalker!",
     "welcomePopupLink": "https://discord.gg/TTRPKc9HYJ",
     "raceEditions": [

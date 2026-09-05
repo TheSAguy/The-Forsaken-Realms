@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Clipboard;
@@ -54,7 +55,6 @@ import forge.screens.ClosingScreen;
 import forge.screens.FScreen;
 import forge.screens.SplashScreen;
 import forge.screens.TransitionScreen;
-import forge.screens.home.AdventureScreen;
 import forge.screens.home.HomeScreen;
 import forge.screens.home.NewGameMenu;
 import forge.screens.match.MatchController;
@@ -446,7 +446,7 @@ public class Forge implements ApplicationListener {
                 getAssets().fallback_skins().put("transition", new Texture(transitionFile));
             if (titleBGFile.exists())
                 getAssets().fallback_skins().put("title", new Texture(titleBGFile));
-            AdventureScreen.preload();
+            getAssets().setGifAnimation(new FileHandle(ForgeConstants.EFFECTS_DIR + "demo.gif"), Animation.PlayMode.LOOP);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -972,9 +972,6 @@ public class Forge implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        // Investigate why this would be 0..
-        if (width < 1 || height < 1)
-            return;
         try {
             if (currentScreen != null) {
                 currentScreen.setSize(width, height);
@@ -1022,22 +1019,23 @@ public class Forge implements ApplicationListener {
             currentScreen.onClose(null);
             currentScreen = null;
         }
-        // TODO: Implement disposable to applicable classes
         try {
             FOverlay.hideAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
         Dscreens.clear();
-        safeDispose(MapStage.getInstance(), Adventure.getInstance(), ScreenUtil.getInstance(), ShaderUtil.getInstance(),
-            graphics, getAssets());
+        // don't call getInstance() or they will be recreated on dispose
+        safeDispose( // I need to know what line the startup bug occurs when the app is paused...
+            MapStage.instance,
+            Adventure.instance,
+            ScreenUtil.instance,
+            ShaderUtil.instance,
+            graphics,
+            Assets.instance,
+            lastPreview);
         try {
             SoundSystem.instance.dispose();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            AdventureScreen.dispose();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1046,19 +1044,21 @@ public class Forge implements ApplicationListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            if (lastPreview != null)
-                lastPreview.dispose();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+    public boolean triggerDispose() {
+        dispose();
+        return true;
     }
     public static void safeDispose(Disposable... disposables) {
         for (Disposable d : disposables) {
             if (d != null) {
                 try {
                     d.dispose();
-                } catch (Exception ignored) {}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    d = null;
+                }
             }
         }
     }

@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 114 (2026-09-04, repo only): upstream merge @ 042b3267af7 = Forge_2's Snapshot 09.05 (25 commits/101 files/63 java);
+  one conflict (WorldSaveHeader serialVersionUID pin vs upstream comment); 2,010 mod lines verified; stamps 09.05. Not packaged.
 - Round 113 (2026-09-04): grantRingGift('items') skips the Challenge Coins and already-owned start items when the
   newGamePlus flag is set (NG+ reset already tops the purse up); side-boss POI types get the unvisited magnifier.
 - Round 112 (2026-09-04, repo only - not packaged): ringLifeBonus now persisted (every load re-added +5; pre-fix

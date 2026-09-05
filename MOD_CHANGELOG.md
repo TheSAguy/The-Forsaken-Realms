@@ -16800,3 +16800,46 @@ side-boss lairs (`sidebosseasy/moderate/hard`) never had one. They do now. As be
 goes away once the player has cleared something inside (`hasDeletedObjects`), not merely on entry.
 
 **Files touched**: `player/AdventurePlayer.java` (grantRingGift), `stage/MapSprite.java`.
+
+## Round 114: upstream engine update to Forge 09.05 daily (2026-09-04, REPO ONLY - not packaged)
+
+Step 0 of the next release, per the standing rule (round 82): take the upstream engine before any
+release work. The user installed the matching stock Forge into `E:\GAMES\Forge_2` first this time.
+
+- **Merged upstream `Card-Forge/forge` master @ `042b3267af7`** - the exact commit the install
+  was built from (`build.txt` 2026-09-05 01:41:59, `CHANGES.txt` head "Crash Fix when restarting
+  on Android (#11786)"). 25 commits / 101 files / 63 `.java` since the 09.01 merge point
+  `c817743ecbd`. Nothing left untaken this time: upstream head == install.
+- **One textual conflict.** `WorldSaveHeader.java`: the mod's round-90 `serialVersionUID` pin sits
+  on the line where upstream added a comment to `previewImageWidth` ("may cause serialization
+  error when removed.."). Kept OURS (the pin) and adopted the comment. Thirteen files were touched
+  by both sides; a mechanical check afterwards found all 2,010 mod-added lines across them still
+  present (`Game.java` 95, `Player.java` 11, android `Main.java` 7, `Forge.java` 4, `DuelScene`
+  414, `PlayerStatisticScene` 26, `QuestLogScene` 4, `RewardScene` 559, `UIScene` 42, `MapStage`
+  797, `RewardActor` 43, `WorldSaveHeader` 3, `en-US.properties` 5).
+- **Adopted from upstream:** the Rulebreaker / `DeckRule` architecture (`DeckRule`,
+  `DeckRuleColorIdentity`, `DeckRuleSize` in forge-core), the "skip GUI updates while simulating"
+  architecture plus headless sim mode and a startup test, framebuffer reuse and the dispose /
+  shape-renderer fixes, daemon worker threads so the game exits cleanly while disposing assets,
+  the Android restart crash fix (dispose on destroy), `GifAnimation` moved into `Assets` with the
+  resource NPE fix, Sentry skipping obvious custom-script errors, the "wrong update logic" fix,
+  AI controller tweaks, the Premodern banlist (Parallax Tide), Reality Fracture (FRA) edition
+  updates with fourteen new card scripts (Cast Away Doubt, Generous Revival, Arvad, Daxiver,
+  Grizzlegom, Hadran, Maular, Seluma, The Everforger, The Unluckiest Planeswalker, Tolabow, Valko
+  x2, Whtz), and printsheet typo fixes. Upstream's Realm of Legends 1.073 castle rebalance only
+  touches that plane's own castle maps; TFR's castles are its own copies and are unaffected.
+- **No edition-code renames this time** (the round-84 CON -> CFX class of regression was checked
+  for: only `Reality Fracture.txt` changed, in place).
+- **Android revert-watch list checked** after the merge: manifest package
+  `com.thesaguy.forsakenrealms`, no `com.mydomain` provider, Sentry still disabled via
+  `io.sentry.auto-init=false`, `GITHUB_FORGE_URL` still the TFR repo, `ASSETS_DIR` still
+  `/ForsakenRealms/`, the identity strings in android `Main.java` intact. Upstream's only Android
+  change (dispose on destroy) auto-merged.
+- **Version stamps:** plane `config.json` `engineBuildVersion` `2.0.15-SNAPSHOT-09.05`,
+  `modVersionDate` `09.05`.
+- **Verified by a full Maven package build** of `forge-gui-mobile-dev` (no API breaks in mod-owned
+  code this time). NOT packaged - the user was playtesting the live folder. The next package will
+  do the one-time full static copy (the packager's `res/.base_install_version` marker keys off
+  `Forge_2/build.txt`, which changed).
+- **Everything must be re-playtested** after the next package - this swaps the rules engine and
+  the deck-rule layer under the current save.

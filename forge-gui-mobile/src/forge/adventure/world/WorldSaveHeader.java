@@ -1,16 +1,7 @@
 package forge.adventure.world;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Disposable;
-import forge.adventure.util.Config;
-import forge.util.BlurUtils;
-import forge.Forge;
-import forge.Graphics;
-import forge.adventure.scene.Scene;
 import forge.adventure.util.Serializer;
 import forge.util.ScreenUtil;
 
@@ -24,7 +15,7 @@ public class WorldSaveHeader implements java.io.Serializable, Disposable {
     // Save compatibility: pinned 2026-09-03 (round 90) at the value derived from the v1.04 class shape so save compatibility no longer depends on the class not changing.
     private static final long serialVersionUID = 7676320057945211217L;
 
-    public static int previewImageWidth = 512;
+    public static int previewImageWidth = 512; // may cause serialization error when removed..
     public Pixmap preview;
     public String name;
     public Date saveDate;
@@ -34,7 +25,7 @@ public class WorldSaveHeader implements java.io.Serializable, Disposable {
         out.writeUTF(name);
         if (preview == null)
             preview = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        Serializer.WritePixmap(out, preview, true);
+        Serializer.WritePixmap(out, preview, false);
         out.writeObject(saveDate);
     }
 
@@ -52,34 +43,12 @@ public class WorldSaveHeader implements java.io.Serializable, Disposable {
     }
 
     public void createPreview() {
-        TextureRegion tr = ScreenUtil.getInstance().takeScreenshot();
-        Matrix4 m  = new Matrix4();
-        Graphics g = new Graphics(Forge.LOW_SPRITES_CAP);
-        FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Forge.getScreenWidth(), Forge.getScreenHeight(), false);
-        frameBuffer.begin();
-        m.setToOrtho2D(0, 0, Forge.getScreenWidth(), Forge.getScreenHeight());
-        g.begin(Forge.getScreenWidth(), Forge.getScreenHeight());
-        g.setProjectionMatrix(m);
-        g.startClip();
-        g.drawImage(tr, 0, 0, Forge.getScreenWidth(), Forge.getScreenHeight());
-        g.end();
-        g.endClip();
-        Pixmap pixmap = Pixmap.createFromFrameBuffer(0, 0, Forge.getScreenWidth(), Forge.getScreenHeight());
-        if (Forge.lastPreview != null)
-            Forge.lastPreview.dispose();
-        Pixmap blurred = BlurUtils.blur(pixmap, 4, 2, false, Config.instance().getBlurDivisor());
-        Forge.lastPreview = new Texture(blurred);
-        Pixmap scaled = new Pixmap(WorldSaveHeader.previewImageWidth, (int) (WorldSaveHeader.previewImageWidth / (Scene.getIntendedWidth() / (float) Scene.getIntendedHeight())), Pixmap.Format.RGBA8888);
-        scaled.drawPixmap(pixmap,
-                0, 0, pixmap.getWidth(), pixmap.getHeight(),
-                0, 0, scaled.getWidth(), scaled.getHeight());
-        pixmap.dispose();
-        blurred.dispose();
-        if (preview != null)
-            preview.dispose();
-        preview = scaled;
-        frameBuffer.end();
-        g.dispose();
-        frameBuffer.dispose();
+        try {
+            if (preview != null)
+                preview.dispose();
+            preview = ScreenUtil.getInstance().getThumbnailPreview();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

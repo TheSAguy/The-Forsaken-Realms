@@ -1321,6 +1321,15 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-09-04 - merged upstream `master` @ `042b3267af7` (Forge 2.0.15-SNAPSHOT, 09.05 daily
+  build = the exact commit `E:\GAMES\Forge_2` was built from; 25 commits, 101 files, 63 `.java`
+  since the previous merge point `c817743ecbd`).** One textual conflict:
+  - `WorldSaveHeader.java`: the round-90 `serialVersionUID` pin vs upstream's new comment on
+    `previewImageWidth` - kept OURS (the pin), adopted the comment.
+  Thirteen files touched by both sides auto-merged; every mod-added line verified present
+  afterwards (2,010 lines, 0 missing). Android identity files unchanged by upstream. No edition
+  code renames. Round 114 in MOD_CHANGELOG.md.
+
 - **2026-09-02 — merged upstream `master` @ `c817743ecbd` (Forge 2.0.15-SNAPSHOT, 09.01 daily
   build - the exact commit `E:\GAMES\Forge_2` was built from; 34 commits, 133 files, 80 `.java`
   since the previous merge point `8c7e9afb8e6`).** Four textual conflicts, all one cause: upstream
