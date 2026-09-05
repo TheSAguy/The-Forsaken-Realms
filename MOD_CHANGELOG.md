@@ -17659,3 +17659,34 @@ G | Worm                               Uncommon -> Common   deck 2.09  life 11 s
 
 **Files touched**: `scene/TileMapScene.java`, `util/AdventureEventController.java`,
 `data/AdventureEventData.java`, GUIDE.md, world/enemies.json, the re-picked / resized decks.
+
+## Round 119: v1.05 "Fight Back" RELEASED - desktop zip + Android, built beside the live folder (2026-09-05)
+
+User request: "call this release the Fight Back release, let them know you can now attack AI towns,
+release both PC and Android - and I also want to play the live game, so make a backup to release
+from if needed."
+
+- **Stamps:** plane `config.json` `modVersion` 1.05 (`modVersionDate` 09.05, engine 09.05);
+  `forge-gui-android/pom.xml` `tfr.version` 1.05 and `manifestVersionCode` 10500. Commit
+  `5f520118bdd`, tag `tfr-v1.05`, both pushed. MOD_SCOPE items 100, 102 and 103 closed.
+- **Release notes:** `RELEASE_NOTES_v1.05.md` is the release body - headline "Fight Back", the
+  town/capital assault feature promoted to the first section, Ring Cities, the new opening, victory,
+  the 267 enemies / 22 Mythic decks, the tier ladder table, reputation retune, one Jumpstart per run,
+  engine 09.05, save-integrity pin, fixes, credits, Android install steps.
+- **Built beside the live game, not in it.** `build_standalone.py` gained `--out DIR`: the lock probe,
+  the full static copy and `PACKAGE_OK.txt` all apply to that folder, so a release can be assembled
+  while the live folder is being played. `--zip --out C:\Users\User\TFR-Release` produced
+  `The-Forsaken-Realms-v1.05.zip` in about thirty seconds on the internal SSD (the same full copy
+  took forty minutes on the F: USB drive in round 116). Zip verified: PACKAGE_OK, launcher exe, jar,
+  GAME_GUIDE, `res/adventure` = exactly `common` + the plane, modVersion 1.05 inside.
+- **Android:** the ANDROID_RELEASE.md recipe unchanged - `subst R:` re-mapped (it does not survive a
+  reboot), `mvn -pl forge-gui-android -am clean install -P android-release-build` from `R:\` with the
+  short `C:/m2` repo; APK verified with `aapt dump badging` (package `com.thesaguy.forsakenrealms`,
+  versionCode 10500, versionName 1.05) and `apksigner verify --print-certs` (our keystore), assets.zip
+  layout checked, uploaded as `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip`.
+- **Release:** https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.05 (published 2026-09-05T15:53:47Z). Assets:
+- `assets.zip` (175.4 MB)
+- `forsaken-realms-1.05-signed-aligned.apk` (12.5 MB)
+- `The-Forsaken-Realms-v1.05.zip` (227.9 MB)
+- Live folder untouched throughout (the user was playing round 118's package, which is the same
+  content minus the version stamp).

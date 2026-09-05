@@ -50,6 +50,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 119 (2026-09-05): **v1.05 'Fight Back' RELEASED** - tag tfr-v1.05 @ 5f520118bdd, desktop zip + Android APK/assets.zip on
+  GitHub; stamps 1.05 / 10500; packager `--out DIR` builds a release beside the live folder (30 s on C:); R: subst needed for Android.
 - Round 118 (2026-09-05, repo only): one Jumpstart per run (jumpstartPlayed flag set in startEvent, checked in createEvent);
   TileMapScene ruined-town flag also skips Ring Cities (log showed Llanowar flagged ruined); slice v2 = Mythic 20 / Rare 30 (B 40) /
   rest split C-U, generated decks re-picked on tier change, own standard decks resized 40..80 (r118_rebalance.py).

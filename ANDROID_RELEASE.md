@@ -54,7 +54,8 @@ Consequences:
 
 ## Per-release steps
 
-0. Desktop release first: the normal desktop flow (build, `build_standalone.py --zip`, publish
+0. Desktop release first: the normal desktop flow (build, `build_standalone.py --zip`
+   - add `--out C:\Users\User\TFR-Release` when the live folder is being played; round 119 - publish
    the `tfr-vX.YZ` GitHub release with the desktop zip). The Android artifacts attach to the
    SAME release.
 1. Bump **`<tfr.version>`** in `forge-gui-android/pom.xml` to match the new `modVersion`
