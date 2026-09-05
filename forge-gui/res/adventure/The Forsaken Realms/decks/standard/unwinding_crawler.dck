@@ -1,45 +1,30 @@
 [metadata]
 Name=Unwinding Crawler
 [Main]
-1 Skulking Knight|TSP
-1 Withered Wretch|TSB
-1 Grixis Slavedriver|CFX
-1 Undead Warchief|TSB
-1 Cemetery Reaper|M10
-1 Smokespew Invoker|LGN
-25 Swamp|MBS
-1 Zombie Master|6ED
-1 Null Champion|ROE
-1 Wretched Anurid|ONS
-1 Tendrils of Corruption|M10
-1 Grasp of Darkness|SOM
-1 Unholy Grotto|ONS
-1 Spined Basher|ONS
-1 Noxious Ghoul|LGN
-1 Stromgald Crusader|CSP
-1 Dreg Reaver|ALA
-1 Dross Crocodile|10E
-1 Nefashu|SCG
-1 Shambling Goblin
-1 Anurid Murkdiver|ONS
-1 Nested Ghoul|MBS
-1 Infectious Horror|CFX
-1 Mass of Ghouls|10E
-1 Aphetto Vulture|ONS
-1 Grave Pact|10E
-1 Cadaverous Knight|MIR
-2 Cruel Revival|ONS
-1 Feeding Frenzy|ONS
-1 Spineless Thug|10E
-1 Call to the Grave|SCG
-1 Lim-Dul the Necromancer|TSP
-1 Lord of the Undead|PLS
-1 Vengeful Dead|SCG
-1 Grave Defiler|APC
-1 Soulless One|ONS
-1 Boneknitter
-1 Endless Ranks of the Dead
-1 Cellar Door
-1 Gravecrawler
-1 Mikaeus, the Unhallowed
-1 Risen Executioner
+1 Alley Grifters|MMQ
+1 Battlefield Percher|NMS
+1 Belbe's Portal|NMS
+1 Carrion Wall|NMS
+1 Cateran Brute|MMQ
+1 Cateran Enforcer|MMQ
+1 Cateran Kidnappers|MMQ
+1 Cateran Summons|MMQ
+2 Dark Ritual|MMQ
+1 Dark Triumph|NMS
+1 Haunted Crossroads|MMQ
+1 Intimidation|MMQ
+1 Massacre|NMS
+2 Mind Swords|NMS
+3 Misshapen Fiend|MMQ
+3 Parallax Dementia|NMS
+2 Phyrexian Driver|NMS
+1 Phyrexian Prowler|NMS
+1 Rampart Crawler|MMQ
+1 Rathi Assassin|NMS
+1 Rathi Fiend|NMS
+1 Rathi Intimidator|NMS
+1 Seal of Doom|NMS
+1 Skulking Fugitive|MMQ
+4 Spineless Thug|NMS
+2 Strongarm Thug|MMQ
+23 Swamp|MMQ

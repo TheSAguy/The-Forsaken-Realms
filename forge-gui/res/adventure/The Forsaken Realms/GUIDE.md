@@ -475,7 +475,8 @@ list, so exploring hostile ground is a real way to pick up cards you couldn't bu
 
 You start with three, and they have two separate uses.
 
-1. **Free entry to a Jumpstart tournament** at an Inn.
+1. **Free entry to a Jumpstart tournament** at an Inn - and since Inns run Jumpstart only until you
+   have played one, only one coin ever goes this way; the other two are for ransom.
 2. **Ante ransom.** Lose an ordinary duel and you can hand the winner a coin instead of losing
    your anted cards — you get every anted card back *and* keep your gold. Beat that same enemy
    later and you take the coin back as part of the reward.
@@ -497,6 +498,8 @@ Every Inn runs one, refreshed on a cooldown. The entry fee scales with the town'
 - **AI and neutral Inns** draw from the broader shared pool instead — which is a real reason to
   travel if you want to draft sets you don't own.
 - **Re-roll** the offered tournament for 15 Shards; it's guaranteed to come back different.
+- **Jumpstart comes around once per run.** After you have played one Jumpstart tournament, Inns only
+  offer Draft and Sealed from then on.
 - Tournament wins **don't** count toward your win/loss record, and don't push up the enemy tiers
   you meet in the world.
 - A **ruined town's** Inn runs tournaments and nothing else — no card sales, no Potion of False

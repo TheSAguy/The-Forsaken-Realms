@@ -131,7 +131,10 @@ public class AdventureEventController implements Serializable {
         // the remaining coins permanently unspendable - which is exactly what prompted this.
         // See also the Bronze Coin ante-ransom option in DuelScene, added the same round, which
         // gives them a second, non-expiring use.
+        // Round 118 (user spec 2026-09-05): one Jumpstart tournament per run - the jumpstartPlayed character flag is set the
+        // moment a Jumpstart event starts (AdventureEventData.startEvent) and no Inn rolls the format afterwards.
         if (Current.player().getStatistic().totalWins() < JUMPSTART_MAX_WINS &&
+                Current.player().getCharacterFlag("jumpstartPlayed") <= 0 &&
                 random.nextInt(10) <= 2) {
             e = new AdventureEventData(eventSeed, EventFormat.Jumpstart, playerTown);
         } else {

@@ -656,6 +656,10 @@ public class AdventureEventData implements Serializable {
         if (eventStatus == AdventureEventController.EventStatus.Ready) {
             currentRound = 1;
             eventStatus = AdventureEventController.EventStatus.Started;
+            if (format == AdventureEventController.EventFormat.Jumpstart) { // round 118: the one Jumpstart of this run has been played
+                Current.player().setCharacterFlag("jumpstartPlayed", 1);
+                System.out.println("[TFR-Jumpstart] Jumpstart tournament started - Inns will not offer the format again this run");
+            }
         }
     }
 

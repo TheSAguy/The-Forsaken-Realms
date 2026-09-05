@@ -2112,6 +2112,7 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`player/AdventurePlayer.java`** - round 112: `ringLifeBonus` saved/loaded (-1 = pre-fix save, adopted without re-adding); `addMaxLife` clamps life to [1, max] on negative amounts.
 - **`player/AdventurePlayer.java`** - round 113: `grantRingGift` NG+ handling (no coin re-grant, no duplicate start items); **`stage/MapSprite.java`** - magnifier for `sideboss*` POI types.
 - **`data/AdventureQuestStage.java`** - round 115: `survivingTown` / `ruinedTown` nav filters exclude Ring Cities; **`player/AdventurePlayer.java`** - `addGold` / `addWood` / `addStone` play `CoinsDrop` on positive amounts; **`util/ResourceSpawns.java`** - the explicit wood/stone sound calls removed (now inside the adds).
+- **`scene/TileMapScene.java`** - round 118: the ruined-town flag skips Ring Cities too; **`util/AdventureEventController.java`** - Jumpstart roll gated on the `jumpstartPlayed` flag; **`data/AdventureEventData.java`** - `startEvent()` sets `jumpstartPlayed` for Jumpstart events.
 - **`util/TerritoryControl.java`** - `ringPullDivisor`; **`stage/WorldStage.java`** - no lands at Ring assaults.
 - **`util/MapDialog.java`** - option pane height from the HUD stage.
 

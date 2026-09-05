@@ -206,7 +206,7 @@ public class TileMapScene extends HudScene {
                 if (TownRestoration.isNeutralSeededTown(entryChanges) && !forge.adventure.util.TerritoryControl.isRingTown(point)) { // round 111: Ring Cities do not count
                     Current.player().setCharacterFlag("enteredSurvivingTown", 1);
                     System.out.println("[TFR-MainQuest] enteredSurvivingTown -> 1 (" + point.getDisplayName() + ")");
-                } else if (!TownRestoration.isTownRestored(entryChanges)) {
+                } else if (!TownRestoration.isTownRestored(entryChanges) && !forge.adventure.util.TerritoryControl.isRingTown(point)) { // round 118: a Ring City is not a ruin either
                     Current.player().setCharacterFlag("enteredRuinedTown", 1);
                     System.out.println("[TFR-MainQuest] enteredRuinedTown -> 1 (" + point.getDisplayName() + ")");
                 }

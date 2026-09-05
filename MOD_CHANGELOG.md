@@ -17348,3 +17348,314 @@ tier changes: 182 | stat jitter only: 42
 
 **Files touched**: enemies.json (+86, re-sliced), world/biomes/*.json, 86 atlases (+png), 86 decks,
 CREDITS.md.
+
+## Round 118: one Jumpstart per run, Ring Cities are not ruins either, tier slice v2 with a Mythic cap of 20 (2026-09-05, REPO ONLY)
+
+Not packaged - the user asked to hold the live update. Ships with the next package together with 117.
+
+### 1. One Jumpstart tournament per run (engine)
+
+User spec: "a player can only play in one Jump Start Inn Tournament - if he did one, no more would
+appear." `AdventureEventData.startEvent()` sets the `jumpstartPlayed` character flag the moment a
+Jumpstart event actually starts (deck locked, round 1), and `AdventureEventController.createEvent`
+adds `getCharacterFlag("jumpstartPlayed") <= 0` to the Jumpstart roll, so every later Inn rolls
+Draft or Sealed. The existing 25-win cutoff stays as a second gate. Consequence spelled out in the
+guide: only one Bronze Challenge Coin is ever spendable at an Inn now - the other two are for
+ante ransom. Saves from before this round that already played a Jumpstart get exactly one more.
+
+### 2. Log review: Ring Cities were being flagged as RUINED towns (engine)
+
+The latest log shows `enteredRingCity5 -> 1 (Llanowar)` immediately followed by
+`enteredRuinedTown -> 1 (Llanowar)`. Round 111 excluded Ring Cities from the surviving-town flag,
+which dropped them into the `else` branch - the ruined-town flag. Now neither flag can come from a
+Ring City. Also confirmed in the same log: the round-112 fix holds (`load: 10/10 ... ringLifeBonus=5`
+with no re-add), the town life bonus applied once at five restored towns, and no exceptions in
+868 lines.
+
+### 3. Tier slice v2 (data)
+
+User spec: Mythic capped at 20 per colour (Black too), Rare stays at 30 (Black 40), the remainder
+split evenly between Common and Uncommon; update deck, life, speed, rarity; deck sizes may vary
+between 40 and 80. Same ranking as rounds 116/117 (deck strength = rarity-weighted average), the
+22 hand-built Mythics pinned inside the 20.
+
+```
+W pool 132: before C/U/R/M  30/ 30/ 30/ 42 -> after  41/ 41/ 30/ 20
+U pool 116: before C/U/R/M  30/ 30/ 30/ 26 -> after  33/ 33/ 30/ 20
+B pool 167: before C/U/R/M  40/ 40/ 40/ 47 -> after  54/ 53/ 40/ 20
+R pool 134: before C/U/R/M  30/ 30/ 30/ 44 -> after  42/ 42/ 30/ 20
+G pool 132: before C/U/R/M  30/ 30/ 30/ 42 -> after  41/ 41/ 30/ 20
+tier changes: 253 | decks re-picked: 77 | decks resized (40-80): 82 | stat jitter only: 9
+```
+
+Stats as before: a changed tier gets the tier's life / speed / difficulty (promotions never
+weaker), untouched template stats get the name-seeded jitter. Decks: an enemy whose tier changed
+and whose deck is its own generated standard deck was re-picked from the library with the new
+tier's difficulty gate; every changed enemy with its own standard deck then had its deck resized
+to a size drawn from 40..80 (weighted toward 60; 40 and 80 rare) keeping the land fraction and the
+four-copy limit. Legends' decks and shared family decks were not touched.
+
+**Nothing was thrown away** (user request): the list every re-picked or resized enemy ran before
+this round is kept under `decks/reserve/<enemy>_pre_r118.dck`, unreferenced, as ready-made decks
+for future enemies (README in that folder).
+
+Full move list:
+
+```
+W | Radiant                            Mythic   -> Rare     deck 4.21  life 26 speed 35
+W | Heliod                             Mythic   -> Rare     deck 4.17  life 32 speed 38
+W | Mangara                            Mythic   -> Rare     deck 4.12  life 34 speed 42
+W | Sun Titan                          Mythic   -> Rare     deck 4.11  life 32 speed 36
+W | Maelstrom Angel                    Mythic   -> Rare     deck 4.10  life 33 speed 35
+W | Shieldmaiden Paragon               Mythic   -> Rare     deck 4.00  life 34 speed 39 deck re-picked: Agent Smith 2 [duel/medium 3.56] size 60 -> 60
+W | Zetalpa                            Mythic   -> Rare     deck 3.98  life 28 speed 35
+W | Yoshimaru                          Mythic   -> Rare     deck 3.98  life 31 speed 37
+W | Reidane                            Mythic   -> Rare     deck 3.94  life 26 speed 38
+W | Oketra                             Mythic   -> Rare     deck 3.92  life 27 speed 36
+W | Lyra                               Mythic   -> Rare     deck 3.86  life 29 speed 38
+W | Kytheon                            Mythic   -> Rare     deck 3.79  life 34 speed 37
+W | Holy Paladin                       Mythic   -> Rare     deck 3.79  life 27 speed 35
+W | Sun Giant                          Mythic   -> Rare     deck 3.78  life 28 speed 39
+W | Cerise                             Mythic   -> Rare     deck 3.76  life 26 speed 35
+W | Ao                                 Mythic   -> Rare     deck 3.75  life 26 speed 37
+W | Ojer Taq                           Mythic   -> Rare     deck 3.70  life 26 speed 35
+W | Thalia                             Mythic   -> Rare     deck 3.65  life 27 speed 40
+W | Kor Renegade                       Mythic   -> Rare     deck 3.60  life 34 speed 41 deck re-picked: Sigismund's Avacyn's Glory 2 [duel/medium 3.20] size 60 -> 40
+W | Dwarf Warlord                      Mythic   -> Rare     deck 3.56  life 32 speed 35
+W | Knight Commander                   Mythic   -> Rare     deck 3.50  life 26 speed 36 deck re-picked: Sigismund's Avacyn's Glory 3 [duel/hard 3.52] size 80 -> 65
+W | Kor Cartographer                   Mythic   -> Rare     deck 3.48  life 29 speed 41 deck re-picked: Ajani's Immortality 2 [duel/medium 3.06] size 60 -> 45
+W | Syr Alin                           Rare     -> Uncommon deck 3.13  life 22 speed 26
+W | Yosei                              Rare     -> Uncommon deck 3.13  life 18 speed 29
+W | Cavalier Captain                   Rare     -> Uncommon deck 3.11  life 22 speed 28 deck re-picked: Captain America 2 [duel/medium 1.88] size 60 -> 45
+W | Mulawin Warrior                    Rare     -> Uncommon deck 3.11  life 19 speed 27 deck re-picked: Eight-and-a-Half-Tails's Vulpi [duel/medium 2.24] size 60 -> 80
+W | Knight Longbowman                  Rare     -> Uncommon deck 3.08  life 19 speed 29 deck re-picked: Wyatt Earp 2 [duel/medium 2.42] size 60 -> 60
+W | Shieldmaiden Captain               Rare     -> Uncommon deck 3.08  life 22 speed 28 deck re-picked: Elesh Norn's Evangelification  [duel/medium 2.78] size 60 -> 65
+W | White Dragonkin Renegade           Rare     -> Uncommon deck 3.08  life 23 speed 30 deck re-picked: The Wanderer's Entourage 2 [duel/medium 2.75] size 58 -> 50
+W | Haliya                             Rare     -> Uncommon deck 3.06  life 23 speed 29
+W | Kemba                              Rare     -> Uncommon deck 3.04  life 17 speed 26
+W | Plate Knight                       Rare     -> Uncommon deck 3.03  life 22 speed 30 deck re-picked: Walle 2 [duel/medium 2.09] size 60 -> 40
+W | Crossbow Marksman                  Rare     -> Uncommon deck 3.00  life 17 speed 27 deck re-picked: Bilbo Baggins 2 [duel/medium 2.48] size 60 -> 45
+W | Delney                             Rare     -> Uncommon deck 3.00  life 19 speed 30
+W | Adeline                            Rare     -> Uncommon deck 2.97  life 22 speed 29
+W | Sram                               Rare     -> Uncommon deck 2.94  life 22 speed 28
+W | Commander Eesha                    Rare     -> Uncommon deck 2.85  life 20 speed 27
+W | Arch Angel of Shandalar            Rare     -> Uncommon deck 2.84  life 22 speed 29 deck re-picked: Seabiscuit 2 [duel/medium 1.70] size 60 -> 55
+W | Market Trader                      Rare     -> Uncommon deck 2.83  life 20 speed 28 deck re-picked: Yosei's Dawn 2 [duel/medium 2.49] size 60 -> 50
+W | Sand Ghoul                         Rare     -> Uncommon deck 2.83  life 21 speed 26
+W | Phelia                             Rare     -> Uncommon deck 2.81  life 20 speed 29
+W | Kor Chant-Leader                   Rare     -> Uncommon deck 2.79  life 20 speed 26 deck re-picked: Colossus 1 [duel/easy 2.19] size 60 -> 55
+W | Thurid                             Rare     -> Uncommon deck 2.78  life 18 speed 30
+W | Lion                               Rare     -> Uncommon deck 2.72  life 17 speed 27
+W | Skrelv                             Uncommon -> Common   deck 2.15  life 13 speed 21
+W | Leonin Wanderer                    Uncommon -> Common   deck 2.11  life 12 speed 22 deck re-picked: Elspeth's Conclave 1 [duel/easy 3.29] size 60 -> 80
+W | Stray Cat                          Uncommon -> Common   deck 2.08  life 13 speed 18
+W | Danitha                            Uncommon -> Common   deck 2.06  life 12 speed 19
+W | White Dwarf                        Uncommon -> Common   deck 2.05  life 11 speed 19
+W | Halfling Rogue                     Uncommon -> Common   deck 2.03  life 10 speed 21 deck re-picked: Agent Smith 1 [duel/easy 3.33] size 60 -> 50
+W | Chainmail Knight                   Uncommon -> Common   deck 1.98  life 14 speed 18 deck re-picked: Blades of Victory [precon/precon 1.44] size 60 -> 45
+W | Zeriam                             Uncommon -> Common   deck 1.95  life 12 speed 19
+W | Kor Duelist                        Uncommon -> Common   deck 1.95  life 13 speed 20 deck re-picked: Angelic Fury [precon/precon 1.44] size 60 -> 45
+W | Kor Firewalker                     Uncommon -> Common   deck 1.89  life 11 speed 19 deck re-picked: Unflinching Assault [precon/precon 1.41] size 60 -> 40
+W | Sand Golem                         Uncommon -> Common   deck 1.89  life 12 speed 19
+U | Alrund                             Mythic   -> Rare     deck 3.41  life 29 speed 39
+U | Tekuthal                           Mythic   -> Rare     deck 3.41  life 30 speed 40
+U | Bruvac                             Mythic   -> Rare     deck 3.38  life 27 speed 36
+U | Jon Finkel '00                     Mythic   -> Rare     deck 3.37  life 26 speed 41 size 60 -> 55
+U | Grandmother Goby                   Mythic   -> Rare     deck 3.34  life 27 speed 35
+U | Kairi                              Mythic   -> Rare     deck 3.33  life 33 speed 38
+U | Pol Jamaar                         Rare     -> Uncommon deck 2.94  life 22 speed 29
+U | Neerdiv                            Rare     -> Uncommon deck 2.93  life 19 speed 26
+U | Talrand                            Rare     -> Uncommon deck 2.90  life 20 speed 27
+U | Mm'menon                           Rare     -> Uncommon deck 2.90  life 18 speed 28
+U | Orysa                              Rare     -> Uncommon deck 2.87  life 22 speed 30
+U | Tiburones                          Rare     -> Uncommon deck 2.87  life 20 speed 27 deck re-picked: Thassa's Rising Tide 2 [duel/medium 2.91] size 60 -> 60
+U | Alex Borteh '01                    Uncommon -> Common   deck 2.40  life 13 speed 19 size 60 -> 60
+U | Syokoy                             Uncommon -> Common   deck 2.40  life 11 speed 20 deck re-picked: Ixidor's Legacy [precon/precon 1.54] size 60 -> 60
+U | Siani and Esior                    Uncommon -> Common   deck 2.38  life 11 speed 19
+B | Necromancer                        Mythic   -> Rare     deck 3.80  life 31 speed 42
+B | Belzenlok                          Mythic   -> Rare     deck 3.76  life 32 speed 34
+B | Abyssal Baron                      Mythic   -> Rare     deck 3.75  life 28 speed 40
+B | Jadar                              Mythic   -> Rare     deck 3.72  life 29 speed 35
+B | Gonti                              Mythic   -> Rare     deck 3.71  life 32 speed 40
+B | Timothar                           Mythic   -> Rare     deck 3.71  life 28 speed 38
+B | Black Dragonkin Renegade           Mythic   -> Rare     deck 3.70  life 29 speed 38 deck re-picked: Black Panther 2 [duel/medium 3.22] size 60 -> 60
+B | Erebos                             Mythic   -> Rare     deck 3.67  life 29 speed 36
+B | Yawgmoth                           Mythic   -> Rare     deck 3.64  life 27 speed 39
+B | Drivnod                            Mythic   -> Rare     deck 3.62  life 28 speed 37
+B | Ihsan's Shade                      Mythic   -> Rare     deck 3.58  life 26 speed 37
+B | Vile Witch                         Mythic   -> Rare     deck 3.57  life 32 speed 40 deck re-picked: Tombstone 3 [duel/hard 3.69] size 60 -> 60
+B | Ekek                               Mythic   -> Rare     deck 3.56  life 31 speed 40 deck re-picked: Ashling's Animosity 3 [duel/hard 2.79] size 80 -> 60
+B | Gix                                Mythic   -> Rare     deck 3.51  life 31 speed 38
+B | Scourgemaster                      Mythic   -> Rare     deck 3.49  life 33 speed 35
+B | Manananggal                        Mythic   -> Rare     deck 3.47  life 26 speed 36 deck re-picked: Bridge Troll 3 [duel/hard 2.51] size 60 -> 60
+B | Unholy Knight                      Mythic   -> Rare     deck 3.46  life 26 speed 40
+B | Zombie Lord                        Mythic   -> Rare     deck 3.44  life 34 speed 40
+B | Runelord                           Mythic   -> Rare     deck 3.42  life 26 speed 37
+B | Orc Deathcaller                    Mythic   -> Rare     deck 3.42  life 32 speed 38 deck re-picked: Buffy 3 [duel/hard 2.92] size 60 -> 65
+B | Shauku                             Mythic   -> Rare     deck 3.41  life 34 speed 39
+B | Bone Raider                        Mythic   -> Rare     deck 3.40  life 26 speed 38 deck re-picked: Agent K 2 [duel/medium 2.22] size 60 -> 65
+B | Varragoth                          Mythic   -> Rare     deck 3.39  life 33 speed 36
+B | Black Golem                        Mythic   -> Rare     deck 3.35  life 32 speed 35
+B | Amaranhig                          Mythic   -> Rare     deck 3.34  life 30 speed 39 deck re-picked: Sheoldred's Contagion Carriers [duel/hard 2.78] size 80 -> 50
+B | Aphemia                            Mythic   -> Rare     deck 3.33  life 29 speed 37
+B | Grave Titan                        Mythic   -> Rare     deck 3.33  life 26 speed 41
+B | False Monk                         Rare     -> Uncommon deck 3.08  life 18 speed 30 deck re-picked: Leatherface's Cannibal Kindred [duel/easy 2.18] size 60 -> 70
+B | Clawed Abomination                 Rare     -> Uncommon deck 3.06  life 19 speed 27 deck re-picked: Voldemort 1 [duel/easy 2.83] size 60 -> 45
+B | Foul Gouger                        Rare     -> Uncommon deck 3.06  life 22 speed 31 deck re-picked: Kokusho's Unending Return 1 [duel/easy 2.28] size 60 -> 60
+B | Lich                               Rare     -> Uncommon deck 3.00  life 20 speed 30
+B | Shade                              Rare     -> Uncommon deck 3.00  life 22 speed 29
+B | Aclazotz                           Rare     -> Uncommon deck 2.99  life 21 speed 30
+B | Kothophed                          Rare     -> Uncommon deck 2.98  life 19 speed 27
+B | Visara                             Rare     -> Uncommon deck 2.98  life 19 speed 30
+B | Greater Zombie                     Rare     -> Uncommon deck 2.98  life 20 speed 28
+B | Syr Konrad                         Rare     -> Uncommon deck 2.97  life 18 speed 29
+B | Skithiryx                          Rare     -> Uncommon deck 2.96  life 19 speed 29
+B | Kokusho                            Rare     -> Uncommon deck 2.95  life 18 speed 30
+B | High Cultist                       Rare     -> Uncommon deck 2.95  life 21 speed 29
+B | Endrek                             Rare     -> Uncommon deck 2.94  life 22 speed 26
+B | Hythonia                           Rare     -> Uncommon deck 2.92  life 19 speed 27
+B | Witch                              Rare     -> Uncommon deck 2.88  life 18 speed 29
+B | Arnyn                              Rare     -> Uncommon deck 2.87  life 18 speed 28
+B | Fledgling Demon                    Rare     -> Uncommon deck 2.86  life 19 speed 29 deck re-picked: Sheoldred's Contagion Carriers [duel/medium 2.51] size 60 -> 50
+B | Lord Pestilence                    Rare     -> Uncommon deck 2.86  life 17 speed 27
+B | Tevesh Szat                        Rare     -> Uncommon deck 2.84  life 22 speed 27
+B | Massacre Girl                      Rare     -> Uncommon deck 2.84  life 18 speed 26
+B | Ozox                               Rare     -> Uncommon deck 2.84  life 18 speed 26
+B | Skittering Hand                    Rare     -> Uncommon deck 2.82  life 20 speed 27 deck re-picked: Mind Swarm [precon/precon 1.44] size 60 -> 60
+B | Irini                              Rare     -> Uncommon deck 2.82  life 23 speed 31
+B | Spiked Ravager                     Rare     -> Uncommon deck 2.82  life 20 speed 27
+B | Demon                              Rare     -> Uncommon deck 2.79  life 17 speed 29
+B | Alpharael                          Rare     -> Uncommon deck 2.78  life 17 speed 29
+B | Cloaked Old Man                    Uncommon -> Common   deck 2.38  life 13 speed 19
+B | Grandmother Sengir                 Uncommon -> Common   deck 2.37  life 13 speed 20
+B | Hexcaller Warlock                  Uncommon -> Common   deck 2.37  life 12 speed 19 deck re-picked: MTGA Graveyard Bash [precon/precon 1.69] size 60 -> 60
+B | False Knight                       Uncommon -> Common   deck 2.37  life 13 speed 18 deck re-picked: Dead Again [precon/precon 1.57] size 40 -> 60
+B | Ghoulcaller Ghoul                  Uncommon -> Common   deck 2.35  life 11 speed 21
+B | Dismembered Crawler                Uncommon -> Common   deck 2.33  life 10 speed 18 deck re-picked: Migraine [precon/precon 1.50] size 60 -> 60
+B | Unwinding Crawler                  Uncommon -> Common   deck 2.32  life 12 speed 20 deck re-picked: Mercenaries [precon/precon 1.51] size 60 -> 60
+B | Pirate Captain 2                   Uncommon -> Common   deck 2.29  life 11 speed 20
+B | Busaw                              Uncommon -> Common   deck 2.28  life 13 speed 21 deck re-picked: Deadly Instinct [precon/precon 1.52] size 40 -> 65
+B | Dark Spirit                        Uncommon -> Common   deck 2.28  life 13 speed 22
+B | Vampire                            Uncommon -> Common   deck 2.27  life 11 speed 20
+B | Zombie                             Uncommon -> Common   deck 2.26  life 13 speed 21
+B | Kinzu                              Uncommon -> Common   deck 2.24  life 12 speed 19
+B | Bog Witch                          Uncommon -> Common   deck 2.23  life 13 speed 20 deck re-picked: Night Terrors [precon/precon 1.50] size 60 -> 80
+R | Goblin Artificer                   Mythic   -> Rare     deck 3.68  life 27 speed 34
+R | Krenko                             Mythic   -> Rare     deck 3.67  life 31 speed 35
+R | Kai Budde '99                      Mythic   -> Rare     deck 3.66  life 31 speed 40 size 60 -> 50
+R | Nogi                               Mythic   -> Rare     deck 3.65  life 28 speed 37
+R | Torbran                            Mythic   -> Rare     deck 3.63  life 31 speed 36
+R | Chandra's Acolyte                  Mythic   -> Rare     deck 3.61  life 28 speed 38
+R | Fire Dragon                        Mythic   -> Rare     deck 3.61  life 30 speed 36
+R | Calamity                           Mythic   -> Rare     deck 3.49  life 32 speed 41
+R | Tannuk                             Mythic   -> Rare     deck 3.45  life 26 speed 38
+R | Arni                               Mythic   -> Rare     deck 3.38  life 30 speed 40
+R | Hazoret                            Mythic   -> Rare     deck 3.38  life 33 speed 35
+R | Devil of Tibalt                    Mythic   -> Rare     deck 3.37  life 28 speed 40
+R | Green Dragonkin Renegade           Mythic   -> Rare     deck 3.37  life 32 speed 36 deck re-picked: Sarkhan Vol 2 [duel/medium 4.81] size 60 -> 55
+R | Chandra's Immolator                Mythic   -> Rare     deck 3.35  life 30 speed 40
+R | Chandra's Lavamancer               Mythic   -> Rare     deck 3.35  life 34 speed 37
+R | Joven and Chandler                 Mythic   -> Rare     deck 3.35  life 28 speed 41
+R | Santa                              Mythic   -> Rare     deck 3.34  life 33 speed 38
+R | Chandra's Firestarter              Mythic   -> Rare     deck 3.33  life 32 speed 40
+R | Santelmo                           Mythic   -> Rare     deck 3.33  life 26 speed 35 deck re-picked: Dogbert 2 [duel/medium 2.36] size 60 -> 60
+R | Fire Giant                         Mythic   -> Rare     deck 3.30  life 33 speed 36
+R | Farid                              Mythic   -> Rare     deck 3.29  life 33 speed 35
+R | Chandra's Scorcher                 Mythic   -> Rare     deck 3.28  life 28 speed 36 deck re-picked: Wishmaster 3 [duel/hard 3.21] size 80 -> 70
+R | Minotaur Warcaller                 Mythic   -> Rare     deck 3.28  life 27 speed 40
+R | Crushing Cyclops                   Mythic   -> Rare     deck 3.27  life 32 speed 38 deck re-picked: Wyleth, Soul of Steel 2 [duel/medium 3.96] size 60 -> 45
+R | Purphoros                          Rare     -> Uncommon deck 3.16  life 20 speed 30
+R | Bungisngis                         Rare     -> Uncommon deck 3.14  life 20 speed 28 deck re-picked: Urabrask's Frenzy 1 [duel/easy 2.61] size 60 -> 70
+R | Solphim                            Rare     -> Uncommon deck 3.14  life 20 speed 30
+R | Crimson Slaad                      Rare     -> Uncommon deck 3.11  life 21 speed 25 deck re-picked: Cow 1 [duel/easy 2.14] size 60 -> 50
+R | Jeska                              Rare     -> Uncommon deck 3.11  life 21 speed 29
+R | Orc Warchief                       Rare     -> Uncommon deck 3.11  life 21 speed 27 deck re-picked: Discord 1 [duel/easy 3.85] size 60 -> 50
+R | Flame Elemental                    Rare     -> Uncommon deck 3.11  life 20 speed 28
+R | Magda                              Rare     -> Uncommon deck 3.10  life 21 speed 27
+R | Stone Troll                        Rare     -> Uncommon deck 3.07  life 22 speed 27 deck re-picked: King Goldemar 1 [duel/easy 1.74] size 60 -> 50
+R | Crag Hydra of Shandalar            Rare     -> Uncommon deck 3.05  life 18 speed 29 deck re-picked: Samut's Summoning 1 [duel/easy 2.72] size 60 -> 60
+R | Viashino Renegade                  Rare     -> Uncommon deck 3.05  life 23 speed 30 deck re-picked: MTGA Chaos and Mayhem [precon/precon 2.03] size 60 -> 75
+R | Barbarian                          Rare     -> Uncommon deck 3.00  life 17 speed 26
+R | Tahngarth                          Rare     -> Uncommon deck 3.00  life 18 speed 28
+R | Norin                              Rare     -> Uncommon deck 2.98  life 19 speed 26
+R | Squee                              Rare     -> Uncommon deck 2.91  life 19 speed 30
+R | Kazuul                             Rare     -> Uncommon deck 2.90  life 17 speed 30
+R | Rorix                              Rare     -> Uncommon deck 2.89  life 18 speed 29
+R | Goblin King                        Rare     -> Uncommon deck 2.87  life 18 speed 27
+R | General Kreat                      Rare     -> Uncommon deck 2.87  life 23 speed 28
+R | Hellion                            Rare     -> Uncommon deck 2.86  life 21 speed 28
+R | Dragon                             Rare     -> Uncommon deck 2.85  life 21 speed 31
+R | Birgi                              Rare     -> Uncommon deck 2.78  life 20 speed 28
+R | Chandra's Hellhound                Rare     -> Uncommon deck 2.76  life 17 speed 27
+R | Goblin Reaver                      Rare     -> Uncommon deck 2.75  life 17 speed 30 deck re-picked: Vanellope von Schweetz 1 [duel/easy 2.17] size 60 -> 55
+R | Mark Le Pine '99                   Uncommon -> Common   deck 2.48  life 13 speed 20 size 60 -> 55
+R | Tersa                              Uncommon -> Common   deck 2.42  life 13 speed 22
+R | Zurzoth                            Uncommon -> Common   deck 2.40  life 12 speed 20
+R | Goblin Shieldbearer                Uncommon -> Common   deck 2.39  life 12 speed 19 deck re-picked: Mob Rule [precon/precon 1.42] size 60 -> 65
+R | Pyromancer                         Uncommon -> Common   deck 2.36  life 12 speed 19
+R | Axe Orc                            Uncommon -> Common   deck 2.36  life 11 speed 18 deck re-picked: Feast of Flesh Precon [precon/precon 1.43] size 60 -> 60
+R | Orc Raider                         Uncommon -> Common   deck 2.21  life 11 speed 22 deck re-picked: Endless March [precon/precon 1.54] size 60 -> 55
+R | Red Dwende                         Uncommon -> Common   deck 2.20  life 10 speed 19 deck re-picked: Battle Cries [precon/precon 1.40] size 60 -> 65
+R | Fire Elemental                     Uncommon -> Common   deck 2.19  life 13 speed 18
+R | Ben Rubin '98                      Uncommon -> Common   deck 2.19  life 11 speed 22 size 60 -> 70
+R | Wandering Brawler                  Uncommon -> Common   deck 2.18  life 11 speed 21 deck re-picked: Relic Breaker [precon/precon 1.43] size 60 -> 50
+R | Laelia                             Uncommon -> Common   deck 2.13  life 11 speed 21
+G | Ranger of the Wood                 Mythic   -> Rare     deck 3.70  life 30 speed 38 deck re-picked: Girundar's Chant of Mul Daya 2 [duel/medium 3.27] size 60 -> 70
+G | Giant Fly                          Mythic   -> Rare     deck 3.65  life 28 speed 34 deck re-picked: Garruk's Hunter's Strength 2 [duel/medium 3.27] size 60 -> 65
+G | Saryth                             Mythic   -> Rare     deck 3.59  life 29 speed 35
+G | Six                                Mythic   -> Rare     deck 3.56  life 27 speed 41
+G | Mitotic Ultimus                    Mythic   -> Rare     deck 3.56  life 26 speed 37
+G | Aeve                               Mythic   -> Rare     deck 3.55  life 27 speed 40
+G | Goreclaw                           Mythic   -> Rare     deck 3.53  life 28 speed 40
+G | Lumra                              Mythic   -> Rare     deck 3.52  life 28 speed 37
+G | Nylea                              Mythic   -> Rare     deck 3.52  life 34 speed 36
+G | Autumn Willow                      Mythic   -> Rare     deck 3.49  life 27 speed 39
+G | Elder Green Dragon                 Mythic   -> Rare     deck 3.44  life 26 speed 39 deck re-picked: Nylea's Enchanted Assault 2 [duel/medium 3.12] size 60 -> 75
+G | Hedgehog                           Mythic   -> Rare     deck 3.42  life 28 speed 37
+G | Syr Faren                          Mythic   -> Rare     deck 3.40  life 32 speed 35
+G | Taong Tuod                         Mythic   -> Rare     deck 3.36  life 31 speed 39 deck re-picked: Evangelyne 2 [duel/medium 3.83] size 60 -> 65
+G | Rhonas                             Mythic   -> Rare     deck 3.30  life 27 speed 36
+G | Penguin Elite                      Mythic   -> Rare     deck 3.30  life 26 speed 40
+G | Marwyn                             Mythic   -> Rare     deck 3.27  life 32 speed 36
+G | Kura                               Mythic   -> Rare     deck 3.26  life 32 speed 39
+G | Mad Boar                           Mythic   -> Rare     deck 3.25  life 31 speed 38 deck re-picked: Nick Fury 3 [duel/hard 4.12] size 60 -> 50
+G | Rothga                             Mythic   -> Rare     deck 3.22  life 30 speed 41
+G | Corrupted Treant                   Mythic   -> Rare     deck 3.21  life 27 speed 36 deck re-picked: Alice in Wonderland 3 [duel/hard 3.72] size 60 -> 50
+G | Werebear                           Mythic   -> Rare     deck 3.21  life 26 speed 37
+G | Outrider                           Rare     -> Uncommon deck 3.03  life 22 speed 30 deck re-picked: Genghis Khan 1 [duel/easy 2.20] size 60 -> 45
+G | Baru                               Rare     -> Uncommon deck 3.02  life 20 speed 26
+G | Penguin                            Rare     -> Uncommon deck 3.00  life 20 speed 26
+G | Treefolk Elite                     Rare     -> Uncommon deck 2.98  life 18 speed 26
+G | Lizardfolk Champion                Rare     -> Uncommon deck 2.94  life 21 speed 31 deck re-picked: Thrun's Trolling Troupe 2 [duel/medium 2.54] size 60 -> 40
+G | Naked Mole Rat                     Rare     -> Uncommon deck 2.93  life 18 speed 26
+G | Kolyog                             Rare     -> Uncommon deck 2.91  life 19 speed 25 deck re-picked: Girundar's Chant of Mul Daya 1 [duel/easy 2.14] size 60 -> 60
+G | Yeva                               Rare     -> Uncommon deck 2.90  life 20 speed 27
+G | Amomongo                           Rare     -> Uncommon deck 2.87  life 22 speed 30 deck re-picked: Vorinclex's Terraforming 1 [duel/easy 2.48] size 60 -> 75
+G | Oviya                              Rare     -> Uncommon deck 2.86  life 17 speed 28
+G | Ladybug                            Rare     -> Uncommon deck 2.86  life 21 speed 29
+G | Mire Troll                         Rare     -> Uncommon deck 2.84  life 20 speed 27 deck re-picked: Sherlock Holmes 2 [duel/medium 2.92] size 60 -> 70
+G | Expert Druid                       Rare     -> Uncommon deck 2.82  life 18 speed 26 deck re-picked: Milhouse Van Houten 2 [duel/medium 2.66] size 60 -> 60
+G | Green Prototype                    Rare     -> Uncommon deck 2.77  life 20 speed 28
+G | Summoner of Shandalar              Rare     -> Uncommon deck 2.71  life 18 speed 27 deck re-picked: Boromir 2 [duel/medium 2.50] size 60 -> 60
+G | Greensleeves                       Rare     -> Uncommon deck 2.68  life 18 speed 27
+G | Fynn                               Rare     -> Uncommon deck 2.65  life 21 speed 28
+G | Baby Green Dragon                  Rare     -> Uncommon deck 2.63  life 19 speed 29 deck re-picked: Baru's Wurmcalling 1 [duel/easy 2.24] size 60 -> 65
+G | Dainty Pig                         Rare     -> Uncommon deck 2.61  life 23 speed 30 deck re-picked: Joris Jurgen 2 [duel/medium 2.71] size 60 -> 45
+G | Silvos                             Rare     -> Uncommon deck 2.61  life 22 speed 27
+G | Grunn                              Rare     -> Uncommon deck 2.56  life 19 speed 28
+G | Badger                             Rare     -> Uncommon deck 2.55  life 19 speed 27
+G | Nuno sa Punso                      Uncommon -> Common   deck 2.35  life 10 speed 19 deck re-picked: Elvish Rage [precon/precon 1.54] size 60 -> 40
+G | Ayula                              Uncommon -> Common   deck 2.32  life 11 speed 20
+G | Eladamri                           Uncommon -> Common   deck 2.31  life 11 speed 20
+G | Buwaya                             Uncommon -> Common   deck 2.31  life 12 speed 22 deck re-picked: Snake's Path [precon/precon 1.53] size 60 -> 60
+G | Halfling Ranger                    Uncommon -> Common   deck 2.28  life 14 speed 20 deck re-picked: Spectrum [precon/precon 1.50] size 60 -> 50
+G | Longbow Yeoman                     Uncommon -> Common   deck 2.21  life 12 speed 19 deck re-picked: Nature's Assault [precon/precon 1.60] size 40 -> 80
+G | Elf Renegade                       Uncommon -> Common   deck 2.19  life 10 speed 21 deck re-picked: Fat Albert 1 [duel/easy 1.98] size 60 -> 55
+G | Timber Wolf                        Uncommon -> Common   deck 2.12  life 11 speed 22 deck re-picked: Aragorn 1 [duel/easy 1.67] size 60 -> 60
+G | Geonid Death-Cap                   Uncommon -> Common   deck 2.11  life 11 speed 20
+G | Beast Master of Shandalar          Uncommon -> Common   deck 2.10  life 10 speed 19 deck re-picked: King Kong 1 [duel/easy 1.71] size 60 -> 60
+G | Worm                               Uncommon -> Common   deck 2.09  life 11 speed 20
+```
+
+**Files touched**: `scene/TileMapScene.java`, `util/AdventureEventController.java`,
+`data/AdventureEventData.java`, GUIDE.md, world/enemies.json, the re-picked / resized decks.

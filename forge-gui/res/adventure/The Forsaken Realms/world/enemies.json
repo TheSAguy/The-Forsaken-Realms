@@ -7,9 +7,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 48,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 28,
         "rewards": [
             {
                 "type": "deckCard",
@@ -62,7 +62,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Adept Black Wizard",
@@ -2697,10 +2697,10 @@
         ],
         "ai": "",
         "spawnRate": 0.5,
-        "difficulty": 2,
-        "speed": 40,
+        "difficulty": 1,
+        "speed": 27,
         "scale": 0.8,
-        "life": 27,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -2758,7 +2758,7 @@
             "IdentityGreen",
             "BiomeGreen"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Bandit",
@@ -3241,10 +3241,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 41,
+        "difficulty": 1,
+        "speed": 26,
         "scale": 0.7,
-        "life": 30,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -3290,7 +3290,7 @@
             "Warrior",
             "IdentityRed"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Bat",
@@ -3773,9 +3773,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
-        "life": 55,
+        "difficulty": 2,
+        "speed": 35,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -3839,7 +3839,7 @@
             "Construct",
             "Robot"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Bloodgift Demon",
@@ -4173,9 +4173,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
-        "life": 21,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 13,
         "rewards": [
             {
                 "type": "randomCard",
@@ -4217,7 +4217,7 @@
             "Human",
             "IdentityBlack"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Boggart",
@@ -5500,9 +5500,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 41,
-        "life": 43,
+        "difficulty": 2,
+        "speed": 38,
+        "life": 28,
         "rewards": [
             {
                 "type": "deckCard",
@@ -5596,7 +5596,7 @@
             "Fire",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Chandra's Firestarter",
@@ -5606,9 +5606,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 41,
-        "life": 53,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 32,
         "rewards": [
             {
                 "type": "deckCard",
@@ -5702,7 +5702,7 @@
             "Fire",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Chandra's Hellhound",
@@ -5712,9 +5712,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 31,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -5807,7 +5807,7 @@
             "Fire",
             "IdentityRed"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Chandra's Immolator",
@@ -5817,9 +5817,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
-        "life": 51,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 30,
         "rewards": [
             {
                 "type": "deckCard",
@@ -5913,7 +5913,7 @@
             "Fire",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Chandra's Lavamancer",
@@ -5923,9 +5923,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 49,
+        "difficulty": 2,
+        "speed": 37,
+        "life": 34,
         "rewards": [
             {
                 "type": "deckCard",
@@ -6019,7 +6019,7 @@
             "Fire",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Chandra's Pyromancer",
@@ -6135,9 +6135,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 48,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 28,
         "rewards": [
             {
                 "type": "deckCard",
@@ -6231,7 +6231,7 @@
             "Fire",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Chicken",
@@ -7880,9 +7880,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 19,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -7950,7 +7950,7 @@
             "IdentityBlack",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Dawnhart Witch",
@@ -8133,9 +8133,9 @@
         "ai": "",
         "randomizeDeck": true,
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 31,
+        "difficulty": 1,
+        "speed": 29,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -8221,7 +8221,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Demon of Tibalt",
@@ -8410,10 +8410,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
+        "difficulty": 2,
+        "speed": 40,
         "scale": 0.7,
-        "life": 44,
+        "life": 28,
         "rewards": [
             {
                 "type": "deckCard",
@@ -8462,7 +8462,7 @@
             "IdentityRed",
             "BiomeRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Dimir Faerie",
@@ -8942,9 +8942,9 @@
         "ai": "",
         "flying": true,
         "spawnRate": 0.95,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 29,
+        "difficulty": 1,
+        "speed": 31,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -9017,7 +9017,7 @@
             "IdentityRed",
             "BiomeRed"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Dragonfly",
@@ -9659,10 +9659,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 43,
+        "difficulty": 2,
+        "speed": 35,
         "scale": 0.75,
-        "life": 45,
+        "life": 32,
         "rewards": [
             {
                 "type": "deckCard",
@@ -9702,7 +9702,7 @@
             "Leader",
             "Artificer"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Earth Elemental",
@@ -11478,8 +11478,8 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
-        "life": 17,
+        "speed": 18,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -11551,7 +11551,7 @@
             "IdentityBlack",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "False Monk",
@@ -11560,9 +11560,9 @@
             "decks/standard/false_monk_r111.dck"
         ],
         "spawnRate": 1,
-        "difficulty": 0.1,
-        "speed": 22,
-        "life": 13,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 18,
         "rewards": [
             {
                 "type": "deckCard",
@@ -11631,7 +11631,7 @@
             "Unholy",
             "IdentityBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Farmer",
@@ -11729,10 +11729,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
+        "difficulty": 2,
+        "speed": 36,
         "scale": 2,
-        "life": 52,
+        "life": 30,
         "rewards": [
             {
                 "type": "card",
@@ -11797,7 +11797,7 @@
             "Fire",
             "Monster"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Fire Elemental",
@@ -11808,9 +11808,9 @@
         "ai": "",
         "flying": true,
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 30,
-        "life": 17,
+        "difficulty": 0.1,
+        "speed": 18,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -11881,7 +11881,7 @@
             "IdentityRed",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Fire Giant",
@@ -11891,10 +11891,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
+        "difficulty": 2,
+        "speed": 36,
         "scale": 1.4,
-        "life": 44,
+        "life": 33,
         "rewards": [
             {
                 "type": "card",
@@ -11955,7 +11955,7 @@
             "Territorial",
             "IdentityRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Flame Elemental",
@@ -11965,9 +11965,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 27,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -12037,7 +12037,7 @@
             "IdentityRed",
             "BiomeRed"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Flesh Abomination",
@@ -13304,10 +13304,10 @@
         ],
         "ai": "",
         "spawnRate": 0.5,
-        "difficulty": 1,
-        "speed": 26,
+        "difficulty": 0.1,
+        "speed": 20,
         "scale": 0.75,
-        "life": 22,
+        "life": 11,
         "rewards": [
             {
                 "type": "card",
@@ -13381,7 +13381,7 @@
             "IdentityGreen",
             "BiomeBlack"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Ghalta",
@@ -13711,10 +13711,10 @@
         "ai": "",
         "flying": true,
         "spawnRate": 0.5,
-        "difficulty": 3,
-        "speed": 48,
+        "difficulty": 2,
+        "speed": 34,
         "scale": 0.5,
-        "life": 46,
+        "life": 28,
         "rewards": [
             {
                 "type": "deckCard",
@@ -13761,7 +13761,7 @@
             "IdentityAbzan",
             "BiomeBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Giant Panda",
@@ -14163,10 +14163,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 49,
+        "difficulty": 2,
+        "speed": 34,
         "scale": 0.75,
-        "life": 41,
+        "life": 27,
         "rewards": [
             {
                 "type": "deckCard",
@@ -14228,7 +14228,7 @@
             "IdentityRed",
             "Minion"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Goblin Chief",
@@ -14344,10 +14344,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 39,
+        "difficulty": 1,
+        "speed": 27,
         "scale": 0.5,
-        "life": 26,
+        "life": 18,
         "rewards": [
             {
                 "type": "deckCard",
@@ -14395,7 +14395,7 @@
             "King",
             "IdentityRed"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Goblin Pack",
@@ -15183,10 +15183,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
+        "difficulty": 2,
+        "speed": 41,
         "scale": 1.3,
-        "life": 44,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -15238,7 +15238,7 @@
             "Humanoid",
             "IdentityBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Graven Revenant",
@@ -15373,9 +15373,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 0.2,
-        "speed": 14,
-        "life": 23,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -15433,7 +15433,7 @@
             "Humanoid",
             "IdentityBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Green Beast",
@@ -15605,9 +15605,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -15671,7 +15671,7 @@
             "Prototype",
             "Robot"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Griffin",
@@ -16356,10 +16356,10 @@
         ],
         "ai": "",
         "spawnRate": 0.5,
-        "difficulty": 3,
-        "speed": 43,
+        "difficulty": 2,
+        "speed": 37,
         "scale": 0.7,
-        "life": 48,
+        "life": 28,
         "rewards": [
             {
                 "type": "deckCard",
@@ -16404,7 +16404,7 @@
             "IdentityGreen",
             "BiomeRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Hellhound",
@@ -16501,10 +16501,10 @@
         ],
         "ai": "",
         "spawnRate": 0.2,
-        "difficulty": 2,
-        "speed": 42,
+        "difficulty": 1,
+        "speed": 28,
         "scale": 1.6,
-        "life": 27,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -16540,7 +16540,7 @@
             "BiomeRed",
             "BiomeWhite"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Hermit Crab",
@@ -16711,9 +16711,9 @@
             "decks/standard/cultist.dck"
         ],
         "spawnRate": 1,
-        "difficulty": 0.1,
-        "speed": 20,
-        "life": 32,
+        "difficulty": 1,
+        "speed": 29,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -16782,7 +16782,7 @@
             "Unholy",
             "IdentityBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "High Elf",
@@ -17046,10 +17046,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 42,
+        "difficulty": 2,
+        "speed": 35,
         "scale": 0.7,
-        "life": 55,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -17095,7 +17095,7 @@
             "Holy",
             "Leader"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Homarid",
@@ -19755,10 +19755,10 @@
         "ai": "",
         "flying": true,
         "spawnRate": 0.8,
-        "difficulty": 2,
-        "speed": 42,
+        "difficulty": 1,
+        "speed": 29,
         "scale": 0.5,
-        "life": 32,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -19811,7 +19811,7 @@
             "IdentityAbzan",
             "BiomeGreen"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Lathliss",
@@ -20003,9 +20003,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 0.1,
-        "speed": 18,
-        "life": 17,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -20076,7 +20076,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Lightning Elemental",
@@ -20462,10 +20462,10 @@
         "ai": "",
         "randomizeDeck": true,
         "spawnRate": 0.8,
-        "difficulty": 2,
-        "speed": 39,
+        "difficulty": 1,
+        "speed": 27,
         "scale": 0.9,
-        "life": 31,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -20513,7 +20513,7 @@
             "Hunter",
             "BiomeWhite"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Loamspeaker",
@@ -20606,9 +20606,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 27,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -20676,7 +20676,7 @@
             "Wizard",
             "IdentityDimir"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Lorthos",
@@ -20758,10 +20758,10 @@
         "ai": "",
         "flying": true,
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 43,
+        "difficulty": 2,
+        "speed": 35,
         "scale": 0.8,
-        "life": 54,
+        "life": 33,
         "rewards": [
             {
                 "type": "deckCard",
@@ -20804,7 +20804,7 @@
             "Mythical",
             "Warrior"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Mageripper",
@@ -22243,10 +22243,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 41,
+        "difficulty": 2,
+        "speed": 40,
         "scale": 0.5,
-        "life": 46,
+        "life": 27,
         "rewards": [
             {
                 "type": "deckCard",
@@ -22293,7 +22293,7 @@
             "IdentityRakdos",
             "BiomeRed"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Monk",
@@ -22933,10 +22933,10 @@
         ],
         "ai": "",
         "spawnRate": 0.5,
-        "difficulty": 2,
-        "speed": 36,
+        "difficulty": 1,
+        "speed": 26,
         "scale": 0.8,
-        "life": 32,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -22981,7 +22981,7 @@
             "IdentityGreen",
             "BiomeGreen"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Nantuko Guard",
@@ -23144,9 +23144,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 50,
+        "difficulty": 2,
+        "speed": 42,
+        "life": 31,
         "rewards": [
             {
                 "type": "deckCard",
@@ -23193,7 +23193,7 @@
             "Human",
             "IdentityBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Nezumi Leader",
@@ -24284,9 +24284,9 @@
         ],
         "ai": "",
         "spawnRate": 0.3,
-        "difficulty": 2,
-        "speed": 36,
-        "life": 28,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -24347,7 +24347,7 @@
             "Bird",
             "Snow"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Penguin Elite",
@@ -24357,10 +24357,10 @@
         ],
         "ai": "",
         "spawnRate": 0.3,
-        "difficulty": 3,
-        "speed": 42,
+        "difficulty": 2,
+        "speed": 40,
         "scale": 1.5,
-        "life": 44,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -24422,7 +24422,7 @@
             "Bird",
             "Snow"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Pharaoh",
@@ -24922,9 +24922,9 @@
         ],
         "ai": "",
         "spawnRate": 0.8,
-        "difficulty": 1,
-        "speed": 27,
-        "life": 21,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -24993,7 +24993,7 @@
             "Pirate",
             "Captain"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Plague Rat Swarm",
@@ -25469,10 +25469,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
+        "difficulty": 0.1,
+        "speed": 19,
         "scale": 0.75,
-        "life": 21,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -25514,7 +25514,7 @@
             "Lightning",
             "Magic"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Raccoon",
@@ -26224,9 +26224,9 @@
         ],
         "ai": "",
         "spawnRate": 0.5,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 54,
+        "difficulty": 2,
+        "speed": 37,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -26282,7 +26282,7 @@
             "Auramaster",
             "Runelord"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Sand Ghoul",
@@ -26292,9 +26292,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
-        "life": 27,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -26362,7 +26362,7 @@
             "Aggressive",
             null
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Sand Golem",
@@ -26372,9 +26372,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 29,
-        "life": 20,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -26410,7 +26410,7 @@
             "BiomeWhite",
             "BiomeRed"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Satyr",
@@ -26844,10 +26844,10 @@
         "flying": true,
         "randomizeDeck": true,
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
+        "difficulty": 2,
+        "speed": 35,
         "scale": 0.8,
-        "life": 41,
+        "life": 33,
         "rewards": [
             {
                 "type": "deckCard",
@@ -26901,7 +26901,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Sea Monster",
@@ -26994,10 +26994,10 @@
         "ai": "",
         "flying": true,
         "spawnRate": 0.3,
-        "difficulty": 0.8,
-        "speed": 27,
+        "difficulty": 1,
+        "speed": 29,
         "scale": 0.45,
-        "life": 20,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -27055,7 +27055,7 @@
             "IdentityBlack",
             "Humanoid"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Shaman",
@@ -27397,8 +27397,8 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
-        "life": 12,
+        "speed": 21,
+        "life": 11,
         "rewards": [
             {
                 "type": "gold",
@@ -28713,9 +28713,9 @@
         "flying": true,
         "randomizeDeck": true,
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -28769,7 +28769,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Spirit",
@@ -29028,10 +29028,10 @@
         "ai": "",
         "randomizeDeck": true,
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
+        "difficulty": 0.1,
+        "speed": 18,
         "scale": 0.8,
-        "life": 22,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -29079,7 +29079,7 @@
             "Small",
             "IdentityWhite"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Sun Giant",
@@ -29089,10 +29089,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
+        "difficulty": 2,
+        "speed": 39,
         "scale": 1.5,
-        "life": 46,
+        "life": 28,
         "rewards": [
             {
                 "type": "card",
@@ -29148,7 +29148,7 @@
             "Territorial",
             "IdentityWhite"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Sunmare",
@@ -30377,10 +30377,10 @@
             "decks/standard/treefolkelite.dck"
         ],
         "spawnRate": 1,
-        "difficulty": 2,
+        "difficulty": 1,
         "scale": 0.5,
-        "speed": 38,
-        "life": 27,
+        "speed": 26,
+        "life": 18,
         "rewards": [
             {
                 "type": "deckCard",
@@ -30452,7 +30452,7 @@
             "Territorial",
             "IdentityGreen"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Treefolk Guardian",
@@ -30956,9 +30956,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 52,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -31023,7 +31023,7 @@
             "Hostile",
             "Unholy"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Unholy Skull",
@@ -31430,9 +31430,9 @@
         "ai": "",
         "flying": true,
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 30,
-        "life": 19,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -31460,7 +31460,7 @@
             "BiomeBlack",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Vampire Lord",
@@ -32439,10 +32439,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 48,
+        "difficulty": 2,
+        "speed": 37,
         "scale": 0.6,
-        "life": 41,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -32503,7 +32503,7 @@
             "IdentityGreen",
             "BiomeGreen"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Werewolf",
@@ -32555,9 +32555,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 25,
-        "life": 22,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -32581,7 +32581,7 @@
             "IdentityWhite",
             "BiomeWhite"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Wild Rat",
@@ -32595,9 +32595,9 @@
         "randomizeDeck": true,
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
+        "speed": 19,
         "scale": 0.8,
-        "life": 12,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -32746,10 +32746,10 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
+        "difficulty": 1,
+        "speed": 29,
         "scale": 0.75,
-        "life": 27,
+        "life": 18,
         "rewards": [
             {
                 "type": "deckCard",
@@ -32796,7 +32796,7 @@
             "Human",
             "IdentityBlack"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Wolf",
@@ -32942,9 +32942,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "life": 23,
-        "speed": 29,
+        "difficulty": 0.1,
+        "life": 11,
+        "speed": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -32967,7 +32967,7 @@
             "IdentityWhite",
             "Beginner"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Wounded Sliver",
@@ -33521,9 +33521,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
-        "life": 21,
+        "difficulty": 0.1,
+        "speed": 21,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -33560,7 +33560,7 @@
             "BiomeBlack",
             "Minion"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Zombie Lord",
@@ -33570,9 +33570,9 @@
         ],
         "ai": "",
         "spawnRate": 0.7,
-        "difficulty": 3,
-        "speed": 42,
-        "life": 53,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 34,
         "rewards": [
             {
                 "type": "deckCard",
@@ -33607,7 +33607,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Zombie Master",
@@ -33903,9 +33903,9 @@
         "ai": "",
         "randomizeDeck": true,
         "spawnRate": 0.75,
-        "difficulty": 1,
+        "difficulty": 0.1,
         "speed": 19,
-        "life": 14,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -33956,7 +33956,7 @@
             "BiomeMoonlight",
             "BiomeBlack"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Escaped Skaab",
@@ -36626,9 +36626,9 @@
             "decks/legends/krenko.dck"
         ],
         "ai": "",
-        "speed": 42,
+        "speed": 35,
         "scale": 0.5,
-        "life": 50,
+        "life": 31,
         "rewards": [
             {
                 "type": "life",
@@ -36703,8 +36703,8 @@
         "colors": "R",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Giada",
@@ -38045,9 +38045,9 @@
             "decks/legends/rorix.dck"
         ],
         "ai": "",
-        "speed": 41,
+        "speed": 29,
         "scale": 1,
-        "life": 40,
+        "life": 18,
         "rewards": [
             {
                 "type": "item",
@@ -38101,8 +38101,8 @@
         "colors": "R",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Visara",
@@ -38111,9 +38111,9 @@
             "decks/legends/visara.dck"
         ],
         "ai": "",
-        "speed": 39,
+        "speed": 30,
         "scale": 1,
-        "life": 38,
+        "life": 19,
         "rewards": [
             {
                 "type": "item",
@@ -38167,8 +38167,8 @@
         "colors": "B",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Vaevictis",
@@ -38243,9 +38243,9 @@
             "decks/legends/silvos.dck"
         ],
         "ai": "",
-        "speed": 42,
+        "speed": 27,
         "scale": 2,
-        "life": 42,
+        "life": 22,
         "rewards": [
             {
                 "type": "item",
@@ -38299,8 +38299,8 @@
         "colors": "G",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Arcanis",
@@ -39287,9 +39287,9 @@
             "decks/legends/thalia.dck"
         ],
         "ai": "",
-        "speed": 42,
+        "speed": 40,
         "scale": 1,
-        "life": 47,
+        "life": 27,
         "rewards": [
             {
                 "type": "item",
@@ -39357,8 +39357,8 @@
         "colors": "W",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Avacyn",
@@ -43631,9 +43631,9 @@
             "decks/legends/gix.dck"
         ],
         "ai": "",
-        "speed": 43,
+        "speed": 38,
         "scale": 1,
-        "life": 44,
+        "life": 31,
         "rewards": [
             {
                 "type": "item",
@@ -43693,8 +43693,8 @@
         "colors": "B",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Yawgmoth",
@@ -43703,9 +43703,9 @@
             "decks/legends/yawgmoth.dck"
         ],
         "ai": "",
-        "speed": 42,
+        "speed": 39,
         "scale": 1,
-        "life": 48,
+        "life": 27,
         "rewards": [
             {
                 "type": "item",
@@ -43765,8 +43765,8 @@
         "colors": "B",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Ojer Axonil",
@@ -45433,9 +45433,9 @@
             "decks/legends/hythonia.dck"
         ],
         "ai": "",
-        "speed": 40,
+        "speed": 27,
         "scale": 1,
-        "life": 40,
+        "life": 19,
         "rewards": [
             {
                 "type": "item",
@@ -45495,8 +45495,8 @@
         "colors": "B",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Aphemia",
@@ -45506,9 +45506,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 43,
+        "speed": 37,
         "scale": 1,
-        "life": 49,
+        "life": 29,
         "rewards": [
             {
                 "type": "item",
@@ -45568,8 +45568,8 @@
         "colors": "B",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Uro",
@@ -45799,9 +45799,9 @@
             "decks/legends/heliod.dck"
         ],
         "ai": "",
-        "speed": 45,
+        "speed": 38,
         "scale": 2,
-        "life": 55,
+        "life": 32,
         "rewards": [
             {
                 "type": "item",
@@ -45871,8 +45871,8 @@
         "colors": "W",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Inalla",
@@ -45954,9 +45954,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 44,
+        "speed": 38,
         "scale": 1,
-        "life": 42,
+        "life": 33,
         "rewards": [
             {
                 "type": "item",
@@ -46035,8 +46035,8 @@
         "colors": "R",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Jorn",
@@ -47052,9 +47052,9 @@
             "decks/legends/magda.dck"
         ],
         "ai": "",
-        "speed": 47,
+        "speed": 27,
         "scale": 1,
-        "life": 30,
+        "life": 21,
         "rewards": [
             {
                 "type": "item",
@@ -47137,8 +47137,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Heidar",
@@ -47823,9 +47823,9 @@
             "decks/legends/goreclaw.dck"
         ],
         "ai": "",
-        "speed": 44,
+        "speed": 40,
         "scale": 0.5,
-        "life": 44,
+        "life": 28,
         "rewards": [
             {
                 "type": "item",
@@ -47908,8 +47908,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Niv-Mizzet",
@@ -48970,9 +48970,9 @@
             "decks/legends/kemba.dck"
         ],
         "ai": "",
-        "speed": 35,
+        "speed": 26,
         "scale": 1,
-        "life": 34,
+        "life": 17,
         "rewards": [
             {
                 "type": "item",
@@ -49060,8 +49060,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Velomachus",
@@ -53097,9 +53097,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 40,
+        "speed": 27,
         "scale": 1,
-        "life": 34,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -53155,8 +53155,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Kastral",
@@ -53447,9 +53447,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 31,
+        "speed": 19,
         "scale": 1,
-        "life": 27,
+        "life": 12,
         "rewards": [
             {
                 "type": "card",
@@ -53505,8 +53505,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Zinnia",
@@ -54042,9 +54042,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 49,
+        "speed": 30,
         "scale": 2,
-        "life": 34,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -54100,8 +54100,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Ryusei",
@@ -54180,9 +54180,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 50,
+        "speed": 29,
         "scale": 1,
-        "life": 28,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -54238,8 +54238,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Aclazotz",
@@ -54249,9 +54249,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 50,
+        "speed": 30,
         "scale": 3,
-        "life": 31,
+        "life": 21,
         "rewards": [
             {
                 "type": "card",
@@ -54307,8 +54307,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Bontu",
@@ -54458,9 +54458,9 @@
             "decks/legends/erebos.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 36,
         "scale": 2,
-        "life": 54,
+        "life": 29,
         "rewards": [
             {
                 "type": "card",
@@ -54521,8 +54521,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Alrund",
@@ -54531,9 +54531,9 @@
             "decks/legends/alrund.dck"
         ],
         "ai": "",
-        "speed": 51,
+        "speed": 39,
         "scale": 1,
-        "life": 44,
+        "life": 29,
         "rewards": [
             {
                 "type": "card",
@@ -54589,8 +54589,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Cosima",
@@ -55314,9 +55314,9 @@
             "decks/legends/grandmother_sengir.dck"
         ],
         "ai": "",
-        "speed": 42,
+        "speed": 20,
         "scale": 0.8,
-        "life": 31,
+        "life": 13,
         "rewards": [
             {
                 "type": "card",
@@ -55372,8 +55372,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Kazarov",
@@ -55520,9 +55520,9 @@
             "decks/legends/shauku.dck"
         ],
         "ai": "",
-        "speed": 44,
+        "speed": 39,
         "scale": 0.5,
-        "life": 45,
+        "life": 34,
         "rewards": [
             {
                 "type": "card",
@@ -55578,8 +55578,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Verrak",
@@ -56004,9 +56004,9 @@
             "decks/legends/timothar.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 38,
         "scale": 1,
-        "life": 43,
+        "life": 28,
         "rewards": [
             {
                 "type": "card",
@@ -56062,8 +56062,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Beza",
@@ -56278,9 +56278,9 @@
             "decks/legends/lumra.dck"
         ],
         "ai": "",
-        "speed": 49,
+        "speed": 37,
         "scale": 3,
-        "life": 52,
+        "life": 28,
         "rewards": [
             {
                 "type": "card",
@@ -56336,8 +56336,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Maha",
@@ -56919,9 +56919,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 51,
+        "speed": 29,
         "scale": 1,
-        "life": 30,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -56978,8 +56978,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Arabella",
@@ -58104,9 +58104,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 51,
+        "speed": 35,
         "scale": 2,
-        "life": 46,
+        "life": 28,
         "rewards": [
             {
                 "type": "card",
@@ -58162,8 +58162,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Zilortha",
@@ -59022,9 +59022,9 @@
             "decks/legends/skrelv.dck"
         ],
         "ai": "",
-        "speed": 41,
+        "speed": 21,
         "scale": 1,
-        "life": 27,
+        "life": 13,
         "rewards": [
             {
                 "type": "card",
@@ -59083,8 +59083,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Clement",
@@ -59506,9 +59506,9 @@
             "decks/legends/saryth.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 35,
         "scale": 1,
-        "life": 54,
+        "life": 29,
         "rewards": [
             {
                 "type": "card",
@@ -59564,8 +59564,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Tatsunari",
@@ -59992,9 +59992,9 @@
             "decks/legends/general_kreat.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 28,
         "scale": 1,
-        "life": 30,
+        "life": 23,
         "rewards": [
             {
                 "type": "card",
@@ -60050,8 +60050,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Muxus",
@@ -60264,9 +60264,9 @@
             "decks/legends/nylea.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 36,
         "scale": 2,
-        "life": 44,
+        "life": 34,
         "rewards": [
             {
                 "type": "card",
@@ -60327,8 +60327,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Rhonas",
@@ -60337,9 +60337,9 @@
             "decks/legends/rhonas.dck"
         ],
         "ai": "",
-        "speed": 47,
+        "speed": 36,
         "scale": 2,
-        "life": 46,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -60400,8 +60400,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Gisa",
@@ -60755,9 +60755,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 48,
+        "speed": 38,
         "scale": 1,
-        "life": 54,
+        "life": 29,
         "rewards": [
             {
                 "type": "card",
@@ -60813,8 +60813,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Radiant",
@@ -60824,9 +60824,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 50,
+        "speed": 35,
         "scale": 1,
-        "life": 48,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -60887,8 +60887,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Rienne",
@@ -61677,9 +61677,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 50,
+        "speed": 27,
         "scale": 2,
-        "life": 30,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -61735,8 +61735,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Belzenlok",
@@ -61746,9 +61746,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 50,
+        "speed": 34,
         "scale": 1,
-        "life": 44,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -61804,8 +61804,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Razaketh",
@@ -62097,9 +62097,9 @@
             "decks/legends/syr_alin.dck"
         ],
         "ai": "",
-        "speed": 53,
+        "speed": 26,
         "scale": 1,
-        "life": 30,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -62155,8 +62155,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Syr Carah",
@@ -62301,9 +62301,9 @@
             "decks/legends/syr_faren.dck"
         ],
         "ai": "",
-        "speed": 49,
+        "speed": 35,
         "scale": 1,
-        "life": 50,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -62359,8 +62359,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Syr Konrad",
@@ -62369,9 +62369,9 @@
             "decks/legends/syr_konrad.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 29,
         "scale": 1,
-        "life": 30,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -62427,8 +62427,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Torbran",
@@ -62437,9 +62437,9 @@
             "decks/legends/torbran.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 36,
         "scale": 1,
-        "life": 48,
+        "life": 31,
         "rewards": [
             {
                 "type": "card",
@@ -62500,8 +62500,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Yorvo",
@@ -63142,9 +63142,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 53,
+        "speed": 40,
         "scale": 1,
-        "life": 42,
+        "life": 30,
         "rewards": [
             {
                 "type": "card",
@@ -63200,8 +63200,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Unctus",
@@ -63351,9 +63351,9 @@
             "decks/legends/farid.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 35,
         "scale": 1,
-        "life": 48,
+        "life": 33,
         "rewards": [
             {
                 "type": "card",
@@ -63409,8 +63409,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Hajar",
@@ -63488,9 +63488,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 51,
+        "speed": 37,
         "scale": 1,
-        "life": 54,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -63546,8 +63546,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Atsushi",
@@ -63695,9 +63695,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 46,
+        "speed": 38,
         "scale": 2,
-        "life": 43,
+        "life": 33,
         "rewards": [
             {
                 "type": "card",
@@ -63758,8 +63758,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Kura",
@@ -63769,9 +63769,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 47,
+        "speed": 39,
         "scale": 2,
-        "life": 46,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -63827,8 +63827,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Ertai",
@@ -64056,9 +64056,9 @@
             "decks/legends/birgi.dck"
         ],
         "ai": "",
-        "speed": 43,
+        "speed": 28,
         "scale": 1,
-        "life": 34,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -64114,8 +64114,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Hazoret",
@@ -64124,9 +64124,9 @@
             "decks/legends/hazoret.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 35,
         "scale": 1.5,
-        "life": 54,
+        "life": 33,
         "rewards": [
             {
                 "type": "card",
@@ -64192,8 +64192,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Ilharg",
@@ -64270,9 +64270,9 @@
             "decks/legends/purphoros.dck"
         ],
         "ai": "",
-        "speed": 52,
+        "speed": 30,
         "scale": 1,
-        "life": 33,
+        "life": 20,
         "rewards": [
             {
                 "type": "item",
@@ -64339,8 +64339,8 @@
         "colors": "R",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Toralf",
@@ -64417,9 +64417,9 @@
             "decks/legends/eladamri.dck"
         ],
         "ai": "",
-        "speed": 26,
+        "speed": 20,
         "scale": 1,
-        "life": 19,
+        "life": 11,
         "rewards": [
             {
                 "type": "card",
@@ -64480,8 +64480,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Rhys",
@@ -64636,9 +64636,9 @@
             "decks/legends/marwyn.dck"
         ],
         "ai": "",
-        "speed": 49,
+        "speed": 36,
         "scale": 1,
-        "life": 41,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -64699,8 +64699,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Miara and Numa",
@@ -65476,9 +65476,9 @@
             "decks/legends/drivnod.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 37,
         "scale": 1,
-        "life": 55,
+        "life": 28,
         "rewards": [
             {
                 "type": "card",
@@ -65534,8 +65534,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Vraan",
@@ -65613,9 +65613,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 29,
+        "speed": 19,
         "scale": 1,
-        "life": 19,
+        "life": 12,
         "rewards": [
             {
                 "type": "card",
@@ -65671,8 +65671,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Elas il-Kor",
@@ -65749,9 +65749,9 @@
             "decks/legends/aeve.dck"
         ],
         "ai": "",
-        "speed": 44,
+        "speed": 40,
         "scale": 1,
-        "life": 55,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -65807,8 +65807,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Experiment Kraj",
@@ -65885,9 +65885,9 @@
             "decks/legends/mitotic_ultimus.dck"
         ],
         "ai": "",
-        "speed": 52,
+        "speed": 37,
         "scale": 1.5,
-        "life": 52,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -65943,8 +65943,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Slogurk",
@@ -66782,9 +66782,9 @@
             "decks/legends/calamity.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 41,
         "scale": 0.7,
-        "life": 48,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -66840,8 +66840,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Felix",
@@ -67570,9 +67570,9 @@
             "decks/legends/mangara.dck"
         ],
         "ai": "",
-        "speed": 50,
+        "speed": 42,
         "scale": 1,
-        "life": 46,
+        "life": 34,
         "rewards": [
             {
                 "type": "card",
@@ -67633,8 +67633,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Niambi",
@@ -68334,9 +68334,9 @@
             "decks/legends/solphim.dck"
         ],
         "ai": "",
-        "speed": 49,
+        "speed": 30,
         "scale": 1,
-        "life": 30,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -68392,8 +68392,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Harbin",
@@ -68836,9 +68836,9 @@
             "decks/legends/rothga.dck"
         ],
         "ai": "",
-        "speed": 47,
+        "speed": 41,
         "scale": 1,
-        "life": 42,
+        "life": 30,
         "rewards": [
             {
                 "type": "card",
@@ -68894,8 +68894,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Vexyr",
@@ -69113,9 +69113,9 @@
             "decks/legends/ojer_taq.dck"
         ],
         "ai": "",
-        "speed": 49,
+        "speed": 35,
         "scale": 3,
-        "life": 48,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -69171,8 +69171,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Oketra",
@@ -69181,9 +69181,9 @@
             "decks/legends/oketra.dck"
         ],
         "ai": "",
-        "speed": 52,
+        "speed": 36,
         "scale": 1.5,
-        "life": 49,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -69244,8 +69244,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Reidane",
@@ -69255,9 +69255,9 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 51,
+        "speed": 38,
         "scale": 1,
-        "life": 45,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -69313,8 +69313,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Adeliz",
@@ -69806,9 +69806,9 @@
             "decks/legends/pol_jamaar.dck"
         ],
         "ai": "",
-        "speed": 34,
+        "speed": 29,
         "scale": 1,
-        "life": 29,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -69864,8 +69864,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Rasputin",
@@ -70015,9 +70015,9 @@
             "decks/legends/talrand.dck"
         ],
         "ai": "",
-        "speed": 51,
+        "speed": 27,
         "scale": 1,
-        "life": 31,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -70073,8 +70073,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "The Archimandrite",
@@ -70356,9 +70356,9 @@
             "decks/legends/kazuul.dck"
         ],
         "ai": "",
-        "speed": 48,
+        "speed": 30,
         "scale": 1,
-        "life": 33,
+        "life": 17,
         "rewards": [
             {
                 "type": "card",
@@ -70414,8 +70414,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Moraug",
@@ -70990,8 +70990,8 @@
             "decks/legends/bruvac.dck"
         ],
         "ai": "",
-        "speed": 41,
-        "life": 53,
+        "speed": 36,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -71047,8 +71047,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Isperia",
@@ -71503,8 +71503,8 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 28,
-        "life": 18,
+        "speed": 19,
+        "life": 11,
         "rewards": [
             {
                 "type": "card",
@@ -71565,8 +71565,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Najal",
@@ -72190,8 +72190,8 @@
             "decks/legends/irini.dck"
         ],
         "ai": "",
-        "speed": 35,
-        "life": 31,
+        "speed": 31,
+        "life": 23,
         "rewards": [
             {
                 "type": "card",
@@ -72247,8 +72247,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Koll",
@@ -73133,8 +73133,8 @@
             "decks/legends/gonti.dck"
         ],
         "ai": "",
-        "speed": 43,
-        "life": 50,
+        "speed": 40,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -73200,8 +73200,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Hope of Ghirapur",
@@ -73351,8 +73351,8 @@
             "decks/legends/oviya.dck"
         ],
         "ai": "",
-        "speed": 35,
-        "life": 32,
+        "speed": 28,
+        "life": 17,
         "rewards": [
             {
                 "type": "card",
@@ -73413,8 +73413,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Padeem",
@@ -73644,8 +73644,8 @@
             "decks/legends/sram.dck"
         ],
         "ai": "",
-        "speed": 37,
-        "life": 31,
+        "speed": 28,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -73701,8 +73701,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Yahenni",
@@ -74392,8 +74392,8 @@
             "decks/legends/jadar.dck"
         ],
         "ai": "",
-        "speed": 45,
-        "life": 46,
+        "speed": 35,
+        "life": 29,
         "rewards": [
             {
                 "type": "card",
@@ -74449,8 +74449,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Ludevic and Kraum",
@@ -74676,8 +74676,8 @@
             "decks/legends/ozox.dck"
         ],
         "ai": "",
-        "speed": 42,
-        "life": 32,
+        "speed": 26,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -74733,8 +74733,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Millicent",
@@ -75535,8 +75535,8 @@
             "decks/legends/ayula.dck"
         ],
         "ai": "",
-        "speed": 30,
-        "life": 20,
+        "speed": 20,
+        "life": 11,
         "rewards": [
             {
                 "type": "card",
@@ -75592,8 +75592,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Duskana",
@@ -77116,8 +77116,8 @@
             "decks/legends/arni.dck"
         ],
         "ai": "",
-        "speed": 41,
-        "life": 46,
+        "speed": 40,
+        "life": 30,
         "rewards": [
             {
                 "type": "card",
@@ -77178,8 +77178,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Fynn",
@@ -77189,8 +77189,8 @@
         ],
         "ai": "",
         "scale": 1.5,
-        "speed": 39,
-        "life": 28,
+        "speed": 28,
+        "life": 21,
         "rewards": [
             {
                 "type": "card",
@@ -77246,8 +77246,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Lathril",
@@ -77526,8 +77526,8 @@
             "decks/legends/varragoth.dck"
         ],
         "ai": "",
-        "speed": 46,
-        "life": 49,
+        "speed": 36,
+        "life": 33,
         "rewards": [
             {
                 "type": "card",
@@ -77583,8 +77583,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Liberator",
@@ -77796,8 +77796,8 @@
             "decks/legends/nogi.dck"
         ],
         "ai": "",
-        "speed": 45,
-        "life": 50,
+        "speed": 37,
+        "life": 28,
         "rewards": [
             {
                 "type": "card",
@@ -77853,8 +77853,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Rograkh and Ardenn",
@@ -79775,8 +79775,8 @@
         ],
         "ai": "",
         "scale": 0.7,
-        "speed": 26,
-        "life": 20,
+        "speed": 22,
+        "life": 13,
         "rewards": [
             {
                 "type": "card",
@@ -79832,8 +79832,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Alesha",
@@ -80823,8 +80823,8 @@
         ],
         "ai": "",
         "scale": 0.5,
-        "speed": 40,
-        "life": 26,
+        "speed": 28,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -80885,8 +80885,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Squee",
@@ -80895,8 +80895,8 @@
             "decks/legends/squee.dck"
         ],
         "ai": "",
-        "speed": 35,
-        "life": 33,
+        "speed": 30,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -80962,8 +80962,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Mirri",
@@ -82823,8 +82823,8 @@
             "decks/legends/baru.dck"
         ],
         "ai": "",
-        "speed": 41,
-        "life": 19,
+        "speed": 26,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -82885,8 +82885,8 @@
         ],
         "colors": "G",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Six",
@@ -82895,8 +82895,8 @@
             "decks/legends/six.dck"
         ],
         "ai": "",
-        "speed": 49,
-        "life": 53,
+        "speed": 41,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -82952,8 +82952,8 @@
         ],
         "colors": "G",
         "spawnRate": 1,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Rishkar",
@@ -83029,8 +83029,8 @@
             "decks/legends/yeva.dck"
         ],
         "ai": "",
-        "speed": 38,
-        "life": 31,
+        "speed": 27,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -83086,8 +83086,8 @@
         ],
         "colors": "G",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Alandra",
@@ -84136,8 +84136,8 @@
             "decks/legends/zurzoth.dck"
         ],
         "ai": "",
-        "speed": 28,
-        "life": 21,
+        "speed": 20,
+        "life": 12,
         "rewards": [
             {
                 "type": "card",
@@ -84193,8 +84193,8 @@
         ],
         "colors": "R",
         "spawnRate": 1,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Norin",
@@ -84203,8 +84203,8 @@
             "decks/legends/norin.dck"
         ],
         "ai": "",
-        "speed": 40,
-        "life": 29,
+        "speed": 26,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -84265,8 +84265,8 @@
         ],
         "colors": "R",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Laelia",
@@ -84275,8 +84275,8 @@
             "decks/legends/laelia.dck"
         ],
         "ai": "",
-        "speed": 29,
-        "life": 21,
+        "speed": 21,
+        "life": 11,
         "rewards": [
             {
                 "type": "card",
@@ -84332,8 +84332,8 @@
         ],
         "colors": "R",
         "spawnRate": 1,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Jeska",
@@ -84342,7 +84342,7 @@
             "decks/legends/jeska.dck"
         ],
         "ai": "",
-        "speed": 43,
+        "speed": 29,
         "life": 21,
         "rewards": [
             {
@@ -84404,8 +84404,8 @@
         ],
         "colors": "R",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Kalemne",
@@ -84914,8 +84914,8 @@
             "decks/legends/adeline.dck"
         ],
         "ai": "",
-        "speed": 41,
-        "life": 31,
+        "speed": 29,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -84971,8 +84971,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Anya",
@@ -85049,8 +85049,8 @@
             "decks/legends/danitha.dck"
         ],
         "ai": "",
-        "speed": 31,
-        "life": 19,
+        "speed": 19,
+        "life": 12,
         "rewards": [
             {
                 "type": "card",
@@ -85116,8 +85116,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "tier": "Uncommon",
-        "difficulty": 1
+        "tier": "Common",
+        "difficulty": 0.1
     },
     {
         "name": "Delney",
@@ -85126,8 +85126,8 @@
             "decks/legends/delney.dck"
         ],
         "ai": "",
-        "speed": 42,
-        "life": 27,
+        "speed": 30,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -85183,8 +85183,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Denry Klin",
@@ -85340,8 +85340,8 @@
         ],
         "ai": "",
         "scale": 1,
-        "speed": 44,
-        "life": 46,
+        "speed": 37,
+        "life": 34,
         "rewards": [
             {
                 "type": "card",
@@ -85409,8 +85409,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Leinore",
@@ -85776,8 +85776,8 @@
             "decks/legends/yoshimaru.dck"
         ],
         "ai": "",
-        "speed": 46,
-        "life": 42,
+        "speed": 37,
+        "life": 31,
         "rewards": [
             {
                 "type": "card",
@@ -85833,8 +85833,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Anowon",
@@ -86155,8 +86155,8 @@
             "decks/legends/endrek.dck"
         ],
         "ai": "",
-        "speed": 40,
-        "life": 32,
+        "speed": 26,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -86212,8 +86212,8 @@
         ],
         "colors": "B",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Grismold",
@@ -86627,8 +86627,8 @@
             "decks/legends/tevesh_szat.dck"
         ],
         "ai": "",
-        "speed": 39,
-        "life": 26,
+        "speed": 27,
+        "life": 22,
         "rewards": [
             {
                 "type": "card",
@@ -86684,8 +86684,8 @@
         ],
         "colors": "B",
         "spawnRate": 1,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Vish Kal",
@@ -90307,8 +90307,8 @@
             "decks/legends/massacre_girl.dck"
         ],
         "ai": "",
-        "speed": 37,
-        "life": 27,
+        "speed": 26,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -90369,8 +90369,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Ashcoat",
@@ -91777,8 +91777,8 @@
             "decks/legends/grunn.dck"
         ],
         "ai": "",
-        "speed": 41,
-        "life": 27,
+        "speed": 28,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -91834,8 +91834,8 @@
         ],
         "colors": "G",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Kibo",
@@ -92397,8 +92397,8 @@
             "decks/legends/alpharael.dck"
         ],
         "ai": "",
-        "speed": 42,
-        "life": 31,
+        "speed": 29,
+        "life": 17,
         "rewards": [
             {
                 "type": "card",
@@ -92459,8 +92459,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Haliya",
@@ -92469,8 +92469,8 @@
             "decks/legends/haliya.dck"
         ],
         "ai": "",
-        "speed": 39,
-        "life": 33,
+        "speed": 29,
+        "life": 23,
         "rewards": [
             {
                 "type": "card",
@@ -92531,8 +92531,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Kilo",
@@ -92614,8 +92614,8 @@
         ],
         "ai": "",
         "flying": true,
-        "speed": 42,
-        "life": 33,
+        "speed": 28,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -92676,8 +92676,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Ragost",
@@ -92904,8 +92904,8 @@
             "decks/legends/tannuk.dck"
         ],
         "ai": "",
-        "speed": 42,
-        "life": 47,
+        "speed": 38,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -92966,8 +92966,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Bennie Bracks",
@@ -97074,9 +97074,9 @@
             "decks/legends/arnyn.dck"
         ],
         "ai": "",
-        "speed": 40,
+        "speed": 28,
         "scale": 1,
-        "life": 30,
+        "life": 18,
         "rewards": [
             {
                 "type": "item",
@@ -97154,8 +97154,8 @@
         ],
         "colors": "B",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Aziza",
@@ -97314,9 +97314,9 @@
             "decks/legends/orysa.dck"
         ],
         "ai": "",
-        "speed": 48,
+        "speed": 30,
         "scale": 1,
-        "life": 27,
+        "life": 22,
         "rewards": [
             {
                 "type": "item",
@@ -97394,8 +97394,8 @@
         ],
         "colors": "U",
         "spawnRate": 0,
-        "tier": "Rare",
-        "difficulty": 2
+        "tier": "Uncommon",
+        "difficulty": 1
     },
     {
         "name": "Abigale",
@@ -97891,9 +97891,9 @@
             "decks/legends/ihsans_shade.dck"
         ],
         "ai": "",
-        "speed": 47,
+        "speed": 37,
         "scale": 1,
-        "life": 50,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -97915,8 +97915,8 @@
         "colors": "B",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Márton Stromgald",
@@ -97959,9 +97959,9 @@
             "decks/legends/autumn_willow.dck"
         ],
         "ai": "",
-        "speed": 46,
+        "speed": 39,
         "scale": 1,
-        "life": 47,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -97983,8 +97983,8 @@
         "colors": "G",
         "gamesPerMatch": 3,
         "spawnRate": 0,
-        "tier": "Mythic",
-        "difficulty": 3
+        "tier": "Rare",
+        "difficulty": 2
     },
     {
         "name": "Cat",
@@ -100160,9 +100160,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 53,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 32,
         "rewards": [
             {
                 "type": "card",
@@ -100295,7 +100295,7 @@
             "IdentityWhite",
             "BiomeWhite"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Mill Mole",
@@ -101869,9 +101869,9 @@
         ],
         "ai": "reckless",
         "spawnRate": 0,
-        "difficulty": 1,
-        "speed": 29,
-        "life": 20,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 11,
         "rewards": [
             {
                 "type": "gold",
@@ -102065,7 +102065,7 @@
             }
         ],
         "colors": "R",
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Brian Hacker '98",
@@ -102385,9 +102385,9 @@
         ],
         "ai": "",
         "spawnRate": 0,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 46,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 31,
         "rewards": [
             {
                 "type": "gold",
@@ -102581,7 +102581,7 @@
             }
         ],
         "colors": "R",
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Mark Le Pine '99",
@@ -102591,9 +102591,9 @@
         ],
         "ai": "reckless",
         "spawnRate": 0,
-        "difficulty": 1,
-        "speed": 22,
-        "life": 25,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 13,
         "rewards": [
             {
                 "type": "gold",
@@ -102787,7 +102787,7 @@
             }
         ],
         "colors": "R",
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Matt Linde '99",
@@ -103209,9 +103209,9 @@
         ],
         "ai": "",
         "spawnRate": 0,
-        "difficulty": 3,
-        "speed": 43,
-        "life": 47,
+        "difficulty": 2,
+        "speed": 41,
+        "life": 26,
         "rewards": [
             {
                 "type": "gold",
@@ -103405,7 +103405,7 @@
             }
         ],
         "colors": "U",
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Janosch Kühn '00",
@@ -104257,9 +104257,9 @@
         ],
         "ai": "",
         "spawnRate": 0,
-        "difficulty": 1,
-        "speed": 27,
-        "life": 23,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 13,
         "rewards": [
             {
                 "type": "gold",
@@ -104453,7 +104453,7 @@
             }
         ],
         "colors": "U",
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Antoine Ruel '01",
@@ -111676,9 +111676,9 @@
         "ai": "",
         "flying": true,
         "spawnRate": 0.5,
-        "difficulty": 2,
-        "speed": 39,
-        "life": 34,
+        "difficulty": 1,
+        "speed": 29,
+        "life": 22,
         "rewards": [
             {
                 "type": "gold",
@@ -111877,7 +111877,7 @@
             "Angel",
             "BiomeWhite"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "High Priest of Shandalar",
@@ -113568,10 +113568,10 @@
         ],
         "ai": "reckless",
         "spawnRate": 0.5,
-        "difficulty": 2,
-        "speed": 39,
+        "difficulty": 1,
+        "speed": 29,
         "scale": 1.2,
-        "life": 28,
+        "life": 18,
         "rewards": [
             {
                 "type": "gold",
@@ -113770,7 +113770,7 @@
             "Hydra",
             "BiomeRed"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "War Mage of Shandalar",
@@ -114239,9 +114239,9 @@
         ],
         "ai": "",
         "spawnRate": 0.5,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 21,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 10,
         "rewards": [
             {
                 "type": "gold",
@@ -114441,7 +114441,7 @@
             "Druid",
             "BiomeGreen"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Summoner of Shandalar",
@@ -114451,9 +114451,9 @@
         ],
         "ai": "reckless",
         "spawnRate": 0.5,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 18,
         "rewards": [
             {
                 "type": "gold",
@@ -114652,7 +114652,7 @@
             "Human",
             "BiomeGreen"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "The Great Druid",
@@ -118021,9 +118021,9 @@
         ],
         "ai": "reckless",
         "spawnRate": 0.5,
-        "difficulty": 1,
+        "difficulty": 0.1,
         "speed": 21,
-        "life": 32,
+        "life": 11,
         "rewards": [
             {
                 "type": "gold",
@@ -118120,7 +118120,7 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Uncle Istvan",
@@ -123979,8 +123979,8 @@
             "decks/legends/cerise.dck"
         ],
         "ai": "",
-        "speed": 43,
-        "life": 52,
+        "speed": 35,
+        "life": 26,
         "rewards": [
             {
                 "type": "card",
@@ -124036,8 +124036,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "difficulty": 3,
-        "tier": "Mythic"
+        "difficulty": 2,
+        "tier": "Rare"
     },
     {
         "name": "Emiel",
@@ -124239,8 +124239,8 @@
             "decks/legends/phelia.dck"
         ],
         "ai": "",
-        "speed": 46,
-        "life": 40,
+        "speed": 29,
+        "life": 20,
         "rewards": [
             {
                 "type": "card",
@@ -124296,8 +124296,8 @@
         ],
         "colors": "W",
         "spawnRate": 1,
-        "difficulty": 2,
-        "tier": "Rare"
+        "difficulty": 1,
+        "tier": "Uncommon"
     },
     {
         "name": "Preston",
@@ -124373,9 +124373,9 @@
             "decks/legends/thurid.dck"
         ],
         "ai": "",
-        "speed": 58,
+        "speed": 30,
         "scale": 1,
-        "life": 54,
+        "life": 18,
         "rewards": [
             {
                 "type": "item",
@@ -124463,8 +124463,8 @@
         ],
         "colors": "W",
         "spawnRate": 0,
-        "difficulty": 2,
-        "tier": "Rare"
+        "difficulty": 1,
+        "tier": "Uncommon"
     },
     {
         "name": "Autumn Willow (An-Havva)",
@@ -124680,8 +124680,8 @@
             "decks/legends/greensleeves.dck"
         ],
         "ai": "",
-        "speed": 48,
-        "life": 38,
+        "speed": 27,
+        "life": 18,
         "rewards": [
             {
                 "type": "card",
@@ -124742,8 +124742,8 @@
         ],
         "colors": "G",
         "spawnRate": 1,
-        "difficulty": 2,
-        "tier": "Rare"
+        "difficulty": 1,
+        "tier": "Uncommon"
     },
     {
         "name": "Joven and Chandler",
@@ -124752,9 +124752,9 @@
             "decks/legends/joven_and_chandler.dck"
         ],
         "ai": "",
-        "speed": 59,
+        "speed": 41,
         "scale": 1,
-        "life": 61,
+        "life": 28,
         "rewards": [
             {
                 "type": "item",
@@ -124847,8 +124847,8 @@
         ],
         "colors": "R",
         "spawnRate": 0,
-        "difficulty": 3,
-        "tier": "Mythic"
+        "difficulty": 2,
+        "tier": "Rare"
     },
     {
         "name": "Cynette",
@@ -124924,8 +124924,8 @@
             "decks/legends/grandmother_goby.dck"
         ],
         "ai": "",
-        "speed": 49,
-        "life": 47,
+        "speed": 35,
+        "life": 27,
         "rewards": [
             {
                 "type": "card",
@@ -124981,8 +124981,8 @@
         ],
         "colors": "U",
         "spawnRate": 1,
-        "difficulty": 3,
-        "tier": "Mythic"
+        "difficulty": 2,
+        "tier": "Rare"
     },
     {
         "name": "Kitsa",
@@ -125125,8 +125125,8 @@
             "decks/legends/neerdiv.dck"
         ],
         "ai": "",
-        "speed": 47,
-        "life": 38,
+        "speed": 26,
+        "life": 19,
         "rewards": [
             {
                 "type": "card",
@@ -125182,8 +125182,8 @@
         ],
         "colors": "U",
         "spawnRate": 1,
-        "difficulty": 2,
-        "tier": "Rare"
+        "difficulty": 1,
+        "tier": "Uncommon"
     },
     {
         "name": "Rikala",
@@ -125630,9 +125630,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 48,
-        "life": 42,
+        "difficulty": 2,
+        "speed": 41,
+        "life": 34,
         "rewards": [
             {
                 "type": "deckCard",
@@ -125683,7 +125683,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Kor Wanderer",
@@ -125882,9 +125882,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 22,
+        "difficulty": 0.1,
+        "speed": 21,
+        "life": 10,
         "rewards": [
             {
                 "type": "deckCard",
@@ -125935,7 +125935,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Elf Wanderer",
@@ -126268,9 +126268,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 23,
         "rewards": [
             {
                 "type": "deckCard",
@@ -126321,7 +126321,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Viashino Wanderer",
@@ -126847,9 +126847,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 30,
-        "life": 21,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -126900,7 +126900,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Red Dragonkin Renegade",
@@ -126973,9 +126973,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 29,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 23,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127026,7 +127026,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Blue Dragonkin Renegade",
@@ -127099,9 +127099,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 42,
-        "life": 44,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 32,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127152,7 +127152,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Black Dragonkin Renegade",
@@ -127162,9 +127162,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 46,
+        "difficulty": 2,
+        "speed": 38,
+        "life": 29,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127215,7 +127215,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Kor Hookmaster",
@@ -127479,9 +127479,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 48,
-        "life": 53,
+        "difficulty": 2,
+        "speed": 41,
+        "life": 29,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127532,7 +127532,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Kor Duelist",
@@ -127542,9 +127542,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 23,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127595,7 +127595,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Kor Outfitter",
@@ -127671,7 +127671,7 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
+        "speed": 19,
         "life": 12,
         "rewards": [
             {
@@ -127733,9 +127733,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 19,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127786,7 +127786,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Kor Castigator",
@@ -127925,8 +127925,8 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
-        "life": 12,
+        "speed": 22,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -127987,9 +127987,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 39,
-        "life": 34,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -128040,7 +128040,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Kor Spiritdancer",
@@ -128691,9 +128691,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 34,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 23,
         "rewards": [
             {
                 "type": "deckCard",
@@ -128743,7 +128743,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Honking Goose",
@@ -128881,9 +128881,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 44,
+        "difficulty": 2,
+        "speed": 38,
+        "life": 31,
         "rewards": [
             {
                 "type": "deckCard",
@@ -128933,7 +128933,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Meowing Cat",
@@ -129321,9 +129321,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 27,
-        "life": 17,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -129373,7 +129373,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Tiny Chick",
@@ -129635,9 +129635,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 32,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 19,
         "rewards": [
             {
                 "type": "deckCard",
@@ -129687,7 +129687,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Crimson Imp",
@@ -129761,9 +129761,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
-        "life": 31,
+        "difficulty": 1,
+        "speed": 29,
+        "life": 19,
         "rewards": [
             {
                 "type": "deckCard",
@@ -129813,7 +129813,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Floating Eye",
@@ -129887,9 +129887,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 27,
+        "difficulty": 1,
+        "speed": 31,
+        "life": 22,
         "rewards": [
             {
                 "type": "deckCard",
@@ -129939,7 +129939,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Grinning Gremlin",
@@ -130389,9 +130389,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 43,
-        "life": 41,
+        "difficulty": 2,
+        "speed": 39,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -130441,7 +130441,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Elder White Dragon",
@@ -130699,9 +130699,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 39,
-        "life": 29,
+        "difficulty": 1,
+        "speed": 29,
+        "life": 19,
         "rewards": [
             {
                 "type": "deckCard",
@@ -130751,7 +130751,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Baby White Dragon",
@@ -131833,9 +131833,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
-        "life": 21,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 14,
         "rewards": [
             {
                 "type": "deckCard",
@@ -131885,7 +131885,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Halfling Rogue",
@@ -131895,9 +131895,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 18,
+        "difficulty": 0.1,
+        "speed": 21,
+        "life": 10,
         "rewards": [
             {
                 "type": "deckCard",
@@ -131947,7 +131947,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Halfling Slinger",
@@ -132463,9 +132463,71 @@
         ],
         "ai": "",
         "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 25,
+        "life": 21,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 70
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "Red"
+                ],
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "colorType": "MonoColor"
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Monster",
+            "IdentityRed",
+            "BiomeRed",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon"
+    },
+    {
+        "name": "Crushing Cyclops",
+        "sprite": "sprites/enemy/basic/monster/crushing_cyclops.atlas",
+        "deck": [
+            "decks/standard/crushing_cyclops.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
         "difficulty": 2,
-        "speed": 33,
-        "life": 33,
+        "speed": 38,
+        "life": 32,
         "rewards": [
             {
                 "type": "deckCard",
@@ -132516,68 +132578,6 @@
             "BiomeColorless"
         ],
         "tier": "Rare"
-    },
-    {
-        "name": "Crushing Cyclops",
-        "sprite": "sprites/enemy/basic/monster/crushing_cyclops.atlas",
-        "deck": [
-            "decks/standard/crushing_cyclops.dck"
-        ],
-        "ai": "",
-        "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 42,
-        "life": 41,
-        "rewards": [
-            {
-                "type": "deckCard",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 6,
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ]
-            },
-            {
-                "type": "gold",
-                "probability": 1,
-                "count": 20,
-                "addMaxCount": 70
-            },
-            {
-                "type": "card",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 4,
-                "colors": [
-                    "Red"
-                ],
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ],
-                "colorType": "MonoColor"
-            },
-            {
-                "type": "deckCard",
-                "probability": 0.5,
-                "count": 1,
-                "addMaxCount": 4,
-                "rarity": [
-                    "Rare",
-                    "Mythic Rare"
-                ]
-            }
-        ],
-        "colors": "R",
-        "questTags": [
-            "Monster",
-            "IdentityRed",
-            "BiomeRed",
-            "BiomeColorless"
-        ],
-        "tier": "Mythic"
     },
     {
         "name": "Death Slime",
@@ -133097,9 +133097,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 22,
         "rewards": [
             {
                 "type": "deckCard",
@@ -133149,7 +133149,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Mire Troll",
@@ -133159,9 +133159,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -133211,7 +133211,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Bound Cadaver",
@@ -133471,9 +133471,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 25,
-        "life": 22,
+        "difficulty": 0.1,
+        "speed": 18,
+        "life": 10,
         "rewards": [
             {
                 "type": "deckCard",
@@ -133523,7 +133523,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Ghastly Eye",
@@ -133913,9 +133913,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -133965,7 +133965,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Toxic Hound",
@@ -134037,9 +134037,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 25,
-        "life": 19,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -134089,7 +134089,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Vampire Bat",
@@ -134223,9 +134223,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 51,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 27,
         "rewards": [
             {
                 "type": "deckCard",
@@ -134275,7 +134275,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Deft Sorceress",
@@ -134411,9 +134411,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 18,
         "rewards": [
             {
                 "type": "deckCard",
@@ -134463,7 +134463,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Ember Elemental",
@@ -134474,8 +134474,8 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
-        "life": 12,
+        "speed": 21,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -134979,9 +134979,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 49,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 32,
         "rewards": [
             {
                 "type": "deckCard",
@@ -135031,7 +135031,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Tide Elemental",
@@ -136041,9 +136041,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 48,
-        "life": 48,
+        "difficulty": 2,
+        "speed": 38,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136093,7 +136093,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Hedge Slime",
@@ -136227,9 +136227,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 26,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136279,7 +136279,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Hexcaller Warlock",
@@ -136289,9 +136289,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 30,
-        "life": 17,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136341,7 +136341,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Levy Swordsman",
@@ -136353,7 +136353,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "life": 12,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136599,9 +136599,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
-        "life": 18,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136651,7 +136651,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Crossbow Marksman",
@@ -136661,9 +136661,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 26,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 17,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136713,7 +136713,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Cavalier Captain",
@@ -136723,9 +136723,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 31,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 22,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136775,7 +136775,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Outrider",
@@ -136785,9 +136785,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 22,
         "rewards": [
             {
                 "type": "deckCard",
@@ -136837,7 +136837,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Court Mage",
@@ -137474,9 +137474,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 26,
-        "life": 18,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -137526,7 +137526,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 0.45
     },
     {
@@ -137663,9 +137663,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 30,
+        "difficulty": 1,
+        "speed": 31,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -137715,7 +137715,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare",
+        "tier": "Uncommon",
         "scale": 0.45
     },
     {
@@ -137726,9 +137726,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 31,
-        "life": 18,
+        "difficulty": 0.1,
+        "speed": 21,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -137778,7 +137778,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 0.45
     },
     {
@@ -137853,7 +137853,7 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
+        "speed": 19,
         "life": 12,
         "rewards": [
             {
@@ -137978,9 +137978,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 31,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -138030,7 +138030,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare",
+        "tier": "Uncommon",
         "scale": 0.45
     },
     {
@@ -138105,7 +138105,7 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
+        "speed": 19,
         "life": 12,
         "rewards": [
             {
@@ -138230,9 +138230,72 @@
         ],
         "ai": "",
         "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 11,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 70
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "Red"
+                ],
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "colorType": "MonoColor"
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Orc",
+            "IdentityRed",
+            "BiomeRed",
+            "BiomeColorless"
+        ],
+        "tier": "Common",
+        "scale": 0.45
+    },
+    {
+        "name": "Orc Warchief",
+        "sprite": "sprites/enemy/basic/humanoid/orc_warchief.atlas",
+        "deck": [
+            "decks/standard/orc_warchief.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
         "difficulty": 1,
         "speed": 27,
-        "life": 18,
+        "life": 21,
         "rewards": [
             {
                 "type": "deckCard",
@@ -138286,69 +138349,6 @@
         "scale": 0.45
     },
     {
-        "name": "Orc Warchief",
-        "sprite": "sprites/enemy/basic/humanoid/orc_warchief.atlas",
-        "deck": [
-            "decks/standard/orc_warchief.dck"
-        ],
-        "ai": "",
-        "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
-        "life": 28,
-        "rewards": [
-            {
-                "type": "deckCard",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 6,
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ]
-            },
-            {
-                "type": "gold",
-                "probability": 1,
-                "count": 20,
-                "addMaxCount": 70
-            },
-            {
-                "type": "card",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 4,
-                "colors": [
-                    "Red"
-                ],
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ],
-                "colorType": "MonoColor"
-            },
-            {
-                "type": "deckCard",
-                "probability": 0.5,
-                "count": 1,
-                "addMaxCount": 4,
-                "rarity": [
-                    "Rare",
-                    "Mythic Rare"
-                ]
-            }
-        ],
-        "colors": "R",
-        "questTags": [
-            "Orc",
-            "IdentityRed",
-            "BiomeRed",
-            "BiomeColorless"
-        ],
-        "tier": "Rare",
-        "scale": 0.45
-    },
-    {
         "name": "Orc Deathcaller",
         "sprite": "sprites/enemy/basic/humanoid/orc_deathcaller.atlas",
         "deck": [
@@ -138356,9 +138356,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
-        "life": 55,
+        "difficulty": 2,
+        "speed": 38,
+        "life": 32,
         "rewards": [
             {
                 "type": "deckCard",
@@ -138408,7 +138408,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic",
+        "tier": "Rare",
         "scale": 0.45
     },
     {
@@ -138671,9 +138671,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 52,
+        "difficulty": 2,
+        "speed": 38,
+        "life": 30,
         "rewards": [
             {
                 "type": "deckCard",
@@ -138723,7 +138723,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Mythic",
+        "tier": "Rare",
         "scale": 0.45
     },
     {
@@ -138986,9 +138986,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
-        "life": 22,
+        "difficulty": 0.1,
+        "speed": 18,
+        "life": 14,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139038,7 +139038,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 0.45
     },
     {
@@ -139112,9 +139112,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 22,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139164,7 +139164,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare",
+        "tier": "Uncommon",
         "scale": 0.45
     },
     {
@@ -139238,9 +139238,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 49,
-        "life": 52,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139290,7 +139290,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic",
+        "tier": "Rare",
         "scale": 0.45
     },
     {
@@ -139301,9 +139301,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 28,
+        "difficulty": 1,
+        "speed": 29,
+        "life": 19,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139353,7 +139353,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare",
+        "tier": "Uncommon",
         "scale": 0.45
     },
     {
@@ -139490,9 +139490,72 @@
         ],
         "ai": "",
         "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 22,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 70
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "White"
+                ],
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "colorType": "MonoColor"
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Knight",
+            "IdentityWhite",
+            "BiomeWhite",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.45
+    },
+    {
+        "name": "Shieldmaiden Paragon",
+        "sprite": "sprites/enemy/basic/humanoid/shieldmaiden_paragon.atlas",
+        "deck": [
+            "decks/standard/shieldmaiden_paragon.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
         "difficulty": 2,
-        "speed": 38,
-        "life": 33,
+        "speed": 39,
+        "life": 34,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139543,69 +139606,6 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
-    },
-    {
-        "name": "Shieldmaiden Paragon",
-        "sprite": "sprites/enemy/basic/humanoid/shieldmaiden_paragon.atlas",
-        "deck": [
-            "decks/standard/shieldmaiden_paragon.dck"
-        ],
-        "ai": "",
-        "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 55,
-        "rewards": [
-            {
-                "type": "deckCard",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 6,
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ]
-            },
-            {
-                "type": "gold",
-                "probability": 1,
-                "count": 20,
-                "addMaxCount": 70
-            },
-            {
-                "type": "card",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 4,
-                "colors": [
-                    "White"
-                ],
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ],
-                "colorType": "MonoColor"
-            },
-            {
-                "type": "deckCard",
-                "probability": 0.5,
-                "count": 1,
-                "addMaxCount": 4,
-                "rarity": [
-                    "Rare",
-                    "Mythic Rare"
-                ]
-            }
-        ],
-        "colors": "W",
-        "questTags": [
-            "Knight",
-            "IdentityWhite",
-            "BiomeWhite",
-            "BiomeColorless"
-        ],
-        "tier": "Mythic",
         "scale": 0.45
     },
     {
@@ -139678,9 +139678,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 50,
+        "difficulty": 2,
+        "speed": 39,
+        "life": 30,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139730,7 +139730,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Amomongo",
@@ -139740,9 +139740,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 35,
-        "life": 31,
+        "difficulty": 1,
+        "speed": 30,
+        "life": 22,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139792,7 +139792,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Wild Boar",
@@ -139803,8 +139803,8 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
-        "speed": 20,
-        "life": 12,
+        "speed": 19,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139926,9 +139926,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -139978,7 +139978,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Busaw",
@@ -139988,9 +139988,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 24,
-        "life": 20,
+        "difficulty": 0.1,
+        "speed": 21,
+        "life": 13,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140040,7 +140040,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Buwaya",
@@ -140050,9 +140050,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 28,
-        "life": 20,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 12,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140102,7 +140102,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Barnyard Hen",
@@ -140298,9 +140298,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 30,
-        "life": 20,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 10,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140350,7 +140350,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Golden Dwende",
@@ -140484,9 +140484,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 45,
-        "life": 45,
+        "difficulty": 2,
+        "speed": 40,
+        "life": 31,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140536,7 +140536,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Kolyog",
@@ -140546,9 +140546,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 37,
-        "life": 34,
+        "difficulty": 1,
+        "speed": 25,
+        "life": 19,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140598,7 +140598,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Uncommon"
     },
     {
         "name": "Malakat",
@@ -140670,9 +140670,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 46,
-        "life": 50,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140722,7 +140722,7 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Nuno sa Punso",
@@ -140732,9 +140732,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 27,
-        "life": 18,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 10,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140784,7 +140784,7 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Common"
     },
     {
         "name": "Fighting Rooster",
@@ -140856,9 +140856,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 47,
-        "life": 50,
+        "difficulty": 2,
+        "speed": 35,
+        "life": 26,
         "rewards": [
             {
                 "type": "deckCard",
@@ -140908,7 +140908,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Rare"
     },
     {
         "name": "Sigbin",
@@ -141042,9 +141042,133 @@
         ],
         "ai": "",
         "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 11,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 70
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "Blue"
+                ],
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "colorType": "MonoColor"
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Merfolk",
+            "IdentityBlue",
+            "BiomeBlue",
+            "BiomeColorless"
+        ],
+        "tier": "Common"
+    },
+    {
+        "name": "Taong Tuod",
+        "sprite": "sprites/enemy/basic/monster/taong_tuod.atlas",
+        "deck": [
+            "decks/standard/taong_tuod.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 39,
+        "life": 31,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 6,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 70
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "colors": [
+                    "Green"
+                ],
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "colorType": "MonoColor"
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Treefolk",
+            "IdentityGreen",
+            "BiomeGreen",
+            "BiomeColorless"
+        ],
+        "tier": "Rare"
+    },
+    {
+        "name": "Tiburones",
+        "sprite": "sprites/enemy/basic/humanoid/tiburones.atlas",
+        "deck": [
+            "decks/standard/tiburones.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
         "difficulty": 1,
-        "speed": 29,
-        "life": 21,
+        "speed": 27,
+        "life": 20,
         "rewards": [
             {
                 "type": "deckCard",
@@ -141095,130 +141219,6 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon"
-    },
-    {
-        "name": "Taong Tuod",
-        "sprite": "sprites/enemy/basic/monster/taong_tuod.atlas",
-        "deck": [
-            "decks/standard/taong_tuod.dck"
-        ],
-        "ai": "",
-        "spawnRate": 1,
-        "difficulty": 3,
-        "speed": 44,
-        "life": 41,
-        "rewards": [
-            {
-                "type": "deckCard",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 6,
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ]
-            },
-            {
-                "type": "gold",
-                "probability": 1,
-                "count": 20,
-                "addMaxCount": 70
-            },
-            {
-                "type": "card",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 4,
-                "colors": [
-                    "Green"
-                ],
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ],
-                "colorType": "MonoColor"
-            },
-            {
-                "type": "deckCard",
-                "probability": 0.5,
-                "count": 1,
-                "addMaxCount": 4,
-                "rarity": [
-                    "Rare",
-                    "Mythic Rare"
-                ]
-            }
-        ],
-        "colors": "G",
-        "questTags": [
-            "Treefolk",
-            "IdentityGreen",
-            "BiomeGreen",
-            "BiomeColorless"
-        ],
-        "tier": "Mythic"
-    },
-    {
-        "name": "Tiburones",
-        "sprite": "sprites/enemy/basic/humanoid/tiburones.atlas",
-        "deck": [
-            "decks/standard/tiburones.dck"
-        ],
-        "ai": "",
-        "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 40,
-        "life": 30,
-        "rewards": [
-            {
-                "type": "deckCard",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 6,
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ]
-            },
-            {
-                "type": "gold",
-                "probability": 1,
-                "count": 20,
-                "addMaxCount": 70
-            },
-            {
-                "type": "card",
-                "probability": 1,
-                "count": 2,
-                "addMaxCount": 4,
-                "colors": [
-                    "Blue"
-                ],
-                "rarity": [
-                    "Common",
-                    "Uncommon"
-                ],
-                "colorType": "MonoColor"
-            },
-            {
-                "type": "deckCard",
-                "probability": 0.5,
-                "count": 1,
-                "addMaxCount": 4,
-                "rarity": [
-                    "Rare",
-                    "Mythic Rare"
-                ]
-            }
-        ],
-        "colors": "U",
-        "questTags": [
-            "Merfolk",
-            "IdentityBlue",
-            "BiomeBlue",
-            "BiomeColorless"
-        ],
-        "tier": "Rare"
     },
     {
         "name": "Tiyanak",
@@ -141667,9 +141667,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 2,
-        "speed": 38,
-        "life": 33,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 19,
         "rewards": [
             {
                 "type": "deckCard",
@@ -141719,7 +141719,7 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Rare",
+        "tier": "Uncommon",
         "scale": 0.5
     },
     {
@@ -141919,9 +141919,9 @@
         ],
         "ai": "",
         "spawnRate": 1,
-        "difficulty": 1,
-        "speed": 27,
-        "life": 20,
+        "difficulty": 0.1,
+        "speed": 18,
+        "life": 11,
         "rewards": [
             {
                 "type": "deckCard",
@@ -141971,7 +141971,7 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon",
+        "tier": "Common",
         "scale": 0.8
     },
     {
