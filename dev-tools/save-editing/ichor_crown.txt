@@ -1,0 +1,24 @@
+# Ichor Crown v5 - white/black toxic control, 40 cards. Poison ignores the AI's inflated Insane life totals;
+# premium removal keeps your 12 life safe. Black main, white splash (Banisher Priest is the only WW card).
+8 Swamp
+5 Plains
+1 Sunlit Marsh
+1 Terramorphic Expanse
+1 Shimmering Grotto
+2 Bilious Skulldweller
+2 Pestilent Syphoner
+1 Blightbelly Rat
+1 Tithe Drinker
+2 Annex Sentry
+1 Karumonix, the Rat King
+1 Qarsi Revenant
+1 Banisher Priest
+1 Sheoldred's Headcleaver
+1 Liliana's Reaver
+1 Kinzu of the Bleak Coven
+1 Nimraiser Paladin
+1 Get Lost
+2 Anoint with Affliction
+2 Drown in Ichor
+1 Murder
+3 Vraska's Fall

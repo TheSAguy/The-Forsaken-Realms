@@ -11,7 +11,7 @@ import java.util.zip.InflaterInputStream;
  *   java WriteDecks <save.sav> [--write] [--show] slot=<n>:<Deck Name>:<listfile> ...
  * A list file holds "<count> <Card Name>" lines (# comments allowed). Cards resolve to the printings the
  * player owns; basic lands (Plains/Island/Swamp/Mountain/Forest) fall back to a plain "<n> <Name>" row when
- * the collection has fewer than requested. Dry run unless --write; always writes <save>.prededit3.bak first.
+ * the collection has fewer than requested. Dry run unless --write; always writes <save>.prededit4.bak first; select=<n> also sets selectedDeckIndex.
  * Only player.deck_<n> / deck_name_<n> change; world / worldStage / pointOfInterestChanges bytes pass through.
  */
 public class WriteDecks {
@@ -26,11 +26,12 @@ public class WriteDecks {
     public static void main(String[] args) throws Exception {
         com.badlogic.gdx.utils.GdxNativesLoader.load();
         String path = args[0];
-        boolean write = false, show = false;
+        boolean write = false, show = false; int select = -1;
         List<String[]> jobs = new ArrayList<>();
         for (int i = 1; i < args.length; i++) {
             if ("--write".equals(args[i])) write = true;
             else if ("--show".equals(args[i])) show = true;
+            else if (args[i].startsWith("select=")) select = Integer.parseInt(args[i].substring(7));
             else if (args[i].startsWith("slot=")) {
                 String[] parts = args[i].substring(5).split(":", 3);
                 jobs.add(parts);
@@ -123,7 +124,7 @@ public class WriteDecks {
         if (!NEW_BASICS.isEmpty()) System.out.println("free basics the collection gains (largest shortfall per land, decks share the pool): " + NEW_BASICS);
         if (!write) { System.out.println("\n[DRY RUN] nothing written. Pass --write to apply."); return; }
 
-        Path src = Paths.get(path), bak = Paths.get(path + ".prededit3.bak");
+        Path src = Paths.get(path), bak = Paths.get(path + ".prededit4.bak");
         Files.copy(src, bak, StandardCopyOption.REPLACE_EXISTING);
         System.out.println("\nbackup -> " + bak);
         if (!NEW_BASICS.isEmpty()) {
@@ -136,6 +137,7 @@ public class WriteDecks {
             player.storeObject("deck_" + e.getKey(), e.getValue());
             player.store("deck_name_" + e.getKey(), names.get(e.getKey()));
         }
+        if (select >= 0) { player.store("selectedDeckIndex", select); System.out.println("selectedDeckIndex -> " + select); }
         main.store("player", player);
         Path tmp = Paths.get(path + ".tmp");
         try (FileOutputStream fos = new FileOutputStream(tmp.toFile());
