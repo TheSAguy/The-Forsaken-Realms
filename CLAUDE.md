@@ -46,10 +46,20 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Realms\<n>_save_slot.sav`, `forge.log`).
 - **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards), 121, 122 and 123 ship with
   the next APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
-- **Upstream drift**: 6 commits / 9 files (6 java) past our merge base `042b3267af7` as of 2026-09-05 22:00. Take them
+- **Upstream drift**: 14 commits / 37 files (15 java) past our merge base `042b3267af7` as of 2026-09-06 12:05 (upstream tip
+  `6155ef58a50`). Take them
   as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
   The review's section 4.8 names the five files that will conflict first (World, WorldStage, MapStage, AdventurePlayer,
   RewardScene).
+- **NEXT SESSION = the v1.06 release** (user decision 2026-09-06 12:05, session closed right after): follow the release
+  rule below in order - (1) upstream engine merge as its own round (14 commits / 37 files; CORE_ENGINE_CHANGES.md per
+  conflicting file, README to OURS, re-check the Android branding/version stamps ANDROID_RELEASE.md lists), (2) the user
+  reinstalls `E:\GAMES\Forge_2` at the matching daily - ask for it early, the packager refuses on a mismatch, (3) rebuild,
+  (4) the user re-tests, (5) bump config.json modVersion/modVersionDate + forge-gui-android/pom.xml tfr.version 1.06 /
+  manifestVersionCode 10600, RELEASE_NOTES_v1.06.md (rounds 120-126 + the merge), desktop zip via `--out
+  C:\Users\User\TFR-Release --zip` (NEVER repackage the live folder while `javaw.exe` runs - the user may be playing;
+  the --out build is the backup/release copy), Android APK + assets.zip per ANDROID_RELEASE.md from a C: copy of the
+  repo, tag `tfr-v1.06`, publish with `gh -R TheSAguy/The-Forsaken-Realms`.
 - **Open**: (0) playtest-confirm round 126 - lose in a dungeon, reload from the menu, re-enter: the dungeon must stay
   and life must stay at the loaded value (`[TFR-LoadReset]` line on the load); the Mages' Fort golem must be three
   tiles tall; (0b) playtest-confirm round 125 - an AI-capital Arena bracket must show no Apprentice fighters, each playing
