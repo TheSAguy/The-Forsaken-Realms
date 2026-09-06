@@ -1537,6 +1537,7 @@ public class MapStage extends GameStage {
         TileMapScene.instance().getPointOfInterestChanges(currentMap).clearDeletedObjects();
         
         TiledMap currentTiledMap = loadMapFile(currentMap);
+        try {
         
         for (MapLayer layer : currentTiledMap.getLayers()) {
             if (layer.getProperties().containsKey("spriteLayer") || layer instanceof TiledMapTileLayer) {
@@ -1556,6 +1557,9 @@ public class MapStage extends GameStage {
                     }
                 }
             }
+        }
+        } finally {
+            currentTiledMap.dispose(); // round 123 review S4-2: loaded (textures included) only to read its objects
         }
     }
 

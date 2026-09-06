@@ -285,6 +285,7 @@ public class TerritoryControl {
      * side-bosses) that an earlier, since-reverted approach was deleting outright.
      */
     public static void neutralizeAfterGeneration(World world) {
+        resetSessionState(); // round 123 review S2-5: a brand-new world starts with no per-session territory cache
         if (!isEnabled())
             return;
 
@@ -490,6 +491,19 @@ public class TerritoryControl {
     private static final int FORCE_RECONTEST_INTERVAL_DAYS = 30;
     private static final Map<String, Long> lastPullSourcesFingerprint = new HashMap<>();
     private static final Map<String, Integer> lastFullRecontestDay = new HashMap<>();
+
+    /** Round 123 (2026-09-05 code review S2-5): the maps above and the neutral-defense tally are per-session
+     *  caches keyed by owner name. Loading another save (or an older autosave of the same world) or starting a
+     *  new game must not inherit the previous world's fingerprints and re-contest days, or the first day tick
+     *  after the load decides its border re-contest from a different timeline. Called from
+     *  WorldStage.clearCache() (every load) and neutralizeAfterGeneration() (every new world). */
+    public static void resetSessionState() {
+        lastPullSourcesFingerprint.clear();
+        lastFullRecontestDay.clear();
+        neutralDefenseAttempts = 0;
+        neutralDefenseRepels = 0;
+        neutralDefenseExpectedRepels = 0f;
+    }
 
     private static long pullSourcesFingerprint(List<float[]> source) {
         long hash = 17;
@@ -2194,6 +2208,21 @@ public class TerritoryControl {
         // losing a restored town costs the player its share of the town-count life bonus.
         boolean wasPlayerOwned = TownRestoration.isTownRestored(
                 WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID()));
+        if (wasPlayerOwned) {
+            // Round 123 (2026-09-05 code review S2-3): player ownership IS the townRestored flag on the changes
+            // keyed by the OLD id, and nothing ever removed it. A sack keeps the town's template name, so the
+            // id and the changes object survive transformInto() unchanged: the sacked ruin stayed player-owned,
+            // still counted as Player in the standings, was re-expanded as player land by the next day tick and
+            // was a Rally rune target. A capture re-keys the town, but the orphaned old entry kept the flag and
+            // handed ownership back the moment a later revert restored the old name (S2-4). Clear it here, on
+            // the entry the old id still resolves to, before the transform.
+            PointOfInterestChanges lostChanges = WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID());
+            if (lostChanges != null) {
+                lostChanges.getMapFlags().remove(TownRestoration.TOWN_RESTORED_FLAG);
+                System.out.println("[TFR-Ownership] " + displayName + " leaves player hands ("
+                        + (isSacked ? "sacked" : isRevert ? "reverted" : "captured") + ") - townRestored flag cleared");
+            }
+        }
         // The town's territory may have GROWN past RECOLOR_RADIUS (town expansion, up to
         // TOWN_MAX_TERRITORY_RADIUS) - read its radius under the OLD id, before transformInto()
         // changes it, and repaint the FULL held radius. Repainting only RECOLOR_RADIUS would

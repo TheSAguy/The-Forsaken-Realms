@@ -282,7 +282,9 @@ before you commit to fighting them if a specific item is your goal.
 The Quick Travel Mart in your Capitol and your towns sells the Omenstones, the Ghost rune, and the
 **Rally rune**, which carries you to just outside whichever of your towns is under attack - with
 several besieged, each use goes to the next one in turn, so four uses reach four towns before the
-cycle starts over. While none of your towns is targeted it does nothing and costs nothing.
+cycle starts over. While none of your towns is targeted it does nothing and costs nothing. The main
+quest hands you your first one: hire a guard for Orazca ("Raise the Banner") and the stage ends with a
+briefing on how guards fare against attacking mages and a Rally rune to answer the next attack.
 
 ## Notes on Difficulty
 
@@ -523,7 +525,7 @@ included. Each color sends one every 2–5 days.
 - Mages **walk** to their target, so you can intercept one in the field before it arrives.
 - The **Rally rune** (Quick Travel Mart) drops you outside one of your towns that a mage is heading
   for; use it again to jump to the next besieged town. It stays quiet while nothing of yours is
-  under attack.
+  under attack. "Raise the Banner" gives you one for hiring your first guard; more are sold at the mart.
 - **Guards** you've hired fight first. If they fall, you defend your Capitol in person in a forced
   best-of-three — **and losing that ends your run.**
 - **Neutral towns defend themselves**: 15% base, 20% if the town still has a working Armory.

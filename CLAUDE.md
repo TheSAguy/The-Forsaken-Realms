@@ -17,31 +17,41 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-05 NIGHT (round 122) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 EARLY (round 123) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 122 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-122 are
-  post-release fixes and additions: UIScene dialog z-order (Android Armory report), one Trading Post OR Exchange per
-  town, town-exit discovery flash, WriteDecks `select=` + the user's v5 deck lists, and round 122 = the
-  `[TFR-DungeonClear]` log gate, 48 new cave map icons by biome (`maps/tileset/caves.atlas`, 81 plain-Cave entries
-  re-pointed, zero sprite indexes spread over existing saves) and the **Rally rune** (Quick Travel Mart item;
-  `teleport rally` cycles through the player's towns under attack, refunds the shard when none is).
-- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-122 jar (built 19:20), `PACKAGE_OK` 19:30.
+- **HEAD = round 123 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-123 are
+  post-release fixes and additions. Round 123 = the **deep code review** (`docs/review/2026-09-05-code-review.md` -
+  read its section 1 and 5 before touching World/WorldBackground/TerritoryControl/save code) with its 11 applied fixes:
+  the minimap re-bake and per-tile ground pixmap native-memory leaks, per-map tileset texture leaks, a sacked player
+  town staying player-owned, the free Ante Re-roll, `TerritoryControl` statics surviving loads, a truncated save on a
+  runtime failure, three `serialVersionUID` pins, a `BiomeStructure` index bug; plus `dev-tools/validate_plane_data.py`
+  (run it before packaging) and the **Rally rune as the "Hire a guard" reward** (quest 43 stage 2 epilogue: guard
+  briefing, then `grantRewards`; only quests issued AFTER this round carry it - the user's NG+ save keeps its old copy).
+- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-123 jar (built 23:41), `PACKAGE_OK` 23:51.
   The user plays their NG+ Insane game from save slot 1 (12/12 life). Decks v5 (17:05): slot 1 "Ichor Crown" (W/B toxic
   control, selected), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W). Backups `1_save_slot.sav.prededit2/3/4.bak`
   sit beside the save - do not delete them. The saves + log live in `%APPDATA%\ForsakenRealms\` (`adventure\The Forsaken
   Realms\<n>_save_slot.sav`, `forge.log`).
-- **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards), 121 and 122 ship with the
-  next APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
+- **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards), 121, 122 and 123 ship with
+  the next APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
 - **Upstream drift**: 6 commits / 9 files (6 java) past our merge base `042b3267af7` as of 2026-09-05 22:00. Take them
   as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
-- **Open**: (a) playtest-confirm round 121 (no Trading Post offer in a Capitol that has an Exchange; the area lights up
-  for ~3 s when leaving a town/Capitol/castle); (b) playtest-confirm round 122 (cave icons vary per biome in the NG+ world
-  on load; the Rally rune appears in the Quick Travel Mart, cycles through besieged towns, and refunds its shard with a
-  "stays quiet" notification when nothing is under attack; `[TFR-DungeonClear]` no longer prints for towns); (c) MOD_SCOPE
-  #84 Building Upgrades and #85 New Quests are the only Not Started items; #11 Map Polish is In Progress; #104 Rally Rune
-  awaits playtest.
+  The review's section 4.8 names the five files that will conflict first (World, WorldStage, MapStage, AdventurePlayer,
+  RewardScene).
+- **Open**: (a) playtest-confirm rounds 121-122 (Trading Post/Exchange exclusivity, town-exit flash, cave icons per biome,
+  Rally rune from the Quick Travel Mart); (b) playtest-confirm round 123 - process memory should stay flat over a long
+  session (watch Task Manager while walking with fog on; before this round it grew ~100 KB per tile stepped and 31 MB per
+  minimap bake), a sacked player town must read as neutral the next day (`[TFR-Ownership]` line), an Ante Re-roll must
+  cost shards that stay gone after the match (`[TFR-AnteReroll] in-match mana shards` line), and a new game must get the
+  guard briefing + Rally rune when "Hire a guard" completes; (c) the review's "fix before release" list (section 5):
+  loud failure on a broken save instead of silent world regeneration (S1-1), re-keying per-town state on capture (S2-4 -
+  needs the user's answer to open question 1: what does a lost town keep?), loud config parse failures (S2-6), the data
+  fixes the validator lists (33 missing reward items, 45 unknown map enemies incl. the Skep Slivers, 2 unknown shop
+  types, Slobad's `"Card"`, the `RandomShop` sign), logging the exceptions `Adventure.render` swallows (S4-6), untracking
+  `.claude/settings.json`'s `bypassPermissions` (S6-1); (d) MOD_SCOPE #84 Building Upgrades and #85 New Quests are the
+  only Not Started items; #11 Map Polish is In Progress; #104 Rally Rune awaits playtest.
 - Rules that held all week: package only when `tasklist | grep javaw.exe` is 0 - the user plays between rounds and
   "repo only" means exactly that; one Maven at a time, always backgrounded (~15-17 min); pushes are routine since
   2026-09-05 (push after each round); every round updates MOD_CHANGELOG + this file + CORE_ENGINE_CHANGES in its commit.
@@ -80,6 +90,11 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 123 (2026-09-05, PACKAGED 23:51): deep code review (`docs/review/2026-09-05-code-review.md`) + its 11 fixes
+  (S2-1/S2-2 pixmap leaks in World/WorldBackground, S4-1/S4-2 TiledMap leaks in TileMapScene/MapStage, S2-3 sacked-town
+  ownership + S2-5 static reset in TerritoryControl, S3-1 Ante Re-roll charge in DuelScene/MatchController, S1-2 WorldSave
+  RuntimeException catch, S1-3/S1-4 serialVersionUID pins, S2-7 BiomeStructure bounds); `dev-tools/validate_plane_data.py`;
+  quest 43 stage 2 epilogue grants the Rally rune. Build 06:32 min, package fast path 9 min.
 - Round 122 (2026-09-05, PACKAGED 19:30): `[TFR-DungeonClear]` gated on `DungeonRotation.isRotatableData`; 48 cave icons ->
   `caves.atlas` per-biome sets + `PointOfInterest.spreadZeroSpriteIndex`; Rally rune item/shop/icon + `teleport rally`
   (`TerritoryControl.playerTownsUnderAttack/nextRallyTarget`, `World.rallyLastTargetId`). MOD_SCOPE #104.

@@ -4676,4 +4676,7 @@ towns (and Omenport). Under attack = targeted by an in-flight capture mage, the 
 `TerritoryControl.playerTownsUnderAttack()` / `nextRallyTarget()` cycle in POI-id order with the previous
 target remembered on the World; no target = shard refunded + notification. Open: whether it should also cover
 Ring Cities the player holds (they are restored towns, so they already count) and whether the landing spot
-should face the incoming mage's road.
+should face the incoming mage's road. Round 123 (2026-09-05, user request): the rune is also the reward of the
+main quest "Raise the Banner" stage "Hire a guard" - the stage epilogue congratulates the player, summarizes
+guard tiers, wages and duel/capture odds, then grants one Rally rune (quests.json stage 2 epilogue,
+`grantRewards`). Quests already accepted in an existing save keep their old, empty stage epilogue.

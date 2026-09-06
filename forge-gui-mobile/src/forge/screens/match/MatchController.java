@@ -720,6 +720,9 @@ public class MatchController extends NetworkGuiGame {
                 break;
             }
             player.takeShards(cost);
+            // Round 123 (code review S3-1): the purse deduction alone was undone by DuelScene.GameEnd()'s
+            // shard write-back from the in-match player; charge that count too.
+            DuelScene.instance().chargeInGameManaShards(cost);
             currentItems = reroll.get();
             rerollCount++;
         }

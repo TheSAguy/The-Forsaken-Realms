@@ -363,6 +363,29 @@ public class DuelScene extends ForgeScene {
         Forge.setTransitionScreen(new TransitionScreen(endRunnable, ScreenUtil.getInstance().takeScreenshot(), false, false));
     }
 
+    /**
+     * Round 123 (2026-09-05 code review S3-1): GameEnd() copies the in-match player's mana shards back over the
+     * purse (Current.player().setShards(...) above), so any shard spend made from the match thread while a game
+     * is running - the Ante Re-roll in MatchController.revealAnteCards() - must also be taken from the in-match
+     * count, or the write-back refunds it when the match ends (every re-roll of an ordinary duel was free).
+     * The game exists by the time the ante is chosen (HostedMatch.startGame() creates it synchronously before
+     * Match.startGame() runs), so this finds the human seat by its RegisteredPlayer.
+     */
+    public void chargeInGameManaShards(int cost) {
+        if (cost <= 0 || hostedMatch == null || hostedMatch.getGame() == null || humanPlayer == null)
+            return;
+        for (forge.game.player.Player p : hostedMatch.getGame().getPlayers()) {
+            if (p.getRegisteredPlayer() == humanPlayer) {
+                int before = p.getNumManaShards();
+                p.setNumManaShards(Math.max(0, before - cost));
+                System.out.println("[TFR-AnteReroll] in-match mana shards " + before + " -> " + p.getNumManaShards()
+                        + " (purse already charged; keeps GameEnd()'s write-back consistent)");
+                return;
+            }
+        }
+        System.out.println("[TFR-AnteReroll] could not find the human seat to charge " + cost + " in-match shards");
+    }
+
     private FOptionPane createFOption(String message, String title, FBufferedImage icon, Runnable runnable) {
         return new FOptionPane(message, null, title, icon, null, ImmutableList.of(Forge.getLocalizer().getMessage("lblOK")), -1, result -> {
             if (runnable != null)

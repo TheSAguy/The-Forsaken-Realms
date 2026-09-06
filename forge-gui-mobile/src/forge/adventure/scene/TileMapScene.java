@@ -216,6 +216,7 @@ public class TileMapScene extends HudScene {
         }
         String mapPath = resolveMapPath(point); // round 106: Ring Cities use their own layouts
         oldMap = mapPath;
+        disposePreviousMap(); // round 123 review S4-1
         map = new TemplateTmxMapLoader().load(Config.instance().getCommonFilePath(mapPath));
         ((MapStage) stage).setPointOfInterest(getPointOfInterestChanges());
         // Sell prices follow the town you are STANDING IN (2026-08-31 fix). This field previously
@@ -240,6 +241,7 @@ public class TileMapScene extends HudScene {
     String oldMap;
 
     private void load(String targetMap, int nextSpawnPoint) {
+        disposePreviousMap(); // round 123 review S4-1
         map = new TemplateTmxMapLoader().load(Config.instance().getFilePath(targetMap));
         ((MapStage) stage).setPointOfInterest(getPointOfInterestChanges(targetMap));
         stage.getPlayerSprite().setPosition(0, 0);
@@ -247,6 +249,25 @@ public class TileMapScene extends HudScene {
         tiledMapRenderer.loadMap(map, oldMap, targetMap, nextSpawnPoint);
         oldMap = targetMap;
         stage.getPlayerSprite().stop();
+    }
+
+    /**
+     * Round 123 (2026-09-05 code review S4-1): TmxMapLoader uploads a fresh Texture for every tileset image of
+     * a map and hands ownership to the TiledMap; the only dispose() was the scene's own at application exit, so
+     * every town, dungeon floor or cave entered kept its tilesets in GPU/native memory for the whole session
+     * (upstream behavior, but this game's loop is town-to-town all day). Nothing renders the old map between
+     * this call and the next load: MapStage.loadMap() drops every actor that referenced it, the sign and
+     * overlay sprites come from the atlas cache, and the renderer takes the new map in loadMap().
+     */
+    private void disposePreviousMap() {
+        if (map == null)
+            return;
+        try {
+            map.dispose();
+        } catch (Exception e) {
+            System.err.println("[TFR-Map] could not dispose the previous map: " + e);
+        }
+        map = null;
     }
 
     public PointOfInterestChanges getPointOfInterestChanges() {

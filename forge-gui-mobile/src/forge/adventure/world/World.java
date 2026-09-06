@@ -830,15 +830,34 @@ public class World implements Disposable, SaveFileContent {
         }
     }
 
+    /**
+     * Returns a pixmap the CALLER OWNS and must dispose() once it has been drawn (round 123 review S2-2).
+     * Before this round the method mixed fresh pixmaps with shared ones (the fog tile, the map-edge tile), so
+     * callers could dispose nothing and every tile ever composited - a chunk build, the fog-of-war repatch
+     * around the player on every tile stepped, each discovery flash - leaked ~1 KB of native memory (plus a
+     * second copy for hazed tiles). libGDX Pixmaps have no finalizer, so this only ever grew.
+     */
     public Pixmap getBiomeSprite(int x, int y) {
         if (x < 0 || y <= 0 || x >= width || y > height)
             return new Pixmap(data.tileSize, data.tileSize, Pixmap.Format.RGBA8888);
         if (!isExploredWorld(x, y))
-            return getFogTile();
+            return copyTile(getFogTile());
         Pixmap real = generateBiomeSprite(x, y);
-        if (isFogOfWarEnabled() && !isCurrentlyVisible(x, y))
-            return hazeTile(real);
+        if (isFogOfWarEnabled() && !isCurrentlyVisible(x, y)) {
+            Pixmap hazed = hazeTile(real);
+            real.dispose();
+            return hazed;
+        }
         return real;
+    }
+
+    // A fresh, caller-owned copy of a shared tile (the fog tile, the map-edge tiles) - see getBiomeSprite().
+    private static Pixmap copyTile(Pixmap shared) {
+        Pixmap copy = new Pixmap(shared.getWidth(), shared.getHeight(), Pixmap.Format.RGBA8888);
+        copy.setBlending(Pixmap.Blending.None);
+        copy.drawPixmap(shared, 0, 0);
+        copy.setBlending(Pixmap.Blending.SourceOver);
+        return copy;
     }
 
     // The tile's true appearance, ignoring fog entirely - callers go through getBiomeSprite(),
@@ -856,7 +875,12 @@ public class World implements Disposable, SaveFileContent {
             BiomeTexture regions = biomeTexture[i];
             if (x <= 0 || y <= 1 || x >= width - 1 || y >= height)//edge
             {
-                return regions.getPixmap(biomeTerrain);
+                // Round 123 review S2-2: draw the shared edge tile into the fresh pixmap allocated above (which
+                // was leaked here before) so every return of this method is caller-owned, like getBiomeSprite() says.
+                drawingPixmap.setBlending(Pixmap.Blending.None);
+                drawingPixmap.drawPixmap(regions.getPixmap(biomeTerrain), 0, 0);
+                drawingPixmap.setBlending(Pixmap.Blending.SourceOver);
+                return drawingPixmap;
             }
 
 
@@ -1847,7 +1871,10 @@ public class World implements Disposable, SaveFileContent {
                 }
             }
             mapMarkerPixmap.dispose();
+            Pixmap previousBiomeImage = biomeImage; // round 123 review S2-1: a second game in one session leaked the first world's 31 MB image
             biomeImage = pix;
+            if (previousBiomeImage != null && previousBiomeImage != pix)
+                previousBiomeImage.dispose();
             rebuildFogOfWarPixmap();
             measureGenerationTime("sprites", currentTime[0]);
             // Territory Control (MOD_SCOPE.md #7), opt-in via territoryControlEnabled - runs after
@@ -2285,7 +2312,14 @@ public class World implements Disposable, SaveFileContent {
             }
         }
         pixmapHash.clear();
+        // Round 123 review S2-1: every re-bake (dungeon rotation batches, guard-level refreshes, captures)
+        // replaced the 2800x2800 image without disposing the previous one - ~31 MB of native memory per
+        // bake, invisible to the Java heap. GameHUD/MapViewScene textures were uploaded from the old image
+        // already and never read it again, so disposing it here is safe.
+        Pixmap previousBiomeImage = biomeImage;
         biomeImage = pix;
+        if (previousBiomeImage != null && previousBiomeImage != pix)
+            previousBiomeImage.dispose();
         try {
             drawPixmapNow(pix);
         } catch (Exception e) {

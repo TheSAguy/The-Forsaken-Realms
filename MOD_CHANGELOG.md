@@ -17757,6 +17757,81 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 123: deep code review - 11 fixes (native-memory leaks, town ownership, free Ante Re-roll, save pins), a plane data validator, the Rally rune as the "Hire a guard" reward (2026-09-05, packaged)
+
+The user asked for a meticulous whole-codebase review (mod code, the upstream files the mod edits, all plane data),
+then "proceed as far as you can on your own, okay to make obvious/critical fixes", then to make the Rally rune the
+reward of the main quest's "Hire a guard" stage. The review is `docs/review/2026-09-05-code-review.md` (executive
+summary, 37-row findings table, per-subsystem findings S1-S6 with quoted code and failure scenarios, cross-cutting
+observations, a three-tier remediation plan, open questions, minor list, Phase 0 build/orientation appendix, Phase 1
+inventory of all 178 in-scope files) plus `2026-09-05-data-validation.txt` and the Phase 0 build/lint logs. Every
+"Fix now" item was applied this round; everything else is documented with a proposed fix and left alone.
+
+**Fixes applied (all local; each carries a `round 123 review S…` comment at the site):**
+
+- **S2-1 Critical - minimap re-bake leaked 31 MB per bake.** `World.rebakeMinimapAfterTerritoryControl()` and
+  `generateNew()` replaced the 2800x2800 `biomeImage` without disposing the previous one (libGDX Pixmaps free native
+  memory only on `dispose()`; the Java heap never showed it). Callers: every dungeon-rotation batch, the daily AI
+  guard-level refresh, captures and Capitol upgrades - a 30-day session leaked ~300 MB. Now disposed on both paths.
+- **S2-2 Critical - every ground tile ever composited leaked.** `World.getBiomeSprite()` handed out a mix of fresh and
+  shared pixmaps, so `WorldBackground` (chunk builds and the per-tile-stepped fog repatch loop, 81 tiles per step)
+  disposed nothing: ~100 KB of native memory per tile walked. `getBiomeSprite()` now always returns a caller-owned
+  pixmap (copy of the fog tile; the map-edge case draws into the pixmap it already allocated instead of abandoning it
+  and returning the shared one; `hazeTile()` disposes its input), and both `WorldBackground` sites dispose after
+  `draw()`. Upstream had the chunk-build leak; the mod's fog repatch multiplied it.
+- **S4-1 High - every map entered leaked its tileset textures** (`TileMapScene.load()`, both paths; the only dispose
+  was at app exit). New `disposePreviousMap()` runs before each load. **S4-2** - `MapStage.resetMapRecursive()`
+  loaded maps (textures included) just to read their entry objects and never disposed them; now `try/finally`.
+- **S2-3 High - a sacked player town stayed player-owned.** Ownership is `TOWN_RESTORED_FLAG` on the town's changes
+  keyed by POI id; a sack keeps the template name (same id, same object) and nothing ever removed the flag, so the
+  ruin still counted as Player, was re-expanded as player land the next day tick and was a Rally rune target. A capture
+  orphaned the old entry with the flag intact and handed ownership back when a later revert restored the name.
+  `TerritoryControl.onMageArrived()` now clears the flag on the old-id entry before `transformInto()` (logged as
+  `[TFR-Ownership]`). The wider orphan problem (buildings/guards resurrecting on a name round-trip, S2-4) is
+  documented with a fix plan, not applied - it needs the user's decision on what a lost town keeps (open question 1).
+- **S3-1 High - the Ante Re-roll was free.** `MatchController.revealAnteCards()` charged the purse only;
+  `DuelScene.GameEnd()` then copied the in-match player's mana shards (which still held the pre-re-roll amount)
+  back over the purse. New `DuelScene.chargeInGameManaShards(cost)` lowers the in-match count too.
+- **S2-5 Medium - `TerritoryControl`'s static pull-source fingerprints, re-contest days and neutral-defense tally
+  survived loads and new games.** New `resetSessionState()`, called from `WorldStage.clearCache()` (every load) and
+  `neutralizeAfterGeneration()` (every new world).
+- **S1-2 High - a `RuntimeException` during `WorldSave.save()` left a truncated `.sav` with the backup already
+  renamed away.** Now caught like `IOException`: backup restored, `[TFR-Save]` line, error dialog.
+- **S1-3/S1-4 High (latent) - `serialVersionUID` pinned** on `SaveFileData` (the outer object of every save),
+  `DialogData.ActionData.QuestFlag` (inside every saved quest) and `AdventureEventData.AdventureEventHuman`, at the
+  values the JVM derived for the v1.05 shape (verified identical on the current jar with a survey tool), so adding a
+  field to any of them can no longer void old saves. No behavior change; the survey shows 29 serializable classes, all
+  pinned now.
+- **S2-7 Low - `BiomeStructure`'s wave-function-collapse failure branch looped over the whole map while writing at
+  chunk offsets** (`ArrayIndexOutOfBounds` for any chunk but the first). Upstream bug; loop bounded to the chunk.
+
+**Plane data validator** - `dev-tools/validate_plane_data.py` (with `validate_plane_data_stage_fields.txt`): parses
+every JSON file with libGDX's lenient rules, checks every key against the Java loader classes (0 unknown keys, 0 parse
+failures), all 779 atlases (0 missing pages), all 349 maps reachable from the plane's POIs (all reachable, none dead),
+and cross-checks POI/enemy/shop/item/deck/quest/tmx references. Its findings, left for a data round: 33 reward items
+named by 26 roaming enemies and 7 bosses do not exist in `items.json` (Jodah, The Ur-Dragon, Sengir, the 26 Ikoria
+commanders' "Kill Trophy", the Ur-Dragon/False God keys …) so those drops silently vanish; `skep_outer.tmx` and two
+Temple of Liliana maps place 43 "Black/Blue/… Sliver" (the catalog names them `Sliver_Black` etc.) plus "Legionnaire"
+and "Human Guard", which the engine silently replaces with random biome roamers; `swamp_town.tmx` asks for a "Horror"
+shop and `plains_town_generic.tmx` for "Everything", neither exists; Slobad's reward type is `"Card"` (case-sensitive,
+yields nothing); the "Random" shop's `RandomShop` sign region is missing from `buildings.atlas`. Full list in
+`docs/review/2026-09-05-data-validation.txt` (report regenerated by the script).
+
+**Rally rune as the "Hire a guard" reward (user request 2026-09-05).** `quests.json` quest 43 "Raise the Banner",
+stage 2 "Hire a guard": the stage's empty epilogue is now a three-page dialog - "Good work - Orazca has its first
+guard…" (wages, disband rule), a summary of guard tiers and odds (tier-vs-tier duels, +10% attacker, -5% Outlook,
+capture roll 10/30/70/90% by mage tier), then "Take this Rally rune to help your cause" with a `grantRewards` item
+action. It shows through the normal stage-epilogue path (`AdventureQuestController.showQuestDialogs`, next time
+quest dialogs are shown after the flag flips). **Caveat:** quests copy their dialogs into the save when accepted, so a
+save whose "Raise the Banner" is already running or done keeps the old empty epilogue - the user's NG+ save will not
+see it unless the quest is re-issued; new games will. `GUIDE.md` (two places) and MOD_SCOPE #104 updated.
+
+**Not applied, documented for v1.06 ("fix before release" in section 5):** loud failure instead of silent world
+regeneration on a broken save (S1-1, upstream behavior widened by the mod's nine load hooks), re-keying per-town state
+on capture (S2-4), loud config.json/settings.json parse failures (S2-6), the data fixes above, logging the exceptions
+`Adventure.render()` swallows (S4-6), the content-filter CSV write-back fragility (S3-6), untracking
+`.claude/settings.json`'s `bypassPermissions` (S6-1), a save-format version number, a `[TFR-Mem]` heap line.
+
 ## Round 122: DungeonClear log gate, 48 cave map icons by biome, the Rally rune (2026-09-05, packaged)
 
 Three user asks in one round, built and packaged into the live folder.

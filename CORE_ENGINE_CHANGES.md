@@ -2138,3 +2138,24 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`world/World.java`** - `rallyLastTargetId` (String: `store`d when set, `containsKey`-guarded read, reset with the Territory Control state) + getter/setter.
 - **`util/TerritoryControl.java`** (mod-new) - `playerTownsUnderAttack()`, `nextRallyTarget(world, targets)`.
 - **`stage/ConsoleCommandInterpreter.java`** - `teleport rally` command (the Rally rune's `commandOnUse`; refunds the rune's shards and posts a notification when no player town is under attack).
+
+## Round 123 (2026-09-05) - code-review fixes, Rally rune quest reward
+
+Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every change is a few lines with a
+`round 123 review S…` comment at the site.
+
+- **`util/SaveFileData.java`** - `serialVersionUID = 2370928267361276519L` pinned (S1-4; the derived v1.05 value).
+- **`data/DialogData.java`** - `ActionData.QuestFlag.serialVersionUID = -3808510202986416615L` pinned (S1-3).
+- **`data/AdventureEventData.java`** - `AdventureEventHuman.serialVersionUID = -6819102903640880265L` pinned (S1-3).
+- **`world/WorldSave.java`** - `save()` also catches `RuntimeException`: restores the `.old` backup, `[TFR-Save]` line, error dialog (S1-2).
+- **`world/World.java`** - `generateNew()` and `rebakeMinimapAfterTerritoryControl()` dispose the previous `biomeImage` (S2-1); `getBiomeSprite()` now returns a caller-owned pixmap (new `copyTile()` for the shared fog tile; `hazeTile()`'s input disposed); `generateBiomeSprite()`'s map-edge case draws the shared tile into the already-allocated pixmap instead of leaking it and returning the shared one (S2-2).
+- **`stage/WorldBackground.java`** - `getChunkTexture()` and `onTileRevealed()` dispose each tile pixmap after `draw()` (S2-2).
+- **`world/BiomeStructure.java`** (upstream file) - WFC failure branch loops over `chunkWidth`/`chunkHeight`, not `dataMap.length` (S2-7).
+- **`util/TerritoryControl.java`** (mod-new) - `onMageArrived()` removes `TOWN_RESTORED_FLAG` from the old-id changes when a player town is captured, sacked or reverted (`[TFR-Ownership]`, S2-3); new `resetSessionState()` clears the pull-source fingerprints, re-contest days and neutral-defense tally, called from `neutralizeAfterGeneration()` (S2-5).
+- **`stage/WorldStage.java`** - `clearCache()` calls `TerritoryControl.resetSessionState()` (S2-5).
+- **`scene/DuelScene.java`** - new `chargeInGameManaShards(int)`: lowers the human seat's in-match mana shards so `GameEnd()`'s write-back keeps an Ante Re-roll charge (S3-1).
+- **`forge-gui-mobile/src/forge/screens/match/MatchController.java`** - `revealAnteCards()` calls it after `takeShards(cost)` (S3-1).
+- **`scene/TileMapScene.java`** - new `disposePreviousMap()` before both `TemplateTmxMapLoader().load(...)` calls (S4-1).
+- **`stage/MapStage.java`** - `resetMapRecursive()` disposes each parsed map in a `finally` (S4-2).
+- **Data** - `world/quests.json` quest 43 stage 2 epilogue (guard briefing + `grantRewards` "Rally rune"); `GUIDE.md`; `MOD_SCOPE.md` #104.
+- **Tooling** - `dev-tools/validate_plane_data.py` + `validate_plane_data_stage_fields.txt` (plane data validator); `docs/review/` (the review, data report, Phase 0 logs).

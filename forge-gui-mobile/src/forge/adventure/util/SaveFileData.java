@@ -13,6 +13,10 @@ import java.io.*;
 import java.util.HashMap;
 
 public class SaveFileData extends HashMap<String, byte[]> {
+    // Round 123 (2026-09-05 code review S1-4): pinned at the value the JVM derived for the v1.05 class
+    // shape (verified identical on the current build), so a future field added to this class can no longer
+    // make every existing save unreadable. This is the outer object of every .sav file.
+    private static final long serialVersionUID = 2370928267361276519L;
     public void store(String key, SaveFileData subData) {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

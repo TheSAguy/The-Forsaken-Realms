@@ -59,6 +59,9 @@ public class DialogData implements Serializable {
     static public class ActionData implements Serializable {
         public static final long serialVersionUID = 2848523275822677205L;
         static public class QuestFlag implements Serializable{
+            // Round 123 (2026-09-05 code review S1-3): pinned at the derived v1.05 value; reachable from every
+            // saved quest and from items with a dialogOnUse, so an unpinned UID here could void old saves.
+            private static final long serialVersionUID = -3808510202986416615L;
             public String key;
             public int val;
         }

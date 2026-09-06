@@ -238,7 +238,9 @@ public class WorldBackground extends Actor {
             Texture newChunk = new Texture(chunkSize * tileSize, chunkSize * tileSize, Pixmap.Format.RGBA8888);
             for (int cx = 0; cx < chunkSize; cx++) {
                 for (int cy = 0; cy < chunkSize; cy++) {
-                    newChunk.draw(WorldSave.getCurrentSave().getWorld().getBiomeSprite(cx + chunkSize * x, cy + chunkSize * y), cx * tileSize, (chunkSize * tileSize) - (cy + 1) * tileSize);
+                    Pixmap tile = WorldSave.getCurrentSave().getWorld().getBiomeSprite(cx + chunkSize * x, cy + chunkSize * y); // round 123 review S2-2: caller-owned, dispose after drawing
+                    newChunk.draw(tile, cx * tileSize, (chunkSize * tileSize) - (cy + 1) * tileSize);
+                    tile.dispose();
                 }
             }
             chunks[x][y] = newChunk;
@@ -394,5 +396,6 @@ public class WorldBackground extends Actor {
         int localY = Math.floorMod(worldTileY, chunkSize);
         Pixmap tile = WorldSave.getCurrentSave().getWorld().getBiomeSprite(worldTileX, worldTileY);
         tex.draw(tile, localX * tileSize, (chunkSize * tileSize) - (localY + 1) * tileSize);
+        tile.dispose(); // round 123 review S2-2: getBiomeSprite() hands out caller-owned pixmaps
     }
 }

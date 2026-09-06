@@ -9402,7 +9402,37 @@
 						}
 					]
 				},
-				"epilogue": {},
+				"epilogue": {
+					"text": "Good work - Orazca has its first guard. Hired defenses fight off attacking wizards before they ever reach your gates, for a weekly wage: paid when the guard is hired and every week after. A guard whose wage goes unpaid disbands.",
+					"options": [
+						{
+							"name": "(Continue)",
+							"text": "How your guards fare: Apprentice, Adept, Master and Archmage guards each cost more per week and fight harder. A guard's duel against an attacking mage is decided by their tiers - equal tiers are close to even, and every tier of difference swings the odds hard - with the attacker always getting +10%, less 5% if the town has an Outlook. A beaten guard is gone for good; a beaten mage never reaches the town. If no guard stands, the mage rolls to take the town itself: Apprentice 10%, Adept 30%, Master 70%, Archmage 90%.",
+							"options": [
+								{
+									"name": "(Continue)",
+									"text": "Take this Rally rune to help your cause. Use it from the world map while one of your towns is under attack and it carries you to that town's gates; with several towns besieged, each use takes you to the next one in turn. When nothing is under attack it stays quiet and costs you nothing.",
+									"options": [
+										{
+											"name": "(Take the Rally rune)",
+											"action": [
+												{
+													"grantRewards": [
+														{
+															"type": "item",
+															"itemName": "Rally rune",
+															"count": 1
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
 				"POIToken": ""
 			},
 			{

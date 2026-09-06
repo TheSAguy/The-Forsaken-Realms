@@ -311,6 +311,16 @@ public class WorldSave {
             restoreBackup(oldFileName, fileName);
             announceError("Please check forge.log for errors.");
             return true;
+        } catch (RuntimeException e) {
+            // Round 123 (2026-09-05 code review S1-2): a non-IO failure inside the serializers (an NPE in one of
+            // the mod's save() hooks, an unserializable field) used to escape this method with the .sav already
+            // renamed to .old and a truncated new file in its place - the next launch then failed to load it and
+            // silently regenerated the world. Restore the backup exactly as the IOException path does.
+            System.err.println("[TFR-Save] save failed with " + e + " - restoring the previous save file");
+            e.printStackTrace();
+            restoreBackup(oldFileName, fileName);
+            announceError("Please check forge.log for errors.");
+            return true;
         }
 
         Config.instance().getSettingData().lastActiveSave = WorldSave.filename(currentSlot);

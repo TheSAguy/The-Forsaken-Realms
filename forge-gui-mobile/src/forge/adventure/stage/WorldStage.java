@@ -1663,6 +1663,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // persisted, both must forget the previous run/save here.
         DungeonRotation.resetSessionState();
         TerritoryControl.clearPendingCapitolDefense();
+        TerritoryControl.resetSessionState(); // round 123 review S2-5: per-session territory caches must not outlive the save
         background.clear();
         player = null;
         // A loaded save's first tile should always get its own log line, not get silently

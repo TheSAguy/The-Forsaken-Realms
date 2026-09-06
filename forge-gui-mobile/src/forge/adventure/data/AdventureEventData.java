@@ -1156,6 +1156,8 @@ public class AdventureEventData implements Serializable {
     }
 
     public static class AdventureEventHuman extends AdventureEventParticipant {
+        // Round 123 (2026-09-05 code review S1-3): pinned at the derived v1.05 value (saved inside every event).
+        private static final long serialVersionUID = -6819102903640880265L;
         @Override
         public Deck getDeck() {
             return registeredDeck == null ? Current.player().getSelectedDeck() : registeredDeck;

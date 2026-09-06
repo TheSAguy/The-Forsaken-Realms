@@ -1,0 +1,147 @@
+Data validation for: forge-gui/res/adventure/The Forsaken Realms
+counts: atlas-region=1, atlases-parsed=779, enemy-deck-refs=1877, enum=21, ref-enemy=45, ref-item=56, ref-shop=7, reward-type=1, tmx-parsed=349, tmx-reachable=349, tmx-unreachable-in-plane=0
+items=655 enemies=1787 pois=335 shops=308 quests=85
+tmx object types: dialog=72, reward=30, enemy=10, portal=8, dummy=5, RotatingShop=4, quest=2, waypoint=1, spellsmith=1
+
+== atlas-region (1) ==
+  shops.json[240](Random): region 'RandomShop' not in maps/tileset/buildings.atlas
+
+== enum (21) ==
+  enemies.json[16](Angel Overseer): colors 'uw'
+  enemies.json[54](Bloodgift Demon): colors 'brw'
+  enemies.json[304](Minor Demon): colors 'b'
+  points_of_interest.json[136](Garruk Forest): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[144](Grolnoks Bog): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[152](Grove7): type 'sidebosshard' (not in the known set; informational)
+  points_of_interest.json[162](Jacehold): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[164](Kiora Island): type 'sidebosseasy' (not in the known set; informational)
+  points_of_interest.json[208](Nahiri Encampment): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[234](Slimefoots Lair): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[235](Slime Cave): type 'sidebosseasy' (not in the known set; informational)
+  points_of_interest.json[236](Camel Cave): type 'sidebosseasy' (not in the known set; informational)
+  points_of_interest.json[237](Scarecrow Farm): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[238](Slobads Factory): type 'sidebosseasy' (not in the known set; informational)
+  points_of_interest.json[239](Skep): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[249](Teferi Hideout): type 'sidebosseasy' (not in the known set; informational)
+  points_of_interest.json[253](Tibalts Fortress): type 'sidebossmoderate' (not in the known set; informational)
+  points_of_interest.json[254](UnhallowedAbbey): type 'sidebosshard' (not in the known set; informational)
+  points_of_interest.json[258](VampireCastle3): type 'sidebosshard' (not in the known set; informational)
+  points_of_interest.json[265](Xiras Hive): type 'sidebosseasy' (not in the known set; informational)
+  points_of_interest.json[267](Zedruu City): type 'sidebossmoderate' (not in the known set; informational)
+
+== ref-enemy (45) ==
+  maps/map/main_story/temple_of_liliana/bog.tmx#259: enemy 'Black Sliver' not in enemies.json
+  maps/map/main_story/temple_of_liliana/forest.tmx#188: enemy 'Black Sliver' not in enemies.json
+  maps/map/main_story/temple_of_liliana/forest.tmx#268: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#65: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#66: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#67: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#68: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#69: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#70: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#72: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#101: enemy 'Legionnaire' not in enemies.json
+  maps/map/skep/skep_outer.tmx#123: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#124: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#125: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#126: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#127: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#128: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#129: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#130: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#131: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#132: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#133: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#134: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#135: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#136: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#137: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#139: enemy 'Red Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#140: enemy 'Red Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#141: enemy 'Red Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#142: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#143: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#144: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#145: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#146: enemy 'Black Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#147: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#148: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#149: enemy 'White Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#154: enemy 'Red Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#188: enemy 'Red Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#227: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#230: enemy 'Blue Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#237: enemy 'Green Sliver' not in enemies.json
+  maps/map/skep/skep_outer.tmx#263: enemy 'Blue Sliver' not in enemies.json
+  maps/map/fort/fort_colorless_3_human.tmx#69: enemy 'Human Guard' not in enemies.json
+  maps/map/fort/fort_white_4_farm.tmx#59: enemy 'Human Guard' not in enemies.json
+
+== ref-item (56) ==
+  enemies.json[487](Jodah).rewards[0]: item 'Commander's Robes' not in items.json
+  enemies.json[500](Kynaios and Tiro).rewards[2]: item 'Black Key to the Ur-Dragon' not in items.json
+  enemies.json[501](Saskia).rewards[2]: item 'Blue Key to the Ur-Dragon' not in items.json
+  enemies.json[502](Breya).rewards[2]: item 'Green Key to the Ur-Dragon' not in items.json
+  enemies.json[503](Atraxa).rewards[2]: item 'Red Key to the Ur-Dragon' not in items.json
+  enemies.json[504](Yidris).rewards[2]: item 'White Key to the Ur-Dragon' not in items.json
+  enemies.json[512](The Ur-Dragon).rewards[0]: item 'Opal Cloak' not in items.json
+  enemies.json[517](The First Sliver).rewards[2]: item 'Heirloom Blade' not in items.json
+  enemies.json[522](Zur).rewards[1]: item 'Reliquary Robes' not in items.json
+  enemies.json[537](Kinnan).rewards[0]: item 'Nest Warden's Armor' not in items.json
+  enemies.json[538](Sengir).rewards[1]: item 'Bowl of Ancient Blood' not in items.json
+  enemies.json[552](Arguel).rewards[1]: item 'Arguel's Bloody Helm' not in items.json
+  enemies.json[584](Eriette).rewards[0]: item 'Charmed Apple' not in items.json
+  enemies.json[593](Gargos).rewards[1]: item 'The Luckiest Clover' not in items.json
+  enemies.json[614](Sheoldred).rewards[1]: item 'Black Cartouche of Victory' not in items.json
+  enemies.json[634](General Tazri).rewards[1]: item 'Victory Standard' not in items.json
+  enemies.json[648](Wilhelt).rewards[1]: item 'Warding Statue Arms' not in items.json
+  enemies.json[650](Admiral Brass).rewards[1]: item 'Map to the Hostages' not in items.json
+  enemies.json[657](Prossh).rewards[1]: item 'One Thousand Chickens' not in items.json
+  enemies.json[658](Illuna).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[659](Brokkos).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[660](Vadrok).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[661](Snapdax).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[662](Nethroi).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[663](Kemba).rewards[1]: item 'Everflowing Watering Can' not in items.json
+  enemies.json[674](Galazeth).rewards[0]: item 'Student's Robes' not in items.json
+  enemies.json[679](Horde of Notions).rewards[0]: item 'Helix Helm' not in items.json
+  enemies.json[685](Falco Spara).rewards[0]: item 'Name of Item' not in items.json
+  enemies.json[690](Arthur).rewards[0]: item 'Fortune Teller's Hat' not in items.json
+  enemies.json[691](Baylen).rewards[0]: item 'Gourmand's Hat' not in items.json
+  enemies.json[699](Beledros).rewards[0]: item 'Witch's Cloak' not in items.json
+  enemies.json[814](Gisa).rewards[1]: item 'Warding Statue Skirt' not in items.json
+  enemies.json[815](Geralf).rewards[1]: item 'Warding Statue Torso' not in items.json
+  enemies.json[1066](Akim).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1067](Gyruda).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1068](Kaheera).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1069](Kalamax).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1070](Kathril).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1071](Keruga).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1072](Lurrus).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1073](Obosh).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1074](Umori).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1075](Otrimi).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1076](Tayam).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1077](Xyris).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1078](Yorion).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1079](Zirda).rewards[1]: item 'Kill Trophy' not in items.json
+  enemies.json[1418](The Sainted One).rewards[4]: item 'Sainted One's Trophy' not in items.json
+  enemies.json[1421](The Astral Visionary).rewards[4]: item 'Astral Visionary's Trophy' not in items.json
+  enemies.json[1424](The Lichlord of Azar).rewards[4]: item 'Lichlord's Trophy' not in items.json
+  enemies.json[1427](The Dragon Lord).rewards[4]: item 'Dragon Lord's Trophy' not in items.json
+  enemies.json[1430](The Great Druid).rewards[4]: item 'Great Druid's Trophy' not in items.json
+  enemies.json[1455](Urza Planeswalker).rewards[5]: item 'Blue Key to the False God' not in items.json
+  enemies.json[1456](Gaea, the Worldsoul).rewards[5]: item 'Green Key to the False God' not in items.json
+  enemies.json[1457](Serra the Benevolent).rewards[3]: item 'White Key to the False God' not in items.json
+  enemies.json[1460](Time Walker).rewards[0]: item 'Time Walker's Trophy' not in items.json
+
+== ref-shop (7) ==
+  maps/map/towns/swamp_town.tmx#41: shopList 'Horror' not in shops.json
+  maps/map/towns/swamp_town.tmx#42: shopList 'Horror' not in shops.json
+  maps/map/towns/swamp_town.tmx#43: shopList 'Horror' not in shops.json
+  maps/map/towns/swamp_town.tmx#44: shopList 'Horror' not in shops.json
+  maps/map/towns/swamp_town.tmx#45: shopList 'Horror' not in shops.json
+  maps/map/towns/swamp_town.tmx#46: shopList 'Horror' not in shops.json
+  maps/map/towns/plains_town_generic.tmx#51: commonShopList 'Everything' not in shops.json
+
+== reward-type (1) ==
+  enemies.json[390](Slobad).rewards[0]: unknown reward type 'Card'

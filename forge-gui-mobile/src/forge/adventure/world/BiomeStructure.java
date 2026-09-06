@@ -94,8 +94,11 @@ public class BiomeStructure {
                 for (int i = 0; i < 10 && !suc; i++)
                     suc = model.run((int) seed + (i * 5355) + mx * my, 0);
                 if (!suc) {
-                    for (int x = 0; x < dataMap.length; x++)
-                        for (int y = 0; y < dataMap[x].length; y++)
+                    // Round 123 (2026-09-05 code review S2-7): this branch looped over the WHOLE map while writing at
+                    // [mx + x][my + y], an ArrayIndexOutOfBounds for any chunk but the first once the model failed ten
+                    // times; the identical no-image branch above already loops over the chunk. Upstream bug.
+                    for (int x = 0; x < chunkWidth; x++)
+                        for (int y = 0; y < chunkHeight; y++)
                             dataMap[mx + x][my + y] = -1;
                     return;
                 }
