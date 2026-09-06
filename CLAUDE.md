@@ -17,11 +17,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 AFTERNOON (round 126, packaged) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 EVENING (round 127 = the upstream merge; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 126 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-126 are
+- **HEAD = round 127 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-127 are
   post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
   (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
   and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
@@ -46,20 +46,30 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Realms\<n>_save_slot.sav`, `forge.log`).
 - **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards), 121, 122 and 123 ship with
   the next APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
-- **Upstream drift**: 14 commits / 37 files (15 java) past our merge base `042b3267af7` as of 2026-09-06 12:05 (upstream tip
-  `6155ef58a50`). Take them
-  as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
-  The review's section 4.8 names the five files that will conflict first (World, WorldStage, MapStage, AdventurePlayer,
-  RewardScene).
-- **NEXT SESSION = the v1.06 release** (user decision 2026-09-06 12:05, session closed right after): follow the release
-  rule below in order - (1) upstream engine merge as its own round (14 commits / 37 files; CORE_ENGINE_CHANGES.md per
-  conflicting file, README to OURS, re-check the Android branding/version stamps ANDROID_RELEASE.md lists), (2) the user
-  reinstalls `E:\GAMES\Forge_2` at the matching daily - ask for it early, the packager refuses on a mismatch, (3) rebuild,
-  (4) the user re-tests, (5) bump config.json modVersion/modVersionDate + forge-gui-android/pom.xml tfr.version 1.06 /
-  manifestVersionCode 10600, RELEASE_NOTES_v1.06.md (rounds 120-126 + the merge), desktop zip via `--out
-  C:\Users\User\TFR-Release --zip` (NEVER repackage the live folder while `javaw.exe` runs - the user may be playing;
-  the --out build is the backup/release copy), Android APK + assets.zip per ANDROID_RELEASE.md from a C: copy of the
-  repo, tag `tfr-v1.06`, publish with `gh -R TheSAguy/The-Forsaken-Realms`.
+- **Upstream: MERGED, round 127.** `main` now carries upstream `master` @ `6155ef58a50` (14 commits / 37 files /
+  15 java past the old merge base `042b3267af7`). **Zero conflicts**; all seven both-touched files auto-merged and
+  354 mod-added lines across them were re-checked present. Review section 4.8's predicted conflicts (World,
+  WorldStage, MapStage, AdventurePlayer, RewardScene) did not happen - upstream touched none of those five.
+  `engineBuildVersion` is now `2.0.15-SNAPSHOT-09.06`. See MOD_CHANGELOG round 127 + CORE_ENGINE_CHANGES' merge log
+  for what upstream changed (FrameRate sampling refactor, GameHUD owns its Batch, `delayedSwitchBack(title,message)`,
+  two AI behavior changes in `AiBlockController`/`ChangeZoneAi`).
+- **`E:\GAMES\Forge_2` needs NO reinstall for v1.06** - it is already the 09.06 daily
+  (`.installationinformation`: `forge-installer-2.0.15-SNAPSHOT-09.06.jar`; `build.txt` `2026-09-06 18:21:40`),
+  which content probes place at upstream `53a103721d6` = 13 of the 14 merged commits. The 14th is Realm-of-Legends
+  plane data with no java, so repo and install run identical engine code and the packager's daily guard passes.
+  **How to re-identify a daily** (do this instead of trusting dates): read `.installationinformation` for
+  `snapshot-version`, then probe two files whose commits straddle the candidate window - one that must be present,
+  one that must be absent.
+- **v1.06 RELEASE, where it stands** (started 2026-09-06 evening). Release rule order, with status:
+  (1) upstream engine merge as its own round - **DONE, round 127**; (2) base install at the matching daily -
+  **DONE, no reinstall was needed**; (3) rebuild - **DONE** (full Maven `package` of `forge-gui-mobile-dev` on the
+  merge); (4) **the user re-tests the merged engine** - the gate before anything is stamped; (5) then: bump plane
+  `config.json` `modVersion` 1.06 / `modVersionDate`, `forge-gui-android/pom.xml` `tfr.version` 1.06 +
+  `manifestVersionCode` 10600, write `RELEASE_NOTES_v1.06.md` (rounds 120-127: the merge plus every post-v1.05
+  round), desktop zip via `python standalone-packaging/build_standalone.py --out C:\Users\User\TFR-Release --zip`
+  (**NEVER repackage the live folder while `javaw.exe` runs** - the user may be playing; the `--out` build is the
+  release/backup copy), Android APK + `assets.zip` per ANDROID_RELEASE.md **from a C: copy of the repo**, tag
+  `tfr-v1.06`, publish with `gh -R TheSAguy/The-Forsaken-Realms`.
 - **Open**: (0) playtest-confirm round 126 - lose in a dungeon, reload from the menu, re-enter: the dungeon must stay
   and life must stay at the loaded value (`[TFR-LoadReset]` line on the load); the Mages' Fort golem must be three
   tiles tall; (0b) playtest-confirm round 125 - an AI-capital Arena bracket must show no Apprentice fighters, each playing
@@ -114,6 +124,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 127 (2026-09-06, repo only): upstream merge @ 6155ef58a50 = Forge_2's 09.06 daily (14 commits / 37 files /
+  15 java, ZERO conflicts); FrameRate sampling refactor, GameHUD owns its Batch, delayedSwitchBack(title,message),
+  AiBlockController + ChangeZoneAi behavior changes; Android revert-watch list re-checked clean; engineBuildVersion 09.06.
 - Round 126 (2026-09-06, PACKAGED 11:56): GameStage.cancelPendingActions()/scheduleResultTask() + MapStage/WorldStage
   overrides, called from WorldStage.clearCache() ([TFR-LoadReset]); enemies.json scale fixes (Arcane Golem 3->0.5, Shorikai,
   Dementia Beast, Blech 0.5).

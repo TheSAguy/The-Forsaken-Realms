@@ -17757,6 +17757,81 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 127: upstream engine update to the Forge 09.06 daily - step 0 of v1.06 (2026-09-06, repo only)
+
+Step 0 of the release, per the standing rule (round 82): take the upstream engine as its own round before any
+release work. No reinstall was needed this time - the user had already installed the 09.06 daily into
+`E:\GAMES\Forge_2` earlier the same day.
+
+- **Merged upstream `Card-Forge/forge` master @ `6155ef58a50`** - 14 commits / 37 files / 15 `.java` since the
+  09.05 merge point `042b3267af7`. **Zero conflicts**; git auto-merged all seven files both sides had touched.
+- **Which daily the base install actually is, established by probing its contents rather than trusting a date.**
+  `E:\GAMES\Forge_2\.installationinformation` names `forge-installer-2.0.15-SNAPSHOT-09.06.jar`
+  (`snapshot-version` `2.0.15-SNAPSHOT-09.06`, `APP_VER` `09.06`), `build.txt` reads `2026-09-06 18:21:40`. Two
+  content probes pin the exact commit: the install HAS the `exhume.txt` edit from `53a103721d6` (09-06 10:49 UTC -
+  the two `SVar:` lines are gone from `cardsfolder.zip`) and does NOT have `Crypt_of_Broken_Rules.tmx` from the
+  tip `6155ef58a50` (09-06 19:32 UTC). So the install = upstream @ `53a103721d6`, i.e. 13 of the 14 commits.
+  The 14th is **data only** (the Realm of Legends plane's new dungeon, decks, enemies, items and POIs, plus one
+  shared atlas line) with no `.java` at all, so the rules engine in the repo and the rules engine in `Forge_2`
+  are the same code. Merging the full 14 keeps the next merge smaller at no cost.
+- **Seven files touched by both sides, all auto-merged, all verified line-by-line afterwards** (354 mod-added
+  lines between the merge base and round 126 across them, 0 missing): `GameLauncher` 19, `Forge` 4,
+  `SaveLoadScene` 43, `UIScene` 50, `GameHUD` 227, `SaveFileData` 4, `FSkin` 7. Each file's merge delta was also
+  read in the other direction and contains **only** upstream's own hunks - nothing of the mod's was rewritten.
+- **What upstream actually changed, and why none of it collides with the mod:**
+  - **FrameRate sampling refactor** (`FrameRate`, `Forge`, `Adventure`, `Classic`, `UIScene`, `HudScene`,
+    `GameHUD`): a real max-sprite counter sampled per batch, plus `updateHistoricalPeak()` on every scene switch.
+    Touches the mod's `UIScene` only by appending one line to `render()` - the round-120 `toFront()` z-order
+    re-assert in `act()` and the dialog body-wrap logic are untouched. `HIGH_SPRITES_CAP` 700 -> 800.
+  - **`GameHUD` now owns its own `Batch`** (`super(viewport)` instead of `super(viewport, gameStage.getBatch())`)
+    with a new `getBatch()` override that still returns the game stage's batch - so every external caller sees
+    exactly the previous behavior. `GameHUD` is a lazily-created singleton (`instance == null ? instance = new
+    GameHUD(...)`), created once per process, so the extra `SpriteBatch` is not a per-load leak of the kind
+    round 123 fixed; and because the stage now owns the batch, `dispose()` actually frees it. No mod code calls
+    `hud.getBatch()`.
+  - **`Forge.delayedSwitchBack()` gained a `(title, message)` signature** and shows the reason on `SaveLoadScene`
+    before bouncing to the main menu. Its one caller (`SaveFileData`, upstream's own) was updated in the same
+    commit; the mod has no other call site, so nothing broke.
+  - **Save-load failure message** (`SaveLoadScene.showMessage`) - additive, and a small step toward the review's
+    S1-1 ("loud failure instead of silent regeneration"), though not the same code path.
+  - **`Lwjgl3ApplicationConfiguration.useGlfwAsync()`** replaces the hand-rolled macOS GLFW check in
+    `GameLauncher`; the mod's window-icon block sits below it and is untouched.
+  - **`FSkin`** theme-missing messages gained a `/` separator (cosmetic); the mod's `mkdirs()` fix is intact.
+  - **AI**: `AiBlockController` no longer blocks with creatures that die before dealing damage;
+    `ChangeZoneAi` allows shared fetches when other players have nothing to retrieve (with new tests). Both are
+    stock rules-engine files the mod has never edited - they change how every AI opponent plays.
+  - **Data**: Pauper bans for Zeta, Reality Fracture (FRA) edition updates, `perfected_theory.txt`,
+    `exhume.txt` and `seven_of_nine.txt` oracle/script fixes.
+- **No edition-code renames this time** (the round-84 `CON` -> `CFX` class of regression was checked for: the only
+  edition file in the delta is `Reality Fracture.txt`, edited in place).
+- **No TFR plane file is in the delta** - all 37 files are engine code, stock card/edition/format data, the Realm
+  of Legends plane, and one shared atlas. `README.md` untouched by upstream, so no "keep ours" resolution was
+  needed.
+- **Android revert-watch list re-checked in full** (ANDROID_RELEASE.md's list, every item): manifest
+  `package="com.thesaguy.forsakenrealms"`, `app_name` "The Forsaken Realms", the `com.thesaguy.forsakenrealms.
+  publicfileprovider` authority in both the manifest and `Main.java`, no `com.mydomain` provider, Sentry
+  providers still deleted and `io.sentry.auto-init=false`, `GITHUB_FORGE_URL` still `TheSAguy/The-Forsaken-Realms`,
+  `GitLogs` tag marker still `tfr-v`, `AssetsDownloader` still `tfr-v` + `assets.zip`, `ASSETS_DIR` still
+  `/ForsakenRealms/`, `RES_PKG_FALLBACK` and the `setUsingAppDirectory` sniff still the TFR package, desktop
+  `AutoUpdater.attemptToUpdate` still force-disabled. All intact - upstream's delta contains no Android file.
+- **Known cosmetic gap, upstream's, not ours:** the tip commit fixes
+  `common/sprites/enemy/beast/smallmammals/weasel.atlas`, whose first line said `rabbit.png` instead of
+  `weasel.png`. The 09.06 daily was cut before that fix, and the packager copies `res/adventure/common` from
+  `BASE_INSTALL`, so the plane's two weasel enemies keep rendering as a rabbit in v1.06 regardless of which
+  upstream commit we merge. It corrects itself at the next base-install refresh. Not worth a plane-scoped
+  override for two enemies.
+- **Version stamp**: plane `config.json` `engineBuildVersion` `2.0.15-SNAPSHOT-09.05` -> `2.0.15-SNAPSHOT-09.06`,
+  which is what the packager's guard compares against `Forge_2/build.txt`. `modVersion` / `modVersionDate` stay at
+  1.05 / 09.05 until the release round.
+- **Verified by a full Maven `package` build** of `forge-gui-mobile-dev`. Repo only - not packaged; the user
+  re-tests the merged engine before the release round.
+- **Everything needs re-testing after the next package** - this swaps the rules engine and the AI's blocking and
+  fetch logic under the current save.
+
+**Files touched**: the 37 upstream files (15 `.java`: `AiBlockController`, `ChangeZoneAi`, `ChangeZoneAiTest`,
+`BasicBlockTests`, `GameLauncher`, `Adventure`, `Classic`, `Forge`, `FrameRate`, `HudScene`, `SaveLoadScene`,
+`UIScene`, `GameHUD`, `SaveFileData`, `FSkin`), plus plane `config.json` (`engineBuildVersion`).
+
 ## Round 126: a loss's follow-up no longer survives a save load (the "dungeon disappears when you enter" report), the 288-pixel Arcane Golem (2026-09-06, packaged)
 
 Two user reports from the first session on the round-125 package, with the log copied to `Pictures\Screenshots\LOG`.

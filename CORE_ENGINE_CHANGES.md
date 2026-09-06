@@ -1321,6 +1321,53 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;
+  14 commits, 37 files, 15 `.java` since the previous merge point `042b3267af7`).** **Zero
+  conflicts** - all seven files both sides had touched auto-merged.
+  - The base install `E:\GAMES\Forge_2` was already at this daily (`.installationinformation`:
+    `forge-installer-2.0.15-SNAPSHOT-09.06.jar`, `build.txt` `2026-09-06 18:21:40`). Content
+    probes place it at upstream `53a103721d6` exactly - it HAS `53a103721d6`'s `exhume.txt` edit
+    and LACKS the tip's `Crypt_of_Broken_Rules.tmx` - so the daily is 13 of the 14 commits. The
+    14th is data-only (Realm of Legends plane) with no `.java`, so repo and install run identical
+    engine code.
+  - Files touched by both sides, all auto-merged, 354 mod-added lines re-checked and all present:
+    `GameLauncher` 19, `Forge` 4, `SaveLoadScene` 43, `UIScene` 50, `GameHUD` 227, `SaveFileData` 4,
+    `FSkin` 7. The merge delta on each was also read in the other direction: only upstream hunks.
+  - Upstream's changes worth knowing about, per file this doc tracks:
+    - `UIScene.java` - upstream appended `FrameRate.getInstance().sampleAdventure(stage.getBatch(),
+      Forge.showFPS)` to `render()`. The mod's round-120 `toFront()` z-order re-assert in `act()`,
+      its `dialogBodyMaxWidth()` wrap and its `Forge.lastPreview` null guard in `enter()` are all
+      outside that hunk and untouched.
+    - `GameHUD.java` - the stage no longer borrows `gameStage.getBatch()`; it builds its own and
+      exposes the game stage's through a new `getBatch()` override, so callers are unaffected. The
+      singleton is created once per process, so the extra `SpriteBatch` is not a per-load leak.
+    - `Forge.java` - `delayedSwitchBack()` -> `delayedSwitchBack(String title, String message)`,
+      four new `FrameRate.updateHistoricalPeak()` calls, `HIGH_SPRITES_CAP` 700 -> 800, scene
+      imports collapsed to `forge.adventure.scene.*`. The mod's four added lines are elsewhere.
+    - `SaveLoadScene.java` - new `showMessage(title, message)` used by the above.
+    - `SaveFileData.java` - the one `delayedSwitchBack` call site, updated by upstream itself.
+    - `GameLauncher.java` - `Lwjgl3ApplicationConfiguration.useGlfwAsync()` replaces the
+      `SharedLibraryLoader.isMac` GLFW check; the mod's window-icon block is untouched.
+    - `FSkin.java` - a `/` separator added to five theme-missing messages; the mod's `mkdirs()`
+      fix for the skins cache dir is intact.
+  - Stock files the mod does not edit, changed by upstream and worth noting because they change
+    play: `AiBlockController` (won't block with creatures that die before dealing damage) and
+    `ChangeZoneAi` (shared fetches when other players have nothing to retrieve).
+  - Android identity: upstream's delta contains **no** Android file. The full revert-watch list in
+    ANDROID_RELEASE.md was re-checked anyway and every item is intact (manifest package,
+    `app_name`, publicfileprovider authority, Sentry deleted/disabled, `GITHUB_FORGE_URL`,
+    `GitLogs`/`AssetsDownloader` `tfr-v` markers, `ASSETS_DIR`, `RES_PKG_FALLBACK`, the
+    `setUsingAppDirectory` sniff, `AutoUpdater` force-disabled).
+  - No edition-code renames (only `Reality Fracture.txt` changed, in place). `README.md` untouched
+    by upstream - no "keep ours" resolution needed this round.
+  - **Shared (non-plane-scoped) note:** the tip commit fixes
+    `forge-gui/res/adventure/common/sprites/enemy/beast/smallmammals/weasel.atlas` (first line said
+    `rabbit.png`). The 09.06 daily predates the fix and the packager takes `adventure/common` from
+    `BASE_INSTALL`, so the plane's two weasel enemies still render as a rabbit until the base
+    install is refreshed. Upstream's bug, upstream's fix, no mod action.
+  - `engineBuildVersion` bumped to `2.0.15-SNAPSHOT-09.06` in the plane's config.json. Round 127 in
+    MOD_CHANGELOG.md.
+
 - **2026-09-04 - merged upstream `master` @ `042b3267af7` (Forge 2.0.15-SNAPSHOT, 09.05 daily
   build = the exact commit `E:\GAMES\Forge_2` was built from; 25 commits, 101 files, 63 `.java`
   since the previous merge point `c817743ecbd`).** One textual conflict:

@@ -489,6 +489,16 @@ public class SaveLoadScene extends UIScene {
         super.enter();
     }
 
+    public void showMessage(String title, String message) {
+        showDialog(createGenericDialog(title, message,
+            Forge.getLocalizer().getMessage("lblOK"),
+            Forge.getLocalizer().getMessage("lblCancel"),
+            () -> {
+                Forge.switchScene(StartScene.instance());
+                removeDialog();
+            }, this::removeDialog));
+    }
+
     public String getSaveFileSuffix() {
         String difficulty;
         switch (AdventurePlayer.current().getDifficulty().name) {
