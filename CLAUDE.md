@@ -21,7 +21,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD `ef4d847ef81` (round 121b), `main` level with `origin/master`, tree clean.** Rounds 120-121b are post-release
+- **HEAD = the round-121c handoff-docs commit on top of round 121b `ef4d847ef81` (verify with `git log -1`), `main` level
+  with `origin/master`, tree clean.** Rounds 120-121b are post-release
   fixes: UIScene dialog z-order (Android Armory report), one Trading Post OR Exchange per town, town-exit discovery
   flash, WriteDecks `select=` option + the user's v5 deck lists in `dev-tools/save-editing/`.
 - **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-121 jar (built 14:19), `PACKAGE_OK` 17:05.
