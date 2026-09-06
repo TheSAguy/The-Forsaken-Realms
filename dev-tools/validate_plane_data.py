@@ -122,7 +122,7 @@ F["TuningData"] = set("""dayLengthSeconds capitolExpansionTilesPerDay townExpans
  ringCityTownExclusionTiles ringShopPriceMultiplier ringShopRestockMultiplier ringCityPullFactor initialTownRoadSkipFraction townMaxRoadLinks
  ringTownTargetCooldownDays ringTownTargetWeightBonus aiTownGuardDefenseEnabled aiGuardTwoLandPowerFactor innTournamentRerollShardCost
  capitolTargetCooldownDays functioningNeutralTownCount maxSameEnemyNearby sameEnemyNearbyRadius sameEnemySpawnRerolls
- torchPulseMultiplier torchPulseSeconds torchPulseMaxRadiusTiles""".split())
+ torchPulseMultiplier torchPulseSeconds torchPulseMaxRadiusTiles dungeonLootedDespawnFactor""".split())
 F["PointOfInterestData"] = set("name type count spriteAtlas sprite map radiusFactor offsetX offsetY active questTags questFlagsToActivate displayName".split())
 F["EnemyData"] = set("""name nameOverride sprite deck copyPlayerDeck ai boss flying randomizeDeck spawnRate difficulty tier speed scale life rewards
  equipment colors nextEnemy teamNumber questTags lifetime gamesPerMatch bossInsult bossIntro noAnte""".split())
