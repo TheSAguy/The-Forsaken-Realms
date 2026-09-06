@@ -258,6 +258,32 @@ def read_base_build_stamp():
     return open(path, encoding="utf-8", errors="replace").read().strip()
 
 
+def rmtree_with_retry(path, attempts=40, delay=1.0):
+    """shutil.rmtree that survives Windows' delayed directory-handle release.
+
+    2026-09-06 (round 128, second occurrence): removing the previous package off the F: USB
+    drive died with `OSError [WinError 145] The directory is not empty` on
+    res/conquest/planes/Regatha/Regatha - Windows had already deleted that directory's children
+    but had not released their handles by the time rmtree called os.rmdir on the parent. The
+    same race was hit once before (2026-09-02) and cleared by hand with a retry loop; doing it
+    by hand each time is how a half-deleted live folder gets left behind, since the traceback
+    aborts the run AFTER the old package is already partly gone. rmtree is idempotent here -
+    whatever it managed to delete stays deleted - so simply calling it again until the tree is
+    gone is both safe and sufficient.
+    """
+    for attempt in range(attempts):
+        try:
+            shutil.rmtree(path)
+            return
+        except OSError as e:
+            if not os.path.exists(path):
+                return  # someone else finished the job (or the last pass actually succeeded)
+            if attempt == attempts - 1:
+                raise
+            print(f"  rmtree retry {attempt + 1}/{attempts} after {type(e).__name__}: {e}")
+            time.sleep(delay)
+
+
 def main():
     global OUT_DIR
     ap = argparse.ArgumentParser()
@@ -356,7 +382,7 @@ def main():
     if full_rebuild:
         if os.path.exists(game_dir):
             print(f"removing previous package at {game_dir}")
-            shutil.rmtree(game_dir)
+            rmtree_with_retry(game_dir)
         # Windows: rmtree returns before the directory handle is fully released, so an
         # immediate makedirs can get WinError 5 - retry briefly.
         for attempt in range(30):

@@ -17800,8 +17800,29 @@ standing**.
   days remaining, the factor), plus a line for each skip reason (quest target, or too few days left), so the
   mechanic can be verified from `forge.log` alone.
 
+**Packaged into the live folder** (`PACKAGE_OK` 16:13), carrying rounds 127 AND 128 - verified in the shipped jar
+(`[TFR-DungeonLooted]` and `poiLootedDay` for 128, upstream's new `FrameRate.sampleAdventure/updateHistoricalPeak`
+for 127) and in the shipped plane data (`engineBuildVersion` 09.06, `dungeonLootedDespawnFactor` 0.5). This was the
+slow path: the base install moved from the 09.05 daily to 09.06, so the static-asset marker mismatched and the
+packager did the full stock copy (~20,700 files off E: onto the F: USB drive) instead of the 9-minute fast path.
+
+**Round 128b** (same day, two follow-ups the package run itself exposed):
+- `dev-tools/validate_plane_data.py` gains `dungeonLootedDespawnFactor` in its `TuningData` field list. The
+  pre-package run reported it as `unknown-key`, which is the validator doing its job on a field added the same
+  round.
+- **`standalone-packaging/build_standalone.py` gains `rmtree_with_retry()`.** The first package attempt died with
+  `OSError [WinError 145] The directory is not empty` on `res/conquest/planes/Regatha/Regatha` - Windows deletes a
+  directory's children but does not always release their handles before `rmtree` reaches the parent, and the F: USB
+  drive makes that window wide. **This was the second occurrence** (first on 2026-09-02, cleared by hand). The
+  failure mode is worse than it looks: the traceback aborts the run *after* the old package is already partly
+  deleted, so the live folder is left unplayable and the fix has to be found before the user next launches the
+  game. `rmtree` is idempotent here - whatever it deleted stays deleted - so the removal now simply retries (40
+  attempts, 1 s apart, printing each retry) until the tree is gone. The pre-existing `makedirs` retry right below
+  it only ever covered the *re*-creation, never the removal.
+
 **Files touched**: `util/DungeonRotation.java`, `stage/MapStage.java`, `world/World.java`, `data/TuningData.java`;
-plane `config tables/settings.json`. MOD_SCOPE #108.
+plane `config tables/settings.json`; `dev-tools/validate_plane_data.py`,
+`standalone-packaging/build_standalone.py`. MOD_SCOPE #108.
 
 ## Round 127: upstream engine update to the Forge 09.06 daily - step 0 of v1.06 (2026-09-06, repo only)
 

@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 EVENING (round 128; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 EVENING (round 128, PACKAGED; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
@@ -38,7 +38,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   runtime failure, three `serialVersionUID` pins, a `BiomeStructure` index bug; plus `dev-tools/validate_plane_data.py`
   (run it before packaging) and the **Rally rune as the "Hire a guard" reward** (quest 43 stage 2 epilogue: guard
   briefing, then `grantRewards`; only quests issued AFTER this round carry it - the user's NG+ save keeps its old copy).
-- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-126 jar (built 11:47), `PACKAGE_OK` 11:56. The user plays their NG+ Insane game from save slot 1 (12/12 life; slots 2 and 3 are
+- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-128 jar (built 14:53), `PACKAGE_OK` 16:13,
+  on the 09.06 stock assets. **This package is the user's re-test of the merged engine** (release step 4). Verified in
+  the shipped jar: `[TFR-DungeonLooted]`/`poiLootedDay` (r128) and upstream's `FrameRate.sampleAdventure`/
+  `updateHistoricalPeak` (r127); shipped plane data reads `engineBuildVersion` 09.06 + `dungeonLootedDespawnFactor` 0.5.
+  The full stock copy took ~75 min on F: (deletion ~25, copy ~45) - the fast path does not apply after a base-install
+  change. Note `build_standalone.py` now retries `rmtree` (round 128b) - the first attempt died on WinError 145 and
+  left the folder half-deleted. The user plays their NG+ Insane game from save slot 1 (12/12 life; slots 2 and 3 are
   older copies of the same character). Decks v6 (09:47, lists in `dev-tools/save-editing/`): slot 1 "Ichor Crown" (W/B
   toxic control), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W, 44 cards, SELECTED - the user tunes this
   one in-game, keep their additions when updating). Backups `1_save_slot.sav.prededit2/3/4/5.bak` sit beside the save -
