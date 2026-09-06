@@ -1572,6 +1572,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
             background.flashDiscoveryAround(poi);
     }
 
+    /** Round 124: the Torch pulse - see WorldBackground.pulseVision(); returns the flared radius in tiles (0 = nothing done). */
+    public int pulseVision(float multiplier, float seconds, int maxRadiusTiles) {
+        return background != null ? background.pulseVision(multiplier, seconds, maxRadiusTiles) : 0;
+    }
+
     @Override
     public void leave() {
         getPlayerSprite().storePos();

@@ -2491,7 +2491,7 @@ public class World implements Disposable, SaveFileContent {
     // Settings (SettingData.fogOfWarEnabled, defaulting off). It's a Settings toggle rather than
     // an in-game HUD toggle because flipping it live mid-session didn't cleanly reset the
     // Known/Visible rendering state - Settings changes take effect from the next world load.
-    private boolean isFogOfWarEnabled() {
+    public boolean isFogOfWarEnabled() { // public since round 124: WorldBackground.pulseVision() and the torch pulse command gate on it
         ConfigData configData = Config.instance().getConfigData();
         SettingData settingData = Config.instance().getSettingData();
         return configData != null && configData.fogOfWarEnabled
@@ -4171,6 +4171,13 @@ public class World implements Disposable, SaveFileContent {
         temporaryRevealTimers.put(packWorldTile(wx, wy), TEMPORARY_REVEAL_SECONDS);
     }
 
+    /** Same with an explicit duration; a longer flash already running on the tile is never shortened (round 124). */
+    public void temporarilyReveal(int wx, int wy, float seconds) {
+        long key = packWorldTile(wx, wy);
+        Float remaining = temporaryRevealTimers.get(key);
+        temporaryRevealTimers.put(key, remaining == null ? seconds : Math.max(remaining, seconds));
+    }
+
     /**
      * Round 121 (user request: leaving a town should "briefly reveal the surrounding area, just like when
      * first discovered"). The first-discovery burst in WorldBackground.draw() only flashes tiles that were
@@ -4181,6 +4188,15 @@ public class World implements Disposable, SaveFileContent {
      * ordinary tier. Costs one getBiomeSprite() composition per tile, like the discovery burst itself.
      */
     public void flashArea(int centerWorldX, int centerWorldY, int radius, BiConsumer<Integer, Integer> onTileChanged) {
+        flashArea(centerWorldX, centerWorldY, radius, TEMPORARY_REVEAL_SECONDS, onTileChanged);
+    }
+
+    /**
+     * Same as above with an explicit flash duration - the Torch pulse (round 124, user request 2026-09-06) is a
+     * shorter, wider burst around the player than a discovery flash: WorldBackground.pulseVision() flares the
+     * vision to a multiple of its radius for torchPulseSeconds, and every tile it touches stays explored.
+     */
+    public void flashArea(int centerWorldX, int centerWorldY, int radius, float seconds, BiConsumer<Integer, Integer> onTileChanged) {
         if (!isFogOfWarEnabled() || explored == null)
             return;
         revealArea(centerWorldX, centerWorldY, radius, null); // every tile is repainted below anyway
@@ -4191,7 +4207,7 @@ public class World implements Disposable, SaveFileContent {
                 int dy = wy - centerWorldY;
                 if (dx * dx + dy * dy > radiusSq)
                     continue;
-                temporarilyReveal(wx, wy);
+                temporarilyReveal(wx, wy, seconds);
                 if (onTileChanged != null)
                     onTileChanged.accept(wx, wy);
             }

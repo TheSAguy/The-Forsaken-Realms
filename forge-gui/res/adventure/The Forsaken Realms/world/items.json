@@ -7595,10 +7595,13 @@
         "effect":  {
                        "visionRadiusMultiplier":  2.0
                    },
-        "description":  "Lights the way, doubling your visible range in the fog of war.",
+        "description":  "Lights the way, doubling your visible range in the fog of war. Use it to flare the flame: for a moment your sight pulses out to three times its radius, and everything it touches stays on your map.",
         "cost":  100,
         "iconName":  "Torch",
-        "rarity":  "Common"
+        "rarity":  "Common",
+        "usableOnWorldMap":  true,
+        "shardsNeeded":  1,
+        "commandOnUse":  "torch pulse"
     },
     {
         "name":  "Grand Torch",
@@ -7606,10 +7609,13 @@
         "effect":  {
                        "visionRadiusMultiplier":  4.0
                    },
-        "description":  "A brilliant flame, quadrupling your visible range in the fog of war.",
+        "description":  "A brilliant flame, quadrupling your visible range in the fog of war. Use it to flare the flame: for a moment your sight pulses out to three times its radius, and everything it touches stays on your map.",
         "cost":  1000,
         "iconName":  "GrandTorch",
-        "rarity":  "Rare"
+        "rarity":  "Rare",
+        "usableOnWorldMap":  true,
+        "shardsNeeded":  1,
+        "commandOnUse":  "torch pulse"
     }
 ,
     {

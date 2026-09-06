@@ -144,7 +144,7 @@
   </object>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="473.5" y="789.333" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -154,7 +154,7 @@
   </object>
   <object id="66" template="../../../../common/maps/obj/enemy.tx" x="638" y="624.5" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -164,7 +164,7 @@
   </object>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="884.5" y="555" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -174,7 +174,7 @@
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="1374.33" y="741.333" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -184,7 +184,7 @@
   </object>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="1344.83" y="963.667" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -194,7 +194,7 @@
   </object>
   <object id="70" template="../../../../common/maps/obj/enemy.tx" x="1535" y="877" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -222,7 +222,7 @@
   </object>
   <object id="72" template="../../../../common/maps/obj/enemy.tx" x="477.5" y="389.667" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -440,7 +440,7 @@
 ]
         </property>
     <property name="displayNameOverride" value="Lord Garrin"/>
-    <property name="enemy" value="Legionnaire"/>
+    <property name="enemy" value="Sliver"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -589,7 +589,7 @@
   </object>
   <object id="123" template="../../../../common/maps/obj/enemy.tx" x="1263" y="814" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -599,7 +599,7 @@
   </object>
   <object id="124" template="../../../../common/maps/obj/enemy.tx" x="508" y="699" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -609,7 +609,7 @@
   </object>
   <object id="125" template="../../../../common/maps/obj/enemy.tx" x="175.333" y="820" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -619,7 +619,7 @@
   </object>
   <object id="126" template="../../../../common/maps/obj/enemy.tx" x="672" y="1069" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -629,7 +629,7 @@
   </object>
   <object id="127" template="../../../../common/maps/obj/enemy.tx" x="642" y="925.667" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -639,7 +639,7 @@
   </object>
   <object id="128" template="../../../../common/maps/obj/enemy.tx" x="1019" y="910" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -649,7 +649,7 @@
   </object>
   <object id="129" template="../../../../common/maps/obj/enemy.tx" x="1157.33" y="591.333" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -659,7 +659,7 @@
   </object>
   <object id="130" template="../../../../common/maps/obj/enemy.tx" x="530.334" y="440.666" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -669,7 +669,7 @@
   </object>
   <object id="131" template="../../../../common/maps/obj/enemy.tx" x="776" y="395" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -679,7 +679,7 @@
   </object>
   <object id="132" template="../../../../common/maps/obj/enemy.tx" x="286" y="483.5" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -689,7 +689,7 @@
   </object>
   <object id="133" template="../../../../common/maps/obj/enemy.tx" x="0.666667" y="746.833" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -699,7 +699,7 @@
   </object>
   <object id="134" template="../../../../common/maps/obj/enemy.tx" x="1401" y="1100.5" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -709,7 +709,7 @@
   </object>
   <object id="135" template="../../../../common/maps/obj/enemy.tx" x="769" y="989.833" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -719,7 +719,7 @@
   </object>
   <object id="136" template="../../../../common/maps/obj/enemy.tx" x="373" y="673.833" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -729,7 +729,7 @@
   </object>
   <object id="137" template="../../../../common/maps/obj/enemy.tx" x="950.333" y="328.166" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -739,7 +739,7 @@
   </object>
   <object id="139" template="../../../../common/maps/obj/enemy.tx" x="1116.67" y="1108.5" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="Red Sliver"/>
+    <property name="enemy" value="Sliver_Red"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -749,7 +749,7 @@
   </object>
   <object id="140" template="../../../../common/maps/obj/enemy.tx" x="1021" y="1165.17" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="Red Sliver"/>
+    <property name="enemy" value="Sliver_Red"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -759,7 +759,7 @@
   </object>
   <object id="141" template="../../../../common/maps/obj/enemy.tx" x="1018.67" y="752.833" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="Red Sliver"/>
+    <property name="enemy" value="Sliver_Red"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -769,7 +769,7 @@
   </object>
   <object id="142" template="../../../../common/maps/obj/enemy.tx" x="758" y="590" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -779,7 +779,7 @@
   </object>
   <object id="143" template="../../../../common/maps/obj/enemy.tx" x="106" y="885" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -789,7 +789,7 @@
   </object>
   <object id="144" template="../../../../common/maps/obj/enemy.tx" x="365.333" y="1051" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -799,7 +799,7 @@
   </object>
   <object id="145" template="../../../../common/maps/obj/enemy.tx" x="697" y="1227" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -809,7 +809,7 @@
   </object>
   <object id="146" template="../../../../common/maps/obj/enemy.tx" x="899" y="1104" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -819,7 +819,7 @@
   </object>
   <object id="147" template="../../../../common/maps/obj/enemy.tx" x="537.667" y="1058.5" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -829,7 +829,7 @@
   </object>
   <object id="148" template="../../../../common/maps/obj/enemy.tx" x="343.334" y="772.5" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -839,7 +839,7 @@
   </object>
   <object id="149" template="../../../../common/maps/obj/enemy.tx" x="167" y="595.833" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="White Sliver"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -894,7 +894,7 @@
   </object>
   <object id="154" template="../../../../common/maps/obj/enemy.tx" x="1156.33" y="768.833" width="20" height="17" visible="1">
    <properties>
-    <property name="enemy" value="Red Sliver"/>
+    <property name="enemy" value="Sliver_Red"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -937,7 +937,7 @@
   <object id="187" template="../../../../common/maps/obj/waypoint.tx" x="1281" y="545"/>
   <object id="188" template="../../../../common/maps/obj/enemy.tx" x="1374" y="597.667" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Red Sliver"/>
+    <property name="enemy" value="Sliver_Red"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -1002,7 +1002,7 @@
   <object id="226" template="../../../../common/maps/obj/waypoint.tx" x="932.333" y="696.667"/>
   <object id="227" template="../../../../common/maps/obj/enemy.tx" x="1071.67" y="510" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -1014,7 +1014,7 @@
   <object id="229" template="../../../../common/maps/obj/waypoint.tx" x="608.667" y="607.667"/>
   <object id="230" template="../../../../common/maps/obj/enemy.tx" x="673.333" y="580.667" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -1029,7 +1029,7 @@
   <object id="236" template="../../../../common/maps/obj/waypoint.tx" x="1291" y="996.667"/>
   <object id="237" template="../../../../common/maps/obj/enemy.tx" x="535" y="1132" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Green Sliver"/>
+    <property name="enemy" value="Sliver_Green"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
@@ -1292,7 +1292,7 @@
   </object>
   <object id="263" template="../../../../common/maps/obj/enemy.tx" x="1525.67" y="1161.67" width="16" height="16" visible="1">
    <properties>
-    <property name="enemy" value="Blue Sliver"/>
+    <property name="enemy" value="Sliver_Blue"/>
     <property name="spawn.Easy" type="bool" value="true"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>

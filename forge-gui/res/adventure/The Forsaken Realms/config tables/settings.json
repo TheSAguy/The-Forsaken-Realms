@@ -158,5 +158,13 @@
     // spawn ring. Grep forge.log for "[TFR-SpawnDedupe]" to see it firing.
     "maxSameEnemyNearby": 2,
     "sameEnemyNearbyRadius": 220,
-    "sameEnemySpawnRerolls": 4
+    "sameEnemySpawnRerolls": 4,
+
+    // Torch pulse (round 124): using a Torch / Grand Torch (1 shard, the item's shardsNeeded) flares your
+    // fog-of-war vision to torchPulseMultiplier x its current radius for torchPulseSeconds; tiles it touches
+    // stay explored (hazed) afterwards. torchPulseMaxRadiusTiles caps the flared radius - the repaint cost
+    // grows with the square of it. Grep forge.log for "[TFR-TorchPulse]".
+    "torchPulseMultiplier": 3.0,
+    "torchPulseSeconds": 2.0,
+    "torchPulseMaxRadiusTiles": 24
 }

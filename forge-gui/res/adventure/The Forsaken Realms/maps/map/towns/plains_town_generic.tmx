@@ -90,10 +90,10 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/shop.tx" x="192" y="306">
    <properties>
-    <property name="commonShopList" value="Everything"/>
-    <property name="mythicShopList" value=""/>
-    <property name="rareShopList" value=""/>
-    <property name="uncommonShopList" value=""/>
+    <property name="commonShopList" value="White,White,Enchantment4White,Creature2White,Instant4White"/>
+    <property name="mythicShopList" value="Planeswalker,WUBRG,RWG,RWU,RWB,UWG,UWB,GWB,PhyrexianWhite"/>
+    <property name="rareShopList" value="Land4White,Azorius,Boros,Selesnya,Orzhov,Vehicle,Colorless"/>
+    <property name="uncommonShopList" value="Artifact,Knight4White,Bird4White,Soldier4White,Angel,Sliver2White,Spirit4White,Wand,Equip,Multicolor"/>
    </properties>
   </object>
   <object id="52" template="../../../../common/maps/obj/shop.tx" x="144" y="306">

@@ -2159,3 +2159,14 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`stage/MapStage.java`** - `resetMapRecursive()` disposes each parsed map in a `finally` (S4-2).
 - **Data** - `world/quests.json` quest 43 stage 2 epilogue (guard briefing + `grantRewards` "Rally rune"); `GUIDE.md`; `MOD_SCOPE.md` #104.
 - **Tooling** - `dev-tools/validate_plane_data.py` + `validate_plane_data_stage_fields.txt` (plane data validator); `docs/review/` (the review, data report, Phase 0 logs).
+
+## Round 124 (2026-09-06) - Torch pulse, saved-item refresh, review data fixes
+
+- **`data/TuningData.java`** - `torchPulseMultiplier` (3), `torchPulseSeconds` (2), `torchPulseMaxRadiusTiles` (24); mirrored in `config tables/settings.json`.
+- **`world/World.java`** - `temporarilyReveal(x, y, seconds)` and `flashArea(cx, cy, radius, seconds, callback)` overloads (the 4-arg versions delegate with the 3 s discovery constant); `isFogOfWarEnabled()` made public.
+- **`stage/WorldBackground.java`** - `pulseVision(multiplier, seconds, maxRadiusTiles)`: the Torch flare (`[TFR-TorchPulse]`).
+- **`stage/WorldStage.java`** - `pulseVision(...)` bridge.
+- **`stage/ConsoleCommandInterpreter.java`** - `torch pulse` command (refunds the shard off the world map / with fog off).
+- **`player/AdventurePlayer.java`** - `refreshItemDefinitionsFromCatalog()` called from `load()`: saved ItemData objects take the catalog's definition fields (`[TFR-ItemRefresh]`).
+- **Data** - `items.json` (Torch, Grand Torch: usableOnWorldMap, shardsNeeded 1, commandOnUse, description), `enemies.json` (56 dangling item rewards removed, Slobad `card`, 3 colors upper-cased), `shops.json` (Horror shop added, Random sign -> CardShop), `maps/map/skep/skep_outer.tmx`, `temple_of_liliana/bog.tmx`, `forest.tmx`, `fort/fort_colorless_3_human.tmx`, `fort/fort_white_4_farm.tmx` (enemy names), `towns/plains_town_generic.tmx` (object 51 shop lists).
+- **Tooling** - `dev-tools/validate_plane_data.py` knows the `torch` command root and the three tuning keys.

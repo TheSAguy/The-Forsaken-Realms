@@ -561,7 +561,7 @@
   <object id="250" template="../../../../../common/maps/obj/waypoint.tx" x="176" y="224"/>
   <object id="259" template="../../../../../common/maps/obj/enemy.tx" x="304" y="496">
    <properties>
-    <property name="enemy" value="Black Sliver"/>
+    <property name="enemy" value="Sliver_Black"/>
     <property name="pursueRange" type="int" value="60"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="255,256,257,258,257,256"/>

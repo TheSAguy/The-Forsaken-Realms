@@ -782,6 +782,28 @@ public class ConsoleCommandInterpreter {
         // One-shot save repair for the 2026-08-13 fully-explored bug (see MOD_SCOPE.md): rebuilds
         // fog-of-war exploration from actual ownership (owned ground + owned-town vision circles)
         // and re-arms the 80% full-reveal trigger. Opt-in because it also forgets walked ground.
+        // Torch pulse (round 124, user request 2026-09-06): the Torch / Grand Torch's commandOnUse. The item's
+        // shardsNeeded (1) is charged by the ability button / inventory Use button BEFORE this runs; the flare
+        // itself is WorldBackground.pulseVision() (torchPulse* in settings.json). World map with fog of war only -
+        // anywhere else the shard is handed back, like the Rally rune with nothing to rally to.
+        registerCommand(new String[]{"torch", "pulse"}, s -> {
+            forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+            boolean inMap = MapStage.getInstance().isInMap();
+            if (inMap || Current.world() == null || !Current.world().isFogOfWarEnabled()) {
+                ItemData torch = ItemListData.getItem("Torch");
+                int refund = torch != null && torch.shardsNeeded > 0 ? torch.shardsNeeded : 1;
+                Current.player().addShards(refund);
+                GameHUD.getInstance().addNotification(inMap ? "The torch only flares out on the world map."
+                        : "There is no fog here for the torch to burn away.");
+                System.out.println("[TFR-TorchPulse] refused (inMap=" + inMap + ") - " + refund + " shard(s) refunded");
+                return "Torch pulse needs the world map with fog of war on - shards refunded";
+            }
+            int radius = WorldStage.getInstance().pulseVision(tuning.torchPulseMultiplier, tuning.torchPulseSeconds,
+                    tuning.torchPulseMaxRadiusTiles);
+            WorldStage.getInstance().player.playEffect(Paths.EFFECT_SPARKS, 1f);
+            GameHUD.getInstance().addNotification("The torch flares - the fog draws back for a moment.");
+            return "Torch pulse: vision flared to " + radius + " tiles";
+        });
         registerCommand(new String[]{"fog", "reset"}, s ->
                 WorldSave.getCurrentSave().getWorld().resetFogOfWarToOwnership());
         // TESTING ONLY (user request 2026-08-14) - REMOVE once the Color Defeat mechanic

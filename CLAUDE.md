@@ -17,12 +17,15 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 EARLY (round 123) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 MORNING (round 124, repo only) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 123 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-123 are
-  post-release fixes and additions. Round 123 = the **deep code review** (`docs/review/2026-09-05-code-review.md` -
+- **HEAD = round 124 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-124 are
+  post-release fixes and additions. **Round 124 is REPO ONLY - the live folder still runs the round-123 jar.** Round 124 =
+  the review's data fixes (56 dangling enemy rewards removed, 45 map enemy names, Horror shop, Random sign, the
+  plains_town_generic slot), the **Torch pulse** (Torch/Grand Torch use = 1 shard, vision x3 for 2 s, `torch pulse`,
+  settings.json torchPulse*), and saved items re-read from items.json on load (`[TFR-ItemRefresh]`). Round 123 = the **deep code review** (`docs/review/2026-09-05-code-review.md` -
   read its section 1 and 5 before touching World/WorldBackground/TerritoryControl/save code) with its 11 applied fixes:
   the minimap re-bake and per-tile ground pixmap native-memory leaks, per-map tileset texture leaks, a sacked player
   town staying player-owned, the free Ante Re-roll, `TerritoryControl` statics surviving loads, a truncated save on a
@@ -40,7 +43,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
   The review's section 4.8 names the five files that will conflict first (World, WorldStage, MapStage, AdventurePlayer,
   RewardScene).
-- **Open**: (a) playtest-confirm rounds 121-122 (Trading Post/Exchange exclusivity, town-exit flash, cave icons per biome,
+- **Open**: (0) PACKAGE round 124 into the live folder when the game is closed (`tasklist | grep javaw.exe` = 0) - it
+  was built (Maven OK) but not packaged, the user asked for repo only; (a) playtest-confirm rounds 121-122 (Trading Post/Exchange exclusivity, town-exit flash, cave icons per biome,
   Rally rune from the Quick Travel Mart); (b) playtest-confirm round 123 - process memory should stay flat over a long
   session (watch Task Manager while walking with fog on; before this round it grew ~100 KB per tile stepped and 31 MB per
   minimap bake), a sacked player town must read as neutral the next day (`[TFR-Ownership]` line), an Ante Re-roll must
@@ -90,6 +94,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 124 (2026-09-06, REPO ONLY): review data fixes (enemies.json rewards/colors/Slobad, 45 map enemy renames, Horror
+  shop + Random sign in shops.json, plains_town_generic slot 51); Torch pulse (items.json + TuningData/settings.json torchPulse*,
+  World.flashArea(seconds), WorldBackground/WorldStage.pulseVision, `torch pulse` command); AdventurePlayer.refreshItemDefinitionsFromCatalog.
 - Round 123 (2026-09-05, PACKAGED 23:51): deep code review (`docs/review/2026-09-05-code-review.md`) + its 11 fixes
   (S2-1/S2-2 pixmap leaks in World/WorldBackground, S4-1/S4-2 TiledMap leaks in TileMapScene/MapStage, S2-3 sacked-town
   ownership + S2-5 static reset in TerritoryControl, S3-1 Ante Re-roll charge in DuelScene/MatchController, S1-2 WorldSave

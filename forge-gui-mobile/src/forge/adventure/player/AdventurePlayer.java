@@ -792,6 +792,56 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return inventoryItems;
     }
 
+    /**
+     * Round 124 (2026-09-06): the inventory is saved as serialized ItemData objects, so a balance change to an
+     * item (the Torch's new 1-shard pulse, a reworded description, a changed effect) never reached an existing
+     * save. After loading, every item still present in items.json takes the catalog's DEFINITION fields; the
+     * per-instance state (longID, isEquipped, isCracked, and the saved equipmentSlot so equippedSlots keeps
+     * matching) stays as saved. Items no longer in the catalog are left untouched. One [TFR-ItemRefresh] line.
+     */
+    private void refreshItemDefinitionsFromCatalog() {
+        int refreshed = 0, changed = 0, unknown = 0;
+        java.util.Set<String> changedNames = new java.util.TreeSet<>();
+        for (ItemData item : inventoryItems) {
+            if (item == null || item.name == null)
+                continue;
+            ItemData catalog = ItemListData.getItem(item.name);
+            if (catalog == null) {
+                unknown++;
+                continue;
+            }
+            boolean differs = item.shardsNeeded != catalog.shardsNeeded
+                    || !java.util.Objects.equals(item.commandOnUse, catalog.commandOnUse)
+                    || item.usableOnWorldMap != catalog.usableOnWorldMap
+                    || item.usableInPoi != catalog.usableInPoi
+                    || !java.util.Objects.equals(item.description, catalog.description)
+                    || item.cost != catalog.cost
+                    || !java.util.Objects.equals(item.rarity, catalog.rarity)
+                    || !java.util.Objects.equals(item.iconName, catalog.iconName);
+            item.effect = catalog.effect;
+            item.description = catalog.description;
+            item.iconName = catalog.iconName;
+            item.questItem = catalog.questItem;
+            item.excludeFromGeneralSale = catalog.excludeFromGeneralSale;
+            item.cost = catalog.cost;
+            item.rarity = catalog.rarity;
+            item.usableOnWorldMap = catalog.usableOnWorldMap;
+            item.usableInPoi = catalog.usableInPoi;
+            item.commandOnUse = catalog.commandOnUse;
+            item.shardsNeeded = catalog.shardsNeeded;
+            item.dialogOnUse = catalog.dialogOnUse;
+            refreshed++;
+            if (differs) {
+                changed++;
+                changedNames.add(item.name);
+            }
+        }
+        if (refreshed > 0 || unknown > 0)
+            System.out.println("[TFR-ItemRefresh] " + refreshed + " inventory item(s) re-read from items.json, " + changed
+                    + " with a changed definition " + changedNames
+                    + (unknown > 0 ? ", " + unknown + " not in the catalog (kept as saved)" : ""));
+    }
+
     public ItemData getItemFromInventory(Long id) {
         if (id == null)
             return null;
@@ -1059,6 +1109,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 }
             }
         }
+        refreshItemDefinitionsFromCatalog(); // round 124: saved items take the catalog's current definition
         if (data.containsKey("equippedSlots") && data.containsKey("equippedItems")) {
             try {
                 String[] slots = (String[]) data.readObject("equippedSlots");

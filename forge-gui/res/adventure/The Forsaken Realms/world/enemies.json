@@ -1301,7 +1301,7 @@
                 "addMaxCount": 90
             }
         ],
-        "colors": "uw",
+        "colors": "UW",
         "questTags": [
             "Angel",
             "Celestial",
@@ -3888,7 +3888,7 @@
                 "count": 5
             }
         ],
-        "colors": "brw",
+        "colors": "BRW",
         "questTags": [
             "IdentityMardu",
             "Aberration",
@@ -22046,7 +22046,7 @@
                 "addMaxCount": 90
             }
         ],
-        "colors": "b",
+        "colors": "B",
         "questTags": [
             "BiomeBlack",
             "BiomeColorless",
@@ -28088,7 +28088,7 @@
         "life": 40,
         "rewards": [
             {
-                "type": "Card",
+                "type": "card",
                 "probability": 1,
                 "count": 1,
                 "rarity": [
@@ -35115,11 +35115,6 @@
         "life": 100,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Commander's Robes"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Black Lotus",
@@ -36147,11 +36142,6 @@
                 "itemName": "Ink-Treader Anklet"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Black Key to the Ur-Dragon"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Kynaios and Tiro of Meletis",
@@ -36230,11 +36220,6 @@
                 "itemName": "Dune-Brood Anklet"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Blue Key to the Ur-Dragon"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Saskia the Unyielding"
@@ -36308,11 +36293,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Yore-Tiller Anklet"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Green Key to the Ur-Dragon"
             },
             {
                 "type": "card",
@@ -36389,11 +36369,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Witch-Maw Anklet"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Red Key to the Ur-Dragon"
             },
             {
                 "type": "card",
@@ -36474,11 +36449,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Glint-Eye Anklet"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "White Key to the Ur-Dragon"
             },
             {
                 "type": "card",
@@ -37098,11 +37068,6 @@
             {
                 "type": "item",
                 "count": 1,
-                "itemName": "Opal Cloak"
-            },
-            {
-                "type": "item",
-                "count": 1,
                 "itemName": "Ur-Dragon's Key"
             },
             {
@@ -37484,11 +37449,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Armor of the First"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Heirloom Blade"
             },
             {
                 "type": "item",
@@ -37911,11 +37871,6 @@
             {
                 "type": "life",
                 "count": 1
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Reliquary Robes"
             },
             {
                 "type": "card",
@@ -38964,11 +38919,6 @@
         "life": 40,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Nest Warden's Armor"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Kinnan, Bonder Prodigy",
@@ -39042,11 +38992,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Ceremonial Knife"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Bowl of Ancient Blood"
             },
             {
                 "type": "card",
@@ -40134,11 +40079,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Arguel's Amulet"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Arguel's Bloody Helm"
             },
             {
                 "type": "card",
@@ -42385,11 +42325,6 @@
         "life": 40,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Charmed Apple"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Eriette of the Charmed Apple"
@@ -43054,11 +42989,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Chimeric Coils"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "The Luckiest Clover"
             },
             {
                 "type": "card",
@@ -44705,11 +44635,6 @@
                 "itemName": "Dross Skullbomb"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Black Cartouche of Victory"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Sheoldred, the Apocalypse"
@@ -46217,11 +46142,6 @@
                 "itemName": "Lookout's Harness"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Victory Standard"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "General Tazri"
@@ -47533,11 +47453,6 @@
                 "itemName": "Ghoulcaller Greaves"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Warding Statue Arms"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Wilhelt, the Rotcleaver"
@@ -47731,11 +47646,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Pirate Hat in Hand"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Map to the Hostages"
             },
             {
                 "type": "card",
@@ -48403,11 +48313,6 @@
                 "itemName": "Kobold Boots"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "One Thousand Chickens"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Prossh, Skyraider of Kher"
@@ -48499,12 +48404,6 @@
                 "itemName": "Glimmerbell Bondband"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.6,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Illuna, Apex of Wishes"
@@ -48593,12 +48492,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Mamba Bondband"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.6,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "card",
@@ -48692,12 +48585,6 @@
                 "itemName": "Raptor Bondband"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.6,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Vadrok, Apex of Thunder"
@@ -48786,12 +48673,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Sabertooth Bondband"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.6,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "card",
@@ -48884,12 +48765,6 @@
                 "itemName": "Symbiote Bondband"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.6,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Nethroi, Apex of Death"
@@ -48978,11 +48853,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Trusty Machete"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Everflowing Watering Can"
             },
             {
                 "type": "card",
@@ -49997,11 +49867,6 @@
         "life": 30,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Student's Robes"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Galazeth Prismari"
@@ -50470,11 +50335,6 @@
         "scale": 1.5,
         "life": 30,
         "rewards": [
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Helix Helm"
-            },
             {
                 "type": "card",
                 "count": 1,
@@ -51039,11 +50899,6 @@
         "life": 30,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Name of Item"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Falco Spara, Pactweaver"
@@ -51497,11 +51352,6 @@
         "life": 30,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Fortune Teller's Hat"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Arthur, Marigold Knight",
@@ -51588,11 +51438,6 @@
         "speed": 50,
         "life": 30,
         "rewards": [
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Gourmand's Hat"
-            },
             {
                 "type": "card",
                 "count": 1,
@@ -52339,11 +52184,6 @@
         "scale": 1,
         "life": 30,
         "rewards": [
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Witch's Cloak"
-            },
             {
                 "type": "card",
                 "count": 1,
@@ -60420,11 +60260,6 @@
                 "itemName": "Thirsting Axe"
             },
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Warding Statue Skirt"
-            },
-            {
                 "type": "card",
                 "count": 1,
                 "cardName": "Gisa, the Hellraiser"
@@ -60506,11 +60341,6 @@
                 "type": "item",
                 "count": 1,
                 "itemName": "Fleshwright Chaps"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Warding Statue Torso"
             },
             {
                 "type": "card",
@@ -78080,12 +77910,6 @@
                 "cardName": "Akim, the Soaring Wind"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78151,12 +77975,6 @@
                 "type": "card",
                 "count": 1,
                 "cardName": "Gyruda, Doom of Depths"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "deckCard",
@@ -78226,12 +78044,6 @@
                 "cardName": "Kaheera, the Orphanguard"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78298,12 +78110,6 @@
                 "type": "card",
                 "count": 1,
                 "cardName": "Kalamax, the Stormsire"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "deckCard",
@@ -78375,12 +78181,6 @@
                 "cardName": "Kathril, Aspect Warper"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78446,12 +78246,6 @@
                 "type": "card",
                 "count": 1,
                 "cardName": "Keruga, the Macrosage"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "deckCard",
@@ -78521,12 +78315,6 @@
                 "cardName": "Lurrus of the Dream-Den"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78592,12 +78380,6 @@
                 "type": "card",
                 "count": 1,
                 "cardName": "Obosh, the Preypiercer"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "deckCard",
@@ -78668,12 +78450,6 @@
                 "cardName": "Umori, the Collector"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78741,12 +78517,6 @@
                 "cardName": "Otrimi, the Ever-Playful"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78812,12 +78582,6 @@
                 "type": "card",
                 "count": 1,
                 "cardName": "Tayam, Luminous Enigma"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "deckCard",
@@ -78889,12 +78653,6 @@
                 "cardName": "Xyris, the Writhing Storm"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -78963,12 +78721,6 @@
                 "cardName": "Yorion, Sky Nomad"
             },
             {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
-            },
-            {
                 "type": "deckCard",
                 "count": 1,
                 "addMaxCount": 3,
@@ -79034,12 +78786,6 @@
                 "type": "card",
                 "count": 1,
                 "cardName": "Zirda, the Dawnwaker"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "probability": 0.3,
-                "itemName": "Kill Trophy"
             },
             {
                 "type": "deckCard",
@@ -112126,12 +111872,6 @@
                 "itemName": "Windwalker's Blessing"
             },
             {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Sainted One's Trophy"
-            },
-            {
                 "type": "gold",
                 "probability": 0.85,
                 "count": 400,
@@ -112791,12 +112531,6 @@
                 "itemName": "Windwalker's Blessing"
             },
             {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Astral Visionary's Trophy"
-            },
-            {
                 "type": "gold",
                 "probability": 0.75,
                 "count": 150,
@@ -113352,12 +113086,6 @@
                 "probability": 1,
                 "count": 1,
                 "itemName": "Windwalker's Blessing"
-            },
-            {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Lichlord's Trophy"
             },
             {
                 "type": "gold",
@@ -114017,12 +113745,6 @@
                 "probability": 1,
                 "count": 1,
                 "itemName": "Windwalker's Blessing"
-            },
-            {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Dragon Lord's Trophy"
             },
             {
                 "type": "card",
@@ -114688,12 +114410,6 @@
                 "probability": 1,
                 "count": 1,
                 "itemName": "Windwalker's Blessing"
-            },
-            {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Great Druid's Trophy"
             },
             {
                 "type": "gold",
@@ -119102,12 +118818,6 @@
                 "cardName": "Tolarian Academy|USG"
             },
             {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Blue Key to the False God"
-            },
-            {
                 "type": "gold",
                 "probability": 1.0,
                 "count": 10000,
@@ -119316,12 +119026,6 @@
                 "count": 1
             },
             {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Green Key to the False God"
-            },
-            {
                 "type": "gold",
                 "probability": 1.0,
                 "count": 10000,
@@ -119517,12 +119221,6 @@
                 "probability": 1,
                 "count": 1,
                 "cardName": "Mox Pearl|LEA"
-            },
-            {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "White Key to the False God"
             },
             {
                 "type": "card",
@@ -120147,12 +119845,6 @@
         "speed": 25,
         "life": 30,
         "rewards": [
-            {
-                "type": "item",
-                "probability": 1,
-                "count": 1,
-                "itemName": "Time Walker's Trophy"
-            },
             {
                 "type": "landSketchbookShop",
                 "probability": 0.2,

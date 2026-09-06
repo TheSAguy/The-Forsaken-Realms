@@ -3091,6 +3091,30 @@
   ]
  },
  {
+  "name": "Horror",
+  "description": "Things that should not be",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "HorrorShop",
+  "rewards": [
+   {
+    "count": 8,
+    "type": "Union",
+    "cardUnion": [
+     {
+      "count": 1,
+      "subTypes": [
+       "Horror"
+      ]
+     },
+     {
+      "count": 1,
+      "cardText": "Horror"
+     }
+    ]
+   }
+  ]
+ },
+ {
   "name": "Human",
   "description": "Adam & Eve's",
   "spriteAtlas": "maps/tileset/buildings.atlas",
@@ -6440,7 +6464,7 @@
   "name": "Random",
   "description": "Pack Shop (?)",
   "spriteAtlas": "maps/tileset/buildings.atlas",
-  "sprite": "RandomShop",
+  "sprite": "CardShop",
   "rewards": [
    {
     "count": 8

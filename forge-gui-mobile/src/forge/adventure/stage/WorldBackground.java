@@ -69,6 +69,32 @@ public class WorldBackground extends Actor {
         world.flashArea(poiTileX, poiTileY, radius, this::onTileRevealed);
     }
 
+    /**
+     * Torch pulse (round 124, user request 2026-09-06: "it costs 1 shard to pulse the radius 3x for a very brief
+     * period"). Flares the player's vision to multiplier x its current radius, capped at maxRadiusTiles, for
+     * `seconds`, through the same time-limited bright tier the discovery flash uses: every tile in the circle is
+     * marked explored, drawn bright, and drops back to hazed when its timer runs out (World.tickTemporaryReveals).
+     * Enemies inside the circle draw for the duration (EnemySprite.draw consults isCurrentlyVisible, which honors
+     * the temporary tier). The shard is charged by the caller (the item's shardsNeeded). Returns the radius used.
+     */
+    public int pulseVision(float multiplier, float seconds, int maxRadiusTiles) {
+        World world = WorldSave.getCurrentSave() == null ? null : WorldSave.getCurrentSave().getWorld();
+        if (world == null || !world.isFogOfWarEnabled())
+            return 0;
+        int ts = world.getTileSize();
+        if (ts <= 0)
+            return 0;
+        int playerTileX = playerX / ts;
+        int playerTileY = playerY / ts;
+        int base = world.getVisionRadius();
+        int radius = Math.max(base, Math.min(maxRadiusTiles, Math.round(base * multiplier)));
+        long started = System.nanoTime();
+        world.flashArea(playerTileX, playerTileY, radius, seconds, this::onTileRevealed);
+        System.out.println("[TFR-TorchPulse] vision " + base + " -> " + radius + " tiles for " + seconds + " s at tile ("
+                + playerTileX + "," + playerTileY + "), repaint took " + (System.nanoTime() - started) / 1_000_000 + " ms");
+        return radius;
+    }
+
     // Throttles the per-frame "keep the visible-vs-hazed boundary accurate" repatch below to only
     // run when the player has actually moved to a new tile, not every single rendered frame.
     private int lastVisibilityPatchX = Integer.MIN_VALUE;

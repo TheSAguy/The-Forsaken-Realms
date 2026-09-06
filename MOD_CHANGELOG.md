@@ -17757,6 +17757,49 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 124: review data fixes, the Torch pulse, saved items re-read from the catalog (2026-09-06, repo only)
+
+Three user asks: the review's "fix before release" DATA fixes (repo only - the live folder stays on the round-123
+jar), a Torch ability ("it costs 1 shard to pulse the radius 3x for a very brief period"), and the attacking-mage
+numbers per difficulty (answered in chat; the formula is `TerritoryControl.maxActiveMagesPerColor()` +
+`randomAttackDelay()`, nothing changed there).
+
+**Data fixes (all from `dev-tools/validate_plane_data.py`, which now reports only the informational `sideboss*`
+POI types):**
+- `enemies.json`: the 56 reward entries naming items that are not in `items.json` are REMOVED (33 distinct names:
+  the 26 Ikoria commanders' "Kill Trophy", the five "Key to the Ur-Dragon", "Commander's Robes", "Opal Cloak",
+  "Heirloom Blade", the Shandalar-1997 trophies, the False God keys, "Name of Item", ...). They never dropped - the
+  engine printed "Missing item" and moved on - so play is unchanged; the names are in the round-123 review data
+  report if any should come back as real items. Slobad's `"type": "Card"` -> `"card"` (case-sensitive switch; his
+  card reward was silently skipped). Three lowercase `colors` values upper-cased (cosmetic; the code upper-cases).
+- Maps: `skep_outer.tmx` 39 Slivers renamed to the catalog's `Sliver_Black/Blue/Green/Red/White`, its "Legionnaire"
+  -> "Sliver", `temple_of_liliana/bog.tmx` + `forest.tmx` 3 Slivers, `fort_colorless_3_human.tmx` +
+  `fort_white_4_farm.tmx` "Human Guard" -> "Human guard". These 45 placements used to spawn a RANDOM biome roamer
+  (MapStage's unknown-enemy fallback); the Skep hive is Slivers again.
+- `shops.json`: new "Horror" shop type (HorrorShop sign, Horror subtype/text cards - `swamp_town.tmx` has listed it
+  in six slots since the port); the "Random" pack shop's sign `RandomShop` (no such atlas region) -> `CardShop`.
+- `plains_town_generic.tmx` object 51 (`commonShopList "Everything"`, a name no shop has, so the slot was skipped):
+  now carries the map's standard White common/uncommon/rare/mythic lists.
+
+**Torch pulse (user request 2026-09-06).** Torch and Grand Torch (`items.json`) gain `usableOnWorldMap`,
+`shardsNeeded 1`, `commandOnUse "torch pulse"`: the ability button / inventory Use charges the shard, the new
+console command `torch pulse` calls `WorldStage.pulseVision()` -> `WorldBackground.pulseVision()` ->
+`World.flashArea(..., seconds, ...)` (new overload of the round-121 discovery flash with an explicit duration;
+`temporarilyReveal(x, y, seconds)` never shortens a longer flash). The vision circle flares to `torchPulseMultiplier`
+(3) x its current radius, capped at `torchPulseMaxRadiusTiles` (24), for `torchPulseSeconds` (2) - all three in
+`settings.json`. Everything the flare touches is marked explored and stays hazed on the map afterwards; enemies inside
+it draw for the duration. World map with fog on only - inside a POI or with fog off the shard is refunded with a
+notification. `[TFR-TorchPulse]` logs the radii and the repaint time. Radii: base 3 (Easy 4, Insane 2); Torch x2,
+Grand Torch x4; pulse x3 -> a Torch on Insane flares 4 -> 12 tiles, a Grand Torch on Normal 12 -> 24 (cap).
+`World.isFogOfWarEnabled()` is public now.
+
+**Saved items re-read from the catalog on load** (`AdventurePlayer.refreshItemDefinitionsFromCatalog()`, called
+from `load()` after the inventory is read). The inventory is saved as serialized ItemData objects, so no balance
+change to an item ever reached an existing save - the user's two torches would have stayed at "0 shards, does
+nothing". Now every item still in `items.json` takes the catalog's definition fields (effect, description, icon,
+cost, rarity, usable flags, command, shards, dialog); longID / equipped / cracked / the saved slot stay. Items no
+longer in the catalog are kept as saved. One `[TFR-ItemRefresh]` line per load lists the changed names.
+
 ## Round 123: deep code review - 11 fixes (native-memory leaks, town ownership, free Ante Re-roll, save pins), a plane data validator, the Rally rune as the "Hire a guard" reward (2026-09-05, packaged)
 
 The user asked for a meticulous whole-codebase review (mod code, the upstream files the mod edits, all plane data),

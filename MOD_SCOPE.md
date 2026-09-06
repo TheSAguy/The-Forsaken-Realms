@@ -4680,3 +4680,13 @@ should face the incoming mage's road. Round 123 (2026-09-05, user request): the 
 main quest "Raise the Banner" stage "Hire a guard" - the stage epilogue congratulates the player, summarizes
 guard tiers, wages and duel/capture odds, then grants one Rally rune (quests.json stage 2 epilogue,
 `grantRewards`). Quests already accepted in an existing save keep their old, empty stage epilogue.
+
+### 105. Torch pulse - flare your vision for a shard — `Done (built 2026-09-06, round 124, repo only), not yet playtest-confirmed`
+User ask 2026-09-06: "for the torch, we have two. Add a feature, where it costs 1 shard to pulse the radius 3x for a
+very brief period." Torch and Grand Torch are Ability2 items with a passive vision multiplier (x2 / x4); using one
+(ability button or inventory Use, 1 [+Shards]) now flares the fog-of-war vision to 3x its current radius (capped at
+24 tiles) for 2 seconds through the discovery-flash tier - tiles touched stay explored, enemies inside show for the
+duration. Tunables `torchPulseMultiplier` / `torchPulseSeconds` / `torchPulseMaxRadiusTiles` in settings.json. Off the
+world map (or with fog off) the shard is refunded. Existing saves get it because saved items are now re-read from
+items.json on load (AdventurePlayer.refreshItemDefinitionsFromCatalog). Open: whether 2 s is "very brief" enough and
+whether the flare should be a bigger visual moment (a particle burst on the player only, today).

@@ -230,4 +230,12 @@ public class TuningData {
     // giving up and spawning the duplicate anyway. Deliberately finite and deliberately NOT a
     // skipped spawn: a biome whose list is genuinely one or two entries long must still populate.
     public int sameEnemySpawnRerolls = 4;
+
+    // Torch pulse (round 124, user request 2026-09-06): using a Torch / Grand Torch (the item's shardsNeeded, 1)
+    // flares the fog-of-war vision to torchPulseMultiplier x its current radius for torchPulseSeconds, through the
+    // same time-limited bright tier the discovery flash uses. torchPulseMaxRadiusTiles caps the flared radius
+    // (a Grand Torch on Easy would otherwise reach 48 tiles - the repaint cost grows with the square).
+    public float torchPulseMultiplier = 3f;
+    public float torchPulseSeconds = 2f;
+    public int torchPulseMaxRadiusTiles = 24;
 }
