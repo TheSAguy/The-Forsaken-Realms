@@ -17731,3 +17731,27 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 **Files touched**: `util/EconomyBuildings.java`, `world/World.java`, `stage/WorldBackground.java`,
 `stage/WorldStage.java`, `stage/MapStage.java`, plane `GUIDE.md`.
+
+## Round 121b/121c: round 121 packaged, log review, decks v5 + WriteDecks select=, thread handoff docs (2026-09-05)
+
+- **Live folder packaged** with the round-121 jar (built 14:19) once the user closed the game: `PACKAGE_OK` 17:05,
+  318 MB, incremental copy (stock tree unchanged).
+- **Log review** (`%APPDATA%\ForsakenRealms\forge.log`, 13:27-16:52, 6,360 lines): no exceptions of ours - two stock
+  `java.util.concurrent.TimeoutException` from `AiController.chooseSpellAbilityToPlayFromList` (the AI's think timer,
+  harmless); no warnings; `[TFR-Life]` shows 12/12 with ringLifeBonus 5 + townLifeBonus 2 on every load; the main-quest
+  flags fired correctly for Mardrake Town and Amanaxis Tower (towns 7 and 8 restored). One cosmetic finding:
+  `[TFR-DungeonClear] Amanaxis Tower left with no enemies and no loot remaining - despawning via onDungeonClear` prints
+  for ruined TOWNS as well - `MapStage.clearDungeonIfEmptied()` logs before `DungeonRotation.onDungeonClear()` self-gates
+  on rotatable dungeons. Nothing happens to the town; only the line is misleading. Open: gate the log on dungeon-like
+  POI types.
+- **Decks v5** for the user's NG+ Insane save (slot 1, 12/12 life; 738 cards / 578 names - 168 new since v4, a few lost
+  to ante including Wall of Swords and Kemba's Skyguard that the v4 lists still carried): slot 1 **Ichor Crown** (W/B
+  toxic control - 11 toxic creatures, Vraska's Fall x3, Drown in Ichor x2 to proliferate, Get Lost / Murder / Anoint x2 /
+  Banisher Priest; poison ignores the Insane life inflation), slot 2 **Gravetithe** v5 (mono-B), slot 3 **Dawn Bulwark**
+  v5 (mono-W). Slot 1 selected. Backup `1_save_slot.sav.prededit4.bak`. Lists in
+  `dev-tools/save-editing/{ichor_crown,gravetithe,dawn_bulwark}.txt`.
+- **WriteDecks** gained `select=<n>` (sets `selectedDeckIndex`) and now writes `.prededit4.bak`; list-file paths must be
+  Windows-style (`C:/...`) - an MSYS `/c/...` inside a `slot=` argument is not converted by Git Bash.
+- **Handoff (121c)**: CLAUDE.md's STATE block rewritten for 2026-09-05 evening (v1.05 released, live = round 121, open
+  items, v1.06 starts with the upstream merge - 6 commits behind tonight); MOD_SCOPE #87 (More Attacking Options) and
+  #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.

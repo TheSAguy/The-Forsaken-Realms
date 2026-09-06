@@ -10,14 +10,39 @@ Read in this order, and stop when you have what you need:
 | Read | For |
 |---|---|
 | **this file (`CLAUDE.md`)** | ground rules, release workflow, deploy path, build commands |
-| **`MOD_SCOPE.md`** | the feature list — 101 numbered items with live status. Start at the Currency line |
+| **`MOD_SCOPE.md`** | the feature list — 103 numbered items with live status. Start at the Currency line |
 | **`MOD_CHANGELOG.md`** | the engineering log. Newest rounds at the **bottom**. ~15k lines — read the last few rounds, then grep by keyword |
 | **`CORE_ENGINE_CHANGES.md`** | every stock-engine file this mod edits, for upstream-merge conflict work |
 | **`ANDROID_RELEASE.md`** | the authoritative Android release procedure. Read before ANY Android work |
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-02 EVENING (round 86) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-05 EVENING (round 121b) - READ THIS FIRST, DO NOT REPEAT WORK
+
+- **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
+  `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
+- **HEAD `ef4d847ef81` (round 121b), `main` level with `origin/master`, tree clean.** Rounds 120-121b are post-release
+  fixes: UIScene dialog z-order (Android Armory report), one Trading Post OR Exchange per town, town-exit discovery
+  flash, WriteDecks `select=` option + the user's v5 deck lists in `dev-tools/save-editing/`.
+- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-121 jar (built 14:19), `PACKAGE_OK` 17:05.
+  The user plays their NG+ Insane game from save slot 1 (12/12 life). Decks v5 were written at 17:05: slot 1 "Ichor
+  Crown" (W/B toxic control, selected), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W). Backup
+  `1_save_slot.sav.prededit4.bak` sits beside the save - do not delete it.
+- **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards) and 121 ship with the next
+  APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
+- **Upstream drift**: 6 commits / 9 files (6 java) past our merge base `042b3267af7` as of 2026-09-05 22:00. Take them
+  as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
+- **Open**: (a) playtest-confirm round 121 (no Trading Post offer in a Capitol that has an Exchange; the area lights up
+  for ~3 s when leaving a town/Capitol/castle); (b) cosmetic log: `[TFR-DungeonClear] <name> left with no enemies and no
+  loot remaining - despawning via onDungeonClear` also prints for ruined TOWNS (`MapStage.clearDungeonIfEmptied()` logs
+  before `DungeonRotation.onDungeonClear()` self-gates on rotatable dungeons) - gate the log on dungeon-like POI types;
+  (c) MOD_SCOPE #84 Building Upgrades and #85 New Quests are the only Not Started items; #11 Map Polish is In Progress.
+- Rules that held all week: package only when `tasklist | grep javaw.exe` is 0 - the user plays between rounds and
+  "repo only" means exactly that; one Maven at a time, always backgrounded (~15-17 min); pushes are routine since
+  2026-09-05 (push after each round); every round updates MOD_CHANGELOG + this file + CORE_ENGINE_CHANGES in its commit.
+- Round history (this section's list, newest first) and the round-86 state block that used to head this file follow.
+
+## Round history 2026-09-02 -> 2026-09-05 (the round-86 state block is kept as written; newest rounds first below it)
 
 **Token budget warning.** This session hit the 5-hour usage limit THREE times running multi-agent
 Workflows (each attempt burned ~1.3M tokens before dying). Do NOT relaunch review/research
@@ -50,6 +75,8 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 121b (2026-09-05): live folder PACKAGED with the round-121 jar (PACKAGE_OK 17:05); log reviewed (two stock AI
+  TimeoutExceptions, nothing else); WriteDecks `select=<n>`; decks v5 written to save slot 1 (Ichor Crown selected). 121c = handoff docs.
 - Round 121 (2026-09-05, repo only): one Trading Post OR Exchange per town (Trader gate also checks EXCHANGE); leaving a
   town/Capitol/castle replays the discovery flash (World.flashArea -> WorldBackground.flashDiscoveryAround, from MapStage.exitDungeon).
 - Round 120 (2026-09-05): UIScene keeps the top dialog in front every frame + toFront after show - fixes the portrait Armory
@@ -151,38 +178,34 @@ Done today (committed):
   loading. Screenshots in C:/Users/User/Pictures/Screenshots/LOG. Investigation notes, if any,
   are in MOD_CHANGELOG round 86/87.
 
-## Where things stood after v1.04 (2026-09-02 morning)
+## Where things stood after v1.05 (2026-09-05 evening)
 
-**v1.04 is released.** PC + Android, both live at
-`https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.04`. Tag `tfr-v1.04` is on
-`7018e12235f`, `main` is level with `origin/master`, working tree clean, and the live folder at
-`F:\FORGE\TFR-Standalone\The Forsaken Realms\` is built and `PACKAGE_OK`. Rounds 62-82 all shipped
-in that release, which was the first push since v1.03.
+**v1.05 "Fight Back" is released.** PC + Android, both live at
+`https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.05`. Tag `tfr-v1.05` is on `5f520118bdd`; rounds
+87-119 shipped in it (town assaults, Ring Cities, the "Oaths at the Ring" opening, victory, 267 new enemies / 22 Mythic
+decks, the tier slice, engine 09.05). Rounds 120-121b are committed and pushed and are in the desktop live folder, but
+in no release yet.
 
-## What v1.05 starts with — NOT open to reordering
+## What v1.06 starts with — NOT open to reordering
 
-**Step 0 is the upstream engine merge.** Standing user rule as of 2026-09-01: always take the latest
-`upstream/master` BEFORE cutting a release, as its own round. Measured 2026-09-01 at **34 commits /
-1,812 files / 174 `.java`** behind. See the "Release rule" section below for why it must be its own
-round, and note it **blocks packaging until the user reinstalls `E:\GAMES\Forge_2`** at the matching
-engine version — only they can do that step, so raise it early rather than discovering it mid-build.
+**Step 0 is the upstream engine merge**, as its own round (standing user rule 2026-09-01). Measured 2026-09-05 22:00 at
+6 commits / 9 files / 6 `.java` past `042b3267af7` (Snapshot 09.05) - small, but it still swaps the rules engine under
+what was just tested and **blocks packaging until the user reinstalls `E:\GAMES\Forge_2`** at the matching daily. Raise
+it early. Then the Android APK carrying rounds 120-121.
 
 ## Open items
 
-- **MOD_SCOPE #101** — the resource-drop placement sweep is 25 of 75 done. 50 clustered `+5/+5`
-  drops remain in 49 maps: 2 out of bounds and uncollectable, 15 partially buried in collision, 33
-  merely stacked. Full triage is in the item.
-- **MOD_SCOPE #84 / #85 / #87** — the only Not Started items. #87 (More Attacking Options) has real
-  research behind it in `STAR_TOWNS_RESEARCH.md` and carries the AI end-game objective ("capture the
-  centre of the map"). #84 has four named targets: Mine Upgrades, City Walls, Mage War Camp, Armory
-  Upgrade.
-- **MOD_SCOPE #98** — 1-vs-N duels work at the engine level but have **zero reachable content**:
-  one chained enemy exists in 1,520 and it is in no biome spawn list. Making it reachable means
-  authoring content, most naturally as part of #87.
-- **Shipped in v1.04 but never playtested by the user**: the Arena bracket coin payout, #94 Armory
-  rarity, #95 Capitol cooldown, #96 New Game+, and the round-79 Skip Tutorial text (new games only).
-- **Android has real testers** (24 downloads on the v1.03 APK) and the user has no Android device —
-  feedback arrives via Discord.
+- **MOD_SCOPE #84 / #85** — the only Not Started items (Building Upgrades: Mine Upgrades, City Walls, Mage War Camp,
+  Armory Upgrade; New Quests). **#11** Map Polish is In Progress.
+- **Round 121 unconfirmed in play**: the Trader no longer offered beside an Exchange; the town-exit discovery flash.
+- **Cosmetic log**: the `[TFR-DungeonClear]` "despawning" line prints when leaving ruined towns too (harmless - the
+  despawn self-gates). Gate the log on dungeon/cave/sideboss POI types in `MapStage.clearDungeonIfEmptied()`.
+- **Shipped in v1.05 but never confirmed by the user**: the AI-vs-AI guard fights, capital 1v2 capture quests 76-85,
+  Ring City 1v2 duels, one Jumpstart per run, the Ring-City exclusion from the entry flags (round 118).
+- **Android has real testers** and the user has no Android device — feedback arrives via Discord. The v1.05 APK still
+  carries the portrait Armory Guards-dialog bug (fixed in round 120).
+- **Older saves may carry inflated life** from the pre-round-112 Ring bonus re-add; advice given: heal to full, then
+  `give life -N` in the console.
 
 ## Hard-won lessons that will bite you again
 

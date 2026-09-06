@@ -4253,7 +4253,7 @@ color a standing that the player moves through play, and territory control (#7) 
 consequences; a separate negotiation layer on top was never scoped and is not wanted. Kept here
 rather than deleted, matching how #5, #8 and #26 were retired.
 
-### 87. More Attacking Options — `In Progress (2026-09-03: Attack/Leave at a War-status AI town; win captures the town as a restored ruin; AI guard dots 1-4 by 28-day ownership set the defender tier, capitals two Archmage dots and unattackable; awaiting playtest; researched 2026-08-31, see STAR_TOWNS_RESEARCH.md)`
+### 87. More Attacking Options — `Done (released in v1.05 Fight Back, 2026-09-05: Attack at War-status AI towns, capital 1v2 against two Archmages, AI guard dots set the defender tier, AI-vs-AI guard fights; playtested by the user 09-03..09-05; researched 2026-08-31, see STAR_TOWNS_RESEARCH.md)`
 User wishlist addition (2026-08-18): expand the player's offensive options against AI
 towns/castles beyond the current Territory Control capture mechanism (#7). Scope not yet defined -
 could mean new attack types, mercenary/ally forces, siege mechanics, or something else.
@@ -4549,7 +4549,7 @@ rather than in a player's save: cards, decks, inventory, equipment, boosters, al
 max life, name/race/avatar. Known accepted cost: an in-progress draft/sealed tournament is
 discarded, exactly as a New Game already does.
 
-### 97. Android Release — `Blocked on a device/tester, not on code - v1.03 APK shipped 2026-08-27; v1.04 version fields pre-bumped, no v1.04 APK built`
+### 97. Android Release — `Live - v1.05 APK + assets.zip shipped 2026-09-05 (round 119); rounds 120-121 fixes await the next APK; testers report via Discord`
 Backfilled 2026-09-01. Signed APK plus a paired assets.zip, attached to the `tfr-v1.03` release and
 marked experimental/community-test. **`ANDROID_RELEASE.md` in the repo root is the authoritative
 per-release procedure** - read it before any Android work; it carries the keystore rules (the SAME
@@ -4563,7 +4563,7 @@ screens followed in rounds 69 and 70.
   release first - the APK attaches to that same GitHub release) is not done either. This item cannot
   move past "shipped experimental" without a tester, since the user has no Android device.
 
-### 98. Multi-Opponent (1-vs-N) Duels — `Engine support Done (round 77); content Not Started - zero reachable 1-vs-N fights exist`
+### 98. Multi-Opponent (1-vs-N) Duels — `Done (content shipped in v1.05: 1v2 duels at AI-held Ring Cities and at AI capitals; engine support round 77)`
 Backfilled 2026-09-01. Research finding, not a new build: `EnemyData.nextEnemy` has ALWAYS built a
 real simultaneous multiplayer match (up to 1-vs-8, full Forge N-player rules, multi-opponent-aware
 AI, dedicated 3- and 4-player match layouts). "Goblin Pack" is the only entry in 1,520 TFR enemies
