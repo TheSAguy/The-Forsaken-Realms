@@ -132,9 +132,10 @@ public class TuningData {
     // Attacking mages each AI color can field at once, NORMAL-difficulty base (2026-08-20 user
     // spec: "base number of attacking mages per color... for normal, and easy is -1, hard +1,
     // insane +2"). TerritoryControl.maxActiveMagesPerColor() applies those fixed per-difficulty
-    // offsets plus the town-count and Color Defeat bonuses on top. Default 3 reproduces the old
-    // hardcoded 2+index ladder (2/3/4/5) exactly.
-    public int baseAttackingMagesPerColor = 3;
+    // offsets plus the town-count and Color Defeat bonuses on top. Default 3 reproduced the old
+    // hardcoded 2+index ladder (2/3/4/5); lowered to 2 in round 125 (2026-09-06, user: "Reduce the
+    // number of attacking mages by 1 per color. So Easy = 1 and Insane would be 4") -> 1/2/3/4.
+    public int baseAttackingMagesPerColor = 2;
 
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an

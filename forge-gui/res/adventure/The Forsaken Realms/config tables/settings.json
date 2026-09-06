@@ -74,9 +74,10 @@
     "sideQuestDays": 20,
 
     // How many attacking mages each AI color can field at once on Normal difficulty.
-    // Easy uses one fewer, Hard one more, Insane two more. Town-count and Color
-    // Defeat bonuses stack on top of this base.
-    "baseAttackingMagesPerColor": 3,
+    // Easy uses one fewer, Hard one more, Insane two more (2 -> Easy 1 / Normal 2 /
+    // Hard 3 / Insane 4 since round 125; it was 3 -> 2/3/4/5 before). Town-count and
+    // Color Defeat bonuses stack on top of this base.
+    "baseAttackingMagesPerColor": 2,
 
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this

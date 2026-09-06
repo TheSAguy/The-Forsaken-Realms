@@ -2170,3 +2170,11 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`player/AdventurePlayer.java`** - `refreshItemDefinitionsFromCatalog()` called from `load()`: saved ItemData objects take the catalog's definition fields (`[TFR-ItemRefresh]`).
 - **Data** - `items.json` (Torch, Grand Torch: usableOnWorldMap, shardsNeeded 1, commandOnUse, description), `enemies.json` (56 dangling item rewards removed, Slobad `card`, 3 colors upper-cased), `shops.json` (Horror shop added, Random sign -> CardShop), `maps/map/skep/skep_outer.tmx`, `temple_of_liliana/bog.tmx`, `forest.tmx`, `fort/fort_colorless_3_human.tmx`, `fort/fort_white_4_farm.tmx` (enemy names), `towns/plains_town_generic.tmx` (object 51 shop lists).
 - **Tooling** - `dev-tools/validate_plane_data.py` knows the `torch` command root and the three tuning keys.
+
+## Round 125 (2026-09-06) - Arena decks and tiers, generated caves, mage base
+
+- **`scene/DuelScene.java`** - the `arenaBattleChallenge` flag, its `isArena && isHardorInsaneDifficulty()` assignment and the branch that dealt Arena fighters a random genetic-AI deck are removed; Arena fighters take the same final branch as roaming enemies.
+- **`scene/ArenaScene.java`** - `loadArenaData()` tier-weighted seat fill (Adept 50 / Master 35 / Archmage 15, Common excluded) gated on AI-capital arenas and level-1 player-owned arenas in Regular mode; new `pickTierWeighted()`, `isAiCapitalArena()`; `[TFR-ArenaTier]` per bracket.
+- **`data/TuningData.java`** - `baseAttackingMagesPerColor` default 3 -> 2; `util/TerritoryControl.java` comment only. Mirrored in `config tables/settings.json`.
+- **Data** - 78 new maps `maps/map/cave/cave_<biome>_01..13.tmx`; `points_of_interest.json` +78 `Cave<L>Gen<nn>` entries; `biomes/<biome>.json` `pointsOfInterest` +13 each; `GUIDE.md`.
+- **Tooling** - `dev-tools/gen_caves.py` (the generator; regenerates the same files from the same seeds) + `dev-tools/gen_caves_manifest.txt`; `dev-tools/save-editing/WriteDecks.java` backup name = first free `.prededit<N>.bak`; deck lists v6 in `dev-tools/save-editing/`.

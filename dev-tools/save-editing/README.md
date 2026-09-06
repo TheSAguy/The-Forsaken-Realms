@@ -89,3 +89,6 @@ the collection count is identical, and life/gold/resources are intact.
 - **2026-09-02 (round 82)** — method re-derived from scratch after a session wrongly concluded save
   writing was unsafe. Wrote "Dawn Offensive" (slot 2) and "Gallows Procession" (slot 3). Tools
   moved into the repo and documented *here* so this is the last re-derivation.
+- **2026-09-06 (round 125)** — decks v6 written into slots 1-3 with `WriteDecks` (lists in this folder). The backup
+  name is now the first free `.prededit<N>.bak` (it used to overwrite `.prededit4.bak`). Verified afterwards with
+  `Inspect`: stats and collection unchanged, 40/40/44 cards.

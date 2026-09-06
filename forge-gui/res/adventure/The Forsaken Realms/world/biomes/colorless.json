@@ -414,7 +414,20 @@
                              "AncientDiamondMine",
                              "RiddlesLair",
                              "Ancient Opal Cavern",
-                             "Planeswalker Dueling Club"
+                             "Planeswalker Dueling Club",
+                             "CaveCGen01",
+                             "CaveCGen02",
+                             "CaveCGen03",
+                             "CaveCGen04",
+                             "CaveCGen05",
+                             "CaveCGen06",
+                             "CaveCGen07",
+                             "CaveCGen08",
+                             "CaveCGen09",
+                             "CaveCGen10",
+                             "CaveCGen11",
+                             "CaveCGen12",
+                             "CaveCGen13"
                          ],
     "structures":  [
                        {

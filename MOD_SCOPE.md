@@ -2058,6 +2058,8 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   for the identical "does the Capitol count" question, `countPlayerTowns()` itself promoted from
   private to public to make the reuse possible. Not yet playtested - needs several in-game days at
   a fast time-multiplier with 10+ owned towns to actually observe the bonus mage count changing.
+- **Round 125 (2026-09-06)**: the flat base dropped from 3 to 2 (`baseAttackingMagesPerColor`), so the ladder is now
+  Easy 1 / Normal 2 / Hard 3 / Insane 4 before this bonus (user: "Reduce the number of attacking mages by 1 per color").
 
 ### 30. AI-Generated Decks for Arena Enemies — `Done (2026-08-12, user-confirmed)`
 - Fulfilled by the 5 Challenge Arena champion decks (#42): AI-built (Claude-designed,
@@ -2065,6 +2067,8 @@ between fights, before it can proceed to the town's/Capitol's own capture resolu
   arena-exclusive enemies with signature bounties. User confirmed this satisfies the original
   "AI deck builds - add to arena" ask; the alternative genetic-AI-per-bracket idea sketched here
   is dropped with it.
+- **Round 125 (2026-09-06)**: upstream's own Hard/Insane rule that dealt EVERY Arena fighter a random genetic-AI
+  deck is removed - fighters play their own decks (see #106).
 
 ### 31. Custom Building Ruin Art Variety — `Done (2026-09-01, user decision - existing ruin art is sufficient)`
 - User idea (2026-08-11, wishlist batch): "Custom building ruins." Ties directly to #2 (Central
@@ -4690,3 +4694,22 @@ duration. Tunables `torchPulseMultiplier` / `torchPulseSeconds` / `torchPulseMax
 world map (or with fog off) the shard is refunded. Existing saves get it because saved items are now re-read from
 items.json on load (AdventurePlayer.refreshItemDefinitionsFromCatalog). Open: whether 2 s is "very brief" enough and
 whether the flare should be a bigger visual moment (a particle burst on the player only, today).
+
+### 106. Arena fighters play their own decks; Adept/Master/Archmage brackets — `Done (built + packaged 2026-09-06, round 125), not yet playtest-confirmed`
+User report 2026-09-06 ("I fought an Adept mage in the Arena and they had an amazing deck") traced to upstream's
+Hard/Insane rule in DuelScene that dealt every Arena fighter a random genetic-AI tournament deck. User chose "option 1"
+(fighters play their own roster decks) plus: "Only have Uncommon or above opponents in Arenas. 50% Uncommon / 35%
+Master / 15% Archmage. This is for AI Capitol and Level 1 Player Arenas (not the level 2 arena or random arenas in the
+wild)." ArenaScene fills the 7 seats with that roll at the five AI capitals and at a player-owned Arena until it is
+upgraded to level 2; level-2 arenas (both modes) and the Chest's illegal arena keep the plain pick. `[TFR-ArenaTier]`.
+Open: whether the Challenging pool should get a weighting of its own.
+
+### 107. Generated caves - 13 per biome — `Done (packaged 2026-09-06, round 125), not yet playtest-confirmed`
+User ask 2026-09-06 after reviewing six generated test caves: "create caves for each biome, till we have 13 each. Give
+them appropriate names and loot, etc. Make one or two of the monsters totally random as far as its level, the rest
+common or uncommon. Have their movement speed to way-points be a little faster than normal." `dev-tools/gen_caves.py`
+writes `cave_<biome>_01..13.tmx` (organic chambers cut with the tileset's corner-Wang rules, biome floors, 3-5 patrols
+with 1-2 any-tier wildcards, speedModifier +4, depth-scaled loot) and registers `Cave<L>Gen01..13` POIs (Hostile/Cave/
+Biome tags, biome cave icons) in points_of_interest.json and the biome lists. New worlds only (POIs and the rotation
+reserve are placed at world-gen). Open: playtest a few in a new world (pathing on the corridor mouths, wildcard
+difficulty feel); more variety later is a matter of new seeds/name lists.

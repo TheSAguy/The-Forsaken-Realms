@@ -612,7 +612,20 @@
                              "CaveGB",
                              "GroveFaerieDragon",
                              "DragonsLairGreen",
-                             "An-Havva Inn"
+                             "An-Havva Inn",
+                             "CaveGGen01",
+                             "CaveGGen02",
+                             "CaveGGen03",
+                             "CaveGGen04",
+                             "CaveGGen05",
+                             "CaveGGen06",
+                             "CaveGGen07",
+                             "CaveGGen08",
+                             "CaveGGen09",
+                             "CaveGGen10",
+                             "CaveGGen11",
+                             "CaveGGen12",
+                             "CaveGGen13"
                          ],
     "structures":  [
                        {

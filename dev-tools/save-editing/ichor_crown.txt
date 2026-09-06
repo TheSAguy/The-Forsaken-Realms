@@ -1,10 +1,12 @@
-# Ichor Crown v5 - white/black toxic control, 40 cards. Poison ignores the AI's inflated Insane life totals;
-# premium removal keeps your 12 life safe. Black main, white splash (Banisher Priest is the only WW card).
+# Ichor Crown v6 (2026-09-06) - white/black toxic control, 40 cards. Poison ignores the AI's inflated Insane life
+# totals; premium removal keeps your 12 life safe. Black main, white splash (Banisher Priest is the only WW card).
+# v6: two Scoured Barrens (W/B dual, +1 life) replace Shimmering Grotto and a Plains; Grim Affliction (instant -1/-1
+# counter + proliferate) and Power Word Kill replace Nimraiser Paladin and the third Vraska's Fall (only 2 are owned).
 8 Swamp
-5 Plains
+4 Plains
+2 Scoured Barrens
 1 Sunlit Marsh
 1 Terramorphic Expanse
-1 Shimmering Grotto
 2 Bilious Skulldweller
 2 Pestilent Syphoner
 1 Blightbelly Rat
@@ -16,9 +18,10 @@
 1 Sheoldred's Headcleaver
 1 Liliana's Reaver
 1 Kinzu of the Bleak Coven
-1 Nimraiser Paladin
 1 Get Lost
 2 Anoint with Affliction
 2 Drown in Ichor
 1 Murder
-3 Vraska's Fall
+1 Power Word Kill
+1 Grim Affliction
+2 Vraska's Fall

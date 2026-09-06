@@ -584,7 +584,20 @@
                              "UnhallowedAbbey",
                              "DragonsLairWhite",
                              "Peaceful Clearing",
-		"Camel Cave"
+		"Camel Cave",
+                             "CaveWGen01",
+                             "CaveWGen02",
+                             "CaveWGen03",
+                             "CaveWGen04",
+                             "CaveWGen05",
+                             "CaveWGen06",
+                             "CaveWGen07",
+                             "CaveWGen08",
+                             "CaveWGen09",
+                             "CaveWGen10",
+                             "CaveWGen11",
+                             "CaveWGen12",
+                             "CaveWGen13"
                          ],
     "structures":  [
                        {

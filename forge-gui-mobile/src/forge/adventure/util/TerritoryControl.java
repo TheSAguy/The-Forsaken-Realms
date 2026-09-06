@@ -1472,8 +1472,9 @@ public class TerritoryControl {
         // skip), so this term is simply moot for them.
         int defeatBonus = world != null ? world.getDefeatedColorCount() : 0;
         // Difficulty base made tunable 2026-08-20 (TuningData.baseAttackingMagesPerColor, Normal
-        // base; fixed offsets Easy -1 / Hard +1 / Insane +2 per user spec). With the default base
-        // of 3 this reproduces the old hardcoded 2+index ladder (2/3/4/5) exactly.
+        // base; fixed offsets Easy -1 / Hard +1 / Insane +2 per user spec). The original default
+        // base of 3 reproduced the old hardcoded 2+index ladder (2/3/4/5); round 125 (2026-09-06)
+        // lowered the shipped base to 2 -> Easy 1 / Normal 2 / Hard 3 / Insane 4.
         int difficultyOffset = index == 0 ? -1 : index - 1;
         int base = Config.instance().getTuningData().baseAttackingMagesPerColor;
         int cap = base + difficultyOffset + townBonus + defeatBonus;

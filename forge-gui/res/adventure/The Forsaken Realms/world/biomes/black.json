@@ -614,7 +614,20 @@
                              "CaveBA",
                              "DragonsLairBlack",
                              "Eclipsed Elven Court",
-                             "Isolated Hut"
+                             "Isolated Hut",
+                             "CaveBGen01",
+                             "CaveBGen02",
+                             "CaveBGen03",
+                             "CaveBGen04",
+                             "CaveBGen05",
+                             "CaveBGen06",
+                             "CaveBGen07",
+                             "CaveBGen08",
+                             "CaveBGen09",
+                             "CaveBGen10",
+                             "CaveBGen11",
+                             "CaveBGen12",
+                             "CaveBGen13"
                          ],
     "structures":  [
                        {

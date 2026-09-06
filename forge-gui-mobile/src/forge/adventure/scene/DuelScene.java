@@ -88,7 +88,6 @@ public class DuelScene extends ForgeScene {
     Deck playerDeck;
     boolean chaosBattle = false;
     boolean callbackExit = false;
-    boolean arenaBattleChallenge = false;
     boolean isArena = false;
     AdventureEventData eventData;
     // Deck Tester "Simulated" mode (2026-08-13) - true only for a fully-AI-vs-AI test duel, see
@@ -770,12 +769,13 @@ public class DuelScene extends ForgeScene {
                 }
                 this.AIExtras = aiCards;
                 deck = deckProxy.getDeck();
-            } else if (this.arenaBattleChallenge) {
-                if (Config.instance().getConfigData().enableGeneticAI) {
-                    deck = Aggregates.random(DeckProxy.getAllGeneticAIDecks()).getDeck();
-                } else {
-                    deck = currentEnemy.generateDeck(Current.player().isFantasyMode(), false);
-                }
+            // Round 125 (2026-09-06, user "option 1"): the upstream Arena override is gone. On
+            // Hard/Insane every Arena opponent used to play a random genetic-AI deck
+            // (Aggregates.random(DeckProxy.getAllGeneticAIDecks()), one of 786 tournament lists)
+            // regardless of who they were - the user's "Adept Green Wizard with an amazing
+            // Eldrazi Tron deck". Arena fighters now resolve their deck exactly like the same
+            // enemy met in the wild (the final branch below: their own EnemyData deck list, with
+            // the same Hard/Insane genetic card-pool rule roaming enemies already get).
             } else if (this.eventData != null) {
                 deck = eventData.nextOpponent.getDeck();
             } else if (currentEnemy.fixedDeck != null) {
@@ -1163,7 +1163,6 @@ public class DuelScene extends ForgeScene {
         this.aiControlsPlayerSide = aiControlsPlayerSide;
         if (eventData != null && eventData.eventRules == null)
             eventData.eventRules = new AdventureEventData.AdventureEventRules(AdventureEventController.EventFormat.Constructed);
-        this.arenaBattleChallenge = isArena && Current.player().isHardorInsaneDifficulty();
         if (eventData != null && eventData.registeredDeck != null)
             this.playerDeck = (Deck) eventData.registeredDeck.copyTo("EventDeckCopy");
         else

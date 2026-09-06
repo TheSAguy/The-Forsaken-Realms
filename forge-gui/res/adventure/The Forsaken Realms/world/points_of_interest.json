@@ -5071,5 +5071,1175 @@
 		"map": "../The Forsaken Realms/maps/map/towns/forest_town_generic.tmx",
 		"radiusFactor": 0,
 		"questTags": ["Town", "BiomeGreen", "TownGeneric", "Sidequest", "QuestSource", "CenterTown", "RingGreen"]
+	},
+	{
+		"name": "CaveWGen01",
+		"displayName": "Frosthollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_01.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen02",
+		"displayName": "Hermit's Cleft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_02.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen03",
+		"displayName": "Snowfall Grotto",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_03.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen04",
+		"displayName": "Chapel Undercroft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_04.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen05",
+		"displayName": "Icicle Warren",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_05.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen06",
+		"displayName": "Pilgrim's Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_06.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen07",
+		"displayName": "Silent Vestry",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_07.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen08",
+		"displayName": "Glacier Pocket",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_08.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen09",
+		"displayName": "Whitebriar Den",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_09.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen10",
+		"displayName": "Winter Kennel",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_10.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen11",
+		"displayName": "Rimeguard Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_11.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen12",
+		"displayName": "Marble Sink",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_12.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveWGen13",
+		"displayName": "Hallowed Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveWhite",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_white_13.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeWhite"
+		]
+	},
+	{
+		"name": "CaveUGen01",
+		"displayName": "Tidecutter Grotto",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_01.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen02",
+		"displayName": "Drowned Cistern",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_02.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen03",
+		"displayName": "Mistfall Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_03.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen04",
+		"displayName": "Kelp Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_04.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen05",
+		"displayName": "Scholar's Refuge",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_05.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen06",
+		"displayName": "Brinewell",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_06.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen07",
+		"displayName": "Frostmere Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_07.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen08",
+		"displayName": "Sunken Archive",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_08.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen09",
+		"displayName": "Barnacle Gallery",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_09.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen10",
+		"displayName": "Foghorn Cleft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_10.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen11",
+		"displayName": "Saltglass Cavern",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_11.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen12",
+		"displayName": "Undertow Pocket",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_12.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveUGen13",
+		"displayName": "Coldwater Vault",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlue",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_blue_13.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlue"
+		]
+	},
+	{
+		"name": "CaveBGen01",
+		"displayName": "Bonepile Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_01.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen02",
+		"displayName": "Rotroot Cellar",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_02.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen03",
+		"displayName": "Gallows Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_03.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen04",
+		"displayName": "Cadaver Vault",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_04.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen05",
+		"displayName": "Blightmarsh Pit",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_05.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen06",
+		"displayName": "Plague Cistern",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_06.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen07",
+		"displayName": "Dead Man's Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_07.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen08",
+		"displayName": "Cutpurse Hideout",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_08.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen09",
+		"displayName": "Gravedust Warren",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_09.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen10",
+		"displayName": "Miasma Cleft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_10.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen11",
+		"displayName": "Sorrow's Sink",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_11.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen12",
+		"displayName": "Nightsoil Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_12.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveBGen13",
+		"displayName": "Ashgrave Pocket",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveBlack",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_black_13.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeBlack"
+		]
+	},
+	{
+		"name": "CaveRGen01",
+		"displayName": "Cinder Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_01.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen02",
+		"displayName": "Ember Vent",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_02.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen03",
+		"displayName": "Slag Pocket",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_03.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen04",
+		"displayName": "Magma Seam",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_04.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen05",
+		"displayName": "Brimstone Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_05.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen06",
+		"displayName": "Ashfall Gallery",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_06.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen07",
+		"displayName": "Scorchstone Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_07.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen08",
+		"displayName": "Devil's Chimney",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_08.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen09",
+		"displayName": "Coalbed Warren",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_09.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen10",
+		"displayName": "Furnace Cleft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_10.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen11",
+		"displayName": "Red Iron Diggings",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_11.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen12",
+		"displayName": "Smolder Pit",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_12.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveRGen13",
+		"displayName": "Kiln Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveRed",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_red_13.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeRed"
+		]
+	},
+	{
+		"name": "CaveGGen01",
+		"displayName": "Mossback Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_01.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen02",
+		"displayName": "Root Cellar",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_02.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen03",
+		"displayName": "Fungal Bloom",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_03.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen04",
+		"displayName": "Bramble Den",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_04.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen05",
+		"displayName": "Frogsong Grotto",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_05.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen06",
+		"displayName": "Dryad's Nook",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_06.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen07",
+		"displayName": "Deepwood Pocket",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_07.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen08",
+		"displayName": "Loam Warren",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_08.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen09",
+		"displayName": "Fernfall Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_09.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen10",
+		"displayName": "Wildvine Cleft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_10.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen11",
+		"displayName": "Beetle Gallery",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_11.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen12",
+		"displayName": "Mulch Sink",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_12.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveGGen13",
+		"displayName": "Verdant Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveGreen",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_green_13.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeGreen"
+		]
+	},
+	{
+		"name": "CaveCGen01",
+		"displayName": "Wasteland Cleft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_01.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen02",
+		"displayName": "Corrupted Shaft",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_02.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen03",
+		"displayName": "Ashen Hollow",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_03.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen04",
+		"displayName": "Dust Cistern",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_04.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen05",
+		"displayName": "Salt Cave",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_05.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen06",
+		"displayName": "Broken Vault",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_06.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen07",
+		"displayName": "Grey Warren",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_07.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen08",
+		"displayName": "Hollow of Echoes",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_08.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen09",
+		"displayName": "Shattered Adit",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_09.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen10",
+		"displayName": "Barren Pocket",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_10.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen11",
+		"displayName": "Null Grotto",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_11.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen12",
+		"displayName": "Scoured Gallery",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_12.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
+	},
+	{
+		"name": "CaveCGen13",
+		"displayName": "Forsaken Sink",
+		"type": "cave",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/caves.atlas",
+		"sprite": "CaveColorless",
+		"map": "../The Forsaken Realms/maps/map/cave/cave_colorless_13.tmx",
+		"radiusFactor": 0.8,
+		"questTags": [
+			"Hostile",
+			"Cave",
+			"BiomeColorless"
+		]
 	}
 ]

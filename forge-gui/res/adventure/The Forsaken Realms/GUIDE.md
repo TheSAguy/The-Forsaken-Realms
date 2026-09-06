@@ -161,6 +161,10 @@ Beyond the tavern, remember the world itself takes sides: depending on your stan
 color, their lands are more hostile or more friendly — travel speed, shop prices, town access,
 and who their mages hunt all follow your reputation. And once you've built your Capitol, it hosts
 an **advanced Arena** with a challenge tier (and champion fights) no ordinary town offers.
+Arena fighters play their own decks, the same ones they'd bring to a fight in the wild. The
+brackets at the five AI capitals, and at your own Arena until you upgrade it to level 2, never
+seat Apprentice-tier fighters: about half the field are Adepts, a third Masters and the rest
+Archmages.
 
 ### Item Economy & Shops
 
@@ -537,7 +541,7 @@ included. Each color sends one every 2–5 days.
 Every color runs the same routine, so most of it can be predicted.
 
 **When.** Each color attacks on its own clock, waiting 2–5 days between mages. It can only have so
-many mages on the road at once — 2 on Easy, 3 on Normal, 4 on Hard, 5 on Insane — plus one more
+many mages on the road at once — 1 on Easy, 2 on Normal, 3 on Hard, 4 on Insane — plus one more
 for every 11 / 10 / 9 / 8 towns you own (Easy through Insane). Take a color's capital and that cap
 is halved.
 
@@ -610,6 +614,12 @@ discarded**, including cards you've drafted but not yet banked.
 - **Caves wear their biome.** Cave mouths on the map come in dozens of looks - mossy in the
   forests, red rock in the mountains, crystal-lit in the swamps, icy on the coasts - instead of
   one shared icon.
+- **78 new caves**, thirteen per biome - Frosthollow, Tidecutter Grotto, Bonepile Hollow, Cinder
+  Hollow, Mossback Hollow, Wasteland Cleft and their kin. Small, medium and large chambers with
+  three to five patrolling creatures - most of them small fry, but one or two in every cave can be
+  anything from an Apprentice to an Archmage, so look before you step in. Each holds a card chest,
+  gold and building stone; the deeper ones add wood, mana shards, a second gold pile and sometimes
+  a booster pack. They spawn in new worlds and join the dungeon rotation.
 - The **blue dot** in the quest list marks the quest you're currently tracking.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.

@@ -218,6 +218,29 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return arenaMapStage.getChanges().getBuildingLevel(arenaObjectId);
     }
 
+    /** Round 125: one bracket seat of the tier-weighted Arena (Adept 50% / Master 35% / Archmage
+     *  15%). A target tier with no names in this pool falls through to the next-closest tier
+     *  that has some; null only if all three are empty (the caller then uses the plain pick). */
+    private EnemyData pickTierWeighted(java.util.List<EnemyData> adept, java.util.List<EnemyData> master, java.util.List<EnemyData> archmage) {
+        int roll = rand.nextInt(100);
+        java.util.List<java.util.List<EnemyData>> order = roll < 50 ? java.util.Arrays.asList(adept, master, archmage)
+                : roll < 85 ? java.util.Arrays.asList(master, adept, archmage)
+                : java.util.Arrays.asList(archmage, master, adept);
+        for (java.util.List<EnemyData> bucket : order)
+            if (!bucket.isEmpty())
+                return bucket.get(rand.nextInt(bucket.size()));
+        return null;
+    }
+
+    /** Is the arena the player walked into one of the AI capitals' (the POI the current map
+     *  belongs to is a "capital" that is not the player's own Capitol)? A captured AI capital
+     *  is player-owned and takes the level-1 gate instead (see loadArenaData()). */
+    private boolean isAiCapitalArena() {
+        forge.adventure.pointofintrest.PointOfInterest root = TileMapScene.instance().rootPoint;
+        return root != null && root.getData() != null && "capital".equals(root.getData().type)
+                && !TownRestoration.isCurrentTownCapitol();
+    }
+
     /** Shows/hides the upgrade and toggle buttons for the current level/mode/match state - called
      *  after load, after upgrading, and after a match starts/ends (never offer either mid-match). */
     private void refreshArenaBuildingButtons() {
@@ -903,10 +926,43 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             poolNames = java.util.Arrays.asList(data.enemyPool);
         }
 
+        // Round 125 (user spec 2026-09-06): "Only have Uncommon or above opponents in Arenas.
+        // 50% Uncommon / 35% Master / 15% Archmage. This is for AI Capitol and Level 1 Player
+        // Arenas (not the level 2 arena or random arenas in the wild)." Tier = EnemyData.tier
+        // (Uncommon = Adept, Rare = Master, Mythic = Archmage; Common = Apprentice never fights
+        // here). Gate: a Regular-mode bracket entered from a map building (arenaMapStage set -
+        // the Chest's illegal arena arrives via loadArenaDataStandalone with none) that is
+        // either an AI capital's arena or a player-owned arena still at building level 1. A
+        // player arena upgraded to level 2 keeps the plain uniform pick in BOTH its modes, and
+        // so does a pool with no Uncommon+ names at all. [TFR-ArenaTier] logs every bracket.
+        boolean fromBuilding = arenaMapStage != null && arenaMapStage.getChanges() != null;
+        boolean playerOwnedArena = fromBuilding && TownRestoration.isCurrentTownPlayerOwned(arenaMapStage.getChanges());
+        boolean tierWeighted = !isChallenge && fromBuilding
+                && (playerOwnedArena ? arenaBuildingLevel() < 2 : isAiCapitalArena());
+        java.util.List<EnemyData> adeptPool = new java.util.ArrayList<>();
+        java.util.List<EnemyData> masterPool = new java.util.ArrayList<>();
+        java.util.List<EnemyData> archmagePool = new java.util.ArrayList<>();
+        if (tierWeighted) {
+            for (String name : poolNames) {
+                EnemyData pooled = WorldData.getEnemy(name);
+                if (pooled == null || pooled.tier == null)
+                    continue;
+                switch (pooled.tier) {
+                    case "Uncommon": adeptPool.add(pooled); break;
+                    case "Rare": masterPool.add(pooled); break;
+                    case "Mythic": archmagePool.add(pooled); break;
+                    default: break;
+                }
+            }
+            if (adeptPool.isEmpty() && masterPool.isEmpty() && archmagePool.isEmpty())
+                tierWeighted = false;
+        }
+        StringBuilder bracketLog = new StringBuilder();
         for (int i = 0; i < numberOfEnemies; i++) {
-            EnemyData enemyData = null;
+            EnemyData enemyData = tierWeighted ? pickTierWeighted(adeptPool, masterPool, archmagePool) : null;
             while (enemyData == null)
                 enemyData = WorldData.getEnemy(poolNames.get(rand.nextInt(poolNames.size())));
+            bracketLog.append(i > 0 ? ", " : "").append(enemyData.getName()).append(" (").append(EnemyData.tierDisplayName(enemyData.tier)).append(')');
             // Arena matches disable ante (user spec 2026-08-11) - clone rather than mutate the
             // shared roster EnemyData, same pattern the Capitol-defense duel uses for its own
             // one-off gamesPerMatch override, so this enemy's non-Arena appearances are unaffected.
@@ -922,6 +978,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             enemies.add(enemy);
             fighters.add(new ArenaRecord(new Image(enemy.getAvatar()), enemyData.getName()));
         }
+        System.out.println("[TFR-ArenaTier] " + (tierWeighted ? "weighted Adept 50 / Master 35 / Archmage 15" : "plain pool pick")
+                + " challenge=" + isChallenge + " fromBuilding=" + fromBuilding + " playerOwned=" + playerOwnedArena
+                + " level=" + arenaBuildingLevel() + " aiCapital=" + isAiCapitalArena() + " pool=" + poolNames.size()
+                + " bracket: " + bracketLog);
         fighters.add(new ArenaRecord(new Image(Current.player().avatar()), Current.player().getName()));
         player = fighters.get(fighters.size - 1).actor;
 

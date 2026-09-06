@@ -11,7 +11,7 @@ import java.util.zip.InflaterInputStream;
  *   java WriteDecks <save.sav> [--write] [--show] slot=<n>:<Deck Name>:<listfile> ...
  * A list file holds "<count> <Card Name>" lines (# comments allowed). Cards resolve to the printings the
  * player owns; basic lands (Plains/Island/Swamp/Mountain/Forest) fall back to a plain "<n> <Name>" row when
- * the collection has fewer than requested. Dry run unless --write; always writes <save>.prededit4.bak first; select=<n> also sets selectedDeckIndex.
+ * the collection has fewer than requested. Dry run unless --write; always writes a fresh <save>.prededit<N>.bak first (first free N >= 4); select=<n> also sets selectedDeckIndex.
  * Only player.deck_<n> / deck_name_<n> change; world / worldStage / pointOfInterestChanges bytes pass through.
  */
 public class WriteDecks {
@@ -124,8 +124,10 @@ public class WriteDecks {
         if (!NEW_BASICS.isEmpty()) System.out.println("free basics the collection gains (largest shortfall per land, decks share the pool): " + NEW_BASICS);
         if (!write) { System.out.println("\n[DRY RUN] nothing written. Pass --write to apply."); return; }
 
+        // Never clobber an earlier backup (round 125, 2026-09-06): take the first free .prededit<N>.bak name.
         Path src = Paths.get(path), bak = Paths.get(path + ".prededit4.bak");
-        Files.copy(src, bak, StandardCopyOption.REPLACE_EXISTING);
+        for (int n = 4; Files.exists(bak); n++) bak = Paths.get(path + ".prededit" + (n + 1) + ".bak");
+        Files.copy(src, bak);
         System.out.println("\nbackup -> " + bak);
         if (!NEW_BASICS.isEmpty()) {
             List<String> rows = new ArrayList<>(Arrays.asList(owned));

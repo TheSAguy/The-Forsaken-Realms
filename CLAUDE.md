@@ -17,13 +17,16 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 MORNING (round 124, repo only) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 MIDDAY (round 125, packaged) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 124 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-124 are
-  post-release fixes and additions. **Round 124 is REPO ONLY - the live folder still runs the round-123 jar.** Round 124 =
-  the review's data fixes (56 dangling enemy rewards removed, 45 map enemy names, Horror shop, Random sign, the
+- **HEAD = round 125 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-125 are
+  post-release fixes and additions. Round 125 = **Arena fighters play their own decks** (upstream's Hard/Insane genetic-AI
+  override in DuelScene is gone) with **tier-weighted brackets** at AI capitals and level-1 player arenas (Adept 50 /
+  Master 35 / Archmage 15, never Apprentice, `[TFR-ArenaTier]`), **78 generated caves** (13 per biome, `dev-tools/gen_caves.py`,
+  POIs `Cave<L>Gen01..13`, NEW WORLDS ONLY), **attacking-mage base 3 -> 2** (Easy 1 / Normal 2 / Hard 3 / Insane 4) and
+  **decks v6** in save slot 1. Round 124 = the review's data fixes (56 dangling enemy rewards removed, 45 map enemy names, Horror shop, Random sign, the
   plains_town_generic slot), the **Torch pulse** (Torch/Grand Torch use = 1 shard, vision x3 for 2 s, `torch pulse`,
   settings.json torchPulse*), and saved items re-read from items.json on load (`[TFR-ItemRefresh]`). Round 123 = the **deep code review** (`docs/review/2026-09-05-code-review.md` -
   read its section 1 and 5 before touching World/WorldBackground/TerritoryControl/save code) with its 11 applied fixes:
@@ -32,10 +35,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   runtime failure, three `serialVersionUID` pins, a `BiomeStructure` index bug; plus `dev-tools/validate_plane_data.py`
   (run it before packaging) and the **Rally rune as the "Hire a guard" reward** (quest 43 stage 2 epilogue: guard
   briefing, then `grantRewards`; only quests issued AFTER this round carry it - the user's NG+ save keeps its old copy).
-- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-123 jar (built 23:41), `PACKAGE_OK` 23:51.
-  The user plays their NG+ Insane game from save slot 1 (12/12 life). Decks v5 (17:05): slot 1 "Ichor Crown" (W/B toxic
-  control, selected), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W). Backups `1_save_slot.sav.prededit2/3/4.bak`
-  sit beside the save - do not delete them. The saves + log live in `%APPDATA%\ForsakenRealms\` (`adventure\The Forsaken
+- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-125 jar (built 09:41), `PACKAGE_OK` 09:54
+  (rounds 124 and 125 together). The user plays their NG+ Insane game from save slot 1 (12/12 life; slots 2 and 3 are
+  older copies of the same character). Decks v6 (09:47, lists in `dev-tools/save-editing/`): slot 1 "Ichor Crown" (W/B
+  toxic control), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W, 44 cards, SELECTED - the user tunes this
+  one in-game, keep their additions when updating). Backups `1_save_slot.sav.prededit2/3/4/5.bak` sit beside the save -
+  do not delete them (WriteDecks now takes the first free number instead of overwriting prededit4). The saves + log live in `%APPDATA%\ForsakenRealms\` (`adventure\The Forsaken
   Realms\<n>_save_slot.sav`, `forge.log`).
 - **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards), 121, 122 and 123 ship with
   the next APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
@@ -43,8 +48,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
   The review's section 4.8 names the five files that will conflict first (World, WorldStage, MapStage, AdventurePlayer,
   RewardScene).
-- **Open**: (0) PACKAGE round 124 into the live folder when the game is closed (`tasklist | grep javaw.exe` = 0) - it
-  was built (Maven OK) but not packaged, the user asked for repo only; (a) playtest-confirm rounds 121-122 (Trading Post/Exchange exclusivity, town-exit flash, cave icons per biome,
+- **Open**: (0) playtest-confirm round 125 - an AI-capital Arena bracket must show no Apprentice fighters, each playing
+  its own deck (`[TFR-ArenaTier]` line); a NEW world must place the Cave<L>Gen caves (walk one: mouth, patrols, loot, no
+  stuck enemy); `[TFR-MageCap]` must read base=2; the three v6 decks must load; (a) playtest-confirm rounds 121-122 (Trading Post/Exchange exclusivity, town-exit flash, cave icons per biome,
   Rally rune from the Quick Travel Mart); (b) playtest-confirm round 123 - process memory should stay flat over a long
   session (watch Task Manager while walking with fog on; before this round it grew ~100 KB per tile stepped and 31 MB per
   minimap bake), a sacked player town must read as neutral the next day (`[TFR-Ownership]` line), an Ante Re-roll must
@@ -94,7 +100,11 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
-- Round 124 (2026-09-06, REPO ONLY): review data fixes (enemies.json rewards/colors/Slobad, 45 map enemy renames, Horror
+- Round 125 (2026-09-06, PACKAGED 09:54): DuelScene arena genetic-AI override removed; ArenaScene tier-weighted
+  bracket pick (pickTierWeighted/isAiCapitalArena, [TFR-ArenaTier]); 78 generated caves (dev-tools/gen_caves.py ->
+  cave_<biome>_NN.tmx, POIs Cave<L>Gen01-13 + biome lists, new worlds only); baseAttackingMagesPerColor 3->2; decks v6
+  (WriteDecks, prededit5.bak); WriteDecks backup naming; GUIDE.md.
+- Round 124 (2026-09-06, repo only until round 125's package): review data fixes (enemies.json rewards/colors/Slobad, 45 map enemy renames, Horror
   shop + Random sign in shops.json, plains_town_generic slot 51); Torch pulse (items.json + TuningData/settings.json torchPulse*,
   World.flashArea(seconds), WorldBackground/WorldStage.pulseVision, `torch pulse` command); AdventurePlayer.refreshItemDefinitionsFromCatalog.
 - Round 123 (2026-09-05, PACKAGED 23:51): deep code review (`docs/review/2026-09-05-code-review.md`) + its 11 fixes

@@ -583,7 +583,20 @@
                              "Quest_LibraryOfVarsil",
                              "DragonsLairBlue",
                              "Idyllic Beachfront",
-		"Oasis"
+		"Oasis",
+                             "CaveUGen01",
+                             "CaveUGen02",
+                             "CaveUGen03",
+                             "CaveUGen04",
+                             "CaveUGen05",
+                             "CaveUGen06",
+                             "CaveUGen07",
+                             "CaveUGen08",
+                             "CaveUGen09",
+                             "CaveUGen10",
+                             "CaveUGen11",
+                             "CaveUGen12",
+                             "CaveUGen13"
                          ],
     "structures":  [
                        {

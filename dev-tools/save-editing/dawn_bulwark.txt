@@ -1,24 +1,29 @@
-# Dawn Bulwark v5 - mono-white, 40 cards: walls and tappers, exile removal, Oketra + Mirror Entity finish, lifegain fliers
-15 Plains
+# Dawn Bulwark v6 (2026-09-06) - mono-white, 44 cards, 18 lands (the size the deck was tuned to in-game). Keeps the
+# in-game additions (Always Watching, second Mirror Entity, Voice of the Blessed) and adds Elesh Norn, Grand Cenobite
+# (their creatures -2/-2, ours +2/+2), Angel of Sanctions (exiles their best permanent), two Skyhunter Skirmishers
+# (double-strike fliers, 2/2 with Always Watching) and Hidden Dragonslayer (lifelink; unmorph kills a big creature).
+# Cuts: Adarkar Valkyrie, Novice Knight, Myth Realized, Immolating Glare, Sonar Strike.
+16 Plains
 1 Idyllic Grange
 1 The Fair Basilica
-1 Novice Knight
-1 Master Decoy
 2 Duelist of Deep Faith
-1 Fiendslayer Paladin
-1 Banisher Priest
+1 Voice of the Blessed
+1 Master Decoy
+1 Hidden Dragonslayer
+2 Skyhunter Skirmisher
 2 Annex Sentry
-1 Mirror Entity
+1 Fiendslayer Paladin
+2 Mirror Entity
+1 Always Watching
+1 Wedding Announcement
 1 Archon of Absolution
 1 Oketra the True
 1 Mite Overseer
 2 Wall of Swords
 1 Basilica Shepherd
-1 Adarkar Valkyrie
+1 Angel of Sanctions
 1 Twinmaw Stormbrood
+1 Elesh Norn, Grand Cenobite
 1 Get Lost
 1 Pacifism
-1 Immolating Glare
-1 Sonar Strike
 1 Planar Disruption
-1 Wedding Announcement
