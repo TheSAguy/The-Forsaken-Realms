@@ -2129,3 +2129,12 @@ every one of these is a revert target - see ANDROID_RELEASE.md "Landmines".
 - **`util/TownRestoration.java`** - Ring Cities: 0 broken slots, `isPermanentlyBrokenShop` guard; `capturedFrom_<color>` flag.
 - **`scene/TileMapScene.java`** - drops stale broken-slot flags in Ring Cities.
 - **`scene/TileMapScene.java`** - round 111: `enteredSurvivingTown` is not set for Ring Cities (quest 30 pre-completion fix).
+
+
+## Round 122 (2026-09-05) - DungeonClear log gate, cave icon sets, Rally rune
+
+- **`stage/MapStage.java`** - `clearDungeonIfEmptied()` prints its `[TFR-DungeonClear]` line only when `DungeonRotation.isRotatableData()` holds (towns, the Capitol and castles no longer claim a despawn).
+- **`pointofintrest/PointOfInterest.java`** - new private static `spreadZeroSpriteIndex()`: a zero `spriteIndex` against a multi-sprite set is re-derived from the POI's name + position, in the constructor and in `load()`; the serialVersionUID pin is unchanged.
+- **`world/World.java`** - `rallyLastTargetId` (String: `store`d when set, `containsKey`-guarded read, reset with the Territory Control state) + getter/setter.
+- **`util/TerritoryControl.java`** (mod-new) - `playerTownsUnderAttack()`, `nextRallyTarget(world, targets)`.
+- **`stage/ConsoleCommandInterpreter.java`** - `teleport rally` command (the Rally rune's `commandOnUse`; refunds the rune's shards and posts a notification when no player town is under attack).

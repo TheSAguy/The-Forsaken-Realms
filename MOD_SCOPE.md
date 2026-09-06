@@ -1160,6 +1160,10 @@ needs its own design pass before any of this gets built:**
   16×16 RGBA8888 PNG, Nearest-neighbor filtering, packed via libGDX TexturePacker `.atlas`,
   maps built in Tiled). itch.io is the best hunting ground (Kenney.nl, LimeZu, Sanctumpixel,
   etc.) — check each pack's license (CC0 vs CC-BY vs no-commercial-redistribution) before use.
+- **Cave icons by biome (2026-09-05, round 122):** the user's 48-cell cave sheet became
+  `maps/tileset/caves.atlas` with per-biome region sets (CaveWhite/Blue/Black/Red/Green/Colorless plus a
+  mixed `Cave`), the 81 plain-`Cave` entries draw from them, and `PointOfInterest.spreadZeroSpriteIndex()`
+  spreads the variants over existing saves too. Not yet playtest-confirmed.
 
 ### 12. Random Events — `Done (2026-09-01, user decision - satisfied by the Chest event system)`
 - General random world events (could tie into the Time System's periodic-event hook, #6).
@@ -4660,3 +4664,16 @@ Five loose through the Seals they were meant to keep. Tutorial: start with nothi
 the difficulty's gold / shards / wood / stone / items and +1 life per free city, then the old chain
 (quest 30 onward). Open: full-screen defeat/victory scenes; the councils' "the Seals go back on"
 thread as an end-game beat; per-city interiors.
+
+
+### 104. Rally Rune - teleport to your towns under attack — `Done (built 2026-09-05, round 122), not yet playtest-confirmed`
+User ask 2026-09-05: "an item, like the Teleport Rune that takes you to the capitol, but a rune that takes you
+to a Player town/capitol that's been targeted/under attack. It will only work if there is currently a town under
+attack, and if there are more than one, it will take you to a different one each time you use it ... it will
+cycle before starting over from the first one." Built as the **Rally rune** (`items.json`, 1600 [+Gold], 1
+[+Shards] per use, Ability2 slot, world map only), sold by the Quick Travel Mart in the player's Capitol and
+towns (and Omenport). Under attack = targeted by an in-flight capture mage, the map's own definition;
+`TerritoryControl.playerTownsUnderAttack()` / `nextRallyTarget()` cycle in POI-id order with the previous
+target remembered on the World; no target = shard refunded + notification. Open: whether it should also cover
+Ring Cities the player holds (they are restored towns, so they already count) and whether the landing spot
+should face the incoming mage's road.

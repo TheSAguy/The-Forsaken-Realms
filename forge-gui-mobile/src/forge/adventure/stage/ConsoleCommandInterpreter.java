@@ -191,6 +191,32 @@ public class ConsoleCommandInterpreter {
             WorldStage.getInstance().player.playEffect(Paths.EFFECT_TELEPORT, 10);
             return "Teleported outside the Capitol(" + capitol.getPosition() + ")";
         });
+        // Rally rune (round 122, user request 2026-09-05): "teleport rally" carries the player just
+        // outside the next player town under attack - TerritoryControl.nextRallyTarget() cycles
+        // through every targeted player town, one per use, before starting over. Both item-use
+        // paths (InventoryScene.triggerUse, GameHUD.setAbilityButton) charge the rune's shards
+        // BEFORE the command runs and ignore its result, so the no-target case refunds them here
+        // and says so on the HUD: while nothing of the player's is under attack the rune is a
+        // no-op, not a wasted shard. Position-only like "teleport home" (no loadPOI), so the
+        // player lands on the overworld beside the town and can intercept the mage on the road
+        // rather than being dropped inside the town.
+        registerCommand(new String[]{"teleport", "rally"}, s -> {
+            List<PointOfInterest> underAttack = TerritoryControl.playerTownsUnderAttack();
+            PointOfInterest target = TerritoryControl.nextRallyTarget(Current.world(), underAttack);
+            if (target == null) {
+                ItemData rune = ItemListData.getItem("Rally rune");
+                if (rune != null && rune.shardsNeeded > 0)
+                    Current.player().addShards(rune.shardsNeeded);
+                GameHUD.getInstance().addNotification("None of your towns is under attack - the Rally rune stays quiet.");
+                System.out.println("[TFR-RallyRune] no player town under attack - nothing to rally to, shards refunded");
+                return "No player town is under attack";
+            }
+            WorldStage.getInstance().setPosition(new Vector2(target.getPosition().x - 16f, target.getPosition().y + 16f));
+            WorldStage.getInstance().player.playEffect(Paths.EFFECT_TELEPORT, 10);
+            GameHUD.getInstance().addNotification("Rallied to " + target.getDisplayName()
+                    + (underAttack.size() > 1 ? " - " + underAttack.size() + " of your towns are under attack" : ""));
+            return "Teleported outside " + target.getDisplayName() + "(" + target.getPosition() + ")";
+        });
         registerCommand(new String[]{"spawn", "enemy"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: enemy name.";
 

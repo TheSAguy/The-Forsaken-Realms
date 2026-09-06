@@ -236,6 +236,21 @@ public class World implements Disposable, SaveFileContent {
         return capitolTargetedDay.get(color);
     }
 
+    // Rally rune (round 122): the ID of the player town the rune last carried the player to, so
+    // successive uses cycle through every player town under attack instead of always picking the
+    // first (TerritoryControl.nextRallyTarget). Null until the rune is first used; the key is simply
+    // absent on older saves. Reset with the rest of the Territory Control state below so a fresh
+    // world starts the cycle over.
+    private String rallyLastTargetId = null;
+
+    public String getRallyLastTargetId() {
+        return rallyLastTargetId;
+    }
+
+    public void setRallyLastTargetId(String poiId) {
+        rallyLastTargetId = poiId;
+    }
+
     public void setColorDefeatDay(String color, int day) {
         colorDefeatDay.put(color, day);
     }
@@ -634,6 +649,7 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             capitolTargetedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("capitolTargetedDay"));
         }
+        rallyLastTargetId = saveFileData.containsKey("rallyLastTargetId") ? saveFileData.readString("rallyLastTargetId") : null;
 
         townTerritoryRadius.clear();
         if (saveFileData.containsKey("townTerritoryRadius")) {
@@ -762,6 +778,8 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("forcedPlayerTargetPending", forcedPlayerTargetPending);
         data.storeObject("colorDefeatDay", colorDefeatDay);
         data.storeObject("capitolTargetedDay", capitolTargetedDay);
+        if (rallyLastTargetId != null)
+            data.store("rallyLastTargetId", rallyLastTargetId);
         data.storeObject("townTerritoryRadius", townTerritoryRadius);
         data.storeObject("townLastGrowthDay", townLastGrowthDay);
         data.storeObject("colorEditionShards", colorEditionShards);
@@ -1029,6 +1047,7 @@ public class World implements Disposable, SaveFileContent {
             forcedPlayerTargetPending.clear();
             colorDefeatDay.clear();
             capitolTargetedDay.clear();
+            rallyLastTargetId = null;
             townTerritoryRadius.clear();
             townLastGrowthDay.clear();
             colorEditionShards.clear(); // fresh world re-shards editions in generateNew(), not a stale split

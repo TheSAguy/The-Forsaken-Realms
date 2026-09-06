@@ -44,6 +44,7 @@ public class PointOfInterest implements Serializable, SaveFileContent {
 
         oldMapId="";
         Array<Sprite> textureAtlas = Config.instance().getPOISprites(this.data);
+        spriteIndex = spreadZeroSpriteIndex(spriteIndex, textureAtlas.size, this.data, position);
         sprite = textureAtlas.get(spriteIndex%textureAtlas.size);
     }
 
@@ -77,7 +78,7 @@ public class PointOfInterest implements Serializable, SaveFileContent {
         if (textureAtlas.isEmpty()) {
             System.out.print("sprite " + d.sprite + " not found");
         }
-        spriteIndex = rand.nextInt(Integer.SIZE - 1) % textureAtlas.size;
+        spriteIndex = spreadZeroSpriteIndex(rand.nextInt(Integer.SIZE - 1) % textureAtlas.size, textureAtlas.size, d, pos);
         sprite = textureAtlas.get(spriteIndex);
         data = d;
         active = d.active;
@@ -95,6 +96,21 @@ public class PointOfInterest implements Serializable, SaveFileContent {
         oldMapId=parent.getID();
         rectangle.set(position.x, position.y, sprite.getWidth(), sprite.getHeight());
     }
+    // Round 122 (cave icon variants, MOD_SCOPE #11): every POI ever saved rolled its spriteIndex
+    // against a one-sprite list (nextInt % 1 == 0), so a sprite set that has since grown - the 81
+    // plain "Cave" entries now draw from per-biome sets of 12-25 regions in caves.atlas - would
+    // show only its FIRST variant on every cave of an existing world. A zero index is therefore
+    // re-derived from the POI's own name and position: deterministic (the same POI resolves to
+    // the same variant in the constructor and on every load, so nothing changes between
+    // sessions), 0 stays reachable, and the result persists on the next save like any other
+    // roll. One-sprite sets are untouched.
+    private static int spreadZeroSpriteIndex(int index, int size, PointOfInterestData d, Vector2 pos) {
+        if (index != 0 || size <= 1 || d == null || d.name == null || pos == null)
+            return index;
+        int hash = (d.name + "@" + (int) pos.x + "," + (int) pos.y).hashCode();
+        return Math.floorMod(hash, size);
+    }
+
     public Sprite getSprite() {
         return sprite;
     }

@@ -17,27 +17,31 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-05 EVENING (round 121b) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-05 NIGHT (round 122) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = the round-121c handoff-docs commit on top of round 121b `ef4d847ef81` (verify with `git log -1`), `main` level
-  with `origin/master`, tree clean.** Rounds 120-121b are post-release
-  fixes: UIScene dialog z-order (Android Armory report), one Trading Post OR Exchange per town, town-exit discovery
-  flash, WriteDecks `select=` option + the user's v5 deck lists in `dev-tools/save-editing/`.
-- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-121 jar (built 14:19), `PACKAGE_OK` 17:05.
-  The user plays their NG+ Insane game from save slot 1 (12/12 life). Decks v5 were written at 17:05: slot 1 "Ichor
-  Crown" (W/B toxic control, selected), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W). Backup
-  `1_save_slot.sav.prededit4.bak` sits beside the save - do not delete it.
-- **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards) and 121 ship with the next
-  APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
+- **HEAD = round 122 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-122 are
+  post-release fixes and additions: UIScene dialog z-order (Android Armory report), one Trading Post OR Exchange per
+  town, town-exit discovery flash, WriteDecks `select=` + the user's v5 deck lists, and round 122 = the
+  `[TFR-DungeonClear]` log gate, 48 new cave map icons by biome (`maps/tileset/caves.atlas`, 81 plain-Cave entries
+  re-pointed, zero sprite indexes spread over existing saves) and the **Rally rune** (Quick Travel Mart item;
+  `teleport rally` cycles through the player's towns under attack, refunds the shard when none is).
+- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-122 jar (built 19:20), `PACKAGE_OK` 19:30.
+  The user plays their NG+ Insane game from save slot 1 (12/12 life). Decks v5 (17:05): slot 1 "Ichor Crown" (W/B toxic
+  control, selected), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W). Backups `1_save_slot.sav.prededit2/3/4.bak`
+  sit beside the save - do not delete them. The saves + log live in `%APPDATA%\ForsakenRealms\` (`adventure\The Forsaken
+  Realms\<n>_save_slot.sav`, `forge.log`).
+- **Android testers are still on the v1.05 APK**: rounds 120 (Guards dialog behind the cards), 121 and 122 ship with the
+  next APK. Build it from a C: copy of the repo - the F: USB build took 2h17m (antrun copying 20k files). ANDROID_RELEASE.md.
 - **Upstream drift**: 6 commits / 9 files (6 java) past our merge base `042b3267af7` as of 2026-09-05 22:00. Take them
   as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
 - **Open**: (a) playtest-confirm round 121 (no Trading Post offer in a Capitol that has an Exchange; the area lights up
-  for ~3 s when leaving a town/Capitol/castle); (b) cosmetic log: `[TFR-DungeonClear] <name> left with no enemies and no
-  loot remaining - despawning via onDungeonClear` also prints for ruined TOWNS (`MapStage.clearDungeonIfEmptied()` logs
-  before `DungeonRotation.onDungeonClear()` self-gates on rotatable dungeons) - gate the log on dungeon-like POI types;
-  (c) MOD_SCOPE #84 Building Upgrades and #85 New Quests are the only Not Started items; #11 Map Polish is In Progress.
+  for ~3 s when leaving a town/Capitol/castle); (b) playtest-confirm round 122 (cave icons vary per biome in the NG+ world
+  on load; the Rally rune appears in the Quick Travel Mart, cycles through besieged towns, and refunds its shard with a
+  "stays quiet" notification when nothing is under attack; `[TFR-DungeonClear]` no longer prints for towns); (c) MOD_SCOPE
+  #84 Building Upgrades and #85 New Quests are the only Not Started items; #11 Map Polish is In Progress; #104 Rally Rune
+  awaits playtest.
 - Rules that held all week: package only when `tasklist | grep javaw.exe` is 0 - the user plays between rounds and
   "repo only" means exactly that; one Maven at a time, always backgrounded (~15-17 min); pushes are routine since
   2026-09-05 (push after each round); every round updates MOD_CHANGELOG + this file + CORE_ENGINE_CHANGES in its commit.
@@ -76,6 +80,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 122 (2026-09-05, PACKAGED 19:30): `[TFR-DungeonClear]` gated on `DungeonRotation.isRotatableData`; 48 cave icons ->
+  `caves.atlas` per-biome sets + `PointOfInterest.spreadZeroSpriteIndex`; Rally rune item/shop/icon + `teleport rally`
+  (`TerritoryControl.playerTownsUnderAttack/nextRallyTarget`, `World.rallyLastTargetId`). MOD_SCOPE #104.
 - Round 121b (2026-09-05): live folder PACKAGED with the round-121 jar (PACKAGE_OK 17:05); log reviewed (two stock AI
   TimeoutExceptions, nothing else); WriteDecks `select=<n>`; decks v5 written to save slot 1 (Ichor Crown selected). 121c = handoff docs.
 - Round 121 (2026-09-05, repo only): one Trading Post OR Exchange per town (Trader gate also checks EXCHANGE); leaving a

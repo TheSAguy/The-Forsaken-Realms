@@ -278,6 +278,12 @@ wave of new equipment tied to the plane's newest dungeons (boots, crowns, armor,
 built around the specific card it grants you at the start of a fight). Check what a boss drops
 before you commit to fighting them if a specific item is your goal.
 
+**Runes and Omenstones** are reusable teleports that cost a shard per use from the ability slot.
+The Quick Travel Mart in your Capitol and your towns sells the Omenstones, the Ghost rune, and the
+**Rally rune**, which carries you to just outside whichever of your towns is under attack - with
+several besieged, each use goes to the next one in turn, so four uses reach four towns before the
+cycle starts over. While none of your towns is targeted it does nothing and costs nothing.
+
 ## Notes on Difficulty
 
 Insane difficulty roughly doubles the stakes of everything above: reputation swings matter more,
@@ -515,6 +521,9 @@ included. Each color sends one every 2–5 days.
   that color can't pick it again for 7 days — win, lose, or kill the mage on the road. With five
   colors that's a hard ceiling of five Capitol attacks a week.
 - Mages **walk** to their target, so you can intercept one in the field before it arrives.
+- The **Rally rune** (Quick Travel Mart) drops you outside one of your towns that a mage is heading
+  for; use it again to jump to the next besieged town. It stays quiet while nothing of yours is
+  under attack.
 - **Guards** you've hired fight first. If they fall, you defend your Capitol in person in a forced
   best-of-three — **and losing that ends your run.**
 - **Neutral towns defend themselves**: 15% base, 20% if the town still has a working Armory.
@@ -596,6 +605,9 @@ discarded**, including cards you've drafted but not yet banked.
   you adjusts it from there.
 - **Leaving a town** lights up the land around it for a moment - the same flash as when you first
   discovered it - so you can re-orient before setting off.
+- **Caves wear their biome.** Cave mouths on the map come in dozens of looks - mossy in the
+  forests, red rock in the mountains, crystal-lit in the swamps, icy on the coasts - instead of
+  one shared icon.
 - The **blue dot** in the quest list marks the quest you're currently tracking.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.

@@ -523,6 +523,18 @@
         "rarity":  "Common"
     },
     {
+        "name":  "Rally rune",
+        "usableOnWorldMap":  true,
+        "equipmentSlot":  "Ability2",
+        "description":  "Carries you to just outside one of your own towns that is under attack. With several besieged, each use goes to the next in turn before starting over. Stays quiet, and costs nothing, while none of your towns is targeted",
+        "commandOnUse":  "teleport rally",
+        "iconName":  "RallyRune",
+        "questItem":  true,
+        "shardsNeeded":  1,
+        "cost": 1600,
+        "rarity":  "Common"
+    },
+    {
         "name":  "Eldrazi rune",
         "usableOnWorldMap":  true,
         "equipmentSlot":  "Ability2",

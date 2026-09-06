@@ -1083,6 +1083,11 @@
     "type": "item",
     "count": 1,
     "itemName": "Ghost rune"
+   },
+   {
+    "type": "item",
+    "count": 1,
+    "itemName": "Rally rune"
    }
   ]
  },

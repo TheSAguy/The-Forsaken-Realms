@@ -17755,3 +17755,56 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 - **Handoff (121c)**: CLAUDE.md's STATE block rewritten for 2026-09-05 evening (v1.05 released, live = round 121, open
   items, v1.06 starts with the upstream merge - 6 commits behind tonight); MOD_SCOPE #87 (More Attacking Options) and
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
+
+
+## Round 122: DungeonClear log gate, 48 cave map icons by biome, the Rally rune (2026-09-05, packaged)
+
+Three user asks in one round, built and packaged into the live folder.
+
+- **`[TFR-DungeonClear]` no longer claims despawns that never happen.** `MapStage.clearDungeonIfEmptied()`
+  printed "despawning via onDungeonClear" for every emptied map - the latest log had 22 such lines, 20 of them
+  towns (the Player Capitol alone 8 times, Llanowar once) - because only `DungeonRotation.onDungeonClear()`
+  applied the rotatable gate. The print is now gated on the same public `isRotatableData()` rule, so only the
+  two "Cave" lines in that log would have printed.
+- **Caves wear their biome.** 81 of the plane's 131 cave entries shared the one stock `Cave` region. The user's
+  48-icon sheet (`Cave.png`, 8x6 cells of 32 px) became `maps/tileset/caves.png` + `caves.atlas` (the stock cave
+  pasted in as a 49th cell), with one region NAME per biome so `Config.getPOISprites()` hands each entry a whole
+  set to roll from: CaveWhite 15 (gray stone, one icy, browns), CaveBlue 12 (gray + ice crystals), CaveBlack 14
+  (purple and purple-crystal, spotted and mossy browns), CaveRed 13 (red rock, gold flecks, white crystals),
+  CaveGreen 18 (mossy gray, sprouting and mossy browns), CaveColorless 25 (plain browns plus a few of everything)
+  and a 31-region mixed `Cave` for the 7 two-biome entries (the engine's roll is `nextInt(31) % size`, so a set is
+  capped at 31). `points_of_interest.json`: 81 entries re-pointed (155 lines, sprite lines only - verified by
+  re-parsing and comparing every other field). The themed caves (Grove, SkullCave, MerfolkPool, Nest...) keep
+  their own art.
+  - **Existing saves get the variety too.** Every POI ever saved rolled its `spriteIndex` against a one-sprite
+    list, i.e. stored 0, so a grown set would have shown its FIRST variant on every cave of the user's NG+ world.
+    New `PointOfInterest.spreadZeroSpriteIndex()` re-derives a zero index from the POI's name and position -
+    deterministic, applied in the constructor and in `load()` alike so nothing changes between sessions, 0 stays
+    reachable, and the value persists on the next save. One-sprite sets are untouched.
+- **The Rally rune** (user spec: "a rune that takes you to a Player town/capitol that's been targeted/under
+  attack ... if there are more than one, it will take you to a different one each time you use it ... it will
+  cycle before starting over"). New item in `items.json` beside the Colorless rune - Ability2 slot, usable on the
+  world map, 1 [+Shards] per use, 1600 [+Gold], quest item like the other runes - sold by the Quick Travel Mart
+  (`OmenStones` shop: player Capitol, player towns, Omenport) after the Ghost rune. `commandOnUse` is the new
+  console command `teleport rally`: `TerritoryControl.playerTownsUnderAttack()` collects the targets of the
+  in-flight capture mages (`WorldStage.getTerritoryMages()` - the same definition as the map's "Under Attack!"
+  labels) that are the Capitol or a restored town, de-duplicated (two colors may aim at one town) and ordered by
+  POI id; `nextRallyTarget()` takes the one after the previous target (wrapping; the first when the previous one
+  is no longer targeted or the rune was never used) and records it in the new `World.rallyLastTargetId`
+  (stored when set, absent on older saves, cleared with the Territory Control state on a new world). The player
+  lands just outside the town like `teleport home` (position-only, teleport effect) with a notification naming the
+  town and, with several besieged, how many. No target: both use paths (`InventoryScene.triggerUse`,
+  `GameHUD.setAbilityButton`) charge the shard BEFORE the command runs and ignore its result, so the command
+  refunds `shardsNeeded` and posts "None of your towns is under attack - the Rally rune stays quiet."
+  `[TFR-RallyRune]` logs every pick (count, index, previous target) and every refund. Icon `RallyRune`: the
+  Colorless rune's disc with a red pennant on a pole, drawn as a new 16 px page `sprites/items_rally.png` appended
+  to the plane's `items.atlas` (the glyph font is built from that atlas, so the ability button shows it).
+- Guide: an Item Guide paragraph on runes/Omenstones and the Rally rune, a Territory bullet, and a "Caves wear
+  their biome" note under Smaller Things.
+- Packaged: Maven 16:07 min, jar built 19:20, `PACKAGE_OK` 19:30 (quick path - stock assets unchanged). Playtest to confirm: the cave variety in the current NG+ world (the spread applies on load), the Rally
+  rune's cycle across several besieged towns, and its quiet refund when nothing is under attack.
+
+**Files touched**: `stage/MapStage.java`, `pointofintrest/PointOfInterest.java`, `world/World.java`,
+`util/TerritoryControl.java`, `stage/ConsoleCommandInterpreter.java`; plane `maps/tileset/caves.png` +
+`caves.atlas` (new), `world/points_of_interest.json`, `world/items.json`, `world/shops.json`,
+`sprites/items_rally.png` (new), `sprites/items.atlas`, `GUIDE.md`.

@@ -1889,3 +1889,12 @@ InterplanarArmor
 CloudKeeperArmor
   xy: 192, 1056
   size: 16, 16
+
+items_rally.png
+size: 16,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+RallyRune
+  xy: 0,0
+  size: 16, 16

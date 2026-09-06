@@ -2264,6 +2264,59 @@ public class TerritoryControl {
     }
 
     /** Round 106 (user spec 2026-09-04): a Ring City pulls ringCityPullFactor (3) x as hard as a regular town - lower weight projects further. */
+    // ---- Rally rune (round 122, user request 2026-09-05) ---------------------------------------
+    // "A rune that takes you to a Player town/capitol that's been targeted/under attack. It will
+    // only work if there is currently a town under attack, and if there are more than one, it
+    // will take you to a different one each time you use it ... it will cycle before starting
+    // over from the first one." Under attack = targeted by an in-flight capture mage, the same
+    // definition the map's "Under Attack!" labels use (MapViewScene).
+
+    /** Player-owned towns (restored towns plus the Capitol) currently targeted by an in-flight
+     *  mage, de-duplicated (two colors may aim at the same town) and in a stable order (by POI
+     *  id) so the rune's cycle is predictable from one use to the next. */
+    public static List<PointOfInterest> playerTownsUnderAttack() {
+        java.util.TreeMap<String, PointOfInterest> byId = new java.util.TreeMap<>();
+        for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
+            PointOfInterest target = mage.territoryTarget;
+            if (target == null || !target.getActive() || !isPlayerOwnedTown(target))
+                continue;
+            byId.put(target.getID(), target);
+        }
+        return new ArrayList<>(byId.values());
+    }
+
+    private static boolean isPlayerOwnedTown(PointOfInterest poi) {
+        if (poi.getData() == null)
+            return false;
+        if (TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name))
+            return true;
+        return TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
+    }
+
+    /** The town the Rally rune goes to now: the one after the rune's last target in `targets`
+     *  (wrapping to the first), or the first when the last target is no longer under attack or
+     *  the rune was never used. Records the pick on the World so the cycle survives a save/load.
+     *  Null for an empty list - the caller refunds the rune's shard and tells the player. */
+    public static PointOfInterest nextRallyTarget(World world, List<PointOfInterest> targets) {
+        if (targets == null || targets.isEmpty())
+            return null;
+        int next = 0;
+        String last = world.getRallyLastTargetId();
+        if (last != null) {
+            for (int i = 0; i < targets.size(); i++) {
+                if (last.equals(targets.get(i).getID())) {
+                    next = (i + 1) % targets.size();
+                    break;
+                }
+            }
+        }
+        PointOfInterest target = targets.get(next);
+        world.setRallyLastTargetId(target.getID());
+        System.out.println("[TFR-RallyRune] " + targets.size() + " player town(s) under attack - going to #" + (next + 1)
+                + " " + target.getDisplayName() + " (previous target: " + (last == null ? "none" : last) + ")");
+        return target;
+    }
+
     private static float ringPullDivisor(PointOfInterest poi) {
         if (!isRingTown(poi))
             return 1f;

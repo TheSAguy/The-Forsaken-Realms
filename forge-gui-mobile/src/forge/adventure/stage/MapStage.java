@@ -1458,8 +1458,14 @@ public class MapStage extends GameStage {
             if (actor instanceof RewardSprite && actor.getStage() != null)
                 return; // loot still sitting there - not emptied
         }
-        System.out.println("[TFR-DungeonClear] " + root.getDisplayName()
-                + " left with no enemies and no loot remaining - despawning via onDungeonClear");
+        // Round 122: this line used to print for every emptied map - towns, the Capitol, Ring Cities,
+        // castles - although onDungeonClear() only ever despawns rotatable dungeons and caves (log
+        // review 2026-09-05: 20 of its 22 lines were towns; only the two "Cave" lines were real).
+        // Gated on the same public rule onDungeonClear() applies, so it can never claim a despawn
+        // that does not happen.
+        if (DungeonRotation.isRotatableData(root.getData()))
+            System.out.println("[TFR-DungeonClear] " + root.getDisplayName()
+                    + " left with no enemies and no loot remaining - despawning via onDungeonClear");
         DungeonRotation.onDungeonClear(root);
     }
 
