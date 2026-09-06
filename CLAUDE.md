@@ -17,11 +17,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 EVENING (round 127 = the upstream merge; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 EVENING (round 128; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 127 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-127 are
+- **HEAD = round 128 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-128 are
   post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
   (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
   and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
@@ -124,6 +124,10 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 128 (2026-09-06): a rotatable dungeon walked out of with every reward pickup taken but enemies still alive
+  halves the days left on its despawn timer (DungeonRotation.onDungeonLooted, [TFR-DungeonLooted]); once per visible
+  lifetime via the new persisted World.poiLootedDay; active quest targets exempt; MapStage.clearDungeonIfEmptied ->
+  applyDungeonExitRules; tunable dungeonLootedDespawnFactor 0.5 in settings.json. MOD_SCOPE #108.
 - Round 127 (2026-09-06, repo only): upstream merge @ 6155ef58a50 = Forge_2's 09.06 daily (14 commits / 37 files /
   15 java, ZERO conflicts); FrameRate sampling refactor, GameHUD owns its Batch, delayedSwitchBack(title,message),
   AiBlockController + ChangeZoneAi behavior changes; Android revert-watch list re-checked clean; engineBuildVersion 09.06.

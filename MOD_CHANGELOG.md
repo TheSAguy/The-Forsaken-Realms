@@ -17757,6 +17757,52 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 128: a looted-but-still-guarded dungeon cycles out twice as fast (2026-09-06)
+
+User spec: *"If a player visits a dungeon and takes all resources out of the dungeon, so only enemies are left, the
+dungeon timer should be cut in half (the time from it disappearing / cycling)."*
+
+The rotation system already had one exit rule, added 2026-08-30 after the report *"this cave did not disappear, even
+though I emptied out all the loot in it"*: on walking out, a rotatable dungeon with **no live enemies AND no
+uncollected reward objects** despawns via `DungeonRotation.onDungeonClear()`. That rule deliberately requires both -
+"no enemies" alone would despawn a loot-only cave the moment the player first walked in and out, stranding its loot.
+This round adds the complementary half, for the case the old rule steps over: **loot all taken, enemies still
+standing**.
+
+- **`DungeonRotation.onDungeonLooted(poi)`** halves the days remaining before the dungeon despawns. It is the
+  remaining time that is halved, not the original lifetime - a cave 10 days into a 50-day life goes from 40 days
+  left to 20, not to 25 - which is what makes the rule feel like a response to what the player just did rather than
+  a retroactive edit of a number they never saw.
+- **Once per visible lifetime.** Without a marker, every subsequent walk-in/walk-out of the same stripped dungeon
+  would halve again and collapse a 40-day timer to one day in about six visits. New persisted
+  `World.poiLootedDay` (same `Map<String,Integer>` shape, same `SaveFileData` key/value persistence and the same
+  `containsKey` load guard as `poiDespawnDay`/`poiRespawnDay`/`poiFailedAttempts`, so **old saves load unchanged** -
+  an absent entry simply reads as "not halved yet"). Cleared in all three places the other `poi*` entries are
+  cleared - `hidePoi()`, `activateFromReserve()` and a quest force-spawn - so when that location later returns from
+  the reserve pool its next incarnation can be halved again on its own merits.
+- **Active quest targets are exempt**, story and side alike, and the log says so when it skips one. The rest of
+  `DungeonRotation` spends its effort *guaranteeing* quest targets a runway (`SIDEQUEST_EXTENSION_DAYS` on every
+  natural expiry, `MAX_QUEST_ATTEMPTS` losses before a defeat can despawn one); pulling that runway in because the
+  player looted the place first would work directly against it. **This is the one judgment call in the round** - if
+  a looted side-quest dungeon should cycle faster too, it is a one-line change to the `questStatus` gate.
+- **A dungeon already inside its last day is left alone** rather than yanked out from under a player standing in it,
+  and the marker is still written so the check does not repeat.
+- **`MapStage.clearDungeonIfEmptied()` became `applyDungeonExitRules()`**, since it now decides between two rules
+  instead of testing one condition. Same call site in `exitDungeon()` (still only on a non-defeat exit), same two
+  probes - live `EnemySprite`s with the `defeatDialog` exemption, and `RewardSprite`s still on the stage, which is
+  every authored `reward` map object: gold, wood, stone, chests, card and item pickups alike. Loot still on the
+  floor returns early exactly as before, so the third case - "worth coming back to" - is untouched.
+- **Tunable, not a constant**: `dungeonLootedDespawnFactor` in the plane's `config tables/settings.json` (0.5).
+  The code clamps it to (0, 1] so a mis-set value can never *extend* a timer through this path, and 1.0 switches
+  the rule off without a code change. Stock planes are unaffected twice over - they have no `settings.json`, and
+  `onDungeonLooted()` self-gates on `dungeonRotationEnabled` before anything else, exactly like its siblings.
+- **`[TFR-DungeonLooted]`** logs every outcome with the numbers behind it (old despawn day, new one, current day,
+  days remaining, the factor), plus a line for each skip reason (quest target, or too few days left), so the
+  mechanic can be verified from `forge.log` alone.
+
+**Files touched**: `util/DungeonRotation.java`, `stage/MapStage.java`, `world/World.java`, `data/TuningData.java`;
+plane `config tables/settings.json`. MOD_SCOPE #108.
+
 ## Round 127: upstream engine update to the Forge 09.06 daily - step 0 of v1.06 (2026-09-06, repo only)
 
 Step 0 of the release, per the standing rule (round 82): take the upstream engine as its own round before any

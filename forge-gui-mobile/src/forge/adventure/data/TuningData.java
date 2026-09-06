@@ -236,6 +236,13 @@ public class TuningData {
     // flares the fog-of-war vision to torchPulseMultiplier x its current radius for torchPulseSeconds, through the
     // same time-limited bright tier the discovery flash uses. torchPulseMaxRadiusTiles caps the flared radius
     // (a Grand Torch on Easy would otherwise reach 48 tiles - the repaint cost grows with the square).
+    // DungeonRotation.onDungeonLooted() (round 128, user request 2026-09-06: "If a player visits a
+    // dungeon and takes all resources out of the dungeon, so only enemies are left, the dungeon timer
+    // should be cut in half"). Multiplier applied to the REMAINING days on a looted-but-still-guarded
+    // dungeon's despawn timer, once per visible lifetime. 1.0 disables the rule without touching code;
+    // values above 1 would extend instead, which is why the code clamps to (0, 1].
+    public float dungeonLootedDespawnFactor = 0.5f;
+
     public float torchPulseMultiplier = 3f;
     public float torchPulseSeconds = 2f;
     public int torchPulseMaxRadiusTiles = 24;

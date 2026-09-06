@@ -321,6 +321,12 @@ public class World implements Disposable, SaveFileContent {
     private final java.util.Map<String, Integer> poiDespawnDay = new java.util.HashMap<>();
     private final java.util.Map<String, Integer> poiRespawnDay = new java.util.HashMap<>();
     private final java.util.Map<String, Integer> poiFailedAttempts = new java.util.HashMap<>();
+    // Round 128: the in-game day a visible rotatable dungeon was first found stripped of its loot
+    // while enemies were still inside - the marker that its despawn timer has already been halved,
+    // so walking in and out again cannot halve it repeatedly. Cleared wherever the other poi* entries
+    // are (hidePoi, activateFromReserve, a quest force-spawn), so the next incarnation can halve
+    // again. Absent on saves predating this round, which simply means "not halved yet".
+    private final java.util.Map<String, Integer> poiLootedDay = new java.util.HashMap<>();
     // Weighted spawn tier system, Layer 3 (2026-08-25 redesign, replacing the original
     // time-decaying suppression-stack system): how many times this exact enemy name has been
     // confirmed-defeated in roaming combat, permanently - never decays over time. Same shape as
@@ -341,6 +347,10 @@ public class World implements Disposable, SaveFileContent {
 
     public java.util.Map<String, Integer> getPoiFailedAttempts() {
         return poiFailedAttempts;
+    }
+
+    public java.util.Map<String, Integer> getPoiLootedDay() {
+        return poiLootedDay;
     }
 
     public java.util.Map<String, Integer> getEnemyPermanentKillCount() {
@@ -704,6 +714,11 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             poiFailedAttempts.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiFailedAttempts"));
         }
+        poiLootedDay.clear();
+        if (saveFileData.containsKey("poiLootedDay")) {
+            //noinspection unchecked
+            poiLootedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiLootedDay"));
+        }
         enemyPermanentKillCount.clear();
         if (saveFileData.containsKey("enemyPermanentKillCount")) {
             //noinspection unchecked
@@ -790,6 +805,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
+        data.storeObject("poiLootedDay", poiLootedDay);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.store("poiActiveTarget", poiActiveTarget);
         StringBuilder star = new StringBuilder();
@@ -1088,6 +1104,7 @@ public class World implements Disposable, SaveFileContent {
             poiDespawnDay.clear();
             poiRespawnDay.clear();
             poiFailedAttempts.clear();
+            poiLootedDay.clear();
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
             // cleared here same as the poi* maps above: New Game+ reuses this exact World instance
             // and calls generateNew() in place rather than constructing a fresh one, so without

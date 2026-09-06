@@ -4717,3 +4717,13 @@ with 1-2 any-tier wildcards, speedModifier +4, depth-scaled loot) and registers 
 Biome tags, biome cave icons) in points_of_interest.json and the biome lists. New worlds only (POIs and the rotation
 reserve are placed at world-gen). Open: playtest a few in a new world (pathing on the corridor mouths, wildcard
 difficulty feel); more variety later is a matter of new seeds/name lists.
+
+### 108. Looted dungeons cycle out twice as fast — `Done (built 2026-09-06, round 128), not yet playtest-confirmed`
+User ask 2026-09-06: "If a player visits a dungeon and takes all resources out of the dungeon, so only enemies are
+left, the dungeon timer should be cut in half (the time from it disappearing / cycling)." The complement of the
+2026-08-30 despawn-on-exit rule, which needs a dungeon to be empty of BOTH loot and enemies. Walking out of a
+rotatable dungeon whose reward pickups are all gone while enemies remain now halves the days left on its despawn
+timer (`DungeonRotation.onDungeonLooted`, `[TFR-DungeonLooted]`), once per visible lifetime, tracked by the new
+persisted `World.poiLootedDay`. Active quest targets are exempt so the side-quest runway the rest of the system
+guarantees is not pulled in. Tunable `dungeonLootedDespawnFactor` (0.5; 1.0 = off) in settings.json. Open: whether
+looted side-quest targets should cycle faster too, and whether half is the right fraction once it is felt in play.

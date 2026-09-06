@@ -1446,27 +1446,47 @@ public class MapStage extends GameStage {
     }
 
     /**
-     * Fires DungeonRotation.onDungeonClear() if the dungeon the player is leaving has nothing
-     * left in it - no live enemies AND no uncollected reward objects. See exitDungeon()'s own
-     * comment for why the combat-win trigger alone wasn't enough.
+     * The two rotation rules that apply when the player walks out of a dungeon, both keyed on what
+     * is left behind:
+     * <ul>
+     * <li>nothing at all - no live enemies AND no uncollected reward objects - fires
+     * {@link DungeonRotation#onDungeonClear}, which despawns it (see exitDungeon()'s own comment
+     * for why the combat-win trigger alone wasn't enough);</li>
+     * <li>loot all taken but enemies still inside - fires {@link DungeonRotation#onDungeonLooted},
+     * which halves the remaining days on its despawn timer (round 128, user request 2026-09-06).
+     * A stripped dungeon has nothing left to come back for, so it should cycle out sooner and free
+     * its rotation slot - but it is not empty, so despawning it outright would delete a fight the
+     * player may still want.</li>
+     * </ul>
+     * Loot still on the floor means neither rule applies: the place is still worth a return visit.
+     * Both callees self-gate on rotation-enabled/rotatable/story, so towns, castles, Ring Cities
+     * and story dungeons fall through them untouched.
      */
-    private void clearDungeonIfEmptied() {
+    private void applyDungeonExitRules() {
         PointOfInterest root = TileMapScene.instance().rootPoint;
-        // No isEnabled() check here - it is private, and onDungeonClear() already gates on it
-        // (plus rotatable/story) as its very first act, so calling in unconditionally is correct
-        // and keeps the rules in exactly one place.
+        // No isEnabled() check here - it is private, and onDungeonClear()/onDungeonLooted() already
+        // gate on it (plus rotatable/story) as their very first act, so calling in unconditionally
+        // is correct and keeps the rules in exactly one place.
         if (root == null)
             return;
+        boolean enemiesLeft = false;
         for (EnemySprite enemy : enemies) {
             // Same "still actually on the map" test updateQuestsWin() uses, and the same
             // defeatDialog exemption: an enemy that can't be removed by defeating it must not
             // hold the dungeon open forever.
-            if (enemy != null && enemy.getStage() != null && enemy.defeatDialog == null)
-                return;
+            if (enemy != null && enemy.getStage() != null && enemy.defeatDialog == null) {
+                enemiesLeft = true;
+                break;
+            }
         }
         for (MapActor actor : new Array.ArrayIterator<>(actors)) {
             if (actor instanceof RewardSprite && actor.getStage() != null)
-                return; // loot still sitting there - not emptied
+                return; // loot still sitting there - neither rule applies
+        }
+        if (enemiesLeft) {
+            // Round 128: looted but still guarded - bring the despawn forward instead of firing it.
+            DungeonRotation.onDungeonLooted(root);
+            return;
         }
         // Round 122: this line used to print for every emptied map - towns, the Capitol, Ring Cities,
         // castles - although onDungeonClear() only ever despawns rotatable dungeons and caves (log
@@ -1507,7 +1527,7 @@ public class MapStage extends GameStage {
         // not the loaded MapStage) and self-gates on rotatable/story/rotation-enabled, so a
         // non-rotatable or story dungeon is unaffected.
         if (!defeated && !defeatedByBoss)
-            clearDungeonIfEmptied();
+            applyDungeonExitRules();
         AdventureQuestController.instance().updateQuestsLeave();
         clearIsInMap();
         AdventureQuestController.instance().showQuestDialogs(this);

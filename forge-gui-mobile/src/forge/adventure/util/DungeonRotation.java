@@ -165,6 +165,7 @@ public class DungeonRotation {
             poi.setActive(true);
             world.getPoiRespawnDay().remove(id);
             world.getPoiFailedAttempts().remove(id);
+            world.getPoiLootedDay().remove(id); // round 128
             world.getPoiDespawnDay().put(id,
                     currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS) + SIDEQUEST_EXTENSION_DAYS);
             world.refreshWorldMapMarkers();
@@ -289,6 +290,7 @@ public class DungeonRotation {
             pick.setActive(true);
             world.getPoiRespawnDay().remove(pick.getID());
             world.getPoiFailedAttempts().remove(pick.getID());
+            world.getPoiLootedDay().remove(pick.getID()); // round 128
             world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS));
             System.out.println("[DungeonRotation] " + pick.getDisplayName() + " has appeared on the map");
             activeCount++;
@@ -334,6 +336,69 @@ public class DungeonRotation {
     }
 
     /**
+     * Called from MapStage's dungeon-exit rules when the player leaves a dungeon/cave they have
+     * stripped of every reward pickup while live enemies are still inside (user request
+     * 2026-09-06: "If a player visits a dungeon and takes all resources out of the dungeon, so
+     * only enemies are left, the dungeon timer should be cut in half - the time from it
+     * disappearing / cycling"). The complement of {@link #onDungeonClear}: that one fires when
+     * BOTH the loot and the enemies are gone and despawns outright; this one fires when only the
+     * loot is gone and the place is still guarded, and merely brings the despawn forward.
+     * <p>
+     * "Cut in half" is applied to the REMAINING days, not to the original lifetime - a cave with
+     * 40 of its 50 days left goes to 20 remaining, not to 25. Half of nothing is nothing, so a
+     * dungeon already inside its last day is left alone rather than being yanked out from under a
+     * player who is standing in it. The factor is TuningData.dungeonLootedDespawnFactor (0.5),
+     * clamped to (0, 1] so a mis-set value can never extend the timer through this path.
+     * <p>
+     * Fires at most once per visible lifetime, tracked by World.getPoiLootedDay(): without that,
+     * every subsequent walk-in/walk-out of the same emptied dungeon would halve again and collapse
+     * the timer to one day in three visits. Both STORY and SIDE quest targets are exempt - the
+     * rest of this class spends its effort guaranteeing quest targets a runway
+     * (SIDEQUEST_EXTENSION_DAYS, MAX_QUEST_ATTEMPTS), and pulling that runway in because the
+     * player looted the place first would work directly against it. A looted quest target
+     * therefore keeps its full timer; the rule applies to it again only if it later returns from
+     * reserve with no quest attached.
+     */
+    public static void onDungeonLooted(PointOfInterest poi) {
+        if (!isEnabled() || !isRotatable(poi))
+            return;
+        int questStatus = activeQuestStatus(poi);
+        if (questStatus != QUEST_NONE) {
+            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is emptied of loot but is an active "
+                    + (questStatus == QUEST_STORY ? "story" : "side") + "-quest target - timer left alone");
+            return;
+        }
+        World world = WorldSave.getCurrentSave().getWorld();
+        String id = poi.getID();
+        if (world.getPoiLootedDay().containsKey(id))
+            return; // already halved for this incarnation - see the class doc
+        int currentDay = world.getCurrentDay();
+        Integer despawnDay = world.getPoiDespawnDay().get(id);
+        if (despawnDay == null) {
+            // Not seeded yet (a world whose first day tick has not run, or a POI activated this
+            // same day): seed the lifetime processDaysPassed() would have given it, then halve
+            // that, so the rule is not silently skipped just because of tick ordering.
+            despawnDay = currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS);
+        }
+        int remaining = despawnDay - currentDay;
+        if (remaining <= 1) {
+            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is emptied of loot but only "
+                    + remaining + " day(s) remain - timer left alone");
+            world.getPoiLootedDay().put(id, currentDay);
+            return;
+        }
+        float factor = Config.instance().getTuningData().dungeonLootedDespawnFactor;
+        if (!(factor > 0f) || factor > 1f)
+            factor = 0.5f;
+        int halved = Math.max(1, Math.round(remaining * factor));
+        world.getPoiDespawnDay().put(id, currentDay + halved);
+        world.getPoiLootedDay().put(id, currentDay);
+        System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " emptied of loot with enemies still inside"
+                + " - despawn day " + despawnDay + " -> " + (currentDay + halved)
+                + " (day " + currentDay + ", " + remaining + " days left x" + factor + " = " + halved + ")");
+    }
+
+    /**
      * Called from AdventureQuestController.updateQuestsWin() the moment the player has CLEARED
      * a rotatable dungeon/cave - killed every enemy inside, not merely won one fight in it
      * (2026-08-18 user request: "Does the dungeon also disappear if you 'complete' it... Silly
@@ -373,6 +438,7 @@ public class DungeonRotation {
         poi.setActive(false);
         world.getPoiDespawnDay().remove(poi.getID());
         world.getPoiFailedAttempts().remove(poi.getID());
+        world.getPoiLootedDay().remove(poi.getID()); // round 128: next incarnation may be halved again
         world.getPoiRespawnDay().put(poi.getID(), currentDay + rollDays(world, RESPAWN_MIN_DAYS, RESPAWN_MAX_DAYS));
         System.out.println("[DungeonRotation] " + poi.getDisplayName() + " despawned until day " + world.getPoiRespawnDay().get(poi.getID()));
         if (notification != null)

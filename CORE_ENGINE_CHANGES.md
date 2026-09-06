@@ -1319,6 +1319,24 @@ replacing broken oversized Dialogs; layouts live in the plane's `ui/info_text*.j
 `forge-gui-mobile/src/forge/adventure/data/TuningData.java` (#63/#74, numeric balance knobs loaded
 from the plane's `config tables/settings.json`).
 
+### 2026-09-06 Looted-dungeon despawn timer (round 128)
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — the private
+  `clearDungeonIfEmptied()` (added 2026-08-30) is now `applyDungeonExitRules()` and branches: loot
+  still on the floor returns early as before; all loot gone with enemies still alive calls the new
+  `DungeonRotation.onDungeonLooted()`; nothing left at all keeps the existing `onDungeonClear()`
+  path and its round-122 `[TFR-DungeonClear]` gate. One call site, unchanged, in `exitDungeon()`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — new persisted
+  `Map<String,Integer> poiLootedDay` + `getPoiLootedDay()`, alongside the existing
+  `poiDespawnDay`/`poiRespawnDay`/`poiFailedAttempts`: same `SaveFileData.storeObject`/`readObject`
+  pattern, same `containsKey` load guard (so pre-round-128 saves load unchanged), and cleared in
+  `generateNew()`'s reset block with the other three.
+- **`forge-gui-mobile/src/forge/adventure/util/DungeonRotation.java`** (mod-new file, listed here
+  because the round touches stock files with it) — new `onDungeonLooted()`; `hidePoi()`,
+  `activateFromReserve()` and `onQuestTargetBound()`'s force-spawn branch also clear the new marker.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** (mod-new) — new
+  `dungeonLootedDespawnFactor` (0.5), read from the plane's `config tables/settings.json`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

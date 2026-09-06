@@ -167,5 +167,12 @@
     // grows with the square of it. Grep forge.log for "[TFR-TorchPulse]".
     "torchPulseMultiplier": 3.0,
     "torchPulseSeconds": 2.0,
-    "torchPulseMaxRadiusTiles": 24
+    "torchPulseMaxRadiusTiles": 24,
+
+    // Looted-dungeon timer (round 128, user request): a rotatable dungeon/cave the player walks out of
+    // having taken every reward pickup, while live enemies are still inside, keeps this fraction of the
+    // days remaining on its despawn timer - 0.5 = cut in half. Applied once per visible lifetime, and
+    // never to a dungeon an active quest points at. Set to 1.0 to switch the rule off. Grep forge.log
+    // for "[TFR-DungeonLooted]".
+    "dungeonLootedDespawnFactor": 0.5
 }
