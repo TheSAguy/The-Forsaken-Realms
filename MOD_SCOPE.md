@@ -1281,6 +1281,10 @@ needs its own design pass before any of this gets built:**
   arrays with literal `null` junk in them) and a correction to the research doc's own "17 free"
   count (a text-matching false positive from JSON-escaped apostrophes), in `MOD_CHANGELOG.md`.
   **Not yet playtested** - first real test of importing Innistrad content specifically.
+- **Round 126 (2026-09-06)**: user report "load a game after losing in a dungeon and the dungeon disappears when you
+  enter" - the deferred loss follow-up (`MapStage.setWinner` -> pause callback: `onDungeonDefeat` + life loss +
+  `exitDungeon`) survived a save load and fired on the loaded game's next dungeon. `GameStage.cancelPendingActions()`,
+  called from `WorldStage.clearCache()` on every load/new game, discards it (`[TFR-LoadReset]`). Not yet playtest-confirmed.
 
 ### 16. Side-Quest Timers - `Done (playtest-confirmed 2026-08-12)`
 - Every non-story quest fails 30 in-game days after acceptance (notification on failure); the

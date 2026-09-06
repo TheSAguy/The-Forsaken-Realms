@@ -17757,6 +17757,42 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 126: a loss's follow-up no longer survives a save load (the "dungeon disappears when you enter" report), the 288-pixel Arcane Golem (2026-09-06, packaged)
+
+Two user reports from the first session on the round-125 package, with the log copied to `Pictures\Screenshots\LOG`.
+
+**"The bug seems to be back, where when you load a game after losing in a dungeon, the dungeon disappears when you
+enter."** The log shows the order: the loss to the Arcane Golem in Mages' Fort (`[TFR-AnteResult] ... inMap=true`),
+the ante/coin popups, then `[TFR-Life] load: 12/12` (the user reloads after every loss), then - on the loaded game -
+`[DungeonRotation] Mages' Fort despawned until day 38`, `Black Tower has appeared`, `[TFR-Life] defeated ... 12/12 ->
+8/12`. The match-result follow-up is deferred: `MapStage.setWinner(false)` parks it in `startPause()`'s `onEndAction`
+and `GameStage.act()` runs it once the hit/attack animation has played (the win path adds a libGDX `Timer` task in
+front of it, and `resetPlayerLocation()` / `defeatedFromBoss()` hang their defeat dialogs and the teleport-to-Spawn +
+autosave on `Timer` tasks too). A save loaded inside that window leaves the callback armed on the stage, and the
+loaded game pays for a loss it never had the next time the stage acts - for `MapStage` that is the next dungeon
+entered, whose `rootPoint` gets `DungeonRotation.onDungeonDefeat()` (despawn + replacement), the life loss and
+`exitDungeon()`. Not a regression of an earlier fix - the earlier despawn work (#15) was about losses that did NOT
+despawn; nothing ever cancelled a pending result on load. Fix: `GameStage.cancelPendingActions()` (clears
+`onEndAction`, the pause timeout and the tracked `Timer` task, now scheduled through `scheduleResultTask()`),
+overridden by `MapStage` (also forgets `currentMob`, the enemy freeze and the loading-match flag) and `WorldStage`
+(also `currentMob`, the Capitol-defense and town-assault flags); `WorldStage.clearCache()` - every load and every new
+game - calls both. `[TFR-LoadReset]` prints when a load actually discarded something, so the next occurrence is
+visible in the log. The same window covered a WIN: a reload during the death animation would have handed the loaded
+game the reward screen and the kill credit.
+
+**"I entered the Mages' Fort and there was a huge monster in there, half the screen."** `Mages' Fort` =
+`fort_colorless_2_wizards.tmx`, whose leader is the Arcane Golem (Mythic construct): its atlas
+(`sprites/enemy/construct/arcane_golem.atlas`) is drawn at 96x96 and `enemies.json` ALSO gave it `"scale": 3` - 288
+pixels, eighteen tiles. A survey of every enemy's sprite size times scale (739 atlases) found three more roamers whose
+atlas already has a deliberately scaled sibling: Shorikai (same 96x96 golem atlas, unscaled - blue/white roster, spawns),
+Dementia Beast (96x64 `fiend/cloaker.atlas`, unscaled, while Cloaker uses it at 0.5 - black roster) and Blech (128x96
+`aberration/gianttoad.atlas`, unscaled, while the Grolnok boss uses it at 0.5 - black/green rosters). All four now
+`scale 0.5` (48 px / 3 tiles for the golem, the Tahngarth/Cloaker convention). Left alone, for the user's call: the
+Filipino-folklore pack (`sprites/enemy/basic/*` - Buwaya 118x63, Kapre 92x70, Sirena 66x81, Gorma 78, Tikbalang
+67x77, Ekek, Busaw, Kolyog, Taong Tuod ...) is drawn at 40-120 px natively and consistently unscaled, and the five
+"of Shandalar" dragons (63 px x 1.3) - both look intentional. Unique bosses and legends (Ulamog 240 px, the Ur-Dragon
+189, Kozilek, Emrakul, the Gitrog Monster 128 ...) are meant to be huge.
+
 ## Round 125: Arena fighters play their own decks (Adept 50 / Master 35 / Archmage 15 brackets), 78 generated caves, one fewer attacking mage per color, decks v6 (2026-09-06, packaged with round 124)
 
 Four user asks in one batch, applied to the repo AND the live folder (this package also delivers the repo-only round

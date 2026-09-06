@@ -1923,7 +1923,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 3,
+        "scale": 0.5,
         "life": 25,
         "rewards": [
             {
@@ -83525,7 +83525,8 @@
         "colors": "WU",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.5
     },
     {
         "name": "Tamiyo",
@@ -96476,7 +96477,8 @@
         "colors": "BG",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.5
     },
     {
         "name": "Excava",
@@ -118542,7 +118544,8 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.5
     },
     {
         "name": "Cateran Overlord",

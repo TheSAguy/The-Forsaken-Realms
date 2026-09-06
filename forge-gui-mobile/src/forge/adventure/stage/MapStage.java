@@ -475,6 +475,16 @@ public class MapStage extends GameStage {
         return !preventEscape;
     } //Check if escape is possible.
 
+    /** Round 126: see GameStage.cancelPendingActions() - a load must also forget the mob the
+     *  pending result was about, or the stale reference outlives the map it belonged to. */
+    @Override
+    public void cancelPendingActions() {
+        super.cancelPendingActions();
+        currentMob = null;
+        freezeAllEnemyBehaviors = false;
+        isLoadingMatch = false;
+    }
+
     public void clearIsInMap() {
         isInMap = false;
         effect = null; //Reset effect so battles outside the dungeon don't use the last visited dungeon's effects.
@@ -1578,7 +1588,7 @@ public class MapStage extends GameStage {
             float attackDuration = Math.max(1f,
                     player.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 1f));
             currentMob.playEffect(Paths.EFFECT_BLOOD, 0.5f);
-            Timer.schedule(new Timer.Task() {
+            scheduleResultTask(new Timer.Task() {
                 @Override
                 public void run() {
                     currentMob.setAnimation(CharacterSprite.AnimationTypes.Death);

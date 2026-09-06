@@ -2178,3 +2178,10 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`data/TuningData.java`** - `baseAttackingMagesPerColor` default 3 -> 2; `util/TerritoryControl.java` comment only. Mirrored in `config tables/settings.json`.
 - **Data** - 78 new maps `maps/map/cave/cave_<biome>_01..13.tmx`; `points_of_interest.json` +78 `Cave<L>Gen<nn>` entries; `biomes/<biome>.json` `pointsOfInterest` +13 each; `GUIDE.md`.
 - **Tooling** - `dev-tools/gen_caves.py` (the generator; regenerates the same files from the same seeds) + `dev-tools/gen_caves_manifest.txt`; `dev-tools/save-editing/WriteDecks.java` backup name = first free `.prededit<N>.bak`; deck lists v6 in `dev-tools/save-editing/`.
+
+## Round 126 (2026-09-06) - pending match result cancelled on load, mis-sized sprites
+
+- **`stage/GameStage.java`** - `pendingResultTask` + `scheduleResultTask()` (the match-result / defeat `Timer` tasks go through it), `cancelPendingActions()` (`[TFR-LoadReset]`); `resetPlayerLocation()` and `defeatedFromBoss()` use `scheduleResultTask()`.
+- **`stage/MapStage.java`** - win-path `Timer` via `scheduleResultTask()`; `cancelPendingActions()` override (currentMob, enemy freeze, loading-match flag).
+- **`stage/WorldStage.java`** - win-path `Timer` via `scheduleResultTask()`; `cancelPendingActions()` override (currentMob, Capitol-defense / town-assault flags); `clearCache()` cancels both stages' pending actions on every load and new game.
+- **Data** - `enemies.json`: Arcane Golem `scale` 3 -> 0.5; Shorikai, Dementia Beast, Blech `scale` 0.5.

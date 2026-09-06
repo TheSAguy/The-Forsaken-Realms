@@ -514,7 +514,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             float attackDuration = Math.max(1f,
                     player.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 1f));
             currentMob.playEffect(Paths.EFFECT_BLOOD, 0.5f);
-            Timer.schedule(new Timer.Task() {
+            scheduleResultTask(new Timer.Task() {
                 @Override
                 public void run() {
                     currentMob.setAnimation(CharacterSprite.AnimationTypes.Death);
@@ -1654,7 +1654,20 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
     }
 
+    /** Round 126: see GameStage.cancelPendingActions(). */
+    @Override
+    public void cancelPendingActions() {
+        super.cancelPendingActions();
+        currentMob = null;
+        currentMobIsCapitolDefense = false;
+        currentMobIsTownAssault = false;
+    }
+
     public void clearCache() {
+        // Round 126: every load and every new game passes through here - drop whatever match
+        // result or defeat follow-up is still waiting on either stage before the new game exists.
+        cancelPendingActions();
+        MapStage.getInstance().cancelPendingActions();
         for (Pair<Float, EnemySprite> enemy : enemies)
             foregroundSprites.removeActor(enemy.getValue());
         enemies.clear();

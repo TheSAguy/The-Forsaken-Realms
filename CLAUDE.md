@@ -17,12 +17,15 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 MIDDAY (round 125, packaged) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 AFTERNOON (round 126, packaged) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 125 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-125 are
-  post-release fixes and additions. Round 125 = **Arena fighters play their own decks** (upstream's Hard/Insane genetic-AI
+- **HEAD = round 126 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-126 are
+  post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
+  (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
+  and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
+  288 px; Shorikai, Dementia Beast, Blech to 0.5). Round 125 = **Arena fighters play their own decks** (upstream's Hard/Insane genetic-AI
   override in DuelScene is gone) with **tier-weighted brackets** at AI capitals and level-1 player arenas (Adept 50 /
   Master 35 / Archmage 15, never Apprentice, `[TFR-ArenaTier]`), **78 generated caves** (13 per biome, `dev-tools/gen_caves.py`,
   POIs `Cave<L>Gen01..13`, NEW WORLDS ONLY), **attacking-mage base 3 -> 2** (Easy 1 / Normal 2 / Hard 3 / Insane 4) and
@@ -35,8 +38,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   runtime failure, three `serialVersionUID` pins, a `BiomeStructure` index bug; plus `dev-tools/validate_plane_data.py`
   (run it before packaging) and the **Rally rune as the "Hire a guard" reward** (quest 43 stage 2 epilogue: guard
   briefing, then `grantRewards`; only quests issued AFTER this round carry it - the user's NG+ save keeps its old copy).
-- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-125 jar (built 09:41), `PACKAGE_OK` 09:54
-  (rounds 124 and 125 together). The user plays their NG+ Insane game from save slot 1 (12/12 life; slots 2 and 3 are
+- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-126 jar (built 11:47), `PACKAGE_OK` 11:56. The user plays their NG+ Insane game from save slot 1 (12/12 life; slots 2 and 3 are
   older copies of the same character). Decks v6 (09:47, lists in `dev-tools/save-editing/`): slot 1 "Ichor Crown" (W/B
   toxic control), slot 2 "Gravetithe" (mono-B), slot 3 "Dawn Bulwark" (mono-W, 44 cards, SELECTED - the user tunes this
   one in-game, keep their additions when updating). Backups `1_save_slot.sav.prededit2/3/4/5.bak` sit beside the save -
@@ -48,7 +50,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   as the first round of v1.06 (standing rule below) - it needs the user to reinstall `E:\GAMES\Forge_2` at that daily.
   The review's section 4.8 names the five files that will conflict first (World, WorldStage, MapStage, AdventurePlayer,
   RewardScene).
-- **Open**: (0) playtest-confirm round 125 - an AI-capital Arena bracket must show no Apprentice fighters, each playing
+- **Open**: (0) playtest-confirm round 126 - lose in a dungeon, reload from the menu, re-enter: the dungeon must stay
+  and life must stay at the loaded value (`[TFR-LoadReset]` line on the load); the Mages' Fort golem must be three
+  tiles tall; (0b) playtest-confirm round 125 - an AI-capital Arena bracket must show no Apprentice fighters, each playing
   its own deck (`[TFR-ArenaTier]` line); a NEW world must place the Cave<L>Gen caves (walk one: mouth, patrols, loot, no
   stuck enemy); `[TFR-MageCap]` must read base=2; the three v6 decks must load; (a) playtest-confirm rounds 121-122 (Trading Post/Exchange exclusivity, town-exit flash, cave icons per biome,
   Rally rune from the Quick Travel Mart); (b) playtest-confirm round 123 - process memory should stay flat over a long
@@ -100,6 +104,9 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 126 (2026-09-06, PACKAGED 11:56): GameStage.cancelPendingActions()/scheduleResultTask() + MapStage/WorldStage
+  overrides, called from WorldStage.clearCache() ([TFR-LoadReset]); enemies.json scale fixes (Arcane Golem 3->0.5, Shorikai,
+  Dementia Beast, Blech 0.5).
 - Round 125 (2026-09-06, PACKAGED 09:54): DuelScene arena genetic-AI override removed; ArenaScene tier-weighted
   bracket pick (pickTierWeighted/isAiCapitalArena, [TFR-ArenaTier]); 78 generated caves (dev-tools/gen_caves.py ->
   cave_<biome>_NN.tmx, POIs Cave<L>Gen01-13 + biome lists, new worlds only); baseAttackingMagesPerColor 3->2; decks v6

@@ -352,6 +352,37 @@ public abstract class GameStage extends Stage {
         return animationTimeout > 0;
     }
 
+    // Round 126 (2026-09-06, user report: "when you load a game after losing in a dungeon, the
+    // dungeon disappears when you enter"): the match-result follow-up is DEFERRED - setWinner()
+    // parks it in startPause()'s onEndAction (behind a libGDX Timer task first, on a win) and
+    // act() runs it once the hit/attack animation has played. A save loaded inside that window
+    // (the user reloads after every loss) leaves the callback armed on this stage, and the loaded
+    // game then pays for a loss it never had the next time the stage acts - for MapStage that is
+    // the next dungeon entered, whose rootPoint gets DungeonRotation.onDungeonDefeat() + the life
+    // loss + exitDungeon() (log: "[DungeonRotation] Mages' Fort despawned" right after
+    // "[TFR-Life] load"). The defeat follow-ups (resetPlayerLocation's teleport-to-Spawn +
+    // autosave, defeatedFromBoss' dialog) sit behind Timer tasks with the same exposure.
+    // WorldStage.clearCache() cancels both stages' pending actions on every load and new game.
+    protected Timer.Task pendingResultTask;
+
+    protected void scheduleResultTask(Timer.Task task, float delaySeconds) {
+        pendingResultTask = task;
+        Timer.schedule(task, delaySeconds);
+    }
+
+    public void cancelPendingActions() {
+        boolean hadAction = onEndAction != null || animationTimeout > 0;
+        boolean hadTask = pendingResultTask != null && pendingResultTask.isScheduled();
+        if (pendingResultTask != null)
+            pendingResultTask.cancel();
+        pendingResultTask = null;
+        onEndAction = null;
+        animationTimeout = 0;
+        if (hadAction || hadTask)
+            System.out.println("[TFR-LoadReset] " + getClass().getSimpleName() + ": discarded a pending stage action on load"
+                    + " (pause callback=" + hadAction + ", timer task=" + hadTask + ")");
+    }
+
     public GameStage() {
         super(new ScalingViewport(Scaling.stretch, Scene.getIntendedWidth(), Scene.getIntendedHeight(), new OrthographicCamera()));
         WorldSave.getCurrentSave().onLoad(() -> {
@@ -769,7 +800,7 @@ public abstract class GameStage extends Stage {
             playerSprite.setAnimation(CharacterSprite.AnimationTypes.Death);
             playerSprite.playEffect(Paths.EFFECT_BLOOD, 0.5f);
             float deathDuration = playerSprite.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 1f);
-            Timer.schedule(new Timer.Task() {
+            scheduleResultTask(new Timer.Task() {
                 @Override
                 public void run() {
                 showImageDialog(Current.generateDefeatMessage(true), getDefeatBadge(),
@@ -793,7 +824,7 @@ public abstract class GameStage extends Stage {
         playerSprite.setAnimation(CharacterSprite.AnimationTypes.Hit);
         playerSprite.playEffect(Paths.EFFECT_BLOOD, 0.5f);
         float hitDuration = playerSprite.getActionAnimationDuration(CharacterSprite.AnimationTypes.Hit, 1f);
-        Timer.schedule(new Timer.Task() {
+        scheduleResultTask(new Timer.Task() {
             @Override
             public void run() {
                 showImageDialog(Current.generateDefeatMessage(false), getDefeatBadge(), () -> Forge.advFreezePlayerControls = false);
