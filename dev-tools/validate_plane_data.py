@@ -124,6 +124,7 @@ F["TuningData"] = set("""dayLengthSeconds capitolExpansionTilesPerDay townExpans
  capitolTargetCooldownDays functioningNeutralTownCount maxSameEnemyNearby sameEnemyNearbyRadius sameEnemySpawnRerolls
  torchPulseMultiplier torchPulseSeconds torchPulseMaxRadiusTiles dungeonLootedDespawnFactor""".split())
 F["WarChampionData"] = set("share white blue black red green".split())
+F["FrontierSpawnData"] = set("unhappyShare warShare neutralColorlessShare maxLife".split())
 F["PointOfInterestData"] = set("name type count spriteAtlas sprite map radiusFactor offsetX offsetY active questTags questFlagsToActivate displayName".split())
 F["EnemyData"] = set("""name nameOverride sprite deck copyPlayerDeck ai boss flying randomizeDeck spawnRate difficulty tier speed scale life rewards
  equipment colors nextEnemy teamNumber questTags lifetime gamesPerMatch bossInsult bossIntro noAnte""".split())
@@ -581,6 +582,15 @@ if wc:
                       % (_color, _n, _e.get("colors"), _letter))
     if not (0 < (wc.get("share") or 0) < 1):
         issue("bad-value", "war_champions.json: share must be between 0 and 1, got %r" % wc.get("share"))
+fs, _ = load_json(os.path.join(PLANE, "config tables", "frontier_spawns.json"))
+if fs:
+    check_keys(fs, "FrontierSpawnData", "frontier_spawns.json")
+    for _k in ("unhappyShare", "warShare", "neutralColorlessShare"):
+        _v = fs.get(_k)
+        if _v is not None and not (0 <= _v < 1):
+            issue("bad-value", "frontier_spawns.json.%s must be in [0,1), got %r" % (_k, _v))
+    if not (0 < (fs.get("maxLife") or 0) <= 200):
+        issue("bad-value", "frontier_spawns.json.maxLife must be 1-200, got %r" % fs.get("maxLife"))
 rc, _ = load_json(os.path.join(PLANE, "config tables", "restricted_cards.json"))
 if rc:
     for k in rc.keys():

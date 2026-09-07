@@ -45,6 +45,7 @@ public class Config {
     private SpawnTierWeightData spawnTierWeightData;
     private forge.adventure.data.ArmoryRarityData armoryRarityData;
     private forge.adventure.data.WarChampionData warChampionData;
+    private forge.adventure.data.FrontierSpawnData frontierSpawnData;
     /** Round 140 (S2-6): set when a plane data file that EXISTS failed to parse, so the menu can
      *  say so instead of the game running with every feature silently defaulted off. */
     private String fatalDataError = null;
@@ -270,6 +271,20 @@ public class Config {
                 warChampionData = null;
             }
         }
+
+        // Frontier spawns (round 142, user spec 2026-09-07) - same plane-local / fallback-to-common
+        // pattern. Absent leaves frontierSpawnData null, which FrontierSpawns reads as "off".
+        FileHandle frontierFile = new FileHandle(prefix + "config tables/frontier_spawns.json");
+        if (!frontierFile.exists())
+            frontierFile = new FileHandle(commonPrefix + "config tables/frontier_spawns.json");
+        if (frontierFile.exists()) {
+            try {
+                frontierSpawnData = new Json().fromJson(forge.adventure.data.FrontierSpawnData.class, frontierFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-FrontierSpawns] frontier_spawns.json failed to load, feature will no-op: " + e);
+                frontierSpawnData = null;
+            }
+        }
     }
 
     private String resPath() {
@@ -312,6 +327,10 @@ public class Config {
     /** Round 140 (S2-6): null when the plane's data loaded cleanly. */
     public String getFatalDataError() {
         return fatalDataError;
+    }
+
+    public forge.adventure.data.FrontierSpawnData getFrontierSpawnData() {
+        return frontierSpawnData;
     }
 
     // Push the plane's allowed/restricted editions and restricted token pairs into TokenDb.

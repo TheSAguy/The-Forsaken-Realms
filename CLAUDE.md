@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 141; v1.08 RELEASED, rounds 137-141 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 142; v1.08 RELEASED, rounds 137-142 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 142 (2026-09-07, REPO ONLY - user was playing, do not package): **frontier spawns**. The 111 enemies that were
+  reachable NOWHERE now roam terrain whose colour is UNHAPPY (10%) or at WAR (15%), matched per colour LETTER so a
+  multicoloured legend is eligible in several biomes; the 3 colourless ones take NEUTRAL terrain (2%). New
+  `FrontierSpawns` + `config tables/frontier_spawns.json`. Defined by PREDICATE not a name list (spawnRate<=0, rewards,
+  !boss, no questTags, NOT Mythic, scale>1.5, life<maxLife=60) - that is exactly what stranded them, and `maxLife` keeps
+  the 70-life hand-placed Eldrazi titans out. Respects the rank filter (unlike war champions). Both injected groups are
+  now weighted against the ordinary pool total captured BEFORE either is added.
+  **MOD_SCOPE #115 parks the autopilot/spectator findings** - the duel half already ships
+  (`DuelScene.aiControlsPlayerSide`, Deck Tester "AI vs. AI (Watch)"); only the overworld half is missing.
 - Round 141 (2026-09-07): **arena weekly lock moved from PAYOUT to ENTRY** (user correction - fighting for nothing was
   worse than being turned away); `weeklyArenaLocked()` gates the button, the click AND the fee point, because
   `setDisabled()` does not detach handlers here. **Inventory sell exploit fixed**: `itemLocation` was NEVER cleared and

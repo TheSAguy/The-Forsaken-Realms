@@ -4808,3 +4808,37 @@ arena champion-bounty flag, so editing it would have cancelled the bounty and re
   reach that until 150 wins — the war is the gate.
 
 Both opt-in; a stock plane has `caveChampionChance` 0 and no war_champions.json, so neither exists there.
+
+### 114. Frontier spawns — the stranded legends — `Done (built 2026-09-07, round 142), not yet playtest-confirmed`
+User ask 2026-09-07, after the audit: "just have them be spawnable in 'Unhappy' and 'War' state terrain. So the multi
+color would spawn in multiple color zones. Color-less. Make those spawnable in Neutral terrain." 111 enemies were
+reachable through no route at all, all failing the same two filters (not Mythic, so barred from the Chest's
+Dangerous-Enemy pool; sprite scale over 1.5, so barred from #113's cave pool). 85 of them are multicoloured.
+`FrontierSpawns` grants them weight by reputation state — Unhappy 10%, War 15%, Neutral 2% for the 3 colourless ones,
+nothing in Happy/Partner territory — matched per colour LETTER so a WUBRG legend is eligible in all five biomes.
+Defined by a PREDICATE rather than a name list (126 entries would go stale); `maxLife` 60 keeps the hand-placed
+Eldrazi titans out. Respects the rank filter, unlike the war champions. `config tables/frontier_spawns.json`.
+
+### 115. Autopilot / spectator mode — `Not Started` (findings parked 2026-09-07, round 142)
+User ask: *"Would it be possible to code it so you can play the game and I be a viewer?"* Parked for later review at
+the user's request. What the investigation found:
+
+- **The duel half already ships.** `DuelScene.initDuels(..., aiControlsPlayerSide)` exists and is used by the Deck
+  Tester's "AI vs. AI (Watch)" mode (added 2026-08-13, `ArenaScene.launchDeckTesterSimulated()`). Forge's AI can
+  already pilot the player's own deck on the real board while the player watches. Available today at a level-2 arena.
+- **What is missing is the overworld half**, in four pieces:
+  1. *Movement.* `util/pathfinding/NavigationMap` exists but is used for in-map enemy AI, not overworld roaming. The
+     overworld is free-roam with collision rectangles; a driver needs either a nav mesh or a walk-and-nudge policy.
+  2. *Policy.* Which POI to visit, when to heal, when to sell, when to disengage. A small state machine.
+  3. **The fiddly part: dialogs and scenes.** Entering a dungeon, taking a reward, a shop, a quest popup and a level-up
+     each have their own flow. A generic "confirm the default option" pass over `MapDialog` / `RewardScene` would
+     cover most of it, but this is where the work actually is.
+  4. *Controls.* A stop switch and a speed setting.
+- **Estimated 2-4 rounds**, concentrated in (3).
+- **The cheap 80%**: an auto-battle toggle — the player keeps the overworld, but any duel entered is played by the AI
+  with their deck. About one round: thread the existing `aiControlsPlayerSide` flag through the three duel launch
+  sites plus a settings toggle.
+- **Honest framing to keep in mind**: what would be watched is *Forge's AI* playing, with the assistant having written
+  the overworld policy — not the assistant making live decisions. There is no screen access from the assistant side,
+  and driving a Magic game turn-by-turn through a text channel would be slower and worse than the AI already is.
+

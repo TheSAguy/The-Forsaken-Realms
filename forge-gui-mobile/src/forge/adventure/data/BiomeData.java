@@ -158,6 +158,14 @@ public class BiomeData implements Serializable {
         // war is the gate. They arrive carrying spawnRate 0, so both weighting branches below give
         // them a weight of exactly zero, and the pass after them grants the configured share.
         List<EnemyData> warChampions = forge.adventure.util.WarChampions.injectFor(name, filteredEnemies);
+        // Frontier spawns (round 142, user spec 2026-09-07): the 111 enemies that were reachable
+        // through no route at all now roam terrain whose colour is UNHAPPY or at WAR, matched
+        // per colour letter so a multicoloured legend has several homes; the colourless few take
+        // NEUTRAL terrain instead. Unlike the war champions these DO respect the rank filter above
+        // - they are ordinary Rare/Uncommon enemies, so difficultyFactor is passed through and
+        // checked inside injectFor().
+        List<EnemyData> frontierSpawns = forge.adventure.util.FrontierSpawns
+                .injectFor(name, filteredEnemies, difficultyFactor);
 
         float[] effectiveWeights = new float[filteredEnemies.size()];
         float totalDistribution = 0.0f;
@@ -214,11 +222,28 @@ public class BiomeData implements Serializable {
         // fixed number would drift away from the configured percentage as they did. The injected
         // champions are the last entries in the list, which is what makes the index range below
         // safe to state so bluntly.
+        // Both injected groups are weighted against the ORDINARY pool total, captured before
+        // either is added, so each one's configured share means the same thing regardless of
+        // whether the other is also active. When both fire (a colour at WAR is the only case) they
+        // dilute one another slightly in the final roll - 20% and 15% of the ordinary pool come to
+        // about 17% and 13% of the whole - which is the intended reading of "share of the pool".
+        float ordinaryTotal = totalDistribution;
+        int injectedTail = filteredEnemies.size();
+        if (!frontierSpawns.isEmpty()) {
+            float frontierTotal = forge.adventure.util.FrontierSpawns.shareWeight(ordinaryTotal, name);
+            if (frontierTotal > 0f) {
+                float each = frontierTotal / frontierSpawns.size();
+                for (int i = injectedTail - frontierSpawns.size(); i < injectedTail; i++)
+                    effectiveWeights[i] = each;
+                totalDistribution += frontierTotal;
+            }
+            injectedTail -= frontierSpawns.size();
+        }
         if (!warChampions.isEmpty()) {
-            float championTotal = forge.adventure.util.WarChampions.shareWeight(totalDistribution);
+            float championTotal = forge.adventure.util.WarChampions.shareWeight(ordinaryTotal);
             if (championTotal > 0f) {
                 float each = championTotal / warChampions.size();
-                for (int i = filteredEnemies.size() - warChampions.size(); i < filteredEnemies.size(); i++)
+                for (int i = injectedTail - warChampions.size(); i < injectedTail; i++)
                     effectiveWeights[i] = each;
                 totalDistribution += championTotal;
             }

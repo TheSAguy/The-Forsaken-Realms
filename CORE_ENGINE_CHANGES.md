@@ -1507,6 +1507,16 @@ from the plane's `config tables/settings.json`).
   `pickRandomArchmage()` falls back to arena-exclusive enemies with 100+ life, so Arzakon and
   Nephilim Epochal stop being unreachable.
 
+### 2026-09-07 Frontier spawns (round 142)
+
+- **`forge-gui-mobile/src/forge/adventure/data/BiomeData.java`** - `getEnemy()` also injects
+  `FrontierSpawns.injectFor(name, filteredEnemies, difficultyFactor)` and grants it a share.
+  Both injected groups (war champions, frontier spawns) are now weighted against the ordinary
+  pool total captured before either is added, so their configured shares are independent.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - loads
+  `config tables/frontier_spawns.json` into a new `FrontierSpawnData`; absent leaves it null (off).
+- New mod files: `data/FrontierSpawnData.java`, `util/FrontierSpawns.java`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

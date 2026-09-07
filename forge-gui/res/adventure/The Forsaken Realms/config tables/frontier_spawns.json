@@ -1,0 +1,31 @@
+{
+  // Frontier spawns (user spec 2026-09-07) - hand-editable, no code change needed to retune.
+  // See FrontierSpawns.java for the predicate and BiomeData.getEnemy() for where it is applied.
+  //
+  // An audit found 111 enemies reachable through NO route at all: not roaming, not placed on a
+  // map, not in an arena pool, not named in a quest, and excluded from both the Chest's
+  // Dangerous-Enemy pool (Mythic tier only) and the cave-champion pool (sprite scale 1.5 or under).
+  // They are the plane's oversized legend cycle - the dragon lords, the Theros gods, the Slivers -
+  // and 85 of the 111 are multicoloured, which is also why they were never going to work as
+  // ordinary biome spawns.
+  //
+  // They now roam terrain that has turned on the player. Matching is per colour LETTER, so a
+  // five-colour legend is eligible in all five colour biomes and a UG one in two. The three
+  // colourless members take neutral terrain instead, including the wasteland, which has no owner
+  // to have an opinion. Happy and Partner territory stays quiet - peace is meant to be worth
+  // something.
+  //
+  // The shares below are of the ORDINARY spawn pool. When a colour is at WAR the round-139 war
+  // champions are also drawing (their own 20%), so the two dilute each other slightly in the final
+  // roll - about 13% frontier and 17% champions rather than 15% and 20%.
+  //
+  // Set any share to 0 to switch off that state; set them all to 0 to disable the feature.
+  "unhappyShare": 0.10,
+  "warShare": 0.15,
+  "neutralColorlessShare": 0.02,
+
+  // Life ceiling for a candidate. 60 admits every genuinely unreachable enemy (the largest is 50)
+  // while keeping the hand-placed Eldrazi titans - Emrakul, Ulamog, Kozilek, all 70 life - out of
+  // the roaming pool, where they belong to the encounters that placed them.
+  "maxLife": 60
+}

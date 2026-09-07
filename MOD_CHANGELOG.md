@@ -17757,6 +17757,59 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 142: the stranded legends get a frontier (2026-09-07, repo only)
+
+User spec, after being shown the audit: *"As for the unreachable enemies, just have them be spawnable in 'Unhappy' and
+'War' state terrain. So the multi colour would spawn in multiple colour zones. Colour-less. Make those spawnable in
+Neutral terrain."*
+
+**111 enemies were reachable through no route at all** - not roaming, not placed on a map, not in an arena pool, not
+named in a quest, and excluded from both round 139's cave-champion pool and round 141's chest fallback. Every one
+failed the same two lines: not Mythic tier (the Chest's Dangerous-Enemy pool is Mythic-only) and sprite scale 2-4
+(the cave pool caps at 1.5, because a 3x model does not fit a two-tile corridor). They are the plane's oversized
+legend/commander cycle - the dragon lords, the Theros gods, all five Slivers, Cromat - and **85 of the 111 are
+multicoloured**, which is also why they were never going to work as ordinary biome spawns: a biome roster filters on
+its own colour letter.
+
+New `FrontierSpawns` grants them weight in terrain that has turned on the player:
+
+| terrain state | who spawns | share of the ordinary pool |
+|---|---|---|
+| UNHAPPY | every candidate whose colours include that biome's letter | 10% |
+| WAR | same | 15% |
+| NEUTRAL (incl. the wasteland) | the 3 colourless candidates only | 2% |
+| HAPPY / PARTNER | nobody | - |
+
+Matching is per **letter**, so a five-colour legend is eligible in all five colour biomes and a UG one in two - the
+"multi colour would spawn in multiple colour zones" half of the spec, and the reason this fits a set that is 76%
+multicoloured.
+
+### Predicate, not a name list
+
+`war_champions.json` names its 25 because they were hand-cast. This set is 126 entries wide and would go stale the
+first time an enemy is added or re-tiered, so `FrontierSpawns.isCandidate()` re-derives it from the same properties
+that stranded them: `spawnRate <= 0`, carries rewards, not a boss, no questTags, **not Mythic**, **scale > 1.5**, and
+life under `maxLife`. That predicate catches all 111 plus 15 that are already hand-placed on a map - harmless, and
+arguably right: a placed legend roaming a war zone is the same creature in the same world.
+
+`maxLife` 60 is the one tuned number. It admits every genuinely unreachable entry (the largest is 50) while keeping
+Emrakul, Ulamog and Kozilek - all 70 life, all hand-placed as boss encounters - out of the roaming pool.
+
+### Weighting
+
+Both injected groups are now weighted against the **ordinary** pool total, captured before either is added, so each
+one's configured share means the same thing whether or not the other is active. When a colour is at WAR both fire,
+and they dilute one another slightly in the final roll: 20% and 15% of the ordinary pool come to about 17% and 13% of
+the whole. Unlike the war champions, frontier spawns **respect the rank filter** - they are ordinary Rare/Uncommon
+enemies at difficulty 1-2, so `BiomeData.getEnemy()`'s existing gate is the right one and `difficultyFactor` is
+passed into `injectFor()`.
+
+As with rounds 139 and 141, nothing in `enemies.json` changed: `spawnRate` is simultaneously SpawnTierWeighting's
+"never rolls on its own" exclusion and ArenaScene's champion-bounty flag, so the weight is granted from outside.
+
+**Files touched**: `data/FrontierSpawnData.java` (new), `util/FrontierSpawns.java` (new), `util/Config.java`,
+`data/BiomeData.java`; plane `config tables/frontier_spawns.json` (new); `dev-tools/validate_plane_data.py`.
+
 ## Round 141: the arena closes, the sell exploit, and three jackpots retuned (2026-09-07)
 
 ### The Arena closes for the week, rather than paying nothing
