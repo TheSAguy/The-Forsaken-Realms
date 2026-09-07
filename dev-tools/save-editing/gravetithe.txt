@@ -1,24 +1,25 @@
-# Gravetithe v6 (2026-09-06) - mono-black, 40 cards, 17 lands: deathtouch blockers, the full removal suite, Obliterator,
-# Reaver, two Kinzu, and two new top-end fliers - Archfiend of Ifnir (cycling shrinks their board) and Reaper from the
-# Abyss (morbid: kills a creature every end step something died). v6 cuts Yuan-Ti Fang-Blade, Deathcap Marionette,
-# Stronghold Assassin and a Nimraiser Paladin for Power Word Kill, Grim Affliction, the Archfiend, the Reaper and a Swamp.
-15 Swamp
-2 The Dross Pits
+# Gravetithe v7 (2026-09-06) - mono-black, 40 cards, 16 lands. Rebuilt from the LIVE slot-2 deck.
+# Change vs live: +1 Sidisi, Undead Vizier - a 5-mana 4/6 DEATHTOUCH body (blocks anything Insane sends) whose
+# Exploit sacrifices a spare 1/1 to tutor ANY card, which in this deck means Phyrexian Obliterator, Sheoldred's
+# Headcleaver or whichever answer the matchup needs. Easily the strongest black card in the 159 newly acquired.
+# Brings the deck to a legal 40 (it was sitting at 39).
+2 Anoint with Affliction
 2 Bilious Skulldweller
 1 Blightbelly Rat
-1 Karumonix, the Rat King
-1 Qarsi Revenant
-1 Phyrexian Obliterator
-1 Liliana's Reaver
-1 Sheoldred's Headcleaver
-2 Kinzu of the Bleak Coven
-1 Nimraiser Paladin
-1 Archfiend of Ifnir
-1 Reaper from the Abyss
-2 Anoint with Affliction
+1 Deathcap Marionette
 2 Drown in Ichor
-1 Murder
-1 Power Word Kill
-1 Grim Affliction
 1 Grisly Spectacle
+1 Karumonix, the Rat King
+2 Kinzu of the Bleak Coven
+1 Liliana's Reaver
+1 Murder
+2 Nimraiser Paladin
+1 Phyrexian Obliterator
+1 Qarsi Revenant
+1 Sheoldred's Headcleaver
+1 Sidisi, Undead Vizier
+1 Stronghold Assassin
+14 Swamp
+2 The Dross Pits
 2 Vraska's Fall
+1 Yuan-Ti Fang-Blade

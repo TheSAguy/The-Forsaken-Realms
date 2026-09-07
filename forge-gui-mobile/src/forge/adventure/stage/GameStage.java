@@ -370,6 +370,47 @@ public abstract class GameStage extends Stage {
         Timer.schedule(task, delaySeconds);
     }
 
+    // Round 129 (user report 2026-09-06: "I pick up some resources in a dungeon. Then the next
+    // time I enter a town, I see the little '+2 Shards' text on the screen, as if I just picked up
+    // those resources from before in the town... I think it's text only"). Exactly right, on both
+    // counts. AdventurePlayer.addStatusMessage() builds the floating "+2 Shards" label and adds it
+    // STRAIGHT TO THE STAGE - not to MapStage's `actors` list, and not to foregroundSprites - so
+    // MapStage.loadMap()'s actor sweep never touched it. The label removes itself at the end of a
+    // 3-second move+fade action, and actions only advance while the stage is being acted; walk out
+    // of the dungeon inside those 3 seconds and the label is simply frozen mid-action on a stage
+    // nobody is rendering. MapStage is a process singleton, so the next map loaded into it - the
+    // town - resumes the leftover action, and the old dungeon's pickup floats up over the town.
+    // The reward itself was granted once, at pickup (addReward() runs immediately, nowhere near
+    // this label), which is why it was text only. Tracked here so both the map swap and a save
+    // load can drop them; same class of bug as the shop-registry corpses loadMap() already clears.
+    private final Array<Actor> statusMessages = new Array<>();
+
+    public void addStatusMessage(Actor label) {
+        // Prune the ones that already finished and removed themselves, so a long stay in one map
+        // cannot grow this list without bound.
+        for (int i = statusMessages.size - 1; i >= 0; i--) {
+            if (statusMessages.get(i).getStage() == null)
+                statusMessages.removeIndex(i);
+        }
+        statusMessages.add(label);
+        addActor(label);
+    }
+
+    public void clearStatusMessages() {
+        int dropped = 0;
+        for (Actor label : statusMessages) {
+            if (label.getStage() != null) {
+                label.clearActions();
+                label.remove();
+                dropped++;
+            }
+        }
+        statusMessages.clear();
+        if (dropped > 0)
+            System.out.println("[TFR-StatusMessage] " + getClass().getSimpleName() + ": discarded "
+                    + dropped + " unfinished pickup label(s) from the previous map");
+    }
+
     public void cancelPendingActions() {
         boolean hadAction = onEndAction != null || animationTimeout > 0;
         boolean hadTask = pendingResultTask != null && pendingResultTask.isScheduled();

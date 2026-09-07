@@ -1668,6 +1668,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // result or defeat follow-up is still waiting on either stage before the new game exists.
         cancelPendingActions();
         MapStage.getInstance().cancelPendingActions();
+        // Round 129: same treatment for a floating pickup label caught mid-animation by the load.
+        clearStatusMessages();
+        MapStage.getInstance().clearStatusMessages();
         for (Pair<Float, EnemySprite> enemy : enemies)
             foregroundSprites.removeActor(enemy.getValue());
         enemies.clear();

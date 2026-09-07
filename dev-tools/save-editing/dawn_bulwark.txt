@@ -1,29 +1,32 @@
-# Dawn Bulwark v6 (2026-09-06) - mono-white, 44 cards, 18 lands (the size the deck was tuned to in-game). Keeps the
-# in-game additions (Always Watching, second Mirror Entity, Voice of the Blessed) and adds Elesh Norn, Grand Cenobite
-# (their creatures -2/-2, ours +2/+2), Angel of Sanctions (exiles their best permanent), two Skyhunter Skirmishers
-# (double-strike fliers, 2/2 with Always Watching) and Hidden Dragonslayer (lifelink; unmorph kills a big creature).
-# Cuts: Adarkar Valkyrie, Novice Knight, Myth Realized, Immolating Glare, Sonar Strike.
-16 Plains
-1 Idyllic Grange
-1 The Fair Basilica
-2 Duelist of Deep Faith
-1 Voice of the Blessed
-1 Master Decoy
-1 Hidden Dragonslayer
-2 Skyhunter Skirmisher
-2 Annex Sentry
-1 Fiendslayer Paladin
-2 Mirror Entity
+# Dawn Bulwark v7 (2026-09-06) - mono-white, 44 cards, 18 lands. This is the SELECTED deck and the one the user
+# tunes in-game, so it is the LIVE list with a single swap, not a rebuild: every in-game addition is kept
+# (Always Watching, the second Mirror Entity, Voice of the Blessed, Wedding Announcement, Twinmaw Stormbrood).
+# Swap: -1 Myth Realized, +1 Crusade. Myth Realized only grows on noncreature spells and this deck runs about six,
+# so it spent most games as a 0/0 enchantment; Crusade gives +1/+1 to every white creature here - 16 bodies
+# including both Mirror Entity, both Duelist of Deep Faith and both Wall of Swords - for the same two mana.
+# (Crusade is symmetric, so it also pumps a white OPPONENT's board; against the white AI colour it is a wash.)
+1 Adarkar Valkyrie
 1 Always Watching
-1 Wedding Announcement
+2 Annex Sentry
 1 Archon of Absolution
-1 Oketra the True
-1 Mite Overseer
-2 Wall of Swords
 1 Basilica Shepherd
-1 Angel of Sanctions
-1 Twinmaw Stormbrood
-1 Elesh Norn, Grand Cenobite
+1 Crusade
+2 Duelist of Deep Faith
+1 Fiendslayer Paladin
 1 Get Lost
+1 Idyllic Grange
+1 Immolating Glare
+1 Master Decoy
+2 Mirror Entity
+1 Mite Overseer
+1 Novice Knight
+1 Oketra the True
 1 Pacifism
+16 Plains
 1 Planar Disruption
+1 Sonar Strike
+1 The Fair Basilica
+1 Twinmaw Stormbrood
+1 Voice of the Blessed
+2 Wall of Swords
+1 Wedding Announcement

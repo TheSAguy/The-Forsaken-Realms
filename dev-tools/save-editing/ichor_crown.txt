@@ -1,27 +1,29 @@
-# Ichor Crown v6 (2026-09-06) - white/black toxic control, 40 cards. Poison ignores the AI's inflated Insane life
-# totals; premium removal keeps your 12 life safe. Black main, white splash (Banisher Priest is the only WW card).
-# v6: two Scoured Barrens (W/B dual, +1 life) replace Shimmering Grotto and a Plains; Grim Affliction (instant -1/-1
-# counter + proliferate) and Power Word Kill replace Nimraiser Paladin and the third Vraska's Fall (only 2 are owned).
-8 Swamp
-4 Plains
-2 Scoured Barrens
-1 Sunlit Marsh
-1 Terramorphic Expanse
-2 Bilious Skulldweller
-2 Pestilent Syphoner
-1 Blightbelly Rat
-1 Tithe Drinker
+# Ichor Crown v7 (2026-09-06) - W/B toxic control, 40 cards, 16 lands. Rebuilt from the LIVE slot-1 deck
+# (which was still the v5-era list - the round-125 v6 write never reached the save the user is actually playing).
+# Change vs live: +1 Festering Mummy. It is a 1-mana 1/1 whose death puts a -1/-1 counter on a creature, which is
+# both removal the opponent cannot answer and another counter for the two Drown in Ichor to proliferate - the same
+# axis the toxic creatures already win on, and one that ignores Insane's inflated enemy life totals entirely.
+# Brings the deck to a legal 40 (it was sitting at 39).
 2 Annex Sentry
-1 Karumonix, the Rat King
-1 Qarsi Revenant
-1 Banisher Priest
-1 Sheoldred's Headcleaver
-1 Liliana's Reaver
-1 Kinzu of the Bleak Coven
-1 Get Lost
 2 Anoint with Affliction
+1 Banisher Priest
+2 Bilious Skulldweller
+1 Blightbelly Rat
 2 Drown in Ichor
+1 Festering Mummy
+1 Get Lost
+1 Karumonix, the Rat King
+1 Kinzu of the Bleak Coven
+1 Liliana's Reaver
 1 Murder
-1 Power Word Kill
-1 Grim Affliction
+1 Nimraiser Paladin
+2 Pestilent Syphoner
+5 Plains
+1 Qarsi Revenant
+1 Sheoldred's Headcleaver
+1 Shimmering Grotto
+1 Sunlit Marsh
+8 Swamp
+1 Terramorphic Expanse
+1 Tithe Drinker
 2 Vraska's Fall

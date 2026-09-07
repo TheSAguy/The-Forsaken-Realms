@@ -1337,6 +1337,23 @@ from the plane's `config tables/settings.json`).
 - **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** (mod-new) — new
   `dungeonLootedDespawnFactor` (0.5), read from the plane's `config tables/settings.json`.
 
+### 2026-09-06 Stale pickup labels + winged enemies (round 129)
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameStage.java`** - new tracked `statusMessages`
+  list with `addStatusMessage(Actor)` / `clearStatusMessages()`. Floating pickup labels used to be
+  added straight to the stage by `AdventurePlayer.addStatusMessage()`, so nothing ever removed one
+  whose 3-second action had not finished when the player left the map; the next map loaded into the
+  `MapStage` singleton resumed it. `[TFR-StatusMessage]`.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `addStatusMessage()` now
+  hands the label to `getCurrentGameStage().addStatusMessage(...)` instead of `addActor(...)`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `loadMap()` calls
+  `clearStatusMessages()` beside the existing actor sweep.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `clearCache()` clears both
+  stages' labels, next to round 126's `cancelPendingActions()` pair.
+- Plane data (not an engine file, noted for the round): 51 `enemies.json` entries gain
+  `"flying": true`. `flying` is a MOVEMENT flag - a flying enemy skips the collision test and the
+  navigation mesh and beelines at the player - not the MTG keyword.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

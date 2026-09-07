@@ -1623,7 +1623,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 Actions.hide(),
                 Actions.removeActor())
         );
-        getCurrentGameStage().addActor(actor);
+        // Round 129: addStatusMessage() on the stage, not addActor() - the stage tracks these so a
+        // label still mid-animation when the player leaves the map can be dropped instead of
+        // resuming over the next map (see GameStage.clearStatusMessages()).
+        getCurrentGameStage().addStatusMessage(actor);
     }
 
     public void addCard(PaperCard card) {

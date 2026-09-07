@@ -4355,7 +4355,8 @@
             "Undead",
             "Skeleton"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "Bone Golem",
@@ -11797,7 +11798,8 @@
             "Fire",
             "Monster"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Fire Elemental",
@@ -16092,7 +16094,8 @@
         "questTags": [
             "Special Encounter"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "Harpy",
@@ -17036,7 +17039,8 @@
             "Arcane",
             "Magical"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "Holy Paladin",
@@ -23967,7 +23971,8 @@
             "IdentityGreen",
             "IdentitySelesnya"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "flying": true
     },
     {
         "name": "Orthodoxy Duelist",
@@ -31719,7 +31724,8 @@
             "Fire",
             "Monster"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "Volcano Elemental",
@@ -35666,7 +35672,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Valgavoth",
@@ -37428,7 +37435,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Mythic",
-        "difficulty": 3
+        "difficulty": 3,
+        "flying": true
     },
     {
         "name": "The First Sliver",
@@ -37991,7 +37999,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "flying": true
     },
     {
         "name": "Rorix",
@@ -38057,7 +38066,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "flying": true
     },
     {
         "name": "Visara",
@@ -38189,7 +38199,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Silvos",
@@ -38387,7 +38398,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Palladia-Mors",
@@ -38453,7 +38465,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Jareth",
@@ -38585,7 +38598,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "O-Kagachi",
@@ -39399,7 +39413,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Mythic",
-        "difficulty": 3
+        "difficulty": 3,
+        "flying": true
     },
     {
         "name": "Firja",
@@ -39471,7 +39486,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Drakuseth",
@@ -39546,7 +39562,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Mythic",
-        "difficulty": 3
+        "difficulty": 3,
+        "flying": true
     },
     {
         "name": "Vilis",
@@ -39843,7 +39860,8 @@
         "gamesPerMatch": 3,
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "The Scorpion God",
@@ -40203,7 +40221,8 @@
         "colors": "WUG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 3
+        "difficulty": 3,
+        "flying": true
     },
     {
         "name": "Commodore Guff",
@@ -80204,7 +80223,8 @@
         "colors": "WR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Raff",
@@ -88035,7 +88055,8 @@
         "colors": "WUBRG",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Aminatou",
@@ -89424,7 +89445,8 @@
         "colors": "UG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "flying": true
     },
     {
         "name": "Zimone",
@@ -90868,7 +90890,8 @@
         "colors": "UB",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "flying": true
     },
     {
         "name": "Wort",
@@ -96813,7 +96836,8 @@
         "colors": "WB",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Arnyn",
@@ -97216,7 +97240,8 @@
         "colors": "WB",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Sanar",
@@ -111413,7 +111438,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Arch Angel of Shandalar",
@@ -119401,7 +119427,8 @@
             }
         ],
         "colors": "W",
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Recaller of Ancestry",
@@ -119835,7 +119862,8 @@
         "colors": "UB",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "flying": true
     },
     {
         "name": "Time Walker",
@@ -123395,7 +123423,8 @@
         "colors": "UB",
         "spawnRate": 0,
         "difficulty": 3,
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Thomil",
@@ -126658,7 +126687,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "White Dragonkin Renegade",
@@ -126721,7 +126751,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "flying": true
     },
     {
         "name": "Blue Dragonkin Renegade",
@@ -126784,7 +126815,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Green Dragonkin Renegade",
@@ -126847,7 +126879,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Black Dragonkin Renegade",
@@ -126910,7 +126943,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Kor Hookmaster",
@@ -130136,7 +130170,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Elder White Dragon",
@@ -130198,7 +130233,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "Aqua Drake",
@@ -130260,7 +130296,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Baby Brass Dragon",
@@ -130322,7 +130359,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Baby Copper Dragon",
@@ -130384,7 +130422,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Baby Green Dragon",
@@ -130446,7 +130485,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "flying": true
     },
     {
         "name": "Baby White Dragon",
@@ -130508,7 +130548,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "flying": true
     },
     {
         "name": "Juvenile Bronze Dragon",
@@ -130572,7 +130613,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Mature Bronze Dragon",
@@ -130636,7 +130678,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "flying": true
     },
     {
         "name": "Mud Wyvern",
@@ -130698,7 +130741,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "flying": true
     },
     {
         "name": "Poison Drake",
@@ -130762,7 +130806,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Pygmy Wyvern",
@@ -130826,7 +130871,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Viridian Drake",
@@ -130888,7 +130934,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "flying": true
     },
     {
         "name": "Young Brass Dragon",
@@ -130952,7 +130999,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Young Red Dragon",
@@ -131014,7 +131062,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "flying": true
     },
     {
         "name": "Bestial Lizardfolk",
@@ -133846,7 +133895,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Adept Necromancer",
@@ -134284,7 +134334,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "flying": true
     },
     {
         "name": "Glowing Wisp",

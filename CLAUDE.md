@@ -17,11 +17,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 EVENING (round 128, PACKAGED; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 EVENING (round 129; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 128 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-128 are
+- **HEAD = round 129 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-129 are
   post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
   (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
   and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
@@ -130,6 +130,13 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 129 (2026-09-06): floating "+N Shards" pickup labels are tracked on GameStage and dropped on a map swap or
+  load (they were parked on the MapStage singleton mid-animation and resumed over the NEXT map - the user's "+2 Shards
+  when I enter a town", text only); 51 winged enemies gain flying (15 basic/dragon, Vampire Bat, Fluttering Pixie, 5
+  Dragonkin, 29 stranded on atlases whose siblings fly) - NOTE flying is a MOVEMENT flag (ignores terrain, beelines),
+  and it tracks the CARD not the sprite, which is why Santa and a hippo fly; decks v7 (prededit6.bak).
+  **The round-125 v6 decks were never in the save the user plays** - all four slots held the v5-era lists; verify decks
+  against the save, not the changelog.
 - Round 128 (2026-09-06): a rotatable dungeon walked out of with every reward pickup taken but enemies still alive
   halves the days left on its despawn timer (DungeonRotation.onDungeonLooted, [TFR-DungeonLooted]); once per visible
   lifetime via the new persisted World.poiLootedDay; active quest targets exempt; MapStage.clearDungeonIfEmptied ->

@@ -17757,6 +17757,93 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 129: the ghost "+2 Shards" pop-up, 51 winged enemies that could not fly, decks v7 (2026-09-06)
+
+Three user items from the first session on the round-128 package.
+
+### The pickup label that followed you into town
+
+*"I pick up some resources in a dungeon. Then the next time I enter a town, I see the little '+2 Shards' text on
+the screen, as if I just picked up those resources from before in the town. I think it's text only, not actually
+getting double resources."* Right on both counts, and the mechanism is a clean one.
+
+`AdventurePlayer.addStatusMessage()` builds the floating `+2 Shards` label and adds it **straight to the stage** -
+not to `MapStage.actors`, not to `foregroundSprites` - so `loadMap()`'s actor sweep, which clears both of those,
+never touched it. The label removes itself at the end of a 3-second move-and-fade action, and libGDX actions only
+advance while the stage is being **acted**. Walk out of the dungeon inside those three seconds and the label simply
+freezes mid-action on a stage nobody is rendering any more. `MapStage` is a process singleton, so the next map
+loaded into it - the town - starts acting again, the leftover action resumes from where it stopped, and the old
+dungeon's pop-up floats up over the town. The resource itself was granted once, at pickup (`addReward()` runs
+inline, nowhere near the label), which is exactly why it was text only.
+
+Fix: `GameStage` now tracks the labels it was handed (`addStatusMessage(Actor)`, pruning ones that already finished)
+and `clearStatusMessages()` drops any that are still live. Called from `MapStage.loadMap()` beside the actor sweep,
+and from `WorldStage.clearCache()` for both stages, next to round 126's `cancelPendingActions()` - so a save load
+cannot carry one across either. `[TFR-StatusMessage]` prints when a leftover is actually discarded. Same class of
+bug as the shop-registry corpses `loadMap()` already had to clear: state parked on a singleton by one map and
+inherited by the next.
+
+### 51 winged enemies that could not fly
+
+*"Did you give any of those flight? I saw a few that looked like little dragons, but they could not fly."* No - and
+the answer is worse than that. The three packs added in rounds 107/108/115/117 contain **zero** flying enemies
+between them: `sprites/enemy/basic` (198), `sprites/enemy/heroes` (47) and `sprites/enemy/mythic` (22).
+
+**What `flying` actually does** (worth writing down, because it is not the MTG keyword): it is a movement flag only.
+`WorldStage` and `MapStage` skip the collision test and the navigation mesh for a flying enemy - it ignores terrain
+and beelines at the player. It has no effect inside a duel.
+
+**The flag tracks the CARD, not the sprite.** That is why Santa flies, Rudolph flies, Phelddagrif (the flying hippo)
+flies, Harbin (an Aviator) flies and Jugan (a dragon spirit) flies, while a plain `Fire Dragon` on the very atlas
+eight flying legends share does not. 86 atlases are used by both flying and non-flying enemies.
+
+This round takes the unambiguous half: **51 enemies on sprites that visibly have wings** now have `flying: true`,
+chosen by a whitelist of sprite PATHS (never enemy names, so a legend on a wingless sprite can never be swept in):
+- **17 from the new packs** - the 15 `basic/dragon/*` (Baby Brass/Copper/Green/White Dragon, Elder Green/White,
+  Juvenile and Mature Bronze, Young Brass, Young Red, Aqua/Poison/Viridian Drake, Mud and Pygmy Wyvern), plus
+  Vampire Bat and Fluttering Pixie. These are the user's "little dragons"; the sprites were checked by eye, not by
+  filename.
+- **5 Dragonkin Renegades** (`heroes/dragonkin_*`) - winged quadrupeds, one per colour.
+- **29 legends and generics stranded on atlases whose siblings already fly** - plainly data slips: Bone Dragon,
+  Fire Dragon, Nicol Bolas, Volcano Dragon, Drakuseth, Chromium, Sivitri, Amareth, Arcades, Palladia-Mors, Rorix,
+  Vaevictis, Avacyn, Serra the Benevolent, Guardian Angel, Tiana, Kaalia, Child of Alara, Karona, Firja, Oona,
+  Orthodoxy Angel, The Locust God, Kianne, Abigale, Scriv and the rest.
+
+**Deliberately NOT touched, pending the user's call:** the reverse direction. Six enemies fly on sprites with no
+wings at all (Albiorix on a chicken, Charix on a crab, Arixmethes on a turtle, Plagon on an octopus, the two
+Scarecrows, Loam Dryad). Several look intentional - Santa and Rudolph are jokes, Phelddagrif and Harbin are the
+card - so stripping them is a design decision, not a data fix. `enemies.json` re-serialised through
+`json.dumps(indent=4, ensure_ascii=False)`, so the diff is 51 added `"flying": true` lines and nothing else.
+
+### Decks v7 - and the v6 write that never reached the game
+
+Inspecting the live save first turned up something worth recording: **none of the four save slots, nor any backup,
+carries the round-125 v6 decklists.** All four still hold the v5-era lists - Dawn Bulwark still had Adarkar
+Valkyrie, Novice Knight, Immolating Glare and Sonar Strike, the four cards v6 cut, and none of Elesh Norn, Angel of
+Sanctions, the Skyhunter Skirmishers or Hidden Dragonslayer that it added. The v6 write itself succeeded (round 125
+verified it); the run the user is now playing simply descends from `4_save_slot.sav` at 08:46, which predates the
+09:47 write. Lesson for the next deck update: **verify against the save, not against the changelog** - the list
+files in `dev-tools/save-editing/` describe what was intended, not necessarily what is in the game.
+
+So v7 is built from the LIVE slot-1 deck, not from the v6 files. The collection had grown from 834 distinct names /
+1,049 cards to **994 / 1,224** (+160 names, +175 cards, nothing lost to ante). One high-value change each, and both
+40-card decks were sitting at 39:
+- **Ichor Crown** (slot 1, W/B toxic, 39 -> 40): **+1 Festering Mummy** - a one-mana 1/1 whose death puts a -1/-1
+  counter on a creature: removal they cannot answer, and another counter for the two Drown in Ichor to proliferate.
+  Ignores Insane's inflated enemy life the same way the toxic plan does.
+- **Gravetithe** (slot 2, mono-B, 39 -> 40): **+1 Sidisi, Undead Vizier** - a 4/6 deathtouch blocker whose Exploit
+  sacrifices a spare 1/1 to tutor any card. The strongest black card in the 159 newly acquired.
+- **Dawn Bulwark** (slot 3, mono-W, 44, SELECTED and user-tuned): a single swap, **-1 Myth Realized +1 Crusade**.
+  Myth Realized only grows on noncreature spells and the deck runs about six; Crusade gives +1/+1 to all 16 white
+  creatures for the same two mana. Every in-game addition kept (Always Watching, the second Mirror Entity, Voice of
+  the Blessed, Wedding Announcement, Twinmaw Stormbrood). Crusade is symmetric - it pumps a white opponent too.
+
+Written with `WriteDecks --write` (game closed), backup `1_save_slot.sav.prededit6.bak`, verified after the write:
+40/40/44, Dawn Bulwark still selected, collection unchanged at 994/1,224.
+
+**Files touched**: `stage/GameStage.java`, `stage/MapStage.java`, `stage/WorldStage.java`,
+`player/AdventurePlayer.java`; plane `world/enemies.json`; `dev-tools/save-editing/{ichor_crown,gravetithe,dawn_bulwark}.txt`.
+
 ## Round 128: a looted-but-still-guarded dungeon cycles out twice as fast (2026-09-06)
 
 User spec: *"If a player visits a dungeon and takes all resources out of the dungeon, so only enemies are left, the

@@ -663,6 +663,10 @@ public class MapStage extends GameStage {
         }
         positions.clear();
         actors.clear();
+        // Round 129: floating "+N Shards" pickup labels live on the STAGE, not in `actors`, so the
+        // loop above never removed them - a label left mid-animation by a player who walked out
+        // within its 3-second lifetime resumed over the next map loaded into this singleton.
+        clearStatusMessages();
         collisionRect.clear();
         waypoints.clear();
         shopOverheadTiles.clear();
