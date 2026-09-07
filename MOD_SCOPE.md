@@ -4778,3 +4778,27 @@ capitals by POI id, the player's arena split by mode into :L1 and :L2). New pers
 by the allowance, so entering, fighting and partial runs are never blocked. `[TFR-ArenaWeekly]`. The Chest's Illegal
 Arena and the Deck Tester are ungated (no POI behind them). Open: partial runs remain repeatable within a week - the
 spec gated wins, so that is what this gates.
+
+### 113. Arena-exclusive enemies reach the world — `Done (built 2026-09-07, round 139), not yet playtest-confirmed`
+User ask 2026-09-07, after being told why 92 enemies were arena-only: "let's go and add all these spawnRate <= 0 to
+those [caves]... let's say 25% for one of them to appear. This way they will exist out there at some point and they are
+not wasted. This also gives caves a more dangerous proposition." Plus "make some let's say 20% rare overworld spawns...
+Maybe have them only spawn when you are at War with the AI. So get 5 or so of each color."
+
+Two routes, neither touching `enemies.json` — `spawnRate <= 0` is simultaneously the roaming-pool exclusion AND the
+arena champion-bounty flag, so editing it would have cancelled the bounty and released them at full uniform weight.
+
+- **Cave champions** (`CaveChampions.java`, `ConfigData.caveChampionChance` = 0.25): every `type: "cave"` POI rolls
+  once, on first entry, for one arena-exclusive enemy to take over one ordinary roamer. Pool = `spawnRate <= 0` +
+  carries rewards, minus bosses, minus scale > 1.5, minus above the player's rank, biome colour preferred — 679
+  enemies. The roll is persisted per POI in `World.caveChampion` **including the misses**, so re-entry can neither
+  re-roll nor farm; which placement is taken is derived from the POI id so the champion does not move between visits.
+  `[TFR-CaveChampion]`.
+- **War champions** (`WarChampions.java`, `config tables/war_champions.json`): five mono-coloured Archmage champions
+  per colour become roaming encounters in that colour's biome while the player is at WAR with it, taking 20% of that
+  biome's spawn rolls between them. The share is solved against the rest of the distribution each roll rather than
+  set as a flat weight, so it stays 20% as the week bracket and the WAR territory delta move the ordinary mix.
+  Appended after `getEnemy()`'s rank filter, because every arena champion is difficulty 3 and `rank()` does not
+  reach that until 150 wins — the war is the gate.
+
+Both opt-in; a stock plane has `caveChampionChance` 0 and no war_champions.json, so neither exists there.

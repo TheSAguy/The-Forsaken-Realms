@@ -1459,6 +1459,28 @@ from the plane's `config tables/settings.json`).
   Insane's x1.5 cannot land on 10 from any integer. `buildOption()` resolves the label, the
   affordability check and the deduction from one flag so they still cannot disagree.
 
+### 2026-09-07 Cave champions + war champions (round 139)
+
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - new `caveChampionChance`
+  (float, 0 = off), the per-cave chance of hosting one arena-exclusive champion.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - loads
+  `config tables/war_champions.json` into a new `WarChampionData`, same plane-local /
+  fallback-to-common pattern as spawn_tier_weighting.json; absent leaves it null (feature off).
+- **`forge-gui-mobile/src/forge/adventure/data/BiomeData.java`** - `getEnemy()` appends the
+  biome colour's war champions AFTER its difficulty filter (every arena champion is difficulty 3,
+  which rank() only reaches at 150 wins) and, after the weighting branches, grants them a
+  combined weight computed from the rest of the distribution so their share stays at the
+  configured percentage as the tier targets move.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - new persisted
+  `Map<String,String> caveChampion` + `getCaveChampion()`, following the poi* maps'
+  store/read/containsKey/clear pattern. Records BOTH outcomes of a cave's roll so re-entry can
+  neither re-roll nor farm. `World` is `SaveFileContent`, not `java.io.Serializable`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - `prepareCaveChampion()` runs
+  before the layer loop and picks one enemy placement for promotion; the `case "enemy"` branch
+  swaps that placement's EnemyData after the territory re-theme. Bosses and quest-tagged enemies
+  are never displaced. `[TFR-CaveChampion]`.
+- New mod files: `data/WarChampionData.java`, `util/WarChampions.java`, `util/CaveChampions.java`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

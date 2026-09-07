@@ -335,6 +335,14 @@ public class World implements Disposable, SaveFileContent {
     // was paid. Persisted like the poi* maps above; absent on older saves, which reads as
     // "never won here".
     private final java.util.Map<String, Integer> arenaWinWeek = new java.util.HashMap<>();
+    // Round 139 (user spec 2026-09-07: caves host one arena-exclusive champion "maybe not 100%
+    // spawn chance, but let's say 25%"). Key = cave POI id, value = the champion's enemy name, or
+    // "" for a cave that rolled and came up empty. BOTH outcomes are recorded, which is the whole
+    // point of persisting it: without the empty entries a player could walk out and back in until
+    // a cave produced a champion, and champions carry their own rewards. Absent on older saves,
+    // which simply reads as "this cave has not been rolled yet". A cave that despawns and is
+    // replaced returns under a new POI id and rolls again. See CaveChampions.java.
+    private final java.util.Map<String, String> caveChampion = new java.util.HashMap<>();
     // Weighted spawn tier system, Layer 3 (2026-08-25 redesign, replacing the original
     // time-decaying suppression-stack system): how many times this exact enemy name has been
     // confirmed-defeated in roaming combat, permanently - never decays over time. Same shape as
@@ -363,6 +371,11 @@ public class World implements Disposable, SaveFileContent {
 
     public java.util.Map<String, Integer> getArenaWinWeek() {
         return arenaWinWeek;
+    }
+
+    /** Round 139: cave POI id -> its rolled champion's name, or "" for "rolled, none". */
+    public java.util.Map<String, String> getCaveChampion() {
+        return caveChampion;
     }
 
     /** Round 135: weeks are day/7, so the lock lifts the moment the week number ticks over. */
@@ -741,6 +754,11 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             arenaWinWeek.putAll((java.util.Map<String, Integer>) saveFileData.readObject("arenaWinWeek"));
         }
+        caveChampion.clear();
+        if (saveFileData.containsKey("caveChampion")) {
+            //noinspection unchecked
+            caveChampion.putAll((java.util.Map<String, String>) saveFileData.readObject("caveChampion"));
+        }
         enemyPermanentKillCount.clear();
         if (saveFileData.containsKey("enemyPermanentKillCount")) {
             //noinspection unchecked
@@ -829,6 +847,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
         data.storeObject("poiLootedDay", poiLootedDay);
         data.storeObject("arenaWinWeek", arenaWinWeek);
+        data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.store("poiActiveTarget", poiActiveTarget);
         StringBuilder star = new StringBuilder();
@@ -1129,6 +1148,7 @@ public class World implements Disposable, SaveFileContent {
             poiFailedAttempts.clear();
             poiLootedDay.clear();
             arenaWinWeek.clear(); // round 135
+            caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
             // cleared here same as the poi* maps above: New Game+ reuses this exact World instance
             // and calls generateNew() in place rather than constructing a fresh one, so without

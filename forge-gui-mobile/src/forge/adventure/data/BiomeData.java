@@ -150,6 +150,15 @@ public class BiomeData implements Serializable {
         // separate rolls had been made. See SpawnTierWeighting.java for the full mechanism (week
         // progression, territory/reputation modifier, and rawSpawnWeight()'s uniform-baseline-
         // permanently-halved-per-kill within-tier share).
+        // War champions (round 139, user spec 2026-09-07: "make some... 20% rare overworld
+        // spawns... Maybe have them only spawn when you are at War with the AI. So get 5 or so of
+        // each colour"). APPENDED here, after the difficulty filter above, deliberately: every
+        // arena champion is difficulty 3, which PlayerStatistic.rank() does not reach until 150
+        // wins, so filtering them in as well as requiring a war would have meant almost never. The
+        // war is the gate. They arrive carrying spawnRate 0, so both weighting branches below give
+        // them a weight of exactly zero, and the pass after them grants the configured share.
+        List<EnemyData> warChampions = forge.adventure.util.WarChampions.injectFor(name, filteredEnemies);
+
         float[] effectiveWeights = new float[filteredEnemies.size()];
         float totalDistribution = 0.0f;
         if (SpawnTierWeighting.isEnabled()) {
@@ -196,6 +205,22 @@ public class BiomeData implements Serializable {
             for (int i = 0; i < filteredEnemies.size(); i++) {
                 effectiveWeights[i] = filteredEnemies.get(i).spawnRate;
                 totalDistribution += effectiveWeights[i];
+            }
+        }
+
+        // Grant the war champions their share of THIS roll. Measured against what the rest of the
+        // biome actually came to, not as a flat weight: the tier targets it competes against move
+        // with the week bracket and the territory status (WAR alone shifts Mythic by +16), so a
+        // fixed number would drift away from the configured percentage as they did. The injected
+        // champions are the last entries in the list, which is what makes the index range below
+        // safe to state so bluntly.
+        if (!warChampions.isEmpty()) {
+            float championTotal = forge.adventure.util.WarChampions.shareWeight(totalDistribution);
+            if (championTotal > 0f) {
+                float each = championTotal / warChampions.size();
+                for (int i = filteredEnemies.size() - warChampions.size(); i < filteredEnemies.size(); i++)
+                    effectiveWeights[i] = each;
+                totalDistribution += championTotal;
             }
         }
 

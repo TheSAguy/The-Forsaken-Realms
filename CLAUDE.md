@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 138; v1.08 RELEASED, rounds 137-138 are post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 139; v1.08 RELEASED, rounds 137-139 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 139 (2026-09-07): **the arena-exclusive roster reaches the world**, two ways, WITHOUT touching enemies.json -
+  `spawnRate <= 0` is both the roaming exclusion AND ArenaScene's champion-bounty flag, so editing it would cancel the
+  bounty and release them at full uniform weight. (1) **Cave champions**: every `type: "cave"` POI (all 209) rolls once
+  on first entry, `caveChampionChance` 0.25, for one of **679** eligible arena-exclusive enemies to take over one
+  ordinary roamer - `CaveChampions.java`, persisted in `World.caveChampion` **including the misses** so re-entry cannot
+  re-roll or farm, picked in `MapStage.prepareCaveChampion()` before the layer loop, never displacing a boss or quest
+  target. `[TFR-CaveChampion]`. (2) **War champions**: `config tables/war_champions.json` casts 5 mono-coloured
+  Archmage champions per colour who roam that colour's biome at 20% of its rolls **only while at WAR** -
+  `WarChampions.java`, appended in `BiomeData.getEnemy()` AFTER the rank filter (every arena champion is difficulty 3;
+  `rank()` needs 150 wins) with the share solved against the rest of the distribution, not set as a flat weight.
+  NOTE why not just give them a small spawnRate: `SpawnTierWeighting.rawSpawnWeight()` IGNORES spawnRate for
+  non-exempt candidates, so 0.01 would make one exactly as likely as any other Mythic in the biome.
 - Round 138 (2026-09-07, REPO ONLY - not packaged): **Teleporter repriced by LOCATION and the network widened to
   six**. Capitol base 200 -> 100 shards (75/100/125/150 across Easy..Insane); towns an exact 10 shards at every
   difficulty; `MAX_TOWN_TELEPORTERS` 4 -> 5. `buildCostFor()` now has one location-dependent entry

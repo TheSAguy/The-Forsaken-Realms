@@ -142,6 +142,12 @@ public class ConfigData {
     // SpawnTierWeighting.java. Same opt-in rule as every flag above: false here, true only in
     // "The Forsaken Realms"/config.json.
     public boolean weightedSpawnTiersEnabled = false;
+    /** Chance that a cave hosts one arena-exclusive champion in place of an ordinary roamer, rolled
+     *  once per cave on first entry and remembered (user spec 2026-09-07: "let's say 25% for one of
+     *  them to appear... This also gives caves a more dangerous proposition"). See
+     *  CaveChampions.java. Same opt-in rule as every flag above - 0 here (feature off), 0.25 only
+     *  in "The Forsaken Realms"/config.json. */
+    public float caveChampionChance = 0f;
     // Functioning Neutral Towns (user spec 2026-08-24): at world-gen, a handful of the neutral
     // ("Waste Town") POIs are seeded as already-functioning instead of ruined - real shops, no
     // rubble, gated to EditionProgression's existing NEUTRAL shard (not the player's unlocked

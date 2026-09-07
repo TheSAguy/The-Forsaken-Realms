@@ -59,6 +59,12 @@ public class MapStage extends GameStage {
     MapLayer spriteLayer;
     private PointOfInterestChanges changes;
     private EnemySprite currentMob;
+    // Round 139: which enemy placement in THIS map (if any) an arena-exclusive champion has taken
+    // over, decided once in prepareCaveChampion() before the layer loop so exactly one of the
+    // cave's roamers can be promoted. Reset on every load - a stale id would promote an unrelated
+    // object in the next map, MapStage being a process singleton.
+    private int caveChampionObjectId = -1;
+    private EnemyData caveChampionData = null;
     Queue<Vector2> positions = new LinkedList<>();
     private boolean isLoadingMatch = false;
     private boolean isPlayerLeavingDungeon = false;
@@ -739,6 +745,7 @@ public class MapStage extends GameStage {
         sourceMapMatch.clear();
         enemies.clear();
         localInnID = -1;
+        prepareCaveChampion(map);
         for (MapLayer layer : map.getLayers()) {
             if (layer.getProperties().containsKey("spriteLayer") && layer.getProperties().get("spriteLayer", boolean.class)) {
                 spriteLayer = layer;
@@ -857,6 +864,64 @@ public class MapStage extends GameStage {
         }
 
         return true;
+    }
+
+    /**
+     * Round 139 (user spec 2026-09-07): a cave has a configured chance to host one arena-exclusive
+     * champion in place of one of its ordinary roamers - "this way they will exist out there at
+     * some point and they are not wasted. This also gives caves a more dangerous proposition."
+     * <p>
+     * Runs before the layer loop so the pick can be made across the WHOLE map: which of the cave's
+     * placements gets promoted cannot be decided while walking them one at a time without either
+     * promoting several or biasing the choice to whichever the file happens to list first. The
+     * candidate scan repeats loadObjects()'s own three admission tests (deleted, canSpawn,
+     * resolvable name) so a promotion can never land on an object that then fails to be built.
+     * <p>
+     * Which placement is chosen is derived from the POI id rather than rolled, so the champion
+     * does not wander to a different corner of the same cave on a re-entry; WHETHER there is one
+     * at all is the persisted roll, held in World.caveChampion.
+     */
+    private void prepareCaveChampion(TiledMap map) {
+        caveChampionObjectId = -1;
+        caveChampionData = null;
+        if (!CaveChampions.isEnabled())
+            return;
+        PointOfInterest poi = AdventureQuestController.instance().mostRecentPOI;
+        if (!CaveChampions.isCave(poi))
+            return;
+        Array<Integer> candidates = new Array<>();
+        for (MapLayer layer : map.getLayers()) {
+            if (layer instanceof TiledMapTileLayer)
+                continue;
+            for (MapObject obj : layer.getObjects()) {
+                MapProperties prop = obj.getProperties();
+                if (!"enemy".equals(prop.get("type", String.class)))
+                    continue;
+                int objectId = prop.get("id", int.class);
+                if (changes != null && changes.isObjectDeleted(objectId))
+                    continue;
+                if (!canSpawn(prop))
+                    continue;
+                Object enemy = prop.get("enemy");
+                if (enemy == null || enemy.toString().isEmpty())
+                    continue;
+                EnemyData existing = WorldData.getEnemy(enemy.toString());
+                // Never displace a boss or a quest target - the same "ordinary encounter" test the
+                // territory re-theme in loadObjects() applies before swapping an enemy out.
+                if (existing == null || existing.boss || existing.questTags.length > 0)
+                    continue;
+                candidates.add(objectId);
+            }
+        }
+        if (candidates.isEmpty())
+            return;
+        EnemyData champion = CaveChampions.championFor(poi, Current.player().getStatistic().rank());
+        if (champion == null)
+            return;
+        caveChampionObjectId = candidates.get(Math.abs(poi.getID().hashCode()) % candidates.size);
+        caveChampionData = champion;
+        System.out.println("[TFR-CaveChampion] " + poi.getData().name + ": " + champion.getName()
+                + " takes placement " + caveChampionObjectId + " of " + candidates.size + " candidate(s)");
     }
 
     private void loadObjects(MapLayer layer, String sourceMap, String currentMap) {
@@ -996,6 +1061,14 @@ public class MapStage extends GameStage {
                                     if (reThemed != null)
                                         EN = reThemed;
                                 }
+                            }
+                            // Round 139: this cave's champion takes over the placement chosen in
+                            // prepareCaveChampion(). After the re-theme above, so a promotion is
+                            // never itself re-themed back into an ordinary local encounter.
+                            if (id == caveChampionObjectId && caveChampionData != null) {
+                                System.out.println("[TFR-CaveChampion] promoting placement " + id + " from "
+                                        + EN.getName() + " to " + caveChampionData.getName());
+                                EN = caveChampionData;
                             }
                             EnemySprite mob = new EnemySprite(id, EN);
                             Object dialogObject = prop.get("dialog"); //Check if the enemy has a dialogue attached to it.

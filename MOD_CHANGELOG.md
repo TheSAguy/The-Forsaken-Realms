@@ -17757,6 +17757,83 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 139: the arena-exclusive roster gets out of the arena (2026-09-07, repo only)
+
+Answering the user's own challenge from round 138 - *"Give me a good reason why we should have 92 enemies Arena
+exclusive and not add them as low probability overworld spawns. Seems like a waste to me."* The reason was real but
+narrow: `spawnRate` stopped being a probability when the round-116/118 tier system landed, because
+`SpawnTierWeighting.rawSpawnWeight()` gives every non-exempt candidate in a tier the same uniform baseline and
+deliberately ignores its own `spawnRate`. Authoring one of these at 0.01 would not have made it rare; it would have
+made it exactly as likely as any other Mythic in the biome, and 56 of the 92 are Mythic against a roaming Mythic pool
+of 61. That is a design constraint on the delivery mechanism, not a reason to leave the content unreachable - so this
+round gives them two ways out that do not touch the data at all.
+
+**Nothing in `enemies.json` changed.** `spawnRate <= 0` is doing two jobs at once: `SpawnTierWeighting.isExempt()`
+reads it as "never rolls on its own", and `ArenaScene`'s champion-bounty test is the same comparison. Editing it would
+have silently cancelled the bounty AND released them everywhere at full uniform weight. Both features below grant
+weight from the outside, so exclusivity, bounty and appearance stay three separate decisions.
+
+### Cave champions - 25% per cave
+
+User spec: *"let's go and add all these spawnRate <= 0 to those [caves]. Maybe not 100% spawn chance, but let's say 25%
+for one of them to appear. This way they will exist out there at some point and they are not wasted. This also gives
+caves a more dangerous proposition."*
+
+Every `type: "cave"` POI - all 209, not only round 125's 78 generated ones - rolls once on first entry for a single
+arena-exclusive enemy to take over one of its ordinary roamers. The eligible pool is the same test the bounty uses
+(`spawnRate <= 0`, carries `rewards`) minus bosses, minus sprites over 1.5x (the catalog runs to 4x and a cave neck is
+two tiles wide), minus anything above the player's rank, and preferring the biome's own colour before falling back to
+the whole catalog. **679 enemies** qualify, against the 92 that were previously reachable through arenas.
+
+Three details carry the feature:
+
+- **The roll is persisted, both ways.** `World.caveChampion` maps cave POI id -> the champion's name, or `""` for a
+  cave that came up empty. Recording the empty ones is the point: without them a player could walk out and back in
+  until a cave produced a champion, and champions carry their own rewards. A cave that despawns and is replaced
+  returns under a new POI id and rolls again. `World` is `SaveFileContent`, not `java.io.Serializable`, so the new
+  field cannot move any save format.
+- **The pick happens before the layer loop.** `MapStage.prepareCaveChampion()` scans the whole map first, because
+  choosing which placement gets promoted while walking them one at a time would either promote several or always
+  pick whichever the file lists first. The scan repeats `loadObjects()`'s own three admission tests so a promotion
+  can never land on an object that then fails to be built, and skips bosses and quest-tagged enemies - the same
+  "ordinary encounter" rule the territory re-theme already applies before swapping an enemy out.
+- **Which placement is derived, not rolled** (`poi.getID().hashCode()`), so the champion does not wander to a
+  different corner of the same cave between visits. Whether there is one at all is the persisted roll.
+
+### War champions - 5 per colour, 20% while at war
+
+User spec: *"I still feel like you could make some let's say 20% rare overworld spawns. You choose who. Maybe have
+them only spawn when you are at War with the AI. So get 5 or so of each colour for this purpose."*
+
+New `config tables/war_champions.json` casts five mono-coloured Archmage-tier champions per colour, none of them
+placed anywhere else in the plane. While the player is at **WAR** with a colour (`ColorReputation`), that colour's
+five become roaming encounters in that colour's biome and take 20% of its spawn rolls between them - 4% each. The war
+ending removes them the same roll.
+
+- White: Avacyn, Akroma and Keleth, Giada, Mondrak, Sephara
+- Blue: Meloku, Urza, The Mindskinner, Padeem, Atemsis
+- Black: Sengir, Valgavoth, Vilis, Ayara, Razaketh
+- Red: Drakuseth, Etali, Toralf, Neheb, Ryusei
+- Green: Freyalise, Kolvori, Gargos, Zopandrel, Ojer Kaslem
+
+**The share is a share, not a weight.** `WarChampions.shareWeight()` solves `w / (w + rest) = share` against whatever
+the rest of the biome actually weighs on that roll, because the tier targets it competes against move with the week
+bracket and the territory status - WAR alone shifts Mythic by +16 percentage points - and a fixed number would have
+drifted away from the configured 20% as they did.
+
+**They are appended after the rank filter, deliberately.** `BiomeData.getEnemy()` only considers candidates whose
+`difficulty` is at or below the player's rank, and every arena champion is difficulty 3, which
+`PlayerStatistic.rank()` does not reach until 150 wins. Requiring that on top of a declared war would have meant
+almost never. The war is the gate.
+
+Both features are opt-in and absent for stock planes: `ConfigData.caveChampionChance` defaults to 0, and a missing
+`war_champions.json` leaves `WarChampions` with no cast.
+
+**Files touched**: `data/ConfigData.java`, `data/BiomeData.java`, `data/WarChampionData.java` (new),
+`util/Config.java`, `util/WarChampions.java` (new), `util/CaveChampions.java` (new), `world/World.java`,
+`stage/MapStage.java`; plane `config.json`, `config tables/war_champions.json` (new);
+`dev-tools/validate_plane_data.py`.
+
 ## Round 138: the Teleporter network, repriced and widened (2026-09-07, repo only)
 
 User spec: *"Cut it in half for the capitol. So 150 Shards on Insane. Then, make it 10 shards for the towns. (On

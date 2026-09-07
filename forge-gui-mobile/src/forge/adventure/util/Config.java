@@ -44,6 +44,7 @@ public class Config {
     private TuningData tuningData;
     private SpawnTierWeightData spawnTierWeightData;
     private forge.adventure.data.ArmoryRarityData armoryRarityData;
+    private forge.adventure.data.WarChampionData warChampionData;
     private final String[] adventures;
     private SettingData settingsData;
     private String Lang = "en-us";
@@ -228,6 +229,21 @@ public class Config {
                 armoryRarityData = null;
             }
         }
+
+        // War champions (round 139, user spec 2026-09-07) - same plane-local / fallback-to-common
+        // pattern. Absent or unparseable leaves warChampionData null, which WarChampions reads as
+        // "no cast, feature off": no plane without this file changes behaviour in any way.
+        FileHandle warChampionFile = new FileHandle(prefix + "config tables/war_champions.json");
+        if (!warChampionFile.exists())
+            warChampionFile = new FileHandle(commonPrefix + "config tables/war_champions.json");
+        if (warChampionFile.exists()) {
+            try {
+                warChampionData = new Json().fromJson(forge.adventure.data.WarChampionData.class, warChampionFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-WarChampions] war_champions.json failed to load, feature will no-op: " + e);
+                warChampionData = null;
+            }
+        }
     }
 
     private String resPath() {
@@ -261,6 +277,10 @@ public class Config {
 
     public SpawnTierWeightData getSpawnTierWeightData() {
         return spawnTierWeightData;
+    }
+
+    public forge.adventure.data.WarChampionData getWarChampionData() {
+        return warChampionData;
     }
 
     // Push the plane's allowed/restricted editions and restricted token pairs into TokenDb.

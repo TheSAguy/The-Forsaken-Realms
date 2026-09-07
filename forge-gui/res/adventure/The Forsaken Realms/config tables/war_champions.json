@@ -1,0 +1,24 @@
+{
+  // War champions (user spec 2026-09-07) - hand-editable, no code change needed to re-cast.
+  // See WarChampions.java for how this is consumed and BiomeData.getEnemy() for where.
+  //
+  // These are arena-exclusive enemies: enemies.json authors them with spawnRate 0, which is both
+  // the flag that keeps them out of the roaming pool AND the flag ArenaScene reads to pay their
+  // champion bounty. They are NOT edited there. Instead, while the player is at WAR with a colour
+  // (ColorReputation), that colour's five champions become roaming encounters in that colour's
+  // biome, and are removed again the moment the war ends.
+  //
+  // share: the fraction of a war-torn biome's spawn rolls the five take between them. 0.2 = one
+  // encounter in five is a champion, measured against whatever the rest of the biome weighs on
+  // that particular roll - so it stays 20% as the week bracket and the WAR territory delta move
+  // the ordinary mix around underneath it. 0 (or a missing file) switches the feature off.
+  "share": 0.2,
+
+  // Five per colour, all mono-coloured Archmage-tier, none of them placed anywhere else in the
+  // plane - so every name here is content that could previously only be met inside an arena.
+  "white": ["Avacyn", "Akroma and Keleth", "Giada", "Mondrak", "Sephara"],
+  "blue":  ["Meloku", "Urza", "The Mindskinner", "Padeem", "Atemsis"],
+  "black": ["Sengir", "Valgavoth", "Vilis", "Ayara", "Razaketh"],
+  "red":   ["Drakuseth", "Etali", "Toralf", "Neheb", "Ryusei"],
+  "green": ["Freyalise", "Kolvori", "Gargos", "Zopandrel", "Ojer Kaslem"]
+}

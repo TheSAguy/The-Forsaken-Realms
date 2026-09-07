@@ -111,7 +111,7 @@ F["ConfigData"] = set("""screenWidth screenHeight skin font fontColor minDeckSiz
  armoryRarityGatingEnabled spawnDuplicateLimitEnabled editionProgressionEnabled armoryGuardsEnabled shopTypeRerollEnabled arenaUpgradesEnabled
  contentFilterTablesEnabled showEnemyTierInName raceEditions shopBlueprintsEnabled raceShops startingColorShopSuffixes blueprintShardCostCommon
  blueprintShardCostUncommon blueprintShardCostRare modVersion welcomePopupText welcomePopupLink engineBuildVersion modVersionDate
- weightedSpawnTiersEnabled functioningNeutralTownsEnabled disableGeneticDeckOverrides""".split())
+ weightedSpawnTiersEnabled functioningNeutralTownsEnabled disableGeneticDeckOverrides caveChampionChance""".split())
 F["TuningData"] = set("""dayLengthSeconds capitolExpansionTilesPerDay townExpansionDaysPerTile aiCastleExpansionTilesPerDay maxTerritoryRadius
  townMaxTerritoryRadius townProtectedRadiusCap speedUpMultiplier playerTerritorySpeedBonus aiTerritoryHappySpeedBonus aiTerritoryPartnerSpeedBonus
  aiTerritoryUnhappySpeedPenalty aiTerritoryWarSpeedPenalty mineWeeklyGoldPayout mineWeeklyWoodPayout mineWeeklyStonePayout mineWeeklyShardPayout
@@ -123,6 +123,7 @@ F["TuningData"] = set("""dayLengthSeconds capitolExpansionTilesPerDay townExpans
  ringTownTargetCooldownDays ringTownTargetWeightBonus aiTownGuardDefenseEnabled aiGuardTwoLandPowerFactor innTournamentRerollShardCost
  capitolTargetCooldownDays functioningNeutralTownCount maxSameEnemyNearby sameEnemyNearbyRadius sameEnemySpawnRerolls
  torchPulseMultiplier torchPulseSeconds torchPulseMaxRadiusTiles dungeonLootedDespawnFactor""".split())
+F["WarChampionData"] = set("share white blue black red green".split())
 F["PointOfInterestData"] = set("name type count spriteAtlas sprite map radiusFactor offsetX offsetY active questTags questFlagsToActivate displayName".split())
 F["EnemyData"] = set("""name nameOverride sprite deck copyPlayerDeck ai boss flying randomizeDeck spawnRate difficulty tier speed scale life rewards
  equipment colors nextEnemy teamNumber questTags lifetime gamesPerMatch bossInsult bossIntro noAnte""".split())
@@ -559,6 +560,27 @@ if stw:
         check_keys(br, "WeekBracket", "spawn_tier_weighting.json.weekBrackets[%d]" % j)
     for terr, td in (stw.get("territoryDeltas") or {}).items():
         check_keys(td, "TierDelta", "spawn_tier_weighting.json.territoryDeltas[%s]" % terr)
+wc, _ = load_json(os.path.join(PLANE, "config tables", "war_champions.json"))
+if wc:
+    check_keys(wc, "WarChampionData", "war_champions.json")
+    # Every name must resolve, must still be authored as non-roaming (spawnRate 0 is what keeps the
+    # arena bounty alive - see WarChampions.java), and must actually be that colour's own.
+    _WC_BY_NAME = {e.get("name"): e for e in (enemies or [])}
+    _WC_LETTER = {"white": "W", "blue": "U", "black": "B", "red": "R", "green": "G"}
+    for _color, _letter in _WC_LETTER.items():
+        for _n in (wc.get(_color) or []):
+            _e = _WC_BY_NAME.get(_n)
+            if _e is None:
+                issue("missing-ref", "war_champions.json.%s: no enemy named '%s'" % (_color, _n))
+                continue
+            if _e.get("spawnRate"):
+                issue("bad-value", "war_champions.json.%s: '%s' has spawnRate %s - a war champion "
+                      "must stay non-roaming or it loses its arena bounty" % (_color, _n, _e["spawnRate"]))
+            if _letter not in (_e.get("colors") or ""):
+                issue("bad-value", "war_champions.json.%s: '%s' is colors=%r, not %s"
+                      % (_color, _n, _e.get("colors"), _letter))
+    if not (0 < (wc.get("share") or 0) < 1):
+        issue("bad-value", "war_champions.json: share must be between 0 and 1, got %r" % wc.get("share"))
 rc, _ = load_json(os.path.join(PLANE, "config tables", "restricted_cards.json"))
 if rc:
     for k in rc.keys():
