@@ -1448,6 +1448,17 @@ from the plane's `config tables/settings.json`).
 - **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - a `*2` paperdoll slot is
   hidden unless something currently grants it.
 
+### 2026-09-07 Teleporter reprice + exact (un-scaled) costs (round 138)
+
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** (mod file) - `buildCostFor()`
+  gained its first location-dependent entry: `teleporterCost()` returns 100 shards (a scaled base,
+  75/100/125/150 across Easy..Insane) at the Capitol and an exact 10 shards in a town.
+  `MAX_TOWN_TELEPORTERS` 4 -> 5, so the network is six sites. New `exactCostLabel()`,
+  `canAffordExactCost()` and `spendExactCostAction()` sit beside the 2026-08-12 multi-resource cost
+  core as its un-scaled siblings, for prices pinned to a literal figure rather than to a base -
+  Insane's x1.5 cannot land on 10 from any integer. `buildOption()` resolves the label, the
+  affordability check and the deduction from one flag so they still cannot disagree.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

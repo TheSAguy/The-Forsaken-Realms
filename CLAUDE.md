@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 137; v1.08 RELEASED, round 137 is post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 138; v1.08 RELEASED, rounds 137-138 are post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 138 (2026-09-07, REPO ONLY - not packaged): **Teleporter repriced by LOCATION and the network widened to
+  six**. Capitol base 200 -> 100 shards (75/100/125/150 across Easy..Insane); towns an exact 10 shards at every
+  difficulty; `MAX_TOWN_TELEPORTERS` 4 -> 5. `buildCostFor()` now has one location-dependent entry
+  (`teleporterCost()`). NOTE the town price could NOT be a normal base - every cost in EconomyBuildings is a base
+  scaled by 0.75/1.0/1.25/**1.5**, and no integer reaches 10 at Insane (7 -> 11, 6 -> 9) - so it goes through new
+  un-scaled siblings `exactCostLabel()` / `canAffordExactCost()` / `spendExactCostAction()`. Use those, not a flag on
+  the originals, for any future pinned price.
 - Round 137 (2026-09-07, REPO ONLY - not packaged): two new dungeon entrance icons from the user's temple art
   (plane-local `sprites/ruins.atlas`, `TempleOvergrown`/`TempleRuined`, 32x32) re-pointing Satyr Grove, Leonin Sphinx,
   Sea Temple and Pharaoh's Fort - one from each of four different over-shared groups. Plus **Sinistral/Dextral

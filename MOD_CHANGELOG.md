@@ -17757,6 +17757,40 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 138: the Teleporter network, repriced and widened (2026-09-07, repo only)
+
+User spec: *"Cut it in half for the capitol. So 150 Shards on Insane. Then, make it 10 shards for the towns. (On
+insane). Also, let's make the limit 6. 1 in capitol and the 5 in towns you can travel to."*
+
+The old price was a flat 200-shard base at every location - 300 on Insane, per site, for what is a hub-and-spoke
+network: `teleporterDestinations()` offers a town exactly one destination (the Capitol) and the Capitol every linked
+town, and no town may build one at all until the Capitol's hub stands. Charging spoke #4 the same 300 shards as the
+hub is what made the last two slots not worth filling.
+
+- **Capitol**: base 200 -> **100**, so 75 / 100 / 125 / 150 shards across Easy..Insane - exactly half of what it was.
+- **Towns**: **10 shards flat**, every difficulty.
+- **Cap**: `MAX_TOWN_TELEPORTERS` 4 -> **5**, so six sites in all (hub + five spokes). The build option's own
+  "(N/6 built)" counter follows the constant, and so does `townTeleporterAvailable()`.
+
+`buildCostFor()` gained its first location-dependent entry (`teleporterCost()` reads
+`TownRestoration.isCurrentTownCapitol()`) - fine here because the only caller is `buildOption()`, reached from
+`buildChooseBuildingDialog()`, which already resolves the same flag one frame earlier for its Capitol-only branches.
+
+### Why the town price needed a new code path
+
+Every price in this file is a BASE that `difficultyPriceMultiplier()` scales by 0.75 / 1.0 / 1.25 / **1.5**. The spec
+pins the town price to 10 on Insane, and **no integer base reaches it**: `Math.round(7 * 1.5)` is 11 and
+`Math.round(6 * 1.5)` is 9. So the town tuple is quoted as the final figure and skips the scaling, via three
+un-scaled siblings of the existing cost core - `exactCostLabel()`, `canAffordExactCost()`, `spendExactCostAction()`.
+
+Kept as a separate trio rather than as a flag on `costLabel()`/`canAffordCost()`/`spendCostAction()` deliberately:
+those three are called from ~40 places with base-quoted numbers, and a flag defaulting the wrong way in one of them
+would silently unscale a real price. `buildOption()` picks the trio once into a local `spend`/`costText`/`exact`, so
+the label, the affordability check and the deduction still cannot disagree about what is being charged - the property
+the original single-tuple comment existed to protect.
+
+**Files touched**: `util/EconomyBuildings.java`.
+
 ## Round 137: two temple entrances, and a pair of gauntlets that grant a second hand slot (2026-09-07, repo only)
 
 ### Two new overworld entrances

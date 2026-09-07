@@ -908,7 +908,7 @@ public class EconomyBuildings {
         return false;
     }
 
-    /** How many ordinary (non-Capitol) towns currently have a Teleporter - capped at 4. */
+    /** How many ordinary (non-Capitol) towns currently have a Teleporter - see MAX_TOWN_TELEPORTERS. */
     public static int countTownTeleporters() {
         int count = 0;
         for (PointOfInterest poi : WorldSave.getCurrentSave().getWorld().getAllPointOfInterest()) {
@@ -921,7 +921,10 @@ public class EconomyBuildings {
         return count;
     }
 
-    private static final int MAX_TOWN_TELEPORTERS = 4;
+    // Round 138 (user spec 2026-09-07): "let's make the limit 6. 1 in capitol and the 5 in
+    // towns you can travel to." This counts the SPOKES only - the Capitol's hub is mandatory and
+    // separate (capitolHasTeleporter()), so the network total is one more than this.
+    private static final int MAX_TOWN_TELEPORTERS = 5;
 
     /** Should a regular (non-Capitol) town's build menu offer the Teleporter option right now? */
     public static boolean townTeleporterAvailable() {
@@ -1095,6 +1098,45 @@ public class EconomyBuildings {
         return action;
     }
 
+    // ---- Exact (un-scaled) costs, round 138 ----
+    // Every price above is quoted as a BASE that difficultyPriceMultiplier() scales. A price the
+    // user has pinned to a literal figure can't go through that: the town Teleporter's spec is a
+    // flat "10 shards on Insane", and no integer base reaches 10 at Insane's x1.5 - 7 rounds up
+    // to 11, 6 down to 9. These three are the un-scaled siblings of costLabel(),
+    // canAffordCost() and spendCostAction(), taking the same {gold, wood, stone, shards} tuple.
+    // Kept as a separate trio rather than as a flag on the originals so that none of the existing
+    // base-quoted callers can accidentally stop scaling.
+
+    private static String exactCostLabel(int[] cost) {
+        String[] icons = {"[+Gold]", "[+Wood]", "[+Stone]", "[+Shards]"};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < icons.length; i++) {
+            if (cost[i] <= 0)
+                continue;
+            if (sb.length() > 0)
+                sb.append(" + ");
+            sb.append(cost[i]).append(' ').append(icons[i]);
+        }
+        return sb.length() == 0 ? "free" : sb.toString();
+    }
+
+    private static boolean canAffordExactCost(int[] cost) {
+        AdventurePlayer player = AdventurePlayer.current();
+        return (cost[0] <= 0 || player.getGold() >= cost[0])
+                && (cost[1] <= 0 || player.getWood() >= cost[1])
+                && (cost[2] <= 0 || player.getStone() >= cost[2])
+                && (cost[3] <= 0 || player.getShards() >= cost[3]);
+    }
+
+    private static DialogData.ActionData spendExactCostAction(int[] cost) {
+        DialogData.ActionData action = new DialogData.ActionData();
+        action.addGold = -cost[0];
+        action.addWood = -cost[1];
+        action.addStone = -cost[2];
+        action.addShards = -cost[3];
+        return action;
+    }
+
     private static DialogData.ActionData spendGoldAction(int cost) {
         DialogData.ActionData action = new DialogData.ActionData();
         action.addGold = -cost;
@@ -1177,7 +1219,10 @@ public class EconomyBuildings {
             case BANK:          return new int[]{500, 0, 0, 0};
             case EXCHANGE:      return new int[]{150, 75, 75, 0};
             case OUTLOOK:       return new int[]{0, 125, 0, 0};
-            case TELEPORTER:    return new int[]{0, 0, 0, 200};
+            // NOTE Teleporter is the one type whose cost depends on WHERE it is built, and the
+            // town branch of teleporterCost() returns an EXACT figure rather than a scalable
+            // base - read teleporterCostIsExact() alongside any new use of buildCostFor().
+            case TELEPORTER:    return teleporterCost();
             case ARCHAEOLOGIST: return new int[]{0, 0, 175, 0};
             // 2026-08-22: gold-only by design - Trader's whole purpose is converting gold INTO
             // wood/stone, so charging wood/stone to build it would be backwards. No user-specified
@@ -1186,6 +1231,29 @@ public class EconomyBuildings {
             case TRADER:        return new int[]{200, 0, 0, 0};
             default:            return new int[]{100, 5, 0, 0}; // NONE / plain shop
         }
+    }
+
+    /**
+     * Teleporter build cost {gold, wood, stone, shards}, which depends on WHERE it is being built
+     * (round 138, user spec 2026-09-07: "Cut it in half for the capitol. So 150 Shards on Insane.
+     * Then, make it 10 shards for the towns"). The Capitol's fee buys the whole network - no town
+     * may build one until the hub stands (capitolHasTeleporter()) - so it carries the price; each
+     * spoke after it is a token charge, which is what makes filling out all five worth doing.
+     *
+     * The Capitol's is an ordinary difficulty-scaled BASE: 100 -> 75 / 100 / 125 / 150 shards
+     * across Easy..Insane, exactly half of the old flat 200 (300 on Insane). The town's is EXACT
+     * at every difficulty - the spec pins it to 10 on Insane and no integer base gets there, so
+     * it bypasses scaledCost() via buildOption()'s exact-cost path.
+     */
+    private static int[] teleporterCost() {
+        return TownRestoration.isCurrentTownCapitol()
+                ? new int[]{0, 0, 0, 100}   // base  -> 75 / 100 / 125 / 150 shards
+                : new int[]{0, 0, 0, 10};   // exact -> 10 shards on every difficulty
+    }
+
+    /** True when teleporterCost() just returned a final figure rather than a scalable base. */
+    private static boolean teleporterCostIsExact() {
+        return !TownRestoration.isCurrentTownCapitol();
     }
 
     // ===================== Card Shop Type chooser (2026-08-30, user spec) =====================
@@ -1965,18 +2033,24 @@ public class EconomyBuildings {
 
     private static DialogData buildOption(int type, int objectId) {
         DialogData option = new DialogData();
-        // One base-cost tuple feeds label, affordability, and deduction (each component
-        // difficulty-scaled inside the helpers) so the three can't disagree.
+        // One cost tuple feeds label, affordability, and deduction (normally difficulty-scaled
+        // inside the helpers) so the three can't disagree.
         int[] c = buildCostFor(type);
-        String label = buildingName(type) + " (" + costLabel(c[0], c[1], c[2], c[3]) + ")";
-        // The 5-total cap is otherwise invisible until it silently stops offering the option -
+        // Round 138: a town Teleporter's price is quoted exactly rather than as a scalable base
+        // (see teleporterCost()). One flag picks the matching trio of helpers so the label, the
+        // affordability check and the deduction still can't disagree about what is being charged.
+        boolean exact = type == TELEPORTER && teleporterCostIsExact();
+        String costText = exact ? exactCostLabel(c) : costLabel(c[0], c[1], c[2], c[3]);
+        DialogData.ActionData spend = exact ? spendExactCostAction(c) : spendCostAction(c[0], c[1], c[2], c[3]);
+        String label = buildingName(type) + " (" + costText + ")";
+        // The 6-total cap is otherwise invisible until it silently stops offering the option -
         // show progress the same way the Capitol upgrade button shows its town count (user spec
         // 2026-08-09).
         if (type == TELEPORTER)
-            label = buildingName(type) + " (" + costLabel(c[0], c[1], c[2], c[3]) + ", "
+            label = buildingName(type) + " (" + costText + ", "
                     + (countTownTeleporters() + (capitolHasTeleporter() ? 1 : 0)) + "/" + (MAX_TOWN_TELEPORTERS + 1) + " built)";
         option.name = label;
-        option.isDisabled = !canAffordCost(c[0], c[1], c[2], c[3]);
+        option.isDisabled = exact ? !canAffordExactCost(c) : !canAffordCost(c[0], c[1], c[2], c[3]);
         if (type == NONE) {
             // Edition-restriction stale-bake-in fix (2026-08-13, adversarial review) - this is the
             // plain "Card Shop" rebuild option ShopActor.onPlayerCollide() routes every ordinary
@@ -1996,12 +2070,12 @@ public class EconomyBuildings {
             shopBuiltFlag.setCharacterFlag = new DialogData.ActionData.QuestFlag();
             shopBuiltFlag.setCharacterFlag.key = "shopBuilt";
             shopBuiltFlag.setCharacterFlag.val = 1;
-            option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), refreshShops, shopBuiltFlag};
+            option.action = new DialogData.ActionData[]{spend, setShopRebuiltAction(objectId), refreshShops, shopBuiltFlag};
         } else {
             option.condition = type == TRADER // round 121: an Exchange is the town's (upgraded) Trader - never a second one
                     ? new DialogData.ConditionData[]{noBuildingOfTypeYetCondition(TRADER), noBuildingOfTypeYetCondition(EXCHANGE)}
                     : new DialogData.ConditionData[]{noBuildingOfTypeYetCondition(type)};
-            option.action = new DialogData.ActionData[]{spendCostAction(c[0], c[1], c[2], c[3]), setShopRebuiltAction(objectId), setEconomyTypeAction(type), setBuiltFlagAction(type)};
+            option.action = new DialogData.ActionData[]{spend, setShopRebuiltAction(objectId), setEconomyTypeAction(type), setBuiltFlagAction(type)};
         }
         return option;
     }
@@ -2103,8 +2177,8 @@ public class EconomyBuildings {
 
         // Teleporter unlock (user spec 2026-08-09): the Capitol's own build menu always offers it
         // (auto-hidden once built, same one-per-type condition every other type already uses) -
-        // an ordinary town only offers it once the Capitol has built one AND fewer than 4 towns
-        // already have (townTeleporterAvailable() - a cross-POI check the declarative condition
+        // an ordinary town only offers it once the Capitol has built one AND fewer than
+        // MAX_TOWN_TELEPORTERS towns already have (townTeleporterAvailable() - a cross-POI check the declarative condition
         // system below can't express, so it's gated imperatively here instead).
         boolean teleporterOffered = (isCapitol || townTeleporterAvailable()) && typeAvailable(stage, TELEPORTER);
         // Archaeologist (2026-08-11): Capitol-only, same as Financial's Bank/Exchange - see the

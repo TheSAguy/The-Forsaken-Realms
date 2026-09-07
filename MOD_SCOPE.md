@@ -1010,11 +1010,15 @@ needs its own design pass before any of this gets built:**
   not a land-grab one). 100 gold, one per town, same rebuild-menu mechanism as the other 6.
 - **Teleporter (2026-08-09):** fast travel between the Capitol and any town that's also built
   one. Gated in two stages: the option doesn't even appear in a town's build menu until the
-  Capitol has built its own; then max 4 more across all towns (5 total). From a town, the only
+  Capitol has built its own; then max 5 more across all towns (6 total, raised from 5 in round
+  138). From a town, the only
   destination is the Capitol; from the Capitol, every linked town is offered. Travel drops the
   player on the overworld near the destination (not straight inside it) - same fade-transition
   mechanism as the existing defeat-respawn/debug-teleport code, just without their "enter the
-  building automatically" step. 100 gold, one per town/Capitol.
+  building automatically" step. One per town/Capitol. **Priced by location since round 138**
+  (2026-09-07 user spec): the Capitol's hub is a 100-shard base (75/100/125/150 across
+  Easy..Insane, half of the old flat 200) and each town spoke is an exact 10 shards at every
+  difficulty - see `teleporterCost()` and the exact-cost helper trio next to the shared cost core.
 - **Destroy building (2026-08-09):** every buildable/rebuildable building now offers a "Destroy"
   option - no resources refunded, reverts to the broken-shop rubble art, free to rebuild as
   something else afterward. Excluded (can't be destroyed): Arena, Inn, Armory, Land Shops (the
