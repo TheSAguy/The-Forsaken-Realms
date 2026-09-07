@@ -1,5 +1,9 @@
 ## The Forsaken Realms — v1.07 — House Rules
 
+> ⚠️ **Superseded by [v1.08](https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.08),
+> released the same afternoon.** v1.08 contains everything below plus a hard ceiling on the number
+> of items an arena run can pay. Install v1.08 instead; these notes are kept for the record.
+
 A small update, but a necessary one: the Arenas were handing out rewards at a rate that broke the
 rest of the game's economy. A single win at your own Capitol could pay **six items** on top of the
 gold and cards — enough to make every shop, every dungeon and every duel reward irrelevant. That is
@@ -39,7 +43,8 @@ chance, one rarity band up — and keeps its own better prize for winning.
 
 Level 2 keeps its item rolls — one per round from each of four pools, at 25% / 40% / 15% / 5% — but
 the 90,000-gold jackpot pool dropped from a 15% chance to 5%, and **no more than two of the cards
-you win can be Mythic**.
+you win can be Mythic**. (Those rolls are still cumulative across the three rounds, which is the
+hole v1.08 closed the same day — see its notes.)
 
 The cards are the real change: instead of a generic rare, each one is themed to the colors of the
 fighter who lost it to you, and **you keep the cards from the rounds you did win** even when the

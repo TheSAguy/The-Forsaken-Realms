@@ -1,11 +1,31 @@
-## The Forsaken Realms — v1.08 — House Rules
+## The Forsaken Realms — v1.08 — Two Items, Maximum
 
-A small update, but a necessary one: the Arenas were handing out rewards at a rate that broke the
-rest of the game's economy. A single win at your own Capitol could pay **six items** on top of the
-gold and cards — enough to make every shop, every dungeon and every duel reward irrelevant. That is
-fixed, along with the one item that was most responsible for it.
+**This is the release to install.** It came out the same afternoon as v1.07 and contains all of it,
+so if you are coming from v1.06 you have not missed anything — the whole arena rebuild is written
+out further down.
+
+## The one thing v1.08 adds
+
+v1.07 rewrote every arena payout table to stop a single Capitol win handing over six items. It
+worked for the tables it rewrote, and it still left a hole: the *number* of items was emergent
+rather than stated. Level 2 rolls four separate item pools per round, payouts are cumulative across
+three rounds, and a win adds a guaranteed item on top — thirteen chances at an item, with nothing
+anywhere in the system saying "and no more than this".
+
+**No arena run can ever pay more than two items now**, whatever the dice say. If more than two come
+up, you are handed the two most valuable and the rest are discarded. It applies to every arena and
+to all three sources at once — the round tables, the champion bounty, and the bonus roll — because
+it is the total that is capped, not any one of them.
+
+A Bronze Coin coming back from an ante ransom is exempt. That is your own property being returned,
+not loot, and dropping it to honor a loot cap would destroy it permanently.
 
 ---
+
+# Everything below arrived in v1.07
+
+Repeated here in full, because v1.07 was only live for twenty minutes and most people will be
+upgrading straight from v1.06.
 
 ## Fixed: Arena rewards
 
@@ -41,9 +61,8 @@ Level 2 keeps its item rolls — one per round from each of four pools, at 25% /
 the 90,000-gold jackpot pool dropped from a 15% chance to 5%, and **no more than two of the cards
 you win can be Mythic**.
 
-**No arena run can ever pay more than two items**, whatever the rolls say. If more come up, you are
-given the two most valuable and the rest are discarded. A Bronze Coin returned from an ante ransom
-is your own property coming back, not loot, so it is never counted against that cap.
+(This is the table v1.08's two-item ceiling sits on top of — thirteen possible rolls, at most two
+of them ever paid.)
 
 The cards are the real change: instead of a generic rare, each one is themed to the colors of the
 fighter who lost it to you, and **you keep the cards from the rounds you did win** even when the
