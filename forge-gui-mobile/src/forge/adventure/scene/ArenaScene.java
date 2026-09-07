@@ -670,6 +670,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // The player's opponent this round is always the LAST enemy (see startRound()) -
             // remembered for the Challenge Arena's last-defeated-foe card drop in done().
             lastDefeatedEnemyData = enemies.get(enemies.size - 1).getData();
+            defeatedThisBracket.add(lastDefeatedEnemyData); // round 133: one themed card per round won
             // Bronze Coin ransom (user request 2026-09-01): note the foe now, pay the coin out in
             // done() with the rest of the bracket's loot. Only recorded - owesCoinRansom() is
             // re-checked at payout time, so a name noted here that somehow stops being owed
@@ -829,6 +830,30 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // comparable to the 5 arena-exclusive champions' signature bounty. Applies to the
             // last round WON even on a partial run (lose round 2 -> the drop is themed to the
             // round-1 opponent).
+            // Round 133 (user spec 2026-09-07, after a single level-1 Capitol win paid out six
+            // items): the Player Capitol level-1 and AI-capital brackets pay ONE rare+ card per
+            // round won, themed to the enemy beaten in THAT round - so losing round 3 still leaves
+            // you the cards from rounds 1 and 2. The gold comes from the round tables (200/150/150,
+            // cumulative 200/350/500) and the single win item is the last table's guaranteed entry;
+            // every probabilistic item roll was removed from those six maps in the same round.
+            // Mutually exclusive with the Challenge drop below - tierWeighted requires !isChallenge.
+            if (capitolPayoutBracket) {
+                for (EnemyData foe : new Array.ArrayIterator<>(defeatedThisBracket)) {
+                    if (foe == null)
+                        continue;
+                    RewardData themed = new RewardData();
+                    themed.type = "card";
+                    themed.count = 1;
+                    themed.rarity = new String[]{"Rare", "Mythic Rare"};
+                    String[] foeColors = colorNamesFor(foe.colors);
+                    if (foeColors != null)
+                        themed.colors = foeColors;
+                    data.addAll(themed.generate(false, null, true));
+                }
+                System.out.println("[TFR-ArenaPayout] Capitol/AI bracket: " + roundsWon + " round(s) won -> "
+                        + defeatedThisBracket.size + " themed rare+ card(s) + the round tables' gold"
+                        + (roundsWon == arenaData.rounds ? " + 1 item" : ""));
+            }
             if (challengeMode && lastDefeatedEnemyData != null) {
                 RewardData foeDrop = new RewardData();
                 foeDrop.type = "card";
@@ -881,6 +906,15 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     // The opponent beaten in the player's most recent round win - drives the Challenge Arena's
     // "1 rare+ card from the last duel you win" drop (user spec 2026-08-12).
     EnemyData lastDefeatedEnemyData = null;
+    /** Round 133: every opponent the player has beaten in the bracket currently running, in round
+     *  order. The Capitol/AI-capital payout pays ONE rare+ card themed to EACH of them (user spec
+     *  2026-09-07: "Lose round 3 - 350g & rare+ card from defeated enemy from round 1 & 2"), where
+     *  the older Challenge drop pays a single card themed to the last one only. */
+    private final Array<EnemyData> defeatedThisBracket = new Array<>();
+    /** Round 133: true when this bracket is a Player Capitol level-1 or AI-capital arena - the
+     *  same scope round 125's tier-weighted brackets use, and the scope the new payout applies to.
+     *  Level 2 (either mode), the Chest's illegal arena and wild arenas keep their old tables. */
+    private boolean capitolPayoutBracket = false;
     Actor player;
 
     public void loadArenaData(ArenaData data, long seed) {
@@ -908,6 +942,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         arenaPlane.clear();
         bracketChampions.clear();
         lastDefeatedEnemyData = null;
+        defeatedThisBracket.clear(); // round 133
         roundsWon = 0;
         coinRansomFoesBeaten.clear();
         int numberOfEnemies = (int) (Math.pow(2f, data.rounds) - 1);
@@ -939,6 +974,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         boolean playerOwnedArena = fromBuilding && TownRestoration.isCurrentTownPlayerOwned(arenaMapStage.getChanges());
         boolean tierWeighted = !isChallenge && fromBuilding
                 && (playerOwnedArena ? arenaBuildingLevel() < 2 : isAiCapitalArena());
+        capitolPayoutBracket = tierWeighted; // round 133: same scope, read again in done()
         java.util.List<EnemyData> adeptPool = new java.util.ArrayList<>();
         java.util.List<EnemyData> masterPool = new java.util.ArrayList<>();
         java.util.List<EnemyData> archmagePool = new java.util.ArrayList<>();

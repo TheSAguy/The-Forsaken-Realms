@@ -4749,3 +4749,15 @@ offered at the Player Capitol - which needed a quest giver of its own, `questtyp
 gold, 5 shards and 2 rares of that colour. They are gated by the new out-of-band `requiresCharacterFlagUnset` on
 `visitedCapital_<colour>`, which `TileMapScene` sets on entering a capital. Open: playtest the reworded caravan
 ending, and whether the Capitol should also offer these for capitals the player has seen but not mapped.
+
+### 111. Arena payouts for the Player Capitol level 1 and the AI capitals — `Done (built 2026-09-07, round 133), not yet playtest-confirmed`
+User report: a single level-1 Capitol win paid out SIX items. Cause: `ArenaScene.done()` sums every round table up to
+`roundsWon`, and the Capitol's three tables each repeated the same four probabilistic item rolls - 13 rolls on a full
+win, expected value 4. (The five AI capitals were identical to each other and always paid exactly one item.) New
+table, per the user's spec: lose round 1 nothing; lose round 2 = 200g + a rare+ card themed to the round-1 opponent;
+lose round 3 = 350g + cards from rounds 1-2; win = 500g + cards from rounds 1-3 + 1 item. Gold tables are 200/150/150
+since the engine sums them; the per-round themed cards are new code (`defeatedThisBracket`, `[TFR-ArenaPayout]`) as
+the engine only had a single Challenge-mode drop. Level 2, the Chest's arena and wild arenas are untouched. Open:
+whether the round-107 champion bounty (arena-exclusive enemies paying their own reward list on a full bracket win)
+should also be trimmed, and whether level 2's item tiers - same non-value-banded shape, with its jackpot tier at 15%
+rather than 2% - want the same treatment.

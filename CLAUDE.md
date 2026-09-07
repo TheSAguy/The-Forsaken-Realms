@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 132; v1.06 RELEASED, round 132 is post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 133; v1.06 RELEASED, rounds 132-133 are post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 133 (2026-09-07, REPO ONLY): Arena payouts for the **Player Capitol level 1 and the five AI capitals** are
+  now 200 / 350 / 500 cumulative gold (round tables 200/150/150 - `done()` SUMS tables 0..roundsWon-1, which is why a
+  single win paid SIX items: the Capitol's three tables each repeated the same four probabilistic item rolls, 13 in
+  all) + one rare+ card per round won, themed to THAT round's beaten opponent (new `defeatedThisBracket` +
+  `capitolPayoutBracket`, `[TFR-ArenaPayout]`; the engine only had a single Challenge-mode last-foe drop) + exactly
+  1 item on a win. **Level 2 (`arenaChallenge`), the Chest's arena and wild arenas are UNTOUCHED** - level 2 still
+  pays 1,600g + 9 item rolls with its jackpot tier at 15%. The item tiers are NOT value-banded (the 0.6 "common"
+  pool held the three 30,000-gold Jewels). The round-107 champion bounty still stands - flagged to the user.
+  MOD_SCOPE #111.
 - Round 132 (2026-09-07, REPO ONLY - not built into the live folder): the Courier chain is three quests, not two -
   44 "Find the Caravan" now ENDS on the bandit-cave Clear (stage 5 removed, its silver-ore reveal + payment + amulet
   merged into the Clear epilogue and reworded so a runner brings the pouch to the cave), 45 renamed **"Explore the

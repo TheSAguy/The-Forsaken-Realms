@@ -17757,6 +17757,77 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 133: Arena payouts rebuilt for the Player Capitol level 1 and the AI capitals (2026-09-07, repo only)
+
+User report: *"I just won my first Arena match in my capitol, and received 6 items! Not sure how that's even
+possible."* It was entirely possible, and the screenshot matches the tables exactly.
+
+### Why six
+
+`ArenaScene.done()` pays **every round table up to `roundsWon`, summed** - so a full 3-round win pays tables 0, 1
+AND 2. The Player Capitol's level-1 tables each carried the same four probabilistic item rolls (0.3 / 0.6 / 0.08 /
+0.02), so a full win rolled **13 items** - twelve probabilistic plus one guaranteed in round 3 - for an expected
+value of exactly 4. Six is an ordinary draw. The payout in the screenshot (500 gold, 3 cards, 6 items) is that table
+to the letter.
+
+**The AI capitals were never the problem.** All five are byte-identical to each other: a single guaranteed item from
+a 4-name list (Gold Armor / Gold Shield / Gold Boots / Bronze Sword). So the user's recollection that the AI and the
+player draw from separate pools is right - but the gap was volume, not pool composition: 1 item versus 13 rolls.
+
+### The item tiers were not value-banded (why Serra's Blessing showed up)
+
+The user also asked what tier `Jewel of Blessings` (grants Serra's Blessing, sells for 7,500) came from. It is in
+the **0.6 tier - the most likely pool of the four**, rolled once per round table:
+
+| probability | names | min cost | median | max cost |
+|---|---|---|---|---|
+| 0.3 | 183 | 100 | 3,000 | 10,000 |
+| **0.6** | **157** | 1,500 | 4,000 | **30,000** (the three Jewels) |
+| 0.08 | 86 | 1,000 | 5,000 | 12,000 |
+| 0.02 | 21 | 20,000 | 50,000 | 90,000 |
+
+The 60% pool topped out higher than the 8% pool and three times higher than the 30% one, so the most likely slot was
+also the one that could hand out the pool's most valuable item. Moot now that the rolls are gone from level 1, but
+recorded because **level 2 has the same shape** and was deliberately left alone.
+
+### The new table (user spec, verbatim)
+
+> Lose round 1 - Nothing. / Lose round 2 - 200g & rare+ card from defeated enemy from round 1. / Lose round 3 - 350g
+> & rare+ card from defeated enemy from round 1 & 2. / Win - 500g & rare+ card from defeated enemy from round 1, 2 &3.
+> + 1 item.
+
+Applied to the **Player Capitol level-1 arena and all five AI capitals** - the same scope round 125's tier-weighted
+brackets use (`tierWeighted`, now also stored as `capitolPayoutBracket` for `done()` to read). Level 2 in both its
+modes, the Chest's illegal arena and wild arenas are untouched.
+
+- **Gold** comes from the round tables as **200 / 150 / 150**, because the engine sums them - that lands on the
+  cumulative 200 / 350 / 500 the spec asks for. Every probabilistic item roll was deleted from all six maps
+  (13 entries -> 1 at the Capitol; the AI capitals already had exactly 1).
+- **The win item** is each arena's own existing guaranteed entry, carried over untouched: the AI gold kit, and the
+  Capitol's 16-name list (1,500-15,000).
+- **The per-round cards are new code.** The engine had only a single last-defeated-foe drop, and only in Challenge
+  mode. New `defeatedThisBracket` records every opponent beaten in the running bracket in round order, and
+  `done()` pays one rare+ card themed to each - so losing round 3 still leaves the cards from rounds 1 and 2.
+  Mutually exclusive with the Challenge drop (`tierWeighted` requires `!isChallenge`). `[TFR-ArenaPayout]` logs
+  rounds won, cards paid and whether the item fired.
+- Cards were removed from the round tables themselves (they were 1 Rare + 2 Mythic, untargeted); the themed drops
+  replace them.
+
+**Left alone deliberately, flagged for the user:** the **champion bounty** - arena-EXCLUSIVE enemies (`spawnRate 0`)
+still pay their own full `EnemyData` reward list on top when the player wins a bracket containing them (round 107).
+That is the feature behind "the arena that awards all the moxen", it can still be a large payout, and the new spec
+arguably excludes it - but cutting it silently would delete a deliberate feature, so it stands until the user says
+otherwise.
+
+**Editing method worth keeping:** the arena tables live as HTML-escaped JSON inside a `.tmx` `<property>`. The
+escaping in these six files is quote-only (`"` -> `&quot;`; zero `&amp;`, `&lt;`, `&#39;`, and apostrophes stay
+raw), verified per file before writing, so unescape -> splice -> re-escape round-trips byte-identically. Only the
+`rewards` value was replaced, located by a string-aware bracket matcher, with the parse, the untouched
+`enemyPool`/`rounds`/`entryFee` and the cumulative gold all asserted afterwards.
+
+**Files touched**: `scene/ArenaScene.java`; plane `maps/map/main_story/{forest,island,mountain,plains,swamp}_capital.tmx`,
+`maps/map/towns/player_capital.tmx`. MOD_SCOPE #111.
+
 ## Round 132: the Courier chain becomes three quests; five "Find the Capital" quests at the Player Capitol (2026-09-07, repo only)
 
 User spec: *"The original main quest. Let's break the quest up into multiple quests. Find the lost caravan, should

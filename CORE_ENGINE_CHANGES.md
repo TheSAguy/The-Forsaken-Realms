@@ -1381,6 +1381,19 @@ from the plane's `config tables/settings.json`).
   the tag-matching filter and in the no-tag-match fallback. Deliberately NOT a field on
   `AdventureQuestData` - see that class's own note on save corruption.
 
+### 2026-09-07 Arena payout rebuild (round 133)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - new `defeatedThisBracket`
+  (every opponent beaten this bracket, in round order) and `capitolPayoutBracket` (set from the
+  same `tierWeighted` expression round 125 uses). `done()` pays one rare+ card themed to EACH
+  beaten opponent for Player-Capitol-level-1 and AI-capital brackets, where the pre-existing drop
+  paid a single card themed to the last one and only in Challenge mode. `[TFR-ArenaPayout]`.
+  Mutually exclusive with the Challenge drop, which requires `challengeMode`.
+- Plane data (not engine files, noted for the round): the `arena` property's reward tables in the
+  five AI capital maps and `player_capital.tmx` are now 200/150/150 gold (the engine sums tables
+  0..roundsWon-1, so cumulative 200/350/500) plus each arena's own guaranteed win item. The Player
+  Capitol's twelve probabilistic item rolls are gone. `arenaChallenge` (level 2) is untouched.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

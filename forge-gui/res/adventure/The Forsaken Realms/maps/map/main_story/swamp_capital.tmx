@@ -211,50 +211,40 @@
 	],
     &quot;rounds&quot;:3,
     &quot;entryFee&quot;:100,
-     &quot;rewards&quot;: [[
-        {
-            &quot;type&quot;: &quot;gold&quot;,
-            &quot;probability&quot;: 1,
-            &quot;count&quot;: 100
-        }
-    ],[
-        {
-            &quot;type&quot;: &quot;gold&quot;,
-            &quot;probability&quot;: 1,
-            &quot;count&quot;: 200
-        },
-        {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;probability&quot;: 1,
-            &quot;count&quot;: 1,
-            &quot;rarity&quot;: [
-                &quot;Rare&quot;
-            ],
-            &quot;colors&quot;: [&quot;black&quot;]
-        }
-    ],[
-        {
-            &quot;type&quot;: &quot;gold&quot;,
-            &quot;probability&quot;: 1,
-            &quot;count&quot;: 200
-        },
-        {
-            &quot;type&quot;: &quot;item&quot;,
-            &quot;probability&quot;: 1,
-            &quot;count&quot;: 1,
-            &quot;itemNames&quot;: [&quot;Death Ring&quot;,&quot;Dark Armor&quot;,&quot;Dark Shield&quot;,&quot;Dark Boots&quot;]
-        },
-        {
-            &quot;type&quot;: &quot;card&quot;,
-            &quot;probability&quot;: 1,
-            &quot;count&quot;: 2,
-            &quot;rarity&quot;: [
-                &quot;Mythic Rare&quot;
-            ],
-            &quot;colors&quot;: [&quot;black&quot;]
-        }
-    ]
-    ]
+     &quot;rewards&quot;: [
+ [
+  {
+   &quot;type&quot;: &quot;gold&quot;,
+   &quot;probability&quot;: 1,
+   &quot;count&quot;: 200
+  }
+ ],
+ [
+  {
+   &quot;type&quot;: &quot;gold&quot;,
+   &quot;probability&quot;: 1,
+   &quot;count&quot;: 150
+  }
+ ],
+ [
+  {
+   &quot;type&quot;: &quot;gold&quot;,
+   &quot;probability&quot;: 1,
+   &quot;count&quot;: 150
+  },
+  {
+   &quot;type&quot;: &quot;item&quot;,
+   &quot;probability&quot;: 1,
+   &quot;count&quot;: 1,
+   &quot;itemNames&quot;: [
+    &quot;Death Ring&quot;,
+    &quot;Dark Armor&quot;,
+    &quot;Dark Shield&quot;,
+    &quot;Dark Boots&quot;
+   ]
+  }
+ ]
+]
 }</property>
    </properties>
   </object>
