@@ -17786,6 +17786,14 @@ no honest trail, and the user was away. `modVersion` 1.08 (`modVersionDate` stay
 **Files touched**: `scene/ArenaScene.java`; plane `config.json`; `forge-gui-android/pom.xml`;
 `RELEASE_NOTES_v1.08.md`.
 
+**RELEASED** 2026-09-07 16:08 UTC as tag `tfr-v1.08` @ `dd50d41adb8`, marked Latest:
+desktop zip 241.5 MB, `forsaken-realms-1.08-signed-aligned.apk` 12.5 MB, `assets.zip` 175.5 MB. All
+ANDROID_RELEASE.md step-4 checks passed before upload (package `com.thesaguy.forsakenrealms`,
+versionCode **10800**, versionName **1.08**, label "The Forsaken Realms", signature SHA-256
+`ee603925...` = the EE:60:39:25 keystore, assets.zip holding exactly `common` + the plane with
+build.txt and cardsfolder.zip). Live folder repackaged to match (`PACKAGE_OK` 09:11). v1.07 stays
+published as the superseded release; it had zero downloads.
+
 ## Round 135: enemy titles resynced to tiers, one Arena win per venue per week, v1.07 stamps (2026-09-07)
 
 ### Titles that fought their rank
