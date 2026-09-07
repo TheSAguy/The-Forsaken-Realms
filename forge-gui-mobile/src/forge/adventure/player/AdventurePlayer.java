@@ -2431,15 +2431,74 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
     }
 
-    public void equip(ItemData item) {
-        Long itemID = equippedItems.get(item.equipmentSlot);
-        if (itemID != null && itemID.equals(item.longID)) {
-            item.isEquipped = false;
-            equippedItems.remove(item.equipmentSlot);
-        } else {
-            item.isEquipped = true;
-            equippedItems.put(item.equipmentSlot, item.longID);
+    /** Round 137: slot names currently unlocked by a worn item's grantsEquipmentSlot ("Left2",
+     *  "Right2"). Empty for a character wearing neither gauntlet, which is every save before this. */
+    public java.util.Set<String> grantedEquipmentSlots() {
+        java.util.Set<String> granted = new java.util.HashSet<>();
+        for (Long id : equippedItems.values()) {
+            ItemData data = getEquippedItem(id);
+            if (data != null && data.grantsEquipmentSlot != null && !data.grantsEquipmentSlot.isEmpty())
+                granted.add(data.grantsEquipmentSlot);
         }
+        return granted;
+    }
+
+    /** Round 137: the slots this item may occupy, in fill order - its own, then the granted twin. */
+    private java.util.List<String> slotCandidates(ItemData item) {
+        java.util.List<String> candidates = new java.util.ArrayList<>();
+        candidates.add(item.equipmentSlot);
+        String twin = item.equipmentSlot + "2";
+        if (grantedEquipmentSlots().contains(twin))
+            candidates.add(twin);
+        return candidates;
+    }
+
+    /**
+     * Round 137: an extra slot only exists while the item granting it is worn, so taking that
+     * gauntlet off has to take whatever was in the extra slot off with it - otherwise the item
+     * stays flagged equipped, keeps applying its effects, and has no slot on the paperdoll to
+     * unequip it from.
+     */
+    private void dropUngrantedSlots() {
+        java.util.Set<String> granted = grantedEquipmentSlots();
+        for (String slot : new java.util.ArrayList<>(equippedItems.keySet())) {
+            if (!slot.endsWith("2") || granted.contains(slot))
+                continue;
+            ItemData orphan = getEquippedItem(equippedItems.remove(slot));
+            if (orphan != null)
+                orphan.isEquipped = false;
+            System.out.println("[TFR-EquipSlot] " + slot + " is no longer granted - unequipped "
+                    + (orphan == null ? "(unknown item)" : orphan.name));
+        }
+    }
+
+    public void equip(ItemData item) {
+        java.util.List<String> candidates = slotCandidates(item);
+        // Already worn in one of its candidate slots? Then this is an unequip.
+        for (String slot : candidates) {
+            Long worn = equippedItems.get(slot);
+            if (worn != null && worn.equals(item.longID)) {
+                item.isEquipped = false;
+                equippedItems.remove(slot);
+                dropUngrantedSlots();
+                onEquipmentChange.emit();
+                return;
+            }
+        }
+        // Otherwise fill the first FREE candidate, falling back to displacing the base slot.
+        String target = candidates.get(0);
+        for (String slot : candidates) {
+            if (!equippedItems.containsKey(slot)) {
+                target = slot;
+                break;
+            }
+        }
+        ItemData displaced = getEquippedItem(equippedItems.get(target));
+        if (displaced != null && !displaced.longID.equals(item.longID))
+            displaced.isEquipped = false; // round 137: it is off the doll, so it must not read as worn
+        item.isEquipped = true;
+        equippedItems.put(target, item.longID);
+        dropUngrantedSlots();
         onEquipmentChange.emit();
     }
 

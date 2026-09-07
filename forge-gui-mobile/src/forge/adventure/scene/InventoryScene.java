@@ -582,8 +582,12 @@ public class InventoryScene extends UIScene {
             }
         }
 
+        // Round 137: an extra hand slot is only on the doll while a gauntlet grants it.
+        java.util.Set<String> grantedSlots = Current.player().grantedEquipmentSlots();
         for (Map.Entry<String, Button> slot : equipmentSlots.entrySet()) {
             Button slotButton = slot.getValue();
+            if (slot.getKey().endsWith("2"))
+                slotButton.setVisible(grantedSlots.contains(slot.getKey()));
             // Remove the previous item image and border by name (order-independent)
             Actor oldItem = slotButton.findActor(SLOT_ITEM_NAME);
             if (oldItem != null) oldItem.remove();

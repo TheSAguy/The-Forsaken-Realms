@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 136; **v1.08 RELEASED**) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 137; v1.08 RELEASED, round 137 is post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 137 (2026-09-07, REPO ONLY - not packaged): two new dungeon entrance icons from the user's temple art
+  (plane-local `sprites/ruins.atlas`, `TempleOvergrown`/`TempleRuined`, 32x32) re-pointing Satyr Grove, Leonin Sphinx,
+  Sea Temple and Pharaoh's Fort - one from each of four different over-shared groups. Plus **Sinistral/Dextral
+  Gauntlet**: each occupies one hand and GRANTS a second slot for the other (`ItemData.grantsEquipmentSlot` ->
+  "Right2"/"Left2"), -2 duel life, 5,000g (the exact median), Mythic (this game has no "Legendary" tier).
+  `AdventurePlayer.equip()` reworked to fill the first free candidate slot; `dropUngrantedSlots()` takes the extra
+  slot's item off when the gauntlet comes off. Icons came from row 26 cols 3-4 of common items.png - **1,128 unmapped
+  cells there still carry usable art**. NOTE `points_of_interest.json` is hand-edited (irregular indent) - edit it
+  surgically, never reserialise.
 - Round 136 (2026-09-07): **hard two-item cap on every Arena payout** (`capArenaItems` in `done()`, keeps the two
   highest-`cost` items, logs `[TFR-ArenaPayout] item cap:`), applied to the whole assembled payout but BEFORE the
   Bronze Coin ransom reclaim (that coin is the player's own item coming back, not loot). L1/AI/Chest were already at

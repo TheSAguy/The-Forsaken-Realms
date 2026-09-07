@@ -15,6 +15,12 @@ public class ItemData implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
     public String name;
     public String equipmentSlot;
+    /** Round 137 (user spec 2026-09-07): the name of a SECOND equipment slot this item unlocks
+     *  while it is worn - "Right2" or "Left2". The paperdoll shows that slot only while something
+     *  grants it, and AdventurePlayer drops whatever is in it the moment the granting item comes
+     *  off. Null for every ordinary item. Safe to add: this class carries an explicit
+     *  serialVersionUID, so the save format cannot move. */
+    public String grantsEquipmentSlot;
     public EffectData effect;
     public String description; //Manual description of the item.
     public String iconName;

@@ -1436,6 +1436,18 @@ from the plane's `config tables/settings.json`).
   bounty + bonus roll) because only the total is capped, and deliberately BEFORE the Bronze Coin
   ransom reclaim, which returns the player's own item rather than paying loot.
 
+### 2026-09-07 Granted equipment slots (round 137)
+
+- **`forge-gui-mobile/src/forge/adventure/data/ItemData.java`** - new `grantsEquipmentSlot`, the
+  slot name an item unlocks while worn. The class has an explicit serialVersionUID, so this cannot
+  move the save format.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `grantedEquipmentSlots()`,
+  `slotCandidates()`, `dropUngrantedSlots()`, and `equip()` reworked to fill the first free
+  candidate slot and to unequip from whichever candidate actually holds the item. `equip()` now
+  also clears `isEquipped` on a DISPLACED item, which it never did before. `[TFR-EquipSlot]`.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - a `*2` paperdoll slot is
+  hidden unless something currently grants it.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

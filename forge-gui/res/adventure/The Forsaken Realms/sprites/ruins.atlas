@@ -1,0 +1,11 @@
+ruins.png
+size: 64,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+TempleOvergrown
+  xy: 0, 0
+  size: 32, 32
+TempleRuined
+  xy: 32, 0
+  size: 32, 32

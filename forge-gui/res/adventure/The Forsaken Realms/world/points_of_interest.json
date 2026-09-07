@@ -255,8 +255,8 @@
 		"displayName": "Sea Temple",
 		"type": "dungeon",
 		"count": 1,
-		"spriteAtlas": "../common/maps/tileset/buildingsbosses.atlas",
-		"sprite": "FortBlue",
+		"spriteAtlas": "../The Forsaken Realms/sprites/ruins.atlas",
+		"sprite": "TempleRuined",
 		"map": "../The Forsaken Realms/maps/map/fort/fort_blue_5_temple.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -305,8 +305,8 @@
 		"displayName": "Pharaoh's Fort",
 		"type": "dungeon",
 		"count": 1,
-		"spriteAtlas": "../common/maps/tileset/buildingsbosses.atlas",
-		"sprite": "WhiteCastle",
+		"spriteAtlas": "../The Forsaken Realms/sprites/ruins.atlas",
+		"sprite": "TempleRuined",
 		"map": "../The Forsaken Realms/maps/map/fort/fort_white_3_pharaoh.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -421,8 +421,8 @@
 		"displayName": "Leonin Sphinx",
 		"type": "dungeon",
 		"count": 1,
-		"spriteAtlas": "../common/maps/tileset/buildingsbosses.atlas",
-		"sprite": "CatLair",
+		"spriteAtlas": "../The Forsaken Realms/sprites/ruins.atlas",
+		"sprite": "TempleOvergrown",
 		"map": "../The Forsaken Realms/maps/map/catlair/catlair_white_3_temple.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -2123,8 +2123,8 @@
 		"displayName": "Satyr Grove",
 		"type": "dungeon",
 		"count": 2,
-		"spriteAtlas": "../common/maps/tileset/buildingsbosses.atlas",
-		"sprite": "FortGreen",
+		"spriteAtlas": "../The Forsaken Realms/sprites/ruins.atlas",
+		"sprite": "TempleOvergrown",
 		"map": "../The Forsaken Realms/maps/map/fort/fort_green_2_grove.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [

@@ -17757,6 +17757,69 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 137: two temple entrances, and a pair of gauntlets that grant a second hand slot (2026-09-07, repo only)
+
+### Two new overworld entrances
+
+The user supplied two 419 px temple renders. They are not on a pixel grid (block size 1, anti-aliased, sitting on a
+flat `(188,200,194)` background), so each was flood-filled from the edges to key the background out - a flood fill
+rather than a colour match, since the temple's own stonework contains similar greys - then cropped, squared
+bottom-aligned like a building, LANCZOS-resampled to **32x32** (the dominant dungeon icon size) and
+alpha-thresholded to keep the edge crisp. New plane-local `sprites/ruins.png` (64x32) + `ruins.atlas` with
+`TempleOvergrown` and `TempleRuined`. Common's `buildings.png` was left alone - same reasoning as round 122's cave
+icons, it is a shared file.
+
+Four dungeons were re-pointed, deliberately one from each of four DIFFERENT over-shared groups so the
+de-duplication spreads rather than concentrating: Satyr Grove (was FortGreen, shared by 3) and Leonin Sphinx
+(CatLair, 6) to TempleOvergrown; Sea Temple (FortBlue, 5) and Pharaoh's Fort (WhiteCastle, 3) to TempleRuined.
+
+`points_of_interest.json` is tab-indented CRLF but **hand-edited** - some nested arrays close one indent level short,
+so `json.dumps` cannot reproduce it and a reserialise would have rewritten all 6,245 lines. Edited surgically per
+POI, anchored on each one's unique `name` (the display names are not unique - there are five Monasteries), for a
+16-line diff.
+
+### Sinistral and Dextral Gauntlets
+
+Per the user: one left-hand item granting an extra right-hand slot, one right-hand item granting an extra left-hand
+slot, both -2 health, both legendary, both median cost.
+
+- **Sinistral Gauntlet** - Left slot, grants `Right2`, `lifeModifier: -2`, 5,000 gold, Mythic.
+- **Dextral Gauntlet** - Right slot, grants `Left2`, `lifeModifier: -2`, 5,000 gold, Mythic.
+
+5,000 is the exact median `cost` across the 248 priced items. **Mythic, not "Legendary"**: this game's rarity ladder
+is Common/Uncommon/Rare/Mythic, and `rollWeightedItemRarity()` / `getItemNamesByRarity()` match on those bare words,
+so a "Legendary" string would simply never be rolled by anything that draws items by rarity. `lifeModifier` is
+per-duel starting life, which is the only "health" an item effect can move.
+
+**Icons.** The plane's atlas maps 189 regions, but **1,128 unmapped 16x16 cells of the sheet still carry artwork** -
+there was genuinely unused art to take. Nothing is named glove or gauntlet, so the sheet was rendered and read by
+eye: row 26, columns 3 and 4 are paired bracers (leather and steel) and both are unmapped. Extracted to a new plane
+page `sprites/items_gloves.png` (32x16) with `SinistralGauntlet` / `DextralGauntlet` appended to the plane's
+`items.atlas` - the same page-append pattern round 122 used for the Rally rune.
+
+### The second-slot mechanic
+
+`equippedItems` is a `Map<slotName, longID>` - **one item per slot NAME** - so a second right hand needs a second
+key, and `equip()` was hard-wired to `put(item.equipmentSlot, ...)`.
+
+- **`ItemData.grantsEquipmentSlot`** names the slot an item unlocks while worn. Safe to add: the class carries an
+  explicit `serialVersionUID = 1L`, so the save format cannot move.
+- **`grantedEquipmentSlots()`** reads what is currently unlocked; **`slotCandidates()`** gives an item its fill
+  order (its own slot, then the granted twin); **`equip()`** now unequips from whichever candidate actually holds
+  the item, and otherwise fills the first FREE candidate before falling back to displacing the base slot.
+- **`dropUngrantedSlots()`** is the load-bearing one: an extra slot vanishes with the gauntlet that granted it, so
+  whatever sat in it has to come off too - otherwise that item stays flagged equipped, keeps applying its effects,
+  and has no slot on the doll to remove it from. `[TFR-EquipSlot]` logs each drop.
+- `equip()` also now clears `isEquipped` on an item it **displaces**, which the original never did - a latent bug
+  where a swapped-out item still read as worn.
+- **`InventoryScene`** hides any `*2` slot unless it is currently granted; `ui/inventory.json` and
+  `ui/inventory_portrait.json` gain `Equipment_Left2` and `Equipment_Right2` between the hands and the Medal slot.
+
+**Files touched**: `data/ItemData.java`, `player/AdventurePlayer.java`, `scene/InventoryScene.java`; plane
+`sprites/ruins.png` + `ruins.atlas` (new), `sprites/items_gloves.png` (new), `sprites/items.atlas`,
+`world/items.json`, `world/points_of_interest.json`, `ui/inventory.json`, `ui/inventory_portrait.json`;
+`dev-tools/validate_plane_data.py`.
+
 ## Round 136: a hard two-item cap on every Arena payout; v1.08 (2026-09-07)
 
 User clarification, arriving minutes after v1.07 was published: *"Any Arena rewards should never exceed 2 items.

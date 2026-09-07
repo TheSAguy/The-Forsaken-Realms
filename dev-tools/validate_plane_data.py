@@ -135,7 +135,7 @@ F["DifficultyData"] = set("""name startingLife startingShards startingMoney star
 F["EffectData"] = set("""name lifeModifier changeStartCards startBattleWithCard startBattleWithCardTapped startBattleWithCardInCommandZone colorView
  moveSpeed goldModifier cardRewardBonus extraManaShards visionRadiusMultiplier opponent""".split())
 F["ItemData"] = set("""name equipmentSlot effect description iconName questItem excludeFromGeneralSale cost rarity usableOnWorldMap usableInPoi
- isCracked isEquipped longID commandOnUse shardsNeeded dialogOnUse""".split())
+ isCracked isEquipped longID commandOnUse shardsNeeded dialogOnUse grantsEquipmentSlot""".split())
 F["RewardData"] = set("""type probability count addMaxCount cardName itemName itemNames itemRarity editions colors startDate endDate rarity subTypes
  cardTypes superTypes manaCosts keyWords colorType cardText matchAllSubTypes matchAllColors cardUnion deckNeeds rotation cardPack sourceDeck minDate""".split())
 F["DialogData"] = set("action condition name locname text loctext options isDisabled pinLastOption voiceFile".split())

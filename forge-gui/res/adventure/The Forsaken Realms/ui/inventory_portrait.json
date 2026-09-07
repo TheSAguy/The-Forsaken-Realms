@@ -73,6 +73,15 @@
     },
     {
       "type": "ImageButton",
+      "name": "Equipment_Left2",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 256
+    },
+    {
+      "type": "ImageButton",
       "name": "Equipment_Medal",
       "style": "item_frame_static",
       "width": 20,
@@ -88,6 +97,15 @@
       "height": 20,
       "x": 107,
       "y": 234
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Right2",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 256
     }     ,
     {
       "type": "Scroll",

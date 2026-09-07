@@ -5000,6 +5000,32 @@
         "rarity":  "Common"
     },
     {
+        "name":  "Sinistral Gauntlet",
+        "description":  "Worn on the left, it frees the right: a second right-hand slot opens while it is buckled on. The pact costs you two life in every duel.",
+        "equipmentSlot":  "Left",
+        "grantsEquipmentSlot":  "Right2",
+        "iconName":  "SinistralGauntlet",
+        "cost":  5000,
+        "effect":  {
+                       "name":  "Sinistral Gauntlet",
+                       "lifeModifier":  -2
+                   },
+        "rarity":  "Mythic"
+    },
+    {
+        "name":  "Dextral Gauntlet",
+        "description":  "Worn on the right, it frees the left: a second left-hand slot opens while it is buckled on. The pact costs you two life in every duel.",
+        "equipmentSlot":  "Right",
+        "grantsEquipmentSlot":  "Left2",
+        "iconName":  "DextralGauntlet",
+        "cost":  5000,
+        "effect":  {
+                       "name":  "Dextral Gauntlet",
+                       "lifeModifier":  -2
+                   },
+        "rarity":  "Mythic"
+    },
+    {
         "name":  "Jewel of Blessings",
         "description":  "All your creatures gain vigilance.",
         "equipmentSlot":  "Neck",
