@@ -17757,6 +17757,38 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 131: v1.06 "Deeper Caves" RELEASED - desktop + Android (2026-09-06)
+
+Tag `tfr-v1.06` @ `17d3fcbf54b`, published 2026-09-07 01:31 UTC and marked Latest:
+<https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.06>
+
+Three assets, all verified before the release left draft state. It was created as a DRAFT and published only once
+both platforms were attached, so it never went public PC-only:
+- **`The-Forsaken-Realms-v1.06.zip`** (237.3 MB) - `build_standalone.py --out C:\Users\User\TFR-Release --zip`. The
+  base install had moved to the 09.06 daily, so this was a full stock copy; still under six minutes on the SSD.
+  Shipped `config.json` verified at modVersion 1.06 / modVersionDate 09.06 / engineBuildVersion
+  2.0.15-SNAPSHOT-09.06 / disableGeneticDeckOverrides true.
+- **`forsaken-realms-1.06-signed-aligned.apk`** (12.5 MB) and **`assets.zip`** (175.5 MB) - one Maven run, per the
+  matched-pair rule.
+- **The Android build took 2 min 03 s.** Built from a fresh `git clone` of the F: repo to `C:\TFR-build` with
+  `subst R:` re-pointed at it. The F: USB build was 2h17m (round 119); this is the same work on the internal SSD.
+  Two gotchas for next time: the clone needs `git -c safe.directory='*'` (F: trips git's dubious-ownership guard),
+  and the two gitignored files must be copied in by hand afterwards - `forge-gui-android/forge.keystore` and
+  `forge-gui-android/local.properties`.
+- **Pre-upload verification** (ANDROID_RELEASE.md step 4, every item): `aapt dump badging` gives package
+  `com.thesaguy.forsakenrealms`, versionCode **10600**, versionName **1.06**, label "The Forsaken Realms";
+  `apksigner verify --print-certs` gives `CN=The Forsaken Realms, OU=TheSAguy` with SHA-256 `ee603925c48b...` - the
+  documented **EE:60:39:25** keystore, so existing players update in place instead of having to uninstall and lose
+  saves; `assets.zip` has top-level `res/`, `res/adventure/` containing **exactly** `common` + `The Forsaken Realms`
+  (no stock planes), `res/build.txt` and `res/cardsfolder/cardsfolder.zip` present, and its copy of the plane data
+  carries the round-129 flying pass (322 flying enemies) and the round-130 flag.
+
+`RELEASE_NOTES_v1.06.md` is the release body. Rounds 120-130 are now shipped; nothing is unreleased.
+
+**Worth passing to the Discord testers:** the Arena genetic-deck bug behind the v1.03 report was still live in the
+RELEASED v1.05 - anyone who played v1.05 on Hard or Insane was fighting Arena opponents holding random Vintage and
+Legacy tournament decks the AI cannot pilot. v1.06 is the first build where that is fixed.
+
 ## Round 130: enemies keep the decks they were built with; v1.06 stamps (2026-09-06)
 
 Traced from a v1.03 tester report the user forwarded a week late: *"Wasteland Arena (the one that awards all the

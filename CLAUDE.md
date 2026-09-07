@@ -17,11 +17,18 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 NIGHT (round 130; v1.06 RELEASING) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 NIGHT (round 131; **v1.06 RELEASED**) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
-  `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 130 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-130 are
+- **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
+  2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
+  `forsaken-realms-1.06-signed-aligned.apk` (12.5 MB), `assets.zip` (175.5 MB). `RELEASE_NOTES_v1.06.md` is the body.
+  **Rounds 120-130 are all shipped - nothing is unreleased.** Stamps: modVersion 1.06 / modVersionDate 09.06 /
+  tfr.version 1.06 / manifestVersionCode 10600 / engineBuildVersion 2.0.15-SNAPSHOT-09.06.
+  **The Android build now takes 2 minutes**, not 2h17m: `git -c safe.directory='*' clone F:/... C:/TFR-build`, copy
+  in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
+  ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
+- **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- **HEAD = round 131 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-130 are
   post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
   (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
   and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
