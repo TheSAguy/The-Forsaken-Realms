@@ -83,9 +83,13 @@ every Arena opponent on Hard and Insane was being dealt a random deck from Forge
 tournament lists, regardless of who they actually were. That is gone. **Arena fighters play their
 own decks now**, the same ones they would bring to a fight in the wild.
 
+That fix reaches **every** arena, including the Illegal Arena a Chest can open — which is where a
+tester met an opponent that played Mana Vault into Mana Crypt on turn one and then did nothing for
+ten turns.
+
 The brackets changed with it. At the **five AI capitals** and at a **player Arena still at level 1**,
 the seven seats are filled **50% Adept / 35% Master / 15% Archmage** — no Apprentices at all. A
-player Arena upgraded to level 2 keeps the old open field, as does the Chest's illegal arena.
+player Arena upgraded to level 2 keeps the open field, as does the Chest's arena.
 
 ## Changed: one fewer attacking mage
 
@@ -131,6 +135,16 @@ released when you entered a map.
   back to "spawn a random roamer for this biome". The Skep hive is Slivers again.
 - **56 rewards that never dropped** have been removed from the enemy tables — they named items that
   do not exist, so the engine printed a warning and moved on. Slobad's card reward works now.
+- **Enemies keep the decks they were built with.** Separately from the Arena, with the "Generate
+  LDA Decks" setting on, any enemy with more than 16 base life - most of the roster, including
+  every Mythic and every hand-built legend deck - discarded its own deck for a randomly generated
+  archetype deck, one in ten of them Legacy. That is switched off for this world now.
+- **A pop-up no longer follows you out of a dungeon.** Collect gold or shards and leave within a
+  few seconds, and the little "+2 Shards" text used to reappear over the *next* place you entered.
+  Display only - the resources were always credited once, at pickup.
+- **Winged enemies fly.** 51 of them - the young dragons, drakes and wyverns, the Dragonkin, the
+  Vampire Bat and Fluttering Pixie, plus Bone Dragon, Fire Dragon, Nicol Bolas, Avacyn, Kaalia and
+  others that had been left grounded next to identical enemies that flew.
 - **Android: the Armory's hire-guard buttons no longer hide behind the item cards** in portrait.
 - Gold, wood and stone picked up in dungeons make a sound, like they do outside. A new Horror shop
   and a fixed shop sign. Mage towers and wizard forts have their own icons.

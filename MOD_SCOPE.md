@@ -4727,3 +4727,13 @@ timer (`DungeonRotation.onDungeonLooted`, `[TFR-DungeonLooted]`), once per visib
 persisted `World.poiLootedDay`. Active quest targets are exempt so the side-quest runway the rest of the system
 guarantees is not pulled in. Tunable `dungeonLootedDespawnFactor` (0.5; 1.0 = off) in settings.json. Open: whether
 looted side-quest targets should cycle faster too, and whether half is the right fraction once it is felt in play.
+
+### 109. Enemies keep the decks they were built with — `Done (built 2026-09-06, round 130), not yet playtest-confirmed`
+Traced from a v1.03 tester report: enemies "played insane openers then did nothing whatsoever... mana vault / mana
+crypt turn 1 then spent the next 10 turns tapping then untapping". Upstream substitutes decks on Hard/Insane in three
+places. The Arena one went in round 125. The other two are now gated by `ConfigData.disableGeneticDeckOverrides`
+(default false, true only for this plane): the LDA archetype branch, which discarded the authored deck of any enemy
+with catalog life > 16 - 1,415 of 1,787 here, every Mythic and legend - for a random Standard/Modern/**Legacy**
+archetype list, and the random-precon branch that replaced `.json` deck templates. `[TFR-DeckOverride]` logs once per
+session. Open: whether the "Generate LDA Decks" settings checkbox should be hidden outright for this plane now that
+it does nothing here.

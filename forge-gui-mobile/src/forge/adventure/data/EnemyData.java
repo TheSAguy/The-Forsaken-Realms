@@ -108,7 +108,20 @@ public class EnemyData implements Serializable {
     }
 
     public Deck generateDeck(boolean isFantasyMode, boolean useGeneticAI) {
+        // Round 130: one plane flag switches off BOTH genetic substitutions below - the LDA
+        // archetype branch immediately after this, and the random-precon branch inside
+        // CardUtil.getDeck() that canUseGeneticAI is passed into. See
+        // ConfigData.disableGeneticDeckOverrides for what each one did and why this plane wants
+        // neither: an enemy should play the deck it was authored with.
         boolean canUseGeneticAI = useGeneticAI && life > 16;
+        if (canUseGeneticAI && Config.instance().getConfigData().disableGeneticDeckOverrides) {
+            canUseGeneticAI = false;
+            if (!loggedGeneticSuppression) {
+                loggedGeneticSuppression = true;
+                System.out.println("[TFR-DeckOverride] disableGeneticDeckOverrides is on for this plane -"
+                        + " enemies play their own decks on Hard/Insane (first suppressed: " + getName() + ")");
+            }
+        }
 
         if (canUseGeneticAI && Config.instance().getSettingData().generateLDADecks) {
             GameFormat fmt = FModel.getFormats().getStandard();
@@ -126,6 +139,10 @@ public class EnemyData implements Serializable {
         }
         return CardUtil.getDeck(deck[Current.player().getEnemyDeckNumber(this.getName(), deck.length)], true, isFantasyMode, colors, life > 13, canUseGeneticAI);
     }
+
+    // Session-local, transient by design: one line per run is enough to prove the gate is
+    // active in a log, and a line per duel would be noise (most duels on Insane qualify).
+    private static boolean loggedGeneticSuppression = false;
 
     public String getName(){
         //todo: make this the default accessor for anything seen in UI

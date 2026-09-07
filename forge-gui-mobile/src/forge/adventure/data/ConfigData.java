@@ -34,6 +34,28 @@ public class ConfigData {
     public String[] allowedJumpstart;
     public String defaultBasicLandSet = "JMP";
     public boolean enableGeneticAI = true;
+    /** Round 130 (user decision 2026-09-06, from a v1.03 tester report): suppress upstream's
+     *  Hard/Insane "genetic" deck substitutions for this plane. Default FALSE so Shandalar and
+     *  every other stock plane keep upstream behavior unchanged; only The Forsaken Realms turns
+     *  it on. Two substitutions are covered, both reached through EnemyData.generateDeck()'s
+     *  canUseGeneticAI (which is `useGeneticAI && life > 16`, and useGeneticAI is itself
+     *  `enableGeneticAI && (custom deck || Hard/Insane)`):
+     *  <ul>
+     *  <li>the LDA branch - with the player's "Generate LDA Decks" setting on, the enemy's own
+     *  deck is discarded for a random archetype deck rolled 50% Standard / 40% Modern / 10%
+     *  LEGACY. 1,415 of this plane's 1,787 enemies have catalog life > 16, including all 117
+     *  Mythics and every hand-built legend deck, so on Insane most of the roster was liable to
+     *  throw away the deck it was authored with. A Legacy archetype list is where the tester's
+     *  "Mana Vault / Mana Crypt turn 1 then ten turns of doing nothing" came from: the AI cannot
+     *  pilot those combo/prison decks.</li>
+     *  <li>the CardUtil.getDeck() branch - an enemy whose deck entry is a .json TEMPLATE (67
+     *  references here, 19 of them on life>16 enemies) gets a random precon/theme deck instead of
+     *  its template. A .dck path returns before that branch, so hand-built decks were always
+     *  safe.</li>
+     *  </ul>
+     *  Not covered, deliberately: DuelScene's genetic fallback for a MISSING deck file, which is
+     *  an error path and should stay, and Chaos/fantasy mode, which is a different flag. */
+    public boolean disableGeneticDeckOverrides = false;
     public String chaosDeckFormat;
     public boolean usePriceListPrices = true;
     public boolean fogOfWarEnabled = false;

@@ -1354,6 +1354,21 @@ from the plane's `config tables/settings.json`).
   `"flying": true`. `flying` is a MOVEMENT flag - a flying enemy skips the collision test and the
   navigation mesh and beelines at the player - not the MTG keyword.
 
+### 2026-09-06 Genetic deck override gate (round 130)
+
+- **`forge-gui-mobile/src/forge/adventure/data/ConfigData.java`** - new
+  `disableGeneticDeckOverrides` (default **false**, so stock planes are untouched; only this
+  plane's config.json sets it true).
+- **`forge-gui-mobile/src/forge/adventure/data/EnemyData.java`** - `generateDeck()` clears
+  `canUseGeneticAI` when that flag is on, which disables BOTH of upstream's Hard/Insane deck
+  substitutions at once: the LDA archetype branch here, and the
+  `DeckgenUtil.getRandomOrPreconOrThemeDeck` branch inside `CardUtil.getDeck()` that the same
+  boolean is passed into. Plus a `private static` once-per-session log guard
+  (`[TFR-DeckOverride]`); the class's explicit `serialVersionUID` (round 90) means that cannot
+  move the save format.
+- Not changed, deliberately: `DuelScene`'s genetic fallback for a MISSING deck file (an error
+  path), and `CardUtil.getDeck`'s `isFantasyMode` half (Chaos mode).
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

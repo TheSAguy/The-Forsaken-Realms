@@ -17,11 +17,11 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 EVENING (round 129; v1.06 IN PROGRESS) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-06 NIGHT (round 130; v1.06 RELEASING) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.05 "Fight Back" is RELEASED** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`, desktop zip + Android
   `forsaken-realms-1.05-signed-aligned.apk` + `assets.zip` on GitHub. `RELEASE_NOTES_v1.05.md` is the release body.
-- **HEAD = round 129 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-129 are
+- **HEAD = round 130 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-130 are
   post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
   (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
   and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
@@ -130,6 +130,15 @@ Done today (committed):
   main:master`.
 - Upstream moved 5 commits past c817743ecbd; take them with the next engine update + Forge_2
   reinstall. Optional: upstream added MSH to common starterEditions; TFR's list untouched.
+- Round 130 (2026-09-06): ConfigData.disableGeneticDeckOverrides (default FALSE, true only in TFR's config.json)
+  switches off BOTH of upstream's Hard/Insane deck substitutions - the LDA archetype branch (discarded the authored
+  deck of any enemy with catalog life > 16, i.e. 1,415 of 1,787, for a random Standard/Modern/LEGACY list when the
+  "Generate LDA Decks" setting is on) and CardUtil.getDeck's random-precon swap of .json deck TEMPLATES (.dck paths
+  always returned early and were safe). [TFR-DeckOverride] logs once per session. Traced from the v1.03 tester report
+  about "mana vault / mana crypt turn 1 then 10 turns of nothing"; the Arena half of that was round 125 and was still
+  live in the RELEASED v1.05. The report's "treasure chest sprite" was not a bug - both encounters were Chest world
+  spawns whose 1-in-6 Illegal Arena event opened the arena; Progenitus is spawnRate 0 = Arena-exclusive.
+  **v1.06 stamps applied**: modVersion 1.06 / modVersionDate 09.06 / tfr.version 1.06 / manifestVersionCode 10600.
 - Round 129 (2026-09-06): floating "+N Shards" pickup labels are tracked on GameStage and dropped on a map swap or
   load (they were parked on the MapStage singleton mid-animation and resumed over the NEXT map - the user's "+2 Shards
   when I enter a town", text only); 51 winged enemies gain flying (15 basic/dragon, Vampire Bat, Fluttering Pixie, 5

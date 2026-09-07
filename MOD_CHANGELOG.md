@@ -17757,6 +17757,75 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 130: enemies keep the decks they were built with; v1.06 stamps (2026-09-06)
+
+Traced from a v1.03 tester report the user forwarded a week late: *"Wasteland Arena (the one that awards all the
+moxen and ancestral recall) has the sprite of a treasure chest. When playing through it virtually every enemy played
+insane openers then did nothing whatsoever. For example one played mana vault / mana crypt turn 1 then spent the next
+10 turns tapping then untapping the artifacts without playing any spells... The same issue just occurred with
+Progenitus, who I assume was supposed to be a roaming boss. Both the chest sprite and the extremely passive AI were
+the same."*
+
+### What they actually met (both times): a Chest
+
+There is no "Wasteland Arena" in this plane and never has been (`git log -S` over the whole history finds nothing).
+Both encounters came out of a **Chest** - the `ResourceSpawns` world-map loot pickup, whose sprite is a treasure
+chest by design. Opening one rolls `nextInt(6)`: gold, lost card, Dangerous Enemy, Thief Merchant, Duplicate, or
+**Illegal Arena** (`ChestEvents.triggerIllegalArena` -> `ArenaScene.loadArenaDataStandalone`). The arena-exclusive
+bounties are the "all the moxen and ancestral recall". So the chest sprite is the chest, not the arena's icon - the
+standalone arena POI, **Valor's Reach Arena**, uses `buildings.atlas` region `Building15`, a colosseum gate, and
+`git show tfr-v1.03` confirms that entry is byte-identical to what the tester was running. No sprite bug.
+
+Progenitus fits the same box: `spawnRate: 0`, which in this codebase means **Arena-exclusive** (see ArenaScene's
+champion-bounty comment), so it cannot roam. The Dangerous Enemy event cannot produce it either -
+`pickRandomArchmage` -> `TerritoryControl.pickGrandmasterMage`, a colour's Archmage mage. It reached them through a
+second Chest's Illegal Arena. Their "I assume it was a roaming boss" is what made one bug look like two.
+
+### The passive AI: the Arena half was already fixed, the rest was not
+
+The Arena half is round 125: `DuelScene` had `arenaBattleChallenge = isArena && isHardorInsaneDifficulty()` and then
+dealt every Arena opponent `Aggregates.random(DeckProxy.getAllGeneticAIDecks())` - one of Forge's 786 genetic-AI
+tournament lists. Those are Vintage/Legacy combo and prison decks the AI cannot pilot; Mana Vault into Mana Crypt and
+then ten dead turns is exactly what that looks like. Removed in round 125, which covers both arena entry points.
+**Note it was still live in the released v1.05**, not only v1.03.
+
+But two more genetic substitutions survive on Hard/Insane, both upstream, both reached through
+`EnemyData.generateDeck()`'s `canUseGeneticAI` (`useGeneticAI && life > 16`, where `useGeneticAI` is
+`enableGeneticAI && (custom deck || Hard/Insane)` and `enableGeneticAI` defaults to true):
+- **The LDA branch.** With the player's "Generate LDA Decks" setting on, the enemy's own deck is discarded for
+  `DeckgenUtil.buildLDACArchetypeDeck` rolled **50% Standard / 40% Modern / 10% Legacy**. **1,415 of this plane's
+  1,787 enemies have catalog life > 16** - every one of the 117 Mythics, all 22 hand-built Mythic decks, every
+  legend. A Legacy archetype list is precisely where Mana Vault and Mana Crypt live. The setting defaults to false
+  and is absent from the user's own `settings.json`, but it is a visible checkbox in Settings, so a tester can have
+  it on - this is the one path that still reproduces the reported symptom outside an arena.
+- **The `CardUtil.getDeck` branch.** `forAI && (isFantasyMode || useGeneticAI)` replaces the deck with
+  `DeckgenUtil.getRandomOrPreconOrThemeDeck`. A `.dck` path returns *before* that branch, so hand-built decks were
+  always safe; only `.json` deck TEMPLATES are affected - 67 references here, 19 of them on life>16 enemies.
+
+### The gate (user decision: "gate it behind a plane flag defaulting to off")
+
+New `ConfigData.disableGeneticDeckOverrides`, **default `false`**, set `true` only in this plane's `config.json`.
+Defaulting to false is what keeps Shandalar and every other stock plane on upstream behavior, per CLAUDE.md's
+per-plane opt-in rule; the flag is off unless a plane asks for it, which is the shape the user asked for. One line in
+`EnemyData.generateDeck()` clears `canUseGeneticAI` when the flag is on, which switches off **both** substitutions
+above at once - the LDA branch immediately below it, and the random-precon branch inside `CardUtil.getDeck()` that
+the same boolean is passed into. Deliberately NOT covered: `DuelScene`'s genetic fallback when a deck file is
+*missing* (an error path that should keep working) and Chaos/fantasy mode (a different flag).
+
+`[TFR-DeckOverride]` logs **once per session**, on the first suppression, naming the enemy - a line per duel would be
+noise, since most duels on Insane qualify. `EnemyData` already carries an explicit
+`serialVersionUID = -3317270785183936320L` (round 90), so the new `private static` field cannot shift the save
+format.
+
+### v1.06 stamps
+
+Plane `config.json` `modVersion` 1.05 -> **1.06**, `modVersionDate` 09.05 -> **09.06** (`engineBuildVersion` stays
+`2.0.15-SNAPSHOT-09.06` from round 127). `forge-gui-android/pom.xml` `tfr.version` -> **1.06**,
+`manifestVersionCode` 10500 -> **10600**. `validate_plane_data.py` learns the new config key.
+
+**Files touched**: `data/ConfigData.java`, `data/EnemyData.java`; plane `config.json`;
+`forge-gui-android/pom.xml`; `dev-tools/validate_plane_data.py`. MOD_SCOPE #109.
+
 ## Round 129: the ghost "+2 Shards" pop-up, 51 winged enemies that could not fly, decks v7 (2026-09-06)
 
 Three user items from the first session on the round-128 package.
