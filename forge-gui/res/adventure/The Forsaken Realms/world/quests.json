@@ -14704,7 +14704,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_white",
-		"rewardDescription": "2 rare White cards, 250 gold, 5 shards",
+		"rewardDescription": "2 rare White cards, 250 gold, 5 shards, +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The sovereign of the plains keeps a seat somewhere out there - the Plains Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14732,7 +14732,7 @@
 			]
 		},
 		"epilogue": {
-			"text": "You have stood inside the Plains Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from white stock. (+250 [+Gold], +5 [+Shards])",
+			"text": "You have stood inside the Plains Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from white stock. (+250 [+Gold], +5 [+Shards]) Word of the errand travels: your own banner stands a little higher for it. (+2 reputation with your colors)",
 			"options": [
 				{
 					"name": "(Take your reward)",
@@ -14758,6 +14758,9 @@
 									"count": 5
 								}
 							]
+						},
+						{
+							"addColorReputationPlayerColors": 2
 						}
 					]
 				}
@@ -14789,7 +14792,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_blue",
-		"rewardDescription": "2 rare Blue cards, 250 gold, 5 shards",
+		"rewardDescription": "2 rare Blue cards, 250 gold, 5 shards, +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The tidecaller of the isles keeps a seat somewhere out there - the Island Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14817,7 +14820,7 @@
 			]
 		},
 		"epilogue": {
-			"text": "You have stood inside the Island Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from blue stock. (+250 [+Gold], +5 [+Shards])",
+			"text": "You have stood inside the Island Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from blue stock. (+250 [+Gold], +5 [+Shards]) Word of the errand travels: your own banner stands a little higher for it. (+2 reputation with your colors)",
 			"options": [
 				{
 					"name": "(Take your reward)",
@@ -14843,6 +14846,9 @@
 									"count": 5
 								}
 							]
+						},
+						{
+							"addColorReputationPlayerColors": 2
 						}
 					]
 				}
@@ -14874,7 +14880,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_black",
-		"rewardDescription": "2 rare Black cards, 250 gold, 5 shards",
+		"rewardDescription": "2 rare Black cards, 250 gold, 5 shards, +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The lord of the mire keeps a seat somewhere out there - the Swamp Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14902,7 +14908,7 @@
 			]
 		},
 		"epilogue": {
-			"text": "You have stood inside the Swamp Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from black stock. (+250 [+Gold], +5 [+Shards])",
+			"text": "You have stood inside the Swamp Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from black stock. (+250 [+Gold], +5 [+Shards]) Word of the errand travels: your own banner stands a little higher for it. (+2 reputation with your colors)",
 			"options": [
 				{
 					"name": "(Take your reward)",
@@ -14928,6 +14934,9 @@
 									"count": 5
 								}
 							]
+						},
+						{
+							"addColorReputationPlayerColors": 2
 						}
 					]
 				}
@@ -14959,7 +14968,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_red",
-		"rewardDescription": "2 rare Red cards, 250 gold, 5 shards",
+		"rewardDescription": "2 rare Red cards, 250 gold, 5 shards, +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The emberlord of the peaks keeps a seat somewhere out there - the Mountain Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -14987,7 +14996,7 @@
 			]
 		},
 		"epilogue": {
-			"text": "You have stood inside the Mountain Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from red stock. (+250 [+Gold], +5 [+Shards])",
+			"text": "You have stood inside the Mountain Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from red stock. (+250 [+Gold], +5 [+Shards]) Word of the errand travels: your own banner stands a little higher for it. (+2 reputation with your colors)",
 			"options": [
 				{
 					"name": "(Take your reward)",
@@ -15013,6 +15022,9 @@
 									"count": 5
 								}
 							]
+						},
+						{
+							"addColorReputationPlayerColors": 2
 						}
 					]
 				}
@@ -15044,7 +15056,7 @@
 			"player_capital"
 		],
 		"requiresCharacterFlagUnset": "visitedCapital_green",
-		"rewardDescription": "2 rare Green cards, 250 gold, 5 shards",
+		"rewardDescription": "2 rare Green cards, 250 gold, 5 shards, +2 reputation with your own colors",
 		"offerDialog": {
 			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The warden of the wilds keeps a seat somewhere out there - the Forest Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
 			"options": [
@@ -15072,7 +15084,7 @@
 			]
 		},
 		"epilogue": {
-			"text": "You have stood inside the Forest Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from green stock. (+250 [+Gold], +5 [+Shards])",
+			"text": "You have stood inside the Forest Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from green stock. (+250 [+Gold], +5 [+Shards]) Word of the errand travels: your own banner stands a little higher for it. (+2 reputation with your colors)",
 			"options": [
 				{
 					"name": "(Take your reward)",
@@ -15098,6 +15110,9 @@
 									"count": 5
 								}
 							]
+						},
+						{
+							"addColorReputationPlayerColors": 2
 						}
 					]
 				}

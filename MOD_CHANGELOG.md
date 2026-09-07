@@ -17757,6 +17757,61 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 143: the render loop speaks up, and the capital quests pay your own side (2026-09-07)
+
+### S4-6 - `Adventure.render()` stops swallowing everything
+
+The last Low finding from the 2026-09-05 review. `Adventure.java:81` was:
+
+```java
+} catch (IllegalStateException | NullPointerException ie) {
+    //silence this..
+    //TODO: Don't silence this.
+}
+```
+
+This is the RENDER loop, so a real drawing bug threw sixty times a second and left nothing behind at all. The
+original silence is defensible - logging every occurrence would bury the log under one identical stack trace per
+frame - so the fix logs the **first** of each distinct exception with its trace, then a running count every 600
+occurrences (~10s) while it is still happening. Distinctness is the exception class plus its top stack frame: the
+message is usually null on an NPE, and the whole trace is too noisy to key on, but the top frame separates two
+different bugs while collapsing one bug repeating. `[TFR-Render]`.
+
+### Reputation with your own side
+
+User report: *"I got a quest from the capitol to go find the green capitol... but I think I got rep with the green
+capitol, vs. my capitol. Is that intentional?"*
+
+It was not happening at all - quests 87-91 pay cards, gold and shards and touch no reputation; entering the capital
+only sets `visitedCapital_<colour>`. The green cards in the reward (and the epilogue's "taken from green stock") are
+what read as green favour. Beating green enemies on the way there moves the wheel the OTHER way: green -2, its allies
+-1, its enemies +2.
+
+The deeper problem is that **the thing the user expected does not exist**: reputation is five per-AI-colour scores and
+the player's own side has no counterpart. The nearest true thing is the colours the player's starter deck established -
+the same set `ColorReputation.applyStartingDeckBonus()` seeds at character creation - so that is what the five capital
+quests now pay, **+2 with each of your own colours**.
+
+New `DialogData.ActionData.addColorReputationPlayerColors` (displayed points, like its sibling
+`addColorReputationAmount`) and `ColorReputation.addToPlayerColors()`. Deliberately NOT routed through
+`applyPattern()`, the zero-sum wheel: a five-colour player would net exactly zero from it and two- and three-colour
+players would quietly lose ground with their own off-colours. A flat add to each identity colour is what "your own
+side is pleased with you" should mean. `[TFR-Reputation]`.
+
+Also worth recording: `[+Reputation]` is **not a glyph**. The first draft of the epilogue text used one by analogy
+with `[+Gold]`/`[+Shards]`; nothing in the plane or common atlases defines a `Reputation` region, so it would have
+rendered as literal markup. The text says "+2 reputation with your colors" in plain words instead.
+
+### Jodah keeps the Sol Rings
+
+Round 141 stripped Jodah's two `sourceDeck` reward entries along with the rest of its jackpot. Per the user, one comes
+back: **3 cards from `Alt-Art_Staples.dck`**, which is 28 names across 96 lines and almost entirely Sol Ring
+printings. `High_End_Alt-Art.dck` - 280 distinct cards including Karn Liberated, Force of Will, the five Swords and
+the fetches, of which Jodah used to pay 5 (up to 7) - stays out.
+
+**Files touched**: `Adventure.java`, `data/DialogData.java`, `util/MapDialog.java`, `util/ColorReputation.java`;
+plane `world/quests.json`, `world/enemies.json`; `dev-tools/validate_plane_data.py`.
+
 ## Round 142: the stranded legends get a frontier (2026-09-07, repo only)
 
 User spec, after being shown the audit: *"As for the unreachable enemies, just have them be spawnable in 'Unhappy' and

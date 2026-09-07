@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 142; v1.08 RELEASED, rounds 137-142 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 143; v1.08 RELEASED, rounds 137-143 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 143 (2026-09-07): **code review S4-6 closed** - `Adventure.render()` logs the FIRST of each distinct
+  swallowed exception (class + top stack frame) plus a count every 600 repeats, instead of silencing outright.
+  `[TFR-Render]`. **The five "Find the X Capital" quests (87-91) now pay +2 reputation with the PLAYER'S OWN colours**
+  via new `ActionData.addColorReputationPlayerColors` + `ColorReputation.addToPlayerColors()` - a FLAT add per identity
+  colour, deliberately not the zero-sum applyPattern() wheel (a 5-colour player would net zero). Answering the user's
+  "I got rep with the green capitol vs. my capitol" - the quests paid no reputation at all, and there is no
+  player-side reputation score in this game; identity colours are the nearest true thing. **Jodah's 3 Sol Rings
+  restored** (`Alt-Art_Staples.dck`); the 280-card `High_End_Alt-Art.dck` stays out. NOTE `[+Reputation]` is NOT a
+  glyph - no atlas defines it; only `[+Gold]`/`[+Shards]` and the item icons exist.
+  **Decks written to `1_save_slot.sav`** (backup `prededit7.bak`): slot 1 "Norn's Verdict (W_B)" 40 (new - Elesh Norn,
+  Reaper, Angel of Sanctions, Sidisi, 2x Mirror Entity, Bitterblossom, 9 removal), slot 2 "Gravetithe (B)" 40, slot 3
+  "Dawn Bulwark (W)" 44 (their own build kept, weakest cards swapped). Lists live in `dev-tools/save-editing/`.
 - Round 142 (2026-09-07, REPO ONLY - user was playing, do not package): **frontier spawns**. The 111 enemies that were
   reachable NOWHERE now roam terrain whose colour is UNHAPPY (10%) or at WAR (15%), matched per colour LETTER so a
   multicoloured legend is eligible in several biomes; the 3 colourless ones take NEUTRAL terrain (2%). New

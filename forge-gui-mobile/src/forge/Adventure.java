@@ -79,8 +79,32 @@ public class Adventure implements Disposable {
             if (Forge.currentScene instanceof HudScene hudScene)
                 FrameRate.getInstance().sampleAdventure(hudScene.getBatch(), Forge.showFPS);
         } catch (IllegalStateException | NullPointerException ie) {
-            //silence this..
-            //TODO: Don't silence this.
+            // Round 143 (code review S4-6). This was "//silence this.. //TODO: Don't silence
+            // this." - and it is the RENDER loop, so a real drawing bug threw here sixty times a
+            // second and left nothing behind at all. The reason it was silenced is sound: logging
+            // every occurrence would bury the log under one identical stack trace per frame. So
+            // log the FIRST of each distinct exception and count the rest.
+            //
+            // Distinctness is the exception class plus its top stack frame, which is what
+            // separates two different bugs while collapsing the same bug repeating - the message
+            // alone is usually null on an NPE, and the whole trace is too noisy to key on.
+            reportSilencedRenderException(ie);
+        }
+    }
+
+    /** Round 143 (S4-6): first occurrence of each distinct render-loop exception, then a count. */
+    private static final java.util.Map<String, Integer> silencedRenderExceptions = new java.util.HashMap<>();
+    private static final int SILENCED_REPORT_EVERY = 600; // ~10s at 60fps, for something still going wrong
+
+    private static void reportSilencedRenderException(RuntimeException ie) {
+        StackTraceElement[] trace = ie.getStackTrace();
+        String key = ie.getClass().getSimpleName() + " at " + (trace.length > 0 ? trace[0].toString() : "(no frame)");
+        int seen = silencedRenderExceptions.merge(key, 1, Integer::sum);
+        if (seen == 1) {
+            System.err.println("[TFR-Render] swallowed exception (first occurrence): " + key);
+            ie.printStackTrace();
+        } else if (seen % SILENCED_REPORT_EVERY == 0) {
+            System.err.println("[TFR-Render] still swallowing: " + key + " x" + seen);
         }
     }
 

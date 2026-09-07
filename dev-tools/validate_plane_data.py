@@ -143,7 +143,7 @@ F["RewardData"] = set("""type probability count addMaxCount cardName cardNames i
 F["DialogData"] = set("action condition name locname text loctext options isDisabled pinLastOption voiceFile".split())
 F["ActionData"] = set("""key val removeItem addItem addLife addGold addShards addWood grantRingGift addStone deleteMapObject activateMapObject
  battleWithActorID giveBlessing setColorIdentity advanceCharacterFlag advanceQuestFlag advanceMapFlag setEffect setCharacterFlag setQuestFlag
- setMapFlag grantRewards grantRewardsChoice issueQuest addMapReputation POIReference addColorReputationColor addColorReputationAmount runCommand
+ setMapFlag grantRewards grantRewardsChoice issueQuest addMapReputation POIReference addColorReputationPlayerColors addColorReputationColor addColorReputationAmount runCommand
  refreshShopRewardsTrigger pinShopType triggerDungeonClear""".split())
 F["ConditionData"] = set("""key op val item actorID hasBlessing hasGold hasShards hasMapReputation hasLife colorIdentity checkCharacterFlag
  checkQuestFlag checkMapFlag getCharacterFlag getQuestFlag getMapFlag not""".split())

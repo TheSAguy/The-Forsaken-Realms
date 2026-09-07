@@ -286,6 +286,31 @@ public class ColorReputation {
         }
     }
 
+    /**
+     * Round 143: award {@code displayPoints} with every colour the player's own starter deck
+     * established - "reputation with my own capitol", as close as this game can express it, since
+     * reputation exists only as five per-AI-colour scores and the player's side has no counterpart.
+     * <p>
+     * Deliberately NOT run through applyPattern(): that is the zero-sum wheel, where a gain for one
+     * colour is a loss for its enemies. A five-colour player would net exactly zero from it, and
+     * two- and three-colour players would quietly lose ground with their own off-colours. A flat
+     * add to each identity colour is what "your own side is pleased with you" should mean.
+     */
+    public static void addToPlayerColors(int displayPoints, String why) {
+        if (!isEnabled() || displayPoints == 0)
+            return;
+        AdventurePlayer player = AdventurePlayer.current();
+        if (player == null)
+            return;
+        java.util.List<String> colors = colorsFromColorSet(player.getColorIdentity());
+        if (colors.isEmpty())
+            return;
+        for (String color : colors)
+            player.addColorReputationHalfPoints(color, displayPoints * 2);
+        System.out.println("[TFR-Reputation] " + why + ": +" + displayPoints
+                + " with the player's own colours " + colors);
+    }
+
     /** Called once from AdventurePlayer.create() with the chosen starter deck's color identity. */
     public static void applyStartingDeckBonus(ColorSet identity) {
         if (!isEnabled() || identity == null)

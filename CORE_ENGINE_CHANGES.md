@@ -1517,6 +1517,19 @@ from the plane's `config tables/settings.json`).
   `config tables/frontier_spawns.json` into a new `FrontierSpawnData`; absent leaves it null (off).
 - New mod files: `data/FrontierSpawnData.java`, `util/FrontierSpawns.java`.
 
+### 2026-09-07 S4-6 and reputation with the player's own colours (round 143)
+
+- **`forge-gui-mobile/src/forge/Adventure.java`** - the render loop's
+  `catch (IllegalStateException | NullPointerException)` no longer silences outright. First
+  occurrence of each distinct exception (class + top stack frame) is logged with its trace, then a
+  count every 600 repeats. `[TFR-Render]`. Closes code review S4-6.
+- **`forge-gui-mobile/src/forge/adventure/data/DialogData.java`** - new ActionData field
+  `addColorReputationPlayerColors` (displayed points).
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** - handles it.
+- **`forge-gui-mobile/src/forge/adventure/util/ColorReputation.java`** - new
+  `addToPlayerColors(displayPoints, why)`: a FLAT add to each colour of the player's own identity,
+  deliberately not the zero-sum applyPattern() wheel (a five-colour player would net zero).
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

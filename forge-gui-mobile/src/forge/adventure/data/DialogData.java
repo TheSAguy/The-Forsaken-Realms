@@ -101,6 +101,13 @@ public class DialogData implements Serializable {
         // uses (no 5-color wheel redistribution, just add to the one color). Amount is in DISPLAY
         // points (matches what the player sees in the reputation UI), doubled internally to the
         // half-point storage unit by AdventurePlayer.addColorReputationHalfPoints().
+        // Round 143 (user ask 2026-09-07, after "I got rep with the green capitol, vs. my
+        // capitol. Is that intentional?"): reputation with the player's OWN side. There is no such
+        // score - reputation exists only as five per-AI-colour values - so the nearest true thing
+        // is the colours the player's own starter deck established, the same set
+        // ColorReputation.applyStartingDeckBonus() seeds at character creation. Displayed points,
+        // like addColorReputationAmount.
+        public int addColorReputationPlayerColors = 0;
         public String addColorReputationColor;  //"white"/"blue"/"black"/"red"/"green"
         public int addColorReputationAmount = 0;
 
@@ -179,6 +186,7 @@ public class DialogData implements Serializable {
             issueQuest = other.issueQuest;
             addMapReputation = other.addMapReputation;
             POIReference = other.POIReference;
+            addColorReputationPlayerColors = other.addColorReputationPlayerColors;
             addColorReputationColor = other.addColorReputationColor;
             addColorReputationAmount = other.addColorReputationAmount;
             runCommand = other.runCommand;

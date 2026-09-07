@@ -35137,6 +35137,11 @@
                 ]
             },
             {
+                "type": "card",
+                "count": 3,
+                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
+            },
+            {
                 "type": "gold",
                 "count": 1500
             },
