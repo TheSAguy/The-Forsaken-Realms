@@ -4764,3 +4764,13 @@ one; level 2 rebuilt to 300/500/800 gold with four item tiers at 0.25/0.40/0.15/
 two-Mythic cap; the Chest's Illegal Arena following level 1 at 0.4/Uncommon; and the payout scope widened so a level-2
 arena in Normal mode is paid like level 1. Jewel of Blessings dropped to 12,000/Rare - Jewel of War and Jewel of Rage
 are still 30,000/Uncommon and were left alone.
+
+### 112. One Arena tournament win per venue per week — `Done (built 2026-09-07, round 135), not yet playtest-confirmed`
+User ask 2026-09-07, closing the arena-economy work: "The player can only win 1 arena tournament per week... each of
+the 5 AI's is its own location and level 1 and level 2 player arenas are their own location. You can enter/try as many
+as you want, but only allowed to win 1 per location per week. Use the 7,14,21, etc. for weeks." Seven venues (five AI
+capitals by POI id, the player's arena split by mode into :L1 and :L2). New persisted `World.arenaWinWeek` keyed to
+`getCurrentWeek()` = day/7, checked at the top of `ArenaScene.done()`: only a FULL bracket win consumes or is refused
+by the allowance, so entering, fighting and partial runs are never blocked. `[TFR-ArenaWeekly]`. The Chest's Illegal
+Arena and the Deck Tester are ungated (no POI behind them). Open: partial runs remain repeatable within a week - the
+spec gated wins, so that is what this gates.

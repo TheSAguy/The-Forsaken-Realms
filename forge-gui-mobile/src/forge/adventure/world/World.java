@@ -327,6 +327,14 @@ public class World implements Disposable, SaveFileContent {
     // are (hidePoi, activateFromReserve, a quest force-spawn), so the next incarnation can halve
     // again. Absent on saves predating this round, which simply means "not halved yet".
     private final java.util.Map<String, Integer> poiLootedDay = new java.util.HashMap<>();
+    // Round 135 (user spec 2026-09-07: "The player can only win 1 arena tournament per week...
+    // each of the 5 AI's is its own location and level 1 and level 2 player arenas are their own
+    // location. You can enter/try as many as you want, but only allowed to win 1 per location per
+    // week. Use the 7,14,21, etc. for weeks."). Key = arena location (POI id plus L1/L2 for the
+    // player's two modes), value = the week number (getCurrentDay() / 7) its last tournament win
+    // was paid. Persisted like the poi* maps above; absent on older saves, which reads as
+    // "never won here".
+    private final java.util.Map<String, Integer> arenaWinWeek = new java.util.HashMap<>();
     // Weighted spawn tier system, Layer 3 (2026-08-25 redesign, replacing the original
     // time-decaying suppression-stack system): how many times this exact enemy name has been
     // confirmed-defeated in roaming combat, permanently - never decays over time. Same shape as
@@ -351,6 +359,15 @@ public class World implements Disposable, SaveFileContent {
 
     public java.util.Map<String, Integer> getPoiLootedDay() {
         return poiLootedDay;
+    }
+
+    public java.util.Map<String, Integer> getArenaWinWeek() {
+        return arenaWinWeek;
+    }
+
+    /** Round 135: weeks are day/7, so the lock lifts the moment the week number ticks over. */
+    public int getCurrentWeek() {
+        return getCurrentDay() / 7;
     }
 
     public java.util.Map<String, Integer> getEnemyPermanentKillCount() {
@@ -719,6 +736,11 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             poiLootedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiLootedDay"));
         }
+        arenaWinWeek.clear();
+        if (saveFileData.containsKey("arenaWinWeek")) {
+            //noinspection unchecked
+            arenaWinWeek.putAll((java.util.Map<String, Integer>) saveFileData.readObject("arenaWinWeek"));
+        }
         enemyPermanentKillCount.clear();
         if (saveFileData.containsKey("enemyPermanentKillCount")) {
             //noinspection unchecked
@@ -806,6 +828,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
         data.storeObject("poiLootedDay", poiLootedDay);
+        data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
         data.store("poiActiveTarget", poiActiveTarget);
         StringBuilder star = new StringBuilder();
@@ -1105,6 +1128,7 @@ public class World implements Disposable, SaveFileContent {
             poiRespawnDay.clear();
             poiFailedAttempts.clear();
             poiLootedDay.clear();
+            arenaWinWeek.clear(); // round 135
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
             // cleared here same as the poi* maps above: New Game+ reuses this exact World instance
             // and calls generateNew() in place rather than constructing a fresh one, so without

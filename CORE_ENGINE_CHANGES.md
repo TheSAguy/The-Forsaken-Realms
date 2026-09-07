@@ -1412,6 +1412,22 @@ from the plane's `config tables/settings.json`).
   `maps/map/towns/player_capital.tmx` `arenaChallenge` rebuilt (300/200/300 gold, four item tiers
   0.25/0.40/0.15/0.05, one guaranteed win item, card entries removed).
 
+### 2026-09-07 Tier-title display + weekly arena win (round 135)
+
+- **`forge-gui-mobile/src/forge/adventure/data/EnemyData.java`** - `getTieredDisplayName()` strips
+  ANY of the four tier labels from the front of a name, not only one that already matches this
+  enemy's tier, so a stale title left by the round-116/118 re-tier cannot reach the screen. New
+  `TIER_LABELS`. Identity is untouched - the raw name still keys quests, `.tmx` references,
+  deck numbers and the save's kill-count/coin-ransom maps.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - new persisted
+  `Map<String,Integer> arenaWinWeek` + `getArenaWinWeek()` + `getCurrentWeek()` (day/7), following
+  the poi* maps' store/read/containsKey/clear pattern. `World` is `SaveFileContent`, not
+  `java.io.Serializable`, so the field cannot affect any save format.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `weeklyArenaKey()`
+  (`<POI id>:L1|:L2`, null for a bracket with no POI) and the check at the top of `done()`: a full
+  bracket win records the week, and a second full win at the same venue in the same week is
+  refused with a notification and no payout. `[TFR-ArenaWeekly]`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

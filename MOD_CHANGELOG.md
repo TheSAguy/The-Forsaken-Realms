@@ -17757,6 +17757,61 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 135: enemy titles resynced to tiers, one Arena win per venue per week, v1.07 stamps (2026-09-07)
+
+### Titles that fought their rank
+
+From the round-134 log review: bracket lines read `Master Blue Wizard (Adept)`. The round-116/118 tier slice
+re-tiered the whole roster by deck strength and renamed nothing, so six names now contradict their own tier -
+`Master Blue Wizard` is Adept, the three `Apprentice <colour> Wizard`s are Adept, `Adept Necromancer` is Master, and
+one enemy is simply called `Archmage` at Master tier. `getTieredDisplayName()` stripped a tier prefix only when it
+already agreed with the tier, so a stale one survived and the contradiction reached the screen.
+
+**Fixed on the display side, deliberately not by renaming the data.** The raw name is IDENTITY: quest targets, `.tmx`
+`enemy` references, deck-number keys, biome spawn lists, arena pools, and the save's own `enemyPermanentKillCount`
+and `coinRansomedEnemies` maps are all keyed by it. Renaming those six would have touched 9-12 plane files each and
+silently orphaned every one of those save keys mid-run - including any in-flight quest bound to one of the names -
+for a purely cosmetic gain. `getTieredDisplayName()` now strips ANY of the four tier labels before appending the real
+one, so `Master Blue Wizard` (Adept) reads `Blue Wizard (Adept)`. It also self-heals the next time the slice
+re-tiers something without renaming it. The one enemy literally named `Archmage` keeps its name and reads
+`Archmage (Master)` - it is a creature type, not a stale title, and no rename would improve it.
+
+### One tournament win per venue per week
+
+User spec: *"The player can only win 1 arena tournament per week. So each of the 1 AI's is it's own location and
+level 1 and level 2 player arena's are their own location. You can enter/try as many as you want, but only allowed to
+win 1 per location per week. Use the 7,14,21, etc. for weeks."*
+
+New persisted `World.arenaWinWeek` (key -> the week its last tournament win paid), following the poi* maps exactly:
+same `SaveFileData` store/read, the same `containsKey` load guard so older saves read as "never won here", and
+cleared in `generateNew()`. `World.getCurrentWeek()` is `getCurrentDay() / 7`, so the lock lifts the moment the week
+number ticks over. `World` is not `java.io.Serializable` (it is `SaveFileContent`, persisted field by field), so the
+new field cannot move any save format.
+
+The key is `<POI id>:L1` or `<POI id>:L2`. That gives each of the five AI capitals its own venue for free, and splits
+the player's arena by **mode** rather than by building level - which is what makes "level 1 and level 2 player arenas
+are their own location" true in practice, since level 2 *is* the Challenging pool and a level-2 arena toggled back to
+Normal is still the level-1 tournament. `weeklyArenaKey()` returns null for a bracket with no POI behind it, so the
+Chest's Illegal Arena (a one-off world event) and the Deck Tester are ungated.
+
+Enforced at the top of `done()`, before any payout is assembled: only a **full bracket win** consumes or checks the
+allowance. Entering, fighting and losing are never blocked, and a partial run still pays its gold and its themed
+cards - it is not a tournament win, so it neither uses up the week nor is refused by it. A repeat win in the same week
+gets a notification and no loot. `[TFR-ArenaWeekly]` logs both the record and the refusal with the venue, week and day.
+
+**Open, flagged to the user:** partial runs are still repeatable within a week (lose round 2 for 200 gold and a card,
+as often as the entry fee allows). The spec gated *wins*, so that is what this gates.
+
+### v1.07 stamps
+
+`modVersion` 1.06 -> **1.07**, `modVersionDate` 09.06 -> **09.07**, `tfr.version` -> **1.07**,
+`manifestVersionCode` 10600 -> **10700**. `engineBuildVersion` stays `2.0.15-SNAPSHOT-09.06` - no engine merge this
+round. `RELEASE_NOTES_v1.07.md` written; the user asked for the framing "small update, but had to fix Arenas that
+were currently game breaking in rewards".
+
+**Files touched**: `data/EnemyData.java`, `world/World.java`, `scene/ArenaScene.java`; plane `config.json`;
+`forge-gui-android/pom.xml`; `RELEASE_NOTES_v1.07.md`.
+
 ## Round 134: a Medal slot on the portrait, Arena payout tiers finished, the Torch banner fires once (2026-09-07)
 
 Six user asks in one batch, plus a log review.

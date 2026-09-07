@@ -806,9 +806,49 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     }
 
 
+    /**
+     * Round 135: the weekly-win ledger key for the arena currently loaded, or null for a bracket
+     * that is not location-bound (the Chest's Illegal Arena is a one-off world event with no POI
+     * behind it, and the Deck Tester is not a tournament at all).
+     * <p>
+     * The five AI capitals key off their own POI id, so each is its own location. The player's own
+     * arena splits by MODE rather than by building level, which is what makes "level 1 and level 2
+     * player arenas are their own location" true in practice: level 2 is exactly the Challenging
+     * pool, and a level-2 arena toggled back to Normal is still the level-1 tournament.
+     */
+    private String weeklyArenaKey() {
+        if (arenaMapStage == null || TileMapScene.instance().rootPoint == null)
+            return null;
+        return TileMapScene.instance().rootPoint.getID() + (challengeMode ? ":L2" : ":L1");
+    }
+
     public boolean done() {
         GameHUD.getInstance().getTouchpad().setVisible(false);
         Forge.switchToLast();
+        // Round 135 (user spec): one tournament WIN per location per week. Entering and fighting
+        // are never blocked - only a completed bracket's payout is, and only after this location
+        // has already paid one out in the current week. A partial run (rounds won, bracket lost)
+        // is not a tournament win, so it neither consumes the week's allowance nor is blocked by
+        // it. Weeks are day/7, so the allowance returns the moment the week number ticks over.
+        boolean fullBracketWin = arenaData != null && roundsWon == arenaData.rounds;
+        String weeklyKey = weeklyArenaKey();
+        if (fullBracketWin && weeklyKey != null) {
+            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+            int week = world.getCurrentWeek();
+            Integer wonOn = world.getArenaWinWeek().get(weeklyKey);
+            if (wonOn != null && wonOn == week) {
+                System.out.println("[TFR-ArenaWeekly] " + weeklyKey + ": already won a tournament in week "
+                        + week + " (day " + world.getCurrentDay() + ") - payout suppressed");
+                GameHUD.getInstance().addNotification("You have already taken this arena's prize this week."
+                        + " Come back after the week turns.");
+                coinRansomFoesBeaten.clear();
+                defeatedThisBracket.clear();
+                return true;
+            }
+            world.getArenaWinWeek().put(weeklyKey, week);
+            System.out.println("[TFR-ArenaWeekly] " + weeklyKey + ": tournament win recorded for week "
+                    + week + " (day " + world.getCurrentDay() + ") - next payout here from week " + (week + 1));
+        }
         if (roundsWon != 0) {
             Array<Reward> data = new Array<>();
             for (int i = 0; i < roundsWon; i++) {

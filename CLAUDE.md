@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 134; v1.06 RELEASED, rounds 132-134 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 135; **v1.07 RELEASING**) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 135 (2026-09-07): enemy TITLES resynced to tiers on the DISPLAY side only - `getTieredDisplayName()` now
+  strips any of the four tier labels, not just a matching one, so `Master Blue Wizard` (Adept) reads `Blue Wizard
+  (Adept)`. **Deliberately not a data rename**: the raw name keys quests, .tmx refs, deck numbers, biome/arena lists
+  AND the save's enemyPermanentKillCount + coinRansomedEnemies, so renaming six enemies would touch 9-12 plane files
+  each and silently orphan save keys mid-run. Also: **one Arena tournament WIN per venue per week** - seven venues
+  (5 AI capitals by POI id, the player's arena split by MODE into :L1/:L2), new persisted `World.arenaWinWeek` keyed
+  to `getCurrentWeek()` = day/7, enforced at the top of `ArenaScene.done()`; only a FULL bracket win consumes or is
+  refused by the allowance, entering/fighting/partial runs are never blocked. `[TFR-ArenaWeekly]`. v1.07 stamps.
 - Round 134 (2026-09-07): `Equipment_Medal` added to the paperdoll (ONE slot - the user was asked and chose one, not
   the six in their mock; equipment is Map<slotName,longID>, one item per slot NAME); Jewel of Blessings 30,000/Uncommon
   -> 12,000/Rare (Jewel of War and Jewel of Rage deliberately left at 30,000/Uncommon); Arena payout spec finished -

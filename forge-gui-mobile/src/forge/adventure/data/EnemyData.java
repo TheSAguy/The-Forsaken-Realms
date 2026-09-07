@@ -161,6 +161,9 @@ public class EnemyData implements Serializable {
     // 2026-08-25) - deliberately distinct from the Arena's "Challenger 20/21/22" champion
     // enemies and the "Challenging Arena" mode, which kept their names and were never tier
     // labels.
+    /** Round 135: every tier label, for stripping a stale one off a display name below. */
+    private static final String[] TIER_LABELS = {"Apprentice", "Adept", "Master", "Archmage"};
+
     public static String tierDisplayName(String tier) {
         if (tier == null)
             return "Apprentice";
@@ -188,8 +191,26 @@ public class EnemyData implements Serializable {
         if (config == null || !config.showEnemyTierInName)
             return base;
         String tierLabel = tierDisplayName(tier);
-        if (base.startsWith(tierLabel + " ") && base.length() > tierLabel.length() + 1)
-            base = base.substring(tierLabel.length() + 1);
+        // Round 135 (user request, from a log review): strip ANY tier-word prefix, not only one
+        // that already agrees with this enemy's tier. The round-116/118 tier slice re-tiered the
+        // whole roster by deck strength WITHOUT renaming anything, so six names now contradict
+        // their own tier - "Master Blue Wizard" is Adept, the three "Apprentice <colour> Wizard"s
+        // are Adept, "Adept Necromancer" is Master. Stripping only a matching prefix left that
+        // contradiction on screen as "Master Blue Wizard (Adept)"; stripping any of the four
+        // leaves "Blue Wizard (Adept)", which is what the player should read.
+        //
+        // Deliberately fixed HERE and not by renaming the data: the raw name is IDENTITY - quest
+        // targets, .tmx "enemy" references, deck-number keys, biome spawn lists, arena pools, and
+        // the save's own enemyPermanentKillCount and coinRansomedEnemies maps are all keyed by it.
+        // Renaming six enemies would touch 9-12 plane files each AND silently orphan those save
+        // keys mid-run, including any in-flight quest bound to one of them. This also self-heals
+        // the next time the slice re-tiers something without renaming it.
+        for (String stale : TIER_LABELS) {
+            if (base.startsWith(stale + " ") && base.length() > stale.length() + 1) {
+                base = base.substring(stale.length() + 1);
+                break;
+            }
+        }
         return base + " (" + tierLabel + ")";
     }
     public String getBossInsult(){
