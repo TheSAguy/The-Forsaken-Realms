@@ -35,6 +35,10 @@ import java.util.zip.InflaterInputStream;
  * Scene to load and save the game.
  */
 public class SaveLoadScene extends UIScene {
+    /** Round 140 (S2-6): the data error already reported, so the dialog fires once per problem
+     *  rather than on every visit to this screen. */
+    private String shownDataError = null;
+
     private static final int NUMBEROFSAVESLOTS = 11;
     private final IntMap<Selectable<TextraButton>> buttons = new IntMap<>();
     IntMap<WorldSaveHeader> previews = new IntMap<>();
@@ -301,6 +305,13 @@ public class SaveLoadScene extends UIScene {
                             Forge.switchScene(GameScene.instance());
                         } else {
                             Forge.clearTransitionScreen();
+                            // Round 140 (code review S1-1): a failed load used to drop the player
+                            // into a freshly generated random world with their own character, or -
+                            // once WorldSave stopped doing that - back onto this menu with no
+                            // explanation at all, which reads as a dead button. Say what happened,
+                            // and say the save is intact, because the honest recovery is to report
+                            // it rather than to keep clicking Load.
+                            forge.gui.FThreads.invokeInEdtNowOrLater(this::showLoadFailedDialog);
                         }
                     }, null, false, true, Forge.getLocalizer().getMessage("lblLoadingWorld")));
                 } catch (Exception e) {
@@ -452,9 +463,35 @@ public class SaveLoadScene extends UIScene {
         this.mode = mode;
     }
 
+    /**
+     * Round 140 (S1-1). WorldSave.load() no longer regenerates the world behind the player's back;
+     * it refuses and records why. This is where the player finds out.
+     */
+    private void showLoadFailedDialog() {
+        String reason = WorldSave.getLastLoadError();
+        WorldSave.clearLastLoadError();
+        showDialog(createGenericDialog("Could not load that save", "This save could not be opened"
+                        + (reason == null ? "." : ":\n\n" + reason)
+                        + "\n\nThe file on disk has NOT been changed. Try another slot, and please report this "
+                        + "with your forge.log so it can be looked at.",
+                Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
+    }
+
     @Override
     public void enter() {
         unselectActors();
+        // Round 140 (code review S2-6): a plane data file that exists but does not parse leaves
+        // every feature flag and every balance number at its default, which looks like a very
+        // strange but playable game rather than a broken install. Report it the first time the
+        // player reaches a menu that can start or load a game.
+        String dataError = Config.instance().getFatalDataError();
+        if (dataError != null && !dataError.equals(shownDataError)) {
+            shownDataError = dataError;
+            showDialog(createGenericDialog("Plane data failed to load", dataError
+                            + "\n\nThe game is running with every plane feature and balance value at its built-in "
+                            + "default. Reinstall or restore that file before starting a new game.",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null));
+        }
         updateFiles();
         select(lastSelectedSlot);
         scrollPane.setScrollY(0);

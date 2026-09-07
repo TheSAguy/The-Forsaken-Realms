@@ -1481,6 +1481,32 @@ from the plane's `config tables/settings.json`).
   are never displaced. `[TFR-CaveChampion]`.
 - New mod files: `data/WarChampionData.java`, `util/WarChampions.java`, `util/CaveChampions.java`.
 
+### 2026-09-07 Review fixes S1-1/S2-4/S2-6 and the round-141 batch
+
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - S1-1: the world-load catch no
+  longer regenerates; it logs `[TFR-Load] WORLD LOAD FAILED`, prints the exception and returns
+  false. New `getLastLoadError()`/`clearLastLoadError()` and `removePointOfInterestChanges()`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** - S2-4: new `purgePoiState()`,
+  forgetting every id-keyed record a re-keyed POI leaves behind.
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** - S2-4:
+  `forgetTownState()` and its call from the capture/sack/revert path.
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** - S2-4: the same destroy on
+  `captureTownForPlayer()`.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - S2-6: `fatalDataError` recorded
+  when config.json or settings.json exists but does not parse.
+- **`forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java`** - shows both of the above.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - round 141:
+  `weeklyArenaLocked()`/`notifyWeeklyArenaLocked()` gate ENTRY at the button, the click and the
+  fee point, replacing round 135's payout-only gate.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - round 141: `itemLocation`
+  is cleared on every refresh (it never was - a repeatable-gold sell exploit), `setSelected(null)`
+  after sell/delete, and sell() verifies the player still holds the item.
+- **`forge-gui-mobile/src/forge/adventure/data/RewardData.java`** - round 141: new `cardNames`
+  pool field, drawing `count` distinct cards at random. Card-side twin of `itemNames`.
+- **`forge-gui-mobile/src/forge/adventure/util/ChestEvents.java`** - round 141:
+  `pickRandomArchmage()` falls back to arena-exclusive enemies with 100+ life, so Arzakon and
+  Nephilim Epochal stop being unreachable.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

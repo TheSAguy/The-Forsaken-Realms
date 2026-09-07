@@ -601,6 +601,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     private void startButton() {
         if (!enable)
             return;
+        // Round 141: refuse the click, not just grey the button - setDisabled() leaves the handler
+        // attached, and a silent no-op here would read as a broken button.
+        if (roundsWon == 0 && weeklyArenaLocked()) {
+            notifyWeeklyArenaLocked();
+            return;
+        }
         if (roundsWon == 0) {
             startDialog();
         } else {
@@ -620,6 +626,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         if (arenaData != null && arenaData.entryFee > Current.player().getGold()) {
             System.out.println("[TFR-Gold] Arena start refused - entry fee " + arenaData.entryFee
                     + " exceeds player gold " + Current.player().getGold());
+            return;
+        }
+        // Round 141: last gate before the fee is taken, so no path can charge for a run this venue
+        // is closed for.
+        if (weeklyArenaLocked()) {
+            notifyWeeklyArenaLocked();
             return;
         }
         enable = false;
@@ -859,6 +871,35 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         if (arenaMapStage == null || TileMapScene.instance().rootPoint == null)
             return null;
         return TileMapScene.instance().rootPoint.getID() + (challengeMode ? ":L2" : ":L1");
+    }
+
+    /**
+     * Round 141 (user correction 2026-09-07): "The player should not be able to 'Enter' the arena,
+     * if they have won in the current week. So they can't play at all if they have won."
+     * <p>
+     * Round 135 read the spec as gating the PAYOUT, which let a player still enter, pay the fee and
+     * fight for nothing. The lock now sits on entry instead, in the three places that matter: the
+     * button's enabled state, the click handler (setDisabled() greys a button without detaching its
+     * handler - the same trap the entry-fee check and the Capitol toll were both caught by), and
+     * startArena() where the fee is actually taken. done()'s own check stays as a backstop.
+     */
+    private boolean weeklyArenaLocked() {
+        String weeklyKey = weeklyArenaKey();
+        if (weeklyKey == null)
+            return false;
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        Integer wonOn = world.getArenaWinWeek().get(weeklyKey);
+        return wonOn != null && wonOn == world.getCurrentWeek();
+    }
+
+    /** Shared refusal message, so the button, the click and the fee point all say the same thing. */
+    private void notifyWeeklyArenaLocked() {
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        int daysLeft = 7 - (world.getCurrentDay() % 7);
+        System.out.println("[TFR-ArenaWeekly] " + weeklyArenaKey() + ": entry refused, already won in week "
+                + world.getCurrentWeek() + " (day " + world.getCurrentDay() + ")");
+        GameHUD.getInstance().addNotification("You have already won this arena's tournament this week."
+                + " It reopens in " + daysLeft + (daysLeft == 1 ? " day." : " days."));
     }
 
     public boolean done() {
@@ -1174,7 +1215,14 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         goldLabel.layout();
         goldLabel.setVisible(true);
 
-        startButton.setDisabled(data.entryFee > Current.player().getGold());
+        // Round 141: a venue that has already paid out this week is closed, not merely
+        // unrewarding - see weeklyArenaLocked(). The player's arena splits by MODE, so switching
+        // Normal <-> Challenging is still a different venue and unlocks the button again.
+        boolean weeklyLocked = weeklyArenaLocked();
+        startButton.setDisabled(data.entryFee > Current.player().getGold() || weeklyLocked);
+        if (weeklyLocked)
+            System.out.println("[TFR-ArenaWeekly] " + weeklyArenaKey() + ": entry locked for week "
+                    + WorldSave.getCurrentSave().getWorld().getCurrentWeek());
         int currentSpots = numberOfEnemies + 1;
         int gridWidth = currentSpots * 2;
         int gridHeight = data.rounds + 1;

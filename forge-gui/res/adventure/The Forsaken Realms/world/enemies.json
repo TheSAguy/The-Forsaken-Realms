@@ -35137,53 +35137,12 @@
                 ]
             },
             {
-                "type": "card",
-                "count": 1,
-                "cardName": "Jodah, the Unifier",
-                "editions": [
-                    "DMU"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Jodah, Archmage Eternal",
-                "editions": [
-                    "DMU"
-                ]
-            },
-            {
-                "type": "randomCard",
-                "count": 6,
-                "addMaxCount": 10,
-                "rarity": [
-                    "Mythic Rare"
-                ]
-            },
-            {
                 "type": "gold",
-                "count": 30000,
-                "addMaxCount": 30000
+                "count": 1500
             },
             {
                 "type": "shards",
-                "count": 100,
-                "addMaxCount": 500
-            },
-            {
-                "type": "card",
-                "count": 5,
-                "addMaxCount": 7,
-                "sourceDeck": "decks/rewards/High_End_Alt-Art.dck"
-            },
-            {
-                "type": "card",
-                "count": 3,
-                "sourceDeck": "decks/rewards/Alt-Art_Staples.dck"
-            },
-            {
-                "type": "landSketchbookShop",
-                "count": 1
+                "count": 150
             }
         ],
         "colors": "WUBRG",
@@ -35204,99 +35163,28 @@
         "life": 93,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Medal of Ultimate Victory"
-            },
-            {
                 "type": "card",
-                "count": 1,
-                "cardName": "Meloku the Clouded Mirror"
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "1996 World Champion"
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Ancestral Recall",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Time Walk",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Timetwister",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Tolarian Academy",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Mox Pearl",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Mox Sapphire",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Mox Jet",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Mox Ruby",
-                "editions": [
-                    "VMA"
-                ]
-            },
-            {
-                "type": "card",
-                "count": 1,
-                "cardName": "Mox Emerald",
-                "editions": [
-                    "VMA"
+                "count": 2,
+                "cardNames": [
+                    "1996 World Champion",
+                    "Ancestral Recall",
+                    "Time Walk",
+                    "Timetwister",
+                    "Tolarian Academy",
+                    "Mox Pearl",
+                    "Mox Sapphire",
+                    "Mox Jet",
+                    "Mox Ruby",
+                    "Mox Emerald"
                 ]
             },
             {
                 "type": "gold",
-                "count": 100000
+                "count": 1500
             },
             {
                 "type": "shards",
-                "count": 1000
+                "count": 200
             }
         ],
         "colors": "U",
@@ -35317,22 +35205,12 @@
         "life": 200,
         "rewards": [
             {
-                "type": "item",
-                "count": 1,
-                "itemName": "Mad Hat"
-            },
-            {
-                "type": "item",
-                "count": 1,
-                "itemName": "Faerie Anklet"
-            },
-            {
                 "type": "gold",
-                "count": 20000
+                "count": 1200
             },
             {
                 "type": "shards",
-                "count": 200
+                "count": 150
             }
         ],
         "colors": "WUBRG",

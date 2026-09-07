@@ -38,6 +38,11 @@ public class RewardData implements Serializable {
     public int count;
     public int addMaxCount;
     public String cardName;
+    // Mod addition (round 141, user spec 2026-09-07: Meloku pays "2 random power cards"): a pool of
+    // card names to draw `count` DISTINCT picks from, the card-side twin of itemNames below. Set it
+    // instead of cardName when the reward should vary between runs; cardName still wins if both are
+    // present, so nothing that already uses it changes.
+    public String[] cardNames;
     public String itemName;
     public String[] itemNames;
     // Dynamic item pool by rarity (2026-08-12): when set on an "item"-type reward with no
@@ -91,6 +96,7 @@ public class RewardData implements Serializable {
         count            = rewardData.count;
         addMaxCount      = rewardData.addMaxCount;
         cardName         = rewardData.cardName;
+        cardNames        = rewardData.cardNames == null ? null : rewardData.cardNames.clone();
         itemName         = rewardData.itemName;
         startDate        = rewardData.startDate;
         endDate          = rewardData.endDate;
@@ -330,6 +336,24 @@ public class RewardData implements Serializable {
                     break;
                 case "card":
                 case "randomCard":
+                    // Round 141: draw `count` distinct names from the pool, shuffled with the same
+                    // rewardRandom the itemNames pool uses so a reroll of the same seed is stable,
+                    // and capped at the pool size so a short list cannot repeat a card.
+                    if (cardNames != null && cardNames.length > 0 && (cardName == null || cardName.isEmpty())) {
+                        List<String> shuffledCards = new ArrayList<>(Arrays.asList(cardNames));
+                        Collections.shuffle(shuffledCards, rewardRandom);
+                        int picks = Math.min(count + addedCount, shuffledCards.size());
+                        for (int i = 0; i < picks; i++) {
+                            PaperCard card = StaticData.instance().getCommonCards().getCard(shuffledCards.get(i));
+                            if (card != null) {
+                                card = CardUtil.remapToEditionList(card, this.editions, rewardRandom);
+                                ret.add(new Reward(card, isNoSell));
+                            } else {
+                                System.err.println("Missing card: " + shuffledCards.get(i));
+                            }
+                        }
+                        break;
+                    }
                     if (cardName != null && !cardName.isEmpty()) {
                         // Named-card rewards get the same printing remap as random picks
                         // (2026-08-15, printing-leak audit: this branch never consulted

@@ -2232,7 +2232,18 @@ public class TerritoryControl {
         // reclaim it - an orphaned ring around an enemy town, found by the pre-commit review).
         Integer oldRadius = world.getTownTerritoryRadius(target.getID());
         int repaintRadius = Math.max(RECOLOR_RADIUS, oldRadius != null ? oldRadius : RECOLOR_RADIUS);
+        String preCaptureId = target.getID();
         target.transformInto(newData, world.getRandom(), true); // ownership changes, the town keeps its name
+        // Round 140 (code review S2-4, user decision 2026-09-07: "Any player town that is captured
+        // by AI should be treated exactly as if an AI captures a neutral town. So no
+        // building/resource/reputation carry over. And if the player captures it back, it's like a
+        // fresh start."). The transform above re-keys the POI, and the entry under the old id used
+        // to survive in the save: any later revert to that same name - which the matchingTownData /
+        // matchingWasteData pair makes routine - handed back every building, guard, bank balance
+        // and the townRestored flag, for free. Both ids are cleared, the old one so nothing can be
+        // resurrected and the new one so an earlier occupant's leftovers cannot be inherited.
+        forgetTownState(world, preCaptureId, target.getID(), displayName,
+                isSacked ? "sacked" : isRevert ? "reverted" : "captured");
         if (newData.name != null && newData.name.startsWith("Waste Town Center")) // Center Towns revert to FUNCTIONING neutral towns
             WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID()).getMapFlags().put(TownRestoration.NEUTRAL_SEEDED_FLAG, (byte) 1);
         // Seed the captured town's territory at everything the repaint below actually paints
@@ -2475,6 +2486,25 @@ public class TerritoryControl {
     // source is neutral ("Waste Town X") or another color's town ("Swamp Town X"). Deliberately
     // TOWN-only, never CAPITAL (see findAttackableTowns()) - a captured capital has no cross-color
     // equivalent to swap to.
+    /**
+     * Round 140 (S2-4): erase everything the save holds for a town that has just changed hands,
+     * under BOTH the id it had and the id it now has. Called from every ownership transform;
+     * deliberately a destroy rather than a migration, per the user's rule that a captured town
+     * carries nothing over in either direction.
+     */
+    static void forgetTownState(forge.adventure.world.World world, String oldId, String newId,
+                                String displayName, String reason) {
+        WorldSave save = WorldSave.getCurrentSave();
+        save.removePointOfInterestChanges(oldId);
+        world.purgePoiState(oldId);
+        if (newId != null && !newId.equals(oldId)) {
+            save.removePointOfInterestChanges(newId);
+            world.purgePoiState(newId);
+        }
+        System.out.println("[TFR-Ownership] " + displayName + " " + reason
+                + " - all stored town state destroyed (buildings, guards, resources, reputation, flags)");
+    }
+
     private static PointOfInterestData matchingTownData(PointOfInterestData fromData, String color) {
         String noun = COLOR_TOWN_NOUN.get(color);
         if (noun == null || fromData.name == null)

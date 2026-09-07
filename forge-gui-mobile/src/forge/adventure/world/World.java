@@ -378,6 +378,30 @@ public class World implements Disposable, SaveFileContent {
         return caveChampion;
     }
 
+    /**
+     * Round 140 (code review S2-4, user decision 2026-09-07: "Any player town that is captured by
+     * AI should be treated exactly as if an AI captures a neutral town. So no
+     * building/resource/reputation carry over. And if the player captures it back, it's like a
+     * fresh start."). Forgets every id-keyed record this POI leaves behind when a capture re-keys
+     * it. Without this the records outlive the POI and come back the moment a revert restores the
+     * old name - the resurrection S2-4 described. Several of these maps' own comments already
+     * ASSUMED a capture starts from a fresh entry; this makes that true.
+     */
+    public void purgePoiState(String poiId) {
+        if (poiId == null)
+            return;
+        poiDespawnDay.remove(poiId);
+        poiRespawnDay.remove(poiId);
+        poiFailedAttempts.remove(poiId);
+        poiLootedDay.remove(poiId);
+        caveChampion.remove(poiId);
+        townTerritoryRadius.remove(poiId);
+        // The arena allowance is keyed by POI id plus the arena's mode suffix (round 135).
+        arenaWinWeek.remove(poiId);
+        arenaWinWeek.remove(poiId + ":L1");
+        arenaWinWeek.remove(poiId + ":L2");
+    }
+
     /** Round 135: weeks are day/7, so the lock lifts the moment the week number ticks over. */
     public int getCurrentWeek() {
         return getCurrentDay() / 7;

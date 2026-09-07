@@ -271,7 +271,7 @@ public class InventoryScene extends UIScene {
             Current.player().removeItem(data);
         }
         updateInventory();
-
+        setSelected(null); // round 141: the item is gone - drop the stale selection with it
     }
 
     // Sell equipment (2026-08-23 user spec): 25% of ItemData.cost, gold-granted then removed the
@@ -285,10 +285,20 @@ public class InventoryScene extends UIScene {
             return;
         ItemData data = itemLocation.get(selected).getRight();
         if (data != null && !data.questItem) {
+            // Round 141: pay only for an item the player actually still holds. Belt and braces
+            // next to the itemLocation.clear() in updateInventory() - this is the branch that
+            // hands out gold, so it should not depend on a lookup map staying honest.
+            if (!Current.player().getItems().contains(data)) {
+                System.out.println("[TFR-Sell] refused: " + data.name + " is no longer in the inventory");
+                updateInventory();
+                setSelected(null);
+                return;
+            }
             Current.player().giveGold(sellPrice(data));
             Current.player().removeItem(data);
         }
         updateInventory();
+        setSelected(null); // round 141: see delete()
     }
 
     public void equip() {
@@ -466,6 +476,14 @@ public class InventoryScene extends UIScene {
 
     private void updateInventory() {
         clearSelectable();
+        // Round 141 (user report 2026-09-07: "I sold a Scythe. But the sell button was still active
+        // after I sold it, allowing me to sell again"). itemLocation was NEVER cleared, and this
+        // method builds brand-new Button actors every time - so the entry mapping the OLD button to
+        // the sold ItemData survived here forever. `selected` still pointed at that detached button,
+        // so sell() found it, paid out again and called removeItem() on an item that was already
+        // gone: repeatable gold for one item. Clearing the map is the actual fix; setSelected(null)
+        // in sell()/delete() is what makes the panel and the four buttons agree with it.
+        itemLocation.clear();
         inventoryButtons.clear();
         inventory.clear();
         repairButton.setVisible(false);

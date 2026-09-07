@@ -68,6 +68,18 @@ public class WorldSave {
         return pointOfInterestChanges.get(id);
     }
 
+    /**
+     * Round 140 (code review S2-4, user decision 2026-09-07): destroy a POI's saved changes
+     * outright. A capture re-keys the POI (PointOfInterest.transformInto() derives getID() from
+     * data.name), and the entry under the OLD id used to be left behind - so a later revert to
+     * that same name handed the player back every building, guard and flag they had lost. The
+     * user's rule is that a town changing hands keeps nothing, so the entry is deleted rather
+     * than migrated.
+     */
+    public void removePointOfInterestChanges(String id) {
+        pointOfInterestChanges.remove(id);
+    }
+
     // Lets a global per-day sweep (see EconomyBuildings.processDailyTick()) find every built
     // mine/bank across every town without needing to know their POI ids in advance.
     public java.util.Collection<PointOfInterestChanges> getAllPointOfInterestChanges() {
@@ -150,9 +162,24 @@ public class WorldSave {
                         }
 
                 } catch (Exception e) {
-                    System.err.println("Generating New World");
-                    if (!currentSave.world.generateNew(0))
-                        return false;
+                    // Round 140 (code review S1-1, Critical). This used to print "Generating New
+                    // World" - not the exception - and then REPLACE the player's world with a
+                    // fresh random one, in place, on the save they had just asked to load. Any
+                    // failure anywhere in the block above reached it: a serialization drift, a
+                    // missing plane resource, an NPE in one of the mod's nine load hooks. The
+                    // player kept their character and lost the map.
+                    //
+                    // It now refuses. Returning false is already the "load failed" contract every
+                    // caller implements (SaveLoadScene and StartScene both clear the transition
+                    // screen and stay on the menu), so the save is left untouched on disk and can
+                    // be recovered or reported instead of being silently overwritten by the next
+                    // autosave. Regeneration remains available deliberately, through New Game+.
+                    lastLoadError = e.getClass().getSimpleName()
+                            + (e.getMessage() == null ? "" : ": " + e.getMessage());
+                    System.err.println("[TFR-Load] WORLD LOAD FAILED for slot " + currentSlot
+                            + " - refusing to regenerate. The save on disk is unchanged.");
+                    e.printStackTrace();
+                    return false;
                 }
 
                 currentSave.onLoadList.emit();
@@ -163,6 +190,18 @@ public class WorldSave {
             return false;
         }
         return true;
+    }
+
+    /** Round 140 (S1-1): why the last load() returned false, for the menu to show. Null when
+     *  the last load succeeded or none has been attempted. */
+    private static String lastLoadError = null;
+
+    public static String getLastLoadError() {
+        return lastLoadError;
+    }
+
+    public static void clearLastLoadError() {
+        lastLoadError = null;
     }
 
     public static boolean isSafeFile(String name) {

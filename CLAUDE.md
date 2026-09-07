@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 139; v1.08 RELEASED, rounds 137-139 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 141; v1.08 RELEASED, rounds 137-141 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,23 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 141 (2026-09-07): **arena weekly lock moved from PAYOUT to ENTRY** (user correction - fighting for nothing was
+  worse than being turned away); `weeklyArenaLocked()` gates the button, the click AND the fee point, because
+  `setDisabled()` does not detach handlers here. **Inventory sell exploit fixed**: `itemLocation` was NEVER cleared and
+  `updateInventory()` builds new actors, so a sold item stayed sellable - repeatable gold. Also `setSelected(null)` after
+  sell/delete. **Three jackpots retuned** to the user's numbers (Meloku 1,500g/200 shards/2 random power cards; Jodah
+  1,500g/150 shards/Lotus+Crypt; Arzakon 1,200g/150 shards) using new `RewardData.cardNames` (pool -> `count` distinct
+  picks, card twin of `itemNames`). **112 of 1,787 enemies are reachable NOWHERE** - all of them fail the same two
+  filters (not Mythic so barred from the chest pool, scale 2-4 so barred from round 139's cave pool); Arzakon is now
+  reached via a new 100+-life fallback pool in `ChestEvents.pickRandomArchmage()`. NOTE the user's 100,000-gold Meloku
+  win was NEVER saved (autosave 13:54 shows 219 gold, no power cards) - nothing to undo.
+- Round 140 (2026-09-07): code-review items **S1-1** (world load refuses instead of silently regenerating the world;
+  `[TFR-Load] WORLD LOAD FAILED` + a menu dialog), **S2-4** (a town changing hands keeps NOTHING - new
+  `TerritoryControl.forgetTownState()` destroys the changes entry under both the old and new POI id plus every id-keyed
+  World record; user's rule, and it closes the name-round-trip resurrection), **S2-6** (a config.json/settings.json that
+  exists but will not parse records `Config.fatalDataError` and the menu says so), **S6-1** (`.claude/settings.json`
+  untracked - it carried `bypassPermissions`). Still open from the review: the whole "Eventually" table, `saveFormatVersion`,
+  the `[TFR-Mem]` heap line, S4-6 (Adventure.render still swallows silently).
 - Round 139 (2026-09-07): **the arena-exclusive roster reaches the world**, two ways, WITHOUT touching enemies.json -
   `spawnRate <= 0` is both the roaming exclusion AND ArenaScene's champion-bounty flag, so editing it would cancel the
   bounty and release them at full uniform weight. (1) **Cave champions**: every `type: "cave"` POI (all 209) rolls once

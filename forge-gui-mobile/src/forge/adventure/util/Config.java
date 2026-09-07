@@ -45,6 +45,9 @@ public class Config {
     private SpawnTierWeightData spawnTierWeightData;
     private forge.adventure.data.ArmoryRarityData armoryRarityData;
     private forge.adventure.data.WarChampionData warChampionData;
+    /** Round 140 (S2-6): set when a plane data file that EXISTS failed to parse, so the menu can
+     *  say so instead of the game running with every feature silently defaulted off. */
+    private String fatalDataError = null;
     private final String[] adventures;
     private SettingData settingsData;
     private String Lang = "en-us";
@@ -129,6 +132,18 @@ public class Config {
         try {
             configData = new Json().fromJson(ConfigData.class, file);
         } catch (Exception e) {
+            // Round 140 (code review S2-6): falling back to a default ConfigData turns EVERY mod
+            // feature off at once - territory control, reputation, fog of war, the economy
+            // buildings, the arenas - and the only sign of it was a stack trace in a log the
+            // player never opens. A plane that shipped a config.json and cannot parse it is
+            // broken, not "running with defaults", so it is recorded here and surfaced by the
+            // menu (see SaveLoadScene) instead of being absorbed.
+            fatalDataError = "config.json (" + file.path() + ") could not be parsed: "
+                    + e.getClass().getSimpleName() + (e.getMessage() == null ? "" : " - " + e.getMessage());
+            System.err.println("========================================================================");
+            System.err.println("[TFR-Config] FATAL: " + fatalDataError);
+            System.err.println("[TFR-Config] Every plane feature flag is now at its default (off).");
+            System.err.println("========================================================================");
             e.printStackTrace();
             configData = new ConfigData();
         }
@@ -151,6 +166,17 @@ public class Config {
             try {
                 tuningData = new Json().fromJson(TuningData.class, tuningFile);
             } catch (Exception e) {
+                // Round 140 (S2-6), same reasoning as config.json above: a settings.json that
+                // EXISTS but does not parse silently reverts every balance number in the plane to
+                // TuningData's hardcoded defaults. Recorded, not absorbed. (A settings.json that
+                // is simply absent is an expected case - stock planes have none - and is handled
+                // by the else branch below without complaint.)
+                fatalDataError = "settings.json (" + tuningFile.path() + ") could not be parsed: "
+                        + e.getClass().getSimpleName() + (e.getMessage() == null ? "" : " - " + e.getMessage());
+                System.err.println("========================================================================");
+                System.err.println("[TFR-Config] FATAL: " + fatalDataError);
+                System.err.println("[TFR-Config] Every balance tunable is now at its hardcoded default.");
+                System.err.println("========================================================================");
                 e.printStackTrace();
                 tuningData = new TuningData();
             }
@@ -281,6 +307,11 @@ public class Config {
 
     public forge.adventure.data.WarChampionData getWarChampionData() {
         return warChampionData;
+    }
+
+    /** Round 140 (S2-6): null when the plane's data loaded cleanly. */
+    public String getFatalDataError() {
+        return fatalDataError;
     }
 
     // Push the plane's allowed/restricted editions and restricted token pairs into TokenDb.

@@ -17757,6 +17757,115 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 141: the arena closes, the sell exploit, and three jackpots retuned (2026-09-07)
+
+### The Arena closes for the week, rather than paying nothing
+
+Round 135 read "only 1 arena tournament win per location per week" as a gate on the PAYOUT. The user's correction:
+*"The player should not be able to 'Enter' the arena, if they have won in the current week. So they can't play at all
+if they have won."* Fighting a full bracket for no reward was worse than being turned away.
+
+`weeklyArenaLocked()` now gates three points, because greying a button is not a gate in this codebase - `setDisabled()`
+leaves the click handler attached, the exact trap the arena's own entry-fee check and the Capitol toll were both caught
+by. So: `loadArenaData()` disables the button, `startButton()` refuses the click with a notification naming the days
+left, and `startArena()` refuses again immediately before the fee is taken. `done()`'s original payout suppression
+stays as a backstop that should now be unreachable. Switching Normal <-> Challenging is still a different venue, so a
+level-2 arena reopens the button.
+
+### The inventory sell exploit
+
+User report: *"I sold a Scythe. But the sell button was still active after I sold it, allowing me to sell again."*
+
+It was not only cosmetic. `InventoryScene.itemLocation` - the `Button -> ItemData` lookup every action reads - was
+**never cleared**, and `updateInventory()` builds brand-new Button actors on every refresh. So the entry mapping the
+OLD button to the sold item survived forever, `selected` still pointed at that detached button, and a second click
+found the item, paid `sellPrice()` again and called `removeItem()` on something already gone: **repeatable gold from
+one item**. `delete()` and `equip()` had the same stale-selection window.
+
+Three fixes: `itemLocation.clear()` at the top of `updateInventory()` (the real one), `setSelected(null)` after
+`sell()`/`delete()` so the panel and all four buttons agree with the inventory, and a guard in `sell()` that pays only
+for an item the player still holds - the branch that hands out gold should not depend on a lookup map staying honest.
+
+### Three jackpots retuned, and `RewardData.cardNames`
+
+The user won a chest duel against Meloku and was paid **100,000 gold, 1,000 shards and the entire Power Nine**. That
+is the enemy's own stock loot, inherited from the source plane, and `ChestEvents.triggerDangerousEnemy()` pays it
+verbatim. An audit of every reward in the plane over 10,000 gold / 1,000 shards / any Power-Nine-class card found ten
+enemies; the user set new numbers for the top three:
+
+| enemy | was | now |
+|---|---|---|
+| Meloku | 100,000g, 1,000 shards, 11 cards, Medal of Ultimate Victory | 1,500g, 200 shards, **2 random** power cards |
+| Jodah | 30,000g, 100 shards, 4 named cards + 8 more from two reward decks | 1,500g, 150 shards, Black Lotus, Mana Crypt |
+| Arzakon | 20,000g, 200 shards, 2 items | 1,200g, 150 shards |
+
+"2 random power cards" needed a new `RewardData.cardNames` - a pool of card names to draw `count` DISTINCT picks
+from, the card-side twin of the existing `itemNames`, shuffled with the same `rewardRandom` so a fixed seed stays
+stable. `cardName` still wins when both are set, so nothing already using it changes. Meloku's pool is the ten
+Power-Nine-class cards it used to hand over in full; the VMA edition pin came off, because `1996 World Champion` has
+no VMA printing and a pool-wide pin would have been a lie for it.
+
+### Arzakon was reachable nowhere
+
+The user asked why, and whether anything else is. **112 of 1,787 enemies are reachable through no route at all** -
+not roaming, not placed on a map, not in an arena pool, not named in a quest, not in the Chest's Dangerous-Enemy pool,
+and not in round 139's cave or war champion pools. Every one of them fails on the same two lines: they are not Mythic
+tier (the chest pool is Mythic-only) and their sprite scale is 2-4 (round 139's cave pool caps at 1.5). They are the
+plane's oversized legend/commander models.
+
+Arzakon is now reachable: `ChestEvents.pickRandomArchmage()` falls back to a "heavyweight" pool of arena-exclusive
+enemies with 100+ life when the colour walk finds no Mythic. That catches Arzakon (200 life) and Nephilim Epochal
+(100) and nothing weaker. Deliberately NOT done by widening `TerritoryControl.pickGrandmasterMage()`, which is
+Mythic-only because it also picks the AI's roaming attacking mage - widening that would put a 200-life legend on the
+overworld. Sprite scale is irrelevant here: a chest duel never puts the model on the map.
+
+**Files touched**: `scene/ArenaScene.java`, `scene/InventoryScene.java`, `data/RewardData.java`,
+`util/ChestEvents.java`; plane `world/enemies.json`; `dev-tools/validate_plane_data.py`.
+
+## Round 140: four findings from the 2026-09-05 code review (2026-09-07)
+
+### S1-1 (Critical) - a failed world load no longer eats the world
+
+`WorldSave.load()`'s inner `catch (Exception e)` printed `"Generating New World"` - not the exception - and then
+replaced the player's world with a fresh random one, in place, on the save they had just asked to load. Any failure
+in that block reached it: serialization drift, a missing plane resource, an NPE in one of the mod's nine load hooks.
+The player kept their character and lost the map.
+
+It refuses now: `[TFR-Load] WORLD LOAD FAILED`, the full stack trace, and `return false` - which is already the
+"load failed" contract every caller implements, so the save is left untouched on disk. `SaveLoadScene` shows a dialog
+naming the failure and saying the file is unchanged, because silently returning to the menu reads as a dead button.
+Regeneration stays available deliberately, through New Game+.
+
+### S2-4 (High) - a captured town keeps nothing
+
+User decision: *"Any player town that is captured by AI should be treated exactly as if an AI captures a neutral
+town. So no building/resource/reputation carry over. And if the player captures it back, it's like a fresh start."*
+
+That makes the fix a destroy rather than a re-key. New `TerritoryControl.forgetTownState()` clears the saved
+`PointOfInterestChanges` under BOTH the id the town had and the id it now has, plus every id-keyed record on `World`
+(despawn/respawn/failed-attempt/looted days, the round-135 arena weekly allowance, round 139's cave champion, the
+territory radius). Called from the AI capture/sack/revert path and from `TownRestoration.captureTownForPlayer()`.
+
+This also closes the resurrection the review described: `matchingTownData` / `matchingWasteData` map a name to its
+colour form and straight back, so any later revert used to hand the player every building, guard and the
+`townRestored` flag from the last time they held it - for free. Several of those maps' own comments already ASSUMED a
+capture starts from a fresh entry; this makes it true.
+
+### S2-6 (Medium) - broken plane data says so
+
+A `config.json` or `config tables/settings.json` that EXISTS but does not parse fell back to a default `ConfigData`
+/ `TuningData`: every feature flag off, every balance number at its hardcoded default, and the only sign a stack
+trace in a log the player never opens. Both catches now record `Config.fatalDataError` behind a loud banner, and
+`SaveLoadScene.enter()` reports it once per problem.
+
+### S6-1 (Low) - `.claude/settings.json` untracked
+
+It was committed with `"defaultMode": "bypassPermissions"`, which anyone cloning the repo inherited. Untracked and
+added to `.gitignore`.
+
+**Files touched**: `world/WorldSave.java`, `world/World.java`, `util/Config.java`, `util/TerritoryControl.java`,
+`util/TownRestoration.java`, `scene/SaveLoadScene.java`, `.gitignore`; `.claude/settings.json` untracked.
+
 ## Round 139: the arena-exclusive roster gets out of the arena (2026-09-07, repo only)
 
 Answering the user's own challenge from round 138 - *"Give me a good reason why we should have 92 enemies Arena

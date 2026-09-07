@@ -4779,6 +4779,12 @@ by the allowance, so entering, fighting and partial runs are never blocked. `[TF
 Arena and the Deck Tester are ungated (no POI behind them). Open: partial runs remain repeatable within a week - the
 spec gated wins, so that is what this gates.
 
+**Amended round 141 (2026-09-07)**, user correction: "The player should not be able to 'Enter' the arena, if they have
+won in the current week. So they can't play at all if they have won." The lock moved from the PAYOUT to ENTRY -
+`weeklyArenaLocked()` gates the start button's enabled state, the click handler and the fee point in `startArena()`
+(three places, because `setDisabled()` leaves the handler attached here). The old payout suppression in `done()` stays
+as an unreachable backstop. Partial runs are no longer a question: a locked venue cannot be entered at all.
+
 ### 113. Arena-exclusive enemies reach the world — `Done (built 2026-09-07, round 139), not yet playtest-confirmed`
 User ask 2026-09-07, after being told why 92 enemies were arena-only: "let's go and add all these spawnRate <= 0 to
 those [caves]... let's say 25% for one of them to appear. This way they will exist out there at some point and they are

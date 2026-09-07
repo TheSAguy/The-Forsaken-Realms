@@ -303,8 +303,29 @@ public class ChestEvents {
             if (found != null)
                 return new EnemyData(found);
         }
+        // Round 141 (user ask 2026-09-07: "Why is Arzakon unreachable? If there really is no way to
+        // get to him, add him to the CHEST-DUEL group."). pickGrandmasterMage() is Mythic-tier only
+        // because it also picks the AI's roaming attacking mage - widening THAT would put a
+        // 200-life legend on the overworld, so the extra candidates live here instead, where the
+        // encounter is a straight duel and sprite scale never reaches the map.
+        List<EnemyData> heavyweights = new ArrayList<>();
+        for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies())) {
+            if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+                continue;
+            if (data.spawnRate > 0f || data.life < HEAVYWEIGHT_LIFE)
+                continue;
+            if (!ContentFilterTables.isEnemyIncluded(data.getName()))
+                continue;
+            heavyweights.add(data);
+        }
+        if (!heavyweights.isEmpty())
+            return new EnemyData(heavyweights.get(world.getRandom().nextInt(heavyweights.size())));
         return null;
     }
+
+    /** Round 141: life at which a non-Mythic arena-exclusive enemy still counts as a chest-worthy
+     *  threat. 100 catches Arzakon (200) and Nephilim Epochal (100) and nothing weaker. */
+    private static final int HEAVYWEIGHT_LIFE = 100;
 
     // Builds a fresh, edition-gated card RewardData and immediately generates it - shared by Lost
     // Card and Thief Merchant, both of which grant cards directly rather than through an

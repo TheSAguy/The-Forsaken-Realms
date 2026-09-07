@@ -110,3 +110,8 @@ forge-gui-ios/robovm.properties
 
 # Deploy-time backup files (never commit)
 *.round16bak
+
+# Round 140 (code review S6-1): local Claude Code permissions are a per-machine
+# preference, not project configuration - and the tracked copy set bypassPermissions
+# for anyone who cloned the repo.
+.claude/settings.json

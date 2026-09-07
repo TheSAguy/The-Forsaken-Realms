@@ -372,7 +372,13 @@ public class TownRestoration {
         boolean wasCapital = "capital".equals(target.getData().type); // round 100: a taken capital cripples its color
         Integer oldRadius = world.getTownTerritoryRadius(target.getID());
         int repaintRadius = Math.max(TerritoryControl.RECOLOR_RADIUS, oldRadius != null ? oldRadius : TerritoryControl.RECOLOR_RADIUS);
+        String preCaptureId = target.getID();
         target.transformInto(wasteData, world.getRandom(), true); // ownership changes, the town keeps its name
+        // Round 140 (S2-4, user decision 2026-09-07): "if the player captures it back, it's like a
+        // fresh start". Same destroy the AI's own capture does - so a town the player retakes
+        // cannot arrive still carrying whatever it held the last time they owned it, and cannot
+        // inherit the AI's guards either.
+        TerritoryControl.forgetTownState(world, preCaptureId, target.getID(), shownName, "retaken by the player");
         PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID());
         changes.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);
         world.setTownTerritoryRadius(target.getID(), repaintRadius);
