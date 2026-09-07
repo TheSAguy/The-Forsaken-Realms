@@ -805,6 +805,45 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return true;
     }
 
+    /**
+     * Round 136: keep at most {@code max} Item rewards, the most valuable ones, and drop the rest.
+     * Ties and items missing from the catalog sort last but keep their relative order, so the
+     * result is stable. Everything that is not an Item - gold, cards, shards - is untouched.
+     */
+    private void capArenaItems(Array<Reward> data, int max) {
+        Array<Integer> itemIndexes = new Array<>();
+        for (int i = 0; i < data.size; i++) {
+            if (data.get(i).getType() == Reward.Type.Item)
+                itemIndexes.add(i);
+        }
+        if (itemIndexes.size <= max)
+            return;
+        // Sort a copy of the indexes by the item's own catalog cost, most valuable first.
+        java.util.List<Integer> byValue = new java.util.ArrayList<>();
+        for (Integer idx : new Array.ArrayIterator<>(itemIndexes))
+            byValue.add(idx);
+        byValue.sort((a, b) -> {
+            int costA = data.get(a).getItem() == null ? -1 : data.get(a).getItem().cost;
+            int costB = data.get(b).getItem() == null ? -1 : data.get(b).getItem().cost;
+            return Integer.compare(costB, costA);
+        });
+        java.util.Set<Integer> keep = new java.util.HashSet<>(byValue.subList(0, max));
+        StringBuilder kept = new StringBuilder();
+        StringBuilder dropped = new StringBuilder();
+        for (Integer idx : byValue) {
+            forge.adventure.data.ItemData item = data.get(idx).getItem();
+            String label = (item == null ? "(unknown)" : item.name + " " + item.cost);
+            (keep.contains(idx) ? kept : dropped).append(label).append("; ");
+        }
+        // Remove from the back so the earlier indexes stay valid.
+        for (int i = data.size - 1; i >= 0; i--) {
+            if (data.get(i).getType() == Reward.Type.Item && !keep.contains(i))
+                data.removeIndex(i);
+        }
+        System.out.println("[TFR-ArenaPayout] item cap: " + itemIndexes.size + " rolled -> keeping the "
+                + max + " most valuable [" + kept + "], dropped [" + dropped + "]");
+    }
+
 
     /**
      * Round 135: the weekly-win ledger key for the arena currently loaded, or null for a bracket
@@ -945,6 +984,19 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                     foeDrop.colors = foeColors;
                 data.addAll(foeDrop.generate(false, null, true));
             }
+            // Round 136 (user clarification 2026-09-07): "Any Arena rewards should never exceed 2
+            // items. That's the max that can be won. If there are more than 2 in the pool at the
+            // end, take the highest two as the reward." Applied to the assembled loot from EVERY
+            // source at once - the round tables, the champion bounty and the bonus roll - because
+            // only the total is capped, not any one of them. Level 1, the AI capitals and the
+            // Chest arena already topped out at two (one guaranteed win item plus one bonus roll);
+            // it is level 2 that needed this, where four tiers rolled per round across three
+            // rounds plus the guaranteed item could reach thirteen.
+            //
+            // Deliberately BEFORE the Bronze Coin reclaim below: that coin is the player's own
+            // item being returned after an ante ransom, not loot won here, and dropping it to
+            // honour a loot cap would destroy it permanently.
+            capArenaItems(data, 2);
             // Bronze Coin ransom reclaim (user request 2026-09-01), paid with the bracket's own
             // loot rather than silently at the moment the round was won. Placed AFTER every other
             // table so the coin reads as a distinct extra rather than getting lost mid-page.

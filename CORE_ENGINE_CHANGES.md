@@ -1428,6 +1428,14 @@ from the plane's `config tables/settings.json`).
   bracket win records the week, and a second full win at the same venue in the same week is
   refused with a notification and no payout. `[TFR-ArenaWeekly]`.
 
+### 2026-09-07 Arena two-item cap (round 136)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - new `capArenaItems(data, max)`
+  called from `done()`: keeps at most two Item rewards, the two with the highest catalog `cost`,
+  removing the rest back-to-front. Applied to the whole assembled payout (round tables + champion
+  bounty + bonus roll) because only the total is capped, and deliberately BEFORE the Bronze Coin
+  ransom reclaim, which returns the player's own item rather than paying loot.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

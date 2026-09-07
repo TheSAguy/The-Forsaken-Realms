@@ -17757,6 +17757,35 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 136: a hard two-item cap on every Arena payout; v1.08 (2026-09-07)
+
+User clarification, arriving minutes after v1.07 was published: *"Any Arena rewards should never exceed 2 items.
+That's the max that can be won. If there are more than 2 in the pool at the end, take the highest two as the
+reward."*
+
+Level 1, the five AI capitals and the Chest's arena were already compliant - one guaranteed win item plus at most one
+bonus roll is two. **Level 2 was not**: four tiers rolling once per round across three rounds, plus the guaranteed
+win item, tops out at thirteen and averages about 3.5.
+
+New `capArenaItems(data, 2)` in `done()`, applied to the assembled loot from every source at once - round tables,
+champion bounty and bonus roll - since only the TOTAL is capped, not any one source. Items are ranked by their own
+catalog `cost`, the two most valuable are kept, the rest are removed back-to-front so earlier indexes stay valid.
+Ties and any item missing from the catalog sort last but keep their relative order, so the result is stable.
+`[TFR-ArenaPayout] item cap:` logs how many rolled, which two were kept and what was dropped, with costs.
+
+**Placed deliberately BEFORE the Bronze Coin ransom reclaim.** That coin is the player's own item being returned
+after an ante ransom, not loot won in the bracket; dropping it to honour a loot cap would destroy it permanently.
+
+### v1.08
+
+Published as its own version rather than by swapping v1.07's artifacts. v1.07 had zero downloads at the time, so an
+in-place replacement would have been safe in practice - but re-pointing a published tag at a different binary leaves
+no honest trail, and the user was away. `modVersion` 1.08 (`modVersionDate` stays 09.07, same day), `tfr.version`
+1.08, `manifestVersionCode` 10800. `RELEASE_NOTES_v1.08.md` carries the v1.07 text plus the cap.
+
+**Files touched**: `scene/ArenaScene.java`; plane `config.json`; `forge-gui-android/pom.xml`;
+`RELEASE_NOTES_v1.08.md`.
+
 ## Round 135: enemy titles resynced to tiers, one Arena win per venue per week, v1.07 stamps (2026-09-07)
 
 ### Titles that fought their rank
