@@ -200,6 +200,19 @@ public class TileMapScene extends HudScene {
                 // round 107: a Ring City's shops are never ruined - drop any broken-slot flags an older world seeded
                 WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID()).getMapFlags().keySet().removeIf(k -> k.startsWith("permanentlyBrokenShop_"));
             }
+            // Round 132: the five "Find the <Color> Capital" quests (87-91) complete on ENTERING
+            // that capital, and AdventureQuestController only offers one while its flag is unset.
+            // Same idempotent set-on-entry idiom as the Ring Cities above. colorOfTown() returns a
+            // colour only for a "<Colour> Capital" name, so the Player Capitol and Naktamun - both
+            // type "capital" - fall out on their own without needing an ownership check here.
+            if ("capital".equals(point.getData().type)) {
+                String capitalColor = forge.adventure.util.ColorReputation.colorOfTown(point.getData());
+                if (capitalColor != null && Current.player().getCharacterFlag("visitedCapital_" + capitalColor) == 0) {
+                    Current.player().setCharacterFlag("visitedCapital_" + capitalColor, 1);
+                    System.out.println("[TFR-MainQuest] visitedCapital_" + capitalColor + " -> 1 ("
+                            + point.getDisplayName() + ")");
+                }
+            }
             if (TownRestoration.isWastelandTown(point.getData())) {
                 forge.adventure.pointofintrest.PointOfInterestChanges entryChanges =
                         WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());

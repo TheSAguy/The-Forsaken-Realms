@@ -382,6 +382,22 @@ public class AdventureQuestController implements Serializable {
     // 0/absent = always eligible, matching every quest that predates this feature.
     private final Map<Integer, Float> questOfferProbability = new HashMap<>();
 
+    // Round 132: "requiresCharacterFlagUnset" in quests.json - a template-only gate that hides a
+    // quest from the offer pool once the named character flag is non-zero. Built for the five
+    // "Find the <Color> Capital" quests, which must stop being offered once the player has walked
+    // into that capital (the same flag is the quest's own completion objective, so an accepted one
+    // still completes normally - this only controls whether a NEW one is handed out). Read
+    // out-of-band from the same untyped pass as offerProbability above, for exactly the reasons
+    // that field documents: a real field on AdventureQuestData would either be hidden from libGDX's
+    // Json loader (transient) or corrupt every existing save's quest list (non-transient).
+    private final Map<Integer, String> questRequiresFlagUnset = new HashMap<>();
+
+    /** True when this quest is currently blocked by its requiresCharacterFlagUnset gate. */
+    private boolean flagGateBlocks(AdventureQuestData quest) {
+        String flag = questRequiresFlagUnset.get(quest.getID());
+        return flag != null && Current.player().getCharacterFlag(flag) != 0;
+    }
+
     private void loadData(){
         Json json = new Json();
         json.setIgnoreUnknownFields(true); // "offerProbability" in quests.json is read separately below, not as a class field
@@ -394,6 +410,9 @@ public class AdventureQuestController implements Serializable {
                 float probability = q.getFloat("offerProbability", 0f);
                 if (probability > 0f)
                     questOfferProbability.put(q.getInt("id"), probability);
+                String requiresUnset = q.getString("requiresCharacterFlagUnset", null); // round 132
+                if (requiresUnset != null && !requiresUnset.isEmpty())
+                    questRequiresFlagUnset.put(q.getInt("id"), requiresUnset);
             }
         }
 
@@ -714,6 +733,8 @@ public class AdventureQuestController implements Serializable {
                 if (status == null || !option.requiredColorStatus.equalsIgnoreCase(status.name()))
                     continue;
             }
+            if (flagGateBlocks(option)) // round 132
+                continue;
             float offerProbability = questOfferProbability.getOrDefault(option.getID(), 0f);
             if (offerProbability > 0f && new Random().nextFloat() > offerProbability)
                 continue;
@@ -721,8 +742,19 @@ public class AdventureQuestController implements Serializable {
         }
         if (validSideQuests.size > 0)
             ret = new AdventureQuestData(Aggregates.random(validSideQuests));
-        else
-            ret = new AdventureQuestData(Aggregates.random(allSideQuests));
+        else {
+            // The no-tag-match fallback hands out ANY side quest rather than none. Round 132: it
+            // still has to honour the flag gate, or a "Find the White Capital" quest could be
+            // handed out by a town with no quests of its own long after that capital was visited.
+            // The gate is applied as a filter, never as a hard failure - if it would empty the
+            // pool, the original all-quests behaviour stands.
+            Array<AdventureQuestData> ungated = new Array<>();
+            for (AdventureQuestData option : allSideQuests) {
+                if (!flagGateBlocks(option))
+                    ungated.add(option);
+            }
+            ret = new AdventureQuestData(Aggregates.random(ungated.size > 0 ? ungated : allSideQuests));
+        }
         ret.sourceID = pointID;
         ret.initialize();
         return ret;

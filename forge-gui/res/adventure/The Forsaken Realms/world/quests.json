@@ -9533,7 +9533,7 @@
 		"id": 44,
 		"isTemplate": true,
 		"name": "Find the Caravan",
-		"description": "A shipment of mana shards is overdue to arrive at $(poi_1). Find the caravan carrying it and make sure the shipment arrives.",
+		"description": "A shipment of mana shards is overdue to arrive at $(poi_1). Find the caravan carrying it - or whatever is left of it.",
 		"offerDialog": {
 			"text": "A notice in a courier's careful hand: \"Honest pay for capable hands. A shard shipment has gone missing on the wastes road. Find the caravan - or what is left of it. Ask for the Courier.\"",
 			"options": [
@@ -9693,31 +9693,6 @@
 						}
 					]
 				},
-				"epilogue": {},
-				"POIToken": "$(poi_3)"
-			},
-			{
-				"id": 5,
-				"name": "Return to $(poi_1)",
-				"description": "Travel back to $(poi_1) to discuss the next steps.",
-				"objective": "Travel",
-				"prerequisiteIDs": [
-					4
-				],
-				"prologue": {
-					"text": "Silver. Regular, mundane, unsmithed chunks of silver ore. That's all you find in the majority of the crates stashed away in the cave. Not having the tools or knowledge to mint the weighty metal into currency, and knowing that someone still living may have a rightful claim to it, you leave it behind.",
-					"options": [
-						{
-							"name": "(Continue)",
-							"text": "And as you have no further leads on the much more valuable shipment you are looking for, you should return to $(poi_1) and report in.",
-							"options": [
-								{
-									"name": "(Continue)"
-								}
-							]
-						}
-					]
-				},
 				"epilogue": {
 					"action": [
 						{
@@ -9726,11 +9701,11 @@
 							"POIReference": "$(poi_1)"
 						}
 					],
-					"text": "After you explain what you found, and what you didn't find, The Courier hands you a pouch of coins that are most certainly spendable. \"You didn't find anything, but that doesn't mean you put in no effort on my behalf.\" (+500 Gold)",
+					"text": "Silver. Regular, mundane, unsmithed chunks of silver ore. That's all you find in the majority of the crates stashed away in the cave. Not having the tools or knowledge to mint the weighty metal into currency, and knowing that someone still living may have a rightful claim to it, you leave it behind.\n\nAnd there is no sign at all of the mana shards you came for. You are still turning that over when a runner in courier's livery picks his way down to the cave mouth, out of breath and entirely unsurprised to find you there. He hands over a sealed pouch and a folded map. The note inside is brief: \"You didn't find anything, but that doesn't mean you put in no effort on my behalf.\" (+500 [+Gold])",
 					"options": [
 						{
 							"name": "(Continue)",
-							"text": "Then he pulls out a map of a completely different area in a mountainous region to the southwest. \"We should go back a step, and make sure the shipment left the mines to begin with.\"",
+							"text": "The map shows a mountainous region to the southwest, and a second note in the same hand: \"We should go back a step, and make sure the shipment left the mines to begin with.\"",
 							"options": [
 								{
 									"action": [
@@ -9751,7 +9726,7 @@
 										}
 									],
 									"name": "(Continue)",
-									"text": "The Courier continues, \"You need not return here with your findings unless escorting the caravan. While my venture ultimately depends on having these shards, I have preparations to make elsewhere. Use this amulet once you have more information and I will be in touch.\" He hands you a small piece of iron jewelry, after which you nod and depart.",
+									"text": "The last line reads: \"You need not return to me with your findings unless you are escorting the caravan itself. Use the amulet once you have more information and I will be in touch.\" Folded into the map is a small piece of iron jewellery. The runner is gone before you can answer.",
 									"options": [
 										{
 											"name": "(Continue)"
@@ -9762,7 +9737,7 @@
 						}
 					]
 				},
-				"POIToken": "$(poi_1)"
+				"POIToken": "$(poi_3)"
 			}
 		],
 		"storyQuest": false
@@ -9773,11 +9748,23 @@
 		"questSourceTags": [
 			"relic_trail_chain"
 		],
-		"name": "What's Yours Is Mine",
-		"description": "Still hunting for the missing mana shard shipment, The Courier sends you to the mines from which they originate.",
+		"name": "Explore the Crystal Mines",
+		"description": "The Cidryl Shard Mines in the mountains are where the missing shipment began its journey. Find out what is left of the operation.",
 		"offerDialog": {},
 		"prologue": {},
-		"epilogue": {},
+		"epilogue": {
+			"text": "You step back out into the mountain air with the captain's logbook under your arm. The Courier is going to want to hear this himself.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"issueQuest": "86"
+						}
+					]
+				}
+			]
+		},
 		"failureDialog": {},
 		"declinedDialog": {
 			"text": "Come back tomorrow and perhaps I'll have something that you'll actually be willing to do.",
@@ -9897,110 +9884,6 @@
 						}
 					]
 				}
-			},
-			{
-				"id": 4,
-				"name": "Contact The Courier",
-				"description": "Use The Courier's amulet to contact him.",
-				"mapFlag": "Quest_ShardMines_EpilogueComplete",
-				"mapFlagValue": 1,
-				"worldMapOK": true,
-				"objective": "QuestFlag",
-				"prerequisiteIDs": [
-					3
-				],
-				"prologue": {
-					"text": "When you are ready, you should use the amulet he gave you to tell The Courier about the pirates, and that they've been dealt with.",
-					"options": [
-						{
-							"name": "(Continue)",
-							"options": [
-								{
-									"action": [
-										{
-											"addItem": "Sir Donovan's Amulet"
-										}
-									],
-									"condition": [
-										{
-											"item": "Sir Donovan's Amulet",
-											"not": true
-										}
-									]
-								}
-							]
-						}
-					]
-				},
-				"epilogue": {}
-			},
-			{
-				"id": 5,
-				"name": "Go to a town",
-				"description": "The urge from The Courier's amulet persists. It doesn't control you, speak to you, or anything else like that. You simply know somehow that it is what he wants you to do - go to a town.",
-				"anyPOI": true,
-				"POITags": [
-					"Town"
-				],
-				"objective": "Travel",
-				"prerequisiteIDs": [
-					4
-				],
-				"prologue": {},
-				"epilogue": {
-					"text": "Within moments of walking into town, a wiry young elf approaches you. Or at least he looks young, it's so hard to tell with elves. He briefly holds out an amulet identical to the one The Courier gave you, and beckons you to follow him to the inn.",
-					"options": [
-						{
-							"action": [
-								{
-									"removeItem": "",
-									"setColorIdentity": "",
-									"advanceQuestFlag": "",
-									"advanceMapFlag": "",
-									"setQuestFlag": {
-										"key": ""
-									},
-									"setMapFlag": {
-										"key": ""
-									},
-									"issueQuest": "46",
-									"POIReference": ""
-								}
-							],
-							"name": "(Continue)",
-							"text": "Taking a corner table at the inn, the elf leans forward on his elbows and studies you for a moment. \"Yeah, you're the one. The name's The Scholar. I work with The Courier.\"",
-							"options": [
-								{
-									"name": "(Continue)",
-									"text": "\"Seeing as you walked here, I take it you didn't find our shipment.\"",
-									"options": [
-										{
-											"name": "Explain to The Scholar about the state of the mine, the pirate crew you found holed up within it, and the expended mana shards.",
-											"text": "\"I hate when a good vein runs dry. Cidryl was loaded with crystals, and compared to other operations they were easy to get to. But when there's no mana left, there's no mana left.\" The Scholar pauses.",
-											"options": [
-												{
-													"action": [
-														{
-															"addGold": 500
-														}
-													],
-													"name": "\"So what now?\"",
-													"text": "\"Standard 'Keep working for us' fee.\" He slides you a coin pouch of a familiar size. \"Give me a couple days to track down the boss and bring him up to speed. I'll meet you here again soon.\" (+500 Gold)",
-													"options": [
-														{
-															"name": "(Continue)"
-														}
-													]
-												}
-											]
-										}
-									]
-								}
-							]
-						}
-					]
-				},
-				"POIToken": ""
 			}
 		],
 		"storyQuest": false
@@ -14688,6 +14571,546 @@
 				"anyPOI": true,
 				"worldMapOK": true,
 				"mapFlag": "capturedFrom_black",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 86,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "Word to the Courier",
+		"description": "The mines are a dead end. Use The Courier's amulet to report what you found, then find a town so his people can reach you.",
+		"offerDialog": {},
+		"prologue": {},
+		"epilogue": {},
+		"failureDialog": {},
+		"declinedDialog": {},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Contact The Courier",
+				"description": "Use The Courier's amulet to contact him.",
+				"mapFlag": "Quest_ShardMines_EpilogueComplete",
+				"mapFlagValue": 1,
+				"worldMapOK": true,
+				"objective": "QuestFlag",
+				"prologue": {
+					"text": "When you are ready, you should use the amulet he gave you to tell The Courier about the pirates, and that they've been dealt with.",
+					"options": [
+						{
+							"name": "(Continue)",
+							"options": [
+								{
+									"action": [
+										{
+											"addItem": "Sir Donovan's Amulet"
+										}
+									],
+									"condition": [
+										{
+											"item": "Sir Donovan's Amulet",
+											"not": true
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				"epilogue": {}
+			},
+			{
+				"id": 2,
+				"name": "Go to a town",
+				"description": "The urge from The Courier's amulet persists. It doesn't control you, speak to you, or anything else like that. You simply know somehow that it is what he wants you to do - go to a town.",
+				"anyPOI": true,
+				"POITags": [
+					"Town"
+				],
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "Within moments of walking into town, a wiry young elf approaches you. Or at least he looks young, it's so hard to tell with elves. He briefly holds out an amulet identical to the one The Courier gave you, and beckons you to follow him to the inn.",
+					"options": [
+						{
+							"action": [
+								{
+									"removeItem": "",
+									"setColorIdentity": "",
+									"advanceQuestFlag": "",
+									"advanceMapFlag": "",
+									"setQuestFlag": {
+										"key": ""
+									},
+									"setMapFlag": {
+										"key": ""
+									},
+									"issueQuest": "46",
+									"POIReference": ""
+								}
+							],
+							"name": "(Continue)",
+							"text": "Taking a corner table at the inn, the elf leans forward on his elbows and studies you for a moment. \"Yeah, you're the one. The name's The Scholar. I work with The Courier.\"",
+							"options": [
+								{
+									"name": "(Continue)",
+									"text": "\"Seeing as you walked here, I take it you didn't find our shipment.\"",
+									"options": [
+										{
+											"name": "Explain to The Scholar about the state of the mine, the pirate crew you found holed up within it, and the expended mana shards.",
+											"text": "\"I hate when a good vein runs dry. Cidryl was loaded with crystals, and compared to other operations they were easy to get to. But when there's no mana left, there's no mana left.\" The Scholar pauses.",
+											"options": [
+												{
+													"action": [
+														{
+															"addGold": 500
+														}
+													],
+													"name": "\"So what now?\"",
+													"text": "\"Standard 'Keep working for us' fee.\" He slides you a coin pouch of a familiar size. \"Give me a couple days to track down the boss and bring him up to speed. I'll meet you here again soon.\" (+500 [+Gold])",
+													"options": [
+														{
+															"name": "(Continue)"
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				"POIToken": ""
+			}
+		]
+	},
+	{
+		"id": 87,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "Find the White Capital",
+		"description": "Locate the Plains Capital, the seat of the Sovereign of the Plains, and walk through its gates.",
+		"questSourceTags": [
+			"player_capital"
+		],
+		"requiresCharacterFlagUnset": "visitedCapital_white",
+		"rewardDescription": "2 rare White cards, 250 gold, 5 shards",
+		"offerDialog": {
+			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The sovereign of the plains keeps a seat somewhere out there - the Plains Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
+			"options": [
+				{
+					"name": "\"I'll find it.\" (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "87"
+						}
+					]
+				},
+				{
+					"name": "\"Not yet.\" (Decline)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"The map will keep. So will the offer.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "You have stood inside the Plains Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from white stock. (+250 [+Gold], +5 [+Shards])",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 2,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"white"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 250
+								},
+								{
+									"type": "shards",
+									"count": 5
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Enter the Plains Capital",
+				"description": "Travel to the Plains Capital and step inside its gates.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "visitedCapital_white",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 88,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "Find the Blue Capital",
+		"description": "Locate the Island Capital, the seat of the Tidecaller of the Isles, and walk through its gates.",
+		"questSourceTags": [
+			"player_capital"
+		],
+		"requiresCharacterFlagUnset": "visitedCapital_blue",
+		"rewardDescription": "2 rare Blue cards, 250 gold, 5 shards",
+		"offerDialog": {
+			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The tidecaller of the isles keeps a seat somewhere out there - the Island Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
+			"options": [
+				{
+					"name": "\"I'll find it.\" (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "88"
+						}
+					]
+				},
+				{
+					"name": "\"Not yet.\" (Decline)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"The map will keep. So will the offer.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "You have stood inside the Island Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from blue stock. (+250 [+Gold], +5 [+Shards])",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 2,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"blue"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 250
+								},
+								{
+									"type": "shards",
+									"count": 5
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Enter the Island Capital",
+				"description": "Travel to the Island Capital and step inside its gates.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "visitedCapital_blue",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 89,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "Find the Black Capital",
+		"description": "Locate the Swamp Capital, the seat of the Lord of the Mire, and walk through its gates.",
+		"questSourceTags": [
+			"player_capital"
+		],
+		"requiresCharacterFlagUnset": "visitedCapital_black",
+		"rewardDescription": "2 rare Black cards, 250 gold, 5 shards",
+		"offerDialog": {
+			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The lord of the mire keeps a seat somewhere out there - the Swamp Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
+			"options": [
+				{
+					"name": "\"I'll find it.\" (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "89"
+						}
+					]
+				},
+				{
+					"name": "\"Not yet.\" (Decline)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"The map will keep. So will the offer.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "You have stood inside the Swamp Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from black stock. (+250 [+Gold], +5 [+Shards])",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 2,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"black"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 250
+								},
+								{
+									"type": "shards",
+									"count": 5
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Enter the Swamp Capital",
+				"description": "Travel to the Swamp Capital and step inside its gates.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "visitedCapital_black",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 90,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "Find the Red Capital",
+		"description": "Locate the Mountain Capital, the seat of the Emberlord of the Peaks, and walk through its gates.",
+		"questSourceTags": [
+			"player_capital"
+		],
+		"requiresCharacterFlagUnset": "visitedCapital_red",
+		"rewardDescription": "2 rare Red cards, 250 gold, 5 shards",
+		"offerDialog": {
+			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The emberlord of the peaks keeps a seat somewhere out there - the Mountain Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
+			"options": [
+				{
+					"name": "\"I'll find it.\" (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "90"
+						}
+					]
+				},
+				{
+					"name": "\"Not yet.\" (Decline)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"The map will keep. So will the offer.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "You have stood inside the Mountain Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from red stock. (+250 [+Gold], +5 [+Shards])",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 2,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"red"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 250
+								},
+								{
+									"type": "shards",
+									"count": 5
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Enter the Mountain Capital",
+				"description": "Travel to the Mountain Capital and step inside its gates.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "visitedCapital_red",
+				"mapFlagValue": 1,
+				"objective": "CharacterFlag",
+				"POIToken": "",
+				"prologue": {},
+				"epilogue": {}
+			}
+		]
+	},
+	{
+		"id": 91,
+		"isTemplate": true,
+		"storyQuest": false,
+		"name": "Find the Green Capital",
+		"description": "Locate the Forest Capital, the seat of the Warden of the Wilds, and walk through its gates.",
+		"questSourceTags": [
+			"player_capital"
+		],
+		"requiresCharacterFlagUnset": "visitedCapital_green",
+		"rewardDescription": "2 rare Green cards, 250 gold, 5 shards",
+		"offerDialog": {
+			"text": "Your cartographer unrolls a half-finished map across the table. \"We hold this ground, but we are still guessing at theirs. The warden of the wilds keeps a seat somewhere out there - the Forest Capital. Walk in through the front gate, see it with your own eyes, and come back able to draw it. I will pay for the ink.\"",
+			"options": [
+				{
+					"name": "\"I'll find it.\" (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "91"
+						}
+					]
+				},
+				{
+					"name": "\"Not yet.\" (Decline)"
+				}
+			]
+		},
+		"prologue": {},
+		"failureDialog": {},
+		"declinedDialog": {
+			"text": "\"The map will keep. So will the offer.\"",
+			"options": [
+				{
+					"name": "(Leave)"
+				}
+			]
+		},
+		"epilogue": {
+			"text": "You have stood inside the Forest Capital and lived to describe it. Back at your own Capitol the cartographer works late, inking in walls and gates from your account, and the quartermaster pays out on the finished sheet - coin, shards, and two spellbooks taken from green stock. (+250 [+Gold], +5 [+Shards])",
+			"options": [
+				{
+					"name": "(Take your reward)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "randomCard",
+									"count": 2,
+									"rarity": [
+										"Rare"
+									],
+									"colors": [
+										"green"
+									]
+								},
+								{
+									"type": "gold",
+									"count": 250
+								},
+								{
+									"type": "shards",
+									"count": 5
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"stages": [
+			{
+				"id": 1,
+				"name": "Enter the Forest Capital",
+				"description": "Travel to the Forest Capital and step inside its gates.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"mapFlag": "visitedCapital_green",
 				"mapFlagValue": 1,
 				"objective": "CharacterFlag",
 				"POIToken": "",

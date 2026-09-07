@@ -148,7 +148,7 @@ F["ConditionData"] = set("""key op val item actorID hasBlessing hasGold hasShard
 F["QuestFlag"] = set("key val".split())
 F["AdventureQuestData"] = set("""isTemplate name description synopsis offerDialog prologue epilogue failureDialog declinedDialog reward
  rewardDescription stages questSourceTags giverColor requiredColorStatus questEnemyTags questPOITags storyQuest isTracked autoTrack sourceID
- id offerProbability""".split())
+ id offerProbability requiresCharacterFlagUnset""".split())
 F["AdventureQuestStage"] = None   # filled from argv[3] if given (long list); otherwise skipped
 F["ArmoryRarityData"] = set("venueBrackets".split())
 F["WeekBracket"] = set("weekMin weekMax common uncommon rare mythic".split())

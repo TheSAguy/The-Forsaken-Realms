@@ -1369,6 +1369,18 @@ from the plane's `config tables/settings.json`).
 - Not changed, deliberately: `DuelScene`'s genetic fallback for a MISSING deck file (an error
   path), and `CardUtil.getDeck`'s `isFantasyMode` half (Chaos mode).
 
+### 2026-09-07 Capital-visit flag + quest offer gate (round 132)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/TileMapScene.java`** - sets
+  `visitedCapital_<colour>` on entering a `type: "capital"` POI whose name resolves through
+  `ColorReputation.colorOfTown()`, beside the existing Ring City / surviving-town entry flags.
+  Drives quests 87-91 (both their completion objective and their offer gate). `[TFR-MainQuest]`.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - new out-of-band
+  `requiresCharacterFlagUnset` template gate (`questRequiresFlagUnset` map + `flagGateBlocks()`),
+  populated by the same untyped quests.json pass that reads `offerProbability`, and applied both in
+  the tag-matching filter and in the no-tag-match fallback. Deliberately NOT a field on
+  `AdventureQuestData` - see that class's own note on save corruption.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

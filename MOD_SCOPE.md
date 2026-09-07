@@ -4737,3 +4737,15 @@ with catalog life > 16 - 1,415 of 1,787 here, every Mythic and legend - for a ra
 archetype list, and the random-precon branch that replaced `.json` deck templates. `[TFR-DeckOverride]` logs once per
 session. Open: whether the "Generate LDA Decks" settings checkbox should be hidden outright for this plane now that
 it does nothing here.
+
+### 110. The Courier chain split into three quests; five "Find the Capital" quests — `Done (built 2026-09-07, round 132), not yet playtest-confirmed`
+User ask 2026-09-07. The main quest ran 44 "Find the Caravan" -> 45 "What's Yours Is Mine" -> 46 "Busy Work", with 44
+only paying out after a walk back to town and 45 reading as part two of the caravan hunt. Now: **44 ends when the
+bandit cave is cleared** (a courier's runner meets you at the mouth with the pouch, map and amulet - stage 5 removed,
+its text merged into the Clear epilogue), **45 is "Explore the Crystal Mines"** with its own standalone description
+and only the three mine stages, and **86 "Word to the Courier"** is the reporting tail (amulet, then a town, then The
+Scholar). Both `(+500 Gold)` lines now use the `[+Gold]` glyph. Quests **87-91** "Find the <Colour> Capital" are
+offered at the Player Capitol - which needed a quest giver of its own, `questtype "player_capital"` - and pay 250
+gold, 5 shards and 2 rares of that colour. They are gated by the new out-of-band `requiresCharacterFlagUnset` on
+`visitedCapital_<colour>`, which `TileMapScene` sets on entering a capital. Open: playtest the reworded caravan
+ending, and whether the Capitol should also offer these for capitals the player has seen but not mapped.

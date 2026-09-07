@@ -17757,6 +17757,68 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 132: the Courier chain becomes three quests; five "Find the Capital" quests at the Player Capitol (2026-09-07, repo only)
+
+User spec: *"The original main quest. Let's break the quest up into multiple quests. Find the lost caravan, should
+end when you clear out the dungeon and don't find the caravan. (Also I think I got a +500gold reward, add the gold
+symbol to that message. Make the next quest - Explore crystal mines, it's own quest, not part 2 of the caravan quest.
+If there is a 3rd part after crystal, break that up again. Add 5 new quests to capitol. Find the capitol of <Color
+AI>. Only give these quests if the player had not yet visited those capitols. Reward, 250g, 5 shards and two rares of
+the color found."*
+
+### The chain was 44 -> 45 -> 46; the first two are now three quests
+
+**Quest 44 "Find the Caravan" ends at the cave.** It ran Leave -> Travel to town -> Travel to the bandit cave ->
+Clear the cave -> **Return to $(poi_1)**, and only paid out back in town. Stage 5 is gone; the quest now completes on
+the Clear, which is where the player actually learns the answer. Stage 5's prologue (the crates hold plain silver
+ore, not shards) and its epilogue (payment, map, amulet, next job) were merged into stage 4's epilogue and reworded
+so nothing depends on walking back: a runner in courier's livery meets you at the cave mouth with the pouch, the map
+and the iron amulet. The rewards are unchanged - 500 gold, +2 map reputation, Sir Donovan's Amulet - and it still
+issues the next quest.
+
+**Quest 45 is its own quest, not part two.** Renamed from "What's Yours Is Mine" to **"Explore the Crystal Mines"**,
+with a description that stands on its own ("The Cidryl Shard Mines in the mountains are where the missing shipment
+began its journey") instead of "Still hunting for the missing mana shard shipment, The Courier sends you to...".
+It keeps the three stages that are actually about the mines - travel there, defeat the mine captain, leave - and
+completes when you walk out, with a new quest-level epilogue that hands off to the third quest.
+
+**The third part is now quest 86, "Word to the Courier".** Quest 45's stages 4 and 5 (use the amulet to contact The
+Courier; then find a town, where The Scholar meets you at the inn) were the reporting tail, and they are that quest
+now - moved verbatim, renumbered 1-2, with the same flags, the same Scholar dialogue and the same 500 gold. It
+issues 46 "Busy Work" exactly as before, so the chain still reads 44 -> 45 -> 86 -> 46 end to end.
+
+**Both `(+500 Gold)` messages now read `(+500 [+Gold])`** - the glyph, per the standing resource-symbol rule.
+
+### Five "Find the <Color> Capital" quests
+
+New quests **87-91**, one per AI colour, offered at the **Player Capitol**. Reward per the spec: **250 gold, 5 mana
+shards and 2 rare cards of that capital's colour**, granted from the quest epilogue.
+
+Three pieces had to exist for these to work:
+
+- **The Player Capitol had no quest giver of its own.** Its single `quest.tx` object carries
+  `questtype "waste_town_generic"` - the tag every wasteland town shares - so anything tagged for it would have been
+  offered all over the map. A second quest object (id 104, `questtype "player_capital"`) now sits at x=240 y=257 in
+  `player_capital.tmx`, 40 px right of the existing giver on the same row; the objects are 16 px wide and the next
+  object on that row starts at x=273, so it overlaps nothing. `nextobjectid` bumped to 105.
+- **"Has the player visited that capital?" did not exist as state.** `TileMapScene` now sets
+  `visitedCapital_<colour>` on entering a capital, the same idempotent set-on-entry idiom the Ring Cities already
+  use (`[TFR-MainQuest]` logs it). `ColorReputation.colorOfTown()` returns a colour only for a "<Colour> Capital"
+  name, so the Player Capitol and Naktamun - both `type: "capital"` - fall out on their own with no ownership check.
+  The same flag is each quest's completion objective, so the quest is finished by the act of arriving.
+- **Nothing gated a quest OFFER on a character flag.** New `requiresCharacterFlagUnset` in quests.json, read
+  **out-of-band** in `AdventureQuestController` by the same untyped second pass `offerProbability` uses - that
+  field's own comment spells out why a real field on `AdventureQuestData` is not an option (transient hides it from
+  libGDX's Json loader; non-transient corrupts every existing save's quest list). Applied in the tag-matching filter
+  **and** in the no-match fallback, which hands out an arbitrary side quest and would otherwise have leaked a
+  "Find the White Capital" long after that capital was visited. The fallback applies the gate as a filter, never as
+  a hard failure, so it can still never return nothing.
+
+An accepted quest is unaffected by the gate - it only decides whether a NEW one is handed out.
+
+**Files touched**: `scene/TileMapScene.java`, `util/AdventureQuestController.java`; plane `world/quests.json`,
+`maps/map/towns/player_capital.tmx`; `dev-tools/validate_plane_data.py`. MOD_SCOPE #110.
+
 ## Round 131: v1.06 "Deeper Caves" RELEASED - desktop + Android (2026-09-06)
 
 Tag `tfr-v1.06` @ `17d3fcbf54b`, published 2026-09-07 01:31 UTC and marked Latest:

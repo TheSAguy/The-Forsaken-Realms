@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-06 NIGHT (round 131; **v1.06 RELEASED**) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 132; v1.06 RELEASED, round 132 is post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,7 +28,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- **HEAD = round 131 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-130 are
+- Round 132 (2026-09-07, REPO ONLY - not built into the live folder): the Courier chain is three quests, not two -
+  44 "Find the Caravan" now ENDS on the bandit-cave Clear (stage 5 removed, its silver-ore reveal + payment + amulet
+  merged into the Clear epilogue and reworded so a runner brings the pouch to the cave), 45 renamed **"Explore the
+  Crystal Mines"** with a standalone description and only its three mine stages, and new **86 "Word to the Courier"**
+  holds the reporting tail; chain reads 44 -> 45 -> 86 -> 46. Both `(+500 Gold)` lines now use the `[+Gold]` glyph.
+  New quests **87-91 "Find the <Colour> Capital"** at the Player Capitol (250 gold / 5 shards / 2 rares of the
+  colour), gated by the new out-of-band `requiresCharacterFlagUnset` in AdventureQuestController on
+  `visitedCapital_<colour>`, which TileMapScene sets on capital entry. The Player Capitol needed its own quest giver
+  (`questtype "player_capital"`, object 104 in player_capital.tmx) - its only giver was tagged `waste_town_generic`,
+  shared with every wasteland town. MOD_SCOPE #110.
+- **HEAD = round 132 (verify with `git log -1`), `main` level with `origin/master`, tree clean.** Rounds 120-130 are
   post-release fixes and additions. Round 126 = **a loss's deferred follow-up no longer survives a save load**
   (`GameStage.cancelPendingActions()` from `WorldStage.clearCache()`, `[TFR-LoadReset]` - the user's "load after losing
   and the dungeon disappears when you enter") and four mis-sized sprites (Arcane Golem was scale 3 on a 96 px atlas =
