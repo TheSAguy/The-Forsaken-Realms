@@ -5004,7 +5004,7 @@
         "description":  "All your creatures gain vigilance.",
         "equipmentSlot":  "Neck",
         "iconName":  "MoxPearl",
-        "cost":  30000,
+        "cost":  12000,
         "effect":  {
                        "startBattleWithCard":  [
                                                    "Serra\u0027s Blessing|WTH"
@@ -5036,7 +5036,7 @@
                                                    "Ghoulish Procession|INR"
                                                ]
                    },
-        "rarity":  "Uncommon"
+        "rarity":  "Rare"
     },
     {
         "name":  "Jewel of Rage",

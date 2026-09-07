@@ -17,7 +17,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 133; v1.06 RELEASED, rounds 132-133 are post-release repo work) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 134; v1.06 RELEASED, rounds 132-134 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +28,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 134 (2026-09-07): `Equipment_Medal` added to the paperdoll (ONE slot - the user was asked and chose one, not
+  the six in their mock; equipment is Map<slotName,longID>, one item per slot NAME); Jewel of Blessings 30,000/Uncommon
+  -> 12,000/Rare (Jewel of War and Jewel of Rage deliberately left at 30,000/Uncommon); Arena payout spec finished -
+  a bonus Common item at 0.3/round from round 2 with a hard cap of ONE (rolled in `done()`, since a reward table cannot
+  cap across rounds), level 2 rebuilt to 300/500/800 gold + four item tiers 0.25/0.40/0.15/0.05 + one guaranteed win
+  item + a two-Mythic cap, the Chest's Illegal Arena following level 1 at 0.4/Uncommon, and `capitolPayoutBracket`
+  widened so a **level-2 arena in Normal mode** is paid like level 1 (round 133 gated on level<2 and left it card-less);
+  the Torch banner now fires only on first use (`torchPulseSeen` character flag). Log reviewed 2026-09-07: no
+  exceptions, and ArenaTier/AnteReroll/ItemRefresh/DungeonClear all confirmed working in the user's own game.
 - Round 133 (2026-09-07, REPO ONLY): Arena payouts for the **Player Capitol level 1 and the five AI capitals** are
   now 200 / 350 / 500 cumulative gold (round tables 200/150/150 - `done()` SUMS tables 0..roundsWon-1, which is why a
   single win paid SIX items: the Capitol's three tables each repeated the same four probabilistic item rolls, 13 in

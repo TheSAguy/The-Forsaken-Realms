@@ -73,6 +73,15 @@
     },
     {
       "type": "ImageButton",
+      "name": "Equipment_Medal",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 175
+    },
+    {
+      "type": "ImageButton",
       "name": "Equipment_Right",
       "style": "item_frame_static",
       "width": 20,

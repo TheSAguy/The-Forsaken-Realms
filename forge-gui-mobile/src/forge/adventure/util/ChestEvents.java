@@ -251,13 +251,21 @@ public class ChestEvents {
         arenaData.enemyPool = archmagePool;
         arenaData.rounds = 3;
         arenaData.entryFee = 250;
-        // Reward only for winning the WHOLE bracket (user spec: "the reward is..." singular), not
-        // per-round loot - ArenaScene.done() grants every round's own rewards[i] independently, so
-        // rounds 0/1 get an empty table and only the final round (index 2) carries the item.
+        // Round 134 (user spec 2026-09-07): this bracket "should probably follow Player Level 1
+        // Arena, but a slightly higher probability for better items". So it takes the Capitol's
+        // gold shape - 200/150/150 per round, which ArenaScene.done() sums to 200 / 350 / 500 -
+        // and keeps its own win item, which was already a cut above the Capitol's (a 0.75 Rare /
+        // 0.25 Mythic roll rather than a fixed 16-name list). The "better items" half of the spec
+        // is finished in ArenaScene.done(), where this bracket's bonus roll is 0.4 for an Uncommon
+        // against the Capitol's 0.3 for a Common (chestArenaBracket). The per-round rare+ cards
+        // themed to each beaten opponent come from there too.
+        RewardData gold1 = new RewardData(); gold1.type = "gold"; gold1.count = 200;
+        RewardData gold2 = new RewardData(); gold2.type = "gold"; gold2.count = 150;
+        RewardData gold3 = new RewardData(); gold3.type = "gold"; gold3.count = 150;
         arenaData.rewards = new RewardData[3][];
-        arenaData.rewards[0] = new RewardData[0];
-        arenaData.rewards[1] = new RewardData[0];
-        arenaData.rewards[2] = new RewardData[]{reward};
+        arenaData.rewards[0] = new RewardData[]{gold1};
+        arenaData.rewards[1] = new RewardData[]{gold2};
+        arenaData.rewards[2] = new RewardData[]{gold3, reward};
 
         System.out.println("[ChestEvents] Illegal Arena Match: launching an 8-competitor Archmage bracket ("
                 + archmagePool.length + " eligible names), entry 250 gold");

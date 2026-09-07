@@ -1394,6 +1394,24 @@ from the plane's `config tables/settings.json`).
   0..roundsWon-1, so cumulative 200/350/500) plus each arena's own guaranteed win item. The Player
   Capitol's twelve probabilistic item rolls are gone. `arenaChallenge` (level 2) is untouched.
 
+### 2026-09-07 Medal slot, Arena payout tiers, Torch banner (round 134)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - `capitolPayoutBracket` widened
+  to `!isChallenge && fromBuilding && (playerOwnedArena || isAiCapitalArena())` (a level-2 arena in
+  Normal mode plays the level-1 tables and must pay the level-1 way); new
+  `challengePayoutBracket` (level-2 Challenging, two-Mythic cap on the themed cards) and
+  `chestArenaBracket` (the standalone Illegal Arena, bonus roll 0.4/Uncommon instead of
+  0.3/Common). The bonus-item roll lives in `done()` because a reward table cannot cap an item
+  across rounds.
+- **`forge-gui-mobile/src/forge/adventure/util/ChestEvents.java`** - the Illegal Arena's tables are
+  now 200/150/150 gold plus its existing win item, instead of two empty tables and an item.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** - the Torch pulse
+  banner is gated on a new `torchPulseSeen` character flag (first use only).
+- Plane data: `ui/inventory.json` + `ui/inventory_portrait.json` gain `Equipment_Medal`;
+  `world/items.json` Jewel of Blessings 30,000/Uncommon -> 12,000/Rare;
+  `maps/map/towns/player_capital.tmx` `arenaChallenge` rebuilt (300/200/300 gold, four item tiers
+  0.25/0.40/0.15/0.05, one guaranteed win item, card entries removed).
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

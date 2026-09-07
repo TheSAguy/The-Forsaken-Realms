@@ -801,7 +801,15 @@ public class ConsoleCommandInterpreter {
             int radius = WorldStage.getInstance().pulseVision(tuning.torchPulseMultiplier, tuning.torchPulseSeconds,
                     tuning.torchPulseMaxRadiusTiles);
             WorldStage.getInstance().player.playEffect(Paths.EFFECT_SPARKS, 1f);
-            GameHUD.getInstance().addNotification("The torch flares - the fog draws back for a moment.");
+            // Round 134 (user: "I do it a lot and don't need to see it each time. Maybe fire it the
+            // first time."): the flare is obvious on screen, so the banner is only worth showing
+            // once. A character flag rather than a session static, so it stays quiet across saves
+            // and reloads for a character who has already seen it - and a New Game+ clears every
+            // character flag, so a fresh run explains it again.
+            if (Current.player().getCharacterFlag("torchPulseSeen") == 0) {
+                Current.player().setCharacterFlag("torchPulseSeen", 1);
+                GameHUD.getInstance().addNotification("The torch flares - the fog draws back for a moment.");
+            }
             return "Torch pulse: vision flared to " + radius + " tiles";
         });
         registerCommand(new String[]{"fog", "reset"}, s ->

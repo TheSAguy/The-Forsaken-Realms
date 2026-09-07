@@ -209,6 +209,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         arenaObjectId = -1;
         challengeArenaJson = null;
         loadArenaData(data, seed, false);
+        // Round 134: loadArenaData() clears these; the Chest's arena is the one standalone bracket
+        // that pays the Capitol way, so re-flag it after the load.
+        capitolPayoutBracket = true;
+        chestArenaBracket = true;
         refreshArenaBuildingButtons();
     }
 
@@ -837,22 +841,59 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // cumulative 200/350/500) and the single win item is the last table's guaranteed entry;
             // every probabilistic item roll was removed from those six maps in the same round.
             // Mutually exclusive with the Challenge drop below - tierWeighted requires !isChallenge.
-            if (capitolPayoutBracket) {
+            if (capitolPayoutBracket || challengePayoutBracket) {
+                // Round 134: the level-2 Challenging bracket caps Mythics at two across the whole
+                // payout (user spec). Counted from the cards actually produced, not from the roll,
+                // and once the cap is reached the remaining draws ask for Rare only.
+                int mythics = 0;
                 for (EnemyData foe : new Array.ArrayIterator<>(defeatedThisBracket)) {
                     if (foe == null)
                         continue;
+                    boolean capped = challengePayoutBracket && mythics >= 2;
                     RewardData themed = new RewardData();
                     themed.type = "card";
                     themed.count = 1;
-                    themed.rarity = new String[]{"Rare", "Mythic Rare"};
+                    themed.rarity = capped ? new String[]{"Rare"} : new String[]{"Rare", "Mythic Rare"};
                     String[] foeColors = colorNamesFor(foe.colors);
                     if (foeColors != null)
                         themed.colors = foeColors;
-                    data.addAll(themed.generate(false, null, true));
+                    Array<Reward> themedCards = themed.generate(false, null, true);
+                    for (Reward r : new Array.ArrayIterator<>(themedCards)) {
+                        if (r.getCard() != null && r.getCard().getRarity() == forge.card.CardRarity.MythicRare)
+                            mythics++;
+                    }
+                    data.addAll(themedCards);
                 }
-                System.out.println("[TFR-ArenaPayout] Capitol/AI bracket: " + roundsWon + " round(s) won -> "
-                        + defeatedThisBracket.size + " themed rare+ card(s) + the round tables' gold"
-                        + (roundsWon == arenaData.rounds ? " + 1 item" : ""));
+                // Round 134 (user spec): "the probability to get a common from the wider item pool.
+                // 0.3 per round, from rounds 2 on, with a max of 1 additional common item." Rolled
+                // here rather than as reward-table entries because the tables cannot express a cap
+                // across rounds - each entry rolls independently. The Chest's arena takes the same
+                // shape at better odds and one rarity band up.
+                String bonusItem = null;
+                if (capitolPayoutBracket) {
+                    float chance = chestArenaBracket ? 0.4f : 0.3f;
+                    String band = chestArenaBracket ? "Uncommon" : "Common";
+                    for (int round = 2; round <= roundsWon && bonusItem == null; round++) {
+                        if (forge.util.MyRandom.getRandom().nextFloat() < chance) {
+                            RewardData bonus = new RewardData();
+                            bonus.type = "item";
+                            bonus.count = 1;
+                            bonus.itemRarity = band;
+                            Array<Reward> rolled = bonus.generate(false, null, true);
+                            if (rolled.size > 0) {
+                                data.addAll(rolled);
+                                bonusItem = band;
+                            }
+                        }
+                    }
+                }
+                System.out.println("[TFR-ArenaPayout] " + (challengePayoutBracket ? "Level-2 Challenging"
+                        : chestArenaBracket ? "Chest Illegal Arena" : "Capitol/AI")
+                        + " bracket: " + roundsWon + " round(s) won -> " + defeatedThisBracket.size
+                        + " themed rare+ card(s)" + (challengePayoutBracket ? " (mythics " + mythics + "/2 cap)" : "")
+                        + " + the round tables' gold"
+                        + (roundsWon == arenaData.rounds ? " + the guaranteed win item" : "")
+                        + (bonusItem != null ? " + 1 bonus " + bonusItem + " item" : " + no bonus item"));
             }
             if (challengeMode && lastDefeatedEnemyData != null) {
                 RewardData foeDrop = new RewardData();
@@ -911,10 +952,21 @@ public class ArenaScene extends UIScene implements IAfterMatch {
      *  2026-09-07: "Lose round 3 - 350g & rare+ card from defeated enemy from round 1 & 2"), where
      *  the older Challenge drop pays a single card themed to the last one only. */
     private final Array<EnemyData> defeatedThisBracket = new Array<>();
-    /** Round 133: true when this bracket is a Player Capitol level-1 or AI-capital arena - the
-     *  same scope round 125's tier-weighted brackets use, and the scope the new payout applies to.
-     *  Level 2 (either mode), the Chest's illegal arena and wild arenas keep their old tables. */
+    /** Round 133/134: true for the "Capitol table" payout - one rare+ card per round won themed to
+     *  that round's opponent, plus (round 134) a single bonus Common item rolled at 0.3 from round
+     *  two on. Covers the AI capitals, the Player Capitol's Normal arena at ANY building level (a
+     *  level-2 arena in Normal mode plays the level-1 tables, so it should pay the level-1 way too
+     *  - round 133 gated this on level < 2 and left that case with gold but no cards), and the
+     *  Chest's standalone Illegal Arena. */
     private boolean capitolPayoutBracket = false;
+    /** Round 134: the Player Capitol's level-2 CHALLENGING arena. Same per-round themed cards, but
+     *  capped at two Mythics across the bracket (user spec) and no bonus-Common roll - its own
+     *  four item tiers already carry that weight. */
+    private boolean challengePayoutBracket = false;
+    /** Round 134: the Chest's Illegal Arena "follows Player Level 1 Arena, but a slightly higher
+     *  probability for better items" (user spec) - its bonus roll is 0.4 for an Uncommon rather
+     *  than 0.3 for a Common. */
+    private boolean chestArenaBracket = false;
     Actor player;
 
     public void loadArenaData(ArenaData data, long seed) {
@@ -974,7 +1026,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         boolean playerOwnedArena = fromBuilding && TownRestoration.isCurrentTownPlayerOwned(arenaMapStage.getChanges());
         boolean tierWeighted = !isChallenge && fromBuilding
                 && (playerOwnedArena ? arenaBuildingLevel() < 2 : isAiCapitalArena());
-        capitolPayoutBracket = tierWeighted; // round 133: same scope, read again in done()
+        // Round 134: the payout scope is deliberately WIDER than the tier-weighting scope above -
+        // a level-2 arena switched to Normal mode plays the level-1 tables, so it pays the level-1
+        // way too. Challenge mode gets its own branch.
+        capitolPayoutBracket = !isChallenge && fromBuilding && (playerOwnedArena || isAiCapitalArena());
+        challengePayoutBracket = isChallenge && fromBuilding && playerOwnedArena;
+        chestArenaBracket = false;
         java.util.List<EnemyData> adeptPool = new java.util.ArrayList<>();
         java.util.List<EnemyData> masterPool = new java.util.ArrayList<>();
         java.util.List<EnemyData> archmagePool = new java.util.ArrayList<>();

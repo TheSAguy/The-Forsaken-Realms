@@ -4759,5 +4759,8 @@ lose round 3 = 350g + cards from rounds 1-2; win = 500g + cards from rounds 1-3 
 since the engine sums them; the per-round themed cards are new code (`defeatedThisBracket`, `[TFR-ArenaPayout]`) as
 the engine only had a single Challenge-mode drop. Level 2, the Chest's arena and wild arenas are untouched. Open:
 whether the round-107 champion bounty (arena-exclusive enemies paying their own reward list on a full bracket win)
-should also be trimmed, and whether level 2's item tiers - same non-value-banded shape, with its jackpot tier at 15%
-rather than 2% - want the same treatment.
+should also be trimmed. Round 134 finished the spec: a bonus Common item at 0.3/round from round 2 with a hard cap of
+one; level 2 rebuilt to 300/500/800 gold with four item tiers at 0.25/0.40/0.15/0.05, one guaranteed win item and a
+two-Mythic cap; the Chest's Illegal Arena following level 1 at 0.4/Uncommon; and the payout scope widened so a level-2
+arena in Normal mode is paid like level 1. Jewel of Blessings dropped to 12,000/Rare - Jewel of War and Jewel of Rage
+are still 30,000/Uncommon and were left alone.

@@ -17757,6 +17757,80 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 134: a Medal slot on the portrait, Arena payout tiers finished, the Torch banner fires once (2026-09-07)
+
+Six user asks in one batch, plus a log review.
+
+### A Medal slot on the character portrait
+
+The paperdoll's slots come from UI actors named `Equipment_<Slot>`, and there was no `Equipment_Medal` - so an
+equipped medal was invisible. Added at x=17 y=175 (landscape) / y=279 (portrait), in the gap between the Left hand
+and the Boots, copying the existing `Equipment_Left` block verbatim so the styling matches.
+
+**One slot, not six** - the user's mock showed six medals and there are exactly six purchasable ones (the seventh,
+Medal of Ultimate Victory, is `excludeFromGeneralSale`), so this was put to them as a question: the equipment map is
+`Map<slotName, longID>`, one item per slot NAME, so six medals would have meant six new slots and six stacked
+handicap/reward effects. The user chose one slot. Nothing about equipping changes; the medal you could already wear
+is simply visible now.
+
+### Jewel of Blessings (Serra's Blessing)
+
+`cost` 30,000 -> **12,000**, `rarity` Uncommon -> **Rare**, per the user. It was the reason round 133's tier survey
+happened: it sits in what used to be the 0.6 - most likely - item pool while carrying the highest price in it.
+`items.json` uses a non-standard `":  "` separator (two spaces), which `json.dumps` cannot round-trip, so this was a
+surgical two-line text edit rather than a reserialize. **Jewel of War and Jewel of Rage are still 30,000 Uncommon** -
+the user named only this one.
+
+### The Arena payout tiers, finished
+
+Round 133 set the Capitol/AI table (200 / 350 / 500 gold, one rare+ card per round themed to that round's opponent,
+one item on the win). This round adds the rest of the spec.
+
+- **A bonus Common item**, "0.3 per round, from rounds 2 on, with a max of 1 additional common item". Rolled in
+  `done()` rather than as reward-table entries, because the tables cannot express a cap **across** rounds - every
+  entry rolls independently, which is exactly how the Capitol got to thirteen item rolls in the first place. The
+  loop walks rounds 2..roundsWon and stops at the first success.
+- **Level-2 (Challenging)**: gold tables 300/200/300 (cumulative **300 / 500 / 800**), the same per-round themed
+  rare+ cards, **four item tiers at 0.25 / 0.40 / 0.15 / 0.05** per round, and one guaranteed item on the win. Its
+  three existing pools only covered three of the four probabilities, so the 86-name mid-value band the level-1
+  tables used to carry (recovered from git) fills the 0.15 slot; the 2,500-90,000 jackpot pool moves from 0.15 down
+  to **0.05**, and the guaranteed win item uses the same 16-name list level 1 uses. Its untargeted card entries
+  (1 Rare + 1 Mythic) are gone - the themed cards replace them.
+- **No more than 2 Mythics** on the level-2 payout: counted from the cards actually produced, and once two are out
+  the remaining themed draws ask for Rare only.
+- **A round-133 gap closed.** That round scoped the payout to `tierWeighted`, which requires
+  `arenaBuildingLevel() < 2` - so a level-2 arena **switched back to Normal mode** plays the level-1 tables but got
+  the gold with no themed cards. The payout scope is now deliberately wider than the tier-weighting scope:
+  `!isChallenge && fromBuilding && (playerOwnedArena || isAiCapitalArena())`.
+- **The overworld Chest's Illegal Arena** now "follows Player Level 1 Arena, but a slightly higher probability for
+  better items": the same 200/150/150 gold shape and per-round themed cards, its own win item kept (already better
+  than the Capitol's - a 0.75 Rare / 0.25 Mythic roll rather than a fixed list), and its bonus roll is **0.4 for an
+  Uncommon** against the Capitol's 0.3 for a Common. Flagged from `loadArenaDataStandalone()`, the one standalone
+  bracket that pays the Capitol way.
+
+`[TFR-ArenaPayout]` now names the bracket type and reports rounds won, themed cards, the mythic count against its
+cap, whether the win item fired and whether the bonus item did.
+
+### The Torch banner fires once
+
+*"We can remove this pop-up I do it a lot and don't need to see it each time. Maybe fire it the first time."* The
+flare is obvious on screen, so the banner is gated behind a new `torchPulseSeen` character flag - a flag rather than
+a session static, so it stays quiet across saves and reloads, and a New Game+ (which clears every character flag)
+explains it once more. `[TFR-TorchPulse]` still logs every use; the log for this session shows five.
+
+### Log review (`forge.log`, 2026-09-07 07:58, 729 lines)
+
+**No exceptions at all.** The diagnostics confirm several recent rounds working in the user's own game:
+`[TFR-ArenaTier]` shows `playerOwned=true level=1 aiCapital=false` brackets with no Apprentice fighters (round 125);
+`[TFR-AnteReroll]` shows the shards staying spent, 137 -> 132 (round 123's S3-1 fix); `[TFR-ItemRefresh]` re-read 13
+inventory items on load (round 124); `[TFR-DungeonClear]` printed exactly once, for a Cave, which is the round-122
+gate behaving. Only cosmetic oddity: bracket lines like `Master Blue Wizard (Adept)` - a name/tier mismatch left by
+the round-116/118 tier slice, which re-tiered by deck strength without renaming. Harmless.
+
+**Files touched**: `scene/ArenaScene.java`, `util/ChestEvents.java`, `stage/ConsoleCommandInterpreter.java`; plane
+`ui/inventory.json`, `ui/inventory_portrait.json`, `world/items.json`, `maps/map/towns/player_capital.tmx`.
+MOD_SCOPE #111 updated.
+
 ## Round 133: Arena payouts rebuilt for the Player Capitol level 1 and the AI capitals (2026-09-07, repo only)
 
 User report: *"I just won my first Arena match in my capitol, and received 6 items! Not sure how that's even
