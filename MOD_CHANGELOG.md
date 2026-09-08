@@ -17757,6 +17757,68 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 150: every starting mode follows the race's sets (2026-09-08)
+
+User: *"all starting modes should be Race / Color thematic. They should all follow the Race specific
+starting sets. Is this the case or do we need to fix it?"* Two of them were not, and both now are.
+
+### What this plane actually offers
+
+Three of the eight `AdventureModes` are gated off here and were never part of the question:
+**Commander** needs a `commanderDecks` table this config does not have, and **Precon** /
+**CommanderPrecon** need `decks/starter/precon/` and `.../commanderprecon/` folders that exist in
+neither the plane nor common. That leaves Standard, Constructed, Pile, Chaos and Custom - and Chaos
+is the random-deck mode by definition while Custom is the player's own imported decks.
+
+### Standard could not simply be filtered
+
+Standard's decks were `"jumpstartPacks": ["white","white","white"]` - three JumpStart-style booster
+templates drawn from whichever set the player picked. **Only 18 editions in the card database have
+such a template**, and only **six of the sixteen races** have one of those among their four sets
+(Devil/SOI, Human/DMU, Undead/ISD+DKA, Phyrexian/ONE, Dwarf/BRO, Werewolf/ISD+MID+DKA). The other
+ten - every Dragon race, Kor, Elf, Metathran, Viashino, Leonin - have none at all, and
+`generateDeck` picks with `keys[nextInt(keys.length)]`, so an empty pack pool is not a weak deck, it
+is an exception. Restricting the existing mechanism was never an option; the mode had to stop being
+a pack-opening mode.
+
+It is `mainDeck` reward filters now, like Constructed, but shaped as a POOL rather than a deck so
+the two stay distinct: a looser curve running to seven, 23 lands, and exactly one rare - the "you
+opened something" moment. One rare in sixty keeps it inside the user's "should really struggle
+against Master" bar.
+
+### Standard's set dropdown lists the player's own sets
+
+It used to offer Jumpstart, Dominaria United, The Brothers' War, Jumpstart 22, Phyrexia: ONE, March
+of the Machine, Lord of the Rings, Jumpstart 25 and The Last Airbender - of which exactly three
+appear in any race's table. It now lists the chosen race's four expansions plus "(All my sets)",
+rebuilt whenever the race selector changes. Picking one narrows the deck to that single set.
+
+### Pile
+
+Its templates were already `mainDeck` filters, so it only needed routing through the restricted
+path. It stays two-color and rare-heavy - that is the mode's character, and a pile is supposed to be
+janky rather than unrelated to who you are.
+
+### One shared fallback for all three
+
+`Config.racedStarterDeck()` widens rather than shipping an illegal deck: the requested sets, then
+the race's full four, then no restriction - logging each step, because reaching one means a template
+bucket is too narrow for that race and the DATA is what wants fixing. Validated offline first: all
+80 race/color combinations have a non-empty pool in every bucket of all three templates. The only
+thin one is Metathran red, with two choices at creature 5-7.
+
+### Also
+
+Constructed sizes flipped per the user: **40 cards for Easy/Normal, 60 for Hard/Insane** (round 149
+had it the other way).
+
+Left alone deliberately: `seedStartingEditions` unlocks only 4/3/2/1 of a race's sets by difficulty,
+but the starter deck draws on all four. The deck is what your people handed you; the unlocks gate
+what shops will sell you later.
+
+**Files touched**: `util/Config.java`, `scene/NewGameScene.java`; plane `config.json` and five new
+`decks/starter/standard_<color>.json`.
+
 ## Round 149: Constructed starter decks come from your race's own sets (2026-09-08)
 
 User: *"can we please update the 'Constructed' decks... they are not in the Race Sets. Let's create

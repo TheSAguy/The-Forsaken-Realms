@@ -1601,6 +1601,15 @@ from the plane's `config tables/settings.json`).
   the result is under `minDeckSize`.
 - **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - passes the race through.
 
+### 2026-09-08 Standard + Pile starter decks follow the race sets (round 150)
+
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - `racedStarterDeck()` (requested sets
+  -> race's four -> unrestricted, logged at each widening), used by the Standard, Constructed and
+  Pile branches of `starterDeck`.
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** - Standard's starter-edition
+  dropdown lists the chosen race's expansions plus an "all of them" entry and is rebuilt on race
+  change; `getStartingEdition()` reads that list.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

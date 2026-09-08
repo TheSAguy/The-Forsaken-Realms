@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-08 (round 149; v1.08 RELEASED, rounds 137-149 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-08 (round 150; v1.08 RELEASED, rounds 137-150 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 150 (2026-09-08): **every starting mode this plane offers now follows the race's sets.** Modes actually
+  available here are Standard / Constructed / Pile / Chaos / Custom - **Commander needs a `commanderDecks` table this
+  config lacks, and Precon/CommanderPrecon need `decks/starter/precon|commanderprecon/` folders that do not exist**,
+  so those three never appear. Chaos is random by design, Custom is the player's own decks.
+  **Standard could not just be filtered**: its jumpstartPacks shape needs an edition with a booster TEMPLATE, only 18
+  editions have one, and only 6 of 16 races have such an edition among their four - the other ten would have hit
+  `nextInt(0)`. It is `mainDeck` filters now, shaped as a POOL (looser curve to 7, 23 lands, exactly ONE rare) so it
+  stays distinct from Constructed's tuned deck. Standard's set dropdown lists the RACE's four expansions + "(All my
+  sets)", rebuilt on race change. **Pile** just needed routing through the restricted path (templates already were
+  mainDeck filters); stays two-color and rare-heavy on purpose. `Config.racedStarterDeck()` is the shared fallback:
+  requested sets -> race's four -> unrestricted, logged at each step. Constructed sizes FLIPPED per user: **40 for
+  Easy/Normal, 60 for Hard/Insane**.
 - Round 149 (2026-09-08): **Constructed starter decks are generated from the player's RACE editions**. The old
   "Adventure - Low <color>" .dck files drew on fourteen expansions, only two of which appear in any race's four sets.
   Now ten `decks/starter/constructed_<color>_<60|40>.json` templates (`mainDeck` RewardData filters) are narrowed at

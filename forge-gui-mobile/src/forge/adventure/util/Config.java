@@ -470,6 +470,40 @@ public class Config {
     }
 
     /**
+     * Builds a generated starter deck confined to {@code editionCodes}, widening the restriction
+     * rather than handing over an illegal deck: the requested sets first, then the race's full
+     * four, then no restriction at all. Round 150 - shared by every starting mode that generates
+     * its deck (Standard, Constructed, Pile), so all three answer the same question the same way.
+     * <p>
+     * The widening steps are logged because reaching one means a template bucket is too narrow for
+     * that race, which is a data problem to fix rather than something to absorb silently.
+     */
+    private Deck racedStarterDeck(String path, String label, java.util.List<String> editionCodes,
+            java.util.List<String> raceCodes) {
+        Deck deck = CardUtil.getDeck(path, false, false, "", false, false, editionCodes, false, true);
+        int size = deck == null ? 0 : deck.getMain().countAll();
+        if (size >= configData.minDeckSize) {
+            System.out.println("[TFR-StarterDeck] " + label + " from editions " + editionCodes
+                    + " -> " + size + " cards (" + path + ")");
+            return deck;
+        }
+        if (editionCodes != null && raceCodes != null && !raceCodes.equals(editionCodes)) {
+            System.out.println("[TFR-StarterDeck] " + label + ": " + editionCodes + " filled only " + size
+                    + " of " + configData.minDeckSize + " - widening to the race's full set list");
+            deck = CardUtil.getDeck(path, false, false, "", false, false, raceCodes, false, true);
+            size = deck == null ? 0 : deck.getMain().countAll();
+            if (size >= configData.minDeckSize) {
+                System.out.println("[TFR-StarterDeck] " + label + " from race editions " + raceCodes
+                        + " -> " + size + " cards");
+                return deck;
+            }
+        }
+        System.out.println("[TFR-StarterDeck] " + label + ": race editions could only fill " + size
+                + " of " + configData.minDeckSize + " for " + path + " - rebuilding unrestricted");
+        return CardUtil.getDeck(path, false, false, "", false, false, (java.util.List<String>) null, false, false);
+    }
+
+    /**
      * @param race index into heroes.json, or -1 when the caller has no race to offer. Round 149:
      *             the Constructed starter decks are generated from the chosen race's own four
      *             expansions ({@code raceEditions}) instead of a fixed hand-written card list that
@@ -482,23 +516,7 @@ public class Config {
                 for (ObjectMap.Entry<String, String> entry : difficultyData.constructedStarterDecks) {
                     if (ColorSet.fromNames(entry.key.toCharArray()).getColor() == color.getColor()) {
                         java.util.List<String> raceCodes = forge.adventure.util.EditionProgression.raceEditionCodes(race);
-                        Deck raced = CardUtil.getDeck(entry.value, false, false, "", false, false,
-                                raceCodes, false, true);
-                        int size = raced == null ? 0 : raced.getMain().countAll();
-                        if (size >= configData.minDeckSize) {
-                            System.out.println("[TFR-StarterDeck] Constructed " + entry.key + " from race editions "
-                                    + raceCodes + " -> " + size + " cards (" + entry.value + ")");
-                            return raced;
-                        }
-                        // A race whose four sets cannot fill one of the buckets would otherwise hand
-                        // the player an illegal deck. Rebuild with no restriction rather than start
-                        // the game short - loudly, because it means a bucket in the template is too
-                        // narrow for that race and the template is what wants fixing.
-                        System.out.println("[TFR-StarterDeck] race editions " + raceCodes + " filled only "
-                                + size + " of " + configData.minDeckSize + " cards for " + entry.value
-                                + " - rebuilding without the restriction");
-                        return CardUtil.getDeck(entry.value, false, false, "", false, false,
-                                (java.util.List<String>) null, false, false);
+                        return racedStarterDeck(entry.value, "Constructed " + entry.key, raceCodes, raceCodes);
                     }
                 }
             case Standard:
@@ -513,10 +531,19 @@ public class Config {
                         }
                     }
                 }
-                // Fall back to default starter decks (JSON generation with edition filter)
+                // Round 150: the same race-set restriction Constructed uses. Standard's old
+                // jumpstartPacks shape could never have honoured it - jumpstart-style boosters only
+                // exist for 18 editions, and only SIX of the sixteen races have one of those in
+                // their four sets, so ten races would have picked from an empty pack pool. The
+                // templates are ordinary mainDeck reward filters now, which any set can fill.
+                // starterEdition here is one of the player's OWN race sets (see NewGameScene), or
+                // null for "all of them".
                 for (ObjectMap.Entry<String, String> entry : difficultyData.starterDecks) {
                     if (ColorSet.fromNames(entry.key.toCharArray()).getColor() == color.getColor()) {
-                        return CardUtil.getDeck(entry.value, false, false, "", false, false, starterEdition, true);
+                        java.util.List<String> raceCodes = forge.adventure.util.EditionProgression.raceEditionCodes(race);
+                        java.util.List<String> picked = starterEdition == null ? raceCodes
+                                : java.util.Collections.singletonList(starterEdition.getCode());
+                        return racedStarterDeck(entry.value, "Standard " + entry.key, picked, raceCodes);
                     }
                 }
             case Chaos:
@@ -527,9 +554,12 @@ public class Config {
             case Custom:
                 return DeckProxy.getAllCustomStarterDecks().get(index).getDeck();
             case Pile:
+                // Round 150: a pile is meant to be janky, not unrelated to who you are - same race
+                // restriction, existing two-color templates untouched.
                 for (ObjectMap.Entry<String, String> entry : difficultyData.pileDecks) {
                     if (ColorSet.fromNames(entry.key.toCharArray()).getColor() == color.getColor()) {
-                        return CardUtil.getDeck(entry.value, false, false, "", false, false);
+                        java.util.List<String> raceCodes = forge.adventure.util.EditionProgression.raceEditionCodes(race);
+                        return racedStarterDeck(entry.value, "Pile " + entry.key, raceCodes, raceCodes);
                     }
                 }
             case Commander:

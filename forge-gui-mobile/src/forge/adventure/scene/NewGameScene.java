@@ -61,6 +61,9 @@ public class NewGameScene extends MenuScene {
     private final Random rand = new Random();
     private String originalEditionLabelText;
     private Array<String> originalEditionNames;
+    /** Round 150: parallel to the Standard mode dropdown once it lists the RACE's own sets. The
+     *  last slot is null, meaning "all of them" - see updateStarterEditionListForRace(). */
+    private CardEdition[] raceEditionIds;
 
     private final Array<AdventureModes> modes = new Array<>();
 
@@ -203,6 +206,12 @@ public class NewGameScene extends MenuScene {
             }
         });
         race.addListener(event -> NewGameScene.this.updateAvatar());
+        // Round 150: Standard's set list is the chosen race's own four expansions, so it has to be
+        // rebuilt whenever the race changes.
+        race.addListener(event -> {
+            NewGameScene.this.updateStarterEditionListForRace();
+            return false;
+        });
         race.setTextList(HeroListData.instance().getRaces());
         raceHelp = ui.findActor("raceHelp");
         difficulty = ui.findActor("difficulty");
@@ -303,7 +312,7 @@ public class NewGameScene extends MenuScene {
             colorId.setTextList(Config.instance().filterCommanderPreconDecks(starterEdition.getCurrentIndex()));
         } else if (selectedMode == AdventureModes.Standard) {
             starterEditionLabel.setText(originalEditionLabelText);
-            starterEdition.setTextList(originalEditionNames);
+            updateStarterEditionListForRace();
             colorId.setTextList(selectedMode.getModes());
         } else {
             colorId.setTextList(selectedMode.getModes());
@@ -340,11 +349,44 @@ public class NewGameScene extends MenuScene {
         return colorIds[idx < colorIds.length ? idx : 0];
     }
 
+    /**
+     * Round 150. Standard's set dropdown lists the chosen RACE's own expansions plus an "all of
+     * them" entry, rather than a fixed plane-wide list that had almost nothing in common with any
+     * race's sets (of the nine, only DMU, BRO and ONE appear in a race table at all). Falls back to
+     * the plane list for a race with no entry, which is also what the starter deck itself does.
+     */
+    private void updateStarterEditionListForRace() {
+        if (race == null || starterEdition == null)
+            return;
+        java.util.List<String> codes =
+                forge.adventure.util.EditionProgression.raceEditionCodes(race.getCurrentIndex());
+        if (codes == null || codes.isEmpty()) {
+            raceEditionIds = null;
+            starterEdition.setTextList(originalEditionNames);
+            return;
+        }
+        Array<String> names = new Array<>(codes.size() + 1);
+        raceEditionIds = new CardEdition[codes.size() + 1];
+        for (int i = 0; i < codes.size(); i++) {
+            CardEdition edition = FModel.getMagicDb().getEditions().get(codes.get(i));
+            raceEditionIds[i] = edition;
+            names.add(edition != null ? edition.getName() : codes.get(i));
+        }
+        raceEditionIds[codes.size()] = null; // "all of them" - no single-set narrowing
+        names.add(Forge.getLocalizer().getMessageorUseDefault("lblAllMySets", "(All my sets)"));
+        starterEdition.setTextList(names);
+    }
+
     private CardEdition getStartingEdition() {
         AdventureModes currentMode = modes.get(mode.getCurrentIndex());
-        if (currentMode == AdventureModes.Standard && editionIds.length > 0) {
+        if (currentMode == AdventureModes.Standard) {
             int idx = starterEdition.getCurrentIndex();
-            return editionIds[idx < editionIds.length ? idx : 0];
+            // Race-scoped list: a null entry is the deliberate "all of them" pick, which
+            // Config.starterDeck reads as "use every one of this race's sets".
+            if (raceEditionIds != null)
+                return raceEditionIds[idx < raceEditionIds.length ? idx : raceEditionIds.length - 1];
+            if (editionIds.length > 0)
+                return editionIds[idx < editionIds.length ? idx : 0];
         }
         return editionIds.length > 0 ? editionIds[0] : null;
     }

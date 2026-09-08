@@ -1,0 +1,50 @@
+{
+  "name": "Green Pool",
+  "mainDeck": [
+    {
+      "count": 23,
+      "cardName": "Forest"
+    },
+    {
+      "count": 12,
+      "cardTypes": ["Creature"],
+      "colors": ["green"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2]
+    },
+    {
+      "count": 9,
+      "cardTypes": ["Creature"],
+      "colors": ["green"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    },
+    {
+      "count": 5,
+      "cardTypes": ["Creature"],
+      "colors": ["green"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [5, 6, 7]
+    },
+    {
+      "count": 1,
+      "colors": ["green"],
+      "rarity": ["Rare"],
+      "manaCosts": [3, 4, 5, 6, 7]
+    },
+    {
+      "count": 7,
+      "cardTypes": ["Instant", "Sorcery"],
+      "colors": ["green"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2, 3]
+    },
+    {
+      "count": 3,
+      "cardTypes": ["Instant", "Sorcery", "Enchantment"],
+      "colors": ["green"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [2, 3, 4, 5]
+    }
+  ]
+}

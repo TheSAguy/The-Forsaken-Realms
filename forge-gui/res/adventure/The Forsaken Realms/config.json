@@ -55,12 +55,17 @@
       "rewardMaxFactor" : 1.5,
       "sellFactor": 0.6,  
       "shardSellRatio": 0.95,
+      // Round 150: Standard now generates from the RACE's own sets too. The old
+      // "<color>_<difficulty>.json" files were three jumpstartPacks, and jumpstart-style
+      // boosters exist for only 18 editions - just SIX of the sixteen races have one in
+      // their four sets, so a race restriction there would have picked from an empty pool.
+      // These are ordinary mainDeck reward filters, which any expansion can fill.
       "starterDecks": {
-        "W":"decks/starter/white_e.json",
-        "B":"decks/starter/black_e.json",
-        "U":"decks/starter/blue_e.json",
-        "R":"decks/starter/red_e.json",
-        "G":"decks/starter/green_e.json"
+        "W":"decks/starter/standard_white.json",
+        "B":"decks/starter/standard_black.json",
+        "U":"decks/starter/standard_blue.json",
+        "R":"decks/starter/standard_red.json",
+        "G":"decks/starter/standard_green.json"
       },
       // Round 149: generated at new-game time from the player's RACE editions (see
       // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
@@ -68,11 +73,11 @@
       // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
       // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/constructed_white_60.json",
-        "B":"decks/starter/constructed_black_60.json",
-        "U":"decks/starter/constructed_blue_60.json",
-        "R":"decks/starter/constructed_red_60.json",
-        "G":"decks/starter/constructed_green_60.json"
+        "W":"decks/starter/constructed_white_40.json",
+        "B":"decks/starter/constructed_black_40.json",
+        "U":"decks/starter/constructed_blue_40.json",
+        "R":"decks/starter/constructed_red_40.json",
+        "G":"decks/starter/constructed_green_40.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_e.json",
@@ -100,12 +105,17 @@
       "lifeLoss": 0.2,  
       "sellFactor": 0.5,      
       "shardSellRatio": 0.8,
+      // Round 150: Standard now generates from the RACE's own sets too. The old
+      // "<color>_<difficulty>.json" files were three jumpstartPacks, and jumpstart-style
+      // boosters exist for only 18 editions - just SIX of the sixteen races have one in
+      // their four sets, so a race restriction there would have picked from an empty pool.
+      // These are ordinary mainDeck reward filters, which any expansion can fill.
       "starterDecks": {
-        "W":"decks/starter/white_n.json",
-        "B":"decks/starter/black_n.json",
-        "U":"decks/starter/blue_n.json",
-        "R":"decks/starter/red_n.json",
-        "G":"decks/starter/green_n.json"
+        "W":"decks/starter/standard_white.json",
+        "B":"decks/starter/standard_black.json",
+        "U":"decks/starter/standard_blue.json",
+        "R":"decks/starter/standard_red.json",
+        "G":"decks/starter/standard_green.json"
       },
       // Round 149: generated at new-game time from the player's RACE editions (see
       // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
@@ -113,11 +123,11 @@
       // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
       // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/constructed_white_60.json",
-        "B":"decks/starter/constructed_black_60.json",
-        "U":"decks/starter/constructed_blue_60.json",
-        "R":"decks/starter/constructed_red_60.json",
-        "G":"decks/starter/constructed_green_60.json"
+        "W":"decks/starter/constructed_white_40.json",
+        "B":"decks/starter/constructed_black_40.json",
+        "U":"decks/starter/constructed_blue_40.json",
+        "R":"decks/starter/constructed_red_40.json",
+        "G":"decks/starter/constructed_green_40.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_n.json",
@@ -143,12 +153,17 @@
       "lifeLoss": 0.3,  
       "sellFactor": 0.25,
       "shardSellRatio": 0.6,
+      // Round 150: Standard now generates from the RACE's own sets too. The old
+      // "<color>_<difficulty>.json" files were three jumpstartPacks, and jumpstart-style
+      // boosters exist for only 18 editions - just SIX of the sixteen races have one in
+      // their four sets, so a race restriction there would have picked from an empty pool.
+      // These are ordinary mainDeck reward filters, which any expansion can fill.
       "starterDecks": {
-        "W":"decks/starter/white_h.json",
-        "B":"decks/starter/black_h.json",
-        "U":"decks/starter/blue_h.json",
-        "R":"decks/starter/red_h.json",
-        "G":"decks/starter/green_h.json"
+        "W":"decks/starter/standard_white.json",
+        "B":"decks/starter/standard_black.json",
+        "U":"decks/starter/standard_blue.json",
+        "R":"decks/starter/standard_red.json",
+        "G":"decks/starter/standard_green.json"
       },
       // Round 149: generated at new-game time from the player's RACE editions (see
       // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
@@ -156,11 +171,11 @@
       // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
       // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/constructed_white_40.json",
-        "B":"decks/starter/constructed_black_40.json",
-        "U":"decks/starter/constructed_blue_40.json",
-        "R":"decks/starter/constructed_red_40.json",
-        "G":"decks/starter/constructed_green_40.json"
+        "W":"decks/starter/constructed_white_60.json",
+        "B":"decks/starter/constructed_black_60.json",
+        "U":"decks/starter/constructed_blue_60.json",
+        "R":"decks/starter/constructed_red_60.json",
+        "G":"decks/starter/constructed_green_60.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_h.json",
@@ -183,12 +198,17 @@
       "lifeLoss": 0.3,
       "sellFactor": 0.05,
       "shardSellRatio": 0.3,
+      // Round 150: Standard now generates from the RACE's own sets too. The old
+      // "<color>_<difficulty>.json" files were three jumpstartPacks, and jumpstart-style
+      // boosters exist for only 18 editions - just SIX of the sixteen races have one in
+      // their four sets, so a race restriction there would have picked from an empty pool.
+      // These are ordinary mainDeck reward filters, which any expansion can fill.
       "starterDecks": {
-        "W":"decks/starter/white_h.json",
-        "B":"decks/starter/black_h.json",
-        "U":"decks/starter/blue_h.json",
-        "R":"decks/starter/red_h.json",
-        "G":"decks/starter/green_h.json"
+        "W":"decks/starter/standard_white.json",
+        "B":"decks/starter/standard_black.json",
+        "U":"decks/starter/standard_blue.json",
+        "R":"decks/starter/standard_red.json",
+        "G":"decks/starter/standard_green.json"
       },
       // Round 149: generated at new-game time from the player's RACE editions (see
       // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
@@ -196,11 +216,11 @@
       // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
       // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/constructed_white_40.json",
-        "B":"decks/starter/constructed_black_40.json",
-        "U":"decks/starter/constructed_blue_40.json",
-        "R":"decks/starter/constructed_red_40.json",
-        "G":"decks/starter/constructed_green_40.json"
+        "W":"decks/starter/constructed_white_60.json",
+        "B":"decks/starter/constructed_black_60.json",
+        "U":"decks/starter/constructed_blue_60.json",
+        "R":"decks/starter/constructed_red_60.json",
+        "G":"decks/starter/constructed_green_60.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_h.json",
