@@ -205,6 +205,28 @@ public class EditionProgression {
      * .editions left at whatever the original had) rather than "restrict to nothing" - callers
      * that want a hard restriction to an empty pool should filter it out before calling this.
      */
+    /**
+     * The four editions a race starts with ({@code ConfigData.raceEditions}, keyed on heroes.json's
+     * RAW race name). Null when the race is unknown or the table is absent, which every caller
+     * treats as "no restriction" - the same fail-open contract restrictToEditions() uses.
+     * <p>
+     * Round 149: added for the Constructed starter decks, which now build from the player's own
+     * race sets rather than from a fixed card list that had nothing to do with them.
+     */
+    public static List<String> raceEditionCodes(int race) {
+        String raceName = forge.adventure.data.HeroListData.getRawRaceName(race);
+        forge.adventure.data.RaceEditionData[] table = Config.instance().getConfigData().raceEditions;
+        if (raceName == null || table == null)
+            return null;
+        for (forge.adventure.data.RaceEditionData entry : table) {
+            if (entry != null && raceName.equalsIgnoreCase(entry.race)
+                    && entry.editions != null && entry.editions.length > 0) {
+                return java.util.Arrays.asList(entry.editions);
+            }
+        }
+        return null;
+    }
+
     public static List<RewardData> restrictToEditions(Iterable<RewardData> original, List<String> editionCodes) {
         return restrictToEditions(original, editionCodes, false);
     }

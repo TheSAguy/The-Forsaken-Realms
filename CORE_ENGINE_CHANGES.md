@@ -1589,6 +1589,18 @@ from the plane's `config tables/settings.json`).
   deposit/withdraw and the Exchange's trade declare IGNORED.
 - New mod file: `util/ResourceLedger.java`.
 
+### 2026-09-08 Constructed starter decks generated from race editions (round 149)
+
+- **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** - `generateDeck`/`getDeck` gained an
+  edition-LIST flavour with a `restrictRewards` flag that stamps the mainDeck/template reward
+  filters as well as the jumpstart pack pool. The single-`CardEdition` overloads delegate with the
+  flag off, so existing behavior is unchanged.
+- **`forge-gui-mobile/src/forge/adventure/util/EditionProgression.java`** - `raceEditionCodes(int)`.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - `starterDeck(..., int race)`; the
+  Constructed branch builds from the race's expansions and falls back to an unrestricted rebuild if
+  the result is under `minDeckSize`.
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - passes the race through.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

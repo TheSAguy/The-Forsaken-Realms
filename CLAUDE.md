@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-08 (round 148; v1.08 RELEASED, rounds 137-148 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-08 (round 149; v1.08 RELEASED, rounds 137-149 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 149 (2026-09-08): **Constructed starter decks are generated from the player's RACE editions**. The old
+  "Adventure - Low <color>" .dck files drew on fourteen expansions, only two of which appear in any race's four sets.
+  Now ten `decks/starter/constructed_<color>_<60|40>.json` templates (`mainDeck` RewardData filters) are narrowed at
+  new-game time by `EditionProgression.raceEditionCodes(race)` -> 16 races x 5 colors x 2 sizes from ten files.
+  `CardUtil.generateDeck/getDeck` gained an edition-LIST overload with a `restrictRewards` flag (the old
+  single-CardEdition ones delegate with it OFF, so nothing else changed); `Config.starterDeck` takes the race and
+  rebuilds unrestricted if the race's sets cannot reach `minDeckSize`. Commons/uncommons only, no rares, curve stops
+  at 6 - Easy/Normal 60 cards, Hard/Insane 40 (user spec). **Every difficulty is mono-color now** (Normal/Hard/Insane
+  used to hand out two-color guild decks, whose mana is unreliable once narrowed to four sets). Verified offline:
+  all 80 race/color combinations have a non-empty pool in every bucket; tightest is Metathran red (2 choices at
+  creature 5-6).
+- Round 148c (2026-09-08, save only): Moat Keep + Skyfall written into **`1_save_slot.sav`** (slots 0 and 4) beside
+  the three originals, all rewritten War-Room-free. `2_save_slot.sav` left untouched as the clean pre-test backup.
 - Round 148b (2026-09-08, save only): **Skyfall (G_R)** in slot index 2 - an anti-flier deck, built on REACH rather
   than the user's suggested fliers-vs-fliers, since reach is far cheaper per point of stats and a flier deck has no
   ground defense. Spitting Spider (sac a land: 1 damage to EACH creature with flying - repeatable and one-sided),

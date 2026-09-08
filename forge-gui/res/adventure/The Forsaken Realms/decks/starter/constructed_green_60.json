@@ -1,0 +1,44 @@
+{
+  "name": "Green Starter",
+  "mainDeck": [
+    {
+      "count": 24,
+      "cardName": "Forest"
+    },
+    {
+      "count": 14,
+      "cardTypes": ["Creature"],
+      "colors": ["green"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2]
+    },
+    {
+      "count": 8,
+      "cardTypes": ["Creature"],
+      "colors": ["green"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    },
+    {
+      "count": 3,
+      "cardTypes": ["Creature"],
+      "colors": ["green"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [5, 6]
+    },
+    {
+      "count": 8,
+      "cardTypes": ["Instant", "Sorcery"],
+      "colors": ["green"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2, 3]
+    },
+    {
+      "count": 3,
+      "cardTypes": ["Instant", "Sorcery", "Enchantment"],
+      "colors": ["green"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    }
+  ]
+}

@@ -583,15 +583,34 @@ public class CardUtil {
     }
 
     public static Deck generateDeck(GeneratedDeckData data, CardEdition starterEdition, boolean discourageDuplicates) {
-        List<String> editionCodes = (starterEdition != null)
-                ? Arrays.asList(starterEdition.getCode(), starterEdition.getCode2())
+        // The single-edition flavour only ever narrowed which JUMPSTART PACKS were eligible; it has
+        // never constrained a mainDeck/template reward filter, and round 149 deliberately did not
+        // change that - passing restrictRewards=false keeps every existing caller byte-identical.
+        return generateDeck(data,
+                starterEdition != null ? Arrays.asList(starterEdition.getCode(), starterEdition.getCode2()) : null,
+                discourageDuplicates, false);
+    }
+
+    /**
+     * Round 149. {@code editionCodes} replaces the hard-coded jumpstart pool when supplied, and
+     * with {@code restrictRewards} it ALSO stamps the mainDeck/template reward filters, so a
+     * generated deck can be confined to a specific set of expansions - which is how the Constructed
+     * starter decks are now built from the player's race editions.
+     */
+    public static Deck generateDeck(GeneratedDeckData data, List<String> requestedEditions,
+            boolean discourageDuplicates, boolean restrictRewards) {
+        boolean haveEditions = requestedEditions != null && !requestedEditions.isEmpty();
+        List<String> editionCodes = haveEditions
+                ? requestedEditions
                 : Arrays.asList("JMP", "J22", "DMU", "BRO", "ONE", "MOM");
+        List<String> rewardEditions = (restrictRewards && haveEditions) ? requestedEditions : null;
         Deck deck = new Deck(data.name);
         if (data.mainDeck != null) {
-            deck.getOrCreate(DeckSection.Main).addAllFlat(generateAllCards(Arrays.asList(data.mainDeck), true));
+            deck.getOrCreate(DeckSection.Main)
+                    .addAllFlat(generateAllCards(restrict(data.mainDeck, rewardEditions), true));
             if (data.sideBoard != null)
                 deck.getOrCreate(DeckSection.Sideboard)
-                        .addAllFlat(generateAllCards(Arrays.asList(data.sideBoard), true));
+                        .addAllFlat(generateAllCards(restrict(data.sideBoard, rewardEditions), true));
             return deck;
         }
         if (data.jumpstartPacks != null) {
@@ -657,7 +676,7 @@ public class CardUtil {
             List<RewardData> dataArray = generateRewards(data.template, spells * 0.5f, new int[] { 1, 2 });
             dataArray.addAll(generateRewards(data.template, spells * 0.3f, new int[] { 3, 4, 5 }));
             dataArray.addAll(generateRewards(data.template, spells * 0.2f, new int[] { 6, 7, 8 }));
-            List<PaperCard> nonLand = generateAllCards(dataArray, true);
+            List<PaperCard> nonLand = generateAllCards(restrict(dataArray, rewardEditions), true);
 
             nonLand.addAll(fillWithLands(nonLand, data.template));
             deck.getOrCreate(DeckSection.Main).addAllFlat(nonLand);
@@ -856,6 +875,18 @@ public class CardUtil {
         return ret;
     }
 
+    /** Stamps an edition filter onto a reward list, or hands it back untouched when there is
+     *  nothing to restrict by - the same fail-open contract EditionProgression itself uses. */
+    private static Iterable<RewardData> restrict(RewardData[] rewards, List<String> editionCodes) {
+        return restrict(Arrays.asList(rewards), editionCodes);
+    }
+
+    private static List<RewardData> restrict(List<RewardData> rewards, List<String> editionCodes) {
+        if (editionCodes == null || editionCodes.isEmpty())
+            return rewards;
+        return EditionProgression.restrictToEditions(rewards, editionCodes);
+    }
+
     private static List<RewardData> generateRewards(GeneratedDeckTemplateData template, float count, int[] manaCosts) {
         ArrayList<RewardData> ret = new ArrayList<>();
         ret.addAll(templateGenerate(template, count - (count * template.rares), manaCosts,
@@ -894,6 +925,15 @@ public class CardUtil {
 
     public static Deck getDeck(String path, boolean forAI, boolean isFantasyMode, String colors, boolean isTheme,
             boolean useGeneticAI, CardEdition starterEdition, boolean discourageDuplicates) {
+        return getDeck(path, forAI, isFantasyMode, colors, isTheme, useGeneticAI,
+                starterEdition != null ? Arrays.asList(starterEdition.getCode(), starterEdition.getCode2()) : null,
+                discourageDuplicates, false);
+    }
+
+    /** Round 149: the edition-list flavour, for a deck that must be built out of a named set of
+     *  expansions (the Constructed starter decks and their race editions). */
+    public static Deck getDeck(String path, boolean forAI, boolean isFantasyMode, String colors, boolean isTheme,
+            boolean useGeneticAI, List<String> editionCodes, boolean discourageDuplicates, boolean restrictRewards) {
         if (path.endsWith(".dck")) {
             FileHandle fileHandle = Config.instance().getFile(path);
             Deck deck = null;
@@ -917,7 +957,8 @@ public class CardUtil {
         Json json = new Json();
         FileHandle handle = Config.instance().getFile(path);
         if (handle.exists())
-            return generateDeck(json.fromJson(GeneratedDeckData.class, handle), starterEdition, discourageDuplicates);
+            return generateDeck(json.fromJson(GeneratedDeckData.class, handle), editionCodes,
+                    discourageDuplicates, restrictRewards);
         Deck deck = DeckgenUtil.getRandomOrPreconOrThemeDeck(colors, true, false, true);
         System.err.println("Error loading JSON: " + handle.path() + "\nGenerating random deck: " + deck.getName());
         return deck;

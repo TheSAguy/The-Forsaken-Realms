@@ -17757,6 +17757,78 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 149: Constructed starter decks come from your race's own sets (2026-09-08)
+
+User: *"can we please update the 'Constructed' decks... they are not in the Race Sets. Let's create
+Race specific sets / thematic. 60 cards for Easy and Normal and 40 cards for Hard/Insane. These
+decks need to be 'Starter' decks... competitive with Apprentice opponents, but should really
+struggle against Master."*
+
+The old decks were five hand-written `.dck` files per difficulty drawing on M20, MH1, EMN, AFR, C15,
+MH2, DDQ, SNC, XLN, UMA, GK2, KHM, CMR and NPH. Only two of those fourteen expansions appear in ANY
+race's four assigned sets, so the deck a player started with had essentially nothing to do with the
+race they chose - which is the complaint.
+
+### Generated per race instead of written per color
+
+Sixteen races x five colors x two sizes is 160 decks, so hand-authoring was never the answer. The
+plane already had the machinery: `GeneratedDeckData.mainDeck` describes a deck as a list of
+`RewardData` filters (count, card types, colors, rarity, mana costs), and
+`EditionProgression.restrictToEditions()` stamps an edition filter onto exactly that. Wiring the two
+together turns **ten** template files into all 160 decks:
+
+- `CardUtil.generateDeck` / `getDeck` gained an edition-LIST flavour that also constrains the
+  mainDeck and template reward filters, not just which jumpstart packs are eligible. The existing
+  single-`CardEdition` overloads delegate with that off, so every current caller is byte-identical.
+- `EditionProgression.raceEditionCodes(race)` reads the race's four expansions out of
+  `ConfigData.raceEditions`, the same table Progressive Set Unlocks already keys on.
+- `Config.starterDeck` takes the race and, for Constructed, builds from those four sets.
+
+A Kor now opens with Zendikar-block commons, a Phyrexian with Mirrodin-block ones, and neither ever
+sees the other's cards.
+
+### Keeping it a starter deck
+
+Commons and uncommons only - no rares, no mythics, no planeswalkers - creature-heavy, and the curve
+stops at six. That single "no rares" rule does most of the work the user asked for: a Master deck
+carries bombs and efficient removal this one structurally cannot contain, while an Apprentice deck
+is the same kind of thing and the games are real.
+
+    60 cards (Easy, Normal)        40 cards (Hard, Insane)
+    24 basic land                  17 basic land
+    14 creature  1-2  C            10 creature  1-2  C
+     8 creature  3-4  C/U           6 creature  3-4  C/U
+     3 creature  5-6  C/U           2 creature  5-6  C/U
+     8 instant/sorcery 1-3 C        4 instant/sorcery 1-3 C
+     3 spell     3-4  C/U           1 spell     3-4  C/U
+
+**Every difficulty is mono-color now.** Normal, Hard and Insane previously handed out two-color
+guild decks (Azorius, Rakdos, Orzhov, Golgari...). Narrowed to four expansions, a two-color starter's
+mana would be unreliable, and unreliable is a different thing from weak - the player picks one color
+at new game and now gets that color.
+
+### The bucket that could have been empty
+
+A race whose four sets happen to hold no, say, common white creature at five or six mana would have
+produced a short and illegal deck. `Config.starterDeck` checks the generated size against
+`minDeckSize` and rebuilds unrestricted if it falls short, loudly, because that means a template
+bucket is too narrow rather than anything being wrong at runtime.
+
+It should never fire: all **80** race/color combinations were checked offline against the edition
+files and every bucket has candidates. The tightest is Metathran red, with two choices for
+"creature 5-6" - two cards out of forty, and Invasion block simply is short on cheap red fatties.
+
+**Files touched**: `util/CardUtil.java`, `util/Config.java`, `util/EditionProgression.java`,
+`world/WorldSave.java`; plane `config.json` and ten new `decks/starter/constructed_<color>_<size>.json`.
+
+## Round 148c: both decks moved onto the pre-test save (2026-09-08)
+
+User: *"For the decks, please use Save 1 or two. Those are before testing and giving decks to the
+Roaming guards."* Save 1 holds the full 1,698-card collection with all three original decks intact
+and no guards hired, so Moat Keep and Skyfall went in beside them (slots 0 and 4) and the three
+originals were rewritten from their corrected lists, which drops War Room from all of them. Save 2
+is deliberately untouched as the clean pre-test backup.
+
 ## Round 148b: Skyfall, an anti-flier deck (2026-09-08)
 
 User: *"Can you please create me an Anti-flyer deck. I'm having issue wining duels where the enemy

@@ -62,12 +62,17 @@
         "R":"decks/starter/red_e.json",
         "G":"decks/starter/green_e.json"
       },
+      // Round 149: generated at new-game time from the player's RACE editions (see
+      // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
+      // lists drew on fifteen expansions unrelated to any race's four sets, and Normal/Hard/Insane
+      // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
+      // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/Adventure - Low White.dck",
-        "B":"decks/starter/Adventure - Low Black.dck",
-        "U":"decks/starter/Adventure - Low Blue.dck",
-        "R":"decks/starter/Adventure - Low Red.dck",
-        "G":"decks/starter/Adventure - Low Green.dck"
+        "W":"decks/starter/constructed_white_60.json",
+        "B":"decks/starter/constructed_black_60.json",
+        "U":"decks/starter/constructed_blue_60.json",
+        "R":"decks/starter/constructed_red_60.json",
+        "G":"decks/starter/constructed_green_60.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_e.json",
@@ -102,12 +107,17 @@
         "R":"decks/starter/red_n.json",
         "G":"decks/starter/green_n.json"
       },
+      // Round 149: generated at new-game time from the player's RACE editions (see
+      // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
+      // lists drew on fifteen expansions unrelated to any race's four sets, and Normal/Hard/Insane
+      // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
+      // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/Adventure - Low Azorius.dck",
-        "B":"decks/starter/Adventure - Low Rakdos.dck",
-        "U":"decks/starter/Adventure - Low Dimir.dck",
-        "R":"decks/starter/Adventure - Low Gruul.dck",
-        "G":"decks/starter/Adventure - Low Selesnya.dck"
+        "W":"decks/starter/constructed_white_60.json",
+        "B":"decks/starter/constructed_black_60.json",
+        "U":"decks/starter/constructed_blue_60.json",
+        "R":"decks/starter/constructed_red_60.json",
+        "G":"decks/starter/constructed_green_60.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_n.json",
@@ -140,12 +150,17 @@
         "R":"decks/starter/red_h.json",
         "G":"decks/starter/green_h.json"
       },
+      // Round 149: generated at new-game time from the player's RACE editions (see
+      // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
+      // lists drew on fifteen expansions unrelated to any race's four sets, and Normal/Hard/Insane
+      // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
+      // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/Adventure - Low Orzhov.dck",
-        "B":"decks/starter/Adventure - Low Golgari.dck",
-        "U":"decks/starter/Adventure - Low Izzet.dck",
-        "R":"decks/starter/Adventure - Low Boros.dck",
-        "G":"decks/starter/Adventure - Low Simic.dck"
+        "W":"decks/starter/constructed_white_40.json",
+        "B":"decks/starter/constructed_black_40.json",
+        "U":"decks/starter/constructed_blue_40.json",
+        "R":"decks/starter/constructed_red_40.json",
+        "G":"decks/starter/constructed_green_40.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_h.json",
@@ -175,12 +190,17 @@
         "R":"decks/starter/red_h.json",
         "G":"decks/starter/green_h.json"
       },
+      // Round 149: generated at new-game time from the player's RACE editions (see
+      // Config.starterDeck + EditionProgression.raceEditionCodes). The old "Adventure - Low <name>"
+      // lists drew on fifteen expansions unrelated to any race's four sets, and Normal/Hard/Insane
+      // handed out two-color guild decks whose mana would be unreliable once narrowed to four sets;
+      // every difficulty is mono-color now, matching the color the player actually picked.
       "constructedStarterDecks": {
-        "W":"decks/starter/Adventure - Low Orzhov.dck",
-        "B":"decks/starter/Adventure - Low Golgari.dck",
-        "U":"decks/starter/Adventure - Low Izzet.dck",
-        "R":"decks/starter/Adventure - Low Boros.dck",
-        "G":"decks/starter/Adventure - Low Simic.dck"
+        "W":"decks/starter/constructed_white_40.json",
+        "B":"decks/starter/constructed_black_40.json",
+        "U":"decks/starter/constructed_blue_40.json",
+        "R":"decks/starter/constructed_red_40.json",
+        "G":"decks/starter/constructed_green_40.json"
       },
       "pileDecks": {
         "W":"decks/starter/pile_white_h.json",

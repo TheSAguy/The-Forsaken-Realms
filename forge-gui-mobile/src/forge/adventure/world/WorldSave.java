@@ -286,7 +286,7 @@ public class WorldSave {
         boolean chaos = mode == AdventureModes.Chaos;
         boolean custom = mode == AdventureModes.Custom;
 
-        Deck starterDeck = Config.instance().starterDeck(startingColorIdentity, diff, mode, customDeckIndex, starterEdition);
+        Deck starterDeck = Config.instance().starterDeck(startingColorIdentity, diff, mode, customDeckIndex, starterEdition, race);
         currentSave.player.create(name, starterDeck, male, race, avatarIndex, chaos, custom, diff, mode, startingColorId);
         // Player/AI edition exclusivity (2026-08-16 user spec) - the shard seeding inside
         // world.generateNew() above ran before this player existed, so the player's race

@@ -466,11 +466,39 @@ public class Config {
     }
 
     public Deck starterDeck(ColorSet color, DifficultyData difficultyData, AdventureModes mode, int index, CardEdition starterEdition) {
+        return starterDeck(color, difficultyData, mode, index, starterEdition, -1);
+    }
+
+    /**
+     * @param race index into heroes.json, or -1 when the caller has no race to offer. Round 149:
+     *             the Constructed starter decks are generated from the chosen race's own four
+     *             expansions ({@code raceEditions}) instead of a fixed hand-written card list that
+     *             drew on fifteen sets the player had no connection to.
+     */
+    public Deck starterDeck(ColorSet color, DifficultyData difficultyData, AdventureModes mode, int index,
+            CardEdition starterEdition, int race) {
         switch (mode) {
             case Constructed:
                 for (ObjectMap.Entry<String, String> entry : difficultyData.constructedStarterDecks) {
                     if (ColorSet.fromNames(entry.key.toCharArray()).getColor() == color.getColor()) {
-                        return CardUtil.getDeck(entry.value, false, false, "", false, false);
+                        java.util.List<String> raceCodes = forge.adventure.util.EditionProgression.raceEditionCodes(race);
+                        Deck raced = CardUtil.getDeck(entry.value, false, false, "", false, false,
+                                raceCodes, false, true);
+                        int size = raced == null ? 0 : raced.getMain().countAll();
+                        if (size >= configData.minDeckSize) {
+                            System.out.println("[TFR-StarterDeck] Constructed " + entry.key + " from race editions "
+                                    + raceCodes + " -> " + size + " cards (" + entry.value + ")");
+                            return raced;
+                        }
+                        // A race whose four sets cannot fill one of the buckets would otherwise hand
+                        // the player an illegal deck. Rebuild with no restriction rather than start
+                        // the game short - loudly, because it means a bucket in the template is too
+                        // narrow for that race and the template is what wants fixing.
+                        System.out.println("[TFR-StarterDeck] race editions " + raceCodes + " filled only "
+                                + size + " of " + configData.minDeckSize + " cards for " + entry.value
+                                + " - rebuilding without the restriction");
+                        return CardUtil.getDeck(entry.value, false, false, "", false, false,
+                                (java.util.List<String>) null, false, false);
                     }
                 }
             case Standard:

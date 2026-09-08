@@ -1,0 +1,44 @@
+{
+  "name": "Red Starter",
+  "mainDeck": [
+    {
+      "count": 17,
+      "cardName": "Mountain"
+    },
+    {
+      "count": 10,
+      "cardTypes": ["Creature"],
+      "colors": ["red"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2]
+    },
+    {
+      "count": 6,
+      "cardTypes": ["Creature"],
+      "colors": ["red"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    },
+    {
+      "count": 2,
+      "cardTypes": ["Creature"],
+      "colors": ["red"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [5, 6]
+    },
+    {
+      "count": 4,
+      "cardTypes": ["Instant", "Sorcery"],
+      "colors": ["red"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2, 3]
+    },
+    {
+      "count": 1,
+      "cardTypes": ["Instant", "Sorcery", "Enchantment"],
+      "colors": ["red"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "White Starter",
+  "mainDeck": [
+    {
+      "count": 24,
+      "cardName": "Plains"
+    },
+    {
+      "count": 14,
+      "cardTypes": ["Creature"],
+      "colors": ["white"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2]
+    },
+    {
+      "count": 8,
+      "cardTypes": ["Creature"],
+      "colors": ["white"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    },
+    {
+      "count": 3,
+      "cardTypes": ["Creature"],
+      "colors": ["white"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [5, 6]
+    },
+    {
+      "count": 8,
+      "cardTypes": ["Instant", "Sorcery"],
+      "colors": ["white"],
+      "rarity": ["Common"],
+      "manaCosts": [1, 2, 3]
+    },
+    {
+      "count": 3,
+      "cardTypes": ["Instant", "Sorcery", "Enchantment"],
+      "colors": ["white"],
+      "rarity": ["Common", "Uncommon"],
+      "manaCosts": [3, 4]
+    }
+  ]
+}
