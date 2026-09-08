@@ -117,6 +117,13 @@ public class RoamingGuards {
         return isEnabled() && roster().size() < maxGuards();
     }
 
+    /** A guard with no deck cannot fight, cannot be dispatched, and is not paid (round 146,
+     *  user report: "if he does not have a deck, he should probably not be able to leave/cost gold
+     *  weekly"). It is a contract, not a soldier, until it is armed. */
+    public static boolean isArmed(RoamingGuardData guard) {
+        return guard != null && guard.deckCards.length > 0;
+    }
+
     /** Hires an unequipped guard. The caller charges the cost; this only records the guard. */
     public static RoamingGuardData hire(String tier, int currentDay) {
         RoamingGuardData guard = new RoamingGuardData();
@@ -208,13 +215,79 @@ public class RoamingGuards {
             player.getCards().remove(card, amount);
             taken.add(card, amount);
         }
+        // THE BUG THE USER FOUND (round 146). Adventure decks are VIEWS over one shared
+        // collection - the deck editor happily lists the same single card in three decks, and
+        // nothing enforces that the decks add up to what is owned. So removing a deck's cards from
+        // the collection left every OTHER deck still listing them, which had two consequences:
+        //   1. those decks looked full but could no longer be built - the next guard handed one
+        //      over silently got a short deck (the user's Norn's Verdict came out 25 of 40);
+        //   2. worse, a Deck carries its own CardPool, so the player could still PLAY cards they
+        //      had given away. That is the duplication they suspected.
+        // Stripping the same cards from every other deck is the only honest resolution: the player
+        // genuinely does not own them any more, and a deck that lies about it is the more damaging
+        // of the two failure modes.
+        stripFromOtherDecks(player, taken, deckIndex);
         guard.deckName = deck.getName();
         guard.deckCards = taken.countAll() == 0 ? new String[0] : taken.toCardList("\n").split("\n");
         player.clearDeck(deckIndex);
+        System.out.println("[TFR-RoamGuard] collection after hand-over: " + player.getCards().countAll()
+                + " cards (" + player.getCards().countDistinct() + " distinct)");
         System.out.println("[TFR-RoamGuard] took deck \"" + guard.deckName + "\" (" + taken.countAll()
                 + " cards, " + guard.deckCards.length + " entries) from slot " + deckIndex
                 + " - slot cleared, cards removed from the collection");
         return true;
+    }
+
+    /**
+     * Removes cards that have just left the collection from every OTHER deck that lists them, so
+     * no deck claims cards the player no longer owns. Returns a short human-readable summary of
+     * what was touched, for the confirmation the UI shows before this runs.
+     */
+    private static void stripFromOtherDecks(AdventurePlayer player, CardPool taken, int skipIndex) {
+        for (int i = 0; i < player.getDeckCount(); i++) {
+            if (i == skipIndex)
+                continue;
+            Deck other = player.getDeck(i);
+            if (other == null || other.getMain().countAll() == 0)
+                continue;
+            int removed = 0;
+            for (java.util.Map.Entry<PaperCard, Integer> entry : taken) {
+                int have = other.getMain().count(entry.getKey());
+                if (have <= 0)
+                    continue;
+                int drop = Math.min(have, entry.getValue());
+                other.getMain().remove(entry.getKey(), drop);
+                removed += drop;
+            }
+            if (removed > 0)
+                System.out.println("[TFR-RoamGuard] deck \"" + other.getName() + "\" (slot " + i
+                        + ") lost " + removed + " card(s) that went with the guard - they are no"
+                        + " longer in the collection");
+        }
+    }
+
+    /** Which of the player's OTHER decks would lose cards if this deck were handed over, and how
+     *  many each. Used to warn before the hand-over, since it is not reversible per-deck. */
+    public static java.util.LinkedHashMap<String, Integer> sharedCardImpact(int deckIndex) {
+        java.util.LinkedHashMap<String, Integer> impact = new java.util.LinkedHashMap<>();
+        AdventurePlayer player = AdventurePlayer.current();
+        Deck source = player.getDeck(deckIndex);
+        if (source == null)
+            return impact;
+        for (int i = 0; i < player.getDeckCount(); i++) {
+            if (i == deckIndex)
+                continue;
+            Deck other = player.getDeck(i);
+            if (other == null || other.getMain().countAll() == 0)
+                continue;
+            int shared = 0;
+            for (java.util.Map.Entry<PaperCard, Integer> entry : source.getMain()) {
+                shared += Math.min(other.getMain().count(entry.getKey()), entry.getValue());
+            }
+            if (shared > 0)
+                impact.put(other.getName(), shared);
+        }
+        return impact;
     }
 
     /** Puts the guard's cards back in the collection. The deck itself is rebuilt by the caller into
@@ -224,7 +297,10 @@ public class RoamingGuards {
             return;
         AdventurePlayer player = AdventurePlayer.current();
         CardPool returned = CardPool.fromCardList(java.util.Arrays.asList(guard.deckCards));
+        int before = player.getCards().countAll();
         player.getCards().addAll(returned);
+        System.out.println("[TFR-RoamGuard] collection " + before + " -> " + player.getCards().countAll()
+                + " cards after returning \"" + guard.deckName + "\"");
         System.out.println("[TFR-RoamGuard] returned " + returned.countAll() + " card(s) from \""
                 + guard.deckName + "\" to the collection");
         guard.deckCards = new String[0];

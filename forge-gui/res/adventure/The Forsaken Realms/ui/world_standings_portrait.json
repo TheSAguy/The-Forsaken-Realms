@@ -21,12 +21,12 @@
     {
       "type": "Label",
       "name": "title",
-      "text": "[%55]The Forsaken Realms Standings",
+      "text": "[%80]The Forsaken Realms Standings",
       "fontColor": "black",
       "x": 20,
       "y": 26,
       "width": 230,
-      "height": 20
+      "height": 24
     },
     {
       "type": "Table",
@@ -54,6 +54,15 @@
       "y": 268,
       "width": 230,
       "height": 124
+    },
+    {
+      "type": "TextButton",
+      "name": "balanceSheet",
+      "text": "[%80]Balance",
+      "width": 112,
+      "height": 18,
+      "x": 138,
+      "y": 442
     },
     {
       "type": "TextButton",

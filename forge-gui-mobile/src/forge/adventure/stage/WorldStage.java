@@ -867,18 +867,29 @@ public class WorldStage extends GameStage implements SaveFileContent {
             simulateGuardDuel(guard, mage, deck);
             return;
         }
-        currentMob = mage;
+        // Round 147 (user: "Guards don't fight for Ante. That will complicate things."). Right -
+        // ante stakes a card from the PLAYER's collection, and the player is not in this fight. The
+        // guard carries its own cards and the mage is not the player's opponent in the ante sense.
+        // Cloned rather than mutated, the same pattern ArenaScene uses for its own noAnte override,
+        // so this mage's ordinary appearances are unaffected.
+        EnemyData duelData = new EnemyData(mage.getData());
+        duelData.noAnte = true;
+        final EnemySprite guardFoe = new EnemySprite(duelData);
+        guardFoe.territoryTarget = mage.territoryTarget;
+        guardFoe.territoryColor = mage.territoryColor;
+        currentMob = guardFoe;
         currentMobIsGuardDuel = true;
         Forge.advFreezePlayerControls = true;
         DuelScene duelScene = DuelScene.instance();
         FThreads.invokeInEdtNowOrLater(() -> {
             Forge.setTransitionScreen(new TransitionScreen(() -> {
                 Forge.advFreezePlayerControls = false;
-                duelScene.initDuels(player, mage, false, null, true);
+                duelScene.initDuels(player, guardFoe, false, null, true);
                 duelScene.useGuardLoadout(deck, guard.maxLife);
                 Forge.switchScene(duelScene);
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
-                    mage.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard", mage.getTieredDisplayName()));
+                    guardFoe.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard",
+                    guardFoe.getTieredDisplayName()));
             WorldSave.getCurrentSave().autoSave();
         });
     }

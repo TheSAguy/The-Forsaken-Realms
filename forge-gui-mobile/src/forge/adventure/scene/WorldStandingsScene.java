@@ -54,6 +54,7 @@ public class WorldStandingsScene extends UIScene {
         // "Info Page" wiki buttons (2026-08-11, round 8, user request: "a wiki, each will explain
         // some aspect we added") - plain info dialogs via the same createGenericDialog() pattern
         // every other explanatory/confirm dialog in the mod already uses, single "Close" button.
+        ui.onButtonPress("balanceSheet", () -> forge.adventure.util.BalanceSheet.open(this));
         ui.onButtonPress("reputationInfo", this::showReputationInfo);
         ui.onButtonPress("expansionInfo", this::showExpansionInfo);
         // Replaces the old "Explanations" button (2026-08-14 user request) - a single long-form

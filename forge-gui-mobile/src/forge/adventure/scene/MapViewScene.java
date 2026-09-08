@@ -268,6 +268,41 @@ public class MapViewScene extends UIScene {
             label.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
             placeDetailLabel(label, targetPoi.getPosition().x, targetPoi.getPosition().y, placedLabelRects);
         }
+
+        // Garrison strength (round 147, user request). Added to THIS overlay rather than a new one
+        // because Details is already where "Under Attack!" lives, and the two answer the same
+        // question together: which of my towns is threatened, and what is standing in that town.
+        // Same fog-of-war gate as above - a garrison label would otherwise leak an unexplored
+        // town's existence.
+        for (PointOfInterest poi : allPois) {
+            forge.adventure.pointofintrest.PointOfInterestChanges changes =
+                    WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+            if (changes == null || !forge.adventure.util.TownRestoration.isTownRestored(changes))
+                continue;
+            int tileX = (int) (poi.getPosition().x / WorldSave.getCurrentSave().getWorld().getTileSize());
+            int tileY = (int) (poi.getPosition().y / WorldSave.getCurrentSave().getWorld().getTileSize());
+            if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(tileX, tileY))
+                continue;
+            StringBuilder garrison = new StringBuilder();
+            for (int i = 0; i < changes.getGuardCount(); i++) {
+                if (garrison.length() > 0)
+                    garrison.append(", ");
+                garrison.append(forge.adventure.util.EconomyBuildings.guardTierDisplayName(changes.getGuardTier(i)));
+            }
+            // A roaming guard on its way here (or already standing at the gate) counts as part of
+            // this town's defence for the purposes of "what is protecting this place".
+            for (forge.adventure.data.RoamingGuardData roamer : forge.adventure.util.RoamingGuards.roster()) {
+                if (roamer.returningHome || !poi.getID().equals(roamer.missionPoiId))
+                    continue;
+                if (garrison.length() > 0)
+                    garrison.append(", ");
+                garrison.append("Roaming ").append(forge.adventure.util.RoamingGuards.displayName(roamer.tier));
+            }
+            if (garrison.length() == 0)
+                continue;
+            TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] Guards: " + garrison);
+            placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+        }
     }
 
     /** Places one Details-overlay label centered at the given WORLD position (converted through

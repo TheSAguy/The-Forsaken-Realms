@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-08 (round 145; v1.08 RELEASED, rounds 137-145 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-08 (round 147; v1.08 RELEASED, rounds 137-147 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 147 (2026-09-08): guard duels fight an **ante-free clone** of the mage (the player is not in the fight);
+  **garrison labels on the Details minimap overlay** - that overlay already carried "Under Attack!", so guards went
+  there rather than into a 5th mode; new **`BalanceSheet`** (weekly mine income, bank interest, local vs roaming guard
+  wages, net, on hand) reachable from the Bank, the Exchange and World Standings, recomputed live from the same
+  helpers the weekly sweep pays from. Standings title `[%55]` -> `[%80]`.
+- Round 146 (2026-09-08): **THE SHARED-CARD BUG**. Adventure decks are VIEWS over one collection - the editor lists the
+  same single card in several decks. Handing a deck to a guard removed its cards but left other decks still listing
+  them, so those decks looked full, built short, and could still be PLAYED (real duplication at the deck level).
+  `giveDeck()` now strips the cards from every other deck and the picker warns first. Verified no cards were ever
+  lost: 1,615 in the collection + 83 held by guards = 1,698, the clean save's total. Also: an **unarmed guard draws no
+  wage** and says so in red; every roaming button is one width (fixes Android too, via the shared 118px portrait
+  helper); Info returns to the roster via a one-shot flag in `RewardScene.enter()`; `[+Life]` glyph; Archmage not
+  Mythic.
 - Round 145 (2026-09-08, REPO ONLY - **NOT PLAYTESTED, NOT PACKAGED**): **the roaming guard**, MOD_SCOPE #116,
   built in one pass. Capitol-only Local/Roaming fork; a roaming guard carries one of the player's DECKS (cards leave
   the collection, slot empties), walks the overworld with the player's sprite, races an attacking mage TO THE TOWN

@@ -566,6 +566,10 @@ public class RewardScene extends UIScene {
         autoSell = false;
         updateDetailButton();
         super.enter();
+        // Round 146: coming back from the roaming-guard Info screen, which is a real scene switch -
+        // re-open the roster the player left rather than dropping them on the Armory page.
+        if (forge.adventure.util.RoamingGuardUI.consumeReopenRoster(this))
+            return;
         if (pendingEmptyBoosterNote) {
             pendingEmptyBoosterNote = false;
             showDialog(createGenericDialog("", "No boosters available yet!\nResearch more expansions"

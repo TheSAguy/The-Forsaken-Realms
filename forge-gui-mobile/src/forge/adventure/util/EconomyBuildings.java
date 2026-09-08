@@ -763,6 +763,28 @@ public class EconomyBuildings {
         }
     }
 
+    /**
+     * Round 147 (balance sheet): what one town's mine of this type pays each week, or 0 when it
+     * has none. Reads the same mineWeeklyAmount() the weekly sweep pays from, so the projection
+     * cannot drift from the payment.
+     * <p>
+     * Note for anyone reading the sheet: a Gold Mine in a town that also has a Bank pays INTO that
+     * bank when the player has the "deposits directly" preference on, rather than into their purse.
+     * It is income either way, which is why the sheet does not split it.
+     */
+    public static int weeklyMineOutput(PointOfInterestChanges changes, int type) {
+        if (changes == null || !changes.hasEconomyBuildingOfType(type))
+            return 0;
+        return mineWeeklyAmount(type);
+    }
+
+    /** Round 147: interest this town's bank pays per period, at its current balance. */
+    public static int weeklyBankInterest(PointOfInterestChanges changes) {
+        if (changes == null || !changes.hasEconomyBuildingOfType(BANK) || changes.getBankBalance() <= 0)
+            return 0;
+        return Math.round(changes.getBankBalance() * INTEREST_RATE);
+    }
+
     public static void openProductionInfoDialog(MapStage stage, int type, int objectId) {
         refreshProductionInfoDialog(stage, type, objectId);
         stage.showDialog();
@@ -2456,6 +2478,10 @@ public class EconomyBuildings {
         // addHalfButton() pairing already used for those and for the Guards dialog's Info/Close.
         addHalfButton(dialog, column, "Destroy Building", true, () ->
                 openDestroyConfirmDialog(stage, objectId, () -> refreshBankDialog(stage, changes, objectId)));
+        // Round 147: the Bank is where a player already thinks about money, so it is the most
+        // natural of the three places the balance sheet hangs off.
+        addHalfButton(dialog, column, "Balance Sheet", true, () -> BalanceSheet.open(stage,
+                () -> refreshBankDialog(stage, changes, objectId)));
         addHalfButton(dialog, column, "Close", true, stage::hideDialog);
         finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
@@ -2601,6 +2627,8 @@ public class EconomyBuildings {
         TextraButton destroy = Controls.newTextButton("Destroy Building", () ->
                 openDestroyConfirmDialog(stage, objectId, () -> refreshExchangeDialog(stage, objectId)));
         dialog.getButtonTable().add(destroy).colspan(2).width(240f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Balance Sheet", () -> BalanceSheet.open(stage,
+                () -> refreshExchangeDialog(stage, objectId)))).colspan(2).width(240f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).colspan(2).width(240f).row();
         dialog.setKeepWithinStage(true);
     }
@@ -2939,6 +2967,12 @@ public class EconomyBuildings {
         java.util.List<forge.adventure.data.RoamingGuardData> roster = RoamingGuards.roster();
         for (int i = roster.size() - 1; i >= 0; i--) {
             forge.adventure.data.RoamingGuardData guard = roster.get(i);
+            if (!RoamingGuards.isArmed(guard)) {
+                // Round 146: an unarmed guard draws no wage. Its payday still advances, so arming
+                // it later does not immediately bill for every week it stood idle.
+                guard.lastPaidDay = Math.max(guard.lastPaidDay, (newDayCount / 7) * 7);
+                continue;
+            }
             int lastPaid = guard.lastPaidDay;
             boolean disbanded = false;
             while (true) {

@@ -73,11 +73,16 @@ public class RoamingGuardUI {
                     });
         }
         EconomyBuildings.finishHalfButtonRow(dialog, column);
-        EconomyBuildings.addButtonRow(dialog, "Hire a Roaming Guard", RoamingGuards.hasRoom(), () -> {
+        // Round 146 (user screenshot: "the Hire a Roaming Guard button seems a little big and
+        // misaligned"). It was a 240-wide addButtonRow sitting among 140-wide half buttons, so it
+        // neither matched the row above nor the pair below. Everything in this file is a half
+        // button now - one width for every row, and the shared helper already carries the portrait
+        // size (118) the rest of the mod uses, so Android gets the same treatment for free.
+        EconomyBuildings.addHalfButton(dialog, column, "Hire a Guard", RoamingGuards.hasRoom(), () -> {
             scene.removeDialog();
             openHireTier(scene, changes, poiName, objectId);
         });
-        EconomyBuildings.addHalfButton(dialog, column, "Info", true, () -> showInfo(scene));
+        EconomyBuildings.addHalfButton(dialog, column, "Info", true, () -> showInfo(scene, changes, poiName, objectId));
         EconomyBuildings.addHalfButton(dialog, column, "Close", true, scene::removeDialog);
         EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
@@ -86,16 +91,16 @@ public class RoamingGuardUI {
 
     private static String describe(RoamingGuardData guard, int day) {
         StringBuilder sb = new StringBuilder(RoamingGuards.displayName(guard.tier));
-        sb.append(" - ").append(guard.maxLife).append(" life, speed ").append((int) RoamingGuards.speedFor(guard.tier));
-        sb.append(guard.deckCards.length == 0 ? ", NO DECK" : ", \"" + guard.deckName + "\" (" + RoamingGuards.cardCount(guard) + ")");
+        sb.append(" - [+Life] ").append(guard.maxLife).append(", speed ").append((int) RoamingGuards.speedFor(guard.tier));
+        sb.append(guard.deckCards.length == 0 ? "" : ", \"" + guard.deckName + "\" (" + RoamingGuards.cardCount(guard) + ")");
         if (guard.isOutOfCommission(day))
             sb.append(" [RED](out of commission until day ").append(guard.downUntilDay).append(")");
+        else if (!RoamingGuards.isArmed(guard))
+            sb.append(" [RED](GIVE DECK - unarmed, it will not be sent out or paid)");
         else if (guard.returningHome)
             sb.append(" (returning to the Capitol)");
         else if (!guard.isIdle())
             sb.append(" (defending)");
-        else if (guard.deckCards.length == 0)
-            sb.append(" (idle - give it a deck)");
         else
             sb.append(" (ready)");
         return sb.toString();
@@ -106,18 +111,18 @@ public class RoamingGuardUI {
     private static void openHireTier(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
                                      String poiName, int objectId) {
         Dialog dialog = new Dialog("Hire a Roaming Guard", Controls.getSkin());
-        EconomyBuildings.addContentRow(dialog, "The rank sets starting life and how fast the guard "
-                + "crosses the world. Speed matters: most attackers are slower than any rank, but a "
-                + "Mythic mage outruns all of them - a teleporter at the threatened town is the answer to those.");
+        EconomyBuildings.addContentRow(dialog, "Rank sets starting life and travel speed. Most "
+                + "attackers are slower than any rank, but an Archmage mage outruns all of them - "
+                + "a teleporter at the threatened town is the answer to those.");
         int[] column = {0};
         for (String tier : RoamingGuards.TIERS_ASCENDING) {
             int gold = RoamingGuards.weeklyGoldCost(tier);
             int shards = RoamingGuards.weeklyShardCost(tier);
             boolean canAfford = AdventurePlayer.current().getGold() >= gold
                     && AdventurePlayer.current().getShards() >= shards;
-            String label = "[%75]" + RoamingGuards.displayName(tier) + " - " + RoamingGuards.lifeFor(tier)
-                    + " life, spd " + (int) RoamingGuards.speedFor(tier) + " (" + gold + " [+Gold]"
-                    + (shards > 0 ? " + " + shards + " [+Shards]" : "") + "/wk)";
+            String label = "[%75]" + RoamingGuards.displayName(tier) + " [+Life]" + RoamingGuards.lifeFor(tier)
+                    + " spd" + (int) RoamingGuards.speedFor(tier) + " " + gold + "[+Gold]"
+                    + (shards > 0 ? "+" + shards + "[+Shards]" : "") + "/wk";
             EconomyBuildings.addHalfButton(dialog, column, label, canAfford, () -> {
                 AdventurePlayer.current().takeGold(gold);
                 if (shards > 0)
@@ -131,11 +136,11 @@ public class RoamingGuardUI {
                 openDeckPicker(scene, changes, poiName, objectId, guard);
             });
         }
-        EconomyBuildings.finishHalfButtonRow(dialog, column);
-        EconomyBuildings.addButtonRow(dialog, "Back", true, () -> {
+        EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
             openRoster(scene, changes, poiName, objectId);
         });
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
@@ -147,7 +152,8 @@ public class RoamingGuardUI {
         AdventurePlayer player = AdventurePlayer.current();
         Dialog dialog = new Dialog("Give a Deck", Controls.getSkin());
         EconomyBuildings.addContentRow(dialog, "Choose a deck for your " + RoamingGuards.displayName(guard.tier)
-                + ". [RED]Those cards leave your collection and the slot empties[] until you take the deck back.");
+                + ". [RED]Those cards leave your collection and the slot empties[] until you take the deck "
+                + "back. Cards shared with your other decks are removed from those too - you only own one copy.");
         int[] column = {0};
         boolean any = false;
         for (int i = 0; i < player.getDeckCount(); i++) {
@@ -157,19 +163,32 @@ public class RoamingGuardUI {
                 continue;
             any = true;
             int slot = i;
-            EconomyBuildings.addHalfButton(dialog, column, "[%75]" + deck.getName() + " (" + size + ")", true, () -> {
+            java.util.LinkedHashMap<String, Integer> impact = RoamingGuards.sharedCardImpact(slot);
+            String suffix = impact.isEmpty() ? "" : " [RED]!";
+            EconomyBuildings.addHalfButton(dialog, column, "[%75]" + deck.getName() + " (" + size + ")" + suffix, true, () -> {
                 RoamingGuards.giveDeck(guard, slot);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
+            if (!impact.isEmpty()) {
+                StringBuilder warn = new StringBuilder("[RED]! " + deck.getName() + "[] shares cards with: ");
+                boolean first = true;
+                for (java.util.Map.Entry<String, Integer> e : impact.entrySet()) {
+                    if (!first)
+                        warn.append(", ");
+                    warn.append(e.getKey()).append(" (").append(e.getValue()).append(")");
+                    first = false;
+                }
+                EconomyBuildings.addContentRow(dialog, warn.toString());
+            }
         }
-        EconomyBuildings.finishHalfButtonRow(dialog, column);
         if (!any)
             EconomyBuildings.addContentRow(dialog, "You have no built decks to give.");
-        EconomyBuildings.addButtonRow(dialog, "Back", true, () -> {
+        EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
             openManageGuard(scene, changes, poiName, objectId, guard);
         });
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
@@ -194,13 +213,13 @@ public class RoamingGuardUI {
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
         }
-        EconomyBuildings.finishHalfButtonRow(dialog, column);
         if (!any)
             EconomyBuildings.addContentRow(dialog, "[RED]Every deck slot is full. Clear one first.");
-        EconomyBuildings.addButtonRow(dialog, "Back", true, () -> {
+        EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
             openManageGuard(scene, changes, poiName, objectId, guard);
         });
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
@@ -251,7 +270,7 @@ public class RoamingGuardUI {
             });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
 
-        EconomyBuildings.addButtonRow(dialog, "Change rank", true, () -> {
+        EconomyBuildings.addHalfButton(dialog, column, "Change rank", true, () -> {
             scene.removeDialog();
             openRetier(scene, changes, poiName, objectId, guard);
         });
@@ -294,9 +313,9 @@ public class RoamingGuardUI {
             boolean current = tier.equals(guard.tier);
             int difference = Math.max(0, RoamingGuards.weeklyGoldCost(tier) - RoamingGuards.weeklyGoldCost(guard.tier));
             boolean canAfford = AdventurePlayer.current().getGold() >= difference;
-            String label = "[%75]" + RoamingGuards.displayName(tier) + " - " + RoamingGuards.lifeFor(tier)
-                    + " life, spd " + (int) RoamingGuards.speedFor(tier)
-                    + (current ? " (current)" : difference > 0 ? " (" + difference + " [+Gold])" : " (free)");
+            String label = "[%75]" + RoamingGuards.displayName(tier) + " [+Life]" + RoamingGuards.lifeFor(tier)
+                    + " spd" + (int) RoamingGuards.speedFor(tier)
+                    + (current ? " (current)" : difference > 0 ? " " + difference + "[+Gold]" : " (free)");
             EconomyBuildings.addHalfButton(dialog, column, label, !current && canAfford, () -> {
                 int charged = RoamingGuards.retier(guard, tier);
                 if (charged > 0)
@@ -314,7 +333,29 @@ public class RoamingGuardUI {
         scene.showDialog(dialog);
     }
 
-    private static void showInfo(UIScene scene) {
+    /** Round 146 (user report: Info then Back lands on the Armory, not here). InfoTextScene
+     *  switches SCENES, so the dialog is gone by the time its Back returns - the roster has to be
+     *  re-opened when the Armory becomes active again. Same one-shot flag pattern RewardScene
+     *  already uses for its empty-booster note. */
+    private static boolean reopenRosterOnReturn = false;
+    private static forge.adventure.pointofintrest.PointOfInterestChanges pendingChanges;
+    private static String pendingPoiName;
+    private static int pendingObjectId;
+
+    public static boolean consumeReopenRoster(UIScene scene) {
+        if (!reopenRosterOnReturn)
+            return false;
+        reopenRosterOnReturn = false;
+        openRoster(scene, pendingChanges, pendingPoiName, pendingObjectId);
+        return true;
+    }
+
+    private static void showInfo(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
+                                 String poiName, int objectId) {
+        reopenRosterOnReturn = true;
+        pendingChanges = changes;
+        pendingPoiName = poiName;
+        pendingObjectId = objectId;
         scene.removeDialog();
         forge.adventure.scene.InfoTextScene.show("Roaming Guards", java.util.Arrays.asList(
                 "A roaming guard is hired at your Capitol and carries one of YOUR decks. Handing over a "

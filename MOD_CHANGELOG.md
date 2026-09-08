@@ -17757,6 +17757,100 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 147: no ante for guards, garrisons on the map, and a balance sheet (2026-09-08)
+
+### Guards never fight for ante
+
+User: *"Guards don't fight for Ante. That will complicate things."* Correct - ante stakes a card
+from the PLAYER's collection, and the player is not in this fight; the guard carries its own cards.
+`startGuardDuel()` now fights an ante-free CLONE of the attacking mage (`noAnte = true`), the same
+pattern ArenaScene uses for its own override, so the mage's ordinary appearances are unaffected.
+The simulated path was already safe - `DeckTesterSimulator` sets `rules.setPlayForAnte(false)`.
+
+### Garrison strength on the minimap
+
+The user asked for a view showing guards per town, and guessed there might already be one showing
+towns under attack. There is: **Details**. So this went there rather than into a fifth overlay mode,
+because the two answer one question together - which town is threatened, and what is standing in it.
+Each player-owned town now carries a `Guards: Master, Adept` label, and a roaming guard en route to
+(or standing at) that town is listed as `Roaming Archmage` alongside the garrison. Same fog-of-war
+gate the Under Attack label already uses, or the label would leak an unexplored town's existence.
+
+### Balance sheet
+
+New `BalanceSheet`, reachable from the **Bank**, the **Exchange** and the **World Standings** page.
+Weekly income (mines split by resource, bank interest), weekly expenses (local guards and roaming
+guards on separate lines), net per week, and what is on hand - every figure with its resource glyph.
+
+Every number is recomputed live from the same helpers the weekly sweep pays from
+(`weeklyMineOutput`, `weeklyBankInterest`, `guardWeeklyGoldCost`), never from a running tally: a
+tally would drift the moment a mine is built, a guard is hired or a town changes hands, and nothing
+would notice. An unarmed roaming guard is excluded, matching round 146's rule that it is not on the
+payroll - the sheet predicts the next payday rather than listing contracts.
+
+Built as a Dialog rather than an InfoTextScene because it opens over three different screens; a
+scene switch is exactly what made the guard Info button lose its way in round 146. The Bank and
+Exchange flavour takes an `onClose` so it puts the caller's own dialog back.
+
+### Also
+
+The Standings title went from `[%55]` to `[%80]` - it was smaller than every button beside it - and
+gained the `Balance` button in both the landscape and portrait layouts (portrait takes the empty
+slot beside Status; the naive x-offset would have put it off-screen at x=-95).
+
+**Files touched**: `stage/WorldStage.java`, `scene/MapViewScene.java`, `scene/WorldStandingsScene.java`,
+`util/BalanceSheet.java` (new), `util/EconomyBuildings.java`, `util/RoamingGuards.java`;
+plane `ui/world_standings.json`, `ui/world_standings_portrait.json`.
+
+## Round 146: the shared-card bug, and the UI pass (2026-09-08)
+
+### Decks are views over one collection, and that broke the hand-over
+
+User report: *"I gave away my White and my Black decks to the two mages I hired. But my White/Black
+deck still seems to have all the cards in there... I don't know if I had duplicates in my inventory,
+or if they are being duplicated."*
+
+Adventure decks are VIEWS over one shared collection. The deck editor happily lists the same single
+card in three decks and nothing enforces that the decks add up to what is owned. So removing a
+deck's cards from the collection left every OTHER deck still listing them, with two consequences:
+
+1. Those decks looked full but could no longer be built. The user's own log shows it - handing over
+   Norn's Verdict after Gravetithe had already gone produced fifteen `collection holds none -
+   skipped` lines and a 25-card deck out of 40.
+2. Worse, a `Deck` carries its own `CardPool`, so the player could still PLAY cards they had given
+   away. That is the duplication they suspected - real, but at the deck level, not the collection.
+
+**Nothing was lost.** Verified against their saves: the clean pre-test save holds 1,698 cards; the
+live one holds 1,615 with 83 in the two guards' hands. Exactly conserved. The only lasting damage is
+one truncated decklist.
+
+`giveDeck()` now strips the same cards from every other deck, and the deck picker warns first - a
+red `!` on any deck that shares cards, plus a line naming which decks lose how many.
+
+### An unarmed guard is not a soldier
+
+The user hired an Adept and left it deckless. It was correctly skipped for dispatch, but it was
+still being charged weekly. `RoamingGuards.isArmed()` now gates the salary; the payday still
+advances so arming it later does not bill for the idle weeks, and the roster line reads
+`GIVE DECK - unarmed, it will not be sent out or paid` in red.
+
+### UI
+
+Every button in the roaming screens is one width. The oversized "Hire a Roaming Guard" was a
+240-wide `addButtonRow` sitting among 140-wide half buttons, matching neither the row above nor the
+pair below; it is `Hire a Guard` at the shared width now. This also fixes Android without a second
+layout - the shared helper already carries the 118 portrait width the rest of the mod uses.
+
+Info then Back landed on the Armory instead of the roster, because `InfoTextScene` is a real scene
+switch and the dialog is gone by the time its Back returns. A one-shot flag re-opens the roster from
+`RewardScene.enter()`, the same pattern that file already uses for its empty-booster note.
+
+Plus: `[+Life]` heart glyph instead of the word "life", and "Mythic" corrected to "Archmage" in the
+hire text.
+
+**Files touched**: `util/RoamingGuards.java`, `util/RoamingGuardUI.java`, `util/EconomyBuildings.java`,
+`scene/RewardScene.java`.
+
 ## Round 145: the roaming guard (2026-09-07, repo only - NOT playtested)
 
 MOD_SCOPE #116, built in one pass at the user's request ("you have all night, so you could try a

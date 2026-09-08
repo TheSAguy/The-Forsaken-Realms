@@ -1562,6 +1562,22 @@ from the plane's `config tables/settings.json`).
 - New mod files: `data/RoamingGuardData.java`, `data/RoamingGuardConfig.java`,
   `util/RoamingGuards.java`, `util/RoamingGuardUI.java`, `util/RoamingGuardRuntime.java`.
 
+### 2026-09-08 Roaming guard fixes + balance sheet (rounds 146-147)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** - `enter()` re-opens the
+  roaming-guard roster when returning from its Info scene (one-shot flag, same shape as the
+  existing pendingEmptyBoosterNote).
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** - the Details overlay also
+  labels each player-owned town with its garrison (local guards plus any roaming guard assigned
+  there), behind the same fog-of-war gate the Under Attack label uses.
+- **`forge-gui-mobile/src/forge/adventure/scene/WorldStandingsScene.java`** - `balanceSheet` button.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - a guard duel fights an
+  ante-free clone of the mage.
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** - `weeklyMineOutput()` /
+  `weeklyBankInterest()` for the balance sheet, Balance Sheet buttons on the Bank and Exchange
+  dialogs, and no salary for an unarmed roaming guard.
+- New mod file: `util/BalanceSheet.java`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;
