@@ -4842,3 +4842,42 @@ the user's request. What the investigation found:
   the overworld policy — not the assistant making live decisions. There is no screen access from the assistant side,
   and driving a Magic game turn-by-turn through a text channel would be slower and worse than the AI already is.
 
+### 116. Roaming guard — `Not Started` (analysed 2026-09-07, round 144)
+User spec: a Capitol-only hire branch offering Local (today's behaviour) or **Roaming**. A roaming guard picks a mage
+tier for its starting life, is handed one of the player's DECKS (those cards leave the collection), walks the
+overworld with the player's own sprite, uses the teleport network to reach a threatened town by the fastest route,
+handles one threat at a time, and returns to the Capitol before dispatching again. Max 4. A management button per
+guard: swap deck, four engagement checkboxes (Apprentice/Adept/Master/Archmage), and a watch-vs-simulate toggle.
+Death = one month out of commission; dismissing during that month forfeits the cards. Same cost as local guards
+"for now".
+
+**Two premise corrections recorded at analysis time:**
+1. Today's guards are a DICE ROLL, not a simulation — `TerritoryControl.guardFightAttackerWinChance()` is tier power
+   ratio +10% attacker −5% Outlook, resolved silently inside the day tick. So this feature introduces the game's
+   first duel-resolved town defence; that is its centre, not a detail.
+2. The day tick runs on the render thread inside `WorldStage.act()`. `DuelScene` takes the screen and returns via a
+   callback, so the tick must SCHEDULE an encounter plus a continuation, not resolve one inline. Riskiest cases: a
+   guard intercepted while the player is in a dungeon or a shop dialog, or during Speed-Up at 50x.
+
+**What already exists and can be reused:** `DuelScene.initDuels(..., aiControlsPlayerSide=true)` and the Deck Tester's
+"AI vs. AI (Watch)" mode — the duel itself is solved. Teleport is hub-and-spoke with the Capitol as hub (round 138),
+which matches the "return to the Capitol, then dispatch" rule for free.
+
+**Known risks:** review S3-8 — the Deck Tester's no-watch simulation runs on daemon threads against shared engine
+state; a guard match writes to the save (ownership, guard life, card loss), so simulated matches should run on the
+render thread instead. Handing a deck to a guard must also CLEAR the deck slot it came from, or that slot references
+cards the player no longer owns — the deck lists and the card pool are separate structures, the same class of desync
+that made the round-141 sell exploit possible. Balance: four guards piloting real player decks make town loss close
+to impossible, which switches off Territory Control as a threat; parity pricing with local guards is badly
+under-priced.
+
+**Blast radius 5-8 rounds.** Recommended staging: (1) the mechanic — hire branch, tier→life, deck transfer,
+management UI, abstract dispatch via the teleport rule, AI-vs-AI duel replacing the roll, death/recovery; (2) the
+visible overworld sprite and real travel/interception. Not the other order: the sprite is presentation and needs the
+state model to exist first.
+
+**Open questions to the user:** what happens when a guard is intercepted while the player is off the overworld
+(queue vs auto-simulate); whether the roamer replaces or precedes the town's local guard roll; whether a NORMAL
+dismissal returns the cards.
+
+

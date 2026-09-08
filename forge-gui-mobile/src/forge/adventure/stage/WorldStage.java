@@ -372,6 +372,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         + " fog=" + (tFog - tQuests) / 1_000_000 + "ms"
                         + " standings=" + (tickEnd - tFog) / 1_000_000 + "ms"
                         + " total=" + (tickEnd - tickStart) / 1_000_000 + "ms");
+                // Round 144 (code review 4.1): the systemic weakness in this code base is native
+                // resource lifetime - libGDX Pixmap/Texture/TiledMap free only on dispose(), and
+                // FOUR separate leaks (the minimap re-bake, per-tile ground sprites, every map
+                // entered, every map parsed for its object list) all shipped because the JAVA heap
+                // never shows them. Round 123 fixed those four; nothing was watching for the fifth.
+                // One line per in-game day is enough to see a trend without touching the frame
+                // budget - compare the native figure across a long session, not between two ticks.
+                System.out.println("[TFR-Mem] day " + dayAfter
+                        + ": native=" + (Gdx.app.getNativeHeap() / (1024 * 1024)) + "MB"
+                        + " java=" + (Gdx.app.getJavaHeap() / (1024 * 1024)) + "MB");
             }
             // Per frame while moving, not just on day change - pickups are walk-over, so the
             // collection check has to track the player's live position (cheap; see its comment).

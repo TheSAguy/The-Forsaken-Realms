@@ -28,6 +28,22 @@ import java.util.zip.InflaterInputStream;
  */
 public class WorldSave {
 
+    /**
+     * Round 144 (code review 4.7). Every serializable class in the save is pinned, but until now
+     * the save carried no version of its own and no migration hook - compatibility rested entirely
+     * on nobody ever removing or retyping a field, and DecompressibleInputStream's local-descriptor
+     * substitution (a good safety net for ADDED fields) would happily read a mismatched stream into
+     * the wrong shape rather than refuse it.
+     * <p>
+     * Bump this ONLY for a change that older code cannot read correctly. Adding a field does not
+     * qualify - that is exactly what the descriptor substitution handles - so this number is
+     * expected to move rarely. A save written before this round has no entry at all, which reads
+     * as version 1 (see load()), so nothing existing is invalidated.
+     */
+    static final public int SAVE_FORMAT_VERSION = 1;
+    /** The oldest format this build still knows how to read. */
+    static final public int MIN_READABLE_SAVE_FORMAT = 1;
+
     static final public int AUTO_SAVE_SLOT = -1;
     static final public int QUICK_SAVE_SLOT = -2;
     static final public int INVALID_SAVE_SLOT = -3;
@@ -98,6 +114,19 @@ public class WorldSave {
                  ObjectInputStream oos = new ObjectInputStream(inf)) {
                 currentSave.header = (WorldSaveHeader) oos.readObject();
                 SaveFileData mainData = (SaveFileData) oos.readObject();
+                // Round 144 (code review 4.7): checked BEFORE any sub-object is read, which is the
+                // whole point - a format this build cannot read must be refused while the save on
+                // disk is still untouched, not discovered halfway through deserialising it. Saves
+                // written before this round carry no entry and read as version 1.
+                int savedFormat = mainData.containsKey("saveFormatVersion")
+                        ? mainData.readInt("saveFormatVersion") : 1;
+                if (savedFormat < MIN_READABLE_SAVE_FORMAT || savedFormat > SAVE_FORMAT_VERSION) {
+                    lastLoadError = "save format version " + savedFormat + ", this build reads "
+                            + MIN_READABLE_SAVE_FORMAT + " to " + SAVE_FORMAT_VERSION;
+                    System.err.println("[TFR-Load] REFUSED slot " + currentSlot + ": " + lastLoadError
+                            + ". The save on disk is unchanged.");
+                    return false;
+                }
                 currentSave.player.load(mainData.readSubData("player"));
                 GamePlayerUtil.getGuiPlayer().setName(currentSave.player.getName());
                 try {
@@ -328,6 +357,7 @@ public class WorldSave {
                 }
 
                 SaveFileData mainData = new SaveFileData();
+                mainData.store("saveFormatVersion", SAVE_FORMAT_VERSION);
                 mainData.store("player", player);
                 mainData.store("world", world);
                 mainData.store("worldStage", worldStage);

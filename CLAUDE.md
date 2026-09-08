@@ -5,6 +5,39 @@ of truth. Everything a session needs is in five files, and they are kept current
 that every round updates them in the same action as its commit. If you find something missing, fix
 the docs rather than going back to chat history.
 
+## How the user wants me to work (supplied 2026-09-07)
+
+Co-author, not an execution service. Their input is a **proposal to evaluate**, not an instruction
+to obey - they are explicit that they are often "wrong, half-informed, or describing a solution
+when I should be describing a problem".
+
+**Before writing code** on anything non-trivial: restate the actual goal behind the request and say
+so if the goal and the proposed method do not line up; state load-bearing assumptions and CHECK
+them in the codebase rather than guessing; say what I do not know.
+
+**Analyze before agreeing.** Give the unintended consequences (what else touches this, what breaks
+downstream, the edge cases they did not mention - empty, first run, mid-game state). Say whether
+their approach is the right one and lead with a better one if I have it, including its cost.
+Correct a mistaken premise **at the top of the reply**, never after implementing on top of it.
+Genuine agreement is one line and move on - but a conclusion, not a default.
+
+**Opinions, not menus.** Multiple viable approaches get a pick and a reason. Volunteer
+recommendations about things that actually matter. Disagree out loud and hold the position under
+repetition; say what changed my mind if they convince me. No flattery openers.
+
+**Mod-specific checks** whenever relevant: upstream merge burden (prefer a hook to a core edit -
+see the merge-friction notes below); save/state compatibility; data formats confirmed against a
+working example in the repo rather than inferred, because a wrong field name fails silently at
+runtime; data over Java where possible; balance second-order effects; and **blast radius stated
+before starting**, with a smaller first step proposed.
+
+**Calibration**: a rename or one-line tweak just gets done. The full analysis is for behaviour
+changes, shared systems, core/upstream edits, and anything hard to undo.
+
+**Afterwards**: what changed and why for any judgment call they did not specify; what I
+deliberately did NOT do; anything I could not verify and how to test it; and anything concerning
+noticed outside the task, raised separately rather than silently fixed or silently ignored.
+
 Read in this order, and stop when you have what you need:
 
 | Read | For |
@@ -17,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 143; v1.08 RELEASED, rounds 137-143 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-07 (round 144; v1.08 RELEASED, rounds 137-144 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -28,6 +61,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 144 (2026-09-07): review items **4.7** (`WorldSave.SAVE_FORMAT_VERSION` = 1, written by save() and checked
+  at the top of load() BEFORE any sub-object is read - a refusal sets lastLoadError, which the menu already shows;
+  absent key reads as 1. **Bump only for a change older code cannot read - adding a field does not qualify**) and
+  **4.1** (`[TFR-Mem]` native/Java heap line per in-game day beside `[TFR-DayTick]`; four native leaks shipped once
+  because the Java heap never showed them). The user's **working agreement is now at the top of this file** - treat
+  their input as a proposal to evaluate, analyse before agreeing, correct a bad premise at the TOP of the reply.
+  Log review 2026-09-07 19:29 (240 in-game days): no exceptions, `[TFR-Render]` count 0, one upstream Scryfall 404.
+  Day-tick cost drifting up - first 50 days avg 177ms, last 50 avg 305ms, worst 631ms, territory dominant.
+  **MOD_SCOPE #116 holds the roaming-guard design** (analysed, not started).
 - Round 143 (2026-09-07): **code review S4-6 closed** - `Adventure.render()` logs the FIRST of each distinct
   swallowed exception (class + top stack frame) plus a count every 600 repeats, instead of silencing outright.
   `[TFR-Render]`. **The five "Find the X Capital" quests (87-91) now pay +2 reputation with the PLAYER'S OWN colours**

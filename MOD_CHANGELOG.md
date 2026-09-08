@@ -17757,6 +17757,42 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 144: a save format number and a memory line (2026-09-07)
+
+The last two cross-cutting recommendations from the 2026-09-05 review, done together because both
+are single-line diagnostics with no gameplay effect.
+
+### 4.7 - `saveFormatVersion`
+
+Every serializable class in the save has been pinned since round 123, but the save itself carried no
+version and no migration hook: compatibility rested entirely on nobody ever removing or retyping a
+field. Worse, `DecompressibleInputStream`'s local-descriptor substitution - a genuinely good safety
+net for ADDED fields - will happily read a mismatched stream into the wrong shape rather than refuse
+it, so the failure mode was silent corruption rather than a clean error.
+
+`WorldSave.SAVE_FORMAT_VERSION` is written into `mainData` and checked in `load()` **before any
+sub-object is read**. That ordering is the whole point: an unreadable format is refused while the
+file on disk is still untouched, instead of being discovered halfway through deserialising it. A
+refusal sets the same `lastLoadError` round 140's S1-1 fix added, so the menu already reports it.
+
+Version 1 for now, and saves written before this round carry no key at all - they read as 1, so
+nothing existing is invalidated. **Bump it only for a change older code cannot read correctly.**
+Adding a field does not qualify; that is exactly what the descriptor substitution handles.
+
+### 4.1 - `[TFR-Mem]`
+
+Native resource lifetime is this code base's systemic weakness. libGDX `Pixmap`, `Texture` and
+`TiledMap` free only on `dispose()`, and **four separate leaks** - the minimap re-bake, per-tile
+ground sprites, every map entered, and every map parsed for its object list - all shipped, because
+the Java heap never shows any of them. Round 123 fixed those four. Nothing was watching for a fifth.
+
+One line per in-game day, beside the existing `[TFR-DayTick]` timing line, printing
+`Gdx.app.getNativeHeap()` and `getJavaHeap()` in MB. Per day rather than per frame so it costs
+nothing and reads as a trend across a session, which is how a leak actually shows itself - the
+review's own point was that a line like this would have exposed all four in the first playtest.
+
+**Files touched**: `world/WorldSave.java`, `stage/WorldStage.java`, `CLAUDE.md`.
+
 ## Round 143: the render loop speaks up, and the capital quests pay your own side (2026-09-07)
 
 ### S4-6 - `Adventure.render()` stops swallowing everything

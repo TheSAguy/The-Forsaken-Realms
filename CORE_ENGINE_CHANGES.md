@@ -1530,6 +1530,15 @@ from the plane's `config tables/settings.json`).
   `addToPlayerColors(displayPoints, why)`: a FLAT add to each colour of the player's own identity,
   deliberately not the zero-sum applyPattern() wheel (a five-colour player would net zero).
 
+### 2026-09-07 Save format version + memory line (round 144)
+
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** - `SAVE_FORMAT_VERSION` /
+  `MIN_READABLE_SAVE_FORMAT`, written into mainData by `save()` and checked at the top of `load()`
+  BEFORE any sub-object is read. A refusal sets `lastLoadError`, which the menu already surfaces.
+  Absent key reads as version 1, so older saves are unaffected. Code review 4.7.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `[TFR-Mem]` native/Java heap
+  line on the day tick, next to `[TFR-DayTick]`. Code review 4.1.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;
