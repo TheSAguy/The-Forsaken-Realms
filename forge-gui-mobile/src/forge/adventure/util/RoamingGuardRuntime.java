@@ -85,6 +85,23 @@ public class RoamingGuardRuntime {
 
     /** Give every unattended attack on a player town to an available guard. */
     private static void assignMissions(List<Pair<Float, EnemySprite>> enemies, int day) {
+        // First, release any guard whose threat has evaporated - the player can kill a mage on the
+        // road, and a mage can be despawned or re-targeted. Without this the guard would stand at
+        // the gate of a town nobody is attacking, permanently unavailable for the next threat.
+        java.util.Set<String> liveThreats = new java.util.HashSet<>();
+        for (Pair<Float, EnemySprite> pair : enemies) {
+            if (pair.getValue().territoryTarget != null)
+                liveThreats.add(pair.getValue().territoryTarget.getID());
+        }
+        for (RoamingGuardData guard : RoamingGuards.roster()) {
+            if (guard.isIdle() || guard.returningHome)
+                continue;
+            if (!liveThreats.contains(guard.missionPoiId)) {
+                System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
+                        + "'s target is no longer under attack - returning to the Capitol");
+                sendHome(guard);
+            }
+        }
         for (Pair<Float, EnemySprite> pair : enemies) {
             EnemySprite mage = pair.getValue();
             if (mage.territoryTarget == null)

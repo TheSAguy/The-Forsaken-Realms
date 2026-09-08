@@ -87,7 +87,7 @@ public class RoamingGuardUI {
     private static String describe(RoamingGuardData guard, int day) {
         StringBuilder sb = new StringBuilder(RoamingGuards.displayName(guard.tier));
         sb.append(" - ").append(guard.maxLife).append(" life, speed ").append((int) RoamingGuards.speedFor(guard.tier));
-        sb.append(guard.deckCards.length == 0 ? ", NO DECK" : ", \"" + guard.deckName + "\"");
+        sb.append(guard.deckCards.length == 0 ? ", NO DECK" : ", \"" + guard.deckName + "\" (" + RoamingGuards.cardCount(guard) + ")");
         if (guard.isOutOfCommission(day))
             sb.append(" [RED](out of commission until day ").append(guard.downUntilDay).append(")");
         else if (guard.returningHome)
@@ -179,7 +179,7 @@ public class RoamingGuardUI {
         AdventurePlayer player = AdventurePlayer.current();
         Dialog dialog = new Dialog("Take the Deck Back", Controls.getSkin());
         EconomyBuildings.addContentRow(dialog, "Choose an empty slot for \"" + guard.deckName + "\" ("
-                + guard.deckCards.length + " cards). The cards return to your collection.");
+                + RoamingGuards.cardCount(guard) + " cards). The cards return to your collection.");
         int[] column = {0};
         boolean any = false;
         for (int i = 0; i < player.getDeckCount(); i++) {

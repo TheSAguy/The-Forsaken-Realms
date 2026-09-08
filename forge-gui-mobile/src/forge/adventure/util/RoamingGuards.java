@@ -11,7 +11,6 @@ import forge.deck.CardPool;
 import forge.deck.Deck;
 import forge.item.PaperCard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -162,7 +161,7 @@ public class RoamingGuards {
             returnDeck(guard);
         else
             System.out.println("[TFR-RoamGuard] dismissed while out of commission - "
-                    + guard.deckCards.length + " card(s) forfeited with the deck \"" + guard.deckName + "\"");
+                    + cardCount(guard) + " card(s) forfeited with the deck \"" + guard.deckName + "\"");
         roster().remove(guard);
         return !forfeit;
     }
@@ -186,7 +185,13 @@ public class RoamingGuards {
             return false;
 
         CardPool main = deck.getMain();
-        List<String> taken = new ArrayList<>();
+        // Accumulate into a CardPool and serialise with the engine's own toCardList(), which is
+        // exactly what AdventurePlayer.save() uses for the player's decks and exactly what
+        // CardPool.fromCardList() parses back. Hand-rolling "name|edition|number" here would have
+        // been silently unreadable on the way home - processCardList() wants a leading count and
+        // a CardDb.CardRequest.compose() body, and this is the one operation in this feature that
+        // cannot be undone if it is wrong.
+        CardPool taken = new CardPool();
         for (java.util.Map.Entry<PaperCard, Integer> entry : main) {
             PaperCard card = entry.getKey();
             int wanted = entry.getValue();
@@ -201,14 +206,14 @@ public class RoamingGuards {
                 continue;
             }
             player.getCards().remove(card, amount);
-            for (int i = 0; i < amount; i++)
-                taken.add(card.getName() + "|" + card.getEdition() + "|" + card.getCollectorNumber());
+            taken.add(card, amount);
         }
         guard.deckName = deck.getName();
-        guard.deckCards = taken.toArray(new String[0]);
+        guard.deckCards = taken.countAll() == 0 ? new String[0] : taken.toCardList("\n").split("\n");
         player.clearDeck(deckIndex);
-        System.out.println("[TFR-RoamGuard] took deck \"" + guard.deckName + "\" (" + taken.size()
-                + " cards) from slot " + deckIndex + " - slot cleared, cards removed from the collection");
+        System.out.println("[TFR-RoamGuard] took deck \"" + guard.deckName + "\" (" + taken.countAll()
+                + " cards, " + guard.deckCards.length + " entries) from slot " + deckIndex
+                + " - slot cleared, cards removed from the collection");
         return true;
     }
 
@@ -220,7 +225,7 @@ public class RoamingGuards {
         AdventurePlayer player = AdventurePlayer.current();
         CardPool returned = CardPool.fromCardList(java.util.Arrays.asList(guard.deckCards));
         player.getCards().addAll(returned);
-        System.out.println("[TFR-RoamGuard] returned " + guard.deckCards.length + " card(s) from \""
+        System.out.println("[TFR-RoamGuard] returned " + returned.countAll() + " card(s) from \""
                 + guard.deckName + "\" to the collection");
         guard.deckCards = new String[0];
         guard.deckName = "";
@@ -238,6 +243,14 @@ public class RoamingGuards {
         player.setDeck(deckIndex, name, cards);
         System.out.println("[TFR-RoamGuard] rebuilt deck \"" + name + "\" into slot " + deckIndex);
         return true;
+    }
+
+    /** How many actual cards the guard is holding. NOT deckCards.length - that is the number of
+     *  count-prefixed entry lines, so a 4-of counts once there. */
+    public static int cardCount(RoamingGuardData guard) {
+        if (guard.deckCards.length == 0)
+            return 0;
+        return CardPool.fromCardList(java.util.Arrays.asList(guard.deckCards)).countAll();
     }
 
     /** The Deck a guard fights with, rebuilt from its stored list. Null when it carries nothing. */
