@@ -17757,6 +17757,107 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 145: the roaming guard (2026-09-07, repo only - NOT playtested)
+
+MOD_SCOPE #116, built in one pass at the user's request ("you have all night, so you could try a
+full implementation"). A Capitol-only alternative to the hired local guard: a champion who carries
+one of the player's own decks, walks the overworld, and races an attacking mage to a threatened town.
+
+**This is the game's first duel-resolved town defence.** A local guard is a NUMBER -
+`TerritoryControl.guardFightAttackerWinChance()` rolls tier against tier and the town lives or
+falls, silently, inside the day tick. A roaming guard is a DECK, and it resolves by an actual
+AI-vs-AI match. The two systems share a cost table and a tier ladder and nothing else.
+
+### Two findings that shaped the design
+
+**Interception is a race to the town, not a chase.** Attacking mages are real overworld actors that
+move toward their target in a straight line (`WorldStage`'s enemy loop, `TERRITORY_ARRIVAL_EPSILON`
+8). Measured across 275 real dispatches in the user's own log, they run **20-24 at Common/Uncommon
+(85% of attacks), 30 at Rare, 37 for an elite Uncommon, and 50-60 at Mythic**. The user's speed rule
+puts a guard at 34/36/38/40. So a stern chase would catch everything except the attacks that
+actually matter. Racing to a fixed destination can succeed, because the guard may start closer - and
+a teleporter at the target town lets it skip the race entirely, which is now the intended counterplay
+to a Mythic attack and gives the round-138 network a real job. The user kept the speed numbers after
+being shown this.
+
+**Launching a duel from the day tick is safe here, and only here.** In-game time advances only inside
+`WorldStage.onActing()`'s `player.isMoving() || waitingForTime` block. Mages do not move while the
+player is standing still, in a town, or in a dungeon - and neither do guards. So an interception can
+only ever fire while the player is on the overworld and out of dialogs, which is the same context an
+ordinary roaming-monster collision already launches a duel from. The worry about a guard fight
+erupting mid-shop was unfounded.
+
+### Shape
+
+| piece | where |
+|---|---|
+| `RoamingGuardData` | one guard: tier, life, deck + the exact card list, engagement flags, watch flag, position, mission, recovery day |
+| `RoamingGuardConfig` + `config tables/roaming_guards.json` | max 4, per-tier life, speed step, recovery days |
+| `RoamingGuards` | roster, tier stats, hire/retier/dismiss, the deck round-trip, salary hooks, persistence |
+| `RoamingGuardUI` | Local/Roaming chooser, roster, hire, deck give/take, per-guard management |
+| `RoamingGuardRuntime` | dispatch, travel, interception, duel result |
+| `WorldStage` | actor plumbing only - five small edits |
+
+**Tier sets life and speed.** Speed is derived from the plane's own `playerBaseSpeed` rather than
+hardcoded, per the user's rule ("if the player is at 40, we will have Archmage be 40 and each tier
+below that -2"), so retuning the player carries the guards along instead of silently desyncing them.
+Life is 12/16/22/30 in the config table - duel starting life, and the single biggest lever on how
+often a guard wins.
+
+### The card round-trip, which is the dangerous part
+
+Handing a deck to a guard removes those cards from the collection and **empties the deck slot**.
+Emptying it is not cosmetic: a populated slot whose cards have left the collection is precisely the
+deck-list/card-pool desync that made the round-141 sell exploit possible.
+
+The guard stores **the exact card list it was given**, and giving it back replays that list - never
+a recomputation from the deck, which may have been edited in the meantime. `giveDeck()` also takes
+only what the player actually holds, so a deck listing more copies than the collection has carries a
+slightly short list rather than conjuring cards on the way back.
+
+Cards come back on a normal dismissal and on an unpaid-salary disband. They are forfeited **only**
+when the player dismisses a guard that is out of commission, which is the user's rule and the one
+irreversible action in the feature.
+
+### Persistence
+
+Indexed nested sub-data (`roamingGuardCount`, `roamingGuard_<i>`), which is the same idiom the
+player's own decks already use. **No new serializable class enters the save** - this project has a
+standing rule against that since the round-90 save-wipe, and `RoamingGuardData` is read and written
+through explicit keys so it cannot move the save format however it changes later. A save predating
+the feature has no key at all, which loads as an empty roster.
+
+### Watch vs Simulate
+
+Both are the same real match. "Simulate" runs it headless on a background thread through
+`DeckTesterSimulator`, which gained a starting-life overload for this - without it a simulated fight
+would silently be played at different life totals from a watched one, turning a presentation toggle
+into a balance decision.
+
+### Judgment calls the spec did not cover
+
+- **A guard that loses lets the mage through**, and the town then defends itself exactly as it always
+  has. The spec covered the guard arriving late but not the guard losing; this is the reading that
+  matches it.
+- **An unpaid salary disbands the guard but returns the deck.** Forfeiting cards is reserved for the
+  deliberate act of dismissing a downed guard, not for a cash-flow problem.
+- **Roaming guards are paid after local ones.** The garrisons are the older commitment, and if the
+  player is short, losing the roaming champion is the more recoverable outcome.
+- **An out-of-commission guard still draws its wage.** It is on the payroll, not on leave.
+- **Only empty deck slots are offered** when taking a deck back, so nothing the player built is
+  overwritten.
+
+### Not done
+
+Nothing was playtested - this round is repo-only and the live folder is untouched. See CLAUDE.md's
+open list for what to check first.
+
+**Files touched**: `data/RoamingGuardData.java`, `data/RoamingGuardConfig.java`,
+`util/RoamingGuards.java`, `util/RoamingGuardUI.java`, `util/RoamingGuardRuntime.java` (all new);
+`util/Config.java`, `util/EconomyBuildings.java`, `util/DeckTesterSimulator.java`,
+`player/AdventurePlayer.java`, `scene/DuelScene.java`, `stage/WorldStage.java`; plane
+`config tables/roaming_guards.json` (new); `dev-tools/validate_plane_data.py`.
+
 ## Round 144: a save format number and a memory line (2026-09-07)
 
 The last two cross-cutting recommendations from the 2026-09-05 review, done together because both

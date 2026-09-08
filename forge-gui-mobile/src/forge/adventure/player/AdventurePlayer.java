@@ -55,6 +55,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private Deck deck;
     private final ArrayList<Deck> decks = new ArrayList<>(MIN_DECK_COUNT);
     private int selectedDeckIndex = 0;
+    // Roaming guards (MOD_SCOPE #116, round 145). Lives on the player rather than on World because
+    // a guard holds the player's own cards and is hired with the player's own gold. Persisted field
+    // by field through RoamingGuards.save/load - no new serializable class enters the save.
+    private final ArrayList<forge.adventure.data.RoamingGuardData> roamingGuards = new ArrayList<>();
     private final DifficultyData difficultyData = new DifficultyData();
 
     // Commander mode
@@ -415,9 +419,36 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public int getDeckCount() { return decks.size(); }
 
+    public ArrayList<forge.adventure.data.RoamingGuardData> getRoamingGuards() { return roamingGuards; }
+
+    /**
+     * Round 145: empty a deck slot outright, for handing that deck to a roaming guard. Emptying it
+     * is not cosmetic - a populated slot whose cards have left the collection is exactly the
+     * deck-list/card-pool desync that made the round-141 sell exploit possible.
+     */
+    public void clearDeck(int index) {
+        if (index < 0 || index >= decks.size())
+            return;
+        decks.set(index, new Deck(Forge.getLocalizer().getMessage("lblEmptyDeck")));
+        if (selectedDeckIndex == index)
+            deck = decks.get(index);
+    }
+
+    /** Round 145: rebuild a deck slot from a stored card list, for giving a guard's deck back. */
+    public void setDeck(int index, String name, String[] cardList) {
+        if (index < 0 || index >= decks.size())
+            return;
+        Deck rebuilt = new Deck(name == null || name.isEmpty() ? Forge.getLocalizer().getMessage("lblEmptyDeck") : name);
+        rebuilt.getMain().addAll(CardPool.fromCardList(Lists.newArrayList(cardList)));
+        decks.set(index, rebuilt);
+        if (selectedDeckIndex == index)
+            deck = rebuilt;
+    }
+
     public int getMaxDeckCount() { return maxDeckCount; }
 
     private void clearDecks() {
+        roamingGuards.clear(); // round 145 - same reason the decks below are cleared
         decks.clear();
         for (int i = 0; i < MIN_DECK_COUNT; i++)
             decks.add(new Deck(Forge.getLocalizer().getMessage("lblEmptyDeck")));
@@ -976,6 +1007,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void load(SaveFileData data) {
         boolean migration = false;
         clear(); // Reset player data.
+        // Round 145: roaming guards. Read early and unconditionally - clear() above empties the
+        // roster, and a save predating the feature simply has no key, which load() treats as none.
+        forge.adventure.util.RoamingGuards.load(data, roamingGuards);
         this.statistic.load(data.readSubData("statistic"));
         this.difficultyData.startingLife = data.readInt("startingLife");
         // Support for old typo
@@ -1548,6 +1582,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             data.storeObject("commanderCards", deck.get(DeckSection.Commander).toCardList("\n").split("\n"));
 
         // save decks dynamically
+        forge.adventure.util.RoamingGuards.save(data, roamingGuards);
         data.store("deckCount", getDeckCount());
         for (int i = 0; i < getDeckCount(); i++) {
             data.store("deck_name_" + i, decks.get(i).getName());

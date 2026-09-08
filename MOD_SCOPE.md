@@ -4880,4 +4880,11 @@ state model to exist first.
 (queue vs auto-simulate); whether the roamer replaces or precedes the town's local guard roll; whether a NORMAL
 dismissal returns the cards.
 
+**BUILT 2026-09-08 (round 145), not playtested.** All three questions answered by the user: intercept en route and
+turn for home if late; a normal dismissal returns the cards; keep the tier speed numbers despite Mythic mages
+outrunning every rank. Implemented as a race TO THE TOWN rather than a chase — the only version that can work against
+speed-50 Mythic mages — with a teleporter at the target town as the skip-the-race counterplay. Watch and Simulate run
+the same real match. See MOD_CHANGELOG round 145 for the design notes and the judgment calls the spec did not cover.
+
+
 

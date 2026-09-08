@@ -1539,6 +1539,29 @@ from the plane's `config tables/settings.json`).
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - `[TFR-Mem]` native/Java heap
   line on the day tick, next to `[TFR-DayTick]`. Code review 4.1.
 
+### 2026-09-07 Roaming guards (round 145)
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - holds the roster
+  (`getRoamingGuards()`), saved/loaded through RoamingGuards, cleared in clear(). New
+  `clearDeck(int)` and `setDeck(int, name, cardList)` for the guard deck round-trip.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - `useGuardLoadout(deck, life)`:
+  the "player" seat can fight with a deck that is in no deck slot, at its own starting life.
+  Cleared by initDuels() on every ordinary duel so it cannot leak into the player's next fight.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - five edits: the
+  `currentMobIsGuardDuel` flag, interception before `TerritoryControl.onMageArrived()`, the
+  per-frame `RoamingGuardRuntime.update()` on the same clock as the mages, `startGuardDuel()` /
+  `simulateGuardDuel()`, and the guard branch at the top of `setWinner()`.
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** - Capitol-only Local/Roaming
+  fork in `openManageGuardsDialog()`; the original dialog is now `openLocalGuardsDialog()`,
+  unchanged. Four dialog helpers relaxed to package-private for RoamingGuardUI. New
+  `payRoamingGuards()` in the weekly salary sweep.
+- **`forge-gui-mobile/src/forge/adventure/util/DeckTesterSimulator.java`** - `runBatch` overload
+  taking a starting life per seat, so a simulated guard fight matches a watched one.
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - loads
+  `config tables/roaming_guards.json`; absent leaves the feature off.
+- New mod files: `data/RoamingGuardData.java`, `data/RoamingGuardConfig.java`,
+  `util/RoamingGuards.java`, `util/RoamingGuardUI.java`, `util/RoamingGuardRuntime.java`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

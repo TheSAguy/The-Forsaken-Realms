@@ -464,6 +464,20 @@ public class EconomyBuildings {
      *  RewardScene has no equivalent to stage.getDialog(), so "refresh after hiring/dismissing" is
      *  just close-then-reopen a freshly-built one. */
     public static void openManageGuardsDialog(UIScene scene, PointOfInterestChanges changes, String poiName, int objectId) {
+        // Round 145 (MOD_SCOPE #116): at the Capitol, and only when the plane configures roaming
+        // guards, ask which kind first. Everywhere else this is exactly the call it always was -
+        // an ordinary town has no roaming option, so a fork there would be a dead click.
+        if (RoamingGuards.isEnabled()
+                && forge.adventure.util.TownRestoration.CAPITOL_POI_NAME.equals(poiName)) {
+            RoamingGuardUI.openGuardChooser(scene, changes, poiName, objectId);
+            return;
+        }
+        openLocalGuardsDialog(scene, changes, poiName, objectId);
+    }
+
+    /** The original Manage Guards dialog, unchanged - reached directly at every non-Capitol town
+     *  and from the Capitol's Local/Roaming chooser. */
+    public static void openLocalGuardsDialog(UIScene scene, PointOfInterestChanges changes, String poiName, int objectId) {
         scene.showDialog(buildManageGuardsDialog(scene, changes, poiName, objectId));
     }
 
@@ -2447,7 +2461,9 @@ public class EconomyBuildings {
         dialog.setKeepWithinStage(true);
     }
 
-    private static void addContentRow(Dialog dialog, String text) {
+    // Round 145: package-private so RoamingGuardUI can build its dialogs with the same four
+    // helpers rather than duplicating them - same package, still not public API.
+    static void addContentRow(Dialog dialog, String text) {
         TypingLabel label = Controls.newTypingLabel(text);
         label.setWrap(true);
         label.skipToTheEnd();
@@ -2753,7 +2769,7 @@ public class EconomyBuildings {
         return button;
     }
 
-    private static void addButtonRow(Dialog dialog, String name, boolean enabled, Runnable action) {
+    static void addButtonRow(Dialog dialog, String name, boolean enabled, Runnable action) {
         TextraButton button = Controls.newTextButton(name, enabled ? action : () -> {});
         button.setDisabled(!enabled);
         dialog.getButtonTable().add(button).width(240f).row();
@@ -2764,7 +2780,7 @@ public class EconomyBuildings {
     // starts a new row every 2nd button; finishHalfButtonRow() closes a dangling odd row (an odd
     // guard count, e.g. 1 hired at a town) so the NEXT addHalfButton() call starts fresh at
     // column 0 instead of silently continuing an old row.
-    private static void addHalfButton(Dialog dialog, int[] column, String name, boolean enabled, Runnable action) {
+    static void addHalfButton(Dialog dialog, int[] column, String name, boolean enabled, Runnable action) {
         TextraButton button = Controls.newTextButton(name, enabled ? action : () -> {});
         button.setDisabled(!enabled);
         // Widened 118 -> 140 (round 5 bug fix, alongside the [%75] scale + "/wk" abbreviation at
@@ -2776,7 +2792,7 @@ public class EconomyBuildings {
             cell.row();
     }
 
-    private static void finishHalfButtonRow(Dialog dialog, int[] column) {
+    static void finishHalfButtonRow(Dialog dialog, int[] column) {
         if (column[0] % 2 != 0) {
             dialog.getButtonTable().row();
             column[0] = 0;
@@ -2901,6 +2917,59 @@ public class EconomyBuildings {
                 if (!disbanded)
                     changes.setGuardLastPaidDay(i, lastPaid);
             }
+        }
+        payRoamingGuards(newDayCount);
+    }
+
+    /**
+     * Roaming guards (MOD_SCOPE #116, round 145) draw the same weekly wage as a local guard of the
+     * same rank, on the same shared 7/14/21 payday, and disband the same way if it goes unpaid.
+     * <p>
+     * A separate pass because they are not attached to any town: they belong to the player, not to
+     * a PointOfInterestChanges, so the loop above has nothing to iterate them from. Paid AFTER the
+     * local guards deliberately - the town garrisons are the older commitment, and if the player is
+     * short, losing the expensive roaming champion is the more recoverable outcome (its deck comes
+     * back rather than being forfeited).
+     * <p>
+     * A guard that is out of commission still costs its wage. It is on the payroll, not on leave.
+     */
+    private static void payRoamingGuards(int newDayCount) {
+        if (!RoamingGuards.isEnabled())
+            return;
+        java.util.List<forge.adventure.data.RoamingGuardData> roster = RoamingGuards.roster();
+        for (int i = roster.size() - 1; i >= 0; i--) {
+            forge.adventure.data.RoamingGuardData guard = roster.get(i);
+            int lastPaid = guard.lastPaidDay;
+            boolean disbanded = false;
+            while (true) {
+                int nextPayday = ((lastPaid / 7) + 1) * 7;
+                if (nextPayday > newDayCount)
+                    break;
+                int goldCost = guardWeeklyGoldCost(guard.tier);
+                int shardCost = guardWeeklyShardCost(guard.tier);
+                if (AdventurePlayer.current().getGold() >= goldCost
+                        && AdventurePlayer.current().getShards() >= shardCost) {
+                    AdventurePlayer.current().takeGold(goldCost);
+                    if (shardCost > 0)
+                        AdventurePlayer.current().takeShards(shardCost);
+                    lastPaid = nextPayday;
+                } else {
+                    // Unpaid: the guard leaves, but the deck comes home. Forfeiting it here would
+                    // punish a cash-flow problem with permanent card loss, which the user reserved
+                    // for the deliberate act of dismissing a downed guard.
+                    RoamingGuards.returnDeck(guard);
+                    roster.remove(i);
+                    System.out.println("[TFR-RoamGuard] " + guardTierDisplayName(guard.tier)
+                            + " disbanded on day " + newDayCount + " - salary unpaid; deck returned");
+                    GameHUD.getInstance().addNotification("[RED]Your roaming "
+                            + guardTierDisplayName(guard.tier)
+                            + " guard was disbanded - salary went unpaid! The deck came back.", true);
+                    disbanded = true;
+                    break;
+                }
+            }
+            if (!disbanded)
+                guard.lastPaidDay = lastPaid;
         }
     }
 

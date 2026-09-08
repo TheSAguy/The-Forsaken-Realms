@@ -74,6 +74,19 @@ public class DeckTesterSimulator {
      */
     public static Handle runBatch(String deckAName, Deck deckA, String deckBName, Deck deckB, int count,
                                  IntConsumer onProgress, Consumer<BatchResult> onComplete) {
+        // 0 life = "leave the format default alone", which is what every existing caller wants.
+        return runBatch(deckAName, deckA, 0, deckBName, deckB, 0, count, onProgress, onComplete);
+    }
+
+    /**
+     * Round 145 (MOD_SCOPE #116): the same batch, with explicit starting life for either seat.
+     * Roaming guards need it - a guard's rank IS its life total, and its opponent is a mage with
+     * its own. Without this a simulated guard fight would silently be played at different life
+     * totals from a watched one, which would make the Watch/Simulate toggle a balance decision
+     * rather than a presentation one.
+     */
+    public static Handle runBatch(String deckAName, Deck deckA, int lifeA, String deckBName, Deck deckB, int lifeB,
+                                  int count, IntConsumer onProgress, Consumer<BatchResult> onComplete) {
         Handle handle = new Handle();
         Thread batchThread = new Thread(() -> {
             BatchResult result = new BatchResult();
@@ -106,8 +119,12 @@ public class DeckTesterSimulator {
                     try {
                         rpA = RegisteredPlayer.forVariants(2, variants, deckA, null, false, null, null);
                         rpA.setPlayer(playerA);
+                        if (lifeA > 0)
+                            rpA.setStartingLife(lifeA);
                         rpB = RegisteredPlayer.forVariants(2, variants, deckB, null, false, null, null);
                         rpB.setPlayer(playerB);
+                        if (lifeB > 0)
+                            rpB.setStartingLife(lifeB);
                         List<RegisteredPlayer> players = new ArrayList<>();
                         players.add(rpA);
                         players.add(rpB);

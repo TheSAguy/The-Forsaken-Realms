@@ -86,6 +86,18 @@ public class DuelScene extends ForgeScene {
     RegisteredPlayer humanPlayer;
     private EffectData dungeonEffect;
     Deck playerDeck;
+    // Roaming guards (MOD_SCOPE #116, round 145). When set, the "player" seat fights with THIS deck
+    // and THIS starting life instead of the player's own - the guard carries a deck that is not in
+    // any deck slot (its cards were taken out of the collection when it was hired), so the ordinary
+    // getSelectedDeck() path cannot reach it.
+    //
+    // Deliberately two plain fields rather than a temporary swap of the player's selected deck
+    // slot, which is what the Deck Tester does: that trick works there because both decks really
+    // are in slots, and mutating the player's deck list to stage a fight is a bad failure mode if
+    // anything throws between the swap and the restore. Cleared by initDuels() on every ordinary
+    // duel, so a guard fight cannot leak into the next one.
+    private Deck guardDeck;
+    private int guardStartingLife;
     boolean chaosBattle = false;
     boolean callbackExit = false;
     boolean isArena = false;
@@ -699,7 +711,8 @@ public class DuelScene extends ForgeScene {
         playerObject.setAvatarIndex(playerAvatarKey);
         humanPlayer.setPlayer(playerObject);
         humanPlayer.setTeamNumber(0);
-        humanPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : advPlayer.getLife());
+        humanPlayer.setStartingLife(guardDeck != null ? guardStartingLife
+                : eventData != null ? eventData.eventRules.startingLife : advPlayer.getLife());
         if (eventData == null || eventData.eventRules.allowsShards)
             humanPlayer.setManaShards(advPlayer.getShards());
 
@@ -1161,12 +1174,26 @@ public class DuelScene extends ForgeScene {
         this.isArena = isArena;
         this.eventData = eventData;
         this.aiControlsPlayerSide = aiControlsPlayerSide;
+        this.guardDeck = null;       // round 145 - never carry a guard's loadout into another duel
+        this.guardStartingLife = 0;
         if (eventData != null && eventData.eventRules == null)
             eventData.eventRules = new AdventureEventData.AdventureEventRules(AdventureEventController.EventFormat.Constructed);
         if (eventData != null && eventData.registeredDeck != null)
             this.playerDeck = (Deck) eventData.registeredDeck.copyTo("EventDeckCopy");
         else
             this.playerDeck = (Deck) Current.player().getSelectedDeck().copyTo("PlayerDeckCopy");
+    }
+
+    /**
+     * Round 145 (MOD_SCOPE #116): stage the next duel as a roaming guard's fight. Call immediately
+     * AFTER initDuels() - initDuels clears these, which is what keeps a guard's loadout from
+     * leaking into the player's own next duel.
+     */
+    public void useGuardLoadout(Deck deck, int startingLife) {
+        this.guardDeck = deck == null ? null : (Deck) deck.copyTo("GuardDeckCopy");
+        this.guardStartingLife = Math.max(1, startingLife);
+        if (this.guardDeck != null)
+            this.playerDeck = this.guardDeck;
         this.chaosBattle = this.enemy.getData().copyPlayerDeck && Current.player().isFantasyMode();
         this.AIExtras.clear();
         this.playerExtras.clear();

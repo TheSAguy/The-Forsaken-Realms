@@ -1,0 +1,34 @@
+{
+  // Roaming guards (MOD_SCOPE #116, user spec 2026-09-07) - hand-editable, no code change needed
+  // to retune. See RoamingGuards.java for how this is consumed.
+  //
+  // A roaming guard is hired at the Capitol as an alternative to a local one. It carries one of the
+  // player's own DECKS - those cards leave the collection and the deck slot empties - walks the
+  // overworld, and races an attacking mage to a threatened town. Where a local guard resolves as a
+  // dice roll, a roaming guard resolves as a real AI-vs-AI duel.
+  //
+  // maxGuards: 0 switches the whole feature off, and a plane without this file never has it.
+  "maxGuards": 4,
+
+  // Starting life per tier, weakest to strongest. This is DUEL starting life and is the single
+  // biggest lever on how often a guard wins. For scale, the attacking mages it fights run 10-15
+  // life at Common/Uncommon, 20 at Rare and 33-70 at Mythic, and the player runs 14.
+  "lifeApprentice": 12,
+  "lifeAdept": 16,
+  "lifeMaster": 22,
+  "lifeArchmage": 30,
+
+  // Overworld speed is derived from the plane's own playerBaseSpeed, per the user's rule: Archmage
+  // matches the player exactly and each rung down loses this many points. With playerBaseSpeed 40
+  // that gives Archmage 40, Master 38, Adept 36, Apprentice 34.
+  //
+  // Measured against 275 real dispatches: mages run 20-24 (Common/Uncommon, 85% of attacks), 30
+  // (Rare), 37 (elite Uncommon) and 50-60 (Mythic, ~2%). So a guard outruns almost everything and
+  // NONE of the Mythic attackers - deliberately. The counterplay to a Mythic attack is a teleporter
+  // at the target town, which lets the guard skip the race entirely.
+  "speedStepBelowPlayer": 2,
+
+  // In-game days a defeated guard spends out of commission. Dismissing it during this window
+  // forfeits its deck; waiting it out costs nothing but time.
+  "recoveryDays": 30
+}

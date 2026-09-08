@@ -53,6 +53,8 @@ import java.util.*;
 public class WorldStage extends GameStage implements SaveFileContent {
     private static WorldStage instance = null;
     protected EnemySprite currentMob;
+    /** Round 145: true while the duel in flight is a roaming guard's, not the player's. */
+    private boolean currentMobIsGuardDuel = false;
     // Capitol defense (MOD_SCOPE.md #7 forced duel, 2026-08-10): true while currentMob is the
     // one-shot mage duel triggered by TerritoryControl.checkPendingCapitolDefense() - losing it
     // ends the run (triggerCapitolDefeat()) instead of the ordinary life/gold-penalty loss path.
@@ -416,6 +418,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // then, removed here, `continue`s past collision since there's nothing left to hit).
                 if (mob.territoryTarget != null) {
                     if (mob.pos().dst(mob.territoryTarget.getPosition()) < TERRITORY_ARRIVAL_EPSILON) {
+                        // Roaming guards (MOD_SCOPE #116, round 145): a guard standing at the gate
+                        // fights BEFORE the town does. The duel decides whether this mage ever
+                        // reaches the town at all, so the arrival is deferred to the result
+                        // handler rather than resolved here - see startGuardDuel()/setWinner().
+                        // The sprite is pulled off the map either way; the mage object survives in
+                        // RoamingGuardRuntime until the fight is over.
+                        if (RoamingGuardRuntime.interceptOnArrival(mob)) {
+                            foregroundSprites.removeActor(mob);
+                            it.remove();
+                            startGuardDuel(mob);
+                            continue;
+                        }
                         TerritoryControl.onMageArrived(mob);
                         foregroundSprites.removeActor(mob);
                         it.remove();
@@ -483,6 +497,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     break;
                 }
             }
+            // Roaming guards (round 145) advance on exactly the same clock as the mages above -
+            // in-game time only moves inside this block, so a guard can only ever travel, arrive or
+            // intercept while the player is on the overworld and out of dialogs.
+            RoamingGuardRuntime.update(delta, enemies, foregroundSprites);
         } else {
             for (Pair<Float, EnemySprite> pair : enemies) {
                 pair.getValue().setAnimation(CharacterSprite.AnimationTypes.Idle);
@@ -505,6 +523,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     @Override
     public void setWinner(boolean playerIsWinner, boolean isArena) {
+        // Roaming guards (round 145) resolve entirely inside RoamingGuardRuntime: no player XP, no
+        // loot, no life change, no ante - the player was a spectator. Checked FIRST so none of the
+        // ordinary win/lose machinery below runs for a fight the player was not in.
+        if (currentMobIsGuardDuel) {
+            currentMobIsGuardDuel = false;
+            EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(playerIsWinner);
+            if (passthrough != null)
+                TerritoryControl.onMageArrived(passthrough);
+            currentMob = null;
+            return;
+        }
         boolean isCapitolDefense = currentMobIsCapitolDefense;
         currentMobIsCapitolDefense = false;
         final PointOfInterest assaultPoi = currentMobIsTownAssault ? townAssaultPoi : null;
@@ -810,6 +839,77 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // startForcedCapitolDuel above, minus the Capitol-defense-specific bookkeeping (this isn't a
     // run-ending encounter). currentMob still needs setting - WorldStage.setWinner() reads
     // currentMob.getRewards() on a win, the same reward-granting pipeline every other duel uses.
+    /**
+     * Roaming guards (MOD_SCOPE #116, round 145). Modelled on startChestDuel() below, with three
+     * differences: both seats are AI (aiControlsPlayerSide), the "player" seat fights with the
+     * guard's own deck and life rather than the player's, and the result is routed to
+     * RoamingGuardRuntime instead of being treated as one of the player's own wins.
+     * <p>
+     * "Simulate" is not a separate resolution path - every guard fight is a real match either way.
+     * It only decides whether the player is taken to the board to watch it.
+     */
+    private void startGuardDuel(EnemySprite mage) {
+        forge.adventure.data.RoamingGuardData guard = RoamingGuardRuntime.duellingGuard();
+        if (guard == null)
+            return;
+        forge.deck.Deck deck = RoamingGuards.battleDeck(guard);
+        if (deck == null) { // no deck: nothing to fight with, let the town defend itself
+            EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(false);
+            if (passthrough != null)
+                TerritoryControl.onMageArrived(passthrough);
+            return;
+        }
+        // "Simulate" is not a different resolution - it is the same real match, played headless
+        // on a background thread, with the same two decks and the same two life totals. Only the
+        // watching differs, which is exactly what the user asked for ("All guard matches are
+        // simulated, not a dice roll, it's just if the player will be watching").
+        if (!guard.watchMatches) {
+            simulateGuardDuel(guard, mage, deck);
+            return;
+        }
+        currentMob = mage;
+        currentMobIsGuardDuel = true;
+        Forge.advFreezePlayerControls = true;
+        DuelScene duelScene = DuelScene.instance();
+        FThreads.invokeInEdtNowOrLater(() -> {
+            Forge.setTransitionScreen(new TransitionScreen(() -> {
+                Forge.advFreezePlayerControls = false;
+                duelScene.initDuels(player, mage, false, null, true);
+                duelScene.useGuardLoadout(deck, guard.maxLife);
+                Forge.switchScene(duelScene);
+            }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
+                    mage.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard", mage.getTieredDisplayName()));
+            WorldSave.getCurrentSave().autoSave();
+        });
+    }
+
+    /**
+     * Round 145: the unwatched half of a guard fight. One real game, headless, on a background
+     * thread; the result is marshaled back onto the render thread by DeckTesterSimulator itself,
+     * so everything it touches afterwards (the roster, the town, notifications) runs where the
+     * rest of the mod expects to run.
+     */
+    private void simulateGuardDuel(forge.adventure.data.RoamingGuardData guard, EnemySprite mage, forge.deck.Deck deck) {
+        forge.deck.Deck mageDeck = mage.getData().generateDeck(Current.player().isFantasyMode(), false);
+        if (mageDeck == null) { // nothing to simulate against - let the town defend itself
+            EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(false);
+            if (passthrough != null)
+                TerritoryControl.onMageArrived(passthrough);
+            return;
+        }
+        System.out.println("[TFR-RoamGuard] simulating: " + RoamingGuards.displayName(guard.tier)
+                + " (" + guard.maxLife + " life) vs " + mage.getName() + " (" + mage.getData().life + " life)");
+        DeckTesterSimulator.runBatch(
+                RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife,
+                mage.getName(), mageDeck, mage.getData().life,
+                1, null, result -> {
+                    boolean guardWon = result.deckAWins > result.deckBWins;
+                    EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(guardWon);
+                    if (passthrough != null)
+                        TerritoryControl.onMageArrived(passthrough);
+                });
+    }
+
     public void startChestDuel(EnemySprite enemy) {
         currentMob = enemy;
         Forge.advFreezePlayerControls = true;
@@ -1690,6 +1790,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
             foregroundSprites.removeActor(actor);
         resourceSpawnActors.clear();
         ResourceSpawns.forceResync();
+        // Round 145: guard actors belong to the world we are leaving. The ROSTER is persisted and
+        // reloaded with the player; only the live sprites and any in-flight duel are dropped here.
+        RoamingGuardRuntime.reset(foregroundSprites);
         // Session-static state in the mod's world-level helpers (2026-09-02 review): neither is
         // persisted, both must forget the previous run/save here.
         DungeonRotation.resetSessionState();

@@ -46,6 +46,7 @@ public class Config {
     private forge.adventure.data.ArmoryRarityData armoryRarityData;
     private forge.adventure.data.WarChampionData warChampionData;
     private forge.adventure.data.FrontierSpawnData frontierSpawnData;
+    private forge.adventure.data.RoamingGuardConfig roamingGuardConfig;
     /** Round 140 (S2-6): set when a plane data file that EXISTS failed to parse, so the menu can
      *  say so instead of the game running with every feature silently defaulted off. */
     private String fatalDataError = null;
@@ -285,6 +286,21 @@ public class Config {
                 frontierSpawnData = null;
             }
         }
+
+        // Roaming guards (MOD_SCOPE #116, round 145) - same plane-local / fallback-to-common
+        // pattern. Absent leaves roamingGuardConfig null, which RoamingGuards reads as "off", so
+        // no plane without this file gains the feature.
+        FileHandle roamingGuardFile = new FileHandle(prefix + "config tables/roaming_guards.json");
+        if (!roamingGuardFile.exists())
+            roamingGuardFile = new FileHandle(commonPrefix + "config tables/roaming_guards.json");
+        if (roamingGuardFile.exists()) {
+            try {
+                roamingGuardConfig = new Json().fromJson(forge.adventure.data.RoamingGuardConfig.class, roamingGuardFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-RoamGuard] roaming_guards.json failed to load, feature will no-op: " + e);
+                roamingGuardConfig = null;
+            }
+        }
     }
 
     private String resPath() {
@@ -331,6 +347,10 @@ public class Config {
 
     public forge.adventure.data.FrontierSpawnData getFrontierSpawnData() {
         return frontierSpawnData;
+    }
+
+    public forge.adventure.data.RoamingGuardConfig getRoamingGuardConfig() {
+        return roamingGuardConfig;
     }
 
     // Push the plane's allowed/restricted editions and restricted token pairs into TokenDb.

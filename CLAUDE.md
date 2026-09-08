@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-07 (round 144; v1.08 RELEASED, rounds 137-144 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-08 (round 145; v1.08 RELEASED, rounds 137-145 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,20 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 145 (2026-09-08, REPO ONLY - **NOT PLAYTESTED, NOT PACKAGED**): **the roaming guard**, MOD_SCOPE #116,
+  built in one pass. Capitol-only Local/Roaming fork; a roaming guard carries one of the player's DECKS (cards leave
+  the collection, slot empties), walks the overworld with the player's sprite, races an attacking mage TO THE TOWN
+  (not a chase - mages run 50-60 at Mythic vs a guard's 40 cap, so only a race to a fixed destination can work; a
+  teleporter at the target town skips the race), and fights a real AI-vs-AI duel. Max 4. Watch or Simulate - the same
+  match either way (`DeckTesterSimulator` gained a starting-life overload so they cannot diverge). Death = 30 days out;
+  dismissing then forfeits the deck, every other exit returns it.
+  NOTE **launching a duel from the day tick is safe** because in-game time only advances inside WorldStage's
+  `player.isMoving() || waitingForTime` block - a guard can never intercept while the player is in a town or dungeon.
+  NOTE the guard stores the EXACT card list it was given; never recompute the round-trip from the deck.
+  **FIRST PLAYTEST CHECKS**: hire at the Capitol Armory (needs Level 2), give a deck, confirm the slot empties and the
+  collection drops; let a mage target one of your towns and watch for `[TFR-RoamGuard] dispatched`; confirm the guard
+  sprite appears and moves; confirm a win shows "broke the attack" and the guard walks home; confirm taking the deck
+  back restores the exact cards. Every line is `[TFR-RoamGuard]`.
 - Round 144 (2026-09-07): review items **4.7** (`WorldSave.SAVE_FORMAT_VERSION` = 1, written by save() and checked
   at the top of load() BEFORE any sub-object is read - a refusal sets lastLoadError, which the menu already shows;
   absent key reads as 1. **Bump only for a change older code cannot read - adding a field does not qualify**) and
