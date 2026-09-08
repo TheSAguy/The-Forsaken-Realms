@@ -266,6 +266,34 @@ public class RoamingGuards {
         }
     }
 
+    /**
+     * How many cards this deck would ACTUALLY hand over. Round 148, user spec: "An invalid deck,
+     * (less than 40 cards), should not be possible to give."
+     * <p>
+     * Deliberately not {@code deck.getMain().countAll()}. Adventure decks are views over one shared
+     * collection, so a deck can list cards another deck already took with a guard - the listed size
+     * says 40 while the collection can only supply 25, which is exactly what happened in the user's
+     * save before round 146. The collection is the source of truth, so the gate has to count what
+     * giveDeck() will really find.
+     */
+    public static int deliverableCount(int deckIndex) {
+        AdventurePlayer player = AdventurePlayer.current();
+        Deck deck = player.getDeck(deckIndex);
+        if (deck == null)
+            return 0;
+        int total = 0;
+        for (java.util.Map.Entry<PaperCard, Integer> entry : deck.getMain())
+            total += Math.min(entry.getValue(), player.getCards().count(entry.getKey()));
+        return total;
+    }
+
+    /** The same minimum DuelScene enforces, so a guard can never carry a deck the player could not
+     *  legally play themselves. */
+    public static int minDeckSize() {
+        int configured = Config.instance().getConfigData().minDeckSize;
+        return configured > 0 ? configured : 40;
+    }
+
     /** Which of the player's OTHER decks would lose cards if this deck were handed over, and how
      *  many each. Used to warn before the hand-over, since it is not reversible per-deck. */
     public static java.util.LinkedHashMap<String, Integer> sharedCardImpact(int deckIndex) {
@@ -346,6 +374,36 @@ public class RoamingGuards {
         return guard.engageTier != null && index < guard.engageTier.length && guard.engageTier[index];
     }
 
+    /** Round 148: the colour half of the same question. An attacker with no territory colour is
+     *  not a dispatched mage at all and is never filtered out here - the rank rule still applies. */
+    public static boolean willEngageColor(RoamingGuardData guard, String territoryColor) {
+        int index = colorIndex(territoryColor);
+        if (index < 0)
+            return true;
+        return guard.engageColor == null || index >= guard.engageColor.length || guard.engageColor[index];
+    }
+
+    /** Index into TerritoryControl.COLORS, or -1 for null/blank/unknown. */
+    public static int colorIndex(String territoryColor) {
+        if (territoryColor == null || territoryColor.isEmpty())
+            return -1;
+        for (int i = 0; i < TerritoryControl.COLORS.length; i++)
+            if (TerritoryControl.COLORS[i].equalsIgnoreCase(territoryColor))
+                return i;
+        return -1;
+    }
+
+    /** True when the player has unchecked so much that this guard would refuse every attacker -
+     *  worth saying out loud, since an inert guard still draws its wage. */
+    public static boolean engagesNothing(RoamingGuardData guard) {
+        boolean anyTier = false, anyColor = false;
+        for (boolean t : guard.engageTier)
+            anyTier |= t;
+        for (boolean c : guard.engageColor)
+            anyColor |= c;
+        return !anyTier || !anyColor;
+    }
+
     // ------------------------------------------------------------------ daily upkeep
 
     /**
@@ -389,9 +447,14 @@ public class RoamingGuards {
             sub.store("maxLife", g.maxLife);
             sub.store("deckName", g.deckName == null ? "" : g.deckName);
             sub.storeObject("deckCards", g.deckCards == null ? new String[0] : g.deckCards);
+            // Round 148: nine flags now - four ranks then five colours - on the one string. A
+            // save written before this reads back four chars and the colour loop below simply
+            // never fires, leaving every colour allowed, which is the right default.
             StringBuilder engage = new StringBuilder();
             for (int t = 0; t < TIERS_ASCENDING.length; t++)
                 engage.append(g.engageTier != null && t < g.engageTier.length && g.engageTier[t] ? '1' : '0');
+            for (int c = 0; c < TerritoryControl.COLORS.length; c++)
+                engage.append(g.engageColor != null && c < g.engageColor.length && g.engageColor[c] ? '1' : '0');
             sub.store("engage", engage.toString());
             sub.store("watchMatches", g.watchMatches);
             sub.store("hiredDay", g.hiredDay);
@@ -423,6 +486,10 @@ public class RoamingGuards {
             String engage = sub.containsKey("engage") ? sub.readString("engage") : "1111";
             for (int t = 0; t < g.engageTier.length; t++)
                 g.engageTier[t] = t < engage.length() && engage.charAt(t) == '1';
+            for (int c = 0; c < g.engageColor.length; c++) {
+                int at = TIERS_ASCENDING.length + c;
+                g.engageColor[c] = at >= engage.length() || engage.charAt(at) == '1';
+            }
             g.watchMatches = !sub.containsKey("watchMatches") || sub.readBool("watchMatches");
             g.hiredDay = sub.containsKey("hiredDay") ? sub.readInt("hiredDay") : 0;
             g.lastPaidDay = sub.containsKey("lastPaidDay") ? sub.readInt("lastPaidDay") : 0;

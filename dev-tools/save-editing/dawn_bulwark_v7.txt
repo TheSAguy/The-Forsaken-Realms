@@ -23,5 +23,4 @@
 1 Sonar Strike
 1 Idyllic Grange
 1 The Fair Basilica
-1 War Room
 15 Plains

@@ -1,0 +1,32 @@
+# Moat Keep (W_B) - round 148, slot 1.
+# Norn's Verdict could not be rebuilt: it was a hybrid of Dawn Bulwark and Gravetithe, and BOTH of
+# those went out with roaming guards, so nearly every card it listed is no longer in the collection.
+# This is built only from cards the save actually holds.
+#
+# Plan: Magus of the Moat x4 says "creatures without flying can't attack". The AI's decks are almost
+# all ground creatures, so four copies is a hard lock; everything else either flies over it, blocks
+# behind it, or removes the one thing that gets through.
+1 Balance
+1 Winds of Abandon
+2 Anoint with Affliction
+1 Topple
+1 Pulse of the Fields
+1 Beacon of Unrest
+1 Emeria's Call
+4 Magus of the Moat
+1 Hidden Dragonslayer
+1 Banisher Priest
+1 Angel of Vitality
+2 Cavalier of Dawn
+1 Orah, Skyclave Hierophant
+1 Qarsi Revenant
+1 Sunweb
+1 Aven of Enduring Hope
+2 Kinzu of the Bleak Coven
+3 Scoured Barrens
+2 Sunlit Marsh
+2 Sandsteppe Citadel
+1 The Dross Pits
+2 Terramorphic Expanse
+5 Plains
+2 Swamp

@@ -2451,25 +2451,25 @@ public class EconomyBuildings {
         // which already fit this same 140f width unscaled.
         int[] column = {0};
         addHalfButton(dialog, column, "Deposit " + BANK_DENOMINATION + " [+Gold]", player.getGold() >= BANK_DENOMINATION, () -> {
-            player.takeGold(BANK_DENOMINATION);
+            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.takeGold(BANK_DENOMINATION));
             changes.addBankBalance(BANK_DENOMINATION);
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Deposit All", player.getGold() > 0, () -> {
             int all = player.getGold();
-            player.takeGold(all);
+            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.takeGold(all));
             changes.addBankBalance(all);
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Withdraw " + BANK_DENOMINATION + " [+Gold]", changes.getBankBalance() >= BANK_DENOMINATION, () -> {
             changes.addBankBalance(-BANK_DENOMINATION);
-            player.giveGold(BANK_DENOMINATION);
+            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(BANK_DENOMINATION));
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Withdraw All", changes.getBankBalance() > 0, () -> {
             int all = changes.getBankBalance();
             changes.addBankBalance(-all);
-            player.giveGold(all);
+            ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(all));
             refreshBankDialog(stage, changes, objectId);
         });
         finishHalfButtonRow(dialog, column);
@@ -2519,14 +2519,21 @@ public class EconomyBuildings {
                     && player.getWood() >= giveWood && player.getStone() >= giveStone;
         }
         void apply(AdventurePlayer player) {
-            if (giveGold > 0) player.takeGold(giveGold);
-            if (giveShards > 0) player.takeShards(giveShards);
-            if (giveWood > 0) player.takeWood(giveWood);
-            if (giveStone > 0) player.takeStone(giveStone);
-            if (getGold > 0) player.giveGold(getGold);
-            if (getShards > 0) player.addShards(getShards);
-            if (getWood > 0) player.addWood(getWood);
-            if (getStone > 0) player.addStone(getStone);
+            // Round 148: a trade is a conversion, not earnings - counting both halves would
+            // show a single exchange as income AND expense on the same sheet.
+            ResourceLedger.Bucket tradeScope = ResourceLedger.enter(ResourceLedger.Bucket.IGNORED);
+            try {
+                if (giveGold > 0) player.takeGold(giveGold);
+                if (giveShards > 0) player.takeShards(giveShards);
+                if (giveWood > 0) player.takeWood(giveWood);
+                if (giveStone > 0) player.takeStone(giveStone);
+                if (getGold > 0) player.giveGold(getGold);
+                if (getShards > 0) player.addShards(getShards);
+                if (getWood > 0) player.addWood(getWood);
+                if (getStone > 0) player.addStone(getStone);
+            } finally {
+                ResourceLedger.exit(tradeScope);
+            }
         }
     }
 
@@ -2833,6 +2840,9 @@ public class EconomyBuildings {
     public static void processDaysPassed(int daysPassed, int newDayCount) {
         if (daysPassed <= 0)
             return;
+        // Round 148: roll the balance sheet's week over here as well as lazily on the next
+        // movement, so a week in which the player neither earned nor spent anything still ends.
+        ResourceLedger.onDaysPassed(newDayCount);
         // Progressive Set Unlocks (MOD_SCOPE.md #4): player-level, not per-town, so this lives
         // outside the per-town loop below - unlocks the edition the moment the 7-day timer
         // elapses, not only when the player happens to revisit the Lab.
@@ -2869,19 +2879,29 @@ public class EconomyBuildings {
                         if (nextPayday > newDayCount)
                             break;
                         int amount = mineWeeklyAmount(type);
-                        switch (type) {
-                            case SHARD_MINE: AdventurePlayer.current().addShards(amount); break;
-                            case GOLD_MINE:
-                                // "Gold Mine deposits into Bank Directly" (2026-08-13, user spec) -
-                                // only when THIS town actually has a Bank built; otherwise falls
-                                // back to the player's own gold same as always.
-                                if (AdventurePlayer.current().isGoldMineDepositsToBankDirectly() && changes.hasEconomyBuildingOfType(BANK))
-                                    changes.addBankBalance(amount);
-                                else
-                                    AdventurePlayer.current().giveGold(amount);
-                                break;
-                            case LUMBER_MILL: AdventurePlayer.current().addWood(amount); break;
-                            case STONE_MINE: AdventurePlayer.current().addStone(amount); break;
+                        // Round 148: everything paid inside this scope is mine income on the
+                        // balance sheet. The bank-deposit branch below never reaches the player's
+                        // purse, so it is recorded by hand - the scope cannot see it.
+                        ResourceLedger.Bucket mineScope = ResourceLedger.enter(ResourceLedger.Bucket.MINES);
+                        try {
+                            switch (type) {
+                                case SHARD_MINE: AdventurePlayer.current().addShards(amount); break;
+                                case GOLD_MINE:
+                                    // "Gold Mine deposits into Bank Directly" (2026-08-13, user spec) -
+                                    // only when THIS town actually has a Bank built; otherwise falls
+                                    // back to the player's own gold same as always.
+                                    if (AdventurePlayer.current().isGoldMineDepositsToBankDirectly() && changes.hasEconomyBuildingOfType(BANK)) {
+                                        changes.addBankBalance(amount);
+                                        ResourceLedger.record(ResourceLedger.Bucket.MINES, ResourceLedger.GOLD, amount);
+                                    } else {
+                                        AdventurePlayer.current().giveGold(amount);
+                                    }
+                                    break;
+                                case LUMBER_MILL: AdventurePlayer.current().addWood(amount); break;
+                                case STONE_MINE: AdventurePlayer.current().addStone(amount); break;
+                            }
+                        } finally {
+                            ResourceLedger.exit(mineScope);
                         }
                         lastPaid = nextPayday;
                     }
@@ -2891,8 +2911,10 @@ public class EconomyBuildings {
                     int periodsAfter = (newDayCount - 1) / INTEREST_PERIOD_DAYS;
                     for (int i = periodsBefore; i < periodsAfter; i++) {
                         int interest = Math.round(changes.getBankBalance() * INTEREST_RATE);
-                        if (interest > 0)
+                        if (interest > 0) {
                             changes.addBankBalance(interest);
+                            ResourceLedger.record(ResourceLedger.Bucket.INTEREST, ResourceLedger.GOLD, interest);
+                        }
                     }
                 }
             }
@@ -2908,6 +2930,10 @@ public class EconomyBuildings {
             PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
             if (changes == null || changes.getGuardCount() == 0)
                 continue;
+            // Round 148: wages paid anywhere inside this town's pass are local-guard expense.
+            // enter/exit rather than a lambda because the loop below mutates lastPaid/disbanded.
+            ResourceLedger.Bucket localScope = ResourceLedger.enter(ResourceLedger.Bucket.GUARD_LOCAL);
+            try {
             for (int i = changes.getGuardCount() - 1; i >= 0; i--) {
                 String tier = changes.getGuardTier(i);
                 int lastPaid = changes.getGuardLastPaidDay(i);
@@ -2945,6 +2971,9 @@ public class EconomyBuildings {
                 if (!disbanded)
                     changes.setGuardLastPaidDay(i, lastPaid);
             }
+            } finally {
+                ResourceLedger.exit(localScope);
+            }
         }
         payRoamingGuards(newDayCount);
     }
@@ -2965,6 +2994,8 @@ public class EconomyBuildings {
         if (!RoamingGuards.isEnabled())
             return;
         java.util.List<forge.adventure.data.RoamingGuardData> roster = RoamingGuards.roster();
+        ResourceLedger.Bucket roamScope = ResourceLedger.enter(ResourceLedger.Bucket.GUARD_ROAMING);
+        try {
         for (int i = roster.size() - 1; i >= 0; i--) {
             forge.adventure.data.RoamingGuardData guard = roster.get(i);
             if (!RoamingGuards.isArmed(guard)) {
@@ -3004,6 +3035,9 @@ public class EconomyBuildings {
             }
             if (!disbanded)
                 guard.lastPaidDay = lastPaid;
+        }
+        } finally {
+            ResourceLedger.exit(roamScope);
         }
     }
 
@@ -3047,8 +3081,12 @@ public class EconomyBuildings {
             fromInventory = Math.min(inventoryAvailable, goldCost);
             fromBank = goldCost - fromInventory;
         }
-        if (fromBank > 0)
+        if (fromBank > 0) {
             changes.addBankBalance(-fromBank);
+            // Round 148: gold that leaves a town bank is spent as surely as gold from the purse,
+            // but no mutator sees it - the caller's scope decides which guard line it lands on.
+            ResourceLedger.recordAmbient(ResourceLedger.GOLD, -fromBank);
+        }
         if (fromInventory > 0)
             player.takeGold(fromInventory);
         return true;

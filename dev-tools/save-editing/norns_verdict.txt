@@ -18,10 +18,9 @@
 1 Get Lost
 1 Planar Disruption
 1 Sunscour
-1 War Room
 3 Scoured Barrens
 2 Sunlit Marsh
 1 Port Town
 2 Terramorphic Expanse
 5 Plains
-3 Swamp
+4 Swamp

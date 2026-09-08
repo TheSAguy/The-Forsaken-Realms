@@ -6,16 +6,23 @@ import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.scene.UIScene;
+import forge.adventure.util.ResourceLedger.Bucket;
 import forge.adventure.world.WorldSave;
 
 /**
  * Weekly balance sheet (round 147, user request: "We need a financial info page. Weekly Income and
  * Expenses. With all these guards, the player won't know how much he is spending.").
  * <p>
- * Every figure is derived live from the same helpers the weekly sweep itself uses, rather than
- * from a running tally - a tally would drift the moment a mine is built, a guard is hired or a
- * town changes hands, and there is no cheap way to notice. Recomputing means the sheet can never
- * disagree with what actually gets paid.
+ * Round 148 rebuilt the body on {@link ResourceLedger}. The first version RECOMPUTED every figure
+ * from the helpers the weekly sweep pays from, which is exactly right for a rate - mines, interest,
+ * wages - and cannot work at all for what the user asked for next: "All other Income... quest
+ * rewards, loot, pickups" and "All other expenses... Buildings, Lost to re-rolls, duel lost, arena
+ * entry fees, item uses". None of those leave standing state behind to recompute from, so they are
+ * recorded as they happen and read back here.
+ * <p>
+ * What survives from the recompute is the forward look: {@link #compute()} still derives next
+ * payday's fixed commitments live, because that one genuinely is a rate and the player wants it
+ * BEFORE it is charged rather than a week later.
  * <p>
  * Reachable from the Bank, the Exchange and the World Standings page. Built as a Dialog rather
  * than an InfoTextScene because it has to open over three different screens without a scene
@@ -24,8 +31,9 @@ import forge.adventure.world.WorldSave;
 public class BalanceSheet {
     private BalanceSheet() {}
 
-    /** One week's figures. Resources are kept apart because they are not interchangeable - a
-     *  player can be gold-poor and stone-rich, and a single "net" number would hide that. */
+    /** Next payday's fixed commitments. Resources are kept apart because they are not
+     *  interchangeable - a player can be gold-poor and stone-rich, and a single "net" number
+     *  would hide that. */
     public static class Weekly {
         public int goldIn, woodIn, stoneIn, shardsIn;
         public int interestIn;
@@ -57,7 +65,7 @@ public class BalanceSheet {
         }
         for (RoamingGuardData guard : RoamingGuards.roster()) {
             // An unarmed guard is not on the payroll (round 146), so it must not appear as a cost
-            // here either - the sheet is meant to predict the next payday, not list contracts.
+            // here either - this half of the sheet predicts the next payday, not contracts held.
             if (!RoamingGuards.isArmed(guard))
                 continue;
             w.roamingGuardGold += RoamingGuards.weeklyGoldCost(guard.tier);
@@ -70,13 +78,17 @@ public class BalanceSheet {
      *  UIScene, and closing this one has to put the caller's dialog back rather than leave the
      *  player looking at an empty building. */
     public static void open(forge.adventure.stage.MapStage stage, Runnable onClose) {
-        Weekly w = compute();
+        open(stage, onClose, false);
+    }
+
+    private static void open(forge.adventure.stage.MapStage stage, Runnable onClose, boolean lastWeek) {
         Dialog dialog = stage.getDialog();
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
         dialog.clearListeners();
-        fill(dialog, w);
+        fill(dialog, lastWeek);
         int[] column = {0};
+        addToggle(dialog, column, lastWeek, () -> open(stage, onClose, !lastWeek));
         EconomyBuildings.addHalfButton(dialog, column, "Back", true, onClose);
         EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
@@ -84,38 +96,124 @@ public class BalanceSheet {
     }
 
     public static void open(UIScene scene) {
-        Weekly w = compute();
+        open(scene, false);
+    }
+
+    private static void open(UIScene scene, boolean lastWeek) {
         Dialog dialog = new Dialog("Balance Sheet", Controls.getSkin());
-        fill(dialog, w);
+        fill(dialog, lastWeek);
         int[] column = {0};
+        addToggle(dialog, column, lastWeek, () -> {
+            scene.removeDialog();
+            open(scene, !lastWeek);
+        });
         EconomyBuildings.addHalfButton(dialog, column, "Close", true, scene::removeDialog);
         EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
 
-    /** The rows themselves, shared by both entry points. */
-    private static void fill(Dialog dialog, Weekly w) {
+    /** Greyed out rather than hidden until a week has actually rolled, so the player can see the
+     *  view exists instead of wondering why it appeared later. */
+    private static void addToggle(Dialog dialog, int[] column, boolean lastWeek, Runnable action) {
+        EconomyBuildings.addHalfButton(dialog, column, lastWeek ? "This Week" : "Last Week",
+                lastWeek || ResourceLedger.hasLastWeek(), action);
+    }
+
+    // ------------------------------------------------------------------ the rows
+
+    private static void fill(Dialog dialog, boolean lastWeek) {
         AdventurePlayer player = AdventurePlayer.current();
-        EconomyBuildings.addContentRow(dialog, "[%110]Weekly Income[%]");
-        EconomyBuildings.addContentRow(dialog, "Mines: " + w.goldIn + "[+Gold]  " + w.woodIn + "[+Wood]  "
-                + w.stoneIn + "[+Stone]  " + w.shardsIn + "[+Shards]");
-        EconomyBuildings.addContentRow(dialog, "Bank interest: " + w.interestIn + "[+Gold]");
+        int start = Math.max(0, ResourceLedger.weekStartDay(lastWeek));
+        EconomyBuildings.addContentRow(dialog, "[%110]Days " + start + "-" + (start + 6)
+                + (lastWeek ? "[%]" : " (so far)[%]"));
 
-        EconomyBuildings.addContentRow(dialog, "[%110]Weekly Expenses[%]");
-        EconomyBuildings.addContentRow(dialog, "Local guards: " + w.localGuardGold + "[+Gold]"
-                + (w.localGuardShards > 0 ? "  " + w.localGuardShards + "[+Shards]" : ""));
-        EconomyBuildings.addContentRow(dialog, "Roaming guards: " + w.roamingGuardGold + "[+Gold]"
-                + (w.roamingGuardShards > 0 ? "  " + w.roamingGuardShards + "[+Shards]" : ""));
+        EconomyBuildings.addContentRow(dialog, "[%100]Income[%]");
+        EconomyBuildings.addContentRow(dialog, "[%90]Mines: " + amounts(income(lastWeek, Bucket.MINES)));
+        EconomyBuildings.addContentRow(dialog, "[%90]Bank interest: " + amounts(income(lastWeek, Bucket.INTEREST)));
+        EconomyBuildings.addContentRow(dialog, "[%90]Everything else: " + amounts(income(lastWeek, Bucket.OTHER)));
+        EconomyBuildings.addContentRow(dialog, "[%90][GREEN]Total in:[] " + amounts(total(lastWeek, true)));
 
-        String goldNet = (w.netGold() >= 0 ? "[GREEN]+" : "[RED]") + w.netGold() + "[]";
-        String shardNet = (w.netShards() >= 0 ? "[GREEN]+" : "[RED]") + w.netShards() + "[]";
-        EconomyBuildings.addContentRow(dialog, "[%110]Net per week[%]");
-        EconomyBuildings.addContentRow(dialog, goldNet + "[+Gold]   " + shardNet + "[+Shards]   +"
-                + w.woodIn + "[+Wood]   +" + w.stoneIn + "[+Stone]");
+        EconomyBuildings.addContentRow(dialog, "[%100]Expenses[%]");
+        EconomyBuildings.addContentRow(dialog, "[%90]Local guards: " + amounts(expense(lastWeek, Bucket.GUARD_LOCAL)));
+        if (RoamingGuards.isEnabled())
+            EconomyBuildings.addContentRow(dialog, "[%90]Roaming guards: "
+                    + amounts(expense(lastWeek, Bucket.GUARD_ROAMING)));
+        EconomyBuildings.addContentRow(dialog, "[%90]Everything else: " + amounts(expense(lastWeek, Bucket.OTHER)));
+        EconomyBuildings.addContentRow(dialog, "[%90][RED]Total out:[] " + amounts(total(lastWeek, false)));
 
-        EconomyBuildings.addContentRow(dialog, "[%110]On hand[%]");
-        EconomyBuildings.addContentRow(dialog, player.getGold() + "[+Gold]  " + player.getShards() + "[+Shards]  "
-                + player.getWood() + "[+Wood]  " + player.getStone() + "[+Stone]");
+        EconomyBuildings.addContentRow(dialog, "[%100]Net: " + signed(net(lastWeek)) + "[%]");
+
+        // The one figure that still has to be derived rather than recorded: what is already
+        // committed for the payday ahead. A player who hired a guard yesterday needs to see the
+        // bill before it lands, and no amount of history shows that.
+        Weekly next = compute();
+        int nextPayday = ((WorldSave.getCurrentSave().getWorld().getCurrentDay() / 7) + 1) * 7;
+        EconomyBuildings.addContentRow(dialog, "[%90]Day " + nextPayday + ": [GREEN]+"
+                + (next.goldIn + next.interestIn) + "[+Gold][] earned, wages [RED]-" + next.goldOut() + "[+Gold]"
+                + (next.shardsOut() > 0 ? " -" + next.shardsOut() + "[+Shards]" : "") + "[]");
+
+        EconomyBuildings.addContentRow(dialog, "[%90]On hand: " + player.getGold() + "[+Gold]  "
+                + player.getShards() + "[+Shards]  " + player.getWood() + "[+Wood]  "
+                + player.getStone() + "[+Stone]");
+        EconomyBuildings.addContentRow(dialog, "[%75]Bank transfers and Exchange trades move what you "
+                + "already own, so neither column counts them.");
+    }
+
+    // ------------------------------------------------------------------ number wrangling
+
+    private static int[] income(boolean lastWeek, Bucket bucket) {
+        int[] values = new int[ResourceLedger.RESOURCES];
+        for (int r = 0; r < values.length; r++)
+            values[r] = ResourceLedger.income(lastWeek, bucket, r);
+        return values;
+    }
+
+    private static int[] expense(boolean lastWeek, Bucket bucket) {
+        int[] values = new int[ResourceLedger.RESOURCES];
+        for (int r = 0; r < values.length; r++)
+            values[r] = ResourceLedger.expense(lastWeek, bucket, r);
+        return values;
+    }
+
+    private static int[] total(boolean lastWeek, boolean incoming) {
+        int[] values = new int[ResourceLedger.RESOURCES];
+        for (int r = 0; r < values.length; r++)
+            values[r] = incoming ? ResourceLedger.totalIncome(lastWeek, r) : ResourceLedger.totalExpense(lastWeek, r);
+        return values;
+    }
+
+    private static int[] net(boolean lastWeek) {
+        int[] values = new int[ResourceLedger.RESOURCES];
+        for (int r = 0; r < values.length; r++)
+            values[r] = ResourceLedger.totalIncome(lastWeek, r) - ResourceLedger.totalExpense(lastWeek, r);
+        return values;
+    }
+
+    /** Only the resources that actually moved - a row of four zeroes is harder to read than a
+     *  dash, and most weeks touch two of the four. */
+    private static String amounts(int[] values) {
+        StringBuilder sb = new StringBuilder();
+        for (int r = 0; r < values.length; r++) {
+            if (values[r] == 0)
+                continue;
+            if (sb.length() > 0)
+                sb.append("  ");
+            sb.append(values[r]).append(ResourceLedger.GLYPH[r]);
+        }
+        return sb.length() == 0 ? "-" : sb.toString();
+    }
+
+    private static String signed(int[] values) {
+        StringBuilder sb = new StringBuilder();
+        for (int r = 0; r < values.length; r++) {
+            if (values[r] == 0)
+                continue;
+            if (sb.length() > 0)
+                sb.append("  ");
+            sb.append(values[r] > 0 ? "[GREEN]+" : "[RED]").append(values[r])
+                    .append(ResourceLedger.GLYPH[r]).append("[]");
+        }
+        return sb.length() == 0 ? "-" : sb.toString();
     }
 }

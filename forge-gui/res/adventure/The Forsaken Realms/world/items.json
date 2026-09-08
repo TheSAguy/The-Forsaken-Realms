@@ -2862,12 +2862,12 @@
     },
     {
         "name":  "Acorn Amulet",
-        "description":  "Your commander has: at your EOT, if a creature went to grave, make two tapped squirrels",
+        "description":  "Each upkeep, make a 1/1 Squirrel. With 7+ cards in your graveyard your Squirrels get +2/+2.",
         "equipmentSlot":  "Neck",
         "iconName":  "AcornAmulet",
         "effect":  {
                        "startBattleWithCard":  [
-                                                   "Cloakwood Hermit"
+                                                   "Nut Collector"
                                                ]
                    },
         "rarity":  "Uncommon"
@@ -5204,12 +5204,12 @@
     },
     {
         "name":  "Helm of Myth",
-        "description":  "Your commander recasts cost 1 less, draw when commander is zoned.",
+        "description":  "Gains a counter on each noncreature spell you cast. W: it becomes an X/X Monk this turn.",
         "equipmentSlot":  "Neck",
         "iconName":  "HelmofMyth",
         "effect":  {
                        "startBattleWithCard":  [
-                                                   "Myth Unbound"
+                                                   "Myth Realized"
                                                ]
                    },
         "rarity":  "Rare"

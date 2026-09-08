@@ -20,5 +20,4 @@
 1 Power Word Kill
 1 Innocent Blood
 2 The Dross Pits
-1 War Room
-14 Swamp
+15 Swamp

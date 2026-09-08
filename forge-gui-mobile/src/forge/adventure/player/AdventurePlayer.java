@@ -59,6 +59,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // a guard holds the player's own cards and is hired with the player's own gold. Persisted field
     // by field through RoamingGuards.save/load - no new serializable class enters the save.
     private final ArrayList<forge.adventure.data.RoamingGuardData> roamingGuards = new ArrayList<>();
+    // Round 148: the recorded weekly resource tally behind the balance sheet's "everything else"
+    // lines. Same treatment as the guards above - a plain holder, persisted field by field, so no
+    // new serializable class enters the save.
+    private final forge.adventure.util.ResourceLedger.Book ledger = new forge.adventure.util.ResourceLedger.Book();
     private final DifficultyData difficultyData = new DifficultyData();
 
     // Commander mode
@@ -421,6 +425,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public ArrayList<forge.adventure.data.RoamingGuardData> getRoamingGuards() { return roamingGuards; }
 
+    public forge.adventure.util.ResourceLedger.Book getLedger() { return ledger; }
+
     /**
      * Round 145: empty a deck slot outright, for handing that deck to a roaming guard. Emptying it
      * is not cosmetic - a populated slot whose cards have left the collection is exactly the
@@ -449,6 +455,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     private void clearDecks() {
         roamingGuards.clear(); // round 145 - same reason the decks below are cleared
+        forge.adventure.util.ResourceLedger.reset(ledger); // round 148 - a new game starts with an empty book
         decks.clear();
         for (int i = 0; i < MIN_DECK_COUNT; i++)
             decks.add(new Deck(Forge.getLocalizer().getMessage("lblEmptyDeck")));
@@ -1010,6 +1017,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // Round 145: roaming guards. Read early and unconditionally - clear() above empties the
         // roster, and a save predating the feature simply has no key, which load() treats as none.
         forge.adventure.util.RoamingGuards.load(data, roamingGuards);
+        forge.adventure.util.ResourceLedger.load(data, ledger);
         this.statistic.load(data.readSubData("statistic"));
         this.difficultyData.startingLife = data.readInt("startingLife");
         // Support for old typo
@@ -1583,6 +1591,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
         // save decks dynamically
         forge.adventure.util.RoamingGuards.save(data, roamingGuards);
+        forge.adventure.util.ResourceLedger.save(data, ledger);
         data.store("deckCount", getDeckCount());
         for (int i = 0; i < getDeckCount(); i++) {
             data.store("deck_name_" + i, decks.get(i).getName());
@@ -1929,7 +1938,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             suppressDefeatGoldLoss = false;
             System.out.println("[TFR-CoinRansom] defeat gold loss waived by Bronze Coin (gold kept: " + gold + ")");
         } else {
+            int lostGold = gold;
             gold = (int) (gold - (gold * difficultyData.goldLoss));
+            forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - lostGold);
         }
         int lb = life, mb = maxLife;
         life = (int) (life - (maxLife * difficultyData.lifeLoss));
@@ -2115,6 +2126,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // works again until the player earns past the debt.
         // NOTE: addGold() routes through here as takeGold(-price), so the guard must only clamp
         // actual spends - a negative `price` is a credit and must pass through untouched.
+        int goldBefore = gold;
         if (price > 0 && price > gold) {
             System.out.println("[TFR-Gold] refused overspend of " + price + " with only " + gold
                     + " - clamping to 0 (a caller skipped its affordability check)");
@@ -2122,6 +2134,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         } else {
             gold -= price;
         }
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - goldBefore);
         onGoldChangeList.emit();
         //play sfx
         SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
@@ -2133,6 +2146,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public void takeShards(int number) {
         shards -= number;
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.SHARDS, -number);
         onShardsChangeList.emit();
         //play sfx
         SoundSystem.instance.play(SoundEffectType.TakeShard, false);
@@ -2141,6 +2155,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void setShards(int number) {
         boolean changed = shards != number;
         if (changed) {
+            forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.SHARDS, number - shards);
             shards = number;
             onShardsChangeList.emit();
         }
@@ -2154,6 +2169,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public void takeWood(int number) {
         wood -= number;
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.WOOD, -number);
         onWoodChangeList.emit();
     }
 
@@ -2165,6 +2181,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     public void takeStone(int number) {
         stone -= number;
+        forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.STONE, -number);
         onStoneChangeList.emit();
     }
 

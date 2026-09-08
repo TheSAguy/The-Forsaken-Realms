@@ -17757,6 +17757,107 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 148: a real ledger, engagement checkboxes, and the Commander audit (2026-09-08)
+
+### The balance sheet stops guessing
+
+Round 147 RECOMPUTED every figure from the helpers the weekly sweep pays from. That is exactly
+right for a rate - mines, interest, wages - and useless for what the user asked for next: *"All
+other Income (This is from stuff like quest rewards, loot, pickups, etc.)"* and *"All other expenses
+for the week, like Buildings, Lost to re-rolls, duel lost, arena entry fees, item uses."* A quest
+reward leaves no standing state behind to recompute from. It has to be recorded when it happens.
+
+New `ResourceLedger` does that, and the attribution is the interesting part. Tagging twenty-odd call
+sites would have worked today and silently missed every one added later, so instead the ledger reads
+an AMBIENT bucket that defaults to **Everything else**. Only the weekly sweep says anything - mines,
+interest, local wages, roaming wages - and every other gold movement in the game lands in "other" by
+saying nothing, which is precisely what that line means. A flow that is neither income nor expense
+(a bank deposit, an Exchange trade) declares IGNORED, or a 5,000 gold deposit would appear as a
+5,000 gold expense.
+
+It hooks AdventurePlayer's four resource mutators, which every movement already funnels through, and
+records the ACTUAL delta rather than the requested amount - `takeGold`'s overspend clamp can move
+less than it was asked for, and a ledger that disagreed with the purse would be worse than none.
+Three paths bypass those mutators and are recorded by hand: a gold mine depositing straight into a
+town bank, interest accruing there, and the bank half of a guard's wage. One more was easy to miss -
+the gold lost on a defeat is a bare field write, and "duel lost" was on the user's list.
+
+The sheet now shows this week and last week (a toggle, greyed until a week has actually rolled),
+income and expenses each in four lines with a total, the net, and one forward-looking row: what the
+next payday already owes. That last one still has to be derived - a player who hired a guard
+yesterday needs to see the bill before it lands, and no amount of history shows that.
+
+Two weeks of tallies persist as four comma-joined rows of ints under `player`. A String cannot
+change shape when a bucket is added later, and it stays readable in a save dump.
+
+### Engagement orders: rank AND color, as checkboxes
+
+User spec plus a mock-up: *"I think we need to re-work the Mage Attack orders, I want to add Color
+as an option... let's make it check-boxes."* Done - `Okay to attack (rank)` over the four ranks and
+`Okay to attack (color)` over WUBRG, two to a row inside the dialog's content table (scene2d stacks
+CheckBoxes one per row and nine of those would run off the bottom of the screen). Both filters must
+pass before a guard is dispatched; an attacker with no territory color is not a dispatched mage at
+all and is never filtered on color.
+
+The boxes write straight into the guard's own arrays, so unticking three in a row is three clicks
+rather than three dialog tear-downs - the old YES/no buttons rebuilt the whole dialog on every
+toggle. The nine flags ride on the one `engage` string the save already had; a save written before
+this reads back four characters and the color loop never fires, leaving every color allowed.
+
+Colors are listed in WUBRG rather than the mock-up's order, to match the standings and reputation
+screens.
+
+### An invalid deck cannot be handed over
+
+User spec: *"An invalid deck, (less than 40 cards), should not be possible to give."* The gate
+counts what the COLLECTION can actually supply, not what the deck lists - which is the whole lesson
+of round 146. A deck whose cards already went out with another guard still lists forty of them; the
+user's own Norn's Verdict listed 25 real cards and 15 phantoms. The picker now shows `Moat Keep
+(25 of 40)` and refuses it, saying which is which.
+
+### The Commander audit
+
+User: *"Please see if there are any other cards/items that refer to 'Commander' so we can
+remove/update as needed."* Swept every card named by an item, a reward or an enemy against its own
+script, looking for `ActivationGameTypes$ ...Commander`, `IsCommander` and command-zone triggers.
+
+- **Two items were blanks.** Acorn Amulet handed over Cloakwood Hermit, whose only ability affects
+  `Creature.IsCommander+YouOwn`; Helm of Myth handed over Myth Unbound, which reduces a commander's
+  recast cost and draws off the command zone. Neither did anything at all. They now grant Nut
+  Collector and Myth Realized - same flavor, same names (renaming would orphan any copy already in
+  a save), and deliberately cards whose value comes from an ONGOING trigger rather than an
+  enter-the-battlefield one, since `startBattleWithCard` puts the card straight onto the battlefield.
+- **One reward was a card that dies on arrival.** Jeska, Thrice Reborn enters with a loyalty counter
+  for each commander cast from the command zone - always zero here - so she hit the battlefield and
+  died to state-based actions. That reward is Jeska's Will now.
+- **War Room** (the card that started this) is the only card in the whole 30,000-script pool whose
+  ability is gated to Commander game types. Removed from all three decklists.
+- Nine other commander-referencing cards sit in enemy decks. Five keep a working body and the
+  commander clause is just a dead bonus; four - the Familiar cycle - become vanilla creatures. Left
+  alone: each one IS the enemy that carries it (Anara, Esior, Falthis, Keleth).
+- **Reported, not changed: 905 of the 1,432 enemy decks carry a `[Commander]` section, and in
+  ordinary Adventure mode that card is never played.** `RegisteredPlayer.forVariants` only assigns
+  commanders when the applied variants include Commander/Brawl/Oathbreaker/TinyLeaders, and an
+  Adventure duel applies only `GameType.Adventure`. Folding those into the main decks would hand
+  every legend enemy its signature bomb - a balance decision, not a bug fix.
+
+### Decks
+
+Norn's Verdict could not be rebuilt: it was a hybrid of Dawn Bulwark and Gravetithe, and BOTH went
+out with roaming guards, so nearly every card it listed was no longer in the collection - which is
+why it stood at 25 cards. Slot 1 is now **Moat Keep (W_B)**, built only from what the save actually
+holds: four Magus of the Moat ("creatures without flying can't attack") against an AI that plays
+almost entirely ground creatures, with fliers, blockers and removal behind it.
+
+The guards' own decks were fixed in place too - Dawn Bulwark's War Room came back to the collection
+(43 cards), and Gravetithe was one card under the legal minimum, so it gained a Swamp (40).
+
+**Files touched**: `util/ResourceLedger.java` (new), `util/BalanceSheet.java`, `util/RoamingGuards.java`,
+`util/RoamingGuardUI.java`, `util/RoamingGuardRuntime.java`, `util/EconomyBuildings.java`,
+`data/RoamingGuardData.java`, `player/AdventurePlayer.java`; plane `world/items.json`,
+`world/enemies.json`; `dev-tools/save-editing/` (FixGuardDecks.java new, moat_keep.txt new,
+three decklists).
+
 ## Round 147: no ante for guards, garrisons on the map, and a balance sheet (2026-09-08)
 
 ### Guards never fight for ante

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="117">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="118">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -18,7 +18,7 @@
  </layer>
  <layer id="8" name="Walls Supplementary" width="60" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt2MEJg0AQheGJB20kyC54DCknTaQIS7AFW0iugjmmkDSR3HLRza67EJz5PxhYUEcHRR+K2HOu8nucqvheKfvG9gLWuEZk+lG++fdVltNGzHJk3t2aP7P0dbgeiuaFLsMhv8eWvFHyvFiXkutKZsESvbfc35sXufv04y7dt/aEeW15uuW1Vi+3vIYOPM/Q7Gr4W6WBtfxsDf/b84yB91toGwAAgBbkSWjxBrbhKNA=
+   eJzt2EEKgzAQheGpi3qRIgl0WTxOr9MjeAWvYLeFdulBvITu3GiamIA6+T8YCBhHB7N4KJKfuojv8Sj8e4Xs9e0FrDGlyOdP2XLvt0yn8pjlxryn9Z1meV3d9VM0L3RpLvE9tuSNlM/FupBclzILpui95ft2VuRtw+973uc6E+bNS2+W11oNZnkNHTjPAI4qt/ycG/63x2kdWdx1DQAAQAvyJLQYAYPkKDQ=
   </data>
  </layer>
  <layer id="3" name="Clutter" width="60" height="40">
@@ -205,5 +205,6 @@
 ]</property>
    </properties>
   </object>
+  <object id="117" template="../../obj/stone.tx" x="109.975" y="380.255"/>
  </objectgroup>
 </map>

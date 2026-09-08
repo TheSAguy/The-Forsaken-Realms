@@ -142,7 +142,7 @@ public class RoamingGuardRuntime {
 
     /**
      * The guard that will take this threat, or null. Skips guards that are busy, out of commission,
-     * carrying no deck, or whose engagement rules say to avoid this rank of enemy.
+     * carrying no deck, or whose engagement rules say to avoid this rank OR colour of enemy.
      */
     private static RoamingGuardData pickGuardFor(EnemySprite mage, int day) {
         String enemyTier = mage.getData().tier;
@@ -155,6 +155,8 @@ public class RoamingGuardRuntime {
                 continue; // nothing to fight with
             if (!RoamingGuards.willEngage(guard, enemyTier))
                 continue; // the player told it to avoid this rank
+            if (!RoamingGuards.willEngageColor(guard, mage.territoryColor))
+                continue; // round 148 - and to leave this colour alone
             return guard;
         }
         return null;

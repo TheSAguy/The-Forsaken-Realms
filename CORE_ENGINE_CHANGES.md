@@ -1578,6 +1578,17 @@ from the plane's `config tables/settings.json`).
   dialogs, and no salary for an unarmed roaming guard.
 - New mod file: `util/BalanceSheet.java`.
 
+### 2026-09-08 Weekly resource ledger + guard engagement colors (round 148)
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - the four resource
+  mutators (`takeGold`, `takeShards`, `setShards`, `takeWood`, `takeStone`) report the actual delta
+  to `ResourceLedger`, and `defeated()` reports the gold it burns by direct field write. Holds a
+  `ResourceLedger.Book`, saved/loaded/cleared beside the roaming guards.
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** - `processDaysPassed` and
+  `payRoamingGuards` declare which ledger bucket their payouts belong to; the bank dialog's
+  deposit/withdraw and the Exchange's trade declare IGNORED.
+- New mod file: `util/ResourceLedger.java`.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

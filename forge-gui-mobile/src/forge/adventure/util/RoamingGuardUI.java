@@ -1,7 +1,11 @@
 package forge.adventure.util;
 
 import forge.adventure.stage.GameHUD;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import forge.adventure.data.RoamingGuardData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.scene.UIScene;
@@ -97,6 +101,8 @@ public class RoamingGuardUI {
             sb.append(" [RED](out of commission until day ").append(guard.downUntilDay).append(")");
         else if (!RoamingGuards.isArmed(guard))
             sb.append(" [RED](GIVE DECK - unarmed, it will not be sent out or paid)");
+        else if (RoamingGuards.engagesNothing(guard))
+            sb.append(" [RED](engages nothing - tick a rank AND a color)");
         else if (guard.returningHome)
             sb.append(" (returning to the Capitol)");
         else if (!guard.isIdle())
@@ -151,6 +157,7 @@ public class RoamingGuardUI {
                                        String poiName, int objectId, RoamingGuardData guard) {
         AdventurePlayer player = AdventurePlayer.current();
         Dialog dialog = new Dialog("Give a Deck", Controls.getSkin());
+        int minimum = RoamingGuards.minDeckSize();
         EconomyBuildings.addContentRow(dialog, "Choose a deck for your " + RoamingGuards.displayName(guard.tier)
                 + ". [RED]Those cards leave your collection and the slot empties[] until you take the deck "
                 + "back. Cards shared with your other decks are removed from those too - you only own one copy.");
@@ -164,12 +171,23 @@ public class RoamingGuardUI {
             any = true;
             int slot = i;
             java.util.LinkedHashMap<String, Integer> impact = RoamingGuards.sharedCardImpact(slot);
-            String suffix = impact.isEmpty() ? "" : " [RED]!";
-            EconomyBuildings.addHalfButton(dialog, column, "[%75]" + deck.getName() + " (" + size + ")" + suffix, true, () -> {
+            // Round 148 (user spec: "An invalid deck, (less than 40 cards), should not be possible
+            // to give"). Gated on what the COLLECTION can supply, not on what the deck lists - a
+            // deck whose cards already went out with another guard still lists 40 of them.
+            int deliverable = RoamingGuards.deliverableCount(slot);
+            boolean playable = deliverable >= minimum;
+            String suffix = !playable ? " [RED]X" : impact.isEmpty() ? "" : " [RED]!";
+            String count = deliverable == size ? String.valueOf(size) : deliverable + " of " + size;
+            EconomyBuildings.addHalfButton(dialog, column,
+                    "[%75]" + deck.getName() + " (" + count + ")" + suffix, playable, () -> {
                 RoamingGuards.giveDeck(guard, slot);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
+            if (!playable)
+                EconomyBuildings.addContentRow(dialog, "[RED]X " + deck.getName() + "[] can only supply "
+                        + deliverable + " of the " + minimum + " cards a legal deck needs"
+                        + (deliverable == size ? "." : " - the rest are already out with a guard."));
             if (!impact.isEmpty()) {
                 StringBuilder warn = new StringBuilder("[RED]! " + deck.getName() + "[] shares cards with: ");
                 boolean first = true;
@@ -234,24 +252,25 @@ public class RoamingGuardUI {
         if (guard.isOutOfCommission(day))
             EconomyBuildings.addContentRow(dialog, "[RED]Dismissing now forfeits the deck. "
                     + "Waiting until day " + guard.downUntilDay + " costs nothing.");
-        EconomyBuildings.addContentRow(dialog, "Engages: " + engagementSummary(guard));
+        // Round 148 (user spec + mock-up: "I think we need to re-work the Mage Attack orders, I
+        // want to add Color as an option... let's make it check-boxes"). Checkboxes rather than the
+        // old YES/no buttons because nine of those would not fit, and because a checkbox is read at
+        // a glance where "no Master" has to be parsed. They also write straight to the guard's own
+        // arrays, so the dialog no longer has to be torn down and rebuilt on every single toggle.
+        EconomyBuildings.addContentRow(dialog, "[%90]Okay to attack (rank):");
+        String[] rankLabels = new String[RoamingGuards.TIERS_ASCENDING.length];
+        for (int i = 0; i < rankLabels.length; i++)
+            rankLabels[i] = RoamingGuards.displayName(RoamingGuards.TIERS_ASCENDING[i]);
+        addCheckGrid(dialog, guard, "rank", rankLabels, guard.engageTier);
+
+        EconomyBuildings.addContentRow(dialog, "[%90]Okay to attack (color):");
+        String[] colorLabels = new String[TerritoryControl.COLORS.length];
+        for (int i = 0; i < colorLabels.length; i++)
+            colorLabels[i] = Character.toUpperCase(TerritoryControl.COLORS[i].charAt(0))
+                    + TerritoryControl.COLORS[i].substring(1);
+        addCheckGrid(dialog, guard, "color", colorLabels, guard.engageColor);
 
         int[] column = {0};
-        // Engagement toggles - one per enemy rank, in the ladder's own order.
-        for (int i = 0; i < RoamingGuards.TIERS_ASCENDING.length; i++) {
-            int index = i;
-            String rank = RoamingGuards.displayName(RoamingGuards.TIERS_ASCENDING[i]);
-            EconomyBuildings.addHalfButton(dialog, column,
-                    "[%75]" + (guard.engageTier[index] ? "YES " : "no  ") + rank, true, () -> {
-                        guard.engageTier[index] = !guard.engageTier[index];
-                        System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
-                                + " engage " + rank + " -> " + guard.engageTier[index]);
-                        scene.removeDialog();
-                        openManageGuard(scene, changes, poiName, objectId, guard);
-                    });
-        }
-        EconomyBuildings.finishHalfButtonRow(dialog, column);
-
         EconomyBuildings.addHalfButton(dialog, column,
                 "[%75]" + (guard.watchMatches ? "Watch fights" : "Simulate only"), true, () -> {
                     guard.watchMatches = !guard.watchMatches;
@@ -291,16 +310,42 @@ public class RoamingGuardUI {
         scene.showDialog(dialog);
     }
 
-    private static String engagementSummary(RoamingGuardData guard) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < RoamingGuards.TIERS_ASCENDING.length; i++) {
-            if (!guard.engageTier[i])
-                continue;
-            if (sb.length() > 0)
-                sb.append(", ");
-            sb.append(RoamingGuards.displayName(RoamingGuards.TIERS_ASCENDING[i]));
+    /**
+     * A grid of checkboxes two to a row inside the dialog's content table. scene2d stacks
+     * CheckBoxes one per row by default and nine of them would run off the bottom of the screen -
+     * the nested Table is the same trick addHalfButton() uses to pack buttons in pairs.
+     * <p>
+     * The listener writes directly into the guard's own array. There is no rebuild, so unticking
+     * three boxes in a row is three clicks rather than three dialog tear-downs.
+     */
+    private static void addCheckGrid(Dialog dialog, RoamingGuardData guard, String kind,
+                                     String[] labels, boolean[] state) {
+        float width = forge.Forge.isLandscapeMode() ? 250f : 230f;
+        Table row = null;
+        for (int i = 0; i < labels.length; i++) {
+            if (row == null)
+                row = new Table();
+            final int index = i;
+            final String label = labels[i];
+            CheckBox box = Controls.newCheckBox(label);
+            box.getLabel().setFontScale(0.8f);
+            box.setChecked(index < state.length && state[index]);
+            box.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (index >= state.length)
+                        return;
+                    state[index] = ((CheckBox) actor).isChecked();
+                    System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
+                            + " engage " + kind + " " + label + " -> " + state[index]);
+                }
+            });
+            row.add(box).width(width / 2f).left();
+            if (i % 2 == 1 || i == labels.length - 1) {
+                dialog.getContentTable().add(row).width(width).row();
+                row = null;
+            }
         }
-        return sb.length() == 0 ? "[RED]nothing - it will avoid every attacker" : sb.toString();
     }
 
     private static void openRetier(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,

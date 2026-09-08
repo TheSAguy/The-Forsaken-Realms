@@ -27,6 +27,13 @@ public class RoamingGuardData {
      *  (Apprentice, Adept, Master, Archmage). An unchecked rank is avoided, not fought. */
     public boolean[] engageTier = {true, true, true, true};
 
+    /** Which enemy COLORS this guard is allowed to engage, indexed by TerritoryControl.COLORS
+     *  (white, blue, black, red, green - the same WUBRG order the standings and reputation screens
+     *  already use). Round 148, user spec: "I think we need to re-work the Mage Attack orders, I
+     *  want to add Color as an option". A guard refuses a mage whose territory colour is unchecked
+     *  exactly as it refuses an unchecked rank - both filters must pass. */
+    public boolean[] engageColor = {true, true, true, true, true};
+
     /** Whether the player watches this guard's duels or only sees the result. Every guard match is
      *  really played by the AI either way - this is presentation, not resolution. */
     public boolean watchMatches = true;
