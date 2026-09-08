@@ -61,6 +61,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 148b (2026-09-08, save only): **Skyfall (G_R)** in slot index 2 - an anti-flier deck, built on REACH rather
+  than the user's suggested fliers-vs-fliers, since reach is far cheaper per point of stats and a flier deck has no
+  ground defense. Spitting Spider (sac a land: 1 damage to EACH creature with flying - repeatable and one-sided),
+  Arbor Colossus (monstrosity destroys a flier), Katabatic Winds, Clip Wings, Plummet, Broken Wings, Sarkhan's
+  Resolve; red splashed for Bolt/Shock/Electrickery-overload. List in `dev-tools/save-editing/skyfall.txt`.
 - Round 148 (2026-09-08): new **`ResourceLedger`** - the balance sheet's "everything else" lines could never be
   recomputed (a quest reward leaves no state behind), so every resource movement is now RECORDED into one of five
   buckets. Attribution is an AMBIENT bucket defaulting to OTHER: only the weekly sweep declares itself, everything

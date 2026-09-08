@@ -1,0 +1,51 @@
+# Skyfall (G_R) - round 148b, slot index 2 ("Slot 3" in the UI).
+#
+# Built to beat flier decks, NOT to race them in the air. Reach costs far less per point of stats
+# than flying (Giant Spider 2/4 for 4 vs Charging Griffin 2/2 for 4), so ten reach creatures wall
+# their whole air force while the fat ones walk in on the ground - which is where a flier deck has
+# no defense at all. Green carries the flier-specific removal; red is a splash for instant-speed
+# answers and Electrickery's one-sided sweep.
+#
+# The three cards that do the most work:
+#   Spitting Spider   - "Sacrifice a land: deals 1 damage to EACH creature with flying." Repeatable,
+#                       one-sided, and my own creatures never take a point of it.
+#   Arbor Colossus    - 6/6 reach, and monstrosity destroys their best flier and makes it a 9/9.
+#   Katabatic Winds   - while it is phased in, creatures with flying can't attack OR block.
+
+# --- reach: the wall ---
+1 Dragon Sniper
+1 Canopy Spider
+1 Shocking Sharpshooter
+1 Aerie Bowmasters
+2 Giant Spider
+2 Sagu Pummeler
+1 Thrashing Mossdog
+1 Spitting Spider
+1 Arbor Colossus
+
+# --- the ground clock ---
+1 Sakura-Tribe Elder
+1 Blastoderm
+1 Wolfbriar Elemental
+1 Flourishing Hunter
+
+# --- answers ---
+1 Katabatic Winds
+1 Plummet
+1 Clip Wings
+1 Sarkhan's Resolve
+1 Broken Wings
+1 Lightning Bolt
+2 Shock
+1 Electrickery
+
+# --- mana ---
+1 Karplusan Forest
+1 Rugged Highlands
+1 Gruul Guildgate
+1 Spire Garden
+1 Mosswort Bridge
+2 Evolving Wilds
+2 Terramorphic Expanse
+2 Mountain
+5 Forest

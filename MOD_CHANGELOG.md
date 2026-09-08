@@ -17757,6 +17757,30 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 148b: Skyfall, an anti-flier deck (2026-09-08)
+
+User: *"Can you please create me an Anti-flyer deck. I'm having issue wining duels where the enemy
+has a bunch of flyers. I think the best would be flyers + removal for myself."*
+
+Built it green-red rather than to that plan, because racing fliers with fliers is the symmetric
+answer and green owns the asymmetric one. Reach costs far less per point of stats than flying -
+Giant Spider is a 2/4 for four where Charging Griffin is a 2/2 for four - so ten reach creatures
+brick the whole air force while the fat ones win on the ground, which is where a flier deck has no
+defense at all.
+
+The collection turned out to hold a deep anti-air toolkit nothing had used: **Spitting Spider**
+("Sacrifice a land: deals 1 damage to each creature with flying" - repeatable, one-sided, and this
+deck's own creatures never take a point of it), **Arbor Colossus** (6/6 reach whose monstrosity also
+destroys their best flier), **Katabatic Winds** (creatures with flying can't attack or block while it
+is phased in), **Clip Wings** (an edict, so it beats hexproof fliers), plus Plummet, Broken Wings and
+Sarkhan's Resolve. Red is a splash for instant-speed answers and Electrickery, whose overload is a
+one-sided sweep of every X/1 in the sky.
+
+Slot index 2, "Slot 3" in the UI. Zero card overlap with Moat Keep except Terramorphic Expanse, of
+which the collection holds exactly the four the two decks want.
+
+**Files touched**: `dev-tools/save-editing/skyfall.txt` (new).
+
 ## Round 148: a real ledger, engagement checkboxes, and the Commander audit (2026-09-08)
 
 ### The balance sheet stops guessing
