@@ -37,14 +37,14 @@
       "cardTypes": ["Instant", "Sorcery"],
       "colors": ["blue"],
       "rarity": ["Common"],
-      "manaCosts": [1, 2, 3]
+      "manaCosts": [1, 2]
     },
     {
       "count": 3,
       "cardTypes": ["Instant", "Sorcery", "Enchantment"],
       "colors": ["blue"],
       "rarity": ["Common", "Uncommon"],
-      "manaCosts": [2, 3, 4, 5]
+      "manaCosts": [3, 4, 5]
     }
   ]
 }

@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-08 (round 150; v1.08 RELEASED, rounds 137-150 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-08 (round 151; v1.08 RELEASED, rounds 137-151 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 151 (2026-09-08, REPO ONLY - user was playing, NOT PACKAGED): six playtest bugs. **(1) RARITY TRAVELS WITH
+  THE PRINTING** - a `["Common"]` filter passed on a card's Common printing, then `remapToEditionList` swapped it for
+  the only in-list printing, which was RARE (Narcomoeba: Common in SLZ, Rare in GRN, and GRN is a Viashino set). The
+  predicate now needs rarity+edition on ONE printing whenever editions are constrained; rarity-only is untouched.
+  **(2) `generateCards` picks WITH REPLACEMENT and had no cap** -> 5x Air Marshal, "Invalid Deck". New
+  `RewardData.maxCopies` (0 = unlimited = every other caller), stamped at 4 by deck generation only; all 15 templates
+  rebuilt with DISJOINT mana-cost ranges so the per-entry cap is deck-wide. **(3)** `clearNotifications()` never
+  cleared the pane's queued Actions, so seven test games' banners played over a later loaded save. **(4)** The info
+  page's `scrollWindow` is a scene2d Window whose touch listener calls toFront(), burying the title/text laid out
+  beside it - now Touchable.disabled. **(5)** Guard checkboxes: one grid instead of a nested Table per pair, so the
+  columns align. **(6)** NOT a bug - the balance sheet's Mines line reads exactly 75 gold every week in the saves;
+  the varying figure was the payday PROJECTION folding in bank interest unnamed. Now broken out.
 - Round 150 (2026-09-08): **every starting mode this plane offers now follows the race's sets.** Modes actually
   available here are Standard / Constructed / Pile / Chaos / Custom - **Commander needs a `commanderDecks` table this
   config lacks, and Precon/CommanderPrecon need `decks/starter/precon|commanderprecon/` folders that do not exist**,

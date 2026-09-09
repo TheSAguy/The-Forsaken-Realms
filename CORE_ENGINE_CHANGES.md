@@ -1610,6 +1610,18 @@ from the plane's `config tables/settings.json`).
   dropdown lists the chosen race's expansions plus an "all of them" entry and is rebuilt on race
   change; `getStartingEdition()` reads that list.
 
+### 2026-09-08 Playtest fixes for the generated starter decks (round 151)
+
+- **`forge-gui-mobile/src/forge/adventure/util/CardUtil.java`** - the card predicate requires rarity
+  AND edition on one printing when editions are constrained (rarity-only behavior unchanged);
+  `remapToEditionList` gained a rarity-preference overload; `generateCards` honours
+  `RewardData.maxCopies`; deck generation stamps that at 4.
+- **`forge-gui-mobile/src/forge/adventure/data/RewardData.java`** - `maxCopies` field + copy ctor.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `clearNotifications()` clears the
+  pane's queued Actions, not just the label.
+- **`forge-gui-mobile/src/forge/adventure/scene/InfoTextScene.java`** - the decorative Window frame
+  is `Touchable.disabled` so its toFront() cannot bury the page.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

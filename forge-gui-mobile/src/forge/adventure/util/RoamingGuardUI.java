@@ -320,15 +320,18 @@ public class RoamingGuardUI {
      */
     private static void addCheckGrid(Dialog dialog, RoamingGuardData guard, String kind,
                                      String[] labels, boolean[] state) {
+        // ROUND 151 (user playtest: "the check boxes not in a line... can it be tightened up").
+        // Each PAIR used to be its own nested Table, and two sibling tables size their columns
+        // independently, so "Apprentice" and "Master" started at different x. One grid for the
+        // whole block shares one column layout, which is what actually lines them up.
         float width = forge.Forge.isLandscapeMode() ? 250f : 230f;
-        Table row = null;
+        Table grid = new Table();
         for (int i = 0; i < labels.length; i++) {
-            if (row == null)
-                row = new Table();
             final int index = i;
             final String label = labels[i];
             CheckBox box = Controls.newCheckBox(label);
-            box.getLabel().setFontScale(0.8f);
+            box.getLabel().setFontScale(0.75f);
+            box.getImageCell().padRight(2f);
             box.setChecked(index < state.length && state[index]);
             box.addListener(new ChangeListener() {
                 @Override
@@ -340,12 +343,11 @@ public class RoamingGuardUI {
                             + " engage " + kind + " " + label + " -> " + state[index]);
                 }
             });
-            row.add(box).width(width / 2f).left();
-            if (i % 2 == 1 || i == labels.length - 1) {
-                dialog.getContentTable().add(row).width(width).row();
-                row = null;
-            }
+            grid.add(box).width(width / 2f).left().padBottom(1f);
+            if (i % 2 == 1)
+                grid.row();
         }
+        dialog.getContentTable().add(grid).width(width).left().row();
     }
 
     private static void openRetier(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,

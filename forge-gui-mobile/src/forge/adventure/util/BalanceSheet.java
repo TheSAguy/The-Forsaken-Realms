@@ -149,8 +149,15 @@ public class BalanceSheet {
         // bill before it lands, and no amount of history shows that.
         Weekly next = compute();
         int nextPayday = ((WorldSave.getCurrentSave().getWorld().getCurrentDay() / 7) + 1) * 7;
-        EconomyBuildings.addContentRow(dialog, "[%90]Day " + nextPayday + ": [GREEN]+"
-                + (next.goldIn + next.interestIn) + "[+Gold][] earned, wages [RED]-" + next.goldOut() + "[+Gold]"
+        // Round 151 (user playtest: "Gold seems to vary slightly 322, 304, 75... I only had one
+        // gold mine, so the income each week should have only been 75"). It was, and the recorded
+        // Mines line said so every week - the varying figure was this projection, which folded BANK
+        // INTEREST into one total without naming it. Interest moves with the bank balance, so the
+        // number moved. Broken out, it explains itself.
+        EconomyBuildings.addContentRow(dialog, "[%90]Day " + nextPayday + " payday: mines [GREEN]+"
+                + next.goldIn + "[+Gold][]"
+                + (next.interestIn > 0 ? ", interest [GREEN]+" + next.interestIn + "[+Gold][]" : "")
+                + ", wages [RED]-" + next.goldOut() + "[+Gold]"
                 + (next.shardsOut() > 0 ? " -" + next.shardsOut() + "[+Shards]" : "") + "[]");
 
         EconomyBuildings.addContentRow(dialog, "[%90]On hand: " + player.getGold() + "[+Gold]  "

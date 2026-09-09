@@ -79,13 +79,27 @@ public class CardUtil {
 
         @Override
         public boolean test(final PaperCard card) {
-            if (!this.rarities.isEmpty() && !this.rarities.contains(card.getRarity()))
-                return !this.shouldBeEqual;
-            if (!this.editions.isEmpty() && !this.editions.contains(card.getEdition())) {
-                boolean found = false;
-                List<PaperCard> allPrintings = FModel.getMagicDb().getCommonCards().getAllCards(card);
-                for (PaperCard c : allPrintings) {
-                    if (this.editions.contains(c.getEdition())) {
+            // ROUND 151 BUG FIX (user playtest: a no-rares Constructed starter deck contained four
+            // Narcomoeba). Rarity travels with the PRINTING, and a card whose pool entry is a
+            // Common can be remapped afterwards to an in-list printing that is Rare - Narcomoeba is
+            // Common in SLZ, Uncommon in FUT/MMA/RVR and RARE in GRN, and GRN is a Viashino set.
+            // Testing the two filters independently therefore let a rare in through the side door.
+            // When editions are constrained the two must be satisfied by ONE printing, because that
+            // is the printing the player will actually receive.
+            if (this.editions.isEmpty()) {
+                // Unchanged: with no edition restriction nothing remaps, so the card's own printing
+                // is the one that matters.
+                if (!this.rarities.isEmpty() && !this.rarities.contains(card.getRarity()))
+                    return !this.shouldBeEqual;
+            } else {
+                boolean found = this.editions.contains(card.getEdition())
+                        && (this.rarities.isEmpty() || this.rarities.contains(card.getRarity()));
+                if (!found) {
+                    for (PaperCard c : FModel.getMagicDb().getCommonCards().getAllCards(card)) {
+                        if (!this.editions.contains(c.getEdition()))
+                            continue;
+                        if (!this.rarities.isEmpty() && !this.rarities.contains(c.getRarity()))
+                            continue;
                         found = true;
                         break;
                     }
@@ -338,6 +352,33 @@ public class CardUtil {
                     continue;
                 result.add(finishCandidate(candidate, data, r));
             }
+        } else if (data.maxCopies > 0) {
+            // ROUND 151 BUG FIX (user playtest: "Deck must not contain more than 4 copies of the
+            // card Air Marshal" - an ILLEGAL generated deck). Picking with replacement from a small
+            // pool happily returns the same name five times. Opt-in per reward, because shops and
+            // monster loot legitimately want unbounded repeats; only deck generation sets it.
+            java.util.Map<String, Integer> taken = new java.util.HashMap<>();
+            int attempts = 0;
+            int attemptCap = Math.max(64, count * 20);
+            while (result.size() < count && attempts++ < attemptCap) {
+                PaperCard candidate = pool.get(r.nextInt(pool.size()));
+                if (candidate == null)
+                    continue;
+                PaperCard finished = finishCandidate(candidate, data, r);
+                if (finished == null)
+                    continue;
+                if (taken.getOrDefault(finished.getCardName(), 0) >= data.maxCopies)
+                    continue;
+                taken.merge(finished.getCardName(), 1, Integer::sum);
+                result.add(finished);
+            }
+            // A pool too small to honour the cap must still produce a full-size deck - a short deck
+            // is the worse of the two failures, and the caller asked for `count` cards.
+            while (result.size() < count) {
+                PaperCard candidate = pool.get(r.nextInt(pool.size()));
+                if (candidate != null)
+                    result.add(finishCandidate(candidate, data, r));
+            }
         } else {
             for (int i = 0; i < count; i++) {
                 PaperCard candidate = pool.get(r.nextInt(pool.size()));
@@ -357,12 +398,12 @@ public class CardUtil {
      *  result guarantees the FINAL card is an in-list printing whenever one exists, regardless of
      *  which fallback fired. */
     private static PaperCard finishCandidate(PaperCard candidate, RewardData data, Random r) {
-        candidate = remapToEditionList(candidate, data.editions, r);
+        candidate = remapToEditionList(candidate, data.editions, data.rarity, r);
         if (Config.instance().getSettingData().useAllCardVariants) {
             // Get a random variant, preserving edition when specified
             PaperCard variant = CardUtil.getCardByNameAndEdition(candidate.getCardName(), candidate.getEdition());
             if (variant != null)
-                candidate = remapToEditionList(variant, data.editions, r);
+                candidate = remapToEditionList(variant, data.editions, data.rarity, r);
         }
         // LAST word on the printing, deliberately after the variant roll - for the same reason the
         // edition remap is re-applied to the variant result above: useAllCardVariants can pick a
@@ -461,6 +502,14 @@ public class CardUtil {
     private static final java.util.Set<String> loggedRemaps = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     public static PaperCard remapToEditionList(PaperCard candidate, String[] allowedEditions, Random r) {
+        return remapToEditionList(candidate, allowedEditions, null, r);
+    }
+
+    /** Round 151: {@code allowedRarities} keeps the remap from swapping a legal printing for an
+     *  in-list one at a rarity the caller excluded - see the predicate's own note about Narcomoeba.
+     *  Null or empty means no rarity preference, which is every pre-151 caller. */
+    public static PaperCard remapToEditionList(PaperCard candidate, String[] allowedEditions,
+            String[] allowedRarities, Random r) {
         if (candidate == null || allowedEditions == null || allowedEditions.length == 0)
             return candidate;
         forge.adventure.world.World world = Current.world();
@@ -481,6 +530,19 @@ public class CardUtil {
         }
         if (inList.isEmpty())
             return candidate;
+        if (allowedRarities != null && allowedRarities.length > 0) {
+            List<PaperCard> rightRarity = new ArrayList<>();
+            for (PaperCard p : inList) {
+                for (String rarity : allowedRarities) {
+                    if (p.getRarity() == CardRarity.smartValueOf(rarity)) {
+                        rightRarity.add(p);
+                        break;
+                    }
+                }
+            }
+            if (!rightRarity.isEmpty())
+                inList = rightRarity;
+        }
         PaperCard remapped = inList.get(r.nextInt(inList.size()));
         String key = candidate.getCardName() + "|" + candidate.getEdition() + "|" + remapped.getEdition();
         if (loggedRemaps.add(key)) {
@@ -882,9 +944,21 @@ public class CardUtil {
     }
 
     private static List<RewardData> restrict(List<RewardData> rewards, List<String> editionCodes) {
-        if (editionCodes == null || editionCodes.isEmpty())
-            return rewards;
-        return EditionProgression.restrictToEditions(rewards, editionCodes);
+        List<RewardData> out = (editionCodes == null || editionCodes.isEmpty())
+                ? rewards
+                : EditionProgression.restrictToEditions(rewards, editionCodes);
+        // Round 151: a DECK may not hold more than four of a card. Stamped here rather than in the
+        // JSON so it cannot be forgotten on a new template, and only here so shops and loot - which
+        // share generateCards() and want repeats - are untouched. Named-card entries (the basic
+        // lands) are exempt: four Plains would not make a deck.
+        List<RewardData> capped = new ArrayList<>(out.size());
+        for (RewardData rd : out) {
+            RewardData clone = new RewardData(rd);
+            if (clone.cardName == null || clone.cardName.isEmpty())
+                clone.maxCopies = 4;
+            capped.add(clone);
+        }
+        return capped;
     }
 
     private static List<RewardData> generateRewards(GeneratedDeckTemplateData template, float count, int[] manaCosts) {

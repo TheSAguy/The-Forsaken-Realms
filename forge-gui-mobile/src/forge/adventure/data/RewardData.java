@@ -50,6 +50,10 @@ public class RewardData implements Serializable {
     // (ItemListData.getItemNamesByRarity) - the armory tiers use this instead of hand lists.
     public String itemRarity;
     public String[] editions;
+    /** Round 151: at most this many copies of one card NAME from a single roll; 0 = unlimited,
+     *  which is every caller except generated decks (a deck with five of a card is illegal - see
+     *  CardUtil.generateCards). */
+    public int maxCopies;
     public String[] colors;
     public int startDate;
     public int endDate;
@@ -94,6 +98,7 @@ public class RewardData implements Serializable {
         type             = rewardData.type;
         probability      = rewardData.probability;
         count            = rewardData.count;
+        maxCopies        = rewardData.maxCopies;
         addMaxCount      = rewardData.addMaxCount;
         cardName         = rewardData.cardName;
         cardNames        = rewardData.cardNames == null ? null : rewardData.cardNames.clone();

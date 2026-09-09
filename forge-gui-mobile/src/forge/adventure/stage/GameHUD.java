@@ -1370,6 +1370,11 @@ public class GameHUD extends Stage {
     }
 
     public void clearNotifications() {
+        // ROUND 151 BUG FIX (user playtest: "I got several older Quest notifications... something
+        // leaked through from my new games I was testing"). Every notification is a ~15 second
+        // Action SEQUENCE queued on the pane, and resetting the label never touched the queue - so
+        // seven new games' worth of banners were still waiting to play when the old save loaded.
+        notificationPane.clearActions();
         notificationText.setText("");
         notificationPane.setBounds(5, Forge.isLandscapeMode() ? -notificationText.getPrefHeight() : getHeight(), getWidth() * 0.4f, 25);
         notificationPane.setStyle(Controls.getSkin().get("paper", ScrollPane.ScrollPaneStyle.class));

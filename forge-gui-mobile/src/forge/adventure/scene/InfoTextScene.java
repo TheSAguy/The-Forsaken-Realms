@@ -45,6 +45,14 @@ public class InfoTextScene extends UIScene {
         // "paper"-style Window behind it (ui/info_text.json's "scrollWindow"). The skin already
         // defines a transparent style for exactly this ("nobg": {"background": "transparent"}),
         // so the parchment shows through cleanly instead of double-layering two backgrounds.
+        // ROUND 151 BUG FIX (user playtest: "If you click on the info-page background, it goes
+        // blank"). "scrollWindow" is a scene2d Window, and a Window's built-in listener calls
+        // toFront() on touch - which reordered the parchment ABOVE the title and text laid out
+        // beside it, so one click on the background hid the whole page behind its own frame. It is
+        // decoration; it has no business taking input at all.
+        com.badlogic.gdx.scenes.scene2d.Actor frame = ui.findActor("scrollWindow");
+        if (frame != null)
+            frame.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
         ScrollPane scroller = new ScrollPane(content, Controls.getSkin(), "nobg");
         scroller.setScrollingDisabled(true, false); // vertical-only, same as QuestLogScene's detailScroller
         root.add(scroller).expand().fill();

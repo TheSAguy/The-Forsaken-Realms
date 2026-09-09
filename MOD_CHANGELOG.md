@@ -17757,6 +17757,82 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 151: six playtest bugs from the race starter decks (2026-09-08)
+
+First real play of rounds 149-150. The generator itself was sound - the log shows seven new games,
+every one building from its race's editions at the right size, no fallbacks and no exceptions - but
+the cards it chose were wrong in two ways, and four other things came out with them.
+
+### A no-rares deck full of rares
+
+User: *"I started on Normal as a Viashino, and had 4 rare illusionists in my deck, then same race,
+started on Easy and had no Rares... Seems very inconsistent."*
+
+The Constructed templates have no rare bucket at all, so this was real. **Rarity travels with the
+PRINTING, and the filter was testing a different printing than the player received.** Narcomoeba is
+Common in SLZ, Uncommon in FUT/MMA/RVR and **Rare in GRN** - and GRN is a Viashino set. The pool
+entry passed a `["Common"]` filter on its Common printing; `remapToEditionList` then swapped it for
+the only in-list printing, the GRN rare. Any card whose rarity differs across sets could come
+through that gap, which is exactly why it looked random - it depended on which cards got drawn.
+
+Fixed at both ends. When editions are constrained the predicate now requires rarity and edition to
+hold on ONE printing, because that is the printing the player will actually get; the rarity-only
+path is untouched, so nothing outside edition-restricted generation changes. And the remap prefers
+an in-list printing whose rarity the caller allowed, rather than any in-list printing.
+
+### Five copies of a card, and an illegal deck
+
+User: *"Dwarf Blue had 5 copies of a card"* - with the game's own "Deck must not contain more than 4
+copies of the card Air Marshal. Invalid Deck" on screen.
+
+`generateCards` picks with replacement and had no cap, so ten draws from a seven-name pool
+cheerfully returns five of one card. New `RewardData.maxCopies` (0 = unlimited, i.e. every existing
+caller: shops and monster loot legitimately want repeats) which deck generation stamps at 4. If a
+pool is too small to honour the cap it fills the remainder without it - a short deck is the worse of
+the two failures.
+
+All fifteen templates were also rebuilt with **disjoint mana-cost ranges**. The cap is per reward
+entry, so two overlapping buckets could each have allowed four of the same card - eight in a deck.
+Nothing overlaps now, which makes the per-entry cap a real deck-wide cap. Re-validated: every bucket
+across all 80 race/color combinations holds enough distinct names to fill its count at four copies
+each. Tightest is Metathran red, wanting three cards from a two-name pool - eight available.
+
+### Notifications from one game playing in another
+
+User: *"I got several older Quest notifications. I think something leaked through from my new games
+I was testing."* Exactly that. Every notification is a ~15 second Action SEQUENCE queued on the
+notification pane; `clearNotifications()` reset the label and never touched the queue, so seven new
+games' worth of banners were still waiting to play when the old save loaded. `WorldStage.load()` was
+already calling it - it just did not do what its name promised.
+
+### The gold that was not varying
+
+User: *"Gold seems to vary slightly 322, 304, 75... I only had one gold mine, so the income each
+week should have only been 75."*
+
+It was. Dumped straight out of the saves, the recorded ledger reads `Mines Gold=75 Shards=20 Wood=50
+Stone=100` in week 21, week 22 and both previous weeks - exactly constant. The moving number was the
+next-payday PROJECTION, which folded bank interest into a single "earned" total without naming it.
+Interest is `bankBalance x rate`, so it moves whenever the balance does; 322 was 75 mines plus 247
+interest, and the bare 75 in the screenshot was a moment with an empty bank. The line names both
+now. No behavior change - the sheet was right, it just would not say why.
+
+### The info page hid behind its own frame
+
+User: *"If you click on the info-page background, it goes blank."* `scrollWindow` is a scene2d
+`Window`, and a Window's built-in listener calls `toFront()` on touch - which reordered the parchment
+ABOVE the title and text laid out beside it as siblings. It is decoration and now takes no input.
+
+### Checkboxes that would not line up
+
+Each PAIR was its own nested `Table`, and sibling tables size their columns independently, so
+"Apprentice" and "Master" started at different x. One grid for the whole block shares one column
+layout, with a smaller font and tighter padding.
+
+**Files touched**: `util/CardUtil.java`, `data/RewardData.java`, `stage/GameHUD.java`,
+`scene/InfoTextScene.java`, `util/RoamingGuardUI.java`, `util/BalanceSheet.java`; all fifteen plane
+`decks/starter/*.json` templates regenerated.
+
 ## Round 150: every starting mode follows the race's sets (2026-09-08)
 
 User: *"all starting modes should be Race / Color thematic. They should all follow the Race specific
