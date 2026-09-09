@@ -197,6 +197,7 @@ public class RoamingGuardRuntime {
                 continue;
             }
             Vector2 goal = destination.getPosition();
+            float stepX = 0f, stepY = 0f;
             float speed = RoamingGuards.speedFor(guard.tier);
             float dx = goal.x - guard.x;
             float dy = goal.y - guard.y;
@@ -214,8 +215,10 @@ public class RoamingGuardRuntime {
                 // Otherwise it is standing at the threatened town, waiting to intercept.
             } else {
                 float step = Math.min(distance, speed * delta);
-                guard.x += dx / distance * step;
-                guard.y += dy / distance * step;
+                stepX = dx / distance * step;
+                stepY = dy / distance * step;
+                guard.x += stepX;
+                guard.y += stepY;
             }
 
             CharacterSprite sprite = sprites.get(guard);
@@ -223,8 +226,18 @@ public class RoamingGuardRuntime {
                 sprite = new CharacterSprite(AdventurePlayer.current().spriteName());
                 sprites.put(guard, sprite);
                 foregroundSprites.addActor(sprite);
+                sprite.setPosition(guard.x, guard.y);
             }
-            sprite.setPosition(guard.x, guard.y);
+            // Round 156 (user: "the guards... appear to just have a static image moving"). They
+            // were positioned with setPosition(), which moves the actor and nothing else, so every
+            // guard sat on its constructor's Idle frame forever. moveBy() is what the mages use -
+            // it picks the Walk animation AND the eight-way facing from the movement vector - so
+            // the walk is driven by the same code the rest of the overworld uses.
+            if (stepX != 0f || stepY != 0f)
+                sprite.moveBy(stepX, stepY, delta);
+            else
+                sprite.setAnimation(CharacterSprite.AnimationTypes.Idle);
+            sprite.setPosition(guard.x, guard.y); // authoritative: guard.x/y is what persists
         }
     }
 

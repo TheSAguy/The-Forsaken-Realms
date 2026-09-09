@@ -743,7 +743,15 @@ public class DuelScene extends ForgeScene {
             humanPlayer.addExtraCardsOnBattlefield(playerCards);
         }
 
-        if (eventData == null || eventData.eventRules.allowsItems) {
+        // ROUND 156 BUG FIX (user playtest: "the guards all start with my items... That seems OP.
+        // I don't think they should start with player equipment"). Correct, and the round-145
+        // attempt at this missed: useGuardLoadout() clears `playerExtras`, a list of extra CARDS,
+        // while equipment arrives as EffectData through `playerEffects` and is handed to the
+        // RegisteredPlayer by addEffects() below - and useGuardLoadout runs after initDuels, so it
+        // was clearing the wrong list too late. aiControlsPlayerSide is exactly the right test: if
+        // the AI is playing the player's seat then the player is a spectator, and a spectator's
+        // boots do not belong in the fight. It is set by initDuels before enter() runs.
+        if (!aiControlsPlayerSide && (eventData == null || eventData.eventRules.allowsItems)) {
             //Collect and add items effects first.
             for (Long id : advPlayer.getEquippedItems()) {
                 ItemData item = Current.player().getEquippedItem(id);
@@ -755,8 +763,9 @@ public class DuelScene extends ForgeScene {
                 }
             }
         }
-        if (eventData == null || eventData.eventRules.allowsBlessings) {
-            //Collect and add player blessings.
+        if (!aiControlsPlayerSide && (eventData == null || eventData.eventRules.allowsBlessings)) {
+            //Collect and add player blessings. Round 156: a spectator's blessing is not in play
+            //either - same reasoning as the equipment above.
             if (advPlayer.getBlessing() != null) {
                 playerEffects.add(advPlayer.getBlessing());
                 if (advPlayer.getBlessing().opponent != null) oppEffects.add(advPlayer.getBlessing().opponent);

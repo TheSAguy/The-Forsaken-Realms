@@ -89,6 +89,7 @@ public class RoamingGuardUI {
         EconomyBuildings.addHalfButton(dialog, column, "Info", true, () -> showInfo(scene, changes, poiName, objectId));
         EconomyBuildings.addHalfButton(dialog, column, "Close", true, scene::removeDialog);
         EconomyBuildings.finishHalfButtonRow(dialog, column);
+        EconomyBuildings.makeContentScrollable(dialog); // round 156: four guards ran off the screen
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
@@ -210,6 +211,9 @@ public class RoamingGuardUI {
             openManageGuard(scene, changes, poiName, objectId, guard);
         });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
+        // Round 156 (user: "need to take into account if someone has 20+ decks"). One warning row
+        // per shared deck on top of one button per deck - this is the dialog that grows fastest.
+        EconomyBuildings.makeContentScrollable(dialog);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
@@ -322,6 +326,7 @@ public class RoamingGuardUI {
             openRoster(scene, changes, poiName, objectId);
         });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
+        EconomyBuildings.makeContentScrollable(dialog);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }

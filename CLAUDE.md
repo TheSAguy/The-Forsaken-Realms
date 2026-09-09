@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 155; v1.08 RELEASED, rounds 137-155 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 156; v1.08 RELEASED, rounds 137-156 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 156 (2026-09-09): eight playtest items. **`EconomyBuildings.makeContentScrollable()`** - Dialog.show()
+  packs with no cap on a 480x270 screen, so any dialog whose rows scale with what the PLAYER owns overflows; lifts
+  rows into a ScrollPane only once past the cap (roster / deck picker / manage guard). **The Exchange overflows via
+  its BUTTON table** instead, so its three bottom buttons pair into two rows. **Guards now `moveBy()`** rather than
+  `setPosition()` - that is what sets the Walk animation and eight-way facing, so they were frozen on the Idle frame.
+  **PLAYER EQUIPMENT WAS APPLYING IN GUARD DUELS**: round 145 cleared `playerExtras` (extra CARDS) but equipment is
+  `EffectData` in `playerEffects`, applied by addEffects() inside initDuels BEFORE useGuardLoadout runs - gated on
+  `aiControlsPlayerSide` now, blessings too. New **"Attacks" overlay** (5th in the cycle) draws mage->target lines as
+  a stretched+rotated dot texture. Set-name labels removed from the Details overlay. **One enemy per game is hidden**
+  - the one sharing the player's hero atlas, matched on FILE name (dragonplayer_x -> dragonkin_x), via
+  `isEnemyIncluded()` so the catalog stays resolvable for quests/saves/stats.
+  NOT a bug: 4 guards cost 1,725 gold/week against 137 income - a guard LOSS costs nothing (setWinner returns before
+  defeated()), the payroll is the whole drain.
 - Round 155 (2026-09-09): guard dialog **fits the screen** - the nine engagement checkboxes are ONE row per group
   (4 ranks, 5 colors) at font 0.55 instead of two-per-row over five rows, and the dismissal warning is one line.
 - Round 154 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **THE ABILITY2 SLOT HAS BEEN INVISIBLE SINCE

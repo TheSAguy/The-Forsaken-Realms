@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -2489,6 +2490,46 @@ public class EconomyBuildings {
 
     // Round 145: package-private so RoamingGuardUI can build its dialogs with the same four
     // helpers rather than duplicating them - same package, still not public API.
+    /**
+     * Round 156 (user playtest: "The Exchange interface is out of the screen", "The Guard Status is
+     * bigger than the screen when you have 4 guards", "The Give Deck is bigger than the screen -
+     * need to take into account if someone has 20+ decks").
+     * <p>
+     * All three are one cause: {@code Dialog.show()} calls {@code pack()}, which sizes the window
+     * from its content with no cap, and this game lays every scene out on a 480x270 virtual screen.
+     * A dialog whose rows depend on how much the PLAYER owns - guards hired, decks built, trade
+     * pairs offered - has no fixed height and will eventually run off the bottom.
+     * <p>
+     * Called just before showing, this lifts the rows into a fixed-height ScrollPane if and only if
+     * they have already grown past the cap, so short dialogs are untouched and keep their exact
+     * current layout. Opt-in per dialog rather than global: the keyboard-selection walk in
+     * UIScene.showDialog descends the content table, and there is no reason to put a ScrollPane in
+     * its way for the dozen dialogs that were never too tall.
+     */
+    static void makeContentScrollable(Dialog dialog) {
+        Table content = dialog.getContentTable();
+        content.pack();
+        float cap = forge.Forge.isLandscapeMode() ? 132f : 300f;
+        if (content.getPrefHeight() <= cap)
+            return;
+        float width = forge.Forge.isLandscapeMode() ? 250f : 230f;
+        java.util.List<Actor> rows = new java.util.ArrayList<>();
+        for (Cell<?> cell : content.getCells()) {
+            if (cell.getActor() != null)
+                rows.add(cell.getActor());
+        }
+        content.clear();
+        Table body = new Table();
+        for (Actor actor : rows)
+            body.add(actor).width(width).left().row();
+        ScrollPane pane = new ScrollPane(body, Controls.getSkin(), "nobg");
+        pane.setScrollingDisabled(true, false);
+        pane.setFadeScrollBars(false);
+        content.add(pane).width(width + 8f).height(cap).row();
+        System.out.println("[TFR-Dialog] content was " + (int) content.getPrefHeight()
+                + "px over the cap - " + rows.size() + " row(s) moved into a scroll pane");
+    }
+
     static void addContentRow(Dialog dialog, String text) {
         TypingLabel label = Controls.newTypingLabel(text);
         label.setWrap(true);
@@ -2633,10 +2674,14 @@ public class EconomyBuildings {
         }
         TextraButton destroy = Controls.newTextButton("Destroy Building", () ->
                 openDestroyConfirmDialog(stage, objectId, () -> refreshExchangeDialog(stage, objectId)));
-        dialog.getButtonTable().add(destroy).colspan(2).width(240f).row();
+        // Round 156 (user: "The Exchange interface is out of the screen"). Six trade buttons plus
+        // three full-width rows is nine rows of buttons, and the button table is not something
+        // makeContentScrollable() can help with - so the last three pair up into two rows.
+        dialog.getButtonTable().add(destroy).width(118f);
         dialog.getButtonTable().add(Controls.newTextButton("Balance Sheet", () -> BalanceSheet.open(stage,
-                () -> refreshExchangeDialog(stage, objectId)))).colspan(2).width(240f).row();
+                () -> refreshExchangeDialog(stage, objectId)))).width(118f).row();
         dialog.getButtonTable().add(Controls.newTextButton("Close", stage::hideDialog)).colspan(2).width(240f).row();
+        makeContentScrollable(dialog);
         dialog.setKeepWithinStage(true);
     }
 

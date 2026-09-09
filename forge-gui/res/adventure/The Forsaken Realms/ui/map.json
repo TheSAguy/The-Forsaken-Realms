@@ -67,6 +67,15 @@
     },
     {
       "type": "TextButton",
+      "name": "attacks",
+      "text": "[%80] Attacks",
+      "width": 60,
+      "height": 20,
+      "x": 210,
+      "y": 245
+    },
+    {
+      "type": "TextButton",
       "name": "zoomIn",
       "text": "[%80]+",
       "width": 20,

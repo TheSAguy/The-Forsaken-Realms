@@ -234,9 +234,65 @@ public class ContentFilterTables {
     /** False only when the feature is on AND this enemy's row says Include=N. Callers decide
      *  what "excluded" means for their context (random spawns skip; quest spawns don't ask). */
     public static boolean isEnemyIncluded(String enemyName) {
-        if (excludedEnemyNames == null || enemyName == null)
+        if (enemyName == null)
+            return true;
+        if (matchesPlayerHeroArt(enemyName))
+            return false;
+        if (excludedEnemyNames == null)
             return true;
         return !excludedEnemyNames.contains(enemyName.toLowerCase());
+    }
+
+    /**
+     * Round 156 (user request): "We used all the Hero artwork as Enemy artwork also. But I want to
+     * remove the one that matches the current Active hero... This way the Player (and his guards)
+     * will always be unique, and we should also only lose 1 enemy per game, so not noticeable."
+     * <p>
+     * Exactly one enemy is hidden - the one drawn with the sprite sheet the player themself is
+     * walking around in, matched on the atlas FILE rather than on any name, so it keeps working if
+     * either list is renamed. The hero sheets live in {@code sprites/heroes/} and the enemy copies
+     * in {@code sprites/enemy/heroes/} under the same file name, except the five dragons: a hero
+     * is {@code dragonplayer_b} where the enemy is {@code dragonkin_b}, so that one pair is
+     * rewritten before comparing.
+     * <p>
+     * Deliberately here rather than in WorldData.getAllEnemies(): the catalog itself must stay
+     * resolvable for quest-scripted spawns, enemies already alive in a save, territory mages and
+     * the statistics screen - only the random-spawn, arena and map sites consult this.
+     */
+    private static boolean matchesPlayerHeroArt(String enemyName) {
+        String heroAtlas = playerHeroAtlas();
+        if (heroAtlas == null)
+            return false;
+        forge.adventure.data.EnemyData enemy = forge.adventure.data.WorldData.getEnemy(enemyName);
+        if (enemy == null || enemy.sprite == null)
+            return false;
+        return heroAtlas.equalsIgnoreCase(baseName(enemy.sprite));
+    }
+
+    /** The player's own sprite sheet, normalised to a bare file name, or null before a game exists. */
+    private static String playerHeroAtlas() {
+        try {
+            forge.adventure.player.AdventurePlayer player = forge.adventure.player.AdventurePlayer.current();
+            if (player == null)
+                return null;
+            String sprite = player.spriteName();
+            if (sprite == null || sprite.isEmpty())
+                return null;
+            // dragonplayer_b -> dragonkin_b: the only pair whose hero and enemy sheets differ in
+            // name rather than just in folder.
+            return baseName(sprite).replace("dragonplayer_", "dragonkin_");
+        } catch (RuntimeException e) {
+            return null; // no world yet
+        }
+    }
+
+    private static String baseName(String path) {
+        String s = path.replace('\\', '/');
+        int slash = s.lastIndexOf('/');
+        if (slash >= 0)
+            s = s.substring(slash + 1);
+        int dot = s.lastIndexOf('.');
+        return dot > 0 ? s.substring(0, dot) : s;
     }
 
     // ------------------------------------------------------------------ CSV plumbing

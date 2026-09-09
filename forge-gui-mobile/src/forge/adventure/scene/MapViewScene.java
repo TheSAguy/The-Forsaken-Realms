@@ -17,9 +17,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
-import forge.adventure.data.AdventureEventData;
 import forge.adventure.data.AdventureQuestData;
-import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.WorldStage;
@@ -75,6 +73,7 @@ public class MapViewScene extends UIScene {
         ui.onButtonPress("events", this::events);
         ui.onButtonPress("reputation", this::reputation);
         ui.onButtonPress("names", this::names);
+        ui.onButtonPress("attacks", this::attacks); // round 156
         ui.onButtonPress("zoomIn", this::zoomIn);
         ui.onButtonPress("zoomOut", this::zoomOut);
         scroll = new ScrollPane(null,Controls.getSkin()) {
@@ -184,7 +183,7 @@ public class MapViewScene extends UIScene {
 
 
     private void setOverlayButtonStates(int mode) {
-        String[] buttons = {"details", "events", "reputation", "names"};
+        String[] buttons = {"details", "events", "reputation", "names", "attacks"};
         // Each mode shows only the *next* button in the cycle
         // mode 0 (none/names): show "details"
         // mode 1 (details):    show "events"
@@ -226,26 +225,11 @@ public class MapViewScene extends UIScene {
             if (existing instanceof TypingLabel)
                 placedLabelRects.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
         }
-        for (PointOfInterest poi : allPois) {
-            // Town names moved to the Names overlay (user request 2026-08-17: "Town names need
-            // to be moved to the Names view and details should show the set info" - Names was
-            // previously an empty stub while Details carried both name AND event/set-info labels
-            // fused together at the same position). See names() below.
-            for (AdventureEventData data : AdventurePlayer.current().getEvents()) {
-                if (data.sourceID.equals(poi.getID())) {
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.append("[%?BLACKEN]");
-                    if (data.isDraftComplete) {
-                        sb.append("[red]!!![]");
-                    }
-                    sb.append(" ").append(data.getCardBlock());
-
-                    TypingLabel label = Controls.newTypingLabel(sb.toString());
-                    placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
-                }
-            }
-        }
+        // Round 156 (user: "On the mini-map, guard info screen, remove the Set information. It
+        // should not be on that screen."). The event/set-block labels used to be drawn here, from
+        // a 2026-08-17 request made before this overlay also carried Under Attack and garrison
+        // labels. With all three competing for the same POI positions the set names were the ones
+        // crowding out the information the player opens this view for, so they are gone.
 
         // Towns under attack (2026-08-14 user request: "Details or Events could show towns under
         // attack" - the minimap buttons audit found neither actually did). One label per in-
@@ -416,6 +400,67 @@ public class MapViewScene extends UIScene {
                 placeDetailLabel(nameLabel, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
             }
         }
+    }
+
+    /**
+     * Round 156 (user request: "Would it be possible to create little attack lines from the
+     * attacking mage to the town he is heading? - Maybe as its own view, since it might clutter
+     * the current view"). Its own overlay, exactly for that reason: the Details view already
+     * carries Under Attack labels and garrison strength, and a line per mage on top of that is
+     * unreadable.
+     * <p>
+     * scene2d has no line primitive, so each line is the minimap's own dot texture stretched to
+     * the distance, one pixel tall, and rotated to the bearing - the standard trick, and it costs
+     * no new art. Lines join the mageMarkers list so zoomIn/zoomOut reposition them with
+     * everything else rather than leaving them stranded over the map.
+     */
+    public void attacks() {
+        lastOverlayMode = 4;
+        setOverlayButtonStates(4);
+        for (TypingLabel detail : details) {
+            table.removeActor(detail);
+        }
+        details.clear();
+        for (Image marker : mageMarkers)
+            marker.remove();
+        mageMarkers.clear();
+
+        int drawn = 0;
+        for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
+            PointOfInterest target = mage.territoryTarget;
+            if (target == null)
+                continue;
+            // Same fog gate the dots use - a line would otherwise trace a mage the player cannot
+            // see, straight to a town they have not found.
+            int mageTileX = (int) (mage.getX() / WorldSave.getCurrentSave().getWorld().getTileSize());
+            int mageTileY = (int) (mage.getY() / WorldSave.getCurrentSave().getWorld().getTileSize());
+            if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(mageTileX, mageTileY))
+                continue;
+            float x1 = getMapX(mage.getX()), y1 = getMapY(mage.getY());
+            float x2 = getMapX(target.getPosition().x), y2 = getMapY(target.getPosition().y);
+            float dx = x2 - x1, dy = y2 - y1;
+            float length = (float) Math.sqrt(dx * dx + dy * dy);
+            if (length < 1f)
+                continue;
+            Image line = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
+            line.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
+            line.setSize(length, 1f);
+            line.setOrigin(0f, 0.5f);
+            line.setRotation((float) Math.toDegrees(Math.atan2(dy, dx)));
+            line.setPosition(x1, y1);
+            table.addActor(line);
+            mageMarkers.add(line);
+
+            // A dot at the mage end, so a line reads as travelling FROM somewhere rather than as a
+            // bare stripe across the map.
+            Image head = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
+            head.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
+            head.setPosition(x1 - head.getWidth() / 2, y1 - head.getHeight() / 2);
+            table.addActor(head);
+            mageMarkers.add(head);
+            drawn++;
+        }
+        System.out.println("[TFR-MapView] attack overlay: " + drawn + " mage(s) shown heading for a town");
     }
 
     public void zoomOut() {

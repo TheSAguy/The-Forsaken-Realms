@@ -17757,6 +17757,80 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 156: eight playtest items (2026-09-09)
+
+### Three dialogs off the bottom of the screen, one cause
+
+`Dialog.show()` calls `pack()`, which sizes the window from its content with no cap, on scenes laid
+out for 480x270. Any dialog whose row count depends on what the PLAYER owns - guards hired, decks
+built - has no fixed height and eventually runs off. New `EconomyBuildings.makeContentScrollable()`
+lifts the rows into a fixed-height ScrollPane if and only if they have already passed the cap, so
+short dialogs keep their exact current layout. Opt-in per dialog: UIScene.showDialog's keyboard walk
+descends the content table, and there is no reason to put a pane in its way for the dozen dialogs
+that were never too tall. Applied to the guard roster, the deck picker and the manage-guard screen.
+
+**The Exchange needed something else entirely** - its six trade buttons live in the BUTTON table,
+which a content scroller cannot reach. Its three full-width bottom buttons pair into two rows.
+
+### Guards were sliding, not walking
+
+They were positioned with `setPosition()`, which moves the actor and nothing else, so every guard sat
+on its constructor's Idle frame forever. `moveBy()` - what the mages already use - picks the Walk
+animation AND the eight-way facing from the movement vector, so the walk now comes from the same
+code the rest of the overworld uses. `guard.x/y` stays authoritative since that is what persists.
+
+### The player's equipment was fighting for the guard
+
+User: *"the guards all start with my items... That seems OP."* Correct, and round 145's attempt at
+this missed by two steps. `useGuardLoadout()` clears `playerExtras`, a list of extra CARDS, while
+equipment arrives as `EffectData` in `playerEffects` and is handed to the RegisteredPlayer by
+`addEffects()` - and `useGuardLoadout` runs AFTER `initDuels`, so it was clearing the wrong list too
+late as well. Gated on `aiControlsPlayerSide` now: if the AI is playing the player's seat then the
+player is a spectator, and a spectator's boots do not belong in the fight. Blessings likewise.
+
+### Attack lines, as their own view
+
+User: *"Maybe as its own view, since it might clutter the current view."* Agreed and done - the
+Details overlay already carries Under Attack labels and garrison strength, and a line per mage on
+top would be unreadable. scene2d has no line primitive, so each line is the minimap's own dot
+texture stretched to the distance, one pixel tall, rotated to the bearing and tinted by the mage's
+color, with a dot at the mage end so it reads as travelling FROM somewhere. Same fog gate as the
+dots, and the lines join `mageMarkers` so zoom repositions them instead of stranding them.
+
+### Set names off the guard overlay
+
+Removed on request. Worth recording that they were added by the user's own 2026-08-17 request
+("details should show the set info") - but that predates Under Attack and garrison labels landing in
+the same overlay, and with three kinds of label competing for the same POI positions the set names
+were crowding out what the view is opened for.
+
+### One enemy hidden per game
+
+User: *"remove the one that matches the current Active hero... the Player (and his guards) will
+always be unique, and we should also only lose 1 enemy per game."* Matched on the atlas FILE rather
+than any name, so it survives a rename on either side: hero sheets are `sprites/heroes/x.atlas` and
+the enemy copies `sprites/enemy/heroes/x.atlas` under the same file name - except the five dragons,
+where a hero is `dragonplayer_b` against the enemy's `dragonkin_b`, so that pair is rewritten before
+comparing. Hooks `isEnemyIncluded()`, which only the random-spawn, arena and map sites consult; the
+catalog itself stays resolvable, so quest-scripted spawns, enemies already alive in a save,
+territory mages and the statistics screen are all untouched.
+
+### Not a bug, from the same session
+
+The user ran out of gold with four guards hired. The ledger says why: **137 gold in per week against
+1,725 out** - 750 to local guards, 975 to roaming ones - so all four disbanded on day 259 for unpaid
+salary, on schedule. A guard LOSS costs nothing (`setWinner` returns before `defeated()` ever runs,
+so no gold, no life, no ante); the payroll is the whole of it. An Archmage is 200 base a week times
+difficulty scaling, against 75 gold of mine output, and that ratio is a balance question rather than
+a defect.
+
+Also confirmed from the log: round 152 landed - `read the result from the Match instead: winner=true`
+-> *"Archmage WON at Vome - the attack is broken."*
+
+**Files touched**: `util/EconomyBuildings.java`, `util/RoamingGuardRuntime.java`,
+`util/RoamingGuardUI.java`, `util/ContentFilterTables.java`, `scene/DuelScene.java`,
+`scene/MapViewScene.java`; plane `ui/map.json`, `ui/map_portrait.json`.
+
 ## Round 155: the guard dialog fits on the screen (2026-09-09)
 
 User: *"The manage guard page is off the screen. Anyway we can make the check box items 1 line each?
