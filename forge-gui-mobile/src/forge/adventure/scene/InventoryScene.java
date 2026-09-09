@@ -607,10 +607,16 @@ public class InventoryScene extends UIScene {
         }
 
         // Round 137: an extra hand slot is only on the doll while a gauntlet grants it.
+        // ROUND 153 BUG FIX (user playtest: "My ability slot 2 seems missing"). That check was
+        // `slot.getKey().endsWith("2")`, which was written for the gauntlets' Left2/Right2 and also
+        // matched EQUIPMENT_ABILITY2 - so the Ability2 slot has been invisible for every player
+        // since round 137, with whatever was equipped in it stuck there and unreachable. Only two
+        // slot names are ever granted (Dextral -> Left2, Sinistral -> Right2) and 22 items use
+        // Ability2, so the test is against those two names now rather than a name shape.
         java.util.Set<String> grantedSlots = Current.player().grantedEquipmentSlots();
         for (Map.Entry<String, Button> slot : equipmentSlots.entrySet()) {
             Button slotButton = slot.getValue();
-            if (slot.getKey().endsWith("2"))
+            if ("Left2".equals(slot.getKey()) || "Right2".equals(slot.getKey()))
                 slotButton.setVisible(grantedSlots.contains(slot.getKey()));
             // Remove the previous item image and border by name (order-independent)
             Actor oldItem = slotButton.findActor(SLOT_ITEM_NAME);

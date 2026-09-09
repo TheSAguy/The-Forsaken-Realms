@@ -17757,6 +17757,45 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 154: the hidden Ability2 slot, and the audit miss (2026-09-09)
+
+### Ability slot 2 has been invisible since round 137
+
+User: *"My ability slot 2 seems missing."* It was, for everyone, for seventeen rounds. Round 137's
+gauntlets added an extra hand slot that only appears while a gauntlet grants it:
+
+    if (slot.getKey().endsWith("2"))
+        slotButton.setVisible(grantedSlots.contains(slot.getKey()));
+
+Written for `Left2` / `Right2`, and it also matches **`Ability2`**. Whatever was equipped there stayed
+equipped and became unreachable - the user's Torch is still in the slot in their save. Only two slot
+names are ever granted (Dextral -> Left2, Sinistral -> Right2) while **22 items use Ability2**, the
+largest ability category in the plane, so the check tests those two names now instead of a name shape.
+
+### Command Tower makes no mana, and round 148 missed it
+
+User: *"The medal is not giving the AI an extra land. I think it's because it was a 'Commander'
+land."* Exactly right:
+
+    A:AB$ Mana | Cost$ T | Produced$ Combo ColorIdentity
+    AI:RemoveDeck:NonCommander
+
+`ColorIdentity` is the COMMANDER's color identity, empty without one, so Command Tower taps for
+nothing at all - the AI was handed a land worse than no land, since it still costs a draw.
+
+**Round 148's Commander audit should have found this.** That sweep looked for
+`ActivationGameTypes$ Commander`, `IsCommander` and command-zone triggers; Command Tower has none of
+them. The reliable marker was there all along - **`AI:RemoveDeck:NonCommander`**, the card database's
+own annotation for a card that does nothing outside Commander. Re-swept all 2,030 card references in
+`items.json` and `enemies.json` against it: Command Tower was the only miss, and it appeared in TWO
+medals rather than one.
+
+Both now hand over **Gemstone Mine** - untapped, any color, three uses, so it is a real extra land
+for an AI deck of any colors. Jeska's Will trips the same detector and was deliberately left alone:
+its commander clause only adds a third mode, and the card works without one.
+
+**Files touched**: `scene/InventoryScene.java`; plane `world/items.json`.
+
 ## Round 153: pile rares scale with difficulty (2026-09-09)
 
 ### The audit line was crying wolf

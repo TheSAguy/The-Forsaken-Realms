@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 153; v1.08 RELEASED, rounds 137-153 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 154; v1.08 RELEASED, rounds 137-154 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 154 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **THE ABILITY2 SLOT HAS BEEN INVISIBLE SINCE
+  ROUND 137.** The gauntlet feature hid any slot whose key `endsWith("2")` - written for Left2/Right2, it also caught
+  Ability2, the largest ability category (22 items). Anything equipped there was stuck and unreachable. Tests the two
+  granted names explicitly now. Also: **Command Tower produces NO mana without a commander**
+  (`Produced$ Combo ColorIdentity`), so two Medals were handing the AI a dead land - **round 148's Commander audit
+  missed it** because it searched for ActivationGameTypes/IsCommander/command-zone and not for the card DB's own
+  reliable marker, `AI:RemoveDeck:NonCommander`. Re-swept all 2,030 card refs in items.json + enemies.json with that
+  marker: Command Tower was the only miss, in TWO medals. Both now give **Gemstone Mine**. Jeska's Will trips the
+  detector but is fine (its commander clause only adds a third mode).
 - Round 153 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **Pile rares now SCALE** 7/4/2/1 across
   Easy/Normal/Hard/Insane, remainder of the 9-slot top bucket filled with uncommons (user spec). They ran BACKWARDS
   before - Easy and Normal got 9 rares, Hard and Insane got 0, because **Insane had no pile template of its own and

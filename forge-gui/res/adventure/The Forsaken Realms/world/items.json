@@ -4784,7 +4784,7 @@
                        "cardRewardBonus":  1,
                        "opponent":  {
                                         "startBattleWithCard":  [
-                                                                    "Command Tower|CMD"
+                                                                    "Gemstone Mine"
                                                                 ]
                                     }
                    },
@@ -4819,7 +4819,7 @@
                                         "startBattleWithCard":  [
                                                                     "Champion Lancer|S99",
                                                                     "Champion\u0027s Helm|CMM",
-                                                                    "Command Tower|CMD",
+                                                                    "Gemstone Mine",
                                                                     "Phyrexian Arena|FDN"
                                                                 ]
                                     }
