@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 154; v1.08 RELEASED, rounds 137-154 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 155; v1.08 RELEASED, rounds 137-155 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 155 (2026-09-09): guard dialog **fits the screen** - the nine engagement checkboxes are ONE row per group
+  (4 ranks, 5 colors) at font 0.55 instead of two-per-row over five rows, and the dismissal warning is one line.
 - Round 154 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **THE ABILITY2 SLOT HAS BEEN INVISIBLE SINCE
   ROUND 137.** The gauntlet feature hid any slot whose key `endsWith("2")` - written for Left2/Right2, it also caught
   Ability2, the largest ability category (22 items). Anything equipped there was stuck and unreachable. Tests the two

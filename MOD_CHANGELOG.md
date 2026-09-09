@@ -17757,6 +17757,22 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 155: the guard dialog fits on the screen (2026-09-09)
+
+User: *"The manage guard page is off the screen. Anyway we can make the check box items 1 line each?
+1 line for color 1 line for level it can attack."*
+
+Round 152 put the nine engagement checkboxes two to a row, which is five rows, and with the
+describe line, the out-of-commission warning, two group headers and three button rows that runs past
+the bottom of a 270px screen. One row per group is two rows instead of five. The font drops to 0.55
+so four ranks fit across 250px landscape (~62px a column) and five colors across 230px portrait
+(~46px) - the longest labels, Apprentice and Archmage, clear both.
+
+The three-line dismissal warning was most of the rest of the overflow and is one line now; the two
+group headers came down a notch to match.
+
+**Files touched**: `util/RoamingGuardUI.java`.
+
 ## Round 154: the hidden Ability2 slot, and the audit miss (2026-09-09)
 
 ### Ability slot 2 has been invisible since round 137

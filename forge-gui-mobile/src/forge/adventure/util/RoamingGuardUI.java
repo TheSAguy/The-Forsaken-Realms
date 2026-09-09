@@ -253,21 +253,20 @@ public class RoamingGuardUI {
         Dialog dialog = new Dialog(RoamingGuards.displayName(guard.tier), Controls.getSkin());
         EconomyBuildings.addContentRow(dialog, describe(guard, day));
         if (guard.isOutOfCommission(day))
-            EconomyBuildings.addContentRow(dialog, "[RED]Dismissing now forfeits the deck.[] Waiting the "
-                    + (guard.downUntilDay - day) + " remaining day(s) costs nothing, or heal it for "
-                    + RoamingGuards.healShardCost() + "[+Shards].");
+            EconomyBuildings.addContentRow(dialog, "[%90][RED]Dismissing now forfeits the deck.[] Wait "
+                    + (guard.downUntilDay - day) + " day(s) free, or heal below.");
         // Round 148 (user spec + mock-up: "I think we need to re-work the Mage Attack orders, I
         // want to add Color as an option... let's make it check-boxes"). Checkboxes rather than the
         // old YES/no buttons because nine of those would not fit, and because a checkbox is read at
         // a glance where "no Master" has to be parsed. They also write straight to the guard's own
         // arrays, so the dialog no longer has to be torn down and rebuilt on every single toggle.
-        EconomyBuildings.addContentRow(dialog, "[%90]Okay to attack (rank):");
+        EconomyBuildings.addContentRow(dialog, "[%85]Okay to attack (rank):");
         String[] rankLabels = new String[RoamingGuards.TIERS_ASCENDING.length];
         for (int i = 0; i < rankLabels.length; i++)
             rankLabels[i] = RoamingGuards.displayName(RoamingGuards.TIERS_ASCENDING[i]);
         addCheckGrid(dialog, guard, "rank", rankLabels, guard.engageTier);
 
-        EconomyBuildings.addContentRow(dialog, "[%90]Okay to attack (color):");
+        EconomyBuildings.addContentRow(dialog, "[%85]Okay to attack (color):");
         String[] colorLabels = new String[TerritoryControl.COLORS.length];
         for (int i = 0; i < colorLabels.length; i++)
             colorLabels[i] = Character.toUpperCase(TerritoryControl.COLORS[i].charAt(0))
@@ -341,14 +340,19 @@ public class RoamingGuardUI {
         // Each PAIR used to be its own nested Table, and two sibling tables size their columns
         // independently, so "Apprentice" and "Master" started at different x. One grid for the
         // whole block shares one column layout, which is what actually lines them up.
+        // ROUND 155 (user playtest: "The manage guard page is off the screen. Anyway we can make the
+        // check box items 1 line each?"). Two-per-row cost five rows for nine boxes and pushed the
+        // dialog past the bottom of a 270px-tall screen. One row per group is two rows total; the
+        // font drops to 0.55 so four ranks fit across 250px (~62px a column) and five colors across
+        // 230px in portrait (~46px), which the longest labels - Apprentice and Archmage - clear.
         float width = forge.Forge.isLandscapeMode() ? 250f : 230f;
         Table grid = new Table();
         for (int i = 0; i < labels.length; i++) {
             final int index = i;
             final String label = labels[i];
             CheckBox box = Controls.newCheckBox(label);
-            box.getLabel().setFontScale(0.75f);
-            box.getImageCell().padRight(2f);
+            box.getLabel().setFontScale(0.55f);
+            box.getImageCell().padRight(1f);
             box.setChecked(index < state.length && state[index]);
             box.addListener(new ChangeListener() {
                 @Override
@@ -360,9 +364,7 @@ public class RoamingGuardUI {
                             + " engage " + kind + " " + label + " -> " + state[index]);
                 }
             });
-            grid.add(box).width(width / 2f).left().padBottom(1f);
-            if (i % 2 == 1)
-                grid.row();
+            grid.add(box).width(width / labels.length).left();
         }
         dialog.getContentTable().add(grid).width(width).left().row();
     }
