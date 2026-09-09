@@ -2027,6 +2027,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
         }
         if (everything) {
+            // ROUND 151 BUG FIX (found in the user's playtest log, not reported: two of seven new games logged
+            // "[TFR-RingGift] all ... granted directly" THREE TIMES, so those characters started with triple the
+            // difficulty's gold, shards, wood, stone and items). This path grants unconditionally, so any repeat
+            // call - an impatient second click on the skip-intro option, a re-entered dialog - simply pays again.
+            // The starting kit is a once-per-character event by definition, so it is now flagged as one.
+            // resetForNewGamePlus() clears characterFlags, so a legitimate NG+ run still receives it.
+            if (getCharacterFlag("ringGiftGranted") > 0) {
+                System.out.println("[TFR-RingGift] the starting kit was already granted to this character - repeat ignored");
+                return;
+            }
+            setCharacterFlag("ringGiftGranted", 1);
             // Round 103: the skip-intro path runs inside the new-game intro dialog, where a RewardScene is switched
             // away before it can be collected (round-102 playtest: "no resources, items or life") - grant directly,
             // and count every Ring City as visited so the +1-life-per-city bonus applies as if the Ring was walked.

@@ -73,6 +73,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   beside it - now Touchable.disabled. **(5)** Guard checkboxes: one grid instead of a nested Table per pair, so the
   columns align. **(6)** NOT a bug - the balance sheet's Mines line reads exactly 75 gold every week in the saves;
   the varying figure was the payday PROJECTION folding in bank interest unnamed. Now broken out.
+  **(7) THE RING GIFT WAS GRANTED 3x** in two of the seven test games (found in the log, not reported) - the
+  skip-intro dialog action grants unconditionally, so a second click pays again; those characters started with
+  triple the kit. Now gated on a `ringGiftGranted` character flag (NG+ clears characterFlags, so NG+ still gets it).
 - Round 150 (2026-09-08): **every starting mode this plane offers now follows the race's sets.** Modes actually
   available here are Standard / Constructed / Pile / Chaos / Custom - **Commander needs a `commanderDecks` table this
   config lacks, and Precon/CommanderPrecon need `decks/starter/precon|commanderprecon/` folders that do not exist**,

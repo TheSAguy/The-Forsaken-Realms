@@ -1621,6 +1621,8 @@ from the plane's `config tables/settings.json`).
   pane's queued Actions, not just the label.
 - **`forge-gui-mobile/src/forge/adventure/scene/InfoTextScene.java`** - the decorative Window frame
   is `Touchable.disabled` so its toFront() cannot bury the page.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `grantRingGift("all")` is
+  once per character, gated on a `ringGiftGranted` flag.
 
 ## Upstream merge log
 

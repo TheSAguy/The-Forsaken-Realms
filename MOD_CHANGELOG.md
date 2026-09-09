@@ -17823,6 +17823,16 @@ User: *"If you click on the info-page background, it goes blank."* `scrollWindow
 `Window`, and a Window's built-in listener calls `toFront()` on touch - which reordered the parchment
 ABOVE the title and text laid out beside it as siblings. It is decoration and now takes no input.
 
+### The Ring's gift, granted three times over
+
+Not reported, found in the log while chasing the notification leak - and it is the more serious half
+of that report. Two of the seven new games logged `[TFR-RingGift] all ... granted directly` THREE
+TIMES, so those characters opened with 1,500 gold, 45 shards, 600 wood, 600 stone and six items
+instead of the Easy kit. The skip-intro path is a dialog action that grants unconditionally, with no
+debounce and no idempotency, so a second click on the option simply pays again. It is flagged as the
+once-per-character event it always was; `resetForNewGamePlus()` clears characterFlags, so a genuine
+New Game+ still receives it.
+
 ### Checkboxes that would not line up
 
 Each PAIR was its own nested `Table`, and sibling tables size their columns independently, so
