@@ -283,9 +283,13 @@ public class CharacterSprite extends MapActor {
             currentFrame = currentAnimation.getKeyFrame(timer, !isOneShotAnimation(currentAnimationType));
         }
 
+        // Round 159: rendered size is atlasSize x scale x tierScale. `scale` is the artist's
+        // per-creature intent (a ladybug is deliberately half a tile); `tierScale` is the separate
+        // Apprentice->Archmage size cue, config-driven and 1.0-neutral. See TuningData.tierScale.
         float scale = 1f;
         if (this instanceof EnemySprite) {
-            scale = ((EnemySprite) this).getData().scale;
+            forge.adventure.data.EnemyData enemyData = ((EnemySprite) this).getData();
+            scale = enemyData.scale * Config.instance().getTuningData().tierScale(enemyData.tier);
         }
 
         setHeight(currentFrame.getRegionHeight() * scale);

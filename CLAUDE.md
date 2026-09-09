@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 158; v1.08 RELEASED, rounds 137-158 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 159; v1.08 RELEASED, rounds 137-159 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,7 +61,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 158 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **map labels DRIFT** - placeDetailLabel()
+- Round 159 (2026-09-09, PACKAGED): **sprite-size audit + tier scaling**. Rendered size is now
+  `atlasRegionSize x EnemyData.scale x TuningData.tierScale(tier)` - tier is a SECOND multiplier, never folded into
+  `scale`, because `scale` carries the artist's per-creature intent (a Ladybug is 0.5 on purpose). Defaults
+  0.9/1.0/1.1/1.25 for Common/Uncommon/Rare/Mythic = Apprentice/Adept/Master/Archmage, all four in settings.json,
+  all-1.0 restores the old look with no code change. Applied game-wide since showEnemyTierInName already labels
+  every enemy with its rank. **DO NOT blanket-normalise sub-1.0 scales** - the audit found only 27 enemies with 16px
+  art below one tile and MOST ARE DELIBERATE (Ladybug/Cat/Fox/Bat/Scarab/Crab...); round 126 also set four scales to
+  0.5 on user request, so a blanket pass reverts earlier decisions. Only 10 were fixed, all humanoids/large monsters
+  rendering below tile size (Zo-Zu was 4.8px, the smallest sprite in the game). STILL OPEN: **413 enemies are on
+  odd-SIZED ART** (17-103px raw) and render off the 16px grid - that is 27% of the roster and the real remaining
+  source of raggedness; not attempted.
+- Round 158 (2026-09-09, PACKAGED 12:44): **map labels DRIFT** - placeDetailLabel()
   shifted a label down without limit until it cleared its neighbours, so garrison labels came to rest over OTHER
   towns (user saw "Roaming Guard" on black towns; the data was right, the labels had walked). Capped at 4 shifts,
   dropped after that. **The Attacks overlay was unreachable** - names() closed the cycle back to Details so round

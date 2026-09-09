@@ -174,5 +174,19 @@
     // days remaining on its despawn timer - 0.5 = cut in half. Applied once per visible lifetime, and
     // never to a dungeon an active quest points at. Set to 1.0 to switch the rule off. Grep forge.log
     // for "[TFR-DungeonLooted]".
-    "dungeonLootedDespawnFactor": 0.5
+    "dungeonLootedDespawnFactor": 0.5,
+
+    // Enemy tier size cue (round 159, user request: "make an Apprentice slightly smaller and an
+    // Archmage slightly bigger"). A sprite renders at atlasRegionSize x scale x tierScale. The
+    // per-enemy "scale" in world/enemies.json stays the ARTIST's call about how big that creature
+    // is against its own art - a Ladybug is 0.5 on purpose - and this is a SEPARATE multiplier
+    // layered on top, keyed by the enemy's tier, so the two can be retuned without destroying each
+    // other. The four tiers are the Apprentice/Adept/Master/Archmage ranks. Set all four to 1.0 to
+    // switch the cue off entirely - that is exactly the pre-round-159 look, no code change needed.
+    // Note this moves collision boxes with the art (CharacterSprite sizes boundingRect from the
+    // drawn frame), which is the same thing "scale" has always done.
+    "enemyTierScaleCommon": 0.9,
+    "enemyTierScaleUncommon": 1.0,
+    "enemyTierScaleRare": 1.1,
+    "enemyTierScaleMythic": 1.25
 }

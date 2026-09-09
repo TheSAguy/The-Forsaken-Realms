@@ -17757,6 +17757,71 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 159: the sprite-size audit, and tier scaling on top of it (2026-09-09)
+
+### What the audit actually found - and where my own estimate was wrong
+
+1,787 enemies measured against their atlases. Rendered size is `atlasRegionSize x EnemyData.scale`,
+so a size discrepancy can come from the ART or from the scale field, and the two had to be
+separated before any tier-based resizing was worth doing.
+
+- **1,030 enemies are 16px art at scale 1.0** - one tile, the spine of the game.
+- **484 of 1,787 (27%) render off the 16px grid**, which is the raggedness the user was seeing.
+- **413 of those 484 are odd-SIZED ART** (17-103px raw), not odd scale values. This is the real
+  remaining source of inconsistency and it is NOT fixed here - see below.
+- Only **27** enemies are 16px art scaled below one tile. I had estimated "~100" from the raw scale
+  histogram; that was wrong, because most sub-1.0 scales sit on LARGE art where they are doing
+  legitimate normalisation work.
+
+### Step 1: normalise - but only 10 of the 27, and that matters
+
+Listing the 27 killed the blanket fix. They are mostly **Ladybug, Cat, Fox, Dog, Bat, Raven,
+Badger, Raccoon, Armadillo, Chicken, Scarab, Crab, Octopus, Cave Spider, Poisonous Snake** - shrunk
+on purpose, because a ladybug should not be the size of an ogre. Resetting those to 1.0 would have
+been a regression dressed as a cleanup. Round 126 is the precedent: it scaled Arcane Golem 3 ->
+0.5 and three others to 0.5 at the user's own request, so a blanket pass would also have quietly
+reverted an earlier deliberate decision.
+
+Normalised only where the shrink fights the SUBJECT - a humanoid or a large monster rendering below
+tile size: **Zo-Zu the Punisher** (0.3, 4.8px - the smallest sprite in the entire game, a goblin
+warlord), **Arabella** (human priest), **Syr Ginger** (golem art), **Aminatou** (elf wizard),
+**Devil of Tibalt** (0.7 on art literally named `implarge`), **Bria** (human mage), **Horror of
+Tibalt**, **Geistmage**, **Heart-Piercer Manticore** and **Lion** (both below tile size).
+
+The test of whether this was right: the smallest sprites in the game are now Ooze, Ladybug, Hedge
+Slime, Gecko, Owl and Aghoy. Before, it was a goblin warlord at 4.8px.
+
+### Step 2: rendered = atlasSize x scale x tierScale
+
+Tier size is a **second, independent multiplier** rather than a rewrite of `scale`, because `scale`
+already carries the artist's intent about this creature against its own art. Folding tier into it
+would destroy that information permanently and make both un-retunable. `TuningData.tierScale(tier)`
+is keyed by the four tiers, which are the Apprentice/Adept/Master/Archmage ranks:
+
+| Rank | Tier | x | 16px base renders |
+|---|---|---|---|
+| Apprentice | Common | 0.90 | 14.4px |
+| Adept | Uncommon | 1.00 | 16.0px |
+| Master | Rare | 1.10 | 17.6px |
+| Archmage | Mythic | 1.25 | 20.0px |
+
+All four live in `settings.json`; setting them to 1.0 restores the pre-round-159 look with no code
+change. Unrecognised tier strings return 1.0, so a stock plane can never be shrunk to nothing.
+Applied game-wide rather than to overworld mages alone, because `showEnemyTierInName` already
+labels every enemy with its rank - so size now reinforces a cue the player is already reading.
+
+Note this moves collision boxes with the art (`CharacterSprite` sizes `boundingRect` from the drawn
+frame) - which is exactly what `scale` has always done.
+
+### Still open: the 413 odd-sized-art enemies
+
+Snapping those to the 16px grid would need `scale` rewritten per enemy against its own atlas, and it
+is a much larger and more opinionated change than this one - roughly a quarter of the roster moving
+size at once. Flagged rather than done.
+
+**Files touched**: `character/CharacterSprite.java`, `data/TuningData.java`; plane
+`world/enemies.json`, `config tables/settings.json`.
+
 ## Round 158: five follow-ups, and three questions the log answered (2026-09-09)
 
 ### Guard labels on other people's towns - the labels had walked, not the data

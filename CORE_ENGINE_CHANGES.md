@@ -2547,3 +2547,9 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`stage/MapStage.java`** - win-path `Timer` via `scheduleResultTask()`; `cancelPendingActions()` override (currentMob, enemy freeze, loading-match flag).
 - **`stage/WorldStage.java`** - win-path `Timer` via `scheduleResultTask()`; `cancelPendingActions()` override (currentMob, Capitol-defense / town-assault flags); `clearCache()` cancels both stages' pending actions on every load and new game.
 - **Data** - `enemies.json`: Arcane Golem `scale` 3 -> 0.5; Shorikai, Dementia Beast, Blech `scale` 0.5.
+
+## Round 159 (2026-09-09) - enemy tier size cue
+
+- **`character/CharacterSprite.java`** - `draw()` now sizes the frame at `atlasRegionSize x EnemyData.scale x TuningData.tierScale(tier)` instead of `atlasRegionSize x scale`. Tier is a separate multiplier on purpose: `scale` carries the artist's per-creature intent and folding tier into it would destroy that. Neutral (all tiers 1.0) restores stock behaviour exactly.
+- **`data/TuningData.java`** - `enemyTierScaleCommon/Uncommon/Rare/Mythic` + `tierScale(String)`, returning 1.0 for any unrecognised tier so a stock plane is never resized.
+- **Data** - `enemies.json`: 10 sub-tile `scale` values on humanoid/large-monster art normalised to 1.0 (Zo-Zu the Punisher 0.3, Arabella 0.5, Syr Ginger 0.5, Aminatou 0.6, Devil of Tibalt 0.7, Bria 0.8, Horror of Tibalt 0.8, Geistmage 0.9, Heart-Piercer Manticore 0.9, Lion 0.9). The other 17 sub-1.0 entries are deliberately small creatures and were left alone.

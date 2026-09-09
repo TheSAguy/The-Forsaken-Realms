@@ -8413,7 +8413,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 40,
-        "scale": 0.7,
+        "scale": 1.0,
         "life": 28,
         "rewards": [
             {
@@ -13224,7 +13224,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 0.9,
+        "scale": 1.0,
         "life": 12,
         "rewards": [
             {
@@ -16278,7 +16278,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 0.9,
+        "scale": 1.0,
         "life": 11,
         "rewards": [
             {
@@ -17260,7 +17260,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8,
+        "scale": 1.0,
         "life": 17,
         "rewards": [
             {
@@ -20468,7 +20468,7 @@
         "spawnRate": 0.8,
         "difficulty": 1,
         "speed": 27,
-        "scale": 0.9,
+        "scale": 1.0,
         "life": 17,
         "rewards": [
             {
@@ -56731,7 +56731,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.5,
+        "scale": 1.0,
         "life": 30,
         "rewards": [
             {
@@ -82947,7 +82947,7 @@
             "decks/legends/bria.dck"
         ],
         "ai": "",
-        "scale": 0.8,
+        "scale": 1.0,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -87948,7 +87948,7 @@
             "decks/legends/aminatou.dck"
         ],
         "ai": "",
-        "scale": 0.6,
+        "scale": 1.0,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -95988,7 +95988,7 @@
             "decks/legends/syr_ginger.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 1.0,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -123531,7 +123531,7 @@
         "ai": "",
         "spawnRate": 0,
         "difficulty": 0.1,
-        "scale": 0.3,
+        "scale": 1.0,
         "speed": 0,
         "life": 1,
         "rewards": [],

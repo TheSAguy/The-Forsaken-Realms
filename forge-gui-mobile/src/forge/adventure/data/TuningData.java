@@ -246,4 +246,32 @@ public class TuningData {
     public float torchPulseMultiplier = 3f;
     public float torchPulseSeconds = 2f;
     public int torchPulseMaxRadiusTiles = 24;
+
+    // Round 159, user request: "make an Apprentice slightly smaller and an Archmage slightly
+    // bigger". A rendered enemy is atlasRegionSize x EnemyData.scale (CharacterSprite.draw), and
+    // overloading that one field would be a mistake - it already carries the ARTIST's intent about
+    // how big this creature is relative to its own art (a ladybug is 0.5 for a reason). So tier
+    // size is a SECOND, independent multiplier: rendered = atlasSize x scale x tierScale, which
+    // means the two can be reasoned about and retuned separately and neither destroys the other.
+    // Keyed by EnemyData.tier, whose four values are the Apprentice/Adept/Master/Archmage ranks
+    // (EnemyData.tierDisplayName). Set all four to 1.0 to switch the whole feature off - that is
+    // exactly the pre-round-159 behaviour, with no code change and no data change.
+    public float enemyTierScaleCommon = 0.9f;    // Apprentice
+    public float enemyTierScaleUncommon = 1.0f;  // Adept
+    public float enemyTierScaleRare = 1.1f;      // Master
+    public float enemyTierScaleMythic = 1.25f;   // Archmage
+
+    /** Render multiplier for an enemy tier; 1.0 for anything unrecognised, so a stock plane or a
+     *  hand-edited tier string can never shrink a sprite to nothing. */
+    public float tierScale(String tier) {
+        if (tier == null)
+            return enemyTierScaleCommon;
+        switch (tier) {
+            case "Uncommon": return enemyTierScaleUncommon;
+            case "Rare":     return enemyTierScaleRare;
+            case "Mythic":   return enemyTierScaleMythic;
+            case "Common":   return enemyTierScaleCommon;
+            default:         return 1f;
+        }
+    }
 }
