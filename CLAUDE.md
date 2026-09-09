@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 157; v1.08 RELEASED, rounds 137-157 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 158; v1.08 RELEASED, rounds 137-158 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 158 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **map labels DRIFT** - placeDetailLabel()
+  shifted a label down without limit until it cleared its neighbours, so garrison labels came to rest over OTHER
+  towns (user saw "Roaming Guard" on black towns; the data was right, the labels had walked). Capped at 4 shifts,
+  dropped after that. **The Attacks overlay was unreachable** - names() closed the cycle back to Details so round
+  156's 5th button was never shown (its log line appeared 0 times); names -> attacks -> details now. **The scroll
+  pane engaged but could not scroll**: UIScene.showDialog sets scroll focus to the DIALOG, not the pane - focus is
+  handed over now - and the 132px cap ignored the button table, so it is 96px. "Back on day X" removed. Ability
+  buttons hidden inside town maps. ANSWERED FROM THE LOG: a mage that beats a roaming guard DOES carry on to the
+  town (Mardrake trace), and a town does not fall just because its local guard died - capture is a separate roll.
 - Round 157 (2026-09-09): **guard wages retuned** (user spec, after round 156 measured 137 gold/week income against
   1,725 out). LOCAL halved with shards added: 25/50/75/100 gold, Master +5 and Archmage +15 shards. ROAMING now has
   its OWN gold table instead of delegating to the local one: 30/60/100/150, same shards. Both still via

@@ -17757,6 +17757,54 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 158: five follow-ups, and three questions the log answered (2026-09-09)
+
+### Guard labels on other people's towns - the labels had walked, not the data
+
+User: *"there are Roaming Guard labels on black towns... Not sure why."* `placeDetailLabel()` shifts
+a label down one label-height at a time until it clears every neighbour, **with no limit**, so on a
+crowded map a garrison label slid far enough from its own POI to come to rest over somebody else's -
+which reads as a flat lie about who holds that town. The user's screenshot shows them stacked in a
+neat vertical column, which is the tell. Capped at four shifts; a label that still cannot find room
+is dropped rather than parked somewhere untrue.
+
+### The Attacks overlay could not be opened at all
+
+Its own diagnostic line appears **zero** times in the session. `names()` closed the cycle straight
+back to Details, so the fifth button added in round 156 was never made visible. Names hands off to
+Attacks now and attacks() closes the cycle.
+
+### The roster scroll pane: right idea, two faults
+
+It did engage - `7 row(s) moved into a scroll pane` is in the log - but the dialog was still too
+tall and would not scroll. Two separate causes: the 132px cap ignored that the dialog is content
+PLUS a four-row button table PLUS the frame (96px now), and `UIScene.showDialog()` sets the stage's
+scroll focus to the DIALOG, so the wheel never reached the pane. Dragging worked the whole time;
+scrolling did not. Focus is handed to the pane now, and re-handed whenever the dialog regains it.
+
+### Also
+
+"Back on day X" dropped from the injured line - the countdown is the part anyone acts on. Ability
+buttons are hidden inside town maps: a Torch or a rune is a world-map action and does nothing in a
+town, so the slot was advertising something unpressable.
+
+### Three answered from the log, no code needed
+
+**Does the mage carry on after beating a guard?** Yes. Mardrake Steading, in order: `Archmage
+intercepts` -> `winner=false` -> `Archmage defeated on day 264` -> `blue mage vs Adept guard ...
+ATTACKER WINS, guard falls` -> `attacking player-owned Mardrake Steading -> REPELLED`. The roaming
+guard fell, the mage travelled on, the local guard fought and died, and the 30% capture roll failed.
+
+**Why did the town not fall when its local guard died?** Because those are separate steps - killing
+the defender does not take the town, capture is its own roll (0.3 for an Uncommon mage). Working as
+designed.
+
+**Round 152 is confirmed live** in the same trace: the result is read from the Match rather than
+defaulting to a loss.
+
+**Files touched**: `scene/MapViewScene.java`, `stage/GameHUD.java`, `util/EconomyBuildings.java`,
+`util/RoamingGuardUI.java`.
+
 ## Round 157: guard wages retuned, mine output raised (2026-09-09)
 
 Round 156 established the numbers behind the user running out of gold: 137 in per week against

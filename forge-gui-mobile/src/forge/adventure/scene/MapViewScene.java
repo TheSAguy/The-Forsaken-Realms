@@ -296,6 +296,11 @@ public class MapViewScene extends UIScene {
      *  one label height at a time while its rectangle would intersect any already-placed label's,
      *  then records the final rectangle. libGDX is y-up, so "down" = subtract - the same
      *  direction the old per-POI eventLabelYOffset already shifted. */
+    /** How far a label may be nudged to dodge its neighbours before it is dropped instead - see
+     *  the note in placeDetailLabel(). Four label-heights is far enough to unstack a small cluster
+     *  and short enough that the label is still plainly attached to its own POI. */
+    private static final int MAX_LABEL_SHIFTS = 4;
+
     private void placeDetailLabel(TypingLabel label, float worldX, float worldY, List<Rectangle> placedLabelRects) {
         table.addActor(label);
         details.add(label);
@@ -309,16 +314,29 @@ public class MapViewScene extends UIScene {
         float x = img.getScaleX() * (getMapX(worldX) - label.getWidth() / 2) + img.getX();
         float y = img.getScaleY() * (getMapY(worldY) - label.getHeight() / 2) + img.getY();
         Rectangle rect = new Rectangle(x, y, label.getWidth(), label.getHeight());
+        // ROUND 158 BUG FIX (user playtest: "there are Roaming Guard labels on black towns... Not
+        // sure why"). The data was right - the LABELS had walked. This loop shifts a label down one
+        // height at a time until it clears every other label, with no limit, so on a crowded map a
+        // garrison label slid far enough from its own town to come to rest over somebody else's,
+        // which reads as a flat lie about who holds that town. Bounded to four steps now; a label
+        // that still cannot find room is dropped rather than parked somewhere untrue.
         boolean moved = true;
-        while (moved) {
+        int shifts = 0;
+        while (moved && shifts < MAX_LABEL_SHIFTS) {
             moved = false;
             for (Rectangle placed : placedLabelRects) {
                 if (rect.overlaps(placed)) {
                     rect.y -= label.getHeight();
                     moved = true;
+                    shifts++;
                     break;
                 }
             }
+        }
+        if (moved) { // still colliding after the cap - better absent than misplaced
+            table.removeActor(label);
+            details.remove(label);
+            return;
         }
         placedLabelRects.add(rect);
         label.setPosition(rect.x, rect.y);
@@ -375,8 +393,12 @@ public class MapViewScene extends UIScene {
     }
 
     public void names() {
-        lastOverlayMode = 0;
-        setOverlayButtonStates(0);
+        // Round 158: names() used to close the cycle back to Details, so the "attacks" button added
+        // in round 156 was never made visible and the overlay could not be opened at all (its own
+        // log line never appeared once in the user's session). Names now hands off to Attacks, and
+        // attacks() closes the cycle.
+        lastOverlayMode = 4;
+        setOverlayButtonStates(4);
         for (TypingLabel detail : details) {
             table.removeActor(detail);
         }
@@ -415,8 +437,8 @@ public class MapViewScene extends UIScene {
      * everything else rather than leaving them stranded over the map.
      */
     public void attacks() {
-        lastOverlayMode = 4;
-        setOverlayButtonStates(4);
+        lastOverlayMode = 0;
+        setOverlayButtonStates(0);
         for (TypingLabel detail : details) {
             table.removeActor(detail);
         }

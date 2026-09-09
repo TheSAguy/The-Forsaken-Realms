@@ -2523,7 +2523,10 @@ public class EconomyBuildings {
     static void makeContentScrollable(Dialog dialog) {
         Table content = dialog.getContentTable();
         content.pack();
-        float cap = forge.Forge.isLandscapeMode() ? 132f : 300f;
+        // Round 158: 132 was still too tall. The dialog is content + BUTTON TABLE + title, and the
+        // roster carries four button rows of its own, so the content's share of a 270px screen is
+        // far smaller than half. 96 leaves room for five button rows and the frame.
+        float cap = forge.Forge.isLandscapeMode() ? 96f : 260f;
         if (content.getPrefHeight() <= cap)
             return;
         float width = forge.Forge.isLandscapeMode() ? 250f : 230f;
@@ -2540,8 +2543,21 @@ public class EconomyBuildings {
         pane.setScrollingDisabled(true, false);
         pane.setFadeScrollBars(false);
         content.add(pane).width(width + 8f).height(cap).row();
-        System.out.println("[TFR-Dialog] content was " + (int) content.getPrefHeight()
-                + "px over the cap - " + rows.size() + " row(s) moved into a scroll pane");
+        // Round 158 (user: "still seems bigger than the screen and can't scroll"). The pane existed
+        // and the rows were in it, but UIScene.showDialog() sets the stage's scroll focus to the
+        // DIALOG, so the wheel never reached the pane. Handing focus to the pane once the stage has
+        // one is what actually makes it scroll; dragging worked all along, scrolling did not.
+        if (pane.getStage() != null)
+            pane.getStage().setScrollFocus(pane);
+        dialog.addListener(new com.badlogic.gdx.scenes.scene2d.utils.FocusListener() {
+            @Override
+            public void keyboardFocusChanged(FocusEvent event, Actor actor, boolean focused) {
+                if (focused && pane.getStage() != null)
+                    pane.getStage().setScrollFocus(pane);
+            }
+        });
+        System.out.println("[TFR-Dialog] " + rows.size() + " row(s) moved into a "
+                + (int) cap + "px scroll pane");
     }
 
     static void addContentRow(Dialog dialog, String text) {

@@ -1047,8 +1047,15 @@ public class GameHUD extends Stage {
         setDisabled(bookmarkActor, !MapStage.getInstance().isInMap(), "[%120][+Bookmark]", "\u2613");
         worldStandingsActor.setVisible((isTerritoryControlEnabled() || ColorReputation.isEnabled()) && !MapStage.getInstance().isInMap());
 
+        // Round 158 (user: "When in a town, hide the item slot holding the torch... you can't use
+        // it there"). Ability items are world-map actions - a Torch widens overworld vision, a rune
+        // teleports - and none of them do anything inside a town map, so the buttons only advertise
+        // something that cannot be pressed. Hidden outright rather than greyed: the slot is empty
+        // of meaning in town, not merely unavailable.
+        boolean abilitiesUsable = !MapStage.getInstance().isInMap();
         for (TextraButton button : abilityButtonMap) {
-            setAlpha(button, visible);
+            button.setVisible(visible && abilitiesUsable);
+            setAlpha(button, visible && abilitiesUsable);
         }
         opacity = visible ? 1f : 0.4f;
     }

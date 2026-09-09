@@ -101,8 +101,9 @@ public class RoamingGuardUI {
         if (guard.isOutOfCommission(day))
             // Round 152 (user read "until day 236" as "236 days left" - it was 30, from day 206).
             // The absolute day alone made a correct number look alarming; lead with the countdown.
-            sb.append(" [RED](hurt - ").append(guard.downUntilDay - day)
-                    .append(" more days, back on day ").append(guard.downUntilDay).append(")");
+            // Round 158 (user: "Remove the 'Back on Day x' text... That means nothing to the
+            // player"). The countdown is the part anyone acts on.
+            sb.append(" [RED](hurt - ").append(guard.downUntilDay - day).append(" more day(s))");
         else if (!RoamingGuards.isArmed(guard))
             sb.append(" [RED](GIVE DECK - unarmed, it will not be sent out or paid)");
         else if (RoamingGuards.engagesNothing(guard))
