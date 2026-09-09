@@ -61,7 +61,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 159 (2026-09-09, PACKAGED 13:33 - live folder carries rounds 158 AND 159): **sprite-size audit + tier scaling**. Rendered size is now
+- Round 159 (2026-09-09, PACKAGED 13:41 - live folder carries rounds 158 AND 159): **sprite-size audit + tier scaling**. Rendered size is now
   `atlasRegionSize x EnemyData.scale x TuningData.tierScale(tier)` - tier is a SECOND multiplier, never folded into
   `scale`, because `scale` carries the artist's per-creature intent (a Ladybug is 0.5 on purpose). Defaults
   0.9/1.0/1.1/1.25 for Common/Uncommon/Rare/Mythic = Apprentice/Adept/Master/Archmage, all four in settings.json,
