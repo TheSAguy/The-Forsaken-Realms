@@ -1,0 +1,18 @@
+# Gravebound (B) - guard deck 1 of 2, round 155.
+# Deliberately mono-BLACK, and its partner is mono-RED, so the two share not one card. Round 146's
+# lesson: adventure decks are views over one collection and handing one to a guard strips its cards
+# from every other deck - two decks meant for two guards must be disjoint or the first hand-over
+# guts the second. Built only from cards no deck the player is keeping already lists.
+5 Dire Fleet Hoarder
+2 Grimclaw Bats
+3 Bonepicker Skirge
+2 Chittering Rats
+3 Testament Bearer
+1 Skeleton Archer
+1 Gravedigger
+2 Drown in Ichor
+2 Succumb to Temptation
+1 Deadly Derision
+1 Grisly Spectacle
+1 Salt Road Skirmish
+16 Swamp
