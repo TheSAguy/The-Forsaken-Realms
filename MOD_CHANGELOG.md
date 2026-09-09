@@ -17757,6 +17757,46 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 153: pile rares scale with difficulty (2026-09-09)
+
+### The audit line was crying wolf
+
+Every one of the ten deck audits in the user's log ended `<-- ILLEGAL, more than 4`, over 17 Island
+and 24 Swamp. **Basic lands are exempt from the 4-of rule** and counting them made the check useless
+on its first outing. Non-land cards only now, and the line says so. The user's own screenshots showed
+the round-151 copy cap working correctly all along - Hellkite Charger at 4 and at 3, never five.
+
+### Pile rares ran backwards
+
+User: *"started as Kor... it had 9 Rares for both Easy and Insane. Seems pretty high."* Confirmed in
+the log (`Pile R ... rarity {C=14, L=27, R=9, U=10}`), and worse than reported: the pre-existing
+common templates give **Easy and Normal nine rares each while Hard and Insane get none**, because
+Insane had no file of its own and shared Hard's. The same inversion the user caught in round 150's
+deck sizes, and it predates the mod's own work here.
+
+Now a scale, to the user's spec - rares in the nine-slot top bucket at **7 / 4 / 2 / 1** across
+Easy / Normal / Hard / Insane, remainder filled to nine with uncommons. Twenty plane-local templates;
+the shared `common/` ones are untouched so other planes keep the old shape. Insane finally has its
+own set of files.
+
+(The user's arithmetic had Normal at "4 rares, 3 uncommon"; their stated rule was to fill to nine, so
+Normal is 4 + 5.)
+
+### An owned item keeps its old name forever
+
+Round 152 renamed Colorless rune -> Homeward rune, and the note then said an already-owned copy would
+keep working under the old name - true, but presented as if it would sort itself out. It does not:
+inventory items are stored as whole serialized `ItemData` objects and are never re-resolved by name
+on load, so the old name is permanent for that copy. New `dev-tools/save-editing/RenameItem.java`
+rewrites the stored object; applied to all six of the user's saves.
+
+Also confirmed from the saves, for a "my Rally rune is missing" report: saves 1 and 2 hold only the
+Homeward rune and never held a Rally rune - it was acquired later, in the run that lives in saves 3,
+4 and quick_save. Nothing was lost, and the rename could not have dropped it in any case.
+
+**Files touched**: `util/Config.java`; plane `config.json` and twenty new `decks/starter/pile_*.json`;
+`dev-tools/save-editing/RenameItem.java` (new), `Inv.java`, `Ledger.java`.
+
 ## Round 152: the guard that won and was recorded as a loss (2026-09-08)
 
 Second playtest of the roaming guards. Three real bugs, one non-bug, and five requests.

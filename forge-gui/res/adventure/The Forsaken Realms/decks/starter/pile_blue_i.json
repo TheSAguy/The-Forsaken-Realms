@@ -1,0 +1,97 @@
+{
+  "name": "Blue",
+  "mainDeck": [
+    {
+      "count": 15,
+      "cardName": "Island"
+    },
+    {
+      "count": 6,
+      "cardName": "Plains"
+    },
+    {
+      "count": 6,
+      "cardName": "Swamp"
+    },
+    {
+      "count": 9,
+      "colors": [
+        "blue"
+      ],
+      "rarity": [
+        "Common"
+      ],
+      "manaCosts": [
+        1,
+        2
+      ]
+    },
+    {
+      "count": 6,
+      "colors": [
+        "white",
+        "black"
+      ],
+      "rarity": [
+        "Common"
+      ],
+      "manaCosts": [
+        1,
+        2
+      ]
+    },
+    {
+      "count": 6,
+      "colors": [
+        "blue"
+      ],
+      "rarity": [
+        "Common"
+      ],
+      "manaCosts": [
+        3,
+        4
+      ]
+    },
+    {
+      "count": 3,
+      "colors": [
+        "white",
+        "black"
+      ],
+      "rarity": [
+        "Common"
+      ],
+      "manaCosts": [
+        3,
+        4
+      ]
+    },
+    {
+      "count": 1,
+      "colors": [
+        "blue"
+      ],
+      "rarity": [
+        "Rare"
+      ],
+      "manaCosts": [
+        5,
+        6
+      ]
+    },
+    {
+      "count": 8,
+      "colors": [
+        "blue"
+      ],
+      "rarity": [
+        "Uncommon"
+      ],
+      "manaCosts": [
+        5,
+        6
+      ]
+    }
+  ]
+}

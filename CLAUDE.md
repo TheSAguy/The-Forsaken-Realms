@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-08 (round 152; v1.08 RELEASED, rounds 137-152 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 153; v1.08 RELEASED, rounds 137-153 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 153 (2026-09-09, REPO ONLY - user was playing, NOT PACKAGED): **Pile rares now SCALE** 7/4/2/1 across
+  Easy/Normal/Hard/Insane, remainder of the 9-slot top bucket filled with uncommons (user spec). They ran BACKWARDS
+  before - Easy and Normal got 9 rares, Hard and Insane got 0, because **Insane had no pile template of its own and
+  shared Hard's**. 20 plane-local `decks/starter/pile_<color>_<e|n|h|i>.json`; the shared common/ ones are untouched
+  for other planes. Also: the round-152 deck AUDIT line counted BASIC LANDS toward the 4-of check, so all ten decks
+  in the log falsely read "ILLEGAL, more than 4" over 17 Island - non-land cards only now. And **an owned item keeps
+  its old name forever** (inventory is stored as whole serialized ItemData, never re-resolved by name), so renaming
+  in items.json does NOT reach existing saves - new `dev-tools/save-editing/RenameItem.java` does; ran it over all
+  six saves for Colorless -> Homeward rune.
 - Round 152 (2026-09-08): **EVERY WATCHED GUARD DUEL WAS SCORED A LOSS.** A watched guard duel is AI-vs-AI on both
   seats = the Deck Tester shape, so `HostedMatch.endCurrentGame()` nulls `game` before GameEnd() runs and the
   2026-08-13 null-guard left `winner` at its false default. `match` outlives `game` and knows the winner - read from

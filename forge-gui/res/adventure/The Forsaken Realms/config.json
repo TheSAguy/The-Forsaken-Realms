@@ -222,12 +222,16 @@
         "R":"decks/starter/constructed_red_60.json",
         "G":"decks/starter/constructed_green_60.json"
       },
+      // Round 153: Insane gets its OWN pile templates. It shared Hard's until now, which is
+      // why Easy and Normal each rolled nine rares while Hard and Insane rolled none - the
+      // difficulty scaling ran backwards. Rares in the 9-slot top bucket are 7/4/2/1 across
+      // Easy/Normal/Hard/Insane, remainder filled to nine with uncommons (user spec).
       "pileDecks": {
-        "W":"decks/starter/pile_white_h.json",
-        "B":"decks/starter/pile_black_h.json",
-        "U":"decks/starter/pile_blue_h.json",
-        "R":"decks/starter/pile_red_h.json",
-        "G":"decks/starter/pile_green_h.json"
+        "W":"decks/starter/pile_white_i.json",
+        "B":"decks/starter/pile_black_i.json",
+        "U":"decks/starter/pile_blue_i.json",
+        "R":"decks/starter/pile_red_i.json",
+        "G":"decks/starter/pile_green_i.json"
       }
     }
   ],

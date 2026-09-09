@@ -486,6 +486,11 @@ public class Config {
      * - then the list itself. The audit line is the point: a rare in a no-rares template, a fifth
      * copy of a card, or a set that should not be in this race all show up without reading 40 rows.
      */
+    private static final java.util.Set<String> BASIC_LAND_NAMES = new java.util.HashSet<>(
+            java.util.Arrays.asList("Plains", "Island", "Swamp", "Mountain", "Forest", "Wastes",
+                    "Snow-Covered Plains", "Snow-Covered Island", "Snow-Covered Swamp",
+                    "Snow-Covered Mountain", "Snow-Covered Forest"));
+
     private void describeStarterDeck(String label, Deck deck) {
         if (deck == null)
             return;
@@ -503,9 +508,14 @@ public class Config {
                     && card.getRules().getType().isLand())
                 lands += n;
         }
+        // Round 153: BASIC LANDS ARE EXEMPT from the 4-of rule, and counting them made every single
+        // audit line in the user's first log cry "ILLEGAL, more than 4" over 17 Island / 24 Swamp -
+        // a false alarm on all ten decks, which is worse than no check at all.
         String worst = "";
         int worstCount = 0;
         for (java.util.Map.Entry<String, Integer> e : byName.entrySet()) {
+            if (BASIC_LAND_NAMES.contains(e.getKey()))
+                continue;
             if (e.getValue() > worstCount) {
                 worstCount = e.getValue();
                 worst = e.getKey();
@@ -514,7 +524,7 @@ public class Config {
         int total = deck.getMain().countAll();
         System.out.println("[TFR-StarterDeck] " + label + " AUDIT: " + total + " cards, " + lands
                 + " land / " + (total - lands) + " spells | rarity " + byRarity
-                + " | editions " + byEdition + " | most copies of one card: " + worstCount
+                + " | editions " + byEdition + " | most copies of one NON-LAND card: " + worstCount
                 + " (" + worst + ")" + (worstCount > 4 ? "  <-- ILLEGAL, more than 4" : ""));
         StringBuilder list = new StringBuilder();
         for (java.util.Map.Entry<String, Integer> e : byName.entrySet())
