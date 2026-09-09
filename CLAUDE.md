@@ -61,7 +61,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 159 (2026-09-09, PACKAGED): **sprite-size audit + tier scaling**. Rendered size is now
+- Round 159 (2026-09-09, PACKAGED 13:33 - live folder carries rounds 158 AND 159): **sprite-size audit + tier scaling**. Rendered size is now
   `atlasRegionSize x EnemyData.scale x TuningData.tierScale(tier)` - tier is a SECOND multiplier, never folded into
   `scale`, because `scale` carries the artist's per-creature intent (a Ladybug is 0.5 on purpose). Defaults
   0.9/1.0/1.1/1.25 for Common/Uncommon/Rare/Mythic = Apprentice/Adept/Master/Archmage, all four in settings.json,
@@ -72,7 +72,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   rendering below tile size (Zo-Zu was 4.8px, the smallest sprite in the game). STILL OPEN: **413 enemies are on
   odd-SIZED ART** (17-103px raw) and render off the 16px grid - that is 27% of the roster and the real remaining
   source of raggedness; not attempted.
-- Round 158 (2026-09-09, PACKAGED 12:44): **map labels DRIFT** - placeDetailLabel()
+- Round 158 (2026-09-09, PACKAGED): **map labels DRIFT** - placeDetailLabel()
   shifted a label down without limit until it cleared its neighbours, so garrison labels came to rest over OTHER
   towns (user saw "Roaming Guard" on black towns; the data was right, the labels had walked). Capped at 4 shifts,
   dropped after that. **The Attacks overlay was unreachable** - names() closed the cycle back to Details so round
