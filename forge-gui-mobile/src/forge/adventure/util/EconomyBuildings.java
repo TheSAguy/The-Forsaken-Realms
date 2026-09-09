@@ -439,19 +439,33 @@ public class EconomyBuildings {
     // Weekly salary, also paid upfront on hire (user spec exact numbers, 2026-08-11). Both scaled
     // by difficultyPriceMultiplier() (round 4) - a single point of scaling covers the upfront hire
     // payment and every later weekly deduction, since both read this same function.
+    /**
+     * LOCAL garrison wage, per guard per week (round 157, user spec: "Cut the local guard salaries
+     * in half. For Master, add 5 shards, for Archmage make it 15 shards"). Roaming guards used to
+     * delegate here and now keep their own scale - see RoamingGuards.weeklyGoldCost.
+     * <p>
+     * Still passed through scaledCost(), so these are the NORMAL-difficulty figures: Easy pays
+     * 0.75x and Insane 1.5x, same as every other price in the game.
+     */
     public static int guardWeeklyGoldCost(String tier) {
         if (tier == null)
-            return scaledCost(50);
+            return scaledCost(25);
         switch (tier) {
-            case "Uncommon": return scaledCost(100);
-            case "Rare": return scaledCost(150);
-            case "Mythic": return scaledCost(200);
-            default: return scaledCost(50);
+            case "Uncommon": return scaledCost(50);
+            case "Rare": return scaledCost(75);
+            case "Mythic": return scaledCost(100);
+            default: return scaledCost(25);
         }
     }
 
+    /** Shard half of the wage - round 157 put shards on Master as well and tripled Archmage's,
+     *  so the top ranks cost something the player cannot simply mine more of. */
     public static int guardWeeklyShardCost(String tier) {
-        return "Mythic".equals(tier) ? scaledCost(5) : 0;
+        if ("Mythic".equals(tier))
+            return scaledCost(15);
+        if ("Rare".equals(tier))
+            return scaledCost(5);
+        return 0;
     }
 
     // 1 guard per ordinary town, 2 for the Capitol (user spec).

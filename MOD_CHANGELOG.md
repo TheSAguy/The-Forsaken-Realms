@@ -17757,6 +17757,46 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 157: guard wages retuned, mine output raised (2026-09-09)
+
+Round 156 established the numbers behind the user running out of gold: 137 in per week against
+1,725 out, four guards disbanding on day 259 for unpaid salary. A guard LOSS costs nothing - the
+payroll was the whole drain, and one Archmage at 200/week stood against 75/week of total mine
+output. User spec follows.
+
+**Local garrison, halved, with shards on the top two ranks:**
+
+| Tier | Gold | Shards | was |
+|---|---|---|---|
+| Apprentice | 25 | - | 50 |
+| Adept | 50 | - | 100 |
+| Master | 75 | **5** | 150 |
+| Archmage | 100 | **15** | 200 + 5 |
+
+**Roaming, now its own scale** - it used to delegate to the local table and be priced identically,
+which never reflected that a roaming guard covers the whole map rather than one town:
+
+| Tier | Gold | Shards |
+|---|---|---|
+| Apprentice | 30 | - |
+| Adept | 60 | - |
+| Master | 100 | **5** |
+| Archmage | 150 | **15** |
+
+Shards stay shared between the two, which is what the user asked for ("same shard price... I mean
+the new shards, Master 5, Archmage 15"). Everything still runs through `scaledCost()`, so these are
+the Normal figures - Easy 0.75x, Insane 1.5x, same as every other price.
+
+**Gold mine 75 -> 100 a week** (`mineWeeklyGoldPayout` in the plane's settings.json).
+
+On the user's own save that turns roughly 1,725 out into roughly 825, against income rising 137 ->
+162. Worth recording what the new shape means: **shards, not gold, are now the ceiling on top-tier
+guards** - four Archmages want 60 shards a week against a shard mine's 20 - which is the lever doing
+the work, since gold alone would no longer stop anyone.
+
+**Files touched**: `util/EconomyBuildings.java`, `util/RoamingGuards.java`;
+plane `config tables/settings.json`.
+
 ## Round 156: eight playtest items (2026-09-09)
 
 ### Three dialogs off the bottom of the screen, one cause

@@ -112,8 +112,22 @@ public class RoamingGuards {
         return Math.max(1f, playerSpeed - (rungsBelowTop * step));
     }
 
+    /**
+     * ROAMING wage, per guard per week (round 157, user spec: 30 / 60 / 100 / 150). No longer the
+     * local table - a roaming guard covers the whole map instead of one town, so it is priced
+     * above a garrison of the same rank rather than identically to it.
+     * <p>
+     * scaledCost() still applies, so these are the Normal-difficulty figures.
+     */
     public static int weeklyGoldCost(String tier) {
-        return EconomyBuildings.guardWeeklyGoldCost(tier);
+        if (tier == null)
+            return EconomyBuildings.scaledCost(30);
+        switch (tier) {
+            case "Uncommon": return EconomyBuildings.scaledCost(60);
+            case "Rare": return EconomyBuildings.scaledCost(100);
+            case "Mythic": return EconomyBuildings.scaledCost(150);
+            default: return EconomyBuildings.scaledCost(30);
+        }
     }
 
     public static int weeklyShardCost(String tier) {

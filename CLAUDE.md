@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 156; v1.08 RELEASED, rounds 137-156 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 157; v1.08 RELEASED, rounds 137-157 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 157 (2026-09-09): **guard wages retuned** (user spec, after round 156 measured 137 gold/week income against
+  1,725 out). LOCAL halved with shards added: 25/50/75/100 gold, Master +5 and Archmage +15 shards. ROAMING now has
+  its OWN gold table instead of delegating to the local one: 30/60/100/150, same shards. Both still via
+  `scaledCost()` so those are Normal figures (Easy 0.75x, Insane 1.5x). **mineWeeklyGoldPayout 75 -> 100.** Note the
+  new shape: SHARDS are the ceiling on top-tier guards now (4 Archmages = 60/wk vs a shard mine's 20), not gold.
 - Round 156 (2026-09-09): eight playtest items. **`EconomyBuildings.makeContentScrollable()`** - Dialog.show()
   packs with no cap on a 480x270 screen, so any dialog whose rows scale with what the PLAYER owns overflows; lifts
   rows into a ScrollPane only once past the cap (roster / deck picker / manage guard). **The Exchange overflows via
