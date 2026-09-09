@@ -1624,6 +1624,16 @@ from the plane's `config tables/settings.json`).
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** - `grantRingGift("all")` is
   once per character, gated on a `ringGiftGranted` flag.
 
+### 2026-09-08 Guard duel result + item dialog + guard travel (round 152)
+
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** - when `hostedMatch.getGame()` is
+  already null in GameEnd(), the winner is read from `hostedMatch.getMatch()` (which outlives the
+  game) instead of defaulting to false. Fixes every watched AI-vs-AI duel being scored a loss.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** - the use-confirmation dialog
+  is rebuilt per item instead of cached in a field, and its label wraps.
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** - roaming guard dots; minZoom
+  0.25 -> 0.12.
+
 ## Upstream merge log
 
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;

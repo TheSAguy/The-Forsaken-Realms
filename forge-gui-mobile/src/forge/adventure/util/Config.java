@@ -478,6 +478,50 @@ public class Config {
      * The widening steps are logged because reaching one means a template bucket is too narrow for
      * that race, which is a data problem to fix rather than something to absorb silently.
      */
+    /**
+     * Round 152 (user request: "can we add more logging to confirm starting decks are good. I can
+     * create a bunch of new games, but it's hard for me to confirm if the decks are correct").
+     * <p>
+     * One scannable AUDIT line - lands, rarity split, worst duplicate count and the edition spread
+     * - then the list itself. The audit line is the point: a rare in a no-rares template, a fifth
+     * copy of a card, or a set that should not be in this race all show up without reading 40 rows.
+     */
+    private void describeStarterDeck(String label, Deck deck) {
+        if (deck == null)
+            return;
+        java.util.TreeMap<String, Integer> byName = new java.util.TreeMap<>();
+        java.util.TreeMap<String, Integer> byEdition = new java.util.TreeMap<>();
+        java.util.TreeMap<String, Integer> byRarity = new java.util.TreeMap<>();
+        int lands = 0;
+        for (java.util.Map.Entry<forge.item.PaperCard, Integer> e : deck.getMain()) {
+            forge.item.PaperCard card = e.getKey();
+            int n = e.getValue();
+            byName.merge(card.getName(), n, Integer::sum);
+            byEdition.merge(card.getEdition(), n, Integer::sum);
+            byRarity.merge(String.valueOf(card.getRarity()), n, Integer::sum);
+            if (card.getRules() != null && card.getRules().getType() != null
+                    && card.getRules().getType().isLand())
+                lands += n;
+        }
+        String worst = "";
+        int worstCount = 0;
+        for (java.util.Map.Entry<String, Integer> e : byName.entrySet()) {
+            if (e.getValue() > worstCount) {
+                worstCount = e.getValue();
+                worst = e.getKey();
+            }
+        }
+        int total = deck.getMain().countAll();
+        System.out.println("[TFR-StarterDeck] " + label + " AUDIT: " + total + " cards, " + lands
+                + " land / " + (total - lands) + " spells | rarity " + byRarity
+                + " | editions " + byEdition + " | most copies of one card: " + worstCount
+                + " (" + worst + ")" + (worstCount > 4 ? "  <-- ILLEGAL, more than 4" : ""));
+        StringBuilder list = new StringBuilder();
+        for (java.util.Map.Entry<String, Integer> e : byName.entrySet())
+            list.append(e.getValue()).append("x ").append(e.getKey()).append("; ");
+        System.out.println("[TFR-StarterDeck] " + label + " LIST: " + list);
+    }
+
     private Deck racedStarterDeck(String path, String label, java.util.List<String> editionCodes,
             java.util.List<String> raceCodes) {
         Deck deck = CardUtil.getDeck(path, false, false, "", false, false, editionCodes, false, true);
@@ -485,6 +529,7 @@ public class Config {
         if (size >= configData.minDeckSize) {
             System.out.println("[TFR-StarterDeck] " + label + " from editions " + editionCodes
                     + " -> " + size + " cards (" + path + ")");
+            describeStarterDeck(label, deck);
             return deck;
         }
         if (editionCodes != null && raceCodes != null && !raceCodes.equals(editionCodes)) {

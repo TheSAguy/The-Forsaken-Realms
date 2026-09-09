@@ -7011,7 +7011,7 @@
 							"name": "(Continue)",
 							"action": [
 								{
-									"addItem": "Colorless rune"
+									"addItem": "Homeward rune"
 								},
 								{
 									"addItem": "Bronze Challenge Coin"

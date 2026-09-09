@@ -30,5 +30,9 @@
 
   // In-game days a defeated guard spends out of commission. Dismissing it during this window
   // forfeits its deck; waiting it out costs nothing but time.
-  "recoveryDays": 30
+  "recoveryDays": 30,
+
+  // Shards to bring a defeated guard straight back instead of waiting out recoveryDays
+  // (round 152, user request). 0 falls back to 100.
+  "healShardCost": 100
 }

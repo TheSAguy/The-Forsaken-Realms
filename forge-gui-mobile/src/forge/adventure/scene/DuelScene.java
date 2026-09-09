@@ -147,8 +147,19 @@ public class DuelScene extends ForgeScene {
             // loss meaningfully anyway (just resets UI state, per its own comment).
             if (hostedMatch.getGame() != null) {
                 winner = humanPlayer == hostedMatch.getGame().getMatch().getWinner();
+            } else if (hostedMatch.getMatch() != null) {
+                // ROUND 152 BUG FIX (user playtest: "I saw one of our roaming guards win" while the
+                // log recorded a defeat and benched it for a month). The 2026-08-13 guard above was
+                // written for Deck Tester, but a WATCHED ROAMING GUARD DUEL has exactly the same
+                // shape - both seats AI-controlled, so HostedMatch.endCurrentGame() nulls its game
+                // field before this callback runs - and defaulting to false meant EVERY watched
+                // guard fight was scored as a loss no matter what happened on screen.
+                // HostedMatch only ever nulls `game`; `match` outlives it and still knows who won.
+                winner = humanPlayer == hostedMatch.getMatch().getWinner();
+                System.out.println("[TFR-DuelEndRace] hostedMatch.getGame() was already null in GameEnd()"
+                        + " - read the result from the Match instead: winner=" + winner);
             } else {
-                System.out.println("[TFR-DuelEndRace] hostedMatch.getGame() was already null in GameEnd() - match already torn down before this callback ran, winner defaults false");
+                System.out.println("[TFR-DuelEndRace] neither game nor match available in GameEnd() - winner defaults false");
             }
 
             //Persists expended (or potentially gained) shards back to Adventure

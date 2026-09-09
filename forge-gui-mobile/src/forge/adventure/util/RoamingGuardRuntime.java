@@ -80,7 +80,13 @@ public class RoamingGuardRuntime {
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         RoamingGuards.processDailyTick(day);
         assignMissions(enemies, day);
-        moveGuards(delta, day, foregroundSprites);
+        // ROUND 152 BUG FIX (user playtest: a guard that won at a town "teleported directly from
+        // the town" instead of walking home). delta is the RAW frame time, and the first frame back
+        // from a duel carries however long that match took - `speed * delta` then dwarfs the whole
+        // remaining journey and the Math.min() in moveGuards snaps the guard to its destination in
+        // a single step. The mages never showed this because a duel starts from a collision at
+        // their destination; a guard is mid-journey across the scene switch.
+        moveGuards(Math.min(delta, MAX_STEP_SECONDS), day, foregroundSprites);
     }
 
     /** Give every unattended attack on a player town to an available guard. */
@@ -96,6 +102,10 @@ public class RoamingGuardRuntime {
         for (RoamingGuardData guard : RoamingGuards.roster()) {
             if (guard.isIdle() || guard.returningHome)
                 continue;
+            if (guard == duellingGuard)
+                continue; // round 152: its mage is off the enemies list PRECISELY because it is
+                          // being fought right now - releasing the guard here logged "target is no
+                          // longer under attack" in the middle of its own interception.
             if (!liveThreats.contains(guard.missionPoiId)) {
                 System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
                         + "'s target is no longer under attack - returning to the Capitol");
@@ -226,6 +236,10 @@ public class RoamingGuardRuntime {
      * the fight - the caller must then stop processing that mage, because the duel decides whether
      * it ever reaches the town at all.
      */
+    /** One frame's worth of travel at most. A duel, a dialog or a stutter must not become
+     *  distance covered - see update()'s note. */
+    private static final float MAX_STEP_SECONDS = 0.05f;
+
     public static boolean interceptOnArrival(EnemySprite mage) {
         if (!RoamingGuards.isEnabled() || mage.territoryTarget == null || duellingGuard != null)
             return false;

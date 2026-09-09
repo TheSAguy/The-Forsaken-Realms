@@ -30,4 +30,8 @@ public class RoamingGuardConfig {
 
     /** In-game days a defeated guard spends out of commission before returning to duty. */
     public int recoveryDays;
+
+    /** Round 152 (user request): shards to bring a defeated guard back immediately instead of
+     *  waiting out recoveryDays. 0 falls back to 100. */
+    public int healShardCost;
 }

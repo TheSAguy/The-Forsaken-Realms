@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-08 (round 151; v1.08 RELEASED, rounds 137-151 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-08 (round 152; v1.08 RELEASED, rounds 137-152 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 152 (2026-09-08): **EVERY WATCHED GUARD DUEL WAS SCORED A LOSS.** A watched guard duel is AI-vs-AI on both
+  seats = the Deck Tester shape, so `HostedMatch.endCurrentGame()` nulls `game` before GameEnd() runs and the
+  2026-08-13 null-guard left `winner` at its false default. `match` outlives `game` and knows the winner - read from
+  there. Also: the item **use dialog was cached in a field**, so it kept the FIRST used item's name/description all
+  session ("Use Rally rune?" on the Colorless rune) and did not wrap - rebuilt per use. **Guard travel used the raw
+  frame delta**, so the first frame back from a duel covered the whole journey home in one step - clamped to 0.05s.
+  `assignMissions` released a guard DURING its own duel (its mage is off the enemies list because it is being
+  fought) - now skips the duelling guard. NOT a bug: "out of commission until day 236" was day 206 + 30, correct;
+  the label leads with the countdown now. Requests done: **Heal a downed guard for 100 shards**
+  (`healShardCost`), **green minimap dots** for deployed guards (in the mageMarkers list so zoom moves them),
+  **minZoom 0.25 -> 0.12**, **Colorless rune -> Homeward rune** (items serialize whole, so owned copies still work),
+  and a **starter-deck AUDIT log line** (lands, rarity split, editions, most copies of one card).
 - Round 151 (2026-09-08, REPO ONLY - user was playing, NOT PACKAGED): six playtest bugs. **(1) RARITY TRAVELS WITH
   THE PRINTING** - a `["Common"]` filter passed on a card's Common printing, then `remapToEditionList` swapped it for
   the only in-list printing, which was RARE (Narcomoeba: Common in SLZ, Rare in GRN, and GRN is a Viashino set). The

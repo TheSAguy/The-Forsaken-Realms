@@ -361,14 +361,20 @@ public class InventoryScene extends UIScene {
             ItemData data = itemLocation.get(selected).getRight();
             if (data == null)
                 return;
-            if (useDialog == null) {
-                useDialog = createGenericDialog("", null, Forge.getLocalizer().getMessage("lblYes"),
-                        Forge.getLocalizer().getMessage("lblNo"), () -> {
-                            this.triggerUse();
-                            removeDialog();
-                        }, this::removeDialog);
-                useDialog.getContentTable().add(Controls.newTextraLabel("Use " + data.name + "?\n" + data.getDescription()));
-            }
+            // ROUND 152 BUG FIX (user playtest: "When I try to use the Colorless Rune, it says
+            // Rally Rune. Also, the text for this is off the screen"). Both symptoms, one cause:
+            // the dialog was built ONCE and cached in a field, so it kept the name and description
+            // of whichever item was used FIRST for the rest of the session. Rebuilt every time now,
+            // and the label wraps to the dialog width instead of running off the screen edge.
+            useDialog = createGenericDialog("", null, Forge.getLocalizer().getMessage("lblYes"),
+                    Forge.getLocalizer().getMessage("lblNo"), () -> {
+                        this.triggerUse();
+                        removeDialog();
+                    }, this::removeDialog);
+            com.github.tommyettinger.textra.TextraLabel useLabel =
+                    Controls.newTextraLabel("Use " + data.name + "?\n" + data.getDescription());
+            useLabel.setWrap(true);
+            useDialog.getContentTable().add(useLabel).width(Forge.isLandscapeMode() ? 250f : 230f).row();
             showDialog(useDialog);
         }
         if (deckLocation.containsKey(selected)){

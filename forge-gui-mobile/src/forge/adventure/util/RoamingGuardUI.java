@@ -98,7 +98,10 @@ public class RoamingGuardUI {
         sb.append(" - [+Life] ").append(guard.maxLife).append(", speed ").append((int) RoamingGuards.speedFor(guard.tier));
         sb.append(guard.deckCards.length == 0 ? "" : ", \"" + guard.deckName + "\" (" + RoamingGuards.cardCount(guard) + ")");
         if (guard.isOutOfCommission(day))
-            sb.append(" [RED](out of commission until day ").append(guard.downUntilDay).append(")");
+            // Round 152 (user read "until day 236" as "236 days left" - it was 30, from day 206).
+            // The absolute day alone made a correct number look alarming; lead with the countdown.
+            sb.append(" [RED](hurt - ").append(guard.downUntilDay - day)
+                    .append(" more days, back on day ").append(guard.downUntilDay).append(")");
         else if (!RoamingGuards.isArmed(guard))
             sb.append(" [RED](GIVE DECK - unarmed, it will not be sent out or paid)");
         else if (RoamingGuards.engagesNothing(guard))
@@ -250,8 +253,9 @@ public class RoamingGuardUI {
         Dialog dialog = new Dialog(RoamingGuards.displayName(guard.tier), Controls.getSkin());
         EconomyBuildings.addContentRow(dialog, describe(guard, day));
         if (guard.isOutOfCommission(day))
-            EconomyBuildings.addContentRow(dialog, "[RED]Dismissing now forfeits the deck. "
-                    + "Waiting until day " + guard.downUntilDay + " costs nothing.");
+            EconomyBuildings.addContentRow(dialog, "[RED]Dismissing now forfeits the deck.[] Waiting the "
+                    + (guard.downUntilDay - day) + " remaining day(s) costs nothing, or heal it for "
+                    + RoamingGuards.healShardCost() + "[+Shards].");
         // Round 148 (user spec + mock-up: "I think we need to re-work the Mage Attack orders, I
         // want to add Color as an option... let's make it check-boxes"). Checkboxes rather than the
         // old YES/no buttons because nine of those would not fit, and because a checkbox is read at
@@ -289,6 +293,19 @@ public class RoamingGuardUI {
             });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
 
+        if (guard.isOutOfCommission(day)) {
+            // Round 152 (user request: "Let's add a Heal button for a defeated mage - 100 Shards").
+            int healCost = RoamingGuards.healShardCost();
+            boolean canAfford = AdventurePlayer.current().getShards() >= healCost;
+            EconomyBuildings.addHalfButton(dialog, column, "[%75]Heal " + healCost + "[+Shards]", canAfford, () -> {
+                AdventurePlayer.current().takeShards(healCost);
+                RoamingGuards.heal(guard, day);
+                GameHUD.getInstance().addNotification("[GREEN]Your " + RoamingGuards.displayName(guard.tier)
+                        + " guard is back on its feet.", true);
+                scene.removeDialog();
+                openManageGuard(scene, changes, poiName, objectId, guard);
+            });
+        }
         EconomyBuildings.addHalfButton(dialog, column, "Change rank", true, () -> {
             scene.removeDialog();
             openRetier(scene, changes, poiName, objectId, guard);

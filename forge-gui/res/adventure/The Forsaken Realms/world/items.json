@@ -511,7 +511,7 @@
         "rarity":  "Common"
     },
     {
-        "name":  "Colorless rune",
+        "name":  "Homeward rune",
         "usableOnWorldMap":  true,
         "equipmentSlot":  "Ability2",
         "description":  "Teleports you home - to the mysterious library, or just outside your Capitol once you've built one",

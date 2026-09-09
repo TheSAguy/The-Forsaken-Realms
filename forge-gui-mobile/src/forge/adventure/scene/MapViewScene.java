@@ -47,7 +47,9 @@ public class MapViewScene extends UIScene {
     private Set<Vector2> positions;
     private final List<TypingLabel> details;
     private final float maxZoom = 1.2f;
-    private final float minZoom = 0.25f;
+    // Round 152 (user request: "Is it possible to have the over-world map zoom out further?").
+    // 0.25 -> 0.12 is about seven more 0.9x steps, roughly halving the smallest scale again.
+    private final float minZoom = 0.12f;
     private Set<PointOfInterest> bookmark;
     private int lastOverlayMode = 0; // 0=none, 1=details, 2=events, 3=reputation
     // Territory Control (MOD_SCOPE.md #7): one colored dot per in-flight capture mage, same
@@ -541,6 +543,22 @@ public class MapViewScene extends UIScene {
             marker.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
             table.addActor(marker);
             marker.setPosition(getMapX(mage.getX()) - marker.getWidth() / 2, getMapY(mage.getY()) - marker.getHeight() / 2);
+            mageMarkers.add(marker);
+        }
+
+        // Roaming guard dots (round 152, user request: "can we add a dot on the mini-map for our
+        // Roaming Guards"). Deliberately in the same mageMarkers list as the attacker dots above:
+        // that list is what zoomIn/zoomOut re-position and what enter() clears, so a separate one
+        // would detach from the map on the first zoom. Green rather than a territory color, so a
+        // friendly dot never reads as another incoming mage. No fog gate - these are the player's
+        // own guards and their position is not a secret from them.
+        for (forge.adventure.data.RoamingGuardData guard : forge.adventure.util.RoamingGuards.roster()) {
+            if (!guard.deployed)
+                continue;
+            Image marker = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
+            marker.setColor(com.badlogic.gdx.graphics.Color.LIME);
+            table.addActor(marker);
+            marker.setPosition(getMapX(guard.x) - marker.getWidth() / 2, getMapY(guard.y) - marker.getHeight() / 2);
             mageMarkers.add(marker);
         }
 

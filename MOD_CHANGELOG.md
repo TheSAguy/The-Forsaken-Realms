@@ -17757,6 +17757,76 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 152: the guard that won and was recorded as a loss (2026-09-08)
+
+Second playtest of the roaming guards. Three real bugs, one non-bug, and five requests.
+
+### Every watched guard duel was scored a defeat
+
+User: *"I saw one of our roaming guards win."* The log disagreed, and said why:
+
+    [TFR-DuelEndRace] hostedMatch.getGame() was already null in GameEnd() - winner defaults false
+    [TFR-AnteResult] winner=false won=0 lost=0 game=null
+    [TFR-RoamGuard] Archmage defeated on day 188 - out of commission until day 218
+
+A watched guard duel runs with BOTH seats AI-controlled, which is structurally the same as a Deck
+Tester match: `HostedMatch.endCurrentGame()` nulls its `game` field once the match auto-decides,
+racing ahead of the result callback. The null-guard covering that has been in place since
+2026-08-13, written for Deck Tester, and it leaves `winner` at its `false` default - which for Deck
+Tester is harmless and for a roaming guard means **the guard loses every fight it is watched
+winning**, and is benched for a month each time. Both of the user's guards went down that way.
+
+`HostedMatch` only ever nulls `game`; `match` outlives it and still knows the winner, so the result
+is read from there when the game is already gone.
+
+### "Use Rally rune?" on the Colorless rune
+
+Both reported symptoms - the wrong name, and the description running off the screen - are one cause.
+`useDialog` was built once and cached in a field, so it kept the name and description of whichever
+item was used FIRST for the whole session. It is rebuilt per use now, and the label wraps to the
+dialog width.
+
+### A guard that teleported home
+
+`delta` is the raw frame time, and the first frame back from a duel carries however long that match
+took. `speed * delta` then dwarfs the whole remaining journey and moveGuards' own `Math.min` snaps
+the guard to its destination in one step - which is exactly what "teleported directly from the town"
+looks like. Clamped to one frame's worth of travel. The attacking mages never showed this because a
+duel starts from a collision AT their destination; only a guard is mid-journey across a scene switch.
+
+### Also found, not reported
+
+`assignMissions` releases any guard whose threat has evaporated - and a mage being fought is off the
+enemies list precisely BECAUSE it is being fought, so the sweep fired in the middle of the guard's
+own interception and logged "target is no longer under attack". It skips the duelling guard now.
+
+### Not a bug: "out of commission until day 236"
+
+Day 206 + `recoveryDays` 30 = 236, and the log confirms the Archmage recovering exactly 30 days
+after falling. It is an absolute day, not a countdown, and reading it as one is a fair mistake to
+make - so it leads with the countdown now: *"hurt - 30 more days, back on day 236"*.
+
+### Requests
+
+- **Heal a downed guard** for 100 shards (`healShardCost` in `roaming_guards.json`), offered only
+  while it is actually down.
+- **Minimap dots for roaming guards**, green so a friendly dot never reads as another incoming mage.
+  Deliberately in the same marker list as the attacker dots - that list is what zoomIn/zoomOut
+  reposition, so a separate one would detach from the map on the first zoom.
+- **Zoom out further**: `minZoom` 0.25 -> 0.12, about seven more steps.
+- **Colorless rune -> Homeward rune.** Inventory items serialize whole rather than by name, so a
+  copy already owned keeps working under the old name.
+- **Starter deck audit logging.** User: *"it's hard for me to confirm if the decks are correct."*
+  One scannable line per generated deck - lands, rarity split, edition spread, and the largest
+  number of copies of any one card, flagged `<-- ILLEGAL, more than 4` when it should not happen -
+  then the list itself. A rare in a no-rares template or a set that does not belong to that race
+  shows up without reading forty rows.
+
+**Files touched**: `scene/DuelScene.java`, `scene/InventoryScene.java`, `scene/MapViewScene.java`,
+`util/RoamingGuardRuntime.java`, `util/RoamingGuards.java`, `util/RoamingGuardUI.java`,
+`util/Config.java`, `data/RoamingGuardConfig.java`; plane `world/items.json`, `world/quests.json`,
+`config tables/roaming_guards.json`.
+
 ## Round 151: six playtest bugs from the race starter decks (2026-09-08)
 
 First real play of rounds 149-150. The generator itself was sound - the log shows seven new games,

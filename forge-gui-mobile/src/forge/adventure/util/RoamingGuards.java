@@ -55,6 +55,19 @@ public class RoamingGuards {
         return c == null || c.recoveryDays <= 0 ? 30 : c.recoveryDays;
     }
 
+    /** Shards to cut a defeated guard's recovery short (round 152, user request). */
+    public static int healShardCost() {
+        RoamingGuardConfig c = config();
+        return c == null || c.healShardCost <= 0 ? 100 : c.healShardCost;
+    }
+
+    /** Returns a downed guard to duty at once. The caller charges the shards. */
+    public static void heal(RoamingGuardData guard, int currentDay) {
+        System.out.println("[TFR-RoamGuard] " + displayName(guard.tier) + " healed on day " + currentDay
+                + " for " + healShardCost() + " shards - was out until day " + guard.downUntilDay);
+        guard.downUntilDay = 0;
+    }
+
     public static List<RoamingGuardData> roster() {
         return AdventurePlayer.current().getRoamingGuards();
     }
