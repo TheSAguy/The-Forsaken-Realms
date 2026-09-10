@@ -1,13 +1,11 @@
-> **DRAFT for review (2026-09-10) — delete this block before publishing.**
-> Covers rounds 137-164, everything since v1.08. Before this goes out: (1) rounds 162-164 have not been
-> playtested yet, and the standing release rule is the user's pass first; (2) the other standing rule is to
-> take the upstream engine update first, as its own round, then re-test; (3) stamps to bump: `modVersion`
-> 1.08 → 1.09 and `modVersionDate` in config.json, `tfr.version` 1.08 → 1.09 and `manifestVersionCode`
-> 10800 → 10900 in the Android pom; (4) two features from this range are deliberately NOT in these notes
-> because they do not work yet — the hostile-terrain "stranded legends" spawns and Arzakon's chest fallback;
-> (5) the Armory storage shipped on three default decisions you may want to reverse (one storage for the whole
-> character rather than one per town, no Level 2 gate, a downed guard's equipment returns rather than being
-> forfeited with the deck); (6) the release tag must be `tfr-v1.09` and the APK `forsaken-realms-1.09-signed-aligned.apk`.
+> **DRAFT for review (updated 2026-09-10 afternoon) — delete this block before publishing.**
+> Covers rounds 137-170, everything since v1.08. Before this goes out: (1) the engine merge is DONE (round
+> 165, the 09.09 daily) — everything since round 158 runs on it and is yours to pass; (2) stamps to bump:
+> `modVersion` 1.08 → 1.09 and `modVersionDate` in config.json, `tfr.version` 1.08 → 1.09 and
+> `manifestVersionCode` 10800 → 10900 in the Android pom; (3) two features from this range are deliberately
+> NOT in these notes because they do not work yet — the hostile-terrain "stranded legends" spawns and
+> Arzakon's chest fallback; (4) the release tag must be `tfr-v1.09` and the APK
+> `forsaken-realms-1.09-signed-aligned.apk`.
 
 ## The Forsaken Realms — v1.09 — The Roaming Guard
 
@@ -53,15 +51,28 @@ Other things worth knowing:
 - **An unarmed guard is not paid** and is never sent out. Arm it before you expect anything of it.
 - **A guard fights with its own deck and its own gear** — never with your equipment or your blessing.
   Guards do not fight for ante either; ante stakes your cards, and you are not in that fight.
+- **Guard fights count as yours.** Win or lose, watched or simulated, a guard's duel goes into your
+  win/loss record and, on a win, your reputation, exactly as if you had fought it.
+- **One fight at a time.** A second attacker arriving while a guard fight is running waits at the gate
+  for its turn; a guard that wins and finds another attacker waiting holds the gate instead of walking
+  home. A draw, a stalled fight or quitting out of a watched guard duel counts as the guard losing.
 - Guards appear on the minimap as **green dots**, and on the new Attacks view (below) as lines showing
   where each one is walking.
 
 ## New: the Armory storage, and equipment for your guards
 
-Every Armory you own has a **Storage** button. It holds spare equipment — anything with a slot that you are
-not wearing — and you can put things in or take them out at any Armory; it is one store for the whole
-character. At the Capitol, a roaming guard's page gains an **Equipment** button that dresses the guard from
-that store, one item per slot, the same slots your own character has.
+Your Capitol's Level 2 Armory has a **Storage** button. It opens a screen laid out like your inventory: your
+character on the left, the **Armory Storage** grid on the right, your inventory below it, and a **Transfer**
+button that moves the selected item between the two. Anything you are not wearing can go in, including
+Landscape Sketchbooks, which keep unlocking their land art from the storage. Sell, Dispose, Use and Equip
+work there as they do on the inventory screen.
+
+A roaming guard's page gains an **Equipment** button that opens the same screen for the guard: the doll and
+the lower grid show what the guard wears, one item per slot, and Transfer gives it a piece from the storage
+or takes one back. What a guard wears fights with it — its own bonuses on its side, a Medal's extra land on
+the mage's — whether you watch the duel or let it simulate, and boots make it walk faster. Guard equipment
+never cracks, whatever your cracked-items setting says, and it always comes back to the storage when a guard
+is dismissed or leaves; only the deck can be lost.
 
 
 ## New: starter decks that belong to your race
@@ -142,23 +153,16 @@ duel's gold shows up and a bank deposit does not.
   gives Jeska's Will; two Medals that handed the AI Command Tower — a dead land without a commander — hand
   it Gemstone Mine instead.
 - **The Colorless rune is the Homeward rune.** A copy you already own keeps its old name and keeps working.
+- **Research is cheaper.** Unlocking a set at the Research Lab costs **50 shards** instead of 100, before
+  difficulty scaling. The seven days are unchanged.
 
-
-## Known issues
-
-- Beat a cave champion and it can be back in another spot of the same cave when you return.
-- A **watched** guard duel counts toward your own reputation and statistics; a simulated one does not.
-- A draw, a stalled fight or quitting out of a watched guard duel is scored as the guard losing.
-- While one guard fight is simulating, a second attack arriving elsewhere goes unopposed.
-- On the Balance Sheet, hire fees, upgrades and heals are lumped into "Everything else", and the bank
-  interest line runs a day early.
-- The deck picker still runs off the screen for players with more than eight or nine built decks.
-- War champions stop appearing once you pass 150 wins.
 
 ## Engine
 
-Unchanged from v1.08 — Forge's 2026-09-06 daily. (Replace this line if an engine merge is taken before
-release.)
+Forge's 2026-09-09 daily, up from the 09.06 daily v1.08 shipped on. It changes how every duel plays: mana
+abilities follow the current rule (CR 605.1a), Adventure and Omen cards offer their alternate half in more
+places, and the AI attacks, fights and pumps a little differently. Card scripts and editions are current to
+the 9th of September.
 
 **Saves from v1.08 load.** Nothing in this release changes the save format; a save from before the roaming
 guards simply has none, and one from before the Armory storage has an empty store. The one visible quirk:

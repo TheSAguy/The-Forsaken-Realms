@@ -2524,7 +2524,15 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void removeItem(String name) {
-        inventoryItems.stream().filter(itemData -> name.equalsIgnoreCase(itemData.name)).findFirst().ifPresent(this::removeItem);
+        java.util.Optional<ItemData> held = inventoryItems.stream().filter(itemData -> name.equalsIgnoreCase(itemData.name)).findFirst();
+        if (held.isPresent()) {
+            removeItem(held.get());
+            return;
+        }
+        // Round 170: hasItem()/countItem() count the Armory storage as owned, so a take-by-name must be
+        // able to reach it too - otherwise a quest could check for an item and then fail to take it.
+        armoryStorage.stream().filter(itemData -> itemData != null && name.equalsIgnoreCase(itemData.name)).findFirst()
+                .ifPresent(armoryStorage::remove);
     }
 
     public void removeItem(ItemData item) {
@@ -2674,12 +2682,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return goldModifier(false);
     }
 
+    /** Owned anywhere - the pack or the Armory storage (round 170: a stored item is still yours, the way
+     *  the deck editor's sketchbooks are). Quest items cannot be stored, so quest checks are unaffected. */
     public boolean hasItem(String name) {
-        return inventoryItems.stream().anyMatch(itemData -> name.equalsIgnoreCase(itemData.name));
+        return inventoryItems.stream().anyMatch(itemData -> name.equalsIgnoreCase(itemData.name))
+                || armoryStorage.stream().anyMatch(itemData -> itemData != null && name.equalsIgnoreCase(itemData.name));
     }
 
     public int countItem(String name) {
-        return (int) inventoryItems.stream().filter(Objects::nonNull).filter(i -> i.name.equals(name)).count();
+        return (int) inventoryItems.stream().filter(Objects::nonNull).filter(i -> i.name.equals(name)).count()
+                + (int) armoryStorage.stream().filter(Objects::nonNull).filter(i -> i.name.equals(name)).count();
     }
 
     public boolean addItem(String name) {

@@ -43,12 +43,24 @@ public final class ArmoryStorage {
         return slot != null && !slot.isEmpty() && !slot.startsWith("Ability");
     }
 
-    /** Wearable things only - and never something the player is wearing right now: depositing must
-     *  not strip the doll behind the player's back. Take it off on the inventory screen first. */
+    /** Anything the player owns that is not a quest item and is not being worn right now: depositing
+     *  must not strip the doll behind the player's back, so take a worn piece off first.
+     *  <p>
+     *  Round 170 (user: "The necklace was the only item I could transfer, everything else was greyed
+     *  out"): this used to test {@code !item.isEquipped} on its own, and that flag is stale on anything
+     *  that was ever displaced from a slot before round 137 fixed displacement - so a bag full of unworn
+     *  gear read as worn. Worn means the flag AND the doll agree, the inventory screen's own test. The
+     *  "must have a slot" rule went too: the user wants sketchbooks (no slot) in the storage, and they
+     *  keep working from there (AdventureDeckEditor reads the storage as well). */
     public static boolean canDeposit(ItemData item) {
-        if (item == null || item.questItem || item.equipmentSlot == null || item.equipmentSlot.isEmpty())
+        if (item == null || item.questItem)
             return false;
-        return !item.isEquipped && !AdventurePlayer.current().getEquippedItems().contains(item.longID);
+        return !isWornByPlayer(item);
+    }
+
+    /** The inventory screen's test for "worn": the flag and the doll must agree. */
+    public static boolean isWornByPlayer(ItemData item) {
+        return item.isEquipped && item.longID != null && AdventurePlayer.current().getEquippedItems().contains(item.longID);
     }
 
     /** Same rule as the doll: a cracked item is unusable until repaired. */

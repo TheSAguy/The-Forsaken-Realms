@@ -2627,3 +2627,8 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 
 - **`scene/RewardScene.java`** - `promptArmoryStorage()` opens `ArmoryScene`; `enter()` refreshes the Storage button's count after the round-146 re-open check. Two lines.
 - New mod-added: `scene/ArmoryScene.java` (a UIScene shaped like InventoryScene, two grids), `ui/armory.json`, `ui/armory_portrait.json`.
+
+## Round 170 (2026-09-10) - storage ownership
+
+- **`scene/AdventureDeckEditor.java`** - the sketchbook scan iterates the pack plus `getArmoryStorage()` (three lines).
+- **`player/AdventurePlayer.java`** - `hasItem()` / `countItem()` also count `armoryStorage`; `removeItem(String)` falls back to it when the pack has no such item.

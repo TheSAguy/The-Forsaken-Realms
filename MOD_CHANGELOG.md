@@ -17757,6 +17757,30 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 170: the storage takes everything you are not wearing, and sketchbooks work from it (2026-09-10)
+
+User, first look at the Armory screen: *"The necklace was the only Item I could transfer, everything else it did
+not allow me to transfer, it was just greyed out. Also, I'm not 100% sure how sketchbooks work, I think you just
+need to own them, not use them? Make sure they work even when they are in the Storage."*
+
+- **Why everything was greyed out.** `ArmoryStorage.canDeposit()` tested `!item.isEquipped` on its own, and that
+  flag is STALE on any item that was ever displaced from a slot before round 137 fixed displacement - the user's
+  sword, coins and flag all still said "equipped" while sitting unworn in the pack. The inventory screen never
+  trusts the flag alone; it asks the doll too. `canDeposit()` now uses the same test (`isWornByPlayer()`: the
+  flag AND the doll), so only what is actually worn is refused. Take it off on the doll first, as before.
+- **No slot requirement any more.** Round 163 only stored wearables. The user wants sketchbooks in the storage
+  (they have no slot), so anything that is not a quest item and not worn can go in.
+- **Sketchbooks work from the storage.** They are "own it" items: `AdventureDeckEditor` scans the pack for
+  `Landscape Sketchbook - <set>` to unlock that set's land art; it now scans the storage as well. More generally
+  `AdventurePlayer.hasItem()` / `countItem()` count the storage as owned (dialog conditions, the shop's "Owned"
+  count, quest item counts - quest items themselves cannot be stored), and `removeItem(String)` falls back to
+  the storage so a take-by-name cannot be dodged by storing the item first.
+
+PACKAGED 15:24 - live folder = the 09.09 engine with rounds 158-170.
+
+**Files touched**: `util/ArmoryStorage.java`, `scene/AdventureDeckEditor.java`, `player/AdventurePlayer.java`,
+`RELEASE_NOTES_v1.09.md` (draft brought up to round 170).
+
 ## Round 169: research costs half as much (2026-09-10)
 
 User: *"cut the research cost in half."* `researchShardCost` in `config tables/settings.json` **100 -> 50** shards per

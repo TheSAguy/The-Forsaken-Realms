@@ -106,7 +106,11 @@ public class AdventureDeckEditor extends FDeckEditor {
             }
 
             String sketchbookPrefix = "landscape sketchbook - ";
-            for (ItemData itemData : AdventurePlayer.current().getItems()) {
+            // Round 170 (user: "Make sure they work even when they are in the Storage"): a sketchbook
+            // unlocks its land art from the Armory storage as well as from the pack.
+            java.util.List<ItemData> owned = new java.util.ArrayList<>(AdventurePlayer.current().getItems());
+            owned.addAll(AdventurePlayer.current().getArmoryStorage());
+            for (ItemData itemData : owned) {
                 if (itemData == null)
                     continue;
                 String itemName = itemData.name;
