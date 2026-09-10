@@ -34,7 +34,7 @@
       "width": 60,
       "height": 20,
       "x": 105,
-      "y": 245
+      "y": 455
     },
     {
       "type": "TextButton",
@@ -43,7 +43,7 @@
       "width": 60,
       "height": 20,
       "x": 105,
-      "y": 245
+      "y": 455
     },
     {
       "type": "TextButton",
@@ -52,7 +52,7 @@
       "width": 60,
       "height": 20,
       "x": 105,
-      "y": 245
+      "y": 455
     },
     {
       "type": "TextButton",
@@ -61,7 +61,7 @@
       "width": 60,
       "height": 20,
       "x": 105,
-      "y": 245
+      "y": 455
     },
     {
       "type": "TextButton",
@@ -70,7 +70,7 @@
       "width": 60,
       "height": 20,
       "x": 105,
-      "y": 245
+      "y": 455
     },
     {
       "type": "TextButton",

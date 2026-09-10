@@ -411,8 +411,12 @@ public class MapViewScene extends UIScene {
         // in round 156 was never made visible and the overlay could not be opened at all (its own
         // log line never appeared once in the user's session). Names now hands off to Attacks, and
         // attacks() closes the cycle.
-        lastOverlayMode = 4;
-        setOverlayButtonStates(4);
+        // Round 164 (Android/plane pass): a plane whose map layout has no "attacks" button (the stock
+        // common/ui/map.json) used to dead-end here - the next button in the cycle did not exist, so
+        // the only way back to Details was to leave the map. Close the cycle at Names on such planes.
+        boolean hasAttacks = ui.findActor("attacks") != null;
+        lastOverlayMode = hasAttacks ? 4 : 0;
+        setOverlayButtonStates(hasAttacks ? 4 : 0);
         clearDetails();
         clearAttacks();
 

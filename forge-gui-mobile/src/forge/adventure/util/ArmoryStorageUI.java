@@ -150,7 +150,9 @@ public final class ArmoryStorageUI {
     /** Scales a button label down with its length so a long item name stays inside the half button
      *  (140px landscape / 118px portrait); the full name is always in the content rows above. */
     static String fit(String text) {
-        String shown = text.length() > 30 ? text.substring(0, 29) + "." : text;
+        // Round 164 (Android pass): the half button is 118px in portrait, not 140 - cut sooner there.
+        int cap = forge.Forge.isLandscapeMode() ? 30 : 25;
+        String shown = text.length() > cap ? text.substring(0, cap - 1) + "." : text;
         int len = shown.length();
         return (len <= 14 ? "[%75]" : len <= 20 ? "[%65]" : "[%55]") + shown;
     }

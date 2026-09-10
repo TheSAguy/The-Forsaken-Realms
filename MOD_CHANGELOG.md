@@ -17757,6 +17757,67 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 164: the Android / portrait pass over everything added since v1.08 (2026-09-10)
+
+User ask: *"do a full inspection of all new buttons/menus added since the last update and make sure they are Android
+friendly to the best of your ability, given past Android tweaks."* The user has no Android device, so this is a
+code-and-layout inspection against the conventions the earlier Android rounds established (69, 100, 120, 155, 156):
+a 270x480 portrait stage, a `*_portrait.json` twin per scene, content rows 250/230, half buttons 140/118,
+`makeContentScrollable` caps 96/260, `dialogBodyMaxWidth()` from the live viewport, checkbox grids 250/230.
+
+### What was inspected
+
+Every layout file's element list was diffed against its portrait twin (all twins match - the round-137 twin hand
+slots, the round-156 `attacks` button and the round-147 `balanceSheet` button are in both files), and every dialog
+built since round 137 was read for its width rules: the guard chooser, roster, hire, deck picker, deck return,
+manage screen and its checkbox grids, rank change, dismiss confirmation, info page, balance sheet, the Armory
+storage dialogs and the paged picker, the shop page's programmatic buttons, the minimap overlays, the inventory doll,
+the HUD ability buttons, the New Game starter-set dropdown.
+
+### What was wrong, and is fixed
+
+1. **The shop page's seven programmatic buttons were never right in portrait** (`Destroy Building`, `Manage
+   Guards`, `Upgrade Armory`, `Re-roll Inventory`, `Re-assign Shop Type`, `Buy Blueprint`, and round 163's
+   `Storage`). They are all sized 2.2 x the Back button, which is 48px wide in landscape but 128px in portrait: 281px
+   of button on a 270px stage, so every one of them ran off the left edge, row 1 sat on top of the gold readout, and
+   `Storage` ("one row below Back") landed below the bottom of the screen. One placement rule now
+   (`RewardScene.placeModButton`): landscape unchanged; portrait takes Back's own width and column (x 140-268),
+   stacked upward from just above the Detail button with Storage as the fourth row. The card grid keeps its left half.
+2. **The minimap's overlay cycle button floated in the middle of the map in portrait** (`map_portrait.json` had
+   all five at y 245 of 480 - a landscape number copied into a portrait file). It sits on the bottom bar now,
+   between Back and Quest, where landscape has it.
+3. **The longest button labels shrink in portrait**: the roaming hire and rank-change rows
+   (`Archmage [+Life]30 spd40 150[+Gold]+15[+Shards]/wk`) drop to `[%62]` on the 118px half button; the deck
+   picker's deck names go through the picker's `fit()`; `fit()` itself truncates at 25 characters in portrait.
+4. **Standings page (portrait)**: `Balance` and `Status` started 1px inside the Back button's span; moved 2px down.
+5. **Dismiss confirmation** gets `makeContentScrollable` (its forfeit text runs seven lines at 230px); **Change
+   Rank**'s Back is a half button like every other button in that file (it was the one 240px full row).
+6. **Other planes**: a map layout without an `attacks` button (the stock `common/ui/map.json`) dead-ended the
+   overlay cycle at Names since round 158 - the next button did not exist. The cycle closes at Names there.
+
+### Checked and deliberately left alone
+
+- **Balance Sheet** (16 rows, no scroller): fits portrait's 260px cap with room; adding the scroller would put the
+  sheet the user reads on the desktop into a 96px window. The desktop layout is what they use.
+- **Exchange**'s fixed 118/240 widths fit both modes. **Checkbox grids** were sized for portrait in round 155.
+  **1px attack/guard lines** are stage units and scale with the phone. `MAX_LABEL_SHIFTS` is resolution-independent
+  by design (labels that find no room are hidden, not misplaced).
+- **Deck picker / deck return with many decks**: up to ten rows of half buttons in a Dialog's button table, which
+  cannot scroll. Pre-existing since round 145; a player with twenty built decks would overflow either mode. Noted
+  for a later round - it needs the paged picker, not a width tweak.
+
+### What a phone tester should look at
+
+The Armory page (Storage plus up to three rows stacked in the right column above Detail), the minimap's bottom bar,
+the roaming hire dialog's four labels, the Standings page's bottom-right buttons, and the colour checkbox row on the
+manage screen (five boxes across 230px - the tightest fit in the mod, unverified on a device).
+
+PACKAGED 08:15, 356 MB - live folder carries rounds 158-164.
+
+**Files touched**: `scene/RewardScene.java` (stock - `placeModButton`), `scene/MapViewScene.java` (stock - `names()`
+guard), `util/ArmoryStorageUI.java` (`fit`), `util/RoamingGuardUI.java` (labels, Back, scroller),
+`ui/map_portrait.json`, `ui/world_standings_portrait.json`.
+
 ## Round 163: the Armory storage and guard equipment (2026-09-10)
 
 User ask (2026-09-10, called "the last item I have for this round, before release"): *"add a storage to the armory.

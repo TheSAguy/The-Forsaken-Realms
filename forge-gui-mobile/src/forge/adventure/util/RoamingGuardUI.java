@@ -134,7 +134,10 @@ public class RoamingGuardUI {
             int shards = RoamingGuards.weeklyShardCost(tier);
             boolean canAfford = AdventurePlayer.current().getGold() >= gold
                     && AdventurePlayer.current().getShards() >= shards;
-            String label = "[%75]" + RoamingGuards.displayName(tier) + " [+Life]" + RoamingGuards.lifeFor(tier)
+            // Round 164 (Android pass): this is the longest half-button label in the mod; the portrait
+            // half button is 118px, so the font drops a step there.
+            String label = (forge.Forge.isLandscapeMode() ? "[%75]" : "[%62]") + RoamingGuards.displayName(tier)
+                    + " [+Life]" + RoamingGuards.lifeFor(tier)
                     + " spd" + (int) RoamingGuards.speedFor(tier) + " " + gold + "[+Gold]"
                     + (shards > 0 ? "+" + shards + "[+Shards]" : "") + "/wk";
             EconomyBuildings.addHalfButton(dialog, column, label, canAfford, () -> {
@@ -187,7 +190,7 @@ public class RoamingGuardUI {
             String suffix = !playable ? " [RED]X" : impact.isEmpty() ? "" : " [RED]!";
             String count = deliverable == size ? String.valueOf(size) : deliverable + " of " + size;
             EconomyBuildings.addHalfButton(dialog, column,
-                    "[%75]" + deck.getName() + " (" + count + ")" + suffix, playable, () -> {
+                    ArmoryStorageUI.fit(deck.getName() + " (" + count + ")") + suffix, playable, () -> { // round 164: long deck names
                 RoamingGuards.giveDeck(guard, slot);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
@@ -377,6 +380,7 @@ public class RoamingGuardUI {
             openManageGuard(scene, changes, poiName, objectId, guard);
         });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
+        EconomyBuildings.makeContentScrollable(dialog); // round 164: the forfeit text runs seven lines at 230px
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }
@@ -434,7 +438,8 @@ public class RoamingGuardUI {
             boolean current = tier.equals(guard.tier);
             int difference = Math.max(0, RoamingGuards.weeklyGoldCost(tier) - RoamingGuards.weeklyGoldCost(guard.tier));
             boolean canAfford = AdventurePlayer.current().getGold() >= difference;
-            String label = "[%75]" + RoamingGuards.displayName(tier) + " [+Life]" + RoamingGuards.lifeFor(tier)
+            String label = (forge.Forge.isLandscapeMode() ? "[%75]" : "[%62]") + RoamingGuards.displayName(tier) // round 164: portrait
+                    + " [+Life]" + RoamingGuards.lifeFor(tier)
                     + " spd" + (int) RoamingGuards.speedFor(tier)
                     + (current ? " (current)" : difference > 0 ? " " + difference + "[+Gold]" : " (free)");
             EconomyBuildings.addHalfButton(dialog, column, label, !current && canAfford, () -> {
@@ -445,11 +450,13 @@ public class RoamingGuardUI {
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
         }
-        EconomyBuildings.finishHalfButtonRow(dialog, column);
-        EconomyBuildings.addButtonRow(dialog, "Back", true, () -> {
+        // Round 164: a half button like every other button in this file (round 146's width rule) - the
+        // 240px full row it was sat oddly under 118px pairs, and 240 is all a 270px portrait stage has.
+        EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
             openManageGuard(scene, changes, poiName, objectId, guard);
         });
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }

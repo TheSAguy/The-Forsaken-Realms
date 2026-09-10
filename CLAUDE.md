@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 163; v1.08 RELEASED, rounds 137-163 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 164; v1.08 RELEASED, rounds 137-164 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 164 (2026-09-10, PACKAGED 08:15, 356 MB - live folder carries rounds 158-164): **Android / portrait pass over rounds 137-163** (user: "make sure they are
+  Android friendly"). All layout twins match. Fixed: the shop page's seven programmatic buttons (2.2 x Back = 281px in
+  portrait, off the left edge, Storage off the bottom) now go through `RewardScene.placeModButton` (portrait: Back's
+  width/column, stacked above Detail, Storage = row 4); `map_portrait.json`'s five overlay-cycle buttons moved from
+  mid-map (y 245) to the bottom bar (y 455); hire/rank-change labels `[%62]` in portrait, deck names through
+  `ArmoryStorageUI.fit()` (cap 25 in portrait); standings portrait Balance/Status 2px off Back; dismiss confirm gets
+  the scroller; Change Rank's Back is a half button; `names()` closes the cycle on planes without an `attacks` button.
+  Left alone on purpose: Balance Sheet (no scroller - desktop readability), Exchange widths, checkbox grids (round 155),
+  1px lines. KNOWN GAP: deck picker / deck return button tables cannot scroll - twenty decks overflow (needs the paged
+  picker). Nothing verified on a device - the user has none; the tester checklist is in the changelog entry.
 - Round 163 (2026-09-10, built 07:17; PACKAGED 07:41, 354 MB - live folder carries rounds 158-163): **the Armory storage + roaming guard equipment** (MOD_SCOPE #118,
   design `docs/design/2026-09-10-armory-storage.md` - read its decision table before changing scope). ONE storage
   per character on `AdventurePlayer.getArmoryStorage()`, `Storage (N)` on every player-owned Armory page (any level,

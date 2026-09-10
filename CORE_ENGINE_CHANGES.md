@@ -2585,3 +2585,8 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`scene/DuelScene.java`** - `guardEffects` field cleared by `initDuels()`; `useGuardLoadout(Deck, int, Array<EffectData>)` (was two-arg; single caller in WorldStage); in `enter()`, the guard's effects are added to the seat lists right before the blessings block; `addEffects()` delegates to a new `public static applyEffects()` with the unchanged body.
 - **`stage/WorldStage.java`** - `startGuardDuel` passes `ArmoryStorage.effectsOf(guard)`; `simulateGuardDuel` uses the new hooked `runBatch` overload and logs the gear.
 - Mod-added files, no merge burden: `util/ArmoryStorage.java`, `util/ArmoryStorageUI.java` (new); `util/DeckTesterSimulator.java` (hooked overload; the old signature delegates), `util/RoamingGuards.java`, `util/RoamingGuardRuntime.java`, `util/RoamingGuardUI.java`, `util/EconomyBuildings.java` (one line), `data/RoamingGuardData.java`.
+
+## Round 164 (2026-09-10) - portrait pass
+
+- **`scene/RewardScene.java`** - the seven programmatic shop-page buttons (mod-added in rounds 3-163) are placed by one new `placeModButton(button, row)` with a landscape branch (the old inline formula) and a portrait branch; the seven inline `setSize`/`setPosition` pairs are gone. No stock line changed.
+- **`scene/MapViewScene.java`** - `names()` (mod-added view) checks `ui.findActor("attacks")` before handing the cycle to the Attacks view, so a plane using the stock `common/ui/map.json` closes the cycle at Names.

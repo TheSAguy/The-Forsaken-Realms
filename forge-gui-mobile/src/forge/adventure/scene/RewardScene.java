@@ -97,27 +97,21 @@ public class RewardScene extends UIScene {
         // added to the shared ui/items.json, which every plane's shops load. Positioned above the
         // done/checkmark button.
         destroyButton = Controls.newTextButton("Destroy Building", this::promptDestroyShop);
-        destroyButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        destroyButton.setPosition(doneButton.getX() + doneButton.getWidth() - destroyButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() + 10f);
+        placeModButton(destroyButton, 1);
         destroyButton.setVisible(false);
         ui.addActor(destroyButton);
         // Manage Guards (mod feature, user spec 2026-08-11, MOD_SCOPE.md #22) - Armory-only, Level
         // 2 only. Same programmatic-button pattern as Destroy Building above, positioned one row
         // higher so both can be visible at once (an Armory that's both Level 2 and destroyable).
         guardsButton = Controls.newTextButton("Manage Guards", this::promptManageGuards);
-        guardsButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        guardsButton.setPosition(doneButton.getX() + doneButton.getWidth() - guardsButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() * 2 + 20f);
+        placeModButton(guardsButton, 2);
         guardsButton.setVisible(false);
         ui.addActor(guardsButton);
         // Upgrade to Level 2 (mod feature, user spec 2026-08-11, Task #8/#13) - Armory-only,
         // Level 1 only (mutually exclusive with Manage Guards, same row/position - a shop is never
         // both at once). 2026-08-12 cost table: 300 stone.
         upgradeButton = Controls.newTextButton("[%80]Upgrade Armory (" + EconomyBuildings.costLabel(0, 0, EconomyBuildings.ARMORY_UPGRADE_STONE, 0) + ")", this::promptUpgradeArmory);
-        upgradeButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        upgradeButton.setPosition(doneButton.getX() + doneButton.getWidth() - upgradeButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() * 2 + 20f);
+        placeModButton(upgradeButton, 2);
         upgradeButton.setVisible(false);
         ui.addActor(upgradeButton);
         // Re-roll Inventory (mod feature, user spec 2026-08-11, round 7) - Armory-only, any level
@@ -126,9 +120,7 @@ public class RewardScene extends UIScene {
         // visible at the same time as EITHER guardsButton or upgradeButton (whichever the level
         // allows) - never with both at once, so 3 rows total is enough, no dynamic stacking needed.
         rerollButton = Controls.newTextButton("[%80]Re-roll Inventory (" + EconomyBuildings.scaledCost(EconomyBuildings.ARMORY_REROLL_SHARD_COST) + " [+Shards])", this::promptRerollArmory);
-        rerollButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        rerollButton.setPosition(doneButton.getX() + doneButton.getWidth() - rerollButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() * 3 + 30f);
+        placeModButton(rerollButton, 3);
         rerollButton.setVisible(false);
         ui.addActor(rerollButton);
         // Shop Type Re-Roll (mod feature, user spec 2026-08-11, round 8) - ordinary card shops
@@ -141,9 +133,7 @@ public class RewardScene extends UIScene {
         // shop's gold. The old flat SHOP_TYPE_REROLL_SHARD_COST no longer applies, so the button
         // carries no price label: the price depends on what you pick.
         shopTypeRerollButton = Controls.newTextButton("[%80]Re-assign Shop Type", this::promptRerollShopType);
-        shopTypeRerollButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        shopTypeRerollButton.setPosition(doneButton.getX() + doneButton.getWidth() - shopTypeRerollButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() * 2 + 20f);
+        placeModButton(shopTypeRerollButton, 2);
         shopTypeRerollButton.setVisible(false);
         ui.addActor(shopTypeRerollButton);
         // Buy Blueprint (user spec 2026-08-30): learn the type of the shop you are STANDING IN.
@@ -163,9 +153,7 @@ public class RewardScene extends UIScene {
         // mutual exclusion guardsButton/upgradeButton/shopTypeRerollButton already rely on for
         // row 2.
         buyBlueprintButton = Controls.newTextButton("[%80]Buy Blueprint", this::promptBuyBlueprint);
-        buyBlueprintButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        buyBlueprintButton.setPosition(doneButton.getX() + doneButton.getWidth() - buyBlueprintButton.getWidth(),
-                doneButton.getY() + doneButton.getHeight() * 3 + 30f);
+        placeModButton(buyBlueprintButton, 3);
         buyBlueprintButton.setVisible(false);
         ui.addActor(buyBlueprintButton);
         // Armory storage (round 163, MOD_SCOPE #118, user: "add a storage to the armory"). One row
@@ -173,9 +161,7 @@ public class RewardScene extends UIScene {
         // is off the top of the 270px stage, while the Armory never shows Restock (it is a noRestock
         // shop), so the spot under Done is free. Same size as the other programmatic buttons.
         storageButton = Controls.newTextButton("[%80]Storage", this::promptArmoryStorage);
-        storageButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
-        storageButton.setPosition(doneButton.getX() + doneButton.getWidth() - storageButton.getWidth(),
-                doneButton.getY() - storageButton.getHeight() - 6f);
+        placeModButton(storageButton, 0);
         storageButton.setVisible(false);
         ui.addActor(storageButton);
     }
@@ -270,6 +256,38 @@ public class RewardScene extends UIScene {
         forge.adventure.pointofintrest.PointOfInterest rootPoint = TileMapScene.instance().rootPoint;
         String poiName = rootPoint == null ? null : rootPoint.getData().name;
         EconomyBuildings.openManageGuardsDialog(this, changes, poiName, shopActor.getObjectId());
+    }
+
+    /**
+     * Round 164 (Android pass): ONE placement rule for the seven programmatic shop-page buttons
+     * (Destroy / Manage Guards / Upgrade / Re-roll / Re-assign / Blueprint / Storage), which used to
+     * repeat the same landscape formula inline - and that formula was never right in portrait:
+     * <ul>
+     * <li>LANDSCAPE (480x270, Done is 48x30 at the right edge): 2.2x Done wide, right-aligned to it,
+     *     rows stacked 40px apart ABOVE Done (row 1 = Destroy, 2 = Guards or Upgrade or Re-assign,
+     *     3 = Re-roll or Blueprint); row 4 would be off the top, so Storage (row 0) sits just BELOW
+     *     Done, where the Armory never shows Restock.</li>
+     * <li>PORTRAIT (270x480, Done is 128x32 bottom-right): 2.2x Done is 281px - wider than the whole
+     *     stage - so the buttons ran off the left edge and row 1 sat on top of the gold readout, and
+     *     Storage's "below Done" put it off the bottom of the screen. They now take Done's own width
+     *     and column (x 140-268), stacked upward from just above the Detail button, 8px apart, with
+     *     Storage as row 4; the card grid keeps its left half and scrolls under them, exactly as it
+     *     scrolls under the right-edge stack in landscape.</li>
+     * </ul>
+     */
+    private void placeModButton(TextraButton button, int row) {
+        float height = doneButton.getHeight() * 0.8f;
+        if (Forge.isLandscapeMode()) {
+            button.setSize(doneButton.getWidth() * 2.2f, height);
+            float y = row == 0 ? doneButton.getY() - height - 6f
+                    : doneButton.getY() + doneButton.getHeight() * row + 10f * row;
+            button.setPosition(doneButton.getX() + doneButton.getWidth() - button.getWidth(), y);
+            return;
+        }
+        button.setSize(doneButton.getWidth(), height);
+        float base = detailButton.getY() + detailButton.getHeight() + 8f;
+        int slot = row == 0 ? 4 : row; // Storage takes the fourth row in portrait; there is room above
+        button.setPosition(doneButton.getX() + doneButton.getWidth() - button.getWidth(), base + (slot - 1) * (height + 8f));
     }
 
     /** Round 163 (MOD_SCOPE #118): the Armory storage dialog. */
