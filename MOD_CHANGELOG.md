@@ -17757,6 +17757,90 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 166: the release-blocker answers (2026-09-10)
+
+The user went through the draft release notes' Known Issues and ruled on each, plus two decisions on the Armory
+storage. Everything below is their call; the mechanism notes are for the next reader.
+
+### Armory storage: the Capitol's Level 2 Armory only
+
+*"We only need the Item Storage at the Capitol, so let's do it only at Level 2 Armory."* The `Storage (N)` button
+now shows only on the Capitol's Level 2 Armory - the same gate Manage Guards has, since the storage exists for the
+guards hired there. Round 163 had it on every player-owned Armory at any level. The storage itself is unchanged
+(one per character). GUIDE.md and the design note's decision table record the change.
+
+### Guard equipment never cracks
+
+*"Guard items should never 'break' - there is an option to turn the player's items breakable on/off, but guards
+should never break."* Already true by construction, now documented in `ArmoryStorage`'s header: the only place an
+item cracks is `Current.generateDefeatMessage()`, which picks from the PLAYER's worn items when the player's own
+duel is lost, and a guard's loss never reaches it (`WorldStage.setWinner()` hands a guard duel to
+`RoamingGuardRuntime` before any of that runs). A cracked item can be stored but not given to a guard.
+
+### A beaten cave champion stays beaten
+
+*"How do we prevent this?"* The cave keeps a per-POI roll ("this champion" or "none"), and the champion's PLACEMENT
+is derived from the POI id modulo the number of eligible enemy placements. Killing the champion deleted its
+placement, so the next visit had one candidate fewer, the modulo landed on a different placement, and the same
+champion was promoted again - a fresh copy each visit. Now `MapStage`'s defeat handler tells `CaveChampions`
+the champion fell, and the cave's roll is overwritten with "none" - the same value a cave that rolled empty
+carries, which `championFor()` already reads as "no champion here". A cave that despawns and is replaced still
+rolls afresh as a new POI. `[TFR-CaveChampion] ... defeated - this cave's champion is gone for good`.
+
+### Guard fights count exactly like the player's own, watched or simulated
+
+*"Simulated one should also count - Guard fights stats should count the same as player stats."* A watched guard
+fight passes through `DuelScene.afterGameEnd()` and so wrote the win/loss record, the spawn-tier kill register and,
+on a win, colour reputation and the defended town's +1; the headless one never did. The two blocks are now
+`DuelScene.recordReputation()` and `DuelScene.recordStatistics()` (static, bodies unchanged) and
+`WorldStage.simulateGuardDuel()`'s result callback makes the same two calls under the same conditions. Watch and
+Simulate now agree on everything that leaves the fight. Found on the way and fixed in the same edit: **a
+spectated fight spent the player's blessing and Partner overheal** (`clearBlessing()` /
+`clearPartnerOverhealIfActive()` ran for every match end) even though round 156 keeps both OUT of a guard fight;
+they are only spent when the player actually played the seat. The Deck Tester's AI-vs-AI mode had the same leak.
+
+*"A draw, a stalled fight or quitting out of a watched guard duel is scored as the guard losing. (This seems
+correct to me.)"* Unchanged; it moves from Known Issues to the guard rules in the notes.
+
+### A second attacker waits at the gate
+
+*"Should just be queued?"* Yes. One guard fight runs at a time (the headless one takes up to 90 seconds of world
+time), and a mage arriving elsewhere meanwhile used to walk in unopposed. `RoamingGuardRuntime.onArrival()` now
+answers FIGHT, PASS or **WAIT**: a mage whose guard is in position while another fight runs is left standing at
+the gate, and `WorldStage` asks again next frame, so the moment the running fight resolves this one starts. A
+guard that wins and finds another attacker already waiting at its own gate **holds the gate** instead of walking
+home (sending it home would have made the queue find it "returning" and let the mage in). Logged once per
+waiting mage and once per held gate. The "did not reach the town in time" rule is untouched.
+
+### The deck picker and the deck return page six at a time
+
+*"Not exactly sure what this means and what the issue is."* Both dialogs put one button per deck (or per empty
+slot) in the dialog's BUTTON table, which the round-156 scroller cannot scroll - only the text rows scroll. Ten
+built decks were five rows of buttons plus Back; a fresh character's twenty EMPTY slots were ten rows on the
+"Take the Deck Back" dialog, past the bottom of a 270px-tall screen. Both now page six at a time with Prev/Next,
+the same shape as the Armory storage's item picker; the per-deck warnings travel with their page.
+
+### War champions past 150 wins
+
+*"Why?"* Every biome's spawn list carries a zero-weight copy of EVERY enemy at or below the player's rank (the
+quest-boost mechanism), and every war champion is difficulty 3 - which the player's rank reaches at 150 wins.
+Below that, the champions were absent from the list, so `WarChampions.injectFor()` appended them and `BiomeData`
+gave the appended entries their 20% share. From rank 3 they were already in the list as weightless copies, the
+"skip if present" rule left them there, nothing was appended, and the share went to nobody. `injectFor()` now
+removes the copy and appends the champion, so it is counted once and at the tail where the share is granted.
+
+### Ruled fine, left alone
+
+The Balance Sheet's "Everything else" lumping and the interest line's timing (*"I think this is fine"*).
+
+Built 12:55, PACKAGED 13:05 (358 MB) - live folder = the 09.09 engine with rounds 158-166.
+
+**Files touched**: `scene/RewardScene.java` (storage gate), `scene/DuelScene.java` (`recordReputation` /
+`recordStatistics`, blessing guard), `stage/MapStage.java` (champion defeat hook), `stage/WorldStage.java` (arrival
+queue call site, simulated-result bookkeeping), `util/CaveChampions.java` (`onChampionDefeated`),
+`util/WarChampions.java` (tail move), `util/RoamingGuardRuntime.java` (`onArrival` + `Arrival`, gate hold),
+`util/RoamingGuardUI.java` (paged pickers), `util/ArmoryStorage.java` (doc), `GUIDE.md`, the design note.
+
 ## Round 165: upstream engine update to the Forge 09.09 daily - step 0 of v1.09 (2026-09-10)
 
 Step 0 of the release, per the standing rule (round 82): take the upstream engine as its own round before any

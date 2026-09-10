@@ -424,7 +424,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         // handler rather than resolved here - see startGuardDuel()/setWinner().
                         // The sprite is pulled off the map either way; the mage object survives in
                         // RoamingGuardRuntime until the fight is over.
-                        if (RoamingGuardRuntime.interceptOnArrival(mob)) {
+                        RoamingGuardRuntime.Arrival arrival = RoamingGuardRuntime.onArrival(mob);
+                        if (arrival == RoamingGuardRuntime.Arrival.WAIT)
+                            continue; // round 166: a guard fight is running - the mage waits at the gate, asked again next frame
+                        if (arrival == RoamingGuardRuntime.Arrival.FIGHT) {
                             foregroundSprites.removeActor(mob);
                             it.remove();
                             startGuardDuel(mob);
@@ -936,6 +939,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 gearOnMage.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gearOnMage),
                 1, null, result -> {
                     boolean guardWon = result.deckAWins > result.deckBWins;
+                    // Round 166 (user: "Guard fights stats should count the same as player stats"): a
+                    // watched guard fight passes through DuelScene.afterGameEnd() and so writes the
+                    // win/loss record, the kill register and (on a win) colour and town reputation;
+                    // the headless one never did. Same two calls, same conditions (a mage is never an
+                    // arena or tournament opponent), so Watch and Simulate agree on everything now.
+                    if (guardWon)
+                        DuelScene.recordReputation(mage);
+                    if (mage.getData().fixedDeck == null)
+                        DuelScene.recordStatistics(mage, mage.getName(), guardWon);
                     EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(guardWon);
                     if (passthrough != null)
                         TerritoryControl.onMageArrived(passthrough);

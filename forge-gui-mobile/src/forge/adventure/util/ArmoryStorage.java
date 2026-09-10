@@ -21,8 +21,14 @@ import java.util.List;
  * and the round-146 deck desync were both "two containers disagreed about who owns a thing"; the guard
  * deck fixed that with an exact list, and equipment gets the same discipline.
  * <p>
- * The storage lives on the player (one per character, reachable from every player-owned Armory) -
+ * The storage lives on the player (one per character; its button is on the Capitol's Level 2 Armory) -
  * see docs/design/2026-09-10-armory-storage.md for the decisions and what reversing each would cost.
+ * <p>
+ * <b>Guard equipment never cracks</b> (user rule 2026-09-10, whatever the "cracked items" setting says).
+ * True by construction: the only place an item cracks is Current.generateDefeatMessage(), which picks
+ * from the PLAYER's worn items when the player's own duel is lost, and a guard's loss never reaches it -
+ * WorldStage.setWinner() hands a guard duel to RoamingGuardRuntime before any of that machinery runs.
+ * A cracked item can still be stored, but guardCanWear() refuses it, as the doll does.
  */
 public final class ArmoryStorage {
     private ArmoryStorage() {}

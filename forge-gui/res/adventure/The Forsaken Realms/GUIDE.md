@@ -436,9 +436,9 @@ Other Armory notes:
 - **Everything refreshes weekly** on its own, everywhere. **Re-roll Inventory** (a paid, once-a-week
   override) is player-owned only.
 - Prices are 25% cheaper in your own towns and 25% dearer in an AI color town, before reputation.
-- **Storage.** Every Armory you own has a storage: put spare equipment (anything with a slot that you
-  are not wearing) in from your inventory, and take it back out at any of your Armories. At the
-  Capitol, a roaming guard's **Equipment** button dresses it from that storage, one item per slot.
+- **Storage.** Your Capitol's Level 2 Armory has a storage: put spare equipment (anything with a slot
+  that you are not wearing) in from your inventory, and take it back out there. A roaming guard's
+  **Equipment** button dresses it from that storage, one item per slot.
   What a guard wears fights with it - its own bonuses on its side, its items' opponent effects on
   the mage's - whether you watch the duel or let it simulate, and boots make it walk faster.
   Dismissing or losing a guard returns its equipment to the storage; only the deck can be forfeited.

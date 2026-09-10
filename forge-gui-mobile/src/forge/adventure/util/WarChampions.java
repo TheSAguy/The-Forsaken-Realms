@@ -109,13 +109,19 @@ public class WarChampions {
                 present.add(data.getName());
         }
         for (String name : cast) {
-            if (present.contains(name))
-                continue;
             EnemyData data = WorldData.getEnemy(name);
             if (data == null || data.spawnRate > 0f)
                 continue;
             if (!ContentFilterTables.isEnemyIncluded(name))
                 continue;
+            // Round 166 (user: "War champions stop appearing once you pass 150 wins. Why?"): the biome's
+            // candidate list carries a zero-spawn-rate clone of EVERY enemy at or below the player's rank,
+            // and every champion is difficulty 3 - so from rank 3 (150 wins) the champion was already in
+            // the list, weightless, and the old "skip if present" rule left it there. BiomeData grants the
+            // champions' share only to the entries this method APPENDS, so the champion has to move to the
+            // tail rather than be skipped. Removing the clone first keeps it counted exactly once.
+            if (present.contains(name))
+                candidates.removeIf(d -> d != null && name.equals(d.getName()));
             candidates.add(data);
             added.add(data);
             present.add(name);

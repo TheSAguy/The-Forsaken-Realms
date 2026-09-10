@@ -10,8 +10,10 @@ cheapest if they read differently: each says what changes if it is reversed.
 
 ## What it is
 
-1. **The Armory storage.** Every player-owned Armory (any level) shows a `Storage (N)` button beside its other
-   buildings buttons. It opens the character's ONE storage: a list of what is stored, `Deposit` (pick from the
+1. **The Armory storage.** The Capitol's Level 2 Armory shows a `Storage (N)` button beside its other
+   buildings buttons (round 163 showed it on every player-owned Armory at any level; the user's 2026-09-10
+   decision - "We only need the Item Storage at the Capitol, so let's do it only at Level 2 Armory" - narrowed
+   it in round 166). It opens the character's ONE storage: a list of what is stored, `Deposit` (pick from the
    inventory) and `Withdraw` (pick from the storage). Only wearable things go in: an item with an equipment slot
    that is not a quest item and is not currently worn (take it off on the inventory screen first - depositing
    never silently strips the doll).
@@ -31,8 +33,8 @@ cheapest if they read differently: each says what changes if it is reversed.
 
 | Decision | Chosen | Why | If reversed |
 |---|---|---|---|
-| Storage scope | ONE storage per character, on `AdventurePlayer`, reachable from every player-owned Armory | No per-town state in the POI blob (the bigger save surface), no "I left it in the wrong town"; the guards it feeds are Capitol-only anyway | Per-Armory storage: move the list onto `PointOfInterestChanges` (its `guardTiers` idiom), one more `storeObject` per town, and a guard can then only be equipped from the Capitol's own store |
-| Armory level gate | None - level 1 Armories have the storage too | The storage is a stash as much as a guard feature; a level gate would only add a click-path the user did not ask for | Gate on `armoryLevel >= 2` in `RewardScene`'s visibility block (one condition) |
+| Storage scope | ONE storage per character, on `AdventurePlayer`; its button is on the Capitol's Armory only (user decision 2026-09-10, round 166) | No per-town state in the POI blob (the bigger save surface); the guards it feeds are hired at the Capitol | Per-Armory storage: move the list onto `PointOfInterestChanges` (its `guardTiers` idiom), one more `storeObject` per town |
+| Armory level gate | Level 2, Capitol only (user: "We only need the Item Storage at the Capitol, so let's do it only at Level 2 Armory") | The same gate Manage Guards has - the storage exists for the guards | Drop the two conditions in `RewardScene`'s visibility block |
 | Which guards | Roaming guards only | Local garrison guards are tier strings on the town with a dice-roll fight - there is nothing to equip and no per-guard screen | A local-guard equipment model would be a new data object per garrison guard and a new fight rule; out of scope |
 | Slots | The paperdoll's own slot names, one item each; `Ability1`/`Ability2` items refused (player-triggered abilities); no gauntlet twin slots (`Left2`/`Right2` are not granted to a guard) | The item catalog already says where each item goes; abilities need a player to trigger them; the twin-slot rule (round 137) exists for the doll's UI and would double the picker's cases for two items | Allow twins: `ArmoryStorage.slotOf()` would have to consult the guard's worn gauntlets the way `AdventurePlayer.slotCandidates()` does |
 | Cracked items | Cannot be given to a guard (can be stored) | Same as the doll - a cracked item is unusable until repaired | One condition in `guardCanWear()` |

@@ -948,9 +948,13 @@ public class RewardScene extends UIScene {
                     refreshRerollButton();
                     addToSelectable(rerollButton);
                 }
-                // Round 163: the Armory storage, any level, player-owned towns only (same gate as
-                // the rest of the Armory family). The count on the button is the stored item total.
-                storageButton.setVisible(armoryFeatures);
+                // Round 163: the Armory storage. Round 166 (user: "We only need the Item Storage at the
+                // Capitol, so let's do it only at Level 2 Armory"): the Capitol's Level 2 Armory only - the
+                // guards it feeds are hired there, and Manage Guards carries the same gate.
+                forge.adventure.pointofintrest.PointOfInterest storageRoot = TileMapScene.instance().rootPoint;
+                boolean capitolArmory = storageRoot != null && storageRoot.getData() != null
+                        && TownRestoration.CAPITOL_POI_NAME.equals(storageRoot.getData().name);
+                storageButton.setVisible(armoryFeatures && armoryLevel >= 2 && capitolArmory);
                 if (storageButton.isVisible()) {
                     refreshStorageButton();
                     addToSelectable(storageButton);

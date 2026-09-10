@@ -86,6 +86,24 @@ public class CaveChampions {
     }
 
     /**
+     * Round 166: the champion fell, so this cave's roll is spent for good. Recorded as an EMPTY roll,
+     * which championFor() already reads as "no champion here", so a later visit cannot promote the
+     * same champion onto another placement - the farming the round-160 review found (the killed
+     * placement leaves MapStage.prepareCaveChampion()'s candidate list, and the placement hash then
+     * lands on a different one). A cave that despawns and is replaced still rolls afresh as a new POI.
+     */
+    public static void onChampionDefeated(PointOfInterest poi, String name) {
+        if (poi == null)
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null)
+            return;
+        world.getCaveChampion().put(poi.getID(), "");
+        System.out.println("[TFR-CaveChampion] " + poi.getData().name + " (" + poi.getID() + "): " + name
+                + " defeated - this cave's champion is gone for good");
+    }
+
+    /**
      * Every arena-exclusive enemy this cave could host, preferring the biome's own colour and
      * falling back to the whole eligible catalog when that colour has nobody left at this rank.
      * <p>

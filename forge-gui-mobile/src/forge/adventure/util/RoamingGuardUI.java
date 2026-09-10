@@ -164,23 +164,43 @@ public class RoamingGuardUI {
 
     // ------------------------------------------------------------------ deck give / take
 
+    private static final int DECK_PAGE = 6;
+
     private static void openDeckPicker(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
                                        String poiName, int objectId, RoamingGuardData guard) {
+        openDeckPicker(scene, changes, poiName, objectId, guard, 0);
+    }
+
+    /**
+     * Round 166 (user: "Not exactly sure what this means" - the deck picker ran off the screen past
+     * eight or nine decks): one button per built deck sits in the dialog's BUTTON table, which
+     * makeContentScrollable() cannot scroll, so twenty decks were ten rows of buttons on a 270px-tall
+     * screen. Paged now, DECK_PAGE decks at a time with Prev/Next - the same shape as the Armory
+     * storage's item picker - and the per-deck warnings ride along with their page.
+     */
+    private static void openDeckPicker(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
+                                       String poiName, int objectId, RoamingGuardData guard, int page) {
         AdventurePlayer player = AdventurePlayer.current();
-        Dialog dialog = new Dialog("Give a Deck", Controls.getSkin());
         int minimum = RoamingGuards.minDeckSize();
-        EconomyBuildings.addContentRow(dialog, "Choose a deck for your " + RoamingGuards.displayName(guard.tier)
-                + ". [RED]Those cards leave your collection and the slot empties[] until you take the deck "
-                + "back. Cards shared with your other decks are removed from those too - you only own one copy.");
-        int[] column = {0};
-        boolean any = false;
+        List<Integer> slots = new java.util.ArrayList<>();
         for (int i = 0; i < player.getDeckCount(); i++) {
             Deck deck = player.getDeck(i);
-            int size = deck == null ? 0 : deck.getMain().countAll();
-            if (size == 0)
-                continue;
-            any = true;
-            int slot = i;
+            if (deck != null && deck.getMain().countAll() > 0)
+                slots.add(i);
+        }
+        int pages = Math.max(1, (slots.size() + DECK_PAGE - 1) / DECK_PAGE);
+        int at = Math.max(0, Math.min(page, pages - 1));
+        Dialog dialog = new Dialog("Give a Deck", Controls.getSkin());
+        EconomyBuildings.addContentRow(dialog, "Choose a deck for your " + RoamingGuards.displayName(guard.tier)
+                + ". [RED]Those cards leave your collection and the slot empties[] until you take the deck "
+                + "back. Cards shared with your other decks are removed from those too - you only own one copy."
+                + (pages > 1 ? " Page " + (at + 1) + "/" + pages + "." : ""));
+        int[] column = {0};
+        int from = at * DECK_PAGE, to = Math.min(slots.size(), from + DECK_PAGE);
+        for (int k = from; k < to; k++) {
+            int slot = slots.get(k);
+            Deck deck = player.getDeck(slot);
+            int size = deck.getMain().countAll();
             java.util.LinkedHashMap<String, Integer> impact = RoamingGuards.sharedCardImpact(slot);
             // Round 148 (user spec: "An invalid deck, (less than 40 cards), should not be possible
             // to give"). Gated on what the COLLECTION can supply, not on what the deck lists - a
@@ -211,8 +231,19 @@ public class RoamingGuardUI {
                 EconomyBuildings.addContentRow(dialog, warn.toString());
             }
         }
-        if (!any)
+        if (slots.isEmpty())
             EconomyBuildings.addContentRow(dialog, "You have no built decks to give.");
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
+        if (pages > 1) {
+            EconomyBuildings.addHalfButton(dialog, column, "Prev", at > 0, () -> {
+                scene.removeDialog();
+                openDeckPicker(scene, changes, poiName, objectId, guard, at - 1);
+            });
+            EconomyBuildings.addHalfButton(dialog, column, "Next", at < pages - 1, () -> {
+                scene.removeDialog();
+                openDeckPicker(scene, changes, poiName, objectId, guard, at + 1);
+            });
+        }
         EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
             openManageGuard(scene, changes, poiName, objectId, guard);
@@ -227,26 +258,48 @@ public class RoamingGuardUI {
 
     private static void openDeckReturn(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
                                        String poiName, int objectId, RoamingGuardData guard) {
+        openDeckReturn(scene, changes, poiName, objectId, guard, 0);
+    }
+
+    /** Round 166: paged like the deck picker - a fresh character has twenty EMPTY slots, ten rows of buttons. */
+    private static void openDeckReturn(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
+                                       String poiName, int objectId, RoamingGuardData guard, int page) {
         AdventurePlayer player = AdventurePlayer.current();
-        Dialog dialog = new Dialog("Take the Deck Back", Controls.getSkin());
-        EconomyBuildings.addContentRow(dialog, "Choose an empty slot for \"" + guard.deckName + "\" ("
-                + RoamingGuards.cardCount(guard) + " cards). The cards return to your collection.");
-        int[] column = {0};
-        boolean any = false;
+        List<Integer> empty = new java.util.ArrayList<>();
         for (int i = 0; i < player.getDeckCount(); i++) {
             Deck deck = player.getDeck(i);
-            if (deck != null && deck.getMain().countAll() > 0)
-                continue; // only offer empty slots, so nothing the player built gets overwritten
-            any = true;
-            int slot = i;
-            EconomyBuildings.addHalfButton(dialog, column, "[%75]Slot " + (i + 1), true, () -> {
+            if (deck == null || deck.getMain().countAll() == 0)
+                empty.add(i); // only empty slots, so nothing the player built gets overwritten
+        }
+        int pages = Math.max(1, (empty.size() + DECK_PAGE - 1) / DECK_PAGE);
+        int at = Math.max(0, Math.min(page, pages - 1));
+        Dialog dialog = new Dialog("Take the Deck Back", Controls.getSkin());
+        EconomyBuildings.addContentRow(dialog, "Choose an empty slot for \"" + guard.deckName + "\" ("
+                + RoamingGuards.cardCount(guard) + " cards). The cards return to your collection."
+                + (pages > 1 ? " Page " + (at + 1) + "/" + pages + "." : ""));
+        int[] column = {0};
+        int from = at * DECK_PAGE, to = Math.min(empty.size(), from + DECK_PAGE);
+        for (int k = from; k < to; k++) {
+            int slot = empty.get(k);
+            EconomyBuildings.addHalfButton(dialog, column, "[%75]Slot " + (slot + 1), true, () -> {
                 RoamingGuards.returnDeckToSlot(guard, slot);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
         }
-        if (!any)
+        if (empty.isEmpty())
             EconomyBuildings.addContentRow(dialog, "[RED]Every deck slot is full. Clear one first.");
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
+        if (pages > 1) {
+            EconomyBuildings.addHalfButton(dialog, column, "Prev", at > 0, () -> {
+                scene.removeDialog();
+                openDeckReturn(scene, changes, poiName, objectId, guard, at - 1);
+            });
+            EconomyBuildings.addHalfButton(dialog, column, "Next", at < pages - 1, () -> {
+                scene.removeDialog();
+                openDeckReturn(scene, changes, poiName, objectId, guard, at + 1);
+            });
+        }
         EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
             openManageGuard(scene, changes, poiName, objectId, guard);

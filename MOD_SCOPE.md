@@ -4899,7 +4899,7 @@ every duel with the fight staying the player's (equipment, ante, rewards, statis
 the observation, the actions, the walker and the client (`dev-tools/agent/tfr_agent.py`). Remaining: the Claude Code
 play-loop skill, the first full session, `newgame` parameters, a speed setting for the spectated duel.
 
-### 118. Armory storage and roaming guard equipment — `Built (round 163, 2026-09-10; awaiting the user's playtest and scope answers)`
+### 118. Armory storage and roaming guard equipment — `Built (round 163, 2026-09-10; round 166: Capitol Level 2 only per the user; awaiting playtest)`
 User ask 2026-09-10: *"add a storage to the armory. The player can add items from his inventory there. Then on the
 Guard management screen a way to access the inventory and add equipment to the a guard."* Design and decision table:
 `docs/design/2026-09-10-armory-storage.md`. One storage per character, reachable from every player-owned Armory

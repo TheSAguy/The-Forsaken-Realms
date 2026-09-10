@@ -2610,3 +2610,11 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 
 - **`scene/RewardScene.java`** - the seven programmatic shop-page buttons (mod-added in rounds 3-163) are placed by one new `placeModButton(button, row)` with a landscape branch (the old inline formula) and a portrait branch; the seven inline `setSize`/`setPosition` pairs are gone. No stock line changed.
 - **`scene/MapViewScene.java`** - `names()` (mod-added view) checks `ui.findActor("attacks")` before handing the cycle to the Attacks view, so a plane using the stock `common/ui/map.json` closes the cycle at Names.
+
+## Round 166 (2026-09-10) - release-blocker answers
+
+- **`scene/DuelScene.java`** - the reputation block at the top of `afterGameEnd()` and the statistics block inside its `endRunnable` moved into two new `public static` methods, `recordReputation(EnemySprite)` and `recordStatistics(EnemySprite, String, boolean)`, with the callers' conditions left in place; `clearBlessing()` / `clearPartnerOverhealIfActive()` at the match end are now inside `if (!aiControlsPlayerSide)`. Same behaviour for every player-played duel.
+- **`stage/MapStage.java`** - two lines in the dungeon defeat handler (before the `defeatDialog` branch): if the fallen enemy was this cave's champion placement, `CaveChampions.onChampionDefeated(...)`.
+- **`stage/WorldStage.java`** - the mage-arrival branch reads `RoamingGuardRuntime.onArrival()` (FIGHT / PASS / WAIT; WAIT `continue`s) instead of the boolean `interceptOnArrival()`; `simulateGuardDuel()`'s result callback records reputation + statistics through DuelScene's new statics.
+- **`scene/RewardScene.java`** - the storage button's visibility gains `armoryLevel >= 2` and a Capitol check on `TileMapScene.instance().rootPoint`.
+- Mod-added files: `util/CaveChampions.java` (+`onChampionDefeated`), `util/WarChampions.java` (`injectFor` moves a present champion to the tail), `util/RoamingGuardRuntime.java` (`onArrival`, `Arrival`, `waitingMage`, gate hold in `onDuelFinished`, `reset` clears the wait), `util/RoamingGuardUI.java` (paged `openDeckPicker` / `openDeckReturn`, `DECK_PAGE`), `util/ArmoryStorage.java` (doc only).

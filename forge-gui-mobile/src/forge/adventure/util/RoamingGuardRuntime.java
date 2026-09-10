@@ -56,6 +56,12 @@ public class RoamingGuardRuntime {
      *  here instead of treating it as one of the player's own fights. */
     private static RoamingGuardData duellingGuard;
     private static EnemySprite duellingMage;
+    /** Round 166: the mage told to wait at its gate while another guard fight runs - so the wait is
+     *  logged once, and so a guard that wins can hold the gate for it instead of walking home. */
+    private static EnemySprite waitingMage;
+
+    /** What a mage arriving at its target town meets: a guard's duel, nothing, or a queue. */
+    public enum Arrival { FIGHT, PASS, WAIT }
 
     public static RoamingGuardData duellingGuard() {
         return duellingGuard;
@@ -255,12 +261,12 @@ public class RoamingGuardRuntime {
      *  distance covered - see update()'s note. */
     private static final float MAX_STEP_SECONDS = 0.05f;
 
-    public static boolean interceptOnArrival(EnemySprite mage) {
-        if (!RoamingGuards.isEnabled() || mage.territoryTarget == null || duellingGuard != null)
-            return false;
+    public static Arrival onArrival(EnemySprite mage) {
+        if (!RoamingGuards.isEnabled() || mage.territoryTarget == null)
+            return Arrival.PASS;
         RoamingGuardData guard = guardAssignedTo(mage.territoryTarget.getID());
         if (guard == null || guard.returningHome || guard.deckCards.length == 0)
-            return false;
+            return Arrival.PASS;
         Vector2 town = mage.territoryTarget.getPosition();
         float dx = town.x - guard.x, dy = town.y - guard.y;
         if (dx * dx + dy * dy > ARRIVAL_EPSILON * ARRIVAL_EPSILON) {
@@ -272,15 +278,30 @@ public class RoamingGuardRuntime {
             GameHUD.getInstance().addNotification("[RED]Your guard did not reach "
                     + mage.territoryTarget.getDisplayName() + " in time.");
             sendHome(guard);
-            return false;
+            return Arrival.PASS;
         }
+        if (duellingGuard != null) {
+            // Round 166 (user: "Should just be queued?"): one guard fight at a time - a headless one
+            // takes up to 90 seconds of world time, and a second mage arriving meanwhile used to walk
+            // in unopposed. It waits at the gate instead: the caller leaves it standing there and asks
+            // again next frame, so the moment the running fight resolves this one starts.
+            if (waitingMage != mage) {
+                waitingMage = mage;
+                System.out.println("[TFR-RoamGuard] " + mage.getData().tier + " mage waits at "
+                        + mage.territoryTarget.getDisplayName() + " - " + RoamingGuards.displayName(duellingGuard.tier)
+                        + " is still fighting" + (guard == duellingGuard ? " here" : " elsewhere"));
+            }
+            return Arrival.WAIT;
+        }
+        if (waitingMage == mage)
+            waitingMage = null;
         duellingGuard = guard;
         duellingMage = mage;
         System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " intercepts a "
                 + mage.getData().tier + " mage at " + mage.territoryTarget.getDisplayName()
                 + " (guard life " + guard.maxLife + ", deck \"" + guard.deckName + "\", "
                 + (guard.watchMatches ? "watched" : "simulated") + ")");
-        return true;
+        return Arrival.FIGHT;
     }
 
     /**
@@ -303,7 +324,16 @@ public class RoamingGuardRuntime {
                     + " WON at " + town + " - the attack is broken");
             GameHUD.getInstance().addNotification("[GREEN]Your " + RoamingGuards.displayName(guard.tier)
                     + " guard broke the attack on " + town + "!", true);
-            sendHome(guard);
+            // Round 166: another attacker already waiting at this same gate? Hold it rather than
+            // walking home - the queue would otherwise find the guard "returning" and let the mage in.
+            boolean anotherAtTheGate = waitingMage != null && waitingMage.territoryTarget != null && mage != null
+                    && mage.territoryTarget != null
+                    && waitingMage.territoryTarget.getID().equals(mage.territoryTarget.getID());
+            if (anotherAtTheGate)
+                System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " holds the gate at "
+                        + town + " - another attacker is waiting");
+            else
+                sendHome(guard);
             return null;
         }
         RoamingGuards.onDefeated(guard, day);
@@ -372,5 +402,6 @@ public class RoamingGuardRuntime {
         }
         sprites.clear();
         clearDuel();
+        waitingMage = null;
     }
 }

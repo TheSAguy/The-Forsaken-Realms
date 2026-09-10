@@ -1867,6 +1867,12 @@ public class MapStage extends GameStage {
         Current.player().appendCoinRansomReward(loot, currentMob.getName());
         RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
         Forge.switchScene(RewardScene.instance());
+        // Round 166 (user: "How do we prevent this?" - the round-160 review found a cave champion could
+        // be farmed): once it falls, this cave's roll is spent. The killed placement used to drop out of
+        // prepareCaveChampion()'s candidate list on the next visit, which moved the hash onto a
+        // different placement and promoted the same champion again.
+        if (currentMob.getId() == caveChampionObjectId && caveChampionData != null)
+            CaveChampions.onChampionDefeated(AdventureQuestController.instance().mostRecentPOI, caveChampionData.getName());
         if (currentMob.defeatDialog == null) {
             currentMob.remove();
             actors.removeValue(currentMob, true);

@@ -241,10 +241,14 @@ public class DuelScene extends ForgeScene {
         String enemyName = enemy.getName();
         String insult = enemy.getBossInsult();
         boolean showMessages = enemy.getData().boss || (enemy.getData().copyPlayerDeck && Current.player().isUsingCustomDeck());
-        Current.player().clearBlessing();
-        // Color reputation (MOD_SCOPE.md #1) Partner-tier Inn overheal: "used up" by the next duel
-        // regardless of outcome, same funnel/timing as clearBlessing() above.
-        Current.player().clearPartnerOverhealIfActive();
+        // Round 166: not when the AI played the player's seat - a spectated guard fight (or a Deck
+        // Tester match) neither used the blessing (round 156 keeps it out of the fight) nor spends it.
+        if (!aiControlsPlayerSide) {
+            Current.player().clearBlessing();
+            // Color reputation (MOD_SCOPE.md #1) Partner-tier Inn overheal: "used up" by the next duel
+            // regardless of outcome, same funnel/timing as clearBlessing() above.
+            Current.player().clearPartnerOverhealIfActive();
+        }
 
         boolean finalWinner = winner;
         boolean isBossLoss = (chaosBattle || showMessages) && !finalWinner;
@@ -300,6 +304,38 @@ public class DuelScene extends ForgeScene {
 
     Runnable endRunnable = null;
 
+    /**
+     * Round 166 (user: "Guard fights stats should count the same as player stats"): the two pieces of a
+     * duel's outcome that write into the player's standing, split out of afterGameEnd() so the headless
+     * guard fight (WorldStage.simulateGuardDuel) records exactly what a watched one does. Callers keep
+     * their own exclusions (no arena, no tournament, no Deck Tester deck); these two never check them.
+     */
+    public static void recordReputation(EnemySprite enemy) {
+        ColorReputation.onPlayerWonDuel(enemy.getData(), enemy.territoryColor != null);
+        // Town Reputation (user spec 2026-08-17): defeating an attacking mage grants +1
+        // reputation with the town it was attacking - only when that target is a player-
+        // owned/restored town, since this mechanic "only affects the player's towns" (an
+        // AI-vs-AI or neutral-town mage fight the player happens to intercept shouldn't
+        // grant player-town standing).
+        if (enemy.territoryColor != null && enemy.territoryTarget != null) {
+            PointOfInterestChanges targetChanges = WorldSave.getCurrentSave()
+                    .getPointOfInterestChanges(enemy.territoryTarget.getID());
+            if (TownRestoration.isTownRestored(targetChanges))
+                targetChanges.addMapReputation(1);
+        }
+    }
+
+    /** The win/loss record and the spawn-tier kill register - see recordReputation(). */
+    public static void recordStatistics(EnemySprite enemy, String enemyName, boolean winner) {
+        Current.player().getStatistic().setResult(enemyName, winner);
+        // Weighted spawn tier system, Layer 3 (2026-08-23) - only a confirmed win registers, since
+        // registerKill() decays an enemy's future OVERWORLD spawn share. enemy can be null (see the
+        // caller's guard); WorldData.getEnemy() resolves the EnemyData by name in that case -
+        // registerKill() itself is null-safe either way.
+        if (winner)
+            SpawnTierWeighting.registerKill(enemy != null ? enemy.getData() : WorldData.getEnemy(enemyName));
+    }
+
     void afterGameEnd(String enemyName, boolean winner) {
         // Color reputation (MOD_SCOPE.md #1): every ordinary duel WIN shifts the player's
         // standing across the 5-color wheel. This is the single funnel every duel's end passes
@@ -308,20 +344,8 @@ public class DuelScene extends ForgeScene {
         // No-op unless the plane's config enables colorReputationEnabled; colorless enemies
         // no-op inside the call. Deliberately outside the endRunnable below - that only runs
         // once the transition screen finishes, and reputation has no rendering dependency.
-        if (winner && !isArena && eventData == null && enemy != null) {
-            ColorReputation.onPlayerWonDuel(enemy.getData(), enemy.territoryColor != null);
-            // Town Reputation (user spec 2026-08-17): defeating an attacking mage grants +1
-            // reputation with the town it was attacking - only when that target is a player-
-            // owned/restored town, since this mechanic "only affects the player's towns" (an
-            // AI-vs-AI or neutral-town mage fight the player happens to intercept shouldn't
-            // grant player-town standing).
-            if (enemy.territoryColor != null && enemy.territoryTarget != null) {
-                PointOfInterestChanges targetChanges = WorldSave.getCurrentSave()
-                        .getPointOfInterestChanges(enemy.territoryTarget.getID());
-                if (TownRestoration.isTownRestored(targetChanges))
-                    targetChanges.addMapReputation(1);
-            }
-        }
+        if (winner && !isArena && eventData == null && enemy != null)
+            recordReputation(enemy); // round 166: body shared with the simulated guard fight
         Forge.advFreezePlayerControls = winner;
         endRunnable = () -> Gdx.app.postRunnable(() -> {
             GameHUD.getInstance().updateBGM();
@@ -367,16 +391,10 @@ public class DuelScene extends ForgeScene {
             // which clears the mark and adds the tile in the same statement, so the two cannot
             // drift apart. Nothing is done here beyond leaving the mark standing for them.
             if ((enemy == null || enemy.getData().fixedDeck == null) && eventData == null) {
-                Current.player().getStatistic().setResult(enemyName, winner);
-                // Weighted spawn tier system, Layer 3 (2026-08-23) - same guarded funnel as the
-                // win/loss record above (Deck Tester + tournaments excluded, only a confirmed win
-                // registers). Tournaments are excluded for the same reason: registerKill() decays
-                // an enemy's future OVERWORLD spawn share, which a win piloting an event-built
-                // deck shouldn't drive.
-                // enemy can be null here (see the guard above); WorldData.getEnemy() resolves the
-                // EnemyData by name in that case - registerKill() itself is null-safe either way.
-                if (winner)
-                    SpawnTierWeighting.registerKill(enemy != null ? enemy.getData() : WorldData.getEnemy(enemyName));
+                // Deck Tester + tournaments excluded (the deck is not the player's own, and event
+                // matches are already counted through completedEvents). Round 166: the body moved to
+                // recordStatistics() so the simulated guard fight records the same thing.
+                recordStatistics(enemy, enemyName, winner);
             }
 
             if (last instanceof IAfterMatch) {
