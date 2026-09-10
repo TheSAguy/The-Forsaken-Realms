@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 167: HOTFIX - the save/load screen (and five others) took no input since round 162 (2026-09-10)
+
+User, on the first launch of the round-166 package: *"I can't seem to load or save. the interface seems locked."*
+
+**Cause: round 162's Window fix was too broad.** To stop a parchment `Window` jumping in front of its siblings on a
+background tap (the Standings page going blank), round 162 set every layout-built Window to `Touchable.disabled`,
+on the reasoning that the loader nests nothing inside a Window. True of the loader - but six scenes add their
+content INTO the Window afterwards, and a disabled group disables every child: `SaveLoadScene` puts its whole slot
+table in `saveSlots`, `DeckSelectScene` in `deckSlots`, `EventScene`, `PlayerStatisticScene`, `QuestLogScene` and
+`ResearchScene` in their `scrollWindow`. So from the round-162 package on, no save slot, deck slot, event entry,
+statistic, quest or research row could be tapped. The user's earlier session did not open those screens.
+
+**Fix: remove the one listener that misbehaves, not the window's input.** `Window`'s constructor registers exactly
+one capture listener (touchDown -> `toFront()`); `UIActor` now clears the capture listeners of every Window it
+builds instead of disabling touch. The window stays touchable, so it still swallows taps through the parchment and
+its children still receive theirs; the drag/resize listener is an ordinary listener and stays, inert because
+`setMovable(false)` was already there. The Standings page (a childless parchment) stays fixed; the round-151
+per-scene `Touchable.disabled` on the info page's frame stays as it was (that frame has no children).
+
+Lesson, recorded: "the loader is flat" says nothing about what a scene does with the actors afterwards - the
+grep to run before touching a shared loader is `ui.findActor(` per scene, not the JSON.
+
+PACKAGED 13:46 - live folder = the 09.09 engine with rounds 158-167.
+
+**Files touched**: `util/UIActor.java` (one line + comment).
+
 ## Round 166: the release-blocker answers (2026-09-10)
 
 The user went through the draft release notes' Known Issues and ruled on each, plus two decisions on the Armory

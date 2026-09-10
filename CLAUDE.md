@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 166; v1.08 RELEASED, rounds 137-166 are post-release; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 167; v1.08 RELEASED, rounds 137-167 are post-release; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 167 (2026-09-10, PACKAGED 13:46 - live folder = the 09.09 engine with rounds 158-167): **HOTFIX** - round 162's `Touchable.disabled` on every layout Window also disabled
+  the children six scenes add INTO their Window (SaveLoadScene `saveSlots`, DeckSelectScene `deckSlots`, EventScene /
+  PlayerStatisticScene / QuestLogScene / ResearchScene `scrollWindow`): no save slot, deck slot, event, statistic, quest or
+  research row could be tapped since the round-162 package (user: "I can't seem to load or save. the interface seems
+  locked"). `UIActor.readWindowProperties` now clears the Window's CAPTURE listeners (the toFront on touchDown) and leaves
+  it touchable. Before changing a shared loader again: grep `ui.findActor(` in every scene, not just the JSON.
 - Round 166 (2026-09-10, Built 12:55, PACKAGED 13:05 (358 MB) - live folder = the 09.09 engine with rounds 158-166): **the user's release-blocker answers.** Storage button = Capitol's
   Level 2 Armory only (`RewardScene`, user decision); guard gear never cracks (true by construction, documented in
   `ArmoryStorage`); a beaten cave champion's roll is spent (`CaveChampions.onChampionDefeated` from `MapStage`'s

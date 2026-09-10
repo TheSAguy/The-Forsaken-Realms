@@ -186,10 +186,17 @@ public class UIActor extends Group {
         // Window this loader builds is a flat sibling of the labels, tables and buttons laid out
         // over it - so one click on the parchment reorders it above them all. Round 151 fixed the
         // one in info_text.json by hand; ten layouts carry one (standings, inventory, research,
-        // quests, save/load, statistics, events, the deck selector). The loader nests nothing
-        // inside a Window (every element is addActor()'d to this group), so it is decoration
-        // everywhere and takes no input anywhere.
-        newActor.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
+        // quests, save/load, statistics, events, the deck selector).
+        // ROUND 167 HOTFIX (user: "I can't seem to load or save. the interface seems locked").
+        // Round 162 answered this with Touchable.disabled, on the reasoning that the loader nests
+        // nothing inside a Window - true of the loader, false of the scenes: SaveLoadScene adds its
+        // whole slot table INTO the "saveSlots" Window, and a disabled group disables every child,
+        // so no save slot could be tapped. The precise fix is to remove the one listener that
+        // misbehaves. Window's constructor registers exactly one capture listener (touchDown ->
+        // toFront()); the drag/resize listener is an ordinary one and stays, inert because the
+        // window is not movable. The window stays touchable, so it still blocks taps through the
+        // parchment and its children still receive theirs.
+        newActor.getCaptureListeners().clear();
     }
 
     private void readTextFieldProperties(TextField newActor, ObjectMap.Entries<String, String> entries) {

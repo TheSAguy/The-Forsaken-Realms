@@ -2618,3 +2618,7 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`stage/WorldStage.java`** - the mage-arrival branch reads `RoamingGuardRuntime.onArrival()` (FIGHT / PASS / WAIT; WAIT `continue`s) instead of the boolean `interceptOnArrival()`; `simulateGuardDuel()`'s result callback records reputation + statistics through DuelScene's new statics.
 - **`scene/RewardScene.java`** - the storage button's visibility gains `armoryLevel >= 2` and a Capitol check on `TileMapScene.instance().rootPoint`.
 - Mod-added files: `util/CaveChampions.java` (+`onChampionDefeated`), `util/WarChampions.java` (`injectFor` moves a present champion to the tail), `util/RoamingGuardRuntime.java` (`onArrival`, `Arrival`, `waitingMage`, gate hold in `onDuelFinished`, `reset` clears the wait), `util/RoamingGuardUI.java` (paged `openDeckPicker` / `openDeckReturn`, `DECK_PAGE`), `util/ArmoryStorage.java` (doc only).
+
+## Round 167 (2026-09-10) - hotfix
+
+- **`util/UIActor.java`** - `readWindowProperties()`: the round-162 `setTouchable(Touchable.disabled)` became `getCaptureListeners().clear()` - drops only the Window's toFront-on-touch capture listener; the window and the children scenes add into it stay touchable.
