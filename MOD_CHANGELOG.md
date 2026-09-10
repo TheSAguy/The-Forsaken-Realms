@@ -17757,6 +17757,17 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 169: research costs half as much (2026-09-10)
+
+User: *"cut the research cost in half."* `researchShardCost` in `config tables/settings.json` **100 -> 50** shards per
+edition (the base price; the difficulty scaling every building cost gets still applies on top, so Easy 37 / Normal
+50 / Hard 62 / Insane 75). Data only - no code, no save impact; a research already in flight is unaffected, the
+next one is billed at the new price. The 7-day research time is unchanged.
+
+PACKAGED 14:58 - live folder = the 09.09 engine with rounds 158-169.
+
+**Files touched**: `config tables/settings.json`.
+
 ## Round 168: the Armory storage is a screen, not a dialog (2026-09-10)
 
 User, with a mock-up: *"I don't like the current Inventory management System. It should basically look just like the
@@ -17791,7 +17802,7 @@ clicking a doll slot filters BOTH grids to that slot and selects the worn piece,
 
 Not shown, by the mock-up's design: an item's description. The inventory screen still has it.
 
-Built 14:09, NOT packaged - the game was open; package before the next test.
+Built 14:09; PACKAGED 14:58 - live folder = the 09.09 engine with rounds 158-169.
 
 **Files touched**: new `scene/ArmoryScene.java`, `ui/armory.json`, `ui/armory_portrait.json`; `scene/RewardScene.java`
 (opens the scene; refreshes the count on return), `util/RoamingGuardUI.java` (Equipment opens the scene in guard mode,

@@ -87,7 +87,7 @@
     // runs on its own timer, so several can be in progress at once.
     "researchDays": 7,
     // Research Lab: base shard price per edition (difficulty scaling applies on top).
-    "researchShardCost": 100,
+    "researchShardCost": 50,
     // AI towns: in-game days of unbroken AI ownership per guard-dot level (4 levels; the clock
     // starts when the town is first seen held, not retroactively). Level sets the assault defender:
     // none = Apprentice, 1 = Adept, 2 = Master, 3 = Archmage, 4 = Archmage with two starting lands.
