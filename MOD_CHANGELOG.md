@@ -17757,6 +17757,34 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 171: v1.09 "The Roaming Guard" RELEASED - desktop + Android (2026-09-10)
+
+User: *"review latest log, but I think everything is good. Please do a full release, including PC and Android."* Log
+review first (the three sessions of 2026-09-10 on the 09.09 engine, 131-1,084 lines each): no exceptions, `[TFR-Render]`
+0, and the round-170 storage flow visible end to end (`[TFR-Armory]` sketchbook / dagger / amulet / shield stored, then
+the three pieces of gear given to an Archmage guard).
+
+Tag `tfr-v1.09` @ `bb3bf4d2cc1`, published 2026-09-10 23:10:08 UTC and marked Latest:
+<https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.09>
+
+Three assets, created as a DRAFT and published only once both platforms were attached:
+- **`The-Forsaken-Realms-v1.09.zip`** (269.9 MB) - `build_standalone.py --out C:\Users\User\TFR-Release --zip`, built
+  from a copy because the user was playing the live folder (round 119's rule). Full stock copy on the 09.09 base install.
+  Shipped `config.json`: modVersion 1.09 / modVersionDate 09.10 / engineBuildVersion 2.0.15-SNAPSHOT-09.09.
+- **`forsaken-realms-1.09-signed-aligned.apk`** (12.7 MB) and **`assets.zip`** (175.5 MB) - one Maven run (the matched-pair
+  rule), from the `C:\TFR-build` clone reset to the release commit with `subst R:` - 2 min 30 s (16:07-16:09).
+- Pre-upload verification (ANDROID_RELEASE.md step 4): package `com.thesaguy.forsakenrealms`, versionCode 10900,
+  versionName 1.09, label "The Forsaken Realms"; `apksigner` reports the EE:60:39:25 keystore; `assets.zip` holds
+  top-level `res/` with `res/adventure/` = exactly `common` + `The Forsaken Realms`, `res/build.txt`,
+  `res/cardsfolder/cardsfolder.zip`.
+
+`RELEASE_NOTES_v1.09.md` is the release body (the user's edited draft, the review block removed). Rounds 137-170 are
+shipped; nothing is unreleased. **Stamps: modVersion 1.09 / modVersionDate 09.10 / tfr.version 1.09 /
+manifestVersionCode 10900 / engineBuildVersion 2.0.15-SNAPSHOT-09.09.**
+
+The live folder was NOT repackaged for the release (the user was playing it); it carries rounds 158-170 on the same
+jar the zip carries, with the pre-stamp `config.json` (modVersion still reads 1.08 there until the next package).
+
 ## Round 170: the storage takes everything you are not wearing, and sketchbooks work from it (2026-09-10)
 
 User, first look at the Armory screen: *"The necklace was the only Item I could transfer, everything else it did
