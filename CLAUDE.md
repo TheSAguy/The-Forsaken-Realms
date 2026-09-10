@@ -61,7 +61,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 163 (2026-09-10, Built 07:40 (Maven OK, twice) - NOT packaged: the game was still open; the live folder carries rounds 158-161 until the next package): **the Armory storage + roaming guard equipment** (MOD_SCOPE #118,
+- Round 163 (2026-09-10, built 07:17; PACKAGED 07:41, 354 MB - live folder carries rounds 158-163): **the Armory storage + roaming guard equipment** (MOD_SCOPE #118,
   design `docs/design/2026-09-10-armory-storage.md` - read its decision table before changing scope). ONE storage
   per character on `AdventurePlayer.getArmoryStorage()`, `Storage (N)` on every player-owned Armory page (any level,
   one row BELOW Done), `Equipment (N)` on the roaming guard's manage screen; roaming guards only; one item per doll
@@ -73,7 +73,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `equipment` in each guard's sub-data), both `containsKey`-guarded - old saves load empty. Built WITHOUT the user's
   answers on scope (they were playing): global-vs-per-town, level gate, forfeit-with-deck are all one-line reversals
   listed in the design note. NOT yet playtested.
-- Round 162 (2026-09-10, Built 06:57 (Maven OK) - NOT packaged: the game was open the whole round, so the live folder still carries rounds 158-161; package before the next playtest): **size classes applied + minimap overlays fixed + guard lines + dismiss
+- Round 162 (2026-09-10, built 06:57; PACKAGED 07:41 together with round 163 - live folder carries rounds 158-163): **size classes applied + minimap overlays fixed + guard lines + dismiss
   warning + JSON Windows take no input.** (1) `world/enemies.json` now carries round 160's size classes: 396 of the 419 in-scope scales rewritten
   by the new `dev-tools/sprite_sizes.py --apply overrides.json --write` (Critter 23 / Person 211 / Medium 93 / Large 60
   / Huge 9); the user's two review overrides (Xolatoyac, The Pride of Hull Clade -> Large) are in

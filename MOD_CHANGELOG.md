@@ -17817,7 +17817,7 @@ close-then-reopen idiom and the same package-private `EconomyBuildings` helpers 
 for a simulated one; the dispatch line carries the gear and the boosted speed; the roster line shows `, 2 item(s)`.
 `GUIDE.md` (the Armory notes) documents the storage.
 
-Built 07:40 (Maven OK, twice) - NOT packaged: the game was still open; the live folder carries rounds 158-161 until the next package.
+Built 07:17 (Maven OK, twice); PACKAGED 07:41 by hand (a Task Scheduler watcher that was to package after the game closed died silently mid-copy - packaging stays a foreground job). Live folder carries rounds 158-163, 354 MB.
 
 **Files touched**: new `util/ArmoryStorage.java`, `util/ArmoryStorageUI.java`, `docs/design/2026-09-10-armory-storage.md`;
 `data/RoamingGuardData.java` (+`equipment`), `util/RoamingGuards.java` (save/load, dismiss), `util/EconomyBuildings.java`
@@ -17911,7 +17911,7 @@ research, quests, save/load, statistics, events, the deck selector, info text). 
 `UIActor.readWindowProperties` sets every JSON Window `Touchable.disabled` (the loader nests nothing inside a
 Window, so it is decoration everywhere). The round-151 per-scene line in InfoTextScene stays as history.
 
-Built 06:57 (Maven OK) - NOT packaged: the game was open the whole round, so the live folder still carries rounds 158-161; package before the next playtest.
+Built 06:57; PACKAGED 07:41 together with round 163 (live folder carries rounds 158-163, 354 MB).
 
 **Files touched**: `scene/MapViewScene.java` and `util/UIActor.java` (stock files - see CORE_ENGINE_CHANGES),
 `util/RoamingGuardRuntime.java` (+`destination()`), `util/RoamingGuardUI.java` (+`openDismissConfirm()`),
