@@ -343,6 +343,16 @@ public class RoamingGuardRuntime {
         return changes != null && changes.hasEconomyBuildingOfType(EconomyBuildings.TELEPORTER);
     }
 
+    /** Where a deployed guard is walking: the Capitol when it is heading home, else the town it was
+     *  sent to. Null for a guard that is not on the road (at rest, downed, or with a stale mission
+     *  id) - exactly the guards moveGuards() skips or stands down. Round 162, for the minimap's
+     *  guard lines. */
+    public static PointOfInterest destination(RoamingGuardData guard, int day) {
+        if (!guard.deployed || guard.isOutOfCommission(day))
+            return null;
+        return guard.isIdle() ? RoamingGuards.capitol() : poiById(guard.missionPoiId);
+    }
+
     private static PointOfInterest poiById(String id) {
         if (id == null || id.isEmpty())
             return null;

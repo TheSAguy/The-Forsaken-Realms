@@ -17,6 +17,10 @@ Usage (from the repo root):
     python dev-tools/sprite_sizes.py --csv out.csv        one row per enemy, all 1,787
     python dev-tools/sprite_sizes.py --json out.json      in-scope rows + thumbnails, for the review page
     python dev-tools/sprite_sizes.py --check new.atlas    frame size and the scale for every class
+    python dev-tools/sprite_sizes.py --apply overrides.json [--write]
+                                                          write the class scales into world/enemies.json
+                                                          (overrides = {"Enemy name": "Class", ...} from the review;
+                                                          absence = the proposal; dry run unless --write)
 
 What "in scope" means: renders between 14 and 48px pre-tier AND off the 16px grid. Below 14px the
 roster's critters are deliberate (Ladybug, Cat, Fox, Bat...) and are left alone; at 48px and up a
@@ -345,14 +349,62 @@ def check(atlas_path):
         print("   %-8s %2dpx -> scale %.2f" % (cls, px, px / h))
 
 
+def apply_classes(overrides_path, write):
+    """Round 162: put every in-scope enemy on its class. The scale written is class height / Idle
+    frame height, rounded to 2 decimals; out-of-scope enemies (deliberate critters, the already-huge,
+    the on-grid spine) are untouched. enemies.json is 4-space-indented LF and round-trips through
+    json.dumps(indent=4), which is verified byte-for-byte before anything is written."""
+    overrides = json.load(open(overrides_path, encoding="utf-8")) if overrides_path else {}
+    unknown = [n for n, c in overrides.items() if c not in CLASS_PX]
+    if unknown:
+        raise SystemExit("unknown class in overrides: %s" % unknown)
+    rows, unresolved, person = measure()
+    by_name = {r["name"]: r for r in rows}
+    p = os.path.join(PLANE, "world", "enemies.json")
+    raw = open(p, "rb").read()
+    data = json.loads(raw.decode("utf-8"))
+    if json.dumps(data, indent=4, ensure_ascii=False).encode("utf-8") + b"\n" != raw:
+        raise SystemExit("enemies.json does not round-trip through json.dumps(indent=4) - refusing to rewrite it")
+    changed, summary = 0, collections.Counter()
+    for e in data:
+        r = by_name.get(e["name"])
+        if r is None or not r["in_scope"]:
+            continue
+        cls = overrides.get(e["name"], r["cls"])
+        new_scale = round(CLASS_PX[cls] / r["h"], 2)
+        old_scale = float(e.get("scale", 1.0))
+        if abs(new_scale - old_scale) < 0.005:
+            continue
+        e["scale"] = new_scale
+        changed += 1
+        summary[cls] += 1
+        if e["name"] in overrides:
+            print("  override %-28s %s -> %s (scale %g -> %g)" % (e["name"], r["cls"], cls, old_scale, new_scale))
+    missing = [n for n in overrides if n not in by_name]
+    print("in scope %d, scales changed %d: %s%s" % (sum(1 for r in rows if r["in_scope"]), changed,
+          ", ".join("%s %d" % (c, summary[c]) for c in CLASS_ORDER if summary[c]),
+          ("; overrides not in the roster: %s" % missing) if missing else ""))
+    if not write:
+        print("dry run - pass --write to change enemies.json")
+        return
+    out = json.dumps(data, indent=4, ensure_ascii=False).encode("utf-8") + b"\n"
+    open(p, "wb").write(out)
+    print("wrote", p, len(out), "bytes")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--csv", help="write the full table (all enemies) to this CSV")
     ap.add_argument("--json", help="write in-scope rows with thumbnails to this JSON, for the review page")
     ap.add_argument("--check", help="an .atlas file: print its Idle frame size and the scale per class")
+    ap.add_argument("--apply", help="JSON of {enemy name: class} overrides; applies proposal+overrides to enemies.json")
+    ap.add_argument("--write", action="store_true", help="with --apply: actually write enemies.json (else dry run)")
     a = ap.parse_args()
     if a.check:
         check(a.check)
+        return
+    if a.apply:
+        apply_classes(a.apply, a.write)
         return
     rows, unresolved, person = measure(with_thumbs=bool(a.json))
     summary(rows, unresolved, person)

@@ -180,6 +180,16 @@ public class UIActor extends Group {
             }
         }
         newActor.setMovable(false);
+        // Round 162 (user, third report: "when you click anywhere, besides a button on the info
+        // screen, it goes blank" - this time the Standings page). A scene2d Window's CAPTURE
+        // listener calls toFront() on every touchDown whether or not it is movable, and every
+        // Window this loader builds is a flat sibling of the labels, tables and buttons laid out
+        // over it - so one click on the parchment reorders it above them all. Round 151 fixed the
+        // one in info_text.json by hand; ten layouts carry one (standings, inventory, research,
+        // quests, save/load, statistics, events, the deck selector). The loader nests nothing
+        // inside a Window (every element is addActor()'d to this group), so it is decoration
+        // everywhere and takes no input anywhere.
+        newActor.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
     }
 
     private void readTextFieldProperties(TextField newActor, ObjectMap.Entries<String, String> entries) {

@@ -315,12 +315,8 @@ public class RoamingGuardUI {
             openRetier(scene, changes, poiName, objectId, guard);
         });
         EconomyBuildings.addHalfButton(dialog, column, "Dismiss", true, () -> {
-            boolean returned = RoamingGuards.dismiss(guard, day);
-            GameHUD.getInstance().addNotification(returned
-                    ? "Your guard was dismissed and the deck returned to your collection."
-                    : "[RED]Your guard was dismissed while out of commission - the deck is lost.");
             scene.removeDialog();
-            openRoster(scene, changes, poiName, objectId);
+            openDismissConfirm(scene, changes, poiName, objectId, guard);
         });
         EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
             scene.removeDialog();
@@ -328,6 +324,50 @@ public class RoamingGuardUI {
         });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
         EconomyBuildings.makeContentScrollable(dialog);
+        dialog.setKeepWithinStage(true);
+        scene.showDialog(dialog);
+    }
+
+    // ------------------------------------------------------------------ dismiss confirmation
+
+    /**
+     * Round 162 (user: "give a warning before you can dismiss a guard - Are you sure, you will lose
+     * the deck"). Dismiss is the one button on the manage screen that cannot be undone: a healthy
+     * guard's deck is disbanded on the spot (the cards return to the collection, the LIST does not -
+     * "Take deck back" is how to keep it), and a downed guard's deck is forfeited outright. So it
+     * asks first, and says which of the two it is about to do.
+     */
+    private static void openDismissConfirm(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
+                                           String poiName, int objectId, RoamingGuardData guard) {
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        Dialog dialog = new Dialog("Dismiss this guard?", Controls.getSkin());
+        boolean hasDeck = guard.deckCards.length > 0;
+        String deck = "\"" + guard.deckName + "\" (" + RoamingGuards.cardCount(guard) + " cards)";
+        if (!hasDeck)
+            EconomyBuildings.addContentRow(dialog, "Are you sure? This " + RoamingGuards.displayName(guard.tier)
+                    + " guard carries no deck. Dismissing it ends its contract.");
+        else if (guard.isOutOfCommission(day))
+            EconomyBuildings.addContentRow(dialog, "[RED]Are you sure? You will lose the deck.[] This guard is out of"
+                    + " commission, so " + deck + " is forfeited with it - the cards do not come back. Heal the guard"
+                    + " first to keep them.");
+        else
+            EconomyBuildings.addContentRow(dialog, "[RED]Are you sure? You will lose the deck.[] " + deck
+                    + " is disbanded: its cards return to your collection, but the deck itself is gone."
+                    + " Use \"Take deck back\" first to keep it in a slot.");
+        int[] column = {0};
+        EconomyBuildings.addHalfButton(dialog, column, "[RED]Dismiss", true, () -> {
+            boolean returned = RoamingGuards.dismiss(guard, day);
+            GameHUD.getInstance().addNotification(!hasDeck ? "Your guard was dismissed."
+                    : returned ? "Your guard was dismissed and the deck returned to your collection."
+                    : "[RED]Your guard was dismissed while out of commission - the deck is lost.");
+            scene.removeDialog();
+            openRoster(scene, changes, poiName, objectId);
+        });
+        EconomyBuildings.addHalfButton(dialog, column, "Back", true, () -> {
+            scene.removeDialog();
+            openManageGuard(scene, changes, poiName, objectId, guard);
+        });
+        EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
     }

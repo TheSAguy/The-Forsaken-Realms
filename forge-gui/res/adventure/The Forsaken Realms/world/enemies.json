@@ -417,7 +417,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 37,
-        "scale": 1.6,
+        "scale": 2.0,
         "life": 23,
         "rewards": [
             {
@@ -624,7 +624,8 @@
             "Wizard",
             "IdentityAzorius"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.76
     },
     {
         "name": "Aether Channeler",
@@ -864,7 +865,8 @@
             "IdentityRakdos",
             "BiomeRed"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.6
     },
     {
         "name": "Amphin Warrior",
@@ -876,7 +878,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 21,
-        "scale": 0.7,
+        "scale": 0.5,
         "life": 20,
         "rewards": [
             {
@@ -931,7 +933,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 18,
         "rewards": [
             {
@@ -989,7 +991,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 1.6,
+        "scale": 1.5,
         "life": 18,
         "rewards": [
             {
@@ -1196,7 +1198,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 38,
-        "scale": 0.85,
+        "scale": 1.09,
         "life": 25,
         "rewards": [
             {
@@ -1269,7 +1271,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 18,
         "rewards": [
             {
@@ -1998,7 +2000,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.75,
+        "scale": 0.67,
         "life": 20,
         "rewards": [
             {
@@ -2269,7 +2271,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.65,
+        "scale": 0.5,
         "life": 20,
         "rewards": [
             {
@@ -2567,7 +2569,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 1.25,
+        "scale": 1.0,
         "life": 20,
         "rewards": [
             {
@@ -2848,7 +2850,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7,
+        "scale": 0.76,
         "life": 15,
         "rewards": [
             {
@@ -2929,7 +2931,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8,
+        "scale": 0.5,
         "life": 25,
         "rewards": [
             {
@@ -3008,7 +3010,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7,
+        "scale": 0.76,
         "life": 13,
         "rewards": [
             {
@@ -3087,7 +3089,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7,
+        "scale": 0.62,
         "life": 20,
         "rewards": [
             {
@@ -3243,7 +3245,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 26,
-        "scale": 0.7,
+        "scale": 0.53,
         "life": 17,
         "rewards": [
             {
@@ -3851,7 +3853,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 18,
         "rewards": [
             {
@@ -4443,7 +4445,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.7,
+        "scale": 0.75,
         "life": 20,
         "rewards": [
             {
@@ -4498,7 +4500,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 23,
-        "scale": 0.65,
+        "scale": 0.89,
         "life": 12,
         "rewards": [
             {
@@ -4935,7 +4937,7 @@
         "spawnRate": 0.8,
         "difficulty": 2,
         "speed": 34,
-        "scale": 0.4,
+        "scale": 0.27,
         "life": 25,
         "rewards": [
             {
@@ -5100,7 +5102,8 @@
             "IdentityRed",
             "Beast"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.04
     },
     {
         "name": "Challenger 20",
@@ -6332,7 +6335,8 @@
             "Wandering",
             "IdentityTimur"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 1.14
     },
     {
         "name": "Clay Golem",
@@ -6550,7 +6554,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.8,
+        "scale": 1.0,
         "life": 25,
         "rewards": [
             {
@@ -6612,7 +6616,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 0.8,
+        "scale": 0.75,
         "life": 25,
         "rewards": [
             {
@@ -6674,7 +6678,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8,
+        "scale": 0.75,
         "life": 35,
         "rewards": [
             {
@@ -7238,7 +7242,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 0.85,
+        "scale": 0.7,
         "life": 30,
         "rewards": [
             {
@@ -7309,7 +7313,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.9,
+        "scale": 0.75,
         "life": 11,
         "rewards": [
             {
@@ -8302,7 +8306,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8,
+        "scale": 0.7,
         "life": 20,
         "rewards": [
             {
@@ -9094,7 +9098,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.9,
+        "scale": 0.71,
         "life": 20,
         "rewards": [
             {
@@ -9662,7 +9666,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.75,
+        "scale": 1.14,
         "life": 32,
         "rewards": [
             {
@@ -9715,7 +9719,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.9,
+        "scale": 0.89,
         "life": 14,
         "rewards": [
             {
@@ -10164,7 +10168,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 0.7,
+        "scale": 0.75,
         "life": 40,
         "rewards": [
             {
@@ -10306,7 +10310,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 1.5,
+        "scale": 1.33,
         "life": 20,
         "rewards": [
             {
@@ -10360,7 +10364,7 @@
         "spawnRate": 0.1,
         "difficulty": 0.5,
         "speed": 20,
-        "scale": 0.5,
+        "scale": 0.6,
         "life": 80,
         "rewards": [
             {
@@ -11029,7 +11033,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 0.85,
+        "scale": 0.94,
         "life": 11,
         "rewards": [
             {
@@ -11247,7 +11251,8 @@
             "IdentityBlue",
             "IdentityDimir"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.78
     },
     {
         "name": "Falcon",
@@ -11468,7 +11473,8 @@
             "Mystic",
             "BiomeBlack"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 1.14
     },
     {
         "name": "False Knight",
@@ -11895,7 +11901,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 36,
-        "scale": 1.4,
+        "scale": 2.0,
         "life": 33,
         "rewards": [
             {
@@ -12051,7 +12057,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.8,
         "speed": 17,
-        "scale": 0.65,
+        "scale": 0.62,
         "life": 32,
         "rewards": [
             {
@@ -12121,7 +12127,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.75,
+        "scale": 0.64,
         "life": 11,
         "rewards": [
             {
@@ -12269,7 +12275,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 41,
-        "scale": 1.4,
+        "scale": 2.0,
         "life": 46,
         "rewards": [
             {
@@ -12476,7 +12482,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 0.55,
+        "scale": 0.32,
         "life": 25,
         "rewards": [
             {
@@ -12624,7 +12630,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.64,
         "life": 10,
         "rewards": [
             {
@@ -13591,7 +13597,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 1.0,
         "life": 20,
         "rewards": [
             {
@@ -13650,7 +13656,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 14,
-        "scale": 0.7,
+        "scale": 0.5,
         "life": 30,
         "rewards": [
             {
@@ -14097,7 +14103,8 @@
             "IdentityWhite",
             "Gladiator"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.57
     },
     {
         "name": "Goblin",
@@ -14167,7 +14174,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 34,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 27,
         "rewards": [
             {
@@ -14348,7 +14355,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 27,
-        "scale": 0.5,
+        "scale": 0.56,
         "life": 18,
         "rewards": [
             {
@@ -14784,7 +14791,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.64,
         "life": 16,
         "rewards": [
             {
@@ -15104,7 +15111,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 0.55,
+        "scale": 0.38,
         "life": 20,
         "rewards": [
             {
@@ -15187,7 +15194,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 41,
-        "scale": 1.3,
+        "scale": 2.0,
         "life": 26,
         "rewards": [
             {
@@ -15365,7 +15372,8 @@
             "IdentityWhite"
         ],
         "tier": "Uncommon",
-        "speed": 27
+        "speed": 27,
+        "scale": 1.33
     },
     {
         "name": "Greater Zombie",
@@ -16361,7 +16369,7 @@
         "spawnRate": 0.5,
         "difficulty": 2,
         "speed": 37,
-        "scale": 0.7,
+        "scale": 0.38,
         "life": 28,
         "rewards": [
             {
@@ -16555,7 +16563,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8,
+        "scale": 0.38,
         "life": 20,
         "rewards": [
             {
@@ -16614,7 +16622,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.75,
+        "scale": 0.67,
         "life": 20,
         "rewards": [
             {
@@ -16666,7 +16674,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.5,
+        "scale": 0.25,
         "life": 20,
         "rewards": [
             {
@@ -16935,7 +16943,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.6,
+        "scale": 0.75,
         "life": 19,
         "rewards": [
             {
@@ -16984,7 +16992,7 @@
         "spawnRate": 0.2,
         "difficulty": 3,
         "speed": 49,
-        "scale": 0.8,
+        "scale": 0.75,
         "life": 45,
         "rewards": [
             {
@@ -17052,7 +17060,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.7,
+        "scale": 0.38,
         "life": 27,
         "rewards": [
             {
@@ -17112,7 +17120,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.38,
         "life": 20,
         "rewards": [
             {
@@ -17310,7 +17318,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.5,
+        "scale": 0.67,
         "life": 14,
         "rewards": [
             {
@@ -17585,7 +17593,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 1.25,
+        "scale": 1.0,
         "life": 20,
         "rewards": [
             {
@@ -17929,7 +17937,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.1,
         "speed": 24,
-        "scale": 1.3,
+        "scale": 0.75,
         "life": 11,
         "rewards": [
             {
@@ -18336,7 +18344,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 12,
         "rewards": [
             {
@@ -18395,7 +18403,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.65,
+        "scale": 0.75,
         "bossIntro": "The work goes on. The progress is inevitable.",
         "bossInsult": "Flesh is a flaw. We are the cure.",
         "difficulty": 0.5,
@@ -19028,7 +19036,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.75,
+        "scale": 0.5,
         "life": 12,
         "rewards": [
             {
@@ -19096,7 +19104,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 20,
         "rewards": [
             {
@@ -19164,7 +19172,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 12,
         "rewards": [
             {
@@ -19231,7 +19239,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 12,
         "rewards": [
             {
@@ -19299,7 +19307,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.75,
+        "scale": 0.73,
         "life": 12,
         "rewards": [
             {
@@ -19366,7 +19374,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.75,
+        "scale": 0.57,
         "life": 12,
         "rewards": [
             {
@@ -19431,7 +19439,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 12,
         "rewards": [
             {
@@ -20764,7 +20772,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.8,
+        "scale": 0.5,
         "life": 33,
         "rewards": [
             {
@@ -20820,7 +20828,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.8,
+        "scale": 0.75,
         "life": 15,
         "rewards": [
             {
@@ -21032,7 +21040,8 @@
             "Golem",
             "Inhuman"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.8
     },
     {
         "name": "Master Black Wizard",
@@ -21425,7 +21434,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.4,
         "life": 25,
         "rewards": [
             {
@@ -21794,7 +21803,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.6,
+        "scale": 0.46,
         "life": 24,
         "rewards": [
             {
@@ -22249,7 +22258,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 40,
-        "scale": 0.5,
+        "scale": 0.56,
         "life": 27,
         "rewards": [
             {
@@ -22474,7 +22483,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 14,
-        "scale": 0.6,
+        "scale": 0.25,
         "life": 19,
         "rewards": [
             {
@@ -22532,7 +22541,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.7,
+        "scale": 0.8,
         "life": 11,
         "rewards": [
             {
@@ -22593,7 +22602,7 @@
         "spawnRate": 1,
         "difficulty": 0.5,
         "speed": 18,
-        "scale": 2.5,
+        "scale": 3.0,
         "life": 25,
         "rewards": [
             {
@@ -22939,7 +22948,7 @@
         "spawnRate": 0.5,
         "difficulty": 1,
         "speed": 26,
-        "scale": 0.8,
+        "scale": 0.38,
         "life": 18,
         "rewards": [
             {
@@ -22997,7 +23006,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.6,
+        "scale": 0.5,
         "life": 25,
         "rewards": [
             {
@@ -23091,7 +23100,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 45,
-        "scale": 0.6,
+        "scale": 0.44,
         "life": 53,
         "rewards": [
             {
@@ -23209,7 +23218,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.67,
         "life": 30,
         "rewards": [
             {
@@ -23274,7 +23283,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.8,
         "life": 15,
         "rewards": [
             {
@@ -23339,7 +23348,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.8,
         "speed": 16,
-        "scale": 0.65,
+        "scale": 0.62,
         "life": 30,
         "rewards": [
             {
@@ -23407,7 +23416,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.5,
+        "scale": 0.6,
         "bossIntro": "I am Nissa Revane, and I am the soul of this world!",
         "bossInsult": "The ground of this plane is not a weapon... But it will defend itself.",
         "difficulty": 0.5,
@@ -23715,7 +23724,8 @@
             "IdentityGolgari"
         ],
         "gamesPerMatch": 3,
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 1.2
     },
     {
         "name": "Orc Brute",
@@ -23786,7 +23796,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.7,
+        "scale": 0.57,
         "life": 18,
         "rewards": [
             {
@@ -23844,7 +23854,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.7,
+        "scale": 0.62,
         "life": 18,
         "rewards": [
             {
@@ -24223,7 +24233,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.7,
+        "scale": 0.55,
         "life": 12,
         "rewards": [
             {
@@ -24439,7 +24449,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.5,
+        "scale": 0.44,
         "life": 25,
         "rewards": [
             {
@@ -25011,7 +25021,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8,
+        "scale": 0.55,
         "life": 12,
         "rewards": [
             {
@@ -25151,7 +25161,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.8,
+        "scale": 0.89,
         "life": 15,
         "rewards": [
             {
@@ -25212,7 +25222,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.9,
+        "scale": 0.75,
         "life": 14,
         "rewards": [
             {
@@ -25346,7 +25356,8 @@
             "IdentityGreen",
             "Snow"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 1.26
     },
     {
         "name": "Porcupine",
@@ -25358,7 +25369,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.7,
+        "scale": 0.38,
         "life": 20,
         "rewards": [
             {
@@ -25476,7 +25487,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.75,
+        "scale": 0.73,
         "life": 12,
         "rewards": [
             {
@@ -25712,7 +25723,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.9,
+        "scale": 0.94,
         "life": 20,
         "rewards": [
             {
@@ -25987,7 +25998,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 1.1,
+        "scale": 1.5,
         "life": 16,
         "rewards": [
             {
@@ -26091,7 +26102,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.7,
+        "scale": 0.75,
         "life": 24,
         "rewards": [
             {
@@ -26786,7 +26797,7 @@
         "spawnRate": 0.8,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.9,
+        "scale": 0.6,
         "life": 11,
         "rewards": [
             {
@@ -26851,7 +26862,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 35,
-        "scale": 0.8,
+        "scale": 0.5,
         "life": 33,
         "rewards": [
             {
@@ -27001,7 +27012,7 @@
         "spawnRate": 0.3,
         "difficulty": 1,
         "speed": 29,
-        "scale": 0.45,
+        "scale": 0.31,
         "life": 22,
         "rewards": [
             {
@@ -27245,7 +27256,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.6,
+        "scale": 0.64,
         "life": 20,
         "rewards": [
             {
@@ -28089,7 +28100,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 15,
-        "scale": 0.75,
+        "scale": 0.64,
         "life": 40,
         "rewards": [
             {
@@ -28185,7 +28196,7 @@
         "ai": "",
         "spawnRate": 0.5,
         "difficulty": 0.2,
-        "scale": 0.8,
+        "scale": 0.38,
         "speed": 19,
         "life": 13,
         "rewards": [
@@ -28844,7 +28855,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.7,
+        "scale": 0.38,
         "life": 15,
         "rewards": [
             {
@@ -28896,7 +28907,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 12,
         "rewards": [
             {
@@ -29096,7 +29107,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 39,
-        "scale": 1.5,
+        "scale": 2.0,
         "life": 28,
         "rewards": [
             {
@@ -29165,7 +29176,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 0.5,
+        "scale": 0.69,
         "life": 14,
         "rewards": [
             {
@@ -29224,7 +29235,7 @@
         "spawnRate": 0.6,
         "difficulty": 0.1,
         "speed": 22,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 18,
         "rewards": [
             {
@@ -29285,7 +29296,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 20,
-        "scale": 0.65,
+        "scale": 0.91,
         "life": 35,
         "rewards": [
             {
@@ -29602,7 +29613,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.6,
+        "scale": 0.5,
         "life": 50,
         "rewards": [
             {
@@ -29895,7 +29906,7 @@
         "spawnRate": 1,
         "difficulty": 0.8,
         "speed": 23,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 40,
         "rewards": [
             {
@@ -30142,7 +30153,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 17,
-        "scale": 0.7,
+        "scale": 0.75,
         "life": 30,
         "rewards": [
             {
@@ -30761,7 +30772,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 18,
-        "scale": 0.8,
+        "scale": 0.67,
         "life": 20,
         "rewards": [
             {
@@ -31086,7 +31097,8 @@
             "IdentityDimir",
             "Skull"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.89
     },
     {
         "name": "Unraveling Crawler",
@@ -31166,7 +31178,7 @@
         "spawnRate": 0.1,
         "difficulty": 0.5,
         "speed": 20,
-        "scale": 0.65,
+        "scale": 0.75,
         "life": 80,
         "rewards": [
             {
@@ -31658,7 +31670,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 46,
-        "scale": 0.75,
+        "scale": 0.89,
         "life": 47,
         "rewards": [
             {
@@ -31843,7 +31855,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 0.65,
+        "scale": 0.75,
         "bossIntro": "The hunt is the only truth. The predator is the only king.",
         "bossInsult": "Submit to the hunger. Become part of the machine.",
         "difficulty": 0.5,
@@ -31982,7 +31994,7 @@
         "spawnRate": 0.3,
         "difficulty": 0.1,
         "speed": 13,
-        "scale": 0.75,
+        "scale": 0.6,
         "life": 16,
         "rewards": [
             {
@@ -32199,7 +32211,8 @@
             "BiomeColorless",
             "IdentityBoros"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 1.78
     },
     {
         "name": "Wandering Treefolk",
@@ -32307,7 +32320,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.75,
+        "scale": 0.38,
         "life": 14,
         "rewards": [
             {
@@ -32402,7 +32415,8 @@
             "IdentityBlue",
             "BiomeBlue"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.76
     },
     {
         "name": "Weak Demon",
@@ -32447,7 +32461,7 @@
         "spawnRate": 1,
         "difficulty": 2,
         "speed": 37,
-        "scale": 0.6,
+        "scale": 0.5,
         "life": 26,
         "rewards": [
             {
@@ -32602,7 +32616,7 @@
         "spawnRate": 1,
         "difficulty": 0.1,
         "speed": 19,
-        "scale": 0.8,
+        "scale": 0.55,
         "life": 13,
         "rewards": [
             {
@@ -32754,7 +32768,7 @@
         "spawnRate": 1,
         "difficulty": 1,
         "speed": 29,
-        "scale": 0.75,
+        "scale": 0.96,
         "life": 18,
         "rewards": [
             {
@@ -32814,7 +32828,7 @@
         "spawnRate": 1,
         "difficulty": 3,
         "speed": 45,
-        "scale": 0.7,
+        "scale": 0.6,
         "life": 42,
         "rewards": [
             {
@@ -34433,7 +34447,7 @@
         "difficulty": 0.1,
         "speed": 24,
         "life": 15,
-        "scale": 0.5,
+        "scale": 0.6,
         "rewards": [
             {
                 "type": "deckCard",
@@ -34601,7 +34615,8 @@
             "BiomeColorless",
             "BiomeGreen"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.89
     },
     {
         "name": "Missionary of Saint Traft",
@@ -35067,7 +35082,7 @@
         "difficulty": 0.1,
         "speed": 21,
         "life": 13,
-        "scale": 0.6,
+        "scale": 0.62,
         "rewards": [
             {
                 "type": "deckCard",
@@ -35117,7 +35132,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.8,
+        "scale": 0.5,
         "life": 100,
         "rewards": [
             {
@@ -36487,7 +36502,7 @@
         ],
         "ai": "",
         "speed": 35,
-        "scale": 0.5,
+        "scale": 0.32,
         "life": 31,
         "rewards": [
             {
@@ -36878,7 +36893,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 0.3,
+        "scale": 0.33,
         "life": 50,
         "rewards": [
             {
@@ -37026,7 +37041,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1,
+        "scale": 0.53,
         "life": 50,
         "rewards": [
             {
@@ -37097,7 +37112,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.89,
         "life": 50,
         "rewards": [
             {
@@ -38093,7 +38108,7 @@
         ],
         "ai": "",
         "speed": 27,
-        "scale": 2,
+        "scale": 1.78,
         "life": 22,
         "rewards": [
             {
@@ -38225,7 +38240,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.89,
         "life": 40,
         "rewards": [
             {
@@ -39307,7 +39322,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 1.14,
         "life": 40,
         "rewards": [
             {
@@ -39380,7 +39395,7 @@
         ],
         "ai": "",
         "speed": 41,
-        "scale": 1,
+        "scale": 0.89,
         "life": 54,
         "rewards": [
             {
@@ -39681,7 +39696,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2,
+        "scale": 1.78,
         "life": 40,
         "rewards": [
             {
@@ -39754,7 +39769,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2,
+        "scale": 1.6,
         "life": 40,
         "rewards": [
             {
@@ -41863,7 +41878,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.56,
         "life": 40,
         "rewards": [
             {
@@ -42367,7 +42382,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.96,
         "life": 40,
         "rewards": [
             {
@@ -42812,7 +42827,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1,
+        "scale": 0.89,
         "life": 40,
         "rewards": [
             {
@@ -43277,7 +43292,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.8,
         "life": 40,
         "rewards": [
             {
@@ -44287,7 +44302,7 @@
         "ai": "",
         "flying": true,
         "speed": 44,
-        "scale": 1,
+        "scale": 0.89,
         "life": 40,
         "rewards": [
             {
@@ -46212,7 +46227,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.75,
+        "scale": 0.5,
         "life": 30,
         "rewards": [
             {
@@ -47732,7 +47747,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.89,
         "life": 30,
         "rewards": [
             {
@@ -48206,7 +48221,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 0.89,
         "life": 30,
         "rewards": [
             {
@@ -48939,7 +48954,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.62,
         "life": 30,
         "rewards": [
             {
@@ -49483,7 +49498,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.7,
+        "scale": 0.67,
         "life": 30,
         "rewards": [
             {
@@ -49573,7 +49588,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.73,
         "life": 30,
         "rewards": [
             {
@@ -50144,7 +50159,7 @@
         ],
         "ai": "",
         "speed": 39,
-        "scale": 1,
+        "scale": 0.67,
         "life": 33,
         "rewards": [
             {
@@ -50234,7 +50249,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.5,
+        "scale": 1.39,
         "life": 30,
         "rewards": [
             {
@@ -52173,7 +52188,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.5,
+        "scale": 0.6,
         "life": 30,
         "rewards": [
             {
@@ -52263,7 +52278,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.57,
         "life": 30,
         "rewards": [
             {
@@ -53259,7 +53274,7 @@
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1,
+        "scale": 0.55,
         "life": 30,
         "rewards": [
             {
@@ -53923,7 +53938,7 @@
         "ai": "",
         "flying": true,
         "speed": 29,
-        "scale": 1,
+        "scale": 0.89,
         "life": 18,
         "rewards": [
             {
@@ -54554,7 +54569,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.7,
+        "scale": 0.76,
         "life": 30,
         "rewards": [
             {
@@ -55057,7 +55072,7 @@
         ],
         "ai": "",
         "speed": 20,
-        "scale": 0.8,
+        "scale": 0.96,
         "life": 13,
         "rewards": [
             {
@@ -55126,7 +55141,7 @@
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1,
+        "scale": 0.73,
         "life": 30,
         "rewards": [
             {
@@ -55195,7 +55210,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 0.7,
+        "scale": 0.75,
         "life": 30,
         "rewards": [
             {
@@ -55263,7 +55278,7 @@
         ],
         "ai": "",
         "speed": 39,
-        "scale": 0.5,
+        "scale": 0.31,
         "life": 34,
         "rewards": [
             {
@@ -55332,7 +55347,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 1.14,
         "life": 30,
         "rewards": [
             {
@@ -55747,7 +55762,7 @@
         ],
         "ai": "",
         "speed": 38,
-        "scale": 1,
+        "scale": 0.73,
         "life": 28,
         "rewards": [
             {
@@ -56375,7 +56390,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1,
+        "scale": 1.14,
         "life": 30,
         "rewards": [
             {
@@ -57013,7 +57028,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.8,
+        "scale": 0.62,
         "life": 30,
         "rewards": [
             {
@@ -57286,7 +57301,7 @@
         ],
         "ai": "",
         "speed": 57,
-        "scale": 1,
+        "scale": 1.6,
         "life": 28,
         "rewards": [
             {
@@ -57569,7 +57584,7 @@
         ],
         "ai": "",
         "speed": 37,
-        "scale": 1,
+        "scale": 0.89,
         "life": 30,
         "rewards": [
             {
@@ -57710,7 +57725,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.94,
         "life": 30,
         "rewards": [
             {
@@ -58836,7 +58851,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.7,
+        "scale": 0.64,
         "life": 30,
         "rewards": [
             {
@@ -59803,7 +59818,7 @@
         ],
         "ai": "",
         "speed": 46,
-        "scale": 0.5,
+        "scale": 0.56,
         "life": 31,
         "rewards": [
             {
@@ -61273,7 +61288,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 2,
+        "scale": 2.4,
         "life": 30,
         "rewards": [
             {
@@ -62311,7 +62326,7 @@
         ],
         "ai": "",
         "speed": 48,
-        "scale": 0.5,
+        "scale": 0.4,
         "life": 27,
         "rewards": [
             {
@@ -62379,7 +62394,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.64,
         "life": 30,
         "rewards": [
             {
@@ -62875,7 +62890,7 @@
         "ai": "",
         "flying": true,
         "speed": 40,
-        "scale": 1,
+        "scale": 1.14,
         "life": 30,
         "rewards": [
             {
@@ -63221,7 +63236,7 @@
         "ai": "",
         "flying": true,
         "speed": 37,
-        "scale": 1,
+        "scale": 0.89,
         "life": 26,
         "rewards": [
             {
@@ -63935,7 +63950,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 2,
+        "scale": 1.14,
         "life": 42,
         "rewards": [
             {
@@ -64082,7 +64097,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1.5,
+        "scale": 1.0,
         "life": 42,
         "rewards": [
             {
@@ -64301,7 +64316,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.57,
         "life": 30,
         "rewards": [
             {
@@ -64800,7 +64815,7 @@
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 2,
+        "scale": 1.6,
         "life": 30,
         "rewards": [
             {
@@ -64937,7 +64952,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.53,
         "life": 30,
         "rewards": [
             {
@@ -65141,7 +65156,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.7,
+        "scale": 0.75,
         "life": 30,
         "rewards": [
             {
@@ -65482,7 +65497,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1,
+        "scale": 0.8,
         "life": 27,
         "rewards": [
             {
@@ -65550,7 +65565,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.8,
         "life": 30,
         "rewards": [
             {
@@ -66515,7 +66530,7 @@
         ],
         "ai": "",
         "speed": 41,
-        "scale": 0.7,
+        "scale": 0.67,
         "life": 32,
         "rewards": [
             {
@@ -66583,7 +66598,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.8,
         "life": 30,
         "rewards": [
             {
@@ -66651,7 +66666,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 0.7,
+        "scale": 0.67,
         "life": 30,
         "rewards": [
             {
@@ -70157,7 +70172,7 @@
         ],
         "ai": "",
         "speed": 41,
-        "scale": 1,
+        "scale": 1.6,
         "life": 29,
         "rewards": [
             {
@@ -70225,7 +70240,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2,
+        "scale": 1.78,
         "life": 30,
         "rewards": [
             {
@@ -70501,7 +70516,8 @@
         "colors": "WBG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.89
     },
     {
         "name": "Daghatar",
@@ -70640,7 +70656,8 @@
         "colors": "WBG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.33
     },
     {
         "name": "Azor",
@@ -72257,7 +72274,7 @@
             "decks/legends/sethron.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.56,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -72383,7 +72400,8 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.94
     },
     {
         "name": "Gornog",
@@ -72392,7 +72410,7 @@
             "decks/legends/gornog.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.56,
         "speed": 37,
         "life": 19,
         "rewards": [
@@ -73001,7 +73019,8 @@
         "colors": "C",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.6
     },
     {
         "name": "Kambal",
@@ -73718,7 +73737,7 @@
             "decks/legends/varolz.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.91,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -74340,7 +74359,7 @@
             "decks/legends/umbris.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.31,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -75047,7 +75066,8 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.8
     },
     {
         "name": "Ramirez",
@@ -75191,7 +75211,8 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.14
     },
     {
         "name": "Zara",
@@ -75392,7 +75413,8 @@
         "colors": "WRG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.26
     },
     {
         "name": "Hurska",
@@ -75744,7 +75766,7 @@
         ],
         "ai": "",
         "flying": true,
-        "scale": 2,
+        "scale": 1.78,
         "speed": 27,
         "life": 18,
         "rewards": [
@@ -76289,7 +76311,8 @@
         "colors": "UR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.8
     },
     {
         "name": "Elsha",
@@ -76497,7 +76520,8 @@
         "colors": "WUR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.73
     },
     {
         "name": "Xho Cai",
@@ -76920,7 +76944,7 @@
             "decks/legends/fynn.dck"
         ],
         "ai": "",
-        "scale": 1.5,
+        "scale": 1.0,
         "speed": 28,
         "life": 21,
         "rewards": [
@@ -77316,7 +77340,8 @@
         "colors": "B",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.04
     },
     {
         "name": "Liberator",
@@ -77658,7 +77683,8 @@
         "colors": "WR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.57
     },
     {
         "name": "Rohgahh",
@@ -77725,7 +77751,8 @@
         "colors": "BR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.8
     },
     {
         "name": "Rosnakht",
@@ -77792,7 +77819,8 @@
         "colors": "R",
         "spawnRate": 0,
         "tier": "Common",
-        "difficulty": 0.1
+        "difficulty": 0.1,
+        "scale": 0.8
     },
     {
         "name": "Akim",
@@ -78266,7 +78294,8 @@
         "colors": "WB",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.8
     },
     {
         "name": "Obosh",
@@ -78333,7 +78362,8 @@
         "colors": "BR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.89
     },
     {
         "name": "Umori",
@@ -78342,7 +78372,7 @@
             "decks/legends/umori.dck"
         ],
         "ai": "",
-        "scale": 0.7,
+        "scale": 0.8,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -78535,7 +78565,8 @@
         "colors": "WBG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.6
     },
     {
         "name": "Xyris",
@@ -78672,7 +78703,8 @@
         "colors": "WU",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.71
     },
     {
         "name": "Zirda",
@@ -79413,7 +79445,8 @@
         "colors": "WR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.33
     },
     {
         "name": "Tersa",
@@ -79422,7 +79455,7 @@
             "decks/legends/tersa.dck"
         ],
         "ai": "",
-        "scale": 0.7,
+        "scale": 0.57,
         "speed": 22,
         "life": 13,
         "rewards": [
@@ -79631,7 +79664,8 @@
         "colors": "WBR",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.89
     },
     {
         "name": "Akawalli",
@@ -79900,7 +79934,8 @@
         "colors": "G",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.96
     },
     {
         "name": "Thelon",
@@ -80471,7 +80506,7 @@
             "decks/legends/tahngarth.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.56,
         "speed": 28,
         "life": 18,
         "rewards": [
@@ -80612,7 +80647,8 @@
         "colors": "R",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.8
     },
     {
         "name": "Mirri",
@@ -80698,7 +80734,7 @@
             "decks/legends/annie_flash.dck"
         ],
         "ai": "",
-        "scale": 0.7,
+        "scale": 0.67,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -80834,7 +80870,7 @@
             "decks/legends/bruse_tarl.dck"
         ],
         "ai": "",
-        "scale": 0.75,
+        "scale": 0.89,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -81047,7 +81083,7 @@
             "decks/legends/kellan.dck"
         ],
         "ai": "",
-        "scale": 0.7,
+        "scale": 0.67,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -81519,7 +81555,7 @@
             "decks/legends/obzedat.dck"
         ],
         "ai": "",
-        "scale": 0.8,
+        "scale": 0.31,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -81882,7 +81918,7 @@
             "decks/legends/ellivere.dck"
         ],
         "ai": "",
-        "scale": 1.5,
+        "scale": 1.0,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -82241,7 +82277,7 @@
             "decks/legends/kamahl.dck"
         ],
         "ai": "",
-        "scale": 1.5,
+        "scale": 1.0,
         "speed": 38,
         "life": 22,
         "rewards": [
@@ -82602,7 +82638,8 @@
         "colors": "G",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.89
     },
     {
         "name": "Rishkar",
@@ -82879,7 +82916,7 @@
             "decks/legends/captain_howler.dck"
         ],
         "ai": "",
-        "scale": 0.3,
+        "scale": 0.25,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -84361,7 +84398,7 @@
             "decks/legends/thromok.dck"
         ],
         "ai": "",
-        "scale": 2,
+        "scale": 1.6,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -86006,7 +86043,7 @@
             "decks/legends/gorex.dck"
         ],
         "ai": "",
-        "scale": 2,
+        "scale": 1.71,
         "speed": 30,
         "life": 18,
         "rewards": [
@@ -86200,7 +86237,8 @@
         "colors": "BG",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.89
     },
     {
         "name": "Syrix",
@@ -86548,7 +86586,8 @@
         "colors": "UBG",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.86
     },
     {
         "name": "Colfenor",
@@ -86682,7 +86721,8 @@
         "colors": "URG",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.8
     },
     {
         "name": "Kaust",
@@ -86749,7 +86789,8 @@
         "colors": "WRG",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.89
     },
     {
         "name": "Kestia",
@@ -86971,7 +87012,7 @@
             "decks/legends/morska.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.4,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -87309,7 +87350,8 @@
         "colors": "UBG",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.04
     },
     {
         "name": "Arna",
@@ -87450,7 +87492,8 @@
         "colors": "WUBRG",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.94
     },
     {
         "name": "Averna",
@@ -87526,7 +87569,7 @@
             "decks/legends/ghired.dck"
         ],
         "ai": "",
-        "scale": 1.5,
+        "scale": 1.0,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -88223,7 +88266,7 @@
             "decks/legends/obuun.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.31,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -88349,7 +88392,8 @@
         "colors": "WUG",
         "spawnRate": 1,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 1.33
     },
     {
         "name": "Kyodai",
@@ -88713,7 +88757,7 @@
             "decks/legends/varina.dck"
         ],
         "ai": "",
-        "scale": 0.75,
+        "scale": 0.44,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -88860,7 +88904,7 @@
             "decks/legends/rootha.dck"
         ],
         "ai": "",
-        "scale": 0.7,
+        "scale": 0.62,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -89474,7 +89518,8 @@
         "colors": "WUB",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.14
     },
     {
         "name": "Queza",
@@ -89484,7 +89529,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 0.3,
+        "scale": 0.27,
         "life": 20,
         "rewards": [
             {
@@ -90089,7 +90134,8 @@
         "colors": "B",
         "spawnRate": 0,
         "tier": "Common",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.8
     },
     {
         "name": "Greasefang",
@@ -90156,7 +90202,8 @@
         "colors": "WB",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.67
     },
     {
         "name": "Karumonix",
@@ -90223,7 +90270,8 @@
         "colors": "B",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.55
     },
     {
         "name": "Nashi",
@@ -90296,7 +90344,8 @@
         "colors": "UBG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.8
     },
     {
         "name": "Vren",
@@ -90363,7 +90412,8 @@
         "colors": "UB",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.67
     },
     {
         "name": "Wick",
@@ -90430,7 +90480,8 @@
         "colors": "UBR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.8
     },
     {
         "name": "Brion",
@@ -90783,7 +90834,7 @@
             "decks/legends/wort.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.56,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -90991,7 +91042,8 @@
         "colors": "WG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.89
     },
     {
         "name": "Emmara",
@@ -91077,7 +91129,7 @@
             "decks/legends/tolsimir.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.6,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -91834,7 +91886,8 @@
         "colors": "UG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.64
     },
     {
         "name": "The Pride of Hull Clade",
@@ -91843,7 +91896,7 @@
             "decks/legends/the_pride_of_hull_clade.dck"
         ],
         "ai": "",
-        "scale": 3,
+        "scale": 2.29,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -92330,7 +92383,8 @@
         "colors": "U",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.8
     },
     {
         "name": "Ragost",
@@ -92965,7 +93019,7 @@
             "decks/legends/sidisi.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.4,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -94085,7 +94139,7 @@
             "decks/legends/grothama.dck"
         ],
         "ai": "",
-        "scale": 2,
+        "scale": 1.78,
         "speed": 29,
         "life": 22,
         "rewards": [
@@ -94290,7 +94344,8 @@
         "colors": "UG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 1.04
     },
     {
         "name": "Regna and Krav",
@@ -94726,7 +94781,7 @@
             "decks/legends/grumgully.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.56,
         "speed": 30,
         "life": 20,
         "rewards": [
@@ -94939,7 +94994,7 @@
             "decks/legends/gyome.dck"
         ],
         "ai": "",
-        "scale": 0.5,
+        "scale": 0.91,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -95065,7 +95120,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 0.73
     },
     {
         "name": "Willowdusk",
@@ -95132,7 +95188,8 @@
         "colors": "BG",
         "spawnRate": 0,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.96
     },
     {
         "name": "Sarulf",
@@ -95209,7 +95266,7 @@
             "decks/legends/rahilda.dck"
         ],
         "ai": "",
-        "scale": 1.5,
+        "scale": 1.0,
         "speed": 39,
         "life": 22,
         "rewards": [
@@ -95277,7 +95334,7 @@
             "decks/legends/ulrich.dck"
         ],
         "ai": "",
-        "scale": 1.5,
+        "scale": 1.0,
         "speed": 40,
         "life": 20,
         "rewards": [
@@ -95684,7 +95741,8 @@
         "colors": "BR",
         "spawnRate": 0,
         "tier": "Uncommon",
-        "difficulty": 1
+        "difficulty": 1,
+        "scale": 1.04
     },
     {
         "name": "Rudolph",
@@ -96451,7 +96509,8 @@
         "colors": "WR",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.67
     },
     {
         "name": "Gorma",
@@ -96652,7 +96711,8 @@
         "colors": "UG",
         "spawnRate": 1,
         "tier": "Rare",
-        "difficulty": 2
+        "difficulty": 2,
+        "scale": 0.6
     },
     {
         "name": "Scriv",
@@ -97134,7 +97194,7 @@
         ],
         "ai": "",
         "speed": 26,
-        "scale": 1,
+        "scale": 0.8,
         "life": 30,
         "rewards": [
             {
@@ -97189,7 +97249,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 1,
+        "scale": 0.7,
         "life": 30,
         "rewards": [
             {
@@ -98192,7 +98252,7 @@
         "spawnRate": 0.5,
         "difficulty": 0.1,
         "speed": 21,
-        "scale": 1.5,
+        "scale": 1.6,
         "life": 25,
         "rewards": [
             {
@@ -98902,7 +98962,8 @@
             }
         ],
         "colors": "UBR",
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.74
     },
     {
         "name": "King Kane Ferguson",
@@ -101721,7 +101782,8 @@
             }
         ],
         "colors": "R",
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.53
     },
     {
         "name": "Brian Hacker '98",
@@ -106023,7 +106085,8 @@
             }
         ],
         "colors": "BR",
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.56
     },
     {
         "name": "Peer Kroger '03",
@@ -113209,7 +113272,7 @@
         "spawnRate": 0.5,
         "difficulty": 1,
         "speed": 29,
-        "scale": 1.2,
+        "scale": 1.0,
         "life": 18,
         "rewards": [
             {
@@ -114534,7 +114597,7 @@
         "spawnRate": 0.4,
         "difficulty": 1,
         "speed": 28,
-        "scale": 1.3,
+        "scale": 0.89,
         "life": 24,
         "rewards": [
             {
@@ -114765,7 +114828,7 @@
         "spawnRate": 0.4,
         "difficulty": 2,
         "speed": 38,
-        "scale": 1.3,
+        "scale": 0.89,
         "life": 24,
         "rewards": [
             {
@@ -115002,7 +115065,7 @@
         "spawnRate": 0.4,
         "difficulty": 1,
         "speed": 28,
-        "scale": 1.3,
+        "scale": 0.89,
         "life": 24,
         "rewards": [
             {
@@ -115239,7 +115302,7 @@
         "spawnRate": 0.4,
         "difficulty": 1,
         "speed": 28,
-        "scale": 1.3,
+        "scale": 0.89,
         "life": 24,
         "rewards": [
             {
@@ -115476,7 +115539,7 @@
         "spawnRate": 0.4,
         "difficulty": 2,
         "speed": 38,
-        "scale": 1.3,
+        "scale": 0.89,
         "life": 24,
         "rewards": [
             {
@@ -116571,7 +116634,8 @@
         ],
         "nameOverride": "Hidden Wumpus",
         "boss": true,
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 1.78
     },
     {
         "name": "Slivdrazi Monstrosity",
@@ -117292,7 +117356,8 @@
             "IdentityRed"
         ],
         "boss": true,
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.14
     },
     {
         "name": "Joven",
@@ -117412,7 +117477,8 @@
             "IdentityRed"
         ],
         "boss": true,
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.14
     },
     {
         "name": "Kogla (Boss)",
@@ -118685,7 +118751,8 @@
             "IdentityBlack",
             "BiomeBlack"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.62
     },
     {
         "name": "Urza Planeswalker",
@@ -119968,7 +120035,7 @@
         "ai": "",
         "spawnRate": 0,
         "speed": 20,
-        "scale": 1.4,
+        "scale": 1.5,
         "life": 30,
         "rewards": [
             {
@@ -120766,7 +120833,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 1.8,
+        "scale": 2.0,
         "life": 40,
         "rewards": [
             {
@@ -121002,7 +121069,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 1.8,
+        "scale": 2.0,
         "life": 40,
         "rewards": [
             {
@@ -121238,7 +121305,7 @@
         "boss": true,
         "flying": true,
         "speed": 34,
-        "scale": 1.8,
+        "scale": 2.0,
         "life": 40,
         "rewards": [
             {
@@ -121474,7 +121541,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 1.8,
+        "scale": 2.0,
         "life": 40,
         "rewards": [
             {
@@ -121710,7 +121777,7 @@
         "boss": true,
         "flying": true,
         "speed": 24,
-        "scale": 1.8,
+        "scale": 2.0,
         "life": 40,
         "rewards": [
             {
@@ -122130,7 +122197,7 @@
         "ai": "",
         "spawnRate": 0,
         "difficulty": 0.1,
-        "scale": 0.8,
+        "scale": 0.5,
         "speed": 0,
         "life": 1,
         "rewards": [],
@@ -123711,7 +123778,8 @@
         "colors": "WG",
         "spawnRate": 1,
         "difficulty": 2,
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.67
     },
     {
         "name": "Grakk",
@@ -123721,7 +123789,7 @@
         ],
         "ai": "",
         "speed": 43,
-        "scale": 0.5,
+        "scale": 0.65,
         "life": 36,
         "rewards": [
             {
@@ -123981,7 +124049,7 @@
         ],
         "ai": "",
         "speed": 30,
-        "scale": 1,
+        "scale": 0.67,
         "life": 18,
         "rewards": [
             {
@@ -124360,7 +124428,7 @@
         ],
         "ai": "",
         "speed": 41,
-        "scale": 1,
+        "scale": 0.62,
         "life": 28,
         "rewards": [
             {
@@ -124936,7 +125004,7 @@
         "ai": "",
         "spawnRate": 0,
         "difficulty": 0.1,
-        "scale": 1,
+        "scale": 0.67,
         "speed": 0,
         "life": 1,
         "rewards": [],
@@ -134784,7 +134852,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 1.14
     },
     {
         "name": "The Ivory Sovereign",
@@ -134846,7 +134915,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 1.14
     },
     {
         "name": "Dawnblade Prince",
@@ -134908,7 +134978,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.94
     },
     {
         "name": "Rusalka of the Drowned Mere",
@@ -134971,7 +135042,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.6
+        "scale": 0.69
     },
     {
         "name": "The Unblinking Eye",
@@ -135033,7 +135104,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 1.04
     },
     {
         "name": "Archmage of the Tides",
@@ -135095,7 +135167,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.94
     },
     {
         "name": "The Reaper",
@@ -135157,7 +135230,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 1.09
     },
     {
         "name": "Maw of the Abyss",
@@ -135220,7 +135294,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.3
+        "scale": 0.31
     },
     {
         "name": "Onyx Minotaur Lord",
@@ -135283,7 +135357,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.4
+        "scale": 0.41
     },
     {
         "name": "Goblin Warlord",
@@ -135345,7 +135419,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.92
     },
     {
         "name": "Crimson Minotaur Lord",
@@ -135408,7 +135483,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.4
+        "scale": 0.41
     },
     {
         "name": "Ember Urchin",
@@ -135471,7 +135546,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.5
+        "scale": 0.52
     },
     {
         "name": "Molfar of the High Peaks",
@@ -135534,7 +135609,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.6
+        "scale": 0.67
     },
     {
         "name": "Wildwood Minotaur",
@@ -135597,7 +135672,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.4
+        "scale": 0.41
     },
     {
         "name": "Bog Opiven",
@@ -135660,7 +135735,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.6
+        "scale": 0.48
     },
     {
         "name": "Bone Raider",
@@ -135722,7 +135797,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.84
     },
     {
         "name": "Hedge Slime",
@@ -135846,7 +135922,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.67
     },
     {
         "name": "Goblin Reaver",
@@ -135908,7 +135985,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.7
     },
     {
         "name": "Hexcaller Warlock",
@@ -135970,7 +136048,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.7
     },
     {
         "name": "Levy Swordsman",
@@ -136032,7 +136111,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.89
     },
     {
         "name": "Levy Spearman",
@@ -136094,7 +136174,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.94
     },
     {
         "name": "Shieldwall Sergeant",
@@ -136156,7 +136237,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.89
     },
     {
         "name": "Halberd Veteran",
@@ -136218,7 +136300,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.84
     },
     {
         "name": "Longbow Yeoman",
@@ -136280,7 +136363,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.94
     },
     {
         "name": "Crossbow Marksman",
@@ -136342,7 +136426,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 1.14
     },
     {
         "name": "Cavalier Captain",
@@ -136404,7 +136489,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.57
     },
     {
         "name": "Outrider",
@@ -136466,7 +136552,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.57
     },
     {
         "name": "Court Mage",
@@ -136528,7 +136615,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.94
     },
     {
         "name": "Sirena, Tide-Singer",
@@ -136591,7 +136679,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.5
+        "scale": 0.47
     },
     {
         "name": "Elven Archmage of the Mists",
@@ -136654,7 +136742,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.45
+        "scale": 0.49
     },
     {
         "name": "Aswang Sorcerer",
@@ -136717,7 +136805,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.5
+        "scale": 0.6
     },
     {
         "name": "Kapre of the Old Balete",
@@ -136779,7 +136867,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 1.1
     },
     {
         "name": "Troll Warlord",
@@ -136842,7 +136931,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.5
+        "scale": 0.51
     },
     {
         "name": "Tikbalang, Wild Hunter",
@@ -136904,7 +136993,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Mythic"
+        "tier": "Mythic",
+        "scale": 0.96
     },
     {
         "name": "Marksman of the Deep Wood",
@@ -136967,7 +137057,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.45
+        "scale": 0.44
     },
     {
         "name": "Forge Blacksmith",
@@ -137030,7 +137120,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Elf Wayfinder",
@@ -137093,7 +137183,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.29
     },
     {
         "name": "Goblin Shieldbearer",
@@ -137156,7 +137246,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.3
     },
     {
         "name": "Goblin Skulker",
@@ -137219,7 +137309,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.3
     },
     {
         "name": "Lizardfolk Guard",
@@ -137282,7 +137372,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.48
     },
     {
         "name": "Lizardfolk Champion",
@@ -137345,7 +137435,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.48
     },
     {
         "name": "Wandering Brawler",
@@ -137408,7 +137498,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Farmhand Militia",
@@ -137471,7 +137561,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Cutpurse",
@@ -137534,7 +137624,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Hooded Skulk",
@@ -137597,7 +137687,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.29
     },
     {
         "name": "Market Trader",
@@ -137660,7 +137750,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.29
     },
     {
         "name": "Apprentice Scribe",
@@ -137723,7 +137813,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Grey Scholar",
@@ -137786,7 +137876,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Hedge Villager",
@@ -137849,7 +137939,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Orc Raider",
@@ -137912,7 +138002,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.35
     },
     {
         "name": "Orc Warchief",
@@ -137975,7 +138065,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.48
     },
     {
         "name": "Orc Deathcaller",
@@ -138038,7 +138128,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Ratfolk Scavenger",
@@ -138101,7 +138191,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.53
     },
     {
         "name": "Boar Knight",
@@ -138164,7 +138254,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
+        "scale": 0.36
     },
     {
         "name": "Archer Initiate",
@@ -138227,7 +138317,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.28
     },
     {
         "name": "Hooded Archer",
@@ -138290,7 +138380,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.28
     },
     {
         "name": "Ranger of the Wood",
@@ -138353,7 +138443,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Elven Apprentice",
@@ -138416,7 +138506,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Elven Spellweaver",
@@ -138479,7 +138569,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Elven Magus",
@@ -138542,7 +138632,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.45
+        "scale": 0.28
     },
     {
         "name": "Squire-at-Arms",
@@ -138605,7 +138695,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Chainmail Knight",
@@ -138668,7 +138758,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Knight Bowman",
@@ -138731,7 +138821,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Plate Knight",
@@ -138794,7 +138884,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Knight Sharpshooter",
@@ -138857,7 +138947,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Knight Commander",
@@ -138920,7 +139010,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Knight Longbowman",
@@ -138983,7 +139073,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.31
     },
     {
         "name": "Shieldmaiden Recruit",
@@ -139046,7 +139136,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Shieldmaiden",
@@ -139109,7 +139199,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.33
     },
     {
         "name": "Shieldmaiden Captain",
@@ -139172,7 +139262,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.45
+        "scale": 0.32
     },
     {
         "name": "Shieldmaiden Paragon",
@@ -139235,7 +139325,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.45
+        "scale": 0.32
     },
     {
         "name": "Aghoy",
@@ -139421,7 +139511,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.59
     },
     {
         "name": "Wild Boar",
@@ -139483,7 +139574,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.41
     },
     {
         "name": "Bristleback Boar",
@@ -139545,7 +139637,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.41
     },
     {
         "name": "Bungisngis",
@@ -139607,7 +139700,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.62
     },
     {
         "name": "Busaw",
@@ -139669,7 +139763,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.57
     },
     {
         "name": "Buwaya",
@@ -139731,7 +139826,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.57
     },
     {
         "name": "Barnyard Hen",
@@ -139793,7 +139889,8 @@
             "BiomeWhite",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.57
     },
     {
         "name": "Blue Dwende",
@@ -140165,7 +140262,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.53
     },
     {
         "name": "Kolyog",
@@ -140227,7 +140325,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.62
     },
     {
         "name": "Malakat",
@@ -140289,7 +140388,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.62
     },
     {
         "name": "Manananggal",
@@ -140351,7 +140451,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.53
     },
     {
         "name": "Nuno sa Punso",
@@ -140475,7 +140576,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.59
     },
     {
         "name": "Santelmo",
@@ -140537,7 +140639,8 @@
             "BiomeRed",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.59
     },
     {
         "name": "Sigbin",
@@ -140661,7 +140764,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Uncommon"
+        "tier": "Uncommon",
+        "scale": 0.64
     },
     {
         "name": "Syokoy",
@@ -140723,7 +140827,8 @@
             "BiomeBlue",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.62
     },
     {
         "name": "Taong Tuod",
@@ -140785,7 +140890,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Rare"
+        "tier": "Rare",
+        "scale": 0.67
     },
     {
         "name": "Tiburones",
@@ -140909,7 +141015,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.86
     },
     {
         "name": "Hex Witch",
@@ -140971,7 +141078,8 @@
             "BiomeBlack",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 0.59
     },
     {
         "name": "Katipunero Scout",
@@ -141034,7 +141142,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.5
+        "scale": 0.35
     },
     {
         "name": "Katipunero Marine",
@@ -141097,7 +141205,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.5
+        "scale": 0.35
     },
     {
         "name": "Katipunero Firebrand",
@@ -141160,7 +141268,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.5
+        "scale": 0.35
     },
     {
         "name": "Village Volunteer",
@@ -141286,7 +141394,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.5
+        "scale": 0.47
     },
     {
         "name": "Mulawin Warrior",
@@ -141349,7 +141457,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.5
+        "scale": 0.42
     },
     {
         "name": "Orange Mushroomling",
@@ -141538,7 +141646,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8
+        "scale": 0.7
     },
     {
         "name": "Axe Orc",
@@ -141601,7 +141709,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8
+        "scale": 0.76
     },
     {
         "name": "Woodland Rover",
@@ -141663,7 +141771,8 @@
             "BiomeGreen",
             "BiomeColorless"
         ],
-        "tier": "Common"
+        "tier": "Common",
+        "scale": 1.14
     },
     {
         "name": "Traveling Conjurer",

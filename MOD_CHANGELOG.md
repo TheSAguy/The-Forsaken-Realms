@@ -17757,6 +17757,98 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 162: the size classes land, the minimap overlays behave, guards get lines and a dismiss warning (2026-09-10)
+
+Six user items from the 2026-09-10 playtest of rounds 158-161, plus the sprite decisions from the review page.
+
+### 1. Sprite size classes applied to `world/enemies.json` (round 160's rule, now in the data)
+
+The user went through the review page and changed two proposals: **Xolatoyac** and **The Pride of Hull Clade** are
+Large, not Huge (*"It's Huge, but not a boss. Why so big?"* - both had a deliberate 2.0/3.0 scale that the "nearest
+ladder step" rule snapped up to 48px). Everything else takes the tool's proposal. New `dev-tools/sprite_sizes.py
+--apply overrides.json [--write]`: reads `{"Enemy name": "Class"}` overrides (absence = the proposal), refuses to
+touch the file unless it round-trips byte-for-byte through `json.dumps(indent=4)` + trailing LF (it does), and writes
+`scale = class px / Idle-frame height` rounded to two decimals.
+
+| | count |
+|---|---|
+| in scope (14-48px pre-tier, off the 16px grid) | 419 |
+| scales changed | 396 |
+| Critter 12px / Person 16px / Medium 24px / Large 32px / Huge 48px | 23 / 211 / 93 / 60 / 9 |
+| unchanged (already within 0.005 of the class scale) | 23 |
+
+The 45 deliberate critters, the 16 already-huge sprites and everything on the 16px grid are untouched, as round 160
+decided. The tier cue (`TuningData.tierSizeMultiplier`) still multiplies on top. Sanity: Xolatoyac 2.0 -> 1.6 (20px
+art), The Pride of Hull Clade 3.0 -> 2.29 (14px art), Akroma stays 3.0 (boss, on the ladder), Ladybug stays 0.5.
+**enemies.json is data: an existing save picks the new sizes up on load, nothing is serialized.**
+
+### 2. The Attacks view's lines are cleared by every view and survive zoom (review S5/S6, user report)
+
+*"The attack lines do not re-fresh / remove when you click through the different views. They do if you exit and
+return into the mini-map."* Root cause (found by the round-160 review, confirmed in the code): `attacks()` dropped
+its lines into `mageMarkers` - the list that holds the mage and guard DOTS - at unzoomed map coordinates. No other
+view knew the lines existed (`details()/events()/reputation()/names()` only clear their own labels), so the lines
+outlived every later view until `done()`; and because they were placed with raw `getMapX()` while the labels go
+through the zoom transform, a line drawn after a zoom step floated off the map. Building the view also wiped every
+dot first, so the guard dots vanished the moment it opened.
+
+Now: the lines have their own lists (`attackEnds` in WORLD coordinates, `attackColors`, `attackLines`); every view
+and `done()` call `clearAttacks()`; `layoutAttacks()` places each line through the labels' own
+`img.getScaleX() * getMapX(x) + img.getX()` transform and is re-run by `zoomIn()/zoomOut()` instead of nudging the old
+actors along. The dots stay - a line reads as travelling FROM its dot, so the old per-line "head" dot is gone.
+
+### 3. Guard lines on the Attacks view (user request)
+
+*"Can you also draw lines on the mini-map line view for the guards on their way to a town they are defending and
+back to the capitol if they are going back."* Every deployed, not-downed roaming guard gets a line from its position
+to where it is walking: the guard dot's own LIME for the outbound leg, a dimmed green (`GUARD_HOMEWARD`) for the way
+back to the Capitol, so a guard walking away from a town never reads as one racing to defend it. New
+`RoamingGuardRuntime.destination(guard, day)` answers "where is this guard walking" with exactly the rule
+`moveGuards()` uses (Capitol when idle/returning, else the mission POI; null when not on the road), so the map can
+never disagree with the movement. No fog gate, as with the dots. The `[TFR-MapView]` line now reports mages, guards,
+lines drawn and the zoom it drew them at.
+
+### 4. Dismissing a roaming guard asks first (user request)
+
+*"On the guard screen, give a warning before you can dismiss a guard - Are you sure, you will lose the deck."*
+Dismiss was the one button on the manage screen that could not be undone, and it fired on the first tap. It now opens
+"Dismiss this guard?" (`RoamingGuardUI.openDismissConfirm`) with the consequence spelled out for the case at hand:
+a healthy guard's deck is **disbanded** (the cards return to the collection, the list does not - "Take deck back"
+is how to keep it); a downed guard's deck is **forfeited** with the cards (heal first to keep them); a guard with no
+deck just ends its contract. Red "Dismiss" confirms, "Back" returns to the guard. The no-deck case also stops
+claiming a deck was returned. Local (garrison) guards have no deck and keep their one-tap Dismiss.
+
+### 5. Overlay labels no longer walk away from their towns (user screenshot)
+
+*"There seems to be some 'Under Attack' and Guard text just floating / not on a specific town."* The Details view
+places each label at its town and shifts it DOWN until it clears its neighbours (bounded to four steps since round
+158). But every zoom step then transformed the labels and ran `resolveLabelOverlaps()` - a pass that can only ever
+push a label further down and never back - so each zoom-out pushed the crowded labels a little further from their
+towns and no zoom-in brought them home. After a few steps a "Guards: Roaming Archmage" label sat in open grass.
+
+Now every overlay label keeps its WORLD anchor (`detailAnchors`, index-aligned with `details`), and a zoom step
+calls `layoutDetails()`: the labels are laid out again from scratch, in build order, with the same bounded rule
+placeDetailLabel() applies when the view is built. A pure function of anchor and zoom cannot drift. A label that
+finds no room at the current zoom is hidden rather than parked somewhere untrue, and reappears when the map is
+zoomed in. `resolveLabelOverlaps()` now covers only the quest and bookmark labels, which are not anchored.
+
+### 6. The Standings page went blank on a background click (user, third report)
+
+*"The info screen issue still there. When you click anywhere, besides a button on the info screen, it goes blank."*
+This time the screenshot was the Standings page, not the info page round 151 fixed. Same cause: a scene2d
+`Window`'s CAPTURE listener calls `toFront()` on every touchDown whether or not it is movable, and every Window
+`UIActor` builds from a layout file is a flat sibling of the labels, tables and buttons drawn over it - so one
+click on the parchment reorders it above them all. Ten layouts carry such a Window (standings, inventory,
+research, quests, save/load, statistics, events, the deck selector, info text). Fixed once, in the loader:
+`UIActor.readWindowProperties` sets every JSON Window `Touchable.disabled` (the loader nests nothing inside a
+Window, so it is decoration everywhere). The round-151 per-scene line in InfoTextScene stays as history.
+
+Built 06:57 (Maven OK) - NOT packaged: the game was open the whole round, so the live folder still carries rounds 158-161; package before the next playtest.
+
+**Files touched**: `scene/MapViewScene.java` and `util/UIActor.java` (stock files - see CORE_ENGINE_CHANGES),
+`util/RoamingGuardRuntime.java` (+`destination()`), `util/RoamingGuardUI.java` (+`openDismissConfirm()`),
+`world/enemies.json` (396 scales), `dev-tools/sprite_sizes.py` (`--apply`).
+
 ## Round 161: the agent bridge - Claude can play the game as the player (2026-09-09, night)
 
 User ask (2026-09-09 evening): *"figure out how we can implement it where you can play the game as the player. Not

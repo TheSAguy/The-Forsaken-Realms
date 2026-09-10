@@ -1,5 +1,6 @@
 package forge.adventure.scene;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -44,6 +45,9 @@ public class MapViewScene extends UIScene {
     private float avatarX = 0, avatarY = 0;
     private Set<Vector2> positions;
     private final List<TypingLabel> details;
+    /** WORLD position each entry of {@code details} is anchored to, index-aligned with it - so a zoom
+     *  step can lay the labels out again from scratch instead of nudging them (round 162). */
+    private final List<float[]> detailAnchors = Lists.newArrayList();
     private final float maxZoom = 1.2f;
     // Round 152 (user request: "Is it possible to have the over-world map zoom out further?").
     // 0.25 -> 0.12 is about seven more 0.9x steps, roughly halving the smallest scale again.
@@ -57,6 +61,18 @@ public class MapViewScene extends UIScene {
     // state - this whole scene is a static snapshot (the player marker is positioned once on
     // enter the same way), so no per-frame tracking is needed here.
     private final List<Image> mageMarkers = Lists.newArrayList();
+    // Round 162 (user: "the attack lines do not refresh / remove when you click through the
+    // different views"; review S5/S6). The Attacks view's lines used to be dropped into
+    // mageMarkers at UNZOOMED map coordinates, and no other view knew they were there: they
+    // survived every later view, and after a zoom step sat off the map. They now live in their
+    // own lists, every view clears them, and layoutAttacks() places them through the same
+    // scale-and-offset the labels use, re-laying them on every zoom step. Endpoints are kept as
+    // WORLD coordinates so a re-layout is a pure function of the current zoom.
+    private final List<float[]> attackEnds = Lists.newArrayList();
+    private final List<Color> attackColors = Lists.newArrayList();
+    private final List<Image> attackLines = Lists.newArrayList();
+    /** The homeward guard line: the guard dot's LIME, dimmed. */
+    private static final Color GUARD_HOMEWARD = new Color(0.55f, 0.8f, 0.45f, 1f);
 
     public static MapViewScene instance() {
         if (object == null)
@@ -142,11 +158,13 @@ public class MapViewScene extends UIScene {
         labels.clear();
         positions.clear();
         details.clear();
+        detailAnchors.clear();
         // The TypingLabel sweep above doesn't catch the mage marker Images - remove them
         // explicitly (they're rebuilt from live state on every enter() anyway).
         for (Image marker : mageMarkers)
             marker.remove();
         mageMarkers.clear();
+        clearAttacks();
         miniMapPlayer.setScale(1);
         img.setScale(1);
         img.setPosition(0,0);
@@ -207,10 +225,8 @@ public class MapViewScene extends UIScene {
         // this one never did, so a double enter()/details() call (without an intervening leave())
         // would silently stack a second full set of labels on top of the first. Matches the
         // sibling pattern exactly.
-        for (TypingLabel detail : details) {
-            table.removeActor(detail);
-        }
-        details.clear();
+        clearDetails();
+        clearAttacks();
         List<PointOfInterest> allPois = Current.world().getAllPointOfInterest();
         // GLOBAL label collision avoidance (2026-08-15, replaces the earlier per-POI-only offset
         // map - user screenshot near the Capitol showed labels from three DIFFERENT nearby POIs
@@ -304,6 +320,7 @@ public class MapViewScene extends UIScene {
     private void placeDetailLabel(TypingLabel label, float worldX, float worldY, List<Rectangle> placedLabelRects) {
         table.addActor(label);
         details.add(label);
+        detailAnchors.add(new float[]{worldX, worldY});
         // Root cause of labels rendering fused/overlapping (user report, 4th time raised)
         // 2026-08-17: TypingLabel/TextraLabel (textratypist 0.8.2) never call setSize()/pack()
         // internally, so immediately after addActor() getWidth()/getHeight() both read 0 - every
@@ -336,6 +353,7 @@ public class MapViewScene extends UIScene {
         if (moved) { // still colliding after the cap - better absent than misplaced
             table.removeActor(label);
             details.remove(label);
+            detailAnchors.remove(detailAnchors.size() - 1);
             return;
         }
         placedLabelRects.add(rect);
@@ -346,10 +364,8 @@ public class MapViewScene extends UIScene {
     public void events() {
         lastOverlayMode = 2;
         setOverlayButtonStates(2);
-        for (TypingLabel detail : details) {
-            table.removeActor(detail);
-        }
-        details.clear();
+        clearDetails();
+        clearAttacks();
         // Routed through placeDetailLabel()'s collision avoidance (2026-08-17) - previously
         // placed directly with no overlap protection at all, unlike details()/names().
         List<Rectangle> placedLabelRects = Lists.newArrayList();
@@ -370,10 +386,8 @@ public class MapViewScene extends UIScene {
     public void reputation() {
         lastOverlayMode = 3;
         setOverlayButtonStates(3);
-        for (TypingLabel detail : details) {
-            table.removeActor(detail);
-        }
-        details.clear();
+        clearDetails();
+        clearAttacks();
         // Routed through placeDetailLabel()'s collision avoidance (2026-08-17) - same reasoning
         // as events() above.
         List<Rectangle> placedLabelRects = Lists.newArrayList();
@@ -399,10 +413,8 @@ public class MapViewScene extends UIScene {
         // attacks() closes the cycle.
         lastOverlayMode = 4;
         setOverlayButtonStates(4);
-        for (TypingLabel detail : details) {
-            table.removeActor(detail);
-        }
-        details.clear();
+        clearDetails();
+        clearAttacks();
 
         // Town/capital names (moved here from details() - user request 2026-08-17: "Town names
         // need to be moved to the Names view and details should show the set info"). Visited-only,
@@ -433,21 +445,19 @@ public class MapViewScene extends UIScene {
      * <p>
      * scene2d has no line primitive, so each line is the minimap's own dot texture stretched to
      * the distance, one pixel tall, and rotated to the bearing - the standard trick, and it costs
-     * no new art. Lines join the mageMarkers list so zoomIn/zoomOut reposition them with
-     * everything else rather than leaving them stranded over the map.
+     * no new art. Lines are re-laid from world coordinates on every zoom step (layoutAttacks())
+     * and cleared by every other view - see attackEnds. Round 162 added the guard lines.
      */
     public void attacks() {
         lastOverlayMode = 0;
         setOverlayButtonStates(0);
-        for (TypingLabel detail : details) {
-            table.removeActor(detail);
-        }
-        details.clear();
-        for (Image marker : mageMarkers)
-            marker.remove();
-        mageMarkers.clear();
-
-        int drawn = 0;
+        clearDetails();
+        clearAttacks();
+        // The mage and guard dots from enter() stay put: a line reads as travelling FROM its dot,
+        // so the old per-line "head" dot is redundant - and building it used to wipe every dot
+        // first, which is why the guard dots vanished the moment this view opened.
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        int mages = 0, guards = 0;
         for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
             PointOfInterest target = mage.territoryTarget;
             if (target == null)
@@ -458,31 +468,110 @@ public class MapViewScene extends UIScene {
             int mageTileY = (int) (mage.getY() / WorldSave.getCurrentSave().getWorld().getTileSize());
             if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(mageTileX, mageTileY))
                 continue;
-            float x1 = getMapX(mage.getX()), y1 = getMapY(mage.getY());
-            float x2 = getMapX(target.getPosition().x), y2 = getMapY(target.getPosition().y);
+            attackEnds.add(new float[]{mage.getX(), mage.getY(), target.getPosition().x, target.getPosition().y});
+            attackColors.add(GameHUD.getMageMarkerColor(mage.territoryColor));
+            mages++;
+        }
+        // Round 162 (user: "draw lines on the mini-map line view for the guards on their way to a
+        // town they are defending and back to the capitol if they are going back"). The guard dot's
+        // own LIME for the outbound leg and a dimmed green for the way home, so a guard walking
+        // away from a town never reads as one racing to defend it. No fog gate, as with the dots:
+        // these are the player's own guards.
+        for (forge.adventure.data.RoamingGuardData guard : forge.adventure.util.RoamingGuards.roster()) {
+            PointOfInterest destination = forge.adventure.util.RoamingGuardRuntime.destination(guard, day);
+            if (destination == null)
+                continue;
+            attackEnds.add(new float[]{guard.x, guard.y, destination.getPosition().x, destination.getPosition().y});
+            attackColors.add(guard.returningHome ? GUARD_HOMEWARD : Color.LIME);
+            guards++;
+        }
+        layoutAttacks();
+        System.out.println("[TFR-MapView] attack overlay: " + mages + " mage(s) heading for a town, " + guards
+                + " guard(s) on the road, " + attackLines.size() + " line(s) drawn at zoom " + img.getScaleX());
+    }
+
+    private void clearDetails() {
+        for (TypingLabel detail : details)
+            table.removeActor(detail);
+        details.clear();
+        detailAnchors.clear();
+    }
+
+    /**
+     * Round 162 (user screenshot: "Under Attack" and Guards text "floating / not on a specific
+     * town"). Lays every overlay label out again from its WORLD anchor at the current zoom, in
+     * build order, with the same bounded shift-down rule placeDetailLabel() applies when the view
+     * is built. The old zoom step transformed each label and then ran resolveLabelOverlaps(), which
+     * can only ever move a label DOWN and never back - so every zoom-out pushed the crowded labels
+     * further from their towns and no zoom-in brought them home. A pure function of anchor and zoom
+     * cannot drift. A label that still finds no room at this zoom is hidden here, not parked
+     * somewhere untrue, and comes back when the map is zoomed in.
+     */
+    private void layoutDetails() {
+        List<Rectangle> placed = Lists.newArrayList();
+        for (Actor existing : table.getChildren()) {
+            if (existing instanceof TypingLabel && existing.isVisible() && !details.contains(existing))
+                placed.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
+        }
+        for (int i = 0; i < details.size() && i < detailAnchors.size(); i++) {
+            TypingLabel label = details.get(i);
+            float[] anchor = detailAnchors.get(i);
+            float x = img.getScaleX() * getMapX(anchor[0]) + img.getX() - label.getWidth() / 2;
+            float y = img.getScaleY() * getMapY(anchor[1]) + img.getY() - label.getHeight() / 2;
+            Rectangle rect = new Rectangle(x, y, label.getWidth(), label.getHeight());
+            boolean moved = true;
+            int shifts = 0;
+            while (moved && shifts < MAX_LABEL_SHIFTS) {
+                moved = false;
+                for (Rectangle other : placed) {
+                    if (rect.overlaps(other)) {
+                        rect.y -= label.getHeight();
+                        moved = true;
+                        shifts++;
+                        break;
+                    }
+                }
+            }
+            label.setVisible(!moved);
+            if (moved)
+                continue;
+            placed.add(rect);
+            label.setPosition(rect.x, rect.y);
+        }
+    }
+
+    private void clearAttacks() {
+        for (Image line : attackLines)
+            line.remove();
+        attackLines.clear();
+        attackEnds.clear();
+        attackColors.clear();
+    }
+
+    /** (Re)draws the attack lines at the minimap's CURRENT scale and offset - the transform
+     *  placeDetailLabel() uses - so a line drawn while zoomed lands on the map, and zoomIn/zoomOut
+     *  call this instead of nudging the old lines along. */
+    private void layoutAttacks() {
+        for (Image line : attackLines)
+            line.remove();
+        attackLines.clear();
+        for (int i = 0; i < attackEnds.size(); i++) {
+            float[] p = attackEnds.get(i);
+            float x1 = img.getScaleX() * getMapX(p[0]) + img.getX(), y1 = img.getScaleY() * getMapY(p[1]) + img.getY();
+            float x2 = img.getScaleX() * getMapX(p[2]) + img.getX(), y2 = img.getScaleY() * getMapY(p[3]) + img.getY();
             float dx = x2 - x1, dy = y2 - y1;
             float length = (float) Math.sqrt(dx * dx + dy * dy);
             if (length < 1f)
                 continue;
             Image line = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
-            line.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
+            line.setColor(attackColors.get(i));
             line.setSize(length, 1f);
             line.setOrigin(0f, 0.5f);
             line.setRotation((float) Math.toDegrees(Math.atan2(dy, dx)));
             line.setPosition(x1, y1);
             table.addActor(line);
-            mageMarkers.add(line);
-
-            // A dot at the mage end, so a line reads as travelling FROM somewhere rather than as a
-            // bare stripe across the map.
-            Image head = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
-            head.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
-            head.setPosition(x1 - head.getWidth() / 2, y1 - head.getHeight() / 2);
-            table.addActor(head);
-            mageMarkers.add(head);
-            drawn++;
+            attackLines.add(line);
         }
-        System.out.println("[TFR-MapView] attack overlay: " + drawn + " mage(s) shown heading for a town");
     }
 
     public void zoomOut() {
@@ -499,6 +588,8 @@ public class MapViewScene extends UIScene {
                 }
             }
             resolveLabelOverlaps();
+            layoutDetails();
+            layoutAttacks();
         }
     }
     public void zoomIn() {
@@ -514,6 +605,8 @@ public class MapViewScene extends UIScene {
                 }
             }
             resolveLabelOverlaps();
+            layoutDetails();
+            layoutAttacks();
         }
     }
 
@@ -529,12 +622,15 @@ public class MapViewScene extends UIScene {
      *  rather than rebuilding from world coordinates (which would restart every label's typing
      *  animation and is unnecessary just to re-separate them). Operates on every TypingLabel
      *  currently on the table, so it covers all 3 overlay modes that can show labels
-     *  (details/events/reputation), not just the one placeDetailLabel() originally targeted. */
+     *  (details/events/reputation), not just the one placeDetailLabel() originally targeted.
+     *  Round 162: the overlay labels themselves are now re-laid from their world anchors by
+     *  layoutDetails() - this pass can only ever push a label DOWN, and it ran on every zoom step,
+     *  so the labels walked away from their towns - and this covers only the quest/bookmark labels. */
     private void resolveLabelOverlaps() {
         List<Rectangle> placedLabelRects = Lists.newArrayList();
         for (Actor actor : table.getChildren()) {
-            if (!(actor instanceof TypingLabel))
-                continue;
+            if (!(actor instanceof TypingLabel) || details.contains(actor))
+                continue; // round 162: overlay labels are re-laid from their anchors by layoutDetails()
             Rectangle rect = new Rectangle(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
             boolean moved = true;
             while (moved) {

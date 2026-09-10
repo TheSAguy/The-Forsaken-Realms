@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 161; v1.08 RELEASED, rounds 137-161 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 162; v1.08 RELEASED, rounds 137-162 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,23 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 162 (2026-09-10, Built 06:57 (Maven OK) - NOT packaged: the game was open the whole round, so the live folder still carries rounds 158-161; package before the next playtest): **size classes applied + minimap overlays fixed + guard lines + dismiss
+  warning + JSON Windows take no input.** (1) `world/enemies.json` now carries round 160's size classes: 396 of the 419 in-scope scales rewritten
+  by the new `dev-tools/sprite_sizes.py --apply overrides.json --write` (Critter 23 / Person 211 / Medium 93 / Large 60
+  / Huge 9); the user's two review overrides (Xolatoyac, The Pride of Hull Clade -> Large) are in
+  `scratchpad/overrides.json`'s shape `{"name": "Class"}`. Critters below 14px, the 16 already-huge and on-grid sprites
+  untouched. Data only - saves pick it up on load. (2) MapViewScene's Attacks view: lines live in their own lists
+  (`attackEnds` = WORLD coords), every view + `done()` call `clearAttacks()`, `layoutAttacks()` uses the labels'
+  zoom transform and re-runs on zoom (review S5/S6, user: "lines do not refresh/remove when you click through the
+  views"). Mage/guard dots no longer wiped by the view. (3) Guard lines on that view: LIME outbound, dimmed green
+  homeward, via new `RoamingGuardRuntime.destination(guard, day)` = the `moveGuards()` rule. (4) Roaming-guard Dismiss
+  opens `RoamingGuardUI.openDismissConfirm` (disbanded vs forfeited vs no deck spelled out; red Dismiss / Back).
+  (5) Overlay labels keep WORLD anchors (`detailAnchors`) and zoom re-lays them via `layoutDetails()` - the old
+  transform+`resolveLabelOverlaps()` step could only push labels DOWN, so they walked off their towns (user
+  screenshot). (6) Every JSON-built `Window` is `Touchable.disabled` in `UIActor.readWindowProperties` - its capture
+  listener `toFront()`'d the parchment over the page on any background click (Standings page blank; third report).
+  NOT yet playtested by the user. Next: the Armory storage + guard equipment feature (user: "the last item I have for
+  this round, before release") - design questions in the round-162 chat, then build as round 163.
 - Round 161 (2026-09-09 night, PACKAGED 23:02 - live folder carries rounds 158-161): **the agent bridge - Claude plays the game as the player** (MOD_SCOPE
   #117, design `docs/design/2026-09-09-agent-play.md`). New package `forge.adventure.agent`, OFF unless
   `TFR_AGENT_PORT` (or `-Dtfr.agent.port`) is set; `TFR_AGENT_CHEATS=1` allows console commands + fog-free state.
