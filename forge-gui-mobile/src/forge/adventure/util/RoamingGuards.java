@@ -196,6 +196,8 @@ public class RoamingGuards {
         else
             System.out.println("[TFR-RoamGuard] dismissed while out of commission - "
                     + cardCount(guard) + " card(s) forfeited with the deck \"" + guard.deckName + "\"");
+        // Round 163: the steel is the player's whatever happens to the deck - back to the storage.
+        ArmoryStorage.returnGear(guard);
         roster().remove(guard);
         return !forfeit;
     }
@@ -505,6 +507,8 @@ public class RoamingGuards {
             sub.store("returningHome", g.returningHome);
             sub.store("deployed", g.deployed);
             sub.store("pos", new Vector2(g.x, g.y));
+            // Round 163: the guard's equipment, the inventory's own idiom (an ItemData[]).
+            sub.storeObject("equipment", g.equipment.toArray(new forge.adventure.data.ItemData[0]));
             data.store("roamingGuard_" + i, sub);
         }
     }
@@ -542,6 +546,13 @@ public class RoamingGuards {
                 Vector2 pos = sub.readVector2("pos");
                 g.x = pos.x;
                 g.y = pos.y;
+            }
+            // Round 163: equipment. A save from before it simply has none.
+            Object gear = sub.containsKey("equipment") ? sub.readObject("equipment") : null;
+            if (gear instanceof forge.adventure.data.ItemData[]) {
+                for (forge.adventure.data.ItemData item : (forge.adventure.data.ItemData[]) gear)
+                    if (item != null)
+                        g.equipment.add(item);
             }
             guards.add(g);
         }

@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 162; v1.08 RELEASED, rounds 137-162 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 163; v1.08 RELEASED, rounds 137-163 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 163 (2026-09-10, Built 07:40 (Maven OK, twice) - NOT packaged: the game was still open; the live folder carries rounds 158-161 until the next package): **the Armory storage + roaming guard equipment** (MOD_SCOPE #118,
+  design `docs/design/2026-09-10-armory-storage.md` - read its decision table before changing scope). ONE storage
+  per character on `AdventurePlayer.getArmoryStorage()`, `Storage (N)` on every player-owned Armory page (any level,
+  one row BELOW Done), `Equipment (N)` on the roaming guard's manage screen; roaming guards only; one item per doll
+  slot, no Ability items, no cracked items, no gauntlet twins. Effects apply in watched AND simulated fights
+  (`DuelScene.useGuardLoadout(deck, life, effects)`; `DuelScene.applyEffects` now static; `DeckTesterSimulator.runBatch`
+  overload with per-seat `Consumer<RegisteredPlayer>`); boots multiply walking speed. Gear returns to the storage on
+  dismiss (all cases) and unpaid disband; a downed guard keeps it. **One owner per item**: every move is one of
+  `ArmoryStorage`'s five verbs, each logging `[TFR-Armory]`. Saved as `ItemData[]` (`armoryStorage` on the player,
+  `equipment` in each guard's sub-data), both `containsKey`-guarded - old saves load empty. Built WITHOUT the user's
+  answers on scope (they were playing): global-vs-per-town, level gate, forfeit-with-deck are all one-line reversals
+  listed in the design note. NOT yet playtested.
 - Round 162 (2026-09-10, Built 06:57 (Maven OK) - NOT packaged: the game was open the whole round, so the live folder still carries rounds 158-161; package before the next playtest): **size classes applied + minimap overlays fixed + guard lines + dismiss
   warning + JSON Windows take no input.** (1) `world/enemies.json` now carries round 160's size classes: 396 of the 419 in-scope scales rewritten
   by the new `dev-tools/sprite_sizes.py --apply overrides.json --write` (Critter 23 / Person 211 / Medium 93 / Large 60

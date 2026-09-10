@@ -888,7 +888,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             Forge.setTransitionScreen(new TransitionScreen(() -> {
                 Forge.advFreezePlayerControls = false;
                 duelScene.initDuels(player, guardFoe, false, null, true);
-                duelScene.useGuardLoadout(deck, guard.maxLife);
+                duelScene.useGuardLoadout(deck, guard.maxLife, ArmoryStorage.effectsOf(guard)); // round 163: its gear
                 Forge.switchScene(duelScene);
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     guardFoe.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard",
@@ -922,10 +922,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         System.out.println("[TFR-RoamGuard] simulating: " + RoamingGuards.displayName(guard.tier)
                 + " (" + guard.maxLife + " life) vs " + mage.getName() + " (" + mageLife + " life, raw "
-                + mage.getData().life + " x " + Current.player().getDifficulty().enemyLifeFactor + ")");
+                + mage.getData().life + " x " + Current.player().getDifficulty().enemyLifeFactor + ")"
+                + " gear: " + ArmoryStorage.gearNames(guard));
+        // Round 163 (MOD_SCOPE #118): the guard's equipment rides into the headless fight through the
+        // same DuelScene.applyEffects() the watched fight uses - its own effects on its seat, its
+        // items' opponent effects on the mage's. Parity is the rule ("simulate" is presentation only).
+        final Array<EffectData> gear = ArmoryStorage.effectsOf(guard);
+        final Array<EffectData> gearOnMage = ArmoryStorage.opponentEffectsOf(guard);
         DeckTesterSimulator.runBatch(
                 RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife,
+                gear.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gear),
                 mage.getName(), mageDeck, mageLife,
+                gearOnMage.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gearOnMage),
                 1, null, result -> {
                     boolean guardWon = result.deckAWins > result.deckBWins;
                     EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(guardWon);

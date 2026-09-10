@@ -142,7 +142,8 @@ public class RoamingGuardRuntime {
             }
             System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " dispatched to "
                     + target.getDisplayName() + " against a " + mage.getData().tier + " mage (speed "
-                    + mage.getData().speed + " vs " + (int) RoamingGuards.speedFor(guard.tier) + ")"
+                    + mage.getData().speed + " vs " + (int) (RoamingGuards.speedFor(guard.tier) * ArmoryStorage.speedOf(guard))
+                    + ", gear " + ArmoryStorage.gearNames(guard) + ")"
                     + (teleports ? " - TELEPORTED, already in position" : " - travelling"));
             GameHUD.getInstance().addNotification("Your " + RoamingGuards.displayName(guard.tier)
                     + " guard sets out for " + target.getDisplayName() + "."
@@ -198,7 +199,7 @@ public class RoamingGuardRuntime {
             }
             Vector2 goal = destination.getPosition();
             float stepX = 0f, stepY = 0f;
-            float speed = RoamingGuards.speedFor(guard.tier);
+            float speed = RoamingGuards.speedFor(guard.tier) * ArmoryStorage.speedOf(guard); // round 163: boots count
             float dx = goal.x - guard.x;
             float dy = goal.y - guard.y;
             float distance = (float) Math.sqrt(dx * dx + dy * dy);

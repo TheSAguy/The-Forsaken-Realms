@@ -57,6 +57,13 @@ public class RoamingGuardData {
     public float y;
     public boolean deployed;
 
+    /** Round 163 (MOD_SCOPE #118): what this guard wears, one item per slot, moved here from the
+     *  Armory storage and back through ArmoryStorage's verbs only. Whole ItemData objects, the same
+     *  way the player's inventory holds them, so a worn item keeps its identity (longID) and its
+     *  state (cracked) across the move and back. Saved as an ItemData[] inside this guard's own
+     *  sub-data - ItemData is already serialized whole into every save, so no new class enters it. */
+    public java.util.ArrayList<ItemData> equipment = new java.util.ArrayList<>();
+
     public boolean isOutOfCommission(int currentDay) {
         return downUntilDay > 0 && currentDay < downUntilDay;
     }

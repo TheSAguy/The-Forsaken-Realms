@@ -87,6 +87,18 @@ public class DeckTesterSimulator {
      */
     public static Handle runBatch(String deckAName, Deck deckA, int lifeA, String deckBName, Deck deckB, int lifeB,
                                   int count, IntConsumer onProgress, Consumer<BatchResult> onComplete) {
+        return runBatch(deckAName, deckA, lifeA, null, deckBName, deckB, lifeB, null, count, onProgress, onComplete);
+    }
+
+    /**
+     * Round 163 (MOD_SCOPE #118): the same batch with a per-seat hook that runs on each freshly built
+     * RegisteredPlayer after its life is set. Roaming guards use it to apply their equipment through
+     * DuelScene.applyEffects(), so a simulated guard fight honours the same items a watched one does.
+     * Either hook may be null.
+     */
+    public static Handle runBatch(String deckAName, Deck deckA, int lifeA, Consumer<RegisteredPlayer> customizeA,
+                                  String deckBName, Deck deckB, int lifeB, Consumer<RegisteredPlayer> customizeB,
+                                  int count, IntConsumer onProgress, Consumer<BatchResult> onComplete) {
         Handle handle = new Handle();
         Thread batchThread = new Thread(() -> {
             BatchResult result = new BatchResult();
@@ -121,10 +133,14 @@ public class DeckTesterSimulator {
                         rpA.setPlayer(playerA);
                         if (lifeA > 0)
                             rpA.setStartingLife(lifeA);
+                        if (customizeA != null)
+                            customizeA.accept(rpA); // round 163
                         rpB = RegisteredPlayer.forVariants(2, variants, deckB, null, false, null, null);
                         rpB.setPlayer(playerB);
                         if (lifeB > 0)
                             rpB.setStartingLife(lifeB);
+                        if (customizeB != null)
+                            customizeB.accept(rpB); // round 163
                         List<RegisteredPlayer> players = new ArrayList<>();
                         players.add(rpA);
                         players.add(rpB);

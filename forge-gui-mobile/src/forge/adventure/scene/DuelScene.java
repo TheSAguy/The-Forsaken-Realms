@@ -98,6 +98,10 @@ public class DuelScene extends ForgeScene {
     // duel, so a guard fight cannot leak into the next one.
     private Deck guardDeck;
     private int guardStartingLife;
+    // Round 163 (MOD_SCOPE #118): the guard's OWN equipment, from the Armory storage. Handed in by
+    // useGuardLoadout() rather than read off the player, so the round-156 rule (a spectator's boots
+    // stay out of the fight) stands: these are the guard's boots. Cleared by initDuels() like the rest.
+    private Array<EffectData> guardEffects;
     boolean chaosBattle = false;
     boolean callbackExit = false;
     boolean isArena = false;
@@ -648,6 +652,13 @@ public class DuelScene extends ForgeScene {
     }
 
     void addEffects(RegisteredPlayer player, Array<EffectData> effects) {
+        applyEffects(player, effects);
+    }
+
+    /** Round 163: static so the headless guard-fight simulation (WorldStage.simulateGuardDuel via
+     *  DeckTesterSimulator's per-seat hook) applies a guard's equipment with exactly this code - one
+     *  rule for the watched fight and the simulated one. Body unchanged from addEffects(). */
+    public static void applyEffects(RegisteredPlayer player, Array<EffectData> effects) {
         if (effects == null) return;
         //Apply various combat effects.
         int lifeMod = 0;
@@ -777,6 +788,17 @@ public class DuelScene extends ForgeScene {
                 } else {
                     System.err.printf("Item %s not found.", id);
                 }
+            }
+        }
+        // Round 163 (MOD_SCOPE #118): a roaming guard's own equipment. Its effects go on the guard's
+        // seat and its items' opponent effects on the mage's, exactly as the player's do above.
+        if (guardEffects != null) {
+            for (EffectData effect : guardEffects) {
+                if (effect == null)
+                    continue;
+                playerEffects.add(effect);
+                if (effect.opponent != null)
+                    oppEffects.add(effect.opponent);
             }
         }
         if (!aiControlsPlayerSide && (eventData == null || eventData.eventRules.allowsBlessings)) {
@@ -1212,6 +1234,7 @@ public class DuelScene extends ForgeScene {
         this.aiControlsPlayerSide = aiControlsPlayerSide;
         this.guardDeck = null;       // round 145 - never carry a guard's loadout into another duel
         this.guardStartingLife = 0;
+        this.guardEffects = null;    // round 163
         if (eventData != null && eventData.eventRules == null)
             eventData.eventRules = new AdventureEventData.AdventureEventRules(AdventureEventController.EventFormat.Constructed);
         if (eventData != null && eventData.registeredDeck != null)
@@ -1231,9 +1254,10 @@ public class DuelScene extends ForgeScene {
      * AFTER initDuels() - initDuels clears these, which is what keeps a guard's loadout from
      * leaking into the player's own next duel.
      */
-    public void useGuardLoadout(Deck deck, int startingLife) {
+    public void useGuardLoadout(Deck deck, int startingLife, Array<EffectData> effects) {
         this.guardDeck = deck == null ? null : (Deck) deck.copyTo("GuardDeckCopy");
         this.guardStartingLife = Math.max(1, startingLife);
+        this.guardEffects = effects; // round 163: the guard's equipment (MOD_SCOPE #118)
         if (this.guardDeck != null)
             this.playerDeck = this.guardDeck;
         this.chaosBattle = this.enemy.getData().copyPlayerDeck && Current.player().isFantasyMode();

@@ -96,8 +96,11 @@ public class RoamingGuardUI {
 
     private static String describe(RoamingGuardData guard, int day) {
         StringBuilder sb = new StringBuilder(RoamingGuards.displayName(guard.tier));
-        sb.append(" - [+Life] ").append(guard.maxLife).append(", speed ").append((int) RoamingGuards.speedFor(guard.tier));
+        sb.append(" - [+Life] ").append(guard.maxLife).append(", speed ")
+                .append((int) (RoamingGuards.speedFor(guard.tier) * ArmoryStorage.speedOf(guard))); // round 163: with its boots
         sb.append(guard.deckCards.length == 0 ? "" : ", \"" + guard.deckName + "\" (" + RoamingGuards.cardCount(guard) + ")");
+        if (!guard.equipment.isEmpty())
+            sb.append(", ").append(guard.equipment.size()).append(" item(s)"); // round 163
         if (guard.isOutOfCommission(day))
             // Round 152 (user read "until day 236" as "236 days left" - it was 30, from day 206).
             // The absolute day alone made a correct number look alarming; lead with the countdown.
@@ -295,6 +298,12 @@ public class RoamingGuardUI {
                 scene.removeDialog();
                 openDeckReturn(scene, changes, poiName, objectId, guard);
             });
+        // Round 163 (MOD_SCOPE #118, user: "on the Guard management screen a way to access the
+        // inventory and add equipment to a guard"): what the guard wears, from the Armory storage.
+        EconomyBuildings.addHalfButton(dialog, column, "[%75]Equipment (" + guard.equipment.size() + ")", true, () -> {
+            scene.removeDialog();
+            ArmoryStorageUI.openGuardEquipment(scene, guard, () -> openManageGuard(scene, changes, poiName, objectId, guard));
+        });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
 
         if (guard.isOutOfCommission(day)) {

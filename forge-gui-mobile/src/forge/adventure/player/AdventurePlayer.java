@@ -102,6 +102,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final Map<String, Byte> tutorialFlags = new HashMap<>();
 
     private final ArrayList<ItemData> inventoryItems = new ArrayList<>();
+    // Round 163 (MOD_SCOPE #118): the Armory storage - wearables the player has put aside for the roaming
+    // guards. One per character; saved as an ItemData[] exactly like the inventory above. Every move in or
+    // out goes through forge.adventure.util.ArmoryStorage, so an item is never in two places at once.
+    private final ArrayList<ItemData> armoryStorage = new ArrayList<>();
     private final Array<Deck> boostersOwned = new Array<>();
     private final HashMap<String, Long> equippedItems = new HashMap<>();
     private final ArrayList<HashMap<String, Long>> deckLoadouts = new ArrayList<>();
@@ -486,6 +490,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         maxDeckCount = 20;
         clearDecks();
         inventoryItems.clear();
+        armoryStorage.clear(); // round 163
         boostersOwned.clear();
         equippedItems.clear();
         deckLoadouts.clear();
@@ -845,6 +850,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return inventoryItems;
     }
 
+    /** Round 163: the Armory storage. Mutate it through forge.adventure.util.ArmoryStorage only. */
+    public ArrayList<ItemData> getArmoryStorage() {
+        return armoryStorage;
+    }
+
     /**
      * Round 124 (2026-09-06): the inventory is saved as serialized ItemData objects, so a balance change to an
      * item (the Torch's new 1-shard pulse, a reworded description, a changed effect) never reached an existing
@@ -855,7 +865,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private void refreshItemDefinitionsFromCatalog() {
         int refreshed = 0, changed = 0, unknown = 0;
         java.util.Set<String> changedNames = new java.util.TreeSet<>();
-        for (ItemData item : inventoryItems) {
+        // Round 163: the storage and every guard's gear take the catalog too - a balance change must
+        // reach a stored or worn copy the same as one in the pack. Guards are loaded before this runs.
+        java.util.List<ItemData> everywhere = new ArrayList<>(inventoryItems);
+        everywhere.addAll(armoryStorage);
+        for (forge.adventure.data.RoamingGuardData guard : roamingGuards)
+            everywhere.addAll(guard.equipment);
+        for (ItemData item : everywhere) {
             if (item == null || item.name == null)
                 continue;
             ItemData catalog = ItemListData.getItem(item.name);
@@ -1164,6 +1180,17 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     //shouldn't crash if coming from string...
                     e.printStackTrace();
                 }
+            }
+        }
+        // Round 163: the Armory storage, read the way the inventory is. A save from before it has none.
+        if (data.containsKey("armoryStorage")) {
+            try {
+                ItemData[] stored = (ItemData[]) data.readObject("armoryStorage");
+                for (ItemData item : stored)
+                    if (item != null)
+                        armoryStorage.add(item);
+            } catch (Exception e) {
+                System.err.println("[TFR-Armory] could not read the Armory storage from the save: " + e);
             }
         }
         refreshItemDefinitionsFromCatalog(); // round 124: saved items take the catalog's current definition
@@ -1558,6 +1585,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         data.store("deckName", deck.getName());
 
         data.storeObject("inventory", inventoryItems.toArray(new ItemData[0]));
+        data.storeObject("armoryStorage", armoryStorage.toArray(new ItemData[0])); // round 163
 
         ArrayList<String> slots = new ArrayList<>();
         ArrayList<Long> items = new ArrayList<>();

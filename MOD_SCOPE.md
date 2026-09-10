@@ -4898,3 +4898,13 @@ pace of a turn-based game (time only passes while the player moves or waits); Fo
 every duel with the fight staying the player's (equipment, ante, rewards, statistics). Round 161 built the bridge,
 the observation, the actions, the walker and the client (`dev-tools/agent/tfr_agent.py`). Remaining: the Claude Code
 play-loop skill, the first full session, `newgame` parameters, a speed setting for the spectated duel.
+
+### 118. Armory storage and roaming guard equipment — `Built (round 163, 2026-09-10; awaiting the user's playtest and scope answers)`
+User ask 2026-09-10: *"add a storage to the armory. The player can add items from his inventory there. Then on the
+Guard management screen a way to access the inventory and add equipment to the a guard."* Design and decision table:
+`docs/design/2026-09-10-armory-storage.md`. One storage per character, reachable from every player-owned Armory
+(`Storage (N)` on the Armory page); roaming guards dress from it (`Equipment (N)` on the manage screen), one item per
+doll slot; what a guard wears fights with it in watched and simulated duels alike and boots speed its walk; gear
+returns to the storage on dismissal or disband. One owner per item (`util/ArmoryStorage.java`'s five verbs, each
+logged `[TFR-Armory]`); persisted as `ItemData[]` on the player and inside each guard's sub-data, old saves load empty.
+Open for the user: per-Armory instead of global storage? a Level-2 gate? forfeit gear with a downed guard's deck?

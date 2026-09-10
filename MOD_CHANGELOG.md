@@ -17757,6 +17757,74 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 163: the Armory storage and guard equipment (2026-09-10)
+
+User ask (2026-09-10, called "the last item I have for this round, before release"): *"add a storage to the armory.
+The player can add items from his inventory there. Then on the Guard management screen a way to access the
+inventory and add equipment to the a guard."* MOD_SCOPE #118. Design note with every decision and what reversing
+it would cost: `docs/design/2026-09-10-armory-storage.md`. Built without a check-in on the open questions (the user
+was playing); the defaults chosen are the smallest-blast-radius ones and are listed below so they can be vetoed.
+
+### What it does
+
+- **Storage (N)** on every player-owned Armory's page, any level, one row BELOW Done (rows 1-3 above Done are
+  taken and row 4 is off the 270px stage; the Armory never shows Restock, so the spot under Done is free). Opens
+  the character's ONE storage: what is stored, **Deposit** (a paged picker over the inventory's wearables) and
+  **Withdraw** (the same picker over the storage). Wearables only: an item with a slot, not a quest item, and
+  not currently worn - depositing never strips the doll behind the player's back.
+- **Equipment (N)** on the roaming guard's manage screen: what it wears by slot, **Remove** per piece (back to the
+  storage), **Add from storage** (the picker over the storage's wearables). One item per slot, the doll's own slot
+  names; an occupied slot swaps the old piece back into the storage. Ability items are refused (an ability needs
+  a player to trigger it), cracked items too (as on the doll), and gauntlets grant no twin slot to a guard.
+- **The gear works, both ways.** A worn item's duel effects go on the guard's seat and its `opponent` effects on
+  the mage's, in the WATCHED fight (`DuelScene.useGuardLoadout(deck, life, effects)`, applied after the round-156
+  spectator gate so the player's own items still stay out) and the SIMULATED one (a new per-seat
+  `Consumer<RegisteredPlayer>` hook on `DeckTesterSimulator.runBatch`, fed by the same `DuelScene.applyEffects()`,
+  now static). Boots and blessings multiply the guard's walking speed (`ArmoryStorage.speedOf`, the same product
+  `AdventurePlayer.equipmentSpeed()` takes). Map-only effects (Manasight, vision, discounts, reward bonuses) do
+  nothing on a guard; the picker prints each item's effect text so that is visible before choosing.
+- **The gear comes home.** Dismissal (every case - the forfeit rule is about the DECK, the steel is the player's),
+  unpaid disband: back to the storage. A downed guard keeps its gear. New Game+: guards keep it, the storage rides
+  along like the inventory. New game: cleared.
+
+### One owner per item
+
+`ItemData` objects are in exactly one of {inventory, storage, a guard's `equipment`}; every move is one of the
+five verbs in the new `util/ArmoryStorage.java` (`deposit` goes through `AdventurePlayer.removeItem`, which
+unequips and drops granted slots; `withdraw`; `giveToGuard`, which swaps the slot's old piece back; `takeFromGuard`;
+`returnGear`), each removing from the source before adding to the destination and printing one `[TFR-Armory]`
+line. The round-141 sell exploit and the round-146 deck desync were both two containers disagreeing about an
+owner; the guard deck fixed that with an exact list, and equipment gets the same discipline.
+
+### Persistence, no new serializable class
+
+`AdventurePlayer.armoryStorage` is saved as `storeObject("armoryStorage", ItemData[])`, the inventory's own idiom;
+`RoamingGuardData.equipment` as `storeObject("equipment", ItemData[])` inside the guard's sub-data. Both reads are
+`containsKey`-guarded, so a save from before this round loads with an empty storage and bare guards.
+`refreshItemDefinitionsFromCatalog()` (round 124) now walks the storage and every guard's gear too.
+
+### UI
+
+New `util/ArmoryStorageUI.java`: the storage dialog, the guard equipment dialog and a paged picker (six to a page,
+two to a row, `Prev`/`Next`/`Back`; the content rows carry each numbered item's full description, the buttons the
+number and a length-scaled name; a pick reopens the picker on the same page so several moves are quick). Same
+close-then-reopen idiom and the same package-private `EconomyBuildings` helpers as `RoamingGuardUI`.
+
+### How to see it work
+
+`[TFR-Armory] <item> (<slot>) inventory -> storage - storage now N, inventory M` on every move;
+`[TFR-DuelEffects] <Rank> Guard: N effect(s) ...` in a watched fight; `[TFR-RoamGuard] simulating: ... gear: [...]`
+for a simulated one; the dispatch line carries the gear and the boosted speed; the roster line shows `, 2 item(s)`.
+`GUIDE.md` (the Armory notes) documents the storage.
+
+Built 07:40 (Maven OK, twice) - NOT packaged: the game was still open; the live folder carries rounds 158-161 until the next package.
+
+**Files touched**: new `util/ArmoryStorage.java`, `util/ArmoryStorageUI.java`, `docs/design/2026-09-10-armory-storage.md`;
+`data/RoamingGuardData.java` (+`equipment`), `util/RoamingGuards.java` (save/load, dismiss), `util/EconomyBuildings.java`
+(disband), `util/RoamingGuardRuntime.java` (speed, log), `util/RoamingGuardUI.java` (button, roster line),
+`util/DeckTesterSimulator.java` (hooked overload); stock files `player/AdventurePlayer.java`, `scene/RewardScene.java`,
+`scene/DuelScene.java`, `stage/WorldStage.java` (see CORE_ENGINE_CHANGES); `GUIDE.md`; MOD_SCOPE #118.
+
 ## Round 162: the size classes land, the minimap overlays behave, guards get lines and a dismiss warning (2026-09-10)
 
 Six user items from the 2026-09-10 playtest of rounds 158-161, plus the sprite decisions from the review page.

@@ -41,7 +41,7 @@ import java.util.List;
  * Displays the rewards of a fight or a treasure
  */
 public class RewardScene extends UIScene {
-    private TextraButton doneButton, detailButton, restockButton, destroyButton, guardsButton, upgradeButton, rerollButton, shopTypeRerollButton, buyBlueprintButton;
+    private TextraButton doneButton, detailButton, restockButton, destroyButton, guardsButton, upgradeButton, rerollButton, shopTypeRerollButton, buyBlueprintButton, storageButton;
     private TextraLabel playerGold, playerShards;
     private TypingLabel headerLabel;
     private Vector2 headerLabelOrigPos;
@@ -168,6 +168,16 @@ public class RewardScene extends UIScene {
                 doneButton.getY() + doneButton.getHeight() * 3 + 30f);
         buyBlueprintButton.setVisible(false);
         ui.addActor(buyBlueprintButton);
+        // Armory storage (round 163, MOD_SCOPE #118, user: "add a storage to the armory"). One row
+        // BELOW Done: rows 1-3 above it are taken (Destroy / Guards-or-Upgrade / Re-roll) and row 4
+        // is off the top of the 270px stage, while the Armory never shows Restock (it is a noRestock
+        // shop), so the spot under Done is free. Same size as the other programmatic buttons.
+        storageButton = Controls.newTextButton("[%80]Storage", this::promptArmoryStorage);
+        storageButton.setSize(doneButton.getWidth() * 2.2f, doneButton.getHeight() * 0.8f);
+        storageButton.setPosition(doneButton.getX() + doneButton.getWidth() - storageButton.getWidth(),
+                doneButton.getY() - storageButton.getHeight() - 6f);
+        storageButton.setVisible(false);
+        ui.addActor(storageButton);
     }
 
     /**
@@ -260,6 +270,19 @@ public class RewardScene extends UIScene {
         forge.adventure.pointofintrest.PointOfInterest rootPoint = TileMapScene.instance().rootPoint;
         String poiName = rootPoint == null ? null : rootPoint.getData().name;
         EconomyBuildings.openManageGuardsDialog(this, changes, poiName, shopActor.getObjectId());
+    }
+
+    /** Round 163 (MOD_SCOPE #118): the Armory storage dialog. */
+    private void promptArmoryStorage() {
+        if (shopActor == null || changes == null)
+            return;
+        if (!TownRestoration.isCurrentTownPlayerOwned(changes))
+            return;
+        ArmoryStorageUI.open(this, this::refreshStorageButton);
+    }
+
+    private void refreshStorageButton() {
+        storageButton.setText("[%80]Storage (" + ArmoryStorage.items().size() + ")");
     }
 
     private void promptUpgradeArmory() {
@@ -768,6 +791,7 @@ public class RewardScene extends UIScene {
         guardsButton.setVisible(false); // re-enabled by the Shop case below when applicable
         upgradeButton.setVisible(false); // re-enabled by the Shop case below when applicable
         rerollButton.setVisible(false); // re-enabled by the Shop case below when applicable
+        storageButton.setVisible(false); // round 163 - same
         shopTypeRerollButton.setVisible(false); // re-enabled by the Shop case below when applicable
         buyBlueprintButton.setVisible(false);   // ditto
         if (type == Type.Shop) {
@@ -905,6 +929,13 @@ public class RewardScene extends UIScene {
                     // for Armory; that lives only on the ordinary-shop restock button instead).
                     refreshRerollButton();
                     addToSelectable(rerollButton);
+                }
+                // Round 163: the Armory storage, any level, player-owned towns only (same gate as
+                // the rest of the Armory family). The count on the button is the stored item total.
+                storageButton.setVisible(armoryFeatures);
+                if (storageButton.isVisible()) {
+                    refreshStorageButton();
+                    addToSelectable(storageButton);
                 }
                 // Shop Type Re-Roll (round 8) - ordinary card shops only, mutually exclusive with
                 // Armory's own rerollButton above (a shop resolves to exactly one ShopData at a

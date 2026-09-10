@@ -3111,6 +3111,7 @@ public class EconomyBuildings {
                     // punish a cash-flow problem with permanent card loss, which the user reserved
                     // for the deliberate act of dismissing a downed guard.
                     RoamingGuards.returnDeck(guard);
+                    ArmoryStorage.returnGear(guard); // round 163: its equipment comes home with the deck
                     roster.remove(i);
                     System.out.println("[TFR-RoamGuard] " + guardTierDisplayName(guard.tier)
                             + " disbanded on day " + newDayCount + " - salary unpaid; deck returned");
