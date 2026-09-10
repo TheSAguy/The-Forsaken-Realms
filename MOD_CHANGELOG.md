@@ -17757,6 +17757,46 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 168: the Armory storage is a screen, not a dialog (2026-09-10)
+
+User, with a mock-up: *"I don't like the current Inventory management System. It should basically look just like the
+current Inventory tab, but where the current description comes up, it will just be another storage tab (like the
+current one below it)... When you click on the Equipment button for the guard, the same interface will come up.
+This time for the guard, vs. player."*
+
+### The screen
+
+New `scene/ArmoryScene.java` with `ui/armory.json` + `ui/armory_portrait.json` (both derived from the inventory
+layouts): the doll on the left with the same eleven slots, the **Armory Storage** grid where the inventory screen
+shows an item's description, the **Inventory** grid below it, and a button row of Sell / Dispose / Use / Equip /
+**Transfer** / Back (six 56px buttons in landscape; portrait keeps the inventory's two rows and puts Transfer next
+to Sell). Each panel carries a small title with its count. Selecting an item in either grid drives the buttons;
+clicking a doll slot filters BOTH grids to that slot and selects the worn piece, as on the inventory screen.
+
+- **Player mode** (the Capitol Armory's Storage button): the doll and the lower grid are the player's. Sell, Dispose,
+  Use and Equip do exactly what they do on the inventory screen (same 25% sell price, same confirms, Equip toggles
+  to Unequip on a worn piece, Use only for what is usable inside a town). **Transfer** reads "To Storage" for an
+  inventory item - enabled only for a wearable that is not worn and not a quest item - and "To Inventory" for a
+  stored one.
+- **Guard mode** (a roaming guard's Equipment button): the doll and the lower grid are the guard's worn items (a
+  guard wears everything it holds, one per slot, so every piece carries the green check); Sell / Dispose / Use /
+  Equip are hidden. **Transfer** reads "Give" for a stored item (into its slot, swapping the old piece back to the
+  storage; greyed for anything a guard cannot wear) and "Take Back" for a worn one. The Ability slots and the
+  gauntlet twin slots are hidden on a guard's doll.
+- Back returns to the Armory page; from guard mode it re-opens that guard's page (the round-146 one-shot re-open,
+  now carrying the guard). The Storage button's count refreshes on return.
+- Every move still goes through `ArmoryStorage`'s verbs and logs `[TFR-Armory]`; nothing about what is stored or
+  worn changed, only how it is shown. The round-163 dialogs are gone; `ArmoryStorageUI` keeps only the `fit()`
+  label helper the deck picker uses.
+
+Not shown, by the mock-up's design: an item's description. The inventory screen still has it.
+
+Built 14:09, NOT packaged - the game was open; package before the next test.
+
+**Files touched**: new `scene/ArmoryScene.java`, `ui/armory.json`, `ui/armory_portrait.json`; `scene/RewardScene.java`
+(opens the scene; refreshes the count on return), `util/RoamingGuardUI.java` (Equipment opens the scene in guard mode,
+`pendingGuard` re-open), `util/ArmoryStorageUI.java` (trimmed to `fit()`), the design note's code map.
+
 ## Round 167: HOTFIX - the save/load screen (and five others) took no input since round 162 (2026-09-10)
 
 User, on the first launch of the round-166 package: *"I can't seem to load or save. the interface seems locked."*

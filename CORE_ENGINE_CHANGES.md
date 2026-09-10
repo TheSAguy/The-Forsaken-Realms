@@ -2622,3 +2622,8 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 ## Round 167 (2026-09-10) - hotfix
 
 - **`util/UIActor.java`** - `readWindowProperties()`: the round-162 `setTouchable(Touchable.disabled)` became `getCaptureListeners().clear()` - drops only the Window's toFront-on-touch capture listener; the window and the children scenes add into it stay touchable.
+
+## Round 168 (2026-09-10) - the Armory screen
+
+- **`scene/RewardScene.java`** - `promptArmoryStorage()` opens `ArmoryScene`; `enter()` refreshes the Storage button's count after the round-146 re-open check. Two lines.
+- New mod-added: `scene/ArmoryScene.java` (a UIScene shaped like InventoryScene, two grids), `ui/armory.json`, `ui/armory_portrait.json`.

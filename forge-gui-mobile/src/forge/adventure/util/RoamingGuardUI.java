@@ -357,8 +357,15 @@ public class RoamingGuardUI {
         // Round 163 (MOD_SCOPE #118, user: "on the Guard management screen a way to access the
         // inventory and add equipment to a guard"): what the guard wears, from the Armory storage.
         EconomyBuildings.addHalfButton(dialog, column, "[%75]Equipment (" + guard.equipment.size() + ")", true, () -> {
+            // Round 168: the Armory screen in guard mode (user mock-up). It is a scene switch, so this
+            // dialog is gone by the time Back returns - the same one-shot re-open the Info page uses.
+            reopenRosterOnReturn = true;
+            pendingChanges = changes;
+            pendingPoiName = poiName;
+            pendingObjectId = objectId;
+            pendingGuard = guard;
             scene.removeDialog();
-            ArmoryStorageUI.openGuardEquipment(scene, guard, () -> openManageGuard(scene, changes, poiName, objectId, guard));
+            forge.adventure.scene.ArmoryScene.instance().open(guard);
         });
         EconomyBuildings.finishHalfButtonRow(dialog, column);
 
@@ -522,12 +529,20 @@ public class RoamingGuardUI {
     private static forge.adventure.pointofintrest.PointOfInterestChanges pendingChanges;
     private static String pendingPoiName;
     private static int pendingObjectId;
+    /** Round 168: set when the Armory screen was opened from a guard's page, so Back lands on that
+     *  guard's page rather than on the roster. */
+    private static RoamingGuardData pendingGuard;
 
     public static boolean consumeReopenRoster(UIScene scene) {
         if (!reopenRosterOnReturn)
             return false;
         reopenRosterOnReturn = false;
-        openRoster(scene, pendingChanges, pendingPoiName, pendingObjectId);
+        RoamingGuardData guard = pendingGuard;
+        pendingGuard = null;
+        if (guard != null && RoamingGuards.roster().contains(guard))
+            openManageGuard(scene, pendingChanges, pendingPoiName, pendingObjectId, guard);
+        else
+            openRoster(scene, pendingChanges, pendingPoiName, pendingObjectId);
         return true;
     }
 
@@ -537,6 +552,7 @@ public class RoamingGuardUI {
         pendingChanges = changes;
         pendingPoiName = poiName;
         pendingObjectId = objectId;
+        pendingGuard = null;
         scene.removeDialog();
         forge.adventure.scene.InfoTextScene.show("Roaming Guards", java.util.Arrays.asList(
                 "A roaming guard is hired at your Capitol and carries one of YOUR decks. Handing over a "

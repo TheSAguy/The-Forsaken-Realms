@@ -66,8 +66,8 @@ through `AdventurePlayer.removeItem()`, which already unequips and drops granted
 | File | Change |
 |---|---|
 | `util/ArmoryStorage.java` (new) | The five verbs, `canDeposit`, `guardCanWear`, `effectsOf(guard)`, `speedOf(guard)`, `describe(item)` |
-| `util/ArmoryStorageUI.java` (new) | The storage dialog and the paged item picker (8 per page, `Prev`/`Next`/`Back`), reused by the guard screen |
-| `util/RoamingGuardUI.java` | `Equipment (N)` on the manage screen; `openEquipment()`; gear count in `describe()` |
+| `scene/ArmoryScene.java` + `ui/armory*.json` (round 168) | The screen: the inventory layout with the storage grid in the description's place and a Transfer button; player mode and guard mode. Replaced round 163's `ArmoryStorageUI` dialogs (that class keeps only `fit()`) |
+| `util/RoamingGuardUI.java` | `Equipment (N)` on the manage screen opens `ArmoryScene` in guard mode (round 168; `pendingGuard` re-opens the page on Back); gear count in `describe()` |
 | `data/RoamingGuardData.java` | `equipment` list |
 | `util/RoamingGuards.java` | save/load of `equipment`; `dismiss()` returns gear first |
 | `util/EconomyBuildings.java` | unpaid disband returns gear |

@@ -1,0 +1,208 @@
+{
+  "width": 270,
+  "height": 480,
+  "yDown": true,
+  "elements": [
+    {
+      "type": "Image",
+      "name": "lastScreen",
+      "width": 270,
+      "height": 480
+    },
+    {
+      "type": "Label",
+      "name": "storageTitle",
+      "text": "[%70]Armory Storage",
+      "x": 12,
+      "y": 4,
+      "width": 250,
+      "height": 12
+    },
+    {
+      "type": "Scroll",
+      "name": "storage",
+      "x": 8,
+      "y": 17,
+      "width": 254,
+      "height": 88
+    },
+    {
+      "type": "Image",
+      "image": "ui/equipment.png",
+      "x": 8,
+      "y": 112,
+      "width": 129,
+      "height": 243
+    },
+    {
+      "type": "Label",
+      "name": "dollTitle",
+      "text": "[%70]Player",
+      "x": 12,
+      "y": 113,
+      "width": 122,
+      "height": 12
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Ability1",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 124
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Ability2",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 124
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Neck",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 62,
+      "y": 144
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Body",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 62,
+      "y": 189
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Boots",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 62,
+      "y": 324
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Left",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 234
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Left2",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 256
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Medal",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 279
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Right",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 234
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Right2",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 256
+    },
+    {
+      "type": "Label",
+      "name": "inventoryTitle",
+      "text": "[%70]Inventory",
+      "x": 147,
+      "y": 113,
+      "width": 115,
+      "height": 12
+    },
+    {
+      "type": "Scroll",
+      "name": "inventory",
+      "x": 145,
+      "y": 126,
+      "width": 117,
+      "height": 229
+    },
+    {
+      "type": "TextButton",
+      "name": "delete",
+      "text": "[%80]tr(lblDispose)",
+      "width": 60,
+      "height": 30,
+      "x": 8,
+      "y": 363
+    },
+    {
+      "type": "TextButton",
+      "name": "equip",
+      "text": "tr(lblEquip)",
+      "width": 60,
+      "height": 30,
+      "x": 75,
+      "y": 363
+    },
+    {
+      "type": "TextButton",
+      "name": "use",
+      "text": "tr(lblUse)",
+      "width": 60,
+      "height": 30,
+      "x": 140,
+      "y": 363
+    },
+    {
+      "type": "TextButton",
+      "name": "return",
+      "text": "tr(lblBack)",
+      "width": 60,
+      "height": 30,
+      "x": 205,
+      "y": 363
+    },
+    {
+      "type": "TextButton",
+      "name": "sell",
+      "text": "[%75]Sell",
+      "width": 60,
+      "height": 30,
+      "x": 8,
+      "y": 398
+    },
+    {
+      "type": "TextButton",
+      "name": "transfer",
+      "text": "[%75]Transfer",
+      "width": 60,
+      "height": 30,
+      "x": 75,
+      "y": 398
+    }
+  ]
+}

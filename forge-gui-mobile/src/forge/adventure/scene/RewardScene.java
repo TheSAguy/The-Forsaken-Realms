@@ -296,7 +296,8 @@ public class RewardScene extends UIScene {
             return;
         if (!TownRestoration.isCurrentTownPlayerOwned(changes))
             return;
-        ArmoryStorageUI.open(this, this::refreshStorageButton);
+        // Round 168: a real screen shaped like the inventory (user mock-up), not the round-163 dialogs.
+        ArmoryScene.instance().open(null);
     }
 
     private void refreshStorageButton() {
@@ -611,6 +612,9 @@ public class RewardScene extends UIScene {
         // re-open the roster the player left rather than dropping them on the Armory page.
         if (forge.adventure.util.RoamingGuardUI.consumeReopenRoster(this))
             return;
+        // Round 168: back from the Armory storage screen - the count on the button may have changed.
+        if (storageButton != null && storageButton.isVisible())
+            refreshStorageButton();
         if (pendingEmptyBoosterNote) {
             pendingEmptyBoosterNote = false;
             showDialog(createGenericDialog("", "No boosters available yet!\nResearch more expansions"
