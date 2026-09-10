@@ -1636,6 +1636,26 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-09-10 - merged upstream `master` @ `06a3c05731c` (Forge 2.0.15-SNAPSHOT, 09.09 daily; 35 commits,
+  162 files, 122 `.java` since the previous merge point `6155ef58a50`).** **One conflict** - `UIScene.enter()`:
+  upstream `b09a3d3f009` replaced the last-screenshot backdrop body with a pixelating-shader `BaseDrawable` on the
+  lines carrying the mod's `Forge.lastPreview != null` guard (2026-08-26); resolved by keeping the guard above
+  upstream's body, with a merge note in the comment.
+  - The base install `E:\GAMES\Forge_2` is this exact commit: `.installationinformation` `2.0.15-SNAPSHOT-09.09`,
+    `build.txt` `2026-09-09 18:24:56`; probes: HAS `c8630845165` (`withering_curse.txt`) and `8aa0c3d0a35`
+    (`Reality Fracture.txt`), LACKS `43e6b5a1397` (`dead_ringers.txt`). The 22 upstream commits after it were
+    deliberately NOT merged (ten carry Java: UIScene backdrop/deck-editor colours `e6476f9ee7b`, edition code on the
+    rewards screen `63852c37ae0`, server-URL dialog on mobile `a5f4f9e4796`, auto-pass network `5b4ae4601a2`,
+    GdxRuntimeException buffer fix `a8cf0d3b78c`, bulk image download `e79c785f809`, online draft polish
+    `2481801e679`) - they are the next merge's first item.
+  - Files touched by both sides, all auto-merged except UIScene, mod-added lines re-checked and all present:
+    `forge-game/.../player/Player.java` 11, `Forge.java` 7, `UIScene.java` 50, `en-US.properties` 5,
+    `ForgeConstants.java` 7, `ForgePreferences.java` 4.
+  - Upstream's changes worth knowing about, per file this doc tracks: `Forge.java` gained the CDN language
+    download flow and the adventure-mode CDN-popup suppression (`7a55a0bcee7`); `UIScene.java` the shader backdrop
+    and scene disposal on exit; `Player.java` lost six hidden-keyword lines (`cda00a3b96f`); `ForgeConstants`/
+    `ForgePreferences` gained CDN language keys. `forge-gui/pom.xml` adds `gson 2.13.2`.
+  - Nothing under `res/adventure` changed upstream in this range; no Android file either.
 - **2026-09-06 - merged upstream `master` @ `6155ef58a50` (Forge 2.0.15-SNAPSHOT, 09.06 daily;
   14 commits, 37 files, 15 `.java` since the previous merge point `042b3267af7`).** **Zero
   conflicts** - all seven files both sides had touched auto-merged.

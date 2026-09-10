@@ -17757,6 +17757,56 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 165: upstream engine update to the Forge 09.09 daily - step 0 of v1.09 (2026-09-10)
+
+Step 0 of the release, per the standing rule (round 82): take the upstream engine as its own round before any
+release work. The user installed the 09.09 daily into `E:\GAMES\Forge_2` first ("This is the version we will use
+for release. We need to update our local repo to this").
+
+- **Merged upstream `Card-Forge/forge` @ `06a3c05731c`** - 35 commits / 162 files / 122 `.java` since the 09.06
+  merge point `6155ef58a50`. **One conflict**, `UIScene.enter()`: upstream replaced the body of the last-screenshot
+  backdrop with a pixelating shader drawable (`b09a3d3f009`) on the same lines the mod's round-116 null guard sits
+  on; resolved by keeping the guard on top of upstream's body. Six files touched by both sides; every mod-added line
+  re-checked afterwards and present: `Player` 11, `Forge` 7, `UIScene` 50, `en-US.properties` 5, `ForgeConstants` 7,
+  `ForgePreferences` 4.
+- **Which daily the base install is, established by probing its contents.** `.installationinformation` names
+  `2.0.15-SNAPSHOT-09.09`, `build.txt` reads `2026-09-09 18:24:56`. The install HAS `c8630845165`'s card fix (12:17
+  UTC) and `8aa0c3d0a35`'s edition updates (17:48 UTC) and LACKS `43e6b5a1397`'s Dead Ringers fix (19:03 UTC), so
+  the daily was cut between 17:49 and 19:03 UTC: the install is upstream @ `06a3c05731c` exactly, the merge of those
+  edition updates. **Merged to that commit, not to the tip**: the 22 commits after it (the 09-09 evening card fixes
+  and everything on 09-10 - the UIScene backdrop and deck-editor colours, the edition code on the rewards screen, the
+  server-URL dialog on mobile, the auto-pass network fix, FRA/SCH edition updates) carry ten Java commits, and the
+  repo's engine must be the engine in the install the packager copies `res/` from. They are the next merge.
+- **What upstream changed in this range, and why none of it collides with the mod:**
+  - **Rules engine**: the mana-ability rule change (CR 605.1a, `ddab61a257d`), Adventure and Omen moved to
+    `getAllPossibleAbilities`, `CantGainControl`/`LethalDamageByPower` off hidden keywords, the Empower effect and
+    Jace token, `ChangeTargetsEffect` random-target fix, `Chira, All In`, `My Laughter Echoes` replay fixes, a
+    batch of AI tweaks (`AiAttackController`, `FightAi`, `PumpAi`, `RevealAi`, `UntapAi`). All stock files the mod
+    has never edited - they change how every duel plays, which is why the whole game is re-tested after a merge.
+  - **`Forge.java`** (+47): the CDN multi-language card-image download (`556a34f65b6`) and "prevent cdn popup when
+    on adventure mode" (`7a55a0bcee7`). The mod's seven lines in that file (the agent-bridge hooks, the
+    `setUsingAppDirectory` package sniff) are all outside those hunks.
+  - **`UIScene.java`**: the shader backdrop above, plus "Dispose remaining scenes on exit" (`876e0c0acab`).
+  - **`Player.java`** (-6): six lines removed by the hidden-keyword refactor; the mod's 11 lines (partner overheal)
+    untouched. **`ForgeConstants`/`ForgePreferences`**: new CDN-language preference keys; `GITHUB_FORGE_URL` still
+    points at this fork. **`en-US.properties`**: 21 upstream strings appended; the mod's 5 present.
+  - **New dependency**: `gson 2.13.2` in `forge-gui/pom.xml` - the first Maven run after this merge must be ONLINE
+    (drop `-o`) to fetch it; the local repository only held 2.3 and 2.8.5.
+  - **Data**: FRA spoilers and edition updates (FRA, ANA, PMEI, SPG), ~40 card-script fixes, Japanese Wilds of
+    Eldraine strings. **No adventure resource in the delta** - nothing under `res/adventure` changed, so no plane
+    or `common` file needed a look.
+- **Android revert-watch list re-checked** (ANDROID_RELEASE.md): no `forge-gui-android` file is in the delta;
+  manifest package `com.thesaguy.forsakenrealms`, `ASSETS_DIR` `/ForsakenRealms/`, `RES_PKG_FALLBACK`, the
+  `Forge.java` sniff, `GITHUB_FORGE_URL`, the `tfr-v` tag markers in `AssetsDownloader`, Sentry `auto-init=false`
+  and the desktop `AutoUpdater` early return - all intact.
+- **Stamp**: `engineBuildVersion` `2.0.15-SNAPSHOT-09.06` -> `09.09` in `config.json` (the packager refuses a daily
+  that disagrees with the base install's `build.txt`). `modVersion` stays 1.08 until the release round.
+
+PACKAGED 12:48 after the full stock-resource copy (engine changed) - live folder = the 09.09 engine with rounds 158-165.
+
+**Files touched**: the merge (162 files), `UIScene.java` (conflict resolution), `config.json` (stamp), MOD_CHANGELOG,
+CLAUDE.md, CORE_ENGINE_CHANGES.
+
 ## Round 164: the Android / portrait pass over everything added since v1.08 (2026-09-10)
 
 User ask: *"do a full inspection of all new buttons/menus added since the last update and make sure they are Android

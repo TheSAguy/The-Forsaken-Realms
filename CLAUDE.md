@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 164; v1.08 RELEASED, rounds 137-164 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 165; v1.08 RELEASED, rounds 137-165 are post-release; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 165 (2026-09-10, PACKAGED 12:48 after the full stock-resource copy (engine changed) - live folder = the 09.09 engine with rounds 158-165): **upstream engine merge @ `06a3c05731c` = Forge_2's 09.09 daily** (35 commits /
+  162 files / 122 java since `6155ef58a50`). One conflict (`UIScene.enter()` shader backdrop vs the round-116 null
+  guard - both kept); six both-sides files, every mod line verified present. Merged to the INSTALL's exact commit (content
+  probes: has `8aa0c3d0a35`, lacks `43e6b5a1397`), NOT to upstream's tip - the 22 commits after it (09-09 evening + all
+  of 09-10, ten java) are the next merge. New dependency gson 2.13.2: the first Maven after the merge had to run online.
+  `engineBuildVersion` 09.09. Android identity list re-checked clean (no Android file in the delta). **Everything must be
+  re-tested on this engine** (rules changes: CR 605.1a mana abilities, Adventure/Omen abilities, hidden-keyword refactor,
+  AI attack/fight/pump changes). Next: round 166 = the release-blocker fixes the user asked for (Capitol-L2 storage gate,
+  guard gear never cracks, cave champion defeat remembered, guard fights count as player results in simulated duels too,
+  attack queue while a guard fight runs, deck picker paging, war champions past 150 wins), then the notes and the stamps.
 - Round 164 (2026-09-10, PACKAGED 08:15, 356 MB - live folder carries rounds 158-164): **Android / portrait pass over rounds 137-163** (user: "make sure they are
   Android friendly"). All layout twins match. Fixed: the shop page's seven programmatic buttons (2.2 x Back = 281px in
   portrait, off the left edge, Storage off the bottom) now go through `RewardScene.placeModButton` (portrait: Back's
