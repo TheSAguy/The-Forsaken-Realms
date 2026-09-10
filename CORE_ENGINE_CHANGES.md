@@ -2553,3 +2553,14 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`character/CharacterSprite.java`** - `draw()` now sizes the frame at `atlasRegionSize x EnemyData.scale x TuningData.tierScale(tier)` instead of `atlasRegionSize x scale`. Tier is a separate multiplier on purpose: `scale` carries the artist's per-creature intent and folding tier into it would destroy that. Neutral (all tiers 1.0) restores stock behaviour exactly.
 - **`data/TuningData.java`** - `enemyTierScaleCommon/Uncommon/Rare/Mythic` + `tierScale(String)`, returning 1.0 for any unrecognised tier so a stock plane is never resized.
 - **Data** - `enemies.json`: 10 sub-tile `scale` values on humanoid/large-monster art normalised to 1.0 (Zo-Zu the Punisher 0.3, Arabella 0.5, Syr Ginger 0.5, Aminatou 0.6, Devil of Tibalt 0.7, Bria 0.8, Horror of Tibalt 0.8, Geistmage 0.9, Heart-Piercer Manticore 0.9, Lion 0.9). The other 17 sub-1.0 entries are deliberately small creatures and were left alone.
+
+## Round 160 (2026-09-09) - tile-anchored tier cue, guard cue, code-review fixes
+
+- **`character/CharacterSprite.java`** - `draw()` multiplies by `TuningData.tierSizeMultiplier(tier, frameHeight x scale)` instead of `tierScale(tier)`, null-guards `getData()`, and a new `tierCue` field + `setTierCue(String)` lets a non-EnemySprite (the roaming guards) carry the cue. Neutral settings still restore stock behaviour exactly.
+- **`player/AdventurePlayer.java`** - `dropUngrantedSlots()` tests `"Left2"`/`"Right2"` explicitly instead of `endsWith("2")` (which also matched the stock `Ability2` slot and un-equipped every item placed there) and loops until stable; `removeItem(ItemData)` calls it after un-equipping; `resetForNewGamePlus()` zeroes the roaming guards' day fields. Mod-only logic on a stock file.
+- **`scene/DuelScene.java`** - `initDuels()` recomputes `chaosBattle` and clears the extras lists again (the v1.08 tail, which round 145 had moved into `useGuardLoadout`); `addEffects()` logs `[TFR-DuelEffects]` per seat. Both inside mod-touched regions; upstream's `initDuels` tail is byte-identical to v1.08 again.
+- **`stage/WorldStage.java`** - `simulateGuardDuel()` scales the mage's life like DuelScene does (enemyLifeFactor + terrain), `startGuardDuel()` positions the foe clone on the mage's tile. Mod-added methods.
+- **`util/CardUtil.java`** - `remapToEditionList()`'s in-list early return now also requires an allowed rarity. Mod-added method.
+- **`scene/InventoryScene.java`** - `equip()` re-selects the item's rebuilt button via new `reselect(ItemData)`. Small edit to a stock method.
+- **`stage/GameHUD.java`** - `updateAbility()` applies the round-158 in-map hiding when it rebuilds the buttons. Small edit to a stock method.
+- `data/TuningData.java`, `util/EconomyBuildings.java`, `util/RoamingGuardRuntime.java`, `util/RoamingGuards.java` are mod-added files (no merge burden); see MOD_CHANGELOG.

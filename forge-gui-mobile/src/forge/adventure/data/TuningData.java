@@ -274,4 +274,27 @@ public class TuningData {
             default:         return 1f;
         }
     }
+
+    /** One map tile, the unit the tier cue is anchored to. */
+    private static final float TILE_PX = 16f;
+
+    /**
+     * Round 160: the tier cue anchored to ONE TILE instead of to the sprite. Round 159 applied
+     * tierScale as a straight multiplier, which reads perfectly on the one-tile spine of the
+     * roster (14.4 / 16 / 17.6 / 20px) but grew a 96px boss by 24px for no information - the
+     * player already knows a boss when they see one, and a boss room's authored composition
+     * changed underneath it. Here the cue is worth the same number of PIXELS on anything at or
+     * above a tile ((tierScale - 1) x 16, so at most a quarter tile either way, +4px for an
+     * Archmage), and stays a straight multiplier below a tile so a critter is never shifted by
+     * more than its own size. Returns the factor to apply to BOTH dimensions - the aspect ratio is
+     * untouched. {@code baseHeight} is the frame height AFTER EnemyData.scale.
+     */
+    public float tierSizeMultiplier(String tier, float baseHeight) {
+        float cue = tierScale(tier) - 1f;
+        if (cue == 0f || baseHeight <= 0f)
+            return 1f;
+        if (baseHeight <= TILE_PX)
+            return 1f + cue;
+        return 1f + cue * (TILE_PX / baseHeight);
+    }
 }

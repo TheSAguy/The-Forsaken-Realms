@@ -177,7 +177,10 @@
     "dungeonLootedDespawnFactor": 0.5,
 
     // Enemy tier size cue (round 159, user request: "make an Apprentice slightly smaller and an
-    // Archmage slightly bigger"). A sprite renders at atlasRegionSize x scale x tierScale. The
+    // Archmage slightly bigger"; round 160 anchored it to ONE TILE and gave the roaming guards the
+    // same cue). A 16px sprite renders at exactly 16 x tierScale (14.4 / 16 / 17.6 / 20). Above one
+    // tile the cue is worth the same number of PIXELS, (tierScale - 1) x 16, so an Archmage is +4px
+    // whether it is a wizard or a 96px boss; below one tile it stays a straight multiplier. The
     // per-enemy "scale" in world/enemies.json stays the ARTIST's call about how big that creature
     // is against its own art - a Ladybug is 0.5 on purpose - and this is a SEPARATE multiplier
     // layered on top, keyed by the enemy's tier, so the two can be retuned without destroying each

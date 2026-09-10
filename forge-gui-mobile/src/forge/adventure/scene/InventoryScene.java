@@ -310,6 +310,22 @@ public class InventoryScene extends UIScene {
         if (data == null) return;
         Current.player().equip(data);
         updateInventory();
+        // Round 160 (code review): updateInventory() rebuilds every button and (since round 141)
+        // clears itemLocation, so `selected` pointed at a detached actor and the SECOND press of
+        // Equip - the unequip - silently did nothing. Re-select the same item's new button.
+        reselect(data);
+    }
+
+    /** Point the selection at the freshly built button for {@code data} after a rebuild. */
+    private void reselect(ItemData data) {
+        for (Map.Entry<Button, Pair<String, ItemData>> entry : itemLocation.entrySet()) {
+            if (entry.getValue().getRight() == data) {
+                entry.getKey().setChecked(true);
+                setSelected(entry.getKey());
+                return;
+            }
+        }
+        setSelected(null);
     }
 
     @Override

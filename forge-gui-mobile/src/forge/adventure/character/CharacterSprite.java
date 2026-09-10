@@ -30,6 +30,14 @@ public class CharacterSprite extends MapActor {
     private String atlasPath;
     private float wakeTimer = 0.0f;
     public DialogData.ConditionData[] spawnConditions = new DialogData.ConditionData[0]; //List of conditions for the sprite to spawn.
+    /** Round 160: a rank whose size cue this sprite carries even though it is not an EnemySprite -
+     *  the roaming guards, drawn on the hero atlas, so a Master guard and the Master mage it races
+     *  read as the same rank. Null = no cue (the player, dialog actors, rewards). */
+    private String tierCue = null;
+
+    public void setTierCue(String tier) {
+        tierCue = tier;
+    }
 
     public CharacterSprite(int id, String path) {
         super(id);
@@ -283,14 +291,23 @@ public class CharacterSprite extends MapActor {
             currentFrame = currentAnimation.getKeyFrame(timer, !isOneShotAnimation(currentAnimationType));
         }
 
-        // Round 159: rendered size is atlasSize x scale x tierScale. `scale` is the artist's
-        // per-creature intent (a ladybug is deliberately half a tile); `tierScale` is the separate
-        // Apprentice->Archmage size cue, config-driven and 1.0-neutral. See TuningData.tierScale.
+        // Round 159: rendered size is atlasSize x scale x tier cue. `scale` is the artist's
+        // per-creature intent (a ladybug is deliberately half a tile); the tier cue is the separate
+        // Apprentice->Archmage size signal, config-driven and 1.0-neutral. Round 160 anchored that
+        // cue to ONE TILE (TuningData.tierSizeMultiplier: a 16px sprite still renders at exactly
+        // tierScale x 16, but a 96px boss now grows 4px rather than 24) and gave the roaming
+        // guards the same cue through setTierCue().
         float scale = 1f;
+        String tier = tierCue;
         if (this instanceof EnemySprite) {
             forge.adventure.data.EnemyData enemyData = ((EnemySprite) this).getData();
-            scale = enemyData.scale * Config.instance().getTuningData().tierScale(enemyData.tier);
+            if (enemyData != null) {
+                scale = enemyData.scale;
+                tier = enemyData.tier;
+            }
         }
+        if (tier != null)
+            scale *= Config.instance().getTuningData().tierSizeMultiplier(tier, currentFrame.getRegionHeight() * scale);
 
         setHeight(currentFrame.getRegionHeight() * scale);
         setWidth(currentFrame.getRegionWidth() * scale);

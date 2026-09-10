@@ -2547,13 +2547,22 @@ public class EconomyBuildings {
         // and the rows were in it, but UIScene.showDialog() sets the stage's scroll focus to the
         // DIALOG, so the wheel never reached the pane. Handing focus to the pane once the stage has
         // one is what actually makes it scroll; dragging worked all along, scrolling did not.
-        if (pane.getStage() != null)
-            pane.getStage().setScrollFocus(pane);
+        // Round 160 (code review): the round-158 hand-off never survived the open. UIScene.showDialog()
+        // gives the dialog keyboard focus (the old listener fired and handed the pane scroll focus),
+        // then sets scroll focus back to the DIALOG, and libGDX's Dialog.show() sets it to the
+        // dialog a third time - so the pane held focus for a few lines and the wheel still went
+        // nowhere. Now the hook is the SCROLL focus itself: whenever the dialog is made the scroll
+        // target, focus is passed on to the pane one frame later, after every caller has had its
+        // say. The FocusEvent bubbles up from the pane too, so the target check keeps this from
+        // re-firing on its own hand-off.
         dialog.addListener(new com.badlogic.gdx.scenes.scene2d.utils.FocusListener() {
             @Override
-            public void keyboardFocusChanged(FocusEvent event, Actor actor, boolean focused) {
-                if (focused && pane.getStage() != null)
-                    pane.getStage().setScrollFocus(pane);
+            public void scrollFocusChanged(FocusEvent event, Actor actor, boolean focused) {
+                if (focused && event.getTarget() == dialog)
+                    com.badlogic.gdx.Gdx.app.postRunnable(() -> {
+                        if (dialog.getStage() != null && dialog.getStage().getScrollFocus() == dialog)
+                            dialog.getStage().setScrollFocus(pane);
+                    });
             }
         });
         System.out.println("[TFR-Dialog] " + rows.size() + " row(s) moved into a "
@@ -3085,7 +3094,11 @@ public class EconomyBuildings {
                 int nextPayday = ((lastPaid / 7) + 1) * 7;
                 if (nextPayday > newDayCount)
                     break;
-                int goldCost = guardWeeklyGoldCost(guard.tier);
+                // Round 160 (code review): the ROAMING table. Round 157 gave roaming guards their
+                // own wages (30/60/100/150) and the hire dialog, balance sheet and rank change all
+                // quote it - but this sweep kept charging the local garrison table (25/50/75/100),
+                // so the ledger's "roaming guards" line contradicted the projection on the same sheet.
+                int goldCost = RoamingGuards.weeklyGoldCost(guard.tier);
                 int shardCost = guardWeeklyShardCost(guard.tier);
                 if (AdventurePlayer.current().getGold() >= goldCost
                         && AdventurePlayer.current().getShards() >= shardCost) {

@@ -1,0 +1,102 @@
+# Post-v1.08 code review (rounds 137-159), 2026-09-09
+
+**Range**: `tfr-v1.08..15ef69e4db9` (30 commits, rounds 137-159; 51 Java files, +4,745/-131 lines, 51 data
+files). **Method**: five parallel subsystem reviews (guards, economy/ledger, spawning/overlays, decks/arena/
+inventory, data/tools), each reading the diff AND the current file and grepping call sites; every finding
+below was re-verified by reading before it was accepted. The data/tools review was cut short twice by rate
+limits; only its validator half was done by hand. **Line numbers are at HEAD before round 160.**
+
+**Status key**: FIXED-160 = fixed in round 160 (see MOD_CHANGELOG "Round 160"); OPEN = reported, not fixed;
+DESIGN = needs a user decision before a fix.
+
+---
+
+## 1. Roaming guards (rounds 145-158)
+
+| # | Sev | Status | Finding |
+|---|---|---|---|
+| G1 | BUG | FIXED-160 | `RoamingGuards.stripFromOtherDecks` (273-294) dropped `min(have, taken)` from every other deck without consulting the collection: 40 Swamps owned, A lists 17, B lists 17, give A away -> B lost all 17 though 23 remained. `sharedCardImpact` over-counted the same way. Now strips the shortfall only. |
+| G2 | BUG | FIXED-160 | `DuelScene.initDuels` lost its v1.08 tail (`chaosBattle = ...; AIExtras.clear(); playerExtras.clear()`) to `useGuardLoadout` in round 145, so ordinary duels never recomputed `chaosBattle`. Restored. |
+| G3 | BUG | DESIGN | A WATCHED guard duel runs the player's own post-match effects (`DuelScene` 240-243, 307-320, 365-376): `clearPartnerOverhealIfActive()`, `clearBlessing()`, `ColorReputation.onPlayerWonDuel` with the mage-kill multiplier, +1 town reputation, `getStatistic().setResult(...)` (feeds `rank()` = spawn difficulty and the sell-price ratio) and `SpawnTierWeighting.registerKill`; a SIMULATED one runs none. Watch fights + guards = risk-free reputation/statistics farming. The `fixedDeck == null && eventData == null` discriminator at 365 was written for the Deck Tester. **Recommendation**: gate all of it on `aiControlsPlayerSide` - the player is a spectator (WorldStage 526-528, RoamingGuardData 37-39). |
+| G4 | BUG | FIXED-160 | Watched vs simulated mage life differed: `simulateGuardDuel` passed raw `life`, the watched path scaled by `enemyLifeFactor` (0.8/1/1.5/2.5) plus the terrain rule at tile (0,0) because `guardFoe` was never positioned. Same number both ways now; the foe sits on the mage's tile. |
+| G5 | BUG | FIXED-160 | NG+ (`SaveLoadScene` 325-345 + `resetForNewGamePlus` 722-780) carried the roster with old-run day fields: `downUntilDay` 280 in a world on day 1 ("hurt - 279 more days", Heal charges 100 shards), `lastPaidDay` 259, `missionPoiId` at an old POI, old x/y. Day fields, mission, deployment and position reset now; decks and ranks kept. |
+| G6 | LIKELY | OPEN | `WorldStage` 427-431, 895: the attacking mage is dropped from `enemies` before the watched duel's autosave and `RoamingGuardRuntime.duellingMage` is never persisted. Kill the process during a watched duel -> on reload the guard is sent home unhurt and the attack no longer exists ("quit-to-desktop cancels the attack"). Same for an autosave in a simulation window (669). |
+| G7 | LIKELY | OPEN | `RoamingGuardRuntime.interceptOnArrival` (257) returns false for EVERY guard while `duellingGuard != null`, and a simulation holds it up to 90 s of real time while the world keeps ticking. A second mage reaching a second guarded town in that window is unopposed, then the sweep sends that guard home "no longer under attack". |
+| G8 | LIKELY | DESIGN | A draw, the simulator's 90 s timeout (`DeckTesterSimulator` 202-209, 228-233 tally a thrown/timed-out game as a draw) or a spectator Quit (`Match.getWinner()` null unless `isMatchOver()`) is scored as a guard DEFEAT (30-day bench, mage passes). Only the simulated path carries the clock - another Watch/Simulate divergence. |
+| G9 | LIKELY | OPEN | Commander-like modes (selectable in `NewGameScene` 112, 140): `giveDeck` iterates `getMain()` only, so the commander section is dropped on hand-over; a watched fight then plays `GameType.Commander` with the placeholder commander while a simulated one plays `GameType.Adventure`. |
+| G10 | LIKELY | OPEN | `DuelScene` 727-728 / 178-180: the guard's AI seat is seeded with the PLAYER's shard purse (`eventData == null` -> `setManaShards(advPlayer.getShards())`) and the write-back is skipped (spectator controller, `getPlayer()==null`). `AiCostDecision.visit(CostPayShards)` returns 0 and `payShards(0)` is true, so every `PayShards<N>` card in the guard's deck activates FREE - a strength boost the simulated path does not get. Purse never touched. |
+| G11 | RISK | OPEN | Guards move on `min(delta, 0.05)` (`RoamingGuardRuntime` 89, 254) while mages move on raw `delta` (`WorldStage` 439): below 20 fps a guard covers less of its speed than the mage it races (75% at 15 fps). |
+| G12 | RISK | OPEN | `DeckTesterSimulator` 248-250 + `onDuelFinished` 290-293: a late simulation result resolves whatever `duellingGuard` is current. Load/new game clears it (`clearCache` -> `reset`), but a result landing after the NEXT interception resolves that guard with the previous outcome; returning to the main menu does not call `reset()`. Narrow window. |
+| G13 | NIT | OPEN | "Change rank" (`RoamingGuardUI` 386-394, `RoamingGuards` 177) charges only the GOLD difference; the round-157 wage has a shard part (Master 5 / Archmage 15) it never pays, though the dialog says "the difference in weekly pay". |
+| G14 | NIT | OPEN | Unpaid release (`EconomyBuildings` 3100-3106) and plain Dismiss (`RoamingGuards` 192-201) return loose cards via `returnDeck` (list and name wiped at 361-362) while the notifications say "the deck came back". Cards conserved, list not. |
+| G15 | NIT | OPEN | The deck picker (`RoamingGuardUI` 171-191) offers the SELECTED deck with no warning; giving it away leaves the active deck empty and the next duel is padded to 40 Wastes (`applyAdventureDeckRules`, DuelScene 1032-1034). |
+| G16 | NIT | OPEN | `WorldStage` 905-909: a mage with no deck - comment says "let the town defend itself", code calls `onDuelFinished(false)` and benches the guard 30 days. |
+| G17 | NIT | OPEN | Merge burden: stock `DuelScene` gained two fields, `useGuardLoadout`, the `aiControlsPlayerSide` gating and (until 160) the moved `initDuels` tail. A per-seat override object through `initDuels`, or a hook after `humanPlayer` is built, would have left the stock body untouched. |
+
+Checked and clean: deck round-trip encoding (`toCardList` / `fromCardList`, the same pair the collection uses; noSellValue flags survive); cards returned exactly once (`returnDeck` empties `deckCards`); persistence key-by-key under `roamingGuard_<i>` with per-key defaults, pre-145 saves read an empty roster, `serialVersionUID` pinned; static sprite map reset on load/new game/NG+; winner read from the Match; equipment/blessings excluded from both paths; 30-day timer consistent; arrival epsilon shared with territory; every dialog charges once behind `canAfford`; `FixGuardDecks` conserves cards and backs up first.
+
+## 2. Economy, ledger, balance sheet, save plumbing (rounds 138-157)
+
+| # | Sev | Status | Finding |
+|---|---|---|---|
+| E1 | BUG | FIXED-160 | `payRoamingGuards` (EconomyBuildings 3088) charged `guardWeeklyGoldCost` (local 25/50/75/100) while the hire dialog, balance sheet and rank change quote `RoamingGuards.weeklyGoldCost` (30/60/100/150). Round 157's arithmetic was done on a table the sweep never read. |
+| E2 | BUG | FIXED-160 | `AdventurePlayer.dropUngrantedSlots()` (2528) matched `endsWith("2")`, so `equip()` dropped every Ability2 item in the call that placed it (22 items; the user hit it: "my torch can't be attached to Aux slot 2"). Also: the `granted` snapshot let a gauntlet worn in the other gauntlet's slot keep granting for one pass (now looped until stable), and `removeItem()` never called it (a sold/deleted worn gauntlet orphaned its granted slot's item, effects still applied). |
+| E3 | LIKELY | FIXED-160 | The round-158 scroll-focus hand-off (`makeContentScrollable` 2553-2562) was overwritten: `UIScene.showDialog` sets keyboard focus (listener fires, pane gets scroll focus) then `setScrollFocus(dialog)`, and `Dialog.show` does it again. Now a `scrollFocusChanged` listener + `postRunnable`. |
+| E4 | LIKELY | OPEN | `WorldSave` 130, 193-212: a failed in-game load returns to a running game with another save's player (`player.load()` already ran) and a half-applied `World` (mutated in place); the dialog says the file is untouched, and any of the ten `autoSave()` sites in `WorldStage` then persists the hybrid over `auto_save.sav`. Also a `RuntimeException` inside `player.load()` is caught by neither block. |
+| E5 | LIKELY | OPEN | `RoamingGuardUI` 186: the deck picker's rows are BUTTONS (`addHalfButton` -> `getButtonTable()`), which `makeContentScrollable` cannot cap; with 8-10+ built decks (max 20) the dialog exceeds 270px again. |
+| E6 | NIT | OPEN | `BalanceSheet` 151-161: "Day N payday: interest" is labelled a day early and computed on today's balance (the sweep boundary is `(day-1)/7`). Weekly totals right, projection line off. |
+| E7 | NIT | OPEN | `resetForNewGamePlus` never touches the ledger; the stale week self-heals on the first backwards roll, but a save in that window carries the old book. |
+| E8 | NIT | DESIGN | Hire fees (EconomyBuildings 531-533, RoamingGuardUI 138-140), rank upgrades (394) and the 100-shard heal (305) land in "Everything else" - the guard lines show wages only, against the sheet's stated purpose. |
+| E9 | NIT | OPEN | `dev-tools/save-editing/Inv.java` 31-35 reads `equippedAbility1..equippedBoots`, keys the save never writes (slots are `equippedSlots`/`equippedItems` arrays). Dead code. |
+
+Checked and clean: every ambient-bucket scope restores in `finally`; `takeGold` records the post-clamp delta; IGNORED wraps only the purse side of bank moves and the Trade wraps all eight; week math consistent and persisted; balance sheet recomputes from the sweep's own helpers; exact vs scaled costs never mixed; affordability precedes every spend; all changed save-bound classes keep unchanged `serialVersionUID`s; `SAVE_FORMAT_VERSION` written by the one `save()`; `ringGiftGranted` once per character; `forgetTownState` purges both ids; `makeContentScrollable` fits the roster, manage-guard and Exchange dialogs.
+
+## 3. Spawning, champions, map overlays, sprite sizing (rounds 137-159)
+
+| # | Sev | Status | Finding |
+|---|---|---|---|
+| S1 | BUG | OPEN | **Frontier spawns (round 142) are dead code.** `BiomeData.getEnemyList()` (61-77) puts a spawnRate-0 CLONE of every catalog enemy into `enemyList`, so after the difficulty filter `filteredEnemies` already holds every enemy with `difficulty <= rank`; `FrontierSpawns.injectFor` (116-123) skips names already present AND `difficulty > rank` - exact complements of the caller's filter - so `added` is always empty. The clones keep their exempt weight of 0. Verified over the 126 matching enemies at every rank value. No log line ever fired. (Once fixed: `shareFor` also grants the colourless share to the "player" and "colorless" biomes.) |
+| S2 | BUG | OPEN | **Cave champions can be farmed.** After a win `MapStage.getReward()` (1873-1874) deletes that placement id; on re-entry `prepareCaveChampion` (899-902) rebuilds `candidates` without it, `championFor` returns the persisted name again, and `hash % (n-1)` promotes ANOTHER roamer to the same champion, paying its full reward list again - once per ordinary placement. Fix shape: mark the entry consumed when the promoted sprite is beaten, or derive the placement from the ORIGINAL candidate list. |
+| S3 | BUG | FIXED-160 | Round 158's "ability buttons hidden in town maps" never showed: `showHideMap(false)` hid them and `HudScene.enter()` -> `GameHUD.updateAbility()` (624) rebuilt them visible. |
+| S4 | BUG | OPEN | Round 141's "Arzakon is reachable" is false: `pickRandomArchmage` (ChestEvents 301-323) returns the first non-null `pickGrandmasterMage(world, color)`, which iterates `getEnemyList()` (every catalog enemy) and accepts any non-boss non-quest Mythic - so the heavyweight fallback (Arzakon 200 life, Nephilim Epochal 100) is consulted only if the whole catalog has no Mythic. Fix shape: merge the heavyweights into the candidate list with a share. |
+| S5 | BUG | OPEN | `MapViewScene.attacks()` (461-462, 472, 480) places lines and heads in UNZOOMED map coordinates (labels go through `img.getScaleX() * ... + img.getX()`), and `setSize(length, 1)` is never revisited on zoom - after any zoom step the overlay is detached from the map. |
+| S6 | BUG | OPEN | The Attacks overlay has no exit in the button cycle: `attacks()` clears `mageMarkers` (mage dots AND the round-152 guard dots), draws lines, sets mode 0; `details()/events()/reputation()/names()` clear only `details` labels, so the lines persist through every later view and the dots never return until the scene is left. |
+| S7 | BUG | OPEN | War champions stop spawning past 150 wins: `rank()` returns 10, all 25 champions are difficulty 3, their spawnRate-0 clones pass the filter, `injectFor` hits `present.contains(name)`, no share is granted, exempt weight 0. "War is the gate" breaks exactly when the player is strongest. Same mechanism as S1. |
+| S8 | BUG | OPEN | War champions leak into re-themed dungeon/cave/town placements: `TerritoryControl.reThemedEnemyFor` (1757-1763) calls `biome.getEnemy(ceiling)` on the CURRENT owner's biome; at WAR the five champions are appended at 20% per placement regardless of the ceiling, re-rolled on every map load (the re-theme is not persisted). Contradicts both the round-139 "roaming encounters" intent and MapStage 1053-1057's same-ceiling contract. |
+| S9 | LIKELY | OPEN | Round 158's label fix is incomplete: `resolveLabelOverlaps()` (533-553, run on zoom) still shifts labels down without a cap, so the "label on another town" symptom reproduces after a zoom step. |
+| S10 | RISK | OPEN | The shift cap (323-340) is off by one (exits after the 4th shift without testing the 4th position - effective cap 3) and can drop the garrison label of the player's MOST threatened town (one "Under Attack!" label per attacker goes first). |
+| S11 | RISK | OPEN | Tier scaling lives only in `draw()`: `EnemySprite` ctor sizes and `updateBoundingRect()`s at atlas x scale, `WorldStage.spawn` (1572-1574) tests collision with that box, then the first draw grows it (now by at most a quarter tile after round 160's anchoring; before, 25% of a 4x boss). Authored MapStage rooms likewise. |
+| S12 | NIT | OPEN | `MapStage` 918: `Math.abs(poi.getID().hashCode()) % n` is negative for `Integer.MIN_VALUE`; use `Math.floorMod`. |
+| S13 | NIT | OPEN | `TuningData.tierScale(null)` returns the Common value against its own javadoc ("1.0 for anything unrecognised"); `EnemyData.tier` defaults to "Common", so unreachable in practice. |
+
+Checked and clean: injection does not compound (fresh local list per call); weight algebra (`ordinaryTotal` captured before either add, tails in append order, `shareWeight` guards zero and clamps 0.9); JSON field names match `WarChampionData`/`FrontierSpawnData`; `caveChampion` persisted behind `containsKey`, cleared on `generateNew`, purged on POI re-key; POI id stable across loads; unresolvable champion name -> no promotion; bosses/quest targets excluded; `pickRandomArchmage` null -> gold chest; hero-art exclusion computed against the right hero; overlay textures asset-manager owned; `ActionData.addColorReputationPlayerColors` behind a pinned UID.
+
+## 4. Deck generation, cards, arena, inventory, config (rounds 137-154)
+
+| # | Sev | Status | Finding |
+|---|---|---|---|
+| D1 | BUG | FIXED-160 | `CardUtil.remapToEditionList` (520-522): the "already an in-list printing" early return ran BEFORE the round-151 rarity preference, and the pool hands over the LATEST printing. Shifting Sky and Warped Devotion are Uncommon in PLS and Rare in 8ED (both Metathran sets), so a "no rares" starter bucket kept the 8ED Rare. In-list now also requires an allowed rarity. |
+| D2 | LIKELY | FIXED-160 | `InventoryScene.equip()` (304-313): since round 141's `itemLocation.clear()` the rebuilt inventory left `selected` on a detached button, so the second Equip press (the unequip) was a silent no-op. Re-selects the item's new button. (`repair()` 236 has the same shape - not changed.) |
+| D3 | RISK | OPEN | `NewGameScene` 211-214: the race listener is a raw `EventListener`, so `updateStarterEditionListForRace()` runs on EVERY event and unconditionally `setTextList`s; in Precon/CommanderPrecon mode it would replace the precon set list. Not reachable on this plane (no precon folders); latent. |
+| D4 | RISK | OPEN | The "disjoint mana-cost ranges" claim (round 151) does not hold structurally: `CardPredicate` passes a card if ANY core type matches, so "Creature C/U cmc 3-4" overlaps "Instant/Sorcery/Enchantment C/U cmc 3-5" on Enchantment Creatures; the untyped "Rare cmc 3-7" bucket overlaps every C/U bucket for a cross-rarity card. No exposure in today's 16 race set lists (verified); becomes real with a Theros/Kamigawa-style set. |
+| D5 | NIT | OPEN | `Config.racedStarterDeck()` (534-560): `describeStarterDeck()` (the AUDIT/LIST lines) runs only on the first-attempt success path; the widened-list and unrestricted rebuilds are never audited and the latter is not size-checked. |
+| D6 | NIT | OPEN | `Adventure.render` (98-108) keys swallowed exceptions on the TOP stack frame, so different call sites throwing from the same JDK/libGDX frame share one key and only the first gets a trace. |
+
+Checked and clean: `maxCopies` keyed on card name (no bypass by printing), bounded attempts, pool non-empty; the one-printing predicate right for both cases except D1; `cardNames` branch; race fallback never null, lands exempt, every template sums to 40/60, every field exists on `RewardData`, all 35 config refs and 64 edition codes exist; `NewGameScene` index clamping; arena weekly key null for Chest/Deck Tester, entry lock before `loadArenaData`, win recorded before `RewardScene`, `capArenaItems` before the Bronze Coin; sell/delete clear selection; use dialog rebuilt and removed; `grantsEquipmentSlot` survives `clone()`; `items.json` separator intact except three pre-v1.08 lines; `InfoTextScene` window is a sibling of the pane.
+
+## 5. Data and tools (partial - validator only)
+
+| # | Sev | Status | Finding |
+|---|---|---|---|
+| T1 | BUG | FIXED-160 | `maps/map/main_story/spawn.tmx` #69 (the Ring gift's skip-intro grant) and `maps/map/naktamun/naktamun.tmx` #43 still granted the "Colorless rune"; round 152 renamed it to Homeward rune in items.json and the saves only, so a NEW character's rune came out as `Missing item` on stderr. Both renamed. |
+| T2 | NIT | FIXED-160 | `dev-tools/validate_plane_data.py` hard-codes the `TuningData` / `RoamingGuardConfig` field lists and had not learned the round-159 `enemyTierScale*` keys or round-152 `healShardCost`, reporting them as unknown. |
+| T3 | NIT | OPEN | Three compiled `.class` files are tracked under `dev-tools/save-editing/` (FixGuardDecks, Inspect, WriteDecks; rounds 140-148), against the project's own rule. `git rm --cached` + an ignore pattern. |
+
+Not reviewed: `dev-tools/save-editing/*.java` (FixGuardDecks, RenameItem, Decks, Ledger, Inv), `sprites/ruins.atlas`, the `.dck` changes, the guard decklists. Validator after round 160: clean except the informational `sideboss*` POI types.
+
+## Cross-cutting
+
+- All 23 stock upstream files changed in the range are recorded in CORE_ENGINE_CHANGES.md.
+- Every Java-serialized class touched in the range (`AdventurePlayer`, `ItemData`, `RewardData`, `BiomeData`, `DialogData`) carries an unchanged pinned `serialVersionUID`; `World` and `RoamingGuardData` persist key-by-key.
+- One new concurrency surface in the range: the ledger's thread-local ambient bucket (clean, see E section).
+- A recurring root cause worth naming: **`BiomeData.getEnemyList()` contains a spawnRate-0 clone of every catalog enemy** (upstream's quest-boost mechanism). S1, S4 and S7 are all consequences of injecting "by name not already present" against that list. Any future spawn injection has to key on something other than presence.

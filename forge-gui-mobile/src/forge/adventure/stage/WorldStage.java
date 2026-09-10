@@ -875,6 +875,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         EnemyData duelData = new EnemyData(mage.getData());
         duelData.noAnte = true;
         final EnemySprite guardFoe = new EnemySprite(duelData);
+        // Round 160: DuelScene reads the terrain life modifier from the foe's tile, and an
+        // unpositioned clone sat at (0,0) - not where the fight is.
+        guardFoe.setPosition(mage.getX(), mage.getY());
         guardFoe.territoryTarget = mage.territoryTarget;
         guardFoe.territoryColor = mage.territoryColor;
         currentMob = guardFoe;
@@ -908,11 +911,21 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 TerritoryControl.onMageArrived(passthrough);
             return;
         }
+        // Round 160 (code review): the watched path scales the mage's life by the difficulty's
+        // enemyLifeFactor and the day/night terrain rule (DuelScene does that for every fight the
+        // player sees); the simulation passed the raw catalog value, so on Insane a watched mage
+        // had 2.5x the life of the same mage simulated. Same number both ways now.
+        int mageLife = Math.round(mage.getData().life * Current.player().getDifficulty().enemyLifeFactor);
+        if (!MapStage.getInstance().isInMap()) {
+            int tileSize = Current.world().getTileSize();
+            mageLife = Current.world().applyDayNightTerrainLife(mageLife, (int) mage.getX() / tileSize, (int) mage.getY() / tileSize);
+        }
         System.out.println("[TFR-RoamGuard] simulating: " + RoamingGuards.displayName(guard.tier)
-                + " (" + guard.maxLife + " life) vs " + mage.getName() + " (" + mage.getData().life + " life)");
+                + " (" + guard.maxLife + " life) vs " + mage.getName() + " (" + mageLife + " life, raw "
+                + mage.getData().life + " x " + Current.player().getDifficulty().enemyLifeFactor + ")");
         DeckTesterSimulator.runBatch(
                 RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife,
-                mage.getName(), mageDeck, mage.getData().life,
+                mage.getName(), mageDeck, mageLife,
                 1, null, result -> {
                     boolean guardWon = result.deckAWins > result.deckBWins;
                     EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(guardWon);

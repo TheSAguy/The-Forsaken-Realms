@@ -112,7 +112,7 @@ F["ConfigData"] = set("""screenWidth screenHeight skin font fontColor minDeckSiz
  contentFilterTablesEnabled showEnemyTierInName raceEditions shopBlueprintsEnabled raceShops startingColorShopSuffixes blueprintShardCostCommon
  blueprintShardCostUncommon blueprintShardCostRare modVersion welcomePopupText welcomePopupLink engineBuildVersion modVersionDate
  weightedSpawnTiersEnabled functioningNeutralTownsEnabled disableGeneticDeckOverrides caveChampionChance""".split())
-F["TuningData"] = set("""dayLengthSeconds capitolExpansionTilesPerDay townExpansionDaysPerTile aiCastleExpansionTilesPerDay maxTerritoryRadius
+F["TuningData"] = set("""enemyTierScaleCommon enemyTierScaleUncommon enemyTierScaleRare enemyTierScaleMythic dayLengthSeconds capitolExpansionTilesPerDay townExpansionDaysPerTile aiCastleExpansionTilesPerDay maxTerritoryRadius
  townMaxTerritoryRadius townProtectedRadiusCap speedUpMultiplier playerTerritorySpeedBonus aiTerritoryHappySpeedBonus aiTerritoryPartnerSpeedBonus
  aiTerritoryUnhappySpeedPenalty aiTerritoryWarSpeedPenalty mineWeeklyGoldPayout mineWeeklyWoodPayout mineWeeklyStonePayout mineWeeklyShardPayout
  anteRerollBaseShardCost anteRerollEscalationRate anteBuyBackMultiplier anteBuyBackMinCommon anteBuyBackMinUncommon anteBuyBackMinRare
@@ -125,7 +125,7 @@ F["TuningData"] = set("""dayLengthSeconds capitolExpansionTilesPerDay townExpans
  torchPulseMultiplier torchPulseSeconds torchPulseMaxRadiusTiles dungeonLootedDespawnFactor""".split())
 F["WarChampionData"] = set("share white blue black red green".split())
 F["FrontierSpawnData"] = set("unhappyShare warShare neutralColorlessShare maxLife".split())
-F["RoamingGuardConfig"] = set("maxGuards lifeApprentice lifeAdept lifeMaster lifeArchmage speedStepBelowPlayer recoveryDays".split())
+F["RoamingGuardConfig"] = set("maxGuards lifeApprentice lifeAdept lifeMaster lifeArchmage speedStepBelowPlayer recoveryDays healShardCost".split())
 F["PointOfInterestData"] = set("name type count spriteAtlas sprite map radiusFactor offsetX offsetY active questTags questFlagsToActivate displayName".split())
 F["EnemyData"] = set("""name nameOverride sprite deck copyPlayerDeck ai boss flying randomizeDeck spawnRate difficulty tier speed scale life rewards
  equipment colors nextEnemy teamNumber questTags lifetime gamesPerMatch bossInsult bossIntro noAnte""".split())

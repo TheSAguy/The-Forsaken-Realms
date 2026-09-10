@@ -748,6 +748,20 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // exists in the new world's catalog - so carrying them would hand out free coins for
         // enemies this run never took one from.
         coinRansomedEnemies.clear();
+        // Round 160 (code review): the roster rides into the new run (the guards still hold their
+        // decks), but every DAY-based field pointed at the old calendar - a guard benched on old
+        // day 250 was "hurt for 279 more days" in a world back on day 1, and no wage was billed
+        // until old-run day 266. Missions and positions belong to a world that no longer exists.
+        for (forge.adventure.data.RoamingGuardData guard : roamingGuards) {
+            guard.hiredDay = 0;
+            guard.lastPaidDay = 0;
+            guard.downUntilDay = 0;
+            guard.missionPoiId = "";
+            guard.returningHome = false;
+            guard.deployed = false;
+            guard.x = 0f;
+            guard.y = 0f;
+        }
 
         // ---- gates a New Game re-rolls ------------------------------------------------------
         // The five values must sum to zero (see the field's own comment), so clear-then-reseed
@@ -774,6 +788,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " coinRansomMarks=" + coinRansomedEnemies.size()
                 + " blessing=" + (blessing == null ? "null" : "SET(LEAK)")
                 + " partnerOverheal=" + partnerOverhealActive
+                + " roamingGuardsCalendarReset=" + roamingGuards.size()
                 + " | difficulty=" + difficultyData.name
                 + " rewardMaxFactor=" + difficultyData.rewardMaxFactor
                 + " startingLife=" + difficultyData.startingLife);
@@ -2491,6 +2506,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (getEquippedItems().contains(item.longID) && !inventoryItems.contains(item)) {
             item.isEquipped = false;
             getEquippedItems().remove(item.longID);
+            // Round 160 (code review): selling or deleting a WORN gauntlet used to leave whatever
+            // sat in the slot it granted equipped, with no slot on the doll to take it off from.
+            dropUngrantedSlots();
         }
     }
 
@@ -2523,15 +2541,27 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * unequip it from.
      */
     private void dropUngrantedSlots() {
-        java.util.Set<String> granted = grantedEquipmentSlots();
-        for (String slot : new java.util.ArrayList<>(equippedItems.keySet())) {
-            if (!slot.endsWith("2") || granted.contains(slot))
-                continue;
-            ItemData orphan = getEquippedItem(equippedItems.remove(slot));
-            if (orphan != null)
-                orphan.isEquipped = false;
-            System.out.println("[TFR-EquipSlot] " + slot + " is no longer granted - unequipped "
-                    + (orphan == null ? "(unknown item)" : orphan.name));
+        // Round 160 (code review): only Left2/Right2 are ever granted, so only those two can be
+        // UNgranted. The old endsWith("2") test also matched Ability2, and equip() calls this right
+        // after placing an item - so every Ability2 item was dropped in the same call that equipped
+        // it, and the slot round 154 made visible could hold nothing. Looping until stable closes
+        // the other gap: a gauntlet worn in a slot the OTHER gauntlet granted stops granting the
+        // moment it is dropped, which a single pass over a snapshot of the granted set never saw.
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            java.util.Set<String> granted = grantedEquipmentSlots();
+            for (String slot : new java.util.ArrayList<>(equippedItems.keySet())) {
+                boolean grantable = "Left2".equals(slot) || "Right2".equals(slot);
+                if (!grantable || granted.contains(slot))
+                    continue;
+                ItemData orphan = getEquippedItem(equippedItems.remove(slot));
+                if (orphan != null)
+                    orphan.isEquipped = false;
+                changed = true;
+                System.out.println("[TFR-EquipSlot] " + slot + " is no longer granted - unequipped "
+                        + (orphan == null ? "(unknown item)" : orphan.name));
+            }
         }
     }
 

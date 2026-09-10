@@ -17757,6 +17757,178 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 160: both sprite decisions settled, and the post-v1.08 code review's first fixes (2026-09-09)
+
+### The two open sprite decisions
+
+**Decision 1 - tier scaling stays game-wide, but the cue is anchored to ONE TILE.** Round 159's
+straight multiplier reads perfectly on the one-tile spine of the roster (14.4 / 16 / 17.6 / 20px)
+and badly on big art: Akroma's boss room grew her from 96 to 120px for no information at all - the
+player already knows a boss when they see one, and the room's authored composition changed under
+her. `TuningData.tierSizeMultiplier(tier, baseHeight)` now returns `tierScale` unchanged for
+anything at or below a tile, and above a tile applies `(tierScale - 1) x 16` PIXELS instead - the
+cue is worth at most a quarter tile either way, +4px for an Archmage whether it is a wizard or a
+96px boss. Both dimensions take the same factor, so the aspect ratio is untouched. The four
+`settings.json` values keep their meaning and all-1.0 still switches the cue off. Measured against
+the 725 enemies placed in the 817 map files: before, 21 grew by 8px or more (7 of them bosses);
+after, none grows by more than 4.
+
+**Guards were never scaled.** The "mages/guards only" framing assumed they were; a roaming guard is
+a plain `CharacterSprite` on the hero atlas and the round-159 multiplier only ever touched
+`EnemySprite`s. New `CharacterSprite.setTierCue(tier)` carries the cue for a non-enemy sprite, and
+`RoamingGuardRuntime` sets it from `guard.tier` at spawn - a Master guard and the Master mage it
+races now read as the same rank.
+
+**Decision 2 - the size-class rule.** "Off the 16px grid" stopped being a usable standard the moment
+round 159 put every non-Adept enemy off it by design (1,179 of 1,787). What is actually wrong is a
+size SMEAR: 245 enemies render between one and two tiles, and 37 sit on large art nobody ever gave
+a scale (Uurg, a Common, at 50px). So the rule is by SUBJECT, not by art:
+
+| Class | px | tiles | what goes here |
+|---|---|---|---|
+| Tiny | 8 | 0.5 | ladybugs, the smallest critters (existing ones are already there) |
+| Critter | 12 | 0.75 | birds, insects, small mammals, small reptiles, oozes |
+| Person | 16 | 1 | every humanoid, undead humanoids, spirits, person-sized animals |
+| Medium | 24 | 1.5 | big people (kings, warlords, brutes), horses, bears, minotaurs, drakes |
+| Large | 32 | 2 | dragons, giants, trolls, elementals, two-tile monsters |
+| Huge | 48 | 3 | titans and the biggest bosses |
+
+All pre-tier; `scale = class height / Idle-frame height`; the tier cue multiplies on top. For new
+art the rule is one line: pick the class, divide (`dev-tools/sprite_sizes.py --check new.atlas`
+prints the scale for every class).
+
+New `dev-tools/sprite_sizes.py` measures all 1,787 enemies against their atlases (plane atlas
+first, then common; first Idle frame), scopes the work to the 419 that render 14-48px off
+the grid (45 critters under 14px are deliberate and left alone, 16 at 48px and up already
+read as huge, 1,307 are on the grid), and proposes a class for each: Critter 23, Person 212, Medium 115, Large 58, Huge 11.
+263 are automatic (a confident folder or name rule), 156 are marked "needs eyes" (a
+ratio-only call, a boss, a creature with 45+ life, or a move over 40%); 273 shrink and
+125 grow. `dev-tools/sprite_review_page.py` turns the JSON into the review page - thumbnails at
+current and proposed size side by side on a tile grid, a class picker per row, decisions saved to
+the page's own database (`overrides` collection, one document per enemy, absence = the proposal is
+accepted). **`enemies.json` is NOT touched this round**: the classes are applied only after that
+review, as round 161, reading the overrides back first. The full table is
+`docs/review/2026-09-09-sprite-size-classes.csv`.
+
+What the tool got wrong on the way, kept here because the next person will meet the same traps:
+`life >= 45` and `boss` were first used as SIZE rules and sent a 51-life prince and a human chef
+boss to 48px - toughness is not size, so a boss with a deliberate scale now snaps to its chosen
+size and one at scale 1.0 goes up one step, both flagged; a "large" humanoid atlas is a big PERSON
+(Medium), not a two-tile creature; the plane's basic pack draws people at 32px, twice the common
+pack, so its animals are read against that; a legend on critter art at x2 (The Scorpion God) keeps
+its size rather than shrinking to a 12px critter; and a "giant" slime on 40px art is Large where a
+"giant" rat is person-sized.
+
+### The post-v1.08 code review: what was fixed here
+
+Five parallel reviews of rounds 137-159 (guards, economy and ledger, spawning and overlays, decks
+and arena and inventory, data and tools - the last one was cut short twice by rate limits and only
+the validator half of it was done by hand). Everything small enough to ride along with a build that
+was going out anyway is fixed below; the rest is listed after it and belongs to round 161+.
+
+1. **The roaming-guard sweep charged the LOCAL wage table.** Round 157 gave roaming guards their own
+   30/60/100/150 table, and the hire dialog, balance sheet and rank change all quote it - but
+   `payRoamingGuards` still called `guardWeeklyGoldCost` (25/50/75/100), so the ledger's "roaming
+   guards" line contradicted the projection on the same sheet. One line.
+2. **No Ability2 item could be equipped at all** - the user hit this the same afternoon ("my torch
+   can't be attached to Aux slot 2, it just does nothing"). `dropUngrantedSlots()` matched
+   `endsWith("2")` - written for Left2/Right2 - and `equip()` calls it right after placing an item,
+   so every one of the 22 Ability2 items (the runes, the Torch) was dropped in the same call that
+   equipped it. Round 154 fixed the paperdoll's visibility test but not this one, so the slot became
+   visible and stayed empty. It tests the two granted names now, loops until stable (a gauntlet worn
+   in a slot the OTHER gauntlet granted stops granting the moment it is dropped, which a single pass
+   over a snapshot never saw), and `removeItem()` calls it too, so selling or deleting a worn
+   gauntlet takes the granted slot's item off with it.
+3. **The round-158 scroll-focus hand-off never survived the open.** `UIScene.showDialog()` gives the
+   dialog keyboard focus (the old listener fired and handed the pane scroll focus), then sets scroll
+   focus back to the DIALOG, and libGDX's `Dialog.show()` sets it to the dialog a third time. The
+   hook is the SCROLL focus itself now: whenever the dialog is made the scroll target, focus is
+   passed to the pane one frame later through `postRunnable`.
+4. **Handing a deck to a guard gutted every other deck that shared its basics.** `stripFromOtherDecks`
+   removed `min(listed, taken)` from each other deck without asking what the collection still held:
+   40 Swamps owned, deck A lists 17, deck B lists 17, give A away -> B lost all 17 although 23
+   remained. It strips only the SHORTFALL now, and the picker's "shares cards with" warning counts
+   the same way.
+5. **New Game+ carried the guard roster's calendar into a world back on day 1** - a guard benched on
+   old day 250 was "hurt for 279 more days" (and the Heal button would take 100 shards to fix it),
+   no wage was billed until old-run day 266, missions pointed at old-world POIs. `resetForNewGamePlus`
+   zeroes the day fields, mission, deployment and position; the guards keep their decks and ranks.
+6. **Ordinary duels stopped recomputing `chaosBattle`.** Round 145 moved the last three lines of
+   `initDuels` into `useGuardLoadout`, which only guard duels call, so the flag stuck at whatever the
+   previous fight left it (Chaos mode vs the Doppelganger never took the chaos branch). Restored.
+7. **A watched guard fight and a simulated one were played at different mage life** - the watched
+   path scales by the difficulty's `enemyLifeFactor` and the terrain rule, the simulation passed
+   the raw catalog value, so on Insane a watched Mythic mage had 2.5x the life of the same mage
+   simulated. Same number both ways now, and the watched foe is positioned on the mage's tile so
+   the terrain rule reads the right terrain rather than tile (0,0).
+8. **A starter deck could contain a Rare from a "no rares" bucket.** `remapToEditionList` returned
+   early for any in-list printing BEFORE the round-151 rarity preference, and the pool hands over
+   the LATEST printing: Shifting Sky and Warped Devotion are Uncommon in PLS and Rare in 8ED, both
+   Metathran sets, so the 8ED Rare stayed. In-list is only "already right" at an allowed rarity now.
+9. **Equip was a one-shot.** Since round 141's `itemLocation.clear()` the rebuilt inventory left
+   `selected` pointing at a detached button, so the SECOND press of Equip - the unequip - did
+   nothing. The scene re-selects the same item's new button after the rebuild.
+10. **Round 158's "ability buttons hidden in town maps" never showed**: `showHideMap()` hid them and
+    `HudScene.enter()` immediately called `updateAbility()`, which rebuilt them visible. The rule is
+    applied in the rebuild too.
+11. **Two map dialogs still granted the "Colorless rune"** - the round-152 rename to Homeward rune
+    reached items.json and the saves but not `spawn.tmx` (the Ring gift's skip-intro grant) or
+    `naktamun.tmx`, so a NEW character's rune silently came out as "Missing item" on stderr. Found by
+    the validator; both renamed. The validator's own field lists gained the round-159
+    `enemyTierScale*` keys and round-152 `healShardCost`, which it had been reporting as unknown.
+12. **New `[TFR-DuelEffects]` line** per seat (effect count, life modifier, extra start cards, shards,
+    battlefield cards) - the user reported the Medal of the Outmaneuvered not giving the opponent its
+    Gemstone Mine, and nothing in the log could confirm or deny it. Reading the code, the medal's
+    opponent effect IS collected and handed to the AI seat (`addExtraCardsOnBattlefield` concatenates,
+    every `initDuels` overload resets `aiControlsPlayerSide`); the next duel's log settles it.
+
+### Reported by the review, NOT fixed here (round 161+ - each needs its own decision or a bigger change)
+
+The full reports with file:line evidence and the "checked and clean" coverage lists are in
+`docs/review/2026-09-09-post-v108-code-review.md` (finding ids G1-G17, E1-E9, S1-S13, D1-D6, T1-T3).
+
+Guards: a WATCHED guard duel runs the player's post-match effects (colour reputation, statistics,
+kill registration, partner overheal cleared) while Simulate runs none - farmable reputation, and a
+Watch/Simulate divergence; an autosave during a watched duel drops the attacking mage, so
+quit-to-desktop cancels an attack; `interceptOnArrival` returns false for EVERY guard while a
+simulation runs (up to 90 s of world time), so a second mage arrives unopposed; a draw, a 90 s
+timeout or a spectator Quit is scored as a guard DEFEAT; commander modes lose the deck's commander
+section on hand-over; the guard's AI seat is seeded with the player's shard purse, so shard-cost
+cards activate free (watched only); guards move on `min(delta, 0.05)` while mages use the raw
+delta, biasing the race below 20 fps; a late simulation result can resolve the NEXT interception;
+"Change rank" charges only the gold difference; unpaid release / Dismiss return loose cards while
+the message says "the deck came back"; the picker offers the SELECTED deck; a deckless mage benches
+the guard for 30 days.
+Economy: a failed world load leaves a hybrid in-memory state that the next autosave persists; the
+deck picker still overflows via its BUTTON table with 8-10+ decks; the balance sheet's interest
+line is a day early; NG+ does not reset the ledger (self-healing); hire fees, upgrades and heals
+land in "Everything else".
+Spawning and map: **frontier spawns (round 142) are dead code** - `getEnemyList()`'s spawnRate-0
+catalog clones make every candidate "already present" or over-rank, and no log line ever fired;
+**a cave champion can be farmed** - after a win it is promoted onto another placement on re-entry;
+Arzakon's fallback is unreachable (`pickGrandmasterMage` always finds a Mythic); the Attacks overlay
+draws in unzoomed coordinates, has no exit in the button cycle and wipes the guard dots; war
+champions stop spawning past 150 wins and leak into re-themed dungeon placements at 20% per
+placement; `resolveLabelOverlaps` still walks labels without a cap after a zoom, the shift cap is
+off by one (effective 3) and can drop the most-threatened town's garrison label; tier scaling is
+applied only in `draw()`, so spawn-time collision tests use the unscaled box; `Math.abs(hashCode)`
+can go negative; `tierScale(null)` returns the Common value against its own javadoc.
+Decks: the race listener runs on every event and would clobber a precon set list (latent);
+template buckets overlap on enchantment creatures and cross-rarity cards so the per-entry cap can
+stack (no exposure in today's sets); `racedStarterDeck` audits only the first-attempt path;
+`Adventure.render`'s exception key collapses distinct call sites throwing from one JDK frame.
+Not reviewed: the save-editing tools (`FixGuardDecks`, `RenameItem`, `Decks`, `Ledger`, `Inv`) and
+`sprites/ruins.atlas`.
+
+Packaged: 21:06 (live folder 350 MB, PACKAGE_OK 2026-09-09 21:06:16, carries rounds 158-160).
+
+**Files touched**: `character/CharacterSprite.java`, `data/TuningData.java`, `util/RoamingGuardRuntime.java`,
+`util/RoamingGuards.java`, `util/EconomyBuildings.java`, `util/CardUtil.java`, `player/AdventurePlayer.java`,
+`scene/DuelScene.java`, `scene/InventoryScene.java`, `stage/WorldStage.java`, `stage/GameHUD.java`; plane
+`config tables/settings.json` (comment), `maps/map/main_story/spawn.tmx`, `maps/map/naktamun/naktamun.tmx`;
+`dev-tools/validate_plane_data.py`; new `dev-tools/sprite_sizes.py`, `dev-tools/sprite_review_page.py`,
+`docs/review/2026-09-09-sprite-size-classes.csv`, `docs/review/2026-09-09-post-v108-code-review.md`.
+
 ## Round 159: the sprite-size audit, and tier scaling on top of it (2026-09-09)
 
 ### What the audit actually found - and where my own estimate was wrong

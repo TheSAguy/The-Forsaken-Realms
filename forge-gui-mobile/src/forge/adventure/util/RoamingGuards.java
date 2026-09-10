@@ -282,7 +282,14 @@ public class RoamingGuards {
                 int have = other.getMain().count(entry.getKey());
                 if (have <= 0)
                     continue;
-                int drop = Math.min(have, entry.getValue());
+                // Round 160 (code review): strip only the SHORTFALL against what the collection
+                // still holds, not everything the guard took. The collection has already been
+                // reduced by the time this runs, so a deck listing 17 Swamps while 23 remain loses
+                // nothing - the old min(have, taken) gutted every mono-colour deck sharing basics.
+                int remaining = player.getCards().count(entry.getKey());
+                int drop = Math.min(have, Math.max(0, have - remaining));
+                if (drop <= 0)
+                    continue;
                 other.getMain().remove(entry.getKey(), drop);
                 removed += drop;
             }
@@ -337,7 +344,14 @@ public class RoamingGuards {
                 continue;
             int shared = 0;
             for (java.util.Map.Entry<PaperCard, Integer> entry : source.getMain()) {
-                shared += Math.min(other.getMain().count(entry.getKey()), entry.getValue());
+                // Round 160: what this deck would actually LOSE - its shortfall once the source
+                // deck's copies leave the collection - not merely what the two lists have in common.
+                int have = other.getMain().count(entry.getKey());
+                if (have <= 0)
+                    continue;
+                int owned = player.getCards().count(entry.getKey());
+                int leaving = Math.min(entry.getValue(), owned);
+                shared += Math.min(have, Math.max(0, have - (owned - leaving)));
             }
             if (shared > 0)
                 impact.put(other.getName(), shared);

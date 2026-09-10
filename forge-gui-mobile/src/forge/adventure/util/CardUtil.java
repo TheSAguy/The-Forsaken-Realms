@@ -515,9 +515,23 @@ public class CardUtil {
         forge.adventure.world.World world = Current.world();
         if (world == null || !world.isEditionProgressionEnabled())
             return candidate;
+        boolean rarityOk = allowedRarities == null || allowedRarities.length == 0;
+        if (!rarityOk) {
+            for (String rarity : allowedRarities) {
+                if (candidate.getRarity() == CardRarity.smartValueOf(rarity)) {
+                    rarityOk = true;
+                    break;
+                }
+            }
+        }
+        // Round 160 (code review): an in-list printing is only "already right" if its rarity is
+        // allowed too. Shifting Sky is Uncommon in PLS and Rare in 8ED - both Metathran sets - and
+        // the pool hands over the LATEST printing, so this early return kept the 8ED Rare in a
+        // "no rares" starter deck. A candidate at a barred rarity falls through to the remap,
+        // which prefers an in-list printing at an allowed rarity and otherwise keeps what it had.
         for (String code : allowedEditions)
-            if (candidate.getEdition().equals(code))
-                return candidate; // already an in-list printing
+            if (candidate.getEdition().equals(code) && rarityOk)
+                return candidate; // already an in-list printing at an allowed rarity
         List<PaperCard> printings = FModel.getMagicDb().getCommonCards().getAllCards(candidate);
         List<PaperCard> inList = new ArrayList<>();
         for (PaperCard p : printings) {

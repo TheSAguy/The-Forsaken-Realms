@@ -760,11 +760,16 @@ public class GameHUD extends Stage {
         float y = Forge.isLandscapeMode() ? 10f : 60f;
         float w = 45f;
         float h = 35f;
+        // Round 160 (code review): round 158 hid these inside town maps in showHideMap(), but
+        // HudScene.enter() calls this right after and rebuilt them visible - so the hiding never
+        // showed. The rule lives here too now.
+        boolean abilitiesUsable = !MapStage.getInstance().isInMap();
         for (TextraButton button : abilityButtonMap) {
             button.getColor().a = opacity;
             button.setSize(w, h);
             button.setPosition(x, y);
             y += h + 15f;
+            button.setVisible(abilitiesUsable);
             addActor(button);
         }
     }

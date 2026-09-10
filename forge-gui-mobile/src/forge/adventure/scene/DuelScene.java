@@ -665,6 +665,19 @@ public class DuelScene extends ForgeScene {
             startCardsInCommandZone.addAll(data.startBattleWithCardsInCommandZone());
             extraManaShards += data.extraManaShards;
         }
+        // Round 160 diagnostic (user: "I don't think the Medal I'm wearing is working"): one line
+        // per seat with everything the effects handed it, so an item that does nothing is provable
+        // from the log rather than by watching the opponent's battlefield.
+        if (effects.size > 0) {
+            StringBuilder names = new StringBuilder();
+            for (IPaperCard c : startCards)
+                names.append(names.length() == 0 ? "" : ", ").append(c.getName());
+            for (IPaperCard c : startCardsTapped)
+                names.append(names.length() == 0 ? "" : ", ").append(c.getName()).append(" (tapped)");
+            System.out.println("[TFR-DuelEffects] " + (player.getPlayer() == null ? "?" : player.getPlayer().getName())
+                    + ": " + effects.size + " effect(s), lifeMod=" + lifeMod + ", extraStartCards=" + changeStartCards
+                    + ", shards=" + extraManaShards + ", battlefield=[" + names + "]");
+        }
         player.addExtraCardsOnBattlefield(startCards);
         player.addExtraCardsOnBattlefieldTapped(startCardsTapped);
         player.addExtraCardsInCommandZone(startCardsInCommandZone);
@@ -1202,6 +1215,12 @@ public class DuelScene extends ForgeScene {
             this.playerDeck = (Deck) eventData.registeredDeck.copyTo("EventDeckCopy");
         else
             this.playerDeck = (Deck) Current.player().getSelectedDeck().copyTo("PlayerDeckCopy");
+        // Round 160 (code review): round 145 moved these three lines into useGuardLoadout(), which
+        // only a guard duel calls - so ordinary duels stopped recomputing chaosBattle and the flag
+        // stuck at whatever the previous fight left it. Back where v1.08 had them.
+        this.chaosBattle = this.enemy.getData().copyPlayerDeck && Current.player().isFantasyMode();
+        this.AIExtras.clear();
+        this.playerExtras.clear();
     }
 
     /**

@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 159; v1.08 RELEASED, rounds 137-159 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 160; v1.08 RELEASED, rounds 137-160 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,30 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 160 (2026-09-09, PACKAGED 21:06 - live folder carries rounds 158-160): **both sprite decisions settled + 12 code-review fixes.** (1) Tier cue
+  ANCHORED TO ONE TILE: `TuningData.tierSizeMultiplier(tier, baseHeight)` keeps the straight multiplier at or below
+  16px and applies `(tierScale - 1) x 16` PIXELS above it, so an Archmage is +4px whether wizard or 96px boss (Akroma
+  was 96 -> 120, now 100). Still game-wide. **Guards were never scaled** (a plain CharacterSprite on the hero atlas) -
+  `setTierCue(guard.tier)` gives them the cue now. (2) **The size-class rule**: Tiny 8 / Critter 12 / Person 16 /
+  Medium 24 / Large 32 / Huge 48, pre-tier, by SUBJECT not art, `scale = class / frame height`. New
+  `dev-tools/sprite_sizes.py` (`--csv`, `--json`, `--check new.atlas`) scopes it to 419 enemies (14-48px, off
+  grid; 45 critters and 16 huge left alone) and proposes Critter 23, Person 212, Medium 115, Large 58, Huge 11; 156 marked "needs eyes".
+  `dev-tools/sprite_review_page.py` builds the review page the user is going through; decisions land in that page's
+  database (`overrides` collection) - READ THEM BACK before round 161 applies anything. **enemies.json untouched.**
+  (3) **Post-v1.08 code review** (five subsystem reviews; the changelog entry lists every finding). Fixed here: the
+  roaming sweep charged the LOCAL wage table; **no Ability2 item could be equipped since round 137** (`dropUngrantedSlots`
+  matched `endsWith("2")` - the user hit it: "my torch can't be attached to Aux slot 2"); the round-158 scroll-focus
+  hand-off was overwritten by `UIScene.showDialog` AND `Dialog.show`; **giving a deck to a guard gutted every other deck
+  sharing its basics** (strip the shortfall, not the overlap); NG+ kept the guards' old-run calendar; `chaosBattle`
+  was no longer recomputed for ordinary duels; watched vs simulated guard fights used different mage life (raw vs
+  x enemyLifeFactor); an in-list Rare printing survived a "no rares" starter bucket; Equip was a one-shot after the
+  round-141 rebuild; round 158's town-map ability hiding was undone by `updateAbility()`; two map dialogs still granted
+  "Colorless rune" (new characters got "Missing item"); the validator's field lists were stale. New `[TFR-DuelEffects]`
+  line per seat - the user's "the Medal is not working" report is unconfirmed by code reading, so the next duel's log
+  is the test. **NOT fixed (round 161+)**: watched guard duels run the player's post-match reputation/statistics;
+  frontier spawns are DEAD CODE; cave champions can be farmed; Arzakon's fallback is unreachable; the Attacks overlay
+  ignores zoom and has no exit; war champions stop past 150 wins and leak into re-themed dungeons; a failed world load
+  leaves a hybrid state the next autosave persists; and the rest of the list in the changelog entry.
 - Round 159 (2026-09-09, PACKAGED 13:41 - live folder carries rounds 158 AND 159): **sprite-size audit + tier scaling**. Rendered size is now
   `atlasRegionSize x EnemyData.scale x TuningData.tierScale(tier)` - tier is a SECOND multiplier, never folded into
   `scale`, because `scale` carries the artist's per-creature intent (a Ladybug is 0.5 on purpose). Defaults
@@ -71,7 +95,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   0.5 on user request, so a blanket pass reverts earlier decisions. Only 10 were fixed, all humanoids/large monsters
   rendering below tile size (Zo-Zu was 4.8px, the smallest sprite in the game). STILL OPEN: **413 enemies are on
   odd-SIZED ART** (17-103px raw) and render off the 16px grid - that is 27% of the roster and the real remaining
-  source of raggedness; not attempted.
+  source of raggedness; not attempted (settled in round 160 by the size-class rule).
 - Round 158 (2026-09-09, PACKAGED): **map labels DRIFT** - placeDetailLabel()
   shifted a label down without limit until it cleared its neighbours, so garrison labels came to rest over OTHER
   towns (user saw "Roaming Guard" on black towns; the data was right, the labels had walked). Capped at 4 shifts,

@@ -224,6 +224,7 @@ public class RoamingGuardRuntime {
             CharacterSprite sprite = sprites.get(guard);
             if (sprite == null) {
                 sprite = new CharacterSprite(AdventurePlayer.current().spriteName());
+                sprite.setTierCue(guard.tier); // round 160: the same rank size cue as the mages it races
                 sprites.put(guard, sprite);
                 foregroundSprites.addActor(sprite);
                 sprite.setPosition(guard.x, guard.y);
