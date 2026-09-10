@@ -11,10 +11,6 @@
 
 ## The Forsaken Realms — v1.09 — The Roaming Guard
 
-**This is the biggest update since the game went standalone.** Twenty-eight rounds of work since v1.08:
-a new way to defend your towns, a place to keep the gear your defenders wear, starter decks that finally
-belong to the race you picked, an enemy roster whose sizes mean something, and a long list of fixes from
-three days of playtesting. Saves from v1.08 load; see the save note at the bottom for the one thing to know.
 
 ## New: Roaming guards
 
@@ -67,12 +63,6 @@ not wearing — and you can put things in or take them out at any Armory; it is 
 character. At the Capitol, a roaming guard's page gains an **Equipment** button that dresses the guard from
 that store, one item per slot, the same slots your own character has.
 
-What a guard wears fights with it. Its items' bonuses apply on its side of the duel, their opponent effects
-(a Medal's extra land, say) apply to the mage, and it works the same whether you watch the fight or let it
-simulate. Boots with a movement bonus make the guard walk faster, which is exactly the race it needs to win.
-Effects that only mean something to you on the map — Manasight, vision, shop discounts, bonus rewards — do
-nothing on a guard, and the picker shows each item's effect text so you can see that before choosing.
-Equipment always comes back to the storage when a guard is dismissed or leaves; only the deck can be lost.
 
 ## New: starter decks that belong to your race
 
@@ -109,8 +99,6 @@ a Master and an Archmage slightly larger, by a fixed few pixels, so a boss does 
 carry the same cue, so a Master guard and the Master mage it is racing read as the same rank. Deliberately
 tiny creatures — the ladybug, the cat, the bat, the crab — are untouched.
 
-One enemy is now hidden per game: whichever one shares your own hero's sprite, so you and your guards are
-always unique on the map.
 
 ## New: the minimap says more
 
@@ -128,19 +116,6 @@ lines each (mines, bank interest, everything else; local guards, roaming guards,
 net, what is on hand, and what the **next payday already owes**. It records what actually moved, so a lost
 duel's gold shows up and a bank deposit does not.
 
-## Changed: wages and income
-
-Four guards were costing 1,725 gold a week against 137 of income, so they all walked out on day 259 —
-correctly, but not sustainably. Local garrison wages are halved and roaming guards got their own scale
-(the table above); a gold mine pays **100 a week, up from 75**. Shards, not gold, are now the ceiling on
-top-rank guards: four Archmages want 60 shards a week against a shard mine's 20.
-
-| Garrison rank | Now | Was |
-|---|---|---|
-| Apprentice | 25 gold | 50 |
-| Adept | 50 gold | 100 |
-| Master | 75 gold + 5 shards | 150 |
-| Archmage | 100 gold + 15 shards | 200 + 5 shards |
 
 ## Changed: smaller balance and rule changes
 
@@ -168,37 +143,6 @@ top-rank guards: four Archmages want 60 shards a week against a shard mine's 20.
   it Gemstone Mine instead.
 - **The Colorless rune is the Homeward rune.** A copy you already own keeps its old name and keeps working.
 
-## Fixed
-
-- **A failed load no longer eats your world.** If a save failed to load, the game quietly generated a fresh
-  map in its place; you kept your character and lost the world. It now refuses, leaves the file untouched,
-  and says why. Saves also carry a format number now, checked before anything is read.
-- **The second Ability slot** — the Torch, the runes, 22 items — was invisible and could not be equipped
-  since an earlier update. Both halves fixed.
-- **Selling an item twice.** The Sell button stayed live after a sale and paid out again; the same stale
-  selection affected Delete and Equip. Equip also works as a toggle again.
-- **A watched guard duel was always scored as a defeat**, benching a guard that had just won for thirty
-  days. Watched and simulated fights also used different enemy life totals on higher difficulties.
-- **Giving a deck to a guard left your other decks listing cards you no longer owned**, and could even let
-  you play them. Every deck is kept honest now, only the actual shortfall is removed, and the deck picker
-  warns which decks would lose what.
-- **The Ring's opening gift could be claimed three times** by clicking the skip-intro option repeatedly.
-- **Old quest notifications leaked in from other games** when a save loaded.
-- **Pages went blank when you clicked their background** — the info page first, then the Standings page;
-  fixed for all ten pages that share the parchment frame.
-- **Guards slid across the map on their idle frame**; they walk and face the way they are going.
-- **Your own equipment was fighting in your guards' duels.** A spectator's boots stay out of the fight.
-- **Roaming guards were billed at the garrison wage table**, so the ledger contradicted its own projection.
-- **New Game+ carried a guard's old calendar** into a world back on day one ("hurt for 279 more days").
-- **Chaos mode stopped applying** to ordinary duels after a guard fight.
-- **Ability buttons stayed on screen inside towns** where they do nothing.
-- **A used item's dialog showed the first item you ever used**, and its text ran off the screen.
-- **Overlay labels wandered** onto other people's towns, and attack lines hung around after you switched
-  views. Both anchored properly now.
-- **Guard dialogs ran off the bottom of the screen** with a full roster; they scroll.
-- **Android.** The Armory page's buttons were wider than a phone screen, with the new Storage button off
-  the bottom; the minimap's view button floated in the middle of the map; several long labels shrink to
-  fit. All corrected against the phone layout, though not yet checked on a device.
 
 ## Known issues
 
