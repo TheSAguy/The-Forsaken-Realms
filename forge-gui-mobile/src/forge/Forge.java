@@ -910,6 +910,7 @@ public class Forge implements ApplicationListener {
 
     @Override
     public void render() {
+        forge.adventure.agent.AgentBridge.startIfConfigured(); // round 161: no-op unless TFR_AGENT_PORT is set
         if (showFPS)
             FrameRate.getInstance().update(ImageCache.getInstance().counter, getAssets().manager().getMemoryInMegabytes());
 
@@ -937,11 +938,13 @@ public class Forge implements ApplicationListener {
             OverlayText.getInstance().render(delta);
             // render framerate if enabled
             FrameRate.getInstance().render(showFPS);
+            forge.adventure.agent.AgentBridge.afterRender(); // round 161: end of frame (screenshots, frame counter)
             return;
         }
         // render classic
         Classic.getInstance().render(screen);
         FrameRate.getInstance().render(showFPS);
+        forge.adventure.agent.AgentBridge.afterRender(); // round 161: same hook for matches, splash and transitions
     }
 
     private static FContainer getHierachyScreen() {

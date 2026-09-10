@@ -17757,6 +17757,102 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 161: the agent bridge - Claude can play the game as the player (2026-09-09, night)
+
+User ask (2026-09-09 evening): *"figure out how we can implement it where you can play the game as the player. Not
+just duels that's currently possible, but fully play the game in the place of the player... Write up all the
+steps/prep, and if you don't hear back from me, start the coding so it's ready."* Design and build plan:
+`docs/design/2026-09-09-agent-play.md` (MOD_SCOPE #117). This round is the first cut of that plan, steps 1-6.
+
+### What "Claude plays" means here
+
+Claude drives the overworld, the towns, the shops, the inventory, the decks and the quests, live, one decision per
+command; Forge's AI plays the duels on the player's seat. That division is deliberate: the game already had the
+duel half (`aiControlsPlayerSide`, the Deck Tester's "AI vs. AI - Watch" mode, every guard fight), and a Magic
+game played card-by-card through a text channel would be slower and worse than the AI that already exists.
+
+The fact that makes the rest cheap: **the world is already turn-based at the command level.** In-game time advances
+only inside `WorldStage.onActing()`'s `player.isMoving() || waitingForTime` block, and not at all inside a map. So a
+*read state -> think -> act -> wait until idle* loop has no real-time pressure; the seconds a decision takes cost
+nothing in-game.
+
+### The bridge
+
+New package `forge.adventure.agent` (mod-added, default OFF): a loopback HTTP server on
+`TFR_AGENT_PORT` / `-Dtfr.agent.port` (nothing starts without it; `TFR_AGENT_CHEATS=1` additionally allows console
+commands and the fog-free state). Every read and every action is marshalled onto the render thread
+(`Gdx.app.postRunnable` + a bounded wait); the HTTP thread never touches scene2d. No persisted state; the save
+format is untouched.
+
+| Endpoint | What |
+|---|---|
+| `GET /state[?cheat=1]` | scene, player (resources, life, position, location, decks, items, stats, reputation, guards), `world` (discovered POIs with type/colour/distance/bearing, VISIBLE enemies incl. what a mage is attacking) or `map` (every interactable actor with id/kind/label/distance), the open `dialog` (text + option ids), the clickable `ui` (ids + texts), `shop` items in a RewardScene, `quests`, and `agent` (busy, action, drained HUD notifications) |
+| `POST /cmd` | `goto {poi|actor|tile|x,y}`, `explore {dir,tiles}`, `stop`, `wait {days}`, `fasttime`, `leave`, `click {id|text}`, `back`, `key`, `equip/unequip/use/sell {item}`, `deck {select|list|add|remove|collection}`, `buy {index}`, `save/load {slot}`, `newgame`, `autobattle`, `console` (cheats). Long actions block until they finish or `timeout` |
+| `GET /wait?timeout=N` | blocks until idle (no walk, no wait, no transition, no duel, not paused) and returns the state |
+| `GET /screenshot` | writes the frame to a PNG and returns its path - the agent can look |
+
+**Movement without touching stock movement code**: an invisible actor on the active stage ticks
+`WalkController` before `GameStage.act()` reads its inputs, and steers through `setTouchKnobInput()` - the virtual
+joystick the touch UI already feeds. Overworld paths are A* over `World.isColliding` tiles (8-way, no corner
+cutting, waypoints simplified to straight runs, replans when stuck up to four times); inside a map the enemy AI's
+own `NavigationMap` is used, straight line as the fallback. Arriving on a POI fires the game's own entry path,
+including its entry-barred / toll / legendary dialogs, which the agent answers with `click`.
+
+**Clicks are real touches**: `click` fires `touchDown`/`touchUp` on the target actor's own stage at the actor's
+centre, so hit-testing, capture listeners and modality behave exactly as with a mouse. Ids come from the last
+`/state`; `text` matches a button label. That one generic path covers every dialog and every menu scene.
+
+**Auto-battle**: `DuelScene`'s seat construction gets a second reason to use an AI LobbyPlayer -
+`AgentBridge.aiPilotsPlayer()` - that changes ONLY the pilot. `aiControlsPlayerSide` stays false, so equipment,
+blessings, ante, rewards, statistics and reputation are all the player's, exactly as if the user had played the
+match (the spectator flag strips all of that, which is right for a guard and wrong for the agent).
+
+**Stock-file hooks, a handful of lines in four files**: `Forge.render()` starts the bridge on the very first frame
+- it has to be that early because the splash's Classic/Adventure prompt comes BEFORE Adventure mode exists, and a
+bridge session sets `Forge.selector = "Adventure"` for that process so the prompt is skipped (the saved preference
+is untouched; finding this cost an hour of launches that all sat on the splash waiting for a click) - and marks the
+end of every frame at both of its exits (the only moment the frame buffer is complete, for screenshots; putting it
+in Adventure mode's own loop went dark during every duel); `DuelScene` reads the pilot flag;
+`MatchController.revealAnteCards()` keeps the ante without its two modal prompts when the agent pilots the seat
+(the first live agent duel sat on the Re-roll prompt for ten minutes); `GameHUD.addNotification` feeds the agent's
+notification buffer. `Adventure.java` is untouched.
+
+**Forge's own toolkit is reachable too.** The match screen, the win/lose view and every option pane are Forge
+widgets, not scene2d, so the state carries `forgeUi`: every enabled `FButton` on the visible overlays (flagged
+`prompt: true` - the win/lose view's "Back to Adventure", a reward popup's "OK") and on the current screen
+(`prompt: false` - the match's Pause and speed toggle, which the agent can use to run a duel at 10x). `click` taps
+them through `FButton.tap()`, the same entry point a touch reaches. `/wait` treats a visible prompt as idle. Two more mod-added files in the stage and scene
+packages (`AgentStageAccess`, `AgentSceneAccess`) expose package-private state instead of edits to the stock stages
+and scenes.
+
+**Client**: `dev-tools/agent/tfr_agent.py` (`state [--brief]`, `wait`, `shot`, `cmd <name> k=v ...`). The dev loop
+that made this buildable in one night: run the game with the freshly compiled classes AHEAD of the live jar on the
+classpath (`java -cp "classes;jar" forge.app.Main` from the live folder), so no Maven cycle per iteration.
+
+### Tested live
+
+Driven end to end from a scripted client against a fresh game, several times over the evening: the start menu, New Game with the screen's defaults, the intro's typing dialogs (`advance` + `click`, the "Skip the introduction" branch), the Ring gift arriving (250 gold, 10 shards, the Homeward rune from round 160's map fix), the portal out of the Secluded Encampment (the walk ends on the scene change), the world map with discovered POIs and bearings, A* walks with replans (a cave five tiles away needed an 86-waypoint detour round a ridge; a stuck walk reported the tile it stuck on), a Ring City entered and a shop purchase made (Apothecary Stomper, 100 gold - `buy` clicks the card's own buy button), a cave entered, `leave` back to the world, `wait days` stepping clear of the POI first, `explore` legs with stuck detection at mountains, and THREE roaming-enemy interceptions on the way to a cave each fought and WON by Forge's AI on the player's seat (statistics 0-0 -> 3-0, reward cards and shards paid, the win/lose view's "Back to Adventure", the reward popup's "OK" and the reward screen's Done all pressed through the bridge, control back on the world map each time). Screenshots came back from the menu, the encampment, the world map, a shop and a running match.
+
+**Testing discipline**: an agent session autosaves like any other and overwrites `auto_save.sav`, so the saves
+folder was copied aside before the test and restored after; the test used a new game, never the user's slot 1.
+
+### Not in this round
+
+Steps 7+ of the plan: a play-loop skill for Claude Code, the first full Claude-played session, and whatever the
+agent turns out to be unable to see. Also `newgame` takes the New Game screen's current settings rather than
+parameters (race/colour/difficulty need clicks), the deck editor and the Inn/Spellsmith/Shard-trader scenes have
+only the generic `ui`/`click` path (no model-level actions yet), and a duel's speed is set by tapping the match
+screen's speed toggle from `forgeUi` rather than a setting. The scratch end-to-end driver (`e2e.py`, not
+committed) is the template for the play loop: `dialogs` for typing dialogs, `settle` for duels, prompts and
+reward screens.
+
+Packaged: PACKAGED 23:02 - live folder carries rounds 158-161.
+
+**Files touched**: `forge/Forge.java` (3 lines), `screens/match/MatchController.java` (3 lines),
+`scene/DuelScene.java` (1 expression), `stage/GameHUD.java` (1 line); new `agent/AgentBridge.java`, `agent/AgentObserver.java`, `agent/AgentActions.java`,
+`agent/WalkController.java`, `agent/Jsons.java`, `stage/AgentStageAccess.java`, `scene/AgentSceneAccess.java`;
+new `dev-tools/agent/tfr_agent.py`, `docs/design/2026-09-09-agent-play.md`; MOD_SCOPE #117.
+
 ## Round 160: both sprite decisions settled, and the post-v1.08 code review's first fixes (2026-09-09)
 
 ### The two open sprite decisions

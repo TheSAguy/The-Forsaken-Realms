@@ -680,6 +680,13 @@ public class MatchController extends NetworkGuiGame {
             reveal(title, items);
             return;
         }
+        // Round 161: with the agent bridge's auto-battle the AI pilots the player's seat, and both
+        // the reveal and the Re-roll offer are modal prompts waiting for a click nobody is there
+        // to give (the first live agent duel sat on this prompt for ten minutes). Keep the ante.
+        if (forge.adventure.agent.AgentBridge.aiPilotsPlayer()) {
+            System.out.println("[TFR-AnteReroll] agent pilots this seat - ante kept, no prompt");
+            return;
+        }
         List<CardView> currentItems = items;
         // Escalating cost (2026-08-16, user spec: "add +50% shards, per re-roll, starting at the
         // 50 shards we currently have") - rerollCount tracks how many times THIS ante reveal has

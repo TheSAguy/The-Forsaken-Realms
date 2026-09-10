@@ -1333,6 +1333,7 @@ public class GameHUD extends Stage {
      * the safe black tint.
      */
     public void addNotification(String text, boolean authoredMarkup) {
+        forge.adventure.agent.AgentBridge.noteNotification(text); // round 161: the agent reads these too
         Action preconfigureNotification = new Action() {
             @Override
             public boolean act(float delta) {

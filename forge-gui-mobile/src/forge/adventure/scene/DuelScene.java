@@ -728,7 +728,10 @@ public class DuelScene extends ForgeScene {
         // HostedMatch already treats a humanCount==0 match as a normal spectated game (same
         // MatchController screen, same AdventureWinLose win/lose flow) with no other plumbing
         // needed.
-        LobbyPlayer playerObject = aiControlsPlayerSide
+        // Round 161: the agent bridge's auto-battle pilots the PLAYER's seat with the AI but keeps
+        // everything else the player's fight (equipment, ante, rewards, statistics) - unlike
+        // aiControlsPlayerSide, which means "spectator / guard" and strips all of that.
+        LobbyPlayer playerObject = aiControlsPlayerSide || forge.adventure.agent.AgentBridge.aiPilotsPlayer()
                 ? GamePlayerUtil.createAiPlayer(advPlayer.getName(), "")
                 : GamePlayerUtil.getGuiPlayer();
         FSkin.getAvatars().put(playerAvatarKey, advPlayer.avatar());

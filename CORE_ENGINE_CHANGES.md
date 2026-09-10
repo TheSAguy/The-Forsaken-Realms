@@ -2564,3 +2564,11 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 - **`scene/InventoryScene.java`** - `equip()` re-selects the item's rebuilt button via new `reselect(ItemData)`. Small edit to a stock method.
 - **`stage/GameHUD.java`** - `updateAbility()` applies the round-158 in-map hiding when it rebuilds the buttons. Small edit to a stock method.
 - `data/TuningData.java`, `util/EconomyBuildings.java`, `util/RoamingGuardRuntime.java`, `util/RoamingGuards.java` are mod-added files (no merge burden); see MOD_CHANGELOG.
+
+## Round 161 (2026-09-09) - agent bridge hooks
+
+- **`forge/Forge.java`** - `render()` calls `AgentBridge.startIfConfigured()` first thing (a static boolean check after the first frame) and `AgentBridge.afterRender()` at both exits (frame counter; screenshot capture point). Three lines. The start must be here rather than in Adventure mode because the splash's mode selector precedes Adventure mode; the end-of-frame hook must be here so screenshots work during matches.
+- **`screens/match/MatchController.java`** - `revealAnteCards()` returns before its reveal and Re-roll prompts when `AgentBridge.aiPilotsPlayer()` (three lines inside the mod's own override).
+- **`scene/DuelScene.java`** - the player's LobbyPlayer is the AI one when `aiControlsPlayerSide || AgentBridge.aiPilotsPlayer()`; nothing else in the seat construction changes, so with the bridge's auto-battle the fight stays the player's (equipment, ante, rewards, statistics).
+- **`stage/GameHUD.java`** - `addNotification(String, boolean)` first hands the text to `AgentBridge.noteNotification()` (a no-op when the bridge is off).
+- New mod-added files, no merge burden: `agent/*`, `stage/AgentStageAccess.java` (reads `WorldStage.enemies`, `MapStage.actors`, `MapStage.navMapSize`), `scene/AgentSceneAccess.java` (reads `UIScene.stage` / `HudScene.stage`, starts a new game).

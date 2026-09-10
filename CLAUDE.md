@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-09 (round 160; v1.08 RELEASED, rounds 137-160 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-09 (round 161; v1.08 RELEASED, rounds 137-161 are post-release) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
@@ -61,6 +61,22 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 161 (2026-09-09 night, PACKAGED 23:02 - live folder carries rounds 158-161): **the agent bridge - Claude plays the game as the player** (MOD_SCOPE
+  #117, design `docs/design/2026-09-09-agent-play.md`). New package `forge.adventure.agent`, OFF unless
+  `TFR_AGENT_PORT` (or `-Dtfr.agent.port`) is set; `TFR_AGENT_CHEATS=1` allows console commands + fog-free state.
+  Loopback HTTP: `GET /state`, `POST /cmd`, `GET /wait`, `GET /screenshot`; client `dev-tools/agent/tfr_agent.py`
+  (`state --brief`, `wait`, `shot`, `cmd goto poi=...` etc.). Claude drives overworld/towns/shops/items/decks/quests;
+  Forge's AI plays the duels on the player's seat (`AgentBridge.aiPilotsPlayer()` changes only the LobbyPlayer -
+  equipment/ante/rewards/stats stay the player's, unlike `aiControlsPlayerSide`). Movement = A* over
+  `World.isColliding` + the map `NavigationMap`, steered through `GameStage.setTouchKnobInput()` from an invisible
+  ticking actor - no stock movement code touched. Clicks are real `touchDown/touchUp` on the actor's stage.
+  Hooks: 3 lines in `Forge.render()` (start + end-of-frame), 3 in `MatchController.revealAnteCards` (no ante
+  prompts when the agent pilots), 1 in `DuelScene`, 1 in `GameHUD.addNotification`; Forge-toolkit buttons (match
+  screen, win/lose view, option panes) are exposed as `forgeUi` and tapped through `FButton.tap()`; `AgentStageAccess` /
+  `AgentSceneAccess` expose package-private state. **Dev loop**: `java -cp "<classes>;<live jar>" forge.app.Main`
+  from the live folder with the env vars set (scratch `agent_launch.cmd`) - no Maven per iteration. BACK UP
+  `%APPDATA%\ForsakenRealms\adventure\The Forsaken Realms\` before any agent session (it autosaves) and never test
+  on slot 1. Tested: Driven end to end from a scripted client against a fresh game, several times over the evening: the start menu, New Game with the screen's defaults, the intro's typing dialogs (`advance` + `click`, the "Skip the introduction" branch), the Ring gift arriving (250 gold, 10 shards, the Homeward rune from round 160's map fix), the portal out of the Secluded Encampment (the walk ends on the scene change), the world map with discovered POIs and bearings, A* walks with replans (a cave five tiles away needed an 86-waypoint detour round a ridge; a stuck walk reported the tile it stuck on), a Ring City entered and a shop purchase made (Apothecary Stomper, 100 gold - `buy` clicks the card's own buy button), a cave entered, `leave` back to the world, `wait days` stepping clear of the POI first, `explore` legs with stuck detection at mountains, and THREE roaming-enemy interceptions on the way to a cave each fought and WON by Forge's AI on the player's seat (statistics 0-0 -> 3-0, reward cards and shards paid, the win/lose view's "Back to Adventure", the reward popup's "OK" and the reward screen's Done all pressed through the bridge, control back on the world map each time). Screenshots came back from the menu, the encampment, the world map, a shop and a running match. Next: the play-loop skill and the first full Claude-played session (plan step 7).
 - Round 160 (2026-09-09, PACKAGED 21:06 - live folder carries rounds 158-160): **both sprite decisions settled + 12 code-review fixes.** (1) Tier cue
   ANCHORED TO ONE TILE: `TuningData.tierSizeMultiplier(tier, baseHeight)` keeps the straight multiplier at or below
   16px and applies `(tierScale - 1) x 16` PIXELS above it, so an Archmage is +4px whether wizard or 96px boss (Akroma
