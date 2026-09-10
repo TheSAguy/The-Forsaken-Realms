@@ -1,14 +1,4 @@
-> **DRAFT for review (updated 2026-09-10 afternoon) — delete this block before publishing.**
-> Covers rounds 137-170, everything since v1.08. Before this goes out: (1) the engine merge is DONE (round
-> 165, the 09.09 daily) — everything since round 158 runs on it and is yours to pass; (2) stamps to bump:
-> `modVersion` 1.08 → 1.09 and `modVersionDate` in config.json, `tfr.version` 1.08 → 1.09 and
-> `manifestVersionCode` 10800 → 10900 in the Android pom; (3) two features from this range are deliberately
-> NOT in these notes because they do not work yet — the hostile-terrain "stranded legends" spawns and
-> Arzakon's chest fallback; (4) the release tag must be `tfr-v1.09` and the APK
-> `forsaken-realms-1.09-signed-aligned.apk`.
-
 ## The Forsaken Realms — v1.09 — The Roaming Guard
-
 
 ## New: Roaming guards
 
