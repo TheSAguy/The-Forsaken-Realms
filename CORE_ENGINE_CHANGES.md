@@ -2701,3 +2701,18 @@ Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bro
 - Mod-added files, no merge burden: `data/TuningData.java` (four `defeatGoldLoss*` ints, `defeatGoldLossFor()`,
   `playerColorlessMixChance`), `util/TerritoryControl.java` (`pickGrandmasterMage()` keeps roster names only),
   `util/ChestEvents.java` (`archmageCount(World)` counts the five color rosters).
+
+## Round 178 (2026-09-11) - one size per rank, the race reward, the loading glyph
+
+- **`data/EnemyData.java`** - two new booleans, `legend` and `keepSize`, and their copy-constructor lines (the
+  `serialVersionUID` is pinned; new fields default false on old data).
+- **`data/RewardData.java`** - new `raceEditions` boolean (copy constructor too) and a guard at the top of the 4-arg
+  `generate()`: when set, generate from a copy whose `editions` are the player's race editions. Stock class, additions
+  only; on a merge keep the guard ahead of stock's body.
+- **`character/EnemySprite.java`** - `updateBoundingRect()`: `unfreezeRange` from the drawn size instead of `30 x scale`.
+- **`character/MapActor.java`** - `getCenter()`: no second multiplication by `EnemyData.scale` (a stock bug: the width is
+  already the drawn width). If upstream fixes it their own way, take theirs.
+- **`scene/GameScene.java`** - `getAdventurePlayerLocation()`'s color-glyph switch gains `case "player" -> "[+tfr]"`.
+- Mod-added files, no merge burden: `data/TuningData.java` (straight tier cue, new defaults, TILE_PX gone),
+  `util/CaveChampions.java` / `util/FrontierSpawns.java` (read `legend`), `util/TerritoryControl.java` (mage scale
+  override removed).

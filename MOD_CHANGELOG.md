@@ -17757,6 +17757,82 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 178: one size per rank, the TFR medallion on your own land, a three-quest step, a hidden rare in the camp (2026-09-11)
+
+User, on the round-177 size table: *"Let's go with 13 for Apprentice ... Could we do the box approach and try to get the
+visual size the same per level?"* (the Wandering Giant still read big among the Adepts, the Aegis Paladin small among the
+Archmages). Plus: the town-loading icon *"add the TFR icon when in Player area"*; *"add a new quest entry between Found
+your Capitol and Hire a guard ... do 3 quests. Maybe give 100 stone"*; *"give the player 1 random rare card of the sets
+their race starts with"* from a dialog the user placed in `spawn.tmx`; the territory pictures for the guide. Built 10:01,
+packaged 10:12 (311 MB), agent folder synced; verified in the agent game.
+
+### One size per rank
+
+The rule: every non-boss enemy's BODY is drawn at the hero's body size, and the rank alone scales it - **Apprentice 13 /
+Adept 16 / Master 20 / Archmage 24 px** (`settings.json` `enemyTierScale*` = 0.8125 / 1.0 / 1.25 / 1.5, now a straight
+multiplier - `TuningData.tierSizeMultiplier()` drops round 160's one-tile anchoring). A rat and a dragon of the same rank
+are the same size. The BODY BOX is the user's "box approach" made robust: the opaque pixels of the first four Idle and
+Walk frames, 10% trimmed off each side of each axis before boxing, larger side, largest over those frames - so a thin
+sword (Aegis Paladin), a tail or a stray shadow pixel does not set the size, a tall narrow sprite (Wandering Giant) is
+measured by its height, and an Idle that is only a crocodile's eyes above water cannot blow the sprite up. Hero body =
+13.0 px (median of 75 hero sprites). New tool `dev-tools/enemy_scale.py` (dry run / `--write` / `--check x.atlas` for new
+art) wrote **1,387** non-boss scales. Bosses and 24 hand-placed set pieces (`"keepSize": true` - the six Eldrazi Prison
+titans, Emrakul, Kozilek, the lair legends) keep their sizes: a one-time migration multiplied their scale by old/new cue
+so the straight cue draws them exactly as before (71 entries).
+
+Scale used to mean "this is a huge model" to three systems; they now read something else:
+- CaveChampions (keeps 3x models out of cave corridors) and FrontierSpawns (the stranded legends) read a new
+  `"legend": true` flag - set on the 151 non-boss, spawnRate-0 entries whose old scale was over 1.5, which is exactly
+  the set `scale > 1.5` selected. Behavior unchanged.
+- TerritoryControl forced dispatched mages to scale 1.0 (oversized legend sprites, 2026-08-26); removed - 1.0 would now
+  UNDO the normalization and draw a high-resolution sprite several times too big.
+Two stock quirks the small scales would have exposed: `MapActor.getCenter()` multiplied the already-scaled width by scale
+again (every scaled enemy's effects drew off to one side) - fixed; `EnemySprite.unfreezeRange` (how far a beaten player
+must walk before their victor moves again) was 30 x scale - now from the drawn size.
+
+### The TFR medallion while loading on your own land
+
+Entering a town shows "L O A D I N G" with the current land's color symbol spinning (`GameScene.getLocationColorID()`,
+the `[+w]`..`[+g]` glyphs, colorless `[+c]` elsewhere). On the player's own land it is now the TFR medallion: `[+tfr]`,
+a new 16x16 region in `sprites/items.atlas` (items.png at 400,112) cut from the icon file's own 16x16 frame.
+
+### "Prove the banner - complete three quests"
+
+A new step in "Raise the Banner" between "Raise Orazca - build your Capitol" and "Hire a guard": objective
+`CompleteQuest`, `count3` 3 - it counts quests completed AFTER the step opens, anywhere (a player who did quests before
+building the Capitol is not waved through). Its epilogue pays **100 stone** ("(+100 [+Stone])"). Quests are stored whole
+in a save, so a character already past the Capitol step keeps the old steps; new characters and anyone who has not
+started Raise the Banner get it.
+
+### A hidden rare in the starting camp
+
+The user's dialog in the Secluded Encampment (`spawn.tmx`, edited in Tiled in the live folder and brought into the repo
+here) now reads "A flagstone rocks under your boot..." and grants ONE Rare from the four editions of the player's race
+(`config.json` `raceEditions`): new `RewardData.raceEditions` flag, resolved at claim time
+(`[TFR-RaceReward] card x1 from the race's editions [KHM, DTK, TDM, IKO]` for a Green Dragon). `deleteMapObject` makes it
+once per game. **Moved one tile up**: as placed it sat on the rightmost bookshelf, a wall tile, and a dialog triggers
+only when the player's feet overlap it - it was unreachable. It is now the floor tile in front of that shelf, still
+hidden.
+
+### The guide's territory pictures
+
+`GUIDE.md` "Territory Control & Color Defeat" gains three world-map pictures with captions - day one (the Wasteland, the
+five Capitals on the rim), a few weeks in (the colors spreading, your realm in the middle, mages as colored dots), late
+game (every border touching). Files in the plane's `guide/`; the packager copies `guide/` next to `GAME_GUIDE.md`.
+
+### The new art: converters (staging, outside the repo)
+
+`F:\FORGE\TFR-Art-Staging\tools\`: `art_convert_generic.py` (the 73 render sheets: portrait = avatar, bands as
+Idle/Walk/Attack/Death, watermark text and thumbnail strips dropped, every frame turned to face right by silhouette
+match, per-sheet `overrides_generic.json` for 48 of them), `art_bands.py` (band strips to label), `art_catalog.py` (the
+naming catalog). All 73 convert; with round 177's 124 Ragnarok atlases that is the user's 197.
+
+**Files touched**: `data/TuningData.java`, `data/EnemyData.java`, `data/RewardData.java`, `character/EnemySprite.java`,
+`character/MapActor.java`, `scene/GameScene.java`, `util/CaveChampions.java`, `util/FrontierSpawns.java`,
+`util/TerritoryControl.java`, `world/enemies.json`, `world/quests.json`, `config tables/settings.json`,
+`maps/map/main_story/spawn.tmx`, `sprites/items.atlas` + `items.png`, `GUIDE.md` + `guide/` (3 pictures),
+`standalone-packaging/build_standalone.py`, `dev-tools/enemy_scale.py` (new), `dev-tools/validate_plane_data.py`.
+
 ## Round 177: a flat defeat gold loss, Archmages from their own color, the Wasteland mix-in fires, three new decks (2026-09-11)
 
 User: *"I want to change the gold loss from a fixed to a flat. Let's try Max 200g on Insane, if you have less than 200g,

@@ -9383,6 +9383,45 @@
 				"POIToken": ""
 			},
 			{
+				"id": 6,
+				"name": "Prove the banner - complete three quests",
+				"description": "See three quests through - from a Job Board, an inn, or anyone who asks.",
+				"anyPOI": true,
+				"worldMapOK": true,
+				"count3": 3,
+				"objective": "CompleteQuest",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {
+					"text": "A Capitol needs more than walls - it needs a name people trust. Take on work across the realm: see any three quests through, from a Job Board, an inn, or a stranger on the road, and word of Orazca will spread.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"epilogue": {
+					"text": "Three tasks done, and Orazca's name travels with every tale. A mason's wagon rolls in with cut stone for your walls. (+100 [+Stone])",
+					"options": [
+						{
+							"name": "(Take the stone)",
+							"action": [
+								{
+									"grantRewards": [
+										{
+											"type": "stone",
+											"count": 100
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
 				"id": 2,
 				"name": "Hire a guard",
 				"description": "Hire a guard at your Capitol's Armory to stand watch.",
@@ -9392,7 +9431,7 @@
 				"mapFlagValue": 1,
 				"objective": "CharacterFlag",
 				"prerequisiteIDs": [
-					1
+					6
 				],
 				"prologue": {
 					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then hire a guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage.",

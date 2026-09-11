@@ -73,6 +73,25 @@ travel speed. Push a color's reputation low enough and a Capitol duel becomes wi
 color's castle for good and the consequences ripple outward: their remaining towns react, their
 threat to you changes, and the balance of the whole map shifts.
 
+Here is how that looks on the world map, at three moments of one game:
+
+![The world on day one](guide/territory_start.png)
+
+**Day one.** The Forsaking left the land a grey Wasteland. Each of the five colors holds only the ground
+around its Capital on the rim - white to the north, blue east, black south-east, red south-west, green west -
+and you begin in the middle.
+
+![The world a few weeks in](guide/territory_middle.png)
+
+**A few weeks in.** Every color has pushed out from its Capital, and your own realm - the circle in the middle -
+has grown around your Capitol. The blurred dots are mages on the march, each in its color's hue (black's are
+purple); a dot inside someone else's land is an attack on its way.
+
+![The world late in the game](guide/territory_late.png)
+
+**Late in the game.** The Wasteland is gone. Every border now touches another, and the frontier towns are
+where the colors - and you - fight it out.
+
 ### Time, Day & Night
 
 The Forsaken Realms runs on a living clock. Every in-game day the world ticks forward: territory

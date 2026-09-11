@@ -145,12 +145,10 @@ public class MapActor extends Actor {
     }
 
     public Vector2 getCenter() {
-        float scale = 1f;
-        if (this instanceof EnemySprite) {
-            scale = ((EnemySprite) this).getData().scale;
-        }
-
-        return new Vector2(getX() + (getWidth() * scale) / 2, getY() + (getHeight() * scale) / 2);
+        // Round 178: width/height are already the DRAWN size (EnemySprite's constructor and CharacterSprite.draw()
+        // both apply EnemyData.scale), so multiplying by scale again put the center of every scaled enemy - and
+        // its effects - off to one side. Invisible at scale 1; round 178 made small scales common.
+        return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
     }
 
     @Override

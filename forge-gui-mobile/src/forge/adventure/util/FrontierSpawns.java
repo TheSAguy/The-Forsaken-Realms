@@ -52,7 +52,8 @@ public class FrontierSpawns {
 
     /**
      * Is this enemy one of the stranded legends? The two clauses that matter are {@code tier} and
-     * {@code scale} - together they are exactly what excluded these from the chest and cave pools.
+     * {@code legend} (round 178; it was {@code scale} over 1.5 before sizes went one-per-tier) -
+     * together they are exactly what excluded these from the chest and cave pools.
      * The life ceiling keeps the hand-placed Eldrazi titans (70) out while admitting every
      * genuinely unreachable entry (the largest is 50).
      */
@@ -68,8 +69,8 @@ public class FrontierSpawns {
             return false;
         if ("Mythic".equals(e.tier))
             return false;          // Mythics already ride the Chest's Dangerous-Enemy pool
-        if (e.scale <= 1.5f)
-            return false;          // small enough for the cave-champion pool to have taken it
+        if (!e.legend)
+            return false;          // round 178: the legend flag - sprite scale no longer says "huge model"
         return e.life < (d.maxLife <= 0 ? 60 : d.maxLife);
     }
 

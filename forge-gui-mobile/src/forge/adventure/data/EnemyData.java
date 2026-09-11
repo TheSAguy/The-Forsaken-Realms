@@ -58,6 +58,14 @@ public class EnemyData implements Serializable {
     // set true only on a per-fight clone (see ArenaScene.loadArenaData()), same pattern the
     // Capitol-defense duel already uses for a one-off gamesPerMatch override.
     public boolean noAnte = false;
+    // Round 178: a named legend (commander) that roams nowhere by design - kept out of the cave-champion pool
+    // and eligible for the frontier spawns. Set in enemies.json on the spawnRate-0 entries whose old hand-set
+    // scale was over 1.5: round 178's one-size-per-tier rule retired "scale" as the "is it a huge model" signal
+    // CaveChampions and FrontierSpawns used to read.
+    public boolean legend = false;
+    // Round 178: a hand-placed set piece (an Eldrazi Prison's titan, a lair's legend) that keeps its authored size
+    // like a boss does - dev-tools/enemy_scale.py leaves its scale alone. Read by the tool only.
+    public boolean keepSize = false;
     // Mod addition (Deck Tester, 2026-08-11): when set, DuelScene uses this exact Deck for the AI
     // side instead of resolving one from `deck`/`randomizeDeck` by name or via `copyPlayerDeck` -
     // lets the AI pilot one of the PLAYER's own saved decks (not the one they're currently
@@ -95,6 +103,8 @@ public class EnemyData implements Serializable {
         lifetime        = enemyData.lifetime;
         gamesPerMatch   = enemyData.gamesPerMatch;
         noAnte          = enemyData.noAnte;
+        legend          = enemyData.legend;
+        keepSize        = enemyData.keepSize;
         if (enemyData.scale == 0.0f) {
             scale = 1.0f;
         }

@@ -104,6 +104,8 @@ public class GameScene extends HudScene {
                     case "green" -> locationColorID = "[+g]";
                     case "blue" -> locationColorID = "[+u]";
                     case "black" -> locationColorID = "[+b]";
+                    // Round 178 (user request): the TFR medallion on the player's own land ("tfr" in items.atlas).
+                    case "player" -> locationColorID = "[+tfr]";
                     default -> locationColorID = "[+c]";
                 }
             }

@@ -50,6 +50,10 @@ public class RewardData implements Serializable {
     // (ItemListData.getItemNamesByRarity) - the armory tiers use this instead of hand lists.
     public String itemRarity;
     public String[] editions;
+    /** Round 178: draw from the player's RACE editions (config.json raceEditions - the four sets a race starts
+     *  with) instead of {@link #editions}; resolved in generate() because the race is only known at claim time.
+     *  The hidden cache in the starting camp (spawn.tmx) uses it. */
+    public boolean raceEditions;
     /** Round 151: at most this many copies of one card NAME from a single roll; 0 = unlimited,
      *  which is every caller except generated decks (a deck with five of a card is illegal - see
      *  CardUtil.generateCards). */
@@ -108,6 +112,7 @@ public class RewardData implements Serializable {
         itemNames        = rewardData.itemNames == null ? null : rewardData.itemNames.clone();
         itemRarity       = rewardData.itemRarity;
         editions         = rewardData.editions == null ? null : rewardData.editions.clone();
+        raceEditions     = rewardData.raceEditions;
         colors           = rewardData.colors == null ? null : rewardData.colors.clone();
         rarity           = rewardData.rarity == null ? null : rewardData.rarity.clone();
         subTypes         = rewardData.subTypes == null ? null : rewardData.subTypes.clone();
@@ -274,6 +279,17 @@ public class RewardData implements Serializable {
     }
 
     public Array<Reward> generate(boolean isForEnemy, Iterable<PaperCard> cards, boolean useSeedlessRandom, boolean isNoSell) {
+        if (raceEditions) {
+            // Round 178: resolve the player's race editions now, on a copy, and generate from that. No race
+            // entry (a stock plane) = the plain pool, the fail-open contract every edition restriction here keeps.
+            RewardData resolved = new RewardData(this);
+            resolved.raceEditions = false;
+            java.util.Set<String> codes = forge.adventure.util.EditionProgression.raceEditionCodes(Current.player());
+            if (!codes.isEmpty())
+                resolved.editions = codes.toArray(new String[0]);
+            System.out.println("[TFR-RaceReward] " + type + " x" + count + " from the race's editions " + codes);
+            return resolved.generate(isForEnemy, cards, useSeedlessRandom, isNoSell);
+        }
         boolean allCardVariants = Config.instance().getSettingData().useAllCardVariants;
         Random rewardRandom = useSeedlessRandom ? new Random() : WorldSave.getCurrentSave().getWorld().getRandom();
         //Keep using same generation method for shop rewards, but fully randomize loot drops by not using the instance pre-seeded by the map

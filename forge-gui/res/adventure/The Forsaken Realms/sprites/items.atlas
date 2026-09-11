@@ -1193,6 +1193,9 @@ u
 w
   xy: 384,112
   size: 16, 16    
+tfr
+  xy: 400, 112
+  size: 16, 16
 CardBack 
   xy: 0, 0
   size: 48, 64

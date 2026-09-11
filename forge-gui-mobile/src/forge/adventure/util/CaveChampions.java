@@ -29,10 +29,6 @@ import java.util.Map;
 public class CaveChampions {
     private CaveChampions() {}
 
-    /** Sprite scale a champion must stay under to be worth putting in a cave corridor - the
-     *  catalog runs up to 4x, and the round-125 caves are 36-48 tiles wide with narrow necks. */
-    private static final float MAX_CAVE_SCALE = 1.5f;
-
     public static float chance() {
         return Config.instance().getConfigData().caveChampionChance;
     }
@@ -122,7 +118,9 @@ public class CaveChampions {
                 continue;
             if (data.rewards == null || data.rewards.length == 0)
                 continue;
-            if (data.scale > MAX_CAVE_SCALE)
+            // Round 178: legends stay out (they were the scale > 1.5 models; every sprite is tier-sized now,
+            // so the flag keeps the same enemies out that the scale test used to).
+            if (data.legend)
                 continue;
             if (data.difficulty > difficultyFactor)
                 continue;

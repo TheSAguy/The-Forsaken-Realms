@@ -50,33 +50,30 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-11 (round 177; v1.09 RELEASED + rounds 173-177 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-11 (round 178; v1.09 RELEASED + rounds 173-178 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 177, 2026-09-11 morning).** The user's calls, in their order:
-  1. **Two proposals wait on the user (round 177 changelog):** (a) **enemy sprite sizes by tier** - Apprentice 14 /
-     Adept 16 (= the hero) / Master 20 / Archmage 24 px on the visible sprite's larger side, bosses excluded; when
-     approved, one tool pass writes every non-boss `scale` = 16 / visible Idle size and the tier cues become
-     0.875 / 1.0 / 1.25 / 1.5 straight (round 160's classes and tile anchoring retire). Supersedes round 174's
-     "twelve on-grid sprites" question. (b) **the new art** - the user decided to use it (ripped commercial art: 126
-     Ragnarok Online, 22 named characters, 79 renders; see the changelog's note - the game ships publicly). Staging
-     `F:\FORGE\TFR-Art-Staging\` (converter + QA sheets; 124 Ragnarok atlases built). Next: the user names them
-     (MTG-style), then tiers, themed decks, a CREDITS line, and the hand-mapped rows of the 73 generic sheets.
-  2. **Playtest rounds 173 + 177**: `[TFR-DefeatGold]` on a loss (flat 50/100/150/200), `[TFR-ColorlessMix]` on your
-     own land (40%), Archmage attacks now on-color, `[TFR-Frontier]` legends in Unhappy/War land, the Dangerous Enemy
-     chest's `heavyweight roll (2 in 52)`, a guard fight cut off by closing the game (reads as the guard's loss).
-  3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `F:\FORGE\TFR-Agent\` with its
-     own APPDATA profile; launch via the Task Scheduler (`agent_launch.cmd`), `agent_stop.ps1`, `agent_sync.cmd`
-     after every package. Round 176's watched session ended early by the user's call (agent saves slot 2/3 "Jordan").
-     A long session is cheaper from a FRESH conversation. Open: `newgame` parameters, a spectated-duel speed setting,
-     the AI pilot's shard write-back, long fog routes ending "stuck".
-  4. **Next engine merge - BLOCKED on the user**: the Forge_2 install is still the 09.09 daily (`build.txt` 2026-09-09
-     18:24:56) = our merge point, and we merge only to the install's commit (round 165's content probes). Upstream was
-     22 commits past `06a3c05731c` at round 172: 7 touch Java, 55 Java files, 14 of them files we edit - the hot spots
-     are in CORE_ENGINE_CHANGES "Round 172". First Maven after any merge runs online (gson 2.13.2 precedent).
-  5. **Wider playtest feedback** on v1.09, and the review's remaining OPEN rows; E4 (a failed load's hybrid state)
-     goes right AFTER the merge, because upstream rewrites the same `WorldSave` error paths.
-  6. The user's save slot 1 now holds three decks written in round 177 (slots 5-7; backup `prededit9.bak`) - if the
-     user reports on them, the lists are in `dev-tools/save-editing/` and `card_table.py` rebuilds the card views.
+- **NEXT SESSION starts here (updated round 178, 2026-09-11).** The user's calls, in their order:
+  1. **The 197 new enemies (user: "Let's proceed with the 197")** - IN PROGRESS from round 179. Sprites are converted in
+     `F:\FORGE\TFR-Art-Staging\` (`ro\` 124 Ragnarok atlases, `gen\` 73 render atlases, tools + QA in `tools\`,
+     `qa\`; naming catalog `qa\cat_ro_0*.png`, `qa\cat_gen_0*.png`). The user's brief: MTG-like names; balance the
+     roster - black has the most units (roaming presence W 251 / U 240 / B 299 / R 266 / G 290), so the new ones lean
+     blue, white and red, and fill thin ranks per color (blue Apprentices, black Archmages...); a mix of mono / two /
+     three-color decks (plan ~60 / 77 / 60); THEMED decks (an insect gets an insect deck, dragons dragons...); higher
+     ranks also go into the capital arena pools (tournaments) and dungeon spawns (the round-125 caves are generated from
+     the biome rosters - `dev-tools/gen_caves.py`). Scale every new sprite with `dev-tools/enemy_scale.py` rules. The
+     art is ripped commercial art by the user's informed choice (memory note); a CREDITS line goes in with it.
+  2. **Playtest rounds 173 + 177 + 178**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
+     the TFR medallion when loading on your own land, the three-quests step (+100 stone), the camp's hidden rare.
+  3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `F:\FORGE\TFR-Agent\`; launch via
+     the Task Scheduler (`agent_launch.cmd`), stop with `powershell -ExecutionPolicy Bypass -File agent_stop.ps1`,
+     `agent_sync.cmd` after every package; `goto x=.. y=..` walks to a point inside a map. Open: `newgame` parameters, a
+     spectated-duel speed setting, the AI pilot's shard write-back, long fog routes ending "stuck".
+  4. **Next engine merge - BLOCKED on the user**: Forge_2 is still the 09.09 daily (`build.txt` 2026-09-09 18:24:56).
+     Upstream was 22 commits past `06a3c05731c` at round 172 (hot spots in CORE_ENGINE_CHANGES "Round 172").
+  5. **Wider playtest feedback** on v1.09, the review's remaining OPEN rows; E4 right AFTER the merge.
+  6. Small open items: characters already past "Raise the Banner"'s Capitol step keep the old quest steps (a load-time
+     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-178
+     are unreleased (v1.09 is the last release).
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
   #announcements.
@@ -90,6 +87,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 178 (2026-09-11, built 10:01, PACKAGED 10:12, 311 MB; agent folder synced; verified in the agent game): **one
+  size per rank** - every non-boss body drawn at the hero's body, rank alone scales it (Apprentice 13 / Adept 16 / Master
+  20 / Archmage 24; body box = 10%-trimmed Idle/Walk frames; `dev-tools/enemy_scale.py`, 1,387 scales; bosses + 24
+  `keepSize` set pieces unchanged; `legend` flag replaces "scale > 1.5" for caves/frontier). **TFR medallion** `[+tfr]`
+  while loading on the player's land. **"Prove the banner - complete three quests"** (+100 stone) before "Hire a guard".
+  **Hidden Rare from the race's editions** in the starting camp (`RewardData.raceEditions`; the user's dialog moved one
+  tile off a bookshelf so it can trigger). Guide territory pictures. Art converters for the 73 render sheets (staging).
 - Round 177 (2026-09-11, built 07:33, PACKAGED 07:43, 310 MB - live folder = v1.09 + rounds 173-177; agent folder synced):
   **a lost duel costs a FLAT 50 / 100 / 150 / 200 gold** (Easy / Normal / Hard / Insane; all of it if you carry less;
   `settings.json` `defeatGoldLoss*`, read by difficulty name so existing characters get it; Bronze Coin still waives

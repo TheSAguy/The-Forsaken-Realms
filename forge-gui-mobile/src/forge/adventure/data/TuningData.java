@@ -256,10 +256,10 @@ public class TuningData {
     // Keyed by EnemyData.tier, whose four values are the Apprentice/Adept/Master/Archmage ranks
     // (EnemyData.tierDisplayName). Set all four to 1.0 to switch the whole feature off - that is
     // exactly the pre-round-159 behaviour, with no code change and no data change.
-    public float enemyTierScaleCommon = 0.9f;    // Apprentice
-    public float enemyTierScaleUncommon = 1.0f;  // Adept
-    public float enemyTierScaleRare = 1.1f;      // Master
-    public float enemyTierScaleMythic = 1.25f;   // Archmage
+    public float enemyTierScaleCommon = 0.8125f; // Apprentice 13/16 (round 178)
+    public float enemyTierScaleUncommon = 1.0f;  // Adept 16
+    public float enemyTierScaleRare = 1.25f;     // Master 20/16
+    public float enemyTierScaleMythic = 1.5f;    // Archmage 24/16
 
     /** Render multiplier for an enemy tier; 1.0 for anything unrecognised, so a stock plane or a
      *  hand-edited tier string can never shrink a sprite to nothing. */
@@ -305,26 +305,17 @@ public class TuningData {
     // fired at all: the lookup asked for a biome named "colorless" and colorless.json names it "waste".
     public float playerColorlessMixChance = 0.08f;
 
-    /** One map tile, the unit the tier cue is anchored to. */
-    private static final float TILE_PX = 16f;
-
     /**
-     * Round 160: the tier cue anchored to ONE TILE instead of to the sprite. Round 159 applied
-     * tierScale as a straight multiplier, which reads perfectly on the one-tile spine of the
-     * roster (14.4 / 16 / 17.6 / 20px) but grew a 96px boss by 24px for no information - the
-     * player already knows a boss when they see one, and a boss room's authored composition
-     * changed underneath it. Here the cue is worth the same number of PIXELS on anything at or
-     * above a tile ((tierScale - 1) x 16, so at most a quarter tile either way, +4px for an
-     * Archmage), and stays a straight multiplier below a tile so a critter is never shifted by
-     * more than its own size. Returns the factor to apply to BOTH dimensions - the aspect ratio is
-     * untouched. {@code baseHeight} is the frame height AFTER EnemyData.scale.
+     * Round 178 (user decision 2026-09-11: "have them all 1 size for Adept, and then slightly smaller for
+     * Apprentice and bigger for Master and even a little bigger for Archmage"): the tier cue is a STRAIGHT
+     * multiplier again. Every non-boss enemy's EnemyData.scale now normalizes its sprite's body to the hero's
+     * body (dev-tools/enemy_scale.py), so the cue alone carries the tier: Apprentice 13 / Adept 16 / Master 20 /
+     * Archmage 24. Round 160 anchored the cue to one tile because scale then held each creature's own size (a
+     * 96px boss grew 24px for nothing); with scale normalized there is nothing left to protect, and bosses were
+     * migrated once so they draw exactly as before. {@code baseHeight} is no longer consulted - the signature
+     * stays for CharacterSprite's call.
      */
     public float tierSizeMultiplier(String tier, float baseHeight) {
-        float cue = tierScale(tier) - 1f;
-        if (cue == 0f || baseHeight <= 0f)
-            return 1f;
-        if (baseHeight <= TILE_PX)
-            return 1f + cue;
-        return 1f + cue * (TILE_PX / baseHeight);
+        return tierScale(tier);
     }
 }

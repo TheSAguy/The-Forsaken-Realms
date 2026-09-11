@@ -1386,16 +1386,9 @@ public class TerritoryControl {
             System.out.println("[TerritoryControl] " + color + ": enemy \"" + enemyName + "\" not found, skipping dispatch");
             return;
         }
-        // Mythic-tier dispatches draw from the color's roaming pool, which includes the
-        // deliberately-oversized "Legends" commander sprites (scale 2x+, e.g. Commodore Guff) -
-        // fine as a stationary boss, but marching across the overworld at double size it reads
-        // as a rendering bug (user report 2026-08-26: "A large Enemy icon appeared"). Clone
-        // (never mutate the shared JSON-loaded template) and normalize the SPRITE scale only -
-        // deck/life/tier, i.e. the actual threat, are untouched.
-        if (enemyData.scale != 1.0f) {
-            enemyData = new EnemyData(enemyData);
-            enemyData.scale = 1.0f;
-        }
+        // Round 178: no scale override any more. It forced scale 1.0 so an oversized legend sprite did not
+        // march at double size (2026-08-26); every non-boss scale now normalizes the sprite to the hero's
+        // body, so 1.0 would UNDO that and draw a high-resolution sprite several times too big.
         EnemySprite mage = new EnemySprite(enemyData);
         mage.territoryTarget = target;
         mage.territoryColor = color;

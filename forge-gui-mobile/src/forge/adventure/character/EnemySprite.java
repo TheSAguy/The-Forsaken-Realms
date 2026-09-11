@@ -145,7 +145,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         if (scale < 0)
             scale = 1f;
         boundingRect.set(getX(), getY(), getWidth(), getHeight());
-        unfreezeRange = 30f * scale;
+        // Round 178: from the drawn size, not the raw scale - scale now normalizes art resolution (a 64px
+        // sprite has ~0.2), so 30 x scale would let a beaten player's victor wake up almost on top of them.
+        unfreezeRange = 30f * Math.max(1f, Math.max(getWidth(), getHeight()) / 16f);
     }
 
     public void moveTo(Actor other, float delta) {

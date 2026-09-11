@@ -128,7 +128,7 @@ F["FrontierSpawnData"] = set("unhappyShare warShare neutralColorlessShare maxLif
 F["RoamingGuardConfig"] = set("maxGuards lifeApprentice lifeAdept lifeMaster lifeArchmage speedStepBelowPlayer recoveryDays healShardCost".split())
 F["PointOfInterestData"] = set("name type count spriteAtlas sprite map radiusFactor offsetX offsetY active questTags questFlagsToActivate displayName".split())
 F["EnemyData"] = set("""name nameOverride sprite deck copyPlayerDeck ai boss flying randomizeDeck spawnRate difficulty tier speed scale life rewards
- equipment colors nextEnemy teamNumber questTags lifetime gamesPerMatch bossInsult bossIntro noAnte""".split())
+ equipment colors nextEnemy teamNumber questTags lifetime gamesPerMatch bossInsult bossIntro noAnte legend keepSize""".split())
 F["ShopData"] = set("name description restockPrice spriteAtlas sprite unlimited rewards overlaySprite".split())
 F["BiomeData"] = set("""startPointX startPointY noiseWeight distWeight name tilesetAtlas tilesetName terrain width height color collision invertHeight
  spriteNames enemies pointsOfInterest structures""".split())
@@ -140,7 +140,8 @@ F["EffectData"] = set("""name lifeModifier changeStartCards startBattleWithCard 
 F["ItemData"] = set("""name equipmentSlot effect description iconName questItem excludeFromGeneralSale cost rarity usableOnWorldMap usableInPoi
  isCracked isEquipped longID commandOnUse shardsNeeded dialogOnUse grantsEquipmentSlot""".split())
 F["RewardData"] = set("""type probability count addMaxCount cardName cardNames itemName itemNames itemRarity editions colors startDate endDate rarity subTypes
- cardTypes superTypes manaCosts keyWords colorType cardText matchAllSubTypes matchAllColors cardUnion deckNeeds rotation cardPack sourceDeck minDate""".split())
+ cardTypes superTypes manaCosts keyWords colorType cardText matchAllSubTypes matchAllColors cardUnion deckNeeds rotation cardPack sourceDeck minDate
+ raceEditions""".split())
 F["DialogData"] = set("action condition name locname text loctext options isDisabled pinLastOption voiceFile".split())
 F["ActionData"] = set("""key val removeItem addItem addLife addGold addShards addWood grantRingGift addStone deleteMapObject activateMapObject
  battleWithActorID giveBlessing setColorIdentity advanceCharacterFlag advanceQuestFlag advanceMapFlag setEffect setCharacterFlag setQuestFlag

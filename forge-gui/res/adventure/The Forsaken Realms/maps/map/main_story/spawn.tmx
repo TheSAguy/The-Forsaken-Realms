@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="89">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="90">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -259,8 +259,8 @@
     ]
   }
 ]</property>
-    <property name="enemy" value="Adept Black Wizard"/>
     <property name="displayNameOverride" value="The Warden"/>
+    <property name="enemy" value="Adept Black Wizard"/>
    </properties>
   </object>
   <object id="70" template="../../../../common/maps/obj/entry_down.tx" x="192" y="160">
@@ -283,6 +283,28 @@
     &quot;count&quot;: 10,
     &quot;addMaxCount&quot;: 10
  }
+]</property>
+   </properties>
+  </object>
+  <object id="89" template="../../../../common/maps/obj/dialog.tx" x="288.909" y="224" width="13.8182" height="14.9091">
+   <properties>
+    <property name="dialog">[
+{
+   &quot;text&quot;: &quot;A flagstone rocks under your boot. Beneath it, wrapped in oilskin and sealed with your people's old crest, lies a single card someone hid here long ago - for whoever came home next.&quot;,
+   &quot;options&quot;: [{
+      &quot;name&quot;: &quot;(Take the card)&quot;,
+      &quot;action&quot;: [{
+         &quot;deleteMapObject&quot;:-1
+         },{
+         &quot;grantRewards&quot;: [{
+            &quot;type&quot;: &quot;card&quot;,
+            &quot;count&quot;: 1,
+            &quot;rarity&quot;: [&quot;Rare&quot;],
+            &quot;raceEditions&quot;: true
+         }]
+      }]
+   }]
+}
 ]</property>
    </properties>
   </object>

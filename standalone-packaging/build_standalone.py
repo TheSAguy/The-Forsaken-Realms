@@ -498,6 +498,10 @@ def main():
     guide = os.path.join(adv, PLANE, "GUIDE.md")
     if os.path.exists(guide):
         shutil.copy2(guide, os.path.join(game_dir, "GAME_GUIDE.md"))
+        # round 178: the guide's pictures sit next to it, in guide/ (same relative path as in the plane folder)
+        guide_pics = os.path.join(adv, PLANE, "guide")
+        if os.path.isdir(guide_pics):
+            shutil.copytree(guide_pics, os.path.join(game_dir, "guide"), dirs_exist_ok=True)
     shutil.copy2(os.path.join(BASE_INSTALL, "LICENSE.txt"), os.path.join(adv, PLANE))
     shutil.copy2(os.path.join(here, "CREDITS.md"), os.path.join(adv, PLANE))
 

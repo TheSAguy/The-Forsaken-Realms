@@ -176,22 +176,16 @@
     // for "[TFR-DungeonLooted]".
     "dungeonLootedDespawnFactor": 0.5,
 
-    // Enemy tier size cue (round 159, user request: "make an Apprentice slightly smaller and an
-    // Archmage slightly bigger"; round 160 anchored it to ONE TILE and gave the roaming guards the
-    // same cue). A 16px sprite renders at exactly 16 x tierScale (14.4 / 16 / 17.6 / 20). Above one
-    // tile the cue is worth the same number of PIXELS, (tierScale - 1) x 16, so an Archmage is +4px
-    // whether it is a wizard or a 96px boss; below one tile it stays a straight multiplier. The
-    // per-enemy "scale" in world/enemies.json stays the ARTIST's call about how big that creature
-    // is against its own art - a Ladybug is 0.5 on purpose - and this is a SEPARATE multiplier
-    // layered on top, keyed by the enemy's tier, so the two can be retuned without destroying each
-    // other. The four tiers are the Apprentice/Adept/Master/Archmage ranks. Set all four to 1.0 to
-    // switch the cue off entirely - that is exactly the pre-round-159 look, no code change needed.
-    // Note this moves collision boxes with the art (CharacterSprite sizes boundingRect from the
-    // drawn frame), which is the same thing "scale" has always done.
-    "enemyTierScaleCommon": 0.9,
+    // Enemy size by tier (round 178, user decision: one size per rank, so the size tells you the rank).
+    // Every non-boss enemy's "scale" in world/enemies.json draws its BODY at the hero's body size
+    // (dev-tools/enemy_scale.py - the body box ignores thin swords, tails and staffs), and these four
+    // multiply straight on top: Apprentice 13 / Adept 16 (the hero) / Master 20 / Archmage 24 px.
+    // A rat and a dragon of the same rank are the same size. Bosses keep their hand-set sizes. The
+    // roaming guards get the same cue. Collision boxes move with the art, as they always have.
+    "enemyTierScaleCommon": 0.8125,
     "enemyTierScaleUncommon": 1.0,
-    "enemyTierScaleRare": 1.1,
-    "enemyTierScaleMythic": 1.25,
+    "enemyTierScaleRare": 1.25,
+    "enemyTierScaleMythic": 1.5,
 
     // Round 177 (user request): losing a duel costs a FLAT amount of the gold you carry - or all of it when you
     // have less. Replaces the difficulty's percentage (config.json "goldLoss", still the fallback when a value
