@@ -557,9 +557,15 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             // rewards" per user spec) - only data.rewards (the generic template pool) gets
             // restricted, never this.rewards (per-instance overrides a few lines below, reserved
             // for genuinely special-cased encounters like the Deck Tester's AI shell).
+            // Round 180 (user: "update/fix this same as round 59"): the exemption is bosses and
+            // spawnRate<=0 entries (arena champions, legends, event-only fighters - the dedicated
+            // rewards) - SpawnTierWeighting.isExempt(), the round-59 rule. It was "any quest tag",
+            // and this plane tags nearly every enemy as metadata ("Undead", "BiomeBlack"...), so
+            // 949 of 1,071 roamers (88.6%) dropped cards from any set; only untagged legend
+            // entries were restricted. Quest rewards themselves come from the quest, not from here.
             Iterable<RewardData> standardRewardSource = java.util.Arrays.asList(data.rewards);
             if (Current.world().isEditionProgressionEnabled()) {
-                if (!data.boss && (data.questTags == null || data.questTags.length == 0)) {
+                if (!forge.adventure.util.SpawnTierWeighting.isExempt(data)) {
                     String color = ColorReputation.singleColorOfEnemy(data.colors);
                     String colorLabel = color != null ? color : EditionProgression.NEUTRAL;
                     List<String> editionRestriction = EditionProgression.getEditionsForColor(Current.world(), colorLabel);
@@ -574,8 +580,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                     // from "this code path never ran" when grepping forge.log for a specific
                     // enemy.
                     System.out.println("[TFR-LootEditions] enemy=" + data.name + " colors=" + data.colors
-                            + " -> EXEMPT boss=" + data.boss
-                            + " questTagged=" + (data.questTags != null && data.questTags.length > 0));
+                            + " -> EXEMPT boss=" + data.boss + " spawnRate=" + data.spawnRate);
                 }
             }
             for (RewardData rdata : standardRewardSource) {

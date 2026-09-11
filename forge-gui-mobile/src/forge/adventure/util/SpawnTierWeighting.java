@@ -84,7 +84,10 @@ public class SpawnTierWeighting {
      *  of 1520 enemies.json entries carried tags, so ~97% of the day-1 pool kept raw spawnRate
      *  weighting and week 1's "rare: 0" bracket bound almost nothing. The clause also protected
      *  nothing real: actual quest spawns route through BiomeData.getExtraSpawnEnemy()/
-     *  AdventureQuestController.getQuestSprites(), which never consult this weighting at all. */
+     *  AdventureQuestController.getQuestSprites(), which never consult this weighting at all.
+     *  <p>
+     *  Round 180: EnemySprite.getRewards() uses this same rule for the Progressive Set Unlocks
+     *  loot restriction (exempt = dedicated rewards), so a change here changes loot too. */
     public static boolean isExempt(EnemyData data) {
         return data != null && (data.boss || data.spawnRate <= 0f);
     }

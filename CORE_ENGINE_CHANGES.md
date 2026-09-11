@@ -2722,3 +2722,10 @@ Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bro
 Data and tooling only: 197 new enemies (`world/enemies.json`, biome rosters, capital arena pools, the generated caves,
 `sprites/enemy/tfr/`, `decks/standard/tfr/`), `dev-tools/enemy_scale.py` (POSE_CAP), `dev-tools/agent/tfr_agent.py`
 (`settle` collects loot through Done). No Java changed.
+
+## Round 180 (2026-09-11) - loot restriction exemption
+
+- **`character/EnemySprite.java`** - `getRewards()`, the mod-added Progressive Set Unlocks block: the exemption test is
+  `SpawnTierWeighting.isExempt(data)` (boss or spawnRate <= 0) instead of "boss or any quest tag"; the EXEMPT log line
+  prints spawnRate. Stock method, mod-added block (since 2026-08-12); on a merge keep the block after the deck pools.
+- Mod-added, no merge burden: `util/SpawnTierWeighting.java` (comment on `isExempt()`).

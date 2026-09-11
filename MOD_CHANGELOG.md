@@ -17757,6 +17757,53 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 180: monster loot follows its color's sets for every roamer; the bestiary page (2026-09-11)
+
+User, on round 179's finding: *"Yes, please update/fix this same as round 59."* - and *"Please show me the roster."*
+built 13:06, PACKAGED 13:18, 342 MB; agent folder synced; checked in the agent game: a won duel against the Barrow Skeleton logged restriction(34) - black's sets - and every card it dropped came from them (Swat ULG, Teacher's Pest SOS, Nantuko Calmer TOR, Experimental Augury ONE).
+
+### Loot: the round-59 rule
+
+Progressive Set Unlocks restricts a monster's loot to its color's sets (`EditionProgression.getEditionsForColor`), the
+way the player finds a color's cards before researching them. `EnemySprite.getRewards()` exempted bosses and every
+enemy with a quest tag - and this plane uses quest tags as metadata ("Undead", "IdentityBlack", "BiomeBlack"), so 949
+of 1,071 roamers (88.6%) dropped cards from any set; only untagged legend entries were restricted. Round 59 fixed the
+same misreading for spawn weighting (`SpawnTierWeighting.isExempt()`: bosses and spawnRate <= 0 only). Loot now uses
+that exact method - exempt are bosses and the spawnRate-0 fighters (arena champions, legends, event-only), whose
+rewards are dedicated. What changes for everyone else:
+- random card drops come from the monster color's sets;
+- drops from the monster's own deck keep only the deck cards printed in those sets (`CardUtil.getPredicateResult`
+  applies the reward's editions to the deck pool) - fewer deck-card drops early on, more of the color's own cards;
+- named-card rewards still drop (the edition list only swaps the printing when one exists);
+- gold, shards and the quest's own rewards are untouched.
+`[TFR-LootEditions]` prints `EXEMPT boss=... spawnRate=...` for the exempt ones (it printed `questTagged=`).
+`SpawnTierWeighting.isExempt()` notes that loot now shares it.
+
+### The same test in nine other places - reported, not changed
+
+"Skip anything with a quest tag" also sits in: the cave-champion slot pick (`MapStage` - the 78 generated caves hold
+only tagged roamers, so a champion never takes one over; older caves have 87 untagged spots), the dungeon re-theme on
+a change of owner and the content filter's Include=N skip (`MapStage.loadObjects` - 7.6% of placements are
+untagged), town-assault defenders (`TerritoryControl.pickRandomRoamer` - effectively legends: Jodah, Arzakon,
+Derevi...), attack mages and the chest's Dangerous Enemy (`pickGrandmasterMage` - untagged Mythics: Jodah, Atraxa,
+Ramos...), the Illegal Arena bracket, the chest heavyweights and the Archmage count (`ChestEvents`), frontier legends
+(`FrontierSpawns`). The cave champions and the re-theme were meant for ordinary roamers and are mostly dead; the chest
+and frontier pools are legend pools by design. Listed for the user; nothing changed.
+
+**Corrections to round 179's notes**: the color mix is **64 mono / 66 two / 67 three-color** (Azure Gorgon became
+Blue-Black in the rebalance; 65/65/67 was the pre-rebalance count); and the Chest's Illegal Arena and Dangerous Enemy
+do NOT draw the new Archmages - both skip quest-tagged enemies (above).
+
+### The bestiary page
+
+An artifact for the user, https://claude.ai/code/artifact/5f82734c-8bf7-497f-a369-27a1934c221e: all 197 new enemies drawn at their in-game size (x4, on a grid of 16-px map tiles),
+the size ladder next to the human hero (13 / 16 / 20 / 24 px bodies), the color x rank balance before and after
+round 179, filters by color, mix, rank, theme and where found; per enemy its mana colors, theme and guild, life and
+speed, the deck's four key cards, and its territories, capital arenas and caves. Built by a scratch script from
+`roster179.py`, `enemies.json`, the biome rosters, the capital maps and `gen_caves_manifest.txt`.
+
+**Files touched**: `character/EnemySprite.java`, `util/SpawnTierWeighting.java` (comment).
+
 ## Round 179: 197 new enemies - sprites, themed decks, spawn tables, tournaments and caves (2026-09-11)
 
 User: *"Let's proceed with the 197. Currently Black has a lot more units than the other colors. Let's try to balance them
