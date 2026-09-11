@@ -115,3 +115,6 @@ forge-gui-ios/robovm.properties
 # preference, not project configuration - and the tracked copy set bypassPermissions
 # for anyone who cloned the repo.
 .claude/settings.json
+
+# compiled dev tools (review T3, round 172) - compile into a scratch dir, never into the repo
+dev-tools/**/*.class

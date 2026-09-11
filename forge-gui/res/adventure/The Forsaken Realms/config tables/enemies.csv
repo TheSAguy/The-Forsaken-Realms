@@ -1,569 +1,569 @@
 Name,Colors,Deck,Life,Tier,Boss,Difficulty,Include
-Abyssal Baron,B,demon_swamp,30,Rare,N,2.0,Y
+Abyssal Baron,B,demon_swamp,28,Rare,N,2.0,Y
 Adept Black Wizard,B,blackwizard_medium_demonicpact,15,Uncommon,N,1.0,Y
 Adept Blue Wizard,,bluewizard_medium_donate,15,Uncommon,N,0.6,Y
 Adept Green Wizard,G,greenwizard_medium_cheatramp,15,Uncommon,N,1.0,Y
 Adept Red Wizard,R,redwizard_medium_artifact,15,Uncommon,N,1.0,Y
 Adept White Wizard,W,whitewizard_medium_aggro,15,Uncommon,N,1.0,Y
-Adult Green Dragon,U,greendragon,25,Rare,N,2.0,Y
-Adventurer,UW,adventurer,13,Uncommon,N,0.6,Y
+Adult Green Dragon,U,greendragon,23,Rare,N,2.0,Y
+Adventurer,UW,adventurer,13,Common,N,0.6,Y
 Aerie Guard,WU,aerie_guard,18,Rare,N,1.5,Y
-Aether Channeler,WU,aether_channeler,15,Rare,N,2.0,Y
+Aether Channeler,WU,aether_channeler,15,Uncommon,N,2.0,Y
 Akroma,W,akroma,40,Mythic,Y,3.0,Y
 Amonkhet Minotaur Warrior,BR,amonkhet_minotaur,16,Common,N,0.1,Y
 Amphin Warrior,GR,amphin_warrior,20,Uncommon,N,1.0,Y
-Ancient Demon,UB,demon5,18,Common,N,0.1,Y
+Ancient Demon,UB,demon5,18,Uncommon,N,0.1,Y
 Ancient Silver Dragon,U,bluedragon,18,Rare,Y,2.0,Y
-Ancient Vampire,B,ancientvampire,25,Rare,N,2.0,Y
-Angel Overseer,uw,azoriusangel,18,Common,N,0.1,Y
-Angel Warrior,W,angelwarrior,20,Uncommon,N,1.0,Y
-Angelic Page,W,angel.json,12,Common,N,0.1,Y
-Ape,GR,ape.json,16,Common,N,0.1,Y
+Ancient Vampire,B,ancientvampire,25,Mythic,N,2.0,Y
+Angel Overseer,UW,azoriusangel,18,Rare,N,0.1,Y
+Angel Warrior,W,angelwarrior,49,Mythic,N,3.0,Y
+Angelic Page,W,angel.json,12,Uncommon,N,0.1,Y
+Ape,GR,ape.json,16,Rare,N,0.1,Y
 Apprentice Black Wizard,B,blackwizard_easy_bog,15,Common,N,0.1,Y
 Apprentice Blue Wizard,U,bluewizard_apprentice_1,10,Common,N,0.1,Y
-Apprentice Green Wizard,G,greenwizard_easy_elf,10,Common,N,0.1,Y
-Apprentice Red Wizard,R,redwizard_easy.json,10,Common,N,0.1,Y
-Apprentice White Wizard,W,whitewizard_easy_ajani,10,Common,N,0.1,Y
-Arcane Golem,RG,jodah,25,Uncommon,N,0.8,Y
-Archaeologist,UW,archaeologist,20,Common,N,0.1,Y
+Apprentice Green Wizard,G,greenwizard_easy_elf,10,Uncommon,N,0.1,Y
+Apprentice Red Wizard,R,redwizard_easy.json,10,Uncommon,N,0.1,Y
+Apprentice White Wizard,W,whitewizard_easy_ajani,10,Uncommon,N,0.1,Y
+Arcane Golem,RG,jodah,25,Mythic,N,0.8,Y
+Archaeologist,UW,archaeologist,20,Rare,N,0.1,Y
 Archer,GW,human_archer,11,Common,N,0.1,Y
-Archer Elite,GW,archerelite,25,Common,N,0.1,Y
-Archfiend,B,demon_landdestruction,30,Common,N,0.1,Y
-Archivist,U,archivist,20,Common,N,0.1,Y
-Archmage,GR,archmage,20,Common,N,0.1,Y
-Armadillo,GW,armadillo,20,Common,N,0.1,Y
-Armored Knight,WR,armored_knight,25,Common,N,0.1,Y
-Artifact Warrior,U,artifactwarrior,18,Common,N,0.3,Y
-Ashmouth Devil,BR,ashmouth_devil,18,Common,N,0.1,Y
-Auramancer,UW,enchantress,20,Common,N,0.1,Y
+Archer Elite,GW,archerelite,25,Rare,N,0.1,Y
+Archfiend,B,demon_landdestruction,31,Rare,N,0.1,Y
+Archivist,U,archivist,19,Uncommon,N,0.1,Y
+Archmage,GR,archmage,20,Rare,N,0.1,Y
+Armadillo,GW,armadillo,20,Rare,N,0.1,Y
+Armored Knight,WR,armored_knight,25,Rare,N,0.1,Y
+Artifact Warrior,U,artifactwarrior,42,Mythic,N,3.0,Y
+Ashmouth Devil,BR,ashmouth_devil,18,Uncommon,N,0.1,Y
+Auramancer,UW,enchantress,20,Uncommon,N,0.1,Y
 Axgard Dwarf,RW,axgard_dwarf,13,Common,N,0.1,Y
-Badger,G,badger,20,Common,N,0.1,Y
-Bandit,BR,bandit,13,Common,N,0.1,Y
-Bandit Archer,BR,banditarcher_blink,15,Common,N,0.1,Y
-Bandit Leader,BR,banditleader_bolas,25,Common,N,0.1,Y
-Bandit Scoundrel,BR,bandit_monor,13,Common,N,0.1,Y
-Bandit Slingshot,BR,banditslingshot_flyers,20,Common,N,0.1,Y
-Bandit Trapmaster,BR,bandittrapper_hazezon,20,Common,N,0.1,Y
-Barbarian,R,barbarian,20,Common,N,0.1,Y
-Bat,B,bat,14,Common,N,0.1,Y
-Bear,G,bear.json,16,Common,N,0.1,Y
-Beastmaster,GW,beastmaster,15,Common,N,0.1,Y
-Beholder,BRU,beholder,15,Common,N,0.1,Y
-Berserker,BGR,berserker.json,13,Common,N,0.1,Y
+Badger,G,badger,19,Uncommon,N,1.0,Y
+Bandit,BR,bandit,13,Uncommon,N,0.1,Y
+Bandit Archer,BR,banditarcher_blink,15,Uncommon,N,0.1,Y
+Bandit Leader,BR,banditleader_bolas,25,Uncommon,N,0.1,Y
+Bandit Scoundrel,BR,bandit_scoundrel_r111,13,Uncommon,N,0.1,Y
+Bandit Slingshot,BR,banditslingshot_flyers,20,Rare,N,0.1,Y
+Bandit Trapmaster,BR,bandittrapper_hazezon,20,Rare,N,0.1,Y
+Barbarian,R,barbarian,17,Uncommon,N,1.0,Y
+Bat,B,bat,15,Common,N,0.1,Y
+Bear,G,bear.json,16,Uncommon,N,0.1,Y
+Beastmaster,GW,beastmaster,15,Uncommon,N,0.1,Y
+Beholder,BRU,beholder,15,Uncommon,N,0.1,Y
+Berserker,BGR,berserker.json,13,Uncommon,N,0.1,Y
 Big Zombie,B,zombie_bad.json,13,Common,N,0.1,Y
 Bird,U,bird_blue.json,11,Common,N,0.1,Y
-Black Golem,B,blackconstruct,18,Common,N,0.3,Y
-Bloodgift Demon,brw,demonwander,18,Common,N,0.1,Y
-Bloodied Skeleton,B,bloodiedskeleton,12,Common,N,0.2,Y
-Blue Golem,U,blue_golem,18,Common,N,0.3,Y
-Blue Prototype,U,prototype_blue,18,Common,N,0.3,Y
+Black Golem,B,blackconstruct,32,Rare,N,2.0,Y
+Bloodgift Demon,BRW,demonwander,18,Uncommon,N,0.1,Y
+Bloodied Skeleton,B,bloodiedskeleton,13,Common,N,0.2,Y
+Blue Golem,U,blue_golem,49,Mythic,N,3.0,Y
+Blue Prototype,U,prototype_blue,18,Rare,N,0.3,Y
 Boar,G,boar.json,13,Common,N,0.4,Y
-Bog Witch,B,witch,16,Common,N,0.1,Y
+Bog Witch,B,bog_witch_r111,13,Common,N,0.1,Y
 Boggart,GR,eyeblight,12,Common,N,0.1,Y
-Bone Dragon,R,bonedragon,25,Common,N,0.3,Y
-Bone Golem,GW,bonegolem,20,Common,N,0.1,Y
-Brain Mole,GR,millwizard,20,Common,N,0.1,Y
-Bull,G,bull,13,Uncommon,N,0.8,Y
-Camel,W,camel,14,Common,N,0.1,Y
-Caracal,G,caracal,16,Common,N,0.1,Y
-Cathar,GW,cathar,13,Common,N,0.1,Y
-Cave Spider,RGB,cave_spider,18,Common,N,0.1,Y
-Centaur,GW,centaur.json,16,Common,N,0.1,Y
+Bone Dragon,R,bonedragon,41,Mythic,N,3.0,Y
+Bone Golem,GW,bonegolem,20,Rare,N,0.1,Y
+Brain Mole,GR,millwizard,20,Rare,N,0.1,Y
+Bull,G,bull,12,Common,N,0.8,Y
+Camel,W,camel,15,Common,N,0.1,Y
+Caracal,G,caracal,17,Common,N,0.1,Y
+Cathar,GW,cathar,13,Uncommon,N,0.1,Y
+Cave Spider,RGB,cave_spider,18,Rare,N,0.1,Y
+Centaur,GW,centaur.json,16,Rare,N,0.1,Y
 Centaur Warrior,GW,centaur_warrior,16,Common,N,0.1,Y
 Cephalid,,cephalid,25,Rare,N,2.0,Y
-Cerodon,U,cerodon,30,Uncommon,N,1.0,Y
-Challenger 20,UBRWG,challenger_20_allied_fires,22,Mythic,N,3.0,Y
-Challenger 21,UBRWG,challenger_21_azorius_control,22,Mythic,N,3.0,Y
-Challenger 22,UBRWG,challenger_22_dimir_control,22,Mythic,N,3.0,Y
-Chandra,R,Fire of Kaladesh,70,Common,Y,0.1,Y
-Chandra's Acolyte,R,chandra1,20,Common,N,0.1,Y
-Chandra's Firestarter,R,chandra2,25,Common,N,0.1,Y
-Chandra's Hellhound,R,hellhound2,20,Common,N,0.1,Y
-Chandra's Immolator,R,chandra3,20,Common,N,0.1,Y
-Chandra's Lavamancer,R,chandra4,20,Common,N,0.1,Y
-Chandra's Pyromancer,R,chandra5,25,Common,N,0.1,Y
-Chandra's Scorcher,R,chandra6,20,Common,N,0.1,Y
-Chicken,WG,chicken,12,Uncommon,N,0.8,Y
-Chimera,GW,chimera,25,Common,N,0.1,Y
-Clay Golem,W,golem_good.json,12,Common,N,0.1,Y
-Cleric,W,cleric.json,14,Common,N,0.1,Y
-Cloaker,B,cloaker,13,Common,N,0.1,Y
-Cloud Giant,WUG,cloudgiant,25,Common,N,0.1,Y
-Cloud Guardian,WU,cloudguard,25,Common,N,0.1,Y
-Conjurer,UB,conjure,35,Common,Y,0.1,Y
+Cerodon,U,cerodon,32,Common,N,1.0,Y
+Challenger 20,UBRWG,challenger_20_allied_fires,22,Uncommon,N,3.0,Y
+Challenger 21,UBRWG,challenger_21_azorius_control,22,Rare,N,3.0,Y
+Challenger 22,UBRWG,challenger_22_dimir_control,22,Uncommon,N,3.0,Y
+Chandra,R,Fire of Kaladesh,70,Uncommon,Y,0.1,Y
+Chandra's Acolyte,R,chandra1,28,Rare,N,2.0,Y
+Chandra's Firestarter,R,chandra2,32,Rare,N,2.0,Y
+Chandra's Hellhound,R,hellhound2,17,Uncommon,N,1.0,Y
+Chandra's Immolator,R,chandra3,30,Rare,N,2.0,Y
+Chandra's Lavamancer,R,chandra4,34,Rare,N,2.0,Y
+Chandra's Pyromancer,R,chandra5,27,Uncommon,N,0.1,Y
+Chandra's Scorcher,R,chandra_s_scorcher_r111,28,Rare,N,2.0,Y
+Chicken,WG,chicken,12,Rare,N,0.8,Y
+Chimera,GW,chimera,25,Rare,N,0.1,Y
+Clay Golem,W,golem_good.json,45,Mythic,N,3.0,Y
+Cleric,W,cleric.json,13,Uncommon,N,0.1,Y
+Cloaker,B,cloaker,12,Common,N,0.1,Y
+Cloud Giant,WUG,cloudgiant,25,Rare,N,0.1,Y
+Cloud Guardian,WU,cloudguard,25,Rare,N,0.1,Y
+Conjurer,UB,conjure,35,Rare,Y,0.1,Y
 Construct,RU,artificer,14,Common,N,0.1,Y
-Copper Host Brutalizer,GB,copperhostbrutalizer,19,Common,N,0.1,Y
-Copper Host Infector,G,copperhostinfector.json,16,Common,N,0.1,Y
+Copper Host Brutalizer,GB,copperhostbrutalizer,19,Uncommon,N,0.1,Y
+Copper Host Infector,G,copperhostinfector.json,16,Uncommon,N,0.1,Y
 Corrupted Blue Wizard,,bluewiz_corrupted,15,Uncommon,N,1.0,Y
 Corrupted Cleric,,corruptedcleric,15,Uncommon,N,0.6,Y
-Corrupted Green Wizard,,greenmage_corrupted,15,Uncommon,N,1.0,Y
+Corrupted Green Wizard,,greenmage_corrupted,15,Rare,N,1.0,Y
 Corrupted Red Wizard,,redwiz_corrupted,15,Uncommon,N,1.0,Y
-Cosmic Horror,RG,cosmic_horror,30,Uncommon,N,0.8,Y
-Crab,UB,crab.json,11,Common,N,0.1,Y
-Criosphinx,WU,sphinx amonkhet,19,Common,N,0.1,Y
-Crocodile,WU,crocodile,19,Common,N,0.1,Y
-Curselord,RBU,curselord,20,Common,N,0.1,Y
-Cyclops,R,cyclops,12,Common,N,0.1,Y
-Dark Enchanter,GB,darkenchanter,35,Common,Y,0.1,Y
-Dark Knight,B,death_knight,15,Common,N,0.1,Y
-Dark Spirit,B,dark_spirit,15,Common,N,0.1,Y
+Cosmic Horror,RG,cosmic_horror,30,Rare,N,0.8,Y
+Crab,UB,crab.json,11,Uncommon,N,0.1,Y
+Criosphinx,WU,criosphinx_r111,19,Uncommon,N,0.1,Y
+Crocodile,WU,crocodile,19,Uncommon,N,0.1,Y
+Curselord,RBU,curselord,20,Uncommon,N,0.1,Y
+Cyclops,R,cyclops,11,Common,N,0.1,Y
+Dark Enchanter,GB,darkenchanter,35,Uncommon,Y,0.1,Y
+Dark Knight,B,dark_knight_r111,14,Uncommon,N,0.1,Y
+Dark Spirit,B,dark_spirit,13,Common,N,0.1,Y
 Dawnhart Witch,GW,dawnhart_witch,13,Common,N,0.1,Y
-Death Knight,B,death_knight,15,Common,N,0.1,Y
-Demon,B,demon.json,18,Common,N,0.1,Y
-Demon of Tibalt,B,tibalt_demon,30,Common,N,0.1,Y
-Demoncaller,BR,demoncaller,20,Common,N,0.1,Y
-Devil,R,devil.json,11,Common,N,0.1,Y
-Devil of Tibalt,R,tibalt_devil,20,Common,N,0.1,Y
-Dimir Faerie,BU,dimir_faerie,17,Common,N,0.1,Y
+Death Knight,B,death_knight,15,Uncommon,N,0.1,Y
+Demon,B,demon.json,17,Uncommon,N,1.0,Y
+Demon of Tibalt,B,tibalt_demon,51,Mythic,N,3.0,Y
+Demoncaller,BR,demoncaller,20,Rare,N,0.1,Y
+Devil,R,devil.json,10,Common,N,0.1,Y
+Devil of Tibalt,R,tibalt_devil,28,Rare,N,2.0,Y
+Dimir Faerie,BU,dimir_faerie,17,Rare,N,0.1,Y
 Dinosaur,RW,dinosaur_w_r,19,Common,N,0.1,Y
-Dinosaur Elite,GRW,dinosaurelite,30,Common,N,0.1,Y
-Disciple of Teferi,WUR,disciple_of_teferi,12,Common,N,0.1,Y
-Djinn,RU,djinn.json,18,Common,N,0.1,Y
-Dog,W,dog.json,12,Common,N,0.1,Y
-Doppelganger,C,mimic,20,Common,N,0.1,Y
-Dragon,R,dragon,19,Common,N,0.1,Y
-Dragonfly,WBG,insect,14,Common,N,0.1,Y
-Drake,U,drake_ur_beginner,20,Common,N,0.1,Y
-Dross Gladiator,B,drossgladiator.json,20,Common,N,0.1,Y
-Dross Grimnarch,BU,drossgrimnarch,19,Common,N,0.1,Y
-Dwarf,RW,dwarf.json,13,Common,N,0.1,Y
-Dwarf Demolisher,R,dwarfdemolisher,13,Common,N,0.1,Y
-Dwarf Mercenary,RG,dwarfmercenary,13,Common,N,0.1,Y
-Dwarf Pilot,RW,dwarfpilot,13,Common,N,0.1,Y
-Dwarf Warlord,W,dwarf_whitecastle,20,Common,N,0.1,Y
-Earth Elemental,U,earth_elemental,16,Common,N,0.1,Y
-Efreet,RU,efreet,18,Common,N,0.1,Y
-Eldraine Faerie,GU,eldraine_faerie,8,Common,N,0.1,Y
-Eldraine Knight,RW,eldraine_knight,14,Common,N,0.1,Y
-Eldrazi,BGU,eldrazi,19,Rare,N,2.0,Y
-Eldrazi Devastator,BGU,eldrazilarge,30,Common,N,0.1,Y
-Eldrazi Floater,BGU,eldrazilarge,40,Common,N,0.1,Y
-Elemental,U,elemental_air,16,Common,N,0.1,Y
-Elephant,GW,elephant.json,20,Common,N,0.1,Y
+Dinosaur Elite,GRW,dinosaurelite,30,Rare,N,0.1,Y
+Disciple of Teferi,WUR,disciple_of_teferi,12,Rare,N,0.1,Y
+Djinn,RU,djinn.json,18,Uncommon,N,0.1,Y
+Dog,W,dog.json,11,Common,N,0.1,Y
+Doppelganger,C,doppelganger_r111,20,Uncommon,N,0.1,Y
+Dragon,R,dragon,21,Uncommon,N,1.0,Y
+Dragonfly,WBG,insect,14,Rare,N,0.1,Y
+Drake,U,drake_ur_beginner,20,Uncommon,N,0.1,Y
+Dross Gladiator,B,drossgladiator.json,22,Uncommon,N,0.1,Y
+Dross Grimnarch,BU,drossgrimnarch,19,Uncommon,N,0.1,Y
+Dwarf,RW,dwarf.json,13,Uncommon,N,0.1,Y
+Dwarf Demolisher,R,dwarfdemolisher,14,Uncommon,N,0.1,Y
+Dwarf Mercenary,RG,dwarfmercenary,13,Uncommon,N,0.1,Y
+Dwarf Pilot,RW,dwarfpilot,13,Rare,N,0.1,Y
+Dwarf Warlord,W,dwarf_whitecastle,32,Rare,N,2.0,Y
+Earth Elemental,U,earth_elemental,14,Common,N,0.1,Y
+Efreet,RU,efreet,18,Uncommon,N,0.1,Y
+Eldraine Faerie,GU,eldraine_faerie,8,Uncommon,N,0.1,Y
+Eldraine Knight,RW,eldraine_knight,14,Uncommon,N,0.1,Y
+Eldrazi,BGU,eldrazi,19,Uncommon,N,2.0,Y
+Eldrazi Devastator,BGU,eldrazilarge,30,Rare,N,0.1,Y
+Eldrazi Floater,BGU,eldrazi_floater_r111,40,Rare,N,0.1,Y
+Elemental,U,elemental_air,15,Rare,N,0.1,Y
+Elephant,GW,elephant.json,20,Rare,N,0.1,Y
 Elesh Norn,W,copperhostbrutalizer,80,Uncommon,Y,0.5,Y
-Elf,G,elf_bad.json,12,Common,N,0.1,Y
-Elf Vagabond,R,elfvagabond,12,Common,N,0.2,Y
-Elf warrior,G,elf_mid.json,11,Common,N,0.1,Y
+Elf,G,elf_bad.json,13,Common,N,0.1,Y
+Elf Vagabond,R,elfvagabond,13,Common,N,0.2,Y
+Elf warrior,G,elf_mid.json,11,Uncommon,N,0.1,Y
 Elk,G,elk,13,Common,N,0.1,Y
-Emrakul,C,emrakul,100,Mythic,Y,3.0,Y
-Esper Artificer,UB,esper_artificer,25,Common,N,0.1,Y
-Evil Wall,GW,hiddenwall,20,Common,N,0.1,Y
-Eye,B,eye,25,Common,N,0.1,Y
-Faerie,BGU,faerie.json,8,Common,N,0.1,Y
-Faerie Dragon,BU,faeriedragon,17,Common,N,0.1,Y
-Falcon,W,falcon_w,11,Common,N,0.1,Y
+Emrakul,C,emrakul,100,Rare,Y,3.0,Y
+Esper Artificer,UB,esper_artificer,25,Rare,N,0.1,Y
+Evil Wall,GW,hiddenwall,20,Uncommon,N,0.1,Y
+Eye,B,eye,11,Common,N,0.1,Y
+Faerie,BGU,faerie.json,8,Uncommon,N,0.1,Y
+Faerie Dragon,BU,faeriedragon,17,Rare,N,0.1,Y
+Falcon,W,falcon_w,12,Common,N,0.1,Y
 Falcon-headed Aven Warrior,W,amonkhet_aven_w,16,Common,N,0.1,Y
-Fallen Angel,BW,fallen_angel,20,Common,N,0.1,Y
-False Knight,B,death_knight,18,Common,N,0.1,Y
-False Monk,B,cultist,15,Common,N,0.1,Y
-Farmer,GW,farmer,13,Common,N,0.1,Y
-Fire Dragon,R,firedragon,18,Common,N,0.3,Y
-Fire Elemental,R,fire_elemental,16,Common,N,0.1,Y
-Fire Giant,R,firegiant,20,Common,N,0.1,Y
-Flame Elemental,R,flame_elemental,17,Common,N,0.1,Y
-Flesh Abomination,B,flesh_horror,30,Uncommon,N,0.8,Y
-Flying Witch,B,witch,13,Common,N,0.1,Y
-Fog Trap,WG,turbofog,18,Common,N,0.1,Y
-Forest Giant,G,foresttitan,25,Common,N,0.1,Y
-Fox,W,fox.json,10,Common,N,0.1,Y
-Frog,BGU,frog.json,15,Common,N,0.1,Y
-Froghemoth,RG,froghemoth,25,Uncommon,N,0.8,Y
-Frost Titan,WU,frost_titan,18,Common,N,0.1,Y
+Fallen Angel,BW,fallen_angel,20,Uncommon,N,0.1,Y
+False Knight,B,false_knight_r111,13,Common,N,0.1,Y
+False Monk,B,false_monk_r111,18,Uncommon,N,1.0,Y
+Farmer,GW,farmer,13,Uncommon,N,0.1,Y
+Fire Dragon,R,firedragon,30,Rare,N,2.0,Y
+Fire Elemental,R,fire_elemental,13,Common,N,0.1,Y
+Fire Giant,R,firegiant,33,Rare,N,2.0,Y
+Flame Elemental,R,flame_elemental,20,Uncommon,N,1.0,Y
+Flesh Abomination,B,flesh_horror,32,Common,N,0.8,Y
+Flying Witch,B,flying_witch_r111,11,Common,N,0.1,Y
+Fog Trap,WG,turbofog,18,Rare,N,0.1,Y
+Forest Giant,G,foresttitan,46,Mythic,N,3.0,Y
+Fox,W,fox.json,9,Common,N,0.1,Y
+Frog,BGU,frog.json,15,Uncommon,N,0.1,Y
+Froghemoth,RG,froghemoth,25,Rare,N,0.8,Y
+Frost Titan,WU,frost_titan,18,Uncommon,N,0.1,Y
 Fungus,G,fungus.json,10,Common,N,0.1,Y
-Furnace Goblin,R,furnacegoblin.json,16,Common,N,0.1,Y
-Furnace Tormentor,RG,furnacetormentor,19,Common,N,0.1,Y
-Gargoyle,RUW,gargoyle.json,17,Uncommon,N,0.9,Y
-Gargoyle 2,W,gargoyle,16,Uncommon,N,0.6,Y
-Garruk,GB,garruk,25,Uncommon,Y,1.0,Y
-Geist,U,ghost_blue,15,Common,N,0.1,Y
-Geistmage,U,geistmage,20,Common,N,0.1,Y
-Geonid Death-Cap,G,geonid,10,Common,N,0.1,Y
+Furnace Goblin,R,furnacegoblin.json,14,Uncommon,N,0.1,Y
+Furnace Tormentor,RG,furnacetormentor,19,Uncommon,N,0.1,Y
+Gargoyle,RUW,gargoyle.json,17,Rare,N,0.9,Y
+Gargoyle 2,W,gargoyle,17,Common,N,0.6,Y
+Garruk,GB,garruk,25,Rare,Y,1.0,Y
+Geist,U,ghost_blue,16,Common,N,0.1,Y
+Geistmage,U,geistmage,12,Common,N,0.1,Y
+Geonid Death-Cap,G,geonid,11,Common,N,0.1,Y
 Ghalta,G,ghalta,40,Rare,Y,2.0,Y
-Ghost,B,ghost.json,14,Common,N,0.1,Y
+Ghost,B,ghost.json,45,Mythic,N,3.0,Y
 Ghoul,BU,ghoul,13,Common,N,0.1,Y
-Ghoul Gravecaller,BU,ghoulgravecrawler,20,Common,N,0.1,Y
-Giant Cyclops,UR,luckyminotaur,30,Common,N,0.1,Y
-Giant Fly,G,insect,14,Common,N,0.1,Y
-Giant Panda,G,giantpanda,16,Common,N,0.1,Y
+Ghoul Gravecaller,BU,ghoulgravecrawler,20,Rare,N,0.1,Y
+Giant Cyclops,UR,luckyminotaur,30,Rare,N,0.1,Y
+Giant Fly,G,giant_fly_r111,28,Rare,N,2.0,Y
+Giant Panda,G,giantpanda,16,Uncommon,N,0.1,Y
 Giant Spider,G,spider_token,15,Common,N,0.1,Y
-Gitaxian Scientist,UG,gitaxianscientist,19,Common,N,0.1,Y
-Gitaxian Underling,U,gitaxianunderling.json,16,Common,N,0.1,Y
-Gladiator,R,gladiator,18,Common,N,0.1,Y
-Goblin,R,goblin_warrior_easy,13,Common,N,0.1,Y
-Goblin Artificer,R,goblin_artificer,15,Common,N,0.3,Y
-Goblin Chief,BR,goblin_chief_medium,15,Common,N,0.1,Y
-Goblin Fanatic,GR,goblin_fanatic,15,Common,N,0.1,Y
-Goblin King,R,goblinking,20,Common,N,0.1,Y
+Gitaxian Scientist,UG,gitaxianscientist,19,Uncommon,N,0.1,Y
+Gitaxian Underling,U,gitaxianunderling.json,12,Common,N,0.1,Y
+Gladiator,R,gladiator,52,Mythic,N,3.0,Y
+Goblin,R,goblin_warrior_easy,12,Common,N,0.1,Y
+Goblin Artificer,R,goblin_artificer,27,Rare,N,2.0,Y
+Goblin Chief,BR,goblin_chief_medium,15,Rare,N,0.1,Y
+Goblin Fanatic,GR,goblin_fanatic,15,Uncommon,N,0.1,Y
+Goblin King,R,goblinking,18,Uncommon,N,1.0,Y
 Goblin Pack,R,goblin_bad.json,20,Common,N,0.1,Y
-Goblin Rager,R,goblinrager,12,Common,N,0.2,Y
-Goblin Stalker,BR,evilgoblin,15,Common,N,0.1,Y
-Goblin Warrior,R,goblin_mid.json,12,Common,N,0.1,Y
+Goblin Rager,R,goblinrager,13,Common,N,0.2,Y
+Goblin Stalker,BR,evilgoblin,15,Uncommon,N,0.1,Y
+Goblin Warrior,R,goblin_mid.json,12,Uncommon,N,0.1,Y
 Golem,GW,golem.json,13,Common,N,0.1,Y
-Golem Sentinel,C,golem_sentinel,20,Common,N,0.1,Y
-Golgari Elf,BG,elf_golgari,20,Common,N,0.2,Y
-Golgari Fungus,BG,fungus_golgari,16,Common,N,0.1,Y
-Golgari Treefolk,BG,treefolk_golgari,25,Common,N,0.2,Y
-Gorgon,BG,gorgon,14,Common,N,0.1,Y
+Golem Sentinel,C,golem_sentinel,20,Uncommon,N,0.1,Y
+Golgari Elf,BG,elf_golgari,20,Uncommon,N,0.2,Y
+Golgari Fungus,BG,fungus_golgari,16,Uncommon,N,0.1,Y
+Golgari Treefolk,BG,treefolk_golgari,25,Rare,N,0.2,Y
+Gorgon,BG,gorgon,14,Uncommon,N,0.1,Y
 Gorgon 2,BG,gorgon_2,14,Common,N,0.1,Y
-Gorilla,RG,gorilla,20,Uncommon,N,0.8,Y
-Grave Titan,B,gravetitan,20,Common,N,0.1,Y
-Graven Revenant,B,giralfgisa,20,Common,N,0.1,Y
-Greater Sandwurm,G,sandwurm,12,Common,N,0.1,Y
-Greater Zombie,B,zombie_greater,25,Common,N,0.2,Y
-Green Beast,G,beast_green.json,18,Common,N,0.1,Y
-Green Golem,U,greengolem,18,Common,N,0.3,Y
-Green Prototype,G,prototype_green,18,Common,N,0.3,Y
-Griffin,W,griffin.json,15,Common,N,0.1,Y
-Griselbrand,B,griselbrand,40,Mythic,Y,3.0,Y
+Gorilla,RG,gorilla,20,Rare,N,0.8,Y
+Grave Titan,B,gravetitan,26,Rare,N,2.0,Y
+Graven Revenant,B,giralfgisa,20,Rare,N,0.1,Y
+Greater Sandwurm,G,sandwurm,13,Uncommon,N,0.1,Y
+Greater Zombie,B,zombie_greater,20,Uncommon,N,1.0,Y
+Green Beast,G,beast_green.json,47,Mythic,N,3.0,Y
+Green Golem,U,greengolem,46,Mythic,N,3.0,Y
+Green Prototype,G,prototype_green,20,Uncommon,N,1.0,Y
+Griffin,W,griffin.json,14,Uncommon,N,0.1,Y
+Griselbrand,B,griselbrand,40,Rare,Y,3.0,Y
 Grolnok,BGU,frogboss,50,Uncommon,Y,0.8,Y
-Guardian Angel,WUBRG,angel_rainbow_encounter,50,Common,Y,0.2,Y
-Harpy,B,harpy,13,Common,N,0.1,Y
+Guardian Angel,WUBRG,angel_rainbow_encounter,50,Mythic,Y,0.2,Y
+Harpy,B,harpy,14,Common,N,0.1,Y
 Harpy 2,BU,harpy_2,13,Common,N,0.1,Y
-Heart-Piercer Manticore,U,manticore,20,Common,N,0.1,Y
-Hedgehog,G,hedgehog,20,Common,N,0.1,Y
+Heart-Piercer Manticore,U,manticore,11,Common,N,0.1,Y
+Hedgehog,G,hedgehog,28,Rare,N,2.0,Y
 Hellhound,BR,hellhound,17,Common,N,0.1,Y
-Hellion,R,hellion,15,Common,N,0.1,Y
-Hermit Crab,UG,hermitcrab,20,Common,N,0.1,Y
-Hidden Bush,GU,plant,20,Common,N,0.1,Y
-Hidden Snake,GU,snake.json,20,Common,N,0.1,Y
-High Cultist,B,cultist,30,Common,N,0.1,Y
-High Elf,BG,elf_good.json,12,Common,N,0.1,Y
-High Vampire,B,vampire.json,20,Common,N,0.1,Y
-Hippo,G,hippo,20,Common,N,0.1,Y
-Holy Apparition,W,seraphim,25,Common,N,0.1,Y
-Holy Paladin,W,holypaladin,25,Common,N,0.1,Y
+Hellion,R,hellion,21,Uncommon,N,1.0,Y
+Hermit Crab,UG,hermitcrab,20,Rare,N,0.1,Y
+Hidden Bush,GU,plant,20,Uncommon,N,0.1,Y
+Hidden Snake,GU,snake.json,20,Rare,N,0.1,Y
+High Cultist,B,cultist,21,Uncommon,N,1.0,Y
+High Elf,BG,elf_good.json,12,Rare,N,0.1,Y
+High Vampire,B,vampire.json,53,Mythic,N,3.0,Y
+Hippo,G,hippo,19,Rare,N,0.1,Y
+Holy Apparition,W,seraphim,45,Mythic,N,3.0,Y
+Holy Paladin,W,holypaladin,27,Rare,N,2.0,Y
 Homarid,,homarid,20,Common,N,0.1,Y
-Horror,BU,horror,17,Common,N,0.1,Y
-Horror of Tibalt,BU,tibalt_horror,17,Common,N,0.1,Y
-Horse,GW,horse,14,Common,N,0.1,Y
+Horror,BU,horror,17,Uncommon,N,0.1,Y
+Horror of Tibalt,BU,tibalt_horror,17,Rare,N,0.1,Y
+Horse,GW,horse,14,Uncommon,N,0.1,Y
 Horseman,UW,horsemanship,14,Common,N,0.1,Y
 Hulking Brute,B,hulkingbrute,20,Common,N,0.1,Y
 Human,BRW,human_bad.json,11,Common,N,0.1,Y
-Human Bard,RW,humanbard,25,Common,N,0.1,Y
-Human Captain,UW,humanelite,20,Common,N,0.1,Y
-Human elite,W,human_good.json,18,Common,N,0.1,Y
-Human guard,BW,human_mid.json,12,Common,N,0.1,Y
-Human Looter,GW,peasantrole,15,Common,N,0.1,Y
+Human Bard,RW,humanbard,25,Rare,N,0.1,Y
+Human Captain,UW,humanelite,20,Rare,N,0.1,Y
+Human elite,W,human_good.json,41,Mythic,N,3.0,Y
+Human guard,BW,human_mid.json,12,Uncommon,N,0.1,Y
+Human Looter,GW,peasantrole,15,Rare,N,0.1,Y
 Human Mercenary,GW,humanmercenary,13,Common,N,0.1,Y
-Hydra,G,hydra.json,19,Common,N,0.1,Y
+Hydra,G,hydra.json,46,Mythic,N,3.0,Y
 Ibis,GU,bird_gu,11,Common,N,0.1,Y
-Ibis-headed Aven Warrior,U,amonkhet_aven_u,16,Common,N,0.1,Y
-Ice Elemental,R,ice_elemental,19,Common,N,0.1,Y
-Illusionist,U,illusion,12,Common,N,0.1,Y
+Ibis-headed Aven Warrior,U,amonkhet_aven_u,18,Common,N,0.1,Y
+Ice Elemental,R,ice_elemental,17,Common,N,0.1,Y
+Illusionist,U,illusion,18,Uncommon,N,1.0,Y
 Immersturm Demon,BR,immersturm_demon,17,Common,N,0.1,Y
-Jace,UW,jace,40,Common,Y,0.1,Y
-Jellyfish,,jellyfish,12,Common,N,0.1,Y
+Jace,UW,jace,40,Rare,Y,0.1,Y
+Jellyfish,,jellyfish,12,Uncommon,N,0.1,Y
 Jin-Gitaxias,W,copperhostbrutalizer,80,Uncommon,Y,0.5,Y
 Juggernaut,,juggernaut,20,Common,N,0.1,Y
-Kavu,RGW,kavu,20,Common,N,0.1,Y
-Khan,BRW,mardu,14,Common,N,0.1,Y
+Kavu,RGW,kavu,20,Uncommon,N,0.1,Y
+Khan,BRW,mardu,14,Uncommon,N,0.1,Y
 Khenra Warrior,,jackal,11,Common,N,0.1,Y
-Kiora,UG,kiora,40,Uncommon,Y,0.8,Y
-Knight,W,knight.json,14,Common,N,0.1,Y
-Knight Mercenary,UW,knightmercenary,13,Common,N,0.1,Y
-Kobold Dragoncaller,RB,kobolddragoncaller,12,Common,N,0.1,Y
-Kobold Pyromancer,RB,pyromancer,20,Common,N,0.1,Y
+Kiora,UG,kiora,40,Rare,Y,0.8,Y
+Knight,W,knight.json,42,Mythic,N,3.0,Y
+Knight Mercenary,UW,knightmercenary,13,Rare,N,0.1,Y
+Kobold Dragoncaller,RB,kobolddragoncaller,12,Rare,N,0.1,Y
+Kobold Pyromancer,RB,kobold_pyromancer_r111,20,Uncommon,N,0.1,Y
 Kobold Shaman,RB,roshnakhtheroic,12,Common,N,0.1,Y
-Kobold Slinger,RB,kobold,12,Common,N,0.1,Y
-Kobold Trapmaster,RB,koboldtrapmaster,12,Common,N,0.1,Y
-Kobold Warrior,RB,kobold,12,Common,N,0.1,Y
-Kobold Worker,RB,koboldworker,12,Common,N,0.1,Y
-Kor Warrior,RW,kor_warrior,15,Common,N,0.1,Y
+Kobold Slinger,RB,kobold,12,Rare,N,0.1,Y
+Kobold Trapmaster,RB,koboldtrapmaster,12,Uncommon,N,0.1,Y
+Kobold Warrior,RB,kobold_warrior_r111,12,Rare,N,0.1,Y
+Kobold Worker,RB,kobold_worker_r111,12,Rare,N,0.1,Y
+Kor Warrior,RW,kor_warrior,15,Rare,N,0.1,Y
 Kozilek,W,copperhostbrutalizer,80,Uncommon,Y,0.5,Y
-Ladybug,G,ladybug,14,Common,N,0.1,Y
-Lathliss,R,lathliss,40,Rare,Y,2.0,Y
-Leonin Warrior,GW,leoninwarrior,15,Common,N,0.1,Y
-Leonin Weaponmaster,GW,leoninswordsmith,15,Common,N,0.1,Y
-Lich,B,lich,17,Common,N,0.1,Y
-Lightning Elemental,R,lightning_elemental,20,Common,N,0.1,Y
-Liliana,B,liliana_zombies,70,Common,Y,0.1,Y
-Liliana's Alchemist,BG,dimir_ninja,25,Common,N,0.2,Y
-Liliana's Herbalist,BG,lilianas_herbalist,25,Common,N,0.2,Y
-Lion,W,lion,12,Common,N,0.1,Y
-Loamspeaker,GU,loamspeaker,20,Common,N,0.1,Y
-Lord Pestilence,B,trap,20,Common,N,0.1,Y
-Lorthos,U,lorthos,40,Mythic,Y,3.0,Y
-Maelstrom Angel,W,maelstromangel,20,Rare,N,2.0,Y
-Mageripper,GUR,mageripper,15,Common,N,0.1,Y
-Magma Elemental,R,magma_elemental,25,Common,N,0.1,Y
-Magma Fire Elemental,R,magma_elemental,15,Uncommon,N,0.5,Y
+Ladybug,G,ladybug,21,Uncommon,N,1.0,Y
+Lathliss,R,lathliss,40,Mythic,Y,2.0,Y
+Leonin Warrior,GW,leoninwarrior,15,Rare,N,0.1,Y
+Leonin Weaponmaster,GW,leoninswordsmith,15,Rare,N,0.1,Y
+Lich,B,lich,20,Uncommon,N,1.0,Y
+Lightning Elemental,R,lightning_elemental,21,Uncommon,N,0.1,Y
+Liliana,B,liliana_zombies,70,Rare,Y,0.1,Y
+Liliana's Alchemist,BG,dimir_ninja,25,Rare,N,0.2,Y
+Liliana's Herbalist,BG,lilianas_herbalist,25,Uncommon,N,0.2,Y
+Lion,W,lion,17,Uncommon,N,1.0,Y
+Loamspeaker,GU,loamspeaker,20,Rare,N,0.1,Y
+Lord Pestilence,B,trap,17,Uncommon,N,1.0,Y
+Lorthos,U,lorthos,40,Rare,Y,3.0,Y
+Maelstrom Angel,W,maelstromangel,33,Rare,N,2.0,Y
+Mageripper,GUR,mageripper,15,Rare,N,0.1,Y
+Magma Elemental,R,magma_elemental,25,Uncommon,N,0.1,Y
+Magma Fire Elemental,R,magma_fire_elemental_r111,11,Common,N,0.1,Y
 Master Black Wizard,B,blackwizard_hard_gravepact,20,Rare,N,2.0,Y
-Master Blue Wizard,U,bluewizard_hard_control,20,Rare,N,2.0,Y
+Master Blue Wizard,U,bluewizard_hard_control,20,Uncommon,N,2.0,Y
 Master Green Wizard,G,greenwizard_hard_ramp,20,Rare,N,2.0,Y
 Master Red Wizard,R,redwizard_hard_burn,20,Rare,N,2.0,Y
 Master White Wizard,W,whitewizard_hard_humility,20,Rare,N,2.0,Y
-Merfolk,U,merfolk_bad.json,12,Common,N,0.1,Y
-Merfolk Avatar,GU,merfolk_good.json,14,Common,N,0.1,Y
-Merfolk Elite,UGW,merfolk_elite,25,Common,N,0.1,Y
-Merfolk Fighter,GU,merfolk_lords,20,Common,N,0.2,Y
-Merfolk Lord,GU,merfolk_lord2,20,Common,N,0.25,Y
+Merfolk,U,merfolk_bad.json,13,Common,N,0.1,Y
+Merfolk Avatar,GU,merfolk_good.json,14,Rare,N,0.1,Y
+Merfolk Elite,UGW,merfolk_elite,25,Rare,N,0.1,Y
+Merfolk Fighter,GU,merfolk_lords,20,Uncommon,N,0.2,Y
+Merfolk Lord,GU,merfolk_lord2,20,Rare,N,0.25,Y
 Merfolk Soldier,U,merfolk_v_goblins,13,Common,N,0.1,Y
-Merfolk warrior,U,merfolk_mid.json,13,Common,N,0.1,Y
-Metallic Sliver,BUR,sliver_metallicsliver,30,Uncommon,N,1.0,Y
-Mighty Djinn,U,mighty_djinn,25,Common,N,0.1,Y
-Mimic,BU,mimic,12,Common,N,0.1,Y
-Mindclaw Shaman,BR,mindclaw_shaman,19,Common,N,0.1,Y
-Minor Demon,b,demon4,18,Common,N,0.1,Y
-Minotaur,R,minotaur.json,16,Common,N,0.1,Y
+Merfolk warrior,U,merfolk_mid.json,12,Uncommon,N,0.1,Y
+Metallic Sliver,BUR,sliver_metallicsliver,30,Rare,N,1.0,Y
+Mighty Djinn,U,mighty_djinn,24,Rare,N,0.1,Y
+Mimic,BU,mimic,12,Uncommon,N,0.1,Y
+Mindclaw Shaman,BR,mindclaw_shaman,19,Rare,N,0.1,Y
+Minor Demon,B,demon4,18,Uncommon,N,0.1,Y
+Minotaur,R,minotaur.json,13,Common,N,0.1,Y
 Minotaur Flayer,BR,minotaur,16,Common,N,0.1,Y
-Minotaur Warcaller,R,minotaur_monored_castle,20,Common,N,0.1,Y
-Monk,W,monk.json,10,Common,N,0.1,Y
-Monkey,RG,ragavan,20,Uncommon,N,0.8,Y
-Mountain Ogre,BR,ogre_large,19,Common,N,0.1,Y
+Minotaur Warcaller,R,minotaur_monored_castle,27,Rare,N,2.0,Y
+Monk,W,monk.json,11,Uncommon,N,0.1,Y
+Monkey,RG,ragavan,20,Rare,N,0.8,Y
+Mountain Ogre,BR,ogre_large,19,Rare,N,0.1,Y
 Mummy,,mummy,11,Common,N,0.1,Y
 Myr Superion,C,myr_superion,25,Uncommon,Y,0.5,Y
 Naga Warrior,BR,nagawarrior,16,Common,N,0.1,Y
-Nahiri,RW,nahiri,40,Common,Y,0.1,Y
-Naked Mole Rat,G,shrinemole,20,Common,N,0.1,Y
-Nantuko Guard,BGU,nantuko_morpher,25,Common,N,0.1,Y
-Necrogoyf,B,necrogoyf,16,Common,N,0.1,Y
-Necromancer,B,reanimator,20,Common,N,0.1,Y
-Nezumi Leader,,rat_leader,30,Common,N,0.1,Y
-Nezumi Ninja,,humanoidrat,15,Common,N,0.1,Y
-Nightmare,RG,nightmare,30,Uncommon,N,0.8,Y
+Nahiri,RW,nahiri,40,Rare,Y,0.1,Y
+Naked Mole Rat,G,shrinemole,18,Uncommon,N,1.0,Y
+Nantuko Guard,BGU,nantuko_morpher,25,Rare,N,0.1,Y
+Necrogoyf,B,necrogoyf,53,Mythic,N,3.0,Y
+Necromancer,B,reanimator,31,Rare,N,2.0,Y
+Nezumi Leader,,rat_leader,30,Uncommon,N,0.1,Y
+Nezumi Ninja,,humanoidrat,15,Uncommon,N,0.1,Y
+Nightmare,RG,nightmare,30,Mythic,N,0.8,Y
 Nissa,W,copperhostbrutalizer,80,Uncommon,Y,0.5,Y
-Octopus,,octopus,13,Common,N,0.1,Y
-Ooze,UG,ooze.json,12,Common,N,0.1,Y
-Ooze Boss,GB,ooze_boss,35,Common,Y,0.1,Y
-Orc Brute,BR,orc_brute,18,Common,N,0.1,Y
-Orc Hunter,BR,orc_hunter,18,Common,N,0.1,Y
-Orc Warrior,BR,orc_warrior,18,Common,N,0.1,Y
-Orthodoxy Angel,WG,phyrexianangel,19,Common,N,0.1,Y
-Orthodoxy Duelist,WB,phyrexianduelist.json,16,Common,N,0.1,Y
-Orzhov Cleric,WB,cleric_orzhov,20,Common,N,0.2,Y
-Owl,,owl,13,Common,N,0.1,Y
-Parrot,BU,parrot,12,Common,N,0.1,Y
-Penguin,G,penguin,16,Common,N,0.1,Y
-Penguin Elite,G,penguinelite,20,Common,N,0.1,Y
-Pharaoh,,pharaoh,25,Common,N,0.1,Y
-Phoenix,R,phoenix,20,Common,N,0.1,Y
-Pirate,UR,pirate,16,Common,N,0.1,Y
-Pirate 2,BRU,pirate2,16,Common,N,0.1,Y
-Pirate 3,BRU,pirate3,16,Common,N,0.1,Y
-Pirate Captain,URB,pirate_captain,25,Common,N,0.1,Y
-Pirate Captain 2,B,pirate_captain_2,20,Common,N,0.1,Y
-Plague Rat Swarm,B,rat_poisonrat,14,Common,N,0.1,Y
-Plaguelord,UB,zombiepoisoner,20,Common,N,0.1,Y
-Plant,,plant.json,15,Common,N,0.1,Y
-Poisonous Snake,G,poisonoussnake,15,Common,N,0.1,Y
-Polar Bear,G,polarbear,16,Common,N,0.1,Y
-Porcupine,GR,porcupine,20,Common,N,0.1,Y
-Priest Fanatic,W,fanaticpriest,15,Common,N,0.1,Y
-Pyromancer,R,pyromancer,18,Common,N,0.1,Y
-Raccoon,GW,enchantment_aggro,20,Common,N,0.1,Y
-Rakdos Devil,BR,rakdos_devil,11,Common,N,0.1,Y
-Rakdos Wizard,BG,rakdos_vamps,25,Common,N,0.2,Y
-Raptor,RW,dinosaur_rw_enrage,20,Common,N,0.1,Y
+Octopus,,octopus,13,Rare,N,0.1,Y
+Ooze,UG,ooze.json,12,Uncommon,N,0.1,Y
+Ooze Boss,GB,ooze_boss,35,Rare,Y,0.1,Y
+Orc Brute,BR,orc_brute,18,Rare,N,0.1,Y
+Orc Hunter,BR,orc_hunter,18,Rare,N,0.1,Y
+Orc Warrior,BR,orc_warrior,18,Rare,N,0.1,Y
+Orthodoxy Angel,WG,phyrexianangel,19,Uncommon,N,0.1,Y
+Orthodoxy Duelist,WB,phyrexianduelist.json,16,Uncommon,N,0.1,Y
+Orzhov Cleric,WB,cleric_orzhov,20,Uncommon,N,0.2,Y
+Owl,,owl,13,Uncommon,N,0.1,Y
+Parrot,BU,parrot,12,Uncommon,N,0.1,Y
+Penguin,G,penguin,20,Uncommon,N,1.0,Y
+Penguin Elite,G,penguinelite,26,Rare,N,2.0,Y
+Pharaoh,,pharaoh,25,Rare,N,0.1,Y
+Phoenix,R,phoenix,47,Mythic,N,3.0,Y
+Pirate,UR,pirate,16,Uncommon,N,0.1,Y
+Pirate 2,BRU,pirate2,16,Rare,N,0.1,Y
+Pirate 3,BRU,pirate3,16,Rare,N,0.1,Y
+Pirate Captain,URB,pirate_captain,25,Rare,N,0.1,Y
+Pirate Captain 2,B,pirate_captain_2,11,Common,N,0.1,Y
+Plague Rat Swarm,B,rat_poisonrat,12,Common,N,0.1,Y
+Plaguelord,UB,plaguelord_r111,20,Uncommon,N,0.1,Y
+Plant,,plant.json,15,Uncommon,N,0.1,Y
+Poisonous Snake,G,poisonoussnake,14,Common,N,0.1,Y
+Polar Bear,G,polarbear,28,Rare,N,2.0,Y
+Porcupine,GR,porcupine,20,Rare,N,0.1,Y
+Priest Fanatic,W,fanaticpriest,53,Mythic,N,3.0,Y
+Pyromancer,R,pyromancer,12,Common,N,0.1,Y
+Raccoon,GW,enchantment_aggro,20,Rare,N,0.1,Y
+Rakdos Devil,BR,rakdos_devil,11,Uncommon,N,0.1,Y
+Rakdos Wizard,BG,rakdos_vamps,25,Rare,N,0.2,Y
+Raptor,RW,dinosaur_rw_enrage,20,Uncommon,N,0.1,Y
 Raven,BU,raven,12,Uncommon,N,1.0,Y
 Reassembling Skeleton,B,reassemblingskeleton,11,Common,N,0.1,Y
 Recruiter Sliver,BUR,sliver_recruitersliver,30,Uncommon,N,1.0,Y
-Red Beast,R,beast_red.json,17,Common,N,0.1,Y
-Rhino,GW,rhino,16,Common,N,0.1,Y
-Rogue,BU,rogue.json,11,Common,N,0.1,Y
-Royal King,W,whiteking,25,Common,N,0.1,Y
-Royal Sentinel,UB,trap,20,Common,N,0.1,Y
-Runelord,B,runelord,20,Common,N,0.1,Y
-Sand Ghoul,W,sandghoul,20,Common,N,0.1,Y
+Red Beast,R,beast_red.json,50,Mythic,N,3.0,Y
+Rhino,GW,rhino,16,Uncommon,N,0.1,Y
+Rogue,BU,rogue.json,11,Uncommon,N,0.1,Y
+Royal King,W,whiteking,24,Rare,N,0.1,Y
+Royal Sentinel,UB,royal_sentinel_r111,20,Rare,N,0.1,Y
+Runelord,B,runelord,26,Rare,N,2.0,Y
+Sand Ghoul,W,sandghoul,21,Uncommon,N,1.0,Y
 Sand Golem,W,sandgolem,12,Common,N,0.1,Y
 Satyr,GR,satyr,12,Common,N,0.1,Y
-Satyr Grove Guardian,GR,satyr_hard,15,Common,N,0.1,Y
-Scarab,B,scarab,20,Common,N,0.1,Y
-Scarecrow,B,scarecrow,13,Common,N,0.1,Y
-Scarecrow Captain,WUBRG,scarecrowcaptain,40,Common,Y,0.1,Y
+Satyr Grove Guardian,GR,satyr_hard,15,Uncommon,N,0.1,Y
+Scarab,B,scarab,21,Common,N,0.1,Y
+Scarecrow,B,scarecrow,12,Uncommon,N,0.1,Y
+Scarecrow Captain,WUBRG,scarecrowcaptain,40,Uncommon,Y,0.1,Y
 Scorpion,,scorpion,11,Common,N,0.1,Y
-Scourgemaster,B,demon_hellbent,30,Common,N,0.1,Y
-Sea Monster,U,sea_monster,19,Common,N,0.1,Y
-Shade,B,shade,20,Uncommon,N,0.8,Y
-Shaman,GR,shaman.json,14,Common,N,0.1,Y
-Shaman of Zedruu,GR,shamanelite,20,Common,N,0.1,Y
-Simic Wizard,UG,simicwizard_intruderalarm,20,Common,N,0.1,Y
-Skeleton,B,skeleton,11,Common,N,0.1,Y
-Skeleton Champion,B,skeleton_champion,25,Common,N,0.2,Y
+Scourgemaster,B,demon_hellbent,33,Rare,N,2.0,Y
+Sea Monster,U,sea_monster,18,Uncommon,N,0.1,Y
+Shade,B,shade,22,Uncommon,N,1.0,Y
+Shaman,GR,shaman.json,14,Uncommon,N,0.1,Y
+Shaman of Zedruu,GR,shamanelite,20,Rare,N,0.1,Y
+Simic Wizard,UG,simicwizard_intruderalarm,20,Rare,N,0.1,Y
+Skeleton,B,skeleton,12,Common,N,0.1,Y
+Skeleton Champion,B,skeleton_champion,27,Uncommon,N,0.2,Y
 Skeleton Soldier,B,skeleton_2,11,Common,N,0.1,Y
 Slimefoot,BG,slimefoot,40,Uncommon,Y,0.8,Y
 Slivdrazi Experiment,BUR,sliver_slivdrazi,30,Rare,N,2.0,Y
 Sliver,GRW,sliver.json,15,Uncommon,N,1.0,Y
 Sliver Queen,BGRUW,sliver_queen,50,Rare,Y,2.0,Y
-Sliver_Black,BUR,sliver_black,20,Uncommon,N,1.0,Y
-Sliver_Blue,UWB,sliver_blue,20,Uncommon,N,1.0,Y
-Sliver_Green,GWRBU,sliver_green,20,Uncommon,N,1.0,Y
+Sliver_Black,BUR,sliver_black,20,Rare,N,1.0,Y
+Sliver_Blue,UWB,sliver_blue,20,Rare,N,1.0,Y
+Sliver_Green,GWRBU,sliver_green,20,Rare,N,1.0,Y
 Sliver_Red,RBG,sliver_red,20,Uncommon,N,1.0,Y
 Sliver_White,WGU,sliver_white,20,Uncommon,N,1.0,Y
-Slobad,R,slobad,40,Uncommon,Y,0.8,Y
-Snail,B,slug,12,Common,N,0.2,Y
-Snake,GU,snake.json,12,Common,N,0.1,Y
+Slobad,R,slobad,40,Rare,Y,0.8,Y
+Snail,B,slug,13,Common,N,0.2,Y
+Snake,GU,snake.json,12,Rare,N,0.1,Y
 Snow Wizard,UG,simicwizard_snow,20,Uncommon,N,1.0,Y
-Sorin,GB,sorin,55,Uncommon,Y,1.0,Y
-Sphinx,WU,sphinx amonkhet,19,Common,N,0.1,Y
-Spider,BG,spider.json,14,Common,N,0.1,Y
-Spiked Ravager,B,demon_demonicpact,30,Common,N,0.1,Y
-Spirit,U,spirit,20,Common,N,0.1,Y
-Squirrel,BG,squirrel,15,Common,N,0.1,Y
-Stegosaurus,RG,dinosaur_gruul_etali,12,Common,N,0.1,Y
-Storm Titan,U,stormtitan,25,Common,N,0.1,Y
-Stray Cat,W,cat_greenblack,10,Common,N,0.1,Y
-Sun Giant,W,sun titan,20,Common,N,0.1,Y
-Sunmare,GW,horse,14,Common,N,0.1,Y
-Supreme Elemental,WUBRG,supremeelemental,18,Common,N,0.1,Y
-Swamp Troll,GB,swamptroll,35,Common,N,0.1,Y
-Symbiote,BUG,symbiote,11,Common,N,0.1,Y
+Sorin,GB,sorin,55,Rare,Y,1.0,Y
+Sphinx,WU,sphinx amonkhet,19,Uncommon,N,0.1,Y
+Spider,BG,spider.json,14,Rare,N,0.1,Y
+Spiked Ravager,B,demon_demonicpact,20,Uncommon,N,1.0,Y
+Spirit,U,spirit,12,Common,N,0.1,Y
+Squirrel,BG,squirrel,15,Rare,N,0.1,Y
+Stegosaurus,RG,dinosaur_gruul_etali,12,Uncommon,N,0.1,Y
+Storm Titan,U,stormtitan,41,Mythic,N,3.0,Y
+Stray Cat,W,cat_greenblack,13,Common,N,0.1,Y
+Sun Giant,W,sun titan,28,Rare,N,2.0,Y
+Sunmare,GW,sunmare_r111,14,Uncommon,N,0.1,Y
+Supreme Elemental,WUBRG,supremeelemental,18,Rare,N,0.1,Y
+Swamp Troll,GB,swamptroll,35,Rare,N,0.1,Y
+Symbiote,BUG,symbiote,11,Uncommon,N,0.1,Y
 Tarkir Djinn,RU,djinn_tarkir,18,Common,N,0.1,Y
-Teferi,WU,teferi_boss,40,Uncommon,Y,0.8,Y
-The Cheff,GBR,thecheff,50,Common,Y,0.1,Y
-The Hydra of Shandalaar,G,hydraboss,30,Common,Y,0.1,Y
-Tibalt,R,tibalt,40,Uncommon,Y,0.8,Y
-Tiger,G,tiger,14,Common,N,0.1,Y
-Tomb Guardian,B,tombguardian,20,Common,N,0.1,Y
-Torturer,B,torturer,30,Common,Y,0.1,Y
-Treefolk,G,treefolk.json,17,Common,N,0.1,Y
-Treefolk Elite,G,treefolkelite,25,Common,N,0.2,Y
-Treefolk Guardian,G,treefolk,17,Common,N,0.1,Y
-Triceratops,GW,dinosaur_gw_ramp,20,Common,N,0.1,Y
-Troll,GR,troll.json,18,Common,N,0.1,Y
-Turtle,U,turtle.json,20,Common,N,0.1,Y
-Undead Goblin,RB,monobgoblins,20,Common,N,0.1,Y
-Undead Roamer,B,undeadroamer,20,Common,N,0.1,Y
-Undead Shuffler,B,undeadshuffler,20,Common,N,0.1,Y
-Unholy Knight,B,unholyknight,20,Common,N,0.1,Y
-Unholy Skull,BU,unholyskull,20,Common,N,0.1,Y
+Teferi,WU,teferi_boss,40,Mythic,Y,0.8,Y
+The Cheff,GBR,thecheff,50,Rare,Y,0.1,Y
+The Hydra of Shandalaar,G,hydraboss,30,Rare,Y,0.1,Y
+Tibalt,R,tibalt,40,Rare,Y,0.8,Y
+Tiger,G,tiger,13,Common,N,0.1,Y
+Tomb Guardian,B,tombguardian,18,Common,N,0.1,Y
+Torturer,B,torturer,30,Rare,Y,0.1,Y
+Treefolk,G,treefolk.json,50,Mythic,N,3.0,Y
+Treefolk Elite,G,treefolkelite,18,Uncommon,N,1.0,Y
+Treefolk Guardian,G,treefolk,13,Common,N,0.1,Y
+Triceratops,GW,dinosaur_gw_ramp,20,Uncommon,N,0.1,Y
+Troll,GR,troll.json,18,Rare,N,0.1,Y
+Turtle,U,turtle.json,21,Uncommon,N,0.1,Y
+Undead Goblin,RB,monobgoblins,20,Uncommon,N,0.1,Y
+Undead Roamer,B,undeadroamer,18,Rare,N,0.1,Y
+Undead Shuffler,B,undeadshuffler,19,Rare,N,0.1,Y
+Unholy Knight,B,unholyknight,26,Rare,N,2.0,Y
+Unholy Skull,BU,unholyskull,20,Rare,N,0.1,Y
 Unraveling Crawler,GB,unravelingcrawler,20,Common,N,0.1,Y
 Urabrask,W,copperhostbrutalizer,80,Uncommon,Y,0.5,Y
-Valyx Feaster of Torment,B,valyx,80,Common,Y,0.1,Y
-Vampire,B,vampire,17,Common,N,0.1,Y
-Vampire Lord,BR,vampire_blood_token_fly,18,Common,N,0.1,Y
+Valyx Feaster of Torment,B,valyx,80,Rare,Y,0.1,Y
+Vampire,B,vampire,11,Common,N,0.1,Y
+Vampire Lord,BR,vampire_blood_token_fly,18,Uncommon,N,0.1,Y
 Viashino,BGR,viashino,11,Common,N,0.1,Y
 Viper,BG,snake,15,Common,N,0.1,Y
-Volcano Dragon,R,junddragon,25,Common,N,0.3,Y
-Volcano Elemental,BR,br_elemental,25,Common,N,0.1,Y
+Volcano Dragon,R,junddragon,47,Mythic,N,3.0,Y
+Volcano Elemental,BR,br_elemental,25,Uncommon,N,0.1,Y
 Vorinclex,W,copperhostbrutalizer,80,Uncommon,Y,0.5,Y
 Vulture,B,vulture,11,Common,N,0.1,Y
-Walking Brain,U,walkingbrain,16,Common,N,0.1,Y
+Walking Brain,U,walkingbrain,16,Rare,N,0.1,Y
 "Walter, the Stray Camel",W,walter,35,Common,Y,0.1,Y
-Wandering Giant,RW,wanderinggiant,15,Rare,N,2.0,Y
-Wandering Treefolk,G,wanderingtreefolk,12,Common,N,0.2,Y
+Wandering Giant,RW,wanderinggiant,15,Uncommon,N,2.0,Y
+Wandering Treefolk,G,wanderingtreefolk,13,Common,N,0.2,Y
 Warrior,RGW,human_warrior_amonkhet,18,Common,N,0.1,Y
-Wasp,GRB,wasp,14,Common,N,0.1,Y
+Wasp,GRB,wasp,14,Uncommon,N,0.1,Y
 Water Elemental,U,water_elemental,12,Common,N,0.1,Y
-Weak Demon,B,weakdemon,12,Common,N,0.2,Y
-Werebear,G,bearboss,36,Common,N,0.1,Y
-Werewolf,GR,werewolf,16,Common,N,0.1,Y
-White Dwarf,W,white_dwarf,13,Common,N,0.1,Y
-Wild Rat,B,infectrat,13,Uncommon,N,0.6,Y
-Wild-Magic Sorcerer,RG,wild-magic_sorcerer,15,Common,N,0.1,Y
-Witch,B,witch,20,Common,N,0.1,Y
-Wolf,G,wolfboss,20,Common,N,0.1,Y
-Wolf Pup,G,wolf.json,12,Common,N,0.1,Y
-Worm,G,worm,12,Common,N,0.2,Y
+Weak Demon,B,weakdemon,11,Uncommon,N,0.2,Y
+Werebear,G,bearboss,26,Rare,N,2.0,Y
+Werewolf,GR,werewolf,16,Uncommon,N,0.1,Y
+White Dwarf,W,white_dwarf,11,Common,N,0.1,Y
+Wild Rat,B,infectrat,13,Common,N,0.1,Y
+Wild-Magic Sorcerer,RG,wild-magic_sorcerer,15,Rare,N,0.1,Y
+Witch,B,witch,18,Uncommon,N,1.0,Y
+Wolf,G,wolfboss,42,Mythic,N,3.0,Y
+Wolf Pup,G,wolf.json,13,Uncommon,N,0.1,Y
+Worm,G,worm,11,Common,N,0.1,Y
 Wounded Sliver,GRW,sliver_shandalar,28,Common,Y,0.1,Y
-Wraith,B,wraithswampwalk,13,Common,N,0.1,Y
-Wurm,G,wurm.json,19,Common,N,0.1,Y
-Xira,BGR,xira,35,Uncommon,Y,0.8,Y
+Wraith,B,wraithswampwalk,12,Common,N,0.1,Y
+Wurm,G,wurm.json,20,Uncommon,N,0.1,Y
+Xira,BGR,xira,35,Rare,Y,0.8,Y
 Yeti,GRU,yeti,16,Common,N,0.1,Y
-Zedruu,WUBR,zedruubis,40,Common,Y,0.1,Y
-Zombie,B,zombie_black_easy,12,Common,N,0.1,Y
-Zombie Lord,B,zombie_black_medium,18,Common,N,0.1,Y
-Zombie Master,B,zombie_black_hard,25,Common,N,0.1,Y
-Avacynian Preacher,W,inn_cleric_easy,10,Common,N,0.1,Y
+Zedruu,WUBR,zedruubis,40,Rare,Y,0.1,Y
+Zombie,B,zombie_black_easy,13,Common,N,0.1,Y
+Zombie Lord,B,zombie_black_medium,34,Rare,N,2.0,Y
+Zombie Master,B,zombie_black_hard,46,Mythic,N,3.0,Y
+Avacynian Preacher,W,inn_cleric_easy,11,Common,N,0.1,Y
 Bog Hermit,BG,inn_bog_hermit,10,Common,N,0.1,Y
-Borderland Ranger,G,inn_green_scout,14,Common,N,0.1,Y
-Cloaked Old Man,B,blackwizard_medium_demonicpact,15,Uncommon,N,1.0,Y
-Escaped Skaab,U,inn_skaab_easy,8,Common,N,0.1,Y
-Falkenrath Neonate,R,inn_falkenrath_easy,11,Common,N,0.1,Y
-Falkenrath Tormentor,R,inn_falkenrath_medium,16,Common,N,0.1,Y
+Borderland Ranger,G,inn_green_scout,15,Common,N,0.1,Y
+Cloaked Old Man,B,cloaked_old_man_1_r111,13,Common,N,0.1,Y
+Escaped Skaab,U,escaped_skaab_r111,9,Common,N,0.1,Y
+Falkenrath Neonate,R,inn_falkenrath_easy,10,Common,N,0.1,Y
+Falkenrath Tormentor,R,inn_falkenrath_medium,17,Common,N,0.1,Y
 Gavony Farmhand,W,inn_peasant_easy,17,Common,N,0.1,Y
 The Gitrog Monster (Innistrad),BG,inn_gitrog_monster,25,Rare,N,2.0,Y
-Hobbling Zombie,B,inn_zombie_easy,10,Common,N,0.1,Y
+Hobbling Zombie,B,inn_zombie_easy,11,Common,N,0.1,Y
 Howlpack Exile,GR,inn_werewolf_easy,15,Common,N,0.1,Y
 Hulking Skaab,UB,inn_skaab_medium,15,Common,N,0.1,Y
 Immerwolf,GR,inn_immerwolf_easy,15,Common,N,0.1,Y
-Laboratory Assistant,U,inn_labman_easy,8,Common,N,0.1,Y
-Loam Dryad,G,inn_dryad_easy,8,Common,N,0.1,Y
+Laboratory Assistant,U,inn_labman_easy,9,Common,N,0.1,Y
+Loam Dryad,G,inn_dryad_easy,7,Common,N,0.1,Y
 Missionary of Saint Traft,WU,inn_cleric_traft_easy,12,Common,N,0.1,Y
 Obsessed Stitcher,UR,inn_labman_medium,25,Common,N,0.1,Y
-Sigardian Priest,WG,inn_cleric_sigarda_easy,11,Uncommon,N,1.0,Y
-Shrieking Skaab,U,inn_skaab_easy2,9,Common,N,0.1,Y
+Sigardian Priest,WG,inn_cleric_sigarda_easy,11,Common,N,1.0,Y
+Shrieking Skaab,U,shrieking_skaab_r111,9,Common,N,0.1,Y
 Skaab,U,inn_skaab_easy,10,Common,N,0.1,Y
 Wandering Geist,UW,inn_geist_easy,9,Common,N,0.1,Y
 Watcher in the Web,G,inn_spider_easy,13,Common,N,0.1,Y
-Wolfkin Outcast,G,inn_wolfkin_easy,12,Common,N,0.1,Y
+Wolfkin Outcast,G,inn_wolfkin_easy,13,Common,N,0.1,Y
 Jodah,WUBRG,jodah,100,Mythic,N,3.0,Y
-Meloku,U,meloku,100,Mythic,N,3.0,Y
+Meloku,U,meloku,93,Mythic,N,3.0,Y
 Arzakon,WUBRG,arzakon,200,Uncommon,N,1.0,Y
 Derevi,WUG,derevi,50,Rare,N,2.0,Y
 Cromat,WUBRG,cromat,50,Rare,N,2.0,Y
 Edgar Markov,WBR,edgar_markov,50,Rare,N,2.0,Y
 Kaalia,WBR,kaalia,50,Rare,N,2.0,Y
-Valgavoth,B,valgavoth,50,Rare,N,2.0,Y
+Valgavoth,B,valgavoth,50,Mythic,N,3.0,Y
 Zacama,WRG,zacama,50,Rare,N,2.0,Y
-Azlask,WUBRG,azlask,50,Rare,N,2.0,Y
-Ulalek,WUBRG,ulalek,50,Rare,N,2.0,Y
-Ulamog,C,ulamog,70,Rare,N,2.0,Y
-Zhulodok,C,zhulodok,50,Rare,N,2.0,Y
+Azlask,WUBRG,azlask,50,Rare,N,3.0,Y
+Ulalek,WUBRG,ulalek,50,Rare,N,3.0,Y
+Ulamog,C,ulamog,70,Rare,N,3.0,Y
+Zhulodok,C,zhulodok,50,Rare,N,3.0,Y
 Kynaios and Tiro,WURG,kynaios_and_tiro,50,Rare,N,2.0,Y
 Saskia,WBRG,saskia,50,Rare,N,2.0,Y
 Breya,WUBR,breya,50,Rare,N,2.0,Y
 Atraxa,WUBG,atraxa,50,Mythic,N,3.0,Y
 Yidris,UBRG,yidris,50,Rare,N,2.0,Y
 The Gitrog Monster,BG,the_gitrog_monster,50,Rare,N,2.0,Y
-Krenko,R,krenko,50,Rare,N,2.0,Y
-Giada,W,giada,50,Mythic,N,3.0,Y
+Krenko,R,krenko,31,Rare,N,2.0,Y
+Giada,W,giada,53,Mythic,N,3.0,Y
 Ramos,WUBRG,ramos,50,Mythic,N,3.0,Y
-Kenrith,WUBRG,kenrith,50,Mythic,N,3.0,Y
+Kenrith,WUBRG,kenrith,50,Rare,N,3.0,Y
 Garth,WUBRG,garth,50,Rare,N,2.0,Y
 Golos,WUBRG,golos,50,Mythic,N,3.0,Y
 The Ur-Dragon,WUBRG,the_ur-dragon,70,Mythic,N,3.0,Y
-Jared,WUBRG,jared,50,Mythic,N,3.0,Y
-Scion of the Ur-Dragon,WUBRG,scion_of_the_ur-dragon,50,Mythic,N,3.0,Y
+Jared,WUBRG,jared,50,Rare,N,3.0,Y
+Scion of the Ur-Dragon,WUBRG,scion_of_the_ur-dragon,50,Rare,N,3.0,Y
 Progenitus,WUBRG,progenitus,50,Mythic,N,3.0,Y
 Child of Alara,WUBRG,child_of_alara,50,Mythic,N,3.0,Y
 The First Sliver,WUBRG,the_first_sliver,50,Rare,N,2.0,Y
 Chatterfang,BG,chatterfang,50,Rare,N,2.0,Y
 Akul,BR,akul,50,Rare,N,2.0,Y
 Klothys,RG,klothys,50,Rare,N,2.0,Y
-Urza,U,urza,50,Rare,N,2.0,Y
+Urza,U,urza,50,Mythic,N,3.0,Y
 Zur,WUB,zur,50,Rare,N,2.0,Y
 Arcades,WUG,arcades_sabboth,40,Uncommon,N,1.0,Y
-Rorix,R,rorix,40,Rare,N,2.0,Y
-Visara,B,visara,40,Rare,N,2.0,Y
-Vaevictis,BRG,vaevictis_asmadi,40,Rare,N,2.0,Y
-Silvos,G,silvos,40,Uncommon,N,1.0,Y
-Arcanis,U,arcanis,40,Uncommon,N,1.0,Y
-Nicol Bolas,UBR,nicol_bolas,40,Rare,N,2.0,Y
+Rorix,R,rorix,18,Uncommon,N,1.0,Y
+Visara,B,visara,19,Uncommon,N,1.0,Y
+Vaevictis,BRG,vaevictis_asmadi,40,Uncommon,N,2.0,Y
+Silvos,G,silvos,22,Uncommon,N,1.0,Y
+Arcanis,U,arcanis,36,Uncommon,N,1.0,Y
+Nicol Bolas,UBR,nicol_bolas,40,Uncommon,N,2.0,Y
 Palladia-Mors,WRG,palladia-mors,40,Rare,N,2.0,Y
 Jareth,W,jareth,40,Rare,N,2.0,Y
 Chromium,WUB,chromium,40,Rare,N,2.0,Y
 O-Kagachi,WUBRG,o-kagachi,40,Rare,N,2.0,Y
-Tergrid,B,tergrid,40,Uncommon,N,1.0,Y
-Thassa,U,thassa,40,Rare,N,2.0,Y
+Tergrid,B,tergrid,38,Uncommon,N,1.0,Y
+Thassa,U,thassa,44,Rare,N,2.0,Y
 Winota,WR,winota,40,Rare,N,2.0,Y
-Kinnan,UG,kinnan,40,Mythic,N,3.0,Y
-Sengir,B,sengir_and_falthis,40,Rare,N,2.0,Y
+Kinnan,UG,kinnan,40,Rare,N,3.0,Y
+Sengir,B,sengir_and_falthis,48,Mythic,N,3.0,Y
 Olivia,BR,olivia,40,Rare,N,2.0,Y
 Ygra,BG,ygra,40,Rare,N,2.0,Y
-Thalia,W,thalia,40,Rare,N,2.0,Y
-Avacyn,W,avacyn,40,Rare,N,2.0,Y
+Thalia,W,thalia,27,Rare,N,2.0,Y
+Avacyn,W,avacyn,53,Mythic,N,3.0,Y
 Firja,WB,firja,40,Rare,N,2.0,Y
-Drakuseth,R,drakuseth,40,Rare,N,2.0,Y
-Vilis,B,vilis,40,Rare,N,2.0,Y
+Drakuseth,R,drakuseth,54,Mythic,N,3.0,Y
+Vilis,B,vilis,50,Mythic,N,3.0,Y
 Victor,WB,victor,40,Rare,N,2.0,Y
 The Scarab God,UB,the_scarab_god,40,Rare,N,2.0,Y
 The Locust God,UR,the_locust_god,40,Rare,N,2.0,Y
-The Scorpion God,BR,the_scorpion_god,40,Rare,N,2.0,Y
+The Scorpion God,BR,the_scorpion_god,40,Uncommon,N,2.0,Y
 Gishath,WRG,gishath,40,Rare,N,2.0,Y
 Atla Palani,WRG,atla_palani,40,Rare,N,2.0,Y
 Arguel,WB,high_marshal_arguel,40,Rare,N,2.0,Y
-Amareth,WUG,amareth,40,Mythic,N,3.0,Y
+Amareth,WUG,amareth,40,Rare,N,3.0,Y
 Commodore Guff,WUR,commodore_guff,40,Mythic,N,3.0,Y
 Marath,WRG,marath,40,Rare,N,2.0,Y
 Omnath,WURG,omnath,40,Rare,N,2.0,Y
 Riku,URG,riku,40,Rare,N,2.0,Y
 Disa,BRG,disa,40,Rare,N,2.0,Y
-Gahiji,WRG,gahiji,40,Mythic,N,3.0,Y
-Karador,WBG,karador,40,Mythic,N,3.0,Y
+Gahiji,WRG,gahiji,40,Rare,N,3.0,Y
+Karador,WBG,karador,40,Rare,N,3.0,Y
 Isshin,WBR,isshin,40,Rare,N,2.0,Y
 Tymna and Tana,WBRG,tymna_and_tana,40,Mythic,N,3.0,Y
 Akiri and Silas,WUBR,akiri_and_silas,40,Rare,N,2.0,Y
-Dihada,WBR,dihada,40,Mythic,N,3.0,Y
+Dihada,WBR,dihada,40,Rare,N,3.0,Y
 Nekusar,UBR,nekusar,40,Rare,N,2.0,Y
 Satya,WUR,satya,40,Rare,N,2.0,Y
 Sydri,WUB,sydri,40,Rare,N,2.0,Y
@@ -586,34 +586,34 @@ Omarthis,C,omarthis,40,Rare,N,2.0,Y
 Eriette,WB,eriette,40,Rare,N,2.0,Y
 Hylda,WU,hylda,40,Uncommon,N,1.0,Y
 Agatha,RG,agatha,40,Rare,N,2.0,Y
-Ojer Kaslem,G,ojer_kaslem,40,Rare,N,2.0,Y
+Ojer Kaslem,G,ojer_kaslem,47,Mythic,N,3.0,Y
 Numot,WUR,numot,40,Rare,N,2.0,Y
 Teneb,WBG,teneb,40,Rare,N,2.0,Y
 Vorosh,UBG,vorosh,40,Rare,N,2.0,Y
 Intet,URG,intet,40,Rare,N,2.0,Y
 Oros,WBR,oros,40,Rare,N,2.0,Y
-Gargos,G,gargos,40,Rare,N,2.0,Y
+Gargos,G,gargos,41,Mythic,N,3.0,Y
 Rowan,BR,rowan,40,Rare,N,2.0,Y
 Will,WU,will,40,Rare,N,2.0,Y
 Syr Gwyn,WBR,syr_gwyn,40,Rare,N,2.0,Y
 Mishra,UBR,mishra,40,Rare,N,2.0,Y
 Morophon,WUBRG,morophon,40,Rare,N,2.0,Y
 Go-Shintai,WUBRG,go-shintai,40,Rare,N,2.0,Y
-Gix,B,gix,40,Rare,N,2.0,Y
-Yawgmoth,B,yawgmoth,40,Rare,N,2.0,Y
-Ojer Axonil,R,ojer_axonil,40,Uncommon,N,1.0,Y
+Gix,B,gix,31,Rare,N,2.0,Y
+Yawgmoth,B,yawgmoth,27,Rare,N,2.0,Y
+Ojer Axonil,R,ojer_axonil,41,Uncommon,N,1.0,Y
 Iroas,WR,iroas,40,Rare,N,2.0,Y
 Athreos,WB,athreos,40,Rare,N,2.0,Y
 Pharika,BG,pharika,40,Rare,N,2.0,Y
 Kruphix,UG,kruphix,40,Rare,N,2.0,Y
 Keranos,UR,keranos,40,Rare,N,2.0,Y
 Koma,UG,koma,40,Rare,N,2.0,Y
-Rafiq,WUG,rafiq,40,Rare,N,2.0,Y
-Uril,WRG,uril,40,Rare,N,2.0,Y
+Rafiq,WUG,rafiq,40,Uncommon,N,2.0,Y
+Uril,WRG,uril,40,Uncommon,N,2.0,Y
 Karrthus,BRG,karrthus,40,Rare,N,2.0,Y
 Sedris,UBR,sedris,40,Rare,N,2.0,Y
 Sharuum,WUB,sharuum,40,Rare,N,2.0,Y
-Sheoldred,B,sheoldred,40,Mythic,N,3.0,Y
+Sheoldred,B,sheoldred,47,Mythic,N,3.0,Y
 The Mimeoplasm,UBG,the_mimeoplasm,40,Rare,N,2.0,Y
 Sliver Overlord,WUBRG,sliver_overlord,40,Rare,N,2.0,Y
 Sliver Weftwinder,WUBRG,sliver_weftwinder,40,Rare,N,2.0,Y
@@ -623,35 +623,35 @@ Sliver Hivelord,WUBRG,sliver_hivelord,40,Rare,N,2.0,Y
 Sliver Gravemother,WUBRG,sliver_gravemother,40,Rare,N,2.0,Y
 Reaper King,WUBRG,reaper_king,40,Rare,N,2.0,Y
 Asmira,WG,asmira,40,Uncommon,N,1.0,Y
-Hythonia,B,hythonia,40,Rare,N,2.0,Y
-Aphemia,B,aphemia,40,Rare,N,2.0,Y
+Hythonia,B,hythonia,19,Uncommon,N,1.0,Y
+Aphemia,B,aphemia,29,Rare,N,2.0,Y
 Uro,UG,uro,40,Rare,N,2.0,Y
 Phlage,WR,phlage,40,Rare,N,2.0,Y
 Kroxa,BR,kroxa,40,Rare,N,2.0,Y
-Heliod,W,heliod,40,Mythic,N,3.0,Y
+Heliod,W,heliod,32,Rare,N,2.0,Y
 Inalla,UBR,inalla,40,Rare,N,2.0,Y
-Santa,R,feldon,40,Uncommon,N,1.0,Y
+Santa,R,feldon,33,Rare,N,2.0,Y
 Jorn,UBG,jorn,30,Uncommon,N,1.0,Y
-Mina and Denn,RG,mina_and_denn,40,Rare,N,2.0,Y
+Mina and Denn,RG,mina_and_denn,40,Uncommon,N,2.0,Y
 General Tazri,WUBRG,general_tazri,40,Rare,N,2.0,Y
 Felothar,WBG,felothar,30,Rare,N,2.0,Y
 Grand Arbiter,WU,grand_arbiter,30,Rare,N,2.0,Y
-Aurelia,WR,aurelia,30,Mythic,N,3.0,Y
+Aurelia,WR,aurelia,30,Rare,N,3.0,Y
 Yusri,UR,yusri,30,Rare,N,2.0,Y
 Inniaz,WU,inniaz,30,Rare,N,2.0,Y
 Queen Marchesa,WBR,marchesa,30,Rare,N,2.0,Y
 Grenzo,BR,grenzo,30,Uncommon,N,1.0,Y
 Balthor,B,balthor,30,Uncommon,N,1.0,Y
-Magda,R,magda,30,Rare,N,2.0,Y
-Heidar,U,heidar,30,Uncommon,N,1.0,Y
+Magda,R,magda,21,Uncommon,N,1.0,Y
+Heidar,U,heidar,28,Uncommon,N,1.0,Y
 Rashmi,UG,rashmi,30,Rare,N,2.0,Y
-Jarad,BG,jarad,30,Rare,N,2.0,Y
+Jarad,BG,jarad,30,Uncommon,N,2.0,Y
 Borborygmos,RG,borborygmos,30,Rare,N,2.0,Y
 Wilhelt,UB,wilhelt,30,Rare,N,2.0,Y
 Lazav,UB,lazav,30,Rare,N,2.0,Y
 Admiral Brass,UBR,admiral_brass,30,Rare,N,2.0,Y
-Goreclaw,G,goreclaw,30,Uncommon,N,1.0,Y
-Niv-Mizzet,UR,niv-mizzet,30,Rare,N,2.0,Y
+Goreclaw,G,goreclaw,28,Rare,N,2.0,Y
+Niv-Mizzet,UR,niv-mizzet,30,Uncommon,N,2.0,Y
 Narset,WUR,narset,30,Rare,N,2.0,Y
 Jetmir,WRG,jetmir,30,Rare,N,2.0,Y
 Aegar,UR,aegar,30,Rare,N,2.0,Y
@@ -662,7 +662,7 @@ Brokkos,UBG,brokkos,30,Rare,N,2.0,Y
 Vadrok,WUR,vadrok,30,Rare,N,2.0,Y
 Snapdax,WBR,snapdax,30,Uncommon,N,1.0,Y
 Nethroi,WBG,nethroi,30,Rare,N,2.0,Y
-Kemba,W,kemba,30,Rare,N,2.0,Y
+Kemba,W,kemba,17,Uncommon,N,1.0,Y
 Velomachus,WR,velomachus,30,Rare,N,2.0,Y
 Zurgo,WBR,zurgo,30,Rare,N,2.0,Y
 Phelddagrif,WUG,phelddagrif,42,Rare,N,2.0,Y
@@ -676,12 +676,12 @@ Teysa,WB,teysa,30,Rare,N,2.0,Y
 Galazeth,UR,galazeth,30,Rare,N,2.0,Y
 Tanazir,UG,tanazir,30,Rare,N,2.0,Y
 Raffine,WUB,raffine,30,Rare,N,2.0,Y
-Rakdos,BR,rakdos,30,Rare,N,2.0,Y
-Marrow-Gnawer,B,marrow-gnawer,30,Uncommon,N,1.0,Y
+Rakdos,BR,rakdos,30,Uncommon,N,2.0,Y
+Marrow-Gnawer,B,marrow-gnawer,33,Uncommon,N,1.0,Y
 Horde of Notions,WUBRG,horde_of_notions,30,Rare,N,2.0,Y
 Trostani,WG,trostani,30,Rare,N,2.0,Y
 Shadrix,WB,shadrix,30,Rare,N,2.0,Y
-Kogla,G,kogla,30,Rare,N,2.0,Y
+Kogla,G,kogla,29,Rare,N,2.0,Y
 Prime Speaker Zegana,UG,prime_speaker_zegana,30,Rare,N,2.0,Y
 Infinite Guideline Station,WUBRG,infinite_guideline_station,30,Rare,N,2.0,Y
 Falco Spara,WUG,falco_spara,30,Rare,N,2.0,Y
@@ -700,125 +700,125 @@ The Goose Mother,UG,the_goose_mother,30,Rare,N,2.0,Y
 Korvold,BRG,korvold,30,Rare,N,2.0,Y
 Beledros,BG,beledros,30,Rare,N,2.0,Y
 Voja,WRG,voja,30,Uncommon,N,1.0,Y
-Tovolar,RG,tovolar,30,Rare,N,2.0,Y
+Tovolar,RG,tovolar,30,Uncommon,N,2.0,Y
 Xander,UBR,xander,30,Rare,N,2.0,Y
 Brenard,WUG,brenard,30,Uncommon,N,1.0,Y
 Ziatora,BRG,ziatora,30,Rare,N,2.0,Y
 Albiorix,UG,albiorix,30,Rare,N,2.0,Y
 Balmor,UR,balmor,30,Rare,N,2.0,Y
 Kangee,WU,kangee,30,Uncommon,N,1.0,Y
-Commander Eesha,W,commander_eesha,30,Uncommon,N,1.0,Y
+Commander Eesha,W,commander_eesha,20,Uncommon,N,1.0,Y
 Kastral,WU,kastral,30,Uncommon,N,1.0,Y
 Kykar,WUR,kykar,30,Rare,N,2.0,Y
-Teshar,W,teshar,30,Uncommon,N,1.0,Y
+Teshar,W,teshar,31,Uncommon,N,1.0,Y
 Vega,WU,vega,30,Rare,N,2.0,Y
-Zeriam,W,zeriam,30,Common,N,0.1,Y
+Zeriam,W,zeriam,12,Common,N,0.1,Y
 Zinnia,WUR,zinnia,30,Uncommon,N,1.0,Y
 Zoraline,WB,zoraline,30,Rare,N,2.0,Y
-Adun,BRG,adun_oakenshield,30,Rare,N,2.0,Y
+Adun,BRG,adun_oakenshield,30,Uncommon,N,2.0,Y
 Angus,WUG,angus_mackenzie,30,Uncommon,N,1.0,Y
 Halfdane,WUB,halfdane,30,Rare,N,2.0,Y
 Hazezon,WRG,hazezon,30,Rare,N,2.0,Y
-Tetsuo,UBR,tetsuo_umezawa,30,Rare,N,2.0,Y
-Jugan,G,jugan,30,Uncommon,N,1.0,Y
+Tetsuo,UBR,tetsuo_umezawa,30,Uncommon,N,2.0,Y
+Jugan,G,jugan,28,Uncommon,N,1.0,Y
 Keiga,U,keiga,30,Uncommon,N,1.0,Y
-Kokusho,B,kokusho,30,Rare,N,2.0,Y
-Ryusei,R,ryusei,30,Rare,N,2.0,Y
-Yosei,W,yosei,30,Rare,N,2.0,Y
-Aclazotz,B,aclazotz,30,Rare,N,2.0,Y
+Kokusho,B,kokusho,18,Uncommon,N,1.0,Y
+Ryusei,R,ryusei,55,Mythic,N,3.0,Y
+Yosei,W,yosei,18,Uncommon,N,1.0,Y
+Aclazotz,B,aclazotz,21,Uncommon,N,1.0,Y
 Bontu,B,bontu,30,Rare,N,2.0,Y
-Egon,B,egon,30,Rare,N,2.0,Y
-Erebos,B,erebos,30,Rare,N,2.0,Y
-Alrund,U,alrund,30,Rare,N,2.0,Y
+Egon,B,egon,54,Mythic,N,3.0,Y
+Erebos,B,erebos,29,Rare,N,2.0,Y
+Alrund,U,alrund,29,Rare,N,2.0,Y
 Cosima,U,cosima,30,Rare,N,2.0,Y
-Kefnet,U,kefnet,30,Rare,N,2.0,Y
-Ojer Pakpatiq,U,ojer_pakpatiq,30,Rare,N,2.0,Y
-Brallin and Shabraz,WUR,brallin_and_shabraz,30,Rare,N,2.0,Y
+Kefnet,U,kefnet,27,Rare,N,2.0,Y
+Ojer Pakpatiq,U,ojer_pakpatiq,32,Rare,N,2.0,Y
+Brallin and Shabraz,WUR,brallin_and_shabraz,30,Uncommon,N,2.0,Y
 Cazur and Ukkima,UBG,cazur_and_ukkima,30,Rare,N,2.0,Y
-Haldan and Pako,URG,haldan_and_pako,30,Rare,N,2.0,Y
+Haldan and Pako,URG,haldan_and_pako,30,Uncommon,N,2.0,Y
 Nikara and Yannik,WBG,nikara_and_yannik,30,Uncommon,N,1.0,Y
 Trynn and Silvar,WBR,trynn_and_silvar,30,Rare,N,2.0,Y
-Ascendant Evincar,B,ascendant_evincar,30,Rare,N,2.0,Y
+Ascendant Evincar,B,ascendant_evincar,33,Rare,N,2.0,Y
 Garza Zol,UBR,garza_zol,30,Uncommon,N,1.0,Y
-Grandmother Sengir,B,grandmother_sengir,30,Uncommon,N,1.0,Y
+Grandmother Sengir,B,grandmother_sengir,13,Common,N,0.1,Y
 Kazarov,BR,kazarov,30,Uncommon,N,1.0,Y
 Rodolf,WB,rodolf,30,Rare,N,2.0,Y
-Shauku,B,shauku,30,Uncommon,N,1.0,Y
+Shauku,B,shauku,34,Rare,N,2.0,Y
 Verrak,WB,verrak,30,Rare,N,2.0,Y
 Anje,BR,anje,30,Uncommon,N,1.0,Y
 Florian,BR,florian,30,Rare,N,2.0,Y
-Henrika,B,henrika,30,Rare,N,2.0,Y
-Runo,UB,runo_stromkirk,30,Rare,N,2.0,Y
+Henrika,B,henrika,52,Mythic,N,3.0,Y
+Runo,UB,runo_stromkirk,30,Uncommon,N,2.0,Y
 Strefan,BR,strefan,30,Rare,N,2.0,Y
-Timothar,B,timothar,30,Rare,N,2.0,Y
-Beza,W,beza,30,Mythic,N,3.0,Y
-Dragonhawk,R,dragonhawk,30,Rare,N,2.0,Y
-Eluge,U,eluge,30,Rare,N,2.0,Y
-Lumra,G,lumra,30,Rare,N,2.0,Y
-Maha,B,maha,30,Rare,N,2.0,Y
+Timothar,B,timothar,28,Rare,N,2.0,Y
+Beza,W,beza,49,Mythic,N,3.0,Y
+Dragonhawk,R,dragonhawk,48,Mythic,N,3.0,Y
+Eluge,U,eluge,43,Mythic,N,3.0,Y
+Lumra,G,lumra,28,Rare,N,2.0,Y
+Maha,B,maha,28,Rare,N,2.0,Y
 Wildsear,RG,wildsear,30,Rare,N,2.0,Y
 Bruna,WU,bruna,30,Rare,N,2.0,Y
 Gisela,WR,gisela,30,Rare,N,2.0,Y
-Liesa,WB,liesa,30,Rare,N,2.0,Y
+Liesa,WB,liesa,30,Uncommon,N,2.0,Y
 Sigarda,WG,sigarda,30,Rare,N,2.0,Y
-Taborax,B,taborax,30,Uncommon,N,1.0,Y
-Sephara,W,sephara,30,Rare,N,2.0,Y
-Skithiryx,B,skithiryx,30,Rare,N,2.0,Y
+Taborax,B,taborax,41,Mythic,N,3.0,Y
+Sephara,W,sephara,49,Mythic,N,3.0,Y
+Skithiryx,B,skithiryx,19,Uncommon,N,1.0,Y
 Arabella,WR,arabella,30,Rare,N,2.0,Y
 Winter,BG,winter,30,Rare,N,2.0,Y
 Marina,WUBRG,marina_vendrell,30,Rare,N,2.0,Y
 Rendmaw,BG,rendmaw,30,Rare,N,2.0,Y
 The Jolly Balloon Man,WR,the_jolly_balloon_man,30,Rare,N,2.0,Y
 The Lord of Pain,BR,the_lord_of_pain,30,Rare,N,2.0,Y
-The Master of Keys,WUB,the_master_of_keys,30,Rare,N,2.0,Y
-The Mindskinner,U,the_mindskinner,30,Rare,N,2.0,Y
-Neheb,R,neheb,30,Mythic,N,3.0,Y
-Unesh,U,unesh,30,Rare,N,2.0,Y
+The Master of Keys,WUB,the_master_of_keys,30,Uncommon,N,2.0,Y
+The Mindskinner,U,the_mindskinner,50,Mythic,N,3.0,Y
+Neheb,R,neheb,28,Mythic,N,3.0,Y
+Unesh,U,unesh,31,Rare,N,2.0,Y
 Wayta,WRG,wayta,30,Rare,N,2.0,Y
 Huatli,WRG,huatli,30,Rare,N,2.0,Y
 Nezahal,U,nezahal,30,Uncommon,N,1.0,Y
-Etali,R,etali,30,Rare,N,2.0,Y
+Etali,R,etali,50,Mythic,N,3.0,Y
 Pantlaza,WRG,pantlaza,30,Rare,N,2.0,Y
 Tsagan,WBR,tsagan,30,Rare,N,2.0,Y
-Zetalpa,W,zetalpa,30,Rare,N,2.0,Y
+Zetalpa,W,zetalpa,28,Rare,N,2.0,Y
 Zilortha,RG,zilortha,30,Uncommon,N,1.0,Y
 Amalia,WB,amalia,30,Rare,N,2.0,Y
 Carmen,WB,carmen,30,Rare,N,2.0,Y
 Clavileño,WB,clavileño,30,Rare,N,2.0,Y
 Don Andres,UBR,don_andres,30,Rare,N,2.0,Y
-Saint Elenda,W,saint_elenda,30,Rare,N,2.0,Y
+Saint Elenda,W,saint_elenda,31,Rare,N,2.0,Y
 Evereth,BR,evereth,30,Uncommon,N,1.0,Y
-Vito,B,vito,30,Rare,N,2.0,Y
+Vito,B,vito,32,Rare,N,2.0,Y
 Vona,WB,vona,30,Rare,N,2.0,Y
 Brimaz,WB,brimaz,30,Rare,N,2.0,Y
-Ria Ivor,WB,ria_ivor,30,Rare,N,2.0,Y
-Mondrak,W,mondrak,30,Mythic,N,3.0,Y
-Skrelv,W,skrelv,30,Uncommon,N,1.0,Y
+Ria Ivor,WB,ria_ivor,30,Uncommon,N,2.0,Y
+Mondrak,W,mondrak,53,Mythic,N,3.0,Y
+Skrelv,W,skrelv,13,Common,N,0.1,Y
 Clement,UG,clement,30,Rare,N,2.0,Y
 Glarb,UBG,glarb,30,Rare,N,2.0,Y
 Helga,WUG,helga,30,Rare,N,2.0,Y
 Ishkanah,BG,ishkanah,30,Rare,N,2.0,Y
 Muldrotha,UBG,muldrotha,30,Rare,N,2.0,Y
 Old Stickfingers,BG,old_stickfingers,30,Rare,N,2.0,Y
-Saryth,G,saryth,30,Rare,N,2.0,Y
+Saryth,G,saryth,29,Rare,N,2.0,Y
 Tatsunari,UBG,tatsunari,30,Uncommon,N,1.0,Y
 Uurg,BG,uurg,30,Common,N,0.1,Y
-Yargle and Multani,BG,yargle_and_multani,30,Uncommon,N,1.0,Y
-Toggo and Krark,R,krark_and_toggo,30,Rare,N,2.0,Y
-Pashalik Mons,R,pashalik_mons,30,Uncommon,N,1.0,Y
-Kiki-Jiki,R,kiki-jiki,30,Rare,N,2.0,Y
-General Kreat,R,general_kreat,30,Rare,N,2.0,Y
-Muxus,R,muxus,30,Rare,N,2.0,Y
+Yargle and Multani,BG,yargle_and_multani,30,Rare,N,1.0,Y
+Toggo and Krark,R,krark_and_toggo,32,Rare,N,2.0,Y
+Pashalik Mons,R,pashalik_mons,31,Uncommon,N,1.0,Y
+Kiki-Jiki,R,kiki-jiki,32,Rare,N,2.0,Y
+General Kreat,R,general_kreat,23,Uncommon,N,1.0,Y
+Muxus,R,muxus,31,Rare,N,2.0,Y
 Redshift,RG,redshift,30,Rare,N,2.0,Y
-Kolvori,G,kolvori,30,Rare,N,2.0,Y
-Nylea,G,nylea,30,Rare,N,2.0,Y
-Rhonas,G,rhonas,30,Rare,N,2.0,Y
+Kolvori,G,kolvori,45,Mythic,N,3.0,Y
+Nylea,G,nylea,34,Rare,N,2.0,Y
+Rhonas,G,rhonas,27,Rare,N,2.0,Y
 Gisa,B,gisa,30,Uncommon,N,1.0,Y
-Geralf,U,geralf,30,Uncommon,N,1.0,Y
-Akroma and Keleth,W,akroma_and_keleth,30,Rare,N,2.0,Y
+Geralf,U,geralf,11,Common,N,0.1,Y
+Akroma and Keleth,W,akroma_and_keleth,53,Mythic,N,3.0,Y
 Linvala,WU,linvala,30,Rare,N,2.0,Y
-Lyra,W,lyra,30,Rare,N,2.0,Y
-Radiant,W,radiant,30,Rare,N,2.0,Y
+Lyra,W,lyra,29,Rare,N,2.0,Y
+Radiant,W,radiant,26,Rare,N,2.0,Y
 Rienne,WRG,rienne,30,Rare,N,2.0,Y
 Crosis,UBR,crosis,30,Rare,N,2.0,Y
 Darigaaz,BRG,darigaaz,30,Rare,N,2.0,Y
@@ -827,83 +827,83 @@ Rith,WRG,rith,30,Rare,N,2.0,Y
 Treva,WUG,treva,30,Rare,N,2.0,Y
 Grakmaw,BG,grakmaw,30,Rare,N,2.0,Y
 Gyrus,BRG,gyrus,30,Uncommon,N,1.0,Y
-Polukranos,WG,polukranos,30,Rare,N,2.0,Y
+Polukranos,WG,polukranos,30,Uncommon,N,2.0,Y
 Ulasht,RG,ulasht,30,Rare,N,2.0,Y
 Zaxara,UBG,zaxara,30,Rare,N,2.0,Y
-Kothophed,B,kothophed,30,Rare,N,2.0,Y
-Belzenlok,B,belzenlok,30,Rare,N,2.0,Y
-Razaketh,B,razaketh,30,Rare,N,2.0,Y
-Ayara,B,ayara,30,Rare,N,2.0,Y
+Kothophed,B,kothophed,19,Uncommon,N,1.0,Y
+Belzenlok,B,belzenlok,32,Rare,N,2.0,Y
+Razaketh,B,razaketh,47,Mythic,N,3.0,Y
+Ayara,B,ayara,48,Mythic,N,3.0,Y
 Gadwick,U,gadwick,30,Rare,N,2.0,Y
-Linden,W,linden,30,Mythic,N,3.0,Y
-Syr Alin,W,syr_alin,30,Rare,N,2.0,Y
-Syr Carah,R,syr_carah,30,Rare,N,2.0,Y
-Syr Elenora,U,syr_elenora,30,Rare,N,2.0,Y
-Syr Faren,G,syr_faren,30,Rare,N,2.0,Y
-Syr Konrad,B,syr_konrad,30,Rare,N,2.0,Y
-Torbran,R,torbran,30,Rare,N,2.0,Y
-Yorvo,G,yorvo,30,Rare,N,2.0,Y
-Emperor Mihail,U,emperor_mihail,30,Rare,N,2.0,Y
+Linden,W,linden,33,Mythic,N,3.0,Y
+Syr Alin,W,syr_alin,22,Uncommon,N,1.0,Y
+Syr Carah,R,syr_carah,30,Uncommon,N,2.0,Y
+Syr Elenora,U,syr_elenora,32,Rare,N,2.0,Y
+Syr Faren,G,syr_faren,32,Rare,N,2.0,Y
+Syr Konrad,B,syr_konrad,18,Uncommon,N,1.0,Y
+Torbran,R,torbran,31,Rare,N,2.0,Y
+Yorvo,G,yorvo,47,Mythic,N,3.0,Y
+Emperor Mihail,U,emperor_mihail,27,Rare,N,2.0,Y
 Hakbal,UG,hakbal,30,Rare,N,2.0,Y
 Kenessos,UG,kenessos,30,Uncommon,N,1.0,Y
-Svyelun,U,svyelun,40,Uncommon,N,1.0,Y
+Svyelun,U,svyelun,42,Uncommon,N,1.0,Y
 Tatyova,UG,tatyova,30,Rare,N,2.0,Y
 Tishana,UG,tishana,30,Rare,N,2.0,Y
-Brudiclad,UR,brudiclad,30,Rare,N,2.0,Y
-Rona,UB,rona,30,Rare,N,2.0,Y
+Brudiclad,UR,brudiclad,30,Uncommon,N,2.0,Y
+Rona,UB,rona,30,Uncommon,N,2.0,Y
 Tekuthal,U,tekuthal,30,Rare,N,2.0,Y
 Unctus,U,unctus,30,Rare,N,2.0,Y
 Ashnod,UBR,ashnod,30,Uncommon,N,1.0,Y
-Farid,R,farid,30,Rare,N,2.0,Y
+Farid,R,farid,33,Rare,N,2.0,Y
 Hajar,RG,hajar,30,Rare,N,2.0,Y
-Ao,W,ao,30,Rare,N,2.0,Y
-Atsushi,R,atsushi,30,Rare,N,2.0,Y
-Junji,B,junji,30,Rare,N,2.0,Y
-Kairi,U,kairi,30,Rare,N,2.0,Y
-Kura,G,kura,30,Rare,N,2.0,Y
+Ao,W,ao,26,Rare,N,2.0,Y
+Atsushi,R,atsushi,47,Mythic,N,3.0,Y
+Junji,B,junji,52,Mythic,N,3.0,Y
+Kairi,U,kairi,33,Rare,N,2.0,Y
+Kura,G,kura,32,Rare,N,2.0,Y
 Ertai,WUB,ertai,30,Uncommon,N,1.0,Y
 Greven,BR,greven,30,Rare,N,2.0,Y
 Tsabo Tavoc,BR,tsabo_tavoc,30,Uncommon,N,1.0,Y
-Birgi,R,birgi,30,Uncommon,N,1.0,Y
-Hazoret,R,hazoret,30,Rare,N,2.0,Y
-Ilharg,R,ilharg,30,Rare,N,2.0,Y
-Purphoros,R,purphoros,30,Rare,N,2.0,Y
-Toralf,R,toralf,30,Rare,N,2.0,Y
-Eladamri,G,eladamri,30,Uncommon,N,1.0,Y
+Birgi,R,birgi,20,Uncommon,N,1.0,Y
+Hazoret,R,hazoret,33,Rare,N,2.0,Y
+Ilharg,R,ilharg,42,Mythic,N,3.0,Y
+Purphoros,R,purphoros,20,Uncommon,N,1.0,Y
+Toralf,R,toralf,42,Mythic,N,3.0,Y
+Eladamri,G,eladamri,11,Common,N,0.1,Y
 Rhys,WG,rhys,30,Rare,N,2.0,Y
 Harald,BG,harald,30,Rare,N,2.0,Y
-Marwyn,G,marwyn,30,Rare,N,2.0,Y
+Marwyn,G,marwyn,32,Rare,N,2.0,Y
 Miara and Numa,BG,miara_and_numa,30,Uncommon,N,1.0,Y
 Aesi,UG,aesi,30,Uncommon,N,1.0,Y
 Arixmethes,UG,arixmethes,30,Rare,N,2.0,Y
-Charix,U,charix,30,Rare,N,2.0,Y
-Plagon,WU,plagon,30,Uncommon,N,1.0,Y
+Charix,U,charix,31,Uncommon,N,2.0,Y
+Plagon,WU,plagon,60,Uncommon,N,1.0,Y
 Xolatoyac,UG,xolatoyac,30,Rare,N,2.0,Y
 Jenara,WUG,jenara,30,Rare,N,2.0,Y
 Kresh,BRG,kresh,30,Rare,N,2.0,Y
 Mayael,WRG,mayael,30,Uncommon,N,1.0,Y
 Sen Triplets,WUB,sen_triplets,30,Rare,N,2.0,Y
 Thraximundar,UBR,thraximundar,30,Uncommon,N,1.0,Y
-Drivnod,B,drivnod,30,Rare,N,2.0,Y
-Vraan,B,vraan,30,Rare,N,2.0,Y
-Kinzu,B,kinzu,30,Uncommon,N,1.0,Y
+Drivnod,B,drivnod,28,Rare,N,2.0,Y
+Vraan,B,vraan,32,Rare,N,2.0,Y
+Kinzu,B,kinzu,12,Common,N,0.1,Y
 Elas il-Kor,WB,elas_il-kor,30,Uncommon,N,1.0,Y
-Aeve,G,aeve,30,Uncommon,N,1.0,Y
+Aeve,G,aeve,27,Rare,N,2.0,Y
 Experiment Kraj,UG,experiment_kraj,30,Rare,N,2.0,Y
-Mitotic Ultimus,G,mitotic_ultimus,30,Rare,N,2.0,Y
+Mitotic Ultimus,G,mitotic_ultimus,26,Rare,N,2.0,Y
 Slogurk,UG,slogurk,30,Rare,N,2.0,Y
-Terrian,G,terrian,30,Rare,N,2.0,Y
-Toxrill,UB,toxrill,30,Rare,N,2.0,Y
+Terrian,G,terrian,32,Uncommon,N,2.0,Y
+Toxrill,UB,toxrill,30,Uncommon,N,2.0,Y
 Yennett,WUB,yennett,30,Rare,N,2.0,Y
-Atemsis,U,atemsis,30,Rare,N,2.0,Y
+Atemsis,U,atemsis,43,Mythic,N,3.0,Y
 Eligeth and Anara,UG,eligeth_and_anara,30,Rare,N,2.0,Y
-Arjun,UR,arjun,30,Rare,N,2.0,Y
-Medomai,WU,medomai,30,Rare,N,2.0,Y
+Arjun,UR,arjun,30,Uncommon,N,2.0,Y
+Medomai,WU,medomai,30,Uncommon,N,2.0,Y
 Camellia,BG,camellia,30,Rare,N,2.0,Y
 Hazel,BG,hazel,30,Rare,N,2.0,Y
 Euru,BG,euru,30,Rare,N,2.0,Y
-Toski,G,toski,30,Uncommon,N,1.0,Y
-Calamity,R,calamity,30,Rare,N,2.0,Y
+Toski,G,toski,31,Uncommon,N,1.0,Y
+Calamity,R,calamity,32,Rare,N,2.0,Y
 Felix,UBG,felix,30,Rare,N,2.0,Y
 Honest Rutstein,BG,honest_rutstein,30,Rare,N,2.0,Y
 Jolene,RG,jolene,30,Rare,N,2.0,Y
@@ -911,97 +911,97 @@ Laughing Jasper Flint,BR,laughing_jasper_flint,30,Rare,N,2.0,Y
 Obeka,UBR,obeka,30,Rare,N,2.0,Y
 Roxanne,RG,roxanne,30,Rare,N,2.0,Y
 Satoru,UB,satoru,30,Rare,N,2.0,Y
-Tinybones,B,tinybones,30,Rare,N,2.0,Y
+Tinybones,B,tinybones,27,Rare,N,2.0,Y
 Vraska,BG,vraska,30,Rare,N,2.0,Y
-Jolrael,UG,jolrael,30,Rare,N,2.0,Y
-Mangara,W,mangara,30,Rare,N,2.0,Y
+Jolrael,UG,jolrael,30,Uncommon,N,2.0,Y
+Mangara,W,mangara,34,Rare,N,2.0,Y
 Niambi,WU,niambi,30,Rare,N,2.0,Y
 Sidar Jabari,WUB,sidar_jabari,30,Rare,N,2.0,Y
-Subira,R,subira,30,Rare,N,2.0,Y
+Subira,R,subira,28,Uncommon,N,2.0,Y
 Anikthea,WBG,anikthea,30,Rare,N,2.0,Y
-Arasta,G,arasta,40,Rare,N,2.0,Y
+Arasta,G,arasta,39,Rare,N,2.0,Y
 Calix,WG,calix,30,Rare,N,2.0,Y
 Atris,UB,atris,30,Rare,N,2.0,Y
 Kunoros,WB,kunoros,30,Rare,N,2.0,Y
 Kethek,BR,kethek,30,Rare,N,2.0,Y
 Ovika,UR,ovika,30,Uncommon,N,1.0,Y
-Solphim,R,solphim,30,Rare,N,2.0,Y
+Solphim,R,solphim,20,Uncommon,N,1.0,Y
 Harbin,WU,harbin,30,Rare,N,2.0,Y
 Queen Kayla,WR,queen_kayla,30,Rare,N,2.0,Y
 Tocasia,WUG,tocasia,30,Rare,N,2.0,Y
 Rusko,UB,rusko,30,Rare,N,2.0,Y
 Tawnos,WUB,tawnos,30,Rare,N,2.0,Y
-Glissa,BG,glissa,30,Rare,N,2.0,Y
+Glissa,BG,glissa,30,Uncommon,N,2.0,Y
 Rothga,G,rothga,30,Rare,N,2.0,Y
 Vexyr,WUG,vexyr,30,Rare,N,2.0,Y
-Zopandrel,G,zopandrel,30,Rare,N,2.0,Y
+Zopandrel,G,zopandrel,46,Mythic,N,3.0,Y
 Halvar,W,halvar,30,Rare,N,2.0,Y
-Ojer Taq,W,ojer_taq,30,Rare,N,2.0,Y
-Oketra,W,oketra,30,Rare,N,2.0,Y
-Reidane,W,reidane,30,Rare,N,2.0,Y
+Ojer Taq,W,ojer_taq,26,Rare,N,2.0,Y
+Oketra,W,oketra,27,Rare,N,2.0,Y
+Reidane,W,reidane,26,Rare,N,2.0,Y
 Adeliz,UR,adeliz,30,Uncommon,N,1.0,Y
 Azami,U,azami,30,Rare,N,2.0,Y
-Deekah,U,deekah,30,Rare,N,2.0,Y
-Jalira,U,jalira,30,Rare,N,2.0,Y
+Deekah,U,deekah,31,Rare,N,2.0,Y
+Jalira,U,jalira,34,Rare,N,2.0,Y
 Kess,UBR,kess,30,Rare,N,2.0,Y
-Lier,U,lier,30,Uncommon,N,1.0,Y
+Lier,U,lier,31,Uncommon,N,1.0,Y
 Mairsil,UBR,mairsil,30,Rare,N,2.0,Y
-Pol Jamaar,U,pol_jamaar,30,Rare,N,2.0,Y
+Pol Jamaar,U,pol_jamaar,22,Uncommon,N,1.0,Y
 Rasputin,WU,rasputin,30,Rare,N,2.0,Y
 Rielle,UR,rielle,30,Uncommon,N,1.0,Y
-Talrand,U,talrand,30,Rare,N,2.0,Y
+Talrand,U,talrand,20,Uncommon,N,1.0,Y
 The Archimandrite,WUR,the_archimandrite,30,Rare,N,2.0,Y
 Vadrik,UR,vadrik,30,Rare,N,2.0,Y
 Jori En,UR,jori_en,30,Uncommon,N,1.0,Y
 Kaza,UR,kaza,30,Rare,N,2.0,Y
-Kazuul,R,kazuul,30,Rare,N,2.0,Y
-Moraug,R,moraug,30,Uncommon,N,1.0,Y
+Kazuul,R,kazuul,17,Uncommon,N,1.0,Y
+Moraug,R,moraug,29,Uncommon,N,1.0,Y
 Phylath,RG,phylath,30,Uncommon,N,1.0,Y
 Zagras,BR,zagras,30,Uncommon,N,1.0,Y
 Anafenza,WBG,anafenza,20,Uncommon,N,1.0,Y
 Betor,WBG,betor,20,Rare,N,2.0,Y
 Daghatar,WBG,daghatar,20,Uncommon,N,1.0,Y
-Hamza,WBG,hamza,20,Rare,N,2.0,Y
+Hamza,WBG,hamza,20,Uncommon,N,2.0,Y
 Azor,WU,azor,20,Rare,N,2.0,Y
-Bruvac,U,bruvac,20,Uncommon,N,1.0,Y
+Bruvac,U,bruvac,27,Rare,N,2.0,Y
 Isperia,WU,isperia,20,Uncommon,N,1.0,Y
 Lavinia,WU,lavinia,20,Uncommon,N,1.0,Y
 Agrus Kos,WR,agrus_kos,20,Rare,N,2.0,Y
 Feather,WR,feather,20,Uncommon,N,1.0,Y
 General Ferrous,WR,general_ferrous,20,Rare,N,2.0,Y
 Tajic,WR,tajic,20,Rare,N,2.0,Y
-Siani and Esior,U,siani_and_esior,20,Uncommon,N,1.0,Y
-Najal,UR,najal,20,Rare,N,2.0,Y
-Zahid,U,zahid,20,Uncommon,N,1.0,Y
-Brago,WU,brago,20,Rare,N,2.0,Y
-Muzzio,U,muzzio,20,Rare,N,2.0,Y
+Siani and Esior,U,siani_and_esior,11,Common,N,0.1,Y
+Najal,UR,najal,20,Uncommon,N,2.0,Y
+Zahid,U,zahid,19,Uncommon,N,1.0,Y
+Brago,WU,brago,20,Uncommon,N,2.0,Y
+Muzzio,U,muzzio,19,Rare,N,2.0,Y
 Selvala,WG,selvala,20,Uncommon,N,1.0,Y
 Cadric,WR,cadric,20,Rare,N,2.0,Y
 Cayth,WUR,cayth,20,Rare,N,2.0,Y
-Depala,WR,depala,20,Rare,N,2.0,Y
-Hofri,WR,hofri,20,Rare,N,2.0,Y
-Irini,B,irini,20,Uncommon,N,1.0,Y
+Depala,WR,depala,20,Uncommon,N,2.0,Y
+Hofri,WR,hofri,20,Uncommon,N,2.0,Y
+Irini,B,irini,23,Uncommon,N,1.0,Y
 Koll,WR,koll,20,Uncommon,N,1.0,Y
-Reveka,U,reveka,20,Uncommon,N,1.0,Y
+Reveka,U,reveka,18,Uncommon,N,1.0,Y
 Reyav,WR,reyav,20,Uncommon,N,1.0,Y
 Migloz,RG,migloz,20,Uncommon,N,1.0,Y
 Sethron,BR,sethron,20,Uncommon,N,1.0,Y
 Vnwxt,U,vnwxt,20,Uncommon,N,1.0,Y
-Gornog,R,gornog,20,Rare,N,2.0,Y
+Gornog,R,gornog,19,Rare,N,2.0,Y
 Firesong and Sunspeaker,WR,firesong_and_sunspeaker,20,Common,N,0.1,Y
 Isu,WUG,isu,20,Uncommon,N,1.0,Y
 Moritte,UG,moritte,20,Uncommon,N,1.0,Y
 Narfi,UB,narfi,20,Uncommon,N,1.0,Y
 Svella,RG,svella,20,Uncommon,N,1.0,Y
-Baral,U,baral,20,Rare,N,2.0,Y
-Gonti,B,gonti,20,Rare,N,2.0,Y
-Hope of Ghirapur,C,hope_of_ghirapur,20,Uncommon,N,1.0,Y
+Baral,U,baral,21,Rare,N,2.0,Y
+Gonti,B,gonti,32,Rare,N,2.0,Y
+Hope of Ghirapur,C,hope_of_ghirapur,20,Rare,N,1.0,Y
 Kambal,WB,kambal,20,Uncommon,N,1.0,Y
-Oviya,G,oviya,20,Rare,N,2.0,Y
-Padeem,U,padeem,20,Rare,N,2.0,Y
+Oviya,G,oviya,17,Uncommon,N,1.0,Y
+Padeem,U,padeem,44,Mythic,N,3.0,Y
 Pia Nalaar,URG,pia_nalaar,20,Rare,N,2.0,Y
 Saheeli,UR,saheeli,20,Uncommon,N,1.0,Y
-Sram,W,sram,20,Uncommon,N,1.0,Y
+Sram,W,sram,22,Uncommon,N,1.0,Y
 Yahenni,B,yahenni,20,Uncommon,N,1.0,Y
 Izoni,BG,izoni,20,Rare,N,2.0,Y
 Mazirek,BG,mazirek,20,Rare,N,2.0,Y
@@ -1012,105 +1012,105 @@ Nikya,RG,nikya,20,Rare,N,2.0,Y
 Ruric Thar,RG,ruric_thar,20,Rare,N,2.0,Y
 Yarus,RG,yarus,20,Rare,N,2.0,Y
 Grimgrin,UB,grimgrin,20,Rare,N,2.0,Y
-Jadar,B,jadar,20,Rare,N,2.0,Y
+Jadar,B,jadar,29,Rare,N,2.0,Y
 Ludevic and Kraum,UR,ludevic_and_kraum,20,Rare,N,2.0,Y
-Mikaeus,B,mikaeus,20,Uncommon,N,1.0,Y
+Mikaeus,B,mikaeus,18,Uncommon,N,1.0,Y
 Umbris,UB,umbris,20,Rare,N,2.0,Y
-Ozox,B,ozox,20,Rare,N,2.0,Y
+Ozox,B,ozox,18,Uncommon,N,1.0,Y
 Millicent,WU,millicent,20,Rare,N,2.0,Y
 Circu,UB,circu,20,Uncommon,N,1.0,Y
 Etrata,UB,etrata,20,Rare,N,2.0,Y
 Mirko,UB,mirko,20,Rare,N,2.0,Y
 Szadek,UB,szadek,20,Uncommon,N,1.0,Y
-Captain Storm,UR,captain_storm,20,Uncommon,N,1.0,Y
-Kari Zev,R,kari_zev,20,Uncommon,N,1.0,Y
-Malcolm and Breeches,UR,malcolm_and_breeches,20,Rare,N,2.0,Y
+Captain Storm,UR,captain_storm,20,Common,N,1.0,Y
+Kari Zev,R,kari_zev,19,Uncommon,N,1.0,Y
+Malcolm and Breeches,UR,malcolm_and_breeches,20,Uncommon,N,2.0,Y
 Ramirez,UB,ramirez_depietro,20,Uncommon,N,1.0,Y
 Sala,UR,sala,20,Rare,N,2.0,Y
 Zara,UR,zara,20,Rare,N,2.0,Y
-Ayula,G,ayula,20,Common,N,0.1,Y
+Ayula,G,ayula,11,Common,N,0.1,Y
 Duskana,WRG,duskana,20,Rare,N,2.0,Y
 Hurska,WG,hurska,20,Uncommon,N,1.0,Y
-Kudo,WG,kudo,30,Rare,N,2.0,Y
-Ruxa,G,ruxa,20,Rare,N,2.0,Y
+Kudo,WG,kudo,30,Uncommon,N,2.0,Y
+Ruxa,G,ruxa,21,Rare,N,2.0,Y
 Aatchik,BG,aatchik,20,Uncommon,N,1.0,Y
 Amzu,BG,amzu,20,Uncommon,N,1.0,Y
-Fumulus,B,fumulus,20,Common,N,0.1,Y
-Grist,BG,grist,20,Rare,N,2.0,Y
+Fumulus,B,fumulus,18,Common,N,0.1,Y
+Grist,BG,grist,20,Uncommon,N,2.0,Y
 Vishgraz,WBG,vishgraz,20,Uncommon,N,1.0,Y
 Zabaz,WR,zabaz,20,Rare,N,2.0,Y
 Zask,BG,zask,20,Uncommon,N,1.0,Y
 Melek,UR,melek,20,Rare,N,2.0,Y
 Ral,UR,ral,20,Rare,N,2.0,Y
-Mizzix,UR,mizzix,20,Rare,N,2.0,Y
+Mizzix,UR,mizzix,20,Uncommon,N,2.0,Y
 Elsha,WUR,elsha,20,Rare,N,2.0,Y
 Shiko,WUR,shiko,20,Uncommon,N,1.0,Y
 Shu Yun,WUR,shu_yun,20,Uncommon,N,1.0,Y
-Xho Cai,WUR,xho_cai,20,Rare,N,2.0,Y
+Xho Cai,WUR,xho_cai,20,Uncommon,N,2.0,Y
 Jinnie Fay,WRG,jinnie_fay,20,Uncommon,N,1.0,Y
 Kitt Kanto,WRG,kitt_kanto,20,Rare,N,2.0,Y
 Phabine,WRG,phabine,20,Rare,N,2.0,Y
 Rocco,WRG,rocco,20,Rare,N,2.0,Y
-Arni,R,arni,20,Uncommon,N,1.0,Y
-Fynn,G,fynn,20,Uncommon,N,1.0,Y
+Arni,R,arni,30,Rare,N,2.0,Y
+Fynn,G,fynn,21,Uncommon,N,1.0,Y
 Lathril,BG,lathril,20,Uncommon,N,1.0,Y
 Maja,WG,maja,20,Uncommon,N,1.0,Y
-Orvar,U,orvar,20,Uncommon,N,1.0,Y
+Orvar,U,orvar,12,Common,N,0.1,Y
 Ranar,WU,ranar,20,Uncommon,N,1.0,Y
-Varragoth,B,varragoth,20,Uncommon,N,1.0,Y
+Varragoth,B,varragoth,33,Rare,N,2.0,Y
 Liberator,C,liberator,20,Rare,N,2.0,Y
-The Peregrine Dynamo,C,the_peregrine_dynamo,20,Uncommon,N,1.0,Y
+The Peregrine Dynamo,C,the_peregrine_dynamo,20,Rare,N,1.0,Y
 Traxos,C,traxos,20,Uncommon,N,1.0,Y
-Nogi,R,nogi,20,Rare,N,2.0,Y
+Nogi,R,nogi,28,Rare,N,2.0,Y
 Rograkh and Ardenn,WR,rograkh_and_ardenn,20,Uncommon,N,1.0,Y
 Rohgahh,BR,rohgahh,20,Uncommon,N,1.0,Y
-Rosnakht,R,rosnakht,20,Uncommon,N,1.0,Y
+Rosnakht,R,rosnakht,12,Common,N,0.1,Y
 Akim,WUR,akim,20,Rare,N,2.0,Y
-Gyruda,UB,gyruda,20,Rare,N,2.0,Y
-Kaheera,WG,kaheera,20,Rare,N,2.0,Y
+Gyruda,UB,gyruda,20,Uncommon,N,2.0,Y
+Kaheera,WG,kaheera,20,Uncommon,N,2.0,Y
 Kalamax,URG,kalamax,20,Rare,N,2.0,Y
 Kathril,WBG,kathril,20,Rare,N,2.0,Y
 Keruga,UG,keruga,20,Rare,N,2.0,Y
-Lurrus,WB,lurrus,20,Rare,N,2.0,Y
+Lurrus,WB,lurrus,20,Uncommon,N,2.0,Y
 Obosh,BR,obosh,20,Uncommon,N,1.0,Y
 Umori,BG,umori,20,Uncommon,N,1.0,Y
-Otrimi,UBG,otrimi,20,Rare,N,2.0,Y
+Otrimi,UBG,otrimi,20,Uncommon,N,2.0,Y
 Tayam,WBG,tayam,20,Rare,N,2.0,Y
 Xyris,URG,xyris,20,Uncommon,N,1.0,Y
 Yorion,WU,yorion,20,Uncommon,N,1.0,Y
 Zirda,WR,zirda,20,Rare,N,2.0,Y
-Arahbo,WG,arahbo,20,Uncommon,N,1.0,Y
+Arahbo,WG,arahbo,20,Rare,N,1.0,Y
 Ajani,WR,ajani,30,Rare,N,2.0,Y
 Jedit,WUG,jedit_ojanen,20,Rare,N,2.0,Y
-Qala,W,qala,20,Uncommon,N,1.0,Y
+Qala,W,qala,21,Uncommon,N,1.0,Y
 Rin and Seri,WRG,rin_and_seri,30,Rare,N,2.0,Y
 Alibou,WR,alibou,20,Rare,N,2.0,Y
 Osgir,WR,osgir,20,Rare,N,2.0,Y
 Plargg,WR,plargg,20,Rare,N,2.0,Y
 Quintorius,WR,quintorius,20,Rare,N,2.0,Y
-Tersa,R,tersa,20,Uncommon,N,1.0,Y
+Tersa,R,tersa,13,Common,N,0.1,Y
 Alesha,WBR,alesha,30,Rare,N,2.0,Y
 Neriv,WBR,neriv,20,Rare,N,2.0,Y
-Akawalli,BG,akawalli,20,Uncommon,N,1.0,Y
+Akawalli,BG,akawalli,20,Common,N,1.0,Y
 Ghave,WBG,ghave,20,Uncommon,N,1.0,Y
 The Necrobloom,WBG,the_necrobloom,20,Uncommon,N,1.0,Y
-Shroofus,G,shroofus,20,Uncommon,N,1.0,Y
+Shroofus,G,shroofus,18,Uncommon,N,1.0,Y
 Thelon,BG,thelon,20,Uncommon,N,1.0,Y
-Xavier Sal,UBG,xavier_sal,20,Rare,N,2.0,Y
+Xavier Sal,UBG,xavier_sal,20,Uncommon,N,2.0,Y
 Tiana,WR,tiana,20,Rare,N,2.0,Y
 Raff,WU,raff,20,Rare,N,2.0,Y
 Arvad,WB,arvad,20,Rare,N,2.0,Y
 Shanna,WG,shanna,20,Rare,N,2.0,Y
-Gerrard,WR,gerrard,20,Rare,N,2.0,Y
+Gerrard,WR,gerrard,20,Uncommon,N,2.0,Y
 Hanna,WU,hanna,20,Uncommon,N,1.0,Y
-Tahngarth,R,tahngarth,20,Rare,N,2.0,Y
-Squee,R,squee,20,Rare,N,2.0,Y
+Tahngarth,R,tahngarth,18,Uncommon,N,1.0,Y
+Squee,R,squee,19,Uncommon,N,1.0,Y
 Mirri,WG,mirri,20,Rare,N,2.0,Y
 Annie Flash,WRG,annie_flash,20,Rare,N,2.0,Y
 Bonny Pall,UG,bonny_pall,20,Rare,N,2.0,Y
 Bruse Tarl,WR,bruse_tarl,20,Uncommon,N,1.0,Y
 Ertha Jo,WR,ertha_jo,20,Rare,N,2.0,Y
-Bristly Bill,G,bristly_bill,20,Rare,N,2.0,Y
+Bristly Bill,G,bristly_bill,18,Rare,N,2.0,Y
 Kellan,WUG,kellan,20,Uncommon,N,1.0,Y
 Kirri,WRG,kirri,20,Rare,N,2.0,Y
 Lilah,UR,lilah,20,Rare,N,2.0,Y
@@ -1118,74 +1118,74 @@ Miriam,WG,miriam,20,Rare,N,2.0,Y
 Stella Lee,UR,stella_lee,20,Rare,N,2.0,Y
 Taii Wakeen,WR,taii_wakeen,20,Uncommon,N,1.0,Y
 Vihaan,WBR,vihaan,20,Rare,N,2.0,Y
-Obzedat,WB,obzedat,20,Rare,N,2.0,Y
+Obzedat,WB,obzedat,20,Uncommon,N,2.0,Y
 Tomik,WB,tomik,20,Rare,N,2.0,Y
 Veko,WB,veko,20,Rare,N,2.0,Y
-Azusa,G,azusa,30,Rare,N,2.0,Y
+Azusa,G,azusa,47,Mythic,N,3.0,Y
 Hapatra,BG,hapatra,20,Uncommon,N,1.0,Y
 Ellivere,WG,ellivere,20,Rare,N,2.0,Y
 Gallia,RG,gallia,30,Uncommon,N,1.0,Y
 Halana and Alena,RG,halana_and_alena,20,Rare,N,2.0,Y
 Bess,WG,bess,20,Uncommon,N,1.0,Y
 Jyoti,UG,jyoti,20,Rare,N,2.0,Y
-Kamahl,G,kamahl,20,Rare,N,2.0,Y
+Kamahl,G,kamahl,22,Rare,N,2.0,Y
 Nemata,BG,nemata,30,Uncommon,N,1.0,Y
 Doc Aurlock,UG,doc_aurlock,20,Uncommon,N,1.0,Y
-Baru,G,baru,20,Rare,N,2.0,Y
-Six,G,six,20,Rare,N,2.0,Y
-Rishkar,G,rishkar,20,Uncommon,N,1.0,Y
+Baru,G,baru,20,Uncommon,N,1.0,Y
+Six,G,six,27,Rare,N,2.0,Y
+Rishkar,G,rishkar,11,Common,N,0.1,Y
 Yeva,G,yeva,20,Uncommon,N,1.0,Y
-Alandra,U,alandra,20,Uncommon,N,1.0,Y
+Alandra,U,alandra,19,Uncommon,N,1.0,Y
 Alquist Proft,WU,alquist_proft,20,Rare,N,2.0,Y
 Captain Howler,UR,captain_howler,20,Uncommon,N,1.0,Y
 Bria,UR,bria,20,Rare,N,2.0,Y
-Kira,U,kira,20,Rare,N,2.0,Y
+Kira,U,kira,30,Rare,N,2.0,Y
 Nymris,UB,nymris,20,Rare,N,2.0,Y
 Omo,UG,omo,20,Uncommon,N,1.0,Y
-Sai,U,sai,20,Uncommon,N,1.0,Y
-Sakashima,U,sakashima,20,Rare,N,2.0,Y
+Sai,U,sai,19,Uncommon,N,1.0,Y
+Sakashima,U,sakashima,53,Mythic,N,3.0,Y
 Shorikai,WU,shorikai,30,Rare,N,2.0,Y
-Tamiyo,UG,tamiyo,30,Rare,N,2.0,Y
+Tamiyo,UG,tamiyo,30,Uncommon,N,2.0,Y
 Eloise,UB,eloise,20,Rare,N,2.0,Y
-Tetsuko,U,tetsuko,20,Uncommon,N,1.0,Y
+Tetsuko,U,tetsuko,22,Uncommon,N,1.0,Y
 Chishiro,RG,chishiro,20,Rare,N,2.0,Y
 Dalakos,UR,dalakos,20,Uncommon,N,1.0,Y
-Zurzoth,R,zurzoth,20,Uncommon,N,1.0,Y
-Norin,R,norin,20,Rare,N,2.0,Y
-Laelia,R,laelia,20,Uncommon,N,1.0,Y
-Jeska,R,jeska,20,Rare,N,2.0,Y
-Kalemne,WR,kalemne,20,Rare,N,2.0,Y
+Zurzoth,R,zurzoth,12,Common,N,0.1,Y
+Norin,R,norin,19,Uncommon,N,1.0,Y
+Laelia,R,laelia,11,Common,N,0.1,Y
+Jeska,R,jeska,21,Uncommon,N,1.0,Y
+Kalemne,WR,kalemne,20,Uncommon,N,2.0,Y
 Orthion,R,orthion,20,Uncommon,N,1.0,Y
 Rivaz,BR,rivaz,30,Rare,N,2.0,Y
 Sarkhan,UR,sarkhan,30,Rare,N,2.0,Y
 Thromok,RG,thromok,20,Uncommon,N,1.0,Y
 Tor Wauki,BR,tor_wauki,20,Common,N,0.1,Y
 Abuelo,WU,abuelo,20,Uncommon,N,1.0,Y
-Adeline,W,adeline,20,Rare,N,2.0,Y
+Adeline,W,adeline,22,Uncommon,N,1.0,Y
 Anya,WR,anya,20,Rare,N,2.0,Y
-Danitha,W,danitha,20,Uncommon,N,1.0,Y
-Delney,W,delney,20,Rare,N,2.0,Y
+Danitha,W,danitha,12,Common,N,0.1,Y
+Delney,W,delney,19,Uncommon,N,1.0,Y
 Denry Klin,WU,denry_klin,20,Uncommon,N,1.0,Y
-Kyler,WG,kyler,30,Rare,N,2.0,Y
-Kytheon,W,kytheon,30,Rare,N,2.0,Y
+Kyler,WG,kyler,30,Uncommon,N,2.0,Y
+Kytheon,W,kytheon,34,Rare,N,2.0,Y
 Leinore,WG,leinore,20,Rare,N,2.0,Y
-Odric,W,odric,20,Rare,N,2.0,Y
-Orah,WB,orah,20,Rare,N,2.0,Y
+Odric,W,odric,19,Rare,N,2.0,Y
+Orah,WB,orah,20,Uncommon,N,2.0,Y
 Thalisse,WB,thalisse,20,Uncommon,N,1.0,Y
 Wyleth,WR,wyleth,30,Uncommon,N,1.0,Y
-Yoshimaru,W,yoshimaru,20,Rare,N,2.0,Y
+Yoshimaru,W,yoshimaru,31,Rare,N,2.0,Y
 Anowon,UB,anowon,20,Uncommon,N,1.0,Y
 Ratadrabik,WB,ratadrabik,30,Uncommon,N,1.0,Y
-Braids,B,braids,30,Uncommon,N,1.0,Y
+Braids,B,braids,32,Uncommon,N,1.0,Y
 Chainer,BR,chainer,20,Rare,N,2.0,Y
-Endrek,B,endrek,20,Rare,N,2.0,Y
-Grismold,BG,grismold,20,Rare,N,2.0,Y
-The Raven Man,B,the_raven_man,20,Uncommon,N,1.0,Y
-Gorex,B,gorex,20,Uncommon,N,1.0,Y
-Nefarox,B,nefarox,20,Uncommon,N,1.0,Y
+Endrek,B,endrek,22,Uncommon,N,1.0,Y
+Grismold,BG,grismold,20,Uncommon,N,2.0,Y
+The Raven Man,B,the_raven_man,22,Uncommon,N,1.0,Y
+Gorex,B,gorex,18,Uncommon,N,1.0,Y
+Nefarox,B,nefarox,21,Uncommon,N,1.0,Y
 Skullbriar,BG,skullbriar,20,Uncommon,N,1.0,Y
 Syrix,BR,syrix,20,Rare,N,2.0,Y
-Tevesh Szat,B,tevesh_szat,20,Uncommon,N,1.0,Y
+Tevesh Szat,B,tevesh_szat,22,Uncommon,N,1.0,Y
 Vish Kal,WB,vish_kal,20,Uncommon,N,1.0,Y
 Yuriko,UB,yuriko,30,Uncommon,N,1.0,Y
 Archelos,UBG,archelos,20,Uncommon,N,1.0,Y
@@ -1196,13 +1196,13 @@ Kestia,WUG,kestia,20,Uncommon,N,1.0,Y
 Yurlok,BRG,yurlok,20,Rare,N,2.0,Y
 Jenson,WUBRG,jenson_carthalion,30,Rare,N,2.0,Y
 Morska,WUG,morska,20,Rare,N,2.0,Y
-Goro-Goro and Satoru,UBR,goro-goro_and_satoru,20,Rare,N,2.0,Y
+Goro-Goro and Satoru,UBR,goro-goro_and_satoru,20,Uncommon,N,2.0,Y
 Loot,URG,loot,20,Rare,N,2.0,Y
-Sevinne,WUR,sevinne,20,Rare,N,2.0,Y
+Sevinne,WUR,sevinne,20,Uncommon,N,2.0,Y
 Yarok,UBG,yarok,20,Rare,N,2.0,Y
 Arna,WUB,arna,20,Uncommon,N,1.0,Y
 Codie,WUBRG,codie,30,Rare,N,2.0,Y
-Averna,URG,averna,20,Rare,N,2.0,Y
+Averna,URG,averna,20,Uncommon,N,2.0,Y
 Ghired,WRG,ghired,20,Rare,N,2.0,Y
 Shanid,WBR,shanid,20,Rare,N,2.0,Y
 Lynde,UBR,lynde,20,Uncommon,N,1.0,Y
@@ -1232,51 +1232,51 @@ Kianne,UG,kianne,20,Uncommon,N,1.0,Y
 Zimone,UG,zimone,20,Rare,N,2.0,Y
 Kamiz,WUB,kamiz,20,Rare,N,2.0,Y
 Queza,WUB,queza,20,Rare,N,2.0,Y
-Tivit,WUB,tivit,20,Rare,N,2.0,Y
-Toluz,WUB,toluz,20,Rare,N,2.0,Y
+Tivit,WUB,tivit,20,Uncommon,N,2.0,Y
+Toluz,WUB,toluz,20,Uncommon,N,2.0,Y
 Exava,BR,exava,20,Uncommon,N,1.0,Y
 Judith,BR,judith,20,Uncommon,N,1.0,Y
 Tesak,R,tesak,20,Uncommon,N,1.0,Y
 Juri,BR,juri,20,Uncommon,N,1.0,Y
-Massacre Girl,B,massacre_girl,20,Rare,N,2.0,Y
-Ashcoat,B,ashcoat,20,Uncommon,N,1.0,Y
+Massacre Girl,B,massacre_girl,18,Uncommon,N,1.0,Y
+Ashcoat,B,ashcoat,18,Common,N,1.0,Y
 Greasefang,WB,greasefang,20,Rare,N,2.0,Y
-Karumonix,B,karumonix,20,Mythic,N,3.0,Y
+Karumonix,B,karumonix,27,Rare,N,2.0,Y
 Nashi,UBG,nashi,20,Uncommon,N,1.0,Y
 Vren,UB,vren,20,Uncommon,N,1.0,Y
 Wick,UBR,wick,20,Uncommon,N,1.0,Y
 Brion,WR,brion,20,Rare,N,2.0,Y
-Doran,WBG,doran,20,Rare,N,2.0,Y
+Doran,WBG,doran,20,Uncommon,N,2.0,Y
 Gaddock Teeg,WG,gaddock,20,Uncommon,N,1.0,Y
-Nath,BG,nath,20,Rare,N,2.0,Y
+Nath,BG,nath,20,Uncommon,N,2.0,Y
 Oona,UB,oona,20,Uncommon,N,1.0,Y
 Wort,BR,wort,20,Rare,N,2.0,Y
-Sygg,UB,sygg,20,Rare,N,2.0,Y
+Sygg,UB,sygg,20,Uncommon,N,2.0,Y
 Chorus of the Conclave,WG,chorus_of_the_conclave,20,Rare,N,2.0,Y
-Emmara,WG,emmara,20,Rare,N,2.0,Y
+Emmara,WG,emmara,20,Uncommon,N,2.0,Y
 Tolsimir,WG,tolsimir,20,Rare,N,2.0,Y
 Breena,WB,breena,20,Rare,N,2.0,Y
 Felisa,WB,felisa,20,Rare,N,2.0,Y
 Killian,WB,killian,20,Uncommon,N,1.0,Y
 Shaile,WB,shaile,20,Rare,N,2.0,Y
-Grunn,G,grunn,20,Uncommon,N,1.0,Y
+Grunn,G,grunn,19,Uncommon,N,1.0,Y
 Kibo,RG,kibo,20,Uncommon,N,1.0,Y
 Ragavan,R,ragavan,20,Uncommon,N,1.0,Y
-Lonis,UG,lonis,20,Rare,N,2.0,Y
+Lonis,UG,lonis,20,Uncommon,N,2.0,Y
 Momir Vig,UG,momir_vig,20,Rare,N,2.0,Y
 Roalesk,UG,roalesk,20,Uncommon,N,1.0,Y
 The Pride of Hull Clade,UG,the_pride_of_hull_clade,20,Uncommon,N,1.0,Y
 Vannifar,UG,vannifar,20,Rare,N,2.0,Y
 Vorel,UG,vorel,20,Rare,N,2.0,Y
-Alpharael,B,alpharael,20,Rare,N,2.0,Y
-Haliya,W,haliya,20,Rare,N,2.0,Y
+Alpharael,B,alpharael,17,Uncommon,N,1.0,Y
+Haliya,W,haliya,23,Uncommon,N,1.0,Y
 Kilo,WUR,kilo,20,Rare,N,2.0,Y
-Mm'menon,U,mm'menon,20,Rare,N,2.0,Y
+Mm'menon,U,mm'menon,18,Uncommon,N,1.0,Y
 Ragost,WR,ragost,20,Rare,N,2.0,Y
-Sami,WR,sami,20,Rare,N,2.0,Y
+Sami,WR,sami,20,Uncommon,N,2.0,Y
 Szarel,BRG,szarel,20,Rare,N,2.0,Y
-Tannuk,R,tannuk,20,Rare,N,2.0,Y
-Bennie Bracks,W,bennie_bracks,20,Rare,N,2.0,Y
+Tannuk,R,tannuk,26,Rare,N,2.0,Y
+Bennie Bracks,W,bennie_bracks,18,Rare,N,2.0,Y
 Lagrella,WUG,lagrella,20,Uncommon,N,1.0,Y
 Perrie,WUG,perrie_the_pulverizer,20,Rare,N,2.0,Y
 Rigo,WUG,rigo,20,Uncommon,N,1.0,Y
@@ -1294,18 +1294,18 @@ Hugs,RG,hugs,20,Rare,N,2.0,Y
 Gev,BR,gev,20,Uncommon,N,1.0,Y
 Mabel,WR,mabel,30,Uncommon,N,1.0,Y
 Mr. Foxglove,WUG,mr_foxglove,20,Rare,N,2.0,Y
-Bosh,R,bosh,20,Rare,N,2.0,Y
+Bosh,R,bosh,22,Rare,N,2.0,Y
 Graaz,C,graaz,20,Uncommon,N,1.0,Y
 Gorm and Virtus,BG,gorm_and_virtus,20,Uncommon,N,1.0,Y
-Grothama,G,grothama,20,Uncommon,N,1.0,Y
+Grothama,G,grothama,22,Uncommon,N,1.0,Y
 Khorvath and Sylvia,WR,khorvath_and_sylvia,20,Rare,N,2.0,Y
 Pir and Toothy,UG,pir_and_toothy,20,Rare,N,2.0,Y
 Regna and Krav,WB,regna_and_krav,20,Uncommon,N,1.0,Y
 Okaun and Zndrsplt,UR,okaun_and_zndrsplt,20,Rare,N,2.0,Y
 Alela,WUB,alela,20,Uncommon,N,1.0,Y
 Tegwyll,UB,tegwyll,20,Uncommon,N,1.0,Y
-Emry,U,emry,20,Uncommon,N,1.0,Y
-Rankle,B,rankle,20,Uncommon,N,1.0,Y
+Emry,U,emry,12,Common,N,0.1,Y
+Rankle,B,rankle,22,Uncommon,N,1.0,Y
 Grumgully,RG,grumgully,20,Uncommon,N,1.0,Y
 Beluna,URG,beluna,20,Rare,N,2.0,Y
 Dina,BG,dina,20,Uncommon,N,1.0,Y
@@ -1313,7 +1313,7 @@ Gyome,BG,gyome,20,Rare,N,2.0,Y
 Valentin,BG,valentin,20,Uncommon,N,1.0,Y
 Willowdusk,BG,willowdusk,20,Rare,N,2.0,Y
 Sarulf,BG,sarulf,20,Uncommon,N,1.0,Y
-Rahilda,R,rahilda,20,Rare,N,2.0,Y
+Rahilda,R,rahilda,22,Uncommon,N,2.0,Y
 Ulrich,RG,ulrich,20,Rare,N,2.0,Y
 Anhelo,UBR,anhelo,20,Rare,N,2.0,Y
 Cormela,UBR,cormela,20,Rare,N,2.0,Y
@@ -1328,62 +1328,62 @@ Syr Ginger,C,syr_ginger,20,Uncommon,N,1.0,Y
 The Beamtown Bullies,BRG,the_beamtown_bullies,20,Uncommon,N,1.0,Y
 Henzie,BRG,henzie,20,Rare,N,2.0,Y
 Mr. Orfeo,BRG,mr_orfeo,20,Uncommon,N,1.0,Y
-Ognis,BRG,ognis,20,Rare,N,2.0,Y
+Ognis,BRG,ognis,20,Uncommon,N,2.0,Y
 Blech,BG,blech,20,Uncommon,N,1.0,Y
 Excava,WR,excava,20,Rare,N,2.0,Y
 Gorma,BG,gorma,20,Rare,N,2.0,Y
 Muddle,UR,muddle,20,Rare,N,2.0,Y
 Primo,UG,primo,20,Rare,N,2.0,Y
 Scriv,WB,scriv,20,Rare,N,2.0,Y
-Arnyn,B,arnyn,30,Uncommon,N,1.0,Y
-Aziza,WR,aziza,30,Rare,N,2.0,Y
+Arnyn,B,arnyn,18,Uncommon,N,1.0,Y
+Aziza,WR,aziza,30,Uncommon,N,2.0,Y
 Esika,WUBRG,esika,30,Rare,N,2.0,Y
-Orysa,U,orysa,30,Rare,N,2.0,Y
+Orysa,U,orysa,22,Uncommon,N,1.0,Y
 Abigale,WB,abigale,30,Rare,N,2.0,Y
 Sanar,UR,sanar,30,Common,N,0.1,Y
 Kirol,WR,kirol,30,Rare,N,2.0,Y
 Tam,UG,tam,30,Rare,N,2.0,Y
 Lluwen,BG,lluwen,30,Rare,N,2.0,Y
-The Dawning Archaic,C,the_dawning_archaic,40,Uncommon,N,1.0,Y
+The Dawning Archaic,C,the_dawning_archaic,40,Rare,N,1.0,Y
 General Jarkeld,W,general_jarkeld,50,Mythic,N,3.0,Y
-Hakim,U,hakim,50,Rare,N,2.0,Y
-Ihsan's Shade,B,ihsans_shade,50,Rare,N,2.0,Y
-Márton Stromgald,R,márton_stromgald,50,Rare,N,2.0,Y
-Autumn Willow,G,autumn_willow,50,Rare,N,2.0,Y
+Hakim,U,hakim,53,Mythic,N,3.0,Y
+Ihsan's Shade,B,ihsans_shade,26,Rare,N,2.0,Y
+Márton Stromgald,R,márton_stromgald,50,Mythic,N,3.0,Y
+Autumn Willow,G,autumn_willow,27,Rare,N,2.0,Y
 Cat,GW,straycat,10,Uncommon,N,1.0,Y
-Imp,R,imp,11,Common,N,0.1,Y
+Imp,R,imp,10,Common,N,0.1,Y
 Karona (Boss),WUBRG,karona,80,Rare,Y,2.0,Y
 King Rohgahh,RB,king_rohgahh,25,Common,Y,0.1,Y
 Sorceress Queen Kaja,WUR,sorceressqueenkaja,30,Uncommon,Y,1.0,Y
 Goblin King Phil,UBR,goblinkingphil,30,Uncommon,Y,1.0,Y
-King Kane Ferguson,WUBRG,kingkaneferguson,30,Rare,Y,2.0,Y
+King Kane Ferguson,WUBRG,kingkaneferguson,30,Uncommon,Y,2.0,Y
 Elf Queen Guay,WUG,elfqueenguay,30,Uncommon,Y,1.0,Y
 Valyx the Tormentor,B,valyx,30,Rare,Y,2.0,Y
-Dwarf Lord,W,dwarf_lord,30,Uncommon,N,1.0,Y
-Sun Titan,W,sun_titan,30,Rare,N,2.0,Y
-Mill Mole,U,mill_mole,30,Rare,N,2.0,Y
-Merfolk King,U,merfolk_king,30,Uncommon,N,1.0,Y
-Forest Titan,G,forest_titan,30,Uncommon,N,1.0,Y
+Dwarf Lord,W,dwarf_lord,32,Uncommon,N,1.0,Y
+Sun Titan,W,sun_titan,32,Rare,N,2.0,Y
+Mill Mole,U,mill_mole,49,Mythic,N,3.0,Y
+Merfolk King,U,merfolk_king,30,Common,N,1.0,Y
+Forest Titan,G,forest_titan,34,Uncommon,N,1.0,Y
 Jakub Slemr '97,WUBRG,wc97_jakub_slemr,25,Uncommon,N,1.0,Y
-Janosch Kuhn '97,WUR,wc97_janosch_kuhn,25,Rare,N,2.0,Y
-Svend Geertsen '97,G,wc97_svend_geertsen,25,Uncommon,N,1.0,Y
-Paul McCabe '97,UR,wc97_paul_mccabe,25,Uncommon,N,1.0,Y
+Janosch Kuhn '97,WUR,wc97_janosch_kuhn,25,Uncommon,N,2.0,Y
+Svend Geertsen '97,G,wc97_svend_geertsen,27,Common,N,1.0,Y
+Paul McCabe '97,UR,wc97_paul_mccabe,25,Common,N,1.0,Y
 Brian Selden '98,WUBRG,wc98_brian_selden,25,Rare,N,2.0,Y
-Ben Rubin '98,R,wc98_ben_rubin,25,Uncommon,N,1.0,Y
-Brian Hacker '98,W,wc98_brian_hacker,25,Rare,N,2.0,Y
-Randy Buehler '98,U,wc98_randy_buehler,25,Uncommon,N,1.0,Y
-Kai Budde '99,R,wc99_kai_budde,25,Rare,N,2.0,Y
-Mark Le Pine '99,R,wc99_mark_le_pine,25,Uncommon,N,1.0,Y
-Matt Linde '99,G,wc99_matt_linde,25,Rare,N,2.0,Y
-Jakub Šlemr '99,B,wc99_jakub_slemr,25,Rare,N,2.0,Y
-Jon Finkel '00,U,wc00_jon_finkel,25,Rare,N,2.0,Y
-Janosch Kühn '00,RG,wc00_janosch_kuhn,25,Rare,N,2.0,Y
+Ben Rubin '98,R,wc98_ben_rubin,11,Common,N,0.1,Y
+Brian Hacker '98,W,wc98_brian_hacker,24,Uncommon,N,2.0,Y
+Randy Buehler '98,U,wc98_randy_buehler,23,Common,N,1.0,Y
+Kai Budde '99,R,wc99_kai_budde,31,Rare,N,2.0,Y
+Mark Le Pine '99,R,wc99_mark_le_pine,13,Common,N,0.1,Y
+Matt Linde '99,G,wc99_matt_linde,11,Common,N,0.1,Y
+Jakub Šlemr '99,B,wc99_jakub_slemr,19,Uncommon,N,1.0,Y
+Jon Finkel '00,U,wc00_jon_finkel,26,Rare,N,2.0,Y
+Janosch Kühn '00,RG,wc00_janosch_kuhn,25,Uncommon,N,2.0,Y
 Tom van de Logt '00,WU,wc00_tom_van_de_logt,25,Rare,N,2.0,Y
 Nicolas Labarre '00,WG,wc00_nicolas_labarre,25,Rare,N,2.0,Y
 Tom van de Logt '01,BR,wc01_tom_van_de_logt,25,Uncommon,N,1.0,Y
-Alex Borteh '01,U,wc01_alex_borteh,25,Uncommon,N,1.0,Y
-Antoine Ruel '01,UBR,wc01_antoine_ruel,25,Rare,N,2.0,Y
-Jan Tomcani '01,BRG,wc01_jan_tomcani,25,Rare,N,2.0,Y
+Alex Borteh '01,U,wc01_alex_borteh,13,Common,N,0.1,Y
+Antoine Ruel '01,UBR,wc01_antoine_ruel,25,Uncommon,N,2.0,Y
+Jan Tomcani '01,BRG,wc01_jan_tomcani,25,Uncommon,N,2.0,Y
 Carlos Romao '02,UB,wc02_carlos_romao,25,Uncommon,N,1.0,Y
 Sim Han How '02,UGR,wc02_sim_han_how,25,Uncommon,N,1.0,Y
 Brian Kibler '02,GWR,wc02_brian_kibler,25,Rare,N,2.0,Y
@@ -1394,7 +1394,7 @@ Wolfgang Eder '03,BR,wc03_wolfgang_eder,25,Uncommon,N,1.0,Y
 Peer Kroger '03,BR,wc03_peer_kroger,25,Uncommon,N,1.0,Y
 Zak Dolan '94,WUG,wc94_zak_dolan,25,Rare,N,2.0,Y
 Bertrand Lestree '94,UBRG,wc94_bertrand_lestree,25,Uncommon,N,1.0,Y
-Dominic Symens '94,UBRG,wc94_dominic_symens,25,Rare,N,2.0,Y
+Dominic Symens '94,UBRG,wc94_dominic_symens,25,Uncommon,N,2.0,Y
 Cyrille deFoucaud '94,UBRG,wc94_cyrille_defoucaud,25,Rare,N,2.0,Y
 Alexander Blumke '95,WB,wc95_alexander_blumke,25,Uncommon,N,1.0,Y
 Marc Hernandez '95,WR,wc95_marc_hernandez,25,Rare,N,2.0,Y
@@ -1403,7 +1403,7 @@ Henry Stern '95,RG,wc95_henry_stern,25,Uncommon,N,1.0,Y
 Tom Chanpheng '96,W,wc96_tom_chanpheng,25,Uncommon,N,1.0,Y
 Mark Justice '96,WRG,wc96_mark_justice,25,Uncommon,N,1.0,Y
 Henry Stern '96,B,wc96_henry_stern,25,Uncommon,N,1.0,Y
-Olle Rade '96,RG,wc96_olle_rade,25,Uncommon,N,1.0,Y
+Olle Rade '96,RG,wc96_olle_rade,25,Common,N,1.0,Y
 Legend of the Savannah,GW,legendary_savannah,20,Uncommon,N,1.0,Y
 Legend of the Taiga,RG,legendary_taiga,20,Uncommon,N,1.0,Y
 Legend of the Tundra,WU,legendary_tundra,20,Rare,N,2.0,Y
@@ -1418,20 +1418,20 @@ Domain Keeper of Cromat,WUBRG,legendary_cromat,25,Rare,N,2.0,Y
 Arch Angel of Shandalar,W,shandalar97_white_archangel,22,Uncommon,N,1.0,Y
 High Priest of Shandalar,W,shandalar97_white_highpriest,27,Uncommon,N,1.0,Y
 The Sainted One,W,shandalar97_white_alsadim,40,Rare,Y,2.0,Y
-Shapeshifter of Shandalar,U,shandalar97_blue_shapeshifter,22,Uncommon,N,1.0,Y
-Thought Invoker of Shandalar,U,shandalar97_blue_thoughtinvoker,27,Uncommon,N,1.0,Y
-The Astral Visionary,U,shandalar97_blue_starcryst,40,Uncommon,Y,1.0,Y
-Nether Fiend of Shandalar,B,shandalar97_black_netherfiend,22,Uncommon,N,1.0,Y
-Necromancer of Shandalar,B,shandalar97_black_necromancer,27,Uncommon,N,1.0,Y
+Shapeshifter of Shandalar,U,shandalar97_blue_shapeshifter,24,Uncommon,N,1.0,Y
+Thought Invoker of Shandalar,U,shandalar97_blue_thoughtinvoker,13,Common,N,0.1,Y
+The Astral Visionary,U,shandalar97_blue_starcryst,40,Rare,Y,1.0,Y
+Nether Fiend of Shandalar,B,shandalar97_black_netherfiend,21,Uncommon,N,1.0,Y
+Necromancer of Shandalar,B,shandalar97_black_necromancer,28,Common,N,1.0,Y
 The Lichlord of Azar,B,shandalar97_black_skavius,40,Uncommon,Y,1.0,Y
-Crag Hydra of Shandalar,R,shandalar97_red_craghydra,22,Uncommon,N,1.0,Y
-War Mage of Shandalar,R,shandalar97_red_warmage,27,Uncommon,N,1.0,Y
-The Dragon Lord,R,shandalar97_red_kyzzn,40,Uncommon,Y,1.0,Y
-Beast Master of Shandalar,G,shandalar97_green_beastmaster,22,Common,N,0.1,Y
-Summoner of Shandalar,G,shandalar97_green_summoner,27,Uncommon,N,1.0,Y
-The Great Druid,G,shandalar97_green_morgane,40,Rare,Y,2.0,Y
+Crag Hydra of Shandalar,R,shandalar97_red_craghydra,18,Uncommon,N,1.0,Y
+War Mage of Shandalar,R,shandalar97_red_warmage,30,Rare,N,2.0,Y
+The Dragon Lord,R,shandalar97_red_kyzzn,40,Rare,Y,1.0,Y
+Beast Master of Shandalar,G,shandalar97_green_beastmaster,10,Common,N,0.1,Y
+Summoner of Shandalar,G,shandalar97_green_summoner,18,Uncommon,N,1.0,Y
+The Great Druid,G,shandalar97_green_morgane,40,Uncommon,Y,2.0,Y
 Kiska-Ra of Shandalar,WUG,shandalar97_colorless_kiskara,24,Uncommon,N,1.0,Y
-Whim of Shandalar,WUB,shandalar97_colorless_whim,24,Rare,N,2.0,Y
+Whim of Shandalar,WUB,shandalar97_colorless_whim,24,Uncommon,N,2.0,Y
 Mandurang of Shandalar,UBR,shandalar97_colorless_mandurang,24,Uncommon,N,1.0,Y
 Dracur of Shandalar,BRG,shandalar97_colorless_dracur,24,Uncommon,N,1.0,Y
 Prismat of Shandalar,WRG,shandalar97_colorless_prismat,24,Rare,N,2.0,Y
@@ -1441,19 +1441,19 @@ Baron Levilain,W,barronlevilain,30,Uncommon,Y,1.0,Y
 Gorilla Chief,G,shandalar97_gorilla_chief,30,Rare,Y,2.0,Y
 Slivdrazi Monstrosity,RG,shandalar97_slivdrazi_monstrosity,25,Uncommon,Y,1.0,Y
 Tibalt's Torturer,BR,shandalar97_tibalts_torturer,25,Rare,Y,2.0,Y
-Lim-Dul the Necromancer,B,shandalar97_limdul_the_necromancer,30,Common,N,0.1,Y
+Lim-Dul the Necromancer,B,shandalar97_limdul_the_necromancer,32,Common,N,0.1,Y
 Chandler,R,shandalar97_chandler,20,Common,Y,0.1,Y
 Joven,R,shandalar97_joven,20,Common,Y,0.1,Y
 Kogla (Boss),G,shandalar97_kogla,25,Common,Y,0.1,Y
-Ghoulcaller Ghoul,B,shandalar97_ghoulcaller_ghoul,30,Uncommon,N,1.0,Y
+Ghoulcaller Ghoul,B,shandalar97_ghoulcaller_ghoul,11,Common,N,0.1,Y
 Uncle Istvan,B,shandalar97_uncle_istvan,25,Uncommon,Y,1.0,Y
-Dark Ages Preacher,W,shandalar97_dark_ages_preacher,25,Common,Y,0.1,Y
+Dark Ages Preacher,W,shandalar97_dark_ages_preacher,25,Uncommon,Y,0.1,Y
 Swamp Queen Tojira,B,shandalar97_swamp_queen_tojira,25,Common,Y,0.1,Y
 Nightstalker,B,shandalar97_nightstalker,20,Common,N,0.1,Y
 Chainer Dementia Master,B,shandalar97_chainer_dementia_master,25,Uncommon,Y,1.0,Y
-Dementia Beast,B,shandalar97_dementia_beast,20,Uncommon,N,1.0,Y
+Dementia Beast,B,shandalar97_dementia_beast,11,Common,N,0.1,Y
 Cateran Overlord,B,shandalar97_cateran_overlord,25,Common,Y,0.1,Y
-Cateran Slaver,B,shandalar97_cateran_slaver,20,Uncommon,N,1.0,Y
+Cateran Slaver,B,shandalar97_cateran_slaver,13,Common,N,0.1,Y
 Urza Planeswalker,U,urza,60,Rare,Y,2.0,Y
 "Gaea, the Worldsoul",G,gaea,60,Uncommon,Y,1.0,Y
 Serra the Benevolent,W,serra,60,Rare,Y,2.0,Y
@@ -1461,16 +1461,328 @@ Recaller of Ancestry,UG,recaller_of_ancestry,30,Rare,Y,2.0,Y
 Twister of Time,UB,twister_of_time,30,Rare,Y,2.0,Y
 Time Walker,U,time_walker,30,Rare,Y,2.0,Y
 Krampus (Elite),BR,krampus,30,Uncommon,N,1.0,Y
-Santa (Elite),RG,santa,30,Uncommon,N,1.0,Y
+Santa (Elite),RG,santa,30,Common,N,1.0,Y
 Bazaar Keeper,WUBRG,bazaarkeeper,30,Rare,Y,2.0,Y
 Arcades Sabboth,WUG,Arcades Sabboth,40,Rare,Y,2.0,Y
 Chromium (Boss),WUB,chromium,40,Rare,Y,2.0,Y
 Nicol Bolas (Boss),UBR,nicol bolas,40,Rare,Y,2.0,Y
 Palladia-Mors (Boss),WRG,Palladia-Mors,40,Uncommon,Y,1.0,Y
 Vaevictis Asmadi,BRG,Vaevictis Asmadi,40,Uncommon,Y,1.0,Y
-Dovin Baan,WU,dovin_baan,26,Rare,N,0.8,Y
-Kaervek,BR,kaervek,24,Rare,N,0.8,Y
+Dovin Baan,WU,dovin_baan,26,Uncommon,N,0.8,Y
+Kaervek,BR,kaervek,24,Uncommon,N,0.8,Y
 Sidar Kondo,GW,sidar_kondo,22,Rare,N,0.8,Y
 Meren of Clan Nel Toth,BG,meren_of_clan_nel_toth,28,Rare,N,0.8,Y
-Domri Rade,RG,domri_rade,25,Rare,N,0.8,Y
+Domri Rade,RG,domri_rade,25,Uncommon,N,0.8,Y
 Mysterious Mage,,mystery_list,1,Common,N,0.1,Y
+Ashling,WUBRG,ashling,80,Mythic,N,3.0,Y
+Grub,RB,grub,80,Rare,N,3.0,Y
+Auntie Ool,BGR,auntie_ool,60,Rare,N,2.0,Y
+Bre,WR,bre,60,Rare,N,2.0,Y
+Salacinder and Soot,UR,salacinder_and_soot,60,Rare,N,2.0,Y
+Eirdu,BW,eirdu,80,Rare,N,3.0,Y
+Maralen,BGU,maralen,60,Rare,N,2.0,Y
+Morcant,GB,morcant,80,Rare,N,3.0,Y
+Oura,UB,oura,80,Rare,N,3.0,Y
+The Grand Goatnapper,BR,the_grand_goatnapper,60,Rare,N,2.0,Y
+Thorna and Twigtooth,BWR,thorna_and_twigtooth,60,Rare,N,2.0,Y
+Trystan,BG,trystan,60,Rare,N,2.0,Y
+Istvan,B,istvan,60,Uncommon,N,2.0,Y
+Freyalise,G,freyalise,75,Mythic,N,3.0,Y
+Sifa Grent,BR,sifa_grent,80,Mythic,N,3.0,Y
+Sivitri,UB,sivitri,80,Rare,N,3.0,Y
+Thomil,B,thomil,83,Mythic,N,3.0,Y
+Venser,UW,venser,80,Rare,N,3.0,Y
+Worzel,W,worzel,76,Mythic,N,3.0,Y
+Zo-Zu the Punisher,,mystery_list,1,Common,N,0.1,Y
+Nephilim Epochal,WUBRG,nephilim_epochal,100,Rare,N,3.0,Y
+Cerise,W,cerise,26,Rare,N,2.0,Y
+Emiel,WG,emiel,40,Uncommon,N,2.0,Y
+Grakk,W,grakk,36,Uncommon,N,2.0,Y
+Kwain,WU,kwain,40,Rare,N,2.0,Y
+Phelia,W,phelia,20,Uncommon,N,1.0,Y
+Preston,W,preston,39,Uncommon,N,2.0,Y
+Thurid,W,thurid,18,Uncommon,N,1.0,Y
+Autumn Willow (An-Havva),G,autumn_willow_anhavva,54,Mythic,N,3.0,Y
+Daughter of Autumn,GW,daughter_of_autumn,40,Uncommon,N,2.0,Y
+Feroz,WUG,feroz,40,Rare,N,2.0,Y
+Greensleeves,G,greensleeves,18,Uncommon,N,1.0,Y
+Joven and Chandler,R,joven_and_chandler,28,Rare,N,2.0,Y
+Cynette,U,cynette,41,Uncommon,N,2.0,Y
+Grandmother Goby,U,grandmother_goby,27,Rare,N,2.0,Y
+Kitsa,U,kitsa,45,Uncommon,N,2.0,Y
+Mu Yanling,U,mu_yanling,41,Rare,N,2.0,Y
+Neerdiv,U,neerdiv,19,Uncommon,N,1.0,Y
+Rikala,UG,rikala,60,Uncommon,N,2.0,Y
+Adriana,,mystery_list,1,Common,N,0.1,Y
+Ashiok,,mystery_list,1,Common,N,0.1,Y
+Gwafa Hazid,,mystery_list,1,Common,N,0.1,Y
+Vadmir,,mystery_list,1,Common,N,0.1,Y
+"Emrakul, the Aeons Torn",C,emrakul,70,Rare,N,3.0,Y
+"Kozilek, Butcher of Truth",C,kozilek,70,Rare,N,3.0,Y
+Devil Renegade,BR,devil_m,30,Rare,N,2.0,Y
+Devil Wanderer,BR,devil_f,12,Common,N,0.1,Y
+Kor Renegade,W,kor_m,34,Rare,N,2.0,Y
+Kor Wanderer,W,kor_f,11,Common,N,0.1,Y
+Human Renegade,W,human_m,44,Mythic,N,3.0,Y
+Human Wanderer,W,human_f,13,Common,N,0.1,Y
+Elf Renegade,G,elf_m,10,Common,N,0.1,Y
+Elf Wanderer,WG,elf_f,12,Common,N,0.1,Y
+Metathran Renegade,U,metathran_m,18,Uncommon,N,1.0,Y
+Metathran Wanderer,WU,metathran_f,20,Uncommon,N,1.0,Y
+Undead Renegade,UB,undead_m,30,Rare,N,2.0,Y
+Undead Wanderer,UB,undead_f,20,Uncommon,N,1.0,Y
+Viashino Renegade,R,viashino_m,23,Uncommon,N,1.0,Y
+Viashino Wanderer,R,viashino_f,13,Common,N,0.1,Y
+Phyrexian Renegade,UB,phyrexian_m,30,Rare,N,2.0,Y
+Phyrexian Wanderer,UB,phyrexian_f,12,Common,N,0.1,Y
+Dwarf Renegade,WR,dwarf_m,30,Rare,N,2.0,Y
+Dwarf Wanderer,R,dwarf_f,11,Common,N,0.1,Y
+Werewolf Renegade,RG,werewolf_m,30,Rare,N,2.0,Y
+Werewolf Wanderer,RG,werewolf_f,20,Uncommon,N,1.0,Y
+Leonin Renegade,WG,leonin_m,20,Uncommon,N,1.0,Y
+Leonin Wanderer,W,leonin_f,12,Common,N,0.1,Y
+Red Dragonkin Renegade,R,dragonkin_r,44,Mythic,N,3.0,Y
+White Dragonkin Renegade,W,dragonkin_w,23,Uncommon,N,1.0,Y
+Blue Dragonkin Renegade,U,dragonkin_u,30,Rare,N,2.0,Y
+Green Dragonkin Renegade,R,dragonkin_g,32,Rare,N,2.0,Y
+Black Dragonkin Renegade,B,dragonkin_b,29,Rare,N,2.0,Y
+Kor Hookmaster,WU,old_kor_01,12,Common,N,0.1,Y
+Kor Skyfisher,W,old_kor_02,29,Rare,N,2.0,Y
+Kor Sanctifier,W,old_kor_03,12,Common,N,0.1,Y
+Kor Aeronaut,W,old_kor_04,13,Common,N,0.1,Y
+Kor Cartographer,W,old_kor_05,29,Rare,N,2.0,Y
+Kor Duelist,W,old_kor_06,13,Common,N,0.1,Y
+Kor Outfitter,WU,old_kor_07,12,Common,N,0.1,Y
+Kor Bladewhirl,W,old_kor_08,12,Common,N,0.1,Y
+Kor Firewalker,W,old_kor_09,11,Common,N,0.1,Y
+Kor Castigator,W,old_kor_10,12,Common,N,0.1,Y
+Kor Scout,WU,old_kor_11,12,Common,N,0.1,Y
+Kor Line-Slinger,W,old_kor_12,13,Common,N,0.1,Y
+Kor Chant-Leader,W,old_kor_13,20,Uncommon,N,1.0,Y
+Kor Spiritdancer,W,old_kor_14,11,Common,N,0.1,Y
+Kor Skyknight,WU,old_kor_15,12,Common,N,0.1,Y
+Kor Entangler,W,old_kor_16,11,Common,N,0.1,Y
+Kor Celebrant,WU,old_kor_17,20,Uncommon,N,1.0,Y
+Kor Blademaster,WU,old_kor_18,12,Common,N,0.1,Y
+Kor Sky Climber,W,old_kor_19,13,Common,N,0.1,Y
+Kor Dirgewarden,WU,old_kor_20,30,Rare,N,2.0,Y
+Clucking Chicken,WG,clucking_chicken,9,Common,N,0.1,Y
+Coral Crab,UG,coral_crab,16,Uncommon,N,1.0,Y
+Croaking Toad,UG,croaking_toad,9,Common,N,0.1,Y
+Dainty Pig,G,dainty_pig,23,Uncommon,N,1.0,Y
+Honking Goose,WU,honking_goose,9,Common,N,0.1,Y
+Leaping Frog,UG,leaping_frog,9,Common,N,0.1,Y
+Mad Boar,G,mad_boar,31,Rare,N,2.0,Y
+Meowing Cat,WG,meowing_cat,9,Common,N,0.1,Y
+Pasturing Sheep,W,pasturing_sheep,16,Uncommon,N,1.0,Y
+Slow Turtle,UG,slow_turtle,16,Uncommon,N,1.0,Y
+Snow Fox,U,snow_fox,12,Common,N,0.1,Y
+Spikey Porcupine,G,spikey_porcupine,16,Uncommon,N,1.0,Y
+Stinky Skunk,BG,stinky_skunk,9,Common,N,0.1,Y
+Timber Wolf,G,timber_wolf,11,Common,N,0.1,Y
+Tiny Chick,W,tiny_chick,9,Common,N,0.1,Y
+Depraved Blackguard,WB,depraved_blackguard,30,Rare,N,2.0,Y
+Rascally Demonling,BR,rascally_demonling,20,Uncommon,N,1.0,Y
+Antlered Rascal,G,antlered_rascal,13,Common,N,0.1,Y
+Clawed Abomination,B,clawed_abomination,19,Uncommon,N,1.0,Y
+Crimson Imp,BR,crimson_imp,12,Common,N,0.1,Y
+Fledgling Demon,B,fledgling_demon,19,Uncommon,N,1.0,Y
+Floating Eye,UB,floating_eye,20,Uncommon,N,1.0,Y
+Foul Gouger,B,foul_gouger,22,Uncommon,N,1.0,Y
+Grinning Gremlin,R,grinning_gremlin,11,Common,N,0.1,Y
+Nefarious Scamp,BR,nefarious_scamp,30,Rare,N,2.0,Y
+Pit Balor,BR,pit_balor,30,Rare,N,2.0,Y
+Pointed Demonspawn,B,pointed_demonspawn,13,Common,N,0.1,Y
+Skewering Stalker,B,skewering_stalker,22,Uncommon,N,1.0,Y
+Tainted Scoundrel,UB,tainted_scoundrel,12,Common,N,0.1,Y
+Warp Skull,U,warp_skull,28,Rare,N,2.0,Y
+Elder Green Dragon,G,elder_green_dragon,26,Rare,N,2.0,Y
+Elder White Dragon,W,elder_white_dragon,42,Mythic,N,3.0,Y
+Aqua Drake,U,aqua_drake,17,Common,N,0.1,Y
+Baby Brass Dragon,R,baby_brass_dragon,15,Common,N,0.1,Y
+Baby Copper Dragon,R,baby_copper_dragon,16,Common,N,0.1,Y
+Baby Green Dragon,G,baby_green_dragon,19,Uncommon,N,1.0,Y
+Baby White Dragon,W,baby_white_dragon,24,Uncommon,N,1.0,Y
+Juvenile Bronze Dragon,UR,juvenile_bronze_dragon,15,Common,N,0.1,Y
+Mature Bronze Dragon,UR,mature_bronze_dragon,37,Rare,N,2.0,Y
+Mud Wyvern,B,mud_wyvern,26,Uncommon,N,1.0,Y
+Poison Drake,BG,poison_drake,15,Common,N,0.1,Y
+Pygmy Wyvern,RG,pygmy_wyvern,15,Common,N,0.1,Y
+Viridian Drake,G,viridian_drake,28,Uncommon,N,1.0,Y
+Young Brass Dragon,WR,young_brass_dragon,15,Common,N,0.1,Y
+Young Red Dragon,R,young_red_dragon,45,Mythic,N,3.0,Y
+Bestial Lizardfolk,RG,bestial_lizardfolk,20,Uncommon,N,1.0,Y
+Goblin Archer,R,goblin_archer,13,Common,N,0.1,Y
+Goblin Zealot,R,goblin_zealot,13,Common,N,0.1,Y
+Goblin Fighter,R,goblin_fighter,12,Common,N,0.1,Y
+Goblin Occultist,BR,goblin_occultist,20,Uncommon,N,1.0,Y
+Goblin Wolf Rider,RG,goblin_wolf_rider,20,Uncommon,N,1.0,Y
+Halfling Assassin,WB,halfling_assassin,20,Uncommon,N,1.0,Y
+Halfling Bard,W,halfling_bard,13,Common,N,0.1,Y
+Halfling Ranger,G,halfling_ranger,14,Common,N,0.1,Y
+Halfling Rogue,W,halfling_rogue,10,Common,N,0.1,Y
+Halfling Slinger,W,halfling_slinger,13,Common,N,0.1,Y
+Lizardfolk Archer,G,lizardfolk_archer,12,Common,N,0.1,Y
+Lizardfolk Gladiator,RG,lizardfolk_gladiator,30,Rare,N,2.0,Y
+Lizardfolk Scout,G,lizardfolk_scout,11,Common,N,0.1,Y
+Lizardfolk Spearman,RG,lizardfolk_spearman,12,Common,N,0.1,Y
+Blinded Grimlock,BR,blinded_grimlock,13,Common,N,0.1,Y
+Bloodshot Eye,UB,bloodshot_eye,13,Common,N,0.1,Y
+Brawny Ogre,BR,brawny_ogre,13,Common,N,0.1,Y
+Crimson Slaad,R,crimson_slaad,21,Uncommon,N,1.0,Y
+Crushing Cyclops,R,crushing_cyclops,32,Rare,N,2.0,Y
+Death Slime,BG,death_slime,34,Rare,N,2.0,Y
+Fungal Myconid,BG,fungal_myconid,13,Common,N,0.1,Y
+Humongous Ettin,R,humongous_ettin,48,Mythic,N,3.0,Y
+Murky Slaad,UB,murky_slaad,34,Rare,N,2.0,Y
+Ochre Jelly,UG,ochre_jelly,13,Common,N,0.1,Y
+Ocular Watcher,UB,ocular_watcher,34,Rare,N,2.0,Y
+Red Cap,BR,red_cap,13,Common,N,0.1,Y
+Shrieker Mushroom,BG,shrieker_mushroom,13,Common,N,0.1,Y
+Stone Troll,R,stone_troll,22,Uncommon,N,1.0,Y
+Mire Troll,G,mire_troll,20,Uncommon,N,1.0,Y
+Bound Cadaver,B,bound_cadaver,12,Common,N,0.1,Y
+Brittle Archer,B,brittle_archer,11,Common,N,0.1,Y
+Carcass Feeder,BG,carcass_feeder,20,Uncommon,N,1.0,Y
+Decrepit Bones,B,decrepit_bones,13,Common,N,0.1,Y
+Dismembered Crawler,B,dismembered_crawler,10,Common,N,0.1,Y
+Ghastly Eye,UB,ghastly_eye,20,Uncommon,N,1.0,Y
+Giant Royal Scarab,BG,giant_royal_scarab,30,Rare,N,2.0,Y
+Grave Revenant,WB,grave_revenant,30,Rare,N,2.0,Y
+Mutilated Stumbler,B,mutilated_stumbler,13,Common,N,0.1,Y
+Royal Scarab,B,royal_scarab,12,Common,N,0.1,Y
+Dune Ghoul,BR,dune_ghoul,12,Common,N,0.1,Y
+Skittering Hand,B,skittering_hand,20,Uncommon,N,1.0,Y
+Toxic Hound,B,toxic_hound,30,Rare,N,2.0,Y
+Unwinding Crawler,B,unwinding_crawler,12,Common,N,0.1,Y
+Vampire Bat,B,vampire_bat,11,Common,N,0.1,Y
+Adept Necromancer,B,adept_necromancer,27,Rare,N,2.0,Y
+Corrupted Treant,G,corrupted_treant,27,Rare,N,2.0,Y
+Deft Sorceress,U,deft_sorceress,27,Rare,N,2.0,Y
+Loam Elemental,RG,loam_elemental,30,Rare,N,2.0,Y
+Expert Druid,G,expert_druid,18,Uncommon,N,1.0,Y
+Ember Elemental,R,ember_elemental,11,Common,N,0.1,Y
+Fluttering Pixie,UG,fluttering_pixie,12,Common,N,0.1,Y
+Glowing Wisp,WU,glowing_wisp,12,Common,N,0.1,Y
+Grizzled Treant,G,grizzled_treant,21,Uncommon,N,1.0,Y
+Ice Golem,WU,ice_golem,12,Common,N,0.1,Y
+Iron Golem,WU,iron_golem,30,Rare,N,2.0,Y
+Magical Fairy,WU,magical_fairy,30,Rare,N,2.0,Y
+Novice Pyromancer,R,novice_pyromancer,13,Common,N,0.1,Y
+Vile Witch,B,vile_witch,32,Rare,N,2.0,Y
+Tide Elemental,U,tide_elemental,22,Uncommon,N,1.0,Y
+Aegis Paladin,W,aegis_paladin,57,Mythic,N,3.0,Y
+The Ivory Sovereign,W,ivory_sovereign,51,Mythic,N,3.0,Y
+Dawnblade Prince,W,dawnblade_prince,51,Mythic,N,3.0,Y
+Rusalka of the Drowned Mere,U,rusalka,52,Mythic,N,3.0,Y
+The Unblinking Eye,U,unblinking_eye,59,Mythic,N,3.0,Y
+Archmage of the Tides,U,archmage_of_tides,44,Mythic,N,3.0,Y
+The Reaper,B,the_reaper,50,Mythic,N,3.0,Y
+Maw of the Abyss,B,maw_of_the_abyss,55,Mythic,N,3.0,Y
+Onyx Minotaur Lord,B,onyx_minotaur_lord,54,Mythic,N,3.0,Y
+Goblin Warlord,R,goblin_warlord,51,Mythic,N,3.0,Y
+Crimson Minotaur Lord,R,crimson_minotaur_lord,55,Mythic,N,3.0,Y
+Ember Urchin,R,ember_urchin,53,Mythic,N,3.0,Y
+Molfar of the High Peaks,G,molfar,47,Mythic,N,3.0,Y
+Wildwood Minotaur,G,wildwood_minotaur,49,Mythic,N,3.0,Y
+Bog Opiven,G,bog_opiven,53,Mythic,N,3.0,Y
+Bone Raider,B,bone_raider,26,Rare,N,2.0,Y
+Hedge Slime,G,hedge_slime,12,Common,N,0.1,Y
+Goblin Cutthroat,R,goblin_cutthroat,13,Common,N,0.1,Y
+Goblin Reaver,R,goblin_reaver,17,Uncommon,N,1.0,Y
+Hexcaller Warlock,B,hexcaller_warlock,12,Common,N,0.1,Y
+Levy Swordsman,R,levy_swordsman,11,Common,N,0.1,Y
+Levy Spearman,W,levy_spearman,12,Common,N,0.1,Y
+Shieldwall Sergeant,W,shieldwall_sergeant,20,Uncommon,N,1.0,Y
+Halberd Veteran,R,halberd_veteran,19,Uncommon,N,1.0,Y
+Longbow Yeoman,G,longbow_yeoman,12,Common,N,0.1,Y
+Crossbow Marksman,W,crossbow_marksman,17,Uncommon,N,1.0,Y
+Cavalier Captain,W,cavalier_captain,22,Uncommon,N,1.0,Y
+Outrider,G,outrider,22,Uncommon,N,1.0,Y
+Court Mage,U,court_mage,11,Common,N,0.1,Y
+"Sirena, Tide-Singer",U,sirena_tidesinger,50,Mythic,N,3.0,Y
+Elven Archmage of the Mists,U,elven_archmage,48,Mythic,N,3.0,Y
+Aswang Sorcerer,U,aswang_sorcerer,48,Mythic,N,3.0,Y
+Kapre of the Old Balete,G,kapre_old_balete,52,Mythic,N,3.0,Y
+Troll Warlord,G,troll_warlord,52,Mythic,N,3.0,Y
+"Tikbalang, Wild Hunter",G,tikbalang,48,Mythic,N,3.0,Y
+Marksman of the Deep Wood,G,deepwood_marksman,48,Mythic,N,3.0,Y
+Forge Blacksmith,W,forge_blacksmith,11,Common,N,0.1,Y
+Elf Wayfinder,G,elf_wayfinder,11,Common,N,0.1,Y
+Goblin Shieldbearer,R,goblin_shieldbearer,12,Common,N,0.1,Y
+Goblin Skulker,R,goblin_skulker,11,Common,N,0.1,Y
+Lizardfolk Guard,G,lizardfolk_guard,22,Uncommon,N,1.0,Y
+Lizardfolk Champion,G,lizardfolk_champion,21,Uncommon,N,1.0,Y
+Wandering Brawler,R,wandering_brawler,11,Common,N,0.1,Y
+Farmhand Militia,W,farmhand_militia,12,Common,N,0.1,Y
+Cutpurse,B,cutpurse,12,Common,N,0.1,Y
+Hooded Skulk,B,hooded_skulk,12,Common,N,0.1,Y
+Market Trader,W,market_trader,20,Uncommon,N,1.0,Y
+Apprentice Scribe,U,apprentice_scribe,12,Common,N,0.1,Y
+Grey Scholar,U,grey_scholar,12,Common,N,0.1,Y
+Hedge Villager,G,hedge_villager,12,Common,N,0.1,Y
+Orc Raider,R,orc_raider,11,Common,N,0.1,Y
+Orc Warchief,R,orc_warchief,21,Uncommon,N,1.0,Y
+Orc Deathcaller,B,orc_deathcaller,32,Rare,N,2.0,Y
+Ratfolk Scavenger,B,ratfolk_scavenger,12,Common,N,0.1,Y
+Boar Knight,G,boar_knight,33,Rare,N,2.0,Y
+Archer Initiate,G,archer_initiate,11,Common,N,0.1,Y
+Hooded Archer,G,hooded_archer,12,Common,N,0.1,Y
+Ranger of the Wood,G,ranger_of_the_wood,30,Rare,N,2.0,Y
+Elven Apprentice,U,elven_apprentice,12,Common,N,0.1,Y
+Elven Spellweaver,U,elven_spellweaver,20,Uncommon,N,1.0,Y
+Elven Magus,U,elven_magus,42,Mythic,N,3.0,Y
+Squire-at-Arms,W,squire_at_arms,13,Common,N,0.1,Y
+Chainmail Knight,W,chainmail_knight,14,Common,N,0.1,Y
+Knight Bowman,W,knight_bowman,19,Uncommon,N,1.0,Y
+Plate Knight,W,plate_knight,22,Uncommon,N,1.0,Y
+Knight Sharpshooter,W,knight_sharpshooter,31,Rare,N,2.0,Y
+Knight Commander,W,knight_commander,26,Rare,N,2.0,Y
+Knight Longbowman,W,knight_longbowman,19,Uncommon,N,1.0,Y
+Shieldmaiden Recruit,W,shieldmaiden_recruit,13,Common,N,0.1,Y
+Shieldmaiden,W,shieldmaiden,22,Uncommon,N,1.0,Y
+Shieldmaiden Captain,W,shieldmaiden_captain,22,Uncommon,N,1.0,Y
+Shieldmaiden Paragon,W,shieldmaiden_paragon,34,Rare,N,2.0,Y
+Aghoy,G,aghoy,12,Common,N,0.1,Y
+Amaranhig,B,amaranhig,30,Rare,N,2.0,Y
+Amomongo,G,amomongo,22,Uncommon,N,1.0,Y
+Wild Boar,G,wild_boar,13,Common,N,0.1,Y
+Bristleback Boar,R,bristleback_boar,12,Common,N,0.1,Y
+Bungisngis,R,bungisngis,20,Uncommon,N,1.0,Y
+Busaw,B,busaw,13,Common,N,0.1,Y
+Buwaya,G,buwaya,12,Common,N,0.1,Y
+Barnyard Hen,W,barnyard_hen,13,Common,N,0.1,Y
+Blue Dwende,U,blue_dwende,12,Common,N,0.1,Y
+Ember Dwende,R,ember_dwende,12,Common,N,0.1,Y
+Red Dwende,R,red_dwende,10,Common,N,0.1,Y
+Golden Dwende,W,golden_dwende,12,Common,N,0.1,Y
+Evil Dwende,B,evil_dwende,20,Uncommon,N,1.0,Y
+Ekek,B,ekek,31,Rare,N,2.0,Y
+Kolyog,G,kolyog,19,Uncommon,N,1.0,Y
+Malakat,B,malakat,24,Uncommon,N,1.0,Y
+Manananggal,B,manananggal,26,Rare,N,2.0,Y
+Nuno sa Punso,G,nuno_sa_punso,10,Common,N,0.1,Y
+Fighting Rooster,R,fighting_rooster,13,Common,N,0.1,Y
+Santelmo,R,santelmo,26,Rare,N,2.0,Y
+Sigbin,B,sigbin,19,Uncommon,N,1.0,Y
+Sirena,U,sirena,19,Uncommon,N,1.0,Y
+Syokoy,U,syokoy,11,Common,N,0.1,Y
+Taong Tuod,G,taong_tuod,31,Rare,N,2.0,Y
+Tiburones,U,tiburones,20,Uncommon,N,1.0,Y
+Tiyanak,B,tiyanak,14,Common,N,0.1,Y
+Hex Witch,B,hex_witch,11,Common,N,0.1,Y
+Katipunero Scout,G,katipunero_scout,20,Uncommon,N,1.0,Y
+Katipunero Marine,U,katipunero_marine,22,Uncommon,N,1.0,Y
+Katipunero Firebrand,R,katipunero_firebrand,18,Uncommon,N,1.0,Y
+Village Volunteer,W,village_volunteer,12,Common,N,0.1,Y
+Village Defender,W,village_defender,12,Common,N,0.1,Y
+Mulawin Warrior,W,mulawin_warrior,19,Uncommon,N,1.0,Y
+Orange Mushroomling,G,orange_mushroomling,20,Uncommon,N,1.0,Y
+Pitchfork Farmer,G,pitchfork_farmer,12,Common,N,0.1,Y
+Plumed Knight,W,plumed_knight,22,Uncommon,N,1.0,Y
+Axe Orc,R,axe_orc,11,Common,N,0.1,Y
+Woodland Rover,G,woodland_rover,13,Common,N,0.1,Y
+Traveling Conjurer,U,traveling_conjurer,12,Common,N,0.1,Y
+Red-Cloak Duelist,R,red_cloak_duelist,11,Common,N,0.1,Y
+Grey Pilgrim,W,grey_pilgrim,18,Uncommon,N,1.0,Y
+Alley Knife,B,alley_knife,12,Common,N,0.1,Y

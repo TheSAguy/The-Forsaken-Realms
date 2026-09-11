@@ -17757,6 +17757,49 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 172: the handoff docs catch up, and the next merge is sized (2026-09-10)
+
+Session opener: read the STATE block, rounds 169-171, git and the live folder's PACKAGE_OK; report and propose. The user
+was playing the live folder the whole time (`javaw.exe` from 18:09), so nothing was built or packaged. Found while
+checking, and fixed where it was a document:
+
+- **The live folder equals v1.09 except for a label.** Its jar is byte-identical to the release jar (sha256
+  `ff993a19...` for both), so the NEXT SESSION's "repackage the live folder" only changes `config.json`'s modVersion
+  1.08 / 09.07 to 1.09 / 09.10 - read by nothing but the start screen's version line (`StartScene`). Deferred to the
+  next package.
+- **The content-filter CSVs are regenerated at every launch.** `config tables/enemies.csv` / `items.csv` /
+  `expansions.csv` differ between the live folder and the release because `ContentFilterTables` rewrites them in the
+  plane folder when the game starts, merging any Include=N a user set (there are none in any copy). The repo's tracked
+  copies were stale snapshots from 08-14 (1,475 enemy rows against a 1,787-enemy roster) and 09-02 (items) and shipped
+  that way in v1.09 - harmless, the game rebuilds them. Both are refreshed from the live folder's 18:09 regeneration.
+  `expansions.csv` stays untracked (it follows the engine's edition list).
+- **The review doc's status column had stopped at round 160.** Rounds 162 and 166 fixed or ruled on nine of its rows
+  without saying so there; each claimed fix was re-checked in the code before the column was changed. S5 / S6
+  FIXED-162 (the Attacks overlay); S9 FIXED-162 for the overlay labels (`resolveLabelOverlaps()` skips them now; the
+  quest/bookmark labels it still handles shift down without a cap - minor, left); S2 / S7 / E5 / G7 FIXED-166;
+  G3 / G8 / E6 / E8 RULED-166 (the user's release-blocker answers); T3 FIXED-172 (below). S10 is still open: the
+  bounded shift loop in `placeDetailLabel()` and `layoutDetails()` exits after the fourth shift without testing that
+  position, so the effective cap is three.
+- **CLAUDE.md's reading table said the changelog's newest rounds are at the bottom.** True up to round 121c; from
+  round 122 each round has been inserted newest-first right after 121c, so the bottom of the file is round 122. Table
+  fixed (and ~21k lines, 118 MOD_SCOPE items).
+- **The next engine merge is bigger than "ten Java".** Upstream is 22 commits past `06a3c05731c`: 7 touch Java, 55 Java
+  files, 14 of them files TFR edits - sized file by file in CORE_ENGINE_CHANGES "Round 172". All four call sites of
+  the removed no-argument `DeckEditScene.getInstance()` / `ShopScene.instance()` are in stock files upstream updates
+  in the same merge. It is blocked on the user anyway: the Forge_2 install is still the 09.09 daily, our merge point.
+- **T3**: the three compiled `.class` files under `dev-tools/save-editing/` are untracked (`git rm --cached`, kept on
+  disk) and `dev-tools/**/*.class` is ignored.
+
+The user's calls for what comes next (2026-09-10): round 173 fixes review G10 (free PayShards for a watched guard), S8
+(war champions in re-themed placements) and G6 (a watched guard duel cut off by a quit or crash must count as the
+guard LOSING, not cancel the attack), and brings back S1 (frontier spawns) and S4 (the heavyweight Archmage fallback);
+after that, agent play in an isolated setup on F: (its own `APPDATA` profile under `F:\FORGE\TFR-Agent\`; the user
+asked for F: rather than C:).
+
+**Files touched**: `CLAUDE.md`, `MOD_CHANGELOG.md`, `CORE_ENGINE_CHANGES.md`,
+`docs/review/2026-09-09-post-v108-code-review.md`, `.gitignore`, plane `config tables/enemies.csv` + `items.csv`;
+`dev-tools/save-editing/{FixGuardDecks,Inspect,WriteDecks}.class` removed from the index.
+
 ## Round 171: v1.09 "The Roaming Guard" RELEASED - desktop + Android (2026-09-10)
 
 User: *"review latest log, but I think everything is good. Please do a full release, including PC and Android."* Log

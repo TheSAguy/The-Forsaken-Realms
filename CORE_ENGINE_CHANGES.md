@@ -2632,3 +2632,31 @@ Review: `docs/review/2026-09-05-code-review.md` (finding ids below). Every chang
 
 - **`scene/AdventureDeckEditor.java`** - the sketchbook scan iterates the pack plus `getArmoryStorage()` (three lines).
 - **`player/AdventurePlayer.java`** - `hasItem()` / `countItem()` also count `armoryStorage`; `removeItem(String)` falls back to it when the pack has no such item.
+
+## Round 172 (2026-09-10) - no engine edits; the next merge sized
+
+No stock file changed this round. Preview of the next upstream merge, for whoever does it: upstream `master` was 22
+commits past our merge point `06a3c05731c` when checked (merge only to the commit the user's Forge_2 install is at -
+round 165's content-probe method). 7 commits touch Java, 55 files; the big ones are #11833 "Update UIScene Backdrop
+and Adventure DeckEditor Colors" (26 files) and #11816 "Fix auto-pass network crash and consolidate logic" (18). The
+14 of those files this doc lists:
+
+| File | Upstream | What to expect |
+|---|---|---|
+| `adventure/scene/UIScene.java` | +33/-39 | the backdrop code again - round 165's one conflict (shader backdrop vs the round-116 null guard) |
+| `adventure/scene/AdventureDeckEditor.java` | +54/-3 | a backdrop constructor parameter + `drawBackground()` overrides; the first insertion (~line 46) is near our round-170 sketchbook scan (~line 110) |
+| `adventure/world/WorldSave.java` | +14/-3 | `announceError` -> a new `finish()` in the load/save error paths - where review finding E4 lives, so E4 goes AFTER the merge |
+| `adventure/util/UIActor.java` | +8/-28 | the `title_bg` shader drawable becomes a `ShaderDrawable`; our `readWindowProperties()` lines (rounds 162/167) are ~100 lines above |
+| `forge/Forge.java` | +7 | an `isDisposed` guard and `safeDispose(world)` on dispose; our agent hooks are in `render()` |
+| `adventure/scene/EventScene.java` | +6/-2 | `DeckEditScene.getInstance(TextureRegion)` replaces the no-argument form (removed upstream) |
+| `adventure/scene/MapViewScene.java` | +5/-6 | `refreshMap()`'s minimap texture comes from `getNewMiniMapTexture()` |
+| `adventure/world/World.java` | +4/-3 | `biomeImage` disposal |
+| `forge/Adventure.java` | +4/-3 | `dispose()` early return |
+| `screens/match/MatchController.java` | +4/-2 | yield-marker long-press; our ante hook is ~70 lines below |
+| `adventure/scene/InnScene.java` | +3/-2 | `ShopScene.instance(TextureRegion)` replaces the no-argument form |
+| `adventure/util/RewardActor.java` | +2/-2 | edition code on the rewards screen |
+| `adventure/player/AdventurePlayer.java` | +1/-1 | `refreshEditor()` calls `getInstance(null)` - a method body, no save-format effect |
+| `adventure/stage/WorldStage.java` | +1/-1 | the autosave overlay text |
+
+Every call site of the two removed no-argument accessors is in a stock file upstream updates in the same merge
+(`AdventurePlayer`, `DeckSelectScene`, `EventScene`, `InnScene`). No upstream change adds a field to a save-bound class.

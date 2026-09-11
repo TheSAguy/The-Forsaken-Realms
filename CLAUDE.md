@@ -43,38 +43,49 @@ Read in this order, and stop when you have what you need:
 | Read | For |
 |---|---|
 | **this file (`CLAUDE.md`)** | ground rules, release workflow, deploy path, build commands |
-| **`MOD_SCOPE.md`** | the feature list — 103 numbered items with live status. Start at the Currency line |
-| **`MOD_CHANGELOG.md`** | the engineering log. Newest rounds at the **bottom**. ~15k lines — read the last few rounds, then grep by keyword |
+| **`MOD_SCOPE.md`** | the feature list — 118 numbered items with live status. Start at the Currency line |
+| **`MOD_CHANGELOG.md`** | the engineering log, ~21k lines. **Order**: rounds up to 121c run oldest-first; from round 122 on every new round is inserted NEWEST-FIRST right after 121c (~line 17760), so the newest round sits mid-file and the file's bottom is round 122. `grep -n "^## Round" MOD_CHANGELOG.md` lists them in file order; read the newest few, then grep by keyword |
 | **`CORE_ENGINE_CHANGES.md`** | every stock-engine file this mod edits, for upstream-merge conflict work |
 | **`ANDROID_RELEASE.md`** | the authoritative Android release procedure. Read before ANY Android work |
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 171; v1.09 RELEASED - nothing is unreleased; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 172; v1.09 RELEASED - nothing is unreleased; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (written at the 2026-09-10 close-out, round 171).** Open items, in order:
-  1. **Repackage the live folder** at the first opportunity (game closed, `tasklist | grep javaw.exe` empty):
-     the release was built from a copy, so the live folder's `config.json` still reads modVersion 1.08 although its
-     code and data equal v1.09. `python standalone-packaging/build_standalone.py`, then read `PACKAGE_OK.txt`.
-  2. **Agent play (MOD_SCOPE #117) - where it stands.** DONE (round 161): the loopback bridge
-     (`forge.adventure.agent`, off unless `TFR_AGENT_PORT` is set; `TFR_AGENT_CHEATS=1` for console + fog-free
-     state), the state snapshot, the command set (goto/explore/wait/leave/click/advance/equip/use/sell/deck/buy/
-     save/load/newgame/autobattle), the A* walker, the client `dev-tools/agent/tfr_agent.py`, and a scripted
-     end-to-end run that proved menu -> new game -> intro -> portal -> world walks -> cave -> shop purchase -> three
-     interception duels won by Forge's AI on the player's seat. NOT DONE: (a) the Claude Code play-loop skill (read
-     state -> decide -> one command -> `wait` -> repeat; press through Back to Adventure / OK / Done; re-issue an
-     interrupted goto), (b) the first full Claude-played session for the user to watch, (c) `newgame` parameters
-     (it uses the New Game screen's current settings), (d) a speed setting for the spectated duel, (e) deck editor /
-     Inn / Spellsmith only through generic `ui` clicks. Design + build plan: `docs/design/2026-09-09-agent-play.md`;
-     dev loop, traps and the save-backup rule: the round-161 bullet below and the project memory. The bridge has NOT
-     been run since the 09.09 engine merge (round 165) - the first thing a play session does is confirm it still
-     starts on this engine.
-  3. **Next engine merge** starts at upstream `06a3c05731c`'s 22 successors (ten Java: UIScene backdrop/deck-editor
-     colours, edition code on the rewards screen, server-URL dialog on mobile, auto-pass network fix, ...); first
-     Maven after any merge must run online (gson 2.13.2 precedent). Merge only to the commit the user's Forge_2
-     install is at (content probes, round 165 method).
-  4. **Wider playtest feedback** on the 09.09 engine and the storage / guard-equipment screen; the round-160 review's
-     remaining findings (`docs/review/2026-09-09-post-v108-code-review.md`).
+- **NEXT SESSION starts here (updated round 172, 2026-09-10 evening).** The user's calls, in their order:
+  1. **Round 173 = five review fixes the user approved** (ids from `docs/review/2026-09-09-post-v108-code-review.md`,
+     whose status column is current as of round 172): **G10** - a watched guard fight seeds the guard's AI seat with
+     the PLAYER's shard purse, so its PayShards cards cost nothing; make it play like the simulated path. **S8** - at
+     WAR the war champions leak into re-themed dungeon/cave/town placements. **G6** - a watched guard duel cut off by a
+     quit-to-desktop or crash cancels the attack on reload; user ruling: it must count as the guard LOSING the fight.
+     **S1** - frontier spawns (round 142) are dead code; user: bring them back. **S4** - the Archmage chest's
+     heavyweight fallback (Arzakon, Nephilim Epochal) is unreachable; user: bring it back. S1 has the cause round 166
+     fixed for war champions (S7): `BiomeData.getEnemyList()` holds a zero-weight clone of every catalog enemy.
+  2. **Then agent play (MOD_SCOPE #117) in ISOLATION, on F:** (user, round 172: "build this on F:\ not C:\"). Plan:
+     `F:\FORGE\TFR-Agent\` holds the agent game's own `APPDATA` profile (`profile\`) and its launcher; the game itself
+     runs from the live folder (no 20k-file copy over USB - the cost: close the agent game before any package, the
+     same rule as the user's game). `ForgeProfileProperties.getDefaultDirs()` derives the data dir from `%APPDATA%`, so
+     the agent game gets its own saves / prefs / forge.log and can run while the user plays, with no backup/restore
+     ritual. The first launch must prove it (the user's `%APPDATA%\ForsakenRealms\forge.log` must not rotate) and
+     confirm the bridge on the 09.09 engine. DONE (round 161): the loopback bridge (`forge.adventure.agent`, off unless `TFR_AGENT_PORT` is
+     set; `TFR_AGENT_CHEATS=1` for console + fog-free state), the state snapshot, the command set (goto/explore/wait/
+     leave/click/advance/equip/use/sell/deck/buy/save/load/newgame/autobattle), the A* walker, the client
+     `dev-tools/agent/tfr_agent.py`, a scripted end-to-end run (menu -> new game -> intro -> portal -> world walks ->
+     cave -> shop purchase -> three interception duels won by Forge's AI on the player's seat). NOT DONE: (a) the Claude
+     Code play-loop skill (read state -> decide -> one command -> `wait` -> repeat; press through Back to Adventure /
+     OK / Done; re-issue an interrupted goto), (b) the first full Claude-played session for the user to watch, (c)
+     `newgame` parameters, (d) a speed setting for the spectated duel, (e) deck editor / Inn / Spellsmith only through
+     generic `ui` clicks. Design + build plan: `docs/design/2026-09-09-agent-play.md`; dev loop and traps: the
+     round-161 bullet below and the project memory.
+  3. **Repackage the live folder** with the next package (game closed, `tasklist | grep javaw.exe` empty). Its jar is
+     byte-identical to the v1.09 release jar (sha256 checked in round 172); only `config.json` still reads 1.08 / 09.07,
+     a display-only label (`StartScene`'s version line).
+  4. **Next engine merge - BLOCKED on the user**: the Forge_2 install is still the 09.09 daily (`build.txt` 2026-09-09
+     18:24:56) = our merge point, and we merge only to the install's commit (round 165's content probes). Upstream was
+     22 commits past `06a3c05731c` at round 172: 7 touch Java, 55 Java files, 14 of them files we edit - the hot spots
+     are in CORE_ENGINE_CHANGES "Round 172". First Maven after any merge runs online (gson 2.13.2 precedent).
+  5. **Wider playtest feedback** on v1.09, and the review's remaining OPEN rows; E4 (a failed load's hybrid state)
+     goes right AFTER the merge, because upstream rewrites the same `WorldSave` error paths.
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
   #announcements.
@@ -88,6 +99,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 172 (2026-09-10, docs + housekeeping, repo only - nothing to package; the user was playing): the review doc's
+  status column brought up to date (S2 / S7 / E5 / G7 FIXED-166, S5 / S6 / S9 FIXED-162, G3 / G8 / E6 / E8 RULED-166 by
+  the user's round-166 answers, T3 FIXED-172); the reading table's MOD_CHANGELOG order note corrected (rounds 122+ run
+  newest-first from ~line 17760); the next merge sized in CORE_ENGINE_CHANGES; the three tracked `.class` files
+  untracked + ignored; the plane's `config tables/enemies.csv` / `items.csv` refreshed. **The game REGENERATES all three
+  content-filter tables at every launch** (`ContentFilterTables`, merging any Include=N), so the repo copies are
+  snapshots - they had been stale since 08-14 / 09-02 and shipped stale in v1.09, harmlessly. The user's calls for
+  round 173 and after are in the NEXT SESSION list.
 - **v1.09 "The Roaming Guard" is RELEASED** (round 171, 2026-09-10): tag `tfr-v1.09` @ `bb3bf4d2cc1`, published 2026-09-10 23:10:08 UTC and
   marked Latest. Three assets: `The-Forsaken-Realms-v1.09.zip` (269.9 MB), `forsaken-realms-1.09-signed-aligned.apk` (12.7 MB),
   `assets.zip` (175.5 MB). `RELEASE_NOTES_v1.09.md` is the body. **Rounds 137-170 are all shipped - nothing is unreleased.**
