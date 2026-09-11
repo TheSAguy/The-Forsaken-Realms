@@ -769,7 +769,14 @@ public class DuelScene extends ForgeScene {
         humanPlayer.setTeamNumber(0);
         humanPlayer.setStartingLife(guardDeck != null ? guardStartingLife
                 : eventData != null ? eventData.eventRules.startingLife : advPlayer.getLife());
-        if (eventData == null || eventData.eventRules.allowsShards)
+        // Round 173 (code review G10): not when the AI plays the player's seat. A watched guard fight
+        // handed the guard the PLAYER's whole shard purse, and the stock AI pays a PayShards cost with
+        // PaymentDecision.number(0), so every shard ability on the guard's gear cards (Flame Sword,
+        // Giant Scythe...) fired for free, as often as it liked - while the simulated fight, which has
+        // no purse, could not use them at all. A spectator's purse stays out of the fight, like its
+        // equipment and blessing below; the guard's own gear still adds its shards through
+        // addEffects(). The Deck Tester's watched AI-vs-AI mode now matches its headless mode too.
+        if (!aiControlsPlayerSide && (eventData == null || eventData.eventRules.allowsShards))
             humanPlayer.setManaShards(advPlayer.getShards());
 
         Array<EffectData> playerEffects = new Array<>();

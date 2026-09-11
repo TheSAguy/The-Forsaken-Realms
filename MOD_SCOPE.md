@@ -4809,7 +4809,7 @@ arena champion-bounty flag, so editing it would have cancelled the bounty and re
 
 Both opt-in; a stock plane has `caveChampionChance` 0 and no war_champions.json, so neither exists there.
 
-### 114. Frontier spawns — the stranded legends — `Done (built 2026-09-07, round 142), not yet playtest-confirmed`
+### 114. Frontier spawns — the stranded legends — `Done (built 2026-09-07, round 142; DEAD CODE until round 173 fixed review S1), not yet playtest-confirmed`
 User ask 2026-09-07, after the audit: "just have them be spawnable in 'Unhappy' and 'War' state terrain. So the multi
 color would spawn in multiple color zones. Color-less. Make those spawnable in Neutral terrain." 111 enemies were
 reachable through no route at all, all failing the same two filters (not Mythic, so barred from the Chest's
@@ -4818,6 +4818,9 @@ Dangerous-Enemy pool; sprite scale over 1.5, so barred from #113's cave pool). 8
 nothing in Happy/Partner territory — matched per colour LETTER so a WUBRG legend is eligible in all five biomes.
 Defined by a PREDICATE rather than a name list (126 entries would go stale); `maxLife` 60 keeps the hand-placed
 Eldrazi titans out. Respects the rank filter, unlike the war champions. `config tables/frontier_spawns.json`.
+**Round 173**: it had never appended anything (the zero-weight clone of every catalog enemy in the biome list made
+"skip if present" and the rank filter exact complements); now the clone is replaced by the legend at the tail. The
+player's own biome takes no share (judgment call). 127 eligible today. `[TFR-Frontier]` logs each one that spawns.
 
 ### 115. Autopilot / spectator mode — `Not Started` (findings parked 2026-09-07, round 142)
 User ask: *"Would it be possible to code it so you can play the game and I be a viewer?"* Parked for later review at

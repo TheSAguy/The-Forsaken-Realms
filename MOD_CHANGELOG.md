@@ -17757,6 +17757,113 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 173: five review fixes - free shards for watched guards, champions in re-themed caves, the unfinished guard fight, and two dead features back (2026-09-10)
+
+The user's calls on the post-v1.08 review's open rows (round 172): *"Do A now, G10, S8. G6 should lose the fight.
+S1/S4, bring them back."* All five below; ids are the review's (`docs/review/2026-09-09-post-v108-code-review.md`,
+whose status column now reads FIXED-173 for each).
+
+### G10 - a watched guard fight no longer runs on the player's shards
+
+`DuelScene.enter()` seeded the "player" seat with the player's shard purse whenever the rules allowed shards - including
+a spectated guard fight, where the AI plays that seat. The stock AI then pays any `PayShards<N>` cost with
+`PaymentDecision.number(0)` (`AiCostDecision.visit(CostPayShards)`), and `Player.payShards(0)` succeeds, so every shard
+ability on the guard's gear cards (26 adventure cards carry one - Flame Sword, Giant Scythe, Death Ring...) fired for
+free, over and over, and the purse was never touched. The simulated fight seeds nothing, so it could not use them at
+all. Now the purse is seeded only when the player plays the seat (`!aiControlsPlayerSide`), the same rule round 156
+applied to equipment and blessings; a guard's own gear still adds its shards through `addEffects()`. Watch and Simulate
+play the same fight again. The Deck Tester's watched AI-vs-AI mode (the other `aiControlsPlayerSide` caller) now
+matches its headless mode the same way. The stock AI's zero payment is untouched: after this no AI seat in a normal
+game holds shards - except the agent bridge's auto-battle (the AI pilots the player's real purse), which the
+agent-play round has to handle.
+
+### S8 - war champions stay out of re-themed dungeon placements
+
+`TerritoryControl.reThemedEnemyFor()` re-themes a captured dungeon's hand-placed encounters by rolling the new owner's
+biome through `BiomeData.getEnemy()` - the same roll that appends the war champions (round 139) and, from this round,
+the frontier spawns. At WAR a fifth of a re-themed cave's placements became war champions whatever their difficulty
+ceiling, re-rolled on every visit. New `BiomeData.getEnemy(float, boolean withInjectedSpawns)`; the one-argument form
+keeps the roaming behavior, and the re-theme passes `false`. (The other caller, `MapStage`'s fallback for an enemy name
+that does not resolve - a data error - still rolls the roaming way; left alone.)
+
+### G6 - a guard fight that never finishes is the guard's loss
+
+The mage a guard intercepts is pulled off `WorldStage.enemies` at the gate, and the fight state
+(`RoamingGuardRuntime.duellingGuard/duellingMage`) was never saved. So a save taken during the fight - the watched
+fight's own autosave at its start, any autosave inside a simulated fight's window (up to 90 s of world time), a manual
+save - lost the attacker: reloaded, the guard found its town "no longer under attack" and walked home unhurt. User
+ruling: *"should lose the fight."*
+
+- `RoamingGuardData.inDuel` (persisted as `inDuel` in the guard's sub-data, absent = false) is set when the guard takes
+  the fight and cleared when `onDuelFinished()` scores it.
+- `WorldStage.save()` writes the fought mage back into the enemy lists, at the gate, whenever a fight is running.
+- `WorldStage.load()` ends with `RoamingGuardRuntime.resolveInterruptedDuels()`: a guard still flagged `inDuel` is
+  scored exactly as `onDuelFinished(false)` scores a loss - out of commission for the recovery days, the defeat on the
+  record like any guard fight (round 166), a red notification - and the restored mage walks into the town on the
+  next frame, which then defends itself. `[TFR-RoamGuard] ... never finished ... counted as a LOSS`.
+- New Game+ clears the flag with the other per-world guard fields.
+
+A save written before this round mid-fight has neither the flag nor the mage, so it still loads the old way.
+
+### S1 - frontier spawns, alive for the first time
+
+Round 142's frontier spawns never added a single enemy. `BiomeData.getEnemyList()` holds a zero-spawn-rate copy of
+every catalog enemy (upstream's quest-boost mechanism), so after the rank filter every legend at or below the player's
+rank was already in the candidate list - weightless - and `FrontierSpawns.injectFor()` skipped anything present and
+anything above the rank: exact complements, so nothing was ever appended. The fix is round 166's war-champion fix
+(review S7): drop the weightless copy and append the legend at the tail, where `BiomeData` grants the frontier share.
+Two guards came with it: an enemy the biome is already fielding as a war champion is skipped (the two injected groups
+must stay disjoint for BiomeData's index arithmetic; none overlaps today - every champion is Archmage tier, which the
+frontier predicate refuses), and a name is appended once.
+
+**Judgment call (not in the spec):** `shareFor()` now returns 0 for the player's own biome. Its reputation status is
+null like the wasteland's, so the colorless legends would have started roaming the player's home - the guide says the
+player's territory "is always the safest place to fight". Only the wasteland and a color at NEUTRAL take the colorless
+share. With the shares as configured (`frontier_spawns.json`: Unhappy 10%, War 15%, colorless-in-Neutral 2%), 127
+legends are now eligible, gated by difficulty against the player's rank like any roaming enemy (29 of them at
+difficulty 1 or below, 123 at 2, all 127 at 3), and matched to the land's color by letter. New `[TFR-Frontier] <name> roams
+<biome> territory` and `[TFR-WarChampion]` lines follow the spawn line, so the next playtest can see both groups land.
+MOD_SCOPE #114's status says what happened.
+
+### S4 - Arzakon and Nephilim Epochal join the chest-duel group
+
+Round 141 made the Dangerous Enemy chest consult the heavyweights (non-Archmage arena-exclusives of 100+ life) only
+when the Archmage search came back empty - and it never does, because `pickGrandmasterMage()` also reads the biome
+lists that carry every catalog enemy. They now join the group as members: each exactly as likely as any single
+Archmage - 2 in 58 with today's catalog (56 Archmages; Jodah, a 100-life Archmage, is already one of them and is not
+counted twice). `[ChestEvents] Dangerous Enemy: heavyweight roll (2 in 58) -> Arzakon`. Membership odds are the literal
+reading of round 141's *"add him to the CHEST-DUEL group"*; a bigger share is one constant if wanted. Remember the chest
+duel's own 1.5x life handicap and the difficulty's life factor: Arzakon arrives at 300 x 2.5 = 750 life on Insane.
+
+### Guide
+
+`GUIDE.md` (shipped as GAME_GUIDE.md): the Research Lab step still said **100 Shards** - round 169 halved it (50 on
+Normal; 37 / 62 / 75 on Easy / Hard / Insane), now fixed; the reputation paragraph says hostile land draws out the
+legends and a color at War sends its champions roaming; the defense section gains the guard-fight rule (a draw, a
+stalled fight, quitting out, or a fight cut off by closing the game all count as the guard losing); the storage note
+says a guard has no shard purse, so shard abilities on its gear stay unused.
+
+### Found on the way, NOT changed (the user's call)
+
+- **Archmage attacks ignore their color.** `TerritoryControl.pickGrandmasterMage(world, color)` filters the biome's
+  `getEnemyList()` for Mythic tier - and that list carries every catalog enemy, so the Mythic-tier attacking mage a color
+  dispatches is any of the 56 catalog Archmages, 53 of them arena-exclusive (`spawnRate` 0) and most not of the
+  attacking color. The Dangerous Enemy chest draws the same way. Fix: filter to the biome's own roster (the `enemies`
+  names, or entries with a real spawn rate) - but it changes which Archmages attack.
+- **The player-territory colorless mix-in never fires.** `WorldStage.handleMonsterSpawn()` (user request 2026-08-14,
+  `PLAYER_COLORLESS_MIX_CHANCE`) looks the biome up by the name `"colorless"`, but `colorless.json` names it `"waste"`;
+  no retained log holds a `[TFR-ColorlessMix]` line. One word to fix - it changes spawns in the player's own territory.
+
+Tonight's log (the user's 18:09-19:57 session on the v1.09 build, 2,417 lines): no exceptions; research thresholds,
+arena payouts and the weekly lock, day ticks, ante re-rolls all logged normally.
+
+Built 20:50; NOT packaged.
+
+**Files touched**: `scene/DuelScene.java`, `data/BiomeData.java`, `stage/WorldStage.java`, `player/AdventurePlayer.java`
+(stock); `util/TerritoryControl.java`, `util/FrontierSpawns.java`, `util/ChestEvents.java`, `data/RoamingGuardData.java`,
+`util/RoamingGuards.java`, `util/RoamingGuardRuntime.java` (mod-added); plane `GUIDE.md`; `MOD_SCOPE.md` (#114); the
+review doc.
+
 ## Round 172: the handoff docs catch up, and the next merge is sized (2026-09-10)
 
 Session opener: read the STATE block, rounds 169-171, git and the live folder's PACKAGE_OK; report and propose. The user

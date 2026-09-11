@@ -57,7 +57,10 @@ Partner, 40% pricier at War), how often that color's mages target you, and wheth
 their towns at all. At War, ordinary towns are barred outright and a color's own Capitol charges a
 steep gold toll just to set foot inside. Your standing with a color also shapes what you'll run
 into on their land - roaming enemies skew noticeably weaker with a Partner or Happy standing, and
-tougher the worse things get, down to War. Your own territory is always the safest place to fight,
+tougher the worse things get, down to War. Unhappy and War land also draws the realm's oversized
+legends out of hiding - dragon lords, gods, Slivers - wherever the land's color is one of theirs, and a
+color at War sends its own arena champions roaming; the few colorless legends haunt the wasteland and
+Neutral land instead. Your own territory is always the safest place to fight,
 regardless of anyone else's standing. Separately, the world as a whole trends toward tougher
 roaming enemies the longer a run goes on, week by week, capped well short of an endless escalation
 - so the opening weeks are the gentlest part of any run, by design.
@@ -442,6 +445,7 @@ Other Armory notes:
   What a guard wears fights with it - its own bonuses on its side, its items' opponent effects on
   the mage's - whether you watch the duel or let it simulate, and boots make it walk faster.
   Dismissing or losing a guard returns its equipment to the storage; only the deck can be forfeited.
+  A guard carries no shards, so a shard ability on its gear (a Flame Sword's, say) goes unused.
 
 ### Card Sets: What You Have, and How to Get the Rest
 
@@ -479,7 +483,7 @@ your standing with that color starts to matter.
 1. **Collect the cards first.** A set becomes researchable once you own **10%** of it (minimum 5
    cards). You'll get a popup the moment you cross that line. The Lab lists every edition with
    your progress as `(owned/needed)`.
-2. **Pay 100 Shards** and start the research.
+2. **Pay 50 Shards** (on Normal - 37 on Easy, 62 on Hard, 75 on Insane) and start the research.
 3. **Wait a week.** One edition at a time — you can't research two at once.
 
 Once researched, that edition joins your unlocked pool permanently: your own shops start stocking
@@ -538,6 +542,9 @@ included. Each color sends one every 2–5 days.
   under attack. "Raise the Banner" gives you one for hiring your first guard; more are sold at the mart.
 - **Guards** you've hired fight first. If they fall, you defend your Capitol in person in a forced
   best-of-three — **and losing that ends your run.**
+- A **roaming guard's** fight counts like one of yours, watched or simulated. A draw, a stalled fight,
+  quitting out of a watched one, or a fight cut short by closing the game all count as the guard losing -
+  the attacker then walks on into the town.
 - **Neutral towns defend themselves**: 15% base, 20% if the town still has a working Armory.
 - Your standing with a color changes how likely it is to come for you — the exact weights are in
   the next section.

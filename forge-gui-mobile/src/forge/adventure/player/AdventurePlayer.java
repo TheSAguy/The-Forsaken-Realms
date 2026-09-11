@@ -766,6 +766,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             guard.deployed = false;
             guard.x = 0f;
             guard.y = 0f;
+            guard.inDuel = false; // round 173: a fight from the old world is not this world's loss
         }
 
         // ---- gates a New Game re-rolls ------------------------------------------------------

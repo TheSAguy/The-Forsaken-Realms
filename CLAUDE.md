@@ -50,17 +50,16 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 172; v1.09 RELEASED - nothing is unreleased; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 173; v1.09 RELEASED + round 173 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 172, 2026-09-10 evening).** The user's calls, in their order:
-  1. **Round 173 = five review fixes the user approved** (ids from `docs/review/2026-09-09-post-v108-code-review.md`,
-     whose status column is current as of round 172): **G10** - a watched guard fight seeds the guard's AI seat with
-     the PLAYER's shard purse, so its PayShards cards cost nothing; make it play like the simulated path. **S8** - at
-     WAR the war champions leak into re-themed dungeon/cave/town placements. **G6** - a watched guard duel cut off by a
-     quit-to-desktop or crash cancels the attack on reload; user ruling: it must count as the guard LOSING the fight.
-     **S1** - frontier spawns (round 142) are dead code; user: bring them back. **S4** - the Archmage chest's
-     heavyweight fallback (Arzakon, Nephilim Epochal) is unreachable; user: bring it back. S1 has the cause round 166
-     fixed for war champions (S7): `BiomeData.getEnemyList()` holds a zero-weight clone of every catalog enemy.
+  1. **Round 173 is DONE** (NOT packaged; the bullet below): review G10 / S8 / G6 / S1 / S4 fixed. Playtest it:
+     `[TFR-Frontier]` lines in Unhappy/War land (legends roaming - rank-gated), a Dangerous Enemy chest now and then
+     rolling Arzakon or Nephilim Epochal (`heavyweight roll`), a watched guard fight whose gear has shard abilities
+     (they stay unused now), and a guard fight cut off by closing the game - on reload it must read as the guard's
+     loss with the mage walking into the town. Two new findings wait on the user (round-173 changelog, "NOT
+     changed"): Archmage attacks ignore their color (`pickGrandmasterMage`), and the player-territory colorless
+     mix-in never fires (biome named "waste", not "colorless").
   2. **Then agent play (MOD_SCOPE #117) in ISOLATION, on F:** (user, round 172: "build this on F:\ not C:\"). Plan:
      `F:\FORGE\TFR-Agent\` holds the agent game's own `APPDATA` profile (`profile\`) and its launcher; the game itself
      runs from the live folder (no 20k-file copy over USB - the cost: close the agent game before any package, the
@@ -99,6 +98,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 173 (2026-09-10, built 20:50, NOT packaged): **five review fixes** (user: "G10, S8. G6 should lose the fight. S1/S4,
+  bring them back"). G10: a spectated guard fight no longer seeds the guard's seat with the player's shard purse
+  (`DuelScene.enter()`, `!aiControlsPlayerSide`) - the stock AI pays PayShards costs with zero, so its gear's shard
+  abilities fired free. S8: `BiomeData.getEnemy(float, boolean withInjectedSpawns)`; the dungeon re-theme passes false
+  (no war champions / frontier legends in re-themed placements). G6: `RoamingGuardData.inDuel` persisted,
+  `WorldStage.save()` writes the fought mage back at the gate, `load()` ends in
+  `RoamingGuardRuntime.resolveInterruptedDuels()` = the guard's loss, the mage walks into the town. S1: frontier spawns
+  work for the first time (the zero-weight clone moved to the tail - round 166's S7 fix), not in the player's own biome
+  (judgment call), `[TFR-Frontier]` / `[TFR-WarChampion]` lines. S4: the heavyweights join the chest-duel group at
+  membership odds (2 in 58). GUIDE: research cost 50, guard-fight rules, legends in hostile land. NOT yet playtested.
 - Round 172 (2026-09-10, docs + housekeeping, repo only - nothing to package; the user was playing): the review doc's
   status column brought up to date (S2 / S7 / E5 / G7 FIXED-166, S5 / S6 / S9 FIXED-162, G3 / G8 / E6 / E8 RULED-166 by
   the user's round-166 answers, T3 FIXED-172); the reading table's MOD_CHANGELOG order note corrected (rounds 122+ run

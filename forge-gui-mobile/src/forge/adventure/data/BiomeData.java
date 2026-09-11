@@ -114,6 +114,18 @@ public class BiomeData implements Serializable {
     }
 
     public EnemyData getEnemy(float difficultyFactor) {
+        return getEnemy(difficultyFactor, true);
+    }
+
+    /**
+     * Round 173 (code review S8): {@code withInjectedSpawns} false leaves out the two groups this mod
+     * appends to the roll - the war champions (round 139) and the frontier spawns (round 142). Both
+     * are ROAMING encounters by design. TerritoryControl.reThemedEnemyFor() re-themes a dungeon's
+     * hand-placed encounters through this same roll and must not draw them: at WAR a fifth of a
+     * re-themed cave's placements used to become war champions, whatever the placement's difficulty
+     * ceiling, re-rolled on every visit.
+     */
+    public EnemyData getEnemy(float difficultyFactor, boolean withInjectedSpawns) {
         List<EnemyData> filteredEnemies = new ArrayList<>();
         for (EnemyData data : enemyList ){
             if (data.difficulty <= difficultyFactor) {
@@ -157,15 +169,17 @@ public class BiomeData implements Serializable {
         // wins, so filtering them in as well as requiring a war would have meant almost never. The
         // war is the gate. They arrive carrying spawnRate 0, so both weighting branches below give
         // them a weight of exactly zero, and the pass after them grants the configured share.
-        List<EnemyData> warChampions = forge.adventure.util.WarChampions.injectFor(name, filteredEnemies);
+        List<EnemyData> warChampions = withInjectedSpawns
+                ? forge.adventure.util.WarChampions.injectFor(name, filteredEnemies) : new ArrayList<>();
         // Frontier spawns (round 142, user spec 2026-09-07): the 111 enemies that were reachable
         // through no route at all now roam terrain whose colour is UNHAPPY or at WAR, matched
         // per colour letter so a multicoloured legend has several homes; the colourless few take
         // NEUTRAL terrain instead. Unlike the war champions these DO respect the rank filter above
         // - they are ordinary Rare/Uncommon enemies, so difficultyFactor is passed through and
         // checked inside injectFor().
-        List<EnemyData> frontierSpawns = forge.adventure.util.FrontierSpawns
-                .injectFor(name, filteredEnemies, difficultyFactor);
+        List<EnemyData> frontierSpawns = withInjectedSpawns
+                ? forge.adventure.util.FrontierSpawns.injectFor(name, filteredEnemies, difficultyFactor)
+                : new ArrayList<>();
 
         float[] effectiveWeights = new float[filteredEnemies.size()];
         float totalDistribution = 0.0f;

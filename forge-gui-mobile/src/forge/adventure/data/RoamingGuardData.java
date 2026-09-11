@@ -57,6 +57,12 @@ public class RoamingGuardData {
     public float y;
     public boolean deployed;
 
+    /** Round 173 (code review G6): true from the moment this guard takes a fight until its result is
+     *  in. Persisted, so a save taken while the fight runs - the watched fight's own autosave, any
+     *  autosave inside a simulation window, a manual save - knows the fight never finished, and the
+     *  load scores it as the guard's LOSS (user ruling) instead of forgetting the attack. */
+    public boolean inDuel;
+
     /** Round 163 (MOD_SCOPE #118): what this guard wears, one item per slot, moved here from the
      *  Armory storage and back through ArmoryStorage's verbs only. Whole ItemData objects, the same
      *  way the player's inventory holds them, so a worn item keeps its identity (longID) and its

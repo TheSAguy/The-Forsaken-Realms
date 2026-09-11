@@ -67,6 +67,12 @@ public class RoamingGuardRuntime {
         return duellingGuard;
     }
 
+    /** Round 173 (review G6): the mage being fought right now. It is off WorldStage's enemy list until
+     *  the result is in, so WorldStage.save() writes it back at the gate - see resolveInterruptedDuels(). */
+    public static EnemySprite duellingMage() {
+        return duellingMage;
+    }
+
     public static void clearDuel() {
         duellingGuard = null;
         duellingMage = null;
@@ -297,6 +303,7 @@ public class RoamingGuardRuntime {
             waitingMage = null;
         duellingGuard = guard;
         duellingMage = mage;
+        guard.inDuel = true; // round 173: persisted until the result is in - see resolveInterruptedDuels()
         System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + " intercepts a "
                 + mage.getData().tier + " mage at " + mage.territoryTarget.getDisplayName()
                 + " (guard life " + guard.maxLife + ", deck \"" + guard.deckName + "\", "
@@ -316,6 +323,7 @@ public class RoamingGuardRuntime {
         clearDuel();
         if (guard == null)
             return null;
+        guard.inDuel = false;
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         String town = mage != null && mage.territoryTarget != null
                 ? mage.territoryTarget.getDisplayName() : "your town";
@@ -341,6 +349,48 @@ public class RoamingGuardRuntime {
                 + " guard fell at " + town + " and is out of commission for "
                 + RoamingGuards.recoveryDays() + " days.", true);
         return mage; // the mage carries on to the town, which now defends itself
+    }
+
+    /**
+     * Round 173 (code review G6, user: "should lose the fight"). Called at the end of
+     * WorldStage.load(): a guard still flagged {@code inDuel} was saved in the middle of its fight -
+     * the game was closed or crashed during a watched duel, or saved inside a simulation window - and
+     * that fight will never report a result. It counts as the guard's loss, scored the way
+     * onDuelFinished(false) scores one: the guard is out of commission, the defeat goes on the record
+     * like any guard fight (round 166), and the mage WorldStage.save() wrote back at the gate walks
+     * into the town on the next frame, which then defends itself. Before this round the save simply
+     * lost the mage, and the reloaded guard walked home unhurt from an attack that no longer existed.
+     *
+     * @param enemies WorldStage's freshly loaded enemy list - read only, to find the mage at the gate
+     */
+    public static void resolveInterruptedDuels(List<Pair<Float, EnemySprite>> enemies) {
+        int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
+        for (RoamingGuardData guard : RoamingGuards.roster()) {
+            if (!guard.inDuel || guard == duellingGuard)
+                continue;
+            guard.inDuel = false;
+            PointOfInterest town = poiById(guard.missionPoiId);
+            // save() appends the fought mage after every live one, so the LAST mage aimed at this town
+            // is the one this guard was fighting (an earlier one would be a mage queued at the gate).
+            EnemySprite mage = null;
+            if (town != null && enemies != null) {
+                for (Pair<Float, EnemySprite> pair : enemies) {
+                    EnemySprite e = pair.getValue();
+                    if (e != null && e.territoryTarget != null && town.getID().equals(e.territoryTarget.getID()))
+                        mage = e;
+                }
+            }
+            String townName = town != null ? town.getDisplayName() : "your town";
+            System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier) + "'s fight at " + townName
+                    + " never finished (the game closed, or was saved, mid-fight) - counted as a LOSS"
+                    + (mage != null ? "; " + mage.getName() + " is at the gate" : "; no attacker was saved with it"));
+            if (mage != null && mage.getData() != null && mage.getData().fixedDeck == null)
+                forge.adventure.scene.DuelScene.recordStatistics(mage, mage.getName(), false);
+            RoamingGuards.onDefeated(guard, day);
+            GameHUD.getInstance().addNotification("[RED]Your " + RoamingGuards.displayName(guard.tier)
+                    + " guard's fight at " + townName + " never finished - it counts as a loss. Out of commission for "
+                    + RoamingGuards.recoveryDays() + " days.", true);
+        }
     }
 
     private static void sendHome(RoamingGuardData guard) {

@@ -296,6 +296,26 @@ public class ChestEvents {
     // clone (EnemyData's own copy constructor) - safe to mutate (life, rewards) without touching
     // the shared JSON-loaded template.
     private static EnemyData pickRandomArchmage(World world) {
+        // Round 141 (user ask 2026-09-07: "Why is Arzakon unreachable? If there really is no way to
+        // get to him, add him to the CHEST-DUEL group."). pickGrandmasterMage() is Mythic-tier only
+        // because it also picks the AI's roaming attacking mage - widening THAT would put a
+        // 200-life legend on the overworld, so the extra candidates live here instead, where the
+        // encounter is a straight duel and sprite scale never reaches the map.
+        //
+        // Round 173 (code review S4, user: "bring them back"): round 141 only consulted them when
+        // the Archmage search below came back empty, and it never does - pickGrandmasterMage() reads
+        // BiomeData.getEnemyList(), which holds a copy of every catalog enemy, so every Archmage in
+        // the catalog is always a candidate. The heavyweights now JOIN the group: each one exactly as
+        // likely as any single Archmage (2 in 58 with the catalog as it stands).
+        List<EnemyData> heavyweights = heavyweights();
+        int archmages = archmageCount();
+        if (!heavyweights.isEmpty()
+                && world.getRandom().nextInt(archmages + heavyweights.size()) < heavyweights.size()) {
+            EnemyData pick = heavyweights.get(world.getRandom().nextInt(heavyweights.size()));
+            System.out.println("[ChestEvents] Dangerous Enemy: heavyweight roll (" + heavyweights.size() + " in "
+                    + (archmages + heavyweights.size()) + ") -> " + pick.getName());
+            return new EnemyData(pick);
+        }
         List<String> colors = new ArrayList<>(java.util.Arrays.asList(ColorReputation.COLORS));
         Collections.shuffle(colors, world.getRandom());
         for (String color : colors) {
@@ -303,24 +323,39 @@ public class ChestEvents {
             if (found != null)
                 return new EnemyData(found);
         }
-        // Round 141 (user ask 2026-09-07: "Why is Arzakon unreachable? If there really is no way to
-        // get to him, add him to the CHEST-DUEL group."). pickGrandmasterMage() is Mythic-tier only
-        // because it also picks the AI's roaming attacking mage - widening THAT would put a
-        // 200-life legend on the overworld, so the extra candidates live here instead, where the
-        // encounter is a straight duel and sprite scale never reaches the map.
+        if (!heavyweights.isEmpty())
+            return new EnemyData(heavyweights.get(world.getRandom().nextInt(heavyweights.size())));
+        return null;
+    }
+
+    /** Rounds 141/173: the arena-exclusive enemies big enough to be a chest duel that are NOT already
+     *  Archmages - Arzakon (200 life) and Nephilim Epochal (100). An Archmage over the line (Jodah) is
+     *  in the Archmage group already and is not counted twice. */
+    private static List<EnemyData> heavyweights() {
         List<EnemyData> heavyweights = new ArrayList<>();
         for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies())) {
             if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
                 continue;
-            if (data.spawnRate > 0f || data.life < HEAVYWEIGHT_LIFE)
+            if (data.spawnRate > 0f || data.life < HEAVYWEIGHT_LIFE || "Mythic".equals(data.tier))
                 continue;
             if (!ContentFilterTables.isEnemyIncluded(data.getName()))
                 continue;
             heavyweights.add(data);
         }
-        if (!heavyweights.isEmpty())
-            return new EnemyData(heavyweights.get(world.getRandom().nextInt(heavyweights.size())));
-        return null;
+        return heavyweights;
+    }
+
+    /** Round 173: how many Archmages the group holds - the same filter pickGrandmasterMage() applies
+     *  to a biome's list, which carries every catalog enemy. */
+    private static int archmageCount() {
+        int count = 0;
+        for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies())) {
+            if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+                continue;
+            if ("Mythic".equals(data.tier) && ContentFilterTables.isEnemyIncluded(data.getName()))
+                count++;
+        }
+        return count;
     }
 
     /** Round 141: life at which a non-Mythic arena-exclusive enemy still counts as a chest-worthy

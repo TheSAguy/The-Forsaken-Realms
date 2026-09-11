@@ -2660,3 +2660,11 @@ and Adventure DeckEditor Colors" (26 files) and #11816 "Fix auto-pass network cr
 
 Every call site of the two removed no-argument accessors is in a stock file upstream updates in the same merge
 (`AdventurePlayer`, `DeckSelectScene`, `EventScene`, `InnScene`). No upstream change adds a field to a save-bound class.
+
+## Round 173 (2026-09-10) - review G10 / S8 / G6 / S1 / S4
+
+- **`scene/DuelScene.java`** - `enter()`: the player seat's `setManaShards(advPlayer.getShards())` gains `!aiControlsPlayerSide &&` (a spectated guard fight / the Deck Tester's watched AI-vs-AI no longer run on the player's purse). One condition in a mod-touched region.
+- **`data/BiomeData.java`** - `getEnemy(float)` now delegates to a new `getEnemy(float, boolean withInjectedSpawns)`; the two mod-added injection lines (war champions, frontier spawns) become conditional on the flag. The stock body is otherwise unchanged. `serialVersionUID` is pinned, so the extra method cannot move the save format.
+- **`stage/WorldStage.java`** - `save()`: after the enemy loop, the mage a roaming guard is fighting (`RoamingGuardRuntime.duellingMage()`) is appended to the same eight lists if it is not already listed; `load()`: `RoamingGuardRuntime.resolveInterruptedDuels(enemies)` in its own try just before the `globalTimer` read; `spawn()`'s `[TFR-Spawn]` block adds `[TFR-Frontier]` / `[TFR-WarChampion]` lines. All inside mod-touched regions.
+- **`player/AdventurePlayer.java`** - `resetForNewGamePlus()`'s guard loop clears `inDuel` (one line, mod-only logic).
+- Mod-added files, no merge burden: `util/TerritoryControl.java` (re-theme passes `false`), `util/FrontierSpawns.java` (clone moved to the tail, war-cast and player-biome guards), `util/ChestEvents.java` (heavyweights as group members), `data/RoamingGuardData.java` (`inDuel`), `util/RoamingGuards.java` (persists it), `util/RoamingGuardRuntime.java` (`duellingMage()`, the flag, `resolveInterruptedDuels()`).

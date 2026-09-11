@@ -1479,6 +1479,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         + ", colors=" + enemyData.colors + ", speed=" + enemyData.speed
                         + ", life=" + enemyData.life + ") in " + data.name + " territory (rank=" + difficultyFactor
                         + spawnTierInfo + ")");
+                // Round 173 (review S1): the two groups BiomeData appends to the roll say so when they
+                // land - frontier spawns sat dead for thirty rounds partly because nothing logged one.
+                if (forge.adventure.util.FrontierSpawns.isCandidate(enemyData))
+                    System.out.println("[TFR-Frontier] " + enemyData.getName() + " (tier=" + enemyData.tier
+                            + ", colors=" + enemyData.colors + ") roams " + data.name + " territory");
+                else if (forge.adventure.util.WarChampions.isBiomeAtWar(data.name)
+                        && forge.adventure.util.WarChampions.championNames(data.name).contains(enemyData.getName()))
+                    System.out.println("[TFR-WarChampion] " + enemyData.getName() + " rides with the war in "
+                            + data.name + " territory");
             }
         }
         EnemyData extraSpawnForQuests = data.getExtraSpawnEnemy(difficultyFactor);
@@ -1802,6 +1811,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 enemies.add(Pair.of(timeouts.get(i), sprite));
                 foregroundSprites.addActor(sprite);
             }
+            // Round 173 (code review G6): a guard saved in the middle of its fight lost it - see save().
+            // Its own try: this method's catch below is silent, and a failure here must not cost the
+            // global timer read, nor the other way round.
+            try {
+                RoamingGuardRuntime.resolveInterruptedDuels(enemies);
+            } catch (Exception e) {
+                System.err.println("[TFR-RoamGuard] resolving an interrupted guard fight failed: " + e);
+            }
             globalTimer = data.readFloat("globalTimer");
         } catch (Exception e) {
 
@@ -1890,6 +1907,29 @@ public class WorldStage extends GameStage implements SaveFileContent {
             territoryColors.add(enemy.getValue().territoryColor);
             territoryTargetIds.add(enemy.getValue().territoryTarget == null ? null : enemy.getValue().territoryTarget.getID());
             lastDuelDays.add(enemy.getValue().lastDuelDay);
+        }
+        // Round 173 (code review G6, user: "should lose the fight"): the mage a roaming guard is fighting
+        // right now was pulled off `enemies` at the gate, so a save taken mid-fight - the watched fight's
+        // own autosave, any autosave inside a simulation window, a manual save - left it out: reloaded,
+        // the attack had vanished and the guard walked home unhurt. It is written back at the gate here,
+        // and the guard carries inDuel, so load() scores the unfinished fight as the guard's loss and
+        // this mage walks on into the town (RoamingGuardRuntime.resolveInterruptedDuels()).
+        EnemySprite duelling = RoamingGuardRuntime.duellingMage();
+        if (duelling != null && duelling.getData() != null) {
+            boolean listed = false;
+            for (Pair<Float, EnemySprite> enemy : enemies)
+                listed |= enemy.getValue() == duelling;
+            if (!listed) {
+                timeouts.add(globalTimer);
+                String rawName = duelling.getData().name;
+                names.add(rawName != null && !rawName.isEmpty() ? rawName : duelling.getData().getName());
+                x.add(duelling.getX());
+                y.add(duelling.getY());
+                questStageIDs.add(duelling.questStageID);
+                territoryColors.add(duelling.territoryColor);
+                territoryTargetIds.add(duelling.territoryTarget == null ? null : duelling.territoryTarget.getID());
+                lastDuelDays.add(duelling.lastDuelDay);
+            }
         }
         data.storeObject("timeouts", timeouts);
         data.storeObject("names", names);

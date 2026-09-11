@@ -1760,7 +1760,9 @@ public class TerritoryControl {
             return null;
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (currentColor.equals(biome.name)) {
-                EnemyData result = biome.getEnemy(originalDifficultyCeiling);
+                // Round 173 (review S8): the ordinary roster only - war champions and frontier spawns
+                // are roaming encounters, never a dungeon's placements.
+                EnemyData result = biome.getEnemy(originalDifficultyCeiling, false);
                 if (result != null) {
                     // Diagnostic-only logging (user request 2026-08-10, "hard to test in-game") -
                     // greppable in forge.log as "[TFR-ReTheme]".

@@ -506,6 +506,7 @@ public class RoamingGuards {
             sub.store("missionPoiId", g.missionPoiId == null ? "" : g.missionPoiId);
             sub.store("returningHome", g.returningHome);
             sub.store("deployed", g.deployed);
+            sub.store("inDuel", g.inDuel); // round 173 (review G6)
             sub.store("pos", new Vector2(g.x, g.y));
             // Round 163: the guard's equipment, the inventory's own idiom (an ItemData[]).
             sub.storeObject("equipment", g.equipment.toArray(new forge.adventure.data.ItemData[0]));
@@ -542,6 +543,7 @@ public class RoamingGuards {
             g.missionPoiId = sub.containsKey("missionPoiId") ? sub.readString("missionPoiId") : "";
             g.returningHome = sub.containsKey("returningHome") && sub.readBool("returningHome");
             g.deployed = sub.containsKey("deployed") && sub.readBool("deployed");
+            g.inDuel = sub.containsKey("inDuel") && sub.readBool("inDuel"); // round 173: absent before it
             if (sub.containsKey("pos")) {
                 Vector2 pos = sub.readVector2("pos");
                 g.x = pos.x;
