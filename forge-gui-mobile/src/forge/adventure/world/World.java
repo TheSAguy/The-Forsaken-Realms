@@ -633,8 +633,10 @@ public class World implements Disposable, SaveFileContent {
     @Override
     public void load(SaveFileData saveFileData) {
 
-        if (biomeImage != null)
+        if (biomeImage != null) {
             biomeImage.dispose();
+            biomeImage = null;
+        }
 
         loadWorldData();
 
@@ -4470,10 +4472,9 @@ public class World implements Disposable, SaveFileContent {
     }
 
     public void dispose() {
-
-        if (biomeImage != null) biomeImage.dispose();
-        if (fogOfWarPixmap != null) fogOfWarPixmap.dispose();
-        if (fogTilePixmap != null) fogTilePixmap.dispose();
+        // Engine merge 09.11: upstream's safeDispose (tolerates an already-disposed Pixmap) for the fog-of-war
+        // pixmaps this plane adds too.
+        Forge.safeDispose(biomeImage, fogOfWarPixmap, fogTilePixmap);
     }
 
     public void setSeed(long seedOffset) {

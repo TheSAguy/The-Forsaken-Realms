@@ -1,6 +1,7 @@
 package forge.adventure.scene;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import forge.Forge;
@@ -45,6 +46,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class AdventureDeckEditor extends FDeckEditor {
+    @Override
+    public void drawBackground(Graphics g) {
+        if (backDrop != null)
+            g.drawPix(backDrop, 0, 0, Forge.getScreenWidth(), Forge.getScreenHeight());
+    }
+
     protected static class AdventureEditorConfig extends DeckEditorConfig {
         @Override
         public GameType getGameType() {
@@ -258,7 +265,7 @@ public class AdventureDeckEditor extends FDeckEditor {
                     case Entered:
                         if (event.getDraft() != null)
                             return new DeckEditorPage[]{
-                                    new DraftPackPage(new AdventureCardManager()),
+                                    new AdventureDraftPackPage(new AdventureCardManager()),
                                     new AdventureDeckSectionPage(DeckSection.Main, ItemManagerConfig.DRAFT_POOL),
                                     new AdventureDeckSectionPage(DeckSection.Sideboard, ItemManagerConfig.DRAFT_POOL)
                             };
@@ -305,6 +312,11 @@ public class AdventureDeckEditor extends FDeckEditor {
         @Override
         protected void onCardActivated(PaperCard card) {
             CardZoom.show(card);
+        }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), getHeight());
         }
     }
 
@@ -407,6 +419,11 @@ public class AdventureDeckEditor extends FDeckEditor {
         @Override
         protected boolean allowFavoriteCards() {
             return true;
+        }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), getHeight());
         }
     }
 
@@ -538,6 +555,11 @@ public class AdventureDeckEditor extends FDeckEditor {
                 }
             });
         }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), getHeight());
+        }
     }
 
     protected static class CollectionAutoSellPage extends CatalogPage {
@@ -618,6 +640,11 @@ public class AdventureDeckEditor extends FDeckEditor {
                 removeCard(card, 1);
             }
             //Move to deck? Back to catalog? Unclear.
+        }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), getHeight());
         }
     }
 
@@ -788,15 +815,17 @@ public class AdventureDeckEditor extends FDeckEditor {
     protected AdventureDeckHeader deckHeader;
     protected FDraftLog draftLog;
     protected CollectionAutoSellPage autoSellPage;
+    protected TextureRegion backDrop;
 
-    public AdventureDeckEditor(boolean createAsShop) {
+    public AdventureDeckEditor(boolean createAsShop, TextureRegion backdrop) {
         super(createAsShop ? new ShopConfig() : new AdventureEditorConfig(),
                 createAsShop ? null : Current.player().getSelectedDeck());
         if (createAsShop)
             setHeaderText(Forge.getLocalizer().getMessage("lblSell"));
+        backDrop = backdrop;
     }
 
-    public AdventureDeckEditor(AdventureEventData event) {
+    public AdventureDeckEditor(AdventureEventData event, TextureRegion backdrop) {
         super(new AdventureEventEditorConfig(event), event.registeredDeck);
         currentEvent = event;
 
@@ -805,6 +834,7 @@ public class AdventureDeckEditor extends FDeckEditor {
             event.getDraft().setLogEntry(this.draftLog);
             deckHeader.initDraftLog(this.draftLog, this);
         }
+        backDrop = backdrop;
     }
 
     public AdventureDeckEditor(Deck deckToPreview) {
@@ -1059,12 +1089,33 @@ public class AdventureDeckEditor extends FDeckEditor {
         public void updateGold() {
             lblGold.setText(String.valueOf(Current.player().getGold()));
         }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), HEADER_HEIGHT);
+        }
+    }
+
+    protected static class AdventureDraftPackPage extends DraftPackPage {
+        public AdventureDraftPackPage(CardManager cardManager) {
+            super(cardManager);
+        }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), getHeight());
+        }
     }
 
     protected static class AdventureDeckSectionPage extends DeckSectionPage {
         protected AdventureDeckSectionPage(DeckSection deckSection, ItemManagerConfig config) {
             super(new AdventureCardManager(), deckSection, config, deckSection.getLocalizedShortName(), iconFromDeckSection(deckSection));
             cardManager.setBtnAdvancedSearchOptions(deckSection == DeckSection.Main);
+        }
+
+        @Override
+        public void drawBackground(Graphics g) {
+            g.fillRect(FSkinColor.get(FSkinColor.Colors.ADV_CLR_THEME).alphaColor(0.5f), 0, 0, getWidth(), getHeight());
         }
     }
 

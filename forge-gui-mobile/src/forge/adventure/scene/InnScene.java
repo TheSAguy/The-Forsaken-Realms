@@ -229,8 +229,9 @@ public class InnScene extends UIScene {
         // See potionOfFalseLife() - setDisabled() does not detach the handler.
         if (isRuinedTown())
             return;
-        ShopScene.instance().loadChanges(changes);
-        Forge.switchScene(ShopScene.instance());
+        ShopScene scene = ShopScene.instance(getUIBackground());
+        scene.loadChanges(changes);
+        Forge.switchScene(scene);
     }
 
     /**

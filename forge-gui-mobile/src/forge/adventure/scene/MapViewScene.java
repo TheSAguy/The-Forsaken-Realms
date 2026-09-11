@@ -37,7 +37,7 @@ public class MapViewScene extends UIScene {
     private static MapViewScene object;
     private final ScrollPane scroll;
     private final Image img;
-    private Texture miniMapTexture;
+    private Texture miniMapTexture; // this plane's own minimap texture - see refreshMap()
     private final Image miniMapPlayer;
     private final Group table;
     private final List<TypingLabel> labels;
@@ -654,6 +654,10 @@ public class MapViewScene extends UIScene {
 
     // Extracted so the fog-of-war debug toggle (GameHUD) can force an immediate refresh here too,
     // instead of only updating on the next time this scene is entered.
+    // Engine merge 09.11: upstream's enter() moved to Assets.getNewMiniMapTexture(), which keeps ONE texture and
+    // skips the upload when the Pixmap is the same object (hashCode). This plane repaints fog of war and territory
+    // into that same Pixmap in place, so the cached texture would freeze the world map at its first image - the map
+    // keeps its own texture and rebuilds it on every refresh instead.
     public void refreshMap() {
         if (miniMapTexture != null)
             miniMapTexture.dispose();
