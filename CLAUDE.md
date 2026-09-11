@@ -52,6 +52,33 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-09-10 (round 171; v1.09 RELEASED - nothing is unreleased; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
+- **NEXT SESSION starts here (written at the 2026-09-10 close-out, round 171).** Open items, in order:
+  1. **Repackage the live folder** at the first opportunity (game closed, `tasklist | grep javaw.exe` empty):
+     the release was built from a copy, so the live folder's `config.json` still reads modVersion 1.08 although its
+     code and data equal v1.09. `python standalone-packaging/build_standalone.py`, then read `PACKAGE_OK.txt`.
+  2. **Agent play (MOD_SCOPE #117) - where it stands.** DONE (round 161): the loopback bridge
+     (`forge.adventure.agent`, off unless `TFR_AGENT_PORT` is set; `TFR_AGENT_CHEATS=1` for console + fog-free
+     state), the state snapshot, the command set (goto/explore/wait/leave/click/advance/equip/use/sell/deck/buy/
+     save/load/newgame/autobattle), the A* walker, the client `dev-tools/agent/tfr_agent.py`, and a scripted
+     end-to-end run that proved menu -> new game -> intro -> portal -> world walks -> cave -> shop purchase -> three
+     interception duels won by Forge's AI on the player's seat. NOT DONE: (a) the Claude Code play-loop skill (read
+     state -> decide -> one command -> `wait` -> repeat; press through Back to Adventure / OK / Done; re-issue an
+     interrupted goto), (b) the first full Claude-played session for the user to watch, (c) `newgame` parameters
+     (it uses the New Game screen's current settings), (d) a speed setting for the spectated duel, (e) deck editor /
+     Inn / Spellsmith only through generic `ui` clicks. Design + build plan: `docs/design/2026-09-09-agent-play.md`;
+     dev loop, traps and the save-backup rule: the round-161 bullet below and the project memory. The bridge has NOT
+     been run since the 09.09 engine merge (round 165) - the first thing a play session does is confirm it still
+     starts on this engine.
+  3. **Next engine merge** starts at upstream `06a3c05731c`'s 22 successors (ten Java: UIScene backdrop/deck-editor
+     colours, edition code on the rewards screen, server-URL dialog on mobile, auto-pass network fix, ...); first
+     Maven after any merge must run online (gson 2.13.2 precedent). Merge only to the commit the user's Forge_2
+     install is at (content probes, round 165 method).
+  4. **Wider playtest feedback** on the 09.09 engine and the storage / guard-equipment screen; the round-160 review's
+     remaining findings (`docs/review/2026-09-09-post-v108-code-review.md`).
+  Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
+  (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
+  #announcements.
+
 - **v1.06 "Deeper Caves" is RELEASED** (round 131, 2026-09-06): tag `tfr-v1.06` @ `17d3fcbf54b`, published
   2026-09-07 01:31 UTC and marked Latest. Three assets: `The-Forsaken-Realms-v1.06.zip` (237.3 MB),
   `forsaken-realms-1.06-signed-aligned.apk` (12.5 MB), `assets.zip` (175.5 MB). `RELEASE_NOTES_v1.06.md` is the body.
