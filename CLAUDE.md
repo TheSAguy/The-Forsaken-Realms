@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 175; v1.09 RELEASED + rounds 173-175 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-11 (round 176; v1.09 RELEASED + rounds 173-175 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 172, 2026-09-10 evening).** The user's calls, in their order:
   1. **Round 173 is DONE** (NOT packaged; the bullet below): review G10 / S8 / G6 / S1 / S4 fixed. Playtest it:
@@ -95,6 +95,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 176 (2026-09-11, client only - nothing to build): **the first watched agent session** began (Jordan Lipswalker, Blue
+  Dragon / Green, Normal) and ended early at the user's call after a lost interception duel. `settle` no longer answers a lost
+  ante's Bronze Coin / Buy Back prompt with OK. A long session is cheaper from a FRESH conversation (this one's context
+  made every agent step expensive). Agent saves: slot 2 "Jordan start", slot 3 "Jordan day 1".
 - Round 175 (2026-09-10, built 22:05, PACKAGED 22:15, 310 MB - live folder = v1.09 + rounds 173-175; agent folder synced): **agent play, isolated.** `F:\FORGE\TFR-Agent\` = the user's copy
   of the live folder (renamed) + its own APPDATA profile; launcher / stop / sync / setup scripts in `dev-tools/agent/`;
   isolation verified (the user's log and saves untouched). Walker fixes in mod-added files: exclusive far edges on

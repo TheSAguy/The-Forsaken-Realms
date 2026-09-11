@@ -2683,3 +2683,7 @@ stock field - by reflection (`exemptPoiUnderPlayer()`), and reads it for the `[T
 line then reports `collidingPoint ?` and `exemptPoiUnderPlayer()` returns "failed: ...", and agent walks may walk back
 into the town just left. It also leans on `TileMapScene.leave()` clearing the world player's collision height and
 `GameHUD` restoring it (the reason the exemption is needed). `agent/WalkController.java` is mod-added.
+
+## Round 176 (2026-09-11) - no engine edits
+
+Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).

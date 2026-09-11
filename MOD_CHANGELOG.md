@@ -17757,6 +17757,21 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 176: the first watched agent session, and settle stops at a lost ante (2026-09-11)
+
+User: *"Start the first full agent session so I can watch."* Fair play (no cheats), the isolated agent game, a new
+character - Jordan Lipswalker, Blue Dragon, Green, Normal, Constructed - intro skipped ("Raise the Banner": restore a
+town and upgrade it to the Capitol at its Job Board). Seen on the way: the camp's reward chest was empty; The Warden
+is a greeting NPC in the skip path and re-greets on every step while the player overlaps him - `cmd leave` gets out
+without walking. On the east road a Poison Drake (Apprentice) intercepted and the Green starter LOST (20 -> 16 life,
+-25 gold). **Client bug**: `settle` answered the ante-loss prompt (OK / Use Bronze Coin / Buy Back) with OK and gave
+the card away with three Bronze Coins in the pack. It now stops there and returns the choice. The user ended the
+session there (and asked about cost: every agent step uses their plan's tokens and counts toward its usage window;
+this conversation's large context made each step expensive - a fresh session with the tfr-play skill is cheaper per
+move). Saved in the agent profile: slot 2 "Jordan start", slot 3 "Jordan day 1".
+
+**Files touched**: `dev-tools/agent/tfr_agent.py`.
+
 ## Round 175: agent play, isolated - its own folder and profile on F:, the walker stops walking back into towns, a tfr-play skill (2026-09-10)
 
 The user's call in round 172: *"Then agent play in isolation"*, then *"Can we build this on F:\ not C:\"* - and they

@@ -168,6 +168,12 @@ def settle(rounds=40, wait_each=60):
         scene = s.get("scene")
         prompts = [b for b in (s.get("forgeUi") or []) if b.get("prompt")]
         if prompts:
+            texts = [(b.get("text") or "").lower() for b in prompts]
+            # A LOST ante (Use Bronze Coin / Buy Back) is a real decision - never answer it with "OK". The first
+            # watched session's settle pressed OK there and gave the card away with three coins in the pack.
+            if any("bronze coin" in t or t.startswith("buy back") for t in texts):
+                say("ante lost - a real choice, not settled:", [b.get("text") for b in prompts])
+                return s
             pick = next((b for b in prompts if (b.get("text") or "").lower() in SETTLE_BUTTONS), None)
             if pick is None:
                 say("forge prompt with unknown buttons", [b.get("text") for b in prompts], "- waiting")
