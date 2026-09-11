@@ -1,0 +1,44 @@
+ironstride_construct.png
+size: 564,463
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 141, 133
+Idle
+  xy: 141, 64
+  size: 141, 133
+Idle
+  xy: 282, 64
+  size: 141, 133
+Idle
+  xy: 423, 64
+  size: 141, 133
+Walk
+  xy: 0, 197
+  size: 141, 133
+Walk
+  xy: 141, 197
+  size: 141, 133
+Walk
+  xy: 282, 197
+  size: 141, 133
+Walk
+  xy: 423, 197
+  size: 141, 133
+Attack
+  xy: 0, 330
+  size: 141, 133
+Attack
+  xy: 141, 330
+  size: 141, 133
+Attack
+  xy: 282, 330
+  size: 141, 133
+Attack
+  xy: 423, 330
+  size: 141, 133

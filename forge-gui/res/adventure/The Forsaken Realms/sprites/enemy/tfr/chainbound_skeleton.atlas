@@ -1,0 +1,80 @@
+chainbound_skeleton.png
+size: 648,574
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 54, 54
+Idle
+  xy: 0, 54
+  size: 72, 104
+Idle
+  xy: 72, 54
+  size: 72, 104
+Idle
+  xy: 144, 54
+  size: 72, 104
+Idle
+  xy: 216, 54
+  size: 72, 104
+Idle
+  xy: 288, 54
+  size: 72, 104
+Idle
+  xy: 360, 54
+  size: 72, 104
+Walk
+  xy: 0, 158
+  size: 72, 104
+Walk
+  xy: 72, 158
+  size: 72, 104
+Walk
+  xy: 144, 158
+  size: 72, 104
+Walk
+  xy: 216, 158
+  size: 72, 104
+Walk
+  xy: 288, 158
+  size: 72, 104
+Walk
+  xy: 360, 158
+  size: 72, 104
+Walk
+  xy: 432, 158
+  size: 72, 104
+Walk
+  xy: 504, 158
+  size: 72, 104
+Attack
+  xy: 0, 262
+  size: 72, 104
+Attack
+  xy: 72, 262
+  size: 72, 104
+Attack
+  xy: 144, 262
+  size: 72, 104
+Attack
+  xy: 216, 262
+  size: 72, 104
+Attack
+  xy: 288, 262
+  size: 72, 104
+Hit
+  xy: 0, 366
+  size: 72, 104
+Death
+  xy: 0, 470
+  size: 72, 104
+Death
+  xy: 72, 470
+  size: 72, 104
+Death
+  xy: 144, 470
+  size: 72, 104
+Death
+  xy: 216, 470
+  size: 72, 104

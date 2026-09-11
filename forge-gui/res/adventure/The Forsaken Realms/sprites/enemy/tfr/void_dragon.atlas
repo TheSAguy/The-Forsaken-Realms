@@ -1,0 +1,59 @@
+void_dragon.png
+size: 695,379
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 139, 63
+Idle
+  xy: 139, 64
+  size: 139, 63
+Idle
+  xy: 278, 64
+  size: 139, 63
+Idle
+  xy: 417, 64
+  size: 139, 63
+Walk
+  xy: 0, 127
+  size: 139, 63
+Walk
+  xy: 139, 127
+  size: 139, 63
+Walk
+  xy: 278, 127
+  size: 139, 63
+Walk
+  xy: 417, 127
+  size: 139, 63
+Attack
+  xy: 0, 190
+  size: 139, 63
+Attack
+  xy: 139, 190
+  size: 139, 63
+Attack
+  xy: 278, 190
+  size: 139, 63
+Attack
+  xy: 417, 190
+  size: 139, 63
+Attack
+  xy: 556, 190
+  size: 139, 63
+Hit
+  xy: 0, 253
+  size: 139, 63
+Death
+  xy: 0, 316
+  size: 139, 63
+Death
+  xy: 139, 316
+  size: 139, 63
+Death
+  xy: 278, 316
+  size: 139, 63

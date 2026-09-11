@@ -1,0 +1,50 @@
+cinderscale_salamander.png
+size: 858,566
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 102, 102
+Idle
+  xy: 0, 102
+  size: 143, 116
+Walk
+  xy: 0, 218
+  size: 143, 116
+Walk
+  xy: 143, 218
+  size: 143, 116
+Walk
+  xy: 286, 218
+  size: 143, 116
+Walk
+  xy: 429, 218
+  size: 143, 116
+Walk
+  xy: 572, 218
+  size: 143, 116
+Walk
+  xy: 715, 218
+  size: 143, 116
+Attack
+  xy: 0, 334
+  size: 143, 116
+Attack
+  xy: 143, 334
+  size: 143, 116
+Attack
+  xy: 286, 334
+  size: 143, 116
+Attack
+  xy: 429, 334
+  size: 143, 116
+Attack
+  xy: 572, 334
+  size: 143, 116
+Attack
+  xy: 715, 334
+  size: 143, 116
+Hit
+  xy: 0, 450
+  size: 143, 116

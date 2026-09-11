@@ -1,0 +1,59 @@
+temple_doorwarden.png
+size: 396,539
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 44
+Idle
+  xy: 0, 44
+  size: 66, 99
+Idle
+  xy: 66, 44
+  size: 66, 99
+Idle
+  xy: 132, 44
+  size: 66, 99
+Idle
+  xy: 198, 44
+  size: 66, 99
+Idle
+  xy: 264, 44
+  size: 66, 99
+Idle
+  xy: 330, 44
+  size: 66, 99
+Walk
+  xy: 0, 143
+  size: 66, 99
+Walk
+  xy: 66, 143
+  size: 66, 99
+Walk
+  xy: 132, 143
+  size: 66, 99
+Walk
+  xy: 198, 143
+  size: 66, 99
+Walk
+  xy: 264, 143
+  size: 66, 99
+Walk
+  xy: 330, 143
+  size: 66, 99
+Attack
+  xy: 0, 242
+  size: 66, 99
+Attack
+  xy: 66, 242
+  size: 66, 99
+Attack
+  xy: 132, 242
+  size: 66, 99
+Hit
+  xy: 0, 341
+  size: 66, 99
+Death
+  xy: 0, 440
+  size: 66, 99

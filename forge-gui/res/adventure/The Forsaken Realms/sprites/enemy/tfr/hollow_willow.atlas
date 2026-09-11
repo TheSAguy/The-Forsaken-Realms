@@ -1,0 +1,62 @@
+hollow_willow.png
+size: 320,410
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 60, 60
+Idle
+  xy: 0, 60
+  size: 64, 70
+Idle
+  xy: 64, 60
+  size: 64, 70
+Idle
+  xy: 128, 60
+  size: 64, 70
+Idle
+  xy: 192, 60
+  size: 64, 70
+Idle
+  xy: 256, 60
+  size: 64, 70
+Walk
+  xy: 0, 130
+  size: 64, 70
+Walk
+  xy: 64, 130
+  size: 64, 70
+Walk
+  xy: 128, 130
+  size: 64, 70
+Walk
+  xy: 192, 130
+  size: 64, 70
+Walk
+  xy: 256, 130
+  size: 64, 70
+Attack
+  xy: 0, 200
+  size: 64, 70
+Attack
+  xy: 64, 200
+  size: 64, 70
+Attack
+  xy: 128, 200
+  size: 64, 70
+Attack
+  xy: 192, 200
+  size: 64, 70
+Attack
+  xy: 256, 200
+  size: 64, 70
+Hit
+  xy: 0, 270
+  size: 64, 70
+Death
+  xy: 0, 340
+  size: 64, 70
+Death
+  xy: 64, 340
+  size: 64, 70

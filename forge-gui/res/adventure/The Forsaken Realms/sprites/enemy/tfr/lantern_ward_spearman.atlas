@@ -1,0 +1,83 @@
+lantern_ward_spearman.png
+size: 624,561
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 76, 76
+Idle
+  xy: 0, 76
+  size: 78, 97
+Idle
+  xy: 78, 76
+  size: 78, 97
+Idle
+  xy: 156, 76
+  size: 78, 97
+Idle
+  xy: 234, 76
+  size: 78, 97
+Idle
+  xy: 312, 76
+  size: 78, 97
+Idle
+  xy: 390, 76
+  size: 78, 97
+Walk
+  xy: 0, 173
+  size: 78, 97
+Walk
+  xy: 78, 173
+  size: 78, 97
+Walk
+  xy: 156, 173
+  size: 78, 97
+Walk
+  xy: 234, 173
+  size: 78, 97
+Walk
+  xy: 312, 173
+  size: 78, 97
+Walk
+  xy: 390, 173
+  size: 78, 97
+Walk
+  xy: 468, 173
+  size: 78, 97
+Walk
+  xy: 546, 173
+  size: 78, 97
+Attack
+  xy: 0, 270
+  size: 78, 97
+Attack
+  xy: 78, 270
+  size: 78, 97
+Attack
+  xy: 156, 270
+  size: 78, 97
+Attack
+  xy: 234, 270
+  size: 78, 97
+Attack
+  xy: 312, 270
+  size: 78, 97
+Attack
+  xy: 390, 270
+  size: 78, 97
+Attack
+  xy: 468, 270
+  size: 78, 97
+Attack
+  xy: 546, 270
+  size: 78, 97
+Hit
+  xy: 0, 367
+  size: 78, 97
+Death
+  xy: 0, 464
+  size: 78, 97
+Death
+  xy: 78, 464
+  size: 78, 97

@@ -1,0 +1,80 @@
+crossroads_tikbalang.png
+size: 720,775
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 80, 80
+Idle
+  xy: 0, 80
+  size: 90, 139
+Idle
+  xy: 90, 80
+  size: 90, 139
+Idle
+  xy: 180, 80
+  size: 90, 139
+Idle
+  xy: 270, 80
+  size: 90, 139
+Idle
+  xy: 360, 80
+  size: 90, 139
+Idle
+  xy: 450, 80
+  size: 90, 139
+Idle
+  xy: 540, 80
+  size: 90, 139
+Walk
+  xy: 0, 219
+  size: 90, 139
+Walk
+  xy: 90, 219
+  size: 90, 139
+Walk
+  xy: 180, 219
+  size: 90, 139
+Walk
+  xy: 270, 219
+  size: 90, 139
+Walk
+  xy: 360, 219
+  size: 90, 139
+Walk
+  xy: 450, 219
+  size: 90, 139
+Walk
+  xy: 540, 219
+  size: 90, 139
+Walk
+  xy: 630, 219
+  size: 90, 139
+Attack
+  xy: 0, 358
+  size: 90, 139
+Attack
+  xy: 90, 358
+  size: 90, 139
+Attack
+  xy: 180, 358
+  size: 90, 139
+Attack
+  xy: 270, 358
+  size: 90, 139
+Attack
+  xy: 360, 358
+  size: 90, 139
+Attack
+  xy: 450, 358
+  size: 90, 139
+Hit
+  xy: 0, 497
+  size: 90, 139
+Death
+  xy: 0, 636
+  size: 90, 139
+Death
+  xy: 90, 636
+  size: 90, 139

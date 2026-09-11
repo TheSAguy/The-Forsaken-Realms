@@ -1,0 +1,68 @@
+frostcloak_marauder.png
+size: 567,525
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 65, 65
+Idle
+  xy: 0, 65
+  size: 81, 92
+Idle
+  xy: 81, 65
+  size: 81, 92
+Idle
+  xy: 162, 65
+  size: 81, 92
+Idle
+  xy: 243, 65
+  size: 81, 92
+Idle
+  xy: 324, 65
+  size: 81, 92
+Walk
+  xy: 0, 157
+  size: 81, 92
+Walk
+  xy: 81, 157
+  size: 81, 92
+Walk
+  xy: 162, 157
+  size: 81, 92
+Walk
+  xy: 243, 157
+  size: 81, 92
+Walk
+  xy: 324, 157
+  size: 81, 92
+Walk
+  xy: 405, 157
+  size: 81, 92
+Attack
+  xy: 0, 249
+  size: 81, 92
+Attack
+  xy: 81, 249
+  size: 81, 92
+Attack
+  xy: 162, 249
+  size: 81, 92
+Attack
+  xy: 243, 249
+  size: 81, 92
+Hit
+  xy: 0, 341
+  size: 81, 92
+Death
+  xy: 0, 433
+  size: 81, 92
+Death
+  xy: 81, 433
+  size: 81, 92
+Death
+  xy: 162, 433
+  size: 81, 92
+Death
+  xy: 243, 433
+  size: 81, 92

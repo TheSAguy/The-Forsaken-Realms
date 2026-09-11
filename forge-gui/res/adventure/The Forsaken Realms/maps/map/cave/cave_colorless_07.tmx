@@ -158,7 +158,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="592" y="224">
    <properties>
-    <property name="enemy" value="Young Brass Dragon"/>
+    <property name="enemy" value="Traveling Conjurer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -166,7 +166,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="496" y="176">
    <properties>
-    <property name="enemy" value="Juvenile Bronze Dragon"/>
+    <property name="enemy" value="Hex Witch"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -174,7 +174,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="272" y="192">
    <properties>
-    <property name="enemy" value="Hedge Slime"/>
+    <property name="enemy" value="Grey Scholar"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>

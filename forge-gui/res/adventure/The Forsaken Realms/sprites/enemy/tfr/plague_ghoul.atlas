@@ -1,0 +1,92 @@
+plague_ghoul.png
+size: 680,654
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 85, 118
+Idle
+  xy: 85, 64
+  size: 85, 118
+Idle
+  xy: 170, 64
+  size: 85, 118
+Idle
+  xy: 255, 64
+  size: 85, 118
+Idle
+  xy: 340, 64
+  size: 85, 118
+Idle
+  xy: 425, 64
+  size: 85, 118
+Walk
+  xy: 0, 182
+  size: 85, 118
+Walk
+  xy: 85, 182
+  size: 85, 118
+Walk
+  xy: 170, 182
+  size: 85, 118
+Walk
+  xy: 255, 182
+  size: 85, 118
+Walk
+  xy: 340, 182
+  size: 85, 118
+Walk
+  xy: 425, 182
+  size: 85, 118
+Walk
+  xy: 510, 182
+  size: 85, 118
+Walk
+  xy: 595, 182
+  size: 85, 118
+Attack
+  xy: 0, 300
+  size: 85, 118
+Attack
+  xy: 85, 300
+  size: 85, 118
+Attack
+  xy: 170, 300
+  size: 85, 118
+Attack
+  xy: 255, 300
+  size: 85, 118
+Attack
+  xy: 340, 300
+  size: 85, 118
+Attack
+  xy: 425, 300
+  size: 85, 118
+Attack
+  xy: 510, 300
+  size: 85, 118
+Attack
+  xy: 595, 300
+  size: 85, 118
+Hit
+  xy: 0, 418
+  size: 85, 118
+Death
+  xy: 0, 536
+  size: 85, 118
+Death
+  xy: 85, 536
+  size: 85, 118
+Death
+  xy: 170, 536
+  size: 85, 118
+Death
+  xy: 255, 536
+  size: 85, 118
+Death
+  xy: 340, 536
+  size: 85, 118

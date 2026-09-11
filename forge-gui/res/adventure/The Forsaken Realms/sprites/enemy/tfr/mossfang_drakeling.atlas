@@ -1,0 +1,71 @@
+mossfang_drakeling.png
+size: 360,466
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 36, 36
+Idle
+  xy: 0, 36
+  size: 60, 86
+Idle
+  xy: 60, 36
+  size: 60, 86
+Idle
+  xy: 120, 36
+  size: 60, 86
+Idle
+  xy: 180, 36
+  size: 60, 86
+Idle
+  xy: 240, 36
+  size: 60, 86
+Walk
+  xy: 0, 122
+  size: 60, 86
+Walk
+  xy: 60, 122
+  size: 60, 86
+Walk
+  xy: 120, 122
+  size: 60, 86
+Walk
+  xy: 180, 122
+  size: 60, 86
+Walk
+  xy: 240, 122
+  size: 60, 86
+Walk
+  xy: 300, 122
+  size: 60, 86
+Attack
+  xy: 0, 208
+  size: 60, 86
+Attack
+  xy: 60, 208
+  size: 60, 86
+Attack
+  xy: 120, 208
+  size: 60, 86
+Attack
+  xy: 180, 208
+  size: 60, 86
+Attack
+  xy: 240, 208
+  size: 60, 86
+Attack
+  xy: 300, 208
+  size: 60, 86
+Hit
+  xy: 0, 294
+  size: 60, 86
+Death
+  xy: 0, 380
+  size: 60, 86
+Death
+  xy: 60, 380
+  size: 60, 86
+Death
+  xy: 120, 380
+  size: 60, 86

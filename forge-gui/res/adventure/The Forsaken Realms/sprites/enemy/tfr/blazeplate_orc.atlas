@@ -1,0 +1,62 @@
+blazeplate_orc.png
+size: 385,659
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 77, 119
+Idle
+  xy: 77, 64
+  size: 77, 119
+Idle
+  xy: 154, 64
+  size: 77, 119
+Idle
+  xy: 231, 64
+  size: 77, 119
+Walk
+  xy: 0, 183
+  size: 77, 119
+Walk
+  xy: 77, 183
+  size: 77, 119
+Walk
+  xy: 154, 183
+  size: 77, 119
+Walk
+  xy: 231, 183
+  size: 77, 119
+Attack
+  xy: 0, 302
+  size: 77, 119
+Attack
+  xy: 77, 302
+  size: 77, 119
+Attack
+  xy: 154, 302
+  size: 77, 119
+Attack
+  xy: 231, 302
+  size: 77, 119
+Attack
+  xy: 308, 302
+  size: 77, 119
+Hit
+  xy: 0, 421
+  size: 77, 119
+Death
+  xy: 0, 540
+  size: 77, 119
+Death
+  xy: 77, 540
+  size: 77, 119
+Death
+  xy: 154, 540
+  size: 77, 119
+Death
+  xy: 231, 540
+  size: 77, 119

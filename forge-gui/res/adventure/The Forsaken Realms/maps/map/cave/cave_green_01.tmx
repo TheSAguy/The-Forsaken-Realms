@@ -79,13 +79,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,15732,0,0,0,0,0,15669,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15668,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,15732,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,15669,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -125,36 +125,36 @@
   <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="296" y="152"/>
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="72" y="104"/>
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="328" y="184"/>
-  <object id="5" template="../../../../common/maps/obj/enemy.tx" x="128" y="144">
+  <object id="5" template="../../../../common/maps/obj/enemy.tx" x="48" y="144">
    <properties>
-    <property name="enemy" value="Hydra"/>
+    <property name="enemy" value="Marksman of the Deep Wood"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4"/>
    </properties>
   </object>
-  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="208" y="112">
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="320" y="128">
    <properties>
-    <property name="enemy" value="Baby Green Dragon"/>
+    <property name="enemy" value="Kavu"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,4"/>
    </properties>
   </object>
-  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="288" y="128">
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="128" y="128">
    <properties>
-    <property name="enemy" value="Carcass Feeder"/>
+    <property name="enemy" value="Stinky Skunk"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,4,2"/>
    </properties>
   </object>
-  <object id="8" template="../../../../common/maps/obj/treasure.tx" x="48" y="144">
+  <object id="8" template="../../../../common/maps/obj/treasure.tx" x="96" y="176">
    <properties>
     <property name="reward">[{&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 1, &quot;addMaxCount&quot;: 1}]</property>
    </properties>
   </object>
-  <object id="9" template="../../../../common/maps/obj/gold.tx" x="368" y="160"/>
-  <object id="10" template="../../obj/stone.tx" x="176" y="144"/>
+  <object id="9" template="../../../../common/maps/obj/gold.tx" x="288" y="112"/>
+  <object id="10" template="../../obj/stone.tx" x="320" y="160"/>
  </objectgroup>
 </map>

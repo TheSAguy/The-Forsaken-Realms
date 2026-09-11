@@ -1,0 +1,83 @@
+redcap_nibbler.png
+size: 584,301
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 57, 57
+Idle
+  xy: 0, 57
+  size: 73, 61
+Idle
+  xy: 73, 57
+  size: 73, 61
+Idle
+  xy: 146, 57
+  size: 73, 61
+Idle
+  xy: 219, 57
+  size: 73, 61
+Idle
+  xy: 292, 57
+  size: 73, 61
+Idle
+  xy: 365, 57
+  size: 73, 61
+Idle
+  xy: 438, 57
+  size: 73, 61
+Idle
+  xy: 511, 57
+  size: 73, 61
+Walk
+  xy: 0, 118
+  size: 73, 61
+Walk
+  xy: 73, 118
+  size: 73, 61
+Walk
+  xy: 146, 118
+  size: 73, 61
+Walk
+  xy: 219, 118
+  size: 73, 61
+Walk
+  xy: 292, 118
+  size: 73, 61
+Walk
+  xy: 365, 118
+  size: 73, 61
+Walk
+  xy: 438, 118
+  size: 73, 61
+Walk
+  xy: 511, 118
+  size: 73, 61
+Attack
+  xy: 0, 179
+  size: 73, 61
+Attack
+  xy: 73, 179
+  size: 73, 61
+Attack
+  xy: 146, 179
+  size: 73, 61
+Attack
+  xy: 219, 179
+  size: 73, 61
+Attack
+  xy: 292, 179
+  size: 73, 61
+Attack
+  xy: 365, 179
+  size: 73, 61
+Attack
+  xy: 438, 179
+  size: 73, 61
+Attack
+  xy: 511, 179
+  size: 73, 61
+Hit
+  xy: 0, 240
+  size: 73, 61

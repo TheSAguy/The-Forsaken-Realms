@@ -1,0 +1,65 @@
+tidetusk_brute.png
+size: 475,629
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 95, 113
+Idle
+  xy: 95, 64
+  size: 95, 113
+Idle
+  xy: 190, 64
+  size: 95, 113
+Idle
+  xy: 285, 64
+  size: 95, 113
+Idle
+  xy: 380, 64
+  size: 95, 113
+Walk
+  xy: 0, 177
+  size: 95, 113
+Walk
+  xy: 95, 177
+  size: 95, 113
+Walk
+  xy: 190, 177
+  size: 95, 113
+Walk
+  xy: 285, 177
+  size: 95, 113
+Walk
+  xy: 380, 177
+  size: 95, 113
+Attack
+  xy: 0, 290
+  size: 95, 113
+Attack
+  xy: 95, 290
+  size: 95, 113
+Attack
+  xy: 190, 290
+  size: 95, 113
+Attack
+  xy: 285, 290
+  size: 95, 113
+Hit
+  xy: 0, 403
+  size: 95, 113
+Death
+  xy: 0, 516
+  size: 95, 113
+Death
+  xy: 95, 516
+  size: 95, 113
+Death
+  xy: 190, 516
+  size: 95, 113
+Death
+  xy: 285, 516
+  size: 95, 113

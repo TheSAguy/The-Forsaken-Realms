@@ -1,0 +1,29 @@
+frostcrest_drakeling.png
+size: 220,157
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 49, 49
+Idle
+  xy: 0, 49
+  size: 55, 54
+Idle
+  xy: 55, 49
+  size: 55, 54
+Idle
+  xy: 110, 49
+  size: 55, 54
+Idle
+  xy: 165, 49
+  size: 55, 54
+Walk
+  xy: 0, 103
+  size: 55, 54
+Walk
+  xy: 55, 103
+  size: 55, 54
+Walk
+  xy: 110, 103
+  size: 55, 54

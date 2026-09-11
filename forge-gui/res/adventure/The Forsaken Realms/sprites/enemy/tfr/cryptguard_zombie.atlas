@@ -1,0 +1,86 @@
+cryptguard_zombie.png
+size: 495,489
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 44
+Idle
+  xy: 0, 44
+  size: 55, 89
+Idle
+  xy: 55, 44
+  size: 55, 89
+Idle
+  xy: 110, 44
+  size: 55, 89
+Idle
+  xy: 165, 44
+  size: 55, 89
+Idle
+  xy: 220, 44
+  size: 55, 89
+Idle
+  xy: 275, 44
+  size: 55, 89
+Walk
+  xy: 0, 133
+  size: 55, 89
+Walk
+  xy: 55, 133
+  size: 55, 89
+Walk
+  xy: 110, 133
+  size: 55, 89
+Walk
+  xy: 165, 133
+  size: 55, 89
+Walk
+  xy: 220, 133
+  size: 55, 89
+Walk
+  xy: 275, 133
+  size: 55, 89
+Walk
+  xy: 330, 133
+  size: 55, 89
+Walk
+  xy: 385, 133
+  size: 55, 89
+Attack
+  xy: 0, 222
+  size: 55, 89
+Attack
+  xy: 55, 222
+  size: 55, 89
+Attack
+  xy: 110, 222
+  size: 55, 89
+Attack
+  xy: 165, 222
+  size: 55, 89
+Attack
+  xy: 220, 222
+  size: 55, 89
+Attack
+  xy: 275, 222
+  size: 55, 89
+Attack
+  xy: 330, 222
+  size: 55, 89
+Attack
+  xy: 385, 222
+  size: 55, 89
+Attack
+  xy: 440, 222
+  size: 55, 89
+Hit
+  xy: 0, 311
+  size: 55, 89
+Death
+  xy: 0, 400
+  size: 55, 89
+Death
+  xy: 55, 400
+  size: 55, 89

@@ -1,0 +1,53 @@
+ironhammer_brute.png
+size: 630,322
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 126, 86
+Idle
+  xy: 126, 64
+  size: 126, 86
+Idle
+  xy: 252, 64
+  size: 126, 86
+Idle
+  xy: 378, 64
+  size: 126, 86
+Idle
+  xy: 504, 64
+  size: 126, 86
+Walk
+  xy: 0, 150
+  size: 126, 86
+Walk
+  xy: 126, 150
+  size: 126, 86
+Walk
+  xy: 252, 150
+  size: 126, 86
+Walk
+  xy: 378, 150
+  size: 126, 86
+Walk
+  xy: 504, 150
+  size: 126, 86
+Attack
+  xy: 0, 236
+  size: 126, 86
+Attack
+  xy: 126, 236
+  size: 126, 86
+Attack
+  xy: 252, 236
+  size: 126, 86
+Attack
+  xy: 378, 236
+  size: 126, 86
+Attack
+  xy: 504, 236
+  size: 126, 86

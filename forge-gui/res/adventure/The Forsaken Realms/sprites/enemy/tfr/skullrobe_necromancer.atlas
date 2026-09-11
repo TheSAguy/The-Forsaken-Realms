@@ -1,0 +1,47 @@
+skullrobe_necromancer.png
+size: 440,689
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 110, 125
+Idle
+  xy: 110, 64
+  size: 110, 125
+Idle
+  xy: 220, 64
+  size: 110, 125
+Walk
+  xy: 0, 189
+  size: 110, 125
+Walk
+  xy: 110, 189
+  size: 110, 125
+Walk
+  xy: 220, 189
+  size: 110, 125
+Walk
+  xy: 330, 189
+  size: 110, 125
+Attack
+  xy: 0, 314
+  size: 110, 125
+Attack
+  xy: 110, 314
+  size: 110, 125
+Hit
+  xy: 0, 439
+  size: 110, 125
+Death
+  xy: 0, 564
+  size: 110, 125
+Death
+  xy: 110, 564
+  size: 110, 125
+Death
+  xy: 220, 564
+  size: 110, 125

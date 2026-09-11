@@ -1,0 +1,74 @@
+cracked_shieldbone.png
+size: 584,398
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 58, 58
+Idle
+  xy: 0, 58
+  size: 73, 85
+Idle
+  xy: 73, 58
+  size: 73, 85
+Idle
+  xy: 146, 58
+  size: 73, 85
+Idle
+  xy: 219, 58
+  size: 73, 85
+Idle
+  xy: 292, 58
+  size: 73, 85
+Idle
+  xy: 365, 58
+  size: 73, 85
+Idle
+  xy: 438, 58
+  size: 73, 85
+Idle
+  xy: 511, 58
+  size: 73, 85
+Walk
+  xy: 0, 143
+  size: 73, 85
+Walk
+  xy: 73, 143
+  size: 73, 85
+Walk
+  xy: 146, 143
+  size: 73, 85
+Walk
+  xy: 219, 143
+  size: 73, 85
+Walk
+  xy: 292, 143
+  size: 73, 85
+Walk
+  xy: 365, 143
+  size: 73, 85
+Walk
+  xy: 438, 143
+  size: 73, 85
+Walk
+  xy: 511, 143
+  size: 73, 85
+Attack
+  xy: 0, 228
+  size: 73, 85
+Attack
+  xy: 73, 228
+  size: 73, 85
+Attack
+  xy: 146, 228
+  size: 73, 85
+Attack
+  xy: 219, 228
+  size: 73, 85
+Attack
+  xy: 292, 228
+  size: 73, 85
+Hit
+  xy: 0, 313
+  size: 73, 85

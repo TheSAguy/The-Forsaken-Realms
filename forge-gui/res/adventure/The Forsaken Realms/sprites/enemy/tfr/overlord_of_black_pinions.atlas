@@ -1,0 +1,62 @@
+overlord_of_black_pinions.png
+size: 1230,789
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 246, 145
+Idle
+  xy: 246, 64
+  size: 246, 145
+Idle
+  xy: 492, 64
+  size: 246, 145
+Idle
+  xy: 738, 64
+  size: 246, 145
+Idle
+  xy: 984, 64
+  size: 246, 145
+Walk
+  xy: 0, 209
+  size: 246, 145
+Walk
+  xy: 246, 209
+  size: 246, 145
+Walk
+  xy: 492, 209
+  size: 246, 145
+Walk
+  xy: 738, 209
+  size: 246, 145
+Walk
+  xy: 984, 209
+  size: 246, 145
+Attack
+  xy: 0, 354
+  size: 246, 145
+Attack
+  xy: 246, 354
+  size: 246, 145
+Attack
+  xy: 492, 354
+  size: 246, 145
+Attack
+  xy: 738, 354
+  size: 246, 145
+Attack
+  xy: 984, 354
+  size: 246, 145
+Hit
+  xy: 0, 499
+  size: 246, 145
+Death
+  xy: 0, 644
+  size: 246, 145
+Death
+  xy: 246, 644
+  size: 246, 145

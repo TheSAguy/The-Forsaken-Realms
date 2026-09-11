@@ -1,0 +1,35 @@
+pilfer_beetle.png
+size: 282,100
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 26, 26
+Idle
+  xy: 0, 26
+  size: 47, 37
+Idle
+  xy: 47, 26
+  size: 47, 37
+Idle
+  xy: 94, 26
+  size: 47, 37
+Walk
+  xy: 0, 63
+  size: 47, 37
+Walk
+  xy: 47, 63
+  size: 47, 37
+Walk
+  xy: 94, 63
+  size: 47, 37
+Walk
+  xy: 141, 63
+  size: 47, 37
+Walk
+  xy: 188, 63
+  size: 47, 37
+Walk
+  xy: 235, 63
+  size: 47, 37

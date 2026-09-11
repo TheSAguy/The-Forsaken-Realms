@@ -1,0 +1,80 @@
+sunlit_hierophant.png
+size: 920,755
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 95, 95
+Idle
+  xy: 0, 95
+  size: 115, 132
+Idle
+  xy: 115, 95
+  size: 115, 132
+Idle
+  xy: 230, 95
+  size: 115, 132
+Idle
+  xy: 345, 95
+  size: 115, 132
+Idle
+  xy: 460, 95
+  size: 115, 132
+Idle
+  xy: 575, 95
+  size: 115, 132
+Walk
+  xy: 0, 227
+  size: 115, 132
+Walk
+  xy: 115, 227
+  size: 115, 132
+Walk
+  xy: 230, 227
+  size: 115, 132
+Walk
+  xy: 345, 227
+  size: 115, 132
+Walk
+  xy: 460, 227
+  size: 115, 132
+Walk
+  xy: 575, 227
+  size: 115, 132
+Walk
+  xy: 690, 227
+  size: 115, 132
+Walk
+  xy: 805, 227
+  size: 115, 132
+Attack
+  xy: 0, 359
+  size: 115, 132
+Attack
+  xy: 115, 359
+  size: 115, 132
+Attack
+  xy: 230, 359
+  size: 115, 132
+Attack
+  xy: 345, 359
+  size: 115, 132
+Attack
+  xy: 460, 359
+  size: 115, 132
+Attack
+  xy: 575, 359
+  size: 115, 132
+Attack
+  xy: 690, 359
+  size: 115, 132
+Attack
+  xy: 805, 359
+  size: 115, 132
+Hit
+  xy: 0, 491
+  size: 115, 132
+Death
+  xy: 0, 623
+  size: 115, 132

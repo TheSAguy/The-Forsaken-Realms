@@ -29,7 +29,7 @@ so every fight is a real card duel with real decks.
 - **Sets unlock as you go** — editions unlock as you find their cards in the world and research
   what you've found; different lands hold different expansions.
 
-**By the numbers:** 1,500+ enemies · 330+ dungeons · 33,000+ cards to find · 640+ items.
+**By the numbers:** 1,900+ enemies · 330+ dungeons · 33,000+ cards to find · 640+ items.
 
 A full player guide ships with the game (`GAME_GUIDE.md`).
 

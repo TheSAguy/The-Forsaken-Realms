@@ -139,7 +139,7 @@
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="520" y="200"/>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="480" y="208">
    <properties>
-    <property name="enemy" value="Goblin Cutthroat"/>
+    <property name="enemy" value="Fighting Rooster"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6"/>
@@ -147,7 +147,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="288" y="160">
    <properties>
-    <property name="enemy" value="Red Dwende"/>
+    <property name="enemy" value="Minotaur Flayer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,6,5,4"/>
@@ -155,7 +155,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="80" y="128">
    <properties>
-    <property name="enemy" value="Fire Elemental"/>
+    <property name="enemy" value="Ember Elemental"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,2,3,4,5"/>
@@ -163,7 +163,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="96" y="208">
    <properties>
-    <property name="enemy" value="Kavu"/>
+    <property name="enemy" value="Crag Hydra of Shandalar"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,6,5,4,3"/>

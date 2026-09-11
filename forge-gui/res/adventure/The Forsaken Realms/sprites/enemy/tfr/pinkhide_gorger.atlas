@@ -1,0 +1,77 @@
+pinkhide_gorger.png
+size: 917,669
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 131, 121
+Idle
+  xy: 131, 64
+  size: 131, 121
+Idle
+  xy: 262, 64
+  size: 131, 121
+Idle
+  xy: 393, 64
+  size: 131, 121
+Idle
+  xy: 524, 64
+  size: 131, 121
+Idle
+  xy: 655, 64
+  size: 131, 121
+Idle
+  xy: 786, 64
+  size: 131, 121
+Walk
+  xy: 0, 185
+  size: 131, 121
+Walk
+  xy: 131, 185
+  size: 131, 121
+Walk
+  xy: 262, 185
+  size: 131, 121
+Walk
+  xy: 393, 185
+  size: 131, 121
+Walk
+  xy: 524, 185
+  size: 131, 121
+Walk
+  xy: 655, 185
+  size: 131, 121
+Walk
+  xy: 786, 185
+  size: 131, 121
+Attack
+  xy: 0, 306
+  size: 131, 121
+Attack
+  xy: 131, 306
+  size: 131, 121
+Attack
+  xy: 262, 306
+  size: 131, 121
+Attack
+  xy: 393, 306
+  size: 131, 121
+Attack
+  xy: 524, 306
+  size: 131, 121
+Attack
+  xy: 655, 306
+  size: 131, 121
+Attack
+  xy: 786, 306
+  size: 131, 121
+Hit
+  xy: 0, 427
+  size: 131, 121
+Death
+  xy: 0, 548
+  size: 131, 121

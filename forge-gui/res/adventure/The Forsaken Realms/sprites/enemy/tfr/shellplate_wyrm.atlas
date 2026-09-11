@@ -1,0 +1,47 @@
+shellplate_wyrm.png
+size: 820,331
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 164, 89
+Idle
+  xy: 164, 64
+  size: 164, 89
+Idle
+  xy: 328, 64
+  size: 164, 89
+Idle
+  xy: 492, 64
+  size: 164, 89
+Walk
+  xy: 0, 153
+  size: 164, 89
+Walk
+  xy: 164, 153
+  size: 164, 89
+Walk
+  xy: 328, 153
+  size: 164, 89
+Walk
+  xy: 492, 153
+  size: 164, 89
+Attack
+  xy: 0, 242
+  size: 164, 89
+Attack
+  xy: 164, 242
+  size: 164, 89
+Attack
+  xy: 328, 242
+  size: 164, 89
+Attack
+  xy: 492, 242
+  size: 164, 89
+Attack
+  xy: 656, 242
+  size: 164, 89

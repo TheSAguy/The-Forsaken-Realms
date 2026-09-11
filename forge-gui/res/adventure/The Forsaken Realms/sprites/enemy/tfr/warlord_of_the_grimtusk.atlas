@@ -1,0 +1,95 @@
+warlord_of_the_grimtusk.png
+size: 664,616
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 81, 81
+Idle
+  xy: 0, 81
+  size: 83, 107
+Idle
+  xy: 83, 81
+  size: 83, 107
+Idle
+  xy: 166, 81
+  size: 83, 107
+Idle
+  xy: 249, 81
+  size: 83, 107
+Idle
+  xy: 332, 81
+  size: 83, 107
+Idle
+  xy: 415, 81
+  size: 83, 107
+Idle
+  xy: 498, 81
+  size: 83, 107
+Idle
+  xy: 581, 81
+  size: 83, 107
+Walk
+  xy: 0, 188
+  size: 83, 107
+Walk
+  xy: 83, 188
+  size: 83, 107
+Walk
+  xy: 166, 188
+  size: 83, 107
+Walk
+  xy: 249, 188
+  size: 83, 107
+Walk
+  xy: 332, 188
+  size: 83, 107
+Walk
+  xy: 415, 188
+  size: 83, 107
+Attack
+  xy: 0, 295
+  size: 83, 107
+Attack
+  xy: 83, 295
+  size: 83, 107
+Attack
+  xy: 166, 295
+  size: 83, 107
+Attack
+  xy: 249, 295
+  size: 83, 107
+Attack
+  xy: 332, 295
+  size: 83, 107
+Attack
+  xy: 415, 295
+  size: 83, 107
+Attack
+  xy: 498, 295
+  size: 83, 107
+Attack
+  xy: 581, 295
+  size: 83, 107
+Hit
+  xy: 0, 402
+  size: 83, 107
+Hit
+  xy: 83, 402
+  size: 83, 107
+Death
+  xy: 0, 509
+  size: 83, 107
+Death
+  xy: 83, 509
+  size: 83, 107
+Death
+  xy: 166, 509
+  size: 83, 107
+Death
+  xy: 249, 509
+  size: 83, 107
+Death
+  xy: 332, 509
+  size: 83, 107

@@ -1,0 +1,65 @@
+carrionbloom.png
+size: 492,462
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 78, 78
+Idle
+  xy: 0, 78
+  size: 82, 96
+Idle
+  xy: 82, 78
+  size: 82, 96
+Idle
+  xy: 164, 78
+  size: 82, 96
+Idle
+  xy: 246, 78
+  size: 82, 96
+Idle
+  xy: 328, 78
+  size: 82, 96
+Idle
+  xy: 410, 78
+  size: 82, 96
+Walk
+  xy: 0, 174
+  size: 82, 96
+Walk
+  xy: 82, 174
+  size: 82, 96
+Walk
+  xy: 164, 174
+  size: 82, 96
+Walk
+  xy: 246, 174
+  size: 82, 96
+Walk
+  xy: 328, 174
+  size: 82, 96
+Walk
+  xy: 410, 174
+  size: 82, 96
+Attack
+  xy: 0, 270
+  size: 82, 96
+Attack
+  xy: 82, 270
+  size: 82, 96
+Attack
+  xy: 164, 270
+  size: 82, 96
+Attack
+  xy: 246, 270
+  size: 82, 96
+Attack
+  xy: 328, 270
+  size: 82, 96
+Attack
+  xy: 410, 270
+  size: 82, 96
+Hit
+  xy: 0, 366
+  size: 82, 96

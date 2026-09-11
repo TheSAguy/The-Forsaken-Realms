@@ -1,0 +1,71 @@
+galewrapped_specter.png
+size: 770,617
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 92, 92
+Idle
+  xy: 0, 92
+  size: 110, 105
+Idle
+  xy: 110, 92
+  size: 110, 105
+Idle
+  xy: 220, 92
+  size: 110, 105
+Idle
+  xy: 330, 92
+  size: 110, 105
+Idle
+  xy: 440, 92
+  size: 110, 105
+Idle
+  xy: 550, 92
+  size: 110, 105
+Walk
+  xy: 0, 197
+  size: 110, 105
+Walk
+  xy: 110, 197
+  size: 110, 105
+Walk
+  xy: 220, 197
+  size: 110, 105
+Walk
+  xy: 330, 197
+  size: 110, 105
+Walk
+  xy: 440, 197
+  size: 110, 105
+Walk
+  xy: 550, 197
+  size: 110, 105
+Attack
+  xy: 0, 302
+  size: 110, 105
+Attack
+  xy: 110, 302
+  size: 110, 105
+Attack
+  xy: 220, 302
+  size: 110, 105
+Attack
+  xy: 330, 302
+  size: 110, 105
+Attack
+  xy: 440, 302
+  size: 110, 105
+Attack
+  xy: 550, 302
+  size: 110, 105
+Hit
+  xy: 0, 407
+  size: 110, 105
+Death
+  xy: 0, 512
+  size: 110, 105
+Death
+  xy: 110, 512
+  size: 110, 105

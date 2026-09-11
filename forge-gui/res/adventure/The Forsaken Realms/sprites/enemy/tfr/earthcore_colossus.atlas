@@ -1,0 +1,80 @@
+earthcore_colossus.png
+size: 396,533
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 58, 58
+Idle
+  xy: 0, 58
+  size: 66, 95
+Idle
+  xy: 66, 58
+  size: 66, 95
+Idle
+  xy: 132, 58
+  size: 66, 95
+Idle
+  xy: 198, 58
+  size: 66, 95
+Idle
+  xy: 264, 58
+  size: 66, 95
+Idle
+  xy: 330, 58
+  size: 66, 95
+Walk
+  xy: 0, 153
+  size: 66, 95
+Walk
+  xy: 66, 153
+  size: 66, 95
+Walk
+  xy: 132, 153
+  size: 66, 95
+Walk
+  xy: 198, 153
+  size: 66, 95
+Walk
+  xy: 264, 153
+  size: 66, 95
+Walk
+  xy: 330, 153
+  size: 66, 95
+Attack
+  xy: 0, 248
+  size: 66, 95
+Attack
+  xy: 66, 248
+  size: 66, 95
+Attack
+  xy: 132, 248
+  size: 66, 95
+Attack
+  xy: 198, 248
+  size: 66, 95
+Attack
+  xy: 264, 248
+  size: 66, 95
+Attack
+  xy: 330, 248
+  size: 66, 95
+Hit
+  xy: 0, 343
+  size: 66, 95
+Death
+  xy: 0, 438
+  size: 66, 95
+Death
+  xy: 66, 438
+  size: 66, 95
+Death
+  xy: 132, 438
+  size: 66, 95
+Death
+  xy: 198, 438
+  size: 66, 95
+Death
+  xy: 264, 438
+  size: 66, 95

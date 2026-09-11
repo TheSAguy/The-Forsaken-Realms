@@ -135,7 +135,7 @@
   </object>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="432" y="160">
    <properties>
-    <property name="enemy" value="Sirena"/>
+    <property name="enemy" value="Knight Bowman"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,4"/>
@@ -143,7 +143,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="320" y="144">
    <properties>
-    <property name="enemy" value="Red Dwende"/>
+    <property name="enemy" value="Pitchfork Farmer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,4,2"/>

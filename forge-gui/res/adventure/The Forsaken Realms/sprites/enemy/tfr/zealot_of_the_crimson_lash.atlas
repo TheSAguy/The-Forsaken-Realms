@@ -1,0 +1,107 @@
+zealot_of_the_crimson_lash.png
+size: 682,650
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 60, 60
+Idle
+  xy: 0, 60
+  size: 62, 118
+Idle
+  xy: 62, 60
+  size: 62, 118
+Idle
+  xy: 124, 60
+  size: 62, 118
+Idle
+  xy: 186, 60
+  size: 62, 118
+Idle
+  xy: 248, 60
+  size: 62, 118
+Idle
+  xy: 310, 60
+  size: 62, 118
+Idle
+  xy: 372, 60
+  size: 62, 118
+Idle
+  xy: 434, 60
+  size: 62, 118
+Walk
+  xy: 0, 178
+  size: 62, 118
+Walk
+  xy: 62, 178
+  size: 62, 118
+Walk
+  xy: 124, 178
+  size: 62, 118
+Walk
+  xy: 186, 178
+  size: 62, 118
+Walk
+  xy: 248, 178
+  size: 62, 118
+Walk
+  xy: 310, 178
+  size: 62, 118
+Walk
+  xy: 372, 178
+  size: 62, 118
+Walk
+  xy: 434, 178
+  size: 62, 118
+Attack
+  xy: 0, 296
+  size: 62, 118
+Attack
+  xy: 62, 296
+  size: 62, 118
+Attack
+  xy: 124, 296
+  size: 62, 118
+Attack
+  xy: 186, 296
+  size: 62, 118
+Attack
+  xy: 248, 296
+  size: 62, 118
+Attack
+  xy: 310, 296
+  size: 62, 118
+Attack
+  xy: 372, 296
+  size: 62, 118
+Attack
+  xy: 434, 296
+  size: 62, 118
+Attack
+  xy: 496, 296
+  size: 62, 118
+Attack
+  xy: 558, 296
+  size: 62, 118
+Attack
+  xy: 620, 296
+  size: 62, 118
+Hit
+  xy: 0, 414
+  size: 62, 118
+Death
+  xy: 0, 532
+  size: 62, 118
+Death
+  xy: 62, 532
+  size: 62, 118
+Death
+  xy: 124, 532
+  size: 62, 118
+Death
+  xy: 186, 532
+  size: 62, 118
+Death
+  xy: 248, 532
+  size: 62, 118

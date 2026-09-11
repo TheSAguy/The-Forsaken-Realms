@@ -1,0 +1,71 @@
+tuskmaiden_skirmisher.png
+size: 945,415
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 105, 117
+Idle
+  xy: 105, 64
+  size: 105, 117
+Idle
+  xy: 210, 64
+  size: 105, 117
+Idle
+  xy: 315, 64
+  size: 105, 117
+Idle
+  xy: 420, 64
+  size: 105, 117
+Idle
+  xy: 525, 64
+  size: 105, 117
+Idle
+  xy: 630, 64
+  size: 105, 117
+Idle
+  xy: 735, 64
+  size: 105, 117
+Idle
+  xy: 840, 64
+  size: 105, 117
+Walk
+  xy: 0, 181
+  size: 105, 117
+Walk
+  xy: 105, 181
+  size: 105, 117
+Walk
+  xy: 210, 181
+  size: 105, 117
+Walk
+  xy: 315, 181
+  size: 105, 117
+Walk
+  xy: 420, 181
+  size: 105, 117
+Walk
+  xy: 525, 181
+  size: 105, 117
+Attack
+  xy: 0, 298
+  size: 105, 117
+Attack
+  xy: 105, 298
+  size: 105, 117
+Attack
+  xy: 210, 298
+  size: 105, 117
+Attack
+  xy: 315, 298
+  size: 105, 117
+Attack
+  xy: 420, 298
+  size: 105, 117
+Attack
+  xy: 525, 298
+  size: 105, 117

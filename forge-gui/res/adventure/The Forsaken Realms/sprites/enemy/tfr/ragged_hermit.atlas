@@ -1,0 +1,71 @@
+ragged_hermit.png
+size: 416,475
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 50, 50
+Idle
+  xy: 0, 50
+  size: 52, 85
+Idle
+  xy: 52, 50
+  size: 52, 85
+Idle
+  xy: 104, 50
+  size: 52, 85
+Idle
+  xy: 156, 50
+  size: 52, 85
+Idle
+  xy: 208, 50
+  size: 52, 85
+Idle
+  xy: 260, 50
+  size: 52, 85
+Idle
+  xy: 312, 50
+  size: 52, 85
+Idle
+  xy: 364, 50
+  size: 52, 85
+Walk
+  xy: 0, 135
+  size: 52, 85
+Walk
+  xy: 52, 135
+  size: 52, 85
+Walk
+  xy: 104, 135
+  size: 52, 85
+Walk
+  xy: 156, 135
+  size: 52, 85
+Attack
+  xy: 0, 220
+  size: 52, 85
+Attack
+  xy: 52, 220
+  size: 52, 85
+Attack
+  xy: 104, 220
+  size: 52, 85
+Attack
+  xy: 156, 220
+  size: 52, 85
+Attack
+  xy: 208, 220
+  size: 52, 85
+Attack
+  xy: 260, 220
+  size: 52, 85
+Hit
+  xy: 0, 305
+  size: 52, 85
+Death
+  xy: 0, 390
+  size: 52, 85
+Death
+  xy: 52, 390
+  size: 52, 85

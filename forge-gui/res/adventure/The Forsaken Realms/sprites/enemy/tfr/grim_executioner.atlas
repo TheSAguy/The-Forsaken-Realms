@@ -1,0 +1,44 @@
+grim_executioner.png
+size: 616,340
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 154, 92
+Idle
+  xy: 154, 64
+  size: 154, 92
+Idle
+  xy: 308, 64
+  size: 154, 92
+Idle
+  xy: 462, 64
+  size: 154, 92
+Walk
+  xy: 0, 156
+  size: 154, 92
+Walk
+  xy: 154, 156
+  size: 154, 92
+Walk
+  xy: 308, 156
+  size: 154, 92
+Walk
+  xy: 462, 156
+  size: 154, 92
+Attack
+  xy: 0, 248
+  size: 154, 92
+Attack
+  xy: 154, 248
+  size: 154, 92
+Attack
+  xy: 308, 248
+  size: 154, 92
+Attack
+  xy: 462, 248
+  size: 154, 92

@@ -1,0 +1,65 @@
+slashmaw_monger.png
+size: 800,629
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 160, 113
+Idle
+  xy: 160, 64
+  size: 160, 113
+Idle
+  xy: 320, 64
+  size: 160, 113
+Idle
+  xy: 480, 64
+  size: 160, 113
+Idle
+  xy: 640, 64
+  size: 160, 113
+Walk
+  xy: 0, 177
+  size: 160, 113
+Walk
+  xy: 160, 177
+  size: 160, 113
+Walk
+  xy: 320, 177
+  size: 160, 113
+Walk
+  xy: 480, 177
+  size: 160, 113
+Walk
+  xy: 640, 177
+  size: 160, 113
+Attack
+  xy: 0, 290
+  size: 160, 113
+Attack
+  xy: 160, 290
+  size: 160, 113
+Attack
+  xy: 320, 290
+  size: 160, 113
+Attack
+  xy: 480, 290
+  size: 160, 113
+Hit
+  xy: 0, 403
+  size: 160, 113
+Death
+  xy: 0, 516
+  size: 160, 113
+Death
+  xy: 160, 516
+  size: 160, 113
+Death
+  xy: 320, 516
+  size: 160, 113
+Death
+  xy: 480, 516
+  size: 160, 113

@@ -1,0 +1,77 @@
+rockthrower_oak.png
+size: 840,677
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 82, 82
+Idle
+  xy: 0, 82
+  size: 84, 119
+Idle
+  xy: 84, 82
+  size: 84, 119
+Idle
+  xy: 168, 82
+  size: 84, 119
+Idle
+  xy: 252, 82
+  size: 84, 119
+Idle
+  xy: 336, 82
+  size: 84, 119
+Idle
+  xy: 420, 82
+  size: 84, 119
+Idle
+  xy: 504, 82
+  size: 84, 119
+Idle
+  xy: 588, 82
+  size: 84, 119
+Idle
+  xy: 672, 82
+  size: 84, 119
+Idle
+  xy: 756, 82
+  size: 84, 119
+Walk
+  xy: 0, 201
+  size: 84, 119
+Walk
+  xy: 84, 201
+  size: 84, 119
+Walk
+  xy: 168, 201
+  size: 84, 119
+Walk
+  xy: 252, 201
+  size: 84, 119
+Walk
+  xy: 336, 201
+  size: 84, 119
+Walk
+  xy: 420, 201
+  size: 84, 119
+Attack
+  xy: 0, 320
+  size: 84, 119
+Attack
+  xy: 84, 320
+  size: 84, 119
+Attack
+  xy: 168, 320
+  size: 84, 119
+Hit
+  xy: 0, 439
+  size: 84, 119
+Death
+  xy: 0, 558
+  size: 84, 119
+Death
+  xy: 84, 558
+  size: 84, 119
+Death
+  xy: 168, 558
+  size: 84, 119

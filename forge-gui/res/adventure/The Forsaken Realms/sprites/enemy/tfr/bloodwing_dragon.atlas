@@ -1,0 +1,44 @@
+bloodwing_dragon.png
+size: 825,481
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 165, 139
+Idle
+  xy: 165, 64
+  size: 165, 139
+Walk
+  xy: 0, 203
+  size: 165, 139
+Walk
+  xy: 165, 203
+  size: 165, 139
+Walk
+  xy: 330, 203
+  size: 165, 139
+Walk
+  xy: 495, 203
+  size: 165, 139
+Walk
+  xy: 660, 203
+  size: 165, 139
+Attack
+  xy: 0, 342
+  size: 165, 139
+Attack
+  xy: 165, 342
+  size: 165, 139
+Attack
+  xy: 330, 342
+  size: 165, 139
+Attack
+  xy: 495, 342
+  size: 165, 139
+Attack
+  xy: 660, 342
+  size: 165, 139

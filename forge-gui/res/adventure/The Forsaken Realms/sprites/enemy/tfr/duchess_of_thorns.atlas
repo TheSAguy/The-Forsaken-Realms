@@ -1,0 +1,65 @@
+duchess_of_thorns.png
+size: 888,794
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 148, 146
+Idle
+  xy: 148, 64
+  size: 148, 146
+Idle
+  xy: 296, 64
+  size: 148, 146
+Idle
+  xy: 444, 64
+  size: 148, 146
+Idle
+  xy: 592, 64
+  size: 148, 146
+Idle
+  xy: 740, 64
+  size: 148, 146
+Walk
+  xy: 0, 210
+  size: 148, 146
+Walk
+  xy: 148, 210
+  size: 148, 146
+Walk
+  xy: 296, 210
+  size: 148, 146
+Walk
+  xy: 444, 210
+  size: 148, 146
+Walk
+  xy: 592, 210
+  size: 148, 146
+Attack
+  xy: 0, 356
+  size: 148, 146
+Attack
+  xy: 148, 356
+  size: 148, 146
+Attack
+  xy: 296, 356
+  size: 148, 146
+Attack
+  xy: 444, 356
+  size: 148, 146
+Attack
+  xy: 592, 356
+  size: 148, 146
+Hit
+  xy: 0, 502
+  size: 148, 146
+Death
+  xy: 0, 648
+  size: 148, 146
+Death
+  xy: 148, 648
+  size: 148, 146

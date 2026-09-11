@@ -1,0 +1,53 @@
+neferu_the_sealed_king.png
+size: 469,354
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 42, 42
+Idle
+  xy: 0, 42
+  size: 67, 104
+Idle
+  xy: 67, 42
+  size: 67, 104
+Idle
+  xy: 134, 42
+  size: 67, 104
+Idle
+  xy: 201, 42
+  size: 67, 104
+Idle
+  xy: 268, 42
+  size: 67, 104
+Idle
+  xy: 335, 42
+  size: 67, 104
+Walk
+  xy: 0, 146
+  size: 67, 104
+Walk
+  xy: 67, 146
+  size: 67, 104
+Walk
+  xy: 134, 146
+  size: 67, 104
+Walk
+  xy: 201, 146
+  size: 67, 104
+Walk
+  xy: 268, 146
+  size: 67, 104
+Walk
+  xy: 335, 146
+  size: 67, 104
+Attack
+  xy: 0, 250
+  size: 67, 104
+Attack
+  xy: 67, 250
+  size: 67, 104
+Attack
+  xy: 134, 250
+  size: 67, 104

@@ -1,0 +1,47 @@
+voidmaw_stalker.png
+size: 720,304
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 144, 80
+Idle
+  xy: 144, 64
+  size: 144, 80
+Idle
+  xy: 288, 64
+  size: 144, 80
+Idle
+  xy: 432, 64
+  size: 144, 80
+Walk
+  xy: 0, 144
+  size: 144, 80
+Walk
+  xy: 144, 144
+  size: 144, 80
+Walk
+  xy: 288, 144
+  size: 144, 80
+Walk
+  xy: 432, 144
+  size: 144, 80
+Walk
+  xy: 576, 144
+  size: 144, 80
+Attack
+  xy: 0, 224
+  size: 144, 80
+Attack
+  xy: 144, 224
+  size: 144, 80
+Attack
+  xy: 288, 224
+  size: 144, 80
+Attack
+  xy: 432, 224
+  size: 144, 80

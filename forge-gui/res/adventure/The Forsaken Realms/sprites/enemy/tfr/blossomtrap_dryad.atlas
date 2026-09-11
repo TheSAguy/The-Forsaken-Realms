@@ -1,0 +1,62 @@
+blossomtrap_dryad.png
+size: 816,312
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 69, 69
+Idle
+  xy: 0, 69
+  size: 102, 81
+Idle
+  xy: 102, 69
+  size: 102, 81
+Idle
+  xy: 204, 69
+  size: 102, 81
+Idle
+  xy: 306, 69
+  size: 102, 81
+Idle
+  xy: 408, 69
+  size: 102, 81
+Idle
+  xy: 510, 69
+  size: 102, 81
+Idle
+  xy: 612, 69
+  size: 102, 81
+Idle
+  xy: 714, 69
+  size: 102, 81
+Walk
+  xy: 0, 150
+  size: 102, 81
+Walk
+  xy: 102, 150
+  size: 102, 81
+Walk
+  xy: 204, 150
+  size: 102, 81
+Walk
+  xy: 306, 150
+  size: 102, 81
+Walk
+  xy: 408, 150
+  size: 102, 81
+Walk
+  xy: 510, 150
+  size: 102, 81
+Walk
+  xy: 612, 150
+  size: 102, 81
+Attack
+  xy: 0, 231
+  size: 102, 81
+Attack
+  xy: 102, 231
+  size: 102, 81
+Attack
+  xy: 204, 231
+  size: 102, 81

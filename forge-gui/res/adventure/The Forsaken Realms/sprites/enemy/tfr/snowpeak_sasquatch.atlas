@@ -1,0 +1,65 @@
+snowpeak_sasquatch.png
+size: 396,634
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 66, 114
+Idle
+  xy: 66, 64
+  size: 66, 114
+Idle
+  xy: 132, 64
+  size: 66, 114
+Idle
+  xy: 198, 64
+  size: 66, 114
+Walk
+  xy: 0, 178
+  size: 66, 114
+Walk
+  xy: 66, 178
+  size: 66, 114
+Walk
+  xy: 132, 178
+  size: 66, 114
+Walk
+  xy: 198, 178
+  size: 66, 114
+Walk
+  xy: 264, 178
+  size: 66, 114
+Walk
+  xy: 330, 178
+  size: 66, 114
+Attack
+  xy: 0, 292
+  size: 66, 114
+Attack
+  xy: 66, 292
+  size: 66, 114
+Attack
+  xy: 132, 292
+  size: 66, 114
+Attack
+  xy: 198, 292
+  size: 66, 114
+Attack
+  xy: 264, 292
+  size: 66, 114
+Attack
+  xy: 330, 292
+  size: 66, 114
+Hit
+  xy: 0, 406
+  size: 66, 114
+Death
+  xy: 0, 520
+  size: 66, 114
+Death
+  xy: 66, 520
+  size: 66, 114

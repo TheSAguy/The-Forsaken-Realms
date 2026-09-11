@@ -88,13 +88,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -136,25 +136,25 @@
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="120" y="184"/>
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="536" y="184"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="328" y="184"/>
-  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="480" y="224">
+  <object id="6" template="../../../../common/maps/obj/enemy.tx" x="352" y="128">
    <properties>
-    <property name="enemy" value="High Vampire"/>
+    <property name="enemy" value="Odium of the Last Spire"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>
    </properties>
   </object>
-  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="320" y="144">
+  <object id="7" template="../../../../common/maps/obj/enemy.tx" x="240" y="160">
    <properties>
-    <property name="enemy" value="Ghoulcaller Ghoul"/>
+    <property name="enemy" value="Blinded Grimlock"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,5,4"/>
    </properties>
   </object>
-  <object id="8" template="../../../../common/maps/obj/enemy.tx" x="144" y="176">
+  <object id="8" template="../../../../common/maps/obj/enemy.tx" x="528" y="224">
    <properties>
-    <property name="enemy" value="Bloodied Skeleton"/>
+    <property name="enemy" value="Hoarder Beetle"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>
@@ -165,7 +165,7 @@
     <property name="reward">[{&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 1, &quot;addMaxCount&quot;: 1}]</property>
    </properties>
   </object>
-  <object id="10" template="../../../../common/maps/obj/gold.tx" x="176" y="176"/>
-  <object id="11" template="../../obj/stone.tx" x="352" y="176"/>
+  <object id="10" template="../../../../common/maps/obj/gold.tx" x="272" y="176"/>
+  <object id="11" template="../../obj/stone.tx" x="352" y="192"/>
  </objectgroup>
 </map>

@@ -1,0 +1,89 @@
+hollow_oath_archer.png
+size: 660,560
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 50, 50
+Idle
+  xy: 0, 50
+  size: 66, 102
+Idle
+  xy: 66, 50
+  size: 66, 102
+Idle
+  xy: 132, 50
+  size: 66, 102
+Idle
+  xy: 198, 50
+  size: 66, 102
+Idle
+  xy: 264, 50
+  size: 66, 102
+Idle
+  xy: 330, 50
+  size: 66, 102
+Walk
+  xy: 0, 152
+  size: 66, 102
+Walk
+  xy: 66, 152
+  size: 66, 102
+Walk
+  xy: 132, 152
+  size: 66, 102
+Walk
+  xy: 198, 152
+  size: 66, 102
+Walk
+  xy: 264, 152
+  size: 66, 102
+Walk
+  xy: 330, 152
+  size: 66, 102
+Walk
+  xy: 396, 152
+  size: 66, 102
+Walk
+  xy: 462, 152
+  size: 66, 102
+Attack
+  xy: 0, 254
+  size: 66, 102
+Attack
+  xy: 66, 254
+  size: 66, 102
+Attack
+  xy: 132, 254
+  size: 66, 102
+Attack
+  xy: 198, 254
+  size: 66, 102
+Attack
+  xy: 264, 254
+  size: 66, 102
+Attack
+  xy: 330, 254
+  size: 66, 102
+Attack
+  xy: 396, 254
+  size: 66, 102
+Attack
+  xy: 462, 254
+  size: 66, 102
+Attack
+  xy: 528, 254
+  size: 66, 102
+Attack
+  xy: 594, 254
+  size: 66, 102
+Hit
+  xy: 0, 356
+  size: 66, 102
+Death
+  xy: 0, 458
+  size: 66, 102
+Death
+  xy: 66, 458
+  size: 66, 102

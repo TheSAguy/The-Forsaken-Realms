@@ -189,8 +189,15 @@ def settle(rounds=40, wait_each=60):
         if scene == "RewardScene":
             ui = s.get("ui") or []
             say("reward screen:", [u.get("text") or u.get("name") for u in ui])
-            done = next((u for u in ui if (u.get("text") or "").lower() in ("done", "back")), None)
-            call("POST", "/cmd", {"cmd": "click", "id": done["id"]} if done else {"cmd": "back"})
+            # The Done button is listed by NAME ("done"; its text is the "[+OK]" glyph). Round 179: matching only
+            # the text missed it, and the fallback `back` (UIScene.back -> switchToLast) leaves WITHOUT collecting -
+            # every loot screen settle passed was thrown away. Loot is only ever collected through Done.
+            done = next((u for u in ui if (u.get("name") or "").lower() == "done"
+                         or (u.get("text") or "").lower() in ("done", "[+ok]")), None)
+            if done is None:
+                say("reward screen without a Done button - not leaving it with back (that discards the loot)")
+                return s
+            call("POST", "/cmd", {"cmd": "click", "id": done["id"]})
             time.sleep(2.5)
             continue
         d = s.get("dialog")

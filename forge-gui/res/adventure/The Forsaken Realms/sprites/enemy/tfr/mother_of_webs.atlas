@@ -1,0 +1,41 @@
+mother_of_webs.png
+size: 396,517
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 82, 82
+Idle
+  xy: 0, 82
+  size: 99, 87
+Idle
+  xy: 99, 82
+  size: 99, 87
+Idle
+  xy: 198, 82
+  size: 99, 87
+Walk
+  xy: 0, 169
+  size: 99, 87
+Walk
+  xy: 99, 169
+  size: 99, 87
+Attack
+  xy: 0, 256
+  size: 99, 87
+Attack
+  xy: 99, 256
+  size: 99, 87
+Attack
+  xy: 198, 256
+  size: 99, 87
+Attack
+  xy: 297, 256
+  size: 99, 87
+Hit
+  xy: 0, 343
+  size: 99, 87
+Death
+  xy: 0, 430
+  size: 99, 87

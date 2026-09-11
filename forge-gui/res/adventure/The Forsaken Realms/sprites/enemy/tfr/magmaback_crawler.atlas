@@ -1,0 +1,50 @@
+magmaback_crawler.png
+size: 660,238
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 132, 58
+Idle
+  xy: 132, 64
+  size: 132, 58
+Idle
+  xy: 264, 64
+  size: 132, 58
+Idle
+  xy: 396, 64
+  size: 132, 58
+Idle
+  xy: 528, 64
+  size: 132, 58
+Walk
+  xy: 0, 122
+  size: 132, 58
+Walk
+  xy: 132, 122
+  size: 132, 58
+Walk
+  xy: 264, 122
+  size: 132, 58
+Walk
+  xy: 396, 122
+  size: 132, 58
+Walk
+  xy: 528, 122
+  size: 132, 58
+Attack
+  xy: 0, 180
+  size: 132, 58
+Attack
+  xy: 132, 180
+  size: 132, 58
+Attack
+  xy: 264, 180
+  size: 132, 58
+Attack
+  xy: 396, 180
+  size: 132, 58

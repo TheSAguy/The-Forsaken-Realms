@@ -1,0 +1,122 @@
+gazestalk_ooze.png
+size: 504,266
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 31, 31
+Idle
+  xy: 0, 31
+  size: 42, 47
+Idle
+  xy: 42, 31
+  size: 42, 47
+Idle
+  xy: 84, 31
+  size: 42, 47
+Idle
+  xy: 126, 31
+  size: 42, 47
+Idle
+  xy: 168, 31
+  size: 42, 47
+Idle
+  xy: 210, 31
+  size: 42, 47
+Idle
+  xy: 252, 31
+  size: 42, 47
+Idle
+  xy: 294, 31
+  size: 42, 47
+Idle
+  xy: 336, 31
+  size: 42, 47
+Idle
+  xy: 378, 31
+  size: 42, 47
+Idle
+  xy: 420, 31
+  size: 42, 47
+Idle
+  xy: 462, 31
+  size: 42, 47
+Walk
+  xy: 0, 78
+  size: 42, 47
+Walk
+  xy: 42, 78
+  size: 42, 47
+Walk
+  xy: 84, 78
+  size: 42, 47
+Walk
+  xy: 126, 78
+  size: 42, 47
+Walk
+  xy: 168, 78
+  size: 42, 47
+Walk
+  xy: 210, 78
+  size: 42, 47
+Attack
+  xy: 0, 125
+  size: 42, 47
+Attack
+  xy: 42, 125
+  size: 42, 47
+Attack
+  xy: 84, 125
+  size: 42, 47
+Attack
+  xy: 126, 125
+  size: 42, 47
+Attack
+  xy: 168, 125
+  size: 42, 47
+Attack
+  xy: 210, 125
+  size: 42, 47
+Attack
+  xy: 252, 125
+  size: 42, 47
+Attack
+  xy: 294, 125
+  size: 42, 47
+Hit
+  xy: 0, 172
+  size: 42, 47
+Death
+  xy: 0, 219
+  size: 42, 47
+Death
+  xy: 42, 219
+  size: 42, 47
+Death
+  xy: 84, 219
+  size: 42, 47
+Death
+  xy: 126, 219
+  size: 42, 47
+Death
+  xy: 168, 219
+  size: 42, 47
+Death
+  xy: 210, 219
+  size: 42, 47
+Death
+  xy: 252, 219
+  size: 42, 47
+Death
+  xy: 294, 219
+  size: 42, 47
+Death
+  xy: 336, 219
+  size: 42, 47
+Death
+  xy: 378, 219
+  size: 42, 47
+Death
+  xy: 420, 219
+  size: 42, 47

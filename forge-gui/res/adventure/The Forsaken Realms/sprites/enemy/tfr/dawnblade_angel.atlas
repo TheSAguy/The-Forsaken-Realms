@@ -1,0 +1,47 @@
+dawnblade_angel.png
+size: 865,556
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 173, 164
+Idle
+  xy: 173, 64
+  size: 173, 164
+Idle
+  xy: 346, 64
+  size: 173, 164
+Walk
+  xy: 0, 228
+  size: 173, 164
+Walk
+  xy: 173, 228
+  size: 173, 164
+Walk
+  xy: 346, 228
+  size: 173, 164
+Walk
+  xy: 519, 228
+  size: 173, 164
+Walk
+  xy: 692, 228
+  size: 173, 164
+Attack
+  xy: 0, 392
+  size: 173, 164
+Attack
+  xy: 173, 392
+  size: 173, 164
+Attack
+  xy: 346, 392
+  size: 173, 164
+Attack
+  xy: 519, 392
+  size: 173, 164
+Attack
+  xy: 692, 392
+  size: 173, 164

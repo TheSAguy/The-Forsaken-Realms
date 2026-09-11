@@ -1,0 +1,68 @@
+pomhair_spider.png
+size: 474,429
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 69, 69
+Idle
+  xy: 0, 69
+  size: 79, 72
+Idle
+  xy: 79, 69
+  size: 79, 72
+Idle
+  xy: 158, 69
+  size: 79, 72
+Idle
+  xy: 237, 69
+  size: 79, 72
+Idle
+  xy: 316, 69
+  size: 79, 72
+Idle
+  xy: 395, 69
+  size: 79, 72
+Walk
+  xy: 0, 141
+  size: 79, 72
+Walk
+  xy: 79, 141
+  size: 79, 72
+Walk
+  xy: 158, 141
+  size: 79, 72
+Walk
+  xy: 237, 141
+  size: 79, 72
+Walk
+  xy: 316, 141
+  size: 79, 72
+Walk
+  xy: 395, 141
+  size: 79, 72
+Attack
+  xy: 0, 213
+  size: 79, 72
+Attack
+  xy: 79, 213
+  size: 79, 72
+Attack
+  xy: 158, 213
+  size: 79, 72
+Attack
+  xy: 237, 213
+  size: 79, 72
+Attack
+  xy: 316, 213
+  size: 79, 72
+Attack
+  xy: 395, 213
+  size: 79, 72
+Hit
+  xy: 0, 285
+  size: 79, 72
+Death
+  xy: 0, 357
+  size: 79, 72

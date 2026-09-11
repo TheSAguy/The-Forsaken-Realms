@@ -1,0 +1,47 @@
+tallow_rat.png
+size: 128,123
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 23, 23
+Idle
+  xy: 0, 23
+  size: 32, 25
+Idle
+  xy: 32, 23
+  size: 32, 25
+Idle
+  xy: 64, 23
+  size: 32, 25
+Idle
+  xy: 96, 23
+  size: 32, 25
+Walk
+  xy: 0, 48
+  size: 32, 25
+Walk
+  xy: 32, 48
+  size: 32, 25
+Walk
+  xy: 64, 48
+  size: 32, 25
+Walk
+  xy: 96, 48
+  size: 32, 25
+Attack
+  xy: 0, 73
+  size: 32, 25
+Attack
+  xy: 32, 73
+  size: 32, 25
+Attack
+  xy: 64, 73
+  size: 32, 25
+Attack
+  xy: 96, 73
+  size: 32, 25
+Hit
+  xy: 0, 98
+  size: 32, 25

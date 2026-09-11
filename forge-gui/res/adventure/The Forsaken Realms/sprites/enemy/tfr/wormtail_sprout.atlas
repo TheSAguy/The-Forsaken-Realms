@@ -1,0 +1,53 @@
+wormtail_sprout.png
+size: 172,581
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 41
+Idle
+  xy: 0, 41
+  size: 43, 108
+Idle
+  xy: 43, 41
+  size: 43, 108
+Idle
+  xy: 86, 41
+  size: 43, 108
+Idle
+  xy: 129, 41
+  size: 43, 108
+Walk
+  xy: 0, 149
+  size: 43, 108
+Walk
+  xy: 43, 149
+  size: 43, 108
+Walk
+  xy: 86, 149
+  size: 43, 108
+Attack
+  xy: 0, 257
+  size: 43, 108
+Attack
+  xy: 43, 257
+  size: 43, 108
+Attack
+  xy: 86, 257
+  size: 43, 108
+Attack
+  xy: 129, 257
+  size: 43, 108
+Hit
+  xy: 0, 365
+  size: 43, 108
+Death
+  xy: 0, 473
+  size: 43, 108
+Death
+  xy: 43, 473
+  size: 43, 108
+Death
+  xy: 86, 473
+  size: 43, 108

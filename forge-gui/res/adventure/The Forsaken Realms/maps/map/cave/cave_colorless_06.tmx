@@ -157,7 +157,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="544" y="160">
    <properties>
-    <property name="enemy" value="Ice Golem"/>
+    <property name="enemy" value="Hedge Villager"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,6,5,4"/>
@@ -165,7 +165,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="352" y="144">
    <properties>
-    <property name="enemy" value="Devil Wanderer"/>
+    <property name="enemy" value="Croaking Toad"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,2,3,4,5"/>

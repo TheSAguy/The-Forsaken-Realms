@@ -1,0 +1,71 @@
+skullcap_brawler.png
+size: 1179,715
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 100, 100
+Idle
+  xy: 0, 100
+  size: 131, 123
+Idle
+  xy: 131, 100
+  size: 131, 123
+Idle
+  xy: 262, 100
+  size: 131, 123
+Idle
+  xy: 393, 100
+  size: 131, 123
+Idle
+  xy: 524, 100
+  size: 131, 123
+Idle
+  xy: 655, 100
+  size: 131, 123
+Idle
+  xy: 786, 100
+  size: 131, 123
+Idle
+  xy: 917, 100
+  size: 131, 123
+Idle
+  xy: 1048, 100
+  size: 131, 123
+Walk
+  xy: 0, 223
+  size: 131, 123
+Walk
+  xy: 131, 223
+  size: 131, 123
+Walk
+  xy: 262, 223
+  size: 131, 123
+Walk
+  xy: 393, 223
+  size: 131, 123
+Walk
+  xy: 524, 223
+  size: 131, 123
+Attack
+  xy: 0, 346
+  size: 131, 123
+Attack
+  xy: 131, 346
+  size: 131, 123
+Attack
+  xy: 262, 346
+  size: 131, 123
+Attack
+  xy: 393, 346
+  size: 131, 123
+Hit
+  xy: 0, 469
+  size: 131, 123
+Death
+  xy: 0, 592
+  size: 131, 123
+Death
+  xy: 131, 592
+  size: 131, 123

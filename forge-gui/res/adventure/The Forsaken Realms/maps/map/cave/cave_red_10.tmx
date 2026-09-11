@@ -150,7 +150,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="88" y="72"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="608" y="128">
    <properties>
-    <property name="enemy" value="Raptor"/>
+    <property name="enemy" value="Slashmaw Monger"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -158,7 +158,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="544" y="176">
    <properties>
-    <property name="enemy" value="Fire Elemental"/>
+    <property name="enemy" value="Ember Elemental"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -166,7 +166,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="416" y="208">
    <properties>
-    <property name="enemy" value="Viashino"/>
+    <property name="enemy" value="Orc Raider"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>

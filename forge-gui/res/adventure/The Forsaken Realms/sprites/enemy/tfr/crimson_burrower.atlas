@@ -1,0 +1,35 @@
+crimson_burrower.png
+size: 520,352
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 130, 96
+Idle
+  xy: 130, 64
+  size: 130, 96
+Idle
+  xy: 260, 64
+  size: 130, 96
+Walk
+  xy: 0, 160
+  size: 130, 96
+Walk
+  xy: 130, 160
+  size: 130, 96
+Walk
+  xy: 260, 160
+  size: 130, 96
+Walk
+  xy: 390, 160
+  size: 130, 96
+Attack
+  xy: 0, 256
+  size: 130, 96
+Attack
+  xy: 130, 256
+  size: 130, 96

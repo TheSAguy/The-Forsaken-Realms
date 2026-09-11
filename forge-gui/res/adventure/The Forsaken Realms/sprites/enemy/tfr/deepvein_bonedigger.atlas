@@ -1,0 +1,80 @@
+deepvein_bonedigger.png
+size: 696,588
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 58, 58
+Idle
+  xy: 0, 58
+  size: 87, 106
+Idle
+  xy: 87, 58
+  size: 87, 106
+Idle
+  xy: 174, 58
+  size: 87, 106
+Idle
+  xy: 261, 58
+  size: 87, 106
+Idle
+  xy: 348, 58
+  size: 87, 106
+Idle
+  xy: 435, 58
+  size: 87, 106
+Walk
+  xy: 0, 164
+  size: 87, 106
+Walk
+  xy: 87, 164
+  size: 87, 106
+Walk
+  xy: 174, 164
+  size: 87, 106
+Walk
+  xy: 261, 164
+  size: 87, 106
+Walk
+  xy: 348, 164
+  size: 87, 106
+Walk
+  xy: 435, 164
+  size: 87, 106
+Walk
+  xy: 522, 164
+  size: 87, 106
+Walk
+  xy: 609, 164
+  size: 87, 106
+Attack
+  xy: 0, 270
+  size: 87, 106
+Attack
+  xy: 87, 270
+  size: 87, 106
+Attack
+  xy: 174, 270
+  size: 87, 106
+Attack
+  xy: 261, 270
+  size: 87, 106
+Attack
+  xy: 348, 270
+  size: 87, 106
+Hit
+  xy: 0, 376
+  size: 87, 106
+Death
+  xy: 0, 482
+  size: 87, 106
+Death
+  xy: 87, 482
+  size: 87, 106
+Death
+  xy: 174, 482
+  size: 87, 106
+Death
+  xy: 261, 482
+  size: 87, 106

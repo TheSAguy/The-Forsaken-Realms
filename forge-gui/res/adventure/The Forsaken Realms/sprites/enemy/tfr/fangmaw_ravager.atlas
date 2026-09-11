@@ -1,0 +1,62 @@
+fangmaw_ravager.png
+size: 936,874
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 156, 162
+Idle
+  xy: 156, 64
+  size: 156, 162
+Idle
+  xy: 312, 64
+  size: 156, 162
+Idle
+  xy: 468, 64
+  size: 156, 162
+Idle
+  xy: 624, 64
+  size: 156, 162
+Walk
+  xy: 0, 226
+  size: 156, 162
+Walk
+  xy: 156, 226
+  size: 156, 162
+Walk
+  xy: 312, 226
+  size: 156, 162
+Walk
+  xy: 468, 226
+  size: 156, 162
+Walk
+  xy: 624, 226
+  size: 156, 162
+Walk
+  xy: 780, 226
+  size: 156, 162
+Attack
+  xy: 0, 388
+  size: 156, 162
+Attack
+  xy: 156, 388
+  size: 156, 162
+Attack
+  xy: 312, 388
+  size: 156, 162
+Attack
+  xy: 468, 388
+  size: 156, 162
+Attack
+  xy: 624, 388
+  size: 156, 162
+Hit
+  xy: 0, 550
+  size: 156, 162
+Death
+  xy: 0, 712
+  size: 156, 162

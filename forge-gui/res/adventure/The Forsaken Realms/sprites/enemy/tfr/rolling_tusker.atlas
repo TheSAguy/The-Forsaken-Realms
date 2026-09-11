@@ -1,0 +1,59 @@
+rolling_tusker.png
+size: 740,689
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 148, 125
+Idle
+  xy: 148, 64
+  size: 148, 125
+Idle
+  xy: 296, 64
+  size: 148, 125
+Idle
+  xy: 444, 64
+  size: 148, 125
+Walk
+  xy: 0, 189
+  size: 148, 125
+Walk
+  xy: 148, 189
+  size: 148, 125
+Walk
+  xy: 296, 189
+  size: 148, 125
+Walk
+  xy: 444, 189
+  size: 148, 125
+Walk
+  xy: 592, 189
+  size: 148, 125
+Attack
+  xy: 0, 314
+  size: 148, 125
+Attack
+  xy: 148, 314
+  size: 148, 125
+Attack
+  xy: 296, 314
+  size: 148, 125
+Attack
+  xy: 444, 314
+  size: 148, 125
+Hit
+  xy: 0, 439
+  size: 148, 125
+Death
+  xy: 0, 564
+  size: 148, 125
+Death
+  xy: 148, 564
+  size: 148, 125
+Death
+  xy: 296, 564
+  size: 148, 125

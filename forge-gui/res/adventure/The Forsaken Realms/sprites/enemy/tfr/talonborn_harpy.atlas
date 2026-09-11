@@ -1,0 +1,59 @@
+talonborn_harpy.png
+size: 786,550
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 131, 64
+  size: 131, 162
+Idle
+  xy: 262, 64
+  size: 131, 162
+Idle
+  xy: 393, 64
+  size: 131, 162
+Idle
+  xy: 524, 64
+  size: 131, 162
+Idle
+  xy: 655, 64
+  size: 131, 162
+Walk
+  xy: 0, 226
+  size: 131, 162
+Walk
+  xy: 131, 226
+  size: 131, 162
+Walk
+  xy: 262, 226
+  size: 131, 162
+Walk
+  xy: 393, 226
+  size: 131, 162
+Walk
+  xy: 524, 226
+  size: 131, 162
+Walk
+  xy: 655, 226
+  size: 131, 162
+Attack
+  xy: 0, 388
+  size: 131, 162
+Attack
+  xy: 131, 388
+  size: 131, 162
+Attack
+  xy: 262, 388
+  size: 131, 162
+Attack
+  xy: 393, 388
+  size: 131, 162
+Attack
+  xy: 524, 388
+  size: 131, 162
+Attack
+  xy: 655, 388
+  size: 131, 162

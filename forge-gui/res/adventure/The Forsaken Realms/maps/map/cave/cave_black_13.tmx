@@ -160,7 +160,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="232" y="168"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="528" y="240">
    <properties>
-    <property name="enemy" value="Tainted Scoundrel"/>
+    <property name="enemy" value="Eye"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -168,7 +168,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="256" y="240">
    <properties>
-    <property name="enemy" value="Golgari Fungus"/>
+    <property name="enemy" value="Depraved Blackguard"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -176,7 +176,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="368" y="176">
    <properties>
-    <property name="enemy" value="Bound Cadaver"/>
+    <property name="enemy" value="Bog Hermit"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -184,7 +184,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="128" y="224">
    <properties>
-    <property name="enemy" value="Hooded Skulk"/>
+    <property name="enemy" value="Golgari Fungus"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>

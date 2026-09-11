@@ -1,0 +1,53 @@
+geode_slug.png
+size: 405,268
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 52, 52
+Idle
+  xy: 0, 52
+  size: 81, 54
+Idle
+  xy: 81, 52
+  size: 81, 54
+Idle
+  xy: 162, 52
+  size: 81, 54
+Idle
+  xy: 243, 52
+  size: 81, 54
+Idle
+  xy: 324, 52
+  size: 81, 54
+Walk
+  xy: 0, 106
+  size: 81, 54
+Walk
+  xy: 81, 106
+  size: 81, 54
+Walk
+  xy: 162, 106
+  size: 81, 54
+Walk
+  xy: 243, 106
+  size: 81, 54
+Attack
+  xy: 0, 160
+  size: 81, 54
+Attack
+  xy: 81, 160
+  size: 81, 54
+Attack
+  xy: 162, 160
+  size: 81, 54
+Attack
+  xy: 243, 160
+  size: 81, 54
+Attack
+  xy: 324, 160
+  size: 81, 54
+Hit
+  xy: 0, 214
+  size: 81, 54

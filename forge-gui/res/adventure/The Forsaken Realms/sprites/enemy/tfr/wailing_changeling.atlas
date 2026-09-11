@@ -1,0 +1,62 @@
+wailing_changeling.png
+size: 408,265
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 49, 49
+Idle
+  xy: 0, 49
+  size: 68, 54
+Idle
+  xy: 68, 49
+  size: 68, 54
+Idle
+  xy: 136, 49
+  size: 68, 54
+Idle
+  xy: 204, 49
+  size: 68, 54
+Idle
+  xy: 272, 49
+  size: 68, 54
+Idle
+  xy: 340, 49
+  size: 68, 54
+Walk
+  xy: 0, 103
+  size: 68, 54
+Walk
+  xy: 68, 103
+  size: 68, 54
+Walk
+  xy: 136, 103
+  size: 68, 54
+Walk
+  xy: 204, 103
+  size: 68, 54
+Walk
+  xy: 272, 103
+  size: 68, 54
+Walk
+  xy: 340, 103
+  size: 68, 54
+Attack
+  xy: 0, 157
+  size: 68, 54
+Attack
+  xy: 68, 157
+  size: 68, 54
+Attack
+  xy: 136, 157
+  size: 68, 54
+Attack
+  xy: 204, 157
+  size: 68, 54
+Attack
+  xy: 272, 157
+  size: 68, 54
+Hit
+  xy: 0, 211
+  size: 68, 54

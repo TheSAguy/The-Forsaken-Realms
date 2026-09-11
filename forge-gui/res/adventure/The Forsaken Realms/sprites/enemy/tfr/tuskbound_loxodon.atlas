@@ -1,0 +1,56 @@
+tuskbound_loxodon.png
+size: 444,659
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 111, 119
+Idle
+  xy: 111, 64
+  size: 111, 119
+Idle
+  xy: 222, 64
+  size: 111, 119
+Idle
+  xy: 333, 64
+  size: 111, 119
+Walk
+  xy: 0, 183
+  size: 111, 119
+Walk
+  xy: 111, 183
+  size: 111, 119
+Walk
+  xy: 222, 183
+  size: 111, 119
+Walk
+  xy: 333, 183
+  size: 111, 119
+Attack
+  xy: 0, 302
+  size: 111, 119
+Attack
+  xy: 111, 302
+  size: 111, 119
+Attack
+  xy: 222, 302
+  size: 111, 119
+Hit
+  xy: 0, 421
+  size: 111, 119
+Death
+  xy: 0, 540
+  size: 111, 119
+Death
+  xy: 111, 540
+  size: 111, 119
+Death
+  xy: 222, 540
+  size: 111, 119
+Death
+  xy: 333, 540
+  size: 111, 119

@@ -1,0 +1,83 @@
+crimson_temptress.png
+size: 860,586
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 66, 66
+Idle
+  xy: 0, 66
+  size: 86, 104
+Idle
+  xy: 86, 66
+  size: 86, 104
+Idle
+  xy: 172, 66
+  size: 86, 104
+Idle
+  xy: 258, 66
+  size: 86, 104
+Idle
+  xy: 344, 66
+  size: 86, 104
+Idle
+  xy: 430, 66
+  size: 86, 104
+Idle
+  xy: 516, 66
+  size: 86, 104
+Idle
+  xy: 602, 66
+  size: 86, 104
+Idle
+  xy: 688, 66
+  size: 86, 104
+Walk
+  xy: 0, 170
+  size: 86, 104
+Walk
+  xy: 86, 170
+  size: 86, 104
+Walk
+  xy: 172, 170
+  size: 86, 104
+Walk
+  xy: 258, 170
+  size: 86, 104
+Walk
+  xy: 344, 170
+  size: 86, 104
+Walk
+  xy: 430, 170
+  size: 86, 104
+Walk
+  xy: 516, 170
+  size: 86, 104
+Walk
+  xy: 602, 170
+  size: 86, 104
+Attack
+  xy: 0, 274
+  size: 86, 104
+Attack
+  xy: 86, 274
+  size: 86, 104
+Attack
+  xy: 172, 274
+  size: 86, 104
+Attack
+  xy: 258, 274
+  size: 86, 104
+Attack
+  xy: 344, 274
+  size: 86, 104
+Hit
+  xy: 0, 378
+  size: 86, 104
+Death
+  xy: 0, 482
+  size: 86, 104
+Death
+  xy: 86, 482
+  size: 86, 104

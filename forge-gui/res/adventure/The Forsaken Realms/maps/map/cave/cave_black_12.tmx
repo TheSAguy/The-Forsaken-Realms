@@ -95,20 +95,20 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -159,60 +159,60 @@
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="424" y="264"/>
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="344" y="168"/>
   <object id="8" template="../../../../common/maps/obj/waypoint.tx" x="392" y="136"/>
-  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="256" y="256">
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="640" y="96">
    <properties>
-    <property name="enemy" value="The Reaper"/>
+    <property name="enemy" value="Halfling Assassin"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7,8"/>
    </properties>
   </object>
-  <object id="10" template="../../../../common/maps/obj/enemy.tx" x="128" y="128">
+  <object id="10" template="../../../../common/maps/obj/enemy.tx" x="336" y="208">
    <properties>
-    <property name="enemy" value="High Vampire"/>
+    <property name="enemy" value="The Reaper"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,8,7,6,5,4"/>
    </properties>
   </object>
-  <object id="11" template="../../../../common/maps/obj/enemy.tx" x="640" y="96">
+  <object id="11" template="../../../../common/maps/obj/enemy.tx" x="144" y="128">
    <properties>
-    <property name="enemy" value="Adept Black Wizard"/>
+    <property name="enemy" value="Bat"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,8,2,3,4,5"/>
    </properties>
   </object>
-  <object id="12" template="../../../../common/maps/obj/enemy.tx" x="576" y="240">
+  <object id="12" template="../../../../common/maps/obj/enemy.tx" x="512" y="176">
    <properties>
-    <property name="enemy" value="Big Zombie"/>
+    <property name="enemy" value="Vampire"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2,8"/>
    </properties>
   </object>
-  <object id="13" template="../../../../common/maps/obj/enemy.tx" x="304" y="192">
+  <object id="13" template="../../../../common/maps/obj/enemy.tx" x="288" y="272">
    <properties>
-    <property name="enemy" value="Mutilated Stumbler"/>
+    <property name="enemy" value="Grave-Tattered Bride"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,4,5,6,7,8,2"/>
    </properties>
   </object>
-  <object id="14" template="../../../../common/maps/obj/treasure.tx" x="720" y="48">
+  <object id="14" template="../../../../common/maps/obj/treasure.tx" x="720" y="96">
    <properties>
     <property name="reward">[{&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 2, &quot;addMaxCount&quot;: 1}, {&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 1, &quot;probability&quot;: 0.6, &quot;rarity&quot;: [&quot;rare&quot;]}]</property>
    </properties>
   </object>
-  <object id="15" template="../../../../common/maps/obj/gold.tx" x="192" y="176">
+  <object id="15" template="../../../../common/maps/obj/gold.tx" x="576" y="240">
    <properties>
     <property name="reward">[{&quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 120, &quot;addMaxCount&quot;: 60}]</property>
    </properties>
   </object>
-  <object id="16" template="../../obj/stone.tx" x="400" y="240"/>
-  <object id="17" template="../../obj/wood.tx" x="512" y="192"/>
-  <object id="18" template="../../../../common/maps/obj/manashards.tx" x="288" y="240"/>
-  <object id="19" template="../../../../common/maps/obj/gold.tx" x="592" y="48"/>
-  <object id="20" template="../../../../common/maps/obj/booster.tx" x="640" y="64"/>
+  <object id="16" template="../../obj/stone.tx" x="496" y="272"/>
+  <object id="17" template="../../obj/wood.tx" x="624" y="176"/>
+  <object id="18" template="../../../../common/maps/obj/manashards.tx" x="336" y="272"/>
+  <object id="19" template="../../../../common/maps/obj/gold.tx" x="704" y="208"/>
+  <object id="20" template="../../../../common/maps/obj/booster.tx" x="704" y="48"/>
  </objectgroup>
 </map>

@@ -1,0 +1,59 @@
+wishgiver_seraph.png
+size: 1368,773
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 141, 141
+Idle
+  xy: 0, 141
+  size: 171, 158
+Idle
+  xy: 171, 141
+  size: 171, 158
+Idle
+  xy: 342, 141
+  size: 171, 158
+Idle
+  xy: 513, 141
+  size: 171, 158
+Idle
+  xy: 684, 141
+  size: 171, 158
+Idle
+  xy: 855, 141
+  size: 171, 158
+Walk
+  xy: 0, 299
+  size: 171, 158
+Walk
+  xy: 171, 299
+  size: 171, 158
+Walk
+  xy: 342, 299
+  size: 171, 158
+Walk
+  xy: 513, 299
+  size: 171, 158
+Walk
+  xy: 684, 299
+  size: 171, 158
+Walk
+  xy: 855, 299
+  size: 171, 158
+Walk
+  xy: 1026, 299
+  size: 171, 158
+Walk
+  xy: 1197, 299
+  size: 171, 158
+Attack
+  xy: 0, 457
+  size: 171, 158
+Attack
+  xy: 171, 457
+  size: 171, 158
+Hit
+  xy: 0, 615
+  size: 171, 158

@@ -1,0 +1,65 @@
+frostpelt_wolf.png
+size: 570,414
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 59, 59
+Idle
+  xy: 0, 59
+  size: 95, 71
+Idle
+  xy: 95, 59
+  size: 95, 71
+Idle
+  xy: 190, 59
+  size: 95, 71
+Idle
+  xy: 285, 59
+  size: 95, 71
+Idle
+  xy: 380, 59
+  size: 95, 71
+Walk
+  xy: 0, 130
+  size: 95, 71
+Walk
+  xy: 95, 130
+  size: 95, 71
+Walk
+  xy: 190, 130
+  size: 95, 71
+Walk
+  xy: 285, 130
+  size: 95, 71
+Attack
+  xy: 0, 201
+  size: 95, 71
+Attack
+  xy: 95, 201
+  size: 95, 71
+Attack
+  xy: 190, 201
+  size: 95, 71
+Attack
+  xy: 285, 201
+  size: 95, 71
+Attack
+  xy: 380, 201
+  size: 95, 71
+Attack
+  xy: 475, 201
+  size: 95, 71
+Hit
+  xy: 0, 272
+  size: 95, 71
+Death
+  xy: 0, 343
+  size: 95, 71
+Death
+  xy: 95, 343
+  size: 95, 71
+Death
+  xy: 190, 343
+  size: 95, 71

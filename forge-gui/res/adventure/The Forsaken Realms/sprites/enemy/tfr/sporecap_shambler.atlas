@@ -1,0 +1,80 @@
+sporecap_shambler.png
+size: 416,353
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 48, 48
+Idle
+  xy: 0, 48
+  size: 52, 61
+Idle
+  xy: 52, 48
+  size: 52, 61
+Idle
+  xy: 104, 48
+  size: 52, 61
+Idle
+  xy: 156, 48
+  size: 52, 61
+Idle
+  xy: 208, 48
+  size: 52, 61
+Idle
+  xy: 260, 48
+  size: 52, 61
+Idle
+  xy: 312, 48
+  size: 52, 61
+Idle
+  xy: 364, 48
+  size: 52, 61
+Walk
+  xy: 0, 109
+  size: 52, 61
+Walk
+  xy: 52, 109
+  size: 52, 61
+Walk
+  xy: 104, 109
+  size: 52, 61
+Walk
+  xy: 156, 109
+  size: 52, 61
+Walk
+  xy: 208, 109
+  size: 52, 61
+Walk
+  xy: 260, 109
+  size: 52, 61
+Walk
+  xy: 312, 109
+  size: 52, 61
+Walk
+  xy: 364, 109
+  size: 52, 61
+Attack
+  xy: 0, 170
+  size: 52, 61
+Attack
+  xy: 52, 170
+  size: 52, 61
+Attack
+  xy: 104, 170
+  size: 52, 61
+Attack
+  xy: 156, 170
+  size: 52, 61
+Attack
+  xy: 208, 170
+  size: 52, 61
+Hit
+  xy: 0, 231
+  size: 52, 61
+Death
+  xy: 0, 292
+  size: 52, 61
+Death
+  xy: 52, 292
+  size: 52, 61

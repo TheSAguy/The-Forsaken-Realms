@@ -1,0 +1,86 @@
+clockwork_siegewalker.png
+size: 2220,1252
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 177, 177
+Idle
+  xy: 0, 177
+  size: 222, 215
+Walk
+  xy: 0, 392
+  size: 222, 215
+Walk
+  xy: 222, 392
+  size: 222, 215
+Walk
+  xy: 444, 392
+  size: 222, 215
+Walk
+  xy: 666, 392
+  size: 222, 215
+Walk
+  xy: 888, 392
+  size: 222, 215
+Walk
+  xy: 1110, 392
+  size: 222, 215
+Walk
+  xy: 1332, 392
+  size: 222, 215
+Walk
+  xy: 1554, 392
+  size: 222, 215
+Walk
+  xy: 1776, 392
+  size: 222, 215
+Walk
+  xy: 1998, 392
+  size: 222, 215
+Attack
+  xy: 0, 607
+  size: 222, 215
+Attack
+  xy: 222, 607
+  size: 222, 215
+Attack
+  xy: 444, 607
+  size: 222, 215
+Attack
+  xy: 666, 607
+  size: 222, 215
+Attack
+  xy: 888, 607
+  size: 222, 215
+Hit
+  xy: 0, 822
+  size: 222, 215
+Death
+  xy: 0, 1037
+  size: 222, 215
+Death
+  xy: 222, 1037
+  size: 222, 215
+Death
+  xy: 444, 1037
+  size: 222, 215
+Death
+  xy: 666, 1037
+  size: 222, 215
+Death
+  xy: 888, 1037
+  size: 222, 215
+Death
+  xy: 1110, 1037
+  size: 222, 215
+Death
+  xy: 1332, 1037
+  size: 222, 215
+Death
+  xy: 1554, 1037
+  size: 222, 215
+Death
+  xy: 1776, 1037
+  size: 222, 215

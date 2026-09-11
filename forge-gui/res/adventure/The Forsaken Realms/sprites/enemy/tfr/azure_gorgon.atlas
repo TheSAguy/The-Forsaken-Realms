@@ -1,0 +1,83 @@
+azure_gorgon.png
+size: 1224,949
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 153, 177
+Idle
+  xy: 153, 64
+  size: 153, 177
+Idle
+  xy: 306, 64
+  size: 153, 177
+Idle
+  xy: 459, 64
+  size: 153, 177
+Idle
+  xy: 612, 64
+  size: 153, 177
+Idle
+  xy: 765, 64
+  size: 153, 177
+Walk
+  xy: 0, 241
+  size: 153, 177
+Walk
+  xy: 153, 241
+  size: 153, 177
+Walk
+  xy: 306, 241
+  size: 153, 177
+Walk
+  xy: 459, 241
+  size: 153, 177
+Walk
+  xy: 612, 241
+  size: 153, 177
+Walk
+  xy: 765, 241
+  size: 153, 177
+Walk
+  xy: 918, 241
+  size: 153, 177
+Walk
+  xy: 1071, 241
+  size: 153, 177
+Attack
+  xy: 0, 418
+  size: 153, 177
+Attack
+  xy: 153, 418
+  size: 153, 177
+Attack
+  xy: 306, 418
+  size: 153, 177
+Attack
+  xy: 459, 418
+  size: 153, 177
+Attack
+  xy: 612, 418
+  size: 153, 177
+Attack
+  xy: 765, 418
+  size: 153, 177
+Attack
+  xy: 918, 418
+  size: 153, 177
+Attack
+  xy: 1071, 418
+  size: 153, 177
+Hit
+  xy: 0, 595
+  size: 153, 177
+Death
+  xy: 0, 772
+  size: 153, 177
+Death
+  xy: 153, 772
+  size: 153, 177

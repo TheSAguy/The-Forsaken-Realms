@@ -159,7 +159,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="544" y="128">
    <properties>
-    <property name="enemy" value="Vile Witch"/>
+    <property name="enemy" value="Phyrexian Renegade"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,8,7,6,5,4"/>
@@ -167,7 +167,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="464" y="224">
    <properties>
-    <property name="enemy" value="Golden Dwende"/>
+    <property name="enemy" value="Goblin Rager"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,8,2,3,4,5"/>
@@ -175,7 +175,7 @@
   </object>
   <object id="12" template="../../../../common/maps/obj/enemy.tx" x="256" y="256">
    <properties>
-    <property name="enemy" value="Decrepit Bones"/>
+    <property name="enemy" value="Crimson Imp"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2,8"/>
@@ -183,7 +183,7 @@
   </object>
   <object id="13" template="../../../../common/maps/obj/enemy.tx" x="624" y="224">
    <properties>
-    <property name="enemy" value="Goblin Occultist"/>
+    <property name="enemy" value="Bungisngis"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,4,5,6,7,8,2"/>

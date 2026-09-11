@@ -1,0 +1,62 @@
+orcling_rascal.png
+size: 400,207
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 45, 45
+Idle
+  xy: 0, 45
+  size: 50, 54
+Idle
+  xy: 50, 45
+  size: 50, 54
+Idle
+  xy: 100, 45
+  size: 50, 54
+Idle
+  xy: 150, 45
+  size: 50, 54
+Idle
+  xy: 200, 45
+  size: 50, 54
+Idle
+  xy: 250, 45
+  size: 50, 54
+Idle
+  xy: 300, 45
+  size: 50, 54
+Idle
+  xy: 350, 45
+  size: 50, 54
+Walk
+  xy: 0, 99
+  size: 50, 54
+Walk
+  xy: 50, 99
+  size: 50, 54
+Walk
+  xy: 100, 99
+  size: 50, 54
+Walk
+  xy: 150, 99
+  size: 50, 54
+Walk
+  xy: 200, 99
+  size: 50, 54
+Walk
+  xy: 250, 99
+  size: 50, 54
+Attack
+  xy: 0, 153
+  size: 50, 54
+Attack
+  xy: 50, 153
+  size: 50, 54
+Attack
+  xy: 100, 153
+  size: 50, 54
+Attack
+  xy: 150, 153
+  size: 50, 54

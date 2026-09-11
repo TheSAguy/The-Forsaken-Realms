@@ -1,0 +1,74 @@
+ronin_of_the_ashen_road.png
+size: 728,552
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 88, 88
+Idle
+  xy: 0, 88
+  size: 91, 116
+Idle
+  xy: 91, 88
+  size: 91, 116
+Idle
+  xy: 182, 88
+  size: 91, 116
+Idle
+  xy: 273, 88
+  size: 91, 116
+Idle
+  xy: 364, 88
+  size: 91, 116
+Idle
+  xy: 455, 88
+  size: 91, 116
+Idle
+  xy: 546, 88
+  size: 91, 116
+Walk
+  xy: 0, 204
+  size: 91, 116
+Walk
+  xy: 91, 204
+  size: 91, 116
+Walk
+  xy: 182, 204
+  size: 91, 116
+Walk
+  xy: 273, 204
+  size: 91, 116
+Walk
+  xy: 364, 204
+  size: 91, 116
+Walk
+  xy: 455, 204
+  size: 91, 116
+Walk
+  xy: 546, 204
+  size: 91, 116
+Walk
+  xy: 637, 204
+  size: 91, 116
+Attack
+  xy: 0, 320
+  size: 91, 116
+Attack
+  xy: 91, 320
+  size: 91, 116
+Attack
+  xy: 182, 320
+  size: 91, 116
+Attack
+  xy: 273, 320
+  size: 91, 116
+Attack
+  xy: 364, 320
+  size: 91, 116
+Attack
+  xy: 455, 320
+  size: 91, 116
+Hit
+  xy: 0, 436
+  size: 91, 116

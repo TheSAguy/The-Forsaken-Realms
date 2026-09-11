@@ -1,0 +1,74 @@
+shellhusk_crawler.png
+size: 480,208
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 33, 33
+Idle
+  xy: 0, 33
+  size: 60, 35
+Idle
+  xy: 60, 33
+  size: 60, 35
+Idle
+  xy: 120, 33
+  size: 60, 35
+Idle
+  xy: 180, 33
+  size: 60, 35
+Idle
+  xy: 240, 33
+  size: 60, 35
+Idle
+  xy: 300, 33
+  size: 60, 35
+Walk
+  xy: 0, 68
+  size: 60, 35
+Walk
+  xy: 60, 68
+  size: 60, 35
+Walk
+  xy: 120, 68
+  size: 60, 35
+Walk
+  xy: 180, 68
+  size: 60, 35
+Walk
+  xy: 240, 68
+  size: 60, 35
+Walk
+  xy: 300, 68
+  size: 60, 35
+Attack
+  xy: 0, 103
+  size: 60, 35
+Attack
+  xy: 60, 103
+  size: 60, 35
+Attack
+  xy: 120, 103
+  size: 60, 35
+Attack
+  xy: 180, 103
+  size: 60, 35
+Attack
+  xy: 240, 103
+  size: 60, 35
+Attack
+  xy: 300, 103
+  size: 60, 35
+Attack
+  xy: 360, 103
+  size: 60, 35
+Attack
+  xy: 420, 103
+  size: 60, 35
+Hit
+  xy: 0, 138
+  size: 60, 35
+Death
+  xy: 0, 173
+  size: 60, 35

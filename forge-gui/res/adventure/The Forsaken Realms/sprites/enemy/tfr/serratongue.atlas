@@ -1,0 +1,74 @@
+serratongue.png
+size: 834,739
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 139, 135
+Idle
+  xy: 139, 64
+  size: 139, 135
+Idle
+  xy: 278, 64
+  size: 139, 135
+Idle
+  xy: 417, 64
+  size: 139, 135
+Idle
+  xy: 556, 64
+  size: 139, 135
+Idle
+  xy: 695, 64
+  size: 139, 135
+Walk
+  xy: 0, 199
+  size: 139, 135
+Walk
+  xy: 139, 199
+  size: 139, 135
+Walk
+  xy: 278, 199
+  size: 139, 135
+Walk
+  xy: 417, 199
+  size: 139, 135
+Walk
+  xy: 556, 199
+  size: 139, 135
+Walk
+  xy: 695, 199
+  size: 139, 135
+Attack
+  xy: 0, 334
+  size: 139, 135
+Attack
+  xy: 139, 334
+  size: 139, 135
+Attack
+  xy: 278, 334
+  size: 139, 135
+Attack
+  xy: 417, 334
+  size: 139, 135
+Attack
+  xy: 556, 334
+  size: 139, 135
+Hit
+  xy: 0, 469
+  size: 139, 135
+Death
+  xy: 0, 604
+  size: 139, 135
+Death
+  xy: 139, 604
+  size: 139, 135
+Death
+  xy: 278, 604
+  size: 139, 135
+Death
+  xy: 417, 604
+  size: 139, 135

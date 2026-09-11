@@ -1,0 +1,80 @@
+revenant_knight_errant.png
+size: 592,547
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 72, 72
+Idle
+  xy: 0, 72
+  size: 74, 95
+Idle
+  xy: 74, 72
+  size: 74, 95
+Idle
+  xy: 148, 72
+  size: 74, 95
+Idle
+  xy: 222, 72
+  size: 74, 95
+Idle
+  xy: 296, 72
+  size: 74, 95
+Idle
+  xy: 370, 72
+  size: 74, 95
+Walk
+  xy: 0, 167
+  size: 74, 95
+Walk
+  xy: 74, 167
+  size: 74, 95
+Walk
+  xy: 148, 167
+  size: 74, 95
+Walk
+  xy: 222, 167
+  size: 74, 95
+Walk
+  xy: 296, 167
+  size: 74, 95
+Walk
+  xy: 370, 167
+  size: 74, 95
+Walk
+  xy: 444, 167
+  size: 74, 95
+Walk
+  xy: 518, 167
+  size: 74, 95
+Attack
+  xy: 0, 262
+  size: 74, 95
+Attack
+  xy: 74, 262
+  size: 74, 95
+Attack
+  xy: 148, 262
+  size: 74, 95
+Attack
+  xy: 222, 262
+  size: 74, 95
+Attack
+  xy: 296, 262
+  size: 74, 95
+Attack
+  xy: 370, 262
+  size: 74, 95
+Attack
+  xy: 444, 262
+  size: 74, 95
+Hit
+  xy: 0, 357
+  size: 74, 95
+Death
+  xy: 0, 452
+  size: 74, 95
+Death
+  xy: 74, 452
+  size: 74, 95

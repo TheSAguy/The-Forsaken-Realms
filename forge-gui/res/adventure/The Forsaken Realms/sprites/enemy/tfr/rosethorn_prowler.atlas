@@ -1,0 +1,71 @@
+rosethorn_prowler.png
+size: 413,392
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 57, 57
+Idle
+  xy: 0, 57
+  size: 59, 67
+Idle
+  xy: 59, 57
+  size: 59, 67
+Idle
+  xy: 118, 57
+  size: 59, 67
+Idle
+  xy: 177, 57
+  size: 59, 67
+Idle
+  xy: 236, 57
+  size: 59, 67
+Idle
+  xy: 295, 57
+  size: 59, 67
+Walk
+  xy: 0, 124
+  size: 59, 67
+Walk
+  xy: 59, 124
+  size: 59, 67
+Walk
+  xy: 118, 124
+  size: 59, 67
+Walk
+  xy: 177, 124
+  size: 59, 67
+Walk
+  xy: 236, 124
+  size: 59, 67
+Walk
+  xy: 295, 124
+  size: 59, 67
+Attack
+  xy: 0, 191
+  size: 59, 67
+Attack
+  xy: 59, 191
+  size: 59, 67
+Attack
+  xy: 118, 191
+  size: 59, 67
+Attack
+  xy: 177, 191
+  size: 59, 67
+Attack
+  xy: 236, 191
+  size: 59, 67
+Attack
+  xy: 295, 191
+  size: 59, 67
+Attack
+  xy: 354, 191
+  size: 59, 67
+Hit
+  xy: 0, 258
+  size: 59, 67
+Death
+  xy: 0, 325
+  size: 59, 67

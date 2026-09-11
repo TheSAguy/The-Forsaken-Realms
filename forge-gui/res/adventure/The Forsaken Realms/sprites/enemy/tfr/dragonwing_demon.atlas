@@ -1,0 +1,56 @@
+dragonwing_demon.png
+size: 960,505
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 160, 147
+Idle
+  xy: 160, 64
+  size: 160, 147
+Idle
+  xy: 320, 64
+  size: 160, 147
+Idle
+  xy: 480, 64
+  size: 160, 147
+Idle
+  xy: 640, 64
+  size: 160, 147
+Idle
+  xy: 800, 64
+  size: 160, 147
+Walk
+  xy: 0, 211
+  size: 160, 147
+Walk
+  xy: 160, 211
+  size: 160, 147
+Walk
+  xy: 320, 211
+  size: 160, 147
+Walk
+  xy: 480, 211
+  size: 160, 147
+Walk
+  xy: 640, 211
+  size: 160, 147
+Walk
+  xy: 800, 211
+  size: 160, 147
+Attack
+  xy: 0, 358
+  size: 160, 147
+Attack
+  xy: 160, 358
+  size: 160, 147
+Attack
+  xy: 320, 358
+  size: 160, 147
+Attack
+  xy: 480, 358
+  size: 160, 147

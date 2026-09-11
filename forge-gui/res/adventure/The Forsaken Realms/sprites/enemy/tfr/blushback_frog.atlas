@@ -1,0 +1,53 @@
+blushback_frog.png
+size: 295,429
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 44, 44
+Idle
+  xy: 0, 44
+  size: 59, 77
+Idle
+  xy: 59, 44
+  size: 59, 77
+Idle
+  xy: 118, 44
+  size: 59, 77
+Idle
+  xy: 177, 44
+  size: 59, 77
+Idle
+  xy: 236, 44
+  size: 59, 77
+Walk
+  xy: 0, 121
+  size: 59, 77
+Walk
+  xy: 59, 121
+  size: 59, 77
+Walk
+  xy: 118, 121
+  size: 59, 77
+Walk
+  xy: 177, 121
+  size: 59, 77
+Attack
+  xy: 0, 198
+  size: 59, 77
+Attack
+  xy: 59, 198
+  size: 59, 77
+Attack
+  xy: 118, 198
+  size: 59, 77
+Attack
+  xy: 177, 198
+  size: 59, 77
+Hit
+  xy: 0, 275
+  size: 59, 77
+Death
+  xy: 0, 352
+  size: 59, 77

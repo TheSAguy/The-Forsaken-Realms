@@ -1,0 +1,62 @@
+snowmane_brawler.png
+size: 553,572
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 72, 72
+Idle
+  xy: 0, 72
+  size: 79, 100
+Idle
+  xy: 79, 72
+  size: 79, 100
+Idle
+  xy: 158, 72
+  size: 79, 100
+Idle
+  xy: 237, 72
+  size: 79, 100
+Idle
+  xy: 316, 72
+  size: 79, 100
+Idle
+  xy: 395, 72
+  size: 79, 100
+Idle
+  xy: 474, 72
+  size: 79, 100
+Walk
+  xy: 0, 172
+  size: 79, 100
+Walk
+  xy: 79, 172
+  size: 79, 100
+Walk
+  xy: 158, 172
+  size: 79, 100
+Walk
+  xy: 237, 172
+  size: 79, 100
+Attack
+  xy: 0, 272
+  size: 79, 100
+Attack
+  xy: 79, 272
+  size: 79, 100
+Attack
+  xy: 158, 272
+  size: 79, 100
+Hit
+  xy: 0, 372
+  size: 79, 100
+Death
+  xy: 0, 472
+  size: 79, 100
+Death
+  xy: 79, 472
+  size: 79, 100
+Death
+  xy: 158, 472
+  size: 79, 100

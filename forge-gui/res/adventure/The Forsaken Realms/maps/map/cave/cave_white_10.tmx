@@ -140,7 +140,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="88" y="72"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="256" y="160">
    <properties>
-    <property name="enemy" value="Kor Cartographer"/>
+    <property name="enemy" value="Human Looter"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -148,7 +148,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="384" y="144">
    <properties>
-    <property name="enemy" value="Kor Skyknight"/>
+    <property name="enemy" value="Kor Duelist"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -156,7 +156,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="432" y="224">
    <properties>
-    <property name="enemy" value="Rhino"/>
+    <property name="enemy" value="Frostcloak Marauder"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>

@@ -1,0 +1,68 @@
+cyclops_of_the_scorched_hills.png
+size: 310,614
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 110
+Idle
+  xy: 62, 64
+  size: 62, 110
+Idle
+  xy: 124, 64
+  size: 62, 110
+Idle
+  xy: 186, 64
+  size: 62, 110
+Idle
+  xy: 248, 64
+  size: 62, 110
+Walk
+  xy: 0, 174
+  size: 62, 110
+Walk
+  xy: 62, 174
+  size: 62, 110
+Walk
+  xy: 124, 174
+  size: 62, 110
+Walk
+  xy: 186, 174
+  size: 62, 110
+Walk
+  xy: 248, 174
+  size: 62, 110
+Attack
+  xy: 0, 284
+  size: 62, 110
+Attack
+  xy: 62, 284
+  size: 62, 110
+Attack
+  xy: 124, 284
+  size: 62, 110
+Attack
+  xy: 186, 284
+  size: 62, 110
+Attack
+  xy: 248, 284
+  size: 62, 110
+Hit
+  xy: 0, 394
+  size: 62, 110
+Death
+  xy: 0, 504
+  size: 62, 110
+Death
+  xy: 62, 504
+  size: 62, 110
+Death
+  xy: 124, 504
+  size: 62, 110
+Death
+  xy: 186, 504
+  size: 62, 110

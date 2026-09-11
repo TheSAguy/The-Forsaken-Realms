@@ -1,0 +1,68 @@
+cadaver_lord.png
+size: 595,483
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 43, 43
+Idle
+  xy: 0, 43
+  size: 85, 88
+Idle
+  xy: 85, 43
+  size: 85, 88
+Idle
+  xy: 170, 43
+  size: 85, 88
+Idle
+  xy: 255, 43
+  size: 85, 88
+Idle
+  xy: 340, 43
+  size: 85, 88
+Idle
+  xy: 425, 43
+  size: 85, 88
+Idle
+  xy: 510, 43
+  size: 85, 88
+Walk
+  xy: 0, 131
+  size: 85, 88
+Walk
+  xy: 85, 131
+  size: 85, 88
+Walk
+  xy: 170, 131
+  size: 85, 88
+Walk
+  xy: 255, 131
+  size: 85, 88
+Walk
+  xy: 340, 131
+  size: 85, 88
+Walk
+  xy: 425, 131
+  size: 85, 88
+Attack
+  xy: 0, 219
+  size: 85, 88
+Attack
+  xy: 85, 219
+  size: 85, 88
+Attack
+  xy: 170, 219
+  size: 85, 88
+Attack
+  xy: 255, 219
+  size: 85, 88
+Hit
+  xy: 0, 307
+  size: 85, 88
+Death
+  xy: 0, 395
+  size: 85, 88
+Death
+  xy: 85, 395
+  size: 85, 88

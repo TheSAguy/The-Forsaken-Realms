@@ -1,0 +1,110 @@
+duneflock_runner.png
+size: 1100,584
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 104
+Idle
+  xy: 100, 64
+  size: 100, 104
+Idle
+  xy: 200, 64
+  size: 100, 104
+Idle
+  xy: 300, 64
+  size: 100, 104
+Idle
+  xy: 400, 64
+  size: 100, 104
+Idle
+  xy: 500, 64
+  size: 100, 104
+Idle
+  xy: 600, 64
+  size: 100, 104
+Idle
+  xy: 700, 64
+  size: 100, 104
+Idle
+  xy: 800, 64
+  size: 100, 104
+Walk
+  xy: 0, 168
+  size: 100, 104
+Walk
+  xy: 100, 168
+  size: 100, 104
+Walk
+  xy: 200, 168
+  size: 100, 104
+Walk
+  xy: 300, 168
+  size: 100, 104
+Walk
+  xy: 400, 168
+  size: 100, 104
+Walk
+  xy: 500, 168
+  size: 100, 104
+Walk
+  xy: 600, 168
+  size: 100, 104
+Walk
+  xy: 700, 168
+  size: 100, 104
+Attack
+  xy: 0, 272
+  size: 100, 104
+Attack
+  xy: 100, 272
+  size: 100, 104
+Attack
+  xy: 200, 272
+  size: 100, 104
+Attack
+  xy: 300, 272
+  size: 100, 104
+Attack
+  xy: 400, 272
+  size: 100, 104
+Hit
+  xy: 0, 376
+  size: 100, 104
+Death
+  xy: 0, 480
+  size: 100, 104
+Death
+  xy: 100, 480
+  size: 100, 104
+Death
+  xy: 200, 480
+  size: 100, 104
+Death
+  xy: 300, 480
+  size: 100, 104
+Death
+  xy: 400, 480
+  size: 100, 104
+Death
+  xy: 500, 480
+  size: 100, 104
+Death
+  xy: 600, 480
+  size: 100, 104
+Death
+  xy: 700, 480
+  size: 100, 104
+Death
+  xy: 800, 480
+  size: 100, 104
+Death
+  xy: 900, 480
+  size: 100, 104
+Death
+  xy: 1000, 480
+  size: 100, 104

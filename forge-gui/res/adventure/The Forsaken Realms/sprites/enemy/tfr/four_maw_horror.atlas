@@ -1,0 +1,56 @@
+four_maw_horror.png
+size: 774,394
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 129, 110
+Idle
+  xy: 129, 64
+  size: 129, 110
+Idle
+  xy: 258, 64
+  size: 129, 110
+Idle
+  xy: 387, 64
+  size: 129, 110
+Idle
+  xy: 516, 64
+  size: 129, 110
+Idle
+  xy: 645, 64
+  size: 129, 110
+Walk
+  xy: 0, 174
+  size: 129, 110
+Walk
+  xy: 129, 174
+  size: 129, 110
+Walk
+  xy: 258, 174
+  size: 129, 110
+Walk
+  xy: 387, 174
+  size: 129, 110
+Walk
+  xy: 516, 174
+  size: 129, 110
+Attack
+  xy: 0, 284
+  size: 129, 110
+Attack
+  xy: 129, 284
+  size: 129, 110
+Attack
+  xy: 258, 284
+  size: 129, 110
+Attack
+  xy: 387, 284
+  size: 129, 110
+Attack
+  xy: 516, 284
+  size: 129, 110

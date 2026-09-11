@@ -165,7 +165,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="96" y="272">
    <properties>
-    <property name="enemy" value="Corrupted Blue Wizard"/>
+    <property name="enemy" value="Ancient Demon"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,2,3,4,5"/>
@@ -173,7 +173,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="528" y="240">
    <properties>
-    <property name="enemy" value="Evil Dwende"/>
+    <property name="enemy" value="Bandit"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,6,5,4,3"/>

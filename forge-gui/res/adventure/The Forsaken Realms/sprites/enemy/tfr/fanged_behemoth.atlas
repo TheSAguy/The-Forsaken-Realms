@@ -1,0 +1,59 @@
+fanged_behemoth.png
+size: 790,599
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 158, 107
+Idle
+  xy: 158, 64
+  size: 158, 107
+Idle
+  xy: 316, 64
+  size: 158, 107
+Idle
+  xy: 474, 64
+  size: 158, 107
+Walk
+  xy: 0, 171
+  size: 158, 107
+Walk
+  xy: 158, 171
+  size: 158, 107
+Walk
+  xy: 316, 171
+  size: 158, 107
+Walk
+  xy: 474, 171
+  size: 158, 107
+Attack
+  xy: 0, 278
+  size: 158, 107
+Attack
+  xy: 158, 278
+  size: 158, 107
+Attack
+  xy: 316, 278
+  size: 158, 107
+Attack
+  xy: 474, 278
+  size: 158, 107
+Attack
+  xy: 632, 278
+  size: 158, 107
+Hit
+  xy: 0, 385
+  size: 158, 107
+Death
+  xy: 0, 492
+  size: 158, 107
+Death
+  xy: 158, 492
+  size: 158, 107
+Death
+  xy: 316, 492
+  size: 158, 107

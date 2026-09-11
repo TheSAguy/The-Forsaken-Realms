@@ -160,7 +160,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="424" y="232"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="240" y="192">
    <properties>
-    <property name="enemy" value="Triceratops"/>
+    <property name="enemy" value="Apprentice Green Wizard"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -176,7 +176,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="464" y="176">
    <properties>
-    <property name="enemy" value="Werewolf Wanderer"/>
+    <property name="enemy" value="Copper Host Infector"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -184,7 +184,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="544" y="224">
    <properties>
-    <property name="enemy" value="Giant Spider"/>
+    <property name="enemy" value="Elf Renegade"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>
@@ -192,7 +192,7 @@
   </object>
   <object id="12" template="../../../../common/maps/obj/enemy.tx" x="112" y="208">
    <properties>
-    <property name="enemy" value="Archer Initiate"/>
+    <property name="enemy" value="Giant Panda"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="4,5,6,7,2,3"/>

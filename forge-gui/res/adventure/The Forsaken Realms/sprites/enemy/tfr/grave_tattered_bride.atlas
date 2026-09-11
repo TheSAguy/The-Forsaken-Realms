@@ -1,0 +1,104 @@
+grave_tattered_bride.png
+size: 688,684
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 86, 124
+Idle
+  xy: 86, 64
+  size: 86, 124
+Idle
+  xy: 172, 64
+  size: 86, 124
+Idle
+  xy: 258, 64
+  size: 86, 124
+Idle
+  xy: 344, 64
+  size: 86, 124
+Idle
+  xy: 430, 64
+  size: 86, 124
+Idle
+  xy: 516, 64
+  size: 86, 124
+Idle
+  xy: 602, 64
+  size: 86, 124
+Walk
+  xy: 0, 188
+  size: 86, 124
+Walk
+  xy: 86, 188
+  size: 86, 124
+Walk
+  xy: 172, 188
+  size: 86, 124
+Walk
+  xy: 258, 188
+  size: 86, 124
+Walk
+  xy: 344, 188
+  size: 86, 124
+Walk
+  xy: 430, 188
+  size: 86, 124
+Walk
+  xy: 516, 188
+  size: 86, 124
+Walk
+  xy: 602, 188
+  size: 86, 124
+Attack
+  xy: 0, 312
+  size: 86, 124
+Attack
+  xy: 86, 312
+  size: 86, 124
+Attack
+  xy: 172, 312
+  size: 86, 124
+Attack
+  xy: 258, 312
+  size: 86, 124
+Attack
+  xy: 344, 312
+  size: 86, 124
+Attack
+  xy: 430, 312
+  size: 86, 124
+Attack
+  xy: 516, 312
+  size: 86, 124
+Attack
+  xy: 602, 312
+  size: 86, 124
+Hit
+  xy: 0, 436
+  size: 86, 124
+Death
+  xy: 0, 560
+  size: 86, 124
+Death
+  xy: 86, 560
+  size: 86, 124
+Death
+  xy: 172, 560
+  size: 86, 124
+Death
+  xy: 258, 560
+  size: 86, 124
+Death
+  xy: 344, 560
+  size: 86, 124
+Death
+  xy: 430, 560
+  size: 86, 124
+Death
+  xy: 516, 560
+  size: 86, 124

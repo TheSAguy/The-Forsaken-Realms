@@ -2716,3 +2716,9 @@ Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bro
 - Mod-added files, no merge burden: `data/TuningData.java` (straight tier cue, new defaults, TILE_PX gone),
   `util/CaveChampions.java` / `util/FrontierSpawns.java` (read `legend`), `util/TerritoryControl.java` (mage scale
   override removed).
+
+## Round 179 (2026-09-11) - no engine edits
+
+Data and tooling only: 197 new enemies (`world/enemies.json`, biome rosters, capital arena pools, the generated caves,
+`sprites/enemy/tfr/`, `decks/standard/tfr/`), `dev-tools/enemy_scale.py` (POSE_CAP), `dev-tools/agent/tfr_agent.py`
+(`settle` collects loot through Done). No Java changed.

@@ -97,8 +97,14 @@ anything risky, and `cmd load slot=1` from the Load screen to get back.
 - A MapDialog hides its buttons until its text finishes typing: `advance`, or `dialogs` does it for you.
 - An interception on the way stops a `goto`: `settle`, then issue the same `goto` again.
 - The win/lose view and option panes are Forge widgets, listed as `forgeUi` in the state - `settle` taps them.
+- **Loot is collected only through the reward screen's Done** (listed by NAME, `done`; its text is the `[+OK]`
+  glyph). `cmd back` on a RewardScene leaves WITHOUT collecting (UIScene.back -> switchToLast). Before round 179
+  `settle` matched the button's text only, missed it and pressed `back` - every loot screen it passed was thrown
+  away (the round-176 watched session included). It clicks Done by name now and never backs out of a loot screen.
 - The ante Re-roll prompt is skipped for the agent's seat (it would be a modal nobody can click).
-- Console arguments split on spaces: `console text="spawn enemy Wild Rat"` looks for "Wild".
+- Console arguments split on spaces, but quotes group them: `console text='spawn enemy "Wild Rat"'` works,
+  `console text="spawn enemy Wild Rat"` looks for "Wild". A spawn lands 3-10 tiles away, usually under the fog -
+  `console text="torch pulse"` reveals 9 tiles for a screenshot; `state --cheat` lists them regardless.
 - The stock AI pays any "PayShards" cost with 0 shards and a spectated seat's shards are never written back - in an
   auto-battle the AI can use the player's shard abilities for free. Report it rather than exploit it.
 - `wait days` steps off the POI first; a roaming enemy often finds a waiting player - that is a duel.

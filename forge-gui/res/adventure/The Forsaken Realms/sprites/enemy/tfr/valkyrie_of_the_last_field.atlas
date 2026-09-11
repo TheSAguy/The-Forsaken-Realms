@@ -1,0 +1,41 @@
+valkyrie_of_the_last_field.png
+size: 1368,460
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 142, 142
+Idle
+  xy: 0, 142
+  size: 171, 159
+Idle
+  xy: 171, 142
+  size: 171, 159
+Idle
+  xy: 342, 142
+  size: 171, 159
+Walk
+  xy: 0, 301
+  size: 171, 159
+Walk
+  xy: 171, 301
+  size: 171, 159
+Walk
+  xy: 342, 301
+  size: 171, 159
+Walk
+  xy: 513, 301
+  size: 171, 159
+Walk
+  xy: 684, 301
+  size: 171, 159
+Walk
+  xy: 855, 301
+  size: 171, 159
+Walk
+  xy: 1026, 301
+  size: 171, 159
+Walk
+  xy: 1197, 301
+  size: 171, 159

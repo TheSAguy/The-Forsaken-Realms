@@ -1,0 +1,53 @@
+shredmaw_monger.png
+size: 864,370
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 144, 102
+Idle
+  xy: 144, 64
+  size: 144, 102
+Idle
+  xy: 288, 64
+  size: 144, 102
+Idle
+  xy: 432, 64
+  size: 144, 102
+Idle
+  xy: 576, 64
+  size: 144, 102
+Idle
+  xy: 720, 64
+  size: 144, 102
+Walk
+  xy: 0, 166
+  size: 144, 102
+Walk
+  xy: 144, 166
+  size: 144, 102
+Walk
+  xy: 288, 166
+  size: 144, 102
+Walk
+  xy: 432, 166
+  size: 144, 102
+Walk
+  xy: 576, 166
+  size: 144, 102
+Attack
+  xy: 0, 268
+  size: 144, 102
+Attack
+  xy: 144, 268
+  size: 144, 102
+Attack
+  xy: 288, 268
+  size: 144, 102
+Attack
+  xy: 432, 268
+  size: 144, 102

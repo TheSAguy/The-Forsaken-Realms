@@ -160,7 +160,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="536" y="152"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="320" y="176">
    <properties>
-    <property name="enemy" value="Kor Line-Slinger"/>
+    <property name="enemy" value="Village Volunteer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -168,7 +168,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="240" y="256">
    <properties>
-    <property name="enemy" value="Halfling Bard"/>
+    <property name="enemy" value="Falcon-headed Aven Warrior"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -176,7 +176,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="592" y="208">
    <properties>
-    <property name="enemy" value="Market Trader"/>
+    <property name="enemy" value="Wandering Geist"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -184,7 +184,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="400" y="112">
    <properties>
-    <property name="enemy" value="Orthodoxy Duelist"/>
+    <property name="enemy" value="Triplate Crawler"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>

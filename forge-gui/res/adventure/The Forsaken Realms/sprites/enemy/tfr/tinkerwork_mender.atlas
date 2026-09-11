@@ -1,0 +1,71 @@
+tinkerwork_mender.png
+size: 624,572
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 92, 92
+Idle
+  xy: 0, 92
+  size: 104, 96
+Idle
+  xy: 104, 92
+  size: 104, 96
+Idle
+  xy: 208, 92
+  size: 104, 96
+Idle
+  xy: 312, 92
+  size: 104, 96
+Idle
+  xy: 416, 92
+  size: 104, 96
+Idle
+  xy: 520, 92
+  size: 104, 96
+Walk
+  xy: 0, 188
+  size: 104, 96
+Walk
+  xy: 104, 188
+  size: 104, 96
+Walk
+  xy: 208, 188
+  size: 104, 96
+Walk
+  xy: 312, 188
+  size: 104, 96
+Walk
+  xy: 416, 188
+  size: 104, 96
+Walk
+  xy: 520, 188
+  size: 104, 96
+Attack
+  xy: 0, 284
+  size: 104, 96
+Attack
+  xy: 104, 284
+  size: 104, 96
+Attack
+  xy: 208, 284
+  size: 104, 96
+Attack
+  xy: 312, 284
+  size: 104, 96
+Attack
+  xy: 416, 284
+  size: 104, 96
+Attack
+  xy: 520, 284
+  size: 104, 96
+Hit
+  xy: 0, 380
+  size: 104, 96
+Death
+  xy: 0, 476
+  size: 104, 96
+Death
+  xy: 104, 476
+  size: 104, 96

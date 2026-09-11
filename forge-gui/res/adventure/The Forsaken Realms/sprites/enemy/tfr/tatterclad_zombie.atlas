@@ -1,0 +1,71 @@
+tatterclad_zombie.png
+size: 600,313
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 43, 43
+Idle
+  xy: 0, 43
+  size: 75, 90
+Idle
+  xy: 75, 43
+  size: 75, 90
+Idle
+  xy: 150, 43
+  size: 75, 90
+Idle
+  xy: 225, 43
+  size: 75, 90
+Idle
+  xy: 300, 43
+  size: 75, 90
+Idle
+  xy: 375, 43
+  size: 75, 90
+Idle
+  xy: 450, 43
+  size: 75, 90
+Idle
+  xy: 525, 43
+  size: 75, 90
+Walk
+  xy: 0, 133
+  size: 75, 90
+Walk
+  xy: 75, 133
+  size: 75, 90
+Walk
+  xy: 150, 133
+  size: 75, 90
+Walk
+  xy: 225, 133
+  size: 75, 90
+Walk
+  xy: 300, 133
+  size: 75, 90
+Walk
+  xy: 375, 133
+  size: 75, 90
+Walk
+  xy: 450, 133
+  size: 75, 90
+Attack
+  xy: 0, 223
+  size: 75, 90
+Attack
+  xy: 75, 223
+  size: 75, 90
+Attack
+  xy: 150, 223
+  size: 75, 90
+Attack
+  xy: 225, 223
+  size: 75, 90
+Attack
+  xy: 300, 223
+  size: 75, 90
+Attack
+  xy: 375, 223
+  size: 75, 90

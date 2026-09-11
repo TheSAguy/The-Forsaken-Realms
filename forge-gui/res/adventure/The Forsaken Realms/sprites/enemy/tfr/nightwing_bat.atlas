@@ -1,0 +1,56 @@
+nightwing_bat.png
+size: 1016,315
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 101, 101
+Idle
+  xy: 0, 101
+  size: 127, 107
+Idle
+  xy: 127, 101
+  size: 127, 107
+Idle
+  xy: 254, 101
+  size: 127, 107
+Idle
+  xy: 381, 101
+  size: 127, 107
+Idle
+  xy: 508, 101
+  size: 127, 107
+Idle
+  xy: 635, 101
+  size: 127, 107
+Idle
+  xy: 762, 101
+  size: 127, 107
+Idle
+  xy: 889, 101
+  size: 127, 107
+Walk
+  xy: 0, 208
+  size: 127, 107
+Walk
+  xy: 127, 208
+  size: 127, 107
+Walk
+  xy: 254, 208
+  size: 127, 107
+Walk
+  xy: 381, 208
+  size: 127, 107
+Walk
+  xy: 508, 208
+  size: 127, 107
+Walk
+  xy: 635, 208
+  size: 127, 107
+Walk
+  xy: 762, 208
+  size: 127, 107
+Walk
+  xy: 889, 208
+  size: 127, 107

@@ -1,0 +1,86 @@
+dunestinger_scorpion.png
+size: 456,342
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 47, 47
+Idle
+  xy: 0, 47
+  size: 57, 59
+Idle
+  xy: 57, 47
+  size: 57, 59
+Idle
+  xy: 114, 47
+  size: 57, 59
+Idle
+  xy: 171, 47
+  size: 57, 59
+Idle
+  xy: 228, 47
+  size: 57, 59
+Idle
+  xy: 285, 47
+  size: 57, 59
+Idle
+  xy: 342, 47
+  size: 57, 59
+Idle
+  xy: 399, 47
+  size: 57, 59
+Walk
+  xy: 0, 106
+  size: 57, 59
+Walk
+  xy: 57, 106
+  size: 57, 59
+Walk
+  xy: 114, 106
+  size: 57, 59
+Walk
+  xy: 171, 106
+  size: 57, 59
+Walk
+  xy: 228, 106
+  size: 57, 59
+Walk
+  xy: 285, 106
+  size: 57, 59
+Walk
+  xy: 342, 106
+  size: 57, 59
+Walk
+  xy: 399, 106
+  size: 57, 59
+Attack
+  xy: 0, 165
+  size: 57, 59
+Attack
+  xy: 57, 165
+  size: 57, 59
+Attack
+  xy: 114, 165
+  size: 57, 59
+Attack
+  xy: 171, 165
+  size: 57, 59
+Attack
+  xy: 228, 165
+  size: 57, 59
+Attack
+  xy: 285, 165
+  size: 57, 59
+Attack
+  xy: 342, 165
+  size: 57, 59
+Attack
+  xy: 399, 165
+  size: 57, 59
+Hit
+  xy: 0, 224
+  size: 57, 59
+Death
+  xy: 0, 283
+  size: 57, 59

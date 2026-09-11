@@ -1,0 +1,53 @@
+inferno_drake.png
+size: 920,889
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 230, 165
+Idle
+  xy: 230, 64
+  size: 230, 165
+Idle
+  xy: 460, 64
+  size: 230, 165
+Idle
+  xy: 690, 64
+  size: 230, 165
+Walk
+  xy: 0, 229
+  size: 230, 165
+Walk
+  xy: 230, 229
+  size: 230, 165
+Walk
+  xy: 460, 229
+  size: 230, 165
+Walk
+  xy: 690, 229
+  size: 230, 165
+Attack
+  xy: 0, 394
+  size: 230, 165
+Attack
+  xy: 230, 394
+  size: 230, 165
+Attack
+  xy: 460, 394
+  size: 230, 165
+Hit
+  xy: 0, 559
+  size: 230, 165
+Death
+  xy: 0, 724
+  size: 230, 165
+Death
+  xy: 230, 724
+  size: 230, 165
+Death
+  xy: 460, 724
+  size: 230, 165

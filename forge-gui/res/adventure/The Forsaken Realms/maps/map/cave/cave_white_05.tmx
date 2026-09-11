@@ -128,7 +128,7 @@
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="312" y="184"/>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="480" y="64">
    <properties>
-    <property name="enemy" value="Aegis Paladin"/>
+    <property name="enemy" value="Archangel of the Gilded Dawn"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>
@@ -136,7 +136,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="416" y="160">
    <properties>
-    <property name="enemy" value="Kor Duelist"/>
+    <property name="enemy" value="Halfling Slinger"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,5,4"/>
@@ -144,7 +144,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="128" y="144">
    <properties>
-    <property name="enemy" value="Glowing Wisp"/>
+    <property name="enemy" value="Elf Wanderer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>

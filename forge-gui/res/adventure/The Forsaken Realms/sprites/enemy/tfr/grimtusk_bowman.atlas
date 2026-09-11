@@ -1,0 +1,71 @@
+grimtusk_bowman.png
+size: 444,536
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 66, 66
+Idle
+  xy: 0, 66
+  size: 74, 94
+Idle
+  xy: 74, 66
+  size: 74, 94
+Idle
+  xy: 148, 66
+  size: 74, 94
+Idle
+  xy: 222, 66
+  size: 74, 94
+Idle
+  xy: 296, 66
+  size: 74, 94
+Idle
+  xy: 370, 66
+  size: 74, 94
+Walk
+  xy: 0, 160
+  size: 74, 94
+Walk
+  xy: 74, 160
+  size: 74, 94
+Walk
+  xy: 148, 160
+  size: 74, 94
+Walk
+  xy: 222, 160
+  size: 74, 94
+Walk
+  xy: 296, 160
+  size: 74, 94
+Walk
+  xy: 370, 160
+  size: 74, 94
+Attack
+  xy: 0, 254
+  size: 74, 94
+Attack
+  xy: 74, 254
+  size: 74, 94
+Attack
+  xy: 148, 254
+  size: 74, 94
+Attack
+  xy: 222, 254
+  size: 74, 94
+Attack
+  xy: 296, 254
+  size: 74, 94
+Hit
+  xy: 0, 348
+  size: 74, 94
+Death
+  xy: 0, 442
+  size: 74, 94
+Death
+  xy: 74, 442
+  size: 74, 94
+Death
+  xy: 148, 442
+  size: 74, 94

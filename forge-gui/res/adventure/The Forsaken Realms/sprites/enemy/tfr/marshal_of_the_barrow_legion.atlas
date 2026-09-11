@@ -1,0 +1,74 @@
+marshal_of_the_barrow_legion.png
+size: 528,553
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 63, 63
+Idle
+  xy: 0, 63
+  size: 66, 98
+Walk
+  xy: 0, 161
+  size: 66, 98
+Walk
+  xy: 66, 161
+  size: 66, 98
+Walk
+  xy: 132, 161
+  size: 66, 98
+Walk
+  xy: 198, 161
+  size: 66, 98
+Walk
+  xy: 264, 161
+  size: 66, 98
+Walk
+  xy: 330, 161
+  size: 66, 98
+Walk
+  xy: 396, 161
+  size: 66, 98
+Walk
+  xy: 462, 161
+  size: 66, 98
+Attack
+  xy: 0, 259
+  size: 66, 98
+Attack
+  xy: 66, 259
+  size: 66, 98
+Attack
+  xy: 132, 259
+  size: 66, 98
+Attack
+  xy: 198, 259
+  size: 66, 98
+Attack
+  xy: 264, 259
+  size: 66, 98
+Attack
+  xy: 330, 259
+  size: 66, 98
+Attack
+  xy: 396, 259
+  size: 66, 98
+Attack
+  xy: 462, 259
+  size: 66, 98
+Hit
+  xy: 0, 357
+  size: 66, 98
+Death
+  xy: 0, 455
+  size: 66, 98
+Death
+  xy: 66, 455
+  size: 66, 98
+Death
+  xy: 132, 455
+  size: 66, 98
+Death
+  xy: 198, 455
+  size: 66, 98

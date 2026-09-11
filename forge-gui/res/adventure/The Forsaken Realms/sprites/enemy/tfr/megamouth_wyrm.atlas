@@ -1,0 +1,56 @@
+megamouth_wyrm.png
+size: 605,449
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 121, 77
+Idle
+  xy: 121, 64
+  size: 121, 77
+Idle
+  xy: 242, 64
+  size: 121, 77
+Walk
+  xy: 0, 141
+  size: 121, 77
+Walk
+  xy: 121, 141
+  size: 121, 77
+Walk
+  xy: 242, 141
+  size: 121, 77
+Walk
+  xy: 363, 141
+  size: 121, 77
+Walk
+  xy: 484, 141
+  size: 121, 77
+Attack
+  xy: 0, 218
+  size: 121, 77
+Attack
+  xy: 121, 218
+  size: 121, 77
+Attack
+  xy: 242, 218
+  size: 121, 77
+Attack
+  xy: 363, 218
+  size: 121, 77
+Attack
+  xy: 484, 218
+  size: 121, 77
+Hit
+  xy: 0, 295
+  size: 121, 77
+Death
+  xy: 0, 372
+  size: 121, 77
+Death
+  xy: 121, 372
+  size: 121, 77

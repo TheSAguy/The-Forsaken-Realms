@@ -138,7 +138,7 @@
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="360" y="136"/>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="464" y="176">
    <properties>
-    <property name="enemy" value="Aegis Paladin"/>
+    <property name="enemy" value="Dawnblade Prince"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>
@@ -146,7 +146,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="224" y="160">
    <properties>
-    <property name="enemy" value="Adept White Wizard"/>
+    <property name="enemy" value="Missionary of Saint Traft"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,5,4"/>
@@ -154,7 +154,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="560" y="176">
    <properties>
-    <property name="enemy" value="Griffin"/>
+    <property name="enemy" value="Adept White Wizard"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>

@@ -1,0 +1,92 @@
+crawling_cadaver.png
+size: 574,669
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 121
+Idle
+  xy: 82, 64
+  size: 82, 121
+Idle
+  xy: 164, 64
+  size: 82, 121
+Idle
+  xy: 246, 64
+  size: 82, 121
+Idle
+  xy: 328, 64
+  size: 82, 121
+Idle
+  xy: 410, 64
+  size: 82, 121
+Idle
+  xy: 492, 64
+  size: 82, 121
+Walk
+  xy: 0, 185
+  size: 82, 121
+Walk
+  xy: 82, 185
+  size: 82, 121
+Walk
+  xy: 164, 185
+  size: 82, 121
+Walk
+  xy: 246, 185
+  size: 82, 121
+Walk
+  xy: 328, 185
+  size: 82, 121
+Walk
+  xy: 410, 185
+  size: 82, 121
+Walk
+  xy: 492, 185
+  size: 82, 121
+Attack
+  xy: 0, 306
+  size: 82, 121
+Attack
+  xy: 82, 306
+  size: 82, 121
+Attack
+  xy: 164, 306
+  size: 82, 121
+Attack
+  xy: 246, 306
+  size: 82, 121
+Attack
+  xy: 328, 306
+  size: 82, 121
+Attack
+  xy: 410, 306
+  size: 82, 121
+Attack
+  xy: 492, 306
+  size: 82, 121
+Hit
+  xy: 0, 427
+  size: 82, 121
+Death
+  xy: 0, 548
+  size: 82, 121
+Death
+  xy: 82, 548
+  size: 82, 121
+Death
+  xy: 164, 548
+  size: 82, 121
+Death
+  xy: 246, 548
+  size: 82, 121
+Death
+  xy: 328, 548
+  size: 82, 121
+Death
+  xy: 410, 548
+  size: 82, 121

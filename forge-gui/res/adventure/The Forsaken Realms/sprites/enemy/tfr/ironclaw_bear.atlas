@@ -1,0 +1,59 @@
+ironclaw_bear.png
+size: 651,493
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 65, 65
+Idle
+  xy: 0, 65
+  size: 93, 107
+Idle
+  xy: 93, 65
+  size: 93, 107
+Idle
+  xy: 186, 65
+  size: 93, 107
+Idle
+  xy: 279, 65
+  size: 93, 107
+Walk
+  xy: 0, 172
+  size: 93, 107
+Walk
+  xy: 93, 172
+  size: 93, 107
+Walk
+  xy: 186, 172
+  size: 93, 107
+Walk
+  xy: 279, 172
+  size: 93, 107
+Walk
+  xy: 372, 172
+  size: 93, 107
+Walk
+  xy: 465, 172
+  size: 93, 107
+Walk
+  xy: 558, 172
+  size: 93, 107
+Attack
+  xy: 0, 279
+  size: 93, 107
+Attack
+  xy: 93, 279
+  size: 93, 107
+Attack
+  xy: 186, 279
+  size: 93, 107
+Attack
+  xy: 279, 279
+  size: 93, 107
+Hit
+  xy: 0, 386
+  size: 93, 107
+Hit
+  xy: 93, 386
+  size: 93, 107

@@ -140,7 +140,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="152" y="216"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="320" y="144">
    <properties>
-    <property name="enemy" value="Monk"/>
+    <property name="enemy" value="Sliver_White"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -148,7 +148,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="528" y="128">
    <properties>
-    <property name="enemy" value="Glowing Wisp"/>
+    <property name="enemy" value="Elf Wanderer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -156,7 +156,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="208" y="160">
    <properties>
-    <property name="enemy" value="Shieldmaiden Recruit"/>
+    <property name="enemy" value="Kor Sanctifier"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -164,7 +164,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="96" y="176">
    <properties>
-    <property name="enemy" value="Horseman"/>
+    <property name="enemy" value="Forge Blacksmith"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>

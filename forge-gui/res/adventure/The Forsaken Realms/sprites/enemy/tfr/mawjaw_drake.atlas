@@ -1,0 +1,35 @@
+mawjaw_drake.png
+size: 420,514
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 140, 150
+Idle
+  xy: 140, 64
+  size: 140, 150
+Idle
+  xy: 280, 64
+  size: 140, 150
+Walk
+  xy: 0, 214
+  size: 140, 150
+Walk
+  xy: 140, 214
+  size: 140, 150
+Walk
+  xy: 280, 214
+  size: 140, 150
+Attack
+  xy: 0, 364
+  size: 140, 150
+Attack
+  xy: 140, 364
+  size: 140, 150
+Attack
+  xy: 280, 364
+  size: 140, 150

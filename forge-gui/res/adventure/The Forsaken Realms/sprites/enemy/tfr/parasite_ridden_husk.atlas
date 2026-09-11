@@ -1,0 +1,80 @@
+parasite_ridden_husk.png
+size: 1280,344
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 160, 56
+Idle
+  xy: 160, 64
+  size: 160, 56
+Idle
+  xy: 320, 64
+  size: 160, 56
+Idle
+  xy: 480, 64
+  size: 160, 56
+Idle
+  xy: 640, 64
+  size: 160, 56
+Walk
+  xy: 0, 120
+  size: 160, 56
+Walk
+  xy: 160, 120
+  size: 160, 56
+Walk
+  xy: 320, 120
+  size: 160, 56
+Walk
+  xy: 480, 120
+  size: 160, 56
+Walk
+  xy: 640, 120
+  size: 160, 56
+Attack
+  xy: 0, 176
+  size: 160, 56
+Attack
+  xy: 160, 176
+  size: 160, 56
+Attack
+  xy: 320, 176
+  size: 160, 56
+Attack
+  xy: 480, 176
+  size: 160, 56
+Attack
+  xy: 640, 176
+  size: 160, 56
+Hit
+  xy: 0, 232
+  size: 160, 56
+Death
+  xy: 0, 288
+  size: 160, 56
+Death
+  xy: 160, 288
+  size: 160, 56
+Death
+  xy: 320, 288
+  size: 160, 56
+Death
+  xy: 480, 288
+  size: 160, 56
+Death
+  xy: 640, 288
+  size: 160, 56
+Death
+  xy: 800, 288
+  size: 160, 56
+Death
+  xy: 960, 288
+  size: 160, 56
+Death
+  xy: 1120, 288
+  size: 160, 56

@@ -1,0 +1,68 @@
+stormcrag_griffin.png
+size: 1068,1149
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 178, 217
+Idle
+  xy: 178, 64
+  size: 178, 217
+Idle
+  xy: 356, 64
+  size: 178, 217
+Idle
+  xy: 534, 64
+  size: 178, 217
+Idle
+  xy: 712, 64
+  size: 178, 217
+Idle
+  xy: 890, 64
+  size: 178, 217
+Walk
+  xy: 0, 281
+  size: 178, 217
+Walk
+  xy: 178, 281
+  size: 178, 217
+Walk
+  xy: 356, 281
+  size: 178, 217
+Walk
+  xy: 534, 281
+  size: 178, 217
+Walk
+  xy: 712, 281
+  size: 178, 217
+Walk
+  xy: 890, 281
+  size: 178, 217
+Attack
+  xy: 0, 498
+  size: 178, 217
+Attack
+  xy: 178, 498
+  size: 178, 217
+Attack
+  xy: 356, 498
+  size: 178, 217
+Hit
+  xy: 0, 715
+  size: 178, 217
+Death
+  xy: 0, 932
+  size: 178, 217
+Death
+  xy: 178, 932
+  size: 178, 217
+Death
+  xy: 356, 932
+  size: 178, 217
+Death
+  xy: 534, 932
+  size: 178, 217

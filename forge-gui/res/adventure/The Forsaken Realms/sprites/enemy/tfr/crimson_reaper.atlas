@@ -1,0 +1,44 @@
+crimson_reaper.png
+size: 810,715
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 217
+Idle
+  xy: 162, 64
+  size: 162, 217
+Idle
+  xy: 324, 64
+  size: 162, 217
+Idle
+  xy: 486, 64
+  size: 162, 217
+Walk
+  xy: 0, 281
+  size: 162, 217
+Walk
+  xy: 162, 281
+  size: 162, 217
+Walk
+  xy: 324, 281
+  size: 162, 217
+Attack
+  xy: 0, 498
+  size: 162, 217
+Attack
+  xy: 162, 498
+  size: 162, 217
+Attack
+  xy: 324, 498
+  size: 162, 217
+Attack
+  xy: 486, 498
+  size: 162, 217
+Attack
+  xy: 648, 498
+  size: 162, 217

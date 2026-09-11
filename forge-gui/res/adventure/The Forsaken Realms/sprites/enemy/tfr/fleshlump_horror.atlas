@@ -1,0 +1,50 @@
+fleshlump_horror.png
+size: 880,475
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 176, 137
+Idle
+  xy: 176, 64
+  size: 176, 137
+Idle
+  xy: 352, 64
+  size: 176, 137
+Idle
+  xy: 528, 64
+  size: 176, 137
+Idle
+  xy: 704, 64
+  size: 176, 137
+Walk
+  xy: 0, 201
+  size: 176, 137
+Walk
+  xy: 176, 201
+  size: 176, 137
+Walk
+  xy: 352, 201
+  size: 176, 137
+Walk
+  xy: 528, 201
+  size: 176, 137
+Attack
+  xy: 0, 338
+  size: 176, 137
+Attack
+  xy: 176, 338
+  size: 176, 137
+Attack
+  xy: 352, 338
+  size: 176, 137
+Attack
+  xy: 528, 338
+  size: 176, 137
+Attack
+  xy: 704, 338
+  size: 176, 137

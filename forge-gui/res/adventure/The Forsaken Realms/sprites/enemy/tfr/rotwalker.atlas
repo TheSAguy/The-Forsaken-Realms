@@ -1,0 +1,140 @@
+rotwalker.png
+size: 1235,734
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 95, 134
+Idle
+  xy: 95, 64
+  size: 95, 134
+Idle
+  xy: 190, 64
+  size: 95, 134
+Idle
+  xy: 285, 64
+  size: 95, 134
+Idle
+  xy: 380, 64
+  size: 95, 134
+Idle
+  xy: 475, 64
+  size: 95, 134
+Idle
+  xy: 570, 64
+  size: 95, 134
+Idle
+  xy: 665, 64
+  size: 95, 134
+Idle
+  xy: 760, 64
+  size: 95, 134
+Idle
+  xy: 855, 64
+  size: 95, 134
+Idle
+  xy: 950, 64
+  size: 95, 134
+Idle
+  xy: 1045, 64
+  size: 95, 134
+Walk
+  xy: 0, 198
+  size: 95, 134
+Walk
+  xy: 95, 198
+  size: 95, 134
+Walk
+  xy: 190, 198
+  size: 95, 134
+Walk
+  xy: 285, 198
+  size: 95, 134
+Walk
+  xy: 380, 198
+  size: 95, 134
+Walk
+  xy: 475, 198
+  size: 95, 134
+Walk
+  xy: 570, 198
+  size: 95, 134
+Walk
+  xy: 665, 198
+  size: 95, 134
+Walk
+  xy: 760, 198
+  size: 95, 134
+Walk
+  xy: 855, 198
+  size: 95, 134
+Walk
+  xy: 950, 198
+  size: 95, 134
+Walk
+  xy: 1045, 198
+  size: 95, 134
+Walk
+  xy: 1140, 198
+  size: 95, 134
+Attack
+  xy: 0, 332
+  size: 95, 134
+Attack
+  xy: 95, 332
+  size: 95, 134
+Attack
+  xy: 190, 332
+  size: 95, 134
+Attack
+  xy: 285, 332
+  size: 95, 134
+Attack
+  xy: 380, 332
+  size: 95, 134
+Attack
+  xy: 475, 332
+  size: 95, 134
+Attack
+  xy: 570, 332
+  size: 95, 134
+Attack
+  xy: 665, 332
+  size: 95, 134
+Attack
+  xy: 760, 332
+  size: 95, 134
+Attack
+  xy: 855, 332
+  size: 95, 134
+Attack
+  xy: 950, 332
+  size: 95, 134
+Attack
+  xy: 1045, 332
+  size: 95, 134
+Attack
+  xy: 1140, 332
+  size: 95, 134
+Hit
+  xy: 0, 466
+  size: 95, 134
+Death
+  xy: 0, 600
+  size: 95, 134
+Death
+  xy: 95, 600
+  size: 95, 134
+Death
+  xy: 190, 600
+  size: 95, 134
+Death
+  xy: 285, 600
+  size: 95, 134
+Death
+  xy: 380, 600
+  size: 95, 134

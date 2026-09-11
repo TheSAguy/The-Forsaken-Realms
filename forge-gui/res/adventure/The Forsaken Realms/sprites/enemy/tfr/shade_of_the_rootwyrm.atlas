@@ -1,0 +1,68 @@
+shade_of_the_rootwyrm.png
+size: 1785,1047
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 171, 171
+Idle
+  xy: 0, 171
+  size: 255, 292
+Idle
+  xy: 255, 171
+  size: 255, 292
+Idle
+  xy: 510, 171
+  size: 255, 292
+Idle
+  xy: 765, 171
+  size: 255, 292
+Idle
+  xy: 1020, 171
+  size: 255, 292
+Idle
+  xy: 1275, 171
+  size: 255, 292
+Idle
+  xy: 1530, 171
+  size: 255, 292
+Walk
+  xy: 0, 463
+  size: 255, 292
+Walk
+  xy: 255, 463
+  size: 255, 292
+Walk
+  xy: 510, 463
+  size: 255, 292
+Walk
+  xy: 765, 463
+  size: 255, 292
+Walk
+  xy: 1020, 463
+  size: 255, 292
+Walk
+  xy: 1275, 463
+  size: 255, 292
+Walk
+  xy: 1530, 463
+  size: 255, 292
+Attack
+  xy: 0, 755
+  size: 255, 292
+Attack
+  xy: 255, 755
+  size: 255, 292
+Attack
+  xy: 510, 755
+  size: 255, 292
+Attack
+  xy: 765, 755
+  size: 255, 292
+Attack
+  xy: 1020, 755
+  size: 255, 292
+Attack
+  xy: 1275, 755
+  size: 255, 292

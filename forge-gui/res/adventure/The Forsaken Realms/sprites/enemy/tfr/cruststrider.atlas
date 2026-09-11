@@ -1,0 +1,71 @@
+cruststrider.png
+size: 804,574
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 134, 102
+Idle
+  xy: 134, 64
+  size: 134, 102
+Idle
+  xy: 268, 64
+  size: 134, 102
+Idle
+  xy: 402, 64
+  size: 134, 102
+Idle
+  xy: 536, 64
+  size: 134, 102
+Idle
+  xy: 670, 64
+  size: 134, 102
+Walk
+  xy: 0, 166
+  size: 134, 102
+Walk
+  xy: 134, 166
+  size: 134, 102
+Walk
+  xy: 268, 166
+  size: 134, 102
+Walk
+  xy: 402, 166
+  size: 134, 102
+Walk
+  xy: 536, 166
+  size: 134, 102
+Walk
+  xy: 670, 166
+  size: 134, 102
+Attack
+  xy: 0, 268
+  size: 134, 102
+Attack
+  xy: 134, 268
+  size: 134, 102
+Attack
+  xy: 268, 268
+  size: 134, 102
+Attack
+  xy: 402, 268
+  size: 134, 102
+Hit
+  xy: 0, 370
+  size: 134, 102
+Death
+  xy: 0, 472
+  size: 134, 102
+Death
+  xy: 134, 472
+  size: 134, 102
+Death
+  xy: 268, 472
+  size: 134, 102
+Death
+  xy: 402, 472
+  size: 134, 102

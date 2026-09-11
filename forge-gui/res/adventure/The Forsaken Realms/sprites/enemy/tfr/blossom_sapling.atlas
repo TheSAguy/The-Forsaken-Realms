@@ -1,0 +1,71 @@
+blossom_sapling.png
+size: 450,603
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 73, 73
+Idle
+  xy: 0, 73
+  size: 75, 106
+Idle
+  xy: 75, 73
+  size: 75, 106
+Idle
+  xy: 150, 73
+  size: 75, 106
+Idle
+  xy: 225, 73
+  size: 75, 106
+Idle
+  xy: 300, 73
+  size: 75, 106
+Idle
+  xy: 375, 73
+  size: 75, 106
+Walk
+  xy: 0, 179
+  size: 75, 106
+Walk
+  xy: 75, 179
+  size: 75, 106
+Walk
+  xy: 150, 179
+  size: 75, 106
+Walk
+  xy: 225, 179
+  size: 75, 106
+Walk
+  xy: 300, 179
+  size: 75, 106
+Walk
+  xy: 375, 179
+  size: 75, 106
+Attack
+  xy: 0, 285
+  size: 75, 106
+Attack
+  xy: 75, 285
+  size: 75, 106
+Attack
+  xy: 150, 285
+  size: 75, 106
+Attack
+  xy: 225, 285
+  size: 75, 106
+Attack
+  xy: 300, 285
+  size: 75, 106
+Attack
+  xy: 375, 285
+  size: 75, 106
+Hit
+  xy: 0, 391
+  size: 75, 106
+Death
+  xy: 0, 497
+  size: 75, 106
+Death
+  xy: 75, 497
+  size: 75, 106

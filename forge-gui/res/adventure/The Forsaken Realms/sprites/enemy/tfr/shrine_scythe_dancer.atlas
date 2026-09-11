@@ -1,0 +1,80 @@
+shrine_scythe_dancer.png
+size: 942,759
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 157, 139
+Idle
+  xy: 157, 64
+  size: 157, 139
+Idle
+  xy: 314, 64
+  size: 157, 139
+Idle
+  xy: 471, 64
+  size: 157, 139
+Idle
+  xy: 628, 64
+  size: 157, 139
+Idle
+  xy: 785, 64
+  size: 157, 139
+Walk
+  xy: 0, 203
+  size: 157, 139
+Walk
+  xy: 157, 203
+  size: 157, 139
+Walk
+  xy: 314, 203
+  size: 157, 139
+Walk
+  xy: 471, 203
+  size: 157, 139
+Walk
+  xy: 628, 203
+  size: 157, 139
+Walk
+  xy: 785, 203
+  size: 157, 139
+Attack
+  xy: 0, 342
+  size: 157, 139
+Attack
+  xy: 157, 342
+  size: 157, 139
+Attack
+  xy: 314, 342
+  size: 157, 139
+Attack
+  xy: 471, 342
+  size: 157, 139
+Attack
+  xy: 628, 342
+  size: 157, 139
+Attack
+  xy: 785, 342
+  size: 157, 139
+Hit
+  xy: 0, 481
+  size: 157, 139
+Death
+  xy: 0, 620
+  size: 157, 139
+Death
+  xy: 157, 620
+  size: 157, 139
+Death
+  xy: 314, 620
+  size: 157, 139
+Death
+  xy: 471, 620
+  size: 157, 139
+Death
+  xy: 628, 620
+  size: 157, 139

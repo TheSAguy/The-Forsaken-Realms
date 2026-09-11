@@ -1,0 +1,59 @@
+nutcache_scrapper.png
+size: 678,391
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 70, 70
+Idle
+  xy: 0, 70
+  size: 113, 107
+Idle
+  xy: 113, 70
+  size: 113, 107
+Idle
+  xy: 226, 70
+  size: 113, 107
+Idle
+  xy: 339, 70
+  size: 113, 107
+Idle
+  xy: 452, 70
+  size: 113, 107
+Idle
+  xy: 565, 70
+  size: 113, 107
+Walk
+  xy: 0, 177
+  size: 113, 107
+Walk
+  xy: 113, 177
+  size: 113, 107
+Walk
+  xy: 226, 177
+  size: 113, 107
+Walk
+  xy: 339, 177
+  size: 113, 107
+Walk
+  xy: 452, 177
+  size: 113, 107
+Walk
+  xy: 565, 177
+  size: 113, 107
+Attack
+  xy: 0, 284
+  size: 113, 107
+Attack
+  xy: 113, 284
+  size: 113, 107
+Attack
+  xy: 226, 284
+  size: 113, 107
+Attack
+  xy: 339, 284
+  size: 113, 107
+Attack
+  xy: 452, 284
+  size: 113, 107

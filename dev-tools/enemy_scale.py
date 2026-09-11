@@ -11,13 +11,16 @@ THE BODY BOX: a frame's opaque pixels, with the outer TRIM (10%) of them cut fro
 boxing - a thin sword, tail, staff or a stray shadow pixel does not set the size (the user's Aegis Paladin case), and
 a tall narrow sprite is measured by its height (the Wandering Giant case). Its larger side is the body size, taken as
 the LARGEST over the first four Idle and Walk frames - an Idle that is only a crocodile's eyes above the water must
-not blow the whole sprite up four times.
+not blow the whole sprite up four times - but at most POSE_CAP (1.2) times the typical frame (round 179: a raised
+scythe or a wing flap in one or two frames made a Master draw like an Apprentice).
 
     scale = hero body size / enemy body size          (EnemyData.scale in world/enemies.json)
 
 The hero body size is the median over the hero sprites, measured the same way. Bosses and "keepSize" entries (the
-hand-placed set pieces - an Eldrazi Prison's titan, a lair's legend) are never touched: they keep their hand-set sizes
-(round 178 migrated them once so the straight cue left them where they were).
+hand-placed set pieces - an Eldrazi Prison's titan, a lair's legend) keep their hand-set sizes (round 178 migrated them
+once so the straight cue left them where they were) - with one floor (user: "Boss enemies should remain larger than
+Archmage"): their body never draws under BOSS_MIN = 30 on the 16-px scale, so a boss is always bigger than an
+Archmage (24). A smaller one is raised to exactly 30; a bigger one is left alone.
 
 Usage (from the repo root):
     python dev-tools/enemy_scale.py                  dry run: summary + the biggest changes
@@ -32,6 +35,14 @@ import sprite_sizes as ss  # parse_atlas / idle_frame / resolve / PLANE / COMMON
 from PIL import Image
 
 TRIM = 0.10
+# round 179: one outlying pose - a raised scythe, a wing flap, a lunge - sets the size only up to 20% over the sprite's
+# typical frame (the median of the measured frames); past that the whole sprite drew smaller than its rank. Changes
+# 23 of the 1,685 round-178 sizes (the flappers: Bat, Vulture, Aclazotz...) and 22 of the 197 new ones.
+POSE_CAP = 1.2
+# settings.json enemyTierScale* (the straight rank cue) - for the boss floor below
+CUE = {"Common": 13 / 16, "Uncommon": 1.0, "Rare": 20 / 16, "Mythic": 24 / 16}
+# bosses and set pieces: the body never draws under 30 on the 16-px scale - always bigger than an Archmage (24)
+BOSS_MIN = 30
 _pages = {}
 
 
@@ -48,7 +59,8 @@ def idle_image(atlas_path):
 
 
 def pose_images(atlas_path, per_anim=4):
-    """The first few Idle and Walk frames (any direction suffix), else the Idle-frame fallback of idle_image()."""
+    """(kind, image) for the first few Idle and Walk frames (any direction suffix), kind "Idle" or "Walk"; else the
+    Idle-frame fallback of idle_image()."""
     page, regions = ss.parse_atlas(atlas_path)
     if page is None:
         return []
@@ -59,16 +71,28 @@ def pose_images(atlas_path, per_anim=4):
     for name, frames in regions.items():
         if name.startswith("Idle") or name.startswith("Walk"):
             for (x, y, w, h) in frames[:per_anim]:
-                out.append(_pages[png].crop((x, y, x + w, y + h)))
+                out.append((name[:4], _pages[png].crop((x, y, x + w, y + h))))
     if not out:
         img = idle_image(atlas_path)
-        out = [img] if img else []
+        out = [("Idle", img)] if img else []
     return out
 
 
 def sprite_body(atlas_path):
-    sides = [s for s in (body_side(img) for img in pose_images(atlas_path)) if s]
-    return max(sides) if sides else None
+    """The largest pose, capped at POSE_CAP times the typical one (see POSE_CAP)."""
+    idle, walk = [], []
+    for kind, img in pose_images(atlas_path):
+        s = body_side(img)
+        if s:
+            (idle if kind == "Idle" else walk).append(s)
+    sides = idle + walk
+    if not sides:
+        return None
+    if idle and walk and statistics.median(idle) < 0.6 * statistics.median(walk):
+        typical = statistics.median(walk)        # the crocodile: an Idle that is only eyes above the water
+    else:
+        typical = statistics.median(sides)
+    return min(max(sides), POSE_CAP * typical)
 
 
 def body_side(img, trim=TRIM):
@@ -152,9 +176,22 @@ def main():
     data = json.loads(raw.decode("utf-8"))
     if json.dumps(data, indent=4, ensure_ascii=False).encode("utf-8") + b"\n" != raw:
         raise SystemExit("enemies.json does not round-trip through json.dumps(indent=4) - refusing to rewrite it")
-    cache, changed, unresolved, ratios = {}, 0, [], []
+    cache, changed, unresolved, ratios, raised = {}, 0, [], [], []
     for e in data:
         if e.get("boss") or e.get("keepSize"):
+            # user, 2026-09-11: "Boss enemies should remain larger than Archmage". A fixed-size entry keeps its
+            # hand-set scale unless its body would draw under BOSS_MIN - then it is raised to exactly that.
+            base = proposed(e, hero, cache)            # hero / body side, the scale that draws the body at 16
+            if base is None:
+                continue
+            cue = CUE.get(e.get("tier", "Common"), 1.0)
+            old = float(e.get("scale", 1.0))
+            drawn = old / base * 16 * cue              # the body's drawn size on the 16-px scale
+            if drawn < BOSS_MIN - 0.05:
+                new = round(base * BOSS_MIN / 16 / cue, 4)
+                raised.append("%s %.1f->%d" % (e["name"], drawn, BOSS_MIN))
+                e["scale"] = new
+                changed += 1
             continue
         new = proposed(e, hero, cache)
         if new is None:
@@ -166,7 +203,10 @@ def main():
             e["scale"] = new
             changed += 1
     print("hero body %.1f px (median of %d hero sprites, trim %d%%)" % (hero, n, TRIM * 100))
-    print("non-boss enemies rescaled: %d; unresolved sprites: %d %s" % (changed, len(unresolved), unresolved[:8]))
+    print("scales changed: %d (bosses / set pieces raised to the %d floor: %d); unresolved sprites: %d %s" % (
+        changed, BOSS_MIN, len(raised), len(unresolved), unresolved[:8]))
+    if raised:
+        print("raised:", raised[:12], "..." if len(raised) > 12 else "")
     ratios.sort()
     print("biggest shrinks:", ["%s %.2f->%.2f" % (nm, o, nw) for _, nm, o, nw in ratios[:8]])
     print("biggest growths:", ["%s %.2f->%.2f" % (nm, o, nw) for _, nm, o, nw in ratios[-8:]])

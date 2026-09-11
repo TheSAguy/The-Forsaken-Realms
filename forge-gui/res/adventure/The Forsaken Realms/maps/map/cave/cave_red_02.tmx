@@ -127,7 +127,7 @@
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="328" y="200"/>
   <object id="5" template="../../../../common/maps/obj/enemy.tx" x="336" y="144">
    <properties>
-    <property name="enemy" value="Mandurang of Shandalar"/>
+    <property name="enemy" value="Shaman"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4"/>
@@ -135,7 +135,7 @@
   </object>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="464" y="128">
    <properties>
-    <property name="enemy" value="Minotaur Flayer"/>
+    <property name="enemy" value="Imp"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,4"/>
@@ -143,7 +143,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="112" y="160">
    <properties>
-    <property name="enemy" value="Minotaur"/>
+    <property name="enemy" value="Immerwolf"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,4,2"/>

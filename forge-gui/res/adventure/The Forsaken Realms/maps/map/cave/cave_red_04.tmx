@@ -136,7 +136,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="160" y="96">
    <properties>
-    <property name="enemy" value="Immersturm Demon"/>
+    <property name="enemy" value="Kavu"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,5,4"/>
@@ -144,7 +144,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="512" y="144">
    <properties>
-    <property name="enemy" value="Adept Red Wizard"/>
+    <property name="enemy" value="Goblin Zealot"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>

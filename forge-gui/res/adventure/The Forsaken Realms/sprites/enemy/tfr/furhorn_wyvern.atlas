@@ -1,0 +1,50 @@
+furhorn_wyvern.png
+size: 760,478
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 152, 138
+Idle
+  xy: 152, 64
+  size: 152, 138
+Idle
+  xy: 304, 64
+  size: 152, 138
+Idle
+  xy: 456, 64
+  size: 152, 138
+Idle
+  xy: 608, 64
+  size: 152, 138
+Walk
+  xy: 0, 202
+  size: 152, 138
+Walk
+  xy: 152, 202
+  size: 152, 138
+Walk
+  xy: 304, 202
+  size: 152, 138
+Walk
+  xy: 456, 202
+  size: 152, 138
+Walk
+  xy: 608, 202
+  size: 152, 138
+Attack
+  xy: 0, 340
+  size: 152, 138
+Attack
+  xy: 152, 340
+  size: 152, 138
+Attack
+  xy: 304, 340
+  size: 152, 138
+Attack
+  xy: 456, 340
+  size: 152, 138

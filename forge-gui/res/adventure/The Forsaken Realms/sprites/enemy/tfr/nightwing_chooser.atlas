@@ -1,0 +1,89 @@
+nightwing_chooser.png
+size: 781,678
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 63, 63
+Idle
+  xy: 0, 63
+  size: 71, 123
+Idle
+  xy: 71, 63
+  size: 71, 123
+Idle
+  xy: 142, 63
+  size: 71, 123
+Idle
+  xy: 213, 63
+  size: 71, 123
+Idle
+  xy: 284, 63
+  size: 71, 123
+Idle
+  xy: 355, 63
+  size: 71, 123
+Idle
+  xy: 426, 63
+  size: 71, 123
+Idle
+  xy: 497, 63
+  size: 71, 123
+Idle
+  xy: 568, 63
+  size: 71, 123
+Idle
+  xy: 639, 63
+  size: 71, 123
+Walk
+  xy: 0, 186
+  size: 71, 123
+Walk
+  xy: 71, 186
+  size: 71, 123
+Walk
+  xy: 142, 186
+  size: 71, 123
+Walk
+  xy: 213, 186
+  size: 71, 123
+Walk
+  xy: 284, 186
+  size: 71, 123
+Walk
+  xy: 355, 186
+  size: 71, 123
+Walk
+  xy: 426, 186
+  size: 71, 123
+Walk
+  xy: 497, 186
+  size: 71, 123
+Attack
+  xy: 0, 309
+  size: 71, 123
+Attack
+  xy: 71, 309
+  size: 71, 123
+Attack
+  xy: 142, 309
+  size: 71, 123
+Attack
+  xy: 213, 309
+  size: 71, 123
+Attack
+  xy: 284, 309
+  size: 71, 123
+Hit
+  xy: 0, 432
+  size: 71, 123
+Death
+  xy: 0, 555
+  size: 71, 123
+Death
+  xy: 71, 555
+  size: 71, 123
+Death
+  xy: 142, 555
+  size: 71, 123

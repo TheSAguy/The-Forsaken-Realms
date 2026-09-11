@@ -1,0 +1,32 @@
+serpleg_stalker.png
+size: 525,445
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 175, 127
+Idle
+  xy: 175, 64
+  size: 175, 127
+Idle
+  xy: 350, 64
+  size: 175, 127
+Walk
+  xy: 0, 191
+  size: 175, 127
+Walk
+  xy: 175, 191
+  size: 175, 127
+Attack
+  xy: 0, 318
+  size: 175, 127
+Attack
+  xy: 175, 318
+  size: 175, 127
+Attack
+  xy: 350, 318
+  size: 175, 127

@@ -1,0 +1,83 @@
+shackled_dead.png
+size: 624,538
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 68, 68
+Idle
+  xy: 0, 68
+  size: 78, 94
+Idle
+  xy: 78, 68
+  size: 78, 94
+Idle
+  xy: 156, 68
+  size: 78, 94
+Idle
+  xy: 234, 68
+  size: 78, 94
+Idle
+  xy: 312, 68
+  size: 78, 94
+Walk
+  xy: 0, 162
+  size: 78, 94
+Walk
+  xy: 78, 162
+  size: 78, 94
+Walk
+  xy: 156, 162
+  size: 78, 94
+Walk
+  xy: 234, 162
+  size: 78, 94
+Walk
+  xy: 312, 162
+  size: 78, 94
+Walk
+  xy: 390, 162
+  size: 78, 94
+Walk
+  xy: 468, 162
+  size: 78, 94
+Walk
+  xy: 546, 162
+  size: 78, 94
+Attack
+  xy: 0, 256
+  size: 78, 94
+Attack
+  xy: 78, 256
+  size: 78, 94
+Attack
+  xy: 156, 256
+  size: 78, 94
+Attack
+  xy: 234, 256
+  size: 78, 94
+Attack
+  xy: 312, 256
+  size: 78, 94
+Attack
+  xy: 390, 256
+  size: 78, 94
+Attack
+  xy: 468, 256
+  size: 78, 94
+Attack
+  xy: 546, 256
+  size: 78, 94
+Hit
+  xy: 0, 350
+  size: 78, 94
+Death
+  xy: 0, 444
+  size: 78, 94
+Death
+  xy: 78, 444
+  size: 78, 94
+Death
+  xy: 156, 444
+  size: 78, 94

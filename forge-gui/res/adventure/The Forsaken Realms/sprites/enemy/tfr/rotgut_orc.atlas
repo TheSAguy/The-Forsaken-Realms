@@ -1,0 +1,74 @@
+rotgut_orc.png
+size: 408,524
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 49, 49
+Idle
+  xy: 0, 49
+  size: 51, 95
+Idle
+  xy: 51, 49
+  size: 51, 95
+Idle
+  xy: 102, 49
+  size: 51, 95
+Idle
+  xy: 153, 49
+  size: 51, 95
+Idle
+  xy: 204, 49
+  size: 51, 95
+Walk
+  xy: 0, 49
+  size: 51, 95
+Walk
+  xy: 51, 49
+  size: 51, 95
+Walk
+  xy: 102, 49
+  size: 51, 95
+Walk
+  xy: 153, 49
+  size: 51, 95
+Walk
+  xy: 204, 49
+  size: 51, 95
+Attack
+  xy: 0, 239
+  size: 51, 95
+Attack
+  xy: 51, 239
+  size: 51, 95
+Attack
+  xy: 102, 239
+  size: 51, 95
+Attack
+  xy: 153, 239
+  size: 51, 95
+Hit
+  xy: 0, 334
+  size: 51, 95
+Death
+  xy: 0, 429
+  size: 51, 95
+Death
+  xy: 51, 429
+  size: 51, 95
+Death
+  xy: 102, 429
+  size: 51, 95
+Death
+  xy: 153, 429
+  size: 51, 95
+Death
+  xy: 204, 429
+  size: 51, 95
+Death
+  xy: 255, 429
+  size: 51, 95
+Death
+  xy: 306, 429
+  size: 51, 95

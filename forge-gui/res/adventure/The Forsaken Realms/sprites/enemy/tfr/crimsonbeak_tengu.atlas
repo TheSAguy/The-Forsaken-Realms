@@ -1,0 +1,65 @@
+crimsonbeak_tengu.png
+size: 532,462
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 66, 66
+Idle
+  xy: 0, 66
+  size: 76, 99
+Idle
+  xy: 76, 66
+  size: 76, 99
+Idle
+  xy: 152, 66
+  size: 76, 99
+Idle
+  xy: 228, 66
+  size: 76, 99
+Idle
+  xy: 304, 66
+  size: 76, 99
+Idle
+  xy: 380, 66
+  size: 76, 99
+Idle
+  xy: 456, 66
+  size: 76, 99
+Walk
+  xy: 0, 165
+  size: 76, 99
+Walk
+  xy: 76, 165
+  size: 76, 99
+Walk
+  xy: 152, 165
+  size: 76, 99
+Walk
+  xy: 228, 165
+  size: 76, 99
+Walk
+  xy: 304, 165
+  size: 76, 99
+Walk
+  xy: 380, 165
+  size: 76, 99
+Attack
+  xy: 0, 264
+  size: 76, 99
+Attack
+  xy: 76, 264
+  size: 76, 99
+Attack
+  xy: 152, 264
+  size: 76, 99
+Attack
+  xy: 228, 264
+  size: 76, 99
+Attack
+  xy: 304, 264
+  size: 76, 99
+Hit
+  xy: 0, 363
+  size: 76, 99

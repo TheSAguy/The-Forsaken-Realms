@@ -1,0 +1,62 @@
+crimson_skywyrm.png
+size: 735,749
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 147, 137
+Idle
+  xy: 147, 64
+  size: 147, 137
+Idle
+  xy: 294, 64
+  size: 147, 137
+Idle
+  xy: 441, 64
+  size: 147, 137
+Idle
+  xy: 588, 64
+  size: 147, 137
+Walk
+  xy: 0, 201
+  size: 147, 137
+Walk
+  xy: 147, 201
+  size: 147, 137
+Walk
+  xy: 294, 201
+  size: 147, 137
+Walk
+  xy: 441, 201
+  size: 147, 137
+Walk
+  xy: 588, 201
+  size: 147, 137
+Attack
+  xy: 0, 338
+  size: 147, 137
+Attack
+  xy: 147, 338
+  size: 147, 137
+Attack
+  xy: 294, 338
+  size: 147, 137
+Attack
+  xy: 441, 338
+  size: 147, 137
+Hit
+  xy: 0, 475
+  size: 147, 137
+Death
+  xy: 0, 612
+  size: 147, 137
+Death
+  xy: 147, 612
+  size: 147, 137
+Death
+  xy: 294, 612
+  size: 147, 137

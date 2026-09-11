@@ -1,0 +1,56 @@
+venomwart_toad.png
+size: 504,341
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 41
+Idle
+  xy: 0, 41
+  size: 63, 60
+Idle
+  xy: 63, 41
+  size: 63, 60
+Walk
+  xy: 0, 101
+  size: 63, 60
+Walk
+  xy: 63, 101
+  size: 63, 60
+Walk
+  xy: 126, 101
+  size: 63, 60
+Attack
+  xy: 0, 161
+  size: 63, 60
+Attack
+  xy: 63, 161
+  size: 63, 60
+Attack
+  xy: 126, 161
+  size: 63, 60
+Attack
+  xy: 189, 161
+  size: 63, 60
+Attack
+  xy: 252, 161
+  size: 63, 60
+Attack
+  xy: 315, 161
+  size: 63, 60
+Attack
+  xy: 378, 161
+  size: 63, 60
+Attack
+  xy: 441, 161
+  size: 63, 60
+Hit
+  xy: 0, 221
+  size: 63, 60
+Death
+  xy: 0, 281
+  size: 63, 60
+Death
+  xy: 63, 281
+  size: 63, 60

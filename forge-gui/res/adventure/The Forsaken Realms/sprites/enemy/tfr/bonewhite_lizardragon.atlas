@@ -1,0 +1,53 @@
+bonewhite_lizardragon.png
+size: 834,289
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 139, 75
+Idle
+  xy: 139, 64
+  size: 139, 75
+Idle
+  xy: 278, 64
+  size: 139, 75
+Idle
+  xy: 417, 64
+  size: 139, 75
+Walk
+  xy: 0, 139
+  size: 139, 75
+Walk
+  xy: 139, 139
+  size: 139, 75
+Walk
+  xy: 278, 139
+  size: 139, 75
+Walk
+  xy: 417, 139
+  size: 139, 75
+Walk
+  xy: 556, 139
+  size: 139, 75
+Attack
+  xy: 0, 214
+  size: 139, 75
+Attack
+  xy: 139, 214
+  size: 139, 75
+Attack
+  xy: 278, 214
+  size: 139, 75
+Attack
+  xy: 417, 214
+  size: 139, 75
+Attack
+  xy: 556, 214
+  size: 139, 75
+Attack
+  xy: 695, 214
+  size: 139, 75

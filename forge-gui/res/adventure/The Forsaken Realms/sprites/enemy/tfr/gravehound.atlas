@@ -1,0 +1,50 @@
+gravehound.png
+size: 300,413
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 63, 63
+Idle
+  xy: 0, 63
+  size: 75, 70
+Idle
+  xy: 75, 63
+  size: 75, 70
+Idle
+  xy: 150, 63
+  size: 75, 70
+Idle
+  xy: 225, 63
+  size: 75, 70
+Walk
+  xy: 0, 133
+  size: 75, 70
+Walk
+  xy: 75, 133
+  size: 75, 70
+Walk
+  xy: 150, 133
+  size: 75, 70
+Walk
+  xy: 225, 133
+  size: 75, 70
+Attack
+  xy: 0, 203
+  size: 75, 70
+Attack
+  xy: 75, 203
+  size: 75, 70
+Attack
+  xy: 150, 203
+  size: 75, 70
+Attack
+  xy: 225, 203
+  size: 75, 70
+Hit
+  xy: 0, 273
+  size: 75, 70
+Death
+  xy: 0, 343
+  size: 75, 70

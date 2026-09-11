@@ -1,0 +1,62 @@
+skyhall_harrier.png
+size: 540,517
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 72, 72
+Idle
+  xy: 0, 72
+  size: 90, 89
+Idle
+  xy: 90, 72
+  size: 90, 89
+Idle
+  xy: 180, 72
+  size: 90, 89
+Idle
+  xy: 270, 72
+  size: 90, 89
+Idle
+  xy: 360, 72
+  size: 90, 89
+Idle
+  xy: 450, 72
+  size: 90, 89
+Walk
+  xy: 0, 161
+  size: 90, 89
+Walk
+  xy: 90, 161
+  size: 90, 89
+Walk
+  xy: 180, 161
+  size: 90, 89
+Walk
+  xy: 270, 161
+  size: 90, 89
+Walk
+  xy: 360, 161
+  size: 90, 89
+Attack
+  xy: 0, 250
+  size: 90, 89
+Attack
+  xy: 90, 250
+  size: 90, 89
+Attack
+  xy: 180, 250
+  size: 90, 89
+Attack
+  xy: 270, 250
+  size: 90, 89
+Hit
+  xy: 0, 339
+  size: 90, 89
+Death
+  xy: 0, 428
+  size: 90, 89
+Death
+  xy: 90, 428
+  size: 90, 89

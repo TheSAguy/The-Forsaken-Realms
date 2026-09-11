@@ -1,0 +1,38 @@
+ashen_spinewyrm.png
+size: 568,226
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 142, 54
+Idle
+  xy: 142, 64
+  size: 142, 54
+Idle
+  xy: 284, 64
+  size: 142, 54
+Walk
+  xy: 0, 118
+  size: 142, 54
+Walk
+  xy: 142, 118
+  size: 142, 54
+Walk
+  xy: 284, 118
+  size: 142, 54
+Attack
+  xy: 0, 172
+  size: 142, 54
+Attack
+  xy: 142, 172
+  size: 142, 54
+Attack
+  xy: 284, 172
+  size: 142, 54
+Attack
+  xy: 426, 172
+  size: 142, 54

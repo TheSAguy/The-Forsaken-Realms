@@ -1,0 +1,74 @@
+mossback_dragon.png
+size: 1146,529
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 191, 93
+Idle
+  xy: 191, 64
+  size: 191, 93
+Idle
+  xy: 382, 64
+  size: 191, 93
+Idle
+  xy: 573, 64
+  size: 191, 93
+Idle
+  xy: 764, 64
+  size: 191, 93
+Idle
+  xy: 955, 64
+  size: 191, 93
+Walk
+  xy: 0, 157
+  size: 191, 93
+Walk
+  xy: 191, 157
+  size: 191, 93
+Walk
+  xy: 382, 157
+  size: 191, 93
+Walk
+  xy: 573, 157
+  size: 191, 93
+Walk
+  xy: 764, 157
+  size: 191, 93
+Walk
+  xy: 955, 157
+  size: 191, 93
+Attack
+  xy: 0, 250
+  size: 191, 93
+Attack
+  xy: 191, 250
+  size: 191, 93
+Attack
+  xy: 382, 250
+  size: 191, 93
+Attack
+  xy: 573, 250
+  size: 191, 93
+Attack
+  xy: 764, 250
+  size: 191, 93
+Attack
+  xy: 955, 250
+  size: 191, 93
+Hit
+  xy: 0, 343
+  size: 191, 93
+Death
+  xy: 0, 436
+  size: 191, 93
+Death
+  xy: 191, 436
+  size: 191, 93
+Death
+  xy: 382, 436
+  size: 191, 93

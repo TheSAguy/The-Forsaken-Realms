@@ -1,0 +1,44 @@
+jadeshell_beetle.png
+size: 385,165
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 36, 36
+Idle
+  xy: 0, 36
+  size: 55, 43
+Idle
+  xy: 55, 36
+  size: 55, 43
+Idle
+  xy: 110, 36
+  size: 55, 43
+Walk
+  xy: 0, 79
+  size: 55, 43
+Walk
+  xy: 55, 79
+  size: 55, 43
+Attack
+  xy: 0, 122
+  size: 55, 43
+Attack
+  xy: 55, 122
+  size: 55, 43
+Attack
+  xy: 110, 122
+  size: 55, 43
+Attack
+  xy: 165, 122
+  size: 55, 43
+Attack
+  xy: 220, 122
+  size: 55, 43
+Attack
+  xy: 275, 122
+  size: 55, 43
+Attack
+  xy: 330, 122
+  size: 55, 43

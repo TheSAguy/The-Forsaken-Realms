@@ -1,0 +1,62 @@
+tidecaller_witch.png
+size: 906,436
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 151, 124
+Idle
+  xy: 151, 64
+  size: 151, 124
+Idle
+  xy: 302, 64
+  size: 151, 124
+Idle
+  xy: 453, 64
+  size: 151, 124
+Idle
+  xy: 604, 64
+  size: 151, 124
+Idle
+  xy: 755, 64
+  size: 151, 124
+Walk
+  xy: 0, 188
+  size: 151, 124
+Walk
+  xy: 151, 188
+  size: 151, 124
+Walk
+  xy: 302, 188
+  size: 151, 124
+Walk
+  xy: 453, 188
+  size: 151, 124
+Walk
+  xy: 604, 188
+  size: 151, 124
+Walk
+  xy: 755, 188
+  size: 151, 124
+Attack
+  xy: 0, 312
+  size: 151, 124
+Attack
+  xy: 151, 312
+  size: 151, 124
+Attack
+  xy: 302, 312
+  size: 151, 124
+Attack
+  xy: 453, 312
+  size: 151, 124
+Attack
+  xy: 604, 312
+  size: 151, 124
+Attack
+  xy: 755, 312
+  size: 151, 124

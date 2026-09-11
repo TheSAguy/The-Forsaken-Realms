@@ -1,0 +1,65 @@
+grimtusk_shieldbearer.png
+size: 567,565
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 65, 65
+Idle
+  xy: 0, 65
+  size: 81, 100
+Idle
+  xy: 81, 65
+  size: 81, 100
+Idle
+  xy: 162, 65
+  size: 81, 100
+Idle
+  xy: 243, 65
+  size: 81, 100
+Idle
+  xy: 324, 65
+  size: 81, 100
+Walk
+  xy: 0, 165
+  size: 81, 100
+Walk
+  xy: 81, 165
+  size: 81, 100
+Walk
+  xy: 162, 165
+  size: 81, 100
+Walk
+  xy: 243, 165
+  size: 81, 100
+Walk
+  xy: 324, 165
+  size: 81, 100
+Walk
+  xy: 405, 165
+  size: 81, 100
+Attack
+  xy: 0, 265
+  size: 81, 100
+Attack
+  xy: 81, 265
+  size: 81, 100
+Attack
+  xy: 162, 265
+  size: 81, 100
+Attack
+  xy: 243, 265
+  size: 81, 100
+Hit
+  xy: 0, 365
+  size: 81, 100
+Death
+  xy: 0, 465
+  size: 81, 100
+Death
+  xy: 81, 465
+  size: 81, 100
+Death
+  xy: 162, 465
+  size: 81, 100

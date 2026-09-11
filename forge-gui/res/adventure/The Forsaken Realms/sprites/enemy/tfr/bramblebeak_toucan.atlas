@@ -1,0 +1,50 @@
+bramblebeak_toucan.png
+size: 285,241
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 46, 46
+Idle
+  xy: 0, 46
+  size: 57, 65
+Idle
+  xy: 57, 46
+  size: 57, 65
+Idle
+  xy: 114, 46
+  size: 57, 65
+Idle
+  xy: 171, 46
+  size: 57, 65
+Idle
+  xy: 228, 46
+  size: 57, 65
+Walk
+  xy: 0, 111
+  size: 57, 65
+Walk
+  xy: 57, 111
+  size: 57, 65
+Walk
+  xy: 114, 111
+  size: 57, 65
+Walk
+  xy: 171, 111
+  size: 57, 65
+Walk
+  xy: 228, 111
+  size: 57, 65
+Attack
+  xy: 0, 176
+  size: 57, 65
+Attack
+  xy: 57, 176
+  size: 57, 65
+Attack
+  xy: 114, 176
+  size: 57, 65
+Attack
+  xy: 171, 176
+  size: 57, 65

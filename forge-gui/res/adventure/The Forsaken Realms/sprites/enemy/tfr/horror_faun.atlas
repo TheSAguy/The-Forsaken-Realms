@@ -1,0 +1,68 @@
+horror_faun.png
+size: 1206,739
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 201, 135
+Idle
+  xy: 201, 64
+  size: 201, 135
+Idle
+  xy: 402, 64
+  size: 201, 135
+Idle
+  xy: 603, 64
+  size: 201, 135
+Walk
+  xy: 0, 199
+  size: 201, 135
+Walk
+  xy: 201, 199
+  size: 201, 135
+Walk
+  xy: 402, 199
+  size: 201, 135
+Walk
+  xy: 603, 199
+  size: 201, 135
+Attack
+  xy: 0, 334
+  size: 201, 135
+Attack
+  xy: 201, 334
+  size: 201, 135
+Attack
+  xy: 402, 334
+  size: 201, 135
+Attack
+  xy: 603, 334
+  size: 201, 135
+Attack
+  xy: 804, 334
+  size: 201, 135
+Attack
+  xy: 1005, 334
+  size: 201, 135
+Hit
+  xy: 0, 469
+  size: 201, 135
+Death
+  xy: 0, 604
+  size: 201, 135
+Death
+  xy: 201, 604
+  size: 201, 135
+Death
+  xy: 402, 604
+  size: 201, 135
+Death
+  xy: 603, 604
+  size: 201, 135
+Death
+  xy: 804, 604
+  size: 201, 135

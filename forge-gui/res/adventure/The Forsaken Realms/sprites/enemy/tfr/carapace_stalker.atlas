@@ -1,0 +1,44 @@
+carapace_stalker.png
+size: 176,202
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 32, 32
+Idle
+  xy: 0, 32
+  size: 44, 34
+Idle
+  xy: 44, 32
+  size: 44, 34
+Idle
+  xy: 88, 32
+  size: 44, 34
+Walk
+  xy: 0, 66
+  size: 44, 34
+Walk
+  xy: 44, 66
+  size: 44, 34
+Walk
+  xy: 88, 66
+  size: 44, 34
+Walk
+  xy: 132, 66
+  size: 44, 34
+Attack
+  xy: 0, 100
+  size: 44, 34
+Attack
+  xy: 44, 100
+  size: 44, 34
+Attack
+  xy: 88, 100
+  size: 44, 34
+Hit
+  xy: 0, 134
+  size: 44, 34
+Death
+  xy: 0, 168
+  size: 44, 34

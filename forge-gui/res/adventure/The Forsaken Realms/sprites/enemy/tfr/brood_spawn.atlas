@@ -1,0 +1,65 @@
+brood_spawn.png
+size: 930,709
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 186, 129
+Idle
+  xy: 186, 64
+  size: 186, 129
+Idle
+  xy: 372, 64
+  size: 186, 129
+Idle
+  xy: 558, 64
+  size: 186, 129
+Idle
+  xy: 744, 64
+  size: 186, 129
+Walk
+  xy: 0, 193
+  size: 186, 129
+Walk
+  xy: 186, 193
+  size: 186, 129
+Walk
+  xy: 372, 193
+  size: 186, 129
+Walk
+  xy: 558, 193
+  size: 186, 129
+Walk
+  xy: 744, 193
+  size: 186, 129
+Attack
+  xy: 0, 322
+  size: 186, 129
+Attack
+  xy: 186, 322
+  size: 186, 129
+Attack
+  xy: 372, 322
+  size: 186, 129
+Attack
+  xy: 558, 322
+  size: 186, 129
+Attack
+  xy: 744, 322
+  size: 186, 129
+Hit
+  xy: 0, 451
+  size: 186, 129
+Death
+  xy: 0, 580
+  size: 186, 129
+Death
+  xy: 186, 580
+  size: 186, 129
+Death
+  xy: 372, 580
+  size: 186, 129

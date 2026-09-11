@@ -1,0 +1,56 @@
+the_maimed_demon_king.png
+size: 1308,1210
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 195, 195
+Idle
+  xy: 0, 195
+  size: 218, 203
+Idle
+  xy: 218, 195
+  size: 218, 203
+Idle
+  xy: 436, 195
+  size: 218, 203
+Walk
+  xy: 0, 398
+  size: 218, 203
+Walk
+  xy: 218, 398
+  size: 218, 203
+Walk
+  xy: 436, 398
+  size: 218, 203
+Walk
+  xy: 654, 398
+  size: 218, 203
+Walk
+  xy: 872, 398
+  size: 218, 203
+Walk
+  xy: 1090, 398
+  size: 218, 203
+Attack
+  xy: 0, 601
+  size: 218, 203
+Attack
+  xy: 218, 601
+  size: 218, 203
+Attack
+  xy: 436, 601
+  size: 218, 203
+Hit
+  xy: 0, 804
+  size: 218, 203
+Death
+  xy: 0, 1007
+  size: 218, 203
+Death
+  xy: 218, 1007
+  size: 218, 203
+Death
+  xy: 436, 1007
+  size: 218, 203

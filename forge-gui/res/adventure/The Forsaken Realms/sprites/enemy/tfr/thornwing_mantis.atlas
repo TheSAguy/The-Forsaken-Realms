@@ -1,0 +1,53 @@
+thornwing_mantis.png
+size: 306,215
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 30, 30
+Idle
+  xy: 0, 30
+  size: 51, 37
+Idle
+  xy: 51, 30
+  size: 51, 37
+Idle
+  xy: 102, 30
+  size: 51, 37
+Idle
+  xy: 153, 30
+  size: 51, 37
+Idle
+  xy: 204, 30
+  size: 51, 37
+Idle
+  xy: 255, 30
+  size: 51, 37
+Walk
+  xy: 0, 67
+  size: 51, 37
+Walk
+  xy: 51, 67
+  size: 51, 37
+Walk
+  xy: 102, 67
+  size: 51, 37
+Walk
+  xy: 153, 67
+  size: 51, 37
+Walk
+  xy: 204, 67
+  size: 51, 37
+Attack
+  xy: 0, 104
+  size: 51, 37
+Attack
+  xy: 51, 104
+  size: 51, 37
+Hit
+  xy: 0, 141
+  size: 51, 37
+Death
+  xy: 0, 178
+  size: 51, 37

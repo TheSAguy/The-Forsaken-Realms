@@ -135,7 +135,7 @@
   </object>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="416" y="64">
    <properties>
-    <property name="enemy" value="Syokoy"/>
+    <property name="enemy" value="Red-Cloak Duelist"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,4"/>
@@ -143,7 +143,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="448" y="144">
    <properties>
-    <property name="enemy" value="Sigbin"/>
+    <property name="enemy" value="Katipunero Scout"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,4,2"/>

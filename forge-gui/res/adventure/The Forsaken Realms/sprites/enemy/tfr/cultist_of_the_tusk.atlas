@@ -1,0 +1,68 @@
+cultist_of_the_tusk.png
+size: 288,298
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 33, 33
+Idle
+  xy: 0, 33
+  size: 48, 53
+Idle
+  xy: 48, 33
+  size: 48, 53
+Idle
+  xy: 96, 33
+  size: 48, 53
+Idle
+  xy: 144, 33
+  size: 48, 53
+Idle
+  xy: 192, 33
+  size: 48, 53
+Walk
+  xy: 0, 86
+  size: 48, 53
+Walk
+  xy: 48, 86
+  size: 48, 53
+Walk
+  xy: 96, 86
+  size: 48, 53
+Walk
+  xy: 144, 86
+  size: 48, 53
+Walk
+  xy: 192, 86
+  size: 48, 53
+Walk
+  xy: 240, 86
+  size: 48, 53
+Attack
+  xy: 0, 139
+  size: 48, 53
+Attack
+  xy: 48, 139
+  size: 48, 53
+Attack
+  xy: 96, 139
+  size: 48, 53
+Attack
+  xy: 144, 139
+  size: 48, 53
+Attack
+  xy: 192, 139
+  size: 48, 53
+Attack
+  xy: 240, 139
+  size: 48, 53
+Hit
+  xy: 0, 192
+  size: 48, 53
+Death
+  xy: 0, 245
+  size: 48, 53
+Death
+  xy: 48, 245
+  size: 48, 53

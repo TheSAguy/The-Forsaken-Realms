@@ -1,0 +1,80 @@
+tempest_paragon.png
+size: 1085,843
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 133, 133
+Idle
+  xy: 0, 133
+  size: 155, 142
+Idle
+  xy: 155, 133
+  size: 155, 142
+Idle
+  xy: 310, 133
+  size: 155, 142
+Idle
+  xy: 465, 133
+  size: 155, 142
+Idle
+  xy: 620, 133
+  size: 155, 142
+Idle
+  xy: 775, 133
+  size: 155, 142
+Idle
+  xy: 930, 133
+  size: 155, 142
+Walk
+  xy: 0, 275
+  size: 155, 142
+Walk
+  xy: 155, 275
+  size: 155, 142
+Walk
+  xy: 310, 275
+  size: 155, 142
+Walk
+  xy: 465, 275
+  size: 155, 142
+Walk
+  xy: 620, 275
+  size: 155, 142
+Walk
+  xy: 775, 275
+  size: 155, 142
+Attack
+  xy: 0, 417
+  size: 155, 142
+Attack
+  xy: 155, 417
+  size: 155, 142
+Attack
+  xy: 310, 417
+  size: 155, 142
+Attack
+  xy: 465, 417
+  size: 155, 142
+Attack
+  xy: 620, 417
+  size: 155, 142
+Hit
+  xy: 0, 559
+  size: 155, 142
+Death
+  xy: 0, 701
+  size: 155, 142
+Death
+  xy: 155, 701
+  size: 155, 142
+Death
+  xy: 310, 701
+  size: 155, 142
+Death
+  xy: 465, 701
+  size: 155, 142
+Death
+  xy: 620, 701
+  size: 155, 142

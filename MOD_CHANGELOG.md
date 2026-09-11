@@ -17757,6 +17757,124 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 179: 197 new enemies - sprites, themed decks, spawn tables, tournaments and caves (2026-09-11)
+
+User: *"Let's proceed with the 197. Currently Black has a lot more units than the other colors. Let's try to balance them
+a little more, but both numbers and rank ... Where possible, I'd like to create thematic decks for them ... Would be nice if
+we could have a balance between mono, 2, 3 color decks. Use your best judgement creating the spawn tables. Higher tiers
+should be added to tournaments and overworld / dungeon spawns."* Data only (no Java changed); PACKAGED 12:21, 342 MB; agent folder synced.
+
+### The roster
+
+197 enemies from the user's art folder: 124 Ragnarok Online sheets and 73 generic 3D / comic render sheets, renamed in an
+MTG voice ("Warlord of the Grimtusk", "Neferu, the Sealed King", "Tidecaller Witch", "Barrow Skeleton"). Ranks: 48
+Apprentice / 73 Adept / 51 Master / 25 Archmage. Colors: 65 mono / 65 two-color / 67 three-color (all ten guilds and
+all ten shards). The balance went where the user asked - new slots W 83 / U 85 / B 70 / R 85 / G 74 - so roaming
+presence (non-boss, spawnRate > 0, per color) is now **W 334 / U 325 / B 369 / R 351 / G 364** (was 251 / 240 / 299 /
+266 / 290): black still leads, by 13% over blue instead of 25%. The roster (`dev-tools/art-import/roster179.py`) holds
+slug, name, rank, colors, a deck THEME and extra quest tags per enemy.
+
+### Themed decks
+
+`deckgen179.py` builds one deck per enemy from Forge's own card scripts (`carddb.py`: paper sets only, no Universes
+Beyond, the plane's restricted list, no ante cards, no `AI:RemoveDeck:All`). Apprentice 40 cards (17 lands, commons and
+a few uncommons), Adept / Master / Archmage 60 (24 lands, the rarity cap rising with the rank). Creatures come first
+from the theme's own types - an insect plays insects, a dragon dragons and drakes, a mummy zombies with embalm - then
+the secondary types, then the best of its colors; spells favor removal and the theme's payoffs; a curve target shapes
+both; every color of a multicolor deck keeps at least 3 (Apprentice) / 6 cards; lands are basics by pip share plus
+duals / tri-lands of exactly those colors, each dual picked for the color with the fewest sources so far. Fixes found
+while importing: a creature with a real drawback ("can't attack or block" - Grakk the Pacifist, Patchwork Beastie,
+Slumbering Dragon; "sacrifice it unless"; "target opponent creates") is all but excluded (-6, was -1.5); the seed is
+a CRC32 of the slug (Python's `hash()` is salted per run - the decks were not reproducible); the color-floor swap
+trades like for like (it had replaced every removal spell of the Bloodwing Dragon deck with dragons). `deck_audit.py`:
+197 decks, one flag left (Snowpeak Sasquatch plays 5 Yeti/Ape and a pile of beasts - fine for a sasquatch); median
+on-theme creatures 15 / 21 / 19 / 19 by rank; average mana value 2.8 / 3.2 / 3.2 / 3.3.
+
+### The entries
+
+`import179.py` appended 197 entries to `world/enemies.json` (sprites `sprites/enemy/tfr/<name>.atlas`, decks
+`decks/standard/tfr/<name>.dck`): the rank's median stats (life ~12 / 20 / 24 / 46, speed ~20 / 26 / 35 / 45,
+difficulty 0.1 / 1 / 2 / 3, a small name-seeded spread; Large/Huge +2 life -2 speed), `flying` for the fliers, the
+house reward template scaled by rank (deck cards, gold 20+60 up to 60+140, random cards, a Rare/Mythic from the deck at
+30% / 50% / 70% / 100%, shards from Adept up) plus one THEMED card - a card of the enemy's own creature types (a
+Skeleton for a skeleton) at 40-75%. Quest tags from the vocabulary quests already ask for (Undead, Skeleton, Orc,
+Merfolk, Minion on the rank-and-file undead / orcs / soldiers / pirates / merfolk, Leader on the chiefs), mono
+`Identity<Color>` plus the guild / shard name, `Biome<Color>` for every roster it is in. `config tables/enemies.csv`
+rebuilt the way `ContentFilterTables.registerEnemies()` writes it (1,984 rows; Include flags kept).
+
+### Spawn tables (the user left them to judgment)
+
+- **Overworld**: every new enemy in the biome roster of EACH of its colors. The week-based tier weighting
+  (SpawnTierWeighting) already keeps Masters and Archmages out of the first weeks, so no extra gating.
+- **The Wasteland**: the undead, horrors and constructs below Archmage (41) also join the colorless roster.
+- **Tournaments**: each AI capital's arena pool gains up to 8 new Masters and 5 new Archmages of its color (mono
+  first, then two-, then three-color; 13 per capital - the weighted Adept 50 / Master 35 / Archmage 15 bracket odds are
+  unchanged, the new faces share the Master and Archmage picks). The player capital's arena gains one Adept, one Master
+  and one Archmage per color (15). The Chest's illegal arena and the attack-mage pool read the rosters themselves
+  (attack mages keep to untagged wizards, so the new ones never attack towns).
+- **Dungeons**: `gen_caves.py --no-register` re-picked the 78 caves' roamers from the new rosters - same seeds, so every
+  wall, floor and ground tile is identical; only the roamers, the loot and the bones-and-rubble clutter moved. 96 of the
+  462 cave spots are new enemies, 14 Masters and 12 Archmages among the wildcards. Cave object ids shift in three blue
+  caves (a loot count changed) - a save that cleared them may see one pickup return.
+
+### Sprites: 26 bad frames dropped, sizes by rank, a pose cap
+
+`frame_qa.py` checked every frame of the 197 atlases and found conversion leftovers in 20 of them: Ragnarok sheet
+bracket corners and label boxes kept as the last frame of a row (in three sprites the ONLY walk frame - Bonetusk
+Legionnaire, Rotgut Orc, Sandveil Blademaster now walk with their idle frames), a sheet's preview portrait as the first
+Idle frame (Ogre Matriarch, Talonborn Harpy, Aurelian Dragon - their avatars keep the portrait), watermark text
+(Crimson Reaper), a second, larger render in one cell (Sporeshell Crawler, Queen of the Gilded Brood). `atlas_fix179.py`
+removed the 26 frames. Sizes: `enemy_scale.py --write` (Apprentice 13 / Adept 16 / Master 20 / Archmage 24 px bodies).
+In the agent game the ladder read right, except that a raised scythe or a wing flap in one or two frames made a few
+sprites draw small (Crimson Reaper, a Master, looked like an Apprentice): the largest pose now counts at most **1.2x
+the typical frame** (`POSE_CAP`, median of the measured frames, the crocodile rule kept). That moved 45 sizes: 22 new
+ones and 23 of round 178's (the flappers - Bat, Vulture, Aclazotz, Mabel, Arthur; up to 15% bigger); the other 1,662
+old sizes did not move; Grolnok re-measured under the boss floor and went back to 30. A pure median was measured and
+rejected: it would have grown 748 old sprites by 5-10%.
+
+### Checked in the agent game
+
+The new sprites on the overworld (Apprentice / Adept / Master / Archmage side by side, both art families, at 4K - the
+render sheets draw cleanly at their 0.1-0.3 scales); a duel against the Barrow Skeleton (won; loot: five skeleton-deck
+cards - Tinybones, Sanitarium Skeleton, Dimir House Guard, Cruel Finality, Altar's Reap - a random card and 55 gold).
+Not reached: an arena bracket (the capital's toll gate stopped the agent's walk) - the pools are data, and the import
+asserts every added name resolves to a catalog enemy of the right rank.
+
+### Agent client: settle threw loot away
+
+`dev-tools/agent/tfr_agent.py` `settle` looked for the reward screen's Done button by its TEXT, but the bridge lists it
+by NAME ("done"; the text is the `[+OK]` glyph) - so it fell back to `back`, and `UIScene.back()` leaves the scene
+WITHOUT collecting. Every loot screen settle passed was discarded (the round-176 watched session's included; the agent's
+own saves only). It clicks Done by name now and never backs out of a loot screen. A player cannot hit this - Escape
+presses the Done button.
+
+### Found, not changed (the user's call)
+
+The duel's `[TFR-LootEditions] enemy=Barrow Skeleton colors=B -> EXEMPT boss=false questTagged=true`:
+`EnemySprite.getRewards()` applies the Progressive Set Unlocks loot restriction (a monster drops cards from its color's
+sets) only to enemies with NO quest tags. This plane uses quest tags as metadata, so 949 of 1,071 roamers (88.6%) are
+exempt and drop cards from any set; the restricted 11% are untagged legend entries. The same cause was found and fixed
+for spawn weighting in round 59 (`SpawnTierWeighting.isExempt()`: bosses and spawnRate 0 only). Fixing loot the same way
+changes drops game-wide, so it went to the user rather than into this round.
+
+### Also
+
+- Console: `spawn enemy "Tyrant Rex"` - quotes group a multi-word name (the splitter always supported it; the agent
+  notes said otherwise).
+- `standalone-packaging/CREDITS.md`: the Ragnarok Online sprites (© Gravity; The Spriters Resource rippers) and the
+  render sheets (free sprite-sheet sites, thegamingpot.com among them; many GameDeveloperStudio designs) - the art is
+  the user's informed choice (2026-09-11). README: "1,900+ enemies".
+- The toolchain moved into the repo: `dev-tools/art-import/` (README lists the steps; inputs stay in
+  `F:\FORGE\TFR-Art-Staging\`; `carddb.json` is a gitignored cache).
+- The boss floor from the end of round 178 (51 bosses and set pieces raised to a 30-px body - "Boss enemies should
+  remain larger than Archmage") ships in this commit.
+
+**Files touched**: `world/enemies.json`, `world/biomes/{white,blue,black,red,green,colorless}.json`, 6 capital maps
+(`maps/map/main_story/*_capital.tmx`, `maps/map/towns/player_capital.tmx`), 78 `maps/map/cave/cave_*.tmx`,
+`config tables/enemies.csv`, `sprites/enemy/tfr/` (394 files, new), `decks/standard/tfr/` (197 decks, new),
+`dev-tools/enemy_scale.py`, `dev-tools/gen_caves_manifest.txt`, `dev-tools/agent/tfr_agent.py`,
+`dev-tools/art-import/` (new), `.claude/skills/tfr-play/SKILL.md`, `standalone-packaging/CREDITS.md`, `README.md`.
+
 ## Round 178: one size per rank, the TFR medallion on your own land, a three-quest step, a hidden rare in the camp (2026-09-11)
 
 User, on the round-177 size table: *"Let's go with 13 for Apprentice ... Could we do the box approach and try to get the

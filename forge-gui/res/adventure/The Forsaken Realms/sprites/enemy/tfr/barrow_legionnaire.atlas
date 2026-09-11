@@ -1,0 +1,74 @@
+barrow_legionnaire.png
+size: 480,478
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 58, 58
+Idle
+  xy: 0, 58
+  size: 60, 84
+Walk
+  xy: 0, 142
+  size: 60, 84
+Walk
+  xy: 60, 142
+  size: 60, 84
+Walk
+  xy: 120, 142
+  size: 60, 84
+Walk
+  xy: 180, 142
+  size: 60, 84
+Walk
+  xy: 240, 142
+  size: 60, 84
+Walk
+  xy: 300, 142
+  size: 60, 84
+Walk
+  xy: 360, 142
+  size: 60, 84
+Walk
+  xy: 420, 142
+  size: 60, 84
+Attack
+  xy: 0, 226
+  size: 60, 84
+Attack
+  xy: 60, 226
+  size: 60, 84
+Attack
+  xy: 120, 226
+  size: 60, 84
+Attack
+  xy: 180, 226
+  size: 60, 84
+Attack
+  xy: 240, 226
+  size: 60, 84
+Attack
+  xy: 300, 226
+  size: 60, 84
+Attack
+  xy: 360, 226
+  size: 60, 84
+Attack
+  xy: 420, 226
+  size: 60, 84
+Hit
+  xy: 0, 310
+  size: 60, 84
+Death
+  xy: 0, 394
+  size: 60, 84
+Death
+  xy: 60, 394
+  size: 60, 84
+Death
+  xy: 120, 394
+  size: 60, 84
+Death
+  xy: 180, 394
+  size: 60, 84

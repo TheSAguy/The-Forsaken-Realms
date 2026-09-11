@@ -1,0 +1,65 @@
+duskfeather_owlet.png
+size: 192,222
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 27, 27
+Idle
+  xy: 0, 27
+  size: 32, 39
+Idle
+  xy: 32, 27
+  size: 32, 39
+Idle
+  xy: 64, 27
+  size: 32, 39
+Idle
+  xy: 96, 27
+  size: 32, 39
+Idle
+  xy: 128, 27
+  size: 32, 39
+Idle
+  xy: 160, 27
+  size: 32, 39
+Walk
+  xy: 0, 66
+  size: 32, 39
+Walk
+  xy: 32, 66
+  size: 32, 39
+Walk
+  xy: 64, 66
+  size: 32, 39
+Walk
+  xy: 96, 66
+  size: 32, 39
+Walk
+  xy: 128, 66
+  size: 32, 39
+Attack
+  xy: 0, 105
+  size: 32, 39
+Attack
+  xy: 32, 105
+  size: 32, 39
+Attack
+  xy: 64, 105
+  size: 32, 39
+Hit
+  xy: 0, 144
+  size: 32, 39
+Death
+  xy: 0, 183
+  size: 32, 39
+Death
+  xy: 32, 183
+  size: 32, 39
+Death
+  xy: 64, 183
+  size: 32, 39
+Death
+  xy: 96, 183
+  size: 32, 39

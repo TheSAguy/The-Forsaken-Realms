@@ -1,0 +1,83 @@
+magma_ogre.png
+size: 966,814
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 138, 150
+Idle
+  xy: 138, 64
+  size: 138, 150
+Idle
+  xy: 276, 64
+  size: 138, 150
+Idle
+  xy: 414, 64
+  size: 138, 150
+Idle
+  xy: 552, 64
+  size: 138, 150
+Idle
+  xy: 690, 64
+  size: 138, 150
+Walk
+  xy: 0, 214
+  size: 138, 150
+Walk
+  xy: 138, 214
+  size: 138, 150
+Walk
+  xy: 276, 214
+  size: 138, 150
+Walk
+  xy: 414, 214
+  size: 138, 150
+Walk
+  xy: 552, 214
+  size: 138, 150
+Walk
+  xy: 690, 214
+  size: 138, 150
+Attack
+  xy: 0, 364
+  size: 138, 150
+Attack
+  xy: 138, 364
+  size: 138, 150
+Attack
+  xy: 276, 364
+  size: 138, 150
+Attack
+  xy: 414, 364
+  size: 138, 150
+Attack
+  xy: 552, 364
+  size: 138, 150
+Attack
+  xy: 690, 364
+  size: 138, 150
+Attack
+  xy: 828, 364
+  size: 138, 150
+Hit
+  xy: 0, 514
+  size: 138, 150
+Death
+  xy: 0, 664
+  size: 138, 150
+Death
+  xy: 138, 664
+  size: 138, 150
+Death
+  xy: 276, 664
+  size: 138, 150
+Death
+  xy: 414, 664
+  size: 138, 150
+Death
+  xy: 552, 664
+  size: 138, 150

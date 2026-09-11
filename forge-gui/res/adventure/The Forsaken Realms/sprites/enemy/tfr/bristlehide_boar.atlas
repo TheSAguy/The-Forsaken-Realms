@@ -1,0 +1,56 @@
+bristlehide_boar.png
+size: 288,277
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 42, 42
+Idle
+  xy: 0, 42
+  size: 48, 47
+Idle
+  xy: 48, 42
+  size: 48, 47
+Idle
+  xy: 96, 42
+  size: 48, 47
+Walk
+  xy: 0, 89
+  size: 48, 47
+Walk
+  xy: 48, 89
+  size: 48, 47
+Walk
+  xy: 96, 89
+  size: 48, 47
+Walk
+  xy: 144, 89
+  size: 48, 47
+Walk
+  xy: 192, 89
+  size: 48, 47
+Walk
+  xy: 240, 89
+  size: 48, 47
+Attack
+  xy: 0, 136
+  size: 48, 47
+Attack
+  xy: 48, 136
+  size: 48, 47
+Attack
+  xy: 96, 136
+  size: 48, 47
+Hit
+  xy: 0, 183
+  size: 48, 47
+Death
+  xy: 0, 230
+  size: 48, 47
+Death
+  xy: 48, 230
+  size: 48, 47
+Death
+  xy: 96, 230
+  size: 48, 47

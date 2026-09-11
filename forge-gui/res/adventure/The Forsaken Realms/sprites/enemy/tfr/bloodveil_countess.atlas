@@ -1,0 +1,77 @@
+bloodveil_countess.png
+size: 864,664
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 144, 120
+Idle
+  xy: 144, 64
+  size: 144, 120
+Idle
+  xy: 288, 64
+  size: 144, 120
+Idle
+  xy: 432, 64
+  size: 144, 120
+Idle
+  xy: 576, 64
+  size: 144, 120
+Idle
+  xy: 720, 64
+  size: 144, 120
+Walk
+  xy: 0, 184
+  size: 144, 120
+Walk
+  xy: 144, 184
+  size: 144, 120
+Walk
+  xy: 288, 184
+  size: 144, 120
+Walk
+  xy: 432, 184
+  size: 144, 120
+Walk
+  xy: 576, 184
+  size: 144, 120
+Walk
+  xy: 720, 184
+  size: 144, 120
+Attack
+  xy: 0, 304
+  size: 144, 120
+Attack
+  xy: 144, 304
+  size: 144, 120
+Attack
+  xy: 288, 304
+  size: 144, 120
+Attack
+  xy: 432, 304
+  size: 144, 120
+Attack
+  xy: 576, 304
+  size: 144, 120
+Attack
+  xy: 720, 304
+  size: 144, 120
+Hit
+  xy: 0, 424
+  size: 144, 120
+Death
+  xy: 0, 544
+  size: 144, 120
+Death
+  xy: 144, 544
+  size: 144, 120
+Death
+  xy: 288, 544
+  size: 144, 120
+Death
+  xy: 432, 544
+  size: 144, 120

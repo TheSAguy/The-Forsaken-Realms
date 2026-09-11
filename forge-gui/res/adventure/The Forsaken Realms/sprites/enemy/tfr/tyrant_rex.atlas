@@ -1,0 +1,56 @@
+tyrant_rex.png
+size: 624,374
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 156, 62
+Idle
+  xy: 156, 64
+  size: 156, 62
+Idle
+  xy: 312, 64
+  size: 156, 62
+Walk
+  xy: 0, 126
+  size: 156, 62
+Walk
+  xy: 156, 126
+  size: 156, 62
+Walk
+  xy: 312, 126
+  size: 156, 62
+Walk
+  xy: 468, 126
+  size: 156, 62
+Attack
+  xy: 0, 188
+  size: 156, 62
+Attack
+  xy: 156, 188
+  size: 156, 62
+Attack
+  xy: 312, 188
+  size: 156, 62
+Attack
+  xy: 468, 188
+  size: 156, 62
+Hit
+  xy: 0, 250
+  size: 156, 62
+Death
+  xy: 0, 312
+  size: 156, 62
+Death
+  xy: 156, 312
+  size: 156, 62
+Death
+  xy: 312, 312
+  size: 156, 62
+Death
+  xy: 468, 312
+  size: 156, 62

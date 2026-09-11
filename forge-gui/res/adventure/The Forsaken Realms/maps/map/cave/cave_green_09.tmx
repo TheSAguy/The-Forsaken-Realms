@@ -149,7 +149,7 @@
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="88" y="168"/>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="224" y="224">
    <properties>
-    <property name="enemy" value="Treefolk Guardian"/>
+    <property name="enemy" value="Blossom Sapling"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6"/>
@@ -157,7 +157,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="608" y="144">
    <properties>
-    <property name="enemy" value="Bog Hermit"/>
+    <property name="enemy" value="Stinky Skunk"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,6,5,4"/>
@@ -165,7 +165,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="384" y="128">
    <properties>
-    <property name="enemy" value="Cat"/>
+    <property name="enemy" value="Wurm"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,2,3,4,5"/>
@@ -173,7 +173,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="416" y="208">
    <properties>
-    <property name="enemy" value="Goblin Wolf Rider"/>
+    <property name="enemy" value="Woodland Rover"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,6,5,4,3"/>

@@ -1,0 +1,50 @@
+verdant_wyrm.png
+size: 790,460
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 158, 132
+Idle
+  xy: 158, 64
+  size: 158, 132
+Idle
+  xy: 316, 64
+  size: 158, 132
+Idle
+  xy: 474, 64
+  size: 158, 132
+Walk
+  xy: 0, 196
+  size: 158, 132
+Walk
+  xy: 158, 196
+  size: 158, 132
+Walk
+  xy: 316, 196
+  size: 158, 132
+Walk
+  xy: 474, 196
+  size: 158, 132
+Walk
+  xy: 632, 196
+  size: 158, 132
+Attack
+  xy: 0, 328
+  size: 158, 132
+Attack
+  xy: 158, 328
+  size: 158, 132
+Attack
+  xy: 316, 328
+  size: 158, 132
+Attack
+  xy: 474, 328
+  size: 158, 132
+Attack
+  xy: 632, 328
+  size: 158, 132

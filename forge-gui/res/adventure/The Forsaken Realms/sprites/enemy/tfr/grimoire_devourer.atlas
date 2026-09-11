@@ -1,0 +1,50 @@
+grimoire_devourer.png
+size: 205,205
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 29, 29
+Idle
+  xy: 0, 29
+  size: 41, 44
+Idle
+  xy: 41, 29
+  size: 41, 44
+Idle
+  xy: 82, 29
+  size: 41, 44
+Idle
+  xy: 123, 29
+  size: 41, 44
+Idle
+  xy: 164, 29
+  size: 41, 44
+Walk
+  xy: 0, 73
+  size: 41, 44
+Walk
+  xy: 41, 73
+  size: 41, 44
+Walk
+  xy: 82, 73
+  size: 41, 44
+Walk
+  xy: 123, 73
+  size: 41, 44
+Attack
+  xy: 0, 117
+  size: 41, 44
+Attack
+  xy: 41, 117
+  size: 41, 44
+Attack
+  xy: 82, 117
+  size: 41, 44
+Attack
+  xy: 123, 117
+  size: 41, 44
+Hit
+  xy: 0, 161
+  size: 41, 44

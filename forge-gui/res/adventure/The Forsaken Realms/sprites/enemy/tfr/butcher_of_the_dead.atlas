@@ -1,0 +1,83 @@
+butcher_of_the_dead.png
+size: 464,569
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 49, 49
+Idle
+  xy: 0, 49
+  size: 58, 104
+Idle
+  xy: 58, 49
+  size: 58, 104
+Idle
+  xy: 116, 49
+  size: 58, 104
+Idle
+  xy: 174, 49
+  size: 58, 104
+Idle
+  xy: 232, 49
+  size: 58, 104
+Idle
+  xy: 290, 49
+  size: 58, 104
+Walk
+  xy: 0, 153
+  size: 58, 104
+Walk
+  xy: 58, 153
+  size: 58, 104
+Walk
+  xy: 116, 153
+  size: 58, 104
+Walk
+  xy: 174, 153
+  size: 58, 104
+Walk
+  xy: 232, 153
+  size: 58, 104
+Walk
+  xy: 290, 153
+  size: 58, 104
+Walk
+  xy: 348, 153
+  size: 58, 104
+Walk
+  xy: 406, 153
+  size: 58, 104
+Attack
+  xy: 0, 257
+  size: 58, 104
+Attack
+  xy: 58, 257
+  size: 58, 104
+Attack
+  xy: 116, 257
+  size: 58, 104
+Attack
+  xy: 174, 257
+  size: 58, 104
+Attack
+  xy: 232, 257
+  size: 58, 104
+Attack
+  xy: 290, 257
+  size: 58, 104
+Attack
+  xy: 348, 257
+  size: 58, 104
+Attack
+  xy: 406, 257
+  size: 58, 104
+Hit
+  xy: 0, 361
+  size: 58, 104
+Death
+  xy: 0, 465
+  size: 58, 104
+Death
+  xy: 58, 465
+  size: 58, 104

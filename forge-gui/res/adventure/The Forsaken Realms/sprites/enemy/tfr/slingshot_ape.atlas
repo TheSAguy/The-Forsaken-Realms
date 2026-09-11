@@ -1,0 +1,71 @@
+slingshot_ape.png
+size: 798,717
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 92, 92
+Idle
+  xy: 0, 92
+  size: 114, 125
+Idle
+  xy: 114, 92
+  size: 114, 125
+Idle
+  xy: 228, 92
+  size: 114, 125
+Idle
+  xy: 342, 92
+  size: 114, 125
+Idle
+  xy: 456, 92
+  size: 114, 125
+Idle
+  xy: 570, 92
+  size: 114, 125
+Walk
+  xy: 0, 217
+  size: 114, 125
+Walk
+  xy: 114, 217
+  size: 114, 125
+Walk
+  xy: 228, 217
+  size: 114, 125
+Walk
+  xy: 342, 217
+  size: 114, 125
+Walk
+  xy: 456, 217
+  size: 114, 125
+Walk
+  xy: 570, 217
+  size: 114, 125
+Walk
+  xy: 684, 217
+  size: 114, 125
+Attack
+  xy: 0, 342
+  size: 114, 125
+Attack
+  xy: 114, 342
+  size: 114, 125
+Attack
+  xy: 228, 342
+  size: 114, 125
+Attack
+  xy: 342, 342
+  size: 114, 125
+Attack
+  xy: 456, 342
+  size: 114, 125
+Hit
+  xy: 0, 467
+  size: 114, 125
+Death
+  xy: 0, 592
+  size: 114, 125
+Death
+  xy: 114, 592
+  size: 114, 125

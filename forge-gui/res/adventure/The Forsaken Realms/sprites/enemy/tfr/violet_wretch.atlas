@@ -1,0 +1,35 @@
+violet_wretch.png
+size: 600,496
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 150, 144
+Idle
+  xy: 150, 64
+  size: 150, 144
+Walk
+  xy: 0, 208
+  size: 150, 144
+Walk
+  xy: 150, 208
+  size: 150, 144
+Walk
+  xy: 300, 208
+  size: 150, 144
+Walk
+  xy: 450, 208
+  size: 150, 144
+Attack
+  xy: 0, 352
+  size: 150, 144
+Attack
+  xy: 150, 352
+  size: 150, 144
+Attack
+  xy: 300, 352
+  size: 150, 144

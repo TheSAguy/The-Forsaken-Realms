@@ -1,0 +1,65 @@
+sandveil_blademaster.png
+size: 375,507
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 52, 52
+Idle
+  xy: 0, 52
+  size: 75, 91
+Idle
+  xy: 75, 52
+  size: 75, 91
+Idle
+  xy: 150, 52
+  size: 75, 91
+Idle
+  xy: 225, 52
+  size: 75, 91
+Idle
+  xy: 300, 52
+  size: 75, 91
+Walk
+  xy: 0, 52
+  size: 75, 91
+Walk
+  xy: 75, 52
+  size: 75, 91
+Walk
+  xy: 150, 52
+  size: 75, 91
+Walk
+  xy: 225, 52
+  size: 75, 91
+Walk
+  xy: 300, 52
+  size: 75, 91
+Attack
+  xy: 0, 234
+  size: 75, 91
+Attack
+  xy: 75, 234
+  size: 75, 91
+Attack
+  xy: 150, 234
+  size: 75, 91
+Attack
+  xy: 225, 234
+  size: 75, 91
+Hit
+  xy: 0, 325
+  size: 75, 91
+Death
+  xy: 0, 416
+  size: 75, 91
+Death
+  xy: 75, 416
+  size: 75, 91
+Death
+  xy: 150, 416
+  size: 75, 91
+Death
+  xy: 225, 416
+  size: 75, 91

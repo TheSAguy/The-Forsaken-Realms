@@ -1,0 +1,44 @@
+skyreef_shark.png
+size: 784,490
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 196, 142
+Idle
+  xy: 196, 64
+  size: 196, 142
+Idle
+  xy: 392, 64
+  size: 196, 142
+Idle
+  xy: 588, 64
+  size: 196, 142
+Walk
+  xy: 0, 206
+  size: 196, 142
+Walk
+  xy: 196, 206
+  size: 196, 142
+Walk
+  xy: 392, 206
+  size: 196, 142
+Walk
+  xy: 588, 206
+  size: 196, 142
+Attack
+  xy: 0, 348
+  size: 196, 142
+Attack
+  xy: 196, 348
+  size: 196, 142
+Attack
+  xy: 392, 348
+  size: 196, 142
+Attack
+  xy: 588, 348
+  size: 196, 142

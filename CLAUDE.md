@@ -50,19 +50,19 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-11 (round 178; v1.09 RELEASED + rounds 173-178 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-11 (round 179; v1.09 RELEASED + rounds 173-179 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 178, 2026-09-11).** The user's calls, in their order:
-  1. **The 197 new enemies (user: "Let's proceed with the 197")** - IN PROGRESS from round 179. Sprites are converted in
-     `F:\FORGE\TFR-Art-Staging\` (`ro\` 124 Ragnarok atlases, `gen\` 73 render atlases, tools + QA in `tools\`,
-     `qa\`; naming catalog `qa\cat_ro_0*.png`, `qa\cat_gen_0*.png`). The user's brief: MTG-like names; balance the
-     roster - black has the most units (roaming presence W 251 / U 240 / B 299 / R 266 / G 290), so the new ones lean
-     blue, white and red, and fill thin ranks per color (blue Apprentices, black Archmages...); a mix of mono / two /
-     three-color decks (plan ~60 / 77 / 60); THEMED decks (an insect gets an insect deck, dragons dragons...); higher
-     ranks also go into the capital arena pools (tournaments) and dungeon spawns (the round-125 caves are generated from
-     the biome rosters - `dev-tools/gen_caves.py`). Scale every new sprite with `dev-tools/enemy_scale.py` rules. The
-     art is ripped commercial art by the user's informed choice (memory note); a CREDITS line goes in with it.
-  2. **Playtest rounds 173 + 177 + 178**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
+- **NEXT SESSION starts here (updated round 179, 2026-09-11).** The user's calls, in their order:
+  1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
+     later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
+     rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
+     `deckgen179.py --only <slug>`), loot. Tooling in `dev-tools/art-import/` (README), inputs in
+     `F:\FORGE\TFR-Art-Staging\`.
+     **Raised with the user, not changed (round 179):** `EnemySprite.getRewards()` skips the Progressive Set Unlocks
+     loot restriction for every QUEST-TAGGED enemy - and this plane tags nearly everyone as metadata, so 949 of 1,071
+     roamers (88.6%) drop cards from any set; only untagged legend entries are restricted. Same cause as the round-59
+     spawn-weighting fix (`SpawnTierWeighting.isExempt()`). Fixing it changes loot game-wide - the user's call.
+  2. **Playtest rounds 173 + 177 + 178 + 179**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
      the TFR medallion when loading on your own land, the three-quests step (+100 stone), the camp's hidden rare.
   3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `F:\FORGE\TFR-Agent\`; launch via
      the Task Scheduler (`agent_launch.cmd`), stop with `powershell -ExecutionPolicy Bypass -File agent_stop.ps1`,
@@ -72,7 +72,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      Upstream was 22 commits past `06a3c05731c` at round 172 (hot spots in CORE_ENGINE_CHANGES "Round 172").
   5. **Wider playtest feedback** on v1.09, the review's remaining OPEN rows; E4 right AFTER the merge.
   6. Small open items: characters already past "Raise the Banner"'s Capitol step keep the old quest steps (a load-time
-     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-178
+     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-179
      are unreleased (v1.09 is the last release).
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
@@ -87,6 +87,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 179 (2026-09-11, data only, PACKAGED 12:21, 342 MB; agent folder synced): **197 new enemies** from the user's art - 124 Ragnarok Online + 73
+  render sheets, MTG names; 48 Apprentice / 73 Adept / 51 Master / 25 Archmage; 65 mono / 65 two / 67 three-color; roaming
+  presence now W 334 / U 325 / B 369 / R 351 / G 364. Themed 40/60-card decks (`dev-tools/art-import/deckgen179.py`).
+  Every one in each of its colors' biome rosters (undead / horrors / constructs below Archmage also in the Wasteland);
+  +8 Masters / +5 Archmages per AI capital arena, +15 in the player capital's; the 78 caves re-picked from the rosters
+  (layouts identical). 26 bad frames dropped from 20 atlases; sizes by rank plus a 1.2x POSE_CAP (45 sizes moved, 23 of
+  them old flappers). Agent `settle` no longer discards loot (it pressed `back` on the reward screen). CREDITS lines.
 - Round 178 (2026-09-11, built 10:01, PACKAGED 10:12, 311 MB; agent folder synced; verified in the agent game): **one
   size per rank** - every non-boss body drawn at the hero's body, rank alone scales it (Apprentice 13 / Adept 16 / Master
   20 / Archmage 24; body box = 10%-trimmed Idle/Walk frames; `dev-tools/enemy_scale.py`, 1,387 scales; bosses + 24

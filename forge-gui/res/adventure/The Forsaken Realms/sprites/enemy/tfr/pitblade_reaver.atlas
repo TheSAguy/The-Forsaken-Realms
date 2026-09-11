@@ -1,0 +1,89 @@
+pitblade_reaver.png
+size: 670,685
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 60, 60
+Idle
+  xy: 0, 60
+  size: 67, 125
+Idle
+  xy: 67, 60
+  size: 67, 125
+Idle
+  xy: 134, 60
+  size: 67, 125
+Idle
+  xy: 201, 60
+  size: 67, 125
+Idle
+  xy: 268, 60
+  size: 67, 125
+Idle
+  xy: 335, 60
+  size: 67, 125
+Idle
+  xy: 402, 60
+  size: 67, 125
+Idle
+  xy: 469, 60
+  size: 67, 125
+Idle
+  xy: 536, 60
+  size: 67, 125
+Idle
+  xy: 603, 60
+  size: 67, 125
+Walk
+  xy: 0, 185
+  size: 67, 125
+Walk
+  xy: 67, 185
+  size: 67, 125
+Walk
+  xy: 134, 185
+  size: 67, 125
+Walk
+  xy: 201, 185
+  size: 67, 125
+Walk
+  xy: 268, 185
+  size: 67, 125
+Walk
+  xy: 335, 185
+  size: 67, 125
+Walk
+  xy: 402, 185
+  size: 67, 125
+Walk
+  xy: 469, 185
+  size: 67, 125
+Attack
+  xy: 0, 310
+  size: 67, 125
+Attack
+  xy: 67, 310
+  size: 67, 125
+Attack
+  xy: 134, 310
+  size: 67, 125
+Attack
+  xy: 201, 310
+  size: 67, 125
+Attack
+  xy: 268, 310
+  size: 67, 125
+Attack
+  xy: 335, 310
+  size: 67, 125
+Hit
+  xy: 0, 435
+  size: 67, 125
+Death
+  xy: 0, 560
+  size: 67, 125
+Death
+  xy: 67, 560
+  size: 67, 125

@@ -1,0 +1,74 @@
+shambling_corpse.png
+size: 432,458
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 38, 38
+Idle
+  xy: 0, 38
+  size: 54, 84
+Idle
+  xy: 54, 38
+  size: 54, 84
+Idle
+  xy: 108, 38
+  size: 54, 84
+Idle
+  xy: 162, 38
+  size: 54, 84
+Walk
+  xy: 0, 122
+  size: 54, 84
+Walk
+  xy: 54, 122
+  size: 54, 84
+Walk
+  xy: 108, 122
+  size: 54, 84
+Walk
+  xy: 162, 122
+  size: 54, 84
+Walk
+  xy: 216, 122
+  size: 54, 84
+Walk
+  xy: 270, 122
+  size: 54, 84
+Walk
+  xy: 324, 122
+  size: 54, 84
+Walk
+  xy: 378, 122
+  size: 54, 84
+Attack
+  xy: 0, 206
+  size: 54, 84
+Attack
+  xy: 54, 206
+  size: 54, 84
+Attack
+  xy: 108, 206
+  size: 54, 84
+Attack
+  xy: 162, 206
+  size: 54, 84
+Attack
+  xy: 216, 206
+  size: 54, 84
+Attack
+  xy: 270, 206
+  size: 54, 84
+Attack
+  xy: 324, 206
+  size: 54, 84
+Hit
+  xy: 0, 290
+  size: 54, 84
+Death
+  xy: 0, 374
+  size: 54, 84
+Death
+  xy: 54, 374
+  size: 54, 84

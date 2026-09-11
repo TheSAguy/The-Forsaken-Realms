@@ -63,6 +63,13 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   orcs, goblins, lizardfolk, troll, boar knight) - free samples in the Liberated Pixel Cup format.
 - **The Pixel Character Pack - Free Version** (farmer, plumed knight, axe orc) - pidroudays.itch.io.
 - **Dark and sharp Player Characters** (the five 16px adventurers) - oCosity.
+- **Ragnarok Online monster sprites** (124 enemies - the Grimtusk orcs, the Barrow skeletons, the
+  zombies, mummies, wraiths, beetles, frogs and the rest of that cast, renamed) - © Gravity Co.,
+  Ltd.; sheets from The Spriters Resource, ripped by its contributors.
+- **Rendered creature sheets** (73 enemies - the dragons, wyrms and drakes, demons and devils,
+  dinosaurs, ogres and monsters, renamed) - collected from free sprite-sheet sites (thegamingpot.com
+  among them); many are GameDeveloperStudio (Robert Brooks) creature designs. Authors to be
+  confirmed per sheet.
 
 ## License
 

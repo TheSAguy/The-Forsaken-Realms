@@ -138,7 +138,7 @@
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="296" y="232"/>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="544" y="144">
    <properties>
-    <property name="enemy" value="Brittle Archer"/>
+    <property name="enemy" value="Decrepit Bones"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>
@@ -146,7 +146,7 @@
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="224" y="176">
    <properties>
-    <property name="enemy" value="Fungal Myconid"/>
+    <property name="enemy" value="Deepvein Bonedigger"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,5,4"/>
@@ -154,7 +154,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="144" y="128">
    <properties>
-    <property name="enemy" value="Fledgling Demon"/>
+    <property name="enemy" value="Tainted Scoundrel"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5"/>

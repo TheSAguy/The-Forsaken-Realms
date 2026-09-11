@@ -1,0 +1,53 @@
+pearlmaw_clam.png
+size: 198,221
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 31, 31
+Idle
+  xy: 0, 31
+  size: 33, 38
+Idle
+  xy: 33, 31
+  size: 33, 38
+Idle
+  xy: 66, 31
+  size: 33, 38
+Walk
+  xy: 0, 69
+  size: 33, 38
+Walk
+  xy: 33, 69
+  size: 33, 38
+Walk
+  xy: 66, 69
+  size: 33, 38
+Walk
+  xy: 99, 69
+  size: 33, 38
+Walk
+  xy: 132, 69
+  size: 33, 38
+Walk
+  xy: 165, 69
+  size: 33, 38
+Attack
+  xy: 0, 107
+  size: 33, 38
+Attack
+  xy: 33, 107
+  size: 33, 38
+Attack
+  xy: 66, 107
+  size: 33, 38
+Hit
+  xy: 0, 145
+  size: 33, 38
+Death
+  xy: 0, 183
+  size: 33, 38
+Death
+  xy: 33, 183
+  size: 33, 38

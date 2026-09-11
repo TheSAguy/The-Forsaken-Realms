@@ -1,0 +1,83 @@
+revenant_knight_captain.png
+size: 472,552
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 52, 52
+Idle
+  xy: 0, 52
+  size: 59, 100
+Idle
+  xy: 59, 52
+  size: 59, 100
+Idle
+  xy: 118, 52
+  size: 59, 100
+Idle
+  xy: 177, 52
+  size: 59, 100
+Idle
+  xy: 236, 52
+  size: 59, 100
+Idle
+  xy: 295, 52
+  size: 59, 100
+Walk
+  xy: 0, 152
+  size: 59, 100
+Walk
+  xy: 59, 152
+  size: 59, 100
+Walk
+  xy: 118, 152
+  size: 59, 100
+Walk
+  xy: 177, 152
+  size: 59, 100
+Walk
+  xy: 236, 152
+  size: 59, 100
+Walk
+  xy: 295, 152
+  size: 59, 100
+Walk
+  xy: 354, 152
+  size: 59, 100
+Walk
+  xy: 413, 152
+  size: 59, 100
+Attack
+  xy: 0, 252
+  size: 59, 100
+Attack
+  xy: 59, 252
+  size: 59, 100
+Attack
+  xy: 118, 252
+  size: 59, 100
+Attack
+  xy: 177, 252
+  size: 59, 100
+Attack
+  xy: 236, 252
+  size: 59, 100
+Attack
+  xy: 295, 252
+  size: 59, 100
+Attack
+  xy: 354, 252
+  size: 59, 100
+Attack
+  xy: 413, 252
+  size: 59, 100
+Hit
+  xy: 0, 352
+  size: 59, 100
+Death
+  xy: 0, 452
+  size: 59, 100
+Death
+  xy: 59, 452
+  size: 59, 100

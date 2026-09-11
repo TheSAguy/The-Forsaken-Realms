@@ -1,0 +1,65 @@
+bonetusk_legionnaire.png
+size: 462,538
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 63, 63
+Idle
+  xy: 0, 63
+  size: 66, 95
+Idle
+  xy: 66, 63
+  size: 66, 95
+Idle
+  xy: 132, 63
+  size: 66, 95
+Idle
+  xy: 198, 63
+  size: 66, 95
+Walk
+  xy: 0, 63
+  size: 66, 95
+Walk
+  xy: 66, 63
+  size: 66, 95
+Walk
+  xy: 132, 63
+  size: 66, 95
+Walk
+  xy: 198, 63
+  size: 66, 95
+Attack
+  xy: 0, 253
+  size: 66, 95
+Attack
+  xy: 66, 253
+  size: 66, 95
+Attack
+  xy: 132, 253
+  size: 66, 95
+Attack
+  xy: 198, 253
+  size: 66, 95
+Attack
+  xy: 264, 253
+  size: 66, 95
+Attack
+  xy: 330, 253
+  size: 66, 95
+Attack
+  xy: 396, 253
+  size: 66, 95
+Hit
+  xy: 0, 348
+  size: 66, 95
+Death
+  xy: 0, 443
+  size: 66, 95
+Death
+  xy: 66, 443
+  size: 66, 95
+Death
+  xy: 132, 443
+  size: 66, 95

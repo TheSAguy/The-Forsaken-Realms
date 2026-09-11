@@ -1,0 +1,74 @@
+hollow_oathkeeper.png
+size: 368,577
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 37, 37
+Idle
+  xy: 0, 37
+  size: 46, 108
+Idle
+  xy: 46, 37
+  size: 46, 108
+Idle
+  xy: 92, 37
+  size: 46, 108
+Idle
+  xy: 138, 37
+  size: 46, 108
+Idle
+  xy: 184, 37
+  size: 46, 108
+Idle
+  xy: 230, 37
+  size: 46, 108
+Walk
+  xy: 0, 145
+  size: 46, 108
+Walk
+  xy: 46, 145
+  size: 46, 108
+Walk
+  xy: 92, 145
+  size: 46, 108
+Walk
+  xy: 138, 145
+  size: 46, 108
+Walk
+  xy: 184, 145
+  size: 46, 108
+Walk
+  xy: 230, 145
+  size: 46, 108
+Walk
+  xy: 276, 145
+  size: 46, 108
+Walk
+  xy: 322, 145
+  size: 46, 108
+Attack
+  xy: 0, 253
+  size: 46, 108
+Attack
+  xy: 46, 253
+  size: 46, 108
+Attack
+  xy: 92, 253
+  size: 46, 108
+Attack
+  xy: 138, 253
+  size: 46, 108
+Attack
+  xy: 184, 253
+  size: 46, 108
+Attack
+  xy: 230, 253
+  size: 46, 108
+Hit
+  xy: 0, 361
+  size: 46, 108
+Death
+  xy: 0, 469
+  size: 46, 108

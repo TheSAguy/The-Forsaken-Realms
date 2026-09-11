@@ -1,0 +1,50 @@
+veiltongue_chameleon.png
+size: 268,296
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 46, 46
+Idle
+  xy: 0, 46
+  size: 67, 50
+Idle
+  xy: 67, 46
+  size: 67, 50
+Idle
+  xy: 134, 46
+  size: 67, 50
+Idle
+  xy: 201, 46
+  size: 67, 50
+Walk
+  xy: 0, 96
+  size: 67, 50
+Walk
+  xy: 67, 96
+  size: 67, 50
+Walk
+  xy: 134, 96
+  size: 67, 50
+Walk
+  xy: 201, 96
+  size: 67, 50
+Attack
+  xy: 0, 146
+  size: 67, 50
+Attack
+  xy: 67, 146
+  size: 67, 50
+Attack
+  xy: 134, 146
+  size: 67, 50
+Attack
+  xy: 201, 146
+  size: 67, 50
+Hit
+  xy: 0, 196
+  size: 67, 50
+Death
+  xy: 0, 246
+  size: 67, 50

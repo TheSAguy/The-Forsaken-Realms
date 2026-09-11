@@ -1,0 +1,74 @@
+barrow_skeleton.png
+size: 552,487
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 67, 67
+Idle
+  xy: 0, 67
+  size: 69, 84
+Walk
+  xy: 0, 151
+  size: 69, 84
+Walk
+  xy: 69, 151
+  size: 69, 84
+Walk
+  xy: 138, 151
+  size: 69, 84
+Walk
+  xy: 207, 151
+  size: 69, 84
+Walk
+  xy: 276, 151
+  size: 69, 84
+Walk
+  xy: 345, 151
+  size: 69, 84
+Walk
+  xy: 414, 151
+  size: 69, 84
+Walk
+  xy: 483, 151
+  size: 69, 84
+Attack
+  xy: 0, 235
+  size: 69, 84
+Attack
+  xy: 69, 235
+  size: 69, 84
+Attack
+  xy: 138, 235
+  size: 69, 84
+Attack
+  xy: 207, 235
+  size: 69, 84
+Attack
+  xy: 276, 235
+  size: 69, 84
+Attack
+  xy: 345, 235
+  size: 69, 84
+Attack
+  xy: 414, 235
+  size: 69, 84
+Attack
+  xy: 483, 235
+  size: 69, 84
+Hit
+  xy: 0, 319
+  size: 69, 84
+Death
+  xy: 0, 403
+  size: 69, 84
+Death
+  xy: 69, 403
+  size: 69, 84
+Death
+  xy: 138, 403
+  size: 69, 84
+Death
+  xy: 207, 403
+  size: 69, 84

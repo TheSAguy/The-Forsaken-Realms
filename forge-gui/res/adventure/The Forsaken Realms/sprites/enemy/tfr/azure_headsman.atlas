@@ -1,0 +1,53 @@
+azure_headsman.png
+size: 810,454
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 162, 130
+Idle
+  xy: 162, 64
+  size: 162, 130
+Idle
+  xy: 324, 64
+  size: 162, 130
+Idle
+  xy: 486, 64
+  size: 162, 130
+Idle
+  xy: 648, 64
+  size: 162, 130
+Walk
+  xy: 0, 194
+  size: 162, 130
+Walk
+  xy: 162, 194
+  size: 162, 130
+Walk
+  xy: 324, 194
+  size: 162, 130
+Walk
+  xy: 486, 194
+  size: 162, 130
+Walk
+  xy: 648, 194
+  size: 162, 130
+Attack
+  xy: 0, 324
+  size: 162, 130
+Attack
+  xy: 162, 324
+  size: 162, 130
+Attack
+  xy: 324, 324
+  size: 162, 130
+Attack
+  xy: 486, 324
+  size: 162, 130
+Attack
+  xy: 648, 324
+  size: 162, 130

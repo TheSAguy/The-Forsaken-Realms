@@ -1,0 +1,59 @@
+deathshroud_wraith.png
+size: 864,714
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 94, 94
+Idle
+  xy: 0, 94
+  size: 96, 124
+Walk
+  xy: 0, 218
+  size: 96, 124
+Walk
+  xy: 96, 218
+  size: 96, 124
+Walk
+  xy: 192, 218
+  size: 96, 124
+Walk
+  xy: 288, 218
+  size: 96, 124
+Walk
+  xy: 384, 218
+  size: 96, 124
+Walk
+  xy: 480, 218
+  size: 96, 124
+Walk
+  xy: 576, 218
+  size: 96, 124
+Walk
+  xy: 672, 218
+  size: 96, 124
+Attack
+  xy: 0, 342
+  size: 96, 124
+Attack
+  xy: 96, 342
+  size: 96, 124
+Attack
+  xy: 192, 342
+  size: 96, 124
+Attack
+  xy: 288, 342
+  size: 96, 124
+Hit
+  xy: 0, 466
+  size: 96, 124
+Death
+  xy: 0, 590
+  size: 96, 124
+Death
+  xy: 96, 590
+  size: 96, 124
+Death
+  xy: 192, 590
+  size: 96, 124

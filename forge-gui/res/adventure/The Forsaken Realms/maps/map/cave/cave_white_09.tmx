@@ -139,7 +139,7 @@
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="376" y="168"/>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="224" y="192">
    <properties>
-    <property name="enemy" value="Prismat of Shandalar"/>
+    <property name="enemy" value="Sunlit Hierophant"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6"/>
@@ -147,7 +147,7 @@
   </object>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="400" y="160">
    <properties>
-    <property name="enemy" value="Wandering Geist"/>
+    <property name="enemy" value="Kor Wanderer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,6,5,4"/>
@@ -155,7 +155,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="144" y="176">
    <properties>
-    <property name="enemy" value="Falcon"/>
+    <property name="enemy" value="Cultist of the Tusk"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,2,3,4,5"/>
@@ -163,7 +163,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="32" y="128">
    <properties>
-    <property name="enemy" value="Cathar"/>
+    <property name="enemy" value="Triplate Crawler"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,6,5,4,3"/>

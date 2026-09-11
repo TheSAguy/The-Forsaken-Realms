@@ -1,0 +1,65 @@
+odium_of_the_last_spire.png
+size: 826,801
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 116, 116
+Idle
+  xy: 0, 116
+  size: 118, 137
+Idle
+  xy: 118, 116
+  size: 118, 137
+Idle
+  xy: 236, 116
+  size: 118, 137
+Idle
+  xy: 354, 116
+  size: 118, 137
+Walk
+  xy: 0, 253
+  size: 118, 137
+Walk
+  xy: 118, 253
+  size: 118, 137
+Walk
+  xy: 236, 253
+  size: 118, 137
+Walk
+  xy: 354, 253
+  size: 118, 137
+Attack
+  xy: 0, 390
+  size: 118, 137
+Attack
+  xy: 118, 390
+  size: 118, 137
+Attack
+  xy: 236, 390
+  size: 118, 137
+Attack
+  xy: 354, 390
+  size: 118, 137
+Attack
+  xy: 472, 390
+  size: 118, 137
+Attack
+  xy: 590, 390
+  size: 118, 137
+Hit
+  xy: 0, 527
+  size: 118, 137
+Death
+  xy: 0, 664
+  size: 118, 137
+Death
+  xy: 118, 664
+  size: 118, 137
+Death
+  xy: 236, 664
+  size: 118, 137
+Death
+  xy: 354, 664
+  size: 118, 137

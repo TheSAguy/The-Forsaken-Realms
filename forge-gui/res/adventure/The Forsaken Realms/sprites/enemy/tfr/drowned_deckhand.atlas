@@ -1,0 +1,56 @@
+drowned_deckhand.png
+size: 536,425
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 37, 37
+Idle
+  xy: 0, 37
+  size: 67, 97
+Idle
+  xy: 67, 37
+  size: 67, 97
+Idle
+  xy: 134, 37
+  size: 67, 97
+Idle
+  xy: 201, 37
+  size: 67, 97
+Idle
+  xy: 268, 37
+  size: 67, 97
+Idle
+  xy: 335, 37
+  size: 67, 97
+Idle
+  xy: 402, 37
+  size: 67, 97
+Idle
+  xy: 469, 37
+  size: 67, 97
+Walk
+  xy: 0, 134
+  size: 67, 97
+Walk
+  xy: 67, 134
+  size: 67, 97
+Walk
+  xy: 134, 134
+  size: 67, 97
+Attack
+  xy: 0, 231
+  size: 67, 97
+Attack
+  xy: 67, 231
+  size: 67, 97
+Attack
+  xy: 134, 231
+  size: 67, 97
+Attack
+  xy: 201, 231
+  size: 67, 97
+Hit
+  xy: 0, 328
+  size: 67, 97

@@ -1,0 +1,44 @@
+astral_wyrm.png
+size: 588,544
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 147, 160
+Idle
+  xy: 147, 64
+  size: 147, 160
+Idle
+  xy: 294, 64
+  size: 147, 160
+Idle
+  xy: 441, 64
+  size: 147, 160
+Walk
+  xy: 0, 224
+  size: 147, 160
+Walk
+  xy: 147, 224
+  size: 147, 160
+Walk
+  xy: 294, 224
+  size: 147, 160
+Walk
+  xy: 441, 224
+  size: 147, 160
+Attack
+  xy: 0, 384
+  size: 147, 160
+Attack
+  xy: 147, 384
+  size: 147, 160
+Attack
+  xy: 294, 384
+  size: 147, 160
+Attack
+  xy: 441, 384
+  size: 147, 160

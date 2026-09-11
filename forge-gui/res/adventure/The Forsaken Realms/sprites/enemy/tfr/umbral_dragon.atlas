@@ -1,0 +1,74 @@
+umbral_dragon.png
+size: 894,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 149, 152
+Idle
+  xy: 149, 64
+  size: 149, 152
+Idle
+  xy: 298, 64
+  size: 149, 152
+Idle
+  xy: 447, 64
+  size: 149, 152
+Idle
+  xy: 596, 64
+  size: 149, 152
+Idle
+  xy: 745, 64
+  size: 149, 152
+Walk
+  xy: 0, 216
+  size: 149, 152
+Walk
+  xy: 149, 216
+  size: 149, 152
+Walk
+  xy: 298, 216
+  size: 149, 152
+Walk
+  xy: 447, 216
+  size: 149, 152
+Walk
+  xy: 596, 216
+  size: 149, 152
+Attack
+  xy: 0, 368
+  size: 149, 152
+Attack
+  xy: 149, 368
+  size: 149, 152
+Attack
+  xy: 298, 368
+  size: 149, 152
+Attack
+  xy: 447, 368
+  size: 149, 152
+Attack
+  xy: 596, 368
+  size: 149, 152
+Attack
+  xy: 745, 368
+  size: 149, 152
+Hit
+  xy: 0, 520
+  size: 149, 152
+Death
+  xy: 0, 672
+  size: 149, 152
+Death
+  xy: 149, 672
+  size: 149, 152
+Death
+  xy: 298, 672
+  size: 149, 152
+Death
+  xy: 447, 672
+  size: 149, 152

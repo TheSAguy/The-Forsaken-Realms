@@ -1,0 +1,65 @@
+grimtusk_matron.png
+size: 366,501
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 51, 51
+Idle
+  xy: 0, 51
+  size: 61, 90
+Idle
+  xy: 61, 51
+  size: 61, 90
+Idle
+  xy: 122, 51
+  size: 61, 90
+Idle
+  xy: 183, 51
+  size: 61, 90
+Idle
+  xy: 244, 51
+  size: 61, 90
+Idle
+  xy: 305, 51
+  size: 61, 90
+Walk
+  xy: 0, 141
+  size: 61, 90
+Walk
+  xy: 61, 141
+  size: 61, 90
+Walk
+  xy: 122, 141
+  size: 61, 90
+Walk
+  xy: 183, 141
+  size: 61, 90
+Walk
+  xy: 244, 141
+  size: 61, 90
+Walk
+  xy: 305, 141
+  size: 61, 90
+Attack
+  xy: 0, 231
+  size: 61, 90
+Attack
+  xy: 61, 231
+  size: 61, 90
+Attack
+  xy: 122, 231
+  size: 61, 90
+Attack
+  xy: 183, 231
+  size: 61, 90
+Hit
+  xy: 0, 321
+  size: 61, 90
+Death
+  xy: 0, 411
+  size: 61, 90
+Death
+  xy: 61, 411
+  size: 61, 90

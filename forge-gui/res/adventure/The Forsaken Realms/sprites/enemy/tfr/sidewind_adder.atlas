@@ -1,0 +1,53 @@
+sidewind_adder.png
+size: 414,250
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 40, 40
+Idle
+  xy: 0, 40
+  size: 69, 42
+Idle
+  xy: 69, 40
+  size: 69, 42
+Idle
+  xy: 138, 40
+  size: 69, 42
+Idle
+  xy: 207, 40
+  size: 69, 42
+Idle
+  xy: 276, 40
+  size: 69, 42
+Idle
+  xy: 345, 40
+  size: 69, 42
+Walk
+  xy: 0, 82
+  size: 69, 42
+Walk
+  xy: 69, 82
+  size: 69, 42
+Walk
+  xy: 138, 82
+  size: 69, 42
+Attack
+  xy: 0, 124
+  size: 69, 42
+Attack
+  xy: 69, 124
+  size: 69, 42
+Attack
+  xy: 138, 124
+  size: 69, 42
+Hit
+  xy: 0, 166
+  size: 69, 42
+Death
+  xy: 0, 208
+  size: 69, 42
+Death
+  xy: 69, 208
+  size: 69, 42

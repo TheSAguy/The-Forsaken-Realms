@@ -1,0 +1,59 @@
+sunplume_phoenix.png
+size: 516,668
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 68, 68
+Idle
+  xy: 0, 68
+  size: 86, 120
+Idle
+  xy: 86, 68
+  size: 86, 120
+Idle
+  xy: 172, 68
+  size: 86, 120
+Idle
+  xy: 258, 68
+  size: 86, 120
+Idle
+  xy: 344, 68
+  size: 86, 120
+Idle
+  xy: 430, 68
+  size: 86, 120
+Walk
+  xy: 0, 188
+  size: 86, 120
+Walk
+  xy: 86, 188
+  size: 86, 120
+Attack
+  xy: 0, 308
+  size: 86, 120
+Attack
+  xy: 86, 308
+  size: 86, 120
+Attack
+  xy: 172, 308
+  size: 86, 120
+Attack
+  xy: 258, 308
+  size: 86, 120
+Attack
+  xy: 344, 308
+  size: 86, 120
+Attack
+  xy: 430, 308
+  size: 86, 120
+Hit
+  xy: 0, 428
+  size: 86, 120
+Death
+  xy: 0, 548
+  size: 86, 120
+Death
+  xy: 86, 548
+  size: 86, 120

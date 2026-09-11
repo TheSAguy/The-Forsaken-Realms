@@ -1,0 +1,59 @@
+aurelian_dragon.png
+size: 550,684
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 110, 64
+  size: 110, 124
+Idle
+  xy: 220, 64
+  size: 110, 124
+Idle
+  xy: 330, 64
+  size: 110, 124
+Idle
+  xy: 440, 64
+  size: 110, 124
+Walk
+  xy: 0, 188
+  size: 110, 124
+Walk
+  xy: 110, 188
+  size: 110, 124
+Walk
+  xy: 220, 188
+  size: 110, 124
+Walk
+  xy: 330, 188
+  size: 110, 124
+Walk
+  xy: 440, 188
+  size: 110, 124
+Attack
+  xy: 0, 312
+  size: 110, 124
+Attack
+  xy: 110, 312
+  size: 110, 124
+Attack
+  xy: 220, 312
+  size: 110, 124
+Attack
+  xy: 330, 312
+  size: 110, 124
+Hit
+  xy: 0, 436
+  size: 110, 124
+Death
+  xy: 0, 560
+  size: 110, 124
+Death
+  xy: 110, 560
+  size: 110, 124
+Death
+  xy: 220, 560
+  size: 110, 124

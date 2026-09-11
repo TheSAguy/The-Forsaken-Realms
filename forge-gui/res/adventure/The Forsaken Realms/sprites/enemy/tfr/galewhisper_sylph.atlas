@@ -1,0 +1,80 @@
+galewhisper_sylph.png
+size: 546,621
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 51, 51
+Idle
+  xy: 0, 51
+  size: 91, 114
+Idle
+  xy: 91, 51
+  size: 91, 114
+Idle
+  xy: 182, 51
+  size: 91, 114
+Idle
+  xy: 273, 51
+  size: 91, 114
+Idle
+  xy: 364, 51
+  size: 91, 114
+Idle
+  xy: 455, 51
+  size: 91, 114
+Walk
+  xy: 0, 165
+  size: 91, 114
+Walk
+  xy: 91, 165
+  size: 91, 114
+Walk
+  xy: 182, 165
+  size: 91, 114
+Walk
+  xy: 273, 165
+  size: 91, 114
+Walk
+  xy: 364, 165
+  size: 91, 114
+Walk
+  xy: 455, 165
+  size: 91, 114
+Attack
+  xy: 0, 279
+  size: 91, 114
+Attack
+  xy: 91, 279
+  size: 91, 114
+Attack
+  xy: 182, 279
+  size: 91, 114
+Attack
+  xy: 273, 279
+  size: 91, 114
+Attack
+  xy: 364, 279
+  size: 91, 114
+Attack
+  xy: 455, 279
+  size: 91, 114
+Hit
+  xy: 0, 393
+  size: 91, 114
+Death
+  xy: 0, 507
+  size: 91, 114
+Death
+  xy: 91, 507
+  size: 91, 114
+Death
+  xy: 182, 507
+  size: 91, 114
+Death
+  xy: 273, 507
+  size: 91, 114
+Death
+  xy: 364, 507
+  size: 91, 114

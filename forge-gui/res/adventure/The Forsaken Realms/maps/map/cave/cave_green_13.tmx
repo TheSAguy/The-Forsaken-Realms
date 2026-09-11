@@ -99,16 +99,16 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,15732,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,15669,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,15668,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15731,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -158,15 +158,15 @@
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="344" y="232"/>
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="648" y="136"/>
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="312" y="280"/>
-  <object id="8" template="../../../../common/maps/obj/enemy.tx" x="320" y="176">
+  <object id="8" template="../../../../common/maps/obj/enemy.tx" x="256" y="160">
    <properties>
-    <property name="enemy" value="Mad Boar"/>
+    <property name="enemy" value="Ogre Matriarch"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
    </properties>
   </object>
-  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="304" y="256">
+  <object id="9" template="../../../../common/maps/obj/enemy.tx" x="448" y="224">
    <properties>
     <property name="enemy" value="Master Green Wizard"/>
     <property name="speedModifier" type="float" value="4"/>
@@ -174,43 +174,43 @@
     <property name="waypoints" value="3,2,7,6,5,4"/>
    </properties>
   </object>
-  <object id="10" template="../../../../common/maps/obj/enemy.tx" x="608" y="96">
+  <object id="10" template="../../../../common/maps/obj/enemy.tx" x="352" y="144">
    <properties>
-    <property name="enemy" value="Worm"/>
+    <property name="enemy" value="Giant Panda"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
    </properties>
   </object>
-  <object id="11" template="../../../../common/maps/obj/enemy.tx" x="128" y="128">
+  <object id="11" template="../../../../common/maps/obj/enemy.tx" x="608" y="96">
    <properties>
-    <property name="enemy" value="Pitchfork Farmer"/>
+    <property name="enemy" value="Kavu"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>
    </properties>
   </object>
-  <object id="12" template="../../../../common/maps/obj/enemy.tx" x="400" y="160">
+  <object id="12" template="../../../../common/maps/obj/enemy.tx" x="112" y="112">
    <properties>
-    <property name="enemy" value="Copper Host Infector"/>
+    <property name="enemy" value="Redcap Nibbler"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="4,5,6,7,2,3"/>
    </properties>
   </object>
-  <object id="13" template="../../../../common/maps/obj/treasure.tx" x="64" y="112">
+  <object id="13" template="../../../../common/maps/obj/treasure.tx" x="48" y="128">
    <properties>
     <property name="reward">[{&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 2, &quot;addMaxCount&quot;: 1}, {&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 1, &quot;probability&quot;: 0.6, &quot;rarity&quot;: [&quot;rare&quot;]}]</property>
    </properties>
   </object>
-  <object id="14" template="../../../../common/maps/obj/gold.tx" x="288" y="176">
+  <object id="14" template="../../../../common/maps/obj/gold.tx" x="576" y="144">
    <properties>
     <property name="reward">[{&quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 120, &quot;addMaxCount&quot;: 60}]</property>
    </properties>
   </object>
-  <object id="15" template="../../obj/stone.tx" x="432" y="256"/>
-  <object id="16" template="../../obj/wood.tx" x="496" y="192"/>
-  <object id="17" template="../../../../common/maps/obj/manashards.tx" x="368" y="144"/>
-  <object id="18" template="../../../../common/maps/obj/gold.tx" x="192" y="256"/>
+  <object id="15" template="../../obj/stone.tx" x="432" y="160"/>
+  <object id="16" template="../../obj/wood.tx" x="160" y="224"/>
+  <object id="17" template="../../../../common/maps/obj/manashards.tx" x="320" y="144"/>
+  <object id="18" template="../../../../common/maps/obj/gold.tx" x="272" y="288"/>
  </objectgroup>
 </map>

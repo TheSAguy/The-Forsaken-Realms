@@ -1,0 +1,62 @@
+randgrith_storm_shieldmaiden.png
+size: 1368,862
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 142, 142
+Idle
+  xy: 0, 142
+  size: 171, 144
+Walk
+  xy: 0, 286
+  size: 171, 144
+Walk
+  xy: 171, 286
+  size: 171, 144
+Walk
+  xy: 342, 286
+  size: 171, 144
+Walk
+  xy: 513, 286
+  size: 171, 144
+Walk
+  xy: 684, 286
+  size: 171, 144
+Walk
+  xy: 855, 286
+  size: 171, 144
+Attack
+  xy: 0, 430
+  size: 171, 144
+Attack
+  xy: 171, 430
+  size: 171, 144
+Attack
+  xy: 342, 430
+  size: 171, 144
+Attack
+  xy: 513, 430
+  size: 171, 144
+Attack
+  xy: 684, 430
+  size: 171, 144
+Attack
+  xy: 855, 430
+  size: 171, 144
+Attack
+  xy: 1026, 430
+  size: 171, 144
+Attack
+  xy: 1197, 430
+  size: 171, 144
+Hit
+  xy: 0, 574
+  size: 171, 144
+Death
+  xy: 0, 718
+  size: 171, 144
+Death
+  xy: 171, 718
+  size: 171, 144

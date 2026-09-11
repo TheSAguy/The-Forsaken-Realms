@@ -1,0 +1,59 @@
+sackbeak_peddler.png
+size: 198,280
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 30, 30
+Idle
+  xy: 0, 30
+  size: 33, 50
+Idle
+  xy: 33, 30
+  size: 33, 50
+Idle
+  xy: 66, 30
+  size: 33, 50
+Idle
+  xy: 99, 30
+  size: 33, 50
+Walk
+  xy: 0, 80
+  size: 33, 50
+Walk
+  xy: 33, 80
+  size: 33, 50
+Walk
+  xy: 66, 80
+  size: 33, 50
+Walk
+  xy: 99, 80
+  size: 33, 50
+Attack
+  xy: 0, 130
+  size: 33, 50
+Attack
+  xy: 33, 130
+  size: 33, 50
+Attack
+  xy: 66, 130
+  size: 33, 50
+Attack
+  xy: 99, 130
+  size: 33, 50
+Attack
+  xy: 132, 130
+  size: 33, 50
+Attack
+  xy: 165, 130
+  size: 33, 50
+Hit
+  xy: 0, 180
+  size: 33, 50
+Death
+  xy: 0, 230
+  size: 33, 50
+Death
+  xy: 33, 230
+  size: 33, 50

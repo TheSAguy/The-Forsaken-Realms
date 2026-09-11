@@ -150,7 +150,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="120" y="200"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="528" y="160">
    <properties>
-    <property name="enemy" value="Knight Bowman"/>
+    <property name="enemy" value="Metathran Wanderer"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -158,7 +158,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="640" y="160">
    <properties>
-    <property name="enemy" value="Market Trader"/>
+    <property name="enemy" value="Shellplate Wyrm"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -166,7 +166,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="448" y="224">
    <properties>
-    <property name="enemy" value="Metathran Wanderer"/>
+    <property name="enemy" value="Cathar"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -174,7 +174,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="144" y="208">
    <properties>
-    <property name="enemy" value="Halfling Bard"/>
+    <property name="enemy" value="Falcon-headed Aven Warrior"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>
@@ -182,7 +182,7 @@
   </object>
   <object id="12" template="../../../../common/maps/obj/enemy.tx" x="336" y="128">
    <properties>
-    <property name="enemy" value="Aether Channeler"/>
+    <property name="enemy" value="Nutcache Scrapper"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="4,5,6,7,2,3"/>

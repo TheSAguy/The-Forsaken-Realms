@@ -1786,3 +1786,200 @@ Traveling Conjurer,U,traveling_conjurer,12,Common,N,0.1,Y
 Red-Cloak Duelist,R,red_cloak_duelist,11,Common,N,0.1,Y
 Grey Pilgrim,W,grey_pilgrim,18,Uncommon,N,1.0,Y
 Alley Knife,B,alley_knife,12,Common,N,0.1,Y
+Earthcore Colossus,WRG,earthcore_colossus,25,Rare,N,2.0,Y
+Galewhisper Sylph,WUG,galewhisper_sylph,19,Uncommon,N,1.0,Y
+Snowmane Brawler,WUR,snowmane_brawler,21,Uncommon,N,1.0,Y
+Duskfeather Owlet,WU,duskfeather_owlet,10,Common,N,0.1,Y
+Sunplume Phoenix,WUR,sunplume_phoenix,26,Rare,N,2.0,Y
+Skyhall Harrier,WUG,skyhall_harrier,21,Uncommon,N,1.0,Y
+Gazestalk Ooze,UG,gazestalk_ooze,10,Common,N,0.1,Y
+Mossmane Shambler,G,mossmane_shambler,20,Uncommon,N,1.0,Y
+Geode Slug,WUR,geode_slug,23,Rare,N,2.0,Y
+Shade of the Rootwyrm,UBR,shade_of_the_rootwyrm,47,Mythic,N,3.0,Y
+Tombwrapped Ancient,WUB,tombwrapped_ancient,26,Rare,N,2.0,Y
+Anvilhorn Minotaur,R,anvilhorn_minotaur,27,Rare,N,2.0,Y
+Coraltress Siren,U,coraltress_siren,19,Uncommon,N,1.0,Y
+Odium of the Last Spire,WUB,odium_of_the_last_spire,47,Mythic,N,3.0,Y
+Grimtusk Bowman,R,grimtusk_bowman,11,Common,N,0.1,Y
+Orcling Rascal,R,orcling_rascal,11,Common,N,0.1,Y
+Grimtusk Matron,WRG,grimtusk_matron,20,Uncommon,N,1.0,Y
+Warlord of the Grimtusk,WBR,warlord_of_the_grimtusk,46,Mythic,N,3.0,Y
+Frostcloak Marauder,WUR,frostcloak_marauder,19,Uncommon,N,1.0,Y
+Bonetusk Legionnaire,WBR,bonetusk_legionnaire,20,Uncommon,N,1.0,Y
+Grimtusk Shieldbearer,R,grimtusk_shieldbearer,22,Uncommon,N,1.0,Y
+Rotgut Orc,BR,rotgut_orc,14,Common,N,0.1,Y
+"Neferu, the Sealed King",WUB,neferu_the_sealed_king,48,Mythic,N,3.0,Y
+Sackbeak Peddler,U,sackbeak_peddler,21,Uncommon,N,1.0,Y
+Sandveil Blademaster,WUR,sandveil_blademaster,23,Rare,N,2.0,Y
+Lantern Ward Spearman,W,lantern_ward_spearman,11,Common,N,0.1,Y
+Lantern Ward Sergeant,W,lantern_ward_sergeant,20,Uncommon,N,1.0,Y
+Duneflock Runner,WG,duneflock_runner,13,Common,N,0.1,Y
+Pale Foundling,WU,pale_foundling,20,Uncommon,N,1.0,Y
+Mossback Tortoise,UG,mossback_tortoise,14,Common,N,0.1,Y
+Shellhusk Crawler,G,shellhusk_crawler,12,Common,N,0.1,Y
+Mossfang Drakeling,RG,mossfang_drakeling,21,Uncommon,N,1.0,Y
+Frostcrest Drakeling,U,frostcrest_drakeling,22,Uncommon,N,1.0,Y
+Masked Ironbrute,R,masked_ironbrute,28,Rare,N,2.0,Y
+Thornwing Mantis,G,thornwing_mantis,20,Uncommon,N,1.0,Y
+Blossomtrap Dryad,WUG,blossomtrap_dryad,25,Rare,N,2.0,Y
+Brinebone Buccaneer,UB,brinebone_buccaneer,11,Common,N,0.1,Y
+Venomwart Toad,BG,venomwart_toad,13,Common,N,0.1,Y
+Pomhair Spider,G,pomhair_spider,22,Uncommon,N,1.0,Y
+Temple Doorwarden,W,temple_doorwarden,21,Uncommon,N,1.0,Y
+Sunlit Hierophant,WU,sunlit_hierophant,25,Rare,N,2.0,Y
+Dewdrop Ooze,WG,dewdrop_ooze,12,Common,N,0.1,Y
+Spinecoil Isopod,G,spinecoil_isopod,10,Common,N,0.1,Y
+Queen of the Gilded Brood,WBG,queen_of_the_gilded_brood,47,Mythic,N,3.0,Y
+Hollowlight Shade,UB,hollowlight_shade,20,Uncommon,N,1.0,Y
+Carrionbloom,WG,carrionbloom,20,Uncommon,N,1.0,Y
+Tatterclad Zombie,B,tatterclad_zombie,14,Common,N,0.1,Y
+Veiltongue Chameleon,UG,veiltongue_chameleon,12,Common,N,0.1,Y
+Nutcache Scrapper,WG,nutcache_scrapper,10,Common,N,0.1,Y
+Hollow Oathkeeper,WU,hollow_oathkeeper,26,Rare,N,2.0,Y
+Hollow Oath Archer,W,hollow_oath_archer,19,Uncommon,N,1.0,Y
+Redcap Nibbler,RG,redcap_nibbler,10,Common,N,0.1,Y
+Tinkerwork Mender,U,tinkerwork_mender,19,Uncommon,N,1.0,Y
+Grimoire Devourer,UB,grimoire_devourer,21,Uncommon,N,1.0,Y
+Pondsong Frog,UG,pondsong_frog,14,Common,N,0.1,Y
+Clockwork Siegewalker,WUR,clockwork_siegewalker,25,Rare,N,2.0,Y
+Cinderscale Salamander,R,cinderscale_salamander,22,Uncommon,N,1.0,Y
+Snowpeak Sasquatch,URG,snowpeak_sasquatch,21,Uncommon,N,1.0,Y
+Bristlehide Boar,RG,bristlehide_boar,11,Common,N,0.1,Y
+Dunestinger Scorpion,R,dunestinger_scorpion,11,Common,N,0.1,Y
+Floewalker Seal,WU,floewalker_seal,13,Common,N,0.1,Y
+Tanglekelp,U,tanglekelp,14,Common,N,0.1,Y
+Bloodwatch Seeker,UR,bloodwatch_seeker,19,Uncommon,N,1.0,Y
+Pearlmaw Clam,U,pearlmaw_clam,11,Common,N,0.1,Y
+Sidewind Adder,G,sidewind_adder,21,Uncommon,N,1.0,Y
+Barrow Skeleton,B,barrow_skeleton,12,Common,N,0.1,Y
+Barrow Bonebow,B,barrow_bonebow,20,Uncommon,N,1.0,Y
+Marshal of the Barrow Legion,WBR,marshal_of_the_barrow_legion,24,Rare,N,2.0,Y
+Chainbound Skeleton,B,chainbound_skeleton,20,Uncommon,N,1.0,Y
+Drowned Deckhand,UB,drowned_deckhand,12,Common,N,0.1,Y
+Barrow Legionnaire,WB,barrow_legionnaire,21,Uncommon,N,1.0,Y
+Rattling Bones,B,rattling_bones,11,Common,N,0.1,Y
+Cracked Shieldbone,WB,cracked_shieldbone,11,Common,N,0.1,Y
+Deepvein Bonedigger,BR,deepvein_bonedigger,13,Common,N,0.1,Y
+Nightwing Chooser,WUB,nightwing_chooser,24,Rare,N,2.0,Y
+Sporecap Shambler,BG,sporecap_shambler,14,Common,N,0.1,Y
+Stalkroot Worm,G,stalkroot_worm,11,Common,N,0.1,Y
+Rockthrower Oak,WRG,rockthrower_oak,21,Uncommon,N,1.0,Y
+Tempest Paragon,WUR,tempest_paragon,48,Mythic,N,3.0,Y
+Crimson Temptress,BR,crimson_temptress,24,Rare,N,2.0,Y
+Pitblade Reaver,BR,pitblade_reaver,23,Rare,N,2.0,Y
+Tallow Rat,B,tallow_rat,11,Common,N,0.1,Y
+"Tendrilmane, the Pale Lion",WUG,tendrilmane_the_pale_lion,47,Mythic,N,3.0,Y
+Crimsonbeak Tengu,UR,crimsonbeak_tengu,24,Rare,N,2.0,Y
+Blushback Frog,UG,blushback_frog,13,Common,N,0.1,Y
+Scrollwraith,U,scrollwraith,19,Uncommon,N,1.0,Y
+Pilfer Beetle,UB,pilfer_beetle,13,Common,N,0.1,Y
+Hoarder Beetle,WBG,hoarder_beetle,20,Uncommon,N,1.0,Y
+Jadeshell Beetle,UBG,jadeshell_beetle,20,Uncommon,N,1.0,Y
+Crossroads Tikbalang,BRG,crossroads_tikbalang,24,Rare,N,2.0,Y
+Wailing Changeling,B,wailing_changeling,21,Uncommon,N,1.0,Y
+Bogbelly Toad,UG,bogbelly_toad,20,Uncommon,N,1.0,Y
+Bramblebeak Toucan,G,bramblebeak_toucan,13,Common,N,0.1,Y
+Triplate Crawler,WG,triplate_crawler,11,Common,N,0.1,Y
+Revenant Knight-Errant,WB,revenant_knight_errant,25,Rare,N,2.0,Y
+Revenant Knight-Captain,WUB,revenant_knight_captain,23,Rare,N,2.0,Y
+Mother of Webs,UBG,mother_of_webs,46,Mythic,N,3.0,Y
+Valkyrie of the Last Field,W,valkyrie_of_the_last_field,24,Rare,N,2.0,Y
+"Randgrith, Storm Shieldmaiden",WBR,randgrith_storm_shieldmaiden,46,Mythic,N,3.0,Y
+Ragged Hermit,RG,ragged_hermit,19,Uncommon,N,1.0,Y
+Gravehound,B,gravehound,14,Common,N,0.1,Y
+Carapace Stalker,RG,carapace_stalker,22,Uncommon,N,1.0,Y
+Nightwing Bat,B,nightwing_bat,12,Common,N,0.1,Y
+Ronin of the Ashen Road,WR,ronin_of_the_ashen_road,23,Rare,N,2.0,Y
+Rosethorn Prowler,WRG,rosethorn_prowler,21,Uncommon,N,1.0,Y
+Hollow Willow,BG,hollow_willow,14,Common,N,0.1,Y
+Galewrapped Specter,WUG,galewrapped_specter,25,Rare,N,2.0,Y
+Wishgiver Seraph,WUG,wishgiver_seraph,47,Mythic,N,3.0,Y
+Frostpelt Wolf,WG,frostpelt_wolf,13,Common,N,0.1,Y
+Blossom Sapling,WG,blossom_sapling,12,Common,N,0.1,Y
+Skullcap Brawler,RG,skullcap_brawler,21,Uncommon,N,1.0,Y
+Slingshot Ape,R,slingshot_ape,21,Uncommon,N,1.0,Y
+Wormtail Sprout,G,wormtail_sprout,13,Common,N,0.1,Y
+The Maimed Demon-King,UBR,the_maimed_demon_king,47,Mythic,N,3.0,Y
+Gloomshroud Wraith,WU,gloomshroud_wraith,21,Uncommon,N,1.0,Y
+Deathshroud Wraith,WB,deathshroud_wraith,25,Rare,N,2.0,Y
+Zealot of the Crimson Lash,WBR,zealot_of_the_crimson_lash,48,Mythic,N,3.0,Y
+Cultist of the Tusk,WBR,cultist_of_the_tusk,11,Common,N,0.1,Y
+Ironclaw Bear,G,ironclaw_bear,20,Uncommon,N,1.0,Y
+Shambling Corpse,B,shambling_corpse,12,Common,N,0.1,Y
+Cryptguard Zombie,UB,cryptguard_zombie,20,Uncommon,N,1.0,Y
+Cadaver Lord,UBR,cadaver_lord,45,Mythic,N,3.0,Y
+Shackled Dead,B,shackled_dead,20,Uncommon,N,1.0,Y
+Butcher of the Dead,BR,butcher_of_the_dead,25,Rare,N,2.0,Y
+Ashen Spinewyrm,BRG,ashen_spinewyrm,23,Rare,N,2.0,Y
+Voidmaw Stalker,UBR,voidmaw_stalker,25,Rare,N,2.0,Y
+Sporeshell Crawler,UG,sporeshell_crawler,21,Uncommon,N,1.0,Y
+Crimson Burrower,R,crimson_burrower,19,Uncommon,N,1.0,Y
+Fleshlump Horror,U,fleshlump_horror,19,Uncommon,N,1.0,Y
+Violet Wretch,U,violet_wretch,20,Uncommon,N,1.0,Y
+Ironstride Construct,WUR,ironstride_construct,28,Rare,N,2.0,Y
+Dawnblade Angel,W,dawnblade_angel,23,Rare,N,2.0,Y
+Shellback Ankylosaur,WRG,shellback_ankylosaur,21,Uncommon,N,1.0,Y
+Tidecaller Witch,U,tidecaller_witch,45,Mythic,N,3.0,Y
+Archangel of the Gilded Dawn,W,archangel_of_the_gilded_dawn,47,Mythic,N,3.0,Y
+Blazeplate Orc,WR,blazeplate_orc,20,Uncommon,N,1.0,Y
+Astral Wyrm,UBR,astral_wyrm,46,Mythic,N,3.0,Y
+Azure Headsman,WUR,azure_headsman,26,Rare,N,2.0,Y
+Keening Banshee,WU,keening_banshee,21,Uncommon,N,1.0,Y
+Cyclops of the Scorched Hills,RG,cyclops_of_the_scorched_hills,26,Rare,N,2.0,Y
+Crimson Reaper,B,crimson_reaper,25,Rare,N,2.0,Y
+Bloodveil Countess,WBR,bloodveil_countess,25,Rare,N,2.0,Y
+Golden Glaive Warlord,WRG,golden_glaive_warlord,24,Rare,N,2.0,Y
+Crawling Cadaver,B,crawling_cadaver,14,Common,N,0.1,Y
+Crimson Skywyrm,WUR,crimson_skywyrm,25,Rare,N,2.0,Y
+Cruststrider,WRG,cruststrider,23,Uncommon,N,1.0,Y
+Umbral Dragon,WUB,umbral_dragon,45,Mythic,N,3.0,Y
+Overlord of Black Pinions,WBR,overlord_of_black_pinions,46,Mythic,N,3.0,Y
+Devil Empress,UBR,devil_empress,46,Mythic,N,3.0,Y
+Azure Gorgon,UB,azure_gorgon,25,Rare,N,2.0,Y
+Dragonwing Demon,UBR,dragonwing_demon,24,Rare,N,2.0,Y
+Duchess of Thorns,WUB,duchess_of_thorns,26,Rare,N,2.0,Y
+Tuskbound Loxodon,WG,tuskbound_loxodon,22,Uncommon,N,1.0,Y
+Grim Executioner,R,grim_executioner,21,Uncommon,N,1.0,Y
+Fangmaw Ravager,RG,fangmaw_ravager,21,Uncommon,N,1.0,Y
+Fanged Behemoth,G,fanged_behemoth,27,Rare,N,2.0,Y
+Tuskmaiden Skirmisher,RG,tuskmaiden_skirmisher,22,Uncommon,N,1.0,Y
+Grave-Tattered Bride,WB,grave_tattered_bride,11,Common,N,0.1,Y
+Plague Ghoul,B,plague_ghoul,14,Common,N,0.1,Y
+Skyreef Shark,U,skyreef_shark,20,Uncommon,N,1.0,Y
+Ironhammer Brute,R,ironhammer_brute,26,Rare,N,2.0,Y
+Furhorn Wyvern,WU,furhorn_wyvern,22,Uncommon,N,1.0,Y
+Aurelian Dragon,WRG,aurelian_dragon,48,Mythic,N,3.0,Y
+Brood Spawn,UBG,brood_spawn,26,Rare,N,2.0,Y
+Verdant Wyrm,URG,verdant_wyrm,48,Mythic,N,3.0,Y
+Stormcrag Griffin,W,stormcrag_griffin,21,Uncommon,N,1.0,Y
+Talonborn Harpy,UB,talonborn_harpy,21,Uncommon,N,1.0,Y
+Horror Faun,RG,horror_faun,20,Uncommon,N,1.0,Y
+Inferno Drake,R,inferno_drake,25,Rare,N,2.0,Y
+Magmaback Crawler,R,magmaback_crawler,21,Uncommon,N,1.0,Y
+Sunmane Lion,WG,sunmane_lion,22,Uncommon,N,1.0,Y
+Vinewing Lizardlord,URG,vinewing_lizardlord,26,Rare,N,2.0,Y
+Bonewhite Lizardragon,W,bonewhite_lizardragon,23,Rare,N,2.0,Y
+Magma Dragon,UR,magma_dragon,48,Mythic,N,3.0,Y
+Magma Ogre,WR,magma_ogre,23,Rare,N,2.0,Y
+Shellplate Wyrm,WUG,shellplate_wyrm,22,Uncommon,N,1.0,Y
+Mawjaw Drake,UR,mawjaw_drake,21,Uncommon,N,1.0,Y
+Megamouth Wyrm,UR,megamouth_wyrm,19,Uncommon,N,1.0,Y
+Pinkhide Gorger,R,pinkhide_gorger,11,Common,N,0.1,Y
+Ogre Matriarch,WRG,ogre_matriarch,25,Rare,N,2.0,Y
+Parasite-Ridden Husk,UB,parasite_ridden_husk,19,Uncommon,N,1.0,Y
+Four-Maw Horror,UBG,four_maw_horror,24,Rare,N,2.0,Y
+Rolling Tusker,G,rolling_tusker,22,Uncommon,N,1.0,Y
+Sabertusk Dragon,URG,sabertusk_dragon,48,Mythic,N,3.0,Y
+Serpleg Stalker,U,serpleg_stalker,22,Uncommon,N,1.0,Y
+Serratongue,RG,serratongue,19,Uncommon,N,1.0,Y
+Scarlet Temptress,R,scarlet_temptress,26,Rare,N,2.0,Y
+Shrine Scythe-Dancer,WUR,shrine_scythe_dancer,24,Rare,N,2.0,Y
+Shredmaw Monger,RG,shredmaw_monger,20,Uncommon,N,1.0,Y
+Skullrobe Necromancer,WUB,skullrobe_necromancer,26,Rare,N,2.0,Y
+Slashmaw Monger,R,slashmaw_monger,20,Uncommon,N,1.0,Y
+Tyrant Rex,WRG,tyrant_rex,50,Mythic,N,3.0,Y
+Void Dragon,WUB,void_dragon,46,Mythic,N,3.0,Y
+Tidetusk Brute,URG,tidetusk_brute,19,Uncommon,N,1.0,Y
+Rotwalker,B,rotwalker,12,Common,N,0.1,Y
+Bloodwing Dragon,WBR,bloodwing_dragon,26,Rare,N,2.0,Y
+Mossback Dragon,WUG,mossback_dragon,24,Rare,N,2.0,Y

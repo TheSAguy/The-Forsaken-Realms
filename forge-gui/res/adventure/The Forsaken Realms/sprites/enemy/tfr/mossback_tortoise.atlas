@@ -1,0 +1,74 @@
+mossback_tortoise.png
+size: 520,431
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 56, 56
+Idle
+  xy: 0, 56
+  size: 65, 75
+Idle
+  xy: 65, 56
+  size: 65, 75
+Idle
+  xy: 130, 56
+  size: 65, 75
+Idle
+  xy: 195, 56
+  size: 65, 75
+Idle
+  xy: 260, 56
+  size: 65, 75
+Idle
+  xy: 325, 56
+  size: 65, 75
+Idle
+  xy: 390, 56
+  size: 65, 75
+Idle
+  xy: 455, 56
+  size: 65, 75
+Walk
+  xy: 0, 131
+  size: 65, 75
+Walk
+  xy: 65, 131
+  size: 65, 75
+Walk
+  xy: 130, 131
+  size: 65, 75
+Walk
+  xy: 195, 131
+  size: 65, 75
+Walk
+  xy: 260, 131
+  size: 65, 75
+Walk
+  xy: 325, 131
+  size: 65, 75
+Walk
+  xy: 390, 131
+  size: 65, 75
+Attack
+  xy: 0, 206
+  size: 65, 75
+Attack
+  xy: 65, 206
+  size: 65, 75
+Attack
+  xy: 130, 206
+  size: 65, 75
+Attack
+  xy: 195, 206
+  size: 65, 75
+Hit
+  xy: 0, 281
+  size: 65, 75
+Death
+  xy: 0, 356
+  size: 65, 75
+Death
+  xy: 65, 356
+  size: 65, 75

@@ -1,0 +1,92 @@
+floewalker_seal.png
+size: 544,425
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 60, 60
+Idle
+  xy: 0, 60
+  size: 68, 73
+Idle
+  xy: 68, 60
+  size: 68, 73
+Idle
+  xy: 136, 60
+  size: 68, 73
+Idle
+  xy: 204, 60
+  size: 68, 73
+Idle
+  xy: 272, 60
+  size: 68, 73
+Idle
+  xy: 340, 60
+  size: 68, 73
+Walk
+  xy: 0, 133
+  size: 68, 73
+Walk
+  xy: 68, 133
+  size: 68, 73
+Walk
+  xy: 136, 133
+  size: 68, 73
+Walk
+  xy: 204, 133
+  size: 68, 73
+Walk
+  xy: 272, 133
+  size: 68, 73
+Walk
+  xy: 340, 133
+  size: 68, 73
+Attack
+  xy: 0, 206
+  size: 68, 73
+Attack
+  xy: 68, 206
+  size: 68, 73
+Attack
+  xy: 136, 206
+  size: 68, 73
+Attack
+  xy: 204, 206
+  size: 68, 73
+Attack
+  xy: 272, 206
+  size: 68, 73
+Attack
+  xy: 340, 206
+  size: 68, 73
+Attack
+  xy: 408, 206
+  size: 68, 73
+Hit
+  xy: 0, 279
+  size: 68, 73
+Death
+  xy: 0, 352
+  size: 68, 73
+Death
+  xy: 68, 352
+  size: 68, 73
+Death
+  xy: 136, 352
+  size: 68, 73
+Death
+  xy: 204, 352
+  size: 68, 73
+Death
+  xy: 272, 352
+  size: 68, 73
+Death
+  xy: 340, 352
+  size: 68, 73
+Death
+  xy: 408, 352
+  size: 68, 73
+Death
+  xy: 476, 352
+  size: 68, 73

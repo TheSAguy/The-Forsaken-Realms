@@ -1,0 +1,50 @@
+keening_banshee.png
+size: 435,469
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 87, 135
+Idle
+  xy: 87, 64
+  size: 87, 135
+Idle
+  xy: 174, 64
+  size: 87, 135
+Idle
+  xy: 261, 64
+  size: 87, 135
+Walk
+  xy: 0, 199
+  size: 87, 135
+Walk
+  xy: 87, 199
+  size: 87, 135
+Walk
+  xy: 174, 199
+  size: 87, 135
+Walk
+  xy: 261, 199
+  size: 87, 135
+Walk
+  xy: 348, 199
+  size: 87, 135
+Attack
+  xy: 0, 334
+  size: 87, 135
+Attack
+  xy: 87, 334
+  size: 87, 135
+Attack
+  xy: 174, 334
+  size: 87, 135
+Attack
+  xy: 261, 334
+  size: 87, 135
+Attack
+  xy: 348, 334
+  size: 87, 135

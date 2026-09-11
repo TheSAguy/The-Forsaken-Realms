@@ -1,0 +1,83 @@
+anvilhorn_minotaur.png
+size: 1040,770
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 120, 120
+Idle
+  xy: 0, 120
+  size: 130, 130
+Idle
+  xy: 130, 120
+  size: 130, 130
+Idle
+  xy: 260, 120
+  size: 130, 130
+Idle
+  xy: 390, 120
+  size: 130, 130
+Idle
+  xy: 520, 120
+  size: 130, 130
+Idle
+  xy: 650, 120
+  size: 130, 130
+Idle
+  xy: 780, 120
+  size: 130, 130
+Idle
+  xy: 910, 120
+  size: 130, 130
+Walk
+  xy: 0, 250
+  size: 130, 130
+Walk
+  xy: 130, 250
+  size: 130, 130
+Walk
+  xy: 260, 250
+  size: 130, 130
+Walk
+  xy: 390, 250
+  size: 130, 130
+Walk
+  xy: 520, 250
+  size: 130, 130
+Walk
+  xy: 650, 250
+  size: 130, 130
+Walk
+  xy: 780, 250
+  size: 130, 130
+Walk
+  xy: 910, 250
+  size: 130, 130
+Attack
+  xy: 0, 380
+  size: 130, 130
+Attack
+  xy: 130, 380
+  size: 130, 130
+Attack
+  xy: 260, 380
+  size: 130, 130
+Attack
+  xy: 390, 380
+  size: 130, 130
+Attack
+  xy: 520, 380
+  size: 130, 130
+Attack
+  xy: 650, 380
+  size: 130, 130
+Attack
+  xy: 780, 380
+  size: 130, 130
+Hit
+  xy: 0, 510
+  size: 130, 130
+Death
+  xy: 0, 640
+  size: 130, 130

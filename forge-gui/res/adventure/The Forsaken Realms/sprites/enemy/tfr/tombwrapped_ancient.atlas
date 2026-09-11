@@ -1,0 +1,74 @@
+tombwrapped_ancient.png
+size: 408,499
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 49, 49
+Idle
+  xy: 0, 49
+  size: 51, 90
+Idle
+  xy: 51, 49
+  size: 51, 90
+Idle
+  xy: 102, 49
+  size: 51, 90
+Walk
+  xy: 0, 139
+  size: 51, 90
+Walk
+  xy: 51, 139
+  size: 51, 90
+Walk
+  xy: 102, 139
+  size: 51, 90
+Walk
+  xy: 153, 139
+  size: 51, 90
+Attack
+  xy: 0, 229
+  size: 51, 90
+Attack
+  xy: 51, 229
+  size: 51, 90
+Attack
+  xy: 102, 229
+  size: 51, 90
+Attack
+  xy: 153, 229
+  size: 51, 90
+Attack
+  xy: 204, 229
+  size: 51, 90
+Attack
+  xy: 255, 229
+  size: 51, 90
+Attack
+  xy: 306, 229
+  size: 51, 90
+Attack
+  xy: 357, 229
+  size: 51, 90
+Hit
+  xy: 0, 319
+  size: 51, 90
+Death
+  xy: 0, 409
+  size: 51, 90
+Death
+  xy: 51, 409
+  size: 51, 90
+Death
+  xy: 102, 409
+  size: 51, 90
+Death
+  xy: 153, 409
+  size: 51, 90
+Death
+  xy: 204, 409
+  size: 51, 90
+Death
+  xy: 255, 409
+  size: 51, 90

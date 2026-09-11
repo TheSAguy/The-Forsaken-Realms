@@ -160,7 +160,7 @@
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="376" y="168"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="192" y="144">
    <properties>
-    <property name="enemy" value="Young Red Dragon"/>
+    <property name="enemy" value="Verdant Wyrm"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="2,3,4,5,6,7"/>
@@ -168,7 +168,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/enemy.tx" x="496" y="224">
    <properties>
-    <property name="enemy" value="Dinosaur"/>
+    <property name="enemy" value="Deepvein Bonedigger"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="3,2,7,6,5,4"/>
@@ -176,7 +176,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/enemy.tx" x="320" y="176">
    <properties>
-    <property name="enemy" value="Sliver_Red"/>
+    <property name="enemy" value="Frostcloak Marauder"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="6,7,2,3,4,5"/>
@@ -192,7 +192,7 @@
   </object>
   <object id="12" template="../../../../common/maps/obj/enemy.tx" x="624" y="240">
    <properties>
-    <property name="enemy" value="Dwarf"/>
+    <property name="enemy" value="Young Brass Dragon"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="4,5,6,7,2,3"/>

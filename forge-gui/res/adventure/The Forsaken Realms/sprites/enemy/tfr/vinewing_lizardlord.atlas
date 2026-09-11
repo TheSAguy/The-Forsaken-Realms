@@ -1,0 +1,77 @@
+vinewing_lizardlord.png
+size: 1428,789
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 204, 145
+Idle
+  xy: 204, 64
+  size: 204, 145
+Idle
+  xy: 408, 64
+  size: 204, 145
+Idle
+  xy: 612, 64
+  size: 204, 145
+Idle
+  xy: 816, 64
+  size: 204, 145
+Idle
+  xy: 1020, 64
+  size: 204, 145
+Idle
+  xy: 1224, 64
+  size: 204, 145
+Walk
+  xy: 0, 209
+  size: 204, 145
+Walk
+  xy: 204, 209
+  size: 204, 145
+Walk
+  xy: 408, 209
+  size: 204, 145
+Walk
+  xy: 612, 209
+  size: 204, 145
+Walk
+  xy: 816, 209
+  size: 204, 145
+Attack
+  xy: 0, 354
+  size: 204, 145
+Attack
+  xy: 204, 354
+  size: 204, 145
+Attack
+  xy: 408, 354
+  size: 204, 145
+Attack
+  xy: 612, 354
+  size: 204, 145
+Attack
+  xy: 816, 354
+  size: 204, 145
+Hit
+  xy: 0, 499
+  size: 204, 145
+Death
+  xy: 0, 644
+  size: 204, 145
+Death
+  xy: 204, 644
+  size: 204, 145
+Death
+  xy: 408, 644
+  size: 204, 145
+Death
+  xy: 612, 644
+  size: 204, 145
+Death
+  xy: 816, 644
+  size: 204, 145

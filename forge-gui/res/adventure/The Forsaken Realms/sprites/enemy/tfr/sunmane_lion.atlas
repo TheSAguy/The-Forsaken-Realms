@@ -1,0 +1,59 @@
+sunmane_lion.png
+size: 785,484
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 157, 84
+Idle
+  xy: 157, 64
+  size: 157, 84
+Idle
+  xy: 314, 64
+  size: 157, 84
+Walk
+  xy: 0, 148
+  size: 157, 84
+Walk
+  xy: 157, 148
+  size: 157, 84
+Walk
+  xy: 314, 148
+  size: 157, 84
+Walk
+  xy: 471, 148
+  size: 157, 84
+Attack
+  xy: 0, 232
+  size: 157, 84
+Attack
+  xy: 157, 232
+  size: 157, 84
+Attack
+  xy: 314, 232
+  size: 157, 84
+Attack
+  xy: 471, 232
+  size: 157, 84
+Attack
+  xy: 628, 232
+  size: 157, 84
+Hit
+  xy: 0, 316
+  size: 157, 84
+Death
+  xy: 0, 400
+  size: 157, 84
+Death
+  xy: 157, 400
+  size: 157, 84
+Death
+  xy: 314, 400
+  size: 157, 84
+Death
+  xy: 471, 400
+  size: 157, 84

@@ -1,0 +1,56 @@
+tendrilmane_the_pale_lion.png
+size: 468,520
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 85, 85
+Idle
+  xy: 0, 85
+  size: 117, 87
+Idle
+  xy: 117, 85
+  size: 117, 87
+Idle
+  xy: 234, 85
+  size: 117, 87
+Idle
+  xy: 351, 85
+  size: 117, 87
+Walk
+  xy: 0, 172
+  size: 117, 87
+Walk
+  xy: 117, 172
+  size: 117, 87
+Walk
+  xy: 234, 172
+  size: 117, 87
+Walk
+  xy: 351, 172
+  size: 117, 87
+Attack
+  xy: 0, 259
+  size: 117, 87
+Attack
+  xy: 117, 259
+  size: 117, 87
+Attack
+  xy: 234, 259
+  size: 117, 87
+Attack
+  xy: 351, 259
+  size: 117, 87
+Hit
+  xy: 0, 346
+  size: 117, 87
+Death
+  xy: 0, 433
+  size: 117, 87
+Death
+  xy: 117, 433
+  size: 117, 87
+Death
+  xy: 234, 433
+  size: 117, 87

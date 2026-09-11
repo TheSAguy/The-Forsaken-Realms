@@ -1,0 +1,62 @@
+devil_empress.png
+size: 714,684
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 119, 124
+Idle
+  xy: 119, 64
+  size: 119, 124
+Idle
+  xy: 238, 64
+  size: 119, 124
+Idle
+  xy: 357, 64
+  size: 119, 124
+Idle
+  xy: 476, 64
+  size: 119, 124
+Idle
+  xy: 595, 64
+  size: 119, 124
+Walk
+  xy: 0, 188
+  size: 119, 124
+Walk
+  xy: 119, 188
+  size: 119, 124
+Walk
+  xy: 238, 188
+  size: 119, 124
+Walk
+  xy: 357, 188
+  size: 119, 124
+Attack
+  xy: 0, 312
+  size: 119, 124
+Attack
+  xy: 119, 312
+  size: 119, 124
+Attack
+  xy: 238, 312
+  size: 119, 124
+Attack
+  xy: 357, 312
+  size: 119, 124
+Hit
+  xy: 0, 436
+  size: 119, 124
+Death
+  xy: 0, 560
+  size: 119, 124
+Death
+  xy: 119, 560
+  size: 119, 124
+Death
+  xy: 238, 560
+  size: 119, 124

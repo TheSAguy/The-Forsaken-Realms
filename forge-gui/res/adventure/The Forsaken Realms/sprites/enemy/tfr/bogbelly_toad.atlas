@@ -1,0 +1,50 @@
+bogbelly_toad.png
+size: 616,566
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 66, 66
+Idle
+  xy: 0, 66
+  size: 88, 100
+Idle
+  xy: 88, 66
+  size: 88, 100
+Walk
+  xy: 0, 166
+  size: 88, 100
+Walk
+  xy: 88, 166
+  size: 88, 100
+Walk
+  xy: 176, 166
+  size: 88, 100
+Attack
+  xy: 0, 266
+  size: 88, 100
+Attack
+  xy: 88, 266
+  size: 88, 100
+Attack
+  xy: 176, 266
+  size: 88, 100
+Attack
+  xy: 264, 266
+  size: 88, 100
+Attack
+  xy: 352, 266
+  size: 88, 100
+Attack
+  xy: 440, 266
+  size: 88, 100
+Attack
+  xy: 528, 266
+  size: 88, 100
+Hit
+  xy: 0, 366
+  size: 88, 100
+Death
+  xy: 0, 466
+  size: 88, 100

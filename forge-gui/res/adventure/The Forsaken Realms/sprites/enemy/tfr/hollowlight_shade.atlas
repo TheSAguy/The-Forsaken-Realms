@@ -1,0 +1,59 @@
+hollowlight_shade.png
+size: 329,237
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 37, 37
+Idle
+  xy: 0, 37
+  size: 47, 40
+Idle
+  xy: 47, 37
+  size: 47, 40
+Idle
+  xy: 94, 37
+  size: 47, 40
+Idle
+  xy: 141, 37
+  size: 47, 40
+Walk
+  xy: 0, 77
+  size: 47, 40
+Walk
+  xy: 47, 77
+  size: 47, 40
+Walk
+  xy: 94, 77
+  size: 47, 40
+Attack
+  xy: 0, 117
+  size: 47, 40
+Attack
+  xy: 47, 117
+  size: 47, 40
+Attack
+  xy: 94, 117
+  size: 47, 40
+Attack
+  xy: 141, 117
+  size: 47, 40
+Attack
+  xy: 188, 117
+  size: 47, 40
+Attack
+  xy: 235, 117
+  size: 47, 40
+Attack
+  xy: 282, 117
+  size: 47, 40
+Hit
+  xy: 0, 157
+  size: 47, 40
+Death
+  xy: 0, 197
+  size: 47, 40
+Death
+  xy: 47, 197
+  size: 47, 40

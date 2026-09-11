@@ -1,0 +1,50 @@
+spinecoil_isopod.png
+size: 175,126
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 30, 30
+Idle
+  xy: 0, 30
+  size: 35, 32
+Idle
+  xy: 35, 30
+  size: 35, 32
+Idle
+  xy: 70, 30
+  size: 35, 32
+Idle
+  xy: 105, 30
+  size: 35, 32
+Idle
+  xy: 140, 30
+  size: 35, 32
+Walk
+  xy: 0, 62
+  size: 35, 32
+Walk
+  xy: 35, 62
+  size: 35, 32
+Walk
+  xy: 70, 62
+  size: 35, 32
+Walk
+  xy: 105, 62
+  size: 35, 32
+Attack
+  xy: 0, 94
+  size: 35, 32
+Attack
+  xy: 35, 94
+  size: 35, 32
+Attack
+  xy: 70, 94
+  size: 35, 32
+Attack
+  xy: 105, 94
+  size: 35, 32
+Attack
+  xy: 140, 94
+  size: 35, 32

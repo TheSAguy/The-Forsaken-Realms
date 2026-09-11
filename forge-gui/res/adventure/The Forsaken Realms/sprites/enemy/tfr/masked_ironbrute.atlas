@@ -1,0 +1,65 @@
+masked_ironbrute.png
+size: 630,691
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 86, 86
+Idle
+  xy: 0, 86
+  size: 105, 121
+Idle
+  xy: 105, 86
+  size: 105, 121
+Idle
+  xy: 210, 86
+  size: 105, 121
+Idle
+  xy: 315, 86
+  size: 105, 121
+Walk
+  xy: 0, 207
+  size: 105, 121
+Walk
+  xy: 105, 207
+  size: 105, 121
+Walk
+  xy: 210, 207
+  size: 105, 121
+Walk
+  xy: 315, 207
+  size: 105, 121
+Walk
+  xy: 420, 207
+  size: 105, 121
+Walk
+  xy: 525, 207
+  size: 105, 121
+Attack
+  xy: 0, 328
+  size: 105, 121
+Attack
+  xy: 105, 328
+  size: 105, 121
+Attack
+  xy: 210, 328
+  size: 105, 121
+Attack
+  xy: 315, 328
+  size: 105, 121
+Hit
+  xy: 0, 449
+  size: 105, 121
+Death
+  xy: 0, 570
+  size: 105, 121
+Death
+  xy: 105, 570
+  size: 105, 121
+Death
+  xy: 210, 570
+  size: 105, 121
+Death
+  xy: 315, 570
+  size: 105, 121

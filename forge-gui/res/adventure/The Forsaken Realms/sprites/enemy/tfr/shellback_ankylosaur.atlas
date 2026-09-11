@@ -1,0 +1,44 @@
+shellback_ankylosaur.png
+size: 584,235
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 146, 57
+Idle
+  xy: 146, 64
+  size: 146, 57
+Idle
+  xy: 292, 64
+  size: 146, 57
+Idle
+  xy: 438, 64
+  size: 146, 57
+Walk
+  xy: 0, 121
+  size: 146, 57
+Walk
+  xy: 146, 121
+  size: 146, 57
+Walk
+  xy: 292, 121
+  size: 146, 57
+Walk
+  xy: 438, 121
+  size: 146, 57
+Attack
+  xy: 0, 178
+  size: 146, 57
+Attack
+  xy: 146, 178
+  size: 146, 57
+Attack
+  xy: 292, 178
+  size: 146, 57
+Attack
+  xy: 438, 178
+  size: 146, 57
