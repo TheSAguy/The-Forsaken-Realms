@@ -125,6 +125,14 @@ final class WalkController {
             return failed("no active stage");
         attach(stage);
         worldWalk = !MapStage.getInstance().isInMap();
+        if (worldWalk) {
+            // Round 175: see AgentStageAccess.exemptPoiUnderPlayer() - fresh out of a town the player
+            // still stands on it, and the first step used to walk straight back in.
+            bridge.log("[TFR-Agent] walk start: " + forge.adventure.stage.AgentStageAccess.describeSurroundings());
+            String exempt = forge.adventure.stage.AgentStageAccess.exemptPoiUnderPlayer();
+            if (exempt != null)
+                bridge.log("[TFR-Agent] standing on " + exempt + " - skipped by the entry check until the player steps off");
+        }
         finalTarget = destPx.cpy();
         target = description;
         blocked.clear();
@@ -139,7 +147,12 @@ final class WalkController {
         walkTime = 0;
         walking = true;
         done = new CompletableFuture<>();
-        bridge.log("[TFR-Agent] walk: " + description + " via " + p.size() + " waypoint(s)");
+        StringBuilder first = new StringBuilder();
+        for (int i = 0; i < Math.min(3, p.size()); i++)
+            first.append(String.format(" (%.0f,%.0f)", p.get(i).x, p.get(i).y));
+        Vector2 from = playerCenter(stage);
+        bridge.log("[TFR-Agent] walk: " + description + " via " + p.size() + " waypoint(s), from "
+                + String.format("(%.0f,%.0f)", from.x, from.y) + " first" + first);
         return done;
     }
 
@@ -336,8 +349,14 @@ final class WalkController {
         return out;
     }
 
-    /** Overworld: A* over collision tiles, 8-way without corner cutting. */
+    /** Overworld: A* over collision tiles, 8-way without corner cutting. Round 175: strict about the
+     *  point of interest the player stands next to first, lenient only if that finds no path. */
     private List<Vector2> planWorld(Vector2 fromPx, Vector2 toPx) {
+        List<Vector2> strict = planWorld(fromPx, toPx, false);
+        return strict != null ? strict : planWorld(fromPx, toPx, true);
+    }
+
+    private List<Vector2> planWorld(Vector2 fromPx, Vector2 toPx, boolean lenient) {
         World world = Current.world();
         int ts = world.getTileSize();
         int w = world.getWidthInTiles(), h = world.getHeightInTiles();
@@ -358,18 +377,29 @@ final class WalkController {
             if (!poi.getActive())
                 continue;
             com.badlogic.gdx.math.Rectangle r = poi.getBoundingRectangle();
-            int x0 = (int) Math.floor(r.x / ts) - 1, y0 = (int) Math.floor(r.y / ts) - 1;
-            int x1 = (int) Math.floor((r.x + r.width) / ts) + 1, y1 = (int) Math.floor((r.y + r.height) / ts) + 1;
+            // Round 175: the far edges are exclusive - a 16px town at x 5600 covers tile 350 only; the
+            // old floor((x + width) / ts) counted tile 351 as well, so a player standing just north of
+            // the Secluded Encampment was "inside" it and got every neighbour opened.
+            int rx0 = (int) Math.floor(r.x / ts), ry0 = (int) Math.floor(r.y / ts);
+            int rx1 = (int) Math.floor((r.x + r.width - 0.01f) / ts), ry1 = (int) Math.floor((r.y + r.height - 0.01f) / ts);
+            int x0 = rx0 - 1, y0 = ry0 - 1, x1 = rx1 + 1, y1 = ry1 + 1;
             boolean isGoal = gx >= x0 && gx <= x1 && gy >= y0 && gy <= y1;
             boolean isStart = sx >= x0 && sx <= x1 && sy >= y0 && sy <= y1;
+            boolean insideStart = isStart && sx >= rx0 && sx <= rx1 && sy >= ry0 && sy <= ry1;
             if (isGoal)
                 continue; // the one we are walking to
             for (int x = x0; x <= x1; x++)
                 for (int y = y0; y <= y1; y++) {
-                    // Standing inside a footprint (the game puts you there when you leave a town):
-                    // the tiles right around you stay open so the path can step OUT, but the rest
-                    // of that footprint is still off-limits - the first live run walked back in.
-                    if (isStart && Math.max(Math.abs(x - sx), Math.abs(y - sy)) <= 1)
+                    // Standing ON a footprint (the game puts you there when you leave a town): the
+                    // tiles right around you stay open so the path can step OUT - the game skips the
+                    // town you stand on (exemptPoiUnderPlayer()) - but the rest of it is off-limits.
+                    // Round 175: standing NEXT to one, the margin stays closed: stepping from there into
+                    // the ring around the rectangle swept the player's body across its corner, and the
+                    // first isolated session walked back into the Secluded Encampment on every walk.
+                    // `lenient` (the retry when that leaves no path) reopens the margin tiles only.
+                    boolean inRect = x >= rx0 && x <= rx1 && y >= ry0 && y <= ry1;
+                    boolean nextToMe = isStart && Math.max(Math.abs(x - sx), Math.abs(y - sy)) <= 1;
+                    if (nextToMe && (insideStart || (lenient && !inRect)))
                         continue;
                     footprints.add(key(x, y));
                 }

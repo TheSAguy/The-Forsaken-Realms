@@ -2674,3 +2674,12 @@ Every call site of the two removed no-argument accessors is in a stock file upst
 - **`stage/WorldStage.java`** - both edits are inside mod-added methods: `showCapitalTollDialog()`'s text and Pay buttons use `[+Gold]`; `showChestDuplicateDialog()` shows the offered cards (`RewardActor`s in a row table, removed and disposed when the dialog is answered) and its buttons use `[+Shards]`; new private static `addDuplicateOffer()`.
 - **`forge-gui-mobile-dev/pom.xml`** - the first `<resource>` (directory `${project.basedir}`, `**/title_bg_lq.png`-style includes) gains `<excludes><exclude>target/**</exclude></excludes>`: without it every non-clean build copied the previous build's `target/classes` copies into `target/classes/target/classes/...` (the v1.09 jar held 59 levels, 52.9 MB). Upstream's pom is identical and has the same latent bug - a candidate for an upstream PR. On a merge conflict here, keep the exclude.
 - Mod-added files, no merge burden: `util/ChestEvents.java` (the gold chest notification), `scene/WorldStandingsScene.java` (the reputation explainer's toll).
+
+## Round 175 (2026-09-10) - agent play, isolated
+
+No stock file changed. `stage/AgentStageAccess.java` (mod-added) now writes `WorldStage.collidingPoint` - a PRIVATE
+stock field - by reflection (`exemptPoiUnderPlayer()`), and reads it for the `[TFR-Agent] walk start:` diagnostic.
+**On an upstream merge**: if WorldStage renames or removes `collidingPoint`, nothing fails to compile - the walk-start
+line then reports `collidingPoint ?` and `exemptPoiUnderPlayer()` returns "failed: ...", and agent walks may walk back
+into the town just left. It also leans on `TileMapScene.leave()` clearing the world player's collision height and
+`GameHUD` restoring it (the reason the exemption is needed). `agent/WalkController.java` is mod-added.

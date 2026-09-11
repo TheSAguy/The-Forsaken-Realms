@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 174; v1.09 RELEASED + rounds 173-174 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 175; v1.09 RELEASED + rounds 173-175 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 172, 2026-09-10 evening).** The user's calls, in their order:
   1. **Round 173 is DONE** (NOT packaged; the bullet below): review G10 / S8 / G6 / S1 / S4 fixed. Playtest it:
@@ -60,22 +60,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      loss with the mage walking into the town. Two new findings wait on the user (round-173 changelog, "NOT
      changed"): Archmage attacks ignore their color (`pickGrandmasterMage`), and the player-territory colorless
      mix-in never fires (biome named "waste", not "colorless").
-  2. **Then agent play (MOD_SCOPE #117) in ISOLATION, on F:** (user, round 172: "build this on F:\ not C:\"). Plan:
-     `F:\FORGE\TFR-Agent\` holds the agent game's own `APPDATA` profile (`profile\`) and its launcher; the game itself
-     runs from the live folder (no 20k-file copy over USB - the cost: close the agent game before any package, the
-     same rule as the user's game). `ForgeProfileProperties.getDefaultDirs()` derives the data dir from `%APPDATA%`, so
-     the agent game gets its own saves / prefs / forge.log and can run while the user plays, with no backup/restore
-     ritual. The first launch must prove it (the user's `%APPDATA%\ForsakenRealms\forge.log` must not rotate) and
-     confirm the bridge on the 09.09 engine. DONE (round 161): the loopback bridge (`forge.adventure.agent`, off unless `TFR_AGENT_PORT` is
-     set; `TFR_AGENT_CHEATS=1` for console + fog-free state), the state snapshot, the command set (goto/explore/wait/
-     leave/click/advance/equip/use/sell/deck/buy/save/load/newgame/autobattle), the A* walker, the client
-     `dev-tools/agent/tfr_agent.py`, a scripted end-to-end run (menu -> new game -> intro -> portal -> world walks ->
-     cave -> shop purchase -> three interception duels won by Forge's AI on the player's seat). NOT DONE: (a) the Claude
-     Code play-loop skill (read state -> decide -> one command -> `wait` -> repeat; press through Back to Adventure /
-     OK / Done; re-issue an interrupted goto), (b) the first full Claude-played session for the user to watch, (c)
-     `newgame` parameters, (d) a speed setting for the spectated duel, (e) deck editor / Inn / Spellsmith only through
-     generic `ui` clicks. Design + build plan: `docs/design/2026-09-09-agent-play.md`; dev loop and traps: the
-     round-161 bullet below and the project memory.
+  2. **Agent play (MOD_SCOPE #117) - the isolated setup is DONE (round 175); read the `tfr-play` skill first**
+     (`.claude/skills/tfr-play/SKILL.md`; a copy in `C:\Users\User\Claude_Code\Bannerloard\.claude\skills`). The
+     agent game runs from `F:\FORGE\TFR-Agent\The Forsaken Realms` with `APPDATA=F:\FORGE\TFR-Agent\profile` - its own
+     saves, prefs and log, never the user's; `dev-tools/agent/agent_launch.cmd` via the Task Scheduler,
+     `agent_stop.ps1`, `agent_sync.cmd` after every package. Proven on the 09.09 engine: new game -> intro -> portal
+     -> world walk -> an interception duel won by Forge's AI -> `settle` back to the map. NEXT: the first full
+     Claude-played session for the user to watch; then `newgame` parameters, a spectated-duel speed setting, the AI
+     pilot's shard write-back, long-route pathing through the fog. Design: `docs/design/2026-09-09-agent-play.md`.
   3. **Repackage the live folder** with the next package (game closed, `tasklist | grep javaw.exe` empty). Its jar is
      byte-identical to the v1.09 release jar (sha256 checked in round 172); only `config.json` still reads 1.08 / 09.07,
      a display-only label (`StartScene`'s version line).
@@ -103,6 +95,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 175 (2026-09-10, built 22:05, PACKAGED 22:15, 310 MB - live folder = v1.09 + rounds 173-175; agent folder synced): **agent play, isolated.** `F:\FORGE\TFR-Agent\` = the user's copy
+  of the live folder (renamed) + its own APPDATA profile; launcher / stop / sync / setup scripts in `dev-tools/agent/`;
+  isolation verified (the user's log and saves untouched). Walker fixes in mod-added files: exclusive far edges on
+  point-of-interest rectangles, the ring next to a point of interest stays closed unless the player stands on it,
+  and `AgentStageAccess.exemptPoiUnderPlayer()` marks the town the player stands on (upstream turns world collision
+  off for ~2 s after leaving a map, so `WorldStage.enter()` never does) - walks no longer re-enter the Secluded
+  Encampment. Client `boot` / `settle` / `dialogs choose=`; the `tfr-play` skill. Shakedown: an interception duel won
+  by Forge's AI, settled back to the map; long fog routes can still end "stuck".
 - Round 174 (2026-09-10, built 21:23, PACKAGED 21:35, 310 MB together with round 173 - live folder = v1.09 + rounds 173-174): **resource glyphs + Duplicate card + Juggernaut.** Every displayed
   resource amount in the plane's data and the mod's UI strings uses `[+Gold]` / `[+Shards]` now (nine quest texts, the
   Courier amulet's four options, three maps' trade/reward lines, the capital toll dialog, the gold chest notification,

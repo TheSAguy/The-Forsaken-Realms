@@ -4892,15 +4892,17 @@ the same real match. See MOD_CHANGELOG round 145 for the design notes and the ju
 
 
 
-### 117. Agent play - Claude plays the game as the player — `In Progress (bridge built 2026-09-09, round 161; play-loop skill and first full session pending)`
+### 117. Agent play - Claude plays the game as the player — `In Progress (bridge built 2026-09-09, round 161; isolated setup + tfr-play skill round 175; first full session pending)`
 User ask 2026-09-09: *"figure out how we can implement it where you can play the game as the player. Not just duels
 that's currently possible, but fully play the game in the place of the player."* Design: `docs/design/2026-09-09-agent-play.md`.
 Model chosen: Claude drives everything outside a duel (overworld, towns, shops, inventory, decks, quests) through a
 loopback HTTP bridge (`forge.adventure.agent`, off unless `TFR_AGENT_PORT` is set), one command per decision, at the
 pace of a turn-based game (time only passes while the player moves or waits); Forge's AI pilots the player's seat in
 every duel with the fight staying the player's (equipment, ante, rewards, statistics). Round 161 built the bridge,
-the observation, the actions, the walker and the client (`dev-tools/agent/tfr_agent.py`). Remaining: the Claude Code
-play-loop skill, the first full session, `newgame` parameters, a speed setting for the spectated duel.
+the observation, the actions, the walker and the client (`dev-tools/agent/tfr_agent.py`). Round 175 isolated it (its own
+game folder `F:\FORGE\TFR-Agent` and APPDATA profile - never the user's saves), fixed the walker walking back into the
+town it had just left, and wrote the `tfr-play` skill. Remaining: the first full session for the user to watch,
+`newgame` parameters, a speed setting for the spectated duel, the AI pilot's shard write-back.
 
 ### 118. Armory storage and roaming guard equipment — `Built (round 163, 2026-09-10; round 166: Capitol Level 2 only per the user; awaiting playtest)`
 User ask 2026-09-10: *"add a storage to the armory. The player can add items from his inventory there. Then on the

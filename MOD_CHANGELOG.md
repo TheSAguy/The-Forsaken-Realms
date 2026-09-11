@@ -17757,6 +17757,79 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 175: agent play, isolated - its own folder and profile on F:, the walker stops walking back into towns, a tfr-play skill (2026-09-10)
+
+The user's call in round 172: *"Then agent play in isolation"*, then *"Can we build this on F:\ not C:\"* - and they
+made the copy themselves (*"it will be called 'TFR-Standalone - Copy' You can rename it once done copying"*). The
+round ran unattended after *"go ahead and set everything up"*.
+
+### The isolated setup
+
+- **Game folder** `F:\FORGE\TFR-Agent\The Forsaken Realms`: the user's copy of the live folder (20,918 files,
+  378,314,493 bytes, jar sha256 identical), renamed. `dev-tools/agent/agent_sync.cmd` mirrors the live folder into it
+  after a package (robocopy /MIR of the game folder only - 5 s, 18 changed files after rounds 173-174; it refuses
+  while the agent game runs).
+- **Profile** `F:\FORGE\TFR-Agent\profile`: the launcher sets `APPDATA` there, and Forge's data directory follows it
+  (`ForgeProfileProperties.getDefaultDirs()`), so the agent game has its own saves, preferences and `forge.log`.
+  `dev-tools/agent/agent_setup.py` seeds it once: a 1280x720 window (the user's own settings are 4K full screen),
+  sound and music off, the rest of the user's preferences copied. Card art stays shared through `%LOCALAPPDATA%`.
+- **Launch / stop**: `agent_launch.cmd [cheats] [classesDir]` through the Task Scheduler (the classes argument is the
+  round-161 dev loop: compiled classes ahead of the jar, no Maven); `agent_stop.ps1` kills only the javaw whose command
+  line names the TFR-Agent jar (passed by absolute path for exactly that).
+- **Verified**: the agent's log appeared in the profile; the user's `forge.log` stayed at 253,497 bytes / 19:57 with
+  no rotated file; the user's saves untouched; the agent's Load screen lists only its own saves.
+- **The bridge on the 09.09 engine** (its first run since round 165): StartScene -> New Game (a fresh profile offers
+  "Codern", Green Dragon, Normal, White, Constructed) -> skip-intro gifts (250 gold, 10 shards, the Homeward rune,
+  the coins, Leather Boots) -> the portal -> the world map.
+
+### The walker walked back into the town it had just left
+
+Every world walk after leaving the Secluded Encampment re-entered it within two seconds - toward the River Cave,
+north, east, and the "step clear before waiting" walk alike. Two causes, found by a new `[TFR-Agent] walk start:`
+line (player rectangle, collision height, the game's collidingPoint, every point-of-interest rectangle within four
+tiles) and the first waypoints on the `walk:` line:
+
+1. The planner counted a point of interest's far edge as one more tile: the camp's 16px rectangle at x/y 5600
+   covered tiles 350-351, so a player standing 2 px north of it was "inside" it, every neighbour was opened, and
+   the first waypoint went south-west across its corner.
+2. Upstream switches the player's world collision OFF when a map is left (`TileMapScene.leave()` ->
+   `clearCollisionHeight()`; `GameHUD` restores it after the ~2 s arrival flicker - "at least 2 seconds to get away
+   from problematic collision point"). `WorldStage.enter()`'s own collidingPoint test runs inside that window, where
+   `collideWith()` is always false, so the town you stand on is never marked. A person walks off during the
+   flicker; the agent issued its next walk after it, still standing on the town.
+
+Fixes, all in mod-added files: exclusive far edges; standing NEXT to a point of interest (not on it) keeps its
+one-tile ring closed, with a lenient retry that reopens only the ring when the strict plan finds no path; and
+`AgentStageAccess.exemptPoiUnderPlayer()` sets `WorldStage.collidingPoint` (private - reflection, so the stock file
+stays untouched) with a geometric test at the normal 0.4 collision height before every world walk. After them the
+walk left the camp cleanly.
+
+### Shakedown
+
+The long walk toward the River Cave through unexplored land then ended "stuck" twice after four replans each - the
+planner's known weak spot, now a documented trap (walk in `explore` legs, then `goto` again). Two days in fast time,
+then a roaming Tiyanak (Apprentice) intercepted: Forge's AI played the player's seat at 10x and won, and the client's
+new `settle` pressed "Back to Adventure", the ante prompt's OK and the reward screen's Done, back on the map with a
+shard more.
+
+### The client and the skill
+
+- `tfr_agent.py` gained `boot` (wait for the bridge and a scene that takes commands), `settle` (the round-161 e2e
+  driver's post-duel loop) and `dialogs choose=TEXT`.
+- `.claude/skills/tfr-play/SKILL.md` (repo, canonical) - isolation rules, start/stop, the loop, the commands, a new
+  game, the traps, reporting. A copy sits in `C:\Users\User\Claude_Code\Bannerloard\.claude\skills\tfr-play\`,
+  the folder TFR sessions run from, so a session there can load it; copy it again after editing the repo one.
+
+**Still not done**: a full Claude-played session for the user to watch; `newgame` parameters; a speed setting for
+the spectated duel; the AI pilot's shard spending is never written back (the stock AI pays PayShards with 0 - see
+round 173); deck editor / Inn / Spellsmith only through generic `ui` clicks; long routes through the fog.
+
+Built 22:05; PACKAGED 22:15, 310 MB - live folder = v1.09 + rounds 173-175; agent folder synced.
+
+**Files touched**: `agent/WalkController.java`, `stage/AgentStageAccess.java` (mod-added); `dev-tools/agent/`
+`tfr_agent.py`, `agent_launch.cmd`, `agent_sync.cmd`, `agent_stop.ps1`, `agent_setup.py` (new);
+`.claude/skills/tfr-play/SKILL.md` (new); `MOD_SCOPE.md` (#117).
+
 ## Round 174: resource glyphs in reward and cost text, the Duplicate chest shows its card, a smaller Juggernaut (2026-09-10)
 
 Three playtest asks from the user's evening session, each with a screenshot: *"Can you go through all the rewards
