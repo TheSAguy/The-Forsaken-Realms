@@ -1,0 +1,27 @@
+# Lanternwind Host (W_U) - round 177 (2026-09-11), slot 6. Spirit fliers: six lords (4 Patrician Geist, 2 Supreme Phantom)
+# over 17 Spirits, white for removal. 40 cards, 16 lands (the curve tops out at 3 but for Mind Flayer).
+# lands (16)
+4 Seat of the Synod
+4 Island
+2 Tranquil Cove
+1 Sea of Clouds
+1 Port Town
+1 Razortide Bridge
+1 Lonely Arroyo
+2 Plains
+# creatures (18)
+4 Lantern Bearer
+2 Spectral Sailor
+2 Supreme Phantom
+4 Patrician Geist
+2 Stormbound Geist
+2 Latch Seeker
+1 Dreamshackle Geist
+1 Mind Flayer
+# interaction (6)
+1 Get Lost
+1 Winds of Abandon
+1 Planar Disruption
+1 Pacifism
+1 Counterspell
+1 Cyclonic Rift

@@ -1108,11 +1108,21 @@ public class TerritoryControl {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))
                 continue;
+            // Round 177 (user: Archmage attackers "should be updated to only use their color pool"). Only the
+            // biome's OWN roster (its "enemies" names). getEnemyList() also carries a zero-weight copy of EVERY
+            // catalog enemy (the quest-boost mechanism), so this used to pick from all 56 catalog Archmages -
+            // 53 of them arena-exclusive, most off-color - for every color's attack and for the chest duel.
+            // Each color's roster holds 14-18 Archmages today. One entry per name (the roster entry and its
+            // zero-weight copy share it).
+            java.util.Set<String> roster = new java.util.HashSet<>();
+            if (biome.enemies != null)
+                roster.addAll(java.util.Arrays.asList(biome.enemies));
+            java.util.Set<String> seen = new java.util.HashSet<>();
             List<EnemyData> candidates = new ArrayList<>();
             for (EnemyData e : biome.getEnemyList()) {
                 if (e == null || e.boss || (e.questTags != null && e.questTags.length > 0))
                     continue;
-                if ("Mythic".equals(e.tier))
+                if ("Mythic".equals(e.tier) && roster.contains(e.getName()) && seen.add(e.getName()))
                     candidates.add(e);
             }
             if (candidates.isEmpty())

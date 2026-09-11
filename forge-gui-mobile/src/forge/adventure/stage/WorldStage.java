@@ -1468,10 +1468,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // own comment) - only when this roll is still genuinely on the player's own biome (an
         // intrusion substitution above already picked a different roster for this roll, and
         // shouldn't be double-overridden by an unrelated mechanic).
-        if ("player".equals(data.name) && rand.nextFloat() < PLAYER_COLORLESS_MIX_CHANCE) {
-            BiomeData colorless = findBiomeByName(biomeData, "colorless");
+        // Round 177: the chance is tunable (settings.json playerColorlessMixChance, 0.4), and the biome is found
+        // by its real name - colorless.json calls it "waste"; the old lookup for "colorless" never matched, so
+        // this mix-in had never fired once.
+        TuningData mixTuning = Config.instance().getTuningData();
+        float mixChance = mixTuning == null ? PLAYER_COLORLESS_MIX_CHANCE : mixTuning.playerColorlessMixChance;
+        if ("player".equals(data.name) && rand.nextFloat() < mixChance) {
+            BiomeData colorless = findBiomeByName(biomeData, "waste");
+            if (colorless == null)
+                colorless = findBiomeByName(biomeData, "colorless");
             if (colorless != null) {
-                System.out.println("[TFR-ColorlessMix] player territory -> colorless mix-in fired (chance=" + PLAYER_COLORLESS_MIX_CHANCE + ")");
+                System.out.println("[TFR-ColorlessMix] player territory -> Wasteland roster for this roll (chance=" + mixChance + ")");
                 data = colorless;
             }
         }

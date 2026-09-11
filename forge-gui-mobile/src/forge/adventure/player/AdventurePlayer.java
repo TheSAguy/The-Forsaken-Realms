@@ -1983,7 +1983,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             System.out.println("[TFR-CoinRansom] defeat gold loss waived by Bronze Coin (gold kept: " + gold + ")");
         } else {
             int lostGold = gold;
-            gold = (int) (gold - (gold * difficultyData.goldLoss));
+            // Round 177 (user request): a FLAT loss per difficulty - all of it if you carry less - when the
+            // plane's settings.json names one (TuningData.defeatGoldLossFor); the stock percentage otherwise.
+            forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+            int flat = tuning == null ? 0 : tuning.defeatGoldLossFor(difficultyData.name);
+            if (flat > 0)
+                gold = Math.max(0, gold - flat);
+            else
+                gold = (int) (gold - (gold * difficultyData.goldLoss));
+            System.out.println("[TFR-DefeatGold] " + difficultyData.name + ": lost " + (lostGold - gold) + " of " + lostGold
+                    + " gold (" + (flat > 0 ? "flat " + flat : "goldLoss " + difficultyData.goldLoss) + ")");
             forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - lostGold);
         }
         int lb = life, mb = maxLife;

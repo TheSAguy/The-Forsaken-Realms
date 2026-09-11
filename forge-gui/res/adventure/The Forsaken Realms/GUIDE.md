@@ -301,6 +301,9 @@ best-of-three) are tuned to be a real test even with a well-built deck. If you'r
 specific new boss unfair, it's worth checking whether an easier difficulty changes that fight's
 deck tier before assuming it's just you.
 
+Losing a duel costs gold: a flat 50 on Easy, 100 on Normal, 150 on Hard and 200 on Insane - or all of it, if you
+carry less. Handing over a Bronze Coin at the ante prompt saves your gold (the life loss still applies).
+
 
 ---
 

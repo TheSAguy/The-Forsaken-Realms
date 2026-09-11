@@ -191,5 +191,18 @@
     "enemyTierScaleCommon": 0.9,
     "enemyTierScaleUncommon": 1.0,
     "enemyTierScaleRare": 1.1,
-    "enemyTierScaleMythic": 1.25
+    "enemyTierScaleMythic": 1.25,
+
+    // Round 177 (user request): losing a duel costs a FLAT amount of the gold you carry - or all of it when you
+    // have less. Replaces the difficulty's percentage (config.json "goldLoss", still the fallback when a value
+    // here is 0). A Bronze Coin handed over on the ante prompt still waives it. Applies to existing characters.
+    "defeatGoldLossEasy": 50,
+    "defeatGoldLossNormal": 100,
+    "defeatGoldLossHard": 150,
+    "defeatGoldLossInsane": 200,
+
+    // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
+    // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
+    // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).
+    "playerColorlessMixChance": 0.4
 }

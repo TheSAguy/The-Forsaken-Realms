@@ -555,7 +555,12 @@ public class NewGameScene extends MenuScene {
         dismiss.name = "OK";
 
         DialogData matchImpacts = new DialogData();
-        matchImpacts.text = String.format("Difficulty: %s\nStarting Life: %d\nEnemy Health: %d%%\nGold loss on defeat: %d%%\nLife loss on defeat: %d%%", selectedDifficulty.name, selectedDifficulty.startingLife, (int) (selectedDifficulty.enemyLifeFactor * 100), (int) (selectedDifficulty.goldLoss * 100), (int) (selectedDifficulty.lifeLoss * 100));
+        // Round 177: a plane with a flat defeat gold loss (settings.json) shows the flat amount instead of the percentage
+        // (the resource glyph, as every other amount in the mod's UI; TypingLabel renders it).
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        int flatGoldLoss = tuning == null ? 0 : tuning.defeatGoldLossFor(selectedDifficulty.name);
+        String goldLossText = flatGoldLoss > 0 ? flatGoldLoss + " [+Gold] (all of it if you carry less)" : (int) (selectedDifficulty.goldLoss * 100) + "%";
+        matchImpacts.text = String.format("Difficulty: %s\nStarting Life: %d\nEnemy Health: %d%%\nGold loss on defeat: %s\nLife loss on defeat: %d%%", selectedDifficulty.name, selectedDifficulty.startingLife, (int) (selectedDifficulty.enemyLifeFactor * 100), goldLossText, (int) (selectedDifficulty.lifeLoss * 100));
         matchImpacts.name = "Duels";
 
         DialogData economyImpacts = new DialogData();

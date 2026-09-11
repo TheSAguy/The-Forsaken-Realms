@@ -2687,3 +2687,17 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 ## Round 176 (2026-09-11) - no engine edits
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
+
+## Round 177 (2026-09-11) - flat defeat gold, the Wasteland mix-in
+
+- **`player/AdventurePlayer.java`** - `defeated()`'s gold branch (the non-Bronze-Coin `else`): a flat loss from
+  `TuningData.defeatGoldLossFor(difficultyData.name)` when it is > 0 (`gold = max(0, gold - flat)`), the stock
+  `gold - gold * goldLoss` otherwise; the `[TFR-DefeatGold]` line. Stock method, mod-touched region since the Bronze Coin
+  (2026-08-29); on a merge keep the Bronze Coin branch first and this `else`.
+- **`scene/NewGameScene.java`** - the Duels tab's `matchImpacts.text`: the gold-loss value is a `goldLossText` string
+  (flat amount with the `[+Gold]` glyph, or the stock percentage). Stock line.
+- **`stage/WorldStage.java`** - `handleMonsterSpawn()`'s player-territory colorless mix-in (mod-added block): biome
+  name "waste" (fallback "colorless") and the chance from `TuningData.playerColorlessMixChance`.
+- Mod-added files, no merge burden: `data/TuningData.java` (four `defeatGoldLoss*` ints, `defeatGoldLossFor()`,
+  `playerColorlessMixChance`), `util/TerritoryControl.java` (`pickGrandmasterMage()` keeps roster names only),
+  `util/ChestEvents.java` (`archmageCount(World)` counts the five color rosters).

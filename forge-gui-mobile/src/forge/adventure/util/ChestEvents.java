@@ -306,9 +306,10 @@ public class ChestEvents {
         // the Archmage search below came back empty, and it never does - pickGrandmasterMage() reads
         // BiomeData.getEnemyList(), which holds a copy of every catalog enemy, so every Archmage in
         // the catalog is always a candidate. The heavyweights now JOIN the group: each one exactly as
-        // likely as any single Archmage (2 in 58 with the catalog as it stands).
+        // likely as any single Archmage (round 177: the group is the five color rosters' Archmages - 50 names
+        // today - since pickGrandmasterMage() draws from those now; 2 in 52).
         List<EnemyData> heavyweights = heavyweights();
-        int archmages = archmageCount();
+        int archmages = archmageCount(world);
         if (!heavyweights.isEmpty()
                 && world.getRandom().nextInt(archmages + heavyweights.size()) < heavyweights.size()) {
             EnemyData pick = heavyweights.get(world.getRandom().nextInt(heavyweights.size()));
@@ -345,17 +346,22 @@ public class ChestEvents {
         return heavyweights;
     }
 
-    /** Round 173: how many Archmages the group holds - the same filter pickGrandmasterMage() applies
-     *  to a biome's list, which carries every catalog enemy. */
-    private static int archmageCount() {
-        int count = 0;
-        for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies())) {
-            if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+    /** Rounds 173/177: how many Archmages the chest-duel group holds - the distinct Archmage names across the
+     *  five color biomes' own rosters, the pools pickGrandmasterMage() draws from. */
+    private static int archmageCount(World world) {
+        Set<String> names = new java.util.HashSet<>();
+        for (forge.adventure.data.BiomeData biome : world.getData().GetBiomes()) {
+            if (biome.enemies == null || !java.util.Arrays.asList(ColorReputation.COLORS).contains(biome.name))
                 continue;
-            if ("Mythic".equals(data.tier) && ContentFilterTables.isEnemyIncluded(data.getName()))
-                count++;
+            for (String name : biome.enemies) {
+                EnemyData data = WorldData.getEnemy(name);
+                if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+                    continue;
+                if ("Mythic".equals(data.tier) && ContentFilterTables.isEnemyIncluded(data.getName()))
+                    names.add(data.getName());
+            }
         }
-        return count;
+        return Math.max(1, names.size());
     }
 
     /** Round 141: life at which a non-Mythic arena-exclusive enemy still counts as a chest-worthy

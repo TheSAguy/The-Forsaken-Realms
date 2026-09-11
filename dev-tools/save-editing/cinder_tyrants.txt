@@ -1,0 +1,31 @@
+# Cinder Tyrants (B_R) - round 177 (2026-09-11), slot 5. Rakdos fliers + removal: black's best fliers and kill spells,
+# red's burn, Olivia, Terror of the Peaks. 40 cards, 17 lands.
+# lands (17)
+2 Bloodfell Caves
+1 Sulfurous Springs
+1 Smoldering Marsh
+1 Tresserhorn Sinks
+7 Swamp
+5 Mountain
+# creatures (12)
+2 Qarsi Revenant
+1 Olivia Voldaren
+1 Liliana's Reaver
+1 Josu Vess, Lich Knight
+1 Scavenger Regent
+1 Archfiend of Ifnir
+2 Kinzu of the Bleak Coven
+1 Terror of the Peaks
+1 Demanding Dragon
+1 Reaper from the Abyss
+# removal and card advantage (11)
+1 Lightning Bolt
+1 Chain Lightning
+1 Fatal Push
+1 Infernal Grasp
+1 Go for the Throat
+1 Power Word Kill
+2 Murder
+1 Bedevil
+1 Fireball
+1 Unexpected Windfall

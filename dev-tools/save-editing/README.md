@@ -25,6 +25,7 @@ A `.sav` is zlib-compressed **Java serialization** (`forge.adventure.util.SaveFi
 | `Inspect.java` | **Read-only.** Dumps player stats, every deck slot, and the full collection with counts. Safe to run while the game is open. |
 | `BuildDecks2.java` | Writes decklists into deck slots. Dry-run by default; `--write` to apply; takes its own `.bak`. |
 | `DumpSave.java` | Lower-level structural dump, for when you need to see keys rather than decks. |
+| `card_table.py` | **Read-only** (round 177): turns an `Inspect` dump into per-color reading lists for deck building - cost, type, P/T, best rarity, oracle - joined from `forge-gui/res/cardsfolder` + `editions`. `python card_table.py inspect_slot1.txt [out dir]` (the dump is in the Windows code page; the tool reads it as cp1252). |
 | `WriteDecks.java` | **Generic** deck writer (2026-09-04): `java WriteDecks <save> [--show] [--write] slot=<n>:<Deck Name>:<listfile> ...` - list files are `<count> <Card Name>` lines (`mono_white.txt` etc. here are the round-111 examples); resolves owned printings, adds free unsellable TRK basics to the collection for any shortfall exactly like the editor's Add Basic Lands, dry run by default, `.prededit3.bak`, re-reads and prints every slot after writing. |
 
 ## Running them
@@ -92,3 +93,6 @@ the collection count is identical, and life/gold/resources are intact.
 - **2026-09-06 (round 125)** — decks v6 written into slots 1-3 with `WriteDecks` (lists in this folder). The backup
   name is now the first free `.prededit<N>.bak` (it used to overwrite `.prededit4.bak`). Verified afterwards with
   `Inspect`: stats and collection unchanged, 40/40/44 cards.
+- **2026-09-11 (round 177)** - three new decks into empty slots 5-7 of slot 1 (`cinder_tyrants.txt`,
+  `lanternwind_host.txt`, `wildfire_wyrms.txt`), built from `card_table.py`'s views; backup `.prededit9.bak`; verified:
+  slots 0-4 and the collection unchanged except 3 free Mountains.

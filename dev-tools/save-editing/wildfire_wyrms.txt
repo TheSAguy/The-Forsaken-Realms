@@ -1,0 +1,32 @@
+# Wildfire Wyrms (G_R) - round 177 (2026-09-11), slot 7. Gruul ramp into dragons: six two-mana ramp pieces put a
+# 4/5 flier or Garruk down on turn 3, burn holds the early game, green mythics and dragons close. 40 cards, 17 lands.
+# lands (17)
+1 Karplusan Forest
+1 Rugged Highlands
+1 Gruul Guildgate
+1 Spire Garden
+1 Thriving Bluff
+1 Evolving Wilds
+6 Forest
+5 Mountain
+# ramp (6)
+1 Sakura-Tribe Elder
+2 Rampant Growth
+1 Farseek
+2 Wall of Roots
+# burn (6)
+1 Lightning Bolt
+1 Chain Lightning
+2 Shock
+1 Harnessed Lightning
+1 Fireball
+# threats (11)
+1 Garruk Relentless
+2 Magmatic Hellkite
+1 Stalking Yeti
+1 Biogenic Ooze
+1 Terror of the Peaks
+2 Demanding Dragon
+1 Silverback Elder
+1 Ulvenwald Hydra
+1 Hellkite Charger

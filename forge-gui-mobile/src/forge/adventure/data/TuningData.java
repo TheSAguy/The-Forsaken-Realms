@@ -275,6 +275,36 @@ public class TuningData {
         }
     }
 
+    // Round 177 (user: "change the gold loss from a percentage to a flat ... Max 200g on Insane, if you have
+    // less than 200g, you lose it all. Hard 150, Normal 100g, Easy 50g"). A lost duel takes this much gold,
+    // or all of it when you carry less (AdventurePlayer.defeated()). Keyed by the difficulty's NAME, so it
+    // reaches existing characters on their next defeat - the percentage (DifficultyData.goldLoss) is copied
+    // into every save, a table here is not. 0 = no flat rule for that difficulty: the percentage applies,
+    // which is also what a stock plane without these keys gets.
+    public int defeatGoldLossEasy = 0;
+    public int defeatGoldLossNormal = 0;
+    public int defeatGoldLossHard = 0;
+    public int defeatGoldLossInsane = 0;
+
+    /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
+    public int defeatGoldLossFor(String difficultyName) {
+        if (difficultyName == null)
+            return 0;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, defeatGoldLossEasy);
+            case "normal": return Math.max(0, defeatGoldLossNormal);
+            case "hard":   return Math.max(0, defeatGoldLossHard);
+            case "insane": return Math.max(0, defeatGoldLossInsane);
+            default:       return 0;
+        }
+    }
+
+    // Round 177 (user: the colorless mix into your own territory "should be updated, maybe a slightly lesser
+    // chance than the current enemy pool"). The share of spawn rolls on the player's own land that draw from
+    // the Wasteland roster instead - WorldStage.handleMonsterSpawn(). It was a constant (0.08) that never
+    // fired at all: the lookup asked for a biome named "colorless" and colorless.json names it "waste".
+    public float playerColorlessMixChance = 0.08f;
+
     /** One map tile, the unit the tier cue is anchored to. */
     private static final float TILE_PX = 16f;
 

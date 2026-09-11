@@ -17757,6 +17757,103 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 177: a flat defeat gold loss, Archmages from their own color, the Wasteland mix-in fires, three new decks (2026-09-11)
+
+User: *"I want to change the gold loss from a fixed to a flat. Let's try Max 200g on Insane, if you have less than 200g,
+you lose it all. Hard, 150, Normal 100g Easy 50g."* - and the two round-173 findings: Archmage attackers *"should be
+updated to only use their color pool"*; the colorless mix-in *"should be updated, maybe a slightly lesser chance than the
+current enemy pool."* Mid-round: *"create me 3 new decks that you'd consider the strongest possible given my current
+cards"* (save slot 1; leave the active mono-black deck alone). Built 07:33, packaged 07:43, agent folder synced.
+
+### Defeat gold: a flat amount per difficulty
+
+Before: a lost duel took a PERCENTAGE of the gold carried (`config.json` `goldLoss`: Easy 2%, Normal 10%, Hard 30%,
+Insane 50%). That value is copied into each save when the character is made (`DifficultyData`, stored key by key), so
+editing config.json never reached an existing character. Now `settings.json` holds `defeatGoldLossEasy / Normal / Hard /
+Insane` = **50 / 100 / 150 / 200**, read by the difficulty's NAME at the moment of defeat
+(`TuningData.defeatGoldLossFor()`), so it applies to existing characters on their next loss: `gold = max(0, gold -
+flat)`. 0 (or a stock plane without the keys) falls back to the percentage. A Bronze Coin handed over at the ante prompt
+still waives it; the life loss is unchanged. New Game's Duels tab reads "Gold loss on defeat: 200 [+Gold] (all of it if
+you carry less)". Log: `[TFR-DefeatGold] Insane: lost 200 of 587 gold (flat 200)`. Worth knowing: the flat rule is
+harsher than the old percentage for a light purse on the easy settings (Easy: 50 of 500 instead of 10) and far gentler
+for a heavy one on the hard settings (Insane: 200 of 2,000 instead of 1,000).
+
+### Archmage attackers draw from their own color
+
+`TerritoryControl.pickGrandmasterMage()` now takes its candidates from the color biome's OWN roster (`biome.enemies`
+names): Mythic, not a boss, no quest tags, one entry per name. It used to walk `BiomeData.getEnemyList()`, which also
+carries a zero-weight copy of every catalog enemy (the quest-boost mechanism), so every color's Archmage attack - and the
+Dangerous Enemy chest duel, which uses the same picker - chose from all 56 catalog Archmages, 53 of them arena-exclusive
+and mostly off-color. The pools now: white 17, blue 16, black 18, red 17, green 14 (50 distinct). The chest's
+heavyweight odds follow the rosters (`ChestEvents.archmageCount(world)`): Arzakon or Nephilim Epochal is now 2 in 52.
+
+### The Wasteland mix-in on your own land fires
+
+`WorldStage.handleMonsterSpawn()` meant to swap a share of spawn rolls on the player's territory to the colorless roster
+for variety (the player roster has 72 enemies), but it looked the biome up by the name "colorless" - `colorless.json`
+names it "waste" - so it had never fired in any game. It now finds "waste" (with "colorless" as a fallback), and the
+chance is tunable: `settings.json` `playerColorlessMixChance` = **0.4** (was a 0.08 constant) - the user's "slightly
+lesser chance than the current enemy pool" read as 40% Wasteland roster / 60% your own. Log: `[TFR-ColorlessMix]
+player territory -> Wasteland roster for this roll (chance=0.4)`. One number to tune if it feels off.
+
+### Three new decks in the user's save slot 1
+
+Written with `WriteDecks --write` (game closed; backup `1_save_slot.sav.prededit9.bak`), verified with `Inspect`:
+slots 0-4 untouched, slot 2 "Gravetithe (B)" still the active deck, life / gold / shards / wood / stone unchanged, the
+collection unchanged but for 3 free unsellable Mountains (the editor's Add Basic Lands behavior). All 40 cards:
+- slot 5 **"Cinder Tyrants (B_R)"** - black's fliers and kill spells with red burn: Olivia Voldaren, 2 Qarsi Revenant,
+  2 Kinzu, Archfiend of Ifnir, Scavenger Regent, Liliana's Reaver, Josu Vess, Terror of the Peaks, Demanding Dragon,
+  Reaper from the Abyss; Bolt, Chain Lightning, Fatal Push, Infernal Grasp, Go for the Throat, Power Word Kill,
+  2 Murder, Bedevil, Fireball, Unexpected Windfall. 17 lands.
+- slot 6 **"Lanternwind Host (W_U)"** - Spirit fliers under six lords (4 Patrician Geist, 2 Supreme Phantom) with
+  4 Lantern Bearer, 2 Spectral Sailor, 2 Stormbound Geist, 2 Latch Seeker, Dreamshackle Geist, Mind Flayer; Get Lost,
+  Winds of Abandon, Planar Disruption, Pacifism, Counterspell, Cyclonic Rift. 16 lands.
+- slot 7 **"Wildfire Wyrms (G_R)"** - six two-mana ramp pieces into Magmatic Hellkite x2 / Garruk Relentless on turn 3,
+  then Terror of the Peaks, 2 Demanding Dragon, Hellkite Charger, Biogenic Ooze, Ulvenwald Hydra, Silverback Elder,
+  Stalking Yeti; Bolt, Chain Lightning, 2 Shock, Harnessed Lightning, Fireball. 17 lands.
+Lists: `dev-tools/save-editing/cinder_tyrants.txt`, `lanternwind_host.txt`, `wildfire_wyrms.txt`. New
+`dev-tools/save-editing/card_table.py` turns an `Inspect` dump into per-color reading lists (cost, type, P/T, rarity,
+oracle) - the collection is 2,287 cards / 1,806 names, deepest in black (493 cards). Decks share the pool: a card lost
+to ante (Terror of the Peaks, Lightning Bolt, Fireball are in two new decks) leaves every deck that holds it.
+"Norn's Verdict (W_B)" in slot 1 was already 39 cards before this edit.
+
+### The new art folder: prep only, nothing imported
+
+The user's call on the 227 sheets in `C:\Users\User\Pictures\Screenshots\Art`: *"it was all copied from free online
+sources. I'm fine using what we can. We will change the names to be more MTG like. Please proceed with prep."* Recorded:
+the sheets are ripped commercial-game art - 126 are Ragnarok Online monster rips (The Spriters Resource layout), 22 are
+named characters from other commercial games (RAID: Shadow Legends x13, Final Fantasy x3, Warcraft, Star Wars, Assassin's
+Creed, Mortal Kombat, Tales of Arise, El Conquista) and the other 79 are 3D / comic renders, many carrying a
+thegamingpot.com watermark; renaming the monsters does not change who owns the pictures, and the game ships publicly.
+Prep lives OUTSIDE the repo, in `F:\FORGE\TFR-Art-Staging\` (`tools\art_convert.py`, `art_preview.py`,
+`art_triage3.py`; QA contact sheets in `qa\`). The converter reads the TSR layout on its own - connected components,
+label text and bracket detection, rows paired front/back by frame count, a single low rule fences off the unused
+extras - keeps the front view flipped to face right, and packs Avatar / Idle / Walk / Attack / Hit / Death into a
+uniform-cell atlas at native resolution: 124 of the 126 Ragnarok sheets convert (two robots on black panels do not);
+about ten carry a stray label piece or a one-frame walk to clean by hand. Of the 79 generic sheets about 73 are usable
+(six marginal - thin wings, small humanoids), three are not (#20, #45, #73: white-ground grids or tiny thumbnails); they
+follow no common layout, so each needs its rows mapped by hand. Nothing enters the repo or the game until the user has
+named them.
+
+### The enemy sprite size proposal (waiting on the user)
+
+User: *"after playing, [size classes] breaks the ability to know what level the enemy is ... go back to having them all
+1 size for Adept, and then slightly smaller for Apprentice and bigger for Master and even a little bigger for
+Archmage."* The survey (every enemy's Idle frame, its visible box x scale x tier cue) confirms it: roaming Adepts today
+span 12-23 px (10th-90th percentile, max 46), Masters 13-26 (max 66). Proposed, on the larger side of the visible
+sprite: **Apprentice 14 / Adept 16 (the hero's size) / Master 20 / Archmage 24 px**; bosses keep their hand-set sizes.
+Implementation when approved: one tool pass writes every non-boss enemy's `scale` = 16 / visible Idle size, and the tier
+cues (`enemyTierScale*` 0.875 / 1.0 / 1.25 / 1.5) apply straight - round 160's tile anchoring and size classes retire.
+
+### Log review (the user's 2026-09-11 06:29-06:51 session, Insane)
+
+No exceptions; six duels won, three arena rounds, research on day 14, main-quest progress; one 466 ms economy tick on
+day 14. Nothing from rounds 173/177 exercised yet.
+
+**Files touched**: `data/TuningData.java`, `player/AdventurePlayer.java`, `scene/NewGameScene.java`,
+`stage/WorldStage.java`, `util/TerritoryControl.java`, `util/ChestEvents.java`, `config tables/settings.json`,
+`GUIDE.md`, `dev-tools/validate_plane_data.py`, `dev-tools/save-editing/` (three lists, `card_table.py`, README).
+
 ## Round 176: the first watched agent session, and settle stops at a lost ante (2026-09-11)
 
 User: *"Start the first full agent session so I can watch."* Fair play (no cheats), the isolated agent game, a new
