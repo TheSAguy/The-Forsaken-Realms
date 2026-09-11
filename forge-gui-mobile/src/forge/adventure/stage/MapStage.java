@@ -881,6 +881,27 @@ public class MapStage extends GameStage {
      * does not wander to a different corner of the same cave on a re-entry; WHETHER there is one
      * at all is the persisted roll, held in World.caveChampion.
      */
+    // Round 181 (user: "Proceed with the Cave champions and When a dungeon's land changes owner fix").
+    private static final java.util.Set<String> STORY_TAGS = java.util.Set.of("Boss", "Story", "Legendary", "Challenger");
+
+    /**
+     * A map placement that must stay exactly as authored: a boss, an arena-only / event fighter (spawnRate 0 -
+     * the round-59 rule, SpawnTierWeighting.isExempt()), or an enemy with an explicit story marker (the
+     * Doppelganger tower's Challengers, the factory's Boss-tagged Esper Artificer). It was "any quest tag", and this
+     * plane tags nearly every enemy as metadata ("Undead", "BiomeBlack"...): 2,100 of 2,358 map placements were
+     * protected, so a cave champion never found a slot in the 78 generated caves and a dungeon whose land changed
+     * hands kept all but a handful of its original enemies.
+     */
+    private static boolean isScriptedPlacement(EnemyData e) {
+        if (forge.adventure.util.SpawnTierWeighting.isExempt(e))
+            return true;
+        if (e.questTags != null)
+            for (String tag : e.questTags)
+                if (STORY_TAGS.contains(tag))
+                    return true;
+        return false;
+    }
+
     private void prepareCaveChampion(TiledMap map) {
         caveChampionObjectId = -1;
         caveChampionData = null;
@@ -906,9 +927,9 @@ public class MapStage extends GameStage {
                 if (enemy == null || enemy.toString().isEmpty())
                     continue;
                 EnemyData existing = WorldData.getEnemy(enemy.toString());
-                // Never displace a boss or a quest target - the same "ordinary encounter" test the
+                // Never displace a boss or a scripted placement - the same "ordinary encounter" test the
                 // territory re-theme in loadObjects() applies before swapping an enemy out.
-                if (existing == null || existing.boss || existing.questTags.length > 0)
+                if (existing == null || isScriptedPlacement(existing))
                     continue;
                 candidates.add(objectId);
             }
@@ -1042,11 +1063,11 @@ public class MapStage extends GameStage {
                                 Vector2 poiPos = AdventureQuestController.instance().mostRecentPOI.getPosition();
                                 int currentBiome = forge.adventure.world.World.highestBiome(world.getBiome((int) poiPos.x / world.getTileSize(), (int) poiPos.y / world.getTileSize()));
                                 EN = world.getData().GetBiomes().get(currentBiome).getEnemy(Current.player().getStatistic().rank());
-                            } else if (!EN.boss && EN.questTags.length == 0) {
+                            } else if (!isScriptedPlacement(EN)) {
                                 // Content filter tables (user spec 2026-08-12): an Include=N
                                 // enemy is skipped from ordinary dungeon population. Same
                                 // ordinary-encounter test the re-theme below already uses -
-                                // bosses and quest-tagged enemies are protected by design (a
+                                // bosses and scripted placements are protected by design (a
                                 // missing boss/quest target would break dungeons and quests).
                                 if (!ContentFilterTables.isEnemyIncluded(EN.getName()))
                                     break;

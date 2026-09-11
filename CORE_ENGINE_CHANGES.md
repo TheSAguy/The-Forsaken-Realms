@@ -2729,3 +2729,10 @@ Data and tooling only: 197 new enemies (`world/enemies.json`, biome rosters, cap
   `SpawnTierWeighting.isExempt(data)` (boss or spawnRate <= 0) instead of "boss or any quest tag"; the EXEMPT log line
   prints spawnRate. Stock method, mod-added block (since 2026-08-12); on a merge keep the block after the deck pools.
 - Mod-added, no merge burden: `util/SpawnTierWeighting.java` (comment on `isExempt()`).
+
+## Round 181 (2026-09-11) - scripted map placements
+
+- **`stage/MapStage.java`** - new private `isScriptedPlacement(EnemyData)` + `STORY_TAGS`; `prepareCaveChampion()`'s
+  candidate test and `loadObjects()`'s content-filter / re-theme branch call it instead of "boss or any quest tag".
+  Both call sites are mod-added code inside stock methods (rounds 139 and 2026-08-10/12); on a merge keep the helper
+  with them.

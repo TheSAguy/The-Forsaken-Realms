@@ -50,19 +50,20 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-11 (round 180; v1.09 RELEASED + rounds 173-180 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-11 (round 181; v1.09 RELEASED + rounds 173-181 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 180, 2026-09-11).** The user's calls, in their order:
+- **NEXT SESSION starts here (updated round 181, 2026-09-11).** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
      later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
      rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
      `deckgen179.py --only <slug>`), loot. Tooling in `dev-tools/art-import/` (README), inputs in
      `F:\FORGE\TFR-Art-Staging\`.
-     **Open for the user (round 180)**: the same "skip quest-tagged enemies" test still decides the cave-champion
-     slots (never in the 78 generated caves), the dungeon re-theme + Include=N skip (7.6% of placements), town-assault
-     defenders and attack mages (effectively legends), the chest pools and frontier legends (legend pools by design).
-     Recommended: fix the cave champions and the re-theme the round-59 way; ask before touching the rest.
-  2. **Playtest rounds 173 + 177-180**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
+     **Open for the user (round 181)**: cave champions and the dungeon re-theme are fixed (round 181). The same
+     "skip quest-tagged enemies" test still picks town-assault defenders (any untagged enemy in the WHOLE catalog at
+     the rank - off-color legends; Arzakon can defend an Adept town) and Archmage attack mages / the chest's Dangerous
+     Enemy (legends only); the Illegal Arena should become "every Archmage" (legends keep the bounty). The player
+     roster (61 roamers, mostly wizards) now also stocks dungeons on the player's land - maybe add new enemies to it.
+  2. **Playtest rounds 173 + 177-181**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
      the TFR medallion when loading on your own land, the three-quests step (+100 stone), the camp's hidden rare.
   3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `F:\FORGE\TFR-Agent\`; launch via
      the Task Scheduler (`agent_launch.cmd`), stop with `powershell -ExecutionPolicy Bypass -File agent_stop.ps1`,
@@ -72,7 +73,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      Upstream was 22 commits past `06a3c05731c` at round 172 (hot spots in CORE_ENGINE_CHANGES "Round 172").
   5. **Wider playtest feedback** on v1.09, the review's remaining OPEN rows; E4 right AFTER the merge.
   6. Small open items: characters already past "Raise the Banner"'s Capitol step keep the old quest steps (a load-time
-     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-180
+     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-181
      are unreleased (v1.09 is the last release).
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
@@ -87,6 +88,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 181 (2026-09-11, built 14:06, NOT packaged - E:\GAMES\Forge_2 now holds the 09.11 daily and the packager refuses a 09.09 jar (the engine merge is next)): **cave champions and the dungeon re-theme work on tagged enemies** -
+  `MapStage.isScriptedPlacement()` (boss, spawnRate 0, or a Boss/Story/Legendary/Challenger tag) replaces "any quest
+  tag", which had protected 2,100 of 2,358 map placements. Still open: town defenders, attack mages, chest pools.
 - Round 180 (2026-09-11, built 13:06, PACKAGED 13:18, 342 MB; agent folder synced): **monster loot follows its color's sets for every roamer** - `EnemySprite.getRewards()`
   exempts only bosses and spawnRate-0 fighters (`SpawnTierWeighting.isExempt()`, the round-59 rule; it was "any quest
   tag" = 88.6% of roamers unrestricted). The same quest-tag test in nine other places reported to the user, not changed.

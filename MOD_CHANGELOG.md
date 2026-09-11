@@ -17757,6 +17757,30 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 181: cave champions take a slot again; a dungeon on changed land takes on its new owner's creatures (2026-09-11)
+
+User: *"Proceed with the Cave champions and When a dungeon's land changes owner fix."* built 14:06, NOT packaged - E:\GAMES\Forge_2 now holds the 09.11 daily and the packager refuses a 09.09 jar (the engine merge is next); checked in the agent game with the new classes ahead of the round-180 jar: Corrupted Shaft (CaveCGen02, champion chance raised to 1.0 in the agent copy only) - [TFR-CaveChampion] Rosnakht takes placement 7 of 3 candidates, promoting placement 7 from Pitchfork Farmer to Rosnakht (0 candidates before); the re-theme needs land that has changed hands and was not exercised.
+
+Two map-placement rules in `MapStage` asked "does this enemy have any quest tag?" to mean "is this a scripted
+placement?". This plane tags nearly every enemy as metadata, so 2,100 of 2,358 map placements counted as scripted:
+- **Cave champions** (round 139: the first visit to a cave rolls 25% for one arena-exclusive fighter to take over
+  one of its roamers) found no slot in the 78 generated caves - they hold tagged roamers only - so a champion only
+  ever appeared in the older caves' 87 untagged spots;
+- **the dungeon re-theme** (MOD_SCOPE #7: a dungeon whose land changed hands swaps its ordinary encounters for picks
+  from the current owner's roster, same difficulty ceiling) and the content filter's Include=N skip touched only
+  the 7.6% untagged placements.
+Both now use `MapStage.isScriptedPlacement()`: a boss, a spawnRate-0 fighter (the round-59 rule,
+`SpawnTierWeighting.isExempt()`), or an enemy with an explicit story marker - `Boss`, `Story`, `Legendary`,
+`Challenger` (seven placements: the Doppelganger tower's Challengers, the factory's Boss-tagged Esper Artificer).
+Everything else - 2,100 placements - is an ordinary encounter now. `[TFR-CaveChampion]` and `[TFR-ReTheme]` log both.
+
+What it means in play: a cave's first visit can crown a champion in any cave; a dungeon or cave whose land has
+changed color fields the new owner's creatures (on the player's own land that is the player roster - 61 roamers,
+mostly the five colors' wizards; raised with the user); an enemy switched off in the content filter's `enemies.csv`
+no longer appears in dungeons either.
+
+**Files touched**: `stage/MapStage.java`.
+
 ## Round 180: monster loot follows its color's sets for every roamer; the bestiary page (2026-09-11)
 
 User, on round 179's finding: *"Yes, please update/fix this same as round 59."* - and *"Please show me the roster."*
