@@ -17757,6 +17757,91 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 174: resource glyphs in reward and cost text, the Duplicate chest shows its card, a smaller Juggernaut (2026-09-10)
+
+Three playtest asks from the user's evening session, each with a screenshot: *"Can you go through all the rewards
+text, and add the reward symbol where needed. Like the gold symbol here"* (a quest epilogue ending "(+2 Local
+Reputation, +500 Gold)"); *"For the Duplicate Random event, can we show the card and also use the shard symbol"*; and
+*"The Size of this guy still seems big"* (the Juggernaut).
+
+### Resource glyphs
+
+The standing rule since 2026-08-12 is that an amount of a resource shows the font's glyph (`[+Gold]`, `[+Shards]`)
+rather than the word. Every displayed amount found by a sweep of the plane's data and the mod's UI strings now does:
+
+- `world/quests.json` - nine quest texts: the five "Orazca is under attack" epilogues' `+500 Gold`, the two
+  `(+1000 Gold)` and two `(+500 Gold)` wage lines.
+- `world/items.json` - the Courier amulet's four option labels, `(Requires 3|5 Mana Shards)` -> `(Requires N [+Shards])`.
+- `maps/map/lair/ancient_diamond_mine.tmx` - the two trade buttons each for gold and shards, and the two "requires
+  N to activate" lines; `temple_of_liliana/bog.tmx` - `(+250 gold)` twice; `cave/Valors_Reach_Arena.tmx` -
+  `(Spend 5000 gold)` twice.
+- Java: the capital toll dialog (`WorldStage.showCapitalTollDialog`: the text used to read "for [+Gold] 500 gold", and
+  both Pay buttons), the Duplicate buttons (below), the gold chest's notification (`ChestEvents`), the reputation
+  explainer on the World Standings page (`WorldStandingsScene`).
+
+Deliberately NOT changed: a character SAYING an amount (Demon's Bargain: "How does 20,000 gold sound?"); the debug
+map; quests.json `rewardDescription` fields (nothing displays them); `GUIDE.md` (a markdown file - markup would show
+raw); the ante buy-back popup in `DuelScene` ("Buy Back (N gold)") - it is a Forge `FOptionPane`, whose renderer does
+not know TextraTypist glyphs, so the markup would print literally; log lines and console output. Every edited text
+is rendered by a TypingLabel or TextraButton (MapDialog, the world-map dialogs, the HUD notification's TextraLabel),
+which is what draws the glyphs.
+
+### The Duplicate chest event shows the card
+
+`WorldStage.showChestDuplicateDialog()` puts each offered card face up above the buttons with its price under it
+(`[%80]25 [+Shards]` / `200 [+Shards]`), through the same `RewardActor` the reward and Spell Smith screens use:
+56x78, not flippable, no reward-screen overlay; hovering it shows the card full size (tapping, on Android, opens the
+card viewer). The buttons read `Duplicate <card> (25 [+Shards])`. Answering the dialog (either Duplicate button or
+Decline) removes the cards and disposes their textures (`RewardActor.removeTooltip()`). New helper
+`addDuplicateOffer()`. Found in the same method and fixed: both Duplicate handlers now re-check the price before
+charging. `setDisabled()` greys a TextraButton but leaves its click handler live (the 2026-08-30 toll-dialog
+finding) and `takeShards()` does not clamp, so pressing the greyed button with too few shards used to go negative.
+
+### The Juggernaut
+
+`world/enemies.json`: Juggernaut `scale` 0.75 (it had none, so 1.0) - its art is 32px tall, so it rendered two tiles
+high; the Medium class (24px) is the round-160 rule's size for a war machine. Round 162's size-class pass never saw it
+because it skipped sprites already on the 16px grid. Enemies re-resolve by name on load, so existing saves pick it
+up.
+
+Twelve other roaming sprites were skipped the same way and render above their subject class (the round-160
+classifier's own pick in brackets): Demon of Tibalt 64px (Person), Penguin Elite 48 (Large), Archfiend, Coram,
+Tiburones, Treefolk Elite 32 (Person), Lord Pestilence, Nightstalker 32 (Medium), Kitsa, Kwain, Preston, Mill Mole 32
+(Critter). **Not changed**: many of the basic pack's 32px frames are mostly padding - the rabbits are a 16px rabbit
+in a 32px frame - so a frame-height class would shrink them to specks. They need eyes, not arithmetic; a contact
+sheet went to the user.
+
+### Found on the way: half the desktop jar was build junk
+
+Checking the fresh jar's contents turned up 793 entries under `target/classes/target/classes/.../fallback_skin/` - 61
+levels deep, names up to 953 characters. `forge-gui-mobile-dev/pom.xml` (a stock file, identical upstream) copies
+the splash and fallback-skin images with `**/title_bg_lq.png`-style includes from `${project.basedir}` - and
+`**/` also matches the previous build's own copies under `target/classes`, so every build that does not `clean`
+nests one more level of them into the jar. Upstream's CI always builds clean and never sees it; our incremental
+builds had reached 59 levels in the v1.09 jar: **767 junk entries, 52.9 MB of its 110 MB** (so also of the v1.09
+desktop zip). The resource block now `<exclude>`s `target/**`, the nested directory was deleted once from
+`target/classes`, and the round-174 jar was rebuilt without it. Nothing loads those paths, so the only effect is
+size. The Android build is a different module and never had it.
+
+### The new art folder - assessed, nothing imported
+
+The user asked, the same evening, for new enemy models and themed decks from 227 PNG sheets in
+`C:\Users\User\Pictures\Screenshots\Art`. A scripted triage (sizes, transparency, per-row frame segmentation,
+first frames rendered at 48/24/16 px) found: they are high-resolution 3D renders and "comic" sprite sheets (frames of
+300-900px, most with a portrait at the top and animation rows below), and 22 file names are commercial games'
+characters - RAID: Shadow Legends (13), Final Fantasy (3), Warcraft's Deathwing, a Star Wars lightsaber trooper,
+Assassin's Creed, Mortal Kombat's Shao Kahn, Tales of Arise, El Conquista - plus one Ragnarok Online rip; several
+sheets carry a site watermark. **Nothing was imported**: the game ships publicly and CREDITS.md records a license
+for every art pack; these need a source and a license first. Technically, the full-body creature sheets (dragons,
+wyverns, the griffin, the flying shark...) would survive a downscale to a 48px Huge sprite, the humanoid renders turn
+to mush below 32px, and the portrait frames could serve as duel avatars.
+
+Built 21:23; PACKAGED 21:35, 310 MB together with round 173 - live folder = v1.09 + rounds 173-174.
+
+**Files touched**: `stage/WorldStage.java` (stock file, mod-added methods), `util/ChestEvents.java`,
+`scene/WorldStandingsScene.java`, `forge-gui-mobile-dev/pom.xml` (stock); plane `world/quests.json`,
+`world/items.json`, `world/enemies.json`, three `.tmx` maps.
+
 ## Round 173: five review fixes - free shards for watched guards, champions in re-themed caves, the unfinished guard fight, and two dead features back (2026-09-10)
 
 The user's calls on the post-v1.08 review's open rows (round 172): *"Do A now, G10, S8. G6 should lose the fight.

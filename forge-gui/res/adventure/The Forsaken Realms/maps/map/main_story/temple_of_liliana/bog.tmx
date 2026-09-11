@@ -463,7 +463,7 @@
      {
 	&quot;name&quot;:&quot;Finish her off&quot;,
 	&quot;action&quot;: [{&quot;addGold&quot;: 250, &quot;deleteMapObject&quot;:240}],
-	&quot;text&quot;:&quot;She is unable to put up much more of a fight. You find a bunch of questionable mushrooms and some gold on her. (+250 gold)&quot;
+	&quot;text&quot;:&quot;She is unable to put up much more of a fight. You find a bunch of questionable mushrooms and some gold on her. (+250 [+Gold])&quot;
 	&quot;options&quot;:[ {&quot;name&quot;:&quot;(Continue)&quot;} ]
      },
      {
@@ -480,7 +480,7 @@
      {
 	&quot;name&quot;:&quot;Finish her off&quot;,
 	&quot;action&quot;: [{&quot;addGold&quot;: 250, &quot;deleteMapObject&quot;:240}],
-	&quot;text&quot;:&quot;She is unable to put up much more of a fight. You find a bunch of questionable mushrooms and some gold on her. (+250 gold)&quot;
+	&quot;text&quot;:&quot;She is unable to put up much more of a fight. You find a bunch of questionable mushrooms and some gold on her. (+250 [+Gold])&quot;
 	&quot;options&quot;:[ {&quot;name&quot;:&quot;(Continue)&quot;} ]
      },
      {

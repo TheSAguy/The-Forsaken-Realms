@@ -186,6 +186,12 @@
                     <include>**/font1.ttf</include>
                     <include>**/logo.gif</include>
                 </includes>
+                <!-- TFR round 174: the **/ includes above also matched the previous build's own copies under
+                     target/classes, so every non-clean build nested another level (target/classes/target/classes/...)
+                     into the jar - 59 levels and 52.9 MB of the v1.09 jar. Upstream builds clean and never sees it. -->
+                <excludes>
+                    <exclude>target/**</exclude>
+                </excludes>
             </resource>
             <resource>
                 <directory>filters</directory>

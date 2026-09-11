@@ -101,7 +101,7 @@ public class WorldStandingsScene extends UIScene {
                         + "Neutral (-29 to +29): no effect.\n\n"
                         + "Unhappy (-30 to -79): 25% pricier card shops, 15% more likely to be attacked, somewhat tougher enemies.\n\n"
                         + "War (-80 or lower): barred from that color's towns (Capitals: pay "
-                        + ColorReputation.CAPITAL_ENTRY_TOLL + " gold to enter, 40% pricier once inside), "
+                        + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold] to enter, 40% pricier once inside), "
                         + "50% more likely to be attacked, no healing at their Inns, noticeably tougher enemies roaming their land.\n\n"
                         + "Your own territory is also always safer to fight in than anyone else's, on top of all of the above.");
     }

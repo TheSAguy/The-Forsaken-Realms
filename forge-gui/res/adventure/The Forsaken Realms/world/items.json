@@ -5426,7 +5426,7 @@
                                                                       "hasShards":  3
                                                                   }
                                                               ],
-                                                "name":  "Contact the Courier (Requires 3 Mana Shards)",
+                                                "name":  "Contact the Courier (Requires 3 [+Shards])",
                                                 "action":  [
                                                                {
                                                                    "setQuestFlag":  {
@@ -5464,7 +5464,7 @@
                                                                   }
                                                               ],
                                                 "isDisabled":  true,
-                                                "name":  "Contact the Courier (Requires 3 Mana Shards)"
+                                                "name":  "Contact the Courier (Requires 3 [+Shards])"
                                             },
                                             {
                                                 "condition":  [
@@ -5487,7 +5487,7 @@
                                                                       "hasShards":  5
                                                                   }
                                                               ],
-                                                "name":  "Contact the Courier (Requires 5 Mana Shards)",
+                                                "name":  "Contact the Courier (Requires 5 [+Shards])",
                                                 "text":  "You funnel the power of your mana shards into the artifact. It takes using a few more of them before the device reacts this time, but eventually it glows in multiple colors once again.",
                                                 "options":  [
                                                                 {
@@ -5527,7 +5527,7 @@
                                                                   }
                                                               ],
                                                 "isDisabled":  true,
-                                                "name":  "Contact the Courier (Requires 5 Mana Shards)"
+                                                "name":  "Contact the Courier (Requires 5 [+Shards])"
                                             }
                                         ]
                         },

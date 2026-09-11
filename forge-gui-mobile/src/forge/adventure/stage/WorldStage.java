@@ -1145,8 +1145,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.clearListeners();
 
         TypingLabel label = Controls.newTypingLabel("The guards of " + poi.getDisplayName()
-                + " bar your way, but greed outweighs grudges: they'll let you pass for [+Gold] "
-                + ColorReputation.CAPITAL_ENTRY_TOLL + " gold.");
+                + " bar your way, but greed outweighs grudges: they'll let you pass for "
+                + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold].");
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
@@ -1162,7 +1162,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // in-handler re-check is belt-and-braces in case gold changes between build and click.
         boolean canAffordToll = Current.player().getGold() >= ColorReputation.CAPITAL_ENTRY_TOLL;
         TextraButton payButton = canAffordToll
-                ? Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " gold", () -> {
+                ? Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold]", () -> {
                     if (Current.player().getGold() < ColorReputation.CAPITAL_ENTRY_TOLL)
                         return;
                     Current.player().takeGold(ColorReputation.CAPITAL_ENTRY_TOLL);
@@ -1172,7 +1172,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     point.getMapSprite().checkOut();
                     WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
                 })
-                : Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " gold (you have "
+                : Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold] (you have "
                     + Current.player().getGold() + ")");
         payButton.setDisabled(!canAffordToll);
         dialog.getButtonTable().add(payButton).width(240f).row();
@@ -1255,7 +1255,32 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getContentTable().add(label).width(250f).row();
 
         final int cheapCost = 25;
-        TextraButton cheapButton = Controls.newTextButton("Duplicate " + cheapCard.getName() + " (" + cheapCost + " shards)", () -> {
+        final int expensiveCost = 200;
+        // Round 174 (user: "For the Duplicate Random event, can we show the card and also use the shard
+        // symbol"): each offered card is shown face up with its price, through the same RewardActor the
+        // reward and Spell Smith screens use - hovering it (tapping, on Android) shows it full size.
+        // Answering the dialog removes them; RewardActor.removeTooltip() also disposes its textures.
+        final java.util.List<RewardActor> shownCards = new java.util.ArrayList<>();
+        com.badlogic.gdx.scenes.scene2d.ui.Table cardRow = new com.badlogic.gdx.scenes.scene2d.ui.Table();
+        addDuplicateOffer(cardRow, shownCards, cheapCard, cheapCost);
+        if (expensiveCard != null)
+            addDuplicateOffer(cardRow, shownCards, expensiveCard, expensiveCost);
+        dialog.getContentTable().add(cardRow).padTop(4f).row();
+        final Runnable dropCards = () -> {
+            for (RewardActor shown : shownCards) {
+                shown.removeTooltip();
+                shown.remove();
+            }
+            shownCards.clear();
+        };
+
+        // Round 174: each handler re-checks the price. setDisabled() greys a TextraButton but leaves its click
+        // handler live (the 2026-08-30 toll-dialog finding), and takeShards() does not clamp - a player with too
+        // few shards could still press the greyed button and go negative.
+        TextraButton cheapButton = Controls.newTextButton("Duplicate " + cheapCard.getName() + " (" + cheapCost + " [+Shards])", () -> {
+            if (Current.player().getShards() < cheapCost)
+                return;
+            dropCards.run();
             Current.player().takeShards(cheapCost);
             // Goes to the general Inventory/collection, NOT the active deck itself (2026-08-26
             // user revision: "the duplicate was returned to Inventory" / "The player might have 4
@@ -1271,8 +1296,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().add(cheapButton).width(240f).row();
 
         if (expensiveCard != null) {
-            final int expensiveCost = 200;
-            TextraButton expensiveButton = Controls.newTextButton("Duplicate " + expensiveCard.getName() + " (" + expensiveCost + " shards)", () -> {
+            TextraButton expensiveButton = Controls.newTextButton("Duplicate " + expensiveCard.getName() + " (" + expensiveCost + " [+Shards])", () -> {
+                if (Current.player().getShards() < expensiveCost)
+                    return;
+                dropCards.run();
                 Current.player().takeShards(expensiveCost);
                 Current.player().addCard(expensiveCard, 1);
                 hideDialog();
@@ -1281,9 +1308,24 @@ public class WorldStage extends GameStage implements SaveFileContent {
             expensiveButton.setDisabled(Current.player().getShards() < expensiveCost);
             dialog.getButtonTable().add(expensiveButton).width(240f).row();
         }
-        dialog.getButtonTable().add(Controls.newTextButton("Decline", this::hideDialog)).width(240f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Decline", () -> {
+            dropCards.run();
+            hideDialog();
+        })).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();
+    }
+
+    /** Round 174: one offered card for the Duplicate dialog - the card face up (not flippable, no
+     *  reward-screen overlay) with its shard price under it. */
+    private static void addDuplicateOffer(com.badlogic.gdx.scenes.scene2d.ui.Table row, java.util.List<RewardActor> shown,
+                                          forge.item.PaperCard card, int cost) {
+        RewardActor actor = new RewardActor(new Reward(card), false, null, false);
+        shown.add(actor);
+        com.badlogic.gdx.scenes.scene2d.ui.Table offer = new com.badlogic.gdx.scenes.scene2d.ui.Table();
+        offer.add(actor).size(56f, 78f).row();
+        offer.add(Controls.newTextraLabel("[%80]" + cost + " [+Shards]")).padTop(1f);
+        row.add(offer).padLeft(6f).padRight(6f);
     }
 
     @Override

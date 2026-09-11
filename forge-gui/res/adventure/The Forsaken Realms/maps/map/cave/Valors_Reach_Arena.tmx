@@ -592,7 +592,7 @@
     &quot;text&quot;: &quot;'Welcome, customer, to Gwafa Hazid's emporium of spells!'&quot;,
     &quot;options&quot;: [
       {
-        &quot;name&quot;: &quot;I'll buy some spells. (Spend 5000 gold)&quot;,
+        &quot;name&quot;: &quot;I'll buy some spells. (Spend 5000 [+Gold])&quot;,
         &quot;condition&quot;: [
           { &quot;hasGold&quot;: 5000 }
         ],
@@ -607,7 +607,7 @@
         ]
       },
       {
-        &quot;name&quot;: &quot;I'll buy some spells. (Spend 5000 gold)&quot;,
+        &quot;name&quot;: &quot;I'll buy some spells. (Spend 5000 [+Gold])&quot;,
         &quot;condition&quot;: [
           { &quot;hasGold&quot;: 5000, &quot;not&quot;: true }
         ],

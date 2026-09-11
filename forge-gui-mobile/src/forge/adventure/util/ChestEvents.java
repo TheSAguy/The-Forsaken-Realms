@@ -83,7 +83,7 @@ public class ChestEvents {
     private static void triggerGoldChest(World world) {
         int amount = 750 + world.getRandom().nextInt(1250 - 750 + 1);
         Current.player().giveGold(amount);
-        String message = "You pry open the chest - " + amount + " Gold spills out!";
+        String message = "You pry open the chest - " + amount + " [+Gold] spills out!"; // round 174: the glyph
         System.out.println("[ChestEvents] Gold Chest: " + message);
         GameHUD.getInstance().addNotification(message);
     }

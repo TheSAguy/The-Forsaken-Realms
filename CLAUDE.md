@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-10 (round 173; v1.09 RELEASED + round 173 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-10 (round 174; v1.09 RELEASED + rounds 173-174 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 172, 2026-09-10 evening).** The user's calls, in their order:
   1. **Round 173 is DONE** (NOT packaged; the bullet below): review G10 / S8 / G6 / S1 / S4 fixed. Playtest it:
@@ -85,6 +85,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      are in CORE_ENGINE_CHANGES "Round 172". First Maven after any merge runs online (gson 2.13.2 precedent).
   5. **Wider playtest feedback** on v1.09, and the review's remaining OPEN rows; E4 (a failed load's hybrid state)
      goes right AFTER the merge, because upstream rewrites the same `WorldSave` error paths.
+  6. **Two decisions waiting on the user from round 174**: (a) the new art folder
+     (`C:\Users\User\Pictures\Screenshots\Art`, 227 sheets) - nothing imported until its source and license are
+     known (22 are named after commercial games; see the round-174 changelog); (b) twelve on-grid roaming sprites that
+     render above their subject class (list in the round-174 changelog) - eyes, not arithmetic, because many 32px
+     frames are mostly padding.
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
   #announcements.
@@ -98,6 +103,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 174 (2026-09-10, built 21:23, PACKAGED 21:35, 310 MB together with round 173 - live folder = v1.09 + rounds 173-174): **resource glyphs + Duplicate card + Juggernaut.** Every displayed
+  resource amount in the plane's data and the mod's UI strings uses `[+Gold]` / `[+Shards]` now (nine quest texts, the
+  Courier amulet's four options, three maps' trade/reward lines, the capital toll dialog, the gold chest notification,
+  the standings explainer); deliberately left: speech, `rewardDescription` (not displayed), GUIDE.md, and the ante
+  buy-back popup (a Forge FOptionPane cannot draw glyphs). The Duplicate chest event shows each offered card face up
+  (a `RewardActor`, hover = full size) with its `[+Shards]` price. Juggernaut `scale` 0.75 (Medium) - on-grid art the
+  round-162 pass skipped; twelve more like it listed for the user, not changed. The user's new art folder was
+  triaged and NOT imported (licensing). **Build fix**: `forge-gui-mobile-dev/pom.xml`'s `**/` resource includes
+  re-copied the previous build's `target/classes` into itself on every non-clean build - the v1.09 jar carried 59
+  nested levels, 52.9 MB of junk; `target/**` is excluded now and the nested directory was deleted once. NOT yet
+  playtested.
 - Round 173 (2026-09-10, built 20:50, NOT packaged): **five review fixes** (user: "G10, S8. G6 should lose the fight. S1/S4,
   bring them back"). G10: a spectated guard fight no longer seeds the guard's seat with the player's shard purse
   (`DuelScene.enter()`, `!aiControlsPlayerSide`) - the stock AI pays PayShards costs with zero, so its gear's shard

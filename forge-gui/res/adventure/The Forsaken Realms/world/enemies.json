@@ -18487,6 +18487,7 @@
         "ai": "",
         "spawnRate": 1,
         "difficulty": 0.1,
+        "scale": 0.75,
         "speed": 18,
         "life": 20,
         "rewards": [

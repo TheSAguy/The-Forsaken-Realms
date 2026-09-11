@@ -8422,7 +8422,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "With the Goblin attacks halted, the people of $(poi_3) shower you with thanks and quite a few coins as well. (+2 Local Reputation, +500 Gold)",
+			"text": "With the Goblin attacks halted, the people of $(poi_3) shower you with thanks and quite a few coins as well. (+2 Local Reputation, +500 [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8610,7 +8610,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "Whether the merfolk got sufficient revenge, or your efforts drove them away, $(poi_3) is no longer under attack. (+2 Local Reputation, +500 Gold)",
+			"text": "Whether the merfolk got sufficient revenge, or your efforts drove them away, $(poi_3) is no longer under attack. (+2 Local Reputation, +500 [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8798,7 +8798,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "Tonight, $(poi_3) can rest more easily, as the dead do not rise before they can be burned. (+2 Local Reputation, +500 Gold)",
+			"text": "Tonight, $(poi_3) can rest more easily, as the dead do not rise before they can be burned. (+2 Local Reputation, +500 [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -8985,7 +8985,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "The elves are still angry about the defilement of their sacred tree, but your efforts in defending $(poi_3) have convinced them to forgo revenge for now. (+2 Local Reputation, +500 Gold)",
+			"text": "The elves are still angry about the defilement of their sacred tree, but your efforts in defending $(poi_3) have convinced them to forgo revenge for now. (+2 Local Reputation, +500 [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -9173,7 +9173,7 @@
 		},
 		"prologue": {},
 		"epilogue": {
-			"text": "The leaders of $(poi_3) have you to thank for their freedom, and likely their heads. (+2 Local Reputation, +500 Gold)",
+			"text": "The leaders of $(poi_3) have you to thank for their freedom, and likely their heads. (+2 Local Reputation, +500 [+Gold])",
 			"options": [
 				{
 					"action": [
@@ -10177,7 +10177,7 @@
 												}
 											],
 											"name": "(Continue)",
-											"text": "\"Now, about the golems. I'm curious if they are related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
+											"text": "\"Now, about the golems. I'm curious if they are related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 [+Gold]). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
 											"options": [
 												{
 													"action": [
@@ -10203,7 +10203,7 @@
 										}
 									],
 									"name": "\"About that...\" You hand him the research before telling The Courier about the giant automaton at the top of the library.",
-									"text": "\"I'm curious if this is related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
+									"text": "\"I'm curious if this is related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+1000 [+Gold]). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
 									"options": [
 										{
 											"action": [
@@ -10224,7 +10224,7 @@
 										}
 									],
 									"name": "Hand him the research and tell him about the occupants of the library.",
-									"text": "\"I'm curious if this is related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+500 Gold). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
+									"text": "\"I'm curious if this is related to another incident.\" The Courier pilfers through his satchel for a moment before giving you a map and your latest wages (+500 [+Gold]). \"A historian got quite a surprise recently at a dig site, and I would like to know if the two groups have a common source.\"",
 									"options": [
 										{
 											"action": [
@@ -10398,7 +10398,7 @@
 										}
 									],
 									"name": "\"That's quite an unusual accent you have.\"",
-									"text": "The Tinker shrugs. \"I says that evah-time one's of you blabs the samewise. And me jingle works samewise.\" To demonstrate her point, she shakes the usual coin pouch before tossing it to you. (+500 Gold)\n\"So blabs it. Same metal men?\"",
+									"text": "The Tinker shrugs. \"I says that evah-time one's of you blabs the samewise. And me jingle works samewise.\" To demonstrate her point, she shakes the usual coin pouch before tossing it to you. (+500 [+Gold])\n\"So blabs it. Same metal men?\"",
 									"options": [
 										{
 											"name": "\"I don't think so.\"",

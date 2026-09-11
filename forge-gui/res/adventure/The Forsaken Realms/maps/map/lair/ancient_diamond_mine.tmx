@@ -42,7 +42,7 @@
     &quot;text&quot;: &quot;Before you stands an ancient crystalline formation, pulsing with primordial mana. The diamonds here are remnants of Shandalar's earliest age, and can be exchanged for spells from the dawn of magic itself.&quot;,
     &quot;options&quot;: [
       {
-        &quot;name&quot;: &quot;Trade 10,000 Gold for Beta Pack&quot;,
+        &quot;name&quot;: &quot;Trade 10,000 [+Gold] for Beta Pack&quot;,
         &quot;condition&quot;: [
           { &quot;hasGold&quot;: 10000 }
         ],
@@ -57,14 +57,14 @@
         ]
       },
       {
-        &quot;name&quot;: &quot;Trade 10,000 Gold for Beta Pack&quot;,
+        &quot;name&quot;: &quot;Trade 10,000 [+Gold] for Beta Pack&quot;,
         &quot;condition&quot;: [
           { &quot;hasGold&quot;: 10000, &quot;not&quot;: true }
         ],
-        &quot;text&quot;: &quot;You don't have enough gold. The ancient diamonds require 10,000 gold to activate.&quot;
+        &quot;text&quot;: &quot;You don't have enough gold. The ancient diamonds require 10,000 [+Gold] to activate.&quot;
       },
       {
-        &quot;name&quot;: &quot;Trade 400 Shards for Beta Pack&quot;,
+        &quot;name&quot;: &quot;Trade 400 [+Shards] for Beta Pack&quot;,
         &quot;condition&quot;: [
           { &quot;hasShards&quot;: 400 }
         ],
@@ -79,11 +79,11 @@
         ]
       },
       {
-        &quot;name&quot;: &quot;Trade 400 Shards for Beta Pack&quot;,
+        &quot;name&quot;: &quot;Trade 400 [+Shards] for Beta Pack&quot;,
         &quot;condition&quot;: [
           { &quot;hasShards&quot;: 400, &quot;not&quot;: true }
         ],
-        &quot;text&quot;: &quot;You don't have enough mana shards. The ancient diamonds require 400 shards to activate.&quot;
+        &quot;text&quot;: &quot;You don't have enough mana shards. The ancient diamonds require 400 [+Shards] to activate.&quot;
       },
       {
         &quot;name&quot;: &quot;Leave&quot;,
