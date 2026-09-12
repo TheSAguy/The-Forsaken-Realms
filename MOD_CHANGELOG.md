@@ -17759,7 +17759,7 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 188: Speed-Up and Wait no longer survive a load (2026-09-12)
 
-repo only - NOT yet packaged
+PACKAGED 2026-09-12 (342 MB, fast path)
 
 User: "The Speed up and Wait seems to persist on load. I save, then check them, when I load they
 are checked still, even though they were not checked before save." Both HUD toggles write to

@@ -90,7 +90,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 188 (2026-09-12, repo only - NOT yet packaged): **Speed-Up and Wait survived a save load.** Both HUD
+- Round 188 (2026-09-12, PACKAGED - 342 MB, fast path): **Speed-Up and Wait survived a save load.** Both HUD
   toggles write session state on the `WorldStage` singleton (`fastTimeEnabled` / `waitingForTime`); neither is in
   the save and nothing reset them, so a load inherited the previous session's clock speed / wait. Reset added to
   `WorldStage.clearCache()` - **the right home for singleton state that must not outlive a save, because BOTH a
