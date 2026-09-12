@@ -11,7 +11,7 @@
  <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="30" height="17">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF+MBenoGxN5oXQtdy09fe3VD/7qSDv0F+jOJFFavjxo+pYScMwOyWBvp1FwFMLTuR7cYmTm2Qy4Kdjc6n1I8DCZDjCT09EdJHTUCK3dQGyHaD0hW10i4xgF72jGSALYwpCXcA4Msefg==
+   eJxjYBgF+MBenoGxN5oXQtdyD4z9O3no48coqD9hoI4bP6aGnTAAs1uah4FhFwFMLTuR7cYmTm2Qy4Kdjc6n1I8DCZDjCT09EdJHTUCK3dQGyHaD0hW10i4xgF72jGSwC0sYUxLuAElDHbc=
   </data>
  </layer>
  <layer id="1" name="Background" width="30" height="17">

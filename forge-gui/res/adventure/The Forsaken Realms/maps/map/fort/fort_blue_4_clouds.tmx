@@ -9,7 +9,7 @@
  <tileset firstgid="28289" source="../../../../common/maps/tileset/main-nocollide.tsx"/>
  <layer id="6" name="Collision" width="30" height="30" visible="0" opacity="0.6">
   <data encoding="base64" compression="zlib">
-   eJy9lkFOwzAQRb1PE7FjEeiGC4BK8TJngC33YNVGXIK2rGHDGiEkJA5ReiHylXxlMth1HNJ+adQ0tf08zp9JjenKZsZsUmNuMnM0gSf1k/2NQ+xnrta8KrpxYY25XY7L1rlqSf6YbKzzUuXzaus9uM74OT0cO5Q32DPB/liMw+4jsq+L/lw7kifpwT7c6aS9fkzG4+o68DH/w7aNx3aCa5X/uI+8Yp47uK69hJg7kds2q+9pketaP4apcwyJ53j50N5bpfFM8NCrQuKYrdgn2KHadGneMJ/Sej5yWVef70X9e5nUQZXKM0OYkpurWlg369E3uDcV13LsaWRvkWc8U8+WPJdfNTump0nv7uP6ahEs8mJ6GvNk5CovedaaDc7novt9CJOe0pLsr0kbd8vuOPRl7T8XU8rHdLH76Fud2xDmUDa94WJC+pmG2L5zpJDHvdgfajQ76QaEvuPzK+bjzJgnavdszz41k1yfXDlj/lvTE8EO9V0Xk1ydL3PWXM739Wsw6F2Gi0mubw3tK3iC9SXFeot55+D/kvajz8v0IrmyxmPf52SvRPjqB8+zVHUzlDlE5JfJ8ZhSoZr16ReQQoXh
+   eJy9lj1Ow0AQhafPrkVHAaThAqAALn0GaLkHFUFcggA1NNQIISFxiMCF0JPz5PGwm13/xE8aydrY++2M34wj0lZZiDx5kYtCJhN4Wj/F/9jFec7NnqdVO45LkcvluGybq5Xmj8nGPi+lyGtZnyFU42e/O3Yqb7AXiv1xK5OJ7LMqn4s+GaM+9GAOd+6a6/vZeFzbBzHmEHa58div4nKNwXMcOJEjl3eWFJM8aF3Ua1bkzgcybY4psY4nN83ayndngodZlRLvWatzgp3qzZBQM+z34OvnkcujF3mv6t/vZnVQ+hrqw9RceIQiG6JvsMY6ar/ier/jbNE1Xph3S17Ir5bdZaZp727jxnoRLPK6zDTmydB1trW2bHA+FSuHG2LSU1aa/eWauFq278Nctv4LMbVizBA7R99uOLMvexsTsu80xY7VUedx7ds9Wuy1g3Mn5lc8j5oxT/TuoctnkhtTKGc8/7aZiWCn5m6IGcuXOVsun4/NazDoXUaISW5sD+srzAv2lxb7rcs3B/+XrB9jXuacIlf3eNfvOdkrFbH+wftE7fQ5+zKlh8hHTMXUSvVsTH/io4W4
   </data>
  </layer>
  <layer id="8" name="Ground" width="30" height="30" opacity="0.62">

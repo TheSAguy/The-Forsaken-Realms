@@ -11,7 +11,7 @@
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon/dungeon_bis.tsx"/>
  <layer id="6" name="Collision" width="30" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYMAPtgmQhykFkkAz9jATj8UFIJje9sLsHrWXeDBZaOD968aJSsMwNvGhGs4j2b/o/hvO/q3iR5iJzIbx0eWpYa80tJwHmQmipQQQYQAyH1keWQ01/Ivsvy+CqPbSK10Nd3tr+RFpB4aR7UWXA+EafsLmAgAm15tN
+   eJxjYMAPtgmQhykFkgIMDHuYicfiAhBMb3thdo/aSzyYLDTw/nXjRKVhGJv4UA3nkexfdP8NZ/9W8SPMBAFkO0ByyPIgNjXslYaW8yAzQbSUACIMQOYjyyOroXY4fxFEtZde6Wq421sLTTfIGNledDkQruEnbDAAvyiaxA==
   </data>
  </layer>
  <layer id="1" name="Background" width="30" height="18">

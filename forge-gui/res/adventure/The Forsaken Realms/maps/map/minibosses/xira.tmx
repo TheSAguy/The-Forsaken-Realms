@@ -11,7 +11,7 @@
  <tileset firstgid="11905" source="../../tileset/resource_drop.tsx"/>
  <layer id="11" name="Collision" width="40" height="26">
   <data encoding="base64" compression="zlib">
-   eJzVl11uwkAMhHnMPsBtegWKckDOgNqehjOgwjHIKrLqjDz+WZUHRhopJNn1F6/3h2Pb7Y5v5NPi7+nPXZX2uq12tq2WfuYpionfg0IO65nV1sqdvh9pTr53a1sjQ+a7Ti3XZoSPSWLflbN8+NviiPgidhy/DB/jxVhz8+tAP2Pv4Liz2hQei81jZHPCm6OePD6PDd+NYjCmbL4rfJU84JhafDh/u9j6lGWTa0vn/WqMgzG99ZGpwhf18XGoxa6yZfis2rweVr+Sy1tTIr5MPN0f67vCZvWB7BHTf9tbVzSflY8Kl9SD5VG+aNwz+cvUqWbFfrJ8LHcsjrBpXabVkTAXbMxG1h3Nqpku6twYcbJ9ITN3qvJq65PUDzLgPTlXjKwrFcYMX/fXkuufactm7ZeZ+Jb6WEv/3p7LWHueZnXNpM+60XpiKbsPsxpj7YULc47nzJHcix7kO3/b9n+AZdZOz03L7DvRjO3V9sYt8hMoNu4z
+   eJzVl12OwjAMhPPYPmxvwxVgxQE5AwJOwxnQLsdAUbEwI49/IvHASCMBreOvjpOG7dza9ov8O7d2nl7uqsTrWO1srJa+5inKic+DQg7rmhVr1U7/HmmfvO82vxsZMs8lbFHMCB+T5P5XzvLhd4sj4ovYcf4yfIzXyuX1gb7G7sF5Z70pPBabx8LWhLdGPXl8HhveG+VgTNl6V/gqdcA5tfhw/Xax/SnLJp8tHX5WYx7M6e2PTBW+aIzNUstdZcvwWb15XVZ/ksvbUyK+TD49Hhu7wmaNgeyjNRi1t69oPqseFS7pB8ujfNG8Z+qX6VPNiuNk+VjtWB5h0zpOqyNhLdicjew7mlUzdUt8xMneC5m1U5XXWzvSP8iAv8m5YmRfqTBm+LpPU2uXZ/3ZeTebn821jO+9cxlrr5OcOb2a6bNutJ9Yyr6HWY+xeOHCmuM5c6T2ojt5zj/4H2CZxR3V2rTMnhPN2D5tb96i2Acsq+3g
   </data>
  </layer>
  <layer id="8" name="Background" width="40" height="26">

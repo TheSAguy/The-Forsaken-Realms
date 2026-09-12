@@ -20,6 +20,13 @@ public class DialogData implements Serializable {
     public String loctext= "";            //References a localized string for the text body.
     public DialogData[] options = new DialogData[0];      //List of sub-dialogs. Show up as options in the current one.
     public boolean isDisabled = false;
+    // Round 185 (user, on the Ancient Diamond Mine: "let's grey out the buttons if you can't afford
+    // it"). An option whose `condition` fails is normally HIDDEN - that is what makes dialogs branch,
+    // and showing every failed branch would leak content the player has not reached. A PRICE is the
+    // exception: the player should see what is on offer AND that they cannot afford it yet. Opt in
+    // per option with "greyOutIfUnavailable": true and the button is drawn disabled instead of
+    // hidden. Nothing else changes: an option without the flag behaves exactly as before.
+    public boolean greyOutIfUnavailable = false;
     // Keep the LAST option out of the scrollable area when this dialog's option list is long
     // enough to scroll (mod addition 2026-08-30, user report on the shop chooser: "There was no
     // back/cancel option, I had to build a shop" - the Back button was simply below the scroll
@@ -47,6 +54,7 @@ public class DialogData implements Serializable {
         this.options = clonedOptions.toArray(new DialogData[0]);
         this.voiceFile = other.voiceFile;
         this.isDisabled = other.isDisabled;
+        this.greyOutIfUnavailable = other.greyOutIfUnavailable;
     }
 
     @Override

@@ -259,7 +259,12 @@ public class MapDialog {
             for (DialogData option : dialog.options) {
                 if (option == pinned)
                     continue; // added after the scroll pane, below
-                if (isConditionOk(option.condition)) {
+                // Round 185: an option flagged greyOutIfUnavailable is SHOWN when its condition fails -
+                // as a disabled button - instead of vanishing. See DialogData.greyOutIfUnavailable.
+                boolean unaffordable = !isConditionOk(option.condition);
+                if (unaffordable && !option.greyOutIfUnavailable)
+                    continue;
+                {
                     String name; //Get localized label if present.
                     if (option.locname != null && !option.locname.isEmpty()) name = L.getMessage(option.locname);
                     else name = option.name;
@@ -270,7 +275,8 @@ public class MapDialog {
                     // Wrap (below) still catches genuinely long/wordy choices same as before.
                     name = "[%88]" + name;
                     TextraButton B;
-                    if (option.isDisabled) {
+                    boolean disabled = option.isDisabled || unaffordable;
+                    if (disabled) {
                         B = Controls.newTextButton(name);
                         B.setDisabled(true);
                     } else {
@@ -283,7 +289,7 @@ public class MapDialog {
                     //TODO: Reducing the space a tiny bit could help. But should be fine as long as there aren't more than 4-5 options.
                     optionHost.row(); //Add a row. Tried to allow a few per row but it was a bit erratic.
                     i++;
-                    B.setDisabled(option.isDisabled);
+                    B.setDisabled(disabled);
                 }
             }
             if (scrollOptions && i > 0) {

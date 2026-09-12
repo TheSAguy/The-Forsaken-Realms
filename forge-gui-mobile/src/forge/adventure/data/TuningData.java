@@ -286,6 +286,15 @@ public class TuningData {
     public int defeatGoldLossHard = 0;
     public int defeatGoldLossInsane = 0;
 
+    // Round 185 (user, after a duel paid four copies of one card: "It's okay to sometimes get duplicate reward
+    // cards, but 4 seems extreme. Is there a way we can at least lower duplicate probability?"). How many extra
+    // draws a card reward gets when a pick repeats a name already in that same reward - see
+    // CardUtil.generateCards(). Duplicates stay possible, just rarer: each reroll multiplies the chance of a
+    // repeat by itself (1 reroll squares it, 2 cubes it). 0 restores the old draw-with-replacement behaviour,
+    // which is also what a stock plane without the key gets... except the default here is deliberately 2, since
+    // an edition-restricted loot pool can be small enough that one reroll is not much of a filter.
+    public int rewardDuplicateRerolls = 2;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)

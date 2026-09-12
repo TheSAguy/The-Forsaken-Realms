@@ -176,15 +176,20 @@ public class WorldBackground extends Actor {
             if (dxTiles * dxTiles + dyTiles * dyTiles <= visionRadius * visionRadius) {
                 // Discovery flash (user spec 2026-08-09): the burst of tiles a town/capitol
                 // uncovers on first approach should flare fully bright for a moment before
-                // settling to the normal dimmed "explored" tier, instead of jumping straight
-                // there. revealArea()'s callback only fires for tiles that were NOT already
-                // explored, so this only flags the genuinely newly-discovered ring - already-
-                // explored tiles near a POI (e.g. re-approaching a known town) don't re-flash.
+                // settling to the normal dimmed "explored" tier, instead of jumping straight there.
+                //
+                // Round 185 (user report: "Only the part of the dungeon not covered by the town was
+                // revealed... the previous POI area it revealed is not being re-revealed"). This was
+                // revealArea() with the flash in its CALLBACK, and that callback fires only for tiles
+                // that were not already explored - so a POI found beside ground a town had already
+                // uncovered flashed a partial arc instead of its own circle, and the overlap never
+                // lit up. flashArea() reveals AND flashes every tile in the circle whatever its prior
+                // state. The hasUnexploredIn() gate preserves the original intent - re-approaching a
+                // POI you already know flashes nothing, because by then its circle holds no unknown
+                // ground at all.
                 int discoveryRadius = isTownLikePoi(poi) ? DISCOVERY_REVEAL_RADIUS_TOWN : DISCOVERY_REVEAL_RADIUS_DUNGEON;
-                world.revealArea(poiTileX, poiTileY, discoveryRadius, (tx, ty) -> {
-                    world.temporarilyReveal(tx, ty);
-                    onTileRevealed(tx, ty);
-                });
+                if (world.hasUnexploredIn(poiTileX, poiTileY, discoveryRadius))
+                    world.flashArea(poiTileX, poiTileY, discoveryRadius, this::onTileRevealed);
             }
         }
         if (currentChunkX != pos.x || currentChunkY != pos.y) {

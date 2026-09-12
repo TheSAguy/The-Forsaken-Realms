@@ -112,7 +112,7 @@ F["ConfigData"] = set("""screenWidth screenHeight skin font fontColor minDeckSiz
  contentFilterTablesEnabled showEnemyTierInName raceEditions shopBlueprintsEnabled raceShops startingColorShopSuffixes blueprintShardCostCommon
  blueprintShardCostUncommon blueprintShardCostRare modVersion welcomePopupText welcomePopupLink engineBuildVersion modVersionDate
  weightedSpawnTiersEnabled functioningNeutralTownsEnabled disableGeneticDeckOverrides caveChampionChance""".split())
-F["TuningData"] = set("""enemyTierScaleCommon enemyTierScaleUncommon enemyTierScaleRare enemyTierScaleMythic defeatGoldLossEasy defeatGoldLossNormal defeatGoldLossHard defeatGoldLossInsane playerColorlessMixChance dayLengthSeconds capitolExpansionTilesPerDay townExpansionDaysPerTile aiCastleExpansionTilesPerDay maxTerritoryRadius
+F["TuningData"] = set("""enemyTierScaleCommon enemyTierScaleUncommon enemyTierScaleRare enemyTierScaleMythic defeatGoldLossEasy defeatGoldLossNormal defeatGoldLossHard defeatGoldLossInsane rewardDuplicateRerolls playerColorlessMixChance dayLengthSeconds capitolExpansionTilesPerDay townExpansionDaysPerTile aiCastleExpansionTilesPerDay maxTerritoryRadius
  townMaxTerritoryRadius townProtectedRadiusCap speedUpMultiplier playerTerritorySpeedBonus aiTerritoryHappySpeedBonus aiTerritoryPartnerSpeedBonus
  aiTerritoryUnhappySpeedPenalty aiTerritoryWarSpeedPenalty mineWeeklyGoldPayout mineWeeklyWoodPayout mineWeeklyStonePayout mineWeeklyShardPayout
  anteRerollBaseShardCost anteRerollEscalationRate anteBuyBackMultiplier anteBuyBackMinCommon anteBuyBackMinUncommon anteBuyBackMinRare
@@ -142,7 +142,7 @@ F["ItemData"] = set("""name equipmentSlot effect description iconName questItem 
 F["RewardData"] = set("""type probability count addMaxCount cardName cardNames itemName itemNames itemRarity editions colors startDate endDate rarity subTypes
  cardTypes superTypes manaCosts keyWords colorType cardText matchAllSubTypes matchAllColors cardUnion deckNeeds rotation cardPack sourceDeck minDate
  raceEditions""".split())
-F["DialogData"] = set("action condition name locname text loctext options isDisabled pinLastOption voiceFile".split())
+F["DialogData"] = set("action condition name locname text loctext options isDisabled greyOutIfUnavailable pinLastOption voiceFile".split())
 F["ActionData"] = set("""key val removeItem addItem addLife addGold addShards addWood grantRingGift addStone deleteMapObject activateMapObject
  battleWithActorID giveBlessing setColorIdentity advanceCharacterFlag advanceQuestFlag advanceMapFlag setEffect setCharacterFlag setQuestFlag
  setMapFlag grantRewards grantRewardsChoice issueQuest addMapReputation POIReference addColorReputationPlayerColors addColorReputationColor addColorReputationAmount runCommand

@@ -428,10 +428,30 @@ public class CardUtil {
                         + taken.size() + " distinct name(s) - filled " + result.size() + " at most "
                         + data.maxCopies + " copies each (the deck comes up short rather than illegal)");
         } else {
+            // ROUND 185 (user, after a duel paid out FOUR Oblivion Rings and another three Angels of
+            // Light: "It's okay to sometimes get duplicate reward cards, but 4 seems extreme. Is there
+            // a way we can at least lower duplicate probability?"). This drew with replacement, so a
+            // pool narrowed by the winner's colour sets could return the same name every time.
+            //
+            // Deliberately NOT the uniqueCards dedup: the user wants duplicates rarer, not banned -
+            // a duplicate is still a legitimate, occasionally welcome drop. So each pick that repeats
+            // a name already in this reward gets another draw, up to rewardDuplicateRerolls attempts,
+            // and whatever the last draw gives is kept. One reroll squares the duplicate chance
+            // (a 1-in-3 pool repeat becomes 1-in-9), two cubes it, and a pool holding only one legal
+            // name still pays out rather than coming up empty.
+            int rerolls = Math.max(0, Config.instance().getTuningData().rewardDuplicateRerolls);
+            java.util.Set<String> takenNames = new java.util.HashSet<>();
             for (int i = 0; i < count; i++) {
-                PaperCard candidate = pool.get(r.nextInt(pool.size()));
-                if (candidate != null)
+                PaperCard candidate = null;
+                for (int attempt = 0; attempt <= rerolls; attempt++) {
+                    candidate = pool.get(r.nextInt(pool.size()));
+                    if (candidate == null || !takenNames.contains(candidate.getCardName()))
+                        break; // a fresh name (or nothing to compare) - take it
+                }
+                if (candidate != null) {
+                    takenNames.add(candidate.getCardName());
                     result.add(finishCandidate(candidate, data, r));
+                }
             }
         }
         return result;

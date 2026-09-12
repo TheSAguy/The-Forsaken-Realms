@@ -2771,3 +2771,10 @@ predicate token and `templateMainSize()`), `adventure/util/Config` (`racedStarte
 `adventure/util/DungeonRotation` (the `NoRotate` tag), `adventure/util/SpawnTierWeighting` (the color-skew label),
 and the plane's `world/items.json`, `world/points_of_interest.json`, `maps/map/main_story/spawn.tmx` and two
 `sprites/enemy/basic/humanoid` atlases.
+
+## Round 185 (2026-09-12) - no engine edits
+
+Adventure-side only: `adventure/world/World` (new `hasUnexploredIn()`), `adventure/stage/WorldBackground` (the
+discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `adventure/util/MapDialog` (the
+opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
+`Collision` cells, version stamps).

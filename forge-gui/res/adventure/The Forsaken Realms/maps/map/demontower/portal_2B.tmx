@@ -9,7 +9,7 @@
  <tileset firstgid="13697" source="../../tileset/resource_drop.tsx"/>
  <layer id="6" name="Collision" width="60" height="60">
   <data encoding="base64" compression="zlib">
-   eJztlltuAzEIRfNbqUvoerL/JVX9iGS1MOZxwKQJ0kiTxFzu8RAz94/b7f6+/sT6vXSfrZPxJmlQmpZ9ILSjfqx6lHaFbiXvRN0KX2RU7B/pieZd9SmdSXtXrU2fKxVBn39T/FTrT+uTK11iDj0jb6QGPb+7569Xm/JGvvN5NT26Ow3LPeXPk2+tId1nNTO83XWz9aRn5em1LKtXe7fW+r1WJ+orw6npWtZGIuqRZJX0LOszdTK5JKs3p6OWln+CN9OXJ6Oj/iTWbl7iTO0+QyK1J/A+tKJ5Hefc7/xX4V01iH2rrn3Sq6QTrR19P4wEdc539PQ03swz9qydwLtqeWp637vJOUyERUvj3eVqa6P9QTNrmiSvh7uK1+KP5tU0MvW6eDUPVbzWvqB4pbXdvNacCOtuz7TfNB1LZHqN7NErf1eeMzGN9Se+Put4JT1Lf3s0KvzRelHNDlZKd9WmvFE6FaxrnSkaHbyExjPwkmcB5WV6Lz90KC9vXi7+G++aI93TszybT/Fa36Vov6RXT/76WVpDhHVvLQzRtRMiwhxZNz00n5Fe8NbNBrm/1XOJOltJLzveU36r9n7HfOoZdbJKsybqOTMvqYjMs6jnSH70vyU9J83Lq13fuixhjw==
+   eJztlltuw0AIRfObjXn/S+pXpFELHh4HjN0gRXLT4XLPDBl8vF+v4/v5E+v30nO2TsabpEFpWvaB0I76sepR2hW6lbwTdSt8kVGxf5N5V/0n7l21Nn2vVAR9/03xU60/rU/OdIk5dEfeSA16fnfPX6825Y185/NqenR3GpZnyp8n31pDes5qZni762brSWfl6bUsq1d7t9b6vVYn6ivDqela1kYi6pFklfQs6zN1Mrkkqzeno5aWfwVvpi+vjI76k1i7eYk7tfsO6fwd/M7NnlHXXhE+/xPvqkHsW3XtK71KOtHa0ffDK+/5jp6exps547vxrlqemt73bnIOE2HR0nh3udraaH/QzJomyevhruK1cpG8mkamXhev5qGK19oXFK+0tpvXmhNh3e2Z9j9Np7rXyB4983fmORPTWC0+aT1Lf3s0KvzRelHNDlZKd9WmvFE6FaxrnSkaHbyExh14ybuA8jK9lz86lJcvLxdP411zpGd6lmfzKV7ruxTtl/TqyV//ltYQYd1bC0N07YSIMEfWTQ/NZ6QXvHWzQe5v9Vyi7lbSy1TeKi875qvOqJNVmjVRz5l5SUVknkU9R/K1nJ2GdE4Z3uNBnx+/bWDJ
   </data>
  </layer>
  <layer id="1" name="Lava" width="60" height="60" opacity="0.81" tintcolor="#ff5500">

@@ -17757,6 +17757,90 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 185: v1.10 RELEASED; a POI next to a known town flashes its whole circle; stray invisible collision (2026-09-12)
+
+repo only so far - NOT yet packaged (the user is playing v1.10)
+
+### v1.10 "Know Your Enemy" RELEASED - desktop + Android
+
+Tag `tfr-v1.10` @ `1d55dab1910`, published 2026-09-12 04:04 UTC and marked Latest:
+`The-Forsaken-Realms-v1.10.zip` (264 MB), `forsaken-realms-1.10-signed-aligned.apk` (13.3 MB), `assets.zip`
+(216 MB). Stamps: modVersion 1.10 / modVersionDate 09.11 / tfr.version 1.10 / manifestVersionCode 11000 /
+engine 09.11. Pre-upload checks all passed: package `com.thesaguy.forsakenrealms`, versionCode 11000 (up from
+10900), versionName 1.10, keystore fingerprint EE:60:39:25, and - the one that actually bites if missed - the
+APK's `assets/build.txt` and assets.zip's `res/build.txt` both read `2026-09-12 04:00:43`, so the pair matches
+and first-run asset download resolves.
+
+**The starter-deck fix was verified BEFORE publishing**, because the user's playtest log showed no new game had
+been started and it is the fix for the bug they reported. Reproduced their exact configuration in the agent game
+(Red Dragon / Red / Standard / Dragons of Tarkir): `[TFR-DeckGen] bucket wanted 12 card(s) but its legal pool
+holds only 2 distinct name(s) - filled 8 at most 4 copies each`, then `[DTK] filled only 56 of 60 - widening to
+the race's full set list`, then a legal 60 from `[DTK, TDM, M19, IKO]` with a maximum of 2 copies of any card.
+DTK has exactly two red Common one-and-two-drops, which is the whole origin of the seven Kolaghan Stormsingers.
+
+### A POI discovered beside a known town flashes only an arc
+
+User: *"if you find/leave a town it clears the FOG... Then, if you happen to find a different POI, it does not
+clear a circle, the area that was cleared by the town blocks a full circle clear."* Then, correcting a wrong
+theory of mine: *"Only the part of the dungeon not covered by the town was revealed. It's an overlapping issue,
+where the previous POI area it revealed is not being re-revealed."* Exactly right.
+
+`WorldBackground.draw()` ran the discovery flash as `revealArea(..., cb)` with the flash INSIDE the callback -
+and `revealArea` skips tiles that are already explored, so the callback never fired for them. A POI whose circle
+overlapped ground a town had already uncovered therefore flashed only the crescent outside the town's disc. The
+old comment defended this ("already-explored tiles near a POI don't re-flash"), but that reasoning only covers
+RE-approaching a POI you already know, not a first discovery next to explored ground.
+
+Now: `flashArea()` (which reveals AND flashes every tile in the circle whatever its prior state), gated on a new
+`World.hasUnexploredIn(cx, cy, radius)`. First approach lights the whole circle; a later walk past the same POI
+lights nothing, because by then its circle holds no unknown ground - the original intent, kept. Worth knowing:
+the radii differ by design and always have - town/capital/castle 11, dungeon/cave 6.
+
+### Grey out a dialog option you cannot afford
+
+User, on the Ancient Diamond Mine: *"Let's grey out the buttons if you can't afford it."* The map listed each
+trade TWICE - once gated on `hasGold: 10000`, once on the same with `"not": true` and a "you don't have enough"
+message - so the button always looked live and the refusal only arrived after pressing it. New opt-in
+`DialogData.greyOutIfUnavailable`: an option whose `condition` fails is drawn as a DISABLED button instead of
+being hidden. Opt-in on purpose - hiding failed options is what makes dialogs branch, and showing them all would
+leak content the player has not reached. `ancient_diamond_mine.tmx` sets it on both trades and the two duplicate
+options are gone. Eight other maps (the five castles, the arena, spawn, graveyard) still use the duplicate trick
+and were left alone.
+
+### Invisible walls: 17 stray collision cells, and what was deliberately NOT touched
+
+User: *"I seem to be running into invisible borders... not another dungeon with a collision I can't see."* The F12
+collision overlay settled it. These maps carry a dedicated `Collision` tile layer, drawn first so every later
+layer paints over it, holding a solid-black tile that carries a collision box - the normal technique, since
+`MapStage.loadCollision()` reads collision from every tile layer. The defect is only the cells where the art on
+top is ordinary floor.
+
+New `dev-tools/stray_collision_qa.py` flags a cell on three conditions together: the block is on the `Collision`
+layer, the visible tile is floor BY THAT MAP'S OWN USAGE (walkable in >= 80% of its appearances, so water and
+wall-caps never qualify), and the cell is isolated (at most one blocked orthogonal neighbour, so the player can
+walk around it). 17 cells cleared across 14 maps. Two maps were REVERTED after the tool ate them: iterating to a
+fixed point unravelled a run of four along y=1 in `fort_blue_5_temple` that seals a gap in the wall above, and two
+vertical pairs in `kiora_island` - contiguous runs are barriers, not mistakes.
+
+**The user's own fort is not in that list.** `fort_colorless_5_evil`'s two candidate cells sit inside wall masses,
+where clearing would punch holes, so the isolation rule correctly rejects them - which means the two squares in
+their overlay screenshot are not tile collision at all. Most likely actor bounds (the map has 9 waypoint objects
+plus pickups); unresolved, and the way to settle it is to dump the live actor list inside that fort.
+
+Three wrong turns worth recording, all from assuming instead of reading: both screenshots were assumed to be the
+same map (Tolaria is `player_town.tmx`, Mind Slaver's Encampment is `fort_colorless_5_evil.tmx` - a fort dungeon,
+found in one query of points_of_interest.json); `island_town.tmx` was analysed at length though the user was never
+in it; and a shop-rendering theory was built on a template whose shops turned out to have art after all. The POI
+entry should have been the FIRST lookup.
+
+### Also
+
+`dev-tools/atlas_align_qa.py` found two maps whose collision tile draws nothing at all (`cave_huge`,
+`Witherbloom_Classroom`) - separate from the above, not yet addressed. The user's save-1 deck was rebuilt for
+early-game Insane (see the round's own notes): 7 cards out (2x Fell the Pheasant, which only hits flyers; 2x Giant
+Opportunity, dead without a Food engine; an aura; a surplus trick), 7 in (Chameleon Colossus, Rumbling Baloth,
+Rootless Yew, Grafted Wargear's free re-equip, Gate Smasher's trample, two cheap bodies).
+
 ## Round 184: a cave that never finished loading; seven copies of one common in a starter deck (2026-09-11)
 
 The user's first playtest of the round-183 build, and everything it turned up. built 18:44, PACKAGED 18:56 - 342 MB; verified in the agent game on a COPY of the user's own save (their files untouched): the Black Tower dungeon that used to die mid-load came up with all 18 actors, zero NullPointerException / 'Error loading map' in the log, and the [TFR-SpawnTier] line now reads W1.0 U1.0 B1.0 R1.0 G1.0 with blue's label fixed. **The user then re-entered

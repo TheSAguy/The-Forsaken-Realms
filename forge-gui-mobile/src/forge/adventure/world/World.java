@@ -3901,6 +3901,30 @@ public class World implements Disposable, SaveFileContent {
     }
 
     /**
+     * Round 185 (user: "the previous POI area it revealed is not being re-revealed"): is there any
+     * still-unknown ground inside this circle? WorldBackground uses it as the "is this a genuine first
+     * discovery" test, so a POI whose circle overlaps ground a town already uncovered can still flash
+     * and reveal the WHOLE circle, while walking past a POI you already know flashes nothing.
+     */
+    public boolean hasUnexploredIn(int centerWorldX, int centerWorldY, int radius) {
+        if (!isFogOfWarEnabled() || explored == null)
+            return false;
+        int radiusSq = radius * radius;
+        for (int wx = Math.max(0, centerWorldX - radius); wx <= Math.min(width - 1, centerWorldX + radius); wx++) {
+            int dx = wx - centerWorldX;
+            for (int wy = Math.max(0, centerWorldY - radius); wy <= Math.min(height - 1, centerWorldY + radius); wy++) {
+                int dy = wy - centerWorldY;
+                if (dx * dx + dy * dy > radiusSq)
+                    continue;
+                int rawY = height - wy - 1;
+                if (rawY >= 0 && rawY < height && !explored[wx][rawY])
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Reveals only the tiles the player actually OWNS (player biome bit set) within the given
      * radius of a center - the ownership-accurate replacement (2026-08-13) for the load-time
      * Capitol sweep that used to reveal the whole geometric territory-radius disc, ocean and

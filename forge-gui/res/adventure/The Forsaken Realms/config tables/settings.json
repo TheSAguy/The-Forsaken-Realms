@@ -195,6 +195,13 @@
     "defeatGoldLossHard": 150,
     "defeatGoldLossInsane": 200,
 
+    // Round 185 (user, after one duel paid FOUR Oblivion Rings and the next three Angels of Light: "It's okay to
+    // sometimes get duplicate reward cards, but 4 seems extreme. Is there a way we can at least lower duplicate
+    // probability?"). Extra draws a card reward gets whenever a pick repeats a name already in that same reward.
+    // Duplicates stay possible - just much rarer, since each reroll multiplies the repeat chance by itself.
+    // Raise for fewer duplicates; 0 restores the old draw-with-replacement behaviour.
+    "rewardDuplicateRerolls": 2,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).

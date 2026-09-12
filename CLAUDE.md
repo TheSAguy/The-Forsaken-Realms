@@ -50,9 +50,9 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-11 (round 184; v1.09 RELEASED + rounds 173-184 on top; ENGINE = 09.11 daily since round 182) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-12 (round 185; v1.10 RELEASED; ENGINE = 09.11 daily since round 182) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 184, 2026-09-11).** The user's calls, in their order:
+- **NEXT SESSION starts here (updated round 185, 2026-09-12).** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
      later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
      rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
@@ -90,6 +90,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 185 (2026-09-12, repo only so far - NOT yet packaged (the user is playing v1.10)): **v1.10 "Know Your Enemy" RELEASED** - tag `tfr-v1.10` @ `1d55dab1910`,
+  published 04:04 UTC, desktop zip 264 MB + APK 13.3 MB + assets.zip 216 MB, all pre-upload checks passed (the
+  APK/assets `build.txt` pair both `2026-09-12 04:00:43`). The starter-deck fix was reproduced in the agent game
+  first (DTK holds only TWO red Common 1-2 drops; the cap holds at 4, the widening fires at 56-of-60, the final
+  deck is a legal 60 across four sets). **Fog: a POI found beside a known town flashed only an arc** -
+  `revealArea`'s callback skips already-explored tiles, so the overlap never lit; now `flashArea` gated on the new
+  `World.hasUnexploredIn()`. **Dialog options can grey out** (`DialogData.greyOutIfUnavailable`, on the Ancient
+  Diamond Mine's two trades). **17 stray invisible-collision cells cleared** across 14 maps
+  (`dev-tools/stray_collision_qa.py`); `fort_blue_5_temple` + `kiora_island` reverted (contiguous = real barrier).
+  STILL OPEN: the two blockers in `fort_colorless_5_evil` are NOT tile collision - dump the live actor list there.
 - Round 184 (2026-09-11, built 18:44, PACKAGED 18:56 - 342 MB; verified in the agent game on a COPY of the user's own save (their files untouched): the Black Tower dungeon that used to die mid-load came up with all 18 actors, zero NullPointerException / 'Error loading map' in the log, and the [TFR-SpawnTier] line now reads W1.0 U1.0 B1.0 R1.0 G1.0 with blue's label fixed): the first playtest of the 183 build. **A cave never finished loading and trapped
   the player at its entrance** (the user's "it said Autosaving and I could not move") - `BiomeData.getEnemy()` read
   the lazily-built `enemyList` field directly, and round 181's dungeon re-theme was the first caller to reach it on a
