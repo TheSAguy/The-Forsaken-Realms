@@ -2779,6 +2779,18 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 188 (2026-09-12) - no engine edits
+
+Adventure-side only: `adventure/stage/WorldStage` (`clearCache()` now clears `waitingForTime` and
+`fastTimeEnabled`, plus a corrected comment about which paths reach that reset) and
+`adventure/stage/GameHUD` (one `syncCheckBox()` helper; the Speed-Up box is now read back from
+WorldStage the way the Wait box always was).
+
+Worth knowing: `WorldStage.clearCache()` is reached by BOTH a save load (`WorldStage.load()` calls it
+first) and a new game (World's generation calls it last), so it is the right home for any singleton
+state that must not outlive a save. A comment in WorldStage used to claim new games bypassed it; that
+was wrong and is now fixed.
+
 ## Round 187 (2026-09-12) - ONE engine file: the startup mode selector
 
 `forge/Forge.java` (startup, ~line 218). User: "Have the game go directly to the Adventure Main screen

@@ -1372,11 +1372,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // the biome name OR the computed modifier actually changed (a reputation-tier crossing can
     // change the modifier while the player stays on one continuously-named biome, e.g. standing
     // still during a fight that shifts that color's reputation - biome-name-only tracking missed
-    // that case, adversarial review finding 2026-08-15). Reset in clearCache() (called by load())
-    // so a stale value from a previous session's last-logged biome can't suppress the first real
-    // entry after loading a save; a brand new game doesn't route through clearCache() at all, so
-    // this reset doesn't cover that path - narrow, cosmetic-only residual gap, not worth new
-    // new-game-init plumbing to close.
+    // that case, adversarial review finding 2026-08-15). Reset in clearCache() so a stale value
+    // from a previous session's last-logged biome can't suppress the first real entry after
+    // loading a save.
+    // (Round 188 correction: this used to say a brand new game does not route through
+    // clearCache(), leaving a residual gap. It does - World's generation calls
+    // WorldStage.getInstance().clearCache() as its last step - so both paths are covered and there
+    // is no gap. Re-verified while fixing the Speed-Up/Wait toggles, which rely on the same reset.)
     private String lastLoggedSpeedBiome = null;
     private float lastLoggedSpeedModifier = Float.NaN;
 
@@ -1919,6 +1921,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // Session-static state in the mod's world-level helpers (2026-09-02 review): neither is
         // persisted, both must forget the previous run/save here.
         DungeonRotation.resetSessionState();
+        // Round 188, user: "The Speed up and Wait seems to persist on load. I save, then check
+        // them, when I load they are checked still, even though they were not checked before save."
+        // Both are HUD toggles over session state on this singleton - neither is written to the
+        // save - so loading a save left whatever the previous session had switched on still
+        // running, and the clock either raced or sat waiting in a save that never asked for it.
+        // They belong with the rest of the not-persisted state cleared here.
+        waitingForTime = false;
+        fastTimeEnabled = false;
         TerritoryControl.clearPendingCapitolDefense();
         TerritoryControl.resetSessionState(); // round 123 review S2-5: per-session territory caches must not outlive the save
         background.clear();

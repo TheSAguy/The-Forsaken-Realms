@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 188: Speed-Up and Wait no longer survive a load (2026-09-12)
+
+repo only - NOT yet packaged
+
+User: "The Speed up and Wait seems to persist on load. I save, then check them, when I load they
+are checked still, even though they were not checked before save." Both HUD toggles write to
+`WorldStage` (`setFastTimeEnabled` / `setWaitingForTime`), and WorldStage is a process singleton
+whose two flags are session state - neither is written to the save. Nothing reset them on load, so
+a loaded game inherited whatever the previous session had switched on: the clock either ran at the
+fast multiplier or sat waiting, in a save that never asked for either.
+
+Fixed in `WorldStage.clearCache()`, which already exists as the "state that must not outlive the
+save" reset and is reached by BOTH paths - `load()` calls it first thing, and World's generation
+calls it as the last step of a new game.
+
+Second, separate half of the same report: the two boxes were not treated alike. `waitCheckBox` is
+re-synced from the WorldStage flag every frame (so it follows when the wait self-clears on
+movement), but `speedCheckBox` was only ever WRITTEN, never read back - GameHUD is a singleton
+too, so its tick outlived the load regardless of what the flag said. Both now go through one
+`syncCheckBox()` helper, so the display can no longer disagree with the game in either direction.
+
+Also corrected a comment that was simply wrong, next to the code being changed: it claimed "a
+brand new game doesn't route through clearCache() at all", describing a residual gap in the
+biome-logging reset. A new game DOES route through it (World's generation calls it), so there was
+no gap. A wrong note about which paths a reset covers is exactly what produces bugs like this one.
+
 ## Round 187: crowned enemies are never smaller than a Master; a delivery pays the town that sent you; the game boots straight into Adventure (2026-09-12)
 
 PACKAGED 2026-09-12 (342 MB, fast path - stock asset tree already matched the base install)

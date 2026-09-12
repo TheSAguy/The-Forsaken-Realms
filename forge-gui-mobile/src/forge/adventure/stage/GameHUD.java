@@ -883,14 +883,23 @@ public class GameHUD extends Stage {
         boolean showWaitToggle = onOverworld && WorldSave.getCurrentSave().getWorld().isDayNightCycleEnabled();
         waitCheckBox.setVisible(showWaitToggle);
         speedCheckBox.setVisible(showWaitToggle);
-        // Keep the box in sync when WorldStage clears the wait itself (player moved) -
+        // Keep the boxes in sync when WorldStage changes either flag itself - it clears the wait
+        // when the player moves, and clears both on load (round 188).
         // setProgrammaticChangeEvents avoids re-triggering our own ChangeListener.
-        boolean waiting = WorldStage.getInstance().isWaitingForTime();
-        if (waitCheckBox.isChecked() != waiting) {
-            waitCheckBox.setProgrammaticChangeEvents(false);
-            waitCheckBox.setChecked(waiting);
-            waitCheckBox.setProgrammaticChangeEvents(true);
-        }
+        syncCheckBox(waitCheckBox, WorldStage.getInstance().isWaitingForTime());
+        // Round 188: the speed box was never synced, only written. GameHUD is a singleton too, so
+        // its tick survived the load that reset the flag and the box stayed ticked over a clock
+        // running at normal speed - the display disagreeing with the game either way is the bug.
+        syncCheckBox(speedCheckBox, WorldStage.getInstance().isFastTimeEnabled());
+    }
+
+    /** Show {@code value} without firing the box's own ChangeListener back at WorldStage. */
+    private static void syncCheckBox(CheckBox box, boolean value) {
+        if (box.isChecked() == value)
+            return;
+        box.setProgrammaticChangeEvents(false);
+        box.setChecked(value);
+        box.setProgrammaticChangeEvents(true);
     }
 
     private void updateAudioFades(float delta) {
