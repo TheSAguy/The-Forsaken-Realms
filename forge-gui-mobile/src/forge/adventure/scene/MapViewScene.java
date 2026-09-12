@@ -254,9 +254,17 @@ public class MapViewScene extends UIScene {
         // in enter()) - colored the same as that mage's minimap dot for a consistent read. Safe
         // on every plane, not just this one: getTerritoryMages() simply returns empty where
         // Territory Control isn't active.
+        // Round 183 (code review S10): ONE "Under Attack!" per town, with the attacker count - a label per mage
+        // stacked at the same town used up the shift budget, so the garrison label placed after them was the
+        // one dropped, on exactly the town that most needed it.
+        java.util.Map<String, Integer> attackersPerTown = new java.util.HashMap<>();
+        for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages())
+            if (mage.territoryTarget != null)
+                attackersPerTown.merge(mage.territoryTarget.getID(), 1, Integer::sum);
+        java.util.Set<String> labelledTowns = new java.util.HashSet<>();
         for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
             PointOfInterest targetPoi = mage.territoryTarget;
-            if (targetPoi == null)
+            if (targetPoi == null || !labelledTowns.add(targetPoi.getID()))
                 continue;
             // Fog-of-war gate (2026-08-15 adversarial review finding) - same check the mage-dot
             // marker loop in enter() already applies to the mage's OWN position; without it this
@@ -266,7 +274,8 @@ public class MapViewScene extends UIScene {
             int targetTileY = (int) (targetPoi.getPosition().y / WorldSave.getCurrentSave().getWorld().getTileSize());
             if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(targetTileX, targetTileY))
                 continue;
-            TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] Under Attack!");
+            int attackers = attackersPerTown.getOrDefault(targetPoi.getID(), 1);
+            TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] Under Attack!" + (attackers > 1 ? " x" + attackers : ""));
             label.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
             placeDetailLabel(label, targetPoi.getPosition().x, targetPoi.getPosition().y, placedLabelRects);
         }
@@ -317,6 +326,13 @@ public class MapViewScene extends UIScene {
      *  and short enough that the label is still plainly attached to its own POI. */
     private static final int MAX_LABEL_SHIFTS = 4;
 
+    private static boolean overlapsAny(Rectangle rect, List<Rectangle> placed) {
+        for (Rectangle other : placed)
+            if (rect.overlaps(other))
+                return true;
+        return false;
+    }
+
     private void placeDetailLabel(TypingLabel label, float worldX, float worldY, List<Rectangle> placedLabelRects) {
         table.addActor(label);
         details.add(label);
@@ -337,20 +353,16 @@ public class MapViewScene extends UIScene {
         // garrison label slid far enough from its own town to come to rest over somebody else's,
         // which reads as a flat lie about who holds that town. Bounded to four steps now; a label
         // that still cannot find room is dropped rather than parked somewhere untrue.
-        boolean moved = true;
+        // Round 183 (code review S10): every position up to MAX_LABEL_SHIFTS is TESTED - the old loop stopped after
+        // the 4th shift without checking it, so the effective cap was 3.
         int shifts = 0;
-        while (moved && shifts < MAX_LABEL_SHIFTS) {
-            moved = false;
-            for (Rectangle placed : placedLabelRects) {
-                if (rect.overlaps(placed)) {
-                    rect.y -= label.getHeight();
-                    moved = true;
-                    shifts++;
-                    break;
-                }
-            }
+        boolean blocked = overlapsAny(rect, placedLabelRects);
+        while (blocked && shifts < MAX_LABEL_SHIFTS) {
+            rect.y -= label.getHeight();
+            shifts++;
+            blocked = overlapsAny(rect, placedLabelRects);
         }
-        if (moved) { // still colliding after the cap - better absent than misplaced
+        if (blocked) { // still colliding after the cap - better absent than misplaced
             table.removeActor(label);
             details.remove(label);
             detailAnchors.remove(detailAnchors.size() - 1);

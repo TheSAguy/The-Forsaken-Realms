@@ -105,17 +105,108 @@ public class WorldSave {
         return pointOfInterestChanges.values();
     }
 
+    /** Round 183: true once a game exists in this session (a load or a new game succeeded) - only then is
+     *  there a running game worth snapshotting before a load. */
+    private static boolean liveGame = false;
+    /** Round 183: set by readSave() the moment it starts overwriting the live header / player / world. */
+    private static boolean loadTouchedLiveState = false;
+    /** Round 183: a load failed after touching the live game and the rollback failed too - the in-memory
+     *  game is a hybrid of two saves, so nothing may be written until a load or a new game succeeds. */
+    private static boolean saveBlocked = false;
+
     static public boolean load(int currentSlot) {
         Forge.invokeWorldSave = true; // This is for dispose method check
         String fileName = WorldSave.getSaveFile(currentSlot);
         if (!new File(fileName).exists())
             return false;
         new File(getSaveDir()).mkdirs();
+        // Round 183 (code review E4): a load overwrites the live player and world IN PLACE. One that failed
+        // halfway left a hybrid - the loaded save's player with a half-applied world - that the menu then
+        // returned to, and the next of WorldStage's autosaves wrote it over auto_save.sav. A running game is
+        // now snapshotted first (the same serializers a save uses, into memory) and restored if the load
+        // fails after touching anything. A RuntimeException inside player.load() also escaped both catches.
+        byte[] rollback = liveGame ? currentSave.snapshotForRollback() : null;
+        loadTouchedLiveState = false;
+        boolean loaded;
+        try (FileInputStream in = new FileInputStream(fileName)) {
+            loaded = readSave(in, currentSlot);
+        } catch (Exception e) {
+            if (lastLoadError == null)
+                lastLoadError = e.getClass().getSimpleName() + (e.getMessage() == null ? "" : ": " + e.getMessage());
+            System.err.println("[TFR-Load] load of slot " + currentSlot + " failed: " + e);
+            e.printStackTrace();
+            loaded = false;
+        }
+        if (loaded) {
+            liveGame = true;
+            saveBlocked = false;
+            return true;
+        }
+        if (loadTouchedLiveState)
+            rollBack(rollback);
+        return false;
+    }
+
+    /** Round 183: puts the pre-load snapshot back, or - when there is none or it will not load - blocks saving. */
+    private static void rollBack(byte[] snapshot) {
+        if (snapshot != null) {
+            try {
+                if (readSave(new ByteArrayInputStream(snapshot), INVALID_SAVE_SLOT)) {
+                    System.err.println("[TFR-Load] rolled back to the game that was running before the failed load");
+                    lastLoadError = (lastLoadError == null ? "" : lastLoadError + "\n\n")
+                            + "Your current game was restored exactly as it was.";
+                    return;
+                }
+            } catch (Exception e) {
+                System.err.println("[TFR-Load] rollback failed: " + e);
+                e.printStackTrace();
+            }
+        }
+        saveBlocked = true;
+        System.err.println("[TFR-Load] the running game could NOT be restored - saving is OFF until a load or a new game succeeds");
+        lastLoadError = (lastLoadError == null ? "" : lastLoadError + "\n\n")
+                + "Your current game could not be restored, so saving is switched off until you load a save or start a new game.";
+    }
+
+    /** Round 183: the running game, serialized exactly as save() would write it, into memory. Null when a
+     *  serializer reports an error (then a failed load blocks saving instead of rolling back). */
+    private byte[] snapshotForRollback() {
         try {
-            try (FileInputStream fos = new FileInputStream(fileName);
+            SaveFileData playerData = player.save();
+            SaveFileData worldData = world.save();
+            SaveFileData worldStageData = WorldStage.getInstance().save();
+            SaveFileData poiData = pointOfInterestChanges.save();
+            if (!getExceptionMessage(playerData, worldData, worldStageData, poiData).isEmpty()) {
+                System.err.println("[TFR-Load] no rollback snapshot - a serializer reported an error");
+                return null;
+            }
+            SaveFileData mainData = new SaveFileData();
+            mainData.store("saveFormatVersion", SAVE_FORMAT_VERSION);
+            mainData.store("player", playerData);
+            mainData.store("world", worldData);
+            mainData.store("worldStage", worldStageData);
+            mainData.store("pointOfInterestChanges", poiData);
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            try (DeflaterOutputStream def = new DeflaterOutputStream(bytes);
+                 ObjectOutputStream oos = new ObjectOutputStream(def)) {
+                oos.writeObject(header);
+                oos.writeObject(mainData);
+            }
+            System.out.println("[TFR-Load] rollback snapshot taken (" + bytes.size() + " bytes)");
+            return bytes.toByteArray();
+        } catch (Exception e) {
+            System.err.println("[TFR-Load] no rollback snapshot: " + e);
+            return null;
+        }
+    }
+
+    /** The body of a load, from any source - a save file, or the rollback snapshot. */
+    private static boolean readSave(InputStream source, int currentSlot) throws IOException, ClassNotFoundException {
+        {
+            try (InputStream fos = source;
                  InflaterInputStream inf = new InflaterInputStream(fos);
                  ObjectInputStream oos = new ObjectInputStream(inf)) {
-                currentSave.header = (WorldSaveHeader) oos.readObject();
+                WorldSaveHeader loadedHeader = (WorldSaveHeader) oos.readObject();
                 SaveFileData mainData = (SaveFileData) oos.readObject();
                 // Round 144 (code review 4.7): checked BEFORE any sub-object is read, which is the
                 // whole point - a format this build cannot read must be refused while the save on
@@ -130,6 +221,8 @@ public class WorldSave {
                             + ". The save on disk is unchanged.");
                     return false;
                 }
+                loadTouchedLiveState = true; // round 183: from here on the live game is being overwritten
+                currentSave.header = loadedHeader;
                 currentSave.player.load(mainData.readSubData("player"));
                 GamePlayerUtil.getGuiPlayer().setName(currentSave.player.getName());
                 try {
@@ -217,9 +310,6 @@ public class WorldSave {
                 currentSave.onLoadList.emit();
 
             }
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-            return false;
         }
         return true;
     }
@@ -315,6 +405,8 @@ public class WorldSave {
             System.out.println("[TFR-NeutralTowns] post-setup persistence check: " + stillSeeded
                     + " town(s) still flagged neutralSeeded in this save");
         }
+        liveGame = true;     // round 183 (E4): a real game now exists; a blocked save state is over
+        saveBlocked = false;
         return currentSave;
     }
 
@@ -331,6 +423,11 @@ public class WorldSave {
     }
 
     public boolean save(String text, int currentSlot) {
+        if (saveBlocked) { // round 183 (E4): the in-memory game is two saves mixed - never write it over a real file
+            System.err.println("[TFR-Save] refused \"" + text + "\": a failed load could not be rolled back -"
+                    + " load a save or start a new game first");
+            return false;
+        }
         header.name = text;
 
         String fileName = WorldSave.getSaveFile(currentSlot);

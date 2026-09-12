@@ -17757,6 +17757,209 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 183: how hostile the ground under you is - seven kinds of land and a color skew; the quest-tag family closed; the code review's last sixteen rows (2026-09-11)
+
+User: *"What I'm hoping we have is that the Player land is the 'Friendliest' given it's his land. Neutral is somewhere
+in the middle. AI should probably be a little more hostile than Neutral on Neutral Reputation and get a lot more hostile
+at War. On Partner, there should be a very small chance of Archmage attacks, since you [are] on friendly terms. Can you
+review what we have and see if it matches this and if not do some tweaks."* - plus the code review's remaining open
+items and E4 (unblocked by the round-182 engine merge). built 16:24, PACKAGED 16:36 - 342 MB, the fast path (the stock tree was re-copied by round 182's package an hour earlier); the SHIPPED table was parsed with the SHIPPED jar before the user played it (a small TableCheck against the packaged jar: 7 week brackets, 7 territory rows, the multiplier fields read, and the week-21 shares came out 46/29/24/1 ... 2/13/38/48 exactly as designed) - a parse failure would have been silent in game, since Config catches it and the feature no-ops; the agent-game run followed.
+
+### The hostility ladder
+
+It did not match. Two things were wrong before this round:
+
+- **The Wasteland and a merely-NEUTRAL AI color were the same row.** `SpawnTierWeighting.resolveDelta()` fell through
+  to `NEUTRAL` for ownerless land, and `NEUTRAL` was the all-zero baseline row, so walking into a rival's own territory
+  was exactly as dangerous as no-man's-land. There is now a **`WASTELAND`** key for the fall-through (a table without
+  one still falls back to `NEUTRAL`, so nothing else had to change), and `NEUTRAL` means what its name says: an AI
+  color's own land, at neutral standing, which is now a little more hostile than the middle of the map.
+- **The territory rows were flat percentage-point deltas**, which cannot express "a fraction of whatever this week
+  allows". Two ways that failed. War's `mythic: +16` put Archmages on the board in **week 1**, where the week bracket
+  says `mythic: 0`, while Partner's `mythic: -12` was a hard 0 in week 7 (bracket 4) and inert by week 21 (bracket 24).
+  And subtracting points from the LOW ranks tilts an early bracket backwards: War's `common -18, uncommon -6` against
+  week 1's 90/10 leaves 72/4, a *higher* share of Apprentices than neutral ground, because there is no higher rank for
+  the removed mass to move into.
+
+  `TierDelta` gained optional `commonScale/uncommonScale/rareScale/mythicScale` (default 1, so every existing table is
+  unchanged), applied after the deltas, and the seven rows are now **multipliers only**. A multiplier is a ratio, so
+  the same row reads as "fewer Apprentices, more of everything else" in every bracket; and it cannot open a rank the
+  calendar has closed, because 0 x anything is 0. The week brackets stay the single authority on early-game pacing.
+  `targetTierWeight()` then **renormalizes the row back to the bracket's own total** - the old rows all summed to zero
+  change by hand for a reason: `BiomeData.getEnemy()` divides by the whole pool, and an exempt entry (a boss, an
+  arena-only fighter) contributes its own fixed `spawnRate` to that pool, so a drifting row total (War's multipliers
+  come to 187 against 100) would have quietly made bosses half as likely at war and commoner on your own land.
+
+Seven rows, friendliest to most hostile, as a share of encounters at the week 21+ plateau (22/24/30/24):
+
+| Land | Apprentice | Adept | Master | Archmage | (week 1: Appr / Adept) |
+|---|---|---|---|---|---|
+| `PLAYER_OWNED` | 46 | 29 | 24 | 1 | 94 / 6 |
+| `PARTNER` | 39 | 31 | 27 | 3 | 93 / 7 |
+| `HAPPY` | 31 | 28 | 28 | 13 | 92 / 8 |
+| `WASTELAND` | 22 | 24 | 30 | 24 | 90 / 10 |
+| `NEUTRAL` (an AI color's land) | 16 | 25 | 33 | 26 | 86 / 14 |
+| `UNHAPPY` | 11 | 20 | 35 | 34 | 84 / 16 |
+| `WAR` | 2 | 13 | 38 | 48 | 60 / 40 |
+
+Checked against the shipped table by re-deriving every row the way `targetTierWeight()` does
+(`dev-tools/ladder_check.py`), including the guarantee that no row re-opens a rank a week bracket zeroed.
+
+New diagnostic, because none of this was visible in the log before: `[TFR-SpawnTier] week 7 on WAR: Apprentice 9.8%
+Adept 29.8% Master 44.1% Archmage 16.3%` - one line whenever the land under the player or the week changes the mix
+(identical repeats suppressed; `targetTierWeight()` runs four times per roll).
+
+### Attacking mages follow the same ladder
+
+`TerritoryControl.rollDispatchMageTier()` rolled Apprentice 30 / Adept 50 / Master 15 / Archmage 5 no matter whose
+standing it was - the Color Defeat shift was the only thing that ever moved it. The Master and Archmage shares are now
+multiplied by the dispatching color's standing, with the same numbers as its territory row (Partner x0.35 / x0.10 ...
+War x1.60 / x2.50); Adept absorbs the difference, so an unmodified roll still sums to 100. **Partner sends an Archmage
+on 0.5% of its dispatches, down from 5%** - the user's "very small chance" - and War on 12.5%. Two things this exposed:
+the roll was against a hardcoded `100f` while the shares can now sum to anything (it would have truncated the top tier
+above 100 and dumped every leftover roll into it below 100) - it is against the real total now; and the dispatch log
+line names the standing and both multipliers, so a run of Archmage attacks can be read against the reputation that
+allowed it.
+
+The two reputation levers that already worked this way are unchanged and now line up with the rest:
+`getSpawnIntrusionMultiplier` (a Partner color's monsters never cross your border; War x2.5) and
+`getPlayerTownAttackWeight` (a Partner color is a quarter as likely to aim at one of your towns; War x1.5).
+
+### The color skew
+
+Mid-round, on the same theme: *"the only other thing we need to add is the color reputation skew. More of a color that
+you have worse reputation with. Something like at war x3 probability and partner 1/3."* New
+`ColorReputation.getSpawnColorSkew(letters)` - Partner 1/3, Happy 0.6, Neutral 1, Unhappy 1.7, War 3 - multiplied into
+`SpawnTierWeighting.rawSpawnWeight()`, the same within-tier weight the kill decay uses, so it is renormalized with the
+rest of the pool: it moves WHICH colors you meet, never how many enemies spawn or what rank they are. A multicolor
+enemy AVERAGES its colors' factors rather than taking the worst - 62% of this plane's enemies are multicolor, and the
+max would have made "at war with black" mean "everything with a swamp in it". Colorless enemies are untouched, so the
+Wasteland's own roster and the player-land mix-in stay as they are. The `[TFR-SpawnTier]` line carries the five
+factors, so the skew is readable at a glance.
+
+### The quest-tag family, and the rest of the user's calls
+
+The nine-site "quest tags treated as scripted content" list (round 180) is down to its last group. The user: *"Go with
+our recommendation."*
+
+- **Town-assault defenders** (`pickRandomRoamer`) drew from `getEnemyList()`, a zero-weight clone of the WHOLE catalog,
+  minus quest-tagged entries - so an Adept town could be defended by an off-color arena legend (Arzakon defending a
+  white town). Now the biome's OWN roster, with `SpawnTierWeighting.isExempt` in place of the tag test.
+- **Archmage attack mages** (`pickGrandmasterMage`) kept the roster restriction from round 177 but still used the tag
+  test, which on this plane means "the few legends": 14-18 per color. With `isExempt` it is 19-26 real roaming
+  Archmages per color, the 197 included.
+- **The Chest's Illegal Arena** (`buildArchmagePool`) becomes *every* Archmage - the user's "legends keep the bounty" -
+  and honors the #41 content filter, which it alone had skipped. `archmageCount()` follows the same test so the
+  chest-duel group size still describes the pool it draws from.
+- **The player-land roster** (user: *"Sure why not. Add some."*) gains **36** of the 197 - 12 Apprentice / 16 Adept /
+  7 Master / 1 Archmage, spread evenly over the five colors, deterministic (`dev-tools/player_roster183.py` logic, run
+  once): 72 -> 108 entries. Since round 178 this roster also stocks the dungeons standing on the player's land.
+- **Characters already past the Capitol step keep the old quest steps** (user: *"Keep old steps if they already have
+  capitol"*) - no load-time migration, the open item is closed.
+
+### The code review's last sixteen rows
+
+`docs/review/2026-09-09-post-v108-code-review.md`, all verified by reading the current file first:
+
+- **E4** (`WorldSave`) - a failed load used to leave the running game with another save's player and a half-applied
+  world, and any of the ten `autoSave()` sites could then persist that hybrid over `auto_save.sav`. `load()` now
+  snapshots the live game first (`snapshotForRollback()`), tracks whether the read touched live state
+  (`loadTouchedLiveState`), rolls back on ANY exception, and blocks saving (`saveBlocked`) if even the rollback fails.
+  `GameStage`'s F8 quick load reports a failure through the HUD instead of looking like it did nothing.
+- **G11** guards moved on `min(delta, 0.05)` while the mage they race moved on raw `delta` - below 20 fps a guard
+  covered 75% of its speed. A stall longer than `STALL_SECONDS` (0.25) now steps at `MAX_STEP_SECONDS`.
+- **G12** a late simulation result resolved whatever guard was current; the callback now compares
+  `duellingGuard()`/`duellingMage()` with what it started from and drops a stale result.
+- **G13** "change rank" charged only the gold difference though the wage has a shard part (Master 5 / Archmage 15);
+  both are charged and shown now. **G14** a dismissed or unpaid-released guard's deck came back as loose cards while
+  the notification said "the deck came back" - it is rebuilt into the first empty deck slot, and the notification says
+  which. **G15** the deck picker offered the ACTIVE deck with no warning (the next duel was then padded to 40 Wastes) -
+  greyed out with the reason. **G16** a mage arriving with no deck called `onDuelFinished(false)` and benched the guard
+  30 days; new `onDuelVoid(String why)` voids the fight instead.
+- **G9** (commander decks lose their commander when handed to a guard) is **not reachable in this plane**: TFR ships no
+  `commanderDecks` and no commander precons, so neither Commander mode appears on the New Game screen. Marked N/A
+  rather than fixed.
+- **S10** the minimap's "Under Attack!" labels - one per ATTACKER, so three mages on one town printed three; one per
+  town with a xN count now, and the shift loop tests all four positions (it exited after the fourth shift without
+  testing it). **S11** tier scaling lived only in `draw()`, so the constructor sized and collision-tested the sprite at
+  its atlas size - the constructor applies it now. **S13** `TuningData.tierScale(null)` returned the Common value
+  against its own javadoc; returns 1.
+- **D3** the race listener ran on every event and would have replaced the precon set list - gated to Standard mode.
+  **D5** `Config.racedStarterDeck()` audited only the first-attempt success path; the widened and unrestricted rebuilds
+  are audited too, and an unrestricted rebuild that is still short warns. **D6** swallowed render exceptions were keyed
+  on the top stack frame alone, so every call site throwing from the same JDK/libGDX method shared one key and only the
+  first ever printed a trace - the key is the top frame plus the first `forge.` frame.
+- **E7** `resetForNewGamePlus()` never reset the ledger, so New Game+ week 1 opened with the old run's book.
+  **E9** `dev-tools/save-editing/Inv.java` read `equippedAbility1..equippedBoots`, keys the save never writes - it
+  reads the `equippedSlots`/`equippedItems` arrays.
+
+### Also
+
+**S12**: `MapStage` picks a scripted placement's candidate by `Math.floorMod(poi.getID().hashCode(), candidates.size)`
+rather than `Math.abs(...) % n`, which is negative for `Integer.MIN_VALUE`.
+
+**D4** (user: *"Go with your best option here, I really don't know"*) - the round-151 "disjoint mana-cost ranges" claim.
+The buckets are not disjoint structurally: a card matches a bucket if ANY of its core types is listed, so "Creature C/U
+cmc 3-4" and "Instant/Sorcery/Enchantment C/U cmc 3-5" both catch an Enchantment Creature. Rewriting deck generation to
+exclude already-picked cards is a real risk for no present gain (nothing in today's 16 race set lists triggers it), so
+the claim is now CHECKED instead of assumed: `validate_plane_data.py` compares every pair of starter-deck buckets on
+type, rarity, color and cmc range - knowing which types can share one card - and prints `starter-bucket-overlap` for a
+true collision, `starter-bucket-type-mix` for a pair that collides only if a set prints such a card. Today: **0 hard
+overlaps, 30 type-mixes** (every constructed deck's Creature vs Instant/Sorcery/Enchantment pair), which is exactly the
+review's own reading. The day a Theros- or Kamigawa-style set joins a race's four, the run before packaging says so.
+
+That leaves the review at one open row, **G17** - the `DuelScene` merge burden, an architecture note rather than a bug.
+`MOD_SCOPE.md`: **#11 Map Polish** and **#85 New Quests** closed at the
+user's direction (#11 as "done for now"), and **#84 Building Upgrades** carries the user's note that its balance has to
+be judged from an end-game save.
+
+## Round 182: the engine update - upstream Forge @ 26d8aff8750 = the 09.11 daily; the scope brought current (2026-09-11)
+
+User: *"I've downloaded the latest Forge here: E:\GAMES\Forge_2. - Let's update the Repo and Live game."* built 14:33, PACKAGED 16:12 - 342 MB, the first full stock-asset re-copy since the engine change (57 minutes);
+superseded within the hour by round 183's package, which is the one that was smoke-tested.
+
+### Which commit
+
+Merged to the INSTALL's exact commit, not upstream's tip (round 165's method). `build.txt` says 2026-09-11 18:24:30
+(the dailies are stamped ~18:24 UTC). Content probes against the install: `5c3ced3d374` (FRA cards, 10 September,
+06:07 UTC) - its card scripts are in `cardsfolder.zip`; `de171b17ffe` (BigCrunch22's card branch, 19:49) - its files
+are absent; `d4dc79a506b` (FRA cards, 11 September, 20:34) - `reaper_king.txt` is still the parent's version. The one
+Java-only commit in between, `26d8aff8750` "refactor AI Attack and get SpellAbilitytoPlay" (15:43), removed
+`Game.AI_CAN_USE_TIMEOUT` / `canUseTimeout()` - the installed jar's `Game.class` lacks both (javap), ours had them. So
+the install = `26d8aff8750`: **30 commits / 178 files / 84 Java since `06a3c05731c`**. `de171b17ffe` and `d4dc79a506b`
+(and whatever follows) are the next merge.
+
+### Conflicts (5) and the both-sides check
+
+- `Forge.java` `render()` - upstream's `if (isDisposed) return;` first, then our agent-bridge start.
+- `EventScene.java` - imports: both.
+- `InnScene.java` `sell()` - our ruined-town guard kept, then upstream's new `ShopScene.instance(getUIBackground())`.
+- `MapViewScene.java` - **kept our `refreshMap()` texture**: upstream moved the world map to
+  `Assets.getNewMiniMapTexture(pixmap)`, which keeps one texture and skips the upload when the Pixmap is the same
+  OBJECT (`hashCode`). This plane repaints fog of war and territory into that same Pixmap in place, so the cached
+  texture would have frozen the world map at its first image. Our `miniMapTexture` field (removed upstream by the
+  auto-merge) restored; upstream's `enter()` is otherwise identical to ours.
+- `World.java` `dispose()` - upstream's new `Forge.safeDispose(...)` for the biome image AND our two fog pixmaps.
+16 files changed on both sides; every line we had added is still there (the two fog `dispose()` calls folded into
+`safeDispose`). No new dependency (the desktop pom only drops PowerMock test jars - not in our build); no Android file
+in the delta; nothing of ours used the removed AI-timeout API. `engineBuildVersion` 09.11.
+
+### What the new engine changes (re-test)
+
+The AI's attack planning and spell choice (#11861, and the AI think-timeout switch is gone), the Adventure UIScene
+backdrop and deck-editor colors (#11833), the edition code on the rewards screen and Oracle view (#11400), the
+auto-pass network crash fix (#11816), World disposal guards, a GdxRuntimeException "No buffer allocated" fix, FRA / SCH
+edition data and new FRA cards, network draft pod options.
+
+### The scope brought current
+
+`MOD_SCOPE.md` was last caught up at round 79. Status pass: #97 Android (an APK with every release through v1.09),
+#116 Roaming guard and #118 Armory storage (Done - shipped in v1.09), #117 Agent play (in use as the test harness), and
+a new **#119 New enemy art - 197 enemies**. Still open: #11 Map polish (in progress), #84 Building Upgrades, #85 New
+Quests, #115 Autopilot for players (not started).
+
+Round 181 (cave champions / re-theme, built but blocked from packaging by the engine mismatch) ships in this package.
+
 ## Round 181: cave champions take a slot again; a dungeon on changed land takes on its new owner's creatures (2026-09-11)
 
 User: *"Proceed with the Cave champions and When a dungeon's land changes owner fix."* built 14:06, NOT packaged - E:\GAMES\Forge_2 now holds the 09.11 daily and the packager refuses a 09.09 jar (the engine merge is next); checked in the agent game with the new classes ahead of the round-180 jar: Corrupted Shaft (CaveCGen02, champion chance raised to 1.0 in the agent copy only) - [TFR-CaveChampion] Rosnakht takes placement 7 of 3 candidates, promoting placement 7 from Pitchfork Farmer to Rosnakht (0 candidates before); the re-theme needs land that has changed hands and was not exercised.

@@ -27,10 +27,22 @@ public class Inv {
         } else {
             System.out.println("inventory is " + (o == null ? "absent" : o.getClass()));
         }
-        for (String key : new String[]{"equippedAbility1", "equippedAbility2", "equippedBody",
-                "equippedNeck", "equippedLeft", "equippedRight", "equippedBoots"}) {
-            if (p.containsKey(key))
-                System.out.println("   [" + key + "] " + p.readString(key));
+        // Round 183 (code review E9): the save stores the equipped doll as two parallel arrays - slot names and the
+        // items' longIDs (AdventurePlayer.save()); the per-slot "equippedBody"-style keys read here before never existed.
+        if (p.containsKey("equippedSlots") && p.containsKey("equippedItems")) {
+            String[] slots = (String[]) p.readObject("equippedSlots");
+            Long[] ids = (Long[]) p.readObject("equippedItems");
+            System.out.println("equipped: " + slots.length + " slot(s)");
+            for (int k = 0; k < slots.length && k < ids.length; k++) {
+                String name = "(not in the inventory)";
+                if (o instanceof ItemData[])
+                    for (ItemData i : (ItemData[]) o)
+                        if (i != null && ids[k] != null && ids[k].equals(i.longID))
+                            name = i.name;
+                System.out.printf("   [%-10s] %-26s id=%s%n", slots[k], name, ids[k]);
+            }
+        } else {
+            System.out.println("equipped: none stored");
         }
     }
 }

@@ -16,21 +16,55 @@
     { "weekMin": 16, "weekMax": 20, "common": 30, "uncommon": 27, "rare": 28, "mythic": 15 },
     { "weekMin": 21, "weekMax": -1, "common": 22, "uncommon": 24, "rare": 30, "mythic": 24 }
   ],
-  // territoryDeltas: percentage-point deltas added to the active week bracket's row before
-  // clamping (floor 0) - NOT renormalized to exactly 100 afterward (BiomeData.getEnemy() divides
-  // by each tier's own real spawnRate pool anyway, so small over/under-100 totals just shift the
-  // overall spawn rate slightly, not the relative mix). Keys: PLAYER_OWNED (the current tile is
-  // player-owned terrain) or one of ColorReputation.Status's own names (PARTNER/HAPPY/NEUTRAL/
-  // UNHAPPY/WAR) for AI-color territory. War's Common delta (-18) is deliberately 3x Unhappy's
-  // (-6) - reproduces the same ratio this project's own ColorReputation.getSpawnIntrusionMultiplier()
-  // already uses between those two statuses (2.5x / 1.5x relative to Neutral's 1x), so the new
-  // "danger curve" matches a ratio this codebase already committed to rather than a new one.
+  // territoryDeltas: applied to the active week bracket's row, keyed by whose land the roll is on.
+  // Rows are NOT renormalized to exactly 100 afterward - BiomeData.getEnemy() divides by whatever
+  // the whole pool came to, so a row's total only shifts ordinary enemies slightly against the
+  // exempt ones (bosses/quest-tagged keep their own absolute spawnRate), not the relative mix.
+  //
+  // Each row may carry percentage-point deltas (common/uncommon/rare/mythic, floored at 0, default
+  // 0) and MULTIPLIERS (commonScale/uncommonScale/rareScale/mythicScale, default 1.0) applied after
+  // them: max(0, base + delta) * scale.
+  //
+  // The rows below use MULTIPLIERS ONLY, on purpose. Two reasons:
+  //   1. A multiplier cannot open a rank the week bracket has closed. 0 x anything is 0, so a week
+  //      whose bracket reads "rare 0, mythic 0" grows no Masters and no Archmages however hostile
+  //      the ground is - the week brackets stay the single authority on early-game pacing. That is
+  //      exactly what the old flat "+16 mythic" War row broke: at war in week 1 it spawned
+  //      Archmages.
+  //   2. A flat delta on the LOW ranks tilts the mix the wrong way in an early bracket. War's old
+  //      "common -18, uncommon -6" against week 1's 90/10 left 72/4 - a HIGHER share of Apprentices
+  //      than neutral ground, because there was no higher rank for the removed mass to move to.
+  //      Multipliers are ratios, so the same row reads as "fewer Apprentices, more of everything
+  //      else" in every bracket.
+  // The delta fields are kept for hand-tuning a single bracket; leave them out for a pure tilt.
+  //
+  // Round 183, the user's ladder: "the Player land is the 'Friendliest' given it's his land.
+  // Neutral is somewhere in the middle. AI should probably be a little more hostile than Neutral on
+  // Neutral Reputation and get a lot more hostile at War. On Partner, there should be a very small
+  // chance of Archmage attacks, since you are on friendly terms."
+  //
+  // Keys, friendliest to most hostile: PLAYER_OWNED (your own terrain), then the five
+  // ColorReputation.Status names - each meaning "an AI color's own land at that standing" - with
+  // WASTELAND (the ownerless middle of the map) sitting between HAPPY and NEUTRAL. WASTELAND and
+  // NEUTRAL were one row before this round, which is why merely-neutral AI land was no more
+  // dangerous than no-man's-land.
+  //
+  // Resulting share of encounters at the week 21+ plateau (22/24/30/24), and at week 1 (90/10/0/0):
+  //             Apprentice  Adept  Master  Archmage      week 1: Apprentice  Adept
+  //   your land     46        29      24       1                     94         6
+  //   Partner       39        31      27       3                     93         7
+  //   Happy         31        28      28      13                     92         8
+  //   Wasteland     22        24      30      24                     90        10
+  //   Neutral AI    16        25      33      26                     86        14
+  //   Unhappy       11        20      35      34                     84        16
+  //   War            2        13      38      48                     60        40
   "territoryDeltas": {
-    "PLAYER_OWNED": { "common": 10,  "uncommon": 2,  "rare": -4, "mythic": -8  },
-    "PARTNER":      { "common": 15,  "uncommon": 5,  "rare": -8, "mythic": -12 },
-    "HAPPY":        { "common": 7,   "uncommon": 3,  "rare": -4, "mythic": -6  },
-    "NEUTRAL":       { "common": 0,   "uncommon": 0,  "rare": 0,  "mythic": 0   },
-    "UNHAPPY":      { "common": -6,  "uncommon": -2, "rare": 3,  "mythic": 5   },
-    "WAR":          { "common": -18, "uncommon": -6, "rare": 8,  "mythic": 16  }
+    "PLAYER_OWNED": { "commonScale": 1.75, "uncommonScale": 1.00, "rareScale": 0.65, "mythicScale": 0.04 },
+    "PARTNER":      { "commonScale": 1.40, "uncommonScale": 1.00, "rareScale": 0.70, "mythicScale": 0.10 },
+    "HAPPY":        { "commonScale": 1.20, "uncommonScale": 1.00, "rareScale": 0.80, "mythicScale": 0.46 },
+    "WASTELAND":    { "commonScale": 1.00, "uncommonScale": 1.00, "rareScale": 1.00, "mythicScale": 1.00 },
+    "NEUTRAL":      { "commonScale": 0.70, "uncommonScale": 1.00, "rareScale": 1.05, "mythicScale": 1.05 },
+    "UNHAPPY":      { "commonScale": 0.60, "uncommonScale": 1.00, "rareScale": 1.40, "mythicScale": 1.70 },
+    "WAR":          { "commonScale": 0.17, "uncommonScale": 1.00, "rareScale": 2.35, "mythicScale": 3.70 }
   }
 }

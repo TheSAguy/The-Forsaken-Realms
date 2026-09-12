@@ -175,31 +175,41 @@ public class RoamingGuards {
     public static int retier(RoamingGuardData guard, String newTier) {
         String oldTier = guard.tier;
         int goldDifference = Math.max(0, weeklyGoldCost(newTier) - weeklyGoldCost(oldTier));
+        int shardDifference = Math.max(0, weeklyShardCost(newTier) - weeklyShardCost(oldTier)); // round 183 (G13): the caller charges it
         guard.tier = newTier;
         guard.maxLife = lifeFor(newTier);
         System.out.println("[TFR-RoamGuard] " + displayName(oldTier) + " -> " + displayName(newTier)
                 + " (life " + guard.maxLife + ", speed " + speedFor(newTier)
-                + "), one-off charge " + goldDifference + " gold");
+                + "), one-off charge " + goldDifference + " gold + " + shardDifference + " shards");
         return goldDifference;
     }
+
+    /** Round 183 (code review G14): what happened to a dismissed guard's deck - the slot it was rebuilt into,
+     *  or one of the two negatives, so the caller's notification can say the true thing. */
+    public static final int DECK_FORFEITED = -2;
+    public static final int DECK_RETURNED_LOOSE = -1;
 
     /**
      * Dismiss. The deck comes back UNLESS the guard is out of commission - the user's rule is that
      * dismissing a downed guard forfeits its cards, which is the cost of not waiting out the month.
      *
-     * @return true when the cards were returned
+     * @return the deck slot the list was rebuilt into, DECK_RETURNED_LOOSE when every slot was full
+     *         (or there was no deck), or DECK_FORFEITED when the guard was out of commission
      */
-    public static boolean dismiss(RoamingGuardData guard, int currentDay) {
+    public static int dismiss(RoamingGuardData guard, int currentDay) {
         boolean forfeit = guard.isOutOfCommission(currentDay);
+        int slot = DECK_FORFEITED;
         if (!forfeit)
-            returnDeck(guard);
+            // Round 183 (G14): into an empty deck slot when there is one - the old returnDeck() handed back
+            // loose cards while the notification promised "the deck returned".
+            slot = returnDeckHome(guard);
         else
             System.out.println("[TFR-RoamGuard] dismissed while out of commission - "
                     + cardCount(guard) + " card(s) forfeited with the deck \"" + guard.deckName + "\"");
         // Round 163: the steel is the player's whatever happens to the deck - back to the storage.
         ArmoryStorage.returnGear(guard);
         roster().remove(guard);
-        return !forfeit;
+        return slot;
     }
 
     // ------------------------------------------------------------------ the deck round-trip
@@ -376,6 +386,26 @@ public class RoamingGuards {
                 + guard.deckName + "\" to the collection");
         guard.deckCards = new String[0];
         guard.deckName = "";
+    }
+
+    /**
+     * Round 183 (code review G14): a deck coming home without the player choosing a slot (an unpaid disband) goes
+     * back into the first EMPTY deck slot, so the list survives; only with every slot full do the cards come back
+     * loose. Returns the slot used, or -1 for loose cards. Never overwrites a deck the player built.
+     */
+    public static int returnDeckHome(RoamingGuardData guard) {
+        if (guard.deckCards.length == 0)
+            return -1;
+        AdventurePlayer player = AdventurePlayer.current();
+        for (int i = 0; i < player.getDeckCount(); i++) {
+            forge.deck.Deck deck = player.getDeck(i);
+            // An empty slot AND a rebuild that actually worked - otherwise fall through to the loose-cards
+            // path rather than tell the player to look in a slot that is still empty.
+            if ((deck == null || deck.getMain().countAll() == 0) && returnDeckToSlot(guard, i))
+                return i;
+        }
+        returnDeck(guard);
+        return -1;
     }
 
     /** Returns the cards AND rebuilds the deck into an empty slot, so the player gets the list back

@@ -119,6 +119,11 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         float scale = data.scale;
         if (scale < 0)
             scale = 1f;
+        // Round 183 (code review S11): the RANK cue belongs here too, not only in draw(). Without it the box the
+        // spawn's collision test uses (and the first frames' bounding rect) was the art size alone, while the
+        // sprite draws at art x scale x cue - an Archmage was placement-tested at two thirds of its drawn size.
+        if (data.tier != null)
+            scale *= Config.instance().getTuningData().tierSizeMultiplier(data.tier, getHeight() * scale);
         setWidth(getWidth() * scale);
         setHeight(getHeight() * scale);
         updateBoundingRect();

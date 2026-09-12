@@ -150,6 +150,43 @@ public class ColorReputation {
         }
     }
 
+    /**
+     * Round 183 (user: "the color reputation skew. More of a color that you have worse reputation with.
+     * Something like at war x3 probability and partner 1/3"). Weight multiplier for ONE ENEMY in a roaming
+     * spawn roll, from the standing with the color(s) that enemy belongs to - so a color that hates you shows
+     * up three times as often wherever its creatures can appear, and a Partner color's fade to a third.
+     * <p>
+     * This is a weight inside the roll, not a change to how often a roll happens: SpawnTierWeighting's layer 3
+     * renormalizes the whole candidate pool afterward, so the skew moves the COLOR MIX and nothing else - the
+     * tier mix stays whatever the territory ladder and the week bracket say.
+     * <p>
+     * A multicolor enemy averages its colors' factors rather than taking the worst of them: 62% of this plane's
+     * enemies are multicolor, and letting one hated color drag a three-color creature to x3 would have made
+     * "at war with black" mean "everything with a swamp in it, everywhere". Colorless enemies are unaffected
+     * (no standing to read), which also leaves the Wasteland's own colorless roster alone.
+     */
+    public static float getSpawnColorSkew(String enemyColorLetters) {
+        if (!isEnabled())
+            return 1f;
+        java.util.List<String> colors = colorsFromLetters(enemyColorLetters);
+        if (colors.isEmpty())
+            return 1f;
+        float sum = 0f;
+        for (String color : colors)
+            sum += spawnSkewFor(getStatus(color));
+        return sum / colors.size();
+    }
+
+    private static float spawnSkewFor(Status status) {
+        switch (status) {
+            case PARTNER: return 1f / 3f; // the user's "partner 1/3"
+            case HAPPY:   return 0.6f;
+            case UNHAPPY: return 1.7f;
+            case WAR:     return 3f;      // the user's "at war x3"
+            default:      return 1f;
+        }
+    }
+
     /** True when the player is barred from this color's ordinary towns (War tier). */
     public static boolean isEntryBarred(String color) {
         return isEnabled() && color != null && getStatus(color) == Status.WAR;

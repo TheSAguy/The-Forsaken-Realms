@@ -3110,14 +3110,21 @@ public class EconomyBuildings {
                     // Unpaid: the guard leaves, but the deck comes home. Forfeiting it here would
                     // punish a cash-flow problem with permanent card loss, which the user reserved
                     // for the deliberate act of dismissing a downed guard.
-                    RoamingGuards.returnDeck(guard);
+                    // Round 183 (code review G14): back into an empty deck slot when there is one, so the LIST
+                    // survives - the notification used to say "the deck came back" over a pile of loose cards.
+                    String deckName = guard.deckName;
+                    boolean hadDeck = guard.deckCards.length > 0;
+                    int slot = RoamingGuards.returnDeckHome(guard);
                     ArmoryStorage.returnGear(guard); // round 163: its equipment comes home with the deck
                     roster.remove(i);
                     System.out.println("[TFR-RoamGuard] " + guardTierDisplayName(guard.tier)
-                            + " disbanded on day " + newDayCount + " - salary unpaid; deck returned");
+                            + " disbanded on day " + newDayCount + " - salary unpaid; "
+                            + (!hadDeck ? "no deck" : slot >= 0 ? "deck rebuilt in slot " + (slot + 1) : "cards returned loose (every slot full)"));
                     GameHUD.getInstance().addNotification("[RED]Your roaming "
                             + guardTierDisplayName(guard.tier)
-                            + " guard was disbanded - salary went unpaid! The deck came back.", true);
+                            + " guard was disbanded - salary went unpaid!"
+                            + (!hadDeck ? "" : slot >= 0 ? " \"" + deckName + "\" is back in deck slot " + (slot + 1) + "."
+                               : " Every deck slot is full, so its cards went back to your collection."), true);
                     disbanded = true;
                     break;
                 }

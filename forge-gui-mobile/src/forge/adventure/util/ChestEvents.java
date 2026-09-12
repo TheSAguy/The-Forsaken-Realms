@@ -278,13 +278,20 @@ public class ChestEvents {
     // bounty" mechanism specifically exists to reward drawing one of these arena-exclusive
     // fighters into the bracket). Mixed across all 5 colors, matching how the Capitol's own arena
     // pool is already a hand-picked mix of multiple colors' wizards.
+    /** Round 183 (user: "Go with our recommendation" - the Illegal Arena "should become every Archmage, legends
+     *  keep the bounty"). The quest-tag test is gone: tags are metadata on this plane ("Undead", "IdentityBlack"),
+     *  so "untagged" quietly meant "the handful of legends" and none of round 179's 197 new Archmages could ever
+     *  appear in this bracket. Every non-boss Archmage is a competitor now - the arena-exclusive legends included,
+     *  which is where they are supposed to be reachable, and they keep their own bounty rewards. The content
+     *  filter (#41 Include=N) is honored here now as it already was everywhere else this pool is counted. */
     private static String[] buildArchmagePool() {
         List<String> names = new ArrayList<>();
         for (EnemyData data : new Array.ArrayIterator<>(WorldData.getAllEnemies())) {
-            if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+            if (data == null || data.boss || !"Mythic".equals(data.tier))
                 continue;
-            if ("Mythic".equals(data.tier))
-                names.add(data.name);
+            if (!ContentFilterTables.isEnemyIncluded(data.getName()))
+                continue;
+            names.add(data.name);
         }
         return names.toArray(new String[0]);
     }
@@ -355,7 +362,9 @@ public class ChestEvents {
                 continue;
             for (String name : biome.enemies) {
                 EnemyData data = WorldData.getEnemy(name);
-                if (data == null || data.boss || (data.questTags != null && data.questTags.length > 0))
+                // Round 183: the same isExempt test pickGrandmasterMage() now uses, so this count still
+                // describes the pool Dangerous Enemy actually draws from.
+                if (data == null || SpawnTierWeighting.isExempt(data))
                     continue;
                 if ("Mythic".equals(data.tier) && ContentFilterTables.isEnemyIncluded(data.getName()))
                     names.add(data.getName());

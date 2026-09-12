@@ -631,7 +631,13 @@ public abstract class GameStage extends Stage {
         if (keycode == Input.Keys.F8)//todo config
         {
             if (!TileMapScene.instance().currentMap().isInMap()) {
-                WorldSave.getCurrentSave().quickLoad();
+                // Round 183 (code review E4): a failed quick load is rolled back (or blocks saving) - say so
+                // instead of silently carrying on.
+                if (!WorldSave.getCurrentSave().quickLoad()) {
+                    String why = WorldSave.getLastLoadError();
+                    WorldSave.clearLastLoadError();
+                    GameHUD.getInstance().addNotification("[RED]Quick load failed" + (why == null ? "." : ": " + why), true);
+                }
                 enter();
             }
         }

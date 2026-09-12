@@ -896,17 +896,57 @@ public class TerritoryControl {
     private static final float DISPATCH_TIER_SHIFT_PER_DEFEAT_MASTER = 5f;
     private static final float DISPATCH_TIER_SHIFT_PER_DEFEAT_GRANDMASTER = 5f;
 
-    private static float[] dispatchTierCumulative(World world) {
+    // Round 183 standing scale (user: "On Partner, there should be a very small chance of Archmage attacks, since
+    // you [are] on friendly terms"). Multipliers on the Master/Archmage shares of the dispatch roll, by the
+    // DISPATCHING color's standing with the player - deliberately the same numbers, and the same "scale the high
+    // ranks, leave the low ones to the flat shares" shape, as that color's territoryDeltas row in
+    // spawn_tier_weighting.json, so "what roams their land" and "what they send at you" read as one ladder.
+    // Whatever the top two shares give up (or take) lands on Adept, which is the share the Color Defeat shift
+    // below already moves. Partner lands on Master 5.25% / Archmage 0.5%.
+    private static float dispatchMasterScale(String color) {
+        if (!ColorReputation.isEnabled() || color == null)
+            return 1f;
+        switch (ColorReputation.getStatus(color)) {
+            case PARTNER: return 0.35f;
+            case HAPPY:   return 0.70f;
+            case UNHAPPY: return 1.30f;
+            case WAR:     return 1.60f;
+            default:      return 1f;
+        }
+    }
+
+    private static float dispatchGrandmasterScale(String color) {
+        if (!ColorReputation.isEnabled() || color == null)
+            return 1f;
+        switch (ColorReputation.getStatus(color)) {
+            case PARTNER: return 0.10f;
+            case HAPPY:   return 0.50f;
+            case UNHAPPY: return 1.60f;
+            case WAR:     return 2.50f;
+            default:      return 1f;
+        }
+    }
+
+    private static float[] dispatchTierCumulative(World world, String color) {
         int defeats = world == null ? 0 : world.getDefeatedColorCount();
-        if (defeats <= 0)
+        float masterScale = dispatchMasterScale(color);
+        float grandmasterScale = dispatchGrandmasterScale(color);
+        if (defeats <= 0 && masterScale == 1f && grandmasterScale == 1f)
             return DISPATCH_TIER_CUMULATIVE;
         float apprentice = DISPATCH_TIER_CUMULATIVE[0]; // 30, unshifted
-        float adeptShare = Math.max(0f, (DISPATCH_TIER_CUMULATIVE[1] - DISPATCH_TIER_CUMULATIVE[0])
-                - DISPATCH_TIER_SHIFT_PER_DEFEAT_ADEPT * defeats); // baseline 50
-        float masterShare = (DISPATCH_TIER_CUMULATIVE[2] - DISPATCH_TIER_CUMULATIVE[1])
+        float masterUnscaled = (DISPATCH_TIER_CUMULATIVE[2] - DISPATCH_TIER_CUMULATIVE[1])
                 + DISPATCH_TIER_SHIFT_PER_DEFEAT_MASTER * defeats; // baseline 15
-        float grandmasterShare = (DISPATCH_TIER_CUMULATIVE[3] - DISPATCH_TIER_CUMULATIVE[2])
+        float grandmasterUnscaled = (DISPATCH_TIER_CUMULATIVE[3] - DISPATCH_TIER_CUMULATIVE[2])
                 + DISPATCH_TIER_SHIFT_PER_DEFEAT_GRANDMASTER * defeats; // baseline 5
+        float masterShare = masterUnscaled * masterScale;
+        float grandmasterShare = grandmasterUnscaled * grandmasterScale;
+        // Adept absorbs both the Color Defeat shift and whatever the standing scale took from (or handed to) the
+        // top two shares, so an unmodified roll still sums to 100 and this table keeps reading in plain percent.
+        // It can clamp to 0 under enough stacked pressure (5 defeats at War), which is why the roll below goes
+        // against the real total rather than a hardcoded 100.
+        float adeptShare = Math.max(0f, (DISPATCH_TIER_CUMULATIVE[1] - DISPATCH_TIER_CUMULATIVE[0])
+                - DISPATCH_TIER_SHIFT_PER_DEFEAT_ADEPT * defeats
+                + (masterUnscaled - masterShare) + (grandmasterUnscaled - grandmasterShare)); // baseline 50
         // Sums grandmasterShare in rather than hardcoding the final boundary to 100f (adversarial
         // review 2026-08-14: with the shipped constants these are numerically identical today -
         // ADEPT_SHIFT(10) == MASTER_SHIFT(5)+ARCHMAGE_SHIFT(5), so the three shares always summed
@@ -916,10 +956,16 @@ public class TerritoryControl {
                 apprentice + adeptShare + masterShare + grandmasterShare};
     }
 
-    private static String rollDispatchMageTier(Random random, World world) {
-        float[] cumulative = dispatchTierCumulative(world);
-        float roll = random.nextFloat() * 100f;
-        String rolled = "Mythic"; // unreachable fallback (last boundary is 100)
+    private static String rollDispatchMageTier(Random random, World world, String color) {
+        float[] cumulative = dispatchTierCumulative(world, color);
+        // Against the LAST boundary, not a hardcoded 100 (round 183): the shares no longer always sum to 100 once
+        // the standing scale is in play, and rolling against 100 would have silently truncated the top tier on a
+        // row over 100 and dumped every leftover roll into it on a row under 100.
+        float total = cumulative[cumulative.length - 1];
+        if (total <= 0f)
+            return DISPATCH_TIERS[0];
+        float roll = random.nextFloat() * total;
+        String rolled = DISPATCH_TIERS[DISPATCH_TIERS.length - 1]; // unreachable fallback (last boundary == total)
         for (int i = 0; i < cumulative.length; i++) {
             if (roll < cumulative[i]) {
                 rolled = DISPATCH_TIERS[i];
@@ -980,10 +1026,21 @@ public class TerritoryControl {
         for (BiomeData biome : world.getData().GetBiomes()) {
             if (!color.equals(biome.name))
                 continue;
+            // Round 183 (user: "Go with our recommendation"). Two changes, the same pair round 177 made to
+            // pickGrandmasterMage: the defender comes from the biome's OWN roster, and "is this a scripted
+            // enemy" is SpawnTierWeighting.isExempt (boss or spawnRate 0), not "has any quest tag".
+            // getEnemyList() carries a zero-weight clone of the WHOLE catalog, and this plane's quest tags are
+            // metadata ("Undead", "IdentityBlack"), so an Adept town could be defended by an off-color
+            // arena-exclusive legend - Arzakon turned up defending a white town. Roster + isExempt means a
+            // defender is always a real roaming creature of the town's own color.
+            java.util.Set<String> roster = new java.util.HashSet<>();
+            if (biome.enemies != null)
+                roster.addAll(java.util.Arrays.asList(biome.enemies));
+            java.util.Set<String> seen = new java.util.HashSet<>();
             List<EnemyData> candidates = new ArrayList<>();
             List<EnemyData> anyTier = new ArrayList<>();
             for (EnemyData e : biome.getEnemyList()) {
-                if (e == null || e.boss || (e.questTags != null && e.questTags.length > 0))
+                if (e == null || SpawnTierWeighting.isExempt(e) || !roster.contains(e.getName()) || !seen.add(e.getName()))
                     continue;
                 anyTier.add(e);
                 if (tier == null || tier.equals(e.tier))
@@ -1117,10 +1174,14 @@ public class TerritoryControl {
             java.util.Set<String> roster = new java.util.HashSet<>();
             if (biome.enemies != null)
                 roster.addAll(java.util.Arrays.asList(biome.enemies));
+            // Round 183 (user: "Go with our recommendation"): isExempt (boss or spawnRate 0) replaces the
+            // quest-tag test here too - tags are metadata on this plane, so "untagged" quietly meant "one of the
+            // few legends", 14-18 per color. It is 19-26 real roaming Archmages per color now, and the
+            // arena-exclusive legends (spawnRate 0) stay where they belong.
             java.util.Set<String> seen = new java.util.HashSet<>();
             List<EnemyData> candidates = new ArrayList<>();
             for (EnemyData e : biome.getEnemyList()) {
-                if (e == null || e.boss || (e.questTags != null && e.questTags.length > 0))
+                if (e == null || SpawnTierWeighting.isExempt(e))
                     continue;
                 if ("Mythic".equals(e.tier) && roster.contains(e.getName()) && seen.add(e.getName()))
                     candidates.add(e);
@@ -1370,7 +1431,7 @@ public class TerritoryControl {
             target = candidates.get(pick);
         }
 
-        String dispatchTier = rollDispatchMageTier(world.getRandom(), world);
+        String dispatchTier = rollDispatchMageTier(world.getRandom(), world, color);
         EnemyData enemyData;
         String enemyName;
         if ("Mythic".equals(dispatchTier)) {
@@ -1381,7 +1442,11 @@ public class TerritoryControl {
             enemyData = WorldData.getEnemy(enemyName);
         }
         System.out.println("[TerritoryControl] " + color + ": dispatch rolled tier " + dispatchTier
-                + " (" + EnemyData.tierDisplayName(dispatchTier) + ") -> " + enemyName);
+                + " (" + EnemyData.tierDisplayName(dispatchTier) + ") -> " + enemyName
+                // Round 183: the standing that scaled the roll, so a run of Archmage attacks can be read against
+                // the reputation that allowed them instead of looking like the tier roll misbehaving.
+                + (ColorReputation.isEnabled() ? " [standing " + ColorReputation.getStatus(color).label
+                        + ", Master x" + dispatchMasterScale(color) + " / Archmage x" + dispatchGrandmasterScale(color) + "]" : ""));
         if (enemyData == null) {
             System.out.println("[TerritoryControl] " + color + ": enemy \"" + enemyName + "\" not found, skipping dispatch");
             return;

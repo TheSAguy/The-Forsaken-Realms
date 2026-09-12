@@ -50,30 +50,32 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-11 (round 181; v1.09 RELEASED + rounds 173-181 on top; ENGINE = 09.09 daily since round 165) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-11 (round 183; v1.09 RELEASED + rounds 173-183 on top; ENGINE = 09.11 daily since round 182) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 181, 2026-09-11).** The user's calls, in their order:
+- **NEXT SESSION starts here (updated round 183, 2026-09-11).** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
      later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
      rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
      `deckgen179.py --only <slug>`), loot. Tooling in `dev-tools/art-import/` (README), inputs in
      `F:\FORGE\TFR-Art-Staging\`.
-     **Open for the user (round 181)**: cave champions and the dungeon re-theme are fixed (round 181). The same
-     "skip quest-tagged enemies" test still picks town-assault defenders (any untagged enemy in the WHOLE catalog at
-     the rank - off-color legends; Arzakon can defend an Adept town) and Archmage attack mages / the chest's Dangerous
-     Enemy (legends only); the Illegal Arena should become "every Archmage" (legends keep the bounty). The player
-     roster (61 roamers, mostly wizards) now also stocks dungeons on the player's land - maybe add new enemies to it.
-  2. **Playtest rounds 173 + 177-181**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
+     **Closed in round 183** (user: "Go with our recommendation", "Sure why not. Add some."): town-assault
+     defenders and Archmage attack mages now read the biome's own roster with `SpawnTierWeighting.isExempt` instead of
+     the quest-tag test, the Chest's Illegal Arena takes every Archmage (legends keep their bounty), and 36 of the 197
+     joined the player-land roster (72 -> 108 entries). Nothing of the nine-site quest-tag list is left open.
+  2. **Playtest rounds 173 + 177-183 (182 = a new engine: re-test duels and the AI; 183 = the hostility ladder)**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
      the TFR medallion when loading on your own land, the three-quests step (+100 stone), the camp's hidden rare.
   3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `F:\FORGE\TFR-Agent\`; launch via
      the Task Scheduler (`agent_launch.cmd`), stop with `powershell -ExecutionPolicy Bypass -File agent_stop.ps1`,
      `agent_sync.cmd` after every package; `goto x=.. y=..` walks to a point inside a map. Open: `newgame` parameters, a
      spectated-duel speed setting, the AI pilot's shard write-back, long fog routes ending "stuck".
-  4. **Next engine merge - BLOCKED on the user**: Forge_2 is still the 09.09 daily (`build.txt` 2026-09-09 18:24:56).
-     Upstream was 22 commits past `06a3c05731c` at round 172 (hot spots in CORE_ENGINE_CHANGES "Round 172").
-  5. **Wider playtest feedback** on v1.09, the review's remaining OPEN rows; E4 right AFTER the merge.
+  4. **Engine = the 09.11 daily (round 182, upstream `26d8aff8750`)**. The next merge starts at `de171b17ffe`
+     (BigCrunch22's card branch) and `d4dc79a506b` (FRA cards 11 September) - only once the user installs a newer
+     daily into `E:\GAMES\Forge_2`. **E4 (the WorldSave load/save error paths) is unblocked** - the user's next ask
+     is the code review's open items and E4.
+  5. **Wider playtest feedback** on v1.09 and the v1.10 draft (`RELEASE_NOTES_v1.10.md`). The code review is
+     down to its DESIGN rows and the quest-tag family below - E4 and the other fifteen were fixed in round 183.
   6. Small open items: characters already past "Raise the Banner"'s Capitol step keep the old quest steps (a load-time
-     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-181
+     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-183
      are unreleased (v1.09 is the last release).
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
@@ -88,6 +90,24 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 183 (2026-09-11, built 16:24, PACKAGED 16:36 - 342 MB, the fast path (the stock tree was re-copied by round 182's package an hour earlier)): **the hostility ladder** - `spawn_tier_weighting.json` gains a `WASTELAND` row
+  (ownerless land and an AI color at NEUTRAL were one row) and the seven territory rows are per-tier MULTIPLIERS now
+  (`commonScale`..`mythicScale`), renormalized to the bracket's total in `targetTierWeight()`. Multipliers cannot open
+  a rank the week bracket zeroed (War's old flat `mythic:+16` put Archmages in week 1) and tilt correctly in an early
+  bracket (its `common -18` used to leave MORE Apprentices than neutral ground). Player 46/29/24/1 ... War 2/13/38/48
+  at the week-21 plateau; `dev-tools/ladder_check.py` re-derives every row. **The color skew** (user, same round):
+  `ColorReputation.getSpawnColorSkew()` x3 at War / x1/3 at Partner, multiplied into `rawSpawnWeight()` and averaged
+  over a multicolor enemy's colors - which colors you meet, not how many or what rank. **The quest-tag family closed**:
+  town defenders and Archmage attackers use the biome roster + `isExempt`, the Chest's Illegal Arena takes every
+  Archmage, and 36 of the 197 joined the player-land roster (72 -> 108). Attacking-mage tiers scale the same way (Partner Archmage 5%%->0.5%%), and the dispatch roll is
+  against the real total, not a hardcoded 100. **The code review's last sixteen rows fixed** (E4/E7/E9, G11-G16,
+  S10-S13, D3/D5/D6); G9 marked N/A - this plane has no commander decks. MOD_SCOPE #11/#85 closed, #84 noted.
+  `RELEASE_NOTES_v1.10.md` drafted.
+- Round 182 (2026-09-11, built 14:33, PACKAGED 16:12 - 342 MB, the first full stock-asset re-copy since the engine change (57 minutes)): **engine update - upstream `26d8aff8750` = Forge_2's 09.11 daily** (30 commits /
+  178 files / 84 Java since `06a3c05731c`; content probes + javap on the installed `Game.class`). Five conflicts
+  (Forge.render agent hook after upstream's isDisposed guard; EventScene imports; InnScene ruined guard + the new
+  ShopScene accessor; MapViewScene keeps OUR minimap texture - upstream's cache keys on the Pixmap object and would
+  freeze the fogged/repainted map; World.dispose via safeDispose). `engineBuildVersion` 09.11. MOD_SCOPE current (#119).
 - Round 181 (2026-09-11, built 14:06, NOT packaged - E:\GAMES\Forge_2 now holds the 09.11 daily and the packager refuses a 09.09 jar (the engine merge is next)): **cave champions and the dungeon re-theme work on tagged enemies** -
   `MapStage.isScriptedPlacement()` (boss, spawnRate 0, or a Boss/Story/Legendary/Challenger tag) replaces "any quest
   tag", which had protected 2,100 of 2,358 map placements. Still open: town defenders, attack mages, chest pools.

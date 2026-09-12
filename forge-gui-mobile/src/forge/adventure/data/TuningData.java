@@ -265,7 +265,7 @@ public class TuningData {
      *  hand-edited tier string can never shrink a sprite to nothing. */
     public float tierScale(String tier) {
         if (tier == null)
-            return enemyTierScaleCommon;
+            return 1f; // round 183 (code review S13): as the javadoc says - unreachable today (EnemyData.tier defaults to Common)
         switch (tier) {
             case "Uncommon": return enemyTierScaleUncommon;
             case "Rare":     return enemyTierScaleRare;

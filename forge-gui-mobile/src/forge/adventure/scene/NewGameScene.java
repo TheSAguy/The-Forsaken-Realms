@@ -208,9 +208,15 @@ public class NewGameScene extends MenuScene {
         race.addListener(event -> NewGameScene.this.updateAvatar());
         // Round 150: Standard's set list is the chosen race's own four expansions, so it has to be
         // rebuilt whenever the race changes.
-        race.addListener(event -> {
-            NewGameScene.this.updateStarterEditionListForRace();
-            return false;
+        // Round 183 (code review D3): on a real CHANGE of the race selector, and only while Standard owns that
+        // selector - a raw listener fired on every event (hover, touch-down) and would have overwritten the
+        // Precon / Commander-Precon set list with the race's sets on a plane that ships precon decks.
+        race.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (modes.get(mode.getCurrentIndex()) == AdventureModes.Standard)
+                    NewGameScene.this.updateStarterEditionListForRace();
+            }
         });
         race.setTextList(HeroListData.instance().getRaces());
         raceHelp = ui.findActor("raceHelp");

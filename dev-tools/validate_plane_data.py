@@ -12,7 +12,7 @@ biomes -> enemies / POIs / atlases, quests -> items / enemy tags / POI tags, tmx
 templates / enemies / shops / rewards / dialogs, atlas -> png.
 Writes a report to the path given as argv[2] (default: stdout only).
 """
-import json, os, re, sys, xml.etree.ElementTree as ET
+import glob, json, os, re, sys, xml.etree.ElementTree as ET
 from collections import defaultdict, Counter
 
 PLANE = sys.argv[1] if len(sys.argv) > 1 else r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms"
@@ -762,6 +762,108 @@ for d in sorted(deck_refs):
             issue("deck-empty-main", "%s: [Main] section empty" % d)
     else:
         issue("deck-no-main", "%s: no [Main] section" % d)
+
+# ------------------------------------------ starter-deck buckets that can catch the same card (D4)
+# Round 183 (code review D4). Round 151 built the starter decks on the claim that their buckets are
+# disjoint - "Creature C/U cmc 3-4", "Instant/Sorcery/Enchantment C/U cmc 3-5", "Rare cmc 3-7". They are
+# not disjoint STRUCTURALLY: CardUtil's CardPredicate passes a card when ANY of its core types matches,
+# so an Enchantment Creature satisfies both of the first two, and an untyped bucket catches everything a
+# typed one does. Nothing in today's 16 race set lists exposes it - which is why this is a validator
+# warning rather than a rewrite of deck generation. The day a Theros- or Kamigawa-style set joins a
+# race's four, this prints instead of the deck quietly filling a slot with the wrong kind of card.
+COMBINABLE_TYPES = {frozenset(p) for p in [
+    ("creature", "enchantment"),   # Theros/Kamigawa - D4's own example
+    ("creature", "artifact"),
+    ("creature", "land"),
+    ("artifact", "enchantment"),
+    ("artifact", "land"),
+    ("enchantment", "land"),
+    ("creature", "planeswalker"),  # Gideon
+    ("artifact", "planeswalker"),
+]}
+
+
+def _cmc_range(rd):
+    mc = rd.get("manaCosts") or rd.get("manaCost")
+    if not mc:
+        return None
+    try:
+        vals = [int(x) for x in (mc if isinstance(mc, list) else [mc])]
+    except (TypeError, ValueError):
+        return None
+    return (min(vals), max(vals)) if vals else None
+
+
+def _bucket_types(rd):
+    t = rd.get("cardTypes") or rd.get("cardType")
+    if not t:
+        return set()          # untyped: overlaps every typed bucket
+    return {str(x).strip().lower() for x in (t if isinstance(t, list) else [t])}
+
+
+def _bucket_rarities(rd):
+    r = rd.get("rarity") or rd.get("cardRarity")
+    if not r:
+        return set()
+    return {str(x).strip().lower()[:1] for x in (r if isinstance(r, list) else [r])}
+
+
+def _bucket_colors(rd):
+    # The pile decks separate their buckets by COLOR at identical type/rarity/cmc - genuinely disjoint,
+    # and the commonest shape in this folder, so colour has to be part of the test.
+    c = rd.get("colors") or rd.get("color")
+    if not c:
+        return set()
+    return {str(x).strip().lower() for x in (c if isinstance(c, list) else [c])}
+
+
+starter_checked = 0
+for deck_path in sorted(glob.glob(os.path.join(PLANE, "decks", "starter", "*.json"))):
+    try:
+        dj, _m = loads_lenient(open(deck_path, "r", encoding="utf-8-sig").read())
+    except Exception as e:
+        issue("deck-json-parse", "%s: %s" % (rel(deck_path), e))
+        continue
+    # Named cards (the basic lands) are exact picks, not filters - nothing to overlap.
+    buckets = [b for b in (dj.get("mainDeck") or []) if isinstance(b, dict) and not b.get("cardName")]
+    starter_checked += 1
+    for i in range(len(buckets)):
+        for j in range(i + 1, len(buckets)):
+            a, b = buckets[i], buckets[j]
+            ta, tb = _bucket_types(a), _bucket_types(b)
+            shared = ta & tb
+            # A card matches a bucket when ANY of its core types is listed, so two buckets naming
+            # different types still both catch a card that HAS both - that is D4's Enchantment Creature.
+            # Instants and sorceries are the only types that cannot share a card with a permanent type,
+            # which is why "Creature" vs "Instant/Sorcery" is the one genuinely safe pairing here.
+            mixed = set()
+            if ta and tb and not shared:
+                for x in ta:
+                    for y in tb:
+                        if frozenset((x, y)) in COMBINABLE_TYPES:
+                            mixed.add((x, y))
+                if not mixed:
+                    continue                  # no card can hold a type from each side
+            ra, rb = _bucket_rarities(a), _bucket_rarities(b)
+            if ra and rb and not (ra & rb):
+                continue
+            cola, colb = _bucket_colors(a), _bucket_colors(b)
+            if cola and colb and not (cola & colb):
+                continue
+            ca, cb = _cmc_range(a), _cmc_range(b)
+            if ca and cb and (ca[1] < cb[0] or cb[1] < ca[0]):
+                continue
+            where = "%s: buckets %d and %d" % (rel(deck_path), i, j)
+            shape = ("types %s/%s, rarity %s/%s, cmc %s/%s"
+                     % (sorted(ta) or ["any"], sorted(tb) or ["any"],
+                        sorted(ra) or ["any"], sorted(rb) or ["any"], ca or "any", cb or "any"))
+            if mixed:
+                # Only bites if one of this race's four sets actually prints such a card - informational.
+                issue("starter-bucket-type-mix", "%s both catch a %s (%s)"
+                      % (where, "/".join(sorted(next(iter(mixed)))), shape))
+            else:
+                issue("starter-bucket-overlap", "%s can catch the same card (%s)" % (where, shape))
+counts["starter-decks-checked"] = starter_checked
 
 # ---------------------------------------------------------------- report
 lines = []

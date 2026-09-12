@@ -6,7 +6,7 @@ change — add ideas, cross things off, revise scope.
 
 **Status legend:** `Not Started` · `In Progress` · `Done` · `Open Question` (design not settled yet)
 
-**Currency:** caught up to **round 79 (2026-09-01)**. This file went stale between rounds 61 and 77
+**Currency:** caught up to **round 182 (2026-09-11)** - a status pass that day brought #97, #116, #117 and #118 current and added #119; everything else was verified against `MOD_CHANGELOG.md`. Before that it was caught up to **round 79 (2026-09-01)**. This file went stale between rounds 61 and 77
 while `MOD_CHANGELOG.md` kept running; items **#92-#100** were backfilled in one pass on 2026-09-01
 to close that gap. A user status pass the same day closed #12/#25/#31/#42/#54/#81/#90, moved #11 to
 In Progress, removed #86, and added named targets to #84 and #87. Per-round engineering detail always lives in `MOD_CHANGELOG.md`
@@ -63,6 +63,21 @@ Helping a color angers its two enemies, not its allies.
   | Neutral | -29 to 29 | none |
   | Unhappy | -30 to -79 | 25% pricier; 15% more likely (x1.15) |
   | War | ≤ -80 | barred from that color's towns (capitals charge a 500-gold entry toll instead, prices 40% up inside); 50% more likely (x1.50) |
+  - **Round 183 - what roams that color's land, and what it sends at you.** Two more per-status
+    consequences, both on the same ladder (`config tables/spawn_tier_weighting.json`'s
+    `territoryDeltas`, and `TerritoryControl`'s dispatch roll). Share of encounters on that color's
+    own terrain at the week 21+ plateau, and that color's chance of sending an Archmage:
+    | Status | Apprentice | Adept | Master | Archmage | Archmage attack |
+    |--------|-----|-----|-----|-----|-----|
+    | Partner | 39 | 31 | 27 | 3 | 0.5% |
+    | Happy | 31 | 28 | 28 | 13 | 2.5% |
+    | Neutral | 16 | 25 | 33 | 26 | 5% |
+    | Unhappy | 11 | 20 | 35 | 34 | 8% |
+    | War | 2 | 13 | 38 | 48 | 12.5% |
+    For comparison the player's own land is 46/29/24/1 and the ownerless Wasteland 22/24/30/24 -
+    the Wasteland used to BE the Neutral row, which is why a rival's own land was no more dangerous
+    than no-man's-land. The rows are multipliers, renormalized to the week bracket's total, so no
+    standing can conjure a rank the week brackets have not reached yet and bosses keep their share.
   - **Console command for testing**: `give rep <color> <amount>` (negative allowed) shifts one
     color by a display amount, spreading the negation across the other 4 so net-zero holds -
     added because reaching ±80 legitimately takes ~40 duel wins. (For force-winning actual
@@ -1155,7 +1170,9 @@ needs its own design pass before any of this gets built:**
   stay rubble. This is intended #92 behavior, not a break in #10, but it will read in play as "I
   cannot rebuild this shop" - so it is recorded here rather than left to be re-discovered as a bug.
 
-### 11. Map Polish & Terrain Customization — `In Progress` (absorbed #36, 2026-08-12 - same ask)
+### 11. Map Polish & Terrain Customization — `Done for now (user decision 2026-09-11, round 183)` (absorbed #36, 2026-08-12 - same ask)
+
+**Done for now (user, 2026-09-11).** Closed at the v1.10 line rather than finished: the map got the biome re-theme, the TFR medallion on player land, 48 cave icons, road links, the Ring Cities, the town "Under Attack!" markers and the 197-enemy art pass. Re-open it if a later round wants larger maps or new doodad sets - the wishlist below is kept as the standing backlog for that.
 - More visually diverse map, prettier overall; more terrain variety (new structure/doodad sets
   per biome - ties to #7's Terrain Switch-Out reskinning machinery, which would pick them up
   automatically).
@@ -4254,7 +4271,11 @@ tier. Needs its own design pass on which buildings, how many tiers, and cost cur
   attacking options is the obvious reading, and would tie the two items together).
 - **Armory Upgrade** - extends the existing Level 1/2 system in #22 with further tiers.
 
-### 85. New Quests — `Not Started`
+**User note (2026-09-11):** *"Need end-game testing for balancing."* Whatever this item eventually builds, the payout/cost curve has to be judged from an end-game save (many towns, full mines, an Armory already at its current top level), not from an early-game one - that is where a new tier either trivializes the economy or costs more than it returns.
+
+### 85. New Quests — `Done (2026-09-11, user: "We've implemented a new main quest")`
+
+**Done (user, 2026-09-11).** The new main questline shipped: "Oaths at the Ring" (round 101) replaced the opening and the tutorial, round 132 broke the Courier chain into three separate quests and added the five "Find the Capital of <Color>" quests at the Player Capitol, and later rounds added the guard-hire and camp steps. Further quest content would be a new item rather than more of this one.
 User wishlist addition (2026-08-18): additional quest content beyond the existing story/side-quest
 system (#16's timers, the main story chain). Scope (new story arcs vs. more side-quest variety
 vs. both) not yet defined.
@@ -4565,7 +4586,7 @@ rather than in a player's save: cards, decks, inventory, equipment, boosters, al
 max life, name/race/avatar. Known accepted cost: an in-progress draft/sealed tournament is
 discarded, exactly as a New Game already does.
 
-### 97. Android Release — `Live - v1.05 APK + assets.zip shipped 2026-09-05 (round 119); rounds 120-121 fixes await the next APK; testers report via Discord`
+### 97. Android Release — `Live - an APK with every release since v1.05 (v1.09, 2026-09-10, is the latest); testers report via Discord`
 Backfilled 2026-09-01. Signed APK plus a paired assets.zip, attached to the `tfr-v1.03` release and
 marked experimental/community-test. **`ANDROID_RELEASE.md` in the repo root is the authoritative
 per-release procedure** - read it before any Android work; it carries the keystore rules (the SAME
@@ -4845,7 +4866,7 @@ the user's request. What the investigation found:
   the overworld policy — not the assistant making live decisions. There is no screen access from the assistant side,
   and driving a Magic game turn-by-turn through a text channel would be slower and worse than the AI already is.
 
-### 116. Roaming guard — `Not Started` (analysed 2026-09-07, round 144)
+### 116. Roaming guard — `Done (built round 145, 2026-09-08; shipped in v1.09 "The Roaming Guard", 2026-09-10)` (analysed 2026-09-07, round 144)
 User spec: a Capitol-only hire branch offering Local (today's behaviour) or **Roaming**. A roaming guard picks a mage
 tier for its starting life, is handed one of the player's DECKS (those cards leave the collection), walks the
 overworld with the player's own sprite, uses the teleport network to reach a threatened town by the fastest route,
@@ -4892,7 +4913,7 @@ the same real match. See MOD_CHANGELOG round 145 for the design notes and the ju
 
 
 
-### 117. Agent play - Claude plays the game as the player — `In Progress (bridge built 2026-09-09, round 161; isolated setup + tfr-play skill round 175; first full session pending)`
+### 117. Agent play - Claude plays the game as the player — `In Progress (bridge built 2026-09-09, round 161; isolated setup + tfr-play skill round 175; first watched session round 176; the test harness for rounds 178-181)`
 User ask 2026-09-09: *"figure out how we can implement it where you can play the game as the player. Not just duels
 that's currently possible, but fully play the game in the place of the player."* Design: `docs/design/2026-09-09-agent-play.md`.
 Model chosen: Claude drives everything outside a duel (overworld, towns, shops, inventory, decks, quests) through a
@@ -4904,7 +4925,7 @@ game folder `F:\FORGE\TFR-Agent` and APPDATA profile - never the user's saves), 
 town it had just left, and wrote the `tfr-play` skill. Remaining: the first full session for the user to watch,
 `newgame` parameters, a speed setting for the spectated duel, the AI pilot's shard write-back.
 
-### 118. Armory storage and roaming guard equipment — `Built (round 163, 2026-09-10; round 166: Capitol Level 2 only per the user; awaiting playtest)`
+### 118. Armory storage and roaming guard equipment — `Done (built round 163; Armory screen round 168; shipped in v1.09, 2026-09-10; Capitol Level 2 only per the user)`
 User ask 2026-09-10: *"add a storage to the armory. The player can add items from his inventory there. Then on the
 Guard management screen a way to access the inventory and add equipment to the a guard."* Design and decision table:
 `docs/design/2026-09-10-armory-storage.md`. One storage per character, reachable from every player-owned Armory
@@ -4913,3 +4934,14 @@ doll slot; what a guard wears fights with it in watched and simulated duels alik
 returns to the storage on dismissal or disband. One owner per item (`util/ArmoryStorage.java`'s five verbs, each
 logged `[TFR-Armory]`); persisted as `ItemData[]` on the player and inside each guard's sub-data, old saves load empty.
 Open for the user: per-Armory instead of global storage? a Level-2 gate? forfeit gear with a downed guard's deck?
+
+### 119. New enemy art - 197 enemies — `Done (rounds 177-181, 2026-09-11; not yet released)`
+User ask 2026-09-11: *"Let's proceed with the 197 ... balance them a little more, but both numbers and rank ... create
+thematic decks for them ... a balance between mono, 2, 3 color decks ... Higher tiers should be added to tournaments and
+overworld / dungeon spawns."* The user's art folder (124 Ragnarok Online sheets + 73 render sheets; the art is the user's
+informed choice, credited in CREDITS.md) became 197 enemies with MTG-style names: 48 Apprentice / 73 Adept / 51 Master /
+25 Archmage, 64 mono / 66 two / 67 three-color, the new slots leaning white, blue and red. Each has a themed deck built
+from Forge's card data (an insect plays insects), sits in the biome roster of every one of its colors (undead / horrors /
+constructs below Archmage in the Wasteland too), Masters and Archmages in the capital arenas, and the generated caves
+re-picked their roamers. Sizes follow round 178's one-size-per-rank rule. Toolchain: `dev-tools/art-import/`. The
+bestiary page: https://claude.ai/code/artifact/5f82734c-8bf7-497f-a369-27a1934c221e

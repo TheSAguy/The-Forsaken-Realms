@@ -550,12 +550,23 @@ public class Config {
             if (size >= configData.minDeckSize) {
                 System.out.println("[TFR-StarterDeck] " + label + " from race editions " + raceCodes
                         + " -> " + size + " cards");
+                describeStarterDeck(label, deck); // round 183 (code review D5): audit every path, not just the first
                 return deck;
             }
         }
         System.out.println("[TFR-StarterDeck] " + label + ": race editions could only fill " + size
                 + " of " + configData.minDeckSize + " for " + path + " - rebuilding unrestricted");
-        return CardUtil.getDeck(path, false, false, "", false, false, (java.util.List<String>) null, false, false);
+        Deck unrestricted = CardUtil.getDeck(path, false, false, "", false, false, (java.util.List<String>) null, false, false);
+        // Round 183 (code review D5): the last resort was neither audited nor size-checked - a template that cannot be
+        // filled even from every set would have handed over a short deck silently.
+        int unrestrictedSize = unrestricted == null ? 0 : unrestricted.getMain().countAll();
+        if (unrestrictedSize < configData.minDeckSize)
+            System.err.println("[TFR-StarterDeck] " + label + ": WARNING - even unrestricted, " + path + " filled only "
+                    + unrestrictedSize + " of " + configData.minDeckSize + " cards");
+        else
+            System.out.println("[TFR-StarterDeck] " + label + " unrestricted -> " + unrestrictedSize + " cards");
+        describeStarterDeck(label, unrestricted);
+        return unrestricted;
     }
 
     /**

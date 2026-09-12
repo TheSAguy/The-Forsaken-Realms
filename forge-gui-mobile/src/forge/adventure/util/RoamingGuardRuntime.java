@@ -98,7 +98,10 @@ public class RoamingGuardRuntime {
         // remaining journey and the Math.min() in moveGuards snaps the guard to its destination in
         // a single step. The mages never showed this because a duel starts from a collision at
         // their destination; a guard is mid-journey across the scene switch.
-        moveGuards(Math.min(delta, MAX_STEP_SECONDS), day, foregroundSprites);
+        // Round 183 (code review G11): clamp only a STALL (a scene switch, a duel, a dialog), not a slow frame -
+        // clamping every frame to 0.05 s made a guard cover 75% of its speed at 15 fps while the mage it races
+        // moves on the raw frame time.
+        moveGuards(delta > STALL_SECONDS ? MAX_STEP_SECONDS : delta, day, foregroundSprites);
     }
 
     /** Give every unattended attack on a player town to an available guard. */
@@ -266,6 +269,8 @@ public class RoamingGuardRuntime {
     /** One frame's worth of travel at most. A duel, a dialog or a stutter must not become
      *  distance covered - see update()'s note. */
     private static final float MAX_STEP_SECONDS = 0.05f;
+    /** Round 183: a frame longer than this is a stall, not a slow frame - see update(). */
+    private static final float STALL_SECONDS = 0.25f;
 
     public static Arrival onArrival(EnemySprite mage) {
         if (!RoamingGuards.isEnabled() || mage.territoryTarget == null)
@@ -349,6 +354,28 @@ public class RoamingGuardRuntime {
                 + " guard fell at " + town + " and is out of commission for "
                 + RoamingGuards.recoveryDays() + " days.", true);
         return mage; // the mage carries on to the town, which now defends itself
+    }
+
+    /**
+     * Round 183 (code review G16): a fight that cannot happen - the guard has no deck to play, or the mage has
+     * none - is no contest. The guard walks home unhurt (it used to be scored a LOSS and benched for a month,
+     * against the "let the town defend itself" the callers' comments promised) and the mage goes on to the
+     * town, which defends itself as if no guard had been there.
+     *
+     * @return the mage to hand to the town
+     */
+    public static EnemySprite onDuelVoid(String why) {
+        RoamingGuardData guard = duellingGuard;
+        EnemySprite mage = duellingMage;
+        clearDuel();
+        if (guard == null)
+            return mage;
+        guard.inDuel = false;
+        String town = mage != null && mage.territoryTarget != null ? mage.territoryTarget.getDisplayName() : "your town";
+        System.out.println("[TFR-RoamGuard] no contest at " + town + " (" + why + ") - "
+                + RoamingGuards.displayName(guard.tier) + " walks home unhurt, the town defends itself");
+        sendHome(guard);
+        return mage;
     }
 
     /**

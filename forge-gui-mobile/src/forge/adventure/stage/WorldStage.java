@@ -857,7 +857,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             return;
         forge.deck.Deck deck = RoamingGuards.battleDeck(guard);
         if (deck == null) { // no deck: nothing to fight with, let the town defend itself
-            EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(false);
+            EnemySprite passthrough = RoamingGuardRuntime.onDuelVoid("the guard has no playable deck"); // round 183 (G16)
             if (passthrough != null)
                 TerritoryControl.onMageArrived(passthrough);
             return;
@@ -909,7 +909,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private void simulateGuardDuel(forge.adventure.data.RoamingGuardData guard, EnemySprite mage, forge.deck.Deck deck) {
         forge.deck.Deck mageDeck = mage.getData().generateDeck(Current.player().isFantasyMode(), false);
         if (mageDeck == null) { // nothing to simulate against - let the town defend itself
-            EnemySprite passthrough = RoamingGuardRuntime.onDuelFinished(false);
+            EnemySprite passthrough = RoamingGuardRuntime.onDuelVoid("the mage has no deck"); // round 183 (G16)
             if (passthrough != null)
                 TerritoryControl.onMageArrived(passthrough);
             return;
@@ -938,6 +938,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 mage.getName(), mageDeck, mageLife,
                 gearOnMage.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gearOnMage),
                 1, null, result -> {
+                    // Round 183 (code review G12): the result of THIS fight only. One that lands after the fight
+                    // stopped being the current one (a load or new game cleared it, or the next interception
+                    // began) would score whatever guard is duelling now with a stranger's outcome.
+                    if (RoamingGuardRuntime.duellingGuard() != guard || RoamingGuardRuntime.duellingMage() != mage) {
+                        System.out.println("[TFR-RoamGuard] stale simulation result ignored - "
+                                + RoamingGuards.displayName(guard.tier) + " vs " + mage.getName()
+                                + " is no longer the fight in progress");
+                        return;
+                    }
                     boolean guardWon = result.deckAWins > result.deckBWins;
                     // Round 166 (user: "Guard fights stats should count the same as player stats"): a
                     // watched guard fight passes through DuelScene.afterGameEnd() and so writes the

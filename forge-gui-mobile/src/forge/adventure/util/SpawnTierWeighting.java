@@ -113,10 +113,34 @@ public class SpawnTierWeighting {
         SpawnTierWeightData.WeekBracket bracket = findBracket(data.weekBrackets, week);
         if (bracket == null)
             return 0f;
-        float base = baseFor(bracket, tier);
-        SpawnTierWeightData.TierDelta delta = resolveDelta(data, owningColor);
-        float deltaVal = delta == null ? 0f : deltaFor(delta, tier);
-        return Math.max(0f, base + deltaVal);
+        String key = resolveKey(data, owningColor);
+        SpawnTierWeightData.TierDelta delta = data.territoryDeltas == null ? null : data.territoryDeltas.get(key);
+        logRowOnce(bracket, delta, key, week);
+        if (delta == null)
+            return Math.max(0f, baseFor(bracket, tier));
+        float adjusted = adjustedFor(bracket, delta, tier);
+        // Round 183: renormalize the row back to the week bracket's OWN total. The four adjusted numbers describe a
+        // MIX, and every territory row before this round summed to zero change by hand (+10/+2/-4/-8 etc.) for a
+        // reason: BiomeData.getEnemy() divides by the whole pool, and an EXEMPT entry (a boss, an arena-only fighter)
+        // contributes its own fixed spawnRate to that pool rather than a tier target. Letting a row total drift -
+        // War's multipliers come to 187 against the plateau's 100 - would quietly make bosses half as likely at war
+        // and commoner on your own land, which is a change nobody asked for. Scaling the row back to the bracket's
+        // total keeps the tilt and leaves the ordinary-vs-exempt balance exactly where it was.
+        float rowTotal = 0f;
+        for (String t : TIERS)
+            rowTotal += adjustedFor(bracket, delta, t);
+        if (rowTotal <= 0f)
+            return adjusted;
+        float bracketTotal = bracket.common + bracket.uncommon + bracket.rare + bracket.mythic;
+        return adjusted * (bracketTotal / rowTotal);
+    }
+
+    /** One tier's adjusted target before the row is renormalized: the delta moves it, the multiplier scales it.
+     *  A multiplier cannot open a rank the week bracket closed (0 x anything is 0), which is what keeps the week
+     *  brackets the single authority on early-game pacing. */
+    private static float adjustedFor(SpawnTierWeightData.WeekBracket bracket, SpawnTierWeightData.TierDelta delta,
+                                     String tier) {
+        return Math.max(0f, baseFor(bracket, tier) + deltaFor(delta, tier)) * scaleFor(delta, tier);
     }
 
     private static SpawnTierWeightData.WeekBracket findBracket(SpawnTierWeightData.WeekBracket[] brackets, int week) {
@@ -148,22 +172,78 @@ public class SpawnTierWeighting {
         }
     }
 
+    private static float scaleFor(SpawnTierWeightData.TierDelta delta, String tier) {
+        switch (tier == null ? "Common" : tier) {
+            case "Uncommon": return delta.uncommonScale;
+            case "Rare":     return delta.rareScale;
+            case "Mythic":   return delta.mythicScale;
+            default:         return delta.commonScale;
+        }
+    }
+
     /** Resolves which territoryDeltas row applies: "player" biome ownership -> PLAYER_OWNED;
      *  an AI color with ColorReputation enabled -> that color's current Status name; anything
-     *  else (colorless/wasteland, reputation off, unrecognized name) -> NEUTRAL (an explicit
-     *  all-zero row, same effect as no delta at all). */
-    private static SpawnTierWeightData.TierDelta resolveDelta(SpawnTierWeightData data, String owningColor) {
-        if (data.territoryDeltas == null)
-            return null;
-        String key;
-        if ("player".equals(owningColor)) {
-            key = "PLAYER_OWNED";
-        } else if (owningColor != null && ColorReputation.isEnabled() && Arrays.asList(ColorReputation.COLORS).contains(owningColor)) {
-            key = ColorReputation.getStatus(owningColor).name();
-        } else {
-            key = "NEUTRAL";
+     *  else -> WASTELAND.
+     *  <p>
+     *  Round 183 (user: "Neutral is somewhere in the middle. AI should probably be a little more hostile than
+     *  Neutral on Neutral Reputation"): the ownerless Wasteland and an AI color you are merely NEUTRAL with used
+     *  to share one row. They are different places now - WASTELAND is the middle of the ladder, NEUTRAL is a
+     *  color's own land. A table without a WASTELAND row falls back to NEUTRAL, as before. */
+    private static String resolveKey(SpawnTierWeightData data, String owningColor) {
+        if ("player".equals(owningColor))
+            return "PLAYER_OWNED";
+        if (owningColor != null && ColorReputation.isEnabled() && Arrays.asList(ColorReputation.COLORS).contains(owningColor))
+            return ColorReputation.getStatus(owningColor).name();
+        if (data.territoryDeltas != null && data.territoryDeltas.containsKey("WASTELAND"))
+            return "WASTELAND";
+        return "NEUTRAL";
+    }
+
+    /** MTG letter for one of ColorReputation.COLORS ("black" -> "B"), for the skew read-out below. */
+    private static String colorLetter(String color) {
+        switch (color) {
+            case "white": return "W";
+            case "blue":  return "U";
+            case "black": return "B";
+            case "red":   return "R";
+            case "green": return "G";
+            default:      return "";
         }
-        return data.territoryDeltas.get(key);
+    }
+
+    /** Round 183: one line whenever the land under the player - or the week - changes the tier mix, because
+     *  nothing else in the log said which of the seven rows a spawn was rolled against. Identical repeats are
+     *  suppressed (this runs four times per spawn roll), so stepping across a border prints exactly one line. */
+    private static String lastLoggedRow = null;
+
+    private static void logRowOnce(SpawnTierWeightData.WeekBracket bracket, SpawnTierWeightData.TierDelta delta,
+                                   String key, int week) {
+        StringBuilder line = new StringBuilder("[TFR-SpawnTier] week ").append(week).append(" on ").append(key)
+                .append(delta == null ? " (no row - week bracket as written)" : "").append(":");
+        float rowTotal = 0f;
+        float[] adjusted = new float[TIERS.length];
+        for (int i = 0; i < TIERS.length; i++) {
+            adjusted[i] = delta == null ? Math.max(0f, baseFor(bracket, TIERS[i])) : adjustedFor(bracket, delta, TIERS[i]);
+            rowTotal += adjusted[i];
+        }
+        for (int i = 0; i < TIERS.length; i++) {
+            float share = rowTotal > 0f ? 100f * adjusted[i] / rowTotal : 0f;
+            line.append(' ').append(EnemyData.tierDisplayName(TIERS[i])).append(' ')
+                    .append(Math.round(share * 10f) / 10f).append('%');
+        }
+        // Round 183: the color skew belongs on the same line - it is the other half of "what am I about to meet",
+        // and a per-candidate log of it would print once per enemy per roll.
+        if (ColorReputation.isEnabled()) {
+            line.append(" | color skew");
+            for (String color : ColorReputation.COLORS)
+                line.append(' ').append(Character.toUpperCase(color.charAt(0)))
+                        .append(Math.round(ColorReputation.getSpawnColorSkew(colorLetter(color)) * 100f) / 100f);
+        }
+        String text = line.toString();
+        if (!text.equals(lastLoggedRow)) {
+            System.out.println(text);
+            lastLoggedRow = text;
+        }
     }
 
     /**
@@ -184,7 +264,10 @@ public class SpawnTierWeighting {
             return 0f;
         float baseline = 1f / candidateCountInTier;
         int kills = getPermanentKillCount(data.getName());
-        return baseline * (float) Math.pow(0.5, kills);
+        // Round 183 (user: "the color reputation skew ... at war x3 probability and partner 1/3"). Applied here,
+        // inside the same within-tier weight the kill decay uses, so it is renormalized with everything else: it
+        // moves WHICH colors you meet, never how many enemies spawn or which ranks they are.
+        return baseline * (float) Math.pow(0.5, kills) * ColorReputation.getSpawnColorSkew(data.colors);
     }
 
     /** How many times this exact enemy name has been confirmed-defeated in roaming combat, ever.

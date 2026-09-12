@@ -743,6 +743,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         events.clear();
         AdventureQuestController.clear();
         AdventureEventController.clear();
+        // Round 183 (code review E7): the income book starts empty, as for a new game (create() resets it) - a
+        // save made before its first backwards roll carried the previous run's week.
+        forge.adventure.util.ResourceLedger.reset(ledger);
         statistic.clear();
         setCharacterFlag("newGamePlus", 1);
 

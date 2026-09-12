@@ -939,7 +939,8 @@ public class MapStage extends GameStage {
         EnemyData champion = CaveChampions.championFor(poi, Current.player().getStatistic().rank());
         if (champion == null)
             return;
-        caveChampionObjectId = candidates.get(Math.abs(poi.getID().hashCode()) % candidates.size);
+        // Round 183 (code review S12): floorMod - Math.abs(Integer.MIN_VALUE) is still negative.
+        caveChampionObjectId = candidates.get(Math.floorMod(poi.getID().hashCode(), candidates.size));
         caveChampionData = champion;
         System.out.println("[TFR-CaveChampion] " + poi.getData().name + ": " + champion.getName()
                 + " takes placement " + caveChampionObjectId + " of " + candidates.size + " candidate(s)");

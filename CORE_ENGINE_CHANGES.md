@@ -2736,3 +2736,29 @@ Data and tooling only: 197 new enemies (`world/enemies.json`, biome rosters, cap
   candidate test and `loadObjects()`'s content-filter / re-theme branch call it instead of "boss or any quest tag".
   Both call sites are mod-added code inside stock methods (rounds 139 and 2026-08-10/12); on a merge keep the helper
   with them.
+
+## Round 182 (2026-09-11) - upstream merge @ 26d8aff8750 (the 09.11 daily)
+
+30 commits / 178 files / 84 Java since `06a3c05731c`. Conflicts, and how each was resolved:
+- **`forge/Forge.java`** `render()` - upstream's `isDisposed` early return first, then `AgentBridge.startIfConfigured()`.
+- **`adventure/scene/EventScene.java`** - imports only (upstream's `TextureRegion` + our `Actor`).
+- **`adventure/scene/InnScene.java`** `sell()` - our `isRuinedTown()` guard, then upstream's
+  `ShopScene.instance(getUIBackground())` (the no-argument accessor is gone upstream).
+- **`adventure/scene/MapViewScene.java`** - OUR `refreshMap()` kept (own `miniMapTexture`, rebuilt every refresh);
+  upstream's `Assets.getNewMiniMapTexture()` is NOT used: it skips the upload when the Pixmap object is unchanged,
+  and fog of war / territory repaint mutate that Pixmap in place. On the next merge, keep this unless upstream's
+  cache learns a dirty flag.
+- **`adventure/world/World.java`** `dispose()` - `Forge.safeDispose(biomeImage, fogOfWarPixmap, fogTilePixmap)`.
+Both-sides files (16) re-checked line by line: every mod addition present. No new dependency; no Android file.
+
+## Round 183 (2026-09-11) - one engine file: the render loop's exception key
+
+- **`forge/Adventure.java`** `reportSilencedRenderException()` - the swallowed-exception key is now the top stack frame
+  PLUS the first `forge.` frame (code review D6). Keying on the top frame alone put every call site throwing from the
+  same JDK/libGDX method under one key, so only the first of them ever printed a trace. Same first-occurrence-then-count
+  behavior otherwise.
+
+Everything else this round is adventure-side (`adventure/util/SpawnTierWeighting`, `adventure/util/TerritoryControl`,
+`adventure/world/WorldSave`, the roaming-guard classes, `adventure/scene/MapViewScene`, `adventure/scene/NewGameScene`,
+`adventure/data/SpawnTierWeightData`, `adventure/data/TuningData`, `adventure/stage/{GameStage,MapStage,WorldStage}`)
+plus `dev-tools/save-editing/Inv.java`.

@@ -98,7 +98,19 @@ public class Adventure implements Disposable {
 
     private static void reportSilencedRenderException(RuntimeException ie) {
         StackTraceElement[] trace = ie.getStackTrace();
-        String key = ie.getClass().getSimpleName() + " at " + (trace.length > 0 ? trace[0].toString() : "(no frame)");
+        // Round 183 (code review D6): the throwing frame AND the first frame in Forge's own code. Keying on the top
+        // frame alone put every call site that throws from the same JDK/libGDX method under one key, so only the
+        // first of them ever printed a trace.
+        String site = null;
+        for (StackTraceElement frame : trace) {
+            if (frame.getClassName().startsWith("forge.")) {
+                site = frame.toString();
+                break;
+            }
+        }
+        String top = trace.length > 0 ? trace[0].toString() : "(no frame)";
+        String key = ie.getClass().getSimpleName() + " at " + top
+                + (site == null || site.equals(top) ? "" : " via " + site);
         int seen = silencedRenderExceptions.merge(key, 1, Integer::sum);
         if (seen == 1) {
             System.err.println("[TFR-Render] swallowed exception (first occurrence): " + key);

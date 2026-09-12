@@ -207,15 +207,21 @@ public class RoamingGuardUI {
             // deck whose cards already went out with another guard still lists 40 of them.
             int deliverable = RoamingGuards.deliverableCount(slot);
             boolean playable = deliverable >= minimum;
-            String suffix = !playable ? " [RED]X" : impact.isEmpty() ? "" : " [RED]!";
+            // Round 183 (code review G15): the deck you duel with is not on offer - handing it over emptied the
+            // active slot, and the next duel was padded to 40 Wastes.
+            boolean active = slot == player.getSelectedDeckIndex();
+            String suffix = !playable || active ? " [RED]X" : impact.isEmpty() ? "" : " [RED]!";
             String count = deliverable == size ? String.valueOf(size) : deliverable + " of " + size;
             EconomyBuildings.addHalfButton(dialog, column,
-                    ArmoryStorageUI.fit(deck.getName() + " (" + count + ")") + suffix, playable, () -> { // round 164: long deck names
+                    ArmoryStorageUI.fit(deck.getName() + " (" + count + ")") + suffix, playable && !active, () -> { // round 164: long deck names
                 RoamingGuards.giveDeck(guard, slot);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
-            if (!playable)
+            if (active)
+                EconomyBuildings.addContentRow(dialog, "[RED]X " + deck.getName() + "[] is the deck you duel with -"
+                        + " select another deck first to hand this one over.");
+            else if (!playable)
                 EconomyBuildings.addContentRow(dialog, "[RED]X " + deck.getName() + "[] can only supply "
                         + deliverable + " of the " + minimum + " cards a legal deck needs"
                         + (deliverable == size ? "." : " - the rest are already out with a guard."));
@@ -405,8 +411,8 @@ public class RoamingGuardUI {
     /**
      * Round 162 (user: "give a warning before you can dismiss a guard - Are you sure, you will lose
      * the deck"). Dismiss is the one button on the manage screen that cannot be undone: a healthy
-     * guard's deck is disbanded on the spot (the cards return to the collection, the LIST does not -
-     * "Take deck back" is how to keep it), and a downed guard's deck is forfeited outright. So it
+     * guard's deck comes home - since round 183 (code review G14) rebuilt into the first empty deck slot, or as
+     * loose cards only when every slot is full - and a downed guard's deck is forfeited outright. So it
      * asks first, and says which of the two it is about to do.
      */
     private static void openDismissConfirm(UIScene scene, forge.adventure.pointofintrest.PointOfInterestChanges changes,
@@ -423,14 +429,18 @@ public class RoamingGuardUI {
                     + " commission, so " + deck + " is forfeited with it - the cards do not come back. Heal the guard"
                     + " first to keep them.");
         else
-            EconomyBuildings.addContentRow(dialog, "[RED]Are you sure? You will lose the deck.[] " + deck
-                    + " is disbanded: its cards return to your collection, but the deck itself is gone."
-                    + " Use \"Take deck back\" first to keep it in a slot.");
+            // Round 183 (G14): the deck list survives a dismissal now, as long as a slot is free for it.
+            EconomyBuildings.addContentRow(dialog, "[RED]Are you sure?[] " + deck
+                    + " comes back to the first empty deck slot - or, with every slot full, as loose cards in your"
+                    + " collection.");
         int[] column = {0};
+        String deckName = guard.deckName; // dismiss() clears it on the way home, so the notification needs it now
         EconomyBuildings.addHalfButton(dialog, column, "[RED]Dismiss", true, () -> {
-            boolean returned = RoamingGuards.dismiss(guard, day);
+            int slot = RoamingGuards.dismiss(guard, day);
             GameHUD.getInstance().addNotification(!hasDeck ? "Your guard was dismissed."
-                    : returned ? "Your guard was dismissed and the deck returned to your collection."
+                    : slot >= 0 ? "Your guard was dismissed - \"" + deckName + "\" is back in deck slot " + (slot + 1) + "."
+                    : slot == RoamingGuards.DECK_RETURNED_LOOSE
+                            ? "Your guard was dismissed - every deck slot is full, so its cards went back to your collection."
                     : "[RED]Your guard was dismissed while out of commission - the deck is lost.");
             scene.removeDialog();
             openRoster(scene, changes, poiName, objectId);
@@ -497,15 +507,23 @@ public class RoamingGuardUI {
         for (String tier : RoamingGuards.TIERS_ASCENDING) {
             boolean current = tier.equals(guard.tier);
             int difference = Math.max(0, RoamingGuards.weeklyGoldCost(tier) - RoamingGuards.weeklyGoldCost(guard.tier));
-            boolean canAfford = AdventurePlayer.current().getGold() >= difference;
+            // Round 183 (code review G13): the weekly pay has a shard part too (Master / Archmage) - "the difference
+            // in weekly pay" charged only the gold half of it.
+            int shardDifference = Math.max(0, RoamingGuards.weeklyShardCost(tier) - RoamingGuards.weeklyShardCost(guard.tier));
+            boolean canAfford = AdventurePlayer.current().getGold() >= difference
+                    && AdventurePlayer.current().getShards() >= shardDifference;
+            String price = (difference > 0 ? " " + difference + "[+Gold]" : "")
+                    + (shardDifference > 0 ? " " + shardDifference + "[+Shards]" : "");
             String label = (forge.Forge.isLandscapeMode() ? "[%75]" : "[%62]") + RoamingGuards.displayName(tier) // round 164: portrait
                     + " [+Life]" + RoamingGuards.lifeFor(tier)
                     + " spd" + (int) RoamingGuards.speedFor(tier)
-                    + (current ? " (current)" : difference > 0 ? " " + difference + "[+Gold]" : " (free)");
+                    + (current ? " (current)" : !price.isEmpty() ? price : " (free)");
             EconomyBuildings.addHalfButton(dialog, column, label, !current && canAfford, () -> {
                 int charged = RoamingGuards.retier(guard, tier);
                 if (charged > 0)
                     AdventurePlayer.current().takeGold(charged);
+                if (shardDifference > 0)
+                    AdventurePlayer.current().takeShards(shardDifference);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
             });
