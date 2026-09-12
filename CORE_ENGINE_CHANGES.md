@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 189 (2026-09-12) - no engine edits
+
+Adventure-side only: `adventure/util/TerritoryControl` (a `[TFR-TerritoryPerf]` line per in-game day
+and the phase timers behind it). Diagnostic only - no behaviour change.
+
 ## Round 188 (2026-09-12) - no engine edits
 
 Adventure-side only: `adventure/stage/WorldStage` (`clearCache()` now clears `waitingForTime` and

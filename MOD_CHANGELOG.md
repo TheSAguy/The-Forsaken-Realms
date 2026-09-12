@@ -17757,6 +17757,34 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 189: instrumenting the daily territory pass (2026-09-12)
+
+repo only - NOT yet packaged. DIAGNOSTIC ONLY - no behaviour change.
+
+The 2026-09-12 log (195 in-game days, day 2 -> 197) showed the daily territory pass settling at
+200-265ms, up from ~40ms on days 3-21. Before changing anything, the obvious theory was tested
+against that log and FAILED:
+
+  day ticks with a full re-contest: 159, average territory 170ms
+  day ticks without one:            36, average territory 155ms
+
+Only 15ms apart - and split by radius band, past radius ~100 the supposedly cheap "just the new
+ring" path was no cheaper at all (193ms with vs 199ms without at radius 100-150). So the O(radius^2)
+re-contest is NOT the cost, the 2026-08-26 fingerprint caching is doing its job, and the real cost
+is something this pass pays EVERY day whichever branch it takes. Radius grew 22 -> 216 (cap 450)
+over the session; the 211 instrumented road flood fills were all 0-1ms, i.e. innocent.
+
+New `[TFR-TerritoryPerf]` line, one per in-game day, splitting `processDaysPassed` into guards /
+dispatch / expansion and `processTerritoryExpansion` into its six phases: castles, playerTowns,
+sources1, townGrowth, sources2, colorClaim - plus the POI count the per-day full-map scans walk.
+Phases were chosen from the code's real boundaries, not guessed: there are THREE separate
+walks of every POI on the map per day (the guard-level pass, the player-town scan, the town-growth
+loop) and `buildPullSources()` runs TWICE. Any of those is a plausible per-day constant cost; the
+measurement decides which, rather than another round of reasoning about which looks expensive.
+
+Two `System.nanoTime()` reads per phase once per in-game day, same cost model as the
+`[TFR-DayTick]` line this complements.
+
 ## Round 188: Speed-Up and Wait no longer survive a load (2026-09-12)
 
 PACKAGED 2026-09-12 (342 MB, fast path)

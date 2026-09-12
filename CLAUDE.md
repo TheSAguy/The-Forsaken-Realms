@@ -90,6 +90,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 189 (2026-09-12, repo only - NOT yet packaged): **instrumented the daily territory pass** (diagnostic
+  only, no behaviour change). The 195-day log showed it at 200-265ms/day, up from ~40ms. **The obvious theory was
+  tested and failed**: days WITH a full re-contest averaged 170ms vs 155ms without, and past radius ~100 the
+  "cheap ring" path was no cheaper - so the O(radius^2) re-contest is NOT the cost and the 2026-08-26 fingerprint
+  cache is working. The cost is paid EVERY day whichever branch runs. New `[TFR-TerritoryPerf]` line splits the
+  pass into guards/dispatch/expansion and the expansion into castles/playerTowns/sources1/townGrowth/sources2/
+  colorClaim. Note for whoever reads the next log: there are THREE full-map POI walks per day (guard levels,
+  player-town scan, town-growth loop) and `buildPullSources()` runs TWICE - those are the prime suspects.
+  **Needs a log from a developed world (radius 100+) to conclude.**
 - Round 188 (2026-09-12, PACKAGED - 342 MB, fast path): **Speed-Up and Wait survived a save load.** Both HUD
   toggles write session state on the `WorldStage` singleton (`fastTimeEnabled` / `waitingForTime`); neither is in
   the save and nothing reset them, so a load inherited the previous session's clock speed / wait. Reset added to

@@ -427,9 +427,23 @@ public class TerritoryControl {
         return configData != null && configData.territoryControlEnabled;
     }
 
+    // [TFR-TerritoryPerf] phase timings, round 189. The 2026-09-12 log showed this pass settling at
+    // 200-265ms per in-game day (up from ~40ms early on), and the obvious suspect was wrong: days
+    // WITH a full re-contest averaged 170ms against 155ms for days without, and past radius ~100 the
+    // "cheap ring" path was no cheaper at all. So the cost is something this pass pays EVERY day
+    // whichever branch it takes, and the honest way to find it is to measure each phase rather than
+    // reason about which one looks expensive. Two nanoTime() reads per phase, once per in-game day.
+    //
+    // Written by processTerritoryExpansion(), read by processDaysPassed() so the whole pass reports
+    // as one line. Single-threaded: this runs only on the day rollover in WorldStage.act().
+    private static long expCastles, expPlayerTowns, expSources1, expTownGrowth, expSources2, expColorClaim;
+    private static int expPoiScanned;
+
     /** Called from WorldStage.onActing() whenever the in-game day counter advances. */
     public static void processDaysPassed(int daysPassed, int newDayCount) {
+        long tStart = System.nanoTime();
         updateAiTownGuardLevels(WorldSave.getCurrentSave().getWorld(), newDayCount); // AI guard dots (#87)
+        long tGuards = System.nanoTime();
         if (daysPassed <= 0 || !isEnabled())
             return;
         World world = WorldSave.getCurrentSave().getWorld();
@@ -453,7 +467,21 @@ public class TerritoryControl {
                 world.setColorNextAttackDay(color, newDayCount + randomAttackDelay(world));
             }
         }
+        long tDispatch = System.nanoTime();
         processTerritoryExpansion(world, daysPassed);
+        long tEnd = System.nanoTime();
+        System.out.println("[TFR-TerritoryPerf] day " + newDayCount
+                + ": guards=" + (tGuards - tStart) / 1_000_000 + "ms"
+                + " dispatch=" + (tDispatch - tGuards) / 1_000_000 + "ms"
+                + " | expansion=" + (tEnd - tDispatch) / 1_000_000 + "ms ["
+                + "castles=" + expCastles / 1_000_000 + "ms"
+                + " playerTowns=" + expPlayerTowns / 1_000_000 + "ms"
+                + " sources1=" + expSources1 / 1_000_000 + "ms"
+                + " townGrowth=" + expTownGrowth / 1_000_000 + "ms"
+                + " sources2=" + expSources2 / 1_000_000 + "ms"
+                + " colorClaim=" + expColorClaim / 1_000_000 + "ms]"
+                + " poisScanned=" + expPoiScanned
+                + " total=" + (tEnd - tStart) / 1_000_000 + "ms");
     }
 
     private static int randomAttackDelay(World world) {
@@ -619,31 +647,41 @@ public class TerritoryControl {
     // happen post-neutralizeAfterGeneration, but a save could predate this feature) or no seeded
     // radius is skipped rather than guessed at.
     private static void processTerritoryExpansion(World world, int daysPassed) {
+        long tPhase = System.nanoTime();
         Map<String, Vector2> castlePositions = new LinkedHashMap<>();
         for (String color : COLORS) {
             PointOfInterest castle = findCastle(world, color);
             if (castle != null)
                 castlePositions.put(color, castle.getPosition());
         }
+        expCastles = System.nanoTime() - tPhase;
+        tPhase = System.nanoTime();
         // Same "is this town actually player-owned" check WorldStandingsScene's town count already
         // uses (TerritoryControl.getTownCounts()) - a town keeps its own name/color after the
         // player restores it (see TownRestoration.java), so this is the only reliable way to tell
         // "the player owns this one" apart from "this happens to still be a Waste Town" or "this
         // happens to already be some AI color's."
         List<PointOfInterest> playerTowns = new ArrayList<>();
+        int poiScanned = 0;
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             // peek, not get - this loop queries EVERY POI on the map once per in-game day, and the
             // get-or-create accessor would materialize an empty PointOfInterestChanges entry for
             // each one, permanently bloating the save file for a pure read.
+            poiScanned++;
             if (TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID())))
                 playerTowns.add(poi);
         }
+        expPoiScanned = poiScanned;
+        expPlayerTowns = System.nanoTime() - tPhase;
+        tPhase = System.nanoTime();
         // Diagnostic only (MOD_SCOPE.md #7) - no way to otherwise tell from forge.log whether this
         // is finding the player's town(s) at all, given a report that AI expansion was still
         // visibly encroaching after this fix shipped.
         if (!playerTowns.isEmpty())
             System.out.println("[TerritoryControl] daily expansion: " + playerTowns.size() + " player-owned town(s) projecting pull");
         Map<String, List<float[]>> pullSources = buildPullSources(world, castlePositions, playerTowns);
+        expSources1 = System.nanoTime() - tPhase;
+        tPhase = System.nanoTime();
         // Captured towns grow their own small territory, RECOLOR_RADIUS -> TOWN_MAX_TERRITORY_RADIUS
         // (user request 2026-08-08). Two kinds, same mechanism: player-restored towns claim as
         // "player", AI-captured towns (seeded into townTerritoryRadius by onMageArrived()) claim as
@@ -735,8 +773,12 @@ public class TerritoryControl {
                 TownRestoration.applyTownVisionReveal(world, poi, changes);
             }
         }
+        expTownGrowth = System.nanoTime() - tPhase;
+        tPhase = System.nanoTime();
         // Rebuild sources with the towns' POST-growth radii (their 50% hard-protection tracks it).
         pullSources = buildPullSources(world, castlePositions, playerTowns);
+        expSources2 = System.nanoTime() - tPhase;
+        tPhase = System.nanoTime();
 
         // Caching layer (user report 2026-08-08: "day ticks at 100x started feeling choppy"):
         // the full-disc re-contest only matters when the pull LANDSCAPE changed - a source
@@ -877,6 +919,8 @@ public class TerritoryControl {
                         + (sourcesChanged ? " (full re-contest)" : ""));
             }
         }
+        // Covers both claim loops - the five AI castles above and the Capitol block just now.
+        expColorClaim = System.nanoTime() - tPhase;
     }
 
     // Dispatched-mage tier variety (2026-08-14 user spec): was hardcoded to always "Adept
