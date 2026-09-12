@@ -17759,7 +17759,10 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 184: a cave that never finished loading; seven copies of one common in a starter deck (2026-09-11)
 
-The user's first playtest of the round-183 build, and everything it turned up. built 18:44, PACKAGED 18:56 - 342 MB; verified in the agent game on a COPY of the user's own save (their files untouched): the Black Tower dungeon that used to die mid-load came up with all 18 actors, zero NullPointerException / 'Error loading map' in the log, and the [TFR-SpawnTier] line now reads W1.0 U1.0 B1.0 R1.0 G1.0 with blue's label fixed
+The user's first playtest of the round-183 build, and everything it turned up. built 18:44, PACKAGED 18:56 - 342 MB; verified in the agent game on a COPY of the user's own save (their files untouched): the Black Tower dungeon that used to die mid-load came up with all 18 actors, zero NullPointerException / 'Error loading map' in the log, and the [TFR-SpawnTier] line now reads W1.0 U1.0 B1.0 R1.0 G1.0 with blue's label fixed. **The user then re-entered
+the dungeon that had failed, in their own game, and it loaded** - which closes the one gap in the check above: the
+agent session never landed on re-themed ground, so on its own it showed the absence of a regression rather than the
+fix working on the exact path that threw.
 
 ### The cave that trapped you at its entrance
 
