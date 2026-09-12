@@ -215,8 +215,26 @@ public class Forge implements ApplicationListener {
          */
         Gdx.input.setCatchKey(Keys.BACK, true);
         destroyThis = true; //Prevent back()
-        if (Files.exists(Paths.get(ForgeConstants.DEFAULT_SKINS_DIR+ForgeConstants.ADV_TEXTURE_BG_FILE)))
+        if (Files.exists(Paths.get(ForgeConstants.DEFAULT_SKINS_DIR+ForgeConstants.ADV_TEXTURE_BG_FILE))) {
             selector = getForgePreferences().getPref(FPref.UI_SELECTOR_MODE);
+            // Round 187, user: "Have the game go directly to the Adventure Main screen (Load/Save
+            // screen), not need to ask for Forge/Adventure selection." The Forsaken Realms ships as
+            // an Adventure-only game, so "Default" - the value that makes the startup show the
+            // Forge/Adventure mode picker - means Adventure here.
+            //
+            // Done at READ time rather than by changing ForgePreferences' default, because the
+            // default only ever reaches a profile that has never stored the key: an existing
+            // player's preferences file already holds "Default", and the stored value wins. This
+            // reaches both.
+            //
+            // Inside the assets guard on purpose - with no adventure background present there are
+            // no adventure resources to load, and forcing the mode would open a screen that cannot
+            // be drawn. An explicit choice is still honoured in both directions: picking Classic in
+            // Settings writes "Classic" and is untouched by this, and that setting is how a player
+            // gets back to the picker.
+            if ("Default".equals(selector))
+                selector = "Adventure";
+        }
 
         //screenWidth and screenHeight should be set initially and only change upon restarting the app
         screenWidth = Gdx.app.getGraphics().getWidth();

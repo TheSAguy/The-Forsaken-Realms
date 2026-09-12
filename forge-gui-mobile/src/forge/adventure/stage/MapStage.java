@@ -1120,7 +1120,9 @@ public class MapStage extends GameStage {
                             }
                             dialogObject = prop.get("effect"); //Check for special effects.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {
-                                mob.effect = JSONStringLoader.parse(EffectData.class, dialogObject.toString(), "");
+                                // setEffect, not the field: this is what crowns the mob, and a
+                                // crowned enemy is floored at Master size (round 186).
+                                mob.setEffect(JSONStringLoader.parse(EffectData.class, dialogObject.toString(), ""));
                             }
                             dialogObject = prop.get("ignoreDungeonEffect"); //Check for special effects.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {

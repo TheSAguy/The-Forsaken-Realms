@@ -782,9 +782,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         EnemySprite defender = new EnemySprite(duelData);
         if (lands > 0) {
-            defender.effect = new EffectData();
+            EffectData guardEffect = new EffectData();
             String land = TerritoryControl.basicLandFor(color);
-            defender.effect.startBattleWithCardTapped = lands == 2 ? new String[]{land, land} : new String[]{land};
+            guardEffect.startBattleWithCardTapped = lands == 2 ? new String[]{land, land} : new String[]{land};
+            // setEffect, not the field: an effect is what draws the crown, and a crowned enemy is
+            // floored at Master size (round 186). Built first, then set, so the sprite is resized
+            // only once the effect is complete.
+            defender.setEffect(guardEffect);
         }
         System.out.println("[TFR-TownAssault] " + poi.getDisplayName() + " guard level " + guardLevel
                 + " -> defender tier " + defenderTier + " (" + EnemyData.tierDisplayName(defenderTier) + "), " + lands + " starting land(s)"

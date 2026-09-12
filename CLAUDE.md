@@ -90,6 +90,25 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 187 (2026-09-12, repo only - NOT yet packaged): **three user requests.** (0) **The game boots straight
+  into Adventure** - startup reads `FPref.UI_SELECTOR_MODE`, and the Forge/Adventure picker shows only when it is
+  the shipped default "Default"; `Forge.java` now maps that to "Adventure" inside the adventure-assets guard.
+  **Not** done by changing ForgePreferences' default: a default only reaches a profile that never stored the key,
+  and an existing player's file already holds "Default", which wins. **This round's only Forge-core edit.** (1) **Crowned enemies are floored at
+  Master size.** A crown is drawn when `EnemySprite.effect != null`, and `effect` is always assigned AFTER the
+  constructor has sized the sprite - so the floor lives in a new `setEffect()` that calls `applyCrownSizeFloor()`
+  (multiplies up to Master's 1.25 from Apprentice 0.8125 / Adept 1.0, leaves Master and Archmage alone, then
+  re-runs `updateBoundingRect()` so collision follows the art). **Applied at most once** - MapDialog's "Replace
+  current effects" can re-set an effect on an already-crowned enemy and would otherwise grow it again. All three
+  assignment sites (MapStage TMX property, WorldStage town defender, MapDialog action) go through the setter.
+  Verified in data: 98 crowned placements across 46 maps, of which 24 grow.
+  (2) **A delivery quest now pays the sending town too.** Only Wanderlust (id 2) is a delivery quest. The giver's
+  town had no token - `$(poi_N)` are per-STAGE targets - but `AdventureQuestData.sourceID` already holds it, set
+  just before `initialize()` runs the token pass. New `$(poi_source)` token, **POIReference only**. **It fails safe
+  by cancelling the grant** when sourceID is missing, because MapDialog's unresolved-token fallback grants at the
+  POI the player is standing in - which on a delivery quest is the destination, i.e. it would pay the arrival town
+  twice. Flat +2 at the origin on all three epilogue branches (all three deliver the letter); labels updated.
+  Note for future quest data: that silent-redirect fallback is the trap to design around.
 - Round 186 (2026-09-12, built 09:42, PACKAGED 09:47 - 342 MB, the fast path (the stock asset tree already matched
   the base install); this build carries round 185 as well, which had never been packaged): **three player-reported
   bugs.** (1) **The F12 collision overlay followed the player out of a

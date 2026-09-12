@@ -20,6 +20,7 @@ import forge.adventure.data.DialogData;
 import forge.adventure.data.EffectData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.RewardData;
+import forge.adventure.data.TuningData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.util.Config;
@@ -129,6 +130,55 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         updateBoundingRect();
         initializeBaseMovementBehavior();
     }
+
+    /**
+     * Give this enemy a battle effect - which also puts a crown on it (see draw()).
+     * <p>
+     * Round 186, user: "Enemies with 'Crowns' on them are usually special/ kinda bosses. I think we
+     * should make them the size of a Master at minimum. This is visually." Hence the size floor
+     * below. Use this rather than assigning the field: the effect is what the crown is drawn from,
+     * and it is always set AFTER the constructor has already sized the sprite, so the floor has to
+     * be applied at the moment the effect arrives.
+     */
+    public void setEffect(EffectData value) {
+        effect = value;
+        applyCrownSizeFloor();
+    }
+
+    /**
+     * A crowned enemy is never drawn smaller than a Master.
+     * <p>
+     * The constructor sized this sprite as art x {@code EnemyData.scale} x {@code tierScale(tier)}.
+     * An Apprentice sits at 0.8125 and an Adept at 1.0, both below Master's 1.25, so those two get
+     * multiplied up to it; a Master is already there and an Archmage (1.5) stays bigger - the rule
+     * is a floor, not an assignment. The Forsaken Realms has 98 crowned map placements across 46
+     * maps (Rare 59, Mythic 15, Adept 22, Apprentice 2), so 24 of them grow and the other 74
+     * already are Master or larger. Town defenders are crowned at runtime on top of that.
+     * <p>
+     * Applied at most once. MapDialog's "Replace current effects" action can call
+     * {@link #setEffect} on an enemy that is already crowned, and without the guard each
+     * replacement would multiply the sprite up again.
+     */
+    private void applyCrownSizeFloor() {
+        if (effect == null || crownSizeFloorApplied)
+            return;
+        TuningData tuning = Config.instance().getTuningData();
+        float current = tuning.tierScale(data.tier);
+        float floor = tuning.enemyTierScaleRare;
+        if (current <= 0f || current >= floor)
+            return;
+        float bump = floor / current;
+        crownSizeFloorApplied = true;
+        setWidth(getWidth() * bump);
+        setHeight(getHeight() * bump);
+        updateBoundingRect();
+        System.out.println("[TFR-Crown] " + data.name + " (" + EnemyData.tierDisplayName(data.tier)
+                + ", tierScale " + current + ") crowned -> floored at Master " + floor
+                + " (x" + bump + "), now " + getWidth() + "x" + getHeight());
+    }
+
+    /** Whether {@link #applyCrownSizeFloor()} has already grown this sprite - see its javadoc. */
+    private boolean crownSizeFloorApplied = false;
 
     public void parseWaypoints(String waypoints){
         String[] wp = waypoints.replaceAll("\\s", "").split(",");

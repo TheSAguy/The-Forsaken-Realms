@@ -493,7 +493,10 @@ public class MapDialog {
             }
             if (E.setEffect != null) { //Replace current effects.
                 EnemySprite EN = stage.getEnemyByID(parentID);
-                EN.effect = E.setEffect;
+                // setEffect, not the field: an effect crowns the enemy, and a crowned enemy is
+                // floored at Master size (round 186). Safe to call on an already-crowned enemy -
+                // the floor is applied at most once, so replacing an effect never grows it again.
+                EN.setEffect(E.setEffect);
             }
             if (E.grantRewards != null && E.grantRewards.length > 0) {
                 Array<Reward> ret = new Array<Reward>();

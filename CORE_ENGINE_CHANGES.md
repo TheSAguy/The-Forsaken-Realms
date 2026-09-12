@@ -2779,6 +2779,37 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 187 (2026-09-12) - ONE engine file: the startup mode selector
+
+`forge/Forge.java` (startup, ~line 218). User: "Have the game go directly to the Adventure Main screen
+(Load/Save screen), not need to ask for Forge/Adventure selection." The boot reads
+`FPref.UI_SELECTOR_MODE` into `Forge.selector`, and the Forge/Adventure picker is shown only when that
+value is neither "Classic" nor "Adventure" - i.e. when it is the shipped default "Default". Three lines
+now map "Default" to "Adventure", INSIDE the existing `Files.exists(... ADV_TEXTURE_BG_FILE)` guard so a
+build without adventure assets can never be forced into a mode it cannot draw.
+
+Deliberately NOT done by changing `ForgePreferences.UI_SELECTOR_MODE`'s default (which is where the
+value "Default" comes from, `forge-gui/src/main/java/forge/localinstance/properties/ForgePreferences.java`):
+a default only reaches a profile that has never stored the key, and an existing player's preferences file
+already holds "Default", where the stored value wins. Mapping at read time reaches both. An explicit
+"Classic" in Settings is untouched, and the Settings entry still offers all three values.
+
+MERGE NOTE: this is a small edit in a file upstream changes often. If a merge conflicts here, the whole
+change is the `if ("Default".equals(selector)) selector = "Adventure";` line plus the braces around the
+existing assignment.
+
+Adventure-side for this round: `adventure/character/EnemySprite` (new `setEffect()` + `applyCrownSizeFloor()`
+and its apply-once flag), its three callers `adventure/stage/MapStage`, `adventure/stage/WorldStage`
+and `adventure/util/MapDialog`, `adventure/data/AdventureQuestData` (new `SOURCE_POI_TOKEN` and
+`replaceSourcePOIToken()`), and plane data (`world/quests.json`: Wanderlust's epilogue).
+
+No Forge-core file touched. Worth knowing for future quest data: MapDialog's `addMapReputation`
+treats a POIReference it cannot resolve as "grant at the POI the player is standing in" (a
+deliberate "the player gets *something*" fallback, see the comment there), so a token that fails to
+resolve does not go nowhere - it silently redirects the grant to the current town. Any new POI
+token has to fail safe by cancelling the grant instead, which is what `replaceSourcePOIToken()`
+does.
+
 ## Round 186 (2026-09-12) - no engine edits
 
 Adventure-side only: `adventure/stage/GameStage` (the F12 overlay is a tracked toggle - new `collisionDebug`

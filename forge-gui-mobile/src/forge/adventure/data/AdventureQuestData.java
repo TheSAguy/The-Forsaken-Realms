@@ -95,6 +95,10 @@ public class AdventureQuestData implements Serializable {
     public boolean autoTrack = false;
     public String sourceID = "";
 
+    /** Dialog token for the quest giver's own POI - see {@link #replaceSourcePOIToken}. Valid in a
+     *  POIReference only; it resolves to a raw POI id, which is not something to print in text. */
+    public static final String SOURCE_POI_TOKEN = "$(poi_source)";
+
     public String getName() {
         return name;
     }
@@ -386,8 +390,38 @@ public class AdventureQuestData implements Serializable {
                     String key = e.nextElement();
                     ad.POIReference = ad.POIReference.replace(key, poiTokens.get(key).getID());
                 }
+                replaceSourcePOIToken(ad);
             }
         }
+    }
+
+    /**
+     * The town that ISSUED this quest, which no {@code $(poi_N)} token can name - those are
+     * per-STAGE targets and the giver is not a stage.
+     * <p>
+     * Round 186, user: "for quests that send you to deliver a message across the map, currently you
+     * get the reputation boost from the arriving town. Let's make it that you get rep boost from
+     * both sending and receiving destinations." The arrival town is reached with an empty
+     * POIReference ("wherever the player is standing"); this is how the dialog names the other end.
+     * <p>
+     * {@link AdventureQuestController#getQuestNPCResponse} sets {@code sourceID} immediately before
+     * {@code initialize()} runs the token pass, so it is populated for any quest a town NPC hands
+     * out. If it somehow is not, the grant is CANCELLED rather than left unresolved: MapDialog
+     * treats a POIReference it cannot resolve as "grant at the POI the player is standing in",
+     * which on a delivery quest is the destination - it would quietly pay the arrival town twice.
+     */
+    private void replaceSourcePOIToken(DialogData.ActionData ad) {
+        if (!ad.POIReference.contains(SOURCE_POI_TOKEN))
+            return;
+        if (sourceID != null && !sourceID.isEmpty()) {
+            ad.POIReference = ad.POIReference.replace(SOURCE_POI_TOKEN, sourceID);
+            return;
+        }
+        System.out.println("[TFR-QuestRep] " + name + ": " + SOURCE_POI_TOKEN + " used but the quest"
+                + " carries no sourceID - the origin-town reputation grant is skipped rather than"
+                + " misapplied to the destination.");
+        ad.addMapReputation = 0;
+        ad.POIReference = "";
     }
 
     private EnemySprite generateTargetEnemySprite(AdventureQuestStage stage){

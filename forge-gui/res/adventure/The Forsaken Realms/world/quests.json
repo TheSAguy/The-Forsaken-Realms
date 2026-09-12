@@ -320,9 +320,24 @@
 											"issueQuest": "",
 											"addMapReputation": 1,
 											"POIReference": ""
+										},
+										{
+											"removeItem": "",
+											"setColorIdentity": "",
+											"advanceQuestFlag": "",
+											"advanceMapFlag": "",
+											"setQuestFlag": {
+												"key": ""
+											},
+											"setMapFlag": {
+												"key": ""
+											},
+											"issueQuest": "",
+											"addMapReputation": 2,
+											"POIReference": "$(poi_source)"
 										}
 									],
-									"name": "\"I guess I should have asked for the reward first.\" (+1 Local Reputation. Complete Quest)"
+									"name": "\"I guess I should have asked for the reward first.\" (+1 Local Reputation, +2 Sender's Town. Complete Quest)"
 								},
 								{
 									"action": [
@@ -340,10 +355,25 @@
 											"issueQuest": "",
 											"addMapReputation": -1,
 											"POIReference": ""
+										},
+										{
+											"removeItem": "",
+											"setColorIdentity": "",
+											"advanceQuestFlag": "",
+											"advanceMapFlag": "",
+											"setQuestFlag": {
+												"key": ""
+											},
+											"setMapFlag": {
+												"key": ""
+											},
+											"issueQuest": "",
+											"addMapReputation": 2,
+											"POIReference": "$(poi_source)"
 										}
 									],
 									"name": "(Break down the door)",
-									"text": "Several people in the village have turned their attention to you after the woman's outburst. Perhaps this isn't a good idea after all. (-1 Local Reputation)",
+									"text": "Several people in the village have turned their attention to you after the woman's outburst. Perhaps this isn't a good idea after all. (-1 Local Reputation, +2 Sender's Town)",
 									"options": [
 										{
 											"name": "You mutter to yourself. \"Not worth a scene I suppose.\" (Complete Quest)"
@@ -388,10 +418,25 @@
 											"issueQuest": "",
 											"addMapReputation": 2,
 											"POIReference": ""
+										},
+										{
+											"removeItem": "",
+											"setColorIdentity": "",
+											"advanceQuestFlag": "",
+											"advanceMapFlag": "",
+											"setQuestFlag": {
+												"key": ""
+											},
+											"setMapFlag": {
+												"key": ""
+											},
+											"issueQuest": "",
+											"addMapReputation": 2,
+											"POIReference": "$(poi_source)"
 										}
 									],
 									"name": "You take the coins and place the letter in the bucket. \"I have to say, I do find your demeanor unnerving.\"",
-									"text": "(+2 Local Reputation)",
+									"text": "(+2 Local Reputation, +2 Sender's Town)",
 									"options": [
 										{
 											"name": "(Complete Quest)"

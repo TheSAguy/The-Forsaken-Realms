@@ -17757,6 +17757,77 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 187: crowned enemies are never smaller than a Master; a delivery pays the town that sent you; the game boots straight into Adventure (2026-09-12)
+
+repo only - NOT yet packaged
+
+BOOT STRAIGHT INTO ADVENTURE. User: "Have the game go directly to the Adventure Main screen
+(Load/Save screen), not need to ask for Forge/Adventure selection." Startup reads
+`FPref.UI_SELECTOR_MODE` into `Forge.selector`, and the mode picker appears only when that value
+is neither "Classic" nor "Adventure" - i.e. when it is the shipped default, "Default". Three lines
+in `Forge.java` now map "Default" to "Adventure", inside the existing
+`Files.exists(... ADV_TEXTURE_BG_FILE)` guard so a build with no adventure assets can never be
+pushed into a mode it cannot draw.
+
+Deliberately NOT a change to `ForgePreferences`' default value. A default only ever reaches a
+profile that has never stored the key, and an existing player's preferences file already holds
+"Default" - the stored value wins, so changing the default would fix new installs and leave the
+person who asked for it still looking at the picker. Mapping at read time reaches both. An
+explicit "Classic" chosen in Settings is untouched, and the Settings entry still lists all three
+values. This is the round's only Forge-core edit; see CORE_ENGINE_CHANGES.md for the merge note.
+
+CROWNED ENEMIES FLOORED AT MASTER SIZE. User (round 185): "Enemies with 'Crowns' on them are
+usually special/ kinda bosses. I think we should make them the size of a Master at minimum. This
+is visually." A crown is drawn when `EnemySprite.effect != null` - the battle effect, not the
+dungeon-wide one - so the crown and the size rule key off the same field. The catch is that
+`effect` is always assigned AFTER the constructor has already sized the sprite, so there was
+nowhere for the constructor's `tierSizeMultiplier` to see it. New `EnemySprite.setEffect()` does
+the assignment and applies `applyCrownSizeFloor()`, which multiplies the sprite up to Master's
+1.25 when its tier scale is below that (Apprentice 0.8125, Adept 1.0) and leaves Master and
+Archmage (1.5) alone - a floor, not an assignment - then re-runs `updateBoundingRect()` so the
+collision box follows the art rather than staying at the old size. Verified against the data: The
+Forsaken Realms has 98 crowned map placements across 46 maps (Rare 59, Mythic 15, Adept 22,
+Apprentice 2), so 24 grow and 74 are already there. Town defenders are crowned at runtime on top
+of that. `[TFR-Crown]` logs each one.
+
+Applied at most once, which is the whole reason it is a method and a flag rather than a line in
+the setter: MapDialog's "Replace current effects" action can call `setEffect` on an enemy that is
+already crowned, and each replacement would otherwise multiply the sprite up again. All three
+assignment sites now go through the setter - `MapStage.loadObjects` (the TMX `effect` property),
+`WorldStage`'s town defender, and MapDialog's action. The WorldStage one was mutating the effect
+after assigning it, so it now builds the EffectData first and sets it complete.
+
+A DELIVERY PAYS THE TOWN THAT SENT YOU. User: "for quests that send you to deliver a message
+across the map, currently you get the reputation boost from the arriving town. Let's make it that
+you get rep boost from both sending and receiving destinations." The quest is **Wanderlust** (id
+2, template, "Make a delivery to a distant location") - the plane's only delivery quest; a mage in
+one town hands you a letter, one Travel stage takes you to a Town, and the epilogue plays at the
+destination granting reputation with an EMPTY POIReference, which MapDialog reads as "the POI the
+player is standing in".
+
+The sending town could not be named at all: `$(poi_N)` tokens are per-STAGE targets and the giver
+is not a stage. But the quest already records it - `AdventureQuestController.getQuestNPCResponse`
+sets `sourceID = pointID` immediately before `initialize()` runs the token pass. New
+`$(poi_source)` token (`AdventureQuestData.SOURCE_POI_TOKEN`) resolves to it, in a POIReference
+only, since it yields a raw POI id rather than anything printable. It FAILS SAFE: if a quest ever
+carries no sourceID the grant is cancelled outright, because MapDialog's unresolved-token path
+falls back to "grant where the player is standing" - on a delivery quest that is the destination,
+i.e. it would quietly pay the arrival town twice.
+
+Wanderlust's epilogue has three terminal branches and all three deliver the letter (+1 she slams
+the window, -1 you break the door down, +2 you hand it over properly). Each now carries a sibling
+action worth +2 at the origin - flat, deliberately: the sender paid for a letter to arrive, and in
+all three branches it arrives; how the recipient reacted is the destination's business, and in the
++1 branch she slams the window regardless of what the player does. MapDialog iterates the whole
+action array, so both grants land. The option labels say so too ("+1 Local Reputation, +2 Sender's
+Town"), matching the file's existing convention of spelling reputation out - the origin is
+described rather than named because there is no cheap POI-id-to-display-name lookup.
+
+`dev-tools/patch_wanderlust_origin_rep.py` made the data change and is idempotent (it skips a
+branch that already has the origin action). It aborts unless quests.json round-trips byte-for-byte
+through json with tab indent, which is what keeps a 420 KB data file's diff down to the 48 lines
+actually added.
+
 ## Round 186: the F12 overlay followed the player out of the cave; arena portraits ten times too big; three invisible walls in the Flooded Cave (2026-09-12)
 
 PACKAGED 2026-09-12 09:47 (342 MB). This build also delivers round 185, which had never been
