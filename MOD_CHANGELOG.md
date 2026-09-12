@@ -17759,7 +17759,8 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 186: the F12 overlay followed the player out of the cave; arena portraits ten times too big; three invisible walls in the Flooded Cave (2026-09-12)
 
-repo only - NOT yet packaged (round 185 is not packaged either; the user is playing v1.10)
+PACKAGED 2026-09-12 09:47 (342 MB). This build also delivers round 185, which had never been
+packaged - the live folder went straight from v1.10-as-released to 185+186.
 
 THE F12 OVERLAY FOLLOWED YOU INTO THE NEXT POI. User: "It appears the the player collision block,
 the showing of it, is persisting after I leave a cave where I pressed F12. It's still showing in

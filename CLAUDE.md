@@ -90,8 +90,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 186 (2026-09-12, repo only - NOT packaged; round 185 is unpackaged too, so the user's live folder is still
-  v1.10 as released): **three player-reported bugs.** (1) **The F12 collision overlay followed the player out of a
+- Round 186 (2026-09-12, built 09:42, PACKAGED 09:47 - 342 MB, the fast path (the stock asset tree already matched
+  the base install); this build carries round 185 as well, which had never been packaged): **three player-reported
+  bugs.** (1) **The F12 collision overlay followed the player out of a
   cave** - it is two things, the rectangles (a Group) and two flags (`setDebugAll` + the player sprite's bound box);
   `MapStage.loadMap()` cleared only the first, and MapStage is a process singleton, so a box stayed drawn around the
   player in the next town with no rectangles to go with it. `loadMap()` now ends with `debugCollision(false)`, and
