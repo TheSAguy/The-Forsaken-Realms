@@ -101,6 +101,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     // Deck Tester's button, sharing a row with the toggle instead of its own row (round 7 fix) -
     // see the constructor's own comment for the space math.
     private static final float ARENA_DECK_TESTER_BUTTON_WIDTH = 140f;
+    // Round 186: how much of a fighter spot a bracket portrait may fill. The Spot sprite is 20x20
+    // and the 646 hand-drawn 16x16 Avatar regions were built to sit inside it with a 2px border,
+    // so 0.8 reproduces the original layout EXACTLY and only ever shrinks something larger.
+    private static final float ARENA_PORTRAIT_FILL = 0.8f;
 
     private ArenaScene() {
         super(Forge.isLandscapeMode() ? "ui/arena.json" : "ui/arena_portrait.json");
@@ -782,8 +786,34 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     private void markLostFighter(Actor fighter) {
         Image lost = new Image(lostOverlay);
         float widthDiff = fighter.getWidth() - lost.getWidth();
-        lost.setPosition(fighter.getX() + widthDiff / 2, fighter.getY() + widthDiff / 2);
+        float heightDiff = fighter.getHeight() - lost.getHeight();
+        lost.setPosition(fighter.getX() + widthDiff / 2, fighter.getY() + heightDiff / 2);
         arenaPlane.addActor(lost);
+    }
+
+    /**
+     * Shrink a bracket portrait to fit its fighter spot, keeping its aspect ratio.
+     * <p>
+     * Round 186. The bracket only ever CENTRED a fighter in its 20x20 spot - it never sized one -
+     * which was invisible while every Avatar region in the game was 16x16. The 2026-09-11 art
+     * import brought in portraits up to 195x195 (the_maimed_demon_king), so 208 of the 960 Avatar
+     * regions are now larger than the spot and a bracket drew them at full size, one enemy face
+     * swallowing half the board.
+     * <p>
+     * Deliberately local to the bracket: the duel screen takes the same Sprite through a different
+     * path (DuelScene puts it straight into FSkin's avatar map), so duel portraits keep the full
+     * resolution the import was done for.
+     */
+    private void fitToFighterSpot(Actor fighter) {
+        float w = fighter.getWidth();
+        float h = fighter.getHeight();
+        if (w <= 0f || h <= 0f)
+            return;
+        float max = gridSize * ARENA_PORTRAIT_FILL;
+        if (w <= max && h <= max)
+            return;  // the 16x16 originals are already inside the spot - leave them untouched
+        float scale = Math.min(max / w, max / h);
+        fighter.setSize(w * scale, h * scale);
     }
 
     boolean started = false;
@@ -1233,9 +1263,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 if (x % Math.pow(2, y + 1) == Math.pow(2, y)) {
                     if (y == 0) {
                         if (fighterIndex < fighters.size) {
-                            float widthDiff = gridSize - fighters.get(fighterIndex).actor.getWidth();
-                            fighters.get(fighterIndex).actor.setPosition(x * gridSize + widthDiff / 2, y * gridSize * 2 + widthDiff / 2);
-                            arenaPlane.addActor(fighters.get(fighterIndex).actor);
+                            Actor fighter = fighters.get(fighterIndex).actor;
+                            fitToFighterSpot(fighter);
+                            float widthDiff = gridSize - fighter.getWidth();
+                            float heightDiff = gridSize - fighter.getHeight();
+                            fighter.setPosition(x * gridSize + widthDiff / 2, y * gridSize * 2 + heightDiff / 2);
+                            arenaPlane.addActor(fighter);
                             fighterIndex++;
                         }
                     }

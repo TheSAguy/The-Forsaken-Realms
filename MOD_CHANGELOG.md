@@ -17757,6 +17757,91 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 186: the F12 overlay followed the player out of the cave; arena portraits ten times too big; three invisible walls in the Flooded Cave (2026-09-12)
+
+repo only - NOT yet packaged (round 185 is not packaged either; the user is playing v1.10)
+
+THE F12 OVERLAY FOLLOWED YOU INTO THE NEXT POI. User: "It appears the the player collision block,
+the showing of it, is persisting after I leave a cave where I pressed F12. It's still showing in
+new POI now." The overlay is TWO things - the collision rectangles (a Group) and two flags, the
+stage's `setDebugAll` and the player sprite's own bound box. `MapStage.loadMap()` cleared the
+first (`collisionRect.clear()`, `collisionGroup = null`) and never the second, and MapStage is a
+PROCESS SINGLETON, so the flags outlived the map they were switched on for: a box still drawn
+around the player in the next town, with no rectangles to go with it. `loadMap()` now ends with
+`debugCollision(false)`. Off per map on purpose - F12 is an inspection of the map in front of
+you, and carrying it into every POI afterwards is what got reported. F12 is also a real TOGGLE
+now; it only ever switched the overlay ON, so the way out was F11, which nothing advertises. F11
+still forces it off. Also removed a second, fully redundant F11 branch in `keyDown` (it repeated
+what `debugCollision(false)` already does), and `MapStage.debugCollision` no longer builds a Group
+purely to throw it away when switching off.
+
+ARENA BRACKET PORTRAITS AT FULL RESOLUTION. User: "the new enemies are totally too big for the
+arena matches. I still want to keep them for duel pics though." The bracket only ever CENTRED a
+fighter in its 20x20 spot - `setPosition` with no `setSize` - which was invisible while every
+Avatar region in the game was 16x16. Measured: 646 of 960 Avatar regions still are, but the
+2026-09-11 art import brought in 208 larger ones, up to 195x195 (`the_maimed_demon_king`), so one
+enemy face swallowed half the board. New `fitToFighterSpot()` scales a portrait down to
+`gridSize * ARENA_PORTRAIT_FILL` (0.8 -> 16px, exactly the border the hand-drawn avatars were
+built for) keeping its aspect ratio, and returns early for anything already inside the spot, so
+the 646 originals are untouched pixel for pixel. Deliberately local to the bracket: DuelScene
+takes the same Sprite through its own path into FSkin's avatar map, so duel portraits keep the
+full resolution the import was done for. Centring also now uses the height for the Y axis instead
+of reusing the width - wrong for any non-square avatar (`maw_of_the_abyss` is 144x103), and
+`markLostFighter` had the same bug.
+
+THE FLOODED CAVE: THREE INVISIBLE WALLS, AND AN OVERLAY THAT LOOKS LIKE CONFETTI. User: "The
+flooded cave seems to have a lot of random collision blocks." The POI resolves to
+`cave_merfolk.tmx` (4 of the 5 Flooded Caves) and `cave_amphin.tmx` (1). Cell-level analysis is
+the WRONG MODEL here and produced two successive wrong answers before the right one:
+`MapStage.loadCollision()` keeps each tileset object's own x/y/width/height, so a tile can block a
+4x4 corner or a 16x4 strip - a shoreline traced INSIDE the tile. Counting any cell that carries a
+box called cave_merfolk "86% blocked" (it is 86% *void outside the cave*), and a tile-granular
+flood fill leaked straight through rock faces built from partial edge tiles, inventing 12
+"invisible walls" that a render then showed sitting on plainly visible rock.
+
+Done properly - rasterise every box to pixels and walk the map with the player's real collision
+box, `(x+4, y, width-6, height*0.4)` per `CharacterSprite.updateBoundingRect()` - both caves are
+essentially fully navigable: merfolk 27364 of 27443 legal player positions reachable, amphin
+227182 of 227343, no sealed rooms. cave_merfolk is CLEAN; its one free-standing obstacle is the
+reed cluster at (1,8), which is drawn. What the player saw is the overlay itself: ~223 separate
+small shoreline boxes in merfolk, one per water-edge tile, which reads as scattered blocks but is
+correct geometry.
+
+cave_amphin had three real ones, confirmed by rendering the art with and without the overlay -
+plain open water, full 16x16 block, nothing drawn: (33,21) Ground `main.tsx#1473`, (27,28)
+Background `#1947`, (36,31) Ground `#1472`. All three tiles are water art indistinguishable from
+`#1951`, the tile the rest of the pool uses, but unlike `#1951` they carry a full-tile collision
+box. The map already loads `main-nocollide.tsx` (firstgid 11905) beside `main.tsx` - the same
+image, the same 10112 tile ids, zero collision objects - and the water around these cells is
+already a MIX of both variants, so the author was converting tiles over and missed three.
+Re-pointing those three gids at the no-collide tileset changes the rendered map by exactly zero
+pixels and removes only the collision. Free-standing obstacles 16 -> 13, legal positions
+227343 -> 228918. NOT touched: (16,11), a 4x4 box on a pebble that is actually drawn - small and
+arguably a nuisance, but visible, so a design call rather than a defect.
+
+NOT mass-converted, on purpose. 57 maps still place `#1472`/`#1473`/`#1947`, but in a bog or an
+evil grove water that stops you is the point. Round 185 already learned this the hard way by
+unravelling real barriers in `fort_blue_5_temple` and `kiora_island`; the only safe criterion is
+the one used here - free-standing in open walkable space, with no art - and that needs the pixel
+pass per map.
+
+New `dev-tools/`: `pixel_collision_qa.py` (free-standing obstacles and unreachable pockets, at
+player-box resolution), `map_collision_render.py` (the F12 overlay offline, with `--crop` /
+`--no-boxes` so a player's screenshot can be compared against the data),
+`flipped_collision_qa.py`, and `patch_amphin_invisible_walls.py` (the patch above, with its own
+abort-on-mismatch checks). `flipped_collision_qa.py` covers a real defect - `loadCollision()`
+reads `cell.getTile().getObjects()`, the UNFLIPPED tile, so a mirrored tile keeps its collision on
+the original side - but the plane-wide answer is 22 cells across 10 maps and every one is a
+near-full-tile wall box inset by 1-3px, a 2px error after mirroring. Recorded, not worth fixing.
+
+Also: `validate_plane_data.py` knew four fields of `TierDelta` and the Java has had eight since
+round 183, so every territory row of the shipped `spawn_tier_weighting.json` validated as
+unknown-key noise. Fixed.
+
+STILL OPEN from round 185: the user-approved crowned-enemy size floor (crowns are
+`EnemySprite.effect != null`, assigned AFTER construction, so the bounding rect has to be
+refreshed) - not started this round.
+
 ## Round 185: v1.10 RELEASED; a POI next to a known town flashes its whole circle; stray invisible collision (2026-09-12)
 
 repo only so far - NOT yet packaged (the user is playing v1.10)

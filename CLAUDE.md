@@ -90,6 +90,28 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 186 (2026-09-12, repo only - NOT packaged; round 185 is unpackaged too, so the user's live folder is still
+  v1.10 as released): **three player-reported bugs.** (1) **The F12 collision overlay followed the player out of a
+  cave** - it is two things, the rectangles (a Group) and two flags (`setDebugAll` + the player sprite's bound box);
+  `MapStage.loadMap()` cleared only the first, and MapStage is a process singleton, so a box stayed drawn around the
+  player in the next town with no rectangles to go with it. `loadMap()` now ends with `debugCollision(false)`, and
+  F12 is a real toggle (it only ever switched ON; F11 was the undocumented way out, and still forces off).
+  (2) **Arena bracket portraits were up to 195x195 in a 20x20 spot** - the bracket centred a fighter but never sized
+  one, invisible while all 960 Avatar regions were 16x16; the 09-11 art import added 208 larger ones. New
+  `ArenaScene.fitToFighterSpot()` fits to `gridSize * 0.8` keeping aspect, early-returns for anything already
+  small, so the 646 originals are pixel-identical - and duel portraits are untouched (DuelScene has its own path
+  into FSkin's avatar map), which is what the user asked for.
+  (3) **The Flooded Cave** (`cave_merfolk.tmx` x4, `cave_amphin.tmx` x1): merfolk is CLEAN - what looks like
+  "random collision blocks" in the overlay is ~223 correct per-tile shoreline boxes. amphin had **three genuine
+  invisible walls** on plain open water, fixed by re-pointing the gids at `main-nocollide.tsx` (same image, same
+  ids, no collision - already loaded in that map). **Cell-level collision analysis is the wrong model for this
+  game** and gave two wrong answers first: `loadCollision()` keeps each object's own x/y/w/h, so tiles block
+  PARTIALLY, and a tile-granular flood fill leaks through rock built from partial edge tiles. Use
+  `dev-tools/pixel_collision_qa.py` (player-box resolution) and `dev-tools/map_collision_render.py` (the overlay
+  offline, `--crop`/`--no-boxes`) instead. NOT mass-converted: 57 maps place the same tiles, and in a bog water
+  that stops you is the point - see round 185's reverted forts.
+  **Still open:** the user-approved crowned-enemy Master size floor (crown = `EnemySprite.effect != null`, assigned
+  AFTER construction, so `updateBoundingRect()` must be re-run) - not started.
 - Round 185 (2026-09-12, repo only so far - NOT yet packaged (the user is playing v1.10)): **v1.10 "Know Your Enemy" RELEASED** - tag `tfr-v1.10` @ `1d55dab1910`,
   published 04:04 UTC, desktop zip 264 MB + APK 13.3 MB + assets.zip 216 MB, all pre-upload checks passed (the
   APK/assets `build.txt` pair both `2026-09-12 04:00:43`). The starter-deck fix was reproduced in the agent game

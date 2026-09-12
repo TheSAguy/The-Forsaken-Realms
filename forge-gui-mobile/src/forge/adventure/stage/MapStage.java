@@ -619,23 +619,26 @@ public class MapStage extends GameStage {
 
     @Override
     public void debugCollision(boolean b) {
-        if (collisionGroup == null) {
-            collisionGroup = new Group();
-
-            for (Rectangle rectangle : collisionRect) {
-                MapActor collisionActor = new MapActor(0);
-                collisionActor.setBoundDebug(true);
-                collisionActor.setWidth(rectangle.width);
-                collisionActor.setHeight(rectangle.height);
-                collisionActor.setX(rectangle.x);
-                collisionActor.setY(rectangle.y);
-                collisionGroup.addActor(collisionActor);
-            }
-
-        }
+        // Build the group only when switching ON. It used to be built either way, which meant
+        // turning the overlay off materialised a group out of whatever collisionRect held at that
+        // moment - after loadMap() cleared it, an empty one - purely to throw it away.
         if (b) {
+            if (collisionGroup == null) {
+                collisionGroup = new Group();
+
+                for (Rectangle rectangle : collisionRect) {
+                    MapActor collisionActor = new MapActor(0);
+                    collisionActor.setBoundDebug(true);
+                    collisionActor.setWidth(rectangle.width);
+                    collisionActor.setHeight(rectangle.height);
+                    collisionActor.setX(rectangle.x);
+                    collisionActor.setY(rectangle.y);
+                    collisionGroup.addActor(collisionActor);
+                }
+
+            }
             addActor(collisionGroup);
-        } else {
+        } else if (collisionGroup != null) {
             collisionGroup.remove();
         }
         super.debugCollision(b);
@@ -799,6 +802,16 @@ public class MapStage extends GameStage {
         navMaps.clear();
         navMaps.put(navMapSize, new NavigationMap(navMapSize));
         navMaps.get(navMapSize).initializeGeometryGraph();
+        // Round 186: the F12 overlay is TWO things - the collision rectangles (a Group, cleared at
+        // the top of this method along with collisionRect) and two flags, the stage's setDebugAll
+        // and the player sprite's own bound box. Only the first half was ever reset. MapStage is a
+        // process singleton, so the flags outlived the map they were switched on for: the user
+        // pressed F12 in a flooded cave, walked out, and a box was still drawn around their sprite
+        // in the next town - with no rectangles to go with it, since those had been cleared.
+        // Switched off per map on purpose: F12 is an inspection of the map in front of you, and
+        // carrying it into every POI you enter afterwards is what got reported as a bug. It is a
+        // toggle now, so turning it back on in the next map is one keypress.
+        debugCollision(false);
         getPlayerSprite().stop();
     }
 

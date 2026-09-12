@@ -157,7 +157,10 @@ F["AdventureQuestStage"] = None   # filled from argv[3] if given (long list); ot
 F["ArmoryRarityData"] = set("venueBrackets".split())
 F["WeekBracket"] = set("weekMin weekMax common uncommon rare mythic".split())
 F["SpawnTierWeightData"] = set("weekBrackets territoryDeltas".split())
-F["TierDelta"] = set("common uncommon rare mythic".split())
+# The four *Scale multipliers landed in SpawnTierWeightData.TierDelta in round 183 but never here,
+# so every territory row of the shipped table reported as an unknown key.
+F["TierDelta"] = set("common uncommon rare mythic "
+                     "commonScale uncommonScale rareScale mythicScale".split())
 F["RaceEditionData"] = set("race editions".split())
 F["RaceShopData"] = set("race shops".split())
 F["BiomeStructureData"] = set("""name color collision N x y randomPosition structureAtlasPath sourcePath maskPath periodicInput height width ground

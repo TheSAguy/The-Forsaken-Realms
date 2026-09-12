@@ -643,11 +643,11 @@ public abstract class GameStage extends Stage {
         }
         if (keycode == Input.Keys.F11) {
             debugCollision(false);
-
         }
         if (keycode == Input.Keys.F12) {
-            debugCollision(true);
-
+            // Round 186: a real toggle. F12 only ever switched the overlay ON, so the only way back
+            // out was F11 - a key nothing advertises. F11 is kept as an explicit off.
+            debugCollision(!collisionDebug);
         }
         if (keycode == Input.Keys.F2) {
             // prevent going to Debug Zone by accident if Debug Map isn't enabled..
@@ -663,27 +663,30 @@ public abstract class GameStage extends Stage {
                 System.out.println("Enable Debug Map for Debug Zone.");
             }
         }
-        if (keycode == Input.Keys.F11) {
-            debugCollision(false);
-            for (Actor actor : foregroundSprites.getChildren()) {
-                if (actor instanceof MapActor) {
-                    ((MapActor) actor).setBoundDebug(false);
-                }
-            }
-            player.setBoundDebug(false);
-            setDebugAll(false);
-        }
         return true;
     }
 
+    /**
+     * Whether the F12 collision overlay is currently on. MapStage reads this after a map load: the
+     * stage is a process singleton and outlives every map it shows, so the flags below have to be
+     * re-applied deliberately rather than left wherever the last map put them.
+     */
+    protected boolean collisionDebug = false;
+
+    public boolean isCollisionDebug() {
+        return collisionDebug;
+    }
+
     public void debugCollision(boolean b) {
+        collisionDebug = b;
         for (Actor actor : foregroundSprites.getChildren()) {
             if (actor instanceof MapActor) {
                 ((MapActor) actor).setBoundDebug(b);
             }
         }
         setDebugAll(b);
-        player.setBoundDebug(b);
+        if (player != null)
+            player.setBoundDebug(b);
     }
 
     @Override

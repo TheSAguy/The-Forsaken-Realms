@@ -2778,3 +2778,18 @@ Adventure-side only: `adventure/world/World` (new `hasUnexploredIn()`), `adventu
 discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `adventure/util/MapDialog` (the
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
+
+## Round 186 (2026-09-12) - no engine edits
+
+Adventure-side only: `adventure/stage/GameStage` (the F12 overlay is a tracked toggle - new `collisionDebug`
+field + `isCollisionDebug()`, F12 flips it instead of only ever switching it on, and a duplicate F11 branch
+removed), `adventure/stage/MapStage` (`loadMap()` ends with `debugCollision(false)` so the singleton stops
+carrying the overlay's flags into the next map; `debugCollision` builds its Group only when switching ON),
+`adventure/scene/ArenaScene` (new `fitToFighterSpot()` + `ARENA_PORTRAIT_FILL`, and height-based Y centring in
+the bracket and in `markLostFighter`), and plane data (`cave_amphin.tmx`: three gids re-pointed from `main.tsx`
+to `main-nocollide.tsx`).
+
+No Forge-core file touched. Of note for future map work, and NOT changed: libGDX's own
+`MapStage.loadCollision()` reads `cell.getTile().getObjects()` - the UNFLIPPED tile - so a TMX cell with flip
+bits keeps its collision box on the original side. Real, but plane-wide it is 22 cells whose boxes are
+near-full-tile walls inset by 1-3px, i.e. a 2px discrepancy. See `dev-tools/flipped_collision_qa.py`.
