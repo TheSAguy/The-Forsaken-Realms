@@ -107,6 +107,18 @@ monster, so a rank reads the same whatever the animation is doing.
 
 ## Fixed
 
+- **Starter decks could hold more than four copies of a card** — an illegal deck. When a single set could
+  not fill one of the deck's slots (Dragons of Tarkir has exactly two red common one-and-two-drops, for a
+  slot that wants twelve), the builder padded the gap with repeats. The four-copy limit is now absolute,
+  and when a set cannot fill the template the deck is rebuilt from your race's full set list instead — so
+  you get a legal, more varied deck rather than eight of the same common.
+- **Quest items now say what they are for.** Every key in the game and all five Shards showed a name over
+  an empty panel, so a hidden quest item looked like ordinary loot. Each now names the door it opens.
+- **Maps that lock themselves can no longer vanish.** The cave holding the five Shards, the Evil Grove and
+  the vampire castle all hide a key in one part of themselves and a locked door in another — and all three
+  were eligible to rotate out, or to despawn outright if you lost a duel inside. They now stay put.
+- **Two sprites were sliced on the wrong grid** (the Axe Orc and the Pitchfork Farmer), so parts of their
+  animations drew a figure cut in half.
 - **A save that fails to load no longer leaves the game half-loaded.** A corrupt or truncated save used to
   overwrite the running world as it read, so a failed load left a broken mixture of two games that could
   then be saved over the good one. The world is now snapshotted first, restored if anything goes wrong,
