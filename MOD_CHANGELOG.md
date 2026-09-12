@@ -17759,7 +17759,7 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 187: crowned enemies are never smaller than a Master; a delivery pays the town that sent you; the game boots straight into Adventure (2026-09-12)
 
-repo only - NOT yet packaged
+PACKAGED 2026-09-12 (342 MB, fast path - stock asset tree already matched the base install)
 
 BOOT STRAIGHT INTO ADVENTURE. User: "Have the game go directly to the Adventure Main screen
 (Load/Save screen), not need to ask for Forge/Adventure selection." Startup reads

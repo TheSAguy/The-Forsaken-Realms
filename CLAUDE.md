@@ -90,7 +90,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 187 (2026-09-12, repo only - NOT yet packaged): **three user requests.** (0) **The game boots straight
+- Round 187 (2026-09-12, PACKAGED - 342 MB, fast path): **three user requests.** (0) **The game boots straight
   into Adventure** - startup reads `FPref.UI_SELECTOR_MODE`, and the Forge/Adventure picker shows only when it is
   the shipped default "Default"; `Forge.java` now maps that to "Adventure" inside the adventure-assets guard.
   **Not** done by changing ForgePreferences' default: a default only reaches a profile that never stored the key,
