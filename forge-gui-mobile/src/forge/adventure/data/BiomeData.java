@@ -126,8 +126,16 @@ public class BiomeData implements Serializable {
      * ceiling, re-rolled on every visit.
      */
     public EnemyData getEnemy(float difficultyFactor, boolean withInjectedSpawns) {
+        // Round 184 (user crash report: "I went into a cave and the game got stuck. It said Autosaving and I
+        // could not move from the entrance"). enemyList is built LAZILY by getEnemyList(); this method read the
+        // field directly, which was safe only because every roaming-spawn caller happens to call the builder
+        // first. Round 181's dungeon re-theme became the first caller to reach this on a biome that had never
+        // rolled a spawn - a colour whose land the player had not walked - and the NPE killed loadObjects()
+        // mid-map, so the cave never finished loading and the player was left standing in the entrance.
+        // Initializing here fixes it for every caller, present and future, instead of for this one.
+        List<EnemyData> pool = getEnemyList();
         List<EnemyData> filteredEnemies = new ArrayList<>();
-        for (EnemyData data : enemyList ){
+        for (EnemyData data : pool ){
             if (data.difficulty <= difficultyFactor) {
                 filteredEnemies.add(data);
             }
@@ -138,11 +146,13 @@ public class BiomeData implements Serializable {
         // uniform pick here was a difficulty-blind side door for "Legends" catalog entries.
         if (filteredEnemies.isEmpty()) {
             List<EnemyData> spawnable = new ArrayList<>();
-            for (EnemyData data : enemyList) {
+            for (EnemyData data : pool) {
                 if (data.spawnRate > 0f)
                     spawnable.add(data);
             }
-            return Aggregates.random(spawnable.isEmpty() ? enemyList : spawnable);
+            if (spawnable.isEmpty() && pool.isEmpty())
+                return null; // a biome with no roster at all - the caller decides what to do, rather than crash here
+            return Aggregates.random(spawnable.isEmpty() ? pool : spawnable);
         }
 
         // Weighted-spawn tier system (2026-08-23, opt-in via SpawnTierWeighting.isEnabled();

@@ -235,9 +235,13 @@ public class SpawnTierWeighting {
         // and a per-candidate log of it would print once per enemy per roll.
         if (ColorReputation.isEnabled()) {
             line.append(" | color skew");
-            for (String color : ColorReputation.COLORS)
-                line.append(' ').append(Character.toUpperCase(color.charAt(0)))
-                        .append(Math.round(ColorReputation.getSpawnColorSkew(colorLetter(color)) * 100f) / 100f);
+            for (String color : ColorReputation.COLORS) {
+                // The MTG letter, not the English name's first letter - "blue" starts with a B, which printed
+                // two B columns next to black's and made the read-out ambiguous (caught in the round-183 smoke test).
+                String letter = colorLetter(color);
+                line.append(' ').append(letter)
+                        .append(Math.round(ColorReputation.getSpawnColorSkew(letter) * 100f) / 100f);
+            }
         }
         String text = line.toString();
         if (!text.equals(lastLoggedRow)) {

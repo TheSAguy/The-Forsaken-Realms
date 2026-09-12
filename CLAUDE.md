@@ -50,9 +50,9 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-11 (round 183; v1.09 RELEASED + rounds 173-183 on top; ENGINE = 09.11 daily since round 182) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-11 (round 184; v1.09 RELEASED + rounds 173-184 on top; ENGINE = 09.11 daily since round 182) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 183, 2026-09-11).** The user's calls, in their order:
+- **NEXT SESSION starts here (updated round 184, 2026-09-11).** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
      later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
      rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
@@ -75,7 +75,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   5. **Wider playtest feedback** on v1.09 and the v1.10 draft (`RELEASE_NOTES_v1.10.md`). The code review is
      down to its DESIGN rows and the quest-tag family below - E4 and the other fifteen were fixed in round 183.
   6. Small open items: characters already past "Raise the Banner"'s Capitol step keep the old quest steps (a load-time
-     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-183
+     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-184
      are unreleased (v1.09 is the last release).
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
@@ -90,6 +90,21 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 184 (2026-09-11, built 18:44, PACKAGED 18:56 - 342 MB; verified in the agent game on a COPY of the user's own save (their files untouched): the Black Tower dungeon that used to die mid-load came up with all 18 actors, zero NullPointerException / 'Error loading map' in the log, and the [TFR-SpawnTier] line now reads W1.0 U1.0 B1.0 R1.0 G1.0 with blue's label fixed): the first playtest of the 183 build. **A cave never finished loading and trapped
+  the player at its entrance** (the user's "it said Autosaving and I could not move") - `BiomeData.getEnemy()` read
+  the lazily-built `enemyList` field directly, and round 181's dungeon re-theme was the first caller to reach it on a
+  biome that had never rolled a spawn; it initializes the pool itself now. **Twelve lock-and-key POIs got a new
+  `NoRotate` tag** (the five-shard cave, the Evil Grove, the vampire castle) - rotation could despawn a map holding
+  the keys to its own door, and a LOSS inside one despawns it at once. **20 quest items had no description at all**;
+  each now names the door it opens. **The Axe Orc's atlas was sliced on a grid its art does not use** (round-117
+  import; new `dev-tools/atlas_align_qa.py` + `atlas_regrid.py`, 2 of 3 sheets re-cut and eyeballed).
+  `maxCopies` (round 151) stopped applying exactly when the pool ran thin, because the fallback filled any shortfall
+  with unbounded repeats; the cap is absolute now (shuffled passes take every legal copy first), and
+  `racedStarterDeck()` widens its edition list when a set cannot FILL the template (new `CardUtil.templateMainSize()`)
+  rather than only below minDeckSize (40), which never fired. Trigger was a single-set Standard pick ([DTK]).
+  **The camp's hidden rare matches the color you picked** - new `"startingColor"` predicate token (the New Game PICK,
+  not `getColorIdentity()`, which reads the guild-pair deck). **`[TFR-SpawnTier]` printed blue as B** (name's first
+  letter, not the MTG letter) - caught in the agent smoke test, which otherwise confirmed the ladder and the skew.
 - Round 183 (2026-09-11, built 16:24, PACKAGED 16:36 - 342 MB, the fast path (the stock tree was re-copied by round 182's package an hour earlier)): **the hostility ladder** - `spawn_tier_weighting.json` gains a `WASTELAND` row
   (ownerless land and an AI color at NEUTRAL were one row) and the seven territory rows are per-tier MULTIPLIERS now
   (`commonScale`..`mythicScale`), renormalized to the bracket's total in `targetTierWeight()`. Multipliers cannot open

@@ -79,6 +79,13 @@ public class DungeonRotation {
                     continue; // real data has null entries (e.g. MageTowerC6)
                 if ("Story".equals(tag) || tag.startsWith("Quest_"))
                     return false;
+                // Round 184 (user-approved, after the "Fifth Shard" report): a map that locks part of itself
+                // behind an item found in ANOTHER part of itself cannot be allowed to vanish mid-collection.
+                // The five-shard cave, the Evil Grove and the vampire castle all do this, and all three were
+                // rotatable - and a LOSS inside a rotatable dungeon despawns it immediately, so losing one
+                // duel could put the sealed door out of reach with its keys already in your pack.
+                if ("NoRotate".equals(tag))
+                    return false;
                 if ("Hostile".equals(tag))
                     hostile = true;
             }

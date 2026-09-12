@@ -521,8 +521,8 @@
 		"questTags": [
 			"Cave",
 			"Hostile",
-			"BiomeBlack"
-		]
+			"BiomeBlack",
+            "NoRotate"]
 	},
 	{
 		"name": "CaveB1",
@@ -1739,8 +1739,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "EvilGrove1",
@@ -1755,8 +1755,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "EvilGrove2",
@@ -1771,8 +1771,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "EvilGrove3",
@@ -1787,8 +1787,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "EvilGrove4",
@@ -1803,8 +1803,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "EvilGrove5",
@@ -1819,8 +1819,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "EvilGrove6",
@@ -1835,8 +1835,8 @@
 			"EvilGrove",
 			"BiomeBlack",
 			"Hostile",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "Factory",
@@ -4070,8 +4070,8 @@
 			"Hostile",
 			"BiomeBlack",
 			"Dungeon",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "VampireCastle1",
@@ -4087,8 +4087,8 @@
 			"Hostile",
 			"BiomeBlack",
 			"Dungeon",
-			"Sidequest"
-		]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "VampireCastle2",
@@ -4104,8 +4104,8 @@
 			"Hostile",
 			"BiomeBlack",
 			"Dungeon",
-			"Sidequest"
-	]
+			"Sidequest",
+            "NoRotate"]
 	},
 	{
 		"name": "VampireCastle3",
@@ -4219,8 +4219,8 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"DungeonEffect",
-			"Hostile"
-		]
+			"Hostile",
+            "NoRotate"]
 	},
 	{
 		"name": "Xiras Hive",

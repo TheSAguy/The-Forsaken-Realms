@@ -300,6 +300,7 @@
             &quot;type&quot;: &quot;card&quot;,
             &quot;count&quot;: 1,
             &quot;rarity&quot;: [&quot;Rare&quot;],
+            &quot;colors&quot;: [&quot;startingColor&quot;],
             &quot;raceEditions&quot;: true
          }]
       }]

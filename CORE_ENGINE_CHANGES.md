@@ -2762,3 +2762,12 @@ Everything else this round is adventure-side (`adventure/util/SpawnTierWeighting
 `adventure/world/WorldSave`, the roaming-guard classes, `adventure/scene/MapViewScene`, `adventure/scene/NewGameScene`,
 `adventure/data/SpawnTierWeightData`, `adventure/data/TuningData`, `adventure/stage/{GameStage,MapStage,WorldStage}`)
 plus `dev-tools/save-editing/Inv.java`.
+
+## Round 184 (2026-09-11) - no engine edits
+
+Adventure-side only: `adventure/data/BiomeData` (`getEnemy()` initializes the lazily-built enemy list itself - the
+cave-load crash), `adventure/util/CardUtil` (the absolute copy cap in `generate()`, the new `"startingColor"`
+predicate token and `templateMainSize()`), `adventure/util/Config` (`racedStarterDeck()`'s widening trigger),
+`adventure/util/DungeonRotation` (the `NoRotate` tag), `adventure/util/SpawnTierWeighting` (the color-skew label),
+and the plane's `world/items.json`, `world/points_of_interest.json`, `maps/map/main_story/spawn.tmx` and two
+`sprites/enemy/basic/humanoid` atlases.

@@ -534,9 +534,17 @@ public class Config {
 
     private Deck racedStarterDeck(String path, String label, java.util.List<String> editionCodes,
             java.util.List<String> raceCodes) {
+        // Round 184 (user playtest: a Red Pool starter with SEVEN Kolaghan Stormsingers). The ladder used to widen
+        // only when a deck fell under minDeckSize (40), and nothing ever did: the generator padded any shortfall
+        // with unbounded repeats, so a one-set pool "filled" 60 by printing the same common eight times. With the
+        // copy cap now absolute (CardUtil.generate()), a thin set list comes up SHORT instead - so the trigger has
+        // to be "this set list cannot fill the template", not "the result is unplayably small".
+        int target = Math.max(configData.minDeckSize, CardUtil.templateMainSize(path));
         Deck deck = CardUtil.getDeck(path, false, false, "", false, false, editionCodes, false, true);
         int size = deck == null ? 0 : deck.getMain().countAll();
-        if (size >= configData.minDeckSize) {
+        Deck best = deck;
+        int bestSize = size;
+        if (size >= target) {
             System.out.println("[TFR-StarterDeck] " + label + " from editions " + editionCodes
                     + " -> " + size + " cards (" + path + ")");
             describeStarterDeck(label, deck);
@@ -544,10 +552,14 @@ public class Config {
         }
         if (editionCodes != null && raceCodes != null && !raceCodes.equals(editionCodes)) {
             System.out.println("[TFR-StarterDeck] " + label + ": " + editionCodes + " filled only " + size
-                    + " of " + configData.minDeckSize + " - widening to the race's full set list");
+                    + " of " + target + " - widening to the race's full set list");
             deck = CardUtil.getDeck(path, false, false, "", false, false, raceCodes, false, true);
             size = deck == null ? 0 : deck.getMain().countAll();
-            if (size >= configData.minDeckSize) {
+            if (size > bestSize) {
+                best = deck;
+                bestSize = size;
+            }
+            if (size >= target) {
                 System.out.println("[TFR-StarterDeck] " + label + " from race editions " + raceCodes
                         + " -> " + size + " cards");
                 describeStarterDeck(label, deck); // round 183 (code review D5): audit every path, not just the first
@@ -555,18 +567,28 @@ public class Config {
             }
         }
         System.out.println("[TFR-StarterDeck] " + label + ": race editions could only fill " + size
-                + " of " + configData.minDeckSize + " for " + path + " - rebuilding unrestricted");
+                + " of " + target + " for " + path + " - rebuilding unrestricted");
         Deck unrestricted = CardUtil.getDeck(path, false, false, "", false, false, (java.util.List<String>) null, false, false);
         // Round 183 (code review D5): the last resort was neither audited nor size-checked - a template that cannot be
         // filled even from every set would have handed over a short deck silently.
         int unrestrictedSize = unrestricted == null ? 0 : unrestricted.getMain().countAll();
+        if (unrestrictedSize > bestSize) {
+            best = unrestricted;
+            bestSize = unrestrictedSize;
+        }
         if (unrestrictedSize < configData.minDeckSize)
             System.err.println("[TFR-StarterDeck] " + label + ": WARNING - even unrestricted, " + path + " filled only "
                     + unrestrictedSize + " of " + configData.minDeckSize + " cards");
         else
             System.out.println("[TFR-StarterDeck] " + label + " unrestricted -> " + unrestrictedSize + " cards");
-        describeStarterDeck(label, unrestricted);
-        return unrestricted;
+        // Round 184: hand back the BIGGEST of the three attempts, not whichever ran last. Unrestricted is normally
+        // the biggest, but it is not guaranteed to be - it drops the restrictRewards flag, so a template whose
+        // buckets lean on the race's own sets can come back smaller than the race-set build did.
+        if (best != unrestricted)
+            System.out.println("[TFR-StarterDeck] " + label + ": keeping the larger earlier build ("
+                    + bestSize + " cards) over the unrestricted one (" + unrestrictedSize + ")");
+        describeStarterDeck(label, best);
+        return best;
     }
 
     /**

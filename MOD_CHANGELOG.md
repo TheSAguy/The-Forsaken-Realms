@@ -17757,6 +17757,117 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 184: a cave that never finished loading; seven copies of one common in a starter deck (2026-09-11)
+
+The user's first playtest of the round-183 build, and everything it turned up. built 18:44, PACKAGED 18:56 - 342 MB; verified in the agent game on a COPY of the user's own save (their files untouched): the Black Tower dungeon that used to die mid-load came up with all 18 actors, zero NullPointerException / 'Error loading map' in the log, and the [TFR-SpawnTier] line now reads W1.0 U1.0 B1.0 R1.0 G1.0 with blue's label fixed
+
+### The cave that trapped you at its entrance
+
+*"I went into a cave and the game got stuck. It said Autosaving and I could not move from the entrance."* The
+AUTOSAVE caption was just the last thing drawn before the map load died:
+
+    java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.iterator()" because "this.enemyList" is null
+        at forge.adventure.data.BiomeData.getEnemy(BiomeData.java:130)
+        at forge.adventure.util.TerritoryControl.reThemedEnemyFor(TerritoryControl.java:1833)
+        at forge.adventure.stage.MapStage.loadObjects(MapStage.java:1082)
+
+`BiomeData.enemyList` is built LAZILY by `getEnemyList()`, but `getEnemy()` read the field directly. That was safe
+by accident for years: every roaming-spawn caller calls the builder first. **Round 181's dungeon re-theme became
+the first caller to reach it on a biome that had never rolled a spawn** - a color whose land the player had not
+walked - so entering a cave on land that had changed hands threw inside `loadObjects()`, leaving the map half
+built and the player standing in the entrance with no exit and no error on screen. `getEnemy()` initializes the
+pool itself now (fixing it for every caller, not just this one) and returns null for a biome with no roster at
+all; both call sites already null-check. Round 181 shipped to the user but never to a release, so no released
+build carries it.
+
+### The five-shard cave could rotate away
+
+Chasing the "Fifth Shard" question (below) turned up a second trap: `CaveLarge1`, which hides one shard per level
+and consumes all five at its sealed door, is tagged `Hostile` with no `Story` tag - so dungeon rotation could
+despawn it, and **losing a single duel inside a rotatable dungeon despawns it immediately**, with the player's
+shards already in the pack. The same held for the Evil Grove (three witch keys) and the vampire castle (Sorin's
+Key). A scan of every rotatable POI against its own map's `removeItem` conditions found twelve; all twelve now
+carry a new `NoRotate` quest tag that `DungeonRotation.isRotatableData()` honors, beside the existing Story rule.
+
+### "I just got this Fifth Shard item.... I think it might be a quest item?"
+
+It is - and the game never said so. Twenty quest items (the five Shards and every key in the plane) had NO
+description, so the inventory showed a name over an empty panel. Each now says what it opens, written from the
+maps that actually reference it: the five colored keys go to the Warden in the starting camp, who trades them for
+the Strange Key that opens a door in Emrakul's lair; the Shards are one per cave level; the rest name their own
+door. The item was NOT random loot, which is what prompted the question - it comes from a hand-placed chest with
+`probability: 1` on that cave level.
+
+### The Axe Orc's animation
+
+*"There is something wrong with the Axe Orc's animation."* Its atlas declares 32x21 cells; the walk row's six
+figures sit 44 px apart, so some frames landed clean and others were cut through a figure. The sheet came from
+our own round-117 sprite import, which assumed a uniform grid the art does not use - the rows actually hold 4 / 6
+/ 4 / 2 / 3 figures, not the declared 6 / 8 / 6 / 2 / 5. Two new tools: `dev-tools/atlas_align_qa.py` compares
+each row's measured pitch with its declared cell width (464 atlases scanned, 3 genuinely wrong: `axe_orc`,
+`pitchfork_farmer`, `plumed_knight`), and `dev-tools/atlas_regrid.py` re-cuts an atlas onto the pitch its art
+uses, rebuilding each row from the figures it can actually see. The first two are re-cut and checked frame by
+frame; a few attack frames still show a sliver of the neighbouring figure, because that source art was never laid
+out on a grid at all. `plumed_knight` is left alone - its blob counts disagree with its frame counts in a way
+that needs a hand pass, not a heuristic.
+
+### A starter deck with seven copies of a common
+
+`[TFR-StarterDeck] Standard R AUDIT: 60 cards ... most copies of one NON-LAND card: 7 (Kolaghan Stormsinger)
+<-- ILLEGAL, more than 4` - the audit had been printing that warning and the deck shipped anyway, in all fifteen
+decks the New Game screen rolled that session.
+
+Root cause, from the same log line above it: `Standard R from editions [DTK]` - ONE set. Dragons of Tarkir holds only
+a handful of red Common creatures at cmc 1-2, and that bucket asks for twelve. Round 151 had already added
+`RewardData.maxCopies` (4) for exactly this complaint ("Deck must not contain more than 4 copies of the card Air
+Marshal"), but its loop ended like this:
+
+    // A pool too small to honour the cap must still produce a full-size deck - a short deck
+    // is the worse of the two failures, and the caller asked for `count` cards.
+    while (result.size() < count) { ... result.add(...) }   // no cap at all
+
+So the cap applied until the pool ran thin and then stopped applying, which is precisely when it was needed. That
+judgement was backwards: Forge itself refuses a deck with more than four of a card, and a legal 54-card deck beats an
+illegal 60-card one. Two changes:
+
+- **The cap is absolute** (`CardUtil.generate()`). When the random loop hits its attempt cap the pool is now swept in
+  shuffled passes, one copy per name per pass, up to `maxCopies` - so a thin pool yields the most cards it legally
+  can - and then it stops, logging `[TFR-DeckGen] bucket wanted 12 card(s) but its legal pool holds only 3 distinct
+  name(s)`.
+- **The edition ladder widens on "cannot fill", not on "unplayably small"** (`Config.racedStarterDeck()`). It used to
+  widen only below `minDeckSize` (40) - which never happened, because the padding always "filled" 60. The trigger is
+  now the template's own requested total (new `CardUtil.templateMainSize()`, the sum of its bucket counts), so a
+  single-set pick that cannot fill the template falls through to the race's four sets and then to unrestricted. It
+  also keeps the LARGEST of the three attempts rather than whichever ran last - unrestricted drops `restrictRewards`
+  and is not guaranteed to be the biggest.
+
+Only newly generated decks are affected; the user chose to keep playing their existing character rather than have the
+save's deck repaired.
+
+### The camp's hidden rare matches the color you picked
+
+User: *"the only other thing we need to add it the card you get in the spawn dungeon should match the player's color
+he started with."* The round-178 reward drew a Rare from the race's four editions with no color filter. New
+`"startingColor"` token in `CardUtil.CardPredicate`'s color list (beside the existing `"colorID"`), resolving to
+`AdventurePlayer.getStartingColorId()` - the PICK at New Game, not `getColorIdentity()`, which is derived from the
+starter DECK and reads Azorius for a White pick on this plane's guild-pair constructed starters. `spawn.tmx`'s reward
+gains `"colors": ["startingColor"]`. Strictly mono-colored: the predicate already excludes colorless cards when a
+specific color is asked for. Falls back to the deck identity when there is no pick to read (a pre-field save, or
+Chaos/Precon/Custom).
+
+### The smoke test, and a label bug it caught
+
+The round-183 build was checked in the agent game: `[TFR-SpawnTier] week 1 on WASTELAND: Apprentice 90.0% Adept 10.0%
+Master 0.0% Archmage 0.0% | color skew W1.0 B1.0 B3.0 R0.6 G1.0` after `give rep black -100`. Week 1 correctly shows
+no Masters or Archmages even on the Wasteland row, and the skew reads 3.0 for the War color and 0.6 for the Happy
+one - but blue printed as **B**, because the label used the English name's first letter while the VALUE used the MTG
+letter. Two B columns, one of them black's. Fixed to print the MTG letter.
+
+The user's own log confirmed the rest in the live game: `week 3 on PLAYER_OWNED: Apprentice 86.9% Adept 11.5% Master
+1.7% Archmage 0.0%` (the week 2-3 bracket 78/18/4/0 tilted by the player row, exactly as designed), the skew moving
+with reputation (`G0.6` -> `G0.33`), and `Brinebone Buccaneer ... in player territory` - one of the 36 new enemies
+round 183 added to the player-land roster. No exceptions in 84 KB.
+
 ## Round 183: how hostile the ground under you is - seven kinds of land and a color skew; the quest-tag family closed; the code review's last sixteen rows (2026-09-11)
 
 User: *"What I'm hoping we have is that the Player land is the 'Friendliest' given it's his land. Neutral is somewhere

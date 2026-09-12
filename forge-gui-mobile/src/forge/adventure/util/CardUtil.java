@@ -270,6 +270,8 @@ public class CardUtil {
                 for (String color : type.colors) {
                     if ("colorID".equals(color))
                         colors |= Current.player().getColorIdentity().getColor();
+                    else if ("startingColor".equals(color))
+                        colors |= startingColorMask();
                     else
                         colors |= MagicColor.fromName(color.toLowerCase());
                 }
@@ -310,6 +312,29 @@ public class CardUtil {
             } else {
                 this.minDate = "";
             }
+        }
+
+        /**
+         * Round 183 (user, on the camp's hidden rare: "the card you get in the spawn dungeon should match the
+         * player's color he started with"). The color PICKED at New Game, not {@code getColorIdentity()}: that one
+         * is derived from the starter DECK, and this plane's constructed starters are guild pairs, so a White pick
+         * reports Azorius and the reward could hand out a blue card. Falls back to the deck identity when there is
+         * no pick to read - a save from before the field existed, or Chaos/Precon/Custom, which have none - so a
+         * "startingColor" reward degrades to the old behavior rather than to colorless nothing.
+         */
+        private static int startingColorMask() {
+            String id = Current.player().getStartingColorId();
+            String name = id == null || id.isEmpty() ? null : switch (Character.toUpperCase(id.charAt(0))) {
+                case 'W' -> "white";
+                case 'U' -> "blue";
+                case 'B' -> "black";
+                case 'R' -> "red";
+                case 'G' -> "green";
+                default -> null;
+            };
+            if (name == null)
+                return Current.player().getColorIdentity().getColor();
+            return MagicColor.fromName(name);
         }
     }
 
@@ -372,13 +397,36 @@ public class CardUtil {
                 taken.merge(finished.getCardName(), 1, Integer::sum);
                 result.add(finished);
             }
-            // A pool too small to honour the cap must still produce a full-size deck - a short deck
-            // is the worse of the two failures, and the caller asked for `count` cards.
-            while (result.size() < count) {
-                PaperCard candidate = pool.get(r.nextInt(pool.size()));
-                if (candidate != null)
-                    result.add(finishCandidate(candidate, data, r));
+            // ROUND 184 BUG FIX (user playtest: SEVEN Kolaghan Stormsingers in a Red Pool starter). This used to
+            // fill any shortfall with UNBOUNDED repeats - "a short deck is the worse of the two failures" - which
+            // re-created the exact illegality maxCopies exists to prevent: Forge itself refuses a deck holding more
+            // than four of a card, and round 151 added the cap for that complaint. The judgement was backwards. A
+            // short bucket is recoverable (Config.racedStarterDeck() rebuilds on a widened edition list when the
+            // deck lands under minDeckSize, and a legal 57-card deck beats an illegal 59-card one either way); an
+            // illegal deck is not.
+            //
+            // First, take everything the pool can still legally give: the random loop above stops on its attempt
+            // cap, which with a two-name pool leaves room unused. Sweep the pool in shuffled passes, one copy per
+            // name per pass, up to the cap.
+            for (int pass = 0; pass < data.maxCopies && result.size() < count; pass++) {
+                List<PaperCard> sweep = new ArrayList<>(pool);
+                java.util.Collections.shuffle(sweep, r);
+                for (PaperCard candidate : sweep) {
+                    if (result.size() >= count)
+                        break;
+                    if (candidate == null)
+                        continue;
+                    PaperCard finished = finishCandidate(candidate, data, r);
+                    if (finished == null || taken.getOrDefault(finished.getCardName(), 0) >= data.maxCopies)
+                        continue;
+                    taken.merge(finished.getCardName(), 1, Integer::sum);
+                    result.add(finished);
+                }
             }
+            if (result.size() < count)
+                System.out.println("[TFR-DeckGen] bucket wanted " + count + " card(s) but its legal pool holds only "
+                        + taken.size() + " distinct name(s) - filled " + result.size() + " at most "
+                        + data.maxCopies + " copies each (the deck comes up short rather than illegal)");
         } else {
             for (int i = 0; i < count; i++) {
                 PaperCard candidate = pool.get(r.nextInt(pool.size()));
@@ -1009,6 +1057,32 @@ public class CardUtil {
     public static Deck getDeck(String path, boolean forAI, boolean isFantasyMode, String colors, boolean isTheme,
             boolean useGeneticAI) {
         return getDeck(path, forAI, isFantasyMode, colors, isTheme, useGeneticAI, null, true);
+    }
+
+    /**
+     * Round 184: how many cards a generated-deck template ASKS for - the sum of its mainDeck bucket counts.
+     * Config.racedStarterDeck() widens its edition list when a set list cannot fill the template, which is a
+     * different question from "is the result playable at all" (minDeckSize). 0 for a .dck file, a missing file or
+     * a template with no mainDeck (a jumpstart or template deck), which leaves the caller on the minDeckSize rule.
+     */
+    public static int templateMainSize(String path) {
+        if (path == null || path.endsWith(".dck"))
+            return 0;
+        try {
+            FileHandle handle = Config.instance().getFile(path);
+            if (handle == null || !handle.exists())
+                return 0;
+            GeneratedDeckData data = new Json().fromJson(GeneratedDeckData.class, handle);
+            if (data == null || data.mainDeck == null)
+                return 0;
+            int total = 0;
+            for (RewardData bucket : data.mainDeck)
+                total += Math.max(0, bucket.count);
+            return total;
+        } catch (Exception e) {
+            System.err.println("[TFR-StarterDeck] could not read the card count of " + path + ": " + e);
+            return 0;
+        }
     }
 
     public static Deck getDeck(String path, boolean forAI, boolean isFantasyMode, String colors, boolean isTheme,

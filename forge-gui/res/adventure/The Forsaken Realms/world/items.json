@@ -482,30 +482,35 @@
     },
     {
         "name":  "Red Key",
+        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
         "iconName":  "RedKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "White Key",
+        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
         "iconName":  "WhiteKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Blue Key",
+        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
         "iconName":  "BlueKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Green Key",
+        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
         "iconName":  "GreenKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Black Key",
+        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
         "iconName":  "BlackKey",
         "questItem":  true,
         "rarity":  "Common"
@@ -5796,54 +5801,63 @@
     },
     {
         "name":  "Basement Key",
+        "description":  "Opens the basement under Zedruu\u0027s hall.",
         "iconName":  "RedKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Outer Gate Key",
+        "description":  "Opens an outer gate - the Skep\u0027s, and the one onto Zedruu\u0027s grounds.",
         "iconName":  "RedKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Strange Key",
+        "description":  "The Warden\u0027s trade for all five colored keys. It fits a door in Emrakul\u0027s lair.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Torturer\u0027s Key",
+        "description":  "Taken from a torturer. It opens a door inside Tibalt\u0027s keep.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Grolnok\u0027s Key",
+        "description":  "Grolnok\u0027s key. It opens the way deeper into his bog.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Rusty Old Key",
+        "description":  "Rusted almost shut. Something in Grolnok\u0027s bog still takes it.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Illusionist\u0027s Key",
+        "description":  "Opens the illusionist\u0027s floor in the Mage Tower.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Sorin\u0027s Key",
+        "description":  "Opens a locked door in the vampire castle.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Tibalt\u0027s Key",
+        "description":  "Tibalt\u0027s own key, for the last door of his keep.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
@@ -7077,36 +7091,42 @@
     },
     {
         "name":  "Cultist\u0027s Key",
+        "description":  "Taken from a cultist. It opens a door in the Unhallowed Abbey.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "First Shard",
+        "description":  "One of five shards hidden through the deep cave. The sealed door there wants all five.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Second Shard",
+        "description":  "One of five shards hidden through the deep cave. The sealed door there wants all five.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Third Shard",
+        "description":  "One of five shards hidden through the deep cave. The sealed door there wants all five.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Fourth Shard",
+        "description":  "One of five shards hidden through the deep cave. The sealed door there wants all five.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Fifth Shard",
+        "description":  "One of five shards hidden through the deep cave. The sealed door there wants all five.",
         "iconName":  "StrangeKey",
         "questItem":  true,
         "rarity":  "Common"
