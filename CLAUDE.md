@@ -90,7 +90,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 189 (2026-09-12, repo only - NOT yet packaged): **instrumented the daily territory pass** (diagnostic
+- Round 189 (2026-09-12, PACKAGED - 342 MB, fast path): **instrumented the daily territory pass** (diagnostic
   only, no behaviour change). The 195-day log showed it at 200-265ms/day, up from ~40ms. **The obvious theory was
   tested and failed**: days WITH a full re-contest averaged 170ms vs 155ms without, and past radius ~100 the
   "cheap ring" path was no cheaper - so the O(radius^2) re-contest is NOT the cost and the 2026-08-26 fingerprint

@@ -17759,7 +17759,7 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 189: instrumenting the daily territory pass (2026-09-12)
 
-repo only - NOT yet packaged. DIAGNOSTIC ONLY - no behaviour change.
+PACKAGED 2026-09-12 (342 MB, fast path). DIAGNOSTIC ONLY - no behaviour change.
 
 The 2026-09-12 log (195 in-game days, day 2 -> 197) showed the daily territory pass settling at
 200-265ms, up from ~40ms on days 3-21. Before changing anything, the obvious theory was tested
