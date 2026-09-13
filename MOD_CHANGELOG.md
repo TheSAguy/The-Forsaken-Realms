@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 192: six copies of one card from one duel - the round-185 fix had a hole; selling moves to storage only (2026-09-13)
+
+repo only until packaged.
+
+SIX DUPLICATES FROM ONE DUEL. User, with a screenshot of six Ghostly Changelings: "I won a duel
+and got 6 duplicate cards......" - so round 185's duplicate-reroll fix did not hold, and it is
+worth being precise about why, because the code was doing exactly what it was written to do.
+
+Round 185 rerolled a pick that repeated a name already in `takenNames`, and that set was LOCAL to
+one `generateCards()` call. But a duel's payout is not one call. `EnemySprite.getRewards()` loops
+`rdata.generate(...)` over EVERY RewardData entry the enemy carries, and enemies carry up to FOUR
+separate "deckCard" entries (Challenger 20/21/22, for instance). Each entry therefore started a
+fresh dedup set with no idea what the previous entry had just paid out. The +1 card-reward items
+multiply it again, since `bonusDeckCards()` is added to every entry's count - so four entries at
+1+2 cards each is twelve draws in four independent groups of three. Round 185's own changelog line
+("this narrows repeats WITHIN one reward") was accurate and describes exactly the gap; what it
+missed is that a player sees the payout, not the entry.
+
+Fixed by scoping the dedup to the PAYOUT rather than the call: `CardUtil.beginRewardPayout()` /
+`endRewardPayout()` open a shared name set, and `getRewards()` wraps both of its loops in one
+(in a finally, so a throw cannot leak the scope into unrelated later draws). Deliberately a scope
+rather than threading a set through four `generate()` overloads and three call sites. Outside a
+payout the set is null and every other caller - shops, boosters, deck generation - behaves exactly
+as before.
+
+Also new: `[TFR-RewardDup]` logs whenever a duplicate survives all its rerolls, with the legal
+pool's DISTINCT name count. That is the one thing the round-185 report could not be told apart
+from - "working as intended against a 2-name pool" and "the dedup never ran here" look identical
+from a screenshot, and now they do not.
+
+SELLING ONLY IN STORAGE. User: "Let's make it that you can only sell items in the storage
+interface. Hide the sell button otherwise." Two scenes carry a sell button. ArmoryScene is the one
+with the storage panel and keeps it; InventoryScene - the plain inventory off the HUD, which has no
+storage at all - now hides its own. Hidden rather than deleted: the widget stays in the shared ui
+layout, the press handler stays wired, and every existing null guard around `sellButton` is
+untouched, so nothing downstream needs to know and restoring it is one line. A hidden button cannot
+be pressed, so the sell confirm is unreachable from there.
+
 ## Round 191: instrumenting the claim loops, the half that grows (2026-09-13)
 
 repo only. DIAGNOSTIC ONLY - no behaviour change.

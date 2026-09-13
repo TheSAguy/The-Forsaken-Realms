@@ -90,6 +90,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 192 (2026-09-13): **the round-185 duplicate fix had a hole - six copies of one card from one duel.**
+  Round 185's dedup set was LOCAL to one `generateCards()` call, but a payout is built by looping
+  `rdata.generate(...)` over every RewardData entry, and enemies carry **up to four separate "deckCard"
+  entries** - each starting a fresh set. `bonusDeckCards()` (+1 items) is added to every entry's count, which
+  multiplies it. Fixed by scoping dedup to the PAYOUT: `CardUtil.beginRewardPayout()`/`endRewardPayout()`,
+  opened around both loops in `EnemySprite.getRewards()` in a finally. New `[TFR-RewardDup]` logs the legal
+  pool's DISTINCT name count when a duplicate survives its rerolls - the thing that could not be told apart
+  from a screenshot. **Lesson: "fewer repeats within one reward entry" is not what a player sees; they see
+  the payout.** Also: selling is now Armory/storage only - `InventoryScene` hides its sell button.
 - Round 191 (2026-09-13): **instrumented the claim loops** (diagnostic only). What round 190 left behind is the
   half that GROWS: `townGrowth`/`colorClaim`, the O(radius^2) loops, 271ms of a 382ms late-game day. In
   `World.claimWastelandRing()` the per-tile work is two early exits (already-mine, untouchable) and then two pull

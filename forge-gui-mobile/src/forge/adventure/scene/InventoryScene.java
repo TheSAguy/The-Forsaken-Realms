@@ -100,6 +100,17 @@ public class InventoryScene extends UIScene {
         useButton.setDisabled(true);
         deleteButton = ui.findActor("delete");
         sellButton = ui.findActor("sell");
+        // Round 192, user: "Let's make it that you can only sell items in the storage interface.
+        // Hide the sell button otherwise." Selling now lives solely in ArmoryScene, which is the
+        // screen with the storage panel and keeps its own sell button. This is the plain inventory
+        // reached from the HUD - no storage here, so no selling.
+        //
+        // Hidden rather than removed: the widget is declared in the shared ui layout, the press
+        // handler above is left wired, and the existing null guards on every sellButton call site
+        // stay as they are - so nothing downstream has to learn about this, and restoring it is one
+        // line. A hidden button cannot be pressed, so showSellConfirm() is unreachable from here.
+        if (sellButton != null)
+            sellButton.setVisible(false);
         itemDescription = ui.findActor("item_description");
         itemDescription.setAlignment(Align.topLeft);
         itemDescription.setWrap(true);

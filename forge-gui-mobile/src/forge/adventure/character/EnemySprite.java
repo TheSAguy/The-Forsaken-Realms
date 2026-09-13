@@ -23,6 +23,7 @@ import forge.adventure.data.RewardData;
 import forge.adventure.data.TuningData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
+import forge.adventure.util.CardUtil;
 import forge.adventure.util.Config;
 import forge.adventure.stage.MapStage;
 import forge.adventure.util.ColorReputation;
@@ -638,15 +639,30 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                             + " -> EXEMPT boss=" + data.boss + " spawnRate=" + data.spawnRate);
                 }
             }
-            for (RewardData rdata : standardRewardSource) {
-                rewards.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
+            // Round 192: ONE dedup scope across every entry of this payout. Each rdata.generate()
+            // used to start its own, so an enemy with four "deckCard" entries could pay the same
+            // card four times over - six times with the +1 reward items, which is what the user
+            // reported. See CardUtil.beginRewardPayout(). finally, so a throw cannot leak the scope
+            // into unrelated later draws.
+            CardUtil.beginRewardPayout();
+            try {
+                for (RewardData rdata : standardRewardSource) {
+                    rewards.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
+                }
+            } finally {
+                CardUtil.endRewardPayout();
             }
         }
         if(this.rewards != null) { //Collect additional rewards.
-            for(RewardData rdata : this.rewards) {
-                //Do not filter in case we want to FORCE basic lands. If it ever becomes a problem just repeat the same as above.
+            CardUtil.beginRewardPayout();
+            try {
+                for(RewardData rdata : this.rewards) {
+                    //Do not filter in case we want to FORCE basic lands. If it ever becomes a problem just repeat the same as above.
 
-                rewards.addAll(rdata.generate(false,(Current.latestDeck() != null ? Current.latestDeck().getMain().toFlatList() : null), true));
+                    rewards.addAll(rdata.generate(false,(Current.latestDeck() != null ? Current.latestDeck().getMain().toFlatList() : null), true));
+                }
+            } finally {
+                CardUtil.endRewardPayout();
             }
         }
         applyGoldVariance(rewards);

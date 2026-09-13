@@ -349,6 +349,29 @@ public class CardUtil {
         return result;
     }
 
+    // ---- Payout-scoped duplicate suppression (round 192) --------------------------------------
+    // One reward payout is assembled from SEVERAL RewardData entries, each generating its cards in
+    // its own generateCards() call - so a dedup set local to that call cannot see what the previous
+    // entry already handed over. Rather than thread a set through four generate() overloads and
+    // three call sites, a payout is SCOPED: whoever builds a whole payout opens one, and every
+    // generateCards() inside it shares the set.
+    //
+    // Null when no payout is open, which is the normal state for shops, boosters and anything else
+    // that generates cards outside a payout - those keep per-call behaviour exactly as before.
+    private static java.util.Set<String> payoutTakenNames = null;
+
+    /** Open a payout: every generateCards() until {@link #endRewardPayout()} shares one dedup set.
+     *  ALWAYS pair with endRewardPayout() in a finally - a leaked scope would silently dedup
+     *  unrelated later draws against a stale set. */
+    public static void beginRewardPayout() {
+        payoutTakenNames = new java.util.HashSet<>();
+    }
+
+    /** Close the payout opened by {@link #beginRewardPayout()}. */
+    public static void endRewardPayout() {
+        payoutTakenNames = null;
+    }
+
     public static List<PaperCard> generateCards(Iterable<PaperCard> cards, final RewardData data, final int count,
             Random r) {
         final List<PaperCard> result = new ArrayList<>();
@@ -439,16 +462,40 @@ public class CardUtil {
             // and whatever the last draw gives is kept. One reroll squares the duplicate chance
             // (a 1-in-3 pool repeat becomes 1-in-9), two cubes it, and a pool holding only one legal
             // name still pays out rather than coming up empty.
+            // ROUND 192: the set below used to be LOCAL to this call, and that was the hole. A duel's
+            // payout is built one RewardData entry at a time (EnemySprite.getRewards() loops
+            // `rdata.generate(...)`), and enemies carry up to FOUR separate "deckCard" entries - so
+            // each entry started a fresh dedup set and could re-draw a name the previous entry had
+            // just paid out. The +1 card-reward items multiply it, since bonusDeckCards() is added
+            // to EVERY entry's count. User, with a screenshot of six copies of one card out of one
+            // duel: "I won a duel and got 6 duplicate cards......" - round 185 only ever promised
+            // fewer repeats WITHIN a single entry, which is not what a player sees.
+            //
+            // payoutTakenNames, while a payout is open, is shared across every entry of that payout.
             int rerolls = Math.max(0, Config.instance().getTuningData().rewardDuplicateRerolls);
-            java.util.Set<String> takenNames = new java.util.HashSet<>();
+            java.util.Set<String> takenNames = payoutTakenNames != null ? payoutTakenNames : new java.util.HashSet<>();
             for (int i = 0; i < count; i++) {
                 PaperCard candidate = null;
+                boolean fresh = false;
                 for (int attempt = 0; attempt <= rerolls; attempt++) {
                     candidate = pool.get(r.nextInt(pool.size()));
-                    if (candidate == null || !takenNames.contains(candidate.getCardName()))
+                    if (candidate == null || !takenNames.contains(candidate.getCardName())) {
+                        fresh = true;
                         break; // a fresh name (or nothing to compare) - take it
+                    }
                 }
                 if (candidate != null) {
+                    if (!fresh) {
+                        // Every draw repeated. Usually that means the legal pool is genuinely tiny,
+                        // so log its distinct-name count: it is the difference between "working as
+                        // intended against a 2-name pool" and "the dedup is not reaching this path"
+                        // - precisely what the round-185 report could not be told apart from.
+                        long distinct = pool.stream().filter(java.util.Objects::nonNull)
+                                .map(PaperCard::getCardName).distinct().count();
+                        System.out.println("[TFR-RewardDup] kept a duplicate of " + candidate.getCardName()
+                                + " after " + (rerolls + 1) + " draw(s) - legal pool holds " + distinct
+                                + " distinct name(s), " + takenNames.size() + " name(s) already paid out here");
+                    }
                     takenNames.add(candidate.getCardName());
                     result.add(finishCandidate(candidate, data, r));
                 }
