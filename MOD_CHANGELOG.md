@@ -17795,6 +17795,17 @@ already non-enterable, and an AI town's guard level is already live for any duel
 Player-driven refreshes stay immediate and do not route through the batch: quest force-spawns,
 clearing or defeating a dungeon, restoring a town, building the Capitol.
 
+VERIFIED 2026-09-13 against a fresh 74-day run (day 4-77, radius reaching 96), the same
+measurement that found the problem:
+
+  - The path was genuinely exercised: 78 guard-level changes across 32 days. `guards` read 0ms on
+    every one of them (a single day at 2ms). It was 139.7ms on such a day before.
+  - The rebake did NOT silently disappear - it moved into the flush and now fires on days
+    19, 22, 25, 28, 31 ... exactly every 3 days, 20 times in 74 days instead of on 84% of them.
+  - Like-for-like by world development, since a young world is not comparable on raw totals: at
+    radius 50-100 the old run averaged 159ms of territory per day; the new one averages 54ms over
+    days 30-77. About 105ms/day saved, against the ~117ms predicted.
+
 Expected effect: ~117ms off the average day and ~108ms off a late-game one. What it does NOT fix is
 the other half - `townGrowth` and `colorClaim` are the genuine O(radius^2) claim loops and they do
 grow, from 48ms/68ms on average to 138ms/133ms over the last 100 days of that run. Late game was
