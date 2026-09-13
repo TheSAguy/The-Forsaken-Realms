@@ -2779,6 +2779,21 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 190 (2026-09-12) - no engine edits
+
+Adventure-side only: new `adventure/util/MapMarkerRefresh` (the shared batched minimap refresh),
+`adventure/util/TerritoryControl` (guard pass marks dirty instead of rebaking),
+`adventure/util/DungeonRotation` (its local batching state moved into the shared one),
+`adventure/stage/WorldStage` (flush once per day rollover + reset in clearCache),
+`adventure/scene/ArenaScene` + `adventure/data/EnemyData` + `adventure/data/TuningData` (the arena
+tier weighting), and plane data (`config tables/settings.json`).
+
+Worth knowing for future perf work: `World.refreshWorldMapMarkers()` is a full minimap ground rebake
++ marker redraw + fog pixmap rebuild, ~140ms on a developed world. It has now been caught twice as a
+per-day cost by log instrumentation (DungeonRotation 2026-08-26, TerritoryControl's guard pass
+2026-09-12). Anything that wants it on a daily schedule should go through MapMarkerRefresh; only
+rare, player-visible moments should call it directly.
+
 ## Round 189 (2026-09-12) - no engine edits
 
 Adventure-side only: `adventure/util/TerritoryControl` (a `[TFR-TerritoryPerf]` line per in-game day

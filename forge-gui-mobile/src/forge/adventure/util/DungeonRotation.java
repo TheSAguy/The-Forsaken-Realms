@@ -242,33 +242,23 @@ public class DungeonRotation {
         // immediate: quest force-spawns (extendForQuestTarget) and the player personally
         // clearing/defeating a dungeon (onDungeonDefeat/onDungeonClear) still call
         // refreshWorldMapMarkers() directly - those are rare, player-visible moments.
+        // Round 190: the batching state and interval moved to the shared MapMarkerRefresh, so this
+        // system and TerritoryControl's guard-level pass (which was still refreshing unbatched -
+        // see its own comment, and MapMarkerRefresh's javadoc for the measurement that caught it)
+        // COALESCE into one rebake instead of each keeping its own schedule and both potentially
+        // firing on the same day. Behaviour here is unchanged: mark dirty daily, and the flush
+        // WorldStage runs once per day rollover does at most one refresh per interval.
         if (changed)
-            markerRefreshDirty = true;
-        if (markerRefreshDirty && newDayCount - lastMarkerRefreshDay >= MARKER_REFRESH_INTERVAL_DAYS) {
-            world.refreshWorldMapMarkers();
-            markerRefreshDirty = false;
-            lastMarkerRefreshDay = newDayCount;
-        }
+            MapMarkerRefresh.markDirty();
     }
 
-    // Session-local batching state for the daily marker refresh above. Static/transient by
-    // design: a fresh session's first dirty day refreshes immediately (lastMarkerRefreshDay
-    // starts far enough in the "past" that the interval check always passes - NOT Integer.
-    // MIN_VALUE, which would underflow the subtraction and never fire), which also covers
-    // loading a save whose minimap was left stale by a previous session's pending batch.
-    private static final int MARKER_REFRESH_INTERVAL_DAYS = 3;
-    private static boolean markerRefreshDirty = false;
-    private static int lastMarkerRefreshDay = -1_000_000;
-
     /**
-     * Forget the session-local batching baseline. Called from WorldStage.clearCache() (every Load
-     * and every new world) - 2026-09-02 review finding: after a New Game+ from a day-500 run, or an
-     * in-game Load of an earlier save, {@code newDayCount - lastMarkerRefreshDay} went negative and
-     * the batched minimap refresh was suppressed until the new run caught up with the old day count.
+     * Forget this system's session-local state. Called from WorldStage.clearCache() (every Load and
+     * every new world). The marker-refresh baseline that used to live here moved to
+     * {@link MapMarkerRefresh#resetSessionState()}, which WorldStage.clearCache() now also calls.
      */
     public static void resetSessionState() {
-        markerRefreshDirty = false;
-        lastMarkerRefreshDay = -1_000_000;
+        MapMarkerRefresh.resetSessionState();
     }
 
     // Pool-swap: bring RESERVE locations into play until the visible count is back at the

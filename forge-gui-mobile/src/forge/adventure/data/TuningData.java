@@ -295,6 +295,14 @@ public class TuningData {
     // an edition-restricted loot pool can be small enough that one reroll is not much of a filter.
     public int rewardDuplicateRerolls = 2;
 
+    // Round 190 (user: "currently normal arena is a 50/50 chance for AI vs. AI. Let's make that 60/40 for the
+    // higher ranked opponent"). How often the higher-TIER side wins an AI-vs-AI bracket match, as a percentage.
+    // Only applies when the two actually differ in tier; an equal-tier pairing keeps the original life-weighted
+    // roll, which is where the "50/50" impression came from - it was never a flat coin flip, it was
+    // life_left / (life_left + life_right), and two same-tier enemies usually have similar life. 50 disables the
+    // rule (every pairing falls back to that life roll). Clamped to 0-100 at the call site.
+    public int arenaHigherTierWinPercent = 60;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)

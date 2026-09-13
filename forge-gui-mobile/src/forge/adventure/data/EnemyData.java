@@ -174,6 +174,24 @@ public class EnemyData implements Serializable {
     /** Round 135: every tier label, for stripping a stale one off a display name below. */
     private static final String[] TIER_LABELS = {"Apprentice", "Adept", "Master", "Archmage"};
 
+    /**
+     * Tier as a comparable rank: 0 Apprentice, 1 Adept, 2 Master, 3 Archmage. Anything
+     * unrecognised (null included) reads as Apprentice, matching {@link #tierDisplayName}'s own
+     * default, so a hand-edited tier string can never sort above a real one. Round 190: added for
+     * the Arena's AI-vs-AI bracket resolution, the first caller that needed to ask which of two
+     * enemies outranks the other rather than just print a label.
+     */
+    public static int tierRank(String tier) {
+        if (tier == null)
+            return 0;
+        switch (tier) {
+            case "Uncommon": return 1;
+            case "Rare":     return 2;
+            case "Mythic":   return 3;
+            default:         return 0;
+        }
+    }
+
     public static String tierDisplayName(String tier) {
         if (tier == null)
             return "Apprentice";

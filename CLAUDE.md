@@ -90,6 +90,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 190 (2026-09-12, repo only - NOT yet packaged): **the day-rollover stutter was ONE minimap rebake.**
+  Round 189's instrumentation answered it over 439 days: days where a guard level changed cost **139.7ms**, days
+  where none did cost **0.0ms** - flat whether 1 town changed or 9, so it was the single
+  `refreshWorldMapMarkers()` in `updateAiTownGuardLevels()`, not per-town work. **Every other suspect measured
+  0.0ms** (all three full-map POI walks, both `buildPullSources()` calls) - reasoning from the code would have
+  optimized four things that cost nothing. SECOND time this call has been caught this way (DungeonRotation,
+  2026-08-26). New shared `adventure/util/MapMarkerRefresh`: mark dirty, WorldStage flushes at most one rebake
+  per 3 days after all subsystems - shared, not copied, so the two systems coalesce instead of both rebaking on
+  one day. Markers can lag 3 days on the minimap; nothing underneath does. Player-driven refreshes stay
+  immediate. **Still open:** `townGrowth`/`colorClaim` are the real O(radius^2) loops and DO grow (48/68ms avg ->
+  138/133ms over the last 100 days; late game 382ms/day, 271ms of it those two).
+  Also: **arena AI-vs-AI now favors the higher tier 60/40** (`arenaHigherTierWinPercent`). It was never 50/50 -
+  the roll was weighted by LIFE; equal-tier pairings keep that. New `EnemyData.tierRank()`.
 - Round 189 (2026-09-12, PACKAGED - 342 MB, fast path): **instrumented the daily territory pass** (diagnostic
   only, no behaviour change). The 195-day log showed it at 200-265ms/day, up from ~40ms. **The obvious theory was
   tested and failed**: days WITH a full re-contest averaged 170ms vs 155ms without, and past radius ~100 the

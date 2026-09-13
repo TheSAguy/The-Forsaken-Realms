@@ -202,6 +202,13 @@
     // Raise for fewer duplicates; 0 restores the old draw-with-replacement behaviour.
     "rewardDuplicateRerolls": 2,
 
+    // Round 190 (user: "currently normal arena is a 50/50 chance for AI vs. AI. Let's make that 60/40 for the
+    // higher ranked opponent"). How often the higher-TIER side wins an AI-vs-AI match in an arena bracket.
+    // Applies only when the two differ in tier - an equal-tier pairing keeps the original roll weighted by life
+    // (lifeLeft / (lifeLeft + lifeRight)), which is where the "50/50" impression came from: it was never a flat
+    // coin flip, but two same-tier arena foes usually have similar life. 50 disables the rule entirely.
+    "arenaHigherTierWinPercent": 60,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).

@@ -365,6 +365,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 java.util.Map<String, Integer> standingsCounts = TerritoryControl.getTownCounts(world);
                 standingsCounts.remove("Colorless"); // chart is 5 AI colors + Player only
                 world.recordStandingsHistoryIfNewWeek(standingsCounts);
+                // Round 190: one batched minimap rebake for every subsystem above that dirtied it,
+                // AFTER all of them so a single refresh serves the lot. See MapMarkerRefresh.
+                MapMarkerRefresh.flush(world, dayAfter);
                 long tickEnd = System.nanoTime();
                 System.out.println("[TFR-DayTick] day " + dayAfter
                         + ": economy=" + (tEconomy - tickStart) / 1_000_000 + "ms"
@@ -1921,6 +1924,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // Session-static state in the mod's world-level helpers (2026-09-02 review): neither is
         // persisted, both must forget the previous run/save here.
         DungeonRotation.resetSessionState();
+        MapMarkerRefresh.resetSessionState(); // round 190: the shared marker-refresh batch baseline
         // Round 188, user: "The Speed up and Wait seems to persist on load. I save, then check
         // them, when I load they are checked still, even though they were not checked before save."
         // Both are HUD toggles over session state on this singleton - neither is written to the

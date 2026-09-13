@@ -17757,6 +17757,61 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 190: the day-rollover stutter was one minimap rebake; the arena favors the higher rank (2026-09-12)
+
+repo only - NOT yet packaged
+
+THE 200ms DAILY TERRITORY COST WAS ONE CALL. Round 189's `[TFR-TerritoryPerf]` instrumentation
+answered it over 439 in-game days (day 3 -> 441), and the answer was not what any of the standing
+theories predicted:
+
+    days where a guard level changed: 368, guards = 139.7ms
+    days where none did:               71, guards =   0.0ms
+
+Flat at ~140ms whether ONE town changed level or NINE - so the cost is not per-town work at all, it
+is the single `world.refreshWorldMapMarkers()` at the end of `updateAiTownGuardLevels()`, a FULL
+minimap ground rebake + marker redraw + fog pixmap rebuild. AI guard levels tick on a rolling
+28-day-per-level schedule across many towns, so something changed on 84% of days.
+
+Every other suspect measured ZERO. The three separate full-map POI walks per day and BOTH
+`buildPullSources()` calls came in at 0.0ms each - the POI walks are cheap because they use the
+peeking accessor, and the pull-source builds are trivial. Reasoning from the code would have
+"optimized" four things that cost nothing.
+
+This is the SECOND time this exact call has been caught by log instrumentation: DungeonRotation's
+daily rotation was batched for it on 2026-08-26 ("a steady ~120ms of every late-game day-rollover
+to this one call"), and the guard pass was simply missed in that sweep.
+
+New `adventure/util/MapMarkerRefresh`: one shared, batched refresh. Callers mark dirty; WorldStage
+flushes at most one rebake per MARKER_REFRESH_INTERVAL_DAYS (3) per day rollover, AFTER every
+subsystem has had its say. Deliberately shared rather than copied into TerritoryControl, so the two
+systems COALESCE - two independent batchers would each keep their own schedule and could both rebake
+on the same day, paying twice for one picture. DungeonRotation's local batching state moved into it;
+its `resetSessionState()` remains (WorldStage.clearCache calls it) and now delegates.
+
+Trade-off, identical to the one approved in 2026-08-26 and now applying to guard dots too: a marker
+can lag up to 3 days on the baked minimap. Nothing underneath lags - a rotated-out dungeon is
+already non-enterable, and an AI town's guard level is already live for any duel - only the pixels.
+Player-driven refreshes stay immediate and do not route through the batch: quest force-spawns,
+clearing or defeating a dungeon, restoring a town, building the Capitol.
+
+Expected effect: ~117ms off the average day and ~108ms off a late-game one. What it does NOT fix is
+the other half - `townGrowth` and `colorClaim` are the genuine O(radius^2) claim loops and they do
+grow, from 48ms/68ms on average to 138ms/133ms over the last 100 days of that run. Late game was
+382ms/day total, 271ms of it those two. Still open.
+
+THE ARENA FAVORS THE HIGHER RANK. User: "currently normal arena is a 50/50 chance for AI vs. AI.
+Let's make that 60/40 for the higher ranked opponent." It was never a flat coin flip - the roll was
+`rand.nextInt(lifeLeft + lifeRight) < lifeLeft`, weighted by LIFE, which only lands near 50/50
+because two arena foes usually have similar life. New `ArenaScene.resolveAiMatch()`: when the two
+differ in tier, the higher tier wins `arenaHigherTierWinPercent` of the time (new settings.json
+tunable, default 60; 50 disables the rule). An equal-tier pairing keeps the original life-weighted
+roll rather than being flattened to a true coin flip - it is the better tiebreaker of the two and it
+is what the bracket has always done. Also guarded `nextInt(0)`, which would have thrown on a pairing
+of two 0-life enemies. New `EnemyData.tierRank()` (0 Apprentice -> 3 Archmage), since nothing in the
+codebase could previously ask which of two tiers outranks the other. `[TFR-ArenaSim]` logs each
+resolved AI-vs-AI match.
+
 ## Round 189: instrumenting the daily territory pass (2026-09-12)
 
 PACKAGED 2026-09-12 (342 MB, fast path). DIAGNOSTIC ONLY - no behaviour change.

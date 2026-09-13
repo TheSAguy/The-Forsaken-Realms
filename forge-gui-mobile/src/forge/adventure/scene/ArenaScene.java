@@ -668,8 +668,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         Array<ArenaRecord> winners = new Array<>();
         Array<EnemySprite> winnersEnemies = new Array<>();
         for (int i = 0; i < fighters.size - 2; i += 2) {
-            int matchHP = enemies.get(i).getData().life + enemies.get(i+1).getData().life;
-            boolean leftWon = rand.nextInt(matchHP) < enemies.get(i).getData().life;
+            boolean leftWon = resolveAiMatch(enemies.get(i).getData(), enemies.get(i + 1).getData());
             if (leftWon) {
                 winners.add(fighters.get(i));
                 winnersEnemies.add(enemies.get(i));
@@ -733,6 +732,39 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         }
         if (!Forge.isLandscapeMode())
             drawArena();//update
+    }
+
+    /**
+     * Decide an AI-vs-AI bracket match. True when the LEFT side advances.
+     * <p>
+     * Round 190, user: "currently normal arena is a 50/50 chance for AI vs. AI. Let's make that
+     * 60/40 for the higher ranked opponent." It was never a flat coin flip - the original roll was
+     * {@code rand.nextInt(lifeLeft + lifeRight) < lifeLeft}, i.e. weighted by life, which lands
+     * near 50/50 only because two arena foes usually have similar life.
+     * <p>
+     * So the tier rule applies only where there IS a higher rank to favour, and an equal-tier
+     * pairing keeps that original life-weighted roll rather than being flattened to a true coin
+     * flip - it is the better tiebreaker of the two, and it is what the bracket has always done.
+     */
+    private boolean resolveAiMatch(EnemyData left, EnemyData right) {
+        int leftRank = EnemyData.tierRank(left.tier);
+        int rightRank = EnemyData.tierRank(right.tier);
+        if (leftRank != rightRank) {
+            int favored = Math.max(0, Math.min(100, Config.instance().getTuningData().arenaHigherTierWinPercent));
+            int chanceLeftWins = leftRank > rightRank ? favored : 100 - favored;
+            boolean leftWon = rand.nextInt(100) < chanceLeftWins;
+            System.out.println("[TFR-ArenaSim] " + left.getName() + " (" + EnemyData.tierDisplayName(left.tier)
+                    + ") vs " + right.getName() + " (" + EnemyData.tierDisplayName(right.tier)
+                    + "): higher tier favoured " + favored + "% -> "
+                    + (leftWon ? left.getName() : right.getName()) + " advances");
+            return leftWon;
+        }
+        // Equal tier: the original life-weighted roll. Guarded because nextInt(0) throws, and two
+        // enemies both at 0 life is a data error rather than something to crash the bracket on.
+        int matchHP = left.life + right.life;
+        if (matchHP <= 0)
+            return rand.nextBoolean();
+        return rand.nextInt(matchHP) < left.life;
     }
 
     private void moveFighter(Actor actor, boolean leftPlayer) {

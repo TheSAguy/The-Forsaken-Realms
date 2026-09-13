@@ -1189,8 +1189,16 @@ public class TerritoryControl {
                 changed = true;
             }
         }
+        // Round 190: was refreshWorldMapMarkers() directly, and [TFR-TerritoryPerf] caught it -
+        // days where any guard level changed cost 139.7ms here, days where none did cost 0.0ms,
+        // flat whether one town changed or nine, because the cost is the one full minimap rebake
+        // rather than anything per-town. Guard levels tick on a rolling 28-day-per-level schedule
+        // across many towns, so that fired on 368 of 439 days. Batched now (World coalesces it with
+        // DungeonRotation's, which was fixed the same way in 2026-08-26): an AI town's guard dot on
+        // the minimap can lag up to MARKER_REFRESH_INTERVAL_DAYS. Nothing about the guards
+        // themselves lags - the level is already live for any duel - only the baked minimap pixels.
         if (changed)
-            world.refreshWorldMapMarkers();
+            MapMarkerRefresh.markDirty();
     }
 
     /** The basic land a town-assault defender starts with (tapped) for its color. */
