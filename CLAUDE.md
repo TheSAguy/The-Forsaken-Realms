@@ -90,7 +90,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
-- Round 193 (2026-09-13, repo only - NOT packaged, user said "Repo for now"): **the claim loop short-circuits.**
+- Round 193 (2026-09-13, PACKAGED with 195): **the claim loop short-circuits.**
   `[TFR-ClaimPerf]` over 342 days: only **6.7% of tiles are contested** (79% are already-mine skips), but each
   contested tile compared against **~291 pull sources** - 21.5M distance computations/day, ~127ms, matching the
   measured townGrowth+colorClaim almost exactly. **A spatial index proved unnecessary**: the scan computed exact

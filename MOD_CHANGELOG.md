@@ -17759,7 +17759,7 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 193: the claim loop stops at the first source that decides it (2026-09-13)
 
-repo only - NOT packaged (user: "Repo for now").
+PACKAGED 2026-09-13 with round 195.
 
 Round 191's `[TFR-ClaimPerf]` answered the colorClaim question over 342 in-game days, and the shape
 of the answer decided the fix. Per day across the last 100 days:
@@ -17804,7 +17804,7 @@ every rival is visited, so the next log shows what the short-circuit really save
 
 ## Round 192: six copies of one card from one duel - the round-185 fix had a hole; selling moves to storage only (2026-09-13)
 
-repo only until packaged.
+PACKAGED 2026-09-13 with round 195.
 
 SIX DUPLICATES FROM ONE DUEL. User, with a screenshot of six Ghostly Changelings: "I won a duel
 and got 6 duplicate cards......" - so round 185's duplicate-reroll fix did not hold, and it is
