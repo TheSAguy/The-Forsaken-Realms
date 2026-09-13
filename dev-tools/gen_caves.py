@@ -65,6 +65,71 @@ FLOORSETS = {n: corner_lookup(n) for cfg in BIOMES.values() for n in cfg["floors
 MAIN_IMG = Image.open(os.path.join(COMMON, "maps", "tileset", "main.png")).convert("RGBA"); MAIN_COLS = 158
 dtsx = ET.parse(os.path.join(COMMON, "maps", "tileset", "dungeon.tsx")).getroot()
 DUN_IMG = Image.open(os.path.join(COMMON, "maps", "tileset", dtsx.find("image").get("source"))).convert("RGBA"); DUN_COLS = int(dtsx.get("columns"))
+
+
+# Round 194: per-tile collision area, from the same tilesets the wang lookups come from.
+#
+# This exists because the generator's `floor` boolean mask is NOT what the player walks on. The
+# PAINTED TILES are, and their collision boxes are what MapStage.loadCollision() reads. The two can
+# disagree: the corner-Wang painter resolves a narrow corridor's corner combination to wall tiles,
+# which seals a passage the mask still calls open. Every connectivity check in this generator ran
+# against the mask, so a sealed corridor passed silently - seven of the 78 shipped caves are split
+# in two because of it (user report 2026-09-13: "can't reach the one side"). cave_blue_04 was the
+# proof: the mask reported ONE component of 223 tiles, while the emitted map has 102 + 96 walkable
+# tiles either side of a wall at x=19-20.
+def _collision_area(root, tile_w, tile_h):
+    out = {}
+    for t in root.findall("tile"):
+        og = t.find("objectgroup")
+        if og is None:
+            continue
+        area = 0.0
+        for o in og.findall("object"):
+            if any(o.find(s) is not None for s in ("polygon", "ellipse", "polyline", "text")):
+                area = float(tile_w * tile_h)   # shaped blocker: treat as solid
+                continue
+            area += float(o.get("width", 0)) * float(o.get("height", 0))
+        if area > 0:
+            out[int(t.get("id"))] = area
+    return out
+
+
+MAIN_COLLISION = _collision_area(tsx, TILE, TILE)
+DUN_COLLISION = _collision_area(dtsx, TILE, TILE)
+
+
+def gid_blocks(gid, limit_fraction=0.6):
+    """True when a painted gid covers enough of its own tile to stop the player.
+
+    Note gid 0 is NOT blocking: this is asked of the WALLS layer, where an empty cell means "no wall
+    here" and the floor layers underneath are what the player stands on. (Treating 0 as void was a
+    bug while writing this - it reported far more regions than the map really has.)
+    """
+    if not gid:
+        return False
+    if gid >= DUNGEON_FIRSTGID:
+        return DUN_COLLISION.get(gid - DUNGEON_FIRSTGID, 0.0) >= TILE * TILE * limit_fraction
+    return MAIN_COLLISION.get(gid - 1, 0.0) >= TILE * TILE * limit_fraction
+
+
+def painted_components(ground_layer):
+    """Connected regions of the PAINTED result, which is what the player can actually walk."""
+    passable = [[not gid_blocks(ground_layer[y][x]) for x in range(W)] for y in range(H)]
+    seen = [[False] * W for _ in range(H)]
+    out = []
+    for y0 in range(H):
+        for x0 in range(W):
+            if not passable[y0][x0] or seen[y0][x0]:
+                continue
+            stack = [(x0, y0)]; seen[y0][x0] = True; comp = []
+            while stack:
+                x, y = stack.pop(); comp.append((x, y))
+                for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                    if 0 <= nx < W and 0 <= ny < H and passable[ny][nx] and not seen[ny][nx]:
+                        seen[ny][nx] = True; stack.append((nx, ny))
+            out.append(comp)
+    out.sort(key=lambda c: -len(c))
+    return out
 def tile_img(gid):
     if gid >= DUNGEON_FIRSTGID:
         g = gid - DUNGEON_FIRSTGID; return DUN_IMG.crop(((g % DUN_COLS) * 16, (g // DUN_COLS) * 16, (g % DUN_COLS) * 16 + 16, (g // DUN_COLS) * 16 + 16))
@@ -244,6 +309,43 @@ def make_cave(biome, idx, cfg):
         for y in range(H):
             for x in range(W):
                 if floor[y][x] and (x, y) not in keep: floor[y][x] = False; rock[y][x] = True
+
+    # Round 194: everything above validates the boolean `floor` mask, which is NOT what the player
+    # walks on - see gid_blocks()'s comment. Re-check the PAINTED result and widen wherever the wang
+    # painter sealed a passage the mask calls open, then repaint and look again.
+    #
+    # The widening is deliberately blunt: clear the rock ring around every cell the mask calls floor
+    # but the paint blocks. That is exactly the pinch the painter could not represent, and opening
+    # its neighbours gives the next paint a corner combination that has a floor tile. Frame cells are
+    # never touched, so the cave can never be opened to the map edge.
+    for attempt in range(8):
+        comps_painted = painted_components(ground)
+        if len(comps_painted) <= 1:
+            break
+        sealed = [(x, y) for y in range(1, H - 1) for x in range(1, W - 1)
+                  if floor[y][x] and gid_blocks(ground[y][x])]
+        if not sealed:
+            break   # genuinely separate regions with nothing to widen - the assert below reports it
+        for (x, y) in sealed:
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    nx, ny = x + dx, y + dy
+                    if 0 < nx < W - 1 and 0 < ny < H - 1:
+                        rock[ny][nx] = False; floor[ny][nx] = True
+        ground = paint(rock, WALLS, rng, repair_by_removal=True)
+        floor = [[not rock[y][x] for x in range(W)] for y in range(H)]
+        keep = set(next((c for c in components(floor) if (ENTRY_X0 + 1, H - 1) in c), []))
+        for y in range(H):
+            for x in range(W):
+                if floor[y][x] and (x, y) not in keep: floor[y][x] = False; rock[y][x] = True
+
+    # Fail LOUDLY rather than ship a cave whose far side cannot be reached. Seven caves shipped
+    # split in two because nothing checked this; a generator that cannot connect a map should stop,
+    # not emit it.
+    final_comps = painted_components(ground)
+    if len(final_comps) > 1:
+        raise SystemExit("cave %s %02d: painted map has %d disconnected regions %s - refusing to write"
+                         % (biome, idx, len(final_comps), [len(c) for c in final_comps[:6]]))
 
     # floor patches: the base color shows where the cobble set is absent
     cobble = [[True] * W for _ in range(H)]
@@ -437,25 +539,33 @@ def register(results):
         print("%s.json: +%d pointsOfInterest" % (b, len(results[b])))
 
 # ---------------------------------------------------------------- main
-args = [a for a in sys.argv[1:] if not a.startswith("--")]
-biomes = args[0].split(",") if args else list(BIOMES.keys())
-results = collections.OrderedDict()
-manifest = []
-for biome in biomes:
-    cfg = BIOMES[biome]; results[biome] = collections.OrderedDict()
-    for idx in range(1, CAVES_PER_BIOME + 1):
-        r = make_cave(biome, idx, cfg); results[biome][idx] = r
-        line = "%-9s %02d %-20s %-7s %2dx%-2d floor=%3d %-11s enemies: %s | loot: %s" % (
-            biome, idx, r["name"], r["danger"], r["size"][0], r["size"][1], r["floor"], r["floorset"],
-            "; ".join("%s (%s%s)" % (n, t, " WILD" if k < r["wild"] else "") for k, (n, t) in enumerate(r["enemies"])), ", ".join(r["loot"]))
-        manifest.append(line); print(line)
-    if "--sheets" in sys.argv:   # contact sheet per biome, next to this script
-        imgs = [results[biome][i]["img"] for i in results[biome]]
-        cols = 3; cw = max(im.size[0] for im in imgs); ch = max(im.size[1] for im in imgs); rows = (len(imgs) + cols - 1) // cols
-        sheet = Image.new("RGBA", (cols * cw + (cols - 1) * 6, rows * ch + (rows - 1) * 6), (30, 30, 30, 255))
-        for i, im in enumerate(imgs): sheet.paste(im, ((i % cols) * (cw + 6), (i // cols) * (ch + 6)))
-        sheet.save(os.path.join(SCRATCH, "caves_%s.png" % biome))
-open(os.path.join(SCRATCH, "gen_caves_manifest.txt"), "w", encoding="utf-8").write("\n".join(manifest) + "\n")
-if "--no-register" not in sys.argv:
-    register(results)
-print("done:", sum(len(v) for v in results.values()), "caves")
+def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    biomes = args[0].split(",") if args else list(BIOMES.keys())
+    results = collections.OrderedDict()
+    manifest = []
+    for biome in biomes:
+        cfg = BIOMES[biome]; results[biome] = collections.OrderedDict()
+        for idx in range(1, CAVES_PER_BIOME + 1):
+            r = make_cave(biome, idx, cfg); results[biome][idx] = r
+            line = "%-9s %02d %-20s %-7s %2dx%-2d floor=%3d %-11s enemies: %s | loot: %s" % (
+                biome, idx, r["name"], r["danger"], r["size"][0], r["size"][1], r["floor"], r["floorset"],
+                "; ".join("%s (%s%s)" % (n, t, " WILD" if k < r["wild"] else "") for k, (n, t) in enumerate(r["enemies"])), ", ".join(r["loot"]))
+            manifest.append(line); print(line)
+        if "--sheets" in sys.argv:   # contact sheet per biome, next to this script
+            imgs = [results[biome][i]["img"] for i in results[biome]]
+            cols = 3; cw = max(im.size[0] for im in imgs); ch = max(im.size[1] for im in imgs); rows = (len(imgs) + cols - 1) // cols
+            sheet = Image.new("RGBA", (cols * cw + (cols - 1) * 6, rows * ch + (rows - 1) * 6), (30, 30, 30, 255))
+            for i, im in enumerate(imgs): sheet.paste(im, ((i % cols) * (cw + 6), (i // cols) * (ch + 6)))
+            sheet.save(os.path.join(SCRATCH, "caves_%s.png" % biome))
+    open(os.path.join(SCRATCH, "gen_caves_manifest.txt"), "w", encoding="utf-8").write("\n".join(manifest) + "\n")
+    if "--no-register" not in sys.argv:
+        register(results)
+    print("done:", sum(len(v) for v in results.values()), "caves")
+
+
+# Round 194: a __main__ guard. Without one, merely IMPORTING this module ran the whole driver -
+# regenerating all 78 maps into the live map folder and rewriting the manifest as a side effect of
+# `import gen_caves`. Found the hard way while writing a harness to reproduce one cave.
+if __name__ == "__main__":
+    main()
