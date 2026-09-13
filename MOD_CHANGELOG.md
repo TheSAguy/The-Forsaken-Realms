@@ -17757,6 +17757,34 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 191: instrumenting the claim loops, the half that grows (2026-09-13)
+
+repo only. DIAGNOSTIC ONLY - no behaviour change.
+
+Round 190 removed the flat ~140ms minimap rebake from the daily territory pass and verified it
+(guards 139.7ms -> 0ms on the 32 days that actually changed a guard level). What is left is the
+half that GROWS with the world: `townGrowth` and `colorClaim`, the O(radius^2) claim loops -
+48ms/68ms average rising to 138ms/133ms over the last 100 days of the 441-day run, 271ms of a
+382ms late-game day.
+
+Reading `World.claimWastelandRing()`, the per-tile work splits sharply:
+
+  - everything before the pull loops is a couple of array reads, and there are two early exits
+    (`already mine`, and `base/ocean - untouchable`);
+  - the two pull loops are O(mySources + rivalFlat) FOR EACH TILE that survives those exits.
+
+So the cost is (contested tiles) x (source count), and which of those two factors dominates
+decides the fix: a spatial index over the sources, or fewer/cheaper rings. That is a measurement,
+not something to reason out - round 190 is the standing reminder, where four confidently-named
+suspects (three full-map POI walks, both buildPullSources calls) all measured 0.0ms and the real
+cost was somewhere nobody had named.
+
+New `[TFR-ClaimPerf]` line per in-game day: tilesVisited, alreadyMine, untouchable, contested,
+sourceComparisons, and the derived average sources per contested tile. The early-exit counters
+matter as much as the totals - if `alreadyMine` is most of `tilesVisited` that explains why the
+2026-08-26 full-re-contest caching looked like it barely helped (round 189 measured 170ms with a
+re-contest against 155ms without), because a mature territory's re-contest is mostly cheap skips.
+
 ## Round 190: the day-rollover stutter was one minimap rebake; the arena favors the higher rank (2026-09-12)
 
 PACKAGED 2026-09-12 (342 MB, fast path)

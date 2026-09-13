@@ -3271,6 +3271,18 @@ public class World implements Disposable, SaveFileContent {
                 outerRadiusTiles, onTileRepainted, onChunkNeedsReload, null);
     }
 
+    // [TFR-ClaimPerf] counters, round 191. colorClaim + townGrowth are what is left of the daily
+    // territory cost after round 190 batched the minimap rebake away, and they are the half that
+    // GROWS: 48ms/68ms early against 138ms/133ms over the last 100 days of the 441-day run.
+    //
+    // The per-tile work here splits sharply. Everything before the pull loops is a couple of array
+    // reads; the two pull loops are O(mySources + rivalFlat) EACH TILE. So the cost is
+    // (contested tiles) x (source count), and these counters separate those two factors instead of
+    // leaving it to be guessed - round 190 is the standing reminder of how that goes, where four
+    // confidently-named suspects all measured 0.0ms. Read and reset by TerritoryControl each day.
+    public static long claimTilesVisited, claimTilesAlreadyMine, claimTilesUntouchable, claimTilesContested;
+    public static long claimSourceComparisons;
+
     // outClaimedTiles (2026-08-13 FoW fix): lets the player-Capitol expansion reveal exactly the
     // ground it actually claimed rather than the whole geometric radius disc (which included
     // ocean and rival-owned land, inflating the fully-explored counter far past what was really
@@ -3421,17 +3433,29 @@ public class World implements Disposable, SaveFileContent {
                 // the tile contest by its UNDERLYING owner; the road bit itself is preserved on
                 // the claim write (isRoadTile branch below), so rendering and the road-vs-offroad
                 // speed logic still see a road.
+                claimTilesVisited++;
                 long rawBiomeBits = getBiome(wx, wy);
                 boolean isRoadTile = (rawBiomeBits & roadBit) != 0;
                 int ownerIndex = highestBiome(rawBiomeBits & ~roadBit);
-                if (ownerIndex == colorIndex)
+                if (ownerIndex == colorIndex) {
+                    claimTilesAlreadyMine++;
                     continue; // already mine
+                }
                 boolean isWasteland = ownerIndex == colorlessIndex;
                 String ownerKey = isWasteland ? null : contestableOwners.get(ownerIndex);
-                if (!isWasteland && ownerKey == null)
+                if (!isWasteland && ownerKey == null) {
+                    claimTilesUntouchable++;
                     continue; // base/ocean or some non-faction biome - untouchable
+                }
+                // Reaching here is the EXPENSIVE case: the two pull loops below are
+                // O(mySources + rivalFlat) per tile, and everything above is a couple of array
+                // reads. Round 191 counts these separately so the next log says whether the cost
+                // is tile count or source count - which decides whether the fix is fewer tiles or
+                // a spatial index over the sources. See [TFR-ClaimPerf].
+                claimTilesContested++;
 
                 // My pull: min over my sources of distSq*weightSq (monotonic in dist*weight).
+                claimSourceComparisons += mySources.size() + rivalFlat.size();
                 float myPullSq = Float.MAX_VALUE;
                 for (float[] source : mySources) {
                     float sdx = wx - source[0], sdy = wy - source[1];

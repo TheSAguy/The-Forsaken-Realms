@@ -482,6 +482,24 @@ public class TerritoryControl {
                 + " colorClaim=" + expColorClaim / 1_000_000 + "ms]"
                 + " poisScanned=" + expPoiScanned
                 + " total=" + (tEnd - tStart) / 1_000_000 + "ms");
+        // [TFR-ClaimPerf] round 191: what townGrowth + colorClaim actually did this day. The point
+        // is the ratio - contested tiles are the only ones that reach the O(sources) pull loops, so
+        // if `contested` is small and `comparisons` is huge the sources are the problem (a spatial
+        // index), and if `contested` itself is huge the tile count is (fewer/cheaper rings).
+        System.out.println("[TFR-ClaimPerf] day " + newDayCount
+                + ": tilesVisited=" + World.claimTilesVisited
+                + " alreadyMine=" + World.claimTilesAlreadyMine
+                + " untouchable=" + World.claimTilesUntouchable
+                + " contested=" + World.claimTilesContested
+                + " sourceComparisons=" + World.claimSourceComparisons
+                + (World.claimTilesContested > 0
+                    ? " (avg " + (World.claimSourceComparisons / World.claimTilesContested) + " sources/contested tile)"
+                    : ""));
+        World.claimTilesVisited = 0;
+        World.claimTilesAlreadyMine = 0;
+        World.claimTilesUntouchable = 0;
+        World.claimTilesContested = 0;
+        World.claimSourceComparisons = 0;
     }
 
     private static int randomAttackDelay(World world) {

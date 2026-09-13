@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 191 (2026-09-13) - no engine edits
+
+Adventure-side only: `adventure/world/World` (counters inside `claimWastelandRing`'s per-tile loop)
+and `adventure/util/TerritoryControl` (the `[TFR-ClaimPerf]` line, read-and-reset each day).
+Diagnostic only - no behaviour change.
+
 ## Round 190 (2026-09-12) - no engine edits
 
 Adventure-side only: new `adventure/util/MapMarkerRefresh` (the shared batched minimap refresh),
