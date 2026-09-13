@@ -17757,6 +17757,51 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 193: the claim loop stops at the first source that decides it (2026-09-13)
+
+repo only - NOT packaged (user: "Repo for now").
+
+Round 191's `[TFR-ClaimPerf]` answered the colorClaim question over 342 in-game days, and the shape
+of the answer decided the fix. Per day across the last 100 days:
+
+    tiles visited      1,102,535
+      already mine       871,423  (79.0%)  - cheap skip, two array reads
+      untouchable        157,346
+      CONTESTED           73,766  ( 6.7%)  - reaches the pull loops
+    source comparisons 21,477,545          - ~291 per contested tile
+
+So the tile count was never the problem: only 6.7% of tiles reach the expensive path. The cost is
+that each one then measured its distance to ~291 pull sources. 21.5M float distance computations at
+~6ns is ~127ms, which matches the measured townGrowth 56.5ms + colorClaim 70.0ms almost exactly -
+the model is confirmed, not inferred. (It also closes round 189's loose end: with 79% of visited
+tiles being already-mine skips, a "full re-contest" was always going to cost about the same as a
+ring, which is why the 2026-08-26 caching looked like it barely helped.)
+
+A spatial index was the obvious fix and turned out to be unnecessary. The scan computed the exact
+MINIMUM pull over every rival, and over the owner's own sources separately - but the decision it
+fed only ever asks "did anything beat me?". So the loop now SHORT-CIRCUITS at the first source that
+settles the tile:
+
+  - hard protection: unchanged, still an immediate exit;
+  - wasteland tile: the original skipped iff min(allRivalPulls) < myPullSq, true iff ANY rival pull
+    is under it - the first such rival settles it;
+  - owned tile: the original skipped iff myPullSq >= min(ownerPulls), true iff ANY of the OWNER's
+    own sources is at or under it - and a non-owner rival never entered this branch anyway.
+
+Exact, not approximate: every early exit lands on the same `continue` the original reached, and
+bestRivalPullSq/ownerPullSq were read nowhere else. The win comes from the data's shape - a bracket
+claims a few hundred tiles out of tens of thousands contested, so the overwhelming majority of
+contested tiles LOSE, and a losing tile now stops at the first rival that beats it instead of
+scanning all ~291.
+
+Verified rather than argued: `dev-tools/ClaimEquiv.java` runs both forms over randomized source sets
+(mixed weights, ~20% carrying protection radii, the owner-has-no-sources case included) - 160,000
+cases, 0 mismatches, identical claim counts (58,056 each), rival comparisons down to 47% of the
+original even on synthetic data that claims far more tiles than the real game does.
+
+`[TFR-ClaimPerf]`'s sourceComparisons counter now measures ACTUAL comparisons instead of assuming
+every rival is visited, so the next log shows what the short-circuit really saves.
+
 ## Round 192: six copies of one card from one duel - the round-185 fix had a hole; selling moves to storage only (2026-09-13)
 
 repo only until packaged.

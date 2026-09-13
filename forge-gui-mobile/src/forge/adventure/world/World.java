@@ -3454,8 +3454,13 @@ public class World implements Disposable, SaveFileContent {
                 // a spatial index over the sources. See [TFR-ClaimPerf].
                 claimTilesContested++;
 
-                // My pull: min over my sources of distSq*weightSq (monotonic in dist*weight).
-                claimSourceComparisons += mySources.size() + rivalFlat.size();
+                // My pull: min over my sources of distSq*weightSq (monotonic in dist*weight). This
+                // one genuinely needs the true minimum - it is the threshold the rival scan below
+                // tests against - so it keeps scanning all of mySources (one owner's list, far
+                // shorter than the flattened rivals). Round 193: the counter now measures ACTUAL
+                // comparisons rather than assuming every rival is visited, so the log shows what
+                // the short-circuit below really saves.
+                claimSourceComparisons += mySources.size();
                 float myPullSq = Float.MAX_VALUE;
                 for (float[] source : mySources) {
                     float sdx = wx - source[0], sdy = wy - source[1];
@@ -3464,31 +3469,52 @@ public class World implements Disposable, SaveFileContent {
                         myPullSq = pull;
                 }
                 // Rivals: hard protection, the owner's pull, and the best rival pull, one pass.
-                boolean hardProtected = false;
-                float ownerPullSq = Float.MAX_VALUE, bestRivalPullSq = Float.MAX_VALUE;
+                // Round 193: this scan SHORT-CIRCUITS. It used to compute the exact minimum pull
+                // over EVERY rival (and separately over the owner's own sources) before reaching a
+                // decision that only ever asks "did anything beat me?" - and [TFR-ClaimPerf]
+                // measured that as 21.5 MILLION distance computations per in-game day (73,766
+                // contested tiles x ~291 sources each), i.e. essentially all of the remaining daily
+                // territory cost after round 190.
+                //
+                // EXACT, not an approximation. Every early exit below reaches the same `continue`
+                // the original did, and the three original outcomes map one-for-one:
+                //   - hard protection: unchanged, still `continue`.
+                //   - wasteland tile: the original skipped iff min(allRivalPulls) < myPullSq, which
+                //     is true iff ANY rival pull < myPullSq - so the first such rival settles it and
+                //     the true minimum is never needed.
+                //   - owned tile: the original skipped iff myPullSq >= min(ownerPulls), i.e. iff ANY
+                //     of the OWNER's own sources is at or under myPullSq. A non-owner rival's pull
+                //     never entered this branch at all, so it is not consulted here either.
+                // Falling out of the loop with no exit means nothing beat us - exactly the original
+                // claim condition. bestRivalPullSq/ownerPullSq were used nowhere else, so no caller
+                // loses information.
+                //
+                // The win comes from the shape of the data: most contested tiles are LOST (a bracket
+                // claims a few hundred tiles out of tens of thousands contested), and a losing tile
+                // now stops at the first rival that beats it instead of scanning all ~291.
+                boolean loses = false;
                 int ownerOrdinal = ownerKey == null ? -1 : rivalKeys.indexOf(ownerKey);
                 for (float[] rival : rivalFlat) {
                     float rdx = wx - rival[0], rdy = wy - rival[1];
                     float rDistSq = rdx * rdx + rdy * rdy;
+                    claimSourceComparisons++;
                     if (rival[3] > 0 && rDistSq <= rival[3]) {
-                        hardProtected = true; // inside a castle keep or a town's inner-half - inviolable
+                        loses = true; // inside a castle keep or a town's inner-half - inviolable
                         break;
                     }
                     float pull = rDistSq * rival[2];
-                    if (pull < bestRivalPullSq)
-                        bestRivalPullSq = pull;
-                    if ((int) rival[4] == ownerOrdinal && pull < ownerPullSq)
-                        ownerPullSq = pull;
+                    if (isWasteland) {
+                        if (pull < myPullSq) {
+                            loses = true; // a strictly stronger rival will claim this on its own tick
+                            break;
+                        }
+                    } else if ((int) rival[4] == ownerOrdinal && pull <= myPullSq) {
+                        loses = true; // takeover needs a STRICTLY stronger pull than the current owner
+                        break;
+                    }
                 }
-                if (hardProtected)
+                if (loses)
                     continue;
-                if (isWasteland) {
-                    if (bestRivalPullSq < myPullSq)
-                        continue; // a strictly stronger rival will claim this on its own tick
-                } else {
-                    if (myPullSq >= ownerPullSq)
-                        continue; // takeover needs a STRICTLY stronger pull than the current owner
-                }
 
                 int rawY = height - wy - 1;
                 long existingRoadBit = biomeMap[wx][rawY] & roadBit; // preserve roads, same as repaintBiomeAroundTown()

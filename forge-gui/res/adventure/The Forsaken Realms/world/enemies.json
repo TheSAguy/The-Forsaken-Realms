@@ -980,8 +980,7 @@
             "BiomeBlack",
             "Unholy",
             "Aggressive",
-            "Aberration",
-            null
+            "Aberration"
         ],
         "tier": "Uncommon"
     },
@@ -1318,8 +1317,7 @@
             "IdentityAzorius",
             "Holy",
             "BiomeBlue",
-            "BiomeWhite",
-            null
+            "BiomeWhite"
         ],
         "tier": "Rare"
     },
@@ -1467,9 +1465,7 @@
             "Flying",
             "BiomeColorless",
             "Holy",
-            "IdentityWhite",
-            null,
-            null
+            "IdentityWhite"
         ],
         "tier": "Uncommon"
     },
@@ -3922,9 +3918,7 @@
             "Aggressive",
             "Evil",
             "Unholy",
-            "BiomeRed",
-            null,
-            null
+            "BiomeRed"
         ],
         "tier": "Uncommon"
     },
@@ -17902,9 +17896,7 @@
             "BiomeWhite",
             "BiomeColorless",
             "Looter",
-            "Farm",
-            null,
-            null
+            "Farm"
         ],
         "tier": "Rare",
         "scale": 1.1818
@@ -22205,9 +22197,7 @@
             "IdentityBlack",
             "Demon",
             "Evil",
-            "Unholy",
-            null,
-            null
+            "Unholy"
         ],
         "tier": "Uncommon"
     },
@@ -25625,8 +25615,7 @@
             "Cleric",
             "Priest",
             "Human",
-            "Holy",
-            null
+            "Holy"
         ],
         "tier": "Mythic"
     },
@@ -26535,8 +26524,7 @@
             "Golem",
             "IdentityWhite",
             "Aberration",
-            "Aggressive",
-            null
+            "Aggressive"
         ],
         "tier": "Uncommon",
         "scale": 1.0833
@@ -29458,9 +29446,7 @@
             "Aggressive",
             "Arcane",
             "Beast",
-            "IdentityWUBRG",
-            null,
-            null
+            "IdentityWUBRG"
         ],
         "tier": "Rare"
     },
@@ -31070,8 +31056,7 @@
             "BiomeBlack",
             "IdentityBlack",
             "Undead",
-            "Aberration",
-            null
+            "Aberration"
         ],
         "tier": "Rare"
     },
@@ -31144,9 +31129,7 @@
             "Aggressive",
             "Undead",
             "Unholy",
-            "IdentityBlack",
-            null,
-            null
+            "IdentityBlack"
         ],
         "tier": "Rare"
     },

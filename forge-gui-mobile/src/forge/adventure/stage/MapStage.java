@@ -910,7 +910,16 @@ public class MapStage extends GameStage {
             return true;
         if (e.questTags != null)
             for (String tag : e.questTags)
-                if (STORY_TAGS.contains(tag))
+                // Round 194: `tag != null` is the whole fix for a GAME-BREAKING cave crash. STORY_TAGS
+                // is a Set.of(), i.e. java.util.ImmutableCollections, whose contains() THROWS
+                // NullPointerException on a null argument where HashSet would simply answer false.
+                // 11 enemies in this plane (and 35 across all planes, inherited from common/) carry a
+                // null entry in questTags - "Ancient Demon", "Angelic Page", "Minor Demon" among them
+                // - so the moment prepareCaveChampion() scanned a cave holding one of them, loadMap()
+                // threw, the map never finished loading, and the player was left stuck on the
+                // "Autosaving" screen unable to leave. The data is upstream and not wholly ours to
+                // police, so the guard belongs here regardless of the data cleanup that accompanies it.
+                if (tag != null && STORY_TAGS.contains(tag))
                     return true;
         return false;
     }
