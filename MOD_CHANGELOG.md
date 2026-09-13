@@ -17759,7 +17759,7 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
 
 ## Round 190: the day-rollover stutter was one minimap rebake; the arena favors the higher rank (2026-09-12)
 
-repo only - NOT yet packaged
+PACKAGED 2026-09-12 (342 MB, fast path)
 
 THE 200ms DAILY TERRITORY COST WAS ONE CALL. Round 189's `[TFR-TerritoryPerf]` instrumentation
 answered it over 439 in-game days (day 3 -> 441), and the answer was not what any of the standing
