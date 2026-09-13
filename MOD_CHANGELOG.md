@@ -17757,6 +17757,106 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 195: the cave generator checked the wrong thing (2026-09-13)
+
+PACKAGED 2026-09-13 (342 MB) with rounds 192-194.
+
+Round 194 found seven generated caves split into unreachable halves and stopped short of a cause.
+Chased properly now, and the answer was not the staleness bug suspected by inspection.
+
+REPRODUCED FIRST. gen_caves.make_cave() is deterministic from its seed, so cave_blue_04 was rebuilt
+and traced stage by stage. Two things fell out at once: the regenerated file is BYTE-IDENTICAL to
+the shipped one (so the shipped caves are exactly what this generator produces today), and the
+generator's own connectivity check reported ONE component of 223 tiles at every stage. It thought
+the cave was fine.
+
+THE REAL CAUSE. The generator validates its boolean `floor` mask. That is not what the player walks
+on - the PAINTED TILES are, and their collision boxes are what MapStage.loadCollision() reads. The
+corner-Wang painter resolves a narrow corridor's corner combination to WALL tiles, sealing a passage
+the mask still calls open, and nothing ever re-checked the emitted result. Proved by diffing the two
+views of cave_blue_04: 25 cells the generator calls floor are painted blocking, and five of them -
+(19,6), (19,7), (19,10), (19,11), (20,10) - form a vertical wall at x=19-20, exactly between the
+left region at (5,6) and the right one at (27,4).
+
+(The `ground`-painted-before-the-final-prune staleness noted in round 194 is real but was NOT the
+cause here; the trace shows the last prune removing nothing. Worth recording - it would have been
+"fixed" with a declaration of victory.)
+
+FIXED IN THE GENERATOR. New `gid_blocks()` / `painted_components()` read per-tile collision from the
+same tilesets the wang lookups come from, so connectivity is finally checked against the emitted
+map. Where the painter has sealed a cell the mask calls floor, the rock ring around it is cleared
+and the map repainted, up to 8 attempts; a cave that still cannot be connected RAISES rather than
+being written. Seven caves shipped broken because nothing checked - a generator that cannot connect
+a map should stop, not emit it.
+
+One bug of my own on the way: the first version treated gid 0 on the WALLS layer as void and
+reported far more regions than really exist. An empty cell on that layer means "no wall here" - the
+floor layers underneath are what the player stands on.
+
+VERIFIED, AND SURGICAL. All 78 caves regenerate with 0 refusals, and 71 are BYTE-IDENTICAL to what
+shipped - the fix changes only the 7 that were broken. Those 7 are in place and confirmed connected
+by `dev-tools/cave_connectivity_qa.py`, which is independent of the generator's own check. The cave
+tree is down to 3 maps with multiple regions, all hand-authored (Valor's Reach Arena, Hall of the
+Unifier, Planeswalker Dueling Club), where separate decorative areas may well be deliberate.
+
+CONTENT NOTE: widening consumes RNG draws, so the 7 repaired caves also roll different enemies and
+larger floors (cave_blue_04 223 -> 299 tiles). POI names and ids are untouched, so nothing in a save
+is invalidated. The maps were partly unreachable before, so this is a strict improvement - but it is
+a content change to seven caves rather than a pure layout repair, and it is revertible.
+
+Also: gen_caves.py had NO `if __name__ == "__main__"` guard, so merely importing it regenerated all
+78 maps into the live folder and rewrote the manifest. Found by doing exactly that while building
+the repro harness; the tree was checked and restored immediately - only the manifest had moved, the
+maps came back byte-identical, which is incidentally what proved the generator deterministic.
+
+## Round 194: a null quest tag was killing cave loads; seven generated caves are cut in half (2026-09-13)
+
+PACKAGED 2026-09-13 (342 MB) with round 195.
+
+THE CAVE THAT WOULD NOT LOAD. User: "another issue where a cave won't load. 'Autosave' and I can't
+leave." Same outward symptom as round 184's cave crash, completely different cause:
+
+    java.lang.NullPointerException
+      at java.util.ImmutableCollections$SetN.contains
+      at MapStage.isScriptedPlacement(MapStage.java:913)
+      at MapStage.prepareCaveChampion(MapStage.java:945)
+      at MapStage.loadMap(MapStage.java:751)
+
+STORY_TAGS is a `Set.of(...)`, and Set.of THROWS NullPointerException on `contains(null)` where a
+plain HashSet would simply answer false. 11 enemies in this plane carry a null entry in questTags -
+Ancient Demon, Angelic Page, Minor Demon among them, 35 across all planes, all inherited from
+common/ - so the moment prepareCaveChampion() scanned a cave holding one of them, loadMap() threw,
+the map never finished loading, and the player was stranded on "Autosaving" unable to leave. Data
+dependent, which is why only some caves did it.
+
+Fixed in both places. The guard (`tag != null`) is the real fix and is what protects against
+upstream data nobody here controls; the data cleanup removes the cause from what we do own -
+`dev-tools/strip_null_quest_tags.py` stripped 17 null entries from the plane's enemies.json. That
+script detects each file's own indentation rather than assuming (this tree is not consistent:
+quests.json is tab-indented, enemies.json uses four spaces) and refuses to write a file whose
+formatting it cannot reproduce exactly, so the diff is 11 insertions / 28 deletions rather than a
+reformat of a large data file.
+
+GENERAL TRAP worth remembering: any `Set.of(...)`/`List.of(...)` fed values straight out of plane
+data needs a null guard. Plane arrays legitimately contain nulls, and ImmutableCollections throws
+where the HashSet everyone pictures would answer false.
+
+SEVEN GENERATED CAVES ARE CUT IN HALF. User, with a screenshot: "seems like the two sides are not
+connected ... can't reach the one side." Quantified with the new
+`dev-tools/cave_connectivity_qa.py`:
+
+    cave_black_03      155 / 56 tiles   27% cut off
+    cave_blue_03       101 / 45         31%
+    cave_blue_04       102 / 96         48%
+    cave_colorless_03  141 / 49         26%
+    cave_green_02       93 / 56         38%
+    cave_green_05       77 / 55         42%
+    cave_white_08      190 / 84         31%
+
+Verified precisely on the worst one with pixel_collision_qa, walking the player's real collision
+box: cave_blue_04 had 39,540 legal player positions and only 20,562 reachable. Root-caused and
+repaired in round 195.
+
 ## Round 193: the claim loop stops at the first source that decides it (2026-09-13)
 
 PACKAGED 2026-09-13 with round 195.

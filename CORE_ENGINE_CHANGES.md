@@ -2779,6 +2779,21 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 195 (2026-09-13) - no engine edits
+
+Tooling and plane data only: `dev-tools/gen_caves.py` (per-tile collision reading, connectivity checked
+against the PAINTED map, widen-and-repaint repair, a hard failure instead of writing a disconnected
+cave, and a `__main__` guard) plus the 7 regenerated cave maps and the manifest.
+
+## Round 194 (2026-09-13) - no engine edits
+
+Adventure-side only: `adventure/stage/MapStage` (`isScriptedPlacement()` null-guards the tag before the
+Set.of lookup) and plane data (`world/enemies.json`, 17 null questTag entries removed).
+
+Worth knowing: `Set.of(...)`/`List.of(...)` are java.util.ImmutableCollections, and their `contains()`
+THROWS NullPointerException on null rather than answering false. Any such set fed values straight out
+of plane data needs a null guard - plane arrays legitimately contain nulls.
+
 ## Round 193 (2026-09-13) - no engine edits
 
 Adventure-side only: `adventure/world/World` (`claimWastelandRing()`'s rival scan short-circuits;

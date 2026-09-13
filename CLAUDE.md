@@ -90,6 +90,22 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 195 (2026-09-13, PACKAGED with 192-194): **the 7 split caves are fixed - the generator checked the wrong
+  thing.** It validated its boolean `floor` mask, but the player walks on the PAINTED TILES, and the corner-Wang
+  painter seals narrow corridors with wall tiles the mask still calls open. Proved by rebuilding cave_blue_04
+  (byte-identical to shipped; generator reported 1 component of 223 tiles) and diffing the two views: 25 cells
+  are floor-in-mask but painted blocking, 5 forming a wall at x=19-20 exactly between the two regions. Generator
+  now reads per-tile collision (`gid_blocks`/`painted_components`), widens sealed pinches and repaints (8
+  attempts), and RAISES rather than writing a disconnected cave. **All 78 regenerate, 71 byte-identical - only
+  the 7 broken ones change.** Verified independently with `cave_connectivity_qa.py`. Added the missing
+  `if __name__ == "__main__"` guard too: importing gen_caves.py regenerated all 78 maps into the live folder.
+  Content note: widening shifts the RNG stream, so those 7 caves roll different enemies; POI names/ids unchanged.
+- Round 194 (2026-09-13, PACKAGED with 195): **GAME-BREAKING cave crash fixed** - `STORY_TAGS` is a
+  `Set.of(...)`, whose `contains()` THROWS NPE on null (HashSet would answer false), and 11 plane enemies carry
+  a null questTag entry (35 across all planes, inherited from common/). `prepareCaveChampion()` ->
+  `isScriptedPlacement()` hit one, `loadMap()` threw, player stuck on "Autosaving". Guarded in code AND 17 nulls
+  stripped from enemies.json (`dev-tools/strip_null_quest_tags.py`). **General trap: any `Set.of` fed plane data
+  needs a null guard.**
 - Round 193 (2026-09-13, PACKAGED with 195): **the claim loop short-circuits.**
   `[TFR-ClaimPerf]` over 342 days: only **6.7% of tiles are contested** (79% are already-mine skips), but each
   contested tile compared against **~291 pull sources** - 21.5M distance computations/day, ~127ms, matching the
