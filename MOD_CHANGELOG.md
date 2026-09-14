@@ -17757,6 +17757,34 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 204: the +1-reward-card items no longer inflate a lands-only drop (2026-09-14)
+
+User: "Yes, exempt the Land entry from bonusDeckCard."
+
+Round 203's log review turned this up: a Bear duel paid out FIVE LAND cards - Gingerbread Cabin, Murmuring
+Bosk, Snow-Covered Forest and a plain Forest. Nothing was broken in the pool code. The Bear's reward table
+carries a third, deliberate entry:
+
+    { "type": "deckCard", "count": 1, "rarity": ["rare"], "cardTypes": ["Land"] }
+
+ONE rare land, on purpose. But `bonusDeckCards()` - the player's +1-reward-card items - is added to EVERY
+deckCard entry's count, so a player carrying those items turned that single land into three, and the Bear's
+other two entries were drawing from the same land-heavy pool. The result reads to a player as a broken payout
+even though each entry did exactly what it was told.
+
+Those items exist to hand over more SPELLS. An entry whose `cardTypes` are nothing but Land now keeps the count
+its author wrote (`isLandOnlyReward()`), and logs the suppression when it bites so the decision is visible
+rather than silent. An entry that lists Land ALONGSIDE spell types is an ordinary card reward and is untouched.
+
+Scope, counted over enemies.json rather than assumed: **150 land-only entries across 150 enemies** become
+exempt; exactly **2** entries list Land next to spell types and keep the bonus. The split is clean, so the
+"only lands" test does not need to be smarter than it is.
+
+NOT changed, and worth a separate decision: `bonusDeckCards()` is still added PER ENTRY rather than per payout,
+so a +1 item on a typical enemy with three deckCard entries is really +3 cards. That is long-standing behaviour
+(round 192 noted it in passing) and may well be intended generosity - but it is the reason this bug was
+visible at all, and it is the same multiplication anywhere else an enemy carries several entries.
+
 ## Round 203: a deckCard reward relaxes its rarity when the deck cannot satisfy it, then pays gold (2026-09-14)
 
 User, after round 202 raised the open question: "Let's relax the rarity filter when the deck can't satisfy it.

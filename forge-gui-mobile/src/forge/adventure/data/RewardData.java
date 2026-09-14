@@ -266,6 +266,19 @@ public class RewardData implements Serializable {
         return "Mythic"; // unreachable (last boundary is 100), kept as a safe fallback
     }
 
+    /** True when this reward asks for nothing but lands - a deliberate land drop rather than a card
+     *  drop, so the player's +1-reward-card items (bonusDeckCards) do not inflate it. An entry that
+     *  lists Land ALONGSIDE spell types is an ordinary card reward and keeps the bonus. */
+    private boolean isLandOnlyReward() {
+        if (cardTypes == null || cardTypes.length == 0)
+            return false;
+        for (String cardType : cardTypes) {
+            if (cardType == null || !cardType.trim().equalsIgnoreCase("Land"))
+                return false;
+        }
+        return true;
+    }
+
     public Array<Reward> generate(boolean isForEnemy, boolean useSeedlessRandom) {
         return generate(isForEnemy, null, useSeedlessRandom);
     }
@@ -556,7 +569,22 @@ public class RewardData implements Serializable {
                 case "deckCard": {
                     if (cards == null)
                         return ret;
-                    int wanted = count + addedCount + Current.player().bonusDeckCards();
+                    // Round 204 (user: "exempt the Land entry from bonusDeckCard"). A dedicated land
+                    // reward - the Bear's `deckCard count 1 rarity ["rare"] cardTypes ["Land"]` - asks for
+                    // ONE land deliberately. bonusDeckCards() is added to every entry's count, so a player
+                    // carrying +1-card items turned that single land into three; with the Bear's other two
+                    // entries drawing from the same land-heavy pool the whole payout came out as lands
+                    // (Gingerbread Cabin, Murmuring Bosk, Snow-Covered Forest, a plain Forest - round 203's
+                    // log review). Those items exist to hand over more SPELLS, so an entry asking for
+                    // nothing but lands keeps the count its author wrote.
+                    int cardBonus = Current.player().bonusDeckCards();
+                    if (cardBonus > 0 && isLandOnlyReward()) {
+                        System.out.println("[TFR-DeckLoot] land-only reward keeps its count of "
+                                + (count + addedCount) + " - the +" + cardBonus
+                                + " reward-card bonus does not apply to a lands-only drop");
+                        cardBonus = 0;
+                    }
+                    int wanted = count + addedCount + cardBonus;
                     // Round 203 (user: "relax the rarity filter when the deck can't satisfy it. If it still
                     // fails, Let's give 50g per failed card"). Two stages, because the pool this draws from is
                     // the ENEMY'S OWN DECK and there are two separate ways it comes up empty - the reward's

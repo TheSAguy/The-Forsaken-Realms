@@ -90,6 +90,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 204 (2026-09-14): **a lands-only `deckCard` reward is exempt from the +1-reward-card items.** User: "exempt the
+  Land entry from bonusDeckCard." Round 203's log review found a Bear duel paying FIVE lands: the Bear has a deliberate
+  `deckCard count 1 rarity ["rare"] cardTypes ["Land"]` entry, and `bonusDeckCards()` is added to EVERY entry's count, so
+  one land became three while the other two entries drew from the same land-heavy pool. `isLandOnlyReward()` now keeps the
+  authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
+  and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
+  so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
 - Round 203 (2026-09-14): **a `deckCard` reward now relaxes its rarity filter when the enemy's deck cannot satisfy it,
   then pays gold for what is still unpayable.** User: "relax the rarity filter when the deck can't satisfy it. If it
   still fails, Let's give 50g per failed card." Measured first: the commonest entry type is `["Rare","Mythic Rare"]`
