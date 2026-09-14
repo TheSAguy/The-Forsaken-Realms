@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 206 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/util/CardUtil` (new `claimRewardCardBonus()` + payout-scoped flag),
+`adventure/data/RewardData` (the "deckCard" branch claims it), `adventure/character/EnemySprite` (one payout
+scope around both reward loops), `adventure/data/TuningData` and `config tables/settings.json` (comment fix only).
+
 ## Round 205 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/util/TerritoryControl` (new `reputationDefenseBonus()`, applied at the

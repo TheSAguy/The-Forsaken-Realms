@@ -584,6 +584,14 @@ public class RewardData implements Serializable {
                                 + " reward-card bonus does not apply to a lands-only drop");
                         cardBonus = 0;
                     }
+                    // Round 206 (user: "make bonusDeckCards per payout, not per entry"). Claimed
+                    // AFTER the lands-only check above, so a land entry does not swallow the bonus
+                    // on its way past - it falls through to the first entry that can use it.
+                    cardBonus = CardUtil.claimRewardCardBonus(cardBonus);
+                    if (cardBonus > 0)
+                        System.out.println("[TFR-DeckLoot] +" + cardBonus
+                                + " reward-card bonus applied to this payout's " + type + " x" + count
+                                + " entry (once per payout, not once per entry)");
                     int wanted = count + addedCount + cardBonus;
                     // Round 203 (user: "relax the rarity filter when the deck can't satisfy it. If it still
                     // fails, Let's give 50g per failed card"). Two stages, because the pool this draws from is

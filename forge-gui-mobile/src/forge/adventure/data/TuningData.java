@@ -345,7 +345,9 @@ public class TuningData {
     // quest awards), so 1%/point with no ceiling makes a long-held town immune. 20 points is the ceiling
     // PointOfInterestChanges already applies to shop prices (maxRepToApply), so both reputation effects agree on
     // what "maxed out" means instead of inventing a second scale. At the cap a Mythic mage's 90% capture chance
-    // becomes 70% (65% with an Outlook). 0 in either field disables the whole mechanic.
+    // becomes 70% (65% with an Outlook). Note the two zeroes mean OPPOSITE things: 0 in
+    // townReputationDefensePerPoint disables the mechanic, while 0 in townReputationDefenseMaxPoints removes the
+    // CAP (uncapped, 1%/point forever) - which at 10 reputation makes a Common mage unable to take the town at all.
     public float townReputationDefensePerPoint = 0.01f;
     public int townReputationDefenseMaxPoints = 20;
 

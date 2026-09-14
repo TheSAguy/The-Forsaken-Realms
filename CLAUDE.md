@@ -97,6 +97,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 206 (2026-09-14): **the +1-reward-card items are a PAYOUT bonus, not per-entry.** User: "make bonusDeckCards
+  per payout, not per entry." It was added to every `deckCard` entry's count, and a typical enemy has three - so a +1
+  item was really +3. `CardUtil.claimRewardCardBonus()` gives it to the first entry that asks and 0 after, claimed
+  AFTER round 204's lands-only check so a land entry cannot swallow it. **`EnemySprite` now opens ONE payout scope
+  around BOTH reward loops** (a map-placed enemy carries instance rewards on top of its type's) - two scopes meant the
+  round-192 dedup restarted mid-duel and the bonus would be granted twice; dedup now spans a whole duel, which is what
+  the original "6 duplicate cards" report wanted. **Doc bug from round 205 fixed:** 0 in `townReputationDefenseMaxPoints`
+  removes the CAP, it does not disable the mechanic. **Reputation immunity (asked explicitly):** with the 20-point cap
+  only Common mages ever hit 0% capture chance, at 10 reputation (5 with an Outlook); Uncommon/Rare/Mythic bottom out at
+  10/50/70%. Uncapped, the reputation needed is just the base as a number - 10/30/70/90. The Capitol never goes immune
+  (it is a repel chance, not a subtraction) unless uncapped. **Open:** this class previously rejected making Common
+  mages unable to take a NEUTRAL town; a 5% floor on the capture roll is a one-line change if that is unwanted here.
 - Round 205 (2026-09-14): **a player holding's reputation defends it, 1% per point.** User: "each reputation point
   should add 1% town/capitol defense when warding off mage attacks." A TOWN's bonus comes off `attackerWinChance()`
   beside `OUTLOOK_DEFENSE_BONUS` and stacks with it; the CAPITOL never rolls (it forces a duel), so there reputation

@@ -413,16 +413,44 @@ public class CardUtil {
     // that generates cards outside a payout - those keep per-call behaviour exactly as before.
     private static java.util.Map<String, Integer> payoutTakenNames = null;   // name -> copies paid this payout
 
+    // Round 206 (user: "Let's make bonusDeckCards per payout, not per entry"). The player's
+    // +1-reward-card items were added to EVERY deckCard entry's count, and a typical enemy carries
+    // three of them - so one +1 item was really +3 cards and a +2 item +6. That multiplication is
+    // what made round 204's five-land Bear payout visible. Scoped exactly like the dedup set above,
+    // because it is the same question: what does ONE payout get?
+    private static boolean payoutCardBonusClaimed = false;
+
     /** Open a payout: every generateCards() until {@link #endRewardPayout()} shares one dedup set.
      *  ALWAYS pair with endRewardPayout() in a finally - a leaked scope would silently dedup
      *  unrelated later draws against a stale set. */
     public static void beginRewardPayout() {
         payoutTakenNames = new java.util.HashMap<>();
+        payoutCardBonusClaimed = false;
     }
 
     /** Close the payout opened by {@link #beginRewardPayout()}. */
     public static void endRewardPayout() {
         payoutTakenNames = null;
+        payoutCardBonusClaimed = false;
+    }
+
+    /** The player's +N reward-card bonus, granted ONCE per payout: this returns {@code bonus} to
+     *  the first reward entry that asks and 0 to every entry after it.
+     *
+     *  Outside a payout scope it always returns the full bonus - a shop or booster draw is a single
+     *  generate() call, so per-call and per-payout are the same thing there and behaviour is
+     *  unchanged. Note the caller asks only AFTER deciding the entry is eligible (round 204's
+     *  lands-only entries never ask), so the bonus falls through to the first entry that can
+     *  actually use it rather than being swallowed by one that would have ignored it. */
+    public static int claimRewardCardBonus(int bonus) {
+        if (bonus <= 0)
+            return 0;
+        if (payoutTakenNames == null)
+            return bonus;               // no payout open - a single draw, unchanged
+        if (payoutCardBonusClaimed)
+            return 0;
+        payoutCardBonusClaimed = true;
+        return bonus;
     }
 
     public static List<PaperCard> generateCards(Iterable<PaperCard> cards, final RewardData data, final int count,

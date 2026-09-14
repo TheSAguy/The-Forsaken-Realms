@@ -624,71 +624,69 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             }
         }
 
-        if(data.rewards != null) { //Collect standard rewards.
-            Deck enemyDeck = Current.latestDeck();
-            // By popular demand, remove basic lands from the reward pool.
-            CardPool deckNoRestrictedEditions = enemyDeck.getMain().getFilteredPool(PaperCardPredicates.onlyPrintedInEditions(Config.instance().getConfigData().restrictedEditions).negate());
-            CardPool deckNoBasicLands = deckNoRestrictedEditions.getFilteredPool(PaperCardPredicates.fromRules(CardRulesPredicates.NOT_BASIC_LAND));
+        // Round 192: ONE dedup scope across every entry of this payout. Each rdata.generate() used to
+        // start its own, so an enemy with four "deckCard" entries could pay the same card four times
+        // over - six times with the +1 reward items, which is what the user reported. See
+        // CardUtil.beginRewardPayout(). finally, so a throw cannot leak the scope into later draws.
+        // ROUND 206: the scope now spans BOTH reward loops rather than one each. A map-placed enemy
+        // (MapStage's `mob.rewards`) carries instance rewards ON TOP of its type's standard ones, and
+        // two scopes meant two of everything scope-wide - the dedup restarted halfway through the duel,
+        // and the once-per-payout card bonus would have been granted twice. One duel, one payout.
+        CardUtil.beginRewardPayout();
+        try {
+            if(data.rewards != null) { //Collect standard rewards.
+                Deck enemyDeck = Current.latestDeck();
+                // By popular demand, remove basic lands from the reward pool.
+                CardPool deckNoRestrictedEditions = enemyDeck.getMain().getFilteredPool(PaperCardPredicates.onlyPrintedInEditions(Config.instance().getConfigData().restrictedEditions).negate());
+                CardPool deckNoBasicLands = deckNoRestrictedEditions.getFilteredPool(PaperCardPredicates.fromRules(CardRulesPredicates.NOT_BASIC_LAND));
 
-            // Progressive Set Unlocks (MOD_SCOPE.md #4): ordinary roaming-monster loot is
-            // restricted to that monster's color's shard - this is the actual discovery
-            // mechanism the whole feature runs on (find cards from a color's assigned sets by
-            // fighting that color, well before those sets are formally researched/unlocked).
-            // Deliberately excludes bosses and quest-tagged enemies ("dedicated rewards/quest
-            // rewards" per user spec) - only data.rewards (the generic template pool) gets
-            // restricted, never this.rewards (per-instance overrides a few lines below, reserved
-            // for genuinely special-cased encounters like the Deck Tester's AI shell).
-            // Round 180 (user: "update/fix this same as round 59"): the exemption is bosses and
-            // spawnRate<=0 entries (arena champions, legends, event-only fighters - the dedicated
-            // rewards) - SpawnTierWeighting.isExempt(), the round-59 rule. It was "any quest tag",
-            // and this plane tags nearly every enemy as metadata ("Undead", "BiomeBlack"...), so
-            // 949 of 1,071 roamers (88.6%) dropped cards from any set; only untagged legend
-            // entries were restricted. Quest rewards themselves come from the quest, not from here.
-            Iterable<RewardData> standardRewardSource = java.util.Arrays.asList(data.rewards);
-            if (Current.world().isEditionProgressionEnabled()) {
-                if (!forge.adventure.util.SpawnTierWeighting.isExempt(data)) {
-                    String color = ColorReputation.singleColorOfEnemy(data.colors);
-                    String colorLabel = color != null ? color : EditionProgression.NEUTRAL;
-                    List<String> editionRestriction = EditionProgression.getEditionsForColor(Current.world(), colorLabel);
-                    // Diagnostic-only logging - greppable in forge.log as "[TFR-LootEditions]".
-                    System.out.println("[TFR-LootEditions] enemy=" + data.name + " colors=" + data.colors
-                            + " -> " + colorLabel + " restriction(" + editionRestriction.size() + ")=" + editionRestriction);
-                    standardRewardSource = EditionProgression.restrictToEditions(standardRewardSource, editionRestriction);
-                } else {
-                    // Diagnostic logging (2026-08-13) - this exemption (dedicated boss/quest
-                    // rewards deliberately skip edition restriction, per user spec) previously
-                    // fired completely silently, making "exempted by design" indistinguishable
-                    // from "this code path never ran" when grepping forge.log for a specific
-                    // enemy.
-                    System.out.println("[TFR-LootEditions] enemy=" + data.name + " colors=" + data.colors
-                            + " -> EXEMPT boss=" + data.boss + " spawnRate=" + data.spawnRate);
+                // Progressive Set Unlocks (MOD_SCOPE.md #4): ordinary roaming-monster loot is
+                // restricted to that monster's color's shard - this is the actual discovery
+                // mechanism the whole feature runs on (find cards from a color's assigned sets by
+                // fighting that color, well before those sets are formally researched/unlocked).
+                // Deliberately excludes bosses and quest-tagged enemies ("dedicated rewards/quest
+                // rewards" per user spec) - only data.rewards (the generic template pool) gets
+                // restricted, never this.rewards (per-instance overrides a few lines below, reserved
+                // for genuinely special-cased encounters like the Deck Tester's AI shell).
+                // Round 180 (user: "update/fix this same as round 59"): the exemption is bosses and
+                // spawnRate<=0 entries (arena champions, legends, event-only fighters - the dedicated
+                // rewards) - SpawnTierWeighting.isExempt(), the round-59 rule. It was "any quest tag",
+                // and this plane tags nearly every enemy as metadata ("Undead", "BiomeBlack"...), so
+                // 949 of 1,071 roamers (88.6%) dropped cards from any set; only untagged legend
+                // entries were restricted. Quest rewards themselves come from the quest, not from here.
+                Iterable<RewardData> standardRewardSource = java.util.Arrays.asList(data.rewards);
+                if (Current.world().isEditionProgressionEnabled()) {
+                    if (!forge.adventure.util.SpawnTierWeighting.isExempt(data)) {
+                        String color = ColorReputation.singleColorOfEnemy(data.colors);
+                        String colorLabel = color != null ? color : EditionProgression.NEUTRAL;
+                        List<String> editionRestriction = EditionProgression.getEditionsForColor(Current.world(), colorLabel);
+                        // Diagnostic-only logging - greppable in forge.log as "[TFR-LootEditions]".
+                        System.out.println("[TFR-LootEditions] enemy=" + data.name + " colors=" + data.colors
+                                + " -> " + colorLabel + " restriction(" + editionRestriction.size() + ")=" + editionRestriction);
+                        standardRewardSource = EditionProgression.restrictToEditions(standardRewardSource, editionRestriction);
+                    } else {
+                        // Diagnostic logging (2026-08-13) - this exemption (dedicated boss/quest
+                        // rewards deliberately skip edition restriction, per user spec) previously
+                        // fired completely silently, making "exempted by design" indistinguishable
+                        // from "this code path never ran" when grepping forge.log for a specific
+                        // enemy.
+                        System.out.println("[TFR-LootEditions] enemy=" + data.name + " colors=" + data.colors
+                                + " -> EXEMPT boss=" + data.boss + " spawnRate=" + data.spawnRate);
+                    }
                 }
-            }
-            // Round 192: ONE dedup scope across every entry of this payout. Each rdata.generate()
-            // used to start its own, so an enemy with four "deckCard" entries could pay the same
-            // card four times over - six times with the +1 reward items, which is what the user
-            // reported. See CardUtil.beginRewardPayout(). finally, so a throw cannot leak the scope
-            // into unrelated later draws.
-            CardUtil.beginRewardPayout();
-            try {
                 for (RewardData rdata : standardRewardSource) {
                     rewards.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
                 }
-            } finally {
-                CardUtil.endRewardPayout();
             }
-        }
-        if(this.rewards != null) { //Collect additional rewards.
-            CardUtil.beginRewardPayout();
-            try {
+            if(this.rewards != null) { //Collect additional rewards.
                 for(RewardData rdata : this.rewards) {
                     //Do not filter in case we want to FORCE basic lands. If it ever becomes a problem just repeat the same as above.
 
                     rewards.addAll(rdata.generate(false,(Current.latestDeck() != null ? Current.latestDeck().getMain().toFlatList() : null), true));
                 }
-            } finally {
-                CardUtil.endRewardPayout();
             }
+        } finally {
+            CardUtil.endRewardPayout();
         }
         applyGoldVariance(rewards);
         return rewards;

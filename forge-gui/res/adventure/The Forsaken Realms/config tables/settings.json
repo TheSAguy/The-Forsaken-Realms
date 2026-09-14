@@ -240,7 +240,8 @@
     // attacking war mage - subtracted from the attacker's capture chance for a town, and for the Capitol (which
     // forces a duel instead of rolling) the chance the mage is turned away before that duel.
     // The cap matters: reputation is unbounded, so 1%/point uncapped would make a long-held town immune. 20 is
-    // the same ceiling shop prices already use. At the cap a Mythic mage's 90% becomes 70%. 0 disables it.
+    // the same ceiling shop prices already use. At the cap a Mythic mage's 90% becomes 70%.
+    // The two zeroes mean OPPOSITE things: 0 in ...PerPoint disables the mechanic; 0 in ...MaxPoints removes the CAP.
     "townReputationDefensePerPoint": 0.01,
     "townReputationDefenseMaxPoints": 20,
 

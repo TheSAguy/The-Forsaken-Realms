@@ -17757,6 +17757,58 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 206: the +1-reward-card items are a PAYOUT bonus, not a per-entry one (2026-09-14)
+
+User: "Let's make bonusDeckCards per payout, not per entry."
+
+`bonusDeckCards()` was added to EVERY "deckCard" entry's count, and a typical enemy carries three of them - so a
+single +1 item was really +3 cards and a +2 item +6. That multiplication is exactly what made round 204's
+five-land Bear payout visible: its deliberate "one rare land" entry became three lands.
+
+`CardUtil.claimRewardCardBonus()` hands the bonus to the FIRST entry that asks and 0 to every entry after it,
+scoped to the payout the same way round 192's dedup set is - it is the same question, "what does ONE payout
+get?". Claimed AFTER round 204's lands-only check, so a land entry does not swallow the bonus on its way past;
+it falls through to the first entry that can actually use it. Outside a payout scope (shops, boosters) nothing
+changes, because those are a single `generate()` call where per-call and per-payout are the same thing.
+
+ONE SCOPE PER DUEL, NOT TWO. Making "per payout" mean anything required fixing what a payout is: `EnemySprite`
+opened a separate scope for `data.rewards` and for `this.rewards`, and a map-placed enemy (MapStage's
+`mob.rewards`) carries instance rewards ON TOP of its type's standard ones. Two scopes meant two of everything
+scope-wide - the round-192 dedup restarted halfway through the duel, and this new bonus would have been granted
+twice. Both loops now sit inside one `beginRewardPayout()`/`endRewardPayout()`, which also makes duplicate
+suppression finally span a whole duel, which is what the user's original round-192 report ("6 duplicate cards")
+was actually asking for.
+
+DOC BUG FIXED, introduced by round 205 the same day: the settings comment said "0 in either field disables the
+whole mechanic". It does not. 0 in `townReputationDefensePerPoint` disables it, but 0 in
+`townReputationDefenseMaxPoints` removes the CAP - i.e. makes it unbounded, the opposite of off. Both comments
+now say so. This matters because uncapped 1%/point is exactly the configuration that can make towns immune.
+
+REPUTATION IMMUNITY, asked for explicitly and worth recording. A town's capture roll is
+`max(0, attackerWinChance(tier) - reputation*1% - (Outlook ? 5% : 0))`, with tiers at 10/30/70/90% (50% for an
+untiered mage). So, as shipped with the 20-point cap:
+
+    tier        base   at 20 rep   +Outlook   ever 0%?
+    Common       10%       0%         0%      YES - at 10 reputation (5 with an Outlook)
+    Uncommon     30%      10%         5%      no
+    (untiered)   50%      30%        25%      no
+    Rare         70%      50%        45%      no
+    Mythic       90%      70%        65%      no
+
+Uncapped (`townReputationDefenseMaxPoints: 0`) the reputation needed for a 0% capture chance is simply the base
+as a whole number: Common 10, Uncommon 30, untiered 50, Rare 70, Mythic 90 - each 5 lower with an Outlook.
+
+The Capitol can never become immune by this route: its reputation effect is a repel CHANCE, not a subtraction,
+so 20 reputation is a 20% chance to skip the forced duel and 80% that it still happens. Uncapped, though, 100
+reputation would skip it every time - so the cap is what keeps the Capitol attackable at all.
+
+FLAGGED, not changed: this class already rejected the equivalent once. The Functioning Neutral Town comment
+says subtracting a flat 15% from `attackerWinChance()` "would have made a Common-tier mage's 10% go negative -
+neutral towns would be outright immune to weak mages, which is far more than 'a little longer'". Round 205
+creates precisely that for PLAYER towns at 10 reputation. For a player's own well-defended town that may be
+entirely desirable, which is why it is being raised rather than patched - a floor on the capture chance (never
+below, say, 5%) is a one-line change if immunity is not wanted.
+
 ## Round 205: a player holding's REPUTATION defends it against attacking mages (2026-09-14)
 
 User: "Let's make Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
