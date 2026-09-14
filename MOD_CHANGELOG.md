@@ -17757,6 +17757,36 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 197: the five AI capitals finally spread, to twice a town's reach (2026-09-13)
+
+User: "So the 5 AI's have a capitol each. I want those to act the same way an AI town would spread.
+But max distance be 2x that of a regular town."
+
+Round 196 established WHY they never spread, and the cause was one line rather than a missing
+feature. Town growth needs a per-town `World.townTerritoryRadius` entry, and that was only ever
+seeded when a mage CAPTURED a town (onMageArrived). The five world-gen "<Noun> Capital" POIs never
+had one, so they fell out of the growth loop on its very first check and sat inert while their
+color's Castle did all the spreading.
+
+They are seeded now, alongside player towns, and grow exactly like any AI town - to
+`townMaxTerritoryRadius x aiCapitalTerritoryRadiusFactor` (new settings.json tunable, default 2,
+still clamped to maxTerritoryRadius). 1 makes a capital an ordinary town again; 0 or negative is
+treated as 1 rather than freezing them. Seeded ON FIRST SIGHT rather than retroactively, so an
+existing save starts its capitals growing from today instead of crediting them 200 days of
+back-dated expansion.
+
+Two things deliberately NOT changed. The inviolable core does not double: town protection is
+computed against its own separate `townProtectedRadiusCap`, so the wider disc stays contestable
+ground rather than becoming a bigger no-go zone. And capitals already pulled harder than ordinary
+towns (CAPITAL_PULL_WEIGHT vs TOWN_PULL_WEIGHT) - they were always distinguished in the contest
+model and merely had no radius of their own, so this makes the existing intent visible rather than
+inventing a new advantage.
+
+Balance note, stated rather than discovered later: this is five new expansion centres appearing at
+once, each reaching twice as far as a normal town, on top of castles that already grow to radius
+205+. AI land-grab will speed up noticeably. The factor is a tunable precisely so that can be
+walked back without a rebuild.
+
 ## Round 196: the crown floor stops growing enemies that are already huge (2026-09-13)
 
 repo only - NOT packaged (the game was running).

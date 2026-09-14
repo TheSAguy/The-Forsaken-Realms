@@ -209,6 +209,16 @@
     // coin flip, but two same-tier arena foes usually have similar life. 50 disables the rule entirely.
     "arenaHigherTierWinPercent": 60,
 
+    // Round 197 (user: "the 5 AI's have a capitol each. I want those to act the same way an AI town would
+    // spread. But max distance be 2x that of a regular town"). Multiplier on townMaxTerritoryRadius for an AI
+    // color's own "<Noun> Capital". Those five are world-gen TOWNS that never expanded at all before this round -
+    // town growth needs a per-town radius entry and that was only ever seeded when a mage CAPTURED a town, so the
+    // originals sat inert while their color's Castle did all the spreading. They now grow like any AI town, to
+    // this multiple of the ordinary cap (still clamped to maxTerritoryRadius). 1 = an ordinary town again.
+    // The inviolable core is unaffected: it has its own townProtectedRadiusCap, so the wider disc stays
+    // contestable ground rather than becoming a bigger no-go zone.
+    "aiCapitalTerritoryRadiusFactor": 2,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).

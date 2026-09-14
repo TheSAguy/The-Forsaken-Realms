@@ -90,6 +90,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 197 (2026-09-13): **the 5 AI capitals now spread, capped at 2x a town's radius.** Root cause was one
+  line: town growth needs a `townTerritoryRadius` entry, seeded ONLY on capture (onMageArrived), so the
+  world-gen capitals fell out of the loop on its first check. Now seeded alongside player towns, growing to
+  `townMaxTerritoryRadius x aiCapitalTerritoryRadiusFactor` (settings.json, default 2, clamped to
+  maxTerritoryRadius). Seeded on FIRST SIGHT so an existing save starts growing today, not retroactively.
+  Inviolable core NOT doubled (separate `townProtectedRadiusCap`), and capitals already had CAPITAL_PULL_WEIGHT.
+  **Balance: 5 new expansion centres at once - factor is tunable so it can be walked back without a rebuild.**
 - Round 196 (2026-09-13, repo only - NOT packaged, game was running): **crown floor skips sprites already at
   Master size.** The log caught Slimefoot (Adept, but ~4x normal art) being grown 67 -> 84px by a rule meant to
   stop crowned enemies looking small. Tier is the RANK cue and says nothing about rendered size. Floor now also

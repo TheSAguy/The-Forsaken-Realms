@@ -216,6 +216,35 @@ public class TerritoryControl {
     public static int townMaxTerritoryRadius() {
         return Config.instance().getTuningData().townMaxTerritoryRadius;
     }
+
+    /**
+     * Round 197 (user: "I want those to act the same way an AI town would spread. But max distance
+     * be 2x that of a regular town"). An AI color's own "&lt;Noun&gt; Capital" is a world-gen TOWN, and
+     * before this it never expanded at all: town growth needs a World.townTerritoryRadius entry, and
+     * that was only ever seeded on CAPTURE (onMageArrived), so the five originals sat inert while
+     * their color's castle did all the spreading. They now grow exactly like any AI town, just to a
+     * larger cap.
+     */
+    public static boolean isAiCapital(PointOfInterestData data) {
+        if (data == null || data.name == null)
+            return false;
+        for (String color : COLORS) {
+            String noun = COLOR_TOWN_NOUN.get(color);
+            if (noun != null && data.name.equals(noun + " Capital"))
+                return true;
+        }
+        return false;
+    }
+
+    /** The growth cap for one town: a color's capital reaches further than its ordinary towns. */
+    public static int townMaxTerritoryRadiusFor(PointOfInterestData data) {
+        if (!isAiCapital(data))
+            return townMaxTerritoryRadius();
+        float factor = Config.instance().getTuningData().aiCapitalTerritoryRadiusFactor;
+        if (factor <= 0f)
+            factor = 1f;   // 0 or negative would freeze capitals at their seed radius
+        return Math.min(maxTerritoryRadius(), Math.round(townMaxTerritoryRadius() * factor));
+    }
     // Cap on the INPUT to the protected-core formula below (`radius / 2`), separate from the
     // growth cap above (2026-08-24 user spec) - lets townMaxTerritoryRadius grow the outer
     // territory disc further without also growing the inviolable core rivals can never touch.
@@ -715,12 +744,18 @@ public class TerritoryControl {
             boolean playerOwned = playerTowns.contains(poi);
             Integer townRadius = world.getTownTerritoryRadius(poi.getID());
             if (townRadius == null) {
-                if (!playerOwned)
+                // Round 197: an AI capital is seeded here as well as a player town. Before this only
+                // CAPTURED towns had a radius entry (onMageArrived seeds it), so the five world-gen
+                // capitals never entered this loop and never spread - the user's report. Seeding on
+                // first sight rather than retroactively means a long-running save starts its
+                // capitals growing from today, not from day one.
+                if (!playerOwned && !isAiCapital(poi.getData()))
                     continue;
                 townRadius = RECOLOR_RADIUS; // restored before per-town radius state existed - seed now
                 world.setTownTerritoryRadius(poi.getID(), townRadius);
             }
-            if (townRadius >= townMaxTerritoryRadius())
+            int townCap = townMaxTerritoryRadiusFor(poi.getData());
+            if (townRadius >= townCap)
                 continue;
             String ownerColor = null;
             if (playerOwned) {
@@ -747,7 +782,7 @@ public class TerritoryControl {
             int tilesEarned = (currentDay - lastGrowthDay) / townExpansionDaysPerTile();
             if (tilesEarned <= 0)
                 continue; // hasn't been a full week since this town's last growth tick
-            int newTownRadius = Math.min(townRadius + tilesEarned, townMaxTerritoryRadius());
+            int newTownRadius = Math.min(townRadius + tilesEarned, townCap);
             // Radius + fog-of-war Revealed cache advance BEFORE the claim, so the claim's own
             // per-tile chunk re-bakes see the grown vision area (order-bug finding)...
             world.setTownTerritoryRadius(poi.getID(), newTownRadius);

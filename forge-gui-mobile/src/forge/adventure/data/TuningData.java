@@ -303,6 +303,15 @@ public class TuningData {
     // rule (every pairing falls back to that life roll). Clamped to 0-100 at the call site.
     public int arenaHigherTierWinPercent = 60;
 
+    // Round 197 (user: "So the 5 AI's have a capitol each. I want those to act the same way an AI town would
+    // spread. But max distance be 2x that of a regular town"). Multiplier on townMaxTerritoryRadius for an AI
+    // color's own "<Noun> Capital". Those five are world-gen TOWNS that never expanded at all before this round,
+    // because town growth needs a townTerritoryRadius entry and that was only seeded on capture. They now grow
+    // like any AI town, to this multiple of the ordinary cap (still clamped to maxTerritoryRadius). 1 makes a
+    // capital an ordinary town again; 0 or negative is treated as 1. The INVIOLABLE core is unaffected - it has
+    // its own separate townProtectedRadiusCap - so a bigger capital disc is still contestable ground.
+    public float aiCapitalTerritoryRadiusFactor = 2f;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)
