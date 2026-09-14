@@ -335,6 +335,20 @@ public class TuningData {
     // if it turns up often in play. 0 disables the fallback and the reward simply pays fewer cards.
     public int deckCardFallbackGold = 50;
 
+    // Round 205 (user: "Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
+    // defense when warding off mage attacks"). Defense a player town or the Capitol gains per point of its OWN
+    // reputation (PointOfInterestChanges.getMapReputation) against an attacking war mage. For a town it comes off
+    // the attacker's capture chance; the Capitol never rolls one - it forces a duel - so there it is the chance
+    // the mage is turned away before that duel is queued.
+    //
+    // The cap is not optional. Reputation is an unbounded int (it merges by sum: +1 per mage killed there, plus
+    // quest awards), so 1%/point with no ceiling makes a long-held town immune. 20 points is the ceiling
+    // PointOfInterestChanges already applies to shop prices (maxRepToApply), so both reputation effects agree on
+    // what "maxed out" means instead of inventing a second scale. At the cap a Mythic mage's 90% capture chance
+    // becomes 70% (65% with an Outlook). 0 in either field disables the whole mechanic.
+    public float townReputationDefensePerPoint = 0.01f;
+    public int townReputationDefenseMaxPoints = 20;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)

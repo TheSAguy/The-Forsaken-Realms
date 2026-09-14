@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 205 (2026-09-14): **a player holding's reputation defends it, 1% per point.** User: "each reputation point
+  should add 1% town/capitol defense when warding off mage attacks." A TOWN's bonus comes off `attackerWinChance()`
+  beside `OUTLOOK_DEFENSE_BONUS` and stacks with it; the CAPITOL never rolls (it forces a duel), so there reputation
+  is a chance to turn the mage away BEFORE the duel is queued. **The cap is load-bearing:** reputation is an unbounded
+  int, so 1%/point uncapped makes a long-held town immune - capped at 20 points, the same ceiling shop prices already
+  use, so a Mythic mage's 90% becomes 70% (65% with an Outlook). Both values in settings.json.
+  **Log:** clean, and round 203 is confirmed working in play - two rewards that would have paid NOTHING
+  (`leaves only 0 distinct name(s)`) now draw from pools of 6 and 8.
+  **Save 1 (fresh character, slots 1-9 were empty):** slot 2 "Dawnbreak Tribunal" (mono-white, 4 wraths + 5 Oblivion
+  Rings) and slot 3 "Gempalm Legion" (mono-black Zombies, 4 Gempalm Polluters as the win condition), 46 cards each,
+  `.prededit11.bak`, verified after: collection diff is exactly +18 Plains / +18 Swamp and nothing else.
 - Round 204 addendum (2026-09-14): **two of the three "unreachable region" maps cost the player nothing.**
   `cave_connectivity_qa.components()` now optionally returns per-tile region labels (`with_labels=True`, default off,
   old output verified byte-identical), and the new `dev-tools/unreachable_contents.py` places every map object into its

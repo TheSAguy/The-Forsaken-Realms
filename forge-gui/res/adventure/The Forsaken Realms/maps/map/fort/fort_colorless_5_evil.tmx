@@ -20,7 +20,7 @@
  </layer>
  <layer id="2" name="Walls" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJztlktOwzAQhqdGJAoNSFREIKF2hcMFSrkCcAW4ANdgAYgDACv2FRyiPE7Aa8dJ2GDLGWq7HjtOChv4pV+JbGe+jMdpB+Dv6rIDcKX5uvMzscqeuXbIAE66U49Yc64v1vGaf+1jqoyS9y9sdvxQ+Mjiyvmm3FI8y4XvMzWvX3nF/STy3YrgPjMznyeCK4XcvA+wLLzSN2M9VDG2RS3fF5UpLqpMp7G5tp/cMb65A3ArmHcW9zvvnsn0cWO0NwDYFz4Y0MwY7iSj53y6WFV25VmH21R6jjq3bn0n2Wx9Y5nIijlXPKXPla2bzIzv4uqK5VJy8Vz8EDdGMTxkSn8sAazn5lzdfY7Jz/a8c3RJ57ThSo2LMM8W6yqmvP6mJA/tkl3fvFDj1O9zXWGuvnypc4XfqtxnZI6LetwQM8T1fddvzHy23DC5LmFPJPf5LAE4T8L/g9T7niYqhuSGejWq36Biu7TLFMvXb4S4rvihnIcVl7fgLmRuj6oayvXUGum6XOyv0K8t+th5xvpXc30Bjv2S9g==
+   eJztlktOwzAQhqdGJAoNSFRURULtCocLlHIF4ApwAa7RBSAOAKy6R3CI8jgBrx0nYYMtx9ROZ/xIChv4pV+pbGe+/naUDMDf1WUL4MrwdetnahUde+2QAYzbM49Yfa6r1smGe+1jqqwlf7+w+fEj4eMKV87X5RbiXi58n6l588pL7ieRdzuC+8zsPE8EV0pz8z7AqvBa3671UNbYEWf5vqxMcbWKdFabG/vJkfGtXYBbwbyrcL9zd2ymixuj/QHAgfDhgGbGcKcZPefSxboyljOEW1dmRpMber7TbP58Y5maFfNc8ZR+rqqaZHZ9jGsqlksJ42F8HzdGMTzNlP5YAejl9lzoPsfkq3rRGTGZnCZcjB8i1lZMef1NSZ42pur55l01jr2fY6SzuvJSz9UEeX/edMO4PqaP68r7xux7i02bi0n3RHKfzxKA88T/HaT+72miakiur1ej+g2qNqY9pliufsPHxer7Mg9LLm/AXcpwj8ozlOupNdKhXN1fab826GMXWetf9fUF9NyQ2g==
   </data>
  </layer>
  <layer id="8" name="Castle" width="30" height="30">

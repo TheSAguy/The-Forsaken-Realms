@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 205 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/util/TerritoryControl` (new `reputationDefenseBonus()`, applied at the
+player-town capture roll and as a pre-duel Capitol repel), `adventure/data/TuningData`, and plane data
+(`config tables/settings.json`). Plus a user map edit (`fort_colorless_5_evil.tmx`) and two save-editing deck
+lists. Tooling: `dev-tools/validate_plane_data.py` knows the two new keys.
+
 ## Round 204 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/data/RewardData` (new `isLandOnlyReward()`; the "deckCard" branch skips

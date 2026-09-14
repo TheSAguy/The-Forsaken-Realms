@@ -7,6 +7,7 @@ import forge.adventure.data.DifficultyData;
 import forge.adventure.data.ConfigData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.PointOfInterestData;
+import forge.adventure.data.TuningData;
 import forge.adventure.data.WorldData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
@@ -1783,6 +1784,30 @@ public class TerritoryControl {
                 && !TownRestoration.isTownRestored(changes);
     }
 
+    /** Round 205: a player holding's OWN reputation as a defense bonus against an attacking mage
+     *  (user: "each reputation point should add 1% town/capitol defense when warding off mage
+     *  attacks"). Negative reputation does NOT help the attacker - it simply stops helping the
+     *  defender, matching how every other reputation consumer here treats a hostile town.
+     *
+     *  Capped, and the cap is load-bearing rather than defensive: reputation is an unbounded int
+     *  (PointOfInterestChanges merges it by sum - +1 for every mage killed there on top of quest
+     *  awards), so 1% a point with no ceiling turns a long-held town immune. The ceiling is the one
+     *  PointOfInterestChanges already applies to shop prices, so the two reputation effects agree
+     *  on what "maxed out" means. */
+    private static float reputationDefenseBonus(PointOfInterest target) {
+        TuningData tuning = Config.instance().getTuningData();
+        float perPoint = tuning.townReputationDefensePerPoint;
+        if (perPoint <= 0f)
+            return 0f;
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID());
+        if (changes == null)
+            return 0f;
+        int rep = Math.max(0, changes.getMapReputation());
+        if (tuning.townReputationDefenseMaxPoints > 0)
+            rep = Math.min(rep, tuning.townReputationDefenseMaxPoints);
+        return rep * perPoint;
+    }
+
     private static boolean townHasOutlook(PointOfInterest target) {
         PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(target.getID());
         return changes != null && changes.hasEconomyBuildingOfType(EconomyBuildings.OUTLOOK);
@@ -2234,6 +2259,21 @@ public class TerritoryControl {
             // already fights them strongest-first with no weakening between fights.
             if (!resolveGuardDefense(mage, target))
                 return;
+            // Round 205: reputation defends the Capitol too (user: "1% town/capitol defense when
+            // warding off mage attacks"). The Capitol never rolls a capture chance - it queues a
+            // FORCED DUEL the player fights in person - so there is no probability to shave here.
+            // The equivalent is a chance the attack never lands at all: the garrison turns the mage
+            // away before the duel is queued. Rolled AFTER the guards have already fought, so a
+            // repel here is the town itself holding, not the guards doing it twice.
+            float capitolDefense = reputationDefenseBonus(target);
+            if (capitolDefense > 0f
+                    && WorldSave.getCurrentSave().getWorld().getRandom().nextFloat() < capitolDefense) {
+                System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage turned away from the Capitol"
+                        + " by reputation (defense=" + capitolDefense + ") - no duel");
+                GameHUD.getInstance().addNotification("[GREEN]Your Capitol's standing turned away "
+                        + capitalize(mage.territoryColor) + "'s mage!", true);
+                return;
+            }
             pendingCapitolDefenseMage = mage;
             GameHUD.getInstance().addNotification("[RED]" + capitalize(mage.territoryColor) + "'s mage has reached your Capitol!", true);
             return;
@@ -2276,9 +2316,16 @@ public class TerritoryControl {
                 float captureChance = attackerWinChance(mage.getData().tier);
                 if (townHasOutlook(target))
                     captureChance = Math.max(0f, captureChance - OUTLOOK_DEFENSE_BONUS);
+                // Round 205: the town's own reputation defends it, 1% a point (see
+                // reputationDefenseBonus). Stacks with the Outlook - they are different things, a
+                // building and a standing - and both clamp at 0.
+                float repDefense = reputationDefenseBonus(target);
+                if (repDefense > 0f)
+                    captureChance = Math.max(0f, captureChance - repDefense);
                 boolean attackerWins = world.getRandom().nextFloat() < captureChance;
                 System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
-                        + ", chance=" + captureChance + ") attacking player-owned " + target.getDisplayName()
+                        + ", chance=" + captureChance + ", reputationDefense=" + repDefense
+                        + ") attacking player-owned " + target.getDisplayName()
                         + " -> " + (attackerWins ? "CAPTURED" : "REPELLED"));
                 if (!attackerWins) {
                     GameHUD.getInstance().addNotification("[GREEN]You repelled " + capitalize(mage.territoryColor)

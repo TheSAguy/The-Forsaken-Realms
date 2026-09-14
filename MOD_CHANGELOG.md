@@ -17757,6 +17757,66 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 205: a player holding's REPUTATION defends it against attacking mages (2026-09-14)
+
+User: "Let's make Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
+defense when warding off mage attacks."
+
+Two sites, because a town and the Capitol resolve an attack in completely different ways, and only one of them
+has a probability in it at all:
+
+* A TOWN rolls `attackerWinChance()` (10/30/70/90 by mage tier). The reputation bonus comes straight off that
+  roll, in exactly the place `OUTLOOK_DEFENSE_BONUS` already sits, and stacks with it - a building and a
+  standing are different things.
+* The CAPITOL never rolls. It queues a FORCED DUEL the player fights in person (`pendingCapitolDefenseMage`),
+  so there is no chance to shave. The honest equivalent of "warding off" there is that the attack does not land
+  at all: reputation gets a roll to turn the mage away BEFORE the duel is queued. Rolled after the Capitol's
+  guards have already fought, so a repel is the holding itself standing firm rather than the guards fighting
+  twice.
+
+THE CAP IS LOAD-BEARING, not defensive boilerplate. Reputation is an unbounded `int` -
+`PointOfInterestChanges.reputation` merges by sum, +1 for every attacking mage killed there on top of quest
+awards - so 1% a point with no ceiling makes a long-held town outright immune, which is not what "1% per point"
+is meant to buy. The ceiling is 20 points, the SAME one `PointOfInterestChanges` already applies to shop prices
+(`maxRepToApply = 20`), so the two reputation effects agree on what "maxed out" means instead of inventing a
+second scale. At the cap a Mythic mage's 90% capture chance becomes 70%, or 65% with an Outlook. Both
+`townReputationDefensePerPoint` and `townReputationDefenseMaxPoints` are in settings.json; 0 in either disables
+the mechanic.
+
+Negative reputation does not help the ATTACKER - it just stops helping the defender, matching how every other
+reputation consumer in this class treats a hostile town. `[TFR-CaptureOdds]` now carries the reputation
+component, and the Capitol repel logs its own line, because neither is observable from the notification alone.
+
+LOG REVIEW (live forge.log, 1073 lines): zero exceptions. Round 203 is confirmed WORKING IN PLAY - two entries
+that would previously have paid nothing at all:
+
+    [TFR-DeckLoot] rarity [Rare, Mythic Rare] leaves only 0 distinct name(s) ... asking for 1; relaxing ... to 6
+    [TFR-DeckLoot] rarity [Rare, Mythic Rare] leaves only 0 distinct name(s) ... asking for 2; relaxing ... to 8
+
+That is precisely the Rare/Mythic failure mode measured at 12.7% in round 203. No gold-fallback line fired,
+matching the predicted 0.9%. Round 202's copy cap also bit once, correctly ("Scorched Geyser already paid 2
+time(s)... paying one card fewer").
+
+SAVE 1 GOT TWO NEW DECKS (user: "look at save 1 and create me two good deck in deck slots 2 and 3"). The save
+is a FRESH character - slot 0 "Green Pool" (50 cards) with slots 1-9 empty, 941 distinct names / 1208 cards
+collected - so nothing was overwritten. Built from `card_table.py`'s colour views over the actual collection:
+
+* **slot 2, "Dawnbreak Tribunal"** - mono-white control. The white pool holds FOUR board wipes (Wrath of God,
+  Final Judgment, Doomskar, Kirtar's Wrath) and five Oblivion Rings, which is the strongest thing available to
+  this collection; 28 spells / 18 Plains, with Guardian of Faith's flash-phase-out as the way to wrath while
+  keeping your own board.
+* **slot 3, "Gempalm Legion"** - mono-black Zombies. Six Ghostly Changelings are Zombies by changeling, four
+  Skirk Ridge Exhumers make more, and four Gempalm Polluters cycle for "each opponent loses X where X is your
+  Zombie count" - a real win condition rather than a pile of removal. 28 spells / 18 Swamps.
+
+Written with `WriteDecks` per `dev-tools/save-editing/README.md`: game closed and verified closed, dry run
+first, backup at `.prededit11.bak`. Verified AFTER with `Inspect` rather than trusting the write: stats
+identical (life 19, gold 1790, shards 225, wood 363, stone 88), `selectedDeckIndex` still 0, slot 0 and every
+other slot untouched, and the collection diff is EXACTLY `+18 Plains` / `+18 Swamp` - the free unsellable
+basics the player owned none of, the same grant the in-game editor's Add Basic Lands makes.
+
+Also carried into the live folder this round: the user's own edit to `fort_colorless_5_evil.tmx`.
+
 ## Round 204: the +1-reward-card items no longer inflate a lands-only drop (2026-09-14)
 
 User: "Yes, exempt the Land entry from bonusDeckCard."

@@ -235,6 +235,15 @@
     // payouts turn out to be common in play. 0 disables the fallback (the reward just pays fewer cards).
     "deckCardFallbackGold": 50,
 
+    // Round 205 (user: "Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
+    // defense when warding off mage attacks"). Defense per point of a player town's OWN reputation against an
+    // attacking war mage - subtracted from the attacker's capture chance for a town, and for the Capitol (which
+    // forces a duel instead of rolling) the chance the mage is turned away before that duel.
+    // The cap matters: reputation is unbounded, so 1%/point uncapped would make a long-held town immune. 20 is
+    // the same ceiling shop prices already use. At the cap a Mythic mage's 90% becomes 70%. 0 disables it.
+    "townReputationDefensePerPoint": 0.01,
+    "townReputationDefenseMaxPoints": 20,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).
