@@ -74,6 +74,22 @@ public class MapStage extends GameStage {
     //Map properties.
     //These maps are defined as embedded properties within the Tiled maps.
     private EffectData effect;             //"Dungeon Effect": Character Effect applied to all adversaries within the map.
+
+    /**
+     * Whether THIS map carries a dungeon effect - the "Strange magical energies flow within this
+     * place..." buff that every opponent here fights with.
+     * <p>
+     * Round 200, user: "Why did this guy not get a crown, he seems special. Started with an
+     * additional card in play." He was not special; the CAVE was. The crown is drawn from
+     * EnemySprite.effect, a per-enemy battle effect, and this is an entirely separate field that
+     * reaches the duel as DuelScene.dungeonEffect - so nothing was crowned and the buff was
+     * invisible after the entry dialog had been dismissed. EnemySprite draws a small pip for it,
+     * deliberately NOT the crown: if a dungeon effect crowned things, every enemy in the map would
+     * wear one and the crown would stop meaning "this one is special".
+     */
+    public boolean hasDungeonEffect() {
+        return effect != null;
+    }
     private boolean preventEscape = false; //Prevents player from escaping the dungeon by any means that aren't an exit.
 
     public InputEvent eventTouchDown, eventTouchUp;

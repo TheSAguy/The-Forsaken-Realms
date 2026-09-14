@@ -1269,15 +1269,15 @@ public class EconomyBuildings {
             // same 0.75/1.0/1.25/1.5 factor. The user's 90/60/30 figures are the ratio illustrated
             // rather than a literal reading: the base is 75 stone, so the split is 50 + 25.
             //
-            // LUMBER_MILL keeps sharing the line (round 199, user: "make the Lumber Mill match the
-            // mines"). It was briefly split out on the argument that charging wood to build a wood
-            // producer is circular - but that left it asking MORE stone than the mines beside it in
-            // the same build menu, which reads as a pricing bug from the player's side. One price
-            // for the whole resource-building family beats the thematic point.
             case SHARD_MINE:
             case GOLD_MINE:
-            case LUMBER_MILL:
             case STONE_MINE:    return new int[]{250, 25, 50, 0};
+            // Round 200 (user: "for lumber mill, let's actually switch to 1/3 stone 2/3 wood").
+            // Same 75-point total as the mines, mirrored: a wood producer is framed in timber. This
+            // is the third pass on this one line - round 198 split it out on theme, 199 folded it
+            // back for a matching price, and this settles it as a deliberate MIRROR rather than
+            // either. The totals match, so it no longer reads as one building being dearer.
+            case LUMBER_MILL:   return new int[]{250, 50, 25, 0};
             case BANK:          return new int[]{500, 0, 0, 0};
             case EXCHANGE:      return new int[]{150, 75, 75, 0};
             case OUTLOOK:       return new int[]{0, 125, 0, 0};

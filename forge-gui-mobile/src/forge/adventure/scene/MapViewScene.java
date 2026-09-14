@@ -227,7 +227,7 @@ public class MapViewScene extends UIScene {
         // sibling pattern exactly.
         clearDetails();
         clearAttacks();
-        List<PointOfInterest> allPois = Current.world().getAllPointOfInterest();
+        List<PointOfInterest> allPois = activePointsOfInterest();
         // GLOBAL label collision avoidance (2026-08-15, replaces the earlier per-POI-only offset
         // map - user screenshot near the Capitol showed labels from three DIFFERENT nearby POIs
         // garbled into each other, which per-POI stacking is architecturally incapable of
@@ -333,6 +333,31 @@ public class MapViewScene extends UIScene {
         return false;
     }
 
+    /**
+     * Every POI this map view should draw anything for.
+     * <p>
+     * Round 200, from a player bug report: "I have died in the cave, which then disappeared from
+     * the game, but the minimap still showed Cave text." A rotated-out dungeon or cave is NOT
+     * removed from {@code getAllPointOfInterest()} - DungeonRotation.hidePoi() only calls
+     * {@code setActive(false)} - and {@code World.redrawAllPoiMarkers()} honours that flag, which is
+     * why the ICON vanished. All four of this scene's own label loops iterated the raw list with no
+     * such check, so the name, its reputation number and the rest kept being drawn over empty
+     * ground.
+     * <p>
+     * Filtering here rather than at each call site because the defect was identical in all four and
+     * the next view added would have inherited it too. It also covers the RESERVE pool, which is
+     * deactivated the same way (DungeonRotation seeds it with setActive(false)) and is likewise not
+     * on the map.
+     */
+    private List<PointOfInterest> activePointsOfInterest() {
+        List<PointOfInterest> out = Lists.newArrayList();
+        for (PointOfInterest poi : Current.world().getAllPointOfInterest()) {
+            if (poi != null && poi.getActive())
+                out.add(poi);
+        }
+        return out;
+    }
+
     private void placeDetailLabel(TypingLabel label, float worldX, float worldY, List<Rectangle> placedLabelRects) {
         table.addActor(label);
         details.add(label);
@@ -385,7 +410,7 @@ public class MapViewScene extends UIScene {
             if (existing instanceof TypingLabel)
                 placedLabelRects.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
         }
-        List<PointOfInterest> allPois = Current.world().getAllPointOfInterest();
+        List<PointOfInterest> allPois = activePointsOfInterest();
         for (PointOfInterest poi : allPois) {
             int rep = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).getMapReputation();
             if (rep != 0) {
@@ -407,7 +432,7 @@ public class MapViewScene extends UIScene {
             if (existing instanceof TypingLabel)
                 placedLabelRects.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
         }
-        List<PointOfInterest> allPois = Current.world().getAllPointOfInterest();
+        List<PointOfInterest> allPois = activePointsOfInterest();
         for (PointOfInterest poi : allPois) {
             if (WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).isVisited()) {
                 if ("cave".equalsIgnoreCase(poi.getData().type) || "dungeon".equalsIgnoreCase(poi.getData().type) || "castle".equalsIgnoreCase(poi.getData().type)) {
@@ -441,7 +466,7 @@ public class MapViewScene extends UIScene {
             if (existing instanceof TypingLabel)
                 placedLabelRects.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
         }
-        List<PointOfInterest> allPois = Current.world().getAllPointOfInterest();
+        List<PointOfInterest> allPois = activePointsOfInterest();
         for (PointOfInterest poi : allPois) {
             String poiType = poi.getData().type;
             if (("town".equalsIgnoreCase(poiType) || "capital".equalsIgnoreCase(poiType))

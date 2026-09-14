@@ -17757,6 +17757,50 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 200: a despawned cave kept its name on the minimap; the Lumber Mill mirrors the mines; a pip for dungeon effects (2026-09-14)
+
+repo only until packaged - the game was started mid-build and the packager correctly refused.
+
+A DESPAWNED CAVE KEPT ITS NAME ON THE MINIMAP. Player bug report, relayed by the user: "I have died
+in the cave, which then disappeared from the game, but the minimap still showed Cave text." The
+reporter's description was exactly right - the ICON goes, the TEXT stays.
+
+DungeonRotation.hidePoi() does not remove a despawned cave from the world; it calls
+setActive(false) and leaves the POI in getAllPointOfInterest(). World.redrawAllPoiMarkers() honours
+that flag with its own getActive() check, which is why the icon vanished. MapViewScene has FOUR
+separate loops over the raw POI list - details, the cave/dungeon/castle names, town names, and the
+reputation overlay - and not one of them checked it, so every label kept drawing over empty ground.
+
+Fixed at the source: one activePointsOfInterest() helper feeds all four, rather than patching the
+single loop that was reported. The defect was identical in all of them and the next view added would
+have inherited it. It also covers the RESERVE pool, deactivated the same way and likewise not on the
+map.
+
+NOT a regression from round 190's marker batching, which is the first thing worth ruling out given
+the timing: that change only delays the baked icon refresh, and here the icon was correctly gone
+while the label was stale - a different layer entirely.
+
+THE LUMBER MILL MIRRORS THE MINES. User: "for lumber mill, let's actually switch to 1/3 stone 2/3
+wood" - {250 gold, 50 wood, 25 stone}, the same 75-point total as the mines with the split reversed.
+Third pass on this one line (198 split it out on theme, 199 folded it back for a matching price),
+and this settles it as a deliberate MIRROR: the totals match, so neither building reads as dearer,
+and a wood producer is framed in timber.
+
+A PIP FOR DUNGEON EFFECTS. User, on an enemy that started a duel with an extra land: "Why did this
+guy not get a crown, he seems special." He was not - the CAVE was. A dungeon effect buffs EVERY
+opponent in the map, is announced once on entry, and then nothing on screen says it is still in
+force. Enemies in such a map now carry a small cyan pip on their right edge.
+
+Deliberately NOT the crown. The crown means "this one enemy is special"; a map-wide buff using it
+would put one on every enemy in the cave and the signal would be worth nothing - precisely the
+reading that prompted the question. Drawn from the white texture rather than an icon because
+ui/sprite_markers.png is exactly two 16px cells wide (talk, crown) with no spare slot, and inventing
+art for this is not worth a new asset; cyan matches the entry dialog's own heading colour.
+
+Also settled this round: the user confirmed "90 stone was just an example, not firm number" and that
+the 56/75/94/113 difficulty scaling is correct, and dropped the D: drive music (36 playlist files,
+68-93 MB each, 2.4 GB against a 342 MB package) - "I don't want to increase game size that much".
+
 ## Round 199: the Lumber Mill matches the mines again (2026-09-13)
 
 PACKAGED 2026-09-13 (342 MB).

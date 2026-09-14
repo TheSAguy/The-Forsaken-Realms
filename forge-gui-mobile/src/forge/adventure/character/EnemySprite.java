@@ -807,6 +807,33 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
             TextureRegion TR = new TextureRegion(T, 16, 0, 16, 16);
             batch.draw(TR, getX(), getY() + 16, 16*getScaleX(), 16*getScaleY());
         }
+        drawDungeonEffectPip(batch);
+    }
+
+    /**
+     * A small cyan pip on every enemy in a map that carries a DUNGEON effect.
+     * <p>
+     * Round 200, user: "Why did this guy not get a crown, he seems special. Started with an
+     * additional card in play." He was not - the CAVE was. A dungeon effect ("Strange magical
+     * energies flow within this place...") buffs every opponent in the map and is announced once on
+     * entry, after which nothing on screen says it is still in force.
+     * <p>
+     * Deliberately NOT the crown. The crown means "this one enemy is special"; if a map-wide buff
+     * used it, every enemy in the cave would wear one and the signal would be worth nothing - which
+     * is exactly the reading that prompted the question. A separate, smaller mark says "everything
+     * here is buffed" without competing.
+     * <p>
+     * Drawn from the white texture rather than an icon because ui/sprite_markers.png is exactly two
+     * 16px cells wide (talk, crown) with no spare slot, and inventing art for this is not worth a
+     * new asset. Cyan matches the entry dialog's own heading colour. Placed on the RIGHT edge, clear
+     * of the crown/talk icon above and the colour hints on the left.
+     */
+    private void drawDungeonEffectPip(Batch batch) {
+        if (!MapStage.getInstance().isInMap() || !MapStage.getInstance().hasDungeonEffect())
+            return;
+        batch.setColor(Color.CYAN);
+        batch.draw(Forge.getAssets().getWhiteTexture(), getX() + getWidth(), getY() + getHeight() - 3f, 3, 3);
+        batch.setColor(Color.WHITE);   // same reset drawColorHints() does - a leaked tint stains everything after
     }
 
     public float speed() {

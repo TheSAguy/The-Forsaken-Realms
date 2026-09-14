@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 200 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/scene/MapViewScene` (new `activePointsOfInterest()`, used by all four POI
+label loops), `adventure/stage/MapStage` (new `hasDungeonEffect()`), `adventure/character/EnemySprite`
+(the dungeon-effect pip), `adventure/util/EconomyBuildings` (LUMBER_MILL mirrored).
+
+Worth knowing: a despawned dungeon/cave is NOT removed from `World.getAllPointOfInterest()` - only
+`setActive(false)`. Anything that draws or lists POIs must filter on `getActive()`, as
+`redrawAllPoiMarkers()` already did and four label loops did not.
+
 ## Round 199 (2026-09-13) - no engine edits
 
 Adventure-side only: `adventure/util/EconomyBuildings` (`buildCostFor()` - LUMBER_MILL shares the mines'

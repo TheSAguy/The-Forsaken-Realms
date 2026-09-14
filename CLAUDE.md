@@ -90,6 +90,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 200 (2026-09-14, repo only - game started mid-build, packager correctly refused): **a despawned cave
+  kept its NAME on the minimap.** `DungeonRotation.hidePoi()` only calls `setActive(false)`, leaving the POI in
+  `getAllPointOfInterest()`. `redrawAllPoiMarkers()` filters on that flag (hence the icon vanishing) but
+  **MapViewScene's FOUR label loops did not** - fixed with one `activePointsOfInterest()` helper feeding all
+  four. **Not a round-190 batching regression** (that delays the baked icon; here the icon was right and the
+  label was stale). Also: Lumber Mill {250, 50 wood, 25 stone} mirroring the mines' 75-point total, and a small
+  cyan pip on enemies in a dungeon-effect map - deliberately NOT the crown, since a map-wide buff crowning
+  everything would make the crown meaningless.
 - Round 199 (2026-09-13, PACKAGED): **Lumber Mill matches the mines** - all four resource buildings share
   {250 gold, 25 wood, 50 stone}. Round 198's split left it costing more stone than the mines next to it in the
   same menu, which reads as a pricing bug; one price for the family beats the "wood to build a wood producer is
