@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 196 (2026-09-13) - no engine edits
+
+Adventure-side only: `adventure/character/EnemySprite` (the crown size floor now skips a sprite already
+drawn at or above a Master's height).
+
 ## Round 195 (2026-09-13) - no engine edits
 
 Tooling and plane data only: `dev-tools/gen_caves.py` (per-tile collision reading, connectivity checked

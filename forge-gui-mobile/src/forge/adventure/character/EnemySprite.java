@@ -168,6 +168,23 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         float floor = tuning.enemyTierScaleRare;
         if (current <= 0f || current >= floor)
             return;
+        // Round 196, user: "skip the boost if already at Master size." The tier check above is about
+        // the RANK cue; this one is about what actually gets drawn, and they can disagree sharply.
+        // Slimefoot is Adept (tierScale 1.0) but its art is roughly four times the usual, so the
+        // 2026-09-13 log caught it being grown 67px -> 84px by a rule meant to stop crowned enemies
+        // looking insignificant - next to a typical crowned Master at ~20px it was never at risk of
+        // that. A floor should lift what is below it and leave everything else alone.
+        //
+        // The reference is derived rather than hard-coded so it tracks enemyTierScaleRare if Master
+        // is ever retuned: a standard 16px sprite drawn at Master scale.
+        float masterHeight = STANDARD_SPRITE_PIXELS * floor;
+        if (getHeight() >= masterHeight) {
+            crownSizeFloorApplied = true;   // decided; do not reconsider on a later setEffect()
+            System.out.println("[TFR-Crown] " + data.name + " (" + EnemyData.tierDisplayName(data.tier)
+                    + ") crowned but already " + getHeight() + "px, at or above a Master's "
+                    + masterHeight + "px - left alone");
+            return;
+        }
         float bump = floor / current;
         crownSizeFloorApplied = true;
         setWidth(getWidth() * bump);
@@ -178,8 +195,16 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 + " (x" + bump + "), now " + getWidth() + "x" + getHeight());
     }
 
-    /** Whether {@link #applyCrownSizeFloor()} has already grown this sprite - see its javadoc. */
+    /** Whether {@link #applyCrownSizeFloor()} has already decided about this sprite - see its
+     *  javadoc. Set whether or not the sprite was actually grown, so a later setEffect() does not
+     *  reconsider a decision already made. */
     private boolean crownSizeFloorApplied = false;
+
+    /** The art size a normal enemy sprite is drawn at, before any tier or EnemyData.scale cue.
+     *  Measured from the 2026-09-13 log: crowned Adepts landed at 20.5px and 21.7px after the x1.25
+     *  Master bump, i.e. 16-17px of base art. Used only as the reference height for the crown floor's
+     *  "already big enough" test. */
+    private static final float STANDARD_SPRITE_PIXELS = 16f;
 
     public void parseWaypoints(String waypoints){
         String[] wp = waypoints.replaceAll("\\s", "").split(",");

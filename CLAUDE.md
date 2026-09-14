@@ -90,6 +90,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 196 (2026-09-13, repo only - NOT packaged, game was running): **crown floor skips sprites already at
+  Master size.** The log caught Slimefoot (Adept, but ~4x normal art) being grown 67 -> 84px by a rule meant to
+  stop crowned enemies looking small. Tier is the RANK cue and says nothing about rendered size. Floor now also
+  tests height against a DERIVED reference (16px standard art x enemyTierScaleRare) and logs the skip.
+  **Also answered (no code change): AI capitals do not spread territory by design.** The expanding anchor per
+  color is its CASTLE (grew 24 -> 205 radius in the reviewed session); "X Capital" POIs are ordinary towns, and
+  a town only expands once it has a townTerritoryRadius, seeded only on capture. This IS asymmetric with the
+  player's Capitol, which does expand - changing it would be a balance decision.
 - Round 195 (2026-09-13, PACKAGED with 192-194): **the 7 split caves are fixed - the generator checked the wrong
   thing.** It validated its boolean `floor` mask, but the player walks on the PAINTED TILES, and the corner-Wang
   painter seals narrow corridors with wall tiles the mask still calls open. Proved by rebuilding cave_blue_04

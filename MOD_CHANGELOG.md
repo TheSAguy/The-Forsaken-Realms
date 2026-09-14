@@ -17757,6 +17757,36 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 196: the crown floor stops growing enemies that are already huge (2026-09-13)
+
+repo only - NOT packaged (the game was running).
+
+User, after reading the round-195 log: "skip the boost if already at Master size." The 2026-09-13
+log showed the rule doing something it was never meant to:
+
+    [TFR-Crown] Slimefoot (Adept, tierScale 1.0) crowned -> floored at Master 1.25 (x1.25), now 84.0x84.0
+    [TFR-Crown] Nezumi Leader (Adept, tierScale 1.0) crowned -> floored at Master 1.25 (x1.25), now 20.5x20.5
+
+Both are Adept, so both got the same x1.25 - but Slimefoot's art is roughly four times the usual, so
+a rule meant to stop crowned enemies looking insignificant grew one that already dwarfed every
+Master on the map. The tier check is about the RANK cue; it says nothing about what is actually
+drawn, and the two can disagree sharply.
+
+The floor now also tests rendered height and leaves anything already at or above a Master's alone.
+The reference is DERIVED (16px of standard art x enemyTierScaleRare) rather than hard-coded, so it
+tracks if Master is ever retuned; 16px comes from the log itself, where crowned Adepts landed at
+20.5 and 21.7px after the x1.25 bump. The skip is logged like the bump, so the decision is visible
+either way, and it sets the apply-once flag so a later setEffect() cannot reconsider it.
+
+Also answered, no code change: the AI's capitals do not spread territory, and that is by design.
+Each AI color's expanding anchor is its CASTLE (findCastle: type "castle", "<Color> Castle"), which
+grew radius 24 -> 205 over the reviewed session claiming 140-219 tiles a tick. The five "X Capital"
+POIs are ordinary TOWNS, and a town only projects growing territory once it has a
+townTerritoryRadius entry, which is seeded only when a mage captures it - world-gen originals
+deliberately have none, on the stated reasoning that the castle's own circle covers them. Worth
+recording that this IS asymmetric with the player, whose Capitol does get its own expanding radius
+(capitolExpansionTilesPerDay); giving AI capitals the same would be a balance change, not a bug fix.
+
 ## Round 195: the cave generator checked the wrong thing (2026-09-13)
 
 PACKAGED 2026-09-13 (342 MB) with rounds 192-194.
