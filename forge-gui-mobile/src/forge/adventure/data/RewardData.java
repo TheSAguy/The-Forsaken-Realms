@@ -553,14 +553,38 @@ public class RewardData implements Serializable {
                         ret.add(new Reward(cardPack, isNoSell));
                     }
                     break;
-                case "deckCard":
+                case "deckCard": {
                     if (cards == null)
                         return ret;
-                    for (PaperCard card : CardUtil.generateCards(cards,this, count + addedCount + Current.player().bonusDeckCards(), rewardRandom)) {
-                        if (card != null)
+                    int wanted = count + addedCount + Current.player().bonusDeckCards();
+                    // Round 203 (user: "relax the rarity filter when the deck can't satisfy it. If it still
+                    // fails, Let's give 50g per failed card"). Two stages, because the pool this draws from is
+                    // the ENEMY'S OWN DECK and there are two separate ways it comes up empty - the reward's
+                    // rarity not matching what the deck is built out of, and the deck's editions not being
+                    // unlocked for this colour yet. Relaxing the rarity fixes the first and is measured to
+                    // leave almost nothing behind; gold covers whatever the second still swallows.
+                    RewardData source = CardUtil.relaxRarityForThinDeck(cards, this, wanted);
+                    int paid = 0;
+                    for (PaperCard card : CardUtil.generateCards(cards, source, wanted, rewardRandom)) {
+                        if (card != null) {
                             ret.add(new Reward(card, isNoSell));
+                            paid++;
+                        }
+                    }
+                    // Whatever is still missing becomes gold. This also picks up cards dropped by round 202's
+                    // rewardMaxCopiesPerName cap: one rule now covers every card the payout promised and could
+                    // not legally hand over, rather than the cap quietly paying one card fewer.
+                    int unpayable = wanted - paid;
+                    int goldPerCard = Config.instance().getTuningData().deckCardFallbackGold;
+                    if (unpayable > 0 && goldPerCard > 0) {
+                        System.out.println("[TFR-DeckLoot] deck paid only " + paid + " of " + wanted
+                                + " card(s) even after relaxing rarity - its editions are locked for this"
+                                + " color; paying " + (unpayable * goldPerCard) + " gold instead ("
+                                + unpayable + " x " + goldPerCard + ")");
+                        ret.add(new Reward(unpayable * goldPerCard));
                     }
                     break;
+                }
                 case "gold":
                     ret.add(new Reward(count + addedCount));
                     break;

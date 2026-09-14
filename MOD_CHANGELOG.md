@@ -17757,6 +17757,63 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 203: a deckCard reward relaxes its rarity when the deck cannot satisfy it, then pays gold (2026-09-14)
+
+User, after round 202 raised the open question: "Let's relax the rarity filter when the deck can't satisfy it.
+If it still fails, Let's give 50g per failed card. Will that work?"
+
+It works, and the measurement says it matters more than round 202 suggested. A "deckCard" entry draws from the
+ENEMY'S OWN DECK and keeps only cards with a printing satisfying the edition restriction AND the entry's rarity
+TOGETHER. Round 202 only measured the Common/Uncommon entries. The commonest entry type is actually
+`["Rare","Mythic Rare"]` - 1357 of them against 1442 common/uncommon - and those fail far worse. Expected
+distinct payable names across all 1513 enemies that have both a deck and a deckCard entry
+(`dev-tools/deckcard_loot_coverage.py`):
+
+    filter                    expect 0 payable      under 2
+    Common/Uncommon                 4.5%             7.1%
+    Rare/Mythic Rare               12.7%            21.2%
+    all rarities (control)          0.0%            ~0.5%
+
+The rarity filter is the whole problem. With it gone, essentially every deck can pay something.
+
+STAGE 1 - RELAX. `CardUtil.relaxRarityForThinDeck()` counts the DISTINCT names the strict pool holds; if that is
+fewer than the entry asks for, the entry is regenerated from a clone with `rarity = null`. The relaxed pool is a
+strict superset (same predicate minus one test), so nothing legal is lost, and it self-corrects in both
+directions: a deck of rares asked for a common now pays a rare, a deck of commons asked for a rare now pays a
+common. It returns the ORIGINAL data whenever relaxing would gain nothing, so `finishCandidate()` keeps using the
+rarity when choosing which printing to hand over. Scoped to the deckCard path only - "card"/"randomCard" draw
+from the whole global pool, where rarity is a real design lever and a thin pool does not happen.
+
+STAGE 2 - GOLD. Whatever the relaxed pool still cannot pay becomes `deckCardFallbackGold` (settings.json,
+default 50) per missing card. This also absorbs round 202's `rewardMaxCopiesPerName` cap: a card skipped because
+its name is already at the cap is a card the payout promised, so one rule now covers everything the payout could
+not legally hand over, instead of the cap quietly paying one card fewer.
+
+VERIFIED BEFORE COMMITTING, not asserted. `dev-tools/deckcard_fallback_sim.py` builds the exact distribution of
+surviving distinct names per entry - independent Bernoulli survivals, so a Poisson-binomial DP is exact rather
+than sampled - over all 2858 deckCard entries:
+
+    P(entry cannot pay in full)   strict 8.9%  ->  after relaxing 0.9%
+    expected cards short/entry    strict 0.116 ->  after relaxing 0.011   (91% of the shortfall removed)
+
+And the gold is safe at 50: expected fallback gold per duel is a median of 1.5g, p90 9.8g, and the single worst
+enemy in the game 57g - about one median duel's gold reward (the median gold entry in enemies.json is also 50).
+There is no farming incentive. The simulator does NOT model an entry's `cardTypes`, which are not in
+res/editions, so real pools are a little smaller and these are a floor.
+
+LOG REVIEW (live `%APPDATA%\ForsakenRealms\forge.log`, 984 lines): zero exceptions, zero warnings. Territory is
+healthy post-round-190 - day 7 expansion 34-48ms of a 40-60ms total, colorClaim 31-43ms, 2322 POIs scanned.
+The eight `[TFR-RewardDup]` lines are all this bug: two duels against 2-name pools, one against a 5-name pool.
+
+OPEN, FOUND IN THAT LOG AND NOT FIXED HERE: one duel (Bear, `decks/standard/bear.json`) paid out FIVE LAND
+cards - Gingerbread Cabin, Murmuring Bosk, Snow-Covered Forest, a plain Forest. The Bear's reward table has a
+deliberate third entry, `deckCard count 1 rarity ["rare"] cardTypes ["Land"]`, and `bonusDeckCards()` from the
+player's +1-card items is added to EVERY entry's count - so a "one rare land" reward becomes three lands, and
+with the other two entries collapsing onto the same land-heavy pool the whole payout was lands. Worth deciding
+separately: either exempt a `cardTypes:["Land"]` entry from `bonusDeckCards()`, or keep basics out of the pool
+on the second reward loop (`EnemySprite:687` passes the deck unfiltered, deliberately, "in case we want to FORCE
+basic lands").
+
 ## Round 202: five Befouls came from a one-card pool, not a broken dedup; the guard quest says "upgrade" (2026-09-14)
 
 repo only (user: "Repo only").

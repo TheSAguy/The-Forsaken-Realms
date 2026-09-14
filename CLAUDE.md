@@ -90,6 +90,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 203 (2026-09-14): **a `deckCard` reward now relaxes its rarity filter when the enemy's deck cannot satisfy it,
+  then pays gold for what is still unpayable.** User: "relax the rarity filter when the deck can't satisfy it. If it
+  still fails, Let's give 50g per failed card." Measured first: the commonest entry type is `["Rare","Mythic Rare"]`
+  (1357 entries) and 12.7% of decks expect ZERO payable cards under it, against 0.0% with no rarity filter -
+  the rarity filter is the whole problem. `CardUtil.relaxRarityForThinDeck()` regenerates from a `rarity = null`
+  clone when the strict pool holds fewer DISTINCT names than the entry wants (a strict superset, so nothing legal is
+  lost); the remainder becomes `deckCardFallbackGold` (settings.json, default 50) per card, which also absorbs round
+  202's copy-cap skips. Verified with `dev-tools/deckcard_fallback_sim.py` (exact Poisson-binomial over all 2858
+  entries): shortfall 8.9% -> 0.9% of entries, **91% of it removed**, and fallback gold is a median 1.5g/duel, worst
+  enemy 57g - no farming incentive. **Open:** a Bear duel paid five LAND cards because `bonusDeckCards()` inflates its
+  `cardTypes:["Land"]` entry too - needs a decision, not a silent patch.
 - Round 202 (2026-09-14, repo only): **five Befouls were a ONE-CARD POOL, not a broken dedup.** Round 192's
   `[TFR-RewardDup]` line said so directly ("legal pool holds 1 distinct name(s)"): Ratfolk Scavenger's deck is
   all CHK/BOK, the unlocked black editions contain neither, and Befoul alone has a legal reprint (CHK -> 7ED).

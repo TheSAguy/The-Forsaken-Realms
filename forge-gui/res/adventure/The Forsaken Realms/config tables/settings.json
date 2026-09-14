@@ -227,6 +227,14 @@
     // 0 disables the cap.
     "rewardMaxCopiesPerName": 2,
 
+    // Round 203 (user: "relax the rarity filter when the deck can't satisfy it. If it still fails, Let's give
+    // 50g per failed card"). Gold per card a "deckCard" reward promised but could not legally pay, AFTER the
+    // rarity filter was already relaxed - which by then means the enemy's whole deck sits in editions this
+    // colour has not unlocked yet. Also covers a card skipped by rewardMaxCopiesPerName above.
+    // 50 is a Common's shop price; the median enemy gold reward is also 50, so lower this to 25 if short
+    // payouts turn out to be common in play. 0 disables the fallback (the reward just pays fewer cards).
+    "deckCardFallbackGold": 50,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).

@@ -349,6 +349,59 @@ public class CardUtil {
         return result;
     }
 
+    // ---- Round 203: a deck that cannot satisfy its own reward's rarity ------------------------
+    // A "deckCard" reward draws from the ENEMY'S OWN DECK, then keeps only cards with a printing that
+    // satisfies the edition restriction AND the reward's rarity TOGETHER (see CardPredicate.test). Two
+    // independent things then collide: a deck built out of rares carrying an entry that asks for commons,
+    // and a deck whose editions the player's colour shard has not unlocked. Measured across all 1513
+    // enemies that have both a deck and a deckCard entry, as the EXPECTED number of distinct payable
+    // names (dev-tools/deckcard_loot_coverage.py):
+    //
+    //     filter                    expect 0 payable      under 2
+    //     Common/Uncommon                 4.5%             7.1%
+    //     Rare/Mythic Rare               12.7%            21.2%   <- the commonest entry type, 1357 of them
+    //     all rarities (control)          0.0%            ~0.5%
+    //
+    // The rarity filter is the whole problem: remove it and essentially every deck can pay something. So
+    // when the strict pool cannot even produce `count` DISTINCT names, the entry is regenerated without the
+    // rarity constraint. The relaxed pool is a strict superset (the predicate is the same minus one test),
+    // so nothing legal is lost, and the relaxation swings both ways by itself - a deck of rares asked for a
+    // common now pays a rare, a deck of commons asked for a rare now pays a common.
+    //
+    // Deliberately scoped to the deckCard path (RewardData's "deckCard" branch is the only caller). The
+    // "card"/"randomCard" types draw from the whole global pool where the rarity is a real design lever and
+    // a thin pool is not a thing that happens.
+    //
+    // Returns the ORIGINAL data whenever relaxing would change nothing, so finishCandidate() keeps using the
+    // rarity when it picks which printing to hand over.
+    public static RewardData relaxRarityForThinDeck(Iterable<PaperCard> cards, RewardData data, int count) {
+        if (cards == null || data == null || count <= 0 || data.rarity == null || data.rarity.length == 0)
+            return data;
+        int strict = distinctNameCount(getPredicateResult(cards, data));
+        if (strict >= count)
+            return data;                            // the deck can already cover the request
+        RewardData relaxed = new RewardData(data);
+        relaxed.rarity = null;
+        int widened = distinctNameCount(getPredicateResult(cards, relaxed));
+        if (widened <= strict)
+            return data;                            // nothing to gain - the edition gate is what bites
+        System.out.println("[TFR-DeckLoot] rarity " + Arrays.toString(data.rarity) + " leaves only " + strict
+                + " distinct name(s) in this deck for a reward asking for " + count
+                + "; relaxing the rarity filter widens it to " + widened);
+        return relaxed;
+    }
+
+    /** Distinct CARD NAMES in a pool - a deck-derived pool legitimately holds 4-ofs, and what matters
+     *  everywhere here is how many different cards it could possibly pay. */
+    private static int distinctNameCount(List<PaperCard> pool) {
+        Set<String> names = new HashSet<>();
+        for (PaperCard card : pool) {
+            if (card != null)
+                names.add(card.getCardName());
+        }
+        return names.size();
+    }
+
     // ---- Payout-scoped duplicate suppression (round 192) --------------------------------------
     // One reward payout is assembled from SEVERAL RewardData entries, each generating its cards in
     // its own generateCards() call - so a dedup set local to that call cannot see what the previous

@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 203 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/util/CardUtil` (new `relaxRarityForThinDeck()` + `distinctNameCount()`),
+`adventure/data/RewardData` (the "deckCard" branch), `adventure/data/TuningData`, and plane data
+(`config tables/settings.json`). Tooling: `dev-tools/deckcard_fallback_sim.py` (new),
+`dev-tools/validate_plane_data.py` (knows the new key).
+
 ## Round 202 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/util/CardUtil` (per-name copy cap; payout scope is now a count map),

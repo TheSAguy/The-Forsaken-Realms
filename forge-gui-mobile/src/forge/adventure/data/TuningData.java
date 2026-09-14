@@ -321,6 +321,20 @@ public class TuningData {
     // 0 or negative disables the cap.
     public int rewardMaxCopiesPerName = 2;
 
+    // Round 203 (user: "Let's relax the rarity filter when the deck can't satisfy it. If it still fails, Let's
+    // give 50g per failed card"). Gold paid for each card a "deckCard" reward promised but could not legally
+    // hand over - after the rarity filter has already been relaxed (CardUtil.relaxRarityForThinDeck) and the
+    // pool STILL cannot produce it, which after relaxation means the enemy's whole deck sits in editions this
+    // colour has not unlocked. Also catches the round-202 copy cap: a card skipped because a name is already at
+    // its cap is a card the payout promised, so it converts to gold too, instead of silently vanishing.
+    //
+    // 50 is the shelf price of a Common (CardUtil.getCardPrice) and about twice what one sells for. Worth
+    // knowing when tuning it: the median gold reward across enemies.json is also 50, so a fully locked-out
+    // enemy paying four cards short hands over 200 - several duels' worth. That is tolerable only because
+    // relaxing the rarity filter first makes this case very rare; drop it to 25 (a Common's actual sell value)
+    // if it turns up often in play. 0 disables the fallback and the reward simply pays fewer cards.
+    public int deckCardFallbackGold = 50;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)
