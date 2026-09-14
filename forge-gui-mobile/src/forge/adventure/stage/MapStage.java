@@ -945,6 +945,12 @@ public class MapStage extends GameStage {
         caveChampionData = null;
         if (!CaveChampions.isEnabled())
             return;
+        // Round 201: a dungeon whose roster is already fixed does not re-roll anything, and that
+        // includes WHICH placement carries the champion. The champion from the first visit comes
+        // back through the stored roster in loadObjects() instead; re-running this would promote a
+        // second, different placement on top of it.
+        if (changes != null && changes.hasFixedRoster())
+            return;
         PointOfInterest poi = AdventureQuestController.instance().mostRecentPOI;
         if (!CaveChampions.isCave(poi))
             return;
@@ -1122,6 +1128,21 @@ public class MapStage extends GameStage {
                                         EN = reThemed;
                                 }
                             }
+                            // Round 201 (user: "each time I enter a dungeon, the creatures inside are
+                            // randomized. Can we have it fixed after your first entry"). Once this
+                            // POI's roster has been recorded, the stored pick WINS over every source
+                            // of variation above and below - re-theme, champion promotion, the lot -
+                            // so a second visit is the same dungeon. A stored name that no longer
+                            // resolves (an enemy renamed or filtered out between builds) falls
+                            // through to the live roll rather than emptying the placement.
+                            if (changes != null && changes.hasFixedRoster()) {
+                                String fixed = changes.getFixedEnemy(id);
+                                if (fixed != null) {
+                                    EnemyData stored = WorldData.getEnemy(fixed);
+                                    if (stored != null)
+                                        EN = stored;
+                                }
+                            }
                             // Round 139: this cave's champion takes over the placement chosen in
                             // prepareCaveChampion(). After the re-theme above, so a promotion is
                             // never itself re-themed back into an ordinary local encounter.
@@ -1130,6 +1151,13 @@ public class MapStage extends GameStage {
                                         + EN.getName() + " to " + caveChampionData.getName());
                                 EN = caveChampionData;
                             }
+                            // Round 201: record what this placement actually resolved to, so the
+                            // next visit reproduces it. Written on EVERY entry, which is harmless
+                            // once fixed (it re-writes the same name) and is what captures the
+                            // champion promotion above - prepareCaveChampion() no longer runs at all
+                            // for a fixed roster, so the champion has to come back from here.
+                            if (changes != null && EN != null)
+                                changes.setFixedEnemy(id, EN.getName());
                             EnemySprite mob = new EnemySprite(id, EN);
                             Object dialogObject = prop.get("dialog"); //Check if the enemy has a dialogue attached to it.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {

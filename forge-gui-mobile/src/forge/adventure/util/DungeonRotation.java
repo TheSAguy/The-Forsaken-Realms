@@ -433,6 +433,15 @@ public class DungeonRotation {
         if (!poi.getActive())
             return;
         poi.setActive(false);
+        // Round 201 (user: "if the dungeon fades/disappears and re-appears on the map later, it will
+        // be random till you enter it again for the first time at its new location"). This is the
+        // half of the fixed-roster feature that keeps rotation meaningful - without it a dungeon
+        // would keep the same creatures for the rest of the run. peek, not get: a POI that has never
+        // been entered has no changes entry and does not need one created just to clear it.
+        forge.adventure.pointofintrest.PointOfInterestChanges poiChanges =
+                WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+        if (poiChanges != null)
+            poiChanges.clearFixedRoster();
         world.getPoiDespawnDay().remove(poi.getID());
         world.getPoiFailedAttempts().remove(poi.getID());
         world.getPoiLootedDay().remove(poi.getID()); // round 128: next incarnation may be halved again

@@ -17757,6 +17757,46 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 201: a dungeon's creatures are fixed after the first visit (2026-09-14)
+
+User: "each time I enter a dungeon, the creatures inside are randomized. Can we have it fixed after
+your first entry. So the second time you enter it will be the same as the first, but if the dungeon
+fades/disappears and re-appears on the map later, it will be random till you enter it again for the
+first time at it's new location."
+
+WHERE THE VARIATION CAME FROM. Two sources, both per-entry: TerritoryControl.reThemedEnemyFor()
+re-rolls every ordinary placement through BiomeData.getEnemy() whenever the dungeon's land has
+changed hands since world-gen, and prepareCaveChampion() picks both a champion AND which placement
+carries it. Authored placements on unchanged land never varied, which is why it was "most" dungeons
+rather than all.
+
+STORES THE OUTCOME, NOT A SEED. A per-POI seed would have been the tidier mirror of
+getShopSeed()'s existing lazy-init pattern, and was the first design considered - but the roll it
+would have to reproduce runs BiomeData.getEnemy() -> SpawnTierWeighting -> Aggregates.random with no
+injectable Random anywhere in the chain. Seeding it would mean threading one through all of that,
+and it would silently re-break the moment any of that logic changed. Recording the resolved enemy
+per map-object id is immune to all of it.
+
+New `PointOfInterestChanges.dungeonRoster` (objectId -> enemy name), saved alongside shopSeeds and
+containsKey-guarded on load like every field added after the original save format, so existing saves
+load unchanged and simply fix each dungeon on its next visit.
+
+  - first entry: rolls exactly as before, and records what each placement resolved to
+  - later entries: the stored pick WINS over every source of variation, re-theme included
+  - on despawn: DungeonRotation.hidePoi() clears the roster, so the next incarnation is random
+    again until first entered - the half that keeps rotation meaningful
+
+THE CHAMPION HAD TO BE PINNED TOO, which storing enemies alone does not achieve:
+prepareCaveChampion() also chooses WHICH placement gets promoted, so a second visit would have
+promoted a different one on top of the stored champion, giving the cave two. It now returns early
+when a roster exists, and the original champion comes back through the stored roster like any other
+placement.
+
+KNOWN CONSEQUENCE, raised with the user rather than discovered later: a dungeon whose land changes
+hands AFTER it has been visited keeps its old owner's creatures until it despawns, because the
+stored roster now outranks the re-theme. That follows directly from "fixed after first entry", but
+it does mean territory changes no longer reskin dungeons already visited.
+
 ## Round 200: a despawned cave kept its name on the minimap; the Lumber Mill mirrors the mines; a pip for dungeon effects (2026-09-14)
 
 repo only until packaged - the game was started mid-build and the packager correctly refused.

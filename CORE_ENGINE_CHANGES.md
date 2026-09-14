@@ -2779,6 +2779,17 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 201 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/pointofintrest/PointOfInterestChanges` (new `dungeonRoster` map plus its
+save/load, containsKey-guarded), `adventure/stage/MapStage` (stored roster wins in `loadObjects()`;
+`prepareCaveChampion()` returns early when one exists), `adventure/util/DungeonRotation` (`hidePoi()`
+clears the roster).
+
+Worth knowing: `BiomeData.getEnemy()` and everything under it (SpawnTierWeighting, Aggregates.random)
+take no Random parameter, so per-POI reproducible rolls are not available without threading one
+through that whole chain. Recording resolved outcomes is the practical alternative.
+
 ## Round 200 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/scene/MapViewScene` (new `activePointsOfInterest()`, used by all four POI

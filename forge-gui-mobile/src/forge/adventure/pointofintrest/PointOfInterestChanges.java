@@ -130,6 +130,14 @@ public class PointOfInterestChanges implements SaveFileContent  {
         cardsBought.putAll((HashMap<Integer, HashSet<Integer>>) data.readObject("cardsBought"));
         shopSeeds.clear();
         shopSeeds.putAll((java.util.Map<Integer, Long>) data.readObject("shopSeeds"));
+        // Round 201: containsKey-guarded like every field added after the original format - a save
+        // written before this round has no key, and an unguarded readObject would throw on load.
+        dungeonRoster.clear();
+        if (data.containsKey("dungeonRoster")) {
+            Object obj = data.readObject("dungeonRoster");
+            if (obj instanceof java.util.Map)
+                dungeonRoster.putAll((java.util.Map<Integer, String>) obj);
+        }
         mapFlags.clear();
         mapFlags.putAll((java.util.Map<String, Byte>) data.readObject("mapFlags"));
         reputation.clear();
@@ -215,6 +223,7 @@ public class PointOfInterestChanges implements SaveFileContent  {
         data.storeObject("cardsBought",cardsBought);
         data.storeObject("mapFlags", mapFlags);
         data.storeObject("shopSeeds", shopSeeds);
+        data.storeObject("dungeonRoster", dungeonRoster);   // round 201
         data.storeObject("reputation", reputation);
         data.storeObject("isBookmarked", isBookmarked);
         data.storeObject("isVisited", isVisited);
@@ -325,6 +334,42 @@ public class PointOfInterestChanges implements SaveFileContent  {
             return false;
         }
         return cardsBought.get(objectID).contains(cardIndex);
+    }
+
+    // ---- Fixed dungeon roster (round 201) ---------------------------------------------------
+    // User: "each time I enter a dungeon, the creatures inside are randomized. Can we have it fixed
+    // after your first entry. So the second time you enter it will be the same as the first, but if
+    // the dungeon fades/disappears and re-appears on the map later, it will be random till you enter
+    // it again for the first time at its new location."
+    //
+    // Stores the RESOLVED enemy per map-object id rather than a seed. A seed would be the tidier
+    // mirror of getShopSeed() below, but the roll it would have to reproduce runs through
+    // BiomeData.getEnemy() -> SpawnTierWeighting -> Aggregates.random with no injectable Random
+    // anywhere; seeding it would mean threading one through all of that, and it would re-break the
+    // moment any of that logic changed. Recording the outcome is immune to all of it.
+    //
+    // Empty means "not yet fixed": the next entry rolls and records. DungeonRotation.hidePoi()
+    // clears it, which is what makes a respawned dungeon random again at its new location.
+    private final java.util.Map<Integer, String> dungeonRoster = new HashMap<>();
+
+    /** The enemy fixed for this map object, or null while this dungeon's roster is still unrolled. */
+    public String getFixedEnemy(int objectID) {
+        return dungeonRoster.get(objectID);
+    }
+
+    /** True once this dungeon's roster has been rolled and recorded - see the field comment. */
+    public boolean hasFixedRoster() {
+        return !dungeonRoster.isEmpty();
+    }
+
+    public void setFixedEnemy(int objectID, String enemyName) {
+        if (enemyName != null && !enemyName.isEmpty())
+            dungeonRoster.put(objectID, enemyName);
+    }
+
+    /** Forget the roster so the next incarnation of this POI rolls a fresh one. */
+    public void clearFixedRoster() {
+        dungeonRoster.clear();
     }
 
     public long getShopSeed(int objectID){

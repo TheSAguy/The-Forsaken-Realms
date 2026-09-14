@@ -90,6 +90,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 201 (2026-09-14): **a dungeon's creatures are fixed after the first visit.** Variation came from
+  `reThemedEnemyFor()` (re-rolls every ordinary placement when the land changed hands) and
+  `prepareCaveChampion()` (picks the champion AND its placement). **Stores the OUTCOME, not a seed** - the roll
+  runs `getEnemy() -> SpawnTierWeighting -> Aggregates.random` with no injectable Random, so a seed would mean
+  threading one through all of it and would re-break whenever that logic changed. New
+  `PointOfInterestChanges.dungeonRoster` (objectId -> enemy name), containsKey-guarded on load so old saves are
+  fine. First entry rolls and records; later entries use the store; `hidePoi()` clears it so a respawn is random
+  again. **prepareCaveChampion() returns early on a fixed roster** - otherwise a second visit promotes a second
+  champion on top of the stored one. **Consequence:** a visited dungeon keeps its old owner's creatures through
+  a territory change until it despawns.
 - Round 200 (2026-09-14, repo only - game started mid-build, packager correctly refused): **a despawned cave
   kept its NAME on the minimap.** `DungeonRotation.hidePoi()` only calls `setActive(false)`, leaving the POI in
   `getAllPointOfInterest()`. `redrawAllPoiMarkers()` filters on that flag (hence the icon vanishing) but
