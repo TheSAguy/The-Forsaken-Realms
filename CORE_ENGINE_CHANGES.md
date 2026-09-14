@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 199 (2026-09-13) - no engine edits
+
+Adventure-side only: `adventure/util/EconomyBuildings` (`buildCostFor()` - LUMBER_MILL shares the mines'
+cost line again).
+
 ## Round 198 (2026-09-13) - no engine edits
 
 Adventure-side only: `adventure/util/EconomyBuildings` (`buildCostFor()` - the three mines split a third of

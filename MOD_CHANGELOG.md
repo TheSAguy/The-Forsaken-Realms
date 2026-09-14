@@ -17757,6 +17757,16 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 199: the Lumber Mill matches the mines again (2026-09-13)
+
+PACKAGED 2026-09-13 (342 MB).
+
+User: "make the Lumber Mill match the mines." Round 198 had split LUMBER_MILL out of the shared cost
+line on the argument that charging wood to build a wood producer is circular - but that left it
+asking MORE stone (75) than the three mines sitting beside it in the same build menu (50), which
+reads as a pricing bug from the player's side. It shares the line again: {250 gold, 25 wood,
+50 stone} for all four resource buildings. One price for the family beats the thematic point.
+
 ## Round 198: a third of a mine's stone cost is now wood (2026-09-13)
 
 PACKAGED 2026-09-13 (342 MB) with rounds 196-197.

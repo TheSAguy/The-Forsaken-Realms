@@ -90,6 +90,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 199 (2026-09-13, PACKAGED): **Lumber Mill matches the mines** - all four resource buildings share
+  {250 gold, 25 wood, 50 stone}. Round 198's split left it costing more stone than the mines next to it in the
+  same menu, which reads as a pricing bug; one price for the family beats the "wood to build a wood producer is
+  circular" theme argument.
 - Round 198 (2026-09-13, PACKAGED with 196-197): **a third of a mine's stone cost is now wood.** Shard/Gold/
   Stone Mine {250, 0, 75} -> {250, 25, 50}, split on the BASE so the 2:1 ratio survives difficulty scaling.
   LUMBER_MILL shared that line and deliberately did NOT change (charging wood to build a wood producer is
