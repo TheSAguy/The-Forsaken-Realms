@@ -1263,10 +1263,20 @@ public class EconomyBuildings {
      *  (v1.00 feedback round) - gold/shard components untouched. */
     private static int[] buildCostFor(int type) {
         switch (type) {
+            // Round 198 (user: "for the mines, make a 1/3 of the current stone cost be wood. So if
+            // a mine currently costs 90 stone, make it 60 stone 30 wood"). Split on the BASE, so
+            // the 2:1 ratio holds at every difficulty - scaledCost() multiplies both parts by the
+            // same 0.75/1.0/1.25/1.5 factor. The user's 90/60/30 figures are the ratio illustrated
+            // rather than a literal reading: the base is 75 stone, so the split is 50 + 25.
+            //
+            // LUMBER_MILL deliberately keeps the old all-stone cost and no longer shares this line.
+            // It is the one member of this build family that is not a mine, and charging wood to
+            // build the thing that produces wood is circular. One line to fold it back in if the
+            // matching price is worth more than the theme.
             case SHARD_MINE:
             case GOLD_MINE:
-            case LUMBER_MILL:
-            case STONE_MINE:    return new int[]{250, 0, 75, 0};
+            case STONE_MINE:    return new int[]{250, 25, 50, 0};
+            case LUMBER_MILL:   return new int[]{250, 0, 75, 0};
             case BANK:          return new int[]{500, 0, 0, 0};
             case EXCHANGE:      return new int[]{150, 75, 75, 0};
             case OUTLOOK:       return new int[]{0, 125, 0, 0};

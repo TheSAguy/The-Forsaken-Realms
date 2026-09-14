@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 198: a third of a mine's stone cost is now wood (2026-09-13)
+
+PACKAGED 2026-09-13 (342 MB) with rounds 196-197.
+
+User: "for the mines, make a 1/3 of the current stone cost be wood. So if a mine currently costs 90
+stone, make it 60 stone 30 wood." Shard Mine, Gold Mine and Stone Mine go from {250 gold, 0 wood,
+75 stone} to {250, 25, 50}. Split on the BASE so the 2:1 ratio holds at every difficulty -
+scaledCost() multiplies both parts by the same 0.75/1.0/1.25/1.5 factor.
+
+The 90/60/30 figures are the ratio illustrated rather than a literal cost: the base is 75 stone and
+no difficulty multiplier reaches 90 (they give 56/75/94/113). Flagged to the user in case it was a
+real on-screen figure, which would mean the wrong building was being read.
+
+LUMBER_MILL shared that one cost line and deliberately does NOT change: it is the only member of
+that build family that is not a mine, and charging wood to build the thing that produces wood is
+circular. The cost of that choice is that a Lumber Mill now asks for more stone (75) than the mines
+beside it in the same menu (50), which a player could read as a pricing bug - raised with the user
+rather than decided silently.
+
+PROCESS NOTE, recorded because it nearly shipped something unverified: this edit was made WHILE the
+round 196-197 package was building, which the session had been careful to avoid all day. The
+packager's freshness gate then reported OK - but that gate only compares timestamps, and a jar built
+from pre-edit source still postdates the file, so it would have passed while shipping the old code.
+The compiled class turned out to postdate the edit (19:38:06 vs 19:34:54), so the change was in;
+a clean rebuild and repackage was run anyway rather than relying on lucky ordering.
+
 ## Round 197: the five AI capitals finally spread, to twice a town's reach (2026-09-13)
 
 User: "So the 5 AI's have a capitol each. I want those to act the same way an AI town would spread.

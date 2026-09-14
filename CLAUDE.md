@@ -90,6 +90,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 198 (2026-09-13, PACKAGED with 196-197): **a third of a mine's stone cost is now wood.** Shard/Gold/
+  Stone Mine {250, 0, 75} -> {250, 25, 50}, split on the BASE so the 2:1 ratio survives difficulty scaling.
+  LUMBER_MILL shared that line and deliberately did NOT change (charging wood to build a wood producer is
+  circular) - it therefore now costs more stone than the mines next to it, which was flagged to the user.
+  **Process note:** this was edited DURING the 196-197 build. The packager's freshness gate only compares
+  timestamps, so it would have passed even if the jar had been built from pre-edit source - it happened to be
+  fine (class 19:38:06 vs edit 19:34:54), but a clean rebuild was run rather than trusting the ordering.
 - Round 197 (2026-09-13): **the 5 AI capitals now spread, capped at 2x a town's radius.** Root cause was one
   line: town growth needs a `townTerritoryRadius` entry, seeded ONLY on capture (onMageArrived), so the
   world-gen capitals fell out of the loop on its first check. Now seeded alongside player towns, growing to
