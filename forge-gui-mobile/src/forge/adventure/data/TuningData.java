@@ -312,6 +312,15 @@ public class TuningData {
     // its own separate townProtectedRadiusCap - so a bigger capital disc is still contestable ground.
     public float aiCapitalTerritoryRadiusFactor = 2f;
 
+    // Round 202 (user, with a screenshot of FIVE copies of Befoul from one duel). Hard cap on copies of one
+    // card name in a single reward payout. rewardDuplicateRerolls above makes a repeat unlikely; this makes a
+    // pile of them impossible, which rerolling alone cannot do - the log showed the legal pool holding exactly
+    // ONE distinct name (an all-Kamigawa enemy deck against black editions that unlock neither CHK nor BOK, so
+    // only Befoul had a legal reprint). No number of re-draws helps there. When the cap bites, the reward pays
+    // FEWER cards rather than another copy: a pool that thin should not hand over five of anything.
+    // 0 or negative disables the cap.
+    public int rewardMaxCopiesPerName = 2;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)

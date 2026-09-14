@@ -9469,7 +9469,7 @@
 			{
 				"id": 2,
 				"name": "Hire a guard",
-				"description": "Hire a guard at your Capitol's Armory to stand watch.",
+				"description": "Upgrade your Capitol's Armory, then hire a guard to stand watch.",
 				"anyPOI": true,
 				"worldMapOK": true,
 				"mapFlag": "guardHired",
@@ -9479,7 +9479,7 @@
 					6
 				],
 				"prologue": {
-					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then hire a guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage.",
+					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then UPGRADE it - a restored Armory still has no barracks, and the Guards option only appears once the upgrade is done. Hire your guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage.",
 					"options": [
 						{
 							"name": "(Continue)"

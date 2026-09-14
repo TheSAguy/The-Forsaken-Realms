@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 202: five Befouls came from a one-card pool, not a broken dedup; the guard quest says "upgrade" (2026-09-14)
+
+repo only (user: "Repo only").
+
+FIVE COPIES OF ONE CARD, AND THE DEDUP WAS INNOCENT. User, with a screenshot: "I received 5 Befoul
+cards as loot." Round 192's diagnostic line answered it without any investigation needed:
+
+    [TFR-RewardDup] kept a duplicate of Befoul after 3 draw(s) - legal pool holds 1 distinct name(s)
+
+The whole chain is in the log. Ratfolk Scavenger's deck is ENTIRELY CHK/BOK; the player's unlocked
+black editions (34 of them, listed in that duel's [TFR-LootEditions] line) contain neither; and
+Befoul is the one card in that deck with a reprint in any of them ([TFR-PrintRemap] Befoul: CHK ->
+7ED). The legal pool really did hold one name, and a "deckCard" reward asked for five cards. The
+round-192 payout-wide dedup worked perfectly - there was simply nothing else to give.
+
+This is exactly the distinction that line was added for. Before it, this and the genuine round-192
+bug were indistinguishable from a screenshot.
+
+New `rewardMaxCopiesPerName` (settings.json, default 2): a HARD CAP on copies of one name per
+payout, which is the thing rerolling cannot do. When the cap bites the reward pays FEWER cards
+rather than another copy - a pool that thin should not be able to hand over five of anything - and
+logs that it did, so the cost in lost loot is visible rather than silent. 0 disables it. The payout
+scope's shared state changed from a name Set to a name -> count Map to support this.
+
+NOT FIXED, and raised with the user rather than quietly patched: an enemy whose deck comes from a
+block the player has not unlocked pays almost nothing no matter what the cap says. Ratfolk
+Scavenger's loot is "Befoul or fewer cards" until CHK/BOK unlock. Topping the pool up from the
+enemy's colour pool when the deck-derived pool is too thin would fix it, but that changes what
+"deckCard" means, so it wants a decision first.
+
+THE GUARD QUEST NOW SAYS "UPGRADE". User: "On the quest to hire a guard. Update the text to inform
+the player that they will need to upgrade the Armory to do so." Verified against the gate rather
+than the phrasing: RewardScene shows the Guards button only at `armoryLevel >= 2`, and shows Upgrade
+while below it - so the old text ("Restore your Capitol's Armory if you haven't, then hire a guard
+there") sent the player to a building that could not do it yet. The objective is now "Upgrade your
+Capitol's Armory, then hire a guard to stand watch", and the prologue spells out that a restored
+Armory has no barracks and the Guards option appears only after the upgrade.
+
 ## Round 201: a dungeon's creatures are fixed after the first visit (2026-09-14)
 
 User: "each time I enter a dungeon, the creatures inside are randomized. Can we have it fixed after

@@ -358,13 +358,13 @@ public class CardUtil {
     //
     // Null when no payout is open, which is the normal state for shops, boosters and anything else
     // that generates cards outside a payout - those keep per-call behaviour exactly as before.
-    private static java.util.Set<String> payoutTakenNames = null;
+    private static java.util.Map<String, Integer> payoutTakenNames = null;   // name -> copies paid this payout
 
     /** Open a payout: every generateCards() until {@link #endRewardPayout()} shares one dedup set.
      *  ALWAYS pair with endRewardPayout() in a finally - a leaked scope would silently dedup
      *  unrelated later draws against a stale set. */
     public static void beginRewardPayout() {
-        payoutTakenNames = new java.util.HashSet<>();
+        payoutTakenNames = new java.util.HashMap<>();
     }
 
     /** Close the payout opened by {@link #beginRewardPayout()}. */
@@ -472,31 +472,53 @@ public class CardUtil {
             // fewer repeats WITHIN a single entry, which is not what a player sees.
             //
             // payoutTakenNames, while a payout is open, is shared across every entry of that payout.
+            // ROUND 202: rerolling cannot help a pool that holds ONE legal name, and the log proved
+            // that is what happens. User, with a screenshot of five Befouls from one duel; the
+            // round-192 diagnostic said exactly why:
+            //   "kept a duplicate of Befoul ... legal pool holds 1 distinct name(s)"
+            // Ratfolk Scavenger's deck is entirely CHK/BOK, the player's unlocked black editions
+            // include neither, and Befoul is the only card in it with a reprint in one of them
+            // (CHK -> 7ED). The dedup worked perfectly against a pool of one - the payout was simply
+            // asking for five cards that did not exist.
+            //
+            // So there is now a HARD CAP on copies of one name in a payout. When the cap bites the
+            // reward pays FEWER cards rather than the same card again: a thin pool should not be
+            // able to hand over five of anything. 0 or negative disables the cap entirely.
             int rerolls = Math.max(0, Config.instance().getTuningData().rewardDuplicateRerolls);
-            java.util.Set<String> takenNames = payoutTakenNames != null ? payoutTakenNames : new java.util.HashSet<>();
+            int maxCopies = Config.instance().getTuningData().rewardMaxCopiesPerName;
+            java.util.Map<String, Integer> takenNames = payoutTakenNames != null ? payoutTakenNames : new java.util.HashMap<>();
             for (int i = 0; i < count; i++) {
                 PaperCard candidate = null;
                 boolean fresh = false;
                 for (int attempt = 0; attempt <= rerolls; attempt++) {
                     candidate = pool.get(r.nextInt(pool.size()));
-                    if (candidate == null || !takenNames.contains(candidate.getCardName())) {
+                    if (candidate == null || !takenNames.containsKey(candidate.getCardName())) {
                         fresh = true;
                         break; // a fresh name (or nothing to compare) - take it
                     }
                 }
                 if (candidate != null) {
-                    if (!fresh) {
-                        // Every draw repeated. Usually that means the legal pool is genuinely tiny,
-                        // so log its distinct-name count: it is the difference between "working as
-                        // intended against a 2-name pool" and "the dedup is not reaching this path"
-                        // - precisely what the round-185 report could not be told apart from.
+                    String name = candidate.getCardName();
+                    int already = takenNames.getOrDefault(name, 0);
+                    if (maxCopies > 0 && already >= maxCopies) {
                         long distinct = pool.stream().filter(java.util.Objects::nonNull)
                                 .map(PaperCard::getCardName).distinct().count();
-                        System.out.println("[TFR-RewardDup] kept a duplicate of " + candidate.getCardName()
+                        System.out.println("[TFR-RewardDup] pool exhausted - " + name + " already paid "
+                                + already + " time(s) (cap " + maxCopies + ") and the legal pool holds only "
+                                + distinct + " distinct name(s); paying one card fewer instead of another copy");
+                        continue;
+                    }
+                    if (!fresh) {
+                        // Every draw repeated. Usually the legal pool is genuinely tiny, so log its
+                        // distinct-name count: it is the difference between "working as intended
+                        // against a 2-name pool" and "the dedup is not reaching this path".
+                        long distinct = pool.stream().filter(java.util.Objects::nonNull)
+                                .map(PaperCard::getCardName).distinct().count();
+                        System.out.println("[TFR-RewardDup] kept a duplicate of " + name
                                 + " after " + (rerolls + 1) + " draw(s) - legal pool holds " + distinct
                                 + " distinct name(s), " + takenNames.size() + " name(s) already paid out here");
                     }
-                    takenNames.add(candidate.getCardName());
+                    takenNames.put(name, already + 1);
                     result.add(finishCandidate(candidate, data, r));
                 }
             }

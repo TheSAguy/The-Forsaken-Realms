@@ -219,6 +219,14 @@
     // contestable ground rather than becoming a bigger no-go zone.
     "aiCapitalTerritoryRadiusFactor": 2,
 
+    // Round 202 (user, with a screenshot of FIVE copies of Befoul from one duel). Hard cap on copies of one card
+    // name in a single reward payout. rewardDuplicateRerolls makes a repeat unlikely; this makes a PILE of them
+    // impossible, which rerolling cannot do on its own - that duel's legal pool held exactly ONE distinct name
+    // (an all-Kamigawa enemy deck against unlocked black editions containing neither CHK nor BOK, so only Befoul
+    // had a legal reprint). When the cap bites the reward pays FEWER cards rather than another copy.
+    // 0 disables the cap.
+    "rewardMaxCopiesPerName": 2,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).

@@ -90,6 +90,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   in the gitignored `forge-gui-android/forge.keystore` + `local.properties`, `subst R: C:\TFR-build`, then
   ANDROID_RELEASE.md's maven line from `/r/`. Keystore fingerprint verified EE:60:39:25 before upload.
 - **v1.05 "Fight Back"** (round 119, 2026-09-05): tag `tfr-v1.05` @ `5f520118bdd`.
+- Round 202 (2026-09-14, repo only): **five Befouls were a ONE-CARD POOL, not a broken dedup.** Round 192's
+  `[TFR-RewardDup]` line said so directly ("legal pool holds 1 distinct name(s)"): Ratfolk Scavenger's deck is
+  all CHK/BOK, the unlocked black editions contain neither, and Befoul alone has a legal reprint (CHK -> 7ED).
+  New `rewardMaxCopiesPerName` (settings.json, default 2) hard-caps copies per payout - the thing rerolling
+  cannot do - and pays FEWER cards rather than another copy when it bites. **Still open:** an enemy whose deck
+  is from a locked block pays almost nothing regardless; topping up from the colour pool would change what
+  "deckCard" means, so it needs a decision. Also: the hire-a-guard quest now says to UPGRADE the Armory -
+  verified against `RewardScene`'s `armoryLevel >= 2` gate, which the old "restore it" text did not mention.
 - Round 201 (2026-09-14): **a dungeon's creatures are fixed after the first visit.** Variation came from
   `reThemedEnemyFor()` (re-rolls every ordinary placement when the land changed hands) and
   `prepareCaveChampion()` (picks the champion AND its placement). **Stores the OUTCOME, not a seed** - the roll

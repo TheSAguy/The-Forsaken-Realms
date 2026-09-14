@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 202 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/util/CardUtil` (per-name copy cap; payout scope is now a count map),
+`adventure/data/TuningData`, and plane data (`config tables/settings.json`, `world/quests.json`).
+
 ## Round 201 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/pointofintrest/PointOfInterestChanges` (new `dungeonRoster` map plus its
