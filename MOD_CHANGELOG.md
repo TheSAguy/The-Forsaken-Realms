@@ -17785,6 +17785,39 @@ so a +1 item on a typical enemy with three deckCard entries is really +3 cards. 
 (round 192 noted it in passing) and may well be intended generosity - but it is the reason this bug was
 visible at all, and it is the same multiplication anywhere else an enemy carries several entries.
 
+### Addendum - the three "unreachable region" maps, measured rather than assumed
+
+User: "For the other points. Give me the file names for each so I can look at them in Tiled."
+
+Handing over three file names would have wasted most of the time spent on them. `cave_connectivity_qa.py`
+reports that a map is split into pieces the player cannot walk between, but a split only COSTS the player
+something if content is stranded on the wrong side - and these maps have no collision painted outside the play
+area, so the unpainted border strip counts as walkable and inflates every percentage.
+
+`components()` now optionally returns its per-tile region labels (`with_labels=True`; default off and `found`
+unchanged, and the existing report verified byte-identical afterwards), and the new
+`dev-tools/unreachable_contents.py` drops every object from a map's object layers into its region:
+
+    Valors_Reach_Arena.tmx       (5% cut off)   every object in the main region - COSMETIC
+    Hall_of_the_Unifier.tmx      (19% cut off)  every object in the main region - COSMETIC
+    Planeswalker_Dueling_Club.tmx (42% cut off) ONE object stranded
+
+Two of the three are the unpainted border and nothing else. The third strands a single `teleport` object at
+tile (13,27) on a 21-tile island, cut off from the main 306-tile region - and it is the map's ONLY teleport, so
+there is no partner pad to arrive from. That is the one worth opening.
+
+Collision layers of the other three open maps, checked for whether the tiles painted on them carry any
+collision rectangles at all:
+
+    cave_huge.tmx                 5 tiles painted on a 200x200 map; both tiles used DO block
+    Witherbloom_Classroom.tmx     165 tiles use main.tsx local id 481  - NO collision shapes
+    fort_colorless_5_evil.tmx     171 tiles use main.tsx local id 1828 - NO collision shapes
+
+Stated as measured, not diagnosed: those tiles define no rectangles, which is not the same as the game
+intending them to. `Collision` is the BOTTOM-most layer in both files, so it may be serving as a base/marker
+layer rather than the blocking one. Either way it does not explain the fort's two INVISIBLE blockers - a
+shapeless tile blocks less, not more, so that one is still unexplained and still wants a live actor dump.
+
 ## Round 203: a deckCard reward relaxes its rarity when the deck cannot satisfy it, then pays gold (2026-09-14)
 
 User, after round 202 raised the open question: "Let's relax the rarity filter when the deck can't satisfy it.

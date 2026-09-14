@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 204 addendum (2026-09-14): **two of the three "unreachable region" maps cost the player nothing.**
+  `cave_connectivity_qa.components()` now optionally returns per-tile region labels (`with_labels=True`, default off,
+  old output verified byte-identical), and the new `dev-tools/unreachable_contents.py` places every map object into its
+  region - because these maps paint no collision outside the play area, so the border strip reads as walkable and
+  inflates the percentage. `Valors_Reach_Arena` (5%) and `Hall_of_the_Unifier` (19%) strand NOTHING; only
+  `Planeswalker_Dueling_Club` (42%) does, and it is one `teleport` at tile (13,27) on a 21-tile island with no partner
+  pad. Also measured: `Witherbloom_Classroom` paints 165 Collision-layer tiles with `main.tsx` id 481 and
+  `fort_colorless_5_evil` 171 with id 1828, neither of which defines any collision rectangle - though `Collision` is
+  the bottom-most layer in both, so that may be a base layer rather than a bug, and it does not explain the fort's two
+  INVISIBLE blockers (a shapeless tile blocks less, not more).
 - Round 203 (2026-09-14): **a `deckCard` reward now relaxes its rarity filter when the enemy's deck cannot satisfy it,
   then pays gold for what is still unpayable.** User: "relax the rarity filter when the deck can't satisfy it. If it
   still fails, Let's give 50g per failed card." Measured first: the commonest entry type is `["Rare","Mythic Rare"]`

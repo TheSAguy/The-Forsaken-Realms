@@ -85,7 +85,7 @@ def decode_layer(layer):
     return [int(t.get("gid", 0)) for t in data.findall("tile")]
 
 
-def components(path, max_coverage, min_island):
+def components(path, max_coverage, min_island, with_labels=False):
     root = ET.parse(path).getroot()
     width, height = int(root.get("width")), int(root.get("height"))
     tw, th = int(root.get("tilewidth")), int(root.get("tileheight"))
@@ -122,6 +122,11 @@ def components(path, max_coverage, min_island):
     passable = [drawn[i] and cover[i] < limit for i in range(width * height)]
 
     seen = bytearray(width * height)
+    # with_labels: -1 where the player cannot walk, else the raw component index - which is NOT the
+    # position in `found`, since that is filtered by min_island and then sorted by size. comp_info
+    # carries (size, seed) per component in the same indexing, so a caller can find the largest.
+    labels = [-1] * (width * height) if with_labels else None
+    comp_info = []
     found = []
     for start in range(width * height):
         if not passable[start] or seen[start]:
@@ -130,8 +135,11 @@ def components(path, max_coverage, min_island):
         seen[start] = 1
         size = 0
         cells = []
+        comp = len(comp_info)
         while stack:
             i = stack.pop()
+            if labels is not None:
+                labels[i] = comp
             size += 1
             if len(cells) < 4:
                 cells.append((i % width, i // width))
@@ -142,9 +150,12 @@ def components(path, max_coverage, min_island):
                     if passable[j] and not seen[j]:
                         seen[j] = 1
                         stack.append(j)
+        comp_info.append((size, cells[0]))
         if size >= min_island:
             found.append((size, cells[0]))
     found.sort(reverse=True)
+    if with_labels:
+        return found, width, height, labels, comp_info
     return found, width, height
 
 
