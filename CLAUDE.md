@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 208 (2026-09-15): **a "go there" quest objective now completes on activation if you already went.** User,
+  screenshot of five unchecked castles: "I already found them in my game before the quest... it should know that and
+  mark it as done." A `Travel` stage completes only via `handleEvent()` gated by `checkIfTargetLocation()`, which needs
+  the player INSIDE the target map - an arrival that already happened cannot re-fire, so the box never ticked.
+  `AdventureQuestStage.retroCompleteIfPoiAlreadyVisited()` is the direct sibling of the 2026-08-26
+  `retroCompleteIfFlagSatisfied()`, called one line below it in `activateNextStages()` and inside the same
+  stabilization loop. Keyed on `PointOfInterestChanges.isVisited()`, which `WorldStage` sets exactly when `loadPOI()`
+  runs - the same act the stage waits for, so it **cannot over-complete**. `Travel` only (Delivery shares its case but
+  means "carry something there"); the `anyPOI` branch matches on tags and ignores `getActive()` since these stages set
+  `allowInactivePOI`. Applies to all **78** Travel stages in the plane, not just the main quest's 5. Forward-looking
+  only, as the user asked - it fires at stage activation, so quests already running in a save are untouched.
 - Round 207 (2026-09-14): **Shard Mine is 50/50 Stone/Wood, and no town is ever fully immune.** User: "change the
   shard mine cost to be 50%/50%" and "add the 5% floor on the capture roll". Shard Mine splits out of the shared mine
   case at **38 wood + 38 stone** (38+38 not 37+38: the 75 base is odd, and two different numbers for a cost described

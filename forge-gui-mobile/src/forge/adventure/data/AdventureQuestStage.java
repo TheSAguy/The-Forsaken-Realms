@@ -530,6 +530,62 @@ public class AdventureQuestStage implements Serializable {
         return satisfied;
     }
 
+    /** Retroactive Travel-objective completion (2026-09-15 user request, with a screenshot of the
+     *  main quest listing five unchecked castles: "I already found them in my game before the quest.
+     *  I'd like it to remember that, so when this quest comes up and one or more of the AI capitols
+     *  have already been found, it should know that and mark it as done").
+     *
+     *  A Travel stage completes only through handleEvent(), gated by checkIfTargetLocation(), which
+     *  with worldMapOK false requires the player to be INSIDE the target's map. An arrival that has
+     *  already happened cannot fire again, so a castle entered BEFORE the stage activated would stay
+     *  unchecked for the rest of the run. Same gap retroCompleteIfFlagSatisfied() closes for flags,
+     *  same fix: read persisted STATE at activation instead of waiting for an event that cannot recur.
+     *
+     *  isVisited() is the exact signal rather than a looser "seen it on the map" one - WorldStage
+     *  sets it the moment loadPOI() runs, which is precisely the act a Travel stage is waiting for.
+     *  So this can never mark a stage done on a weaker condition than playing it would have needed.
+     *
+     *  Travel ONLY, deliberately: Delivery shares Travel's case in handleEvent() but means "carry
+     *  something there", and having once visited the destination delivers nothing. */
+    public boolean retroCompleteIfPoiAlreadyVisited() {
+        if (status != ACTIVE || objective != Travel)
+            return false;
+        boolean satisfied = false;
+        try {
+            if (targetPOI != null) {
+                forge.adventure.pointofintrest.PointOfInterestChanges changes =
+                        forge.adventure.world.WorldSave.getCurrentSave().peekPointOfInterestChanges(targetPOI.getID());
+                satisfied = changes != null && changes.isVisited();
+            } else if (anyPOI) {
+                // Unbound stage: any POI carrying every one of this stage's tags counts, which is the
+                // same test checkIfTargetLocation() applies to a live arrival. Deliberately does NOT
+                // filter on getActive() - these stages set allowInactivePOI, and a castle the player
+                // cleared and despawned is still a castle they found.
+                for (PointOfInterest poi : Current.world().getAllPointOfInterest()) {
+                    if (poi == null || poi.getData() == null || poi.getData().questTags == null)
+                        continue;
+                    if (!Arrays.asList(poi.getData().questTags).containsAll(POITags))
+                        continue;
+                    forge.adventure.pointofintrest.PointOfInterestChanges changes =
+                            forge.adventure.world.WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
+                    if (changes != null && changes.isVisited()) {
+                        satisfied = true;
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // a safeguard must never break quest activation
+        }
+        if (satisfied) {
+            status = COMPLETE;
+            System.out.println("[TFR-MainQuest] stage \"" + name + "\" retro-completed on activation ("
+                    + (targetPOI != null ? targetPOI.getDisplayName() : "a matching location")
+                    + " was already visited before this stage was issued)");
+        }
+        return satisfied;
+    }
+
     public boolean hasRequiredFetchItems() {
         if (objective != Fetch || itemNames == null || itemNames.isEmpty()) {
             return false;

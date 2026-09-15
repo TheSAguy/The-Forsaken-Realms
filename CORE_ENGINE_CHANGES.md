@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 208 (2026-09-15) - no engine edits
+
+Adventure-side only: `adventure/data/AdventureQuestStage` (new `retroCompleteIfPoiAlreadyVisited()`) and
+`adventure/data/AdventureQuestData` (calls it from `activateNextStages()`). No plane data changed.
+
 ## Round 207 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/util/EconomyBuildings` (Shard Mine cost), `adventure/util/TerritoryControl`

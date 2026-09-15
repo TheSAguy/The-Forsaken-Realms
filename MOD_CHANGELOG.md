@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 208: a "go there" objective completes on activation if you already went (2026-09-15)
+
+User, with a screenshot of "The Enemy of My Enemy..." listing five unchecked castles: "For the Quest, find AI
+capitols. I already found them in my game before the quest. I'd like it to remember that, so when this quest
+comes up and one or more of the AI capitols have already been found, it should know that and mark it as done."
+
+A `Travel` stage can only complete through `handleEvent()`, and every event is gated by
+`checkIfTargetLocation()`, which with `worldMapOK` false - as all five castle stages have - requires the player
+to be INSIDE the target's map. An arrival that already happened cannot fire again, so a castle entered before
+the quest was issued stays unchecked for the rest of the run, and the only way to tick the box is to walk back
+into a castle you already cleared.
+
+This is the identical gap `retroCompleteIfFlagSatisfied()` closes for flag objectives, added 2026-08-26 for the
+same class of complaint ("add safeguards if the player does something before a quest. Like builds a capitol,
+before the quest fires") - so it gets the identical fix rather than a new mechanism.
+`AdventureQuestStage.retroCompleteIfPoiAlreadyVisited()` is its sibling, called from the same place in
+`activateNextStages()`, one line below it, and inside the same stabilization loop - so a retro-completed travel
+stage can unlock the next stage's prerequisites within the same pass, exactly as a retro-completed flag does.
+
+`PointOfInterestChanges.isVisited()` is the signal, chosen because it is the EXACT one rather than a looser
+"you saw it on the map": `WorldStage` sets it the moment `loadPOI()` runs, which is precisely the act a Travel
+stage is waiting for. So this can never mark a stage done on a weaker condition than actually playing it would
+have required - it cannot over-complete.
+
+Scoped to `Travel` ONLY, deliberately. `Delivery` shares Travel's case in `handleEvent()` but means "carry
+something there", and having once visited the destination delivers nothing. The unbound (`anyPOI`) branch scans
+for any POI carrying every one of the stage's tags, which is the same test `checkIfTargetLocation()` applies to
+a live arrival, and deliberately does NOT filter on `getActive()` - these stages set `allowInactivePOI`, and a
+castle the player cleared and despawned is still a castle they found. Wrapped in try/catch like its sibling: a
+safeguard must never break quest activation.
+
+NOT JUST THIS QUEST. The plane has 78 `Travel` stages, five of them in the main quest, and all of them gain
+this. `[TFR-MainQuest]` logs each retro-completion with the location's name, since a box that is simply already
+ticked is otherwise indistinguishable from one the quest never offered.
+
+As the user noted, this is forward-looking only - it fires when a stage ACTIVATES, so an already-running quest
+in an existing save is unaffected.
+
 ## Round 207: the Shard Mine costs 50/50, and no town is ever fully immune (2026-09-14)
 
 SHARD MINE 50/50 STONE/WOOD. User: "change the shard mine cost to be 50%/50% Stone / Wood." Split out of the

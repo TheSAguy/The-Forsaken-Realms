@@ -556,6 +556,11 @@ public class AdventureQuestData implements Serializable {
                         }
                         if (s.retroCompleteIfFlagSatisfied())
                             continue; // completed instantly - no sprites/notification for it
+                        // Round 208: same safeguard for "go there" objectives. A castle the player
+                        // already walked into before the quest was issued cannot re-fire its arrival
+                        // event, so the stage would sit unchecked forever without this.
+                        if (s.retroCompleteIfPoiAlreadyVisited())
+                            continue;
                         AdventureQuestController.instance().addQuestSprites(s);
                         showNotification = true;
                     }
