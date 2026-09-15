@@ -17757,6 +17757,52 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 209: the defeat splash was a dead end - you could not leave a lost run (2026-09-15)
+
+User, with a screenshot of the burning-castle defeat splash and no dialog on it: "I let the game run a long time
+and when I got back I was frozen at this screen. Not exactly sure how that happened, since I did not have a
+final duel and I could not quit the game from here."
+
+WHAT HAPPENED. The log's last three lines answer the "how", including the part that puzzled the user:
+
+    [TFR-StarTowns] holdings {white=1, blue=3} (loss at 3 of 5)
+    [TFR-GameLost] blue holds 3 Center Towns - run over
+    Looking for resource ui/defeat_splash.jpg... Found!
+
+The run ended on the Center Town condition (MOD_SCOPE #102) - blue took a third star town while the player was
+away - which is exactly why there was no final duel: that loss path never involves one. `triggerGameLost()` then
+froze player controls, showed the splash, and built a "Return to Main Menu" dialog that never became reachable.
+The log stops dead at that point: 283 day ticks of constant output, then nothing, on a world map the player
+never left (no map loads after line 150 of 16,229).
+
+NO EXCEPTION WAS THROWN. `ExceptionHandler` is registered and logs to this same file, and logged nothing - so
+the code ran to completion and the dialog WAS built. It simply could not be seen or clicked. Three independent
+things could each cause that, the exact culprit is not provable from a log alone, and all three are fixed,
+because a player unable to leave a lost run is worse than any of them:
+
+1. **No in-map deferral.** `triggerGameWon()` has deferred out of a POI map since round 105 ("the last castle
+   falls INSIDE its map"); `triggerGameLost()` never got the same treatment, so a run ending while the player
+   stands in a town or cave puts a WorldStage dialog over a TileMapScene - a guaranteed freeze. NOT what
+   happened this time (the player was on the world map throughout), but a certainty the first time it does.
+   Now deferred through a `pendingDefeatMessage` drained in `enter()`, exactly like the victory one.
+2. **The splash could swallow the click.** It is a full-screen `Image` added straight to the dialog stage and
+   left at libGDX's default `Touchable.enabled`. It is pure decoration and has no business taking input; it is
+   `Touchable.disabled` now.
+3. **Z-order was left to add-order.** `showEndSplash()` comments that "the dialog is shown afterwards, so it
+   lands on top" - true only as long as nothing re-adds the splash. An explicit `dialog.toFront()` after
+   `showDialog()` costs nothing and stops depending on it. Applied to the victory dialog too.
+
+AND THE DIAGNOSTIC THAT WOULD HAVE SETTLED IT. The win path logs "game won dialog shown"; the loss path logged
+nothing after the splash, so the log could not distinguish "dialog built but invisible" from "never got that
+far". It now logs `[TFR-GameLost] defeat dialog shown - "Return to Main Menu" is the way out`, which on its own
+will separate those two cases next time.
+
+`clearSuppressDefeatGoldLoss()` deliberately still runs BEFORE the deferral: the run is over either way,
+whatever scene the player happens to be standing in.
+
+NOTE FOR THE USER'S SAVE: this is a real loss, not a glitched state - blue holds 3 of the 5 Center Towns and the
+run is over by design. The fix gets them off the screen; it does not un-lose the run.
+
 ## Round 208: a "go there" objective completes on activation if you already went (2026-09-15)
 
 User, with a screenshot of "The Enemy of My Enemy..." listing five unchecked castles: "For the Quest, find AI

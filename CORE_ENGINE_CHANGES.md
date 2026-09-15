@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 209 (2026-09-15) - no engine edits
+
+Adventure-side only: `adventure/stage/WorldStage` - `triggerGameLost()` split into a trigger plus
+`showGameLostDialog()` with an in-map deferral (`pendingDefeatMessage`, drained in `enter()`), the end splash
+made `Touchable.disabled`, `dialog.toFront()` on both end dialogs, and a confirmation log line on the defeat
+path. No plane data changed.
+
 ## Round 208 (2026-09-15) - no engine edits
 
 Adventure-side only: `adventure/data/AdventureQuestStage` (new `retroCompleteIfPoiAlreadyVisited()`) and

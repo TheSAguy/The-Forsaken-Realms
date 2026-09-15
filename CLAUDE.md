@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 209 (2026-09-15): **the defeat splash was a dead end - no way to leave a lost run.** User, screenshot of the
+  splash with no dialog: "I was frozen at this screen... I did not have a final duel and I could not quit the game."
+  The log's last lines explain both halves: `[TFR-GameLost] blue holds 3 Center Towns - run over` then the splash
+  loading, then 16,229 lines of output stopping dead. The run ended on the **Center Town** condition (MOD_SCOPE #102),
+  which never involves a duel - hence no final duel. **No exception was thrown** (ExceptionHandler logs to that file
+  and logged nothing), so the "Return to Main Menu" dialog was built but unreachable. Three independent causes, all
+  fixed: `triggerGameLost()` had **no in-map deferral** (the win path has had one since round 105) - now deferred via
+  `pendingDefeatMessage` drained in `enter()`; the full-screen splash `Image` was left `Touchable.enabled` and could
+  swallow the click - now `Touchable.disabled`; and z-order relied on add-order - now an explicit `dialog.toFront()`
+  on both end dialogs. Plus `[TFR-GameLost] defeat dialog shown` so the log can tell "built but invisible" from
+  "never got there". **The run really is lost** - the fix frees the screen, it does not undo the defeat.
 - Round 208 (2026-09-15): **a "go there" quest objective now completes on activation if you already went.** User,
   screenshot of five unchecked castles: "I already found them in my game before the quest... it should know that and
   mark it as done." A `Travel` stage completes only via `handleEvent()` gated by `checkIfTargetLocation()`, which needs

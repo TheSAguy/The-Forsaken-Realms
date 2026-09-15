@@ -69,6 +69,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // Victory.jpg / Lose_Image.jpg shipped as ui/victory_splash.jpg + ui/defeat_splash.jpg (1344x768).
     private com.badlogic.gdx.scenes.scene2d.ui.Image endSplash;
     private String pendingVictoryMessage;
+    // Round 209: the loss path's equivalent. See triggerGameLost().
+    private String pendingDefeatMessage;
     private void showEndSplash(String file) {
         hideEndSplash();
         try {
@@ -80,6 +82,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
             endSplash = new com.badlogic.gdx.scenes.scene2d.ui.Image(new com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable(
                     new com.badlogic.gdx.graphics.g2d.TextureRegion(tex)));
             endSplash.setScaling(com.badlogic.gdx.utils.Scaling.fill);
+            // Round 209: decoration only - never let it take a click. A full-screen Image defaults to
+            // Touchable.enabled, so this one covered the entire dialog stage AND was eligible to
+            // swallow the press meant for the "Return to Main Menu" button underneath the cursor.
+            endSplash.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
             endSplash.setSize(dialogStage.getWidth(), dialogStage.getHeight());
             endSplash.setPosition(0, 0);
             dialogStage.addActor(endSplash); // the dialog is shown afterwards, so it lands on top
@@ -1003,8 +1009,23 @@ public class WorldStage extends GameStage implements SaveFileContent {
     public void triggerGameLost(String message) {
         // Every loss path shares this exit, so the Bronze Coin ransom's defeat-gold suppression is
         // cleared HERE for all of them (2026-09-02 research re-verification: round 78 cleared it on
-        // the Capitol-defense path only; the "no towns left" path did not).
+        // the Capitol-defense path only; the "no towns left" path did not). Deliberately before the
+        // deferral below - the run is over either way, whatever scene the player happens to be in.
         Current.player().clearSuppressDefeatGoldLoss();
+        // Round 209 (user, stuck on the defeat splash with no dialog: "I could not quit the game
+        // from here"). The win path has deferred out of a POI map since round 105; this one never
+        // did, so a run ending while the player stands inside a town or cave would put a WorldStage
+        // dialog over a TileMapScene and freeze them there with no way out. Same fix, same drain
+        // point in enter().
+        if (forge.adventure.stage.MapStage.getInstance().isInMap()) {
+            pendingDefeatMessage = message;
+            System.out.println("[TFR-GameLost] inside a map - the defeat dialog is deferred to the world map");
+            return;
+        }
+        showGameLostDialog(message);
+    }
+
+    private void showGameLostDialog(String message) {
         Forge.advFreezePlayerControls = true;
         showEndSplash("ui/defeat_splash.jpg");
         Dialog dialog = getDialog();
@@ -1026,6 +1047,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         })).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();
+        // Round 209: do not rely on add-order for this. showEndSplash() adds a full-screen image to
+        // the same stage and only a comment guaranteed the dialog outranked it.
+        dialog.toFront();
+        System.out.println("[TFR-GameLost] defeat dialog shown - \"Return to Main Menu\" is the way out");
     }
 
     // Severe-tier ordinary towns show a real blocking dialog (user request 2026-08-08 - the old
@@ -1066,6 +1091,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         })).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog();
+        dialog.toFront(); // round 209, same reason as the defeat dialog
         System.out.println("[TFR-Victory] game won dialog shown");
     }
     private void showEntryBarredDialog(PointOfInterest poi, String barredColor) {
@@ -1768,6 +1794,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
             String won = pendingVictoryMessage;
             pendingVictoryMessage = null;
             showGameWonDialog(won);
+        }
+        if (pendingDefeatMessage != null) { // round 209: the run ended while inside a POI map
+            String lost = pendingDefeatMessage;
+            pendingDefeatMessage = null;
+            showGameLostDialog(lost);
         }
         getPlayerSprite().LoadPos();
         getPlayerSprite().setMovementDirection(Vector2.Zero);
