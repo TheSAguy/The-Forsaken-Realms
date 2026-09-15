@@ -71,6 +71,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private String pendingVictoryMessage;
     // Round 209: the loss path's equivalent. See triggerGameLost().
     private String pendingDefeatMessage;
+    // Round 210: the one-away-from-losing warning, deferred the same way. See showStarTownWarning().
+    private String pendingStarWarningMessage;
     private void showEndSplash(String file) {
         hideEndSplash();
         try {
@@ -1094,6 +1096,46 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.toFront(); // round 209, same reason as the defeat dialog
         System.out.println("[TFR-Victory] game won dialog shown");
     }
+    /** Round 210 (user: "Make the 2-town warning a blocking dialog"). One AI color being a single
+     *  Center Town away from ending the run used to be a corner notification, which is easy to miss
+     *  entirely - round 209 found a run that ended while the player was away from the keyboard with
+     *  that notification as the only warning. Same judgement made for severe-tier towns on
+     *  2026-08-08, for the same reason.
+     *
+     *  Blocking in the ordinary dialog sense (showDialog() sets dialogOnlyInput, so the world stops
+     *  taking input until it is dismissed) and deliberately NOT advFreezePlayerControls - that is
+     *  for end states, and this is a warning the player is meant to act on.
+     *
+     *  Deferred out of a POI map for the reason round 209 documents at length: a WorldStage dialog
+     *  over a TileMapScene is unreachable. The world map is also the only place the warning is
+     *  actionable. Public: TerritoryControl lives in another package. */
+    public void showStarTownWarning(String message) {
+        if (forge.adventure.stage.MapStage.getInstance().isInMap()) {
+            pendingStarWarningMessage = message;
+            System.out.println("[TFR-StarTowns] inside a map - the warning dialog is deferred to the world map");
+            return;
+        }
+        showStarTownWarningDialog(message);
+    }
+
+    private void showStarTownWarningDialog(String message) {
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+
+        TypingLabel label = Controls.newTypingLabel(message);
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+
+        dialog.getButtonTable().add(Controls.newTextButton("Understood", this::hideDialog)).width(240f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+        dialog.toFront(); // round 209: never leave this to add-order
+        System.out.println("[TFR-StarTowns] warning dialog shown");
+    }
+
     private void showEntryBarredDialog(PointOfInterest poi, String barredColor) {
         Dialog dialog = getDialog();
         dialog.getContentTable().clear();
@@ -1799,6 +1841,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
             String lost = pendingDefeatMessage;
             pendingDefeatMessage = null;
             showGameLostDialog(lost);
+        }
+        // Round 210: dropped, not shown, when the run is already over - advFreezePlayerControls is
+        // set by the defeat dialog just above, and a warning about the thing that already happened
+        // must never land on top of it.
+        if (pendingStarWarningMessage != null) {
+            String warn = pendingStarWarningMessage;
+            pendingStarWarningMessage = null;
+            if (!Forge.advFreezePlayerControls)
+                showStarTownWarning(warn);
         }
         getPlayerSprite().LoadPos();
         getPlayerSprite().setMovementDirection(Vector2.Zero);

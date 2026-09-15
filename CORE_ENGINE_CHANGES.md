@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 210 (2026-09-15) - no engine edits
+
+Adventure-side only: `adventure/stage/WorldStage` (new `showStarTownWarning()` / `showStarTownWarningDialog()`
+with the round-209 in-map deferral) and `adventure/util/TerritoryControl` (the warning is a dialog, gated by the
+new `starTownWarningCounts` session map). No plane data changed. Plus one save-editing deck list.
+
 ## Round 209 (2026-09-15) - no engine edits
 
 Adventure-side only: `adventure/stage/WorldStage` - `triggerGameLost()` split into a trigger plus

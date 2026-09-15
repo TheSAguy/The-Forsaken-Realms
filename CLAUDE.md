@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 210 (2026-09-15): **one Center Town from losing is a blocking dialog now.** User: "Make the 2-town warning a
+  blocking dialog" - after round 209 found a run ending unattended with only a scroll-away notification as warning.
+  Blocking via `dialogOnlyInput`, deliberately NOT `advFreezePlayerControls` (that is for end states). **Two things a
+  naive swap gets wrong, both handled:** `checkStarTownLoss()` runs on EVERY AI ownership change and a color sits at
+  `needed-1` for weeks, so `starTownWarningCounts` gates it to the CLIMB into "one away" (rebuilt per pass, so
+  dropping and returning warns again); and it uses round 209's in-map deferral, dropped rather than shown if the run
+  has since ended. **Save 1 slot 1: "Warchief's Cleave"** - mono-red Goblins (the deepest color they were not playing,
+  228 cards): 8 token-makers feeding Goblin Warchief + **Embercleave**, 2x Tar Pitcher for reach, Kiki-Jiki on top.
+  29 spells / 17 Mountains. `.prededit13.bak`; slot 3 (Gempalm Legion, now 20 rows - user-edited in game) left alone;
+  collection diff exactly `Mountain 1x -> 17x`.
 - Round 209 (2026-09-15): **the defeat splash was a dead end - no way to leave a lost run.** User, screenshot of the
   splash with no dialog: "I was frozen at this screen... I did not have a final duel and I could not quit the game."
   The log's last lines explain both halves: `[TFR-GameLost] blue holds 3 Center Towns - run over` then the splash

@@ -2686,6 +2686,14 @@ public class TerritoryControl {
      * TuningData.starTownsLossCount of the five star towns around the campfire. Runs from
      * onMageArrived()'s tail like the other loss path; inert on worlds without recorded star tiles.
      */
+    // Round 210: per-color record of the star-town count this session last WARNED about, so the
+    // blocking dialog fires on the climb into "one away" and never again while the count sits there.
+    // checkStarTownLoss() runs from onMageArrived()'s tail - on every completed ownership change
+    // anywhere in the world - and a color holds that count for days, so without this the player would
+    // get a blocking dialog every time any town anywhere changed hands. Session-scoped on purpose: a
+    // reload is a fine moment to be reminded the realm is one town from falling.
+    private static final Map<String, Integer> starTownWarningCounts = new HashMap<>();
+
     private static void checkStarTownLoss(World world) {
         java.util.List<int[]> tiles = world.getStarTownTiles();
         if (tiles == null || tiles.isEmpty())
@@ -2709,10 +2717,26 @@ public class TerritoryControl {
                         + " Center Towns around the campfire. With the heart of the realm in enemy hands, your cause is lost.");
                 return;
             }
-            if (h.getValue() == needed - 1)
-                GameHUD.getInstance().addNotification("[RED]" + colorName + " holds " + h.getValue()
-                        + " Center Towns - one more and the realm falls![]", true);
+            // Round 210 (user: "Make the 2-town warning a blocking dialog"). Only on the CLIMB into
+            // "one away" - see starTownWarningCounts. Was a corner notification, which round 209 found
+            // was the sole warning before a run ended unattended.
+            if (h.getValue() == needed - 1) {
+                Integer warnedAt = starTownWarningCounts.get(h.getKey());
+                if (warnedAt == null || warnedAt < h.getValue()) {
+                    System.out.println("[TFR-StarTowns] " + h.getKey() + " reached " + h.getValue()
+                            + " of " + tiles.size() + " Center Towns (loss at " + needed + ") - warning the player");
+                    WorldStage.getInstance().showStarTownWarning("[RED]" + colorName + " holds "
+                            + h.getValue() + " of the " + tiles.size() + " Center Towns around the campfire.[]\n"
+                            + "One more and the heart of the realm is theirs - your run ends there. "
+                            + "Take one back, or defend the ones still standing.");
+                }
+            }
         }
+        // Record this pass's holdings so a color that drops back and climbs again warns again, while
+        // one that simply holds its ground never re-fires. Rebuilt wholesale: a color absent from
+        // `held` now owns none, and must warn afresh if it ever returns.
+        starTownWarningCounts.clear();
+        starTownWarningCounts.putAll(held);
     }
 
     // "Waste Town Identity" + "green" -> "Forest Town Identity" - keeps the same Generic/Identity/

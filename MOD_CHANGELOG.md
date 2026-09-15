@@ -17757,6 +17757,54 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 210: one town from losing is a blocking dialog now (2026-09-15)
+
+User: "Make the 2-town warning a blocking dialog."
+
+Round 209 traced a run that ended entirely unattended - blue took a third Center Town on day 291 with no input
+from the player - and the only cue beforehand was a corner notification that scrolls away. Same judgement
+already made for severe-tier towns on 2026-08-08 ("the old corner notification was easy to miss, so a barred
+town just read as 'I walk right through this area'").
+
+Blocking in the ordinary dialog sense: `showDialog()` sets `dialogOnlyInput`, so the world stops taking input
+until it is dismissed. Deliberately NOT `advFreezePlayerControls` - that is for end states, and this is a
+warning the player is meant to act on.
+
+TWO THINGS THIS NEEDED BEYOND SWAPPING THE CALL, both of which a naive change gets wrong:
+
+1. **A transition gate.** `checkStarTownLoss()` runs from `onMageArrived()`'s tail - on EVERY completed AI
+   ownership change anywhere in the world - and a color sits at `needed-1` for days or weeks. An ungated dialog
+   would block the screen every single time any town anywhere changed hands, which is far worse than the
+   notification it replaces. `starTownWarningCounts` records the count last warned about per color, so the
+   dialog fires on the CLIMB into "one away" and never while the count sits there. The map is rebuilt wholesale
+   from each pass's holdings, so a color that drops to 1 and claws back to 2 warns again, and one that loses
+   its star towns entirely warns afresh if it ever returns.
+2. **The in-map deferral round 209 just added.** A WorldStage dialog shown while the player is inside a POI
+   renders over a TileMapScene and is exactly the dead end 209 fixed - and a warning has even less business
+   trapping anyone. Deferred through the same `enter()` drain, which is also the only place the warning is
+   actionable. It is DROPPED rather than shown if the run has meanwhile ended (`advFreezePlayerControls` set by
+   the defeat dialog) - a warning about the thing that already happened must never land on top of the defeat.
+
+The text says what to do rather than only what happened: "One more and the heart of the realm is theirs - your
+run ends there. Take one back, or defend the ones still standing."
+
+A NEW DECK IN SAVE 1, SLOT 1 (user: "Look at save 1 and create me a new deck in the first open spot"). The
+collection is now 1070 distinct names / 1401 cards, and slot 3's Gempalm Legion has grown from 14 rows to 20 -
+the user has been editing it in game, so it was left strictly alone.
+
+**Slot 1, "Warchief's Cleave"** - mono-red Goblins, the one color this character owns deeply (228 cards) and
+was not playing. It is a real archetype rather than a pile of burn: eight token-makers (2x Dragon Fodder, 2x
+Goblin Scouts, Mogg War Marshal, 2x Tuktuk the Explorer, Siege-Gang Commander) feeding **Goblin Warchief**
+(Goblin spells cost 1 less, Goblins have haste), **Embercleave** (flash, 1 cheaper per attacking creature, so a
+board of Goblins casts it for about RR), 2x Tar Pitcher as a sacrifice outlet that turns spare tokens into
+reach, and Kiki-Jiki as the top end. 29 spells / 17 Mountains - a low curve wants 17, not the 18 the other
+decks run.
+
+Written with `WriteDecks` per the save-editing README: game verified closed, dry run first, backup
+`.prededit13.bak`, verified after with `Inspect` - stats identical (life 19, gold 3078, shards 291, wood 517,
+stone 186), `selectedDeckIndex` still 3, slots 0/2/3 untouched, and the collection diff is exactly
+`Mountain 1x -> 17x`, the free unsellable basics for a character who owned one.
+
 ## Round 209: the defeat splash was a dead end - you could not leave a lost run (2026-09-15)
 
 User, with a screenshot of the burning-castle defeat splash and no dialog on it: "I let the game run a long time
