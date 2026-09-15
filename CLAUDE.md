@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 211 (2026-09-15): **the guard quest names what else the Armory upgrade buys.** User: "add that at Lvl 2 you
+  get an Item storage. Can sell items and give items to roaming guards." Checked against the code first, and three
+  things went in that the request did not spell out: the Storage button needs `capitolArmory` too (round 166 - the
+  **Capitol's** Level 2 Armory only, not any town's); selling is not just available there but **only** there since
+  round 192 hid `InventoryScene`'s sell button, so without the upgrade there is nowhere to sell at all; and
+  `ArmoryStorage` supports give **and** take, so guard equipment is reversible. 2 insertions / 2 deletions via the
+  round-202 byte-for-byte round-trip guard. (The script's own final assertion was faulty - it tested
+  `OLD_TEXT not in check` when the new prologue begins with the old one - so the edit was verified separately.)
 - Round 210 (2026-09-15): **one Center Town from losing is a blocking dialog now.** User: "Make the 2-town warning a
   blocking dialog" - after round 209 found a run ending unattended with only a scroll-away notification as warning.
   Blocking via `dialogOnlyInput`, deliberately NOT `advFreezePlayerControls` (that is for end states). **Two things a

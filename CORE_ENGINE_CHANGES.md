@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 211 (2026-09-15) - no engine edits
+
+Plane data only: `world/quests.json` (the hire-a-guard objective and prologue). No Java changed. Plus a user map
+edit (`cave_amphin.tmx`).
+
 ## Round 210 (2026-09-15) - no engine edits
 
 Adventure-side only: `adventure/stage/WorldStage` (new `showStarTownWarning()` / `showStarTownWarningDialog()`

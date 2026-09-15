@@ -9469,7 +9469,7 @@
 			{
 				"id": 2,
 				"name": "Hire a guard",
-				"description": "Upgrade your Capitol's Armory, then hire a guard to stand watch.",
+				"description": "Upgrade your Capitol's Armory, then hire a guard to stand watch. The upgrade also opens the Item Storage.",
 				"anyPOI": true,
 				"worldMapOK": true,
 				"mapFlag": "guardHired",
@@ -9479,7 +9479,7 @@
 					6
 				],
 				"prologue": {
-					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then UPGRADE it - a restored Armory still has no barracks, and the Guards option only appears once the upgrade is done. Hire your guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage.",
+					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then UPGRADE it - a restored Armory still has no barracks, and the Guards option only appears once the upgrade is done. Hire your guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage. The upgrade earns you more than a barracks: the Capitol's Level 2 Armory is the only place with an Item Storage. Stow what you are not carrying, hand equipment to your roaming guards so they fight better - and note that selling items happens there and nowhere else, so until it is built you have no way to turn gear into gold.",
 					"options": [
 						{
 							"name": "(Continue)"

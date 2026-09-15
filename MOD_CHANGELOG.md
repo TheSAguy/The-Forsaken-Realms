@@ -17757,6 +17757,38 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 211: the guard quest names what else the Armory upgrade buys (2026-09-15)
+
+User: "For the quest, Hire a guard. We already added, need to have Armory lvl2. Please also add that at Lvl 2
+you get an Item storage. Can sell items and give items to roaming guards."
+
+Verified against the code rather than written from the request, and three details were worth carrying into the
+text:
+
+* `RewardScene` (~line 961) gates the Storage button on `armoryFeatures && armoryLevel >= 2 && capitolArmory` -
+  the CAPITOL's Level 2 Armory only, the deliberate round-166 decision ("We only need the Item Storage at the
+  Capitol"). The quest already sends the player to the Capitol, so the text can say so without over-promising
+  that any town's Armory will do.
+* Selling is not merely *available* there, it is **only** available there. Round 192, at this user's own request
+  ("Let's make it that you can only sell items in the storage interface. Hide the sell button otherwise"), hid
+  `InventoryScene`'s sell button. "You can sell there" undersells it: a player who never upgrades has nowhere to
+  turn gear into gold at all, and that is the sentence that actually changes behaviour.
+* `ArmoryStorage`'s verbs are deposit / withdraw / giveToGuard / takeFromGuard, so "give items to roaming
+  guards" is accurate and equipment can come back off a guard again.
+
+The objective line gains a clause; the prologue gains a sentence naming the storage, the guard-equipment use,
+and the selling consequence. 2 insertions / 2 deletions, through the round-202 script pattern that asserts
+quests.json round-trips byte-for-byte with tab indent before rewriting a 420 KB data file.
+
+A NOTE ON THE VERIFY STEP, since it failed and the edit did not: the script's final assertion included
+`OLD_TEXT not in check`, which can never hold here because the new prologue BEGINS with the entire old one. The
+edit was correct and was confirmed separately (file round-trips, new strings present, zero stale copies, diff
+exactly 2/2). The assertion was the thing that was wrong.
+
+Also carried in: the user's own edit to `cave_amphin.tmx`, and the removal of a stray `quests.json.r211.bak`
+the patch script left inside the plane folder - `*.bak` is not gitignored there and the packager copies that
+folder wholesale, so it would have shipped.
+
 ## Round 210: one town from losing is a blocking dialog now (2026-09-15)
 
 User: "Make the 2-town warning a blocking dialog."
