@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 212 (2026-09-15): **two quest texts teach mechanics; both remaining map splits closed.** User asked for
+  reputation's effects on the "complete three quests" step of *Raise the Banner*, and "each biome has unique sets" on
+  the five-castles quest. Both written from the code: reputation is 1%/point of mage-capture defense (capped 20,
+  floored at 5%) and **three building slots per point** (`BUILDINGS_PER_REPUTATION`), earned by finishing work in a
+  town and beating back its attackers; and `EditionProgression` really does deal each color its own ~35 editions, so
+  "swamp spoils are not mountain spoils" is literal. Also added, per the user's agreement, that guard equipment can be
+  **taken back** (`ArmoryStorage.takeFromGuard`) so nobody fears committing gear. **Map thread closed:** the user
+  fixed `Planeswalker_Dueling_Club.tmx` and `Witherbloom_Classroom.tmx`; re-running `unreachable_contents.py` confirms
+  the Dueling Club's entry/exit is back in the main region and Witherbloom has no split at all. **`deckCardFallbackGold`
+  stays 50** (user decision, closing round 207's open question).
 - Round 211 (2026-09-15): **the guard quest names what else the Armory upgrade buys.** User: "add that at Lvl 2 you
   get an Item storage. Can sell items and give items to roaming guards." Checked against the code first, and three
   things went in that the request did not spell out: the Storage button needs `capitolArmory` too (round 166 - the

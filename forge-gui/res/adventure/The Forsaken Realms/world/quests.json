@@ -9430,7 +9430,7 @@
 			{
 				"id": 6,
 				"name": "Prove the banner - complete three quests",
-				"description": "See three quests through - from a Job Board, an inn, or anyone who asks.",
+				"description": "See three quests through - from a Job Board, an inn, or anyone who asks. The reputation they earn a town both defends it and raises how much it can build.",
 				"anyPOI": true,
 				"worldMapOK": true,
 				"count3": 3,
@@ -9439,7 +9439,7 @@
 					1
 				],
 				"prologue": {
-					"text": "A Capitol needs more than walls - it needs a name people trust. Take on work across the realm: see any three quests through, from a Job Board, an inn, or a stranger on the road, and word of Orazca will spread.",
+					"text": "A Capitol needs more than walls - it needs a name people trust. Take on work across the realm: see any three quests through, from a Job Board, an inn, or a stranger on the road, and word of Orazca will spread. Standing is not mere flavor. A town's reputation is its shield: every point of it turns aside an attacking war mage that much more often. It is also its licence to grow - each point allows three more buildings there, so a town nobody respects can raise nothing at all. Reputation is earned by finishing work in a town and by beating back the mages who come for it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -9479,7 +9479,7 @@
 					6
 				],
 				"prologue": {
-					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then UPGRADE it - a restored Armory still has no barracks, and the Guards option only appears once the upgrade is done. Hire your guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage. The upgrade earns you more than a barracks: the Capitol's Level 2 Armory is the only place with an Item Storage. Stow what you are not carrying, hand equipment to your roaming guards so they fight better - and note that selling items happens there and nowhere else, so until it is built you have no way to turn gear into gold.",
+					"text": "The Five will come for Orazca - it is only a question of when. Restore your Capitol's Armory if you haven't, then UPGRADE it - a restored Armory still has no barracks, and the Guards option only appears once the upgrade is done. Hire your guard there. Guards fight off attacking wizards before they ever reach your gates, for a weekly wage. The upgrade earns you more than a barracks: the Capitol's Level 2 Armory is the only place with an Item Storage. Stow what you are not carrying, hand equipment to your roaming guards so they fight better - and take it back off them whenever you want it, nothing you lend is lost. Note too that selling items happens there and nowhere else, so until it is built you have no way to turn gear into gold.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11270,7 +11270,7 @@
 		"id": 52,
 		"isTemplate": true,
 		"name": "The Enemy of My Enemy...",
-		"description": "The five Seals that bound you - pearl, jet, sapphire, emerald, ruby - sit in the five invaders' castles. Storm each castle and take back what was forged from your stolen power.",
+		"description": "The five Seals that bound you - pearl, jet, sapphire, emerald, ruby - sit in the five invaders' castles. Storm each castle and take back what was forged from your stolen power. Each of the Five hoards card sets no other holds, so what you win in one biome you will not find in another.",
 		"offerDialog": {},
 		"prologue": {
 			"action": [
@@ -11281,7 +11281,7 @@
 					}
 				}
 			],
-			"text": "The Warden lays out five worn map-marks, one for each castle. \"Each of the Five keeps their Seal at the heart of their castle - the instruments of your imprisonment, cut from your own stolen power. Take them back, one throne at a time. Break their trials, defeat their champions, and reclaim what is yours. Then come home to Orazca.\"",
+			"text": "The Warden lays out five worn map-marks, one for each castle. \"Each of the Five keeps their Seal at the heart of their castle - the instruments of your imprisonment, cut from your own stolen power. Take them back, one throne at a time. Break their trials, defeat their champions, and reclaim what is yours. And watch what falls along the way - the Five divided the realm's card sets between them, and no two hold the same. Swamp spoils are not mountain spoils. Hunt a biome and you learn what only that biome can teach. Then come home to Orazca.\"",
 			"options": [
 				{
 					"name": "(Continue)"

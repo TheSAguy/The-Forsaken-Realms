@@ -17757,6 +17757,52 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 212: two quest texts teach mechanics; both map splits closed (2026-09-15)
+
+REPUTATION, ON THE "COMPLETE THREE QUESTS" STEP. User: "on the quest, after you build your capitol, before you
+hire a guard. This is the do 3 quests. Add to that text that town reputation helps with defense and increases
+the building limit." That is stage 6 of **Raise the Banner**, between "Raise Orazca" (id 1) and "Hire a guard"
+(id 2). Both effects were read out of the code rather than the request, and the numbers came with them:
+
+* Defense - `TerritoryControl.reputationDefenseBonus()` (rounds 205/207) takes 1% off an attacking mage's
+  capture chance per point, capped at 20 points, floored at a 5% capture chance.
+* Building limit - `TownRestoration.maxBuildableBuildings()` is `max(0, getMapReputation()) *
+  BUILDINGS_PER_REPUTATION`, and that constant is **3**. Exactly three slots per point is concrete enough to
+  state outright, so the prologue does: "each point allows three more buildings there, so a town nobody
+  respects can raise nothing at all."
+* How it is earned - `DuelScene` grants +1 at the town for beating an attacking mage, restoration grants +1,
+  and quests award it through `DialogData.addMapReputation`. That is what ties the mechanic to a
+  complete-three-quests step in the first place.
+
+UNIQUE SETS PER BIOME, ON THE FIVE-CASTLES QUEST. User: "On the quest, find enemy Capitols. Say something like
+each biome has unique sets." `EditionProgression.seedColorShards()` shuffles every booster-capable edition at
+world generation, gives 12 to neutral, and deals the rest round-robin to the five colors (~35 each of 178); an
+enemy's loot is restricted to its own color's shard, and the five castles sit one per biome. So the Warden now
+adds: "the Five divided the realm's card sets between them, and no two hold the same. Swamp spoils are not
+mountain spoils. Hunt a biome and you learn what only that biome can teach."
+
+GUARD EQUIPMENT IS REVERSIBLE, said out loud. Round 211 noted that `ArmoryStorage` has `takeFromGuard` as well
+as `giveToGuard`; the user agreed it was worth telling the player. The prologue said only "hand equipment to
+your roaming guards", which leaves someone who has just found one good sword reasonably afraid the Armory will
+eat it. Now: "and take it back off them whenever you want it, nothing you lend is lost."
+
+BOTH REMAINING MAP SPLITS CLOSED, by the user's own edits to `Planeswalker_Dueling_Club.tmx` and
+`Witherbloom_Classroom.tmx` - and verified rather than taken on trust. `unreachable_contents.py` now reports
+the Dueling Club as "split, but every object is in the main region - COSMETIC" (its entry/exit object, which is
+both the spawn point and the way out, is back in the 306-tile interior) and Witherbloom as no split at all.
+That empties the map-connectivity thread opened in round 204: of the three maps flagged, two were always
+cosmetic and the third is now fixed.
+
+`deckCardFallbackGold` STAYS AT 50, user decision, after round 207 measured it firing four times for 250 gold
+in one session against a predicted 0.9% of entries. The open question is closed, not deferred.
+
+TWO SCRIPT BUGS OF MY OWN, both caught by their own assertions this time and both worth recording because
+round 211's went the other way. The whole-value matcher used for the four main strings silently matched
+**nothing** when handed a fragment of a longer prologue - it needed substring replacement, and the
+`changed == 1` assertion caught it. Round 211's equivalent check asserted "old text absent", which cannot hold
+when the new text begins with the old, and it failed on a perfectly good edit. Assertions that can only fail
+loudly are worth more than assertions that look thorough.
+
 ## Round 211: the guard quest names what else the Armory upgrade buys (2026-09-15)
 
 User: "For the quest, Hire a guard. We already added, need to have Armory lvl2. Please also add that at Lvl 2

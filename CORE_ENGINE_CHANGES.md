@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 212 (2026-09-15) - no engine edits
+
+Plane data only: `world/quests.json` (Raise the Banner stage 6, the five-castles quest, and the guard quest's
+take-back clause) plus the user's own edits to `Planeswalker_Dueling_Club.tmx` and `Witherbloom_Classroom.tmx`.
+No Java changed.
+
 ## Round 211 (2026-09-15) - no engine edits
 
 Plane data only: `world/quests.json` (the hire-a-guard objective and prologue). No Java changed. Plus a user map
