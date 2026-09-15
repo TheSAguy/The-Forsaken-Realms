@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 207 (2026-09-14) - no engine edits
+
+Adventure-side only: `adventure/util/EconomyBuildings` (Shard Mine cost), `adventure/util/TerritoryControl`
+(the capture floor and the Capitol repel cap), `adventure/data/TuningData`, and plane data
+(`config tables/settings.json`). Plus one save-editing deck list. Tooling: `dev-tools/validate_plane_data.py`
+knows the new key.
+
 ## Round 206 (2026-09-14) - no engine edits
 
 Adventure-side only: `adventure/util/CardUtil` (new `claimRewardCardBonus()` + payout-scoped flag),

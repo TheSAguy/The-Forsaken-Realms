@@ -351,6 +351,17 @@ public class TuningData {
     public float townReputationDefensePerPoint = 0.01f;
     public int townReputationDefenseMaxPoints = 20;
 
+    // Round 207 (user, after round 206's breakdown showed a Common-tier mage hitting a 0% capture chance at 10
+    // reputation: "let's add the 5% floor on the capture roll"). The smallest chance an attacking mage is ever
+    // left with against a player town, no matter how much reputation and how many Outlooks defend it. Without
+    // it, reputation does not merely make a town hard to take, it makes it impossible - and TerritoryControl had
+    // already rejected exactly that for Functioning Neutral Towns ("outright immune to weak mages... far more
+    // than 'a little longer'").
+    //
+    // Also caps the Capitol's pre-duel repel at 1 - this, so an attack there always has at least this chance of
+    // reaching the duel rather than being waved off forever. 0 disables the floor and restores immunity.
+    public float townMinCaptureChance = 0.05f;
+
     /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)

@@ -2266,6 +2266,12 @@ public class TerritoryControl {
             // away before the duel is queued. Rolled AFTER the guards have already fought, so a
             // repel here is the town itself holding, not the guards doing it twice.
             float capitolDefense = reputationDefenseBonus(target);
+            // Round 207: the same guarantee the town roll gets - an attack on the Capitol always has
+            // at least townMinCaptureChance of actually reaching the duel, so no amount of reputation
+            // can wave every mage away forever (which uncapped reputation otherwise would).
+            float capitolFloor = Config.instance().getTuningData().townMinCaptureChance;
+            if (capitolFloor > 0f)
+                capitolDefense = Math.min(capitolDefense, 1f - capitolFloor);
             if (capitolDefense > 0f
                     && WorldSave.getCurrentSave().getWorld().getRandom().nextFloat() < capitolDefense) {
                 System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage turned away from the Capitol"
@@ -2322,6 +2328,14 @@ public class TerritoryControl {
                 float repDefense = reputationDefenseBonus(target);
                 if (repDefense > 0f)
                     captureChance = Math.max(0f, captureChance - repDefense);
+                // Round 207: a town is never fully safe. Round 206's breakdown showed a Common-tier
+                // mage's 10% reaching 0% at 10 reputation, and this class had already rejected that
+                // outcome once for Functioning Neutral Towns. Math.min against the unmodified tier
+                // chance so the floor can only ever RAISE a suppressed roll back to the minimum - it
+                // must never hand a mage better odds than its own tier would have given unaided.
+                float minCapture = Config.instance().getTuningData().townMinCaptureChance;
+                if (minCapture > 0f && captureChance < minCapture)
+                    captureChance = Math.min(minCapture, attackerWinChance(mage.getData().tier));
                 boolean attackerWins = world.getRandom().nextFloat() < captureChance;
                 System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
                         + ", chance=" + captureChance + ", reputationDefense=" + repDefense

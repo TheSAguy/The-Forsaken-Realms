@@ -17757,6 +17757,67 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 207: the Shard Mine costs 50/50, and no town is ever fully immune (2026-09-14)
+
+SHARD MINE 50/50 STONE/WOOD. User: "change the shard mine cost to be 50%/50% Stone / Wood." Split out of the
+shared mine case: **38 wood + 38 stone**, where the other mines keep 25 + 50. Deliberately 38+38 rather than
+37+38: the mines' base is 75, which is odd and cannot divide evenly, and showing the player two different
+numbers for a cost described as 50/50 reads as a mistake. The extra point is invisible in play and the ratio is
+then exactly even at every difficulty, since `scaledCost()` multiplies both halves by the same 0.75/1.0/1.25/1.5.
+
+A 5% FLOOR ON THE CAPTURE ROLL. User: "let's add the '5% floor on the capture roll is a one-line change'" -
+closing the immunity round 206's breakdown exposed, where a Common-tier mage's 10% capture chance hit 0% at 10
+reputation and the town could not be taken at all. `townMinCaptureChance` (settings.json, default 0.05) is the
+smallest chance an attacking mage is ever left with, however much reputation and however many Outlooks defend
+the town.
+
+Clamped with `Math.min` against the mage's own unmodified tier chance, so the floor can only ever RAISE a
+suppressed roll back to the minimum - it must never hand a mage better odds than its tier would have given
+unaided. The same value also caps the Capitol's pre-duel repel at `1 - floor`, so no amount of reputation waves
+every mage away forever (which uncapped reputation otherwise would). 0 disables the floor and restores immunity.
+
+With it, the round-206 table's one "YES" becomes a "no" - nothing on it reaches 0% any more:
+
+    tier        base   at 20 rep   +Outlook
+    Common       10%       5%         5%     (was 0% / 0%)
+    Uncommon     30%      10%         5%
+    Rare         70%      50%        45%
+    Mythic       90%      70%        65%
+
+LOG REVIEW (live forge.log, 703 lines): zero exceptions. Round 203's gold fallback is firing IN PLAY, and more
+often than the simulation's floor estimate:
+
+    [TFR-DeckLoot] deck paid only 6 of 7 card(s) ... paying 50 gold instead (1 x 50)
+    [TFR-DeckLoot] deck paid only 3 of 5 card(s) ... paying 100 gold instead (2 x 50)
+    [TFR-DeckLoot] deck paid only 1 of 2 card(s) ... paying 50 gold instead (1 x 50)
+    [TFR-DeckLoot] deck paid only 0 of 1 card(s) ... paying 50 gold instead (1 x 50)
+
+Four fallbacks in one session, 250 gold total. `deckcard_fallback_sim.py` predicted 0.9% of entries, but said in
+its own docstring that it does NOT model an entry's `cardTypes` (card types are not in res/editions) and so "these
+numbers are a floor". This is that limitation showing up exactly where it was expected: the relaxation lines
+alongside these show pools widening to only 2 or 3 distinct names against a request for 5, and with
+`rewardMaxCopiesPerName = 2` a 2-name pool can pay at most 4 cards. The mechanic is behaving correctly; the
+ESTIMATE was optimistic. 250 gold a session is roughly five median duels' worth, which is the number to watch if
+`deckCardFallbackGold` should come down to 25.
+
+No `[TFR-CaptureOdds]` lines at all this session, so rounds 205/207's town defense is still unexercised in play.
+
+SLOT 3's DECK REBUILT, SLOT 2's DELIBERATELY NOT (user: "Check if my decks need updating"). The collection grew
+941 -> 1022 distinct names since round 205, and the two decks were affected very differently. White gained
+almost nothing it wants (Resurrection, Angel of the Dawn, two Howling Mines - a symmetric draw engine is wrong
+for a control deck), and slot 2 is the player's ACTIVE deck, so it was left alone. Black gained an engine:
+
+* **2x Attrition** (`{B}, Sacrifice a creature: Destroy target nonblack creature`) plus the **6 Reassembling
+  Skeletons** already in the collection but not in v1 - the skeleton returns for `{1}{B}`, so the pair is
+  unbounded repeatable removal.
+* **Archdemon of Unx** - a 6/6 flier that makes a 2/2 Zombie every upkeep by sacrificing a NON-Zombie. In an
+  all-Zombie deck it has nothing to sacrifice but the Reassembling Skeleton, which comes straight back.
+
+v2 therefore cuts the five Ichor Slicks and Josu Vess for that engine. Written with `WriteDecks`, game verified
+closed, dry run first, backup `.prededit12.bak`, verified after with `Inspect`: stats identical, slot 2 and
+every other slot untouched, and the collection diff is EMPTY this time (the 18 Swamps were already granted in
+round 205).
+
 ## Round 206: the +1-reward-card items are a PAYOUT bonus, not a per-entry one (2026-09-14)
 
 User: "Let's make bonusDeckCards per payout, not per entry."

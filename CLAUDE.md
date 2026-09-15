@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 207 (2026-09-14): **Shard Mine is 50/50 Stone/Wood, and no town is ever fully immune.** User: "change the
+  shard mine cost to be 50%/50%" and "add the 5% floor on the capture roll". Shard Mine splits out of the shared mine
+  case at **38 wood + 38 stone** (38+38 not 37+38: the 75 base is odd, and two different numbers for a cost described
+  as 50/50 reads as a bug). New `townMinCaptureChance` (settings.json, 0.05) is the least an attacking mage is ever
+  left with - clamped with `Math.min` against the mage's own tier chance so the floor can only raise a suppressed roll,
+  never beat the tier - and it caps the Capitol's pre-duel repel at `1 - floor` too. Round 206's table now has no 0%
+  entries at all. **Log:** clean, but round 203's gold fallback fires MORE than the sim predicted (4 times / 250g in
+  one session) - the sim's own docstring said it ignores `cardTypes` and is a floor, and that is what showed up; drop
+  `deckCardFallbackGold` to 25 if it reads as too generous. **Decks:** collection grew 941 -> 1022, so slot 3 rebuilt
+  around **2x Attrition + 6 Reassembling Skeleton** (unbounded repeatable removal) and **Archdemon of Unx**; slot 2
+  left alone - it gained nothing it wants and is the active deck. `.prededit12.bak`, collection diff empty.
 - Round 206 (2026-09-14): **the +1-reward-card items are a PAYOUT bonus, not per-entry.** User: "make bonusDeckCards
   per payout, not per entry." It was added to every `deckCard` entry's count, and a typical enemy has three - so a +1
   item was really +3. `CardUtil.claimRewardCardBonus()` gives it to the first entry that asks and 0 after, claimed

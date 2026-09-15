@@ -245,6 +245,12 @@
     "townReputationDefensePerPoint": 0.01,
     "townReputationDefenseMaxPoints": 20,
 
+    // Round 207 (user: "let's add the 5% floor on the capture roll"). The smallest chance an attacking mage is
+    // ever left with against a player town, however much reputation and however many Outlooks defend it -
+    // without it a Common-tier mage's 10% hits 0% at 10 reputation and the town simply cannot be taken. Also
+    // caps the Capitol's pre-duel repel at 1 - this. 0 disables the floor and allows immunity again.
+    "townMinCaptureChance": 0.05,
+
     // Round 177 (user request): the share of spawn rolls on your OWN territory drawn from the Wasteland roster
     // instead of the player roster (72 enemies against the Wasteland's 305) - "slightly lesser" than the own
     // pool's chance, so 0.4 = 40% Wasteland / 60% own. Never fired before this round (a biome-name bug).

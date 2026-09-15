@@ -1269,7 +1269,13 @@ public class EconomyBuildings {
             // same 0.75/1.0/1.25/1.5 factor. The user's 90/60/30 figures are the ratio illustrated
             // rather than a literal reading: the base is 75 stone, so the split is 50 + 25.
             //
-            case SHARD_MINE:
+            // Round 207 (user: "change the shard mine cost to be 50%/50% Stone / Wood") - split out
+            // of the shared mine case below. 38 + 38, not 37 + 38: the other mines' base is 75, which
+            // is odd and so cannot divide evenly, and showing the player two different numbers for a
+            // cost described as 50/50 reads as a mistake. The extra point costs nothing anyone will
+            // notice and the ratio is then exactly what was asked for at every difficulty, since
+            // scaledCost() multiplies both halves by the same 0.75/1.0/1.25/1.5 factor.
+            case SHARD_MINE:    return new int[]{250, 38, 38, 0};
             case GOLD_MINE:
             case STONE_MINE:    return new int[]{250, 25, 50, 0};
             // Round 200 (user: "for lumber mill, let's actually switch to 1/3 stone 2/3 wood").
