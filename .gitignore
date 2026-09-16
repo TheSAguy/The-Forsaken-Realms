@@ -121,3 +121,8 @@ dev-tools/**/*.class
 
 # sprite_artifact_audit.py backups - never ship, the plane folder is copied wholesale
 *.spritebak
+# Round 220: every other dev-tool backup shape too (patch_*.py, strip_null_quest_tags.py,
+# atlas_regrid.py and stray_collision_qa.py all write <file>.bak beside the file they change).
+# The packager skips the same patterns, so a stray backup can neither be committed nor shipped.
+*.bak
+*.orig

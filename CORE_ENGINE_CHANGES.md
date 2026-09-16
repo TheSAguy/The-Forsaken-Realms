@@ -2779,6 +2779,32 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 220 (2026-09-16)
+
+`forge-gui-mobile/src/forge/adventure/util/CardUtil.java` - `generateCards()`'s random-draw branch:
+`pinnedNames` (a reward with `cardName`/`cardNames`) disables both `rewardDuplicateRerolls` and
+`rewardMaxCopiesPerName` and silences the duplicate log line; the cap check also exempts
+`isVeryBasicLand()`.
+
+`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` - `setWinner()`'s Coin Challenge branch
+clears the defeat-gold waiver on BOTH outcomes (it used to clear it on a loss only);
+`launchCoinChallenge()` passes `isArena = true` to `DuelScene.initDuels()` so a win records no color
+reputation, and its `[TFR-CoinChallenge]` launch line says "arena-flagged".
+
+`forge-gui-mobile/src/forge/adventure/stage/MapStage.java` - `loadObjects()`: after the champion
+promotion block, a fixed roster (round 201) re-attaches `caveChampionObjectId`/`caveChampionData` to
+the placement whose stored name is the cave's recorded champion, so `onChampionDefeated()` fires on
+a second visit too.
+
+`forge-gui-mobile/src/forge/adventure/util/CaveChampions.java` - new
+`isRecordedChampion(PointOfInterest, String)`.
+
+`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java` -
+`retroCompleteIfPoiAlreadyVisited()` returns false for `count3 > 1`.
+
+Not engine: `standalone-packaging/build_standalone.py` (the plane copy ignores backup patterns and
+lists what it skipped) and `.gitignore` (`*.bak`, `*.orig`).
+
 ## Round 219 (2026-09-16) - no engine edits
 
 Cleanup. `forge-gui/res/adventure/common/maps/tileset/buildings.png` reverted to its round-217 bytes

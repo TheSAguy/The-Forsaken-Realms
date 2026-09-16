@@ -97,6 +97,25 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 220 (2026-09-16): **the post-v1.10 review's fixes.** A deep read of everything since the
+  v1.10 tag found two bugs, two narrow regressions and one unwritten consequence, all fixed:
+  (1) `rewardMaxCopiesPerName` was truncating AUTHORED fixed-card rewards (Gitrog Bog's 12-land
+  chests, Three Tree City's 20 Hare Apparent, Chicken's 3 Zodiac Rooster, Kiora's 4 Kiora's Follower
+  all paid 2) - a reward with `cardName`/`cardNames` now skips the cap and the rerolls, basic lands
+  are cap-exempt; (2) a WON Coin Challenge left the defeat-gold waiver armed (`defeated()` never runs
+  on the ArenaScene path) - cleared on both outcomes; (3) a fixed-roster cave brought its champion
+  back by name with `caveChampionObjectId` unset, so beating it never marked the roll spent - new
+  `CaveChampions.isRecordedChampion()` re-attaches the identity; (4) round 208's Travel
+  retro-completion now leaves `count3 > 1` stages alone (quest 49's three-visit "Wait for The Tinker"
+  was completing at activation); (5) the Coin Challenge launches with `isArena = true`, so a win
+  shifts no color reputation (user decision) - statistics and kill decay still record; (6) the
+  packager skips `*.bak`/`*.spritebak`/`*.orig`/`*~` when copying the plane and names each skip,
+  `.gitignore` gains `*.bak`/`*.orig`. **Logs corrected the open list:** round 205's
+  `[TFR-CaptureOdds] ... attacking player-owned` HAS fired (eight lines in the 2026-09-15 session,
+  reputationDefense=0.01); a Bronze Coin was paid today to Young Red Dragon, so the Coin Challenge
+  button is live; `[TFR-Crown]`, the round-203 gold fallback and the arena weekly lock were all seen
+  today. Still unobserved: star-town dialog (210), AI capitals spreading (197), Inn retro (213).
+  Noted, not changed: the Level 2 arena button row overflows the portrait stage (pre-existing).
 - Round 219 (2026-09-16): **cleaning up after round 218.** Two things shipped that should not have, both
   spotted in the packager's overlay list. `common/maps/tileset/buildings.png` was committed as modified
   despite round 218 saying `common/` was untouched - its pixels are identical (verified against HEAD~1,

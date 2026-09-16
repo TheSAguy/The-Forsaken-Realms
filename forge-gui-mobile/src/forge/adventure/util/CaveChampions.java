@@ -100,6 +100,22 @@ public class CaveChampions {
     }
 
     /**
+     * Round 220: is this enemy name the champion recorded for this cave - rolled on an earlier visit
+     * and not yet defeated? MapStage uses it to re-attach the champion identity when a fixed roster
+     * (round 201) brings the champion back by name without running prepareCaveChampion(). A spent
+     * roll is recorded as "", which never equals a real name, so a beaten champion cannot be
+     * re-attached to anything.
+     */
+    public static boolean isRecordedChampion(PointOfInterest poi, String enemyName) {
+        if (enemyName == null || enemyName.isEmpty() || !isEnabled() || !isCave(poi))
+            return false;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null)
+            return false;
+        return enemyName.equals(world.getCaveChampion().get(poi.getID()));
+    }
+
+    /**
      * Every arena-exclusive enemy this cave could host, preferring the biome's own colour and
      * falling back to the whole eligible catalog when that colour has nobody left at this rank.
      * <p>

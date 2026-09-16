@@ -419,7 +419,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
      *  <p>
      *  The fight carries noAnte and the defeat gold penalty is waived up front, so per the spec a
      *  loss costs exactly the entry fee. Rewards are stripped: the coin IS the prize, and paying a
-     *  normal loot table on top would make this the cheapest card faucet in the game. */
+     *  normal loot table on top would make this the cheapest card faucet in the game. Round 220:
+     *  launched with isArena, so a win shifts no color reputation - same as a bracket fight. */
     private void launchCoinChallenge(String foe) {
         if (arenaMapStage == null || arenaStarted || roundsWon != 0 || !enable || foe == null)
             return;
@@ -467,10 +468,19 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         enable = false;
         System.out.println("[TFR-CoinChallenge] challenging " + foe + " for a Bronze Coin - fee "
                 + fee + " (" + Current.player().getDifficultyData().name + "), week " + week
-                + ", noAnte, defeat gold loss waived");
+                + ", noAnte, defeat gold loss waived, arena-flagged (no reputation shift)");
         refreshArenaBuildingButtons();
         DuelScene duelScene = DuelScene.instance();
-        duelScene.initDuels(WorldStage.getInstance().getPlayerSprite(), challenger, false, null);
+        // Round 220 (post-v1.10 review; user: "include the reputation exclusion"): isArena = true.
+        // DuelScene's isArena gates exactly three things - the color-reputation shift on a win
+        // (afterGameEnd), the loss dialog's Bronze Coin ransom offer, and the flag setWinner()
+        // receives - and all three are right for this fight. It is bought at the arena and can be
+        // repeated weekly against a foe the player already knows they can beat, so it must not be a
+        // reputation lever, exactly as the bracket is not; the ransom offer is moot (noAnte, and this
+        // foe already holds a coin); and this scene's setWinner() ignores the flag. The win/loss
+        // record and the kill decay still register, as they do for a bracket fight - it is a real
+        // duel against the real enemy on the player's own deck.
+        duelScene.initDuels(WorldStage.getInstance().getPlayerSprite(), challenger, true, null);
         FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new TransitionScreen(() ->
                 Forge.switchScene(duelScene),
                 ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "",
@@ -811,6 +821,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             String foe = coinChallengeFoe;
             coinChallengeMatch = false;
             coinChallengeFoe = null;
+            // Round 220 (post-v1.10 review): the waiver is one-shot and only defeated() consumes it -
+            // and defeated() runs from MapStage/WorldStage.setWinner(), never from this scene. So on
+            // THIS path nobody consumes it, win or lose, and round 216 cleared it on the loss branch
+            // only: a WON challenge left it armed, and the player's next ordinary defeat that session
+            // cost no gold. Cleared unconditionally, before either outcome is handled.
+            Current.player().clearSuppressDefeatGoldLoss();
             if (winner && foe != null) {
                 boolean reclaimed = Current.player().reclaimCoinRansom(foe);
                 System.out.println("[TFR-CoinChallenge] beat " + foe + " -> "
@@ -819,10 +835,6 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                         ? "You won your Bronze Challenge Coin back from " + foe + "."
                         : foe + " no longer held your coin.");
             } else {
-                // The waiver is one-shot and defeated() consumes it, but a duel that ended without
-                // reaching defeated() would leave it armed for an unrelated loss - same leak
-                // clearSuppressDefeatGoldLoss() exists for.
-                Current.player().clearSuppressDefeatGoldLoss();
                 System.out.println("[TFR-CoinChallenge] lost to " + foe + " - coin stays with them,"
                         + " no gold penalty beyond the entry fee");
                 GameHUD.getInstance().addNotification(foe + " keeps your Bronze Challenge Coin."

@@ -565,8 +565,18 @@ public class CardUtil {
             // So there is now a HARD CAP on copies of one name in a payout. When the cap bites the
             // reward pays FEWER cards rather than the same card again: a thin pool should not be
             // able to hand over five of anything. 0 or negative disables the cap entirely.
-            int rerolls = Math.max(0, Config.instance().getTuningData().rewardDuplicateRerolls);
-            int maxCopies = Config.instance().getTuningData().rewardMaxCopiesPerName;
+            // ROUND 220 (post-v1.10 review): neither the rerolls nor the cap apply to a reward that
+            // PINS its cards. Both exist to tame a random draw from a thin pool; an entry that names
+            // its card and asks for several has already chosen the repeats, and the cap was silently
+            // rewriting four authored payouts to 2 each: Gitrog Bog's five chests of 12 basic lands,
+            // Three Tree City's 20 Hare Apparent (a card that reads "any number"), Chicken's 3 Zodiac
+            // Rooster and Kiora's 4 Kiora's Follower - every one logged as "pool exhausted". Basic
+            // lands are exempt from the cap on the same logic even in a random draw: a lands-only
+            // pool exists to pay lands in quantity.
+            boolean pinnedNames = (data.cardName != null && !data.cardName.isEmpty())
+                    || (data.cardNames != null && data.cardNames.length > 0);
+            int rerolls = pinnedNames ? 0 : Math.max(0, Config.instance().getTuningData().rewardDuplicateRerolls);
+            int maxCopies = pinnedNames ? 0 : Config.instance().getTuningData().rewardMaxCopiesPerName;
             java.util.Map<String, Integer> takenNames = payoutTakenNames != null ? payoutTakenNames : new java.util.HashMap<>();
             for (int i = 0; i < count; i++) {
                 PaperCard candidate = null;
@@ -581,7 +591,7 @@ public class CardUtil {
                 if (candidate != null) {
                     String name = candidate.getCardName();
                     int already = takenNames.getOrDefault(name, 0);
-                    if (maxCopies > 0 && already >= maxCopies) {
+                    if (maxCopies > 0 && already >= maxCopies && !candidate.isVeryBasicLand()) {
                         long distinct = pool.stream().filter(java.util.Objects::nonNull)
                                 .map(PaperCard::getCardName).distinct().count();
                         System.out.println("[TFR-RewardDup] pool exhausted - " + name + " already paid "
@@ -589,7 +599,7 @@ public class CardUtil {
                                 + distinct + " distinct name(s); paying one card fewer instead of another copy");
                         continue;
                     }
-                    if (!fresh) {
+                    if (!fresh && !pinnedNames) {
                         // Every draw repeated. Usually the legal pool is genuinely tiny, so log its
                         // distinct-name count: it is the difference between "working as intended
                         // against a 2-name pool" and "the dedup is not reaching this path".

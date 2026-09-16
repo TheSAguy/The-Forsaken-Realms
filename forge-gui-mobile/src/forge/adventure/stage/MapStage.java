@@ -1151,6 +1151,23 @@ public class MapStage extends GameStage {
                                         + EN.getName() + " to " + caveChampionData.getName());
                                 EN = caveChampionData;
                             }
+                            // Round 220 (post-v1.10 review): on a fixed roster prepareCaveChampion()
+                            // returns before choosing anything, so the champion came back by NAME
+                            // through the stored roster above with caveChampionObjectId still -1.
+                            // Beating it then never reached CaveChampions.onChampionDefeated() (the
+                            // defeat hook keys on that id), the cave's roll was never marked spent,
+                            // and the same champion returned when this POI respawned after its
+                            // cooldown - the farming round 166 closed. Re-attach the champion
+                            // identity to the placement carrying the recorded champion's name. Only
+                            // a fixed roster gets here with the id unset: on a first visit the
+                            // promotion just above has already claimed it.
+                            if (caveChampionObjectId < 0 && changes != null && changes.hasFixedRoster() && EN != null
+                                    && CaveChampions.isRecordedChampion(AdventureQuestController.instance().mostRecentPOI, EN.getName())) {
+                                caveChampionObjectId = id;
+                                caveChampionData = EN;
+                                System.out.println("[TFR-CaveChampion] fixed roster: placement " + id
+                                        + " carries the recorded champion " + EN.getName() + " - champion identity restored");
+                            }
                             // Round 201: record what this placement actually resolved to, so the
                             // next visit reproduces it. Written on EVERY entry, which is harmless
                             // once fixed (it re-writes the same name) and is what captures the

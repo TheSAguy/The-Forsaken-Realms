@@ -550,6 +550,13 @@ public class AdventureQuestStage implements Serializable {
     public boolean retroCompleteIfPoiAlreadyVisited() {
         if (status != ACTIVE || objective != Travel)
             return false;
+        // Round 220 (post-v1.10 review): a Travel stage asking for MORE than one arrival is a wait,
+        // not a destination - handleEvent() advances it one arrival at a time (++progress3 >= count3).
+        // Quest 49's "Wait for The Tinker" wants three separate visits to a QuestSource town, and
+        // the giver's own town is one of those, so this would have completed the whole wait on the
+        // spot. One past visit cannot stand in for several; those stages keep the live path.
+        if (count3 > 1)
+            return false;
         boolean satisfied = false;
         try {
             if (targetPOI != null) {

@@ -447,9 +447,20 @@ def main():
         with open(version_marker, "w", encoding="utf-8") as vm:
             vm.write(marker_value)
     # 4b. adventure/<plane> (changes every round - always fresh)
+    # Round 220: tool backups never ship. The plane folder is copied wholesale, and a stray backup
+    # written beside a data file by one of the dev-tools landed in the player's install twice
+    # (round 211's quests.json.r211.bak, round 219's buildings.png.spritebak). .gitignore keeps them
+    # out of the repo; this keeps a working-tree copy out of the package as well, and names each
+    # one it skips so the overlay list still tells the story.
+    backup_patterns = ("*.bak", "*.spritebak", "*.orig", "*~")
+    ignore_backups = shutil.ignore_patterns(*backup_patterns)
+    plane_src = os.path.join(REPO, "forge-gui", "res", "adventure", PLANE)
+    for root, _dirs, files in os.walk(plane_src):
+        for name in sorted(ignore_backups(root, files)):
+            print("  skipping backup file (not packaged): "
+                  + os.path.relpath(os.path.join(root, name), plane_src))
     print("copying the plane folder from the repo...")
-    shutil.copytree(os.path.join(REPO, "forge-gui", "res", "adventure", PLANE),
-                    os.path.join(adv, PLANE))
+    shutil.copytree(plane_src, os.path.join(adv, PLANE), ignore=ignore_backups)
 
     # 5. our jar
     print("copying the built jar...")

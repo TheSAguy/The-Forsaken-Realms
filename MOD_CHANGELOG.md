@@ -17757,6 +17757,87 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 220: the post-v1.10 review's fixes (2026-09-16)
+
+A deep read of every change since the v1.10 tag (43 commits, 31 Java files, the data and the tools)
+turned up two bugs, two narrow regressions and one consequence nobody had written down. All fixed
+here, plus the packager guard that closes the backup-file incident class for good. Findings first,
+then what the logs said about the "never observed" list.
+
+**1. The per-name reward cap was truncating authored fixed-card rewards.** Round 202's
+`rewardMaxCopiesPerName` (2) is applied inside `CardUtil.generateCards()`'s random-draw branch, and
+that branch also serves a `card` reward that NAMES its card and asks for several. Four authored
+payouts were silently cut to 2 each, every one logged as `[TFR-RewardDup] pool exhausted`:
+Gitrog_Bog_1's five treasure entries of 12 basic lands, Three_Tree_City's two entries of 20 Hare
+Apparent (a card that reads "any number"), Chicken's 3 Zodiac Rooster and Kiora's 4 Kiora's
+Follower. Now: a reward with `cardName`/`cardNames` set skips both the cap and the round-185 rerolls
+(it has already chosen its repeats), the duplicate log line is suppressed for those, and a basic
+land is exempt from the cap even in a random draw (a lands-only pool exists to pay lands in
+quantity). Deck-derived `deckCard` entries - the Befoul case the cap was built for - are unchanged.
+
+**2. Winning a Coin Challenge left the defeat-gold waiver armed.** `launchCoinChallenge()` arms
+`suppressNextDefeatGoldLoss()`, but the waiver is consumed only by `AdventurePlayer.defeated()`,
+which runs from MapStage/WorldStage.setWinner() - and the challenge's after-match target is
+ArenaScene, so `defeated()` never runs on that path. Round 216 cleared the flag on the loss branch
+only; after a WON challenge the player's next ordinary defeat that session cost no gold
+(session-only: `load()` resets it). Cleared unconditionally now, before either outcome is handled.
+
+**3. A fixed-roster cave lost its champion bookkeeping on the second visit.** Round 201's
+`prepareCaveChampion()` early return leaves `caveChampionObjectId` at -1, so the champion came back
+by name through the stored roster but beating it never reached `CaveChampions.onChampionDefeated()`
+- the cave's roll was never marked spent, and the same champion returned when that POI respawned
+after its cooldown (the farming round 166 closed). Only bites when the champion survives the first
+visit. New `CaveChampions.isRecordedChampion(poi, name)`; `loadObjects()` re-attaches the champion
+identity to the placement carrying the recorded name (`[TFR-CaveChampion] fixed roster: ...
+champion identity restored`). A spent roll is recorded as "", which never equals a real name.
+
+**4. Round 208's Travel retro-completion ignored `count3`.** A Travel stage advances one arrival at
+a time (`++progress3 >= count3`); quest 49 "Busy Work 2"'s "Wait for The Tinker" is Travel, anyPOI,
+tag QuestSource, count3 3 - a wait implemented as three visits, and the giver's own town is one of
+the 54 QuestSource POIs, so the retro path completed the whole wait at activation. Stages with
+count3 > 1 keep the live path now. It is the only multi-arrival Travel stage in the plane.
+
+**5. The Coin Challenge no longer shifts color reputation** (user: "include the reputation
+exclusion"). It was launched with `isArena = false`, which made it an ordinary duel to every
+downstream system except loot, ante and gold: `DuelScene.afterGameEnd()` recorded the color-wheel
+shift, the win/loss row (rank and sell prices) and `registerKill()`'s spawn decay. The bracket
+deliberately skips reputation, and a 50g weekly rematch against a foe the player already knows they
+can beat is otherwise a reputation lever. Now launched with `isArena = true`, which in DuelScene
+gates exactly three things: the reputation shift (off), the loss dialog's Bronze Coin ransom offer
+(moot - noAnte, and this foe already holds a coin) and the flag `setWinner()` receives (this scene
+ignores it). Statistics and kill decay still record, as they do for a bracket fight.
+
+**6. Tool backups can no longer ship.** Five tools (patch_wanderlust_origin_rep,
+patch_amphin_invisible_walls, strip_null_quest_tags, atlas_regrid, stray_collision_qa) write
+`<file>.bak` beside the file they change, inside the plane folder; `.gitignore` covered only
+`*.spritebak`; and `build_standalone.py` copied the plane with a bare `copytree`, so git-ignoring
+never stopped shipping (round 219's `.spritebak` was git-ignored AND copied). The copy now passes
+`ignore_patterns("*.bak", "*.spritebak", "*.orig", "*~")` and prints each file it skips, and
+`.gitignore` gains `*.bak` / `*.orig` (nothing tracked matches either).
+
+**What the logs said** (three corrections to the standing "never observed" list):
+- Round 205's reputation defense HAS fired: the 2026-09-15 session log holds eight
+  `[TFR-CaptureOdds] ... reputationDefense=0.01 attacking player-owned ...` lines, repels and
+  captures both (1 point = 0.30 -> 0.29). Round 207's 5% floor is still unexercised.
+- A Bronze Coin WAS paid today (14:59 log: "paid a Bronze Challenge Coin to Young Red Dragon"), so
+  the Coin Challenge button is live at the Capitol's Level 2 Arena with that dragon listed.
+- Also observed today: `[TFR-Crown]` (Bandit Leader correctly left alone at 24.5 px), the round-203
+  gold fallback, and the arena weekly lock. Still unobserved: the star-town dialog (210), AI capitals
+  spreading (197), the Inn retro-completion (213).
+
+**Checked clean and left alone:** every new TuningData key is in the validator; serialVersionUID
+pins hold on all four touched Serializable classes; Forge.java (187) is in CORE_ENGINE_CHANGES; the
+claim-loop short-circuit (193) is exact; `flashArea` marks tiles explored so round 185's discovery
+gate cannot loop per frame; the Inn retro-completion cannot be farmed (quest 74 is a story quest
+issued once from "Where Am I?"). Noted, not changed: the Level 2 arena row of three 117-px buttons
+runs to x=372 on the 270-wide portrait stage, so Coin Challenge is off-screen on Android
+(pre-existing - the old 220+140 row overflowed further); TerritoryPerf + ClaimPerf + DayTick +
+StarTowns holdings are four log lines per in-game day (~7% of a long session's log).
+
+Verification: javac of the five touched classes against the live jar, then the Maven package; the
+new `[TFR-CaveChampion] fixed roster` and `arena-flagged` literals confirmed in the compiled
+classes. Packaged to the live folder and synced to the agent game.
+
 ## Round 219: cleaning up after round 218 (2026-09-16)
 
 Round 218 shipped two things it should not have, both caught by reading the packager's own overlay
