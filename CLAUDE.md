@@ -97,6 +97,22 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 213 (2026-09-16): **what five hours of agent play found.** From the 2026-09-15 fair-play session.
+  **The Job Board was invisible to the agent** - `MapStage`:1353 builds it as a `QuestActor` with
+  `setVisible(false)` (the visible thing is the map's board art; the actor is the collision box) and
+  `AgentObserver`:387 dropped every invisible actor, so no town in any of the 32 maps defining one ever
+  reported a `questGiver` and the entire TownRestoration -> Capitol -> reputation chain was unreachable
+  from the bridge; `QuestActor extends DialogActor`, so one condition fixes both. **All five "Oaths at the
+  Ring" stages said "Find and enter any dungeon."** - stock-string leftover; each now names its city and
+  direction, patched by quest+stage id because "Where Am I?" stage 3 uses that string correctly.
+  **Starter decks are 50 cards, not 40** (user: "10 more cards to ante"): losses ante cards away and
+  `DuelScene` pads anything under `minDeckSize` with uncastable **Wastes**, measured at 40 -> 27 in one
+  session and 22% -> 50% win rate once rebuilt; `minDeckSize` stays 40 on purpose, land share held at
+  ~42%, files `git mv`d to `_50` and Easy/Normal repointed. **An Inn tournament played before the quest
+  now counts** - `retroCompleteIfEventAlreadyFinished()`, third use of the round-208 activation-time
+  pattern, reading the already-persisted `PlayerStatistic.completedEvents` rather than adding state.
+  **And one reported bug that was not one:** `settle` hanging on the ante prompt - round 176 already made
+  it return that as a real choice; the session's own wrapper was looping on it. No change made.
 - Round 212 (2026-09-15): **two quest texts teach mechanics; both remaining map splits closed.** User asked for
   reputation's effects on the "complete three quests" step of *Raise the Banner*, and "each biome has unique sets" on
   the five-castles quest. Both written from the code: reputation is 1%/point of mage-capture defense (capped 20,

@@ -586,6 +586,52 @@ public class AdventureQuestStage implements Serializable {
         return satisfied;
     }
 
+    /** Retroactive EventFinish completion (2026-09-16 user request: "if someone does an Inn
+     *  tournament before we give the quest, let's trigger the quest").
+     *  <p>
+     *  An EventFinish stage only advances inside handleEvent(), on a live EVENTCOMPLETE. A
+     *  tournament the player already sat through before "Participate in an Inn Tournament" was
+     *  offered can never fire that event again, so the stage would sit unchecked until they played
+     *  another one - asking the player to repeat something they had just done. Same gap that
+     *  retroCompleteIfFlagSatisfied() closes for flags and retroCompleteIfPoiAlreadyVisited() for
+     *  travel, and the same fix: read persisted STATE at activation.
+     *  <p>
+     *  PlayerStatistic.completedEvents is exactly that state - the per-character list of finished
+     *  tournaments, saved and loaded with the rest of the statistics and cleared on a new game - so
+     *  no new flag is introduced. Tournaments already finished count as progress, so a stage asking
+     *  for several is credited rather than reset.
+     *  <p>
+     *  Requires at least one genuinely completed event before it will do anything, which also keeps
+     *  a stage with count3 == 0 from completing itself out of thin air. */
+    public boolean retroCompleteIfEventAlreadyFinished() {
+        if (status != ACTIVE || objective != EventFinish)
+            return false;
+        boolean satisfied = false;
+        try {
+            int alreadyFinished = Current.player().getStatistic().completedEventCount();
+            if (alreadyFinished <= 0)
+                return false;
+            if (alreadyFinished >= count3) {
+                satisfied = true;
+            } else if (alreadyFinished > progress3) {
+                // Partial credit: a later live EVENTCOMPLETE increments on top of this.
+                progress3 = alreadyFinished;
+                System.out.println("[TFR-MainQuest] stage \"" + name + "\" credited " + alreadyFinished
+                        + " of " + count3 + " tournament(s) already finished before it was issued");
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // a safeguard must never break quest activation
+        }
+        if (satisfied) {
+            status = COMPLETE;
+            progress3 = count3;
+            System.out.println("[TFR-MainQuest] stage \"" + name
+                    + "\" retro-completed on activation (an Inn tournament was already played through"
+                    + " before this stage was issued)");
+        }
+        return satisfied;
+    }
+
     public boolean hasRequiredFetchItems() {
         if (objective != Fetch || itemNames == null || itemNames.isEmpty()) {
             return false;

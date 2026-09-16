@@ -384,7 +384,16 @@ final class AgentObserver {
             } else {
                 continue;
             }
-            if (!a.isVisible()) continue;
+            // Round 213: dialog triggers are deliberately invisible and must NOT be filtered here.
+            // MapStage builds the Job Board as a QuestActor with setVisible(false) - what the player
+            // sees is the map's own board tile art, the actor is only the collision box. The
+            // visibility test is right for a hidden EnemySprite but wrong for these: it hid every
+            // Job Board in all 32 town/capital maps that define one, so /state never reported a
+            // questGiver and an agent could not restore a town, take a board quest, or upgrade to a
+            // Capitol - the whole mod progression was unreachable from the bridge. QuestActor
+            // extends DialogActor, so this single check covers both.
+            if (!a.isVisible() && !(a instanceof DialogActor))
+                continue;
             Map<String, Object> am = new LinkedHashMap<>();
             am.put("id", a.getObjectId());
             am.put("kind", kind);

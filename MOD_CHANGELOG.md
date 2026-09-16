@@ -17757,6 +17757,70 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 213: what five hours of agent play found - and one thing it got wrong (2026-09-16)
+
+Everything here came out of the 2026-09-15 evening play session (a fresh fair game, no cheats, ~3h50m,
+saved to agent slot 3). The session report listed six ranked bugs; the user picked three of them plus
+the deck-decay fix, and added the Inn tournament safeguard.
+
+THE JOB BOARD WAS INVISIBLE TO THE AGENT, and this was the one that mattered. `MapStage`:1353 builds
+every Job Board as a `QuestActor` with `setVisible(false)` - deliberately, because what the player
+sees is the map's own board tile art and the actor is only the collision box. `AgentObserver`:387 then
+dropped every invisible actor while building the map actor list. Net effect: **no town in any of the
+32 town/capital maps that define one ever reported a `questGiver`**, so an agent could not open the
+restore-town dialog, take a Job Board quest, or upgrade to a Capitol - the whole TownRestoration ->
+Capitol -> reputation -> mage-attack chain was unreachable from the bridge. The filter is right for a
+hidden `EnemySprite` and wrong for a trigger actor; `QuestActor extends DialogActor`, so one extra
+condition covers both. (During the session this was worked around by probing ids blind -
+`goto actor=63` opened the restore dialog in a player_town-template town.)
+
+"OATHS AT THE RING" TOLD THE PLAYER TO FIND A DUNGEON, FIVE TIMES. All five city stages of quest 75
+carried the stock description "Find and enter any dungeon." - a copy-paste leftover. The mechanic was
+always correct (`objective=CharacterFlag`, `mapFlag=enteredRingCityN`, set by entering that city); only
+the objective line was wrong, and it is the line the quest log shows. Each stage now names its city and
+its direction, taken from that stage's own prologue so the two agree. Patched by QUEST NAME + STAGE ID
+rather than by string replacement, because a sixth stage - "Where Am I?" stage 3, "Find a Dungeon" -
+uses that exact string CORRECTLY; the script asserts that exactly one legitimate use survives.
+
+THE STARTER DECK IS 50 CARDS NOW, NOT 40. User: "Let's have the min starting deck be 50 cards vs. 40.
+That will give you 10 more cards to ante." The session found decks decaying into an unplayable state:
+every duel loss antes a card away, and `DuelScene`:1080/1095 pads any deck below
+`ConfigData.minDeckSize` (40) back up to the floor with **Wastes** - colorless lands a mono-colored
+starter cannot cast. Measured in play: the Green Starter fell **40 -> 27** in one session, and the
+padding filled the gap invisibly (`deck op=list` reported 27 cards and zero Wastes; the Wastes existed
+only inside the duel). Rebuilding the deck to a legal 40 took the record from **8W/28L (22%)** to
+**4W/4L (50%)** over the next eight duels, and the very next camp went 0 -> 343 gold where every batch
+before it had ground to zero. Starting at 50 leaves ten losses of headroom before the floor is touched
+at all. **`minDeckSize` deliberately stays 40** - raising it would start the padding sooner, which is
+the opposite of the fix. Land share held (17/40 = 42.5% -> 21/50 = 42%) so the mana is not diluted; the
+files are renamed `constructed_*_40.json` -> `_50.json` via `git mv` so the name stops lying, and both
+difficulty blocks that referenced them (Easy, Normal) were repointed. Hard and Insane already use the
+`_60` templates and are untouched. Stated tradeoff: 50 cards draw slightly less consistently than a
+tight 40 - worth it against ten duels of ante headroom.
+
+AN INN TOURNAMENT PLAYED BEFORE THE QUEST NOW COUNTS. User: "if someone does an Inn tournament before
+we give the quest, let's trigger the quest." An `EventFinish` stage only advances inside `handleEvent()`
+on a live `EVENTCOMPLETE`, so a tournament already sat through could never tick it - the quest would ask
+the player to repeat what they had just done. Third instance of the same activation-time pattern
+(`retroCompleteIfFlagSatisfied` for flags, round 208's `retroCompleteIfPoiAlreadyVisited` for travel),
+and the same fix: read persisted STATE instead of waiting for an event that cannot recur. No new state
+was introduced - `PlayerStatistic.completedEvents` is already the per-character list of finished
+tournaments, saved and loaded with the rest of the statistics and cleared on a new game; it only needed
+a public count. Tournaments already finished count as progress, so a stage asking for several is
+credited rather than reset, and at least one genuinely completed event is required, which also stops a
+stage with `count3 == 0` completing itself out of thin air.
+
+A REPORTED BUG THAT WAS NOT ONE, recorded because the session report claimed it. The play report listed
+"`settle` never clears the ante Card Lost / Buy Back prompt - it hangs" as ranked #4, and the user asked
+for it to be fixed. It is not broken: `tfr_agent.py` settle has explicitly returned that prompt as a
+real choice since **round 176** ("settle stops at a lost ante's Bronze Coin / Buy Back choice"), and
+`git status` confirms the file was never modified during the session. What actually looped was the
+session's own throwaway `drive.py` wrapper, which called `settle` repeatedly without ever answering the
+choice it handed back, so it kept receiving the same state. Round 176's behaviour is correct and
+"fixing" it would mean tapping OK - giving anted cards away, precisely what that round prevented. **No
+change made.** The lesson is about the report, not the code: a wrapper looping on a function that
+correctly returns "your move" looks exactly like a hang from the outside.
+
 ## Round 212: two quest texts teach mechanics; both map splits closed (2026-09-15)
 
 REPUTATION, ON THE "COMPLETE THREE QUESTS" STEP. User: "on the quest, after you build your capitol, before you

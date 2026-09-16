@@ -1,42 +1,42 @@
 {
-  "name": "White Starter",
+  "name": "Blue Starter",
   "mainDeck": [
     {
-      "count": 17,
-      "cardName": "Plains"
+      "count": 21,
+      "cardName": "Island"
     },
     {
-      "count": 10,
+      "count": 12,
       "cardTypes": ["Creature"],
-      "colors": ["white"],
+      "colors": ["blue"],
       "rarity": ["Common"],
       "manaCosts": [1, 2]
     },
     {
-      "count": 6,
+      "count": 8,
       "cardTypes": ["Creature"],
-      "colors": ["white"],
+      "colors": ["blue"],
       "rarity": ["Common", "Uncommon"],
       "manaCosts": [3, 4]
     },
     {
-      "count": 2,
+      "count": 3,
       "cardTypes": ["Creature"],
-      "colors": ["white"],
+      "colors": ["blue"],
       "rarity": ["Common", "Uncommon"],
       "manaCosts": [5, 6]
     },
     {
-      "count": 4,
+      "count": 5,
       "cardTypes": ["Instant", "Sorcery"],
-      "colors": ["white"],
+      "colors": ["blue"],
       "rarity": ["Common"],
       "manaCosts": [1, 2]
     },
     {
       "count": 1,
       "cardTypes": ["Instant", "Sorcery", "Enchantment"],
-      "colors": ["white"],
+      "colors": ["blue"],
       "rarity": ["Common", "Uncommon"],
       "manaCosts": [3, 4, 5]
     }

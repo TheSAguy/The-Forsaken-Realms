@@ -13519,7 +13519,7 @@
 			{
 				"id": 1,
 				"name": "Benalia - the White Ring City",
-				"description": "Find and enter any dungeon.",
+				"description": "Enter Benalia, the White Ring City - due north of your fire.",
 				"anyPOI": true,
 				"mapFlag": "enteredRingCity1",
 				"mapFlagValue": 1,
@@ -13555,7 +13555,7 @@
 			{
 				"id": 2,
 				"name": "Tolaria - the Blue Ring City",
-				"description": "Find and enter any dungeon.",
+				"description": "Enter Tolaria, the Blue Ring City - east, where the road meets the water.",
 				"anyPOI": true,
 				"mapFlag": "enteredRingCity2",
 				"mapFlagValue": 1,
@@ -13594,7 +13594,7 @@
 			{
 				"id": 3,
 				"name": "Urborg - the Black Ring City",
-				"description": "Find and enter any dungeon.",
+				"description": "Enter Urborg, the Black Ring City - southeast, into the drowned lands.",
 				"anyPOI": true,
 				"mapFlag": "enteredRingCity3",
 				"mapFlagValue": 1,
@@ -13633,7 +13633,7 @@
 			{
 				"id": 4,
 				"name": "Shiv - the Red Ring City",
-				"description": "Find and enter any dungeon.",
+				"description": "Enter Shiv, the Red Ring City - southwest, where the ground smokes.",
 				"anyPOI": true,
 				"mapFlag": "enteredRingCity4",
 				"mapFlagValue": 1,
@@ -13672,7 +13672,7 @@
 			{
 				"id": 5,
 				"name": "Llanowar - the Green Ring City",
-				"description": "Find and enter any dungeon.",
+				"description": "Enter Llanowar, the Green Ring City - west, under the great trees.",
 				"anyPOI": true,
 				"mapFlag": "enteredRingCity5",
 				"mapFlagValue": 1,

@@ -65,6 +65,17 @@ public class PlayerStatistic implements SaveFileContent {
 
         return (float) totalWins()/(float)totalLoss();
     }
+    /** Round 213: how many Inn tournaments this character has SEEN THROUGH, win or lose.
+     *  <p>
+     *  Backs AdventureQuestStage.retroCompleteIfEventAlreadyFinished(): an EventFinish stage only
+     *  advances on a live EVENTCOMPLETE, so a tournament played BEFORE the quest was offered could
+     *  never tick it. completedEvents is already the persisted, per-character record of exactly
+     *  that act (saved and loaded alongside winLossRecord, and cleared by clear() on a new game),
+     *  so reading it needs no new state - the same "read persisted state at activation" fix used
+     *  for flags and for visited POIs. */
+    public int completedEventCount(){
+        return completedEvents.size();
+    }
     public int eventWins(){
         int win = 0;
         for (AdventureEventData event : completedEvents){

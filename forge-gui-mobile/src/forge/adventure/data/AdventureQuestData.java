@@ -561,6 +561,11 @@ public class AdventureQuestData implements Serializable {
                         // event, so the stage would sit unchecked forever without this.
                         if (s.retroCompleteIfPoiAlreadyVisited())
                             continue;
+                        // Round 213: and the same for "play an Inn tournament". A tournament sat
+                        // through before the quest was offered cannot re-fire its EVENTCOMPLETE,
+                        // so the stage would ask the player to repeat what they had just done.
+                        if (s.retroCompleteIfEventAlreadyFinished())
+                            continue;
                         AdventureQuestController.instance().addQuestSprites(s);
                         showNotification = true;
                     }

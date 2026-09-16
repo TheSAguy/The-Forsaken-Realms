@@ -2779,6 +2779,32 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 213 (2026-09-16)
+
+`forge-gui-mobile/src/forge/adventure/agent/AgentObserver.java` - the map actor list no longer drops
+deliberately-invisible trigger actors. `if (!a.isVisible()) continue;` became
+`if (!a.isVisible() && !(a instanceof DialogActor)) continue;`. `MapStage`:1353 builds every Job Board
+as a `QuestActor` with `setVisible(false)`, so the old filter hid every quest giver in the game from
+`/state`; `QuestActor extends DialogActor`, so the single added clause covers quest boards and dialog
+NPCs alike. Hidden enemies are still filtered by their own `hidden || inactive` check above.
+
+`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java` - new
+`retroCompleteIfEventAlreadyFinished()`, sibling of `retroCompleteIfFlagSatisfied()` and round 208's
+`retroCompleteIfPoiAlreadyVisited()`. For an `EventFinish` stage it reads
+`Current.player().getStatistic().completedEventCount()` at activation: >= `count3` completes the stage,
+a smaller non-zero count seeds `progress3` so a live `EVENTCOMPLETE` still adds on top. Requires at
+least one genuinely completed event, which also guards `count3 == 0`.
+
+`forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java` - `activateNextStages()` calls the
+new retro-check one line below `retroCompleteIfPoiAlreadyVisited()`, inside the same stabilization loop.
+
+`forge-gui-mobile/src/forge/adventure/player/PlayerStatistic.java` - new `completedEventCount()`. Purely
+an accessor over the existing persisted `completedEvents` list; no new state, no save-format change.
+
+Plane data: `world/quests.json` (five "Oaths at the Ring" objective lines), `config.json` (Easy and
+Normal repointed to the `_50` starters), and `decks/starter/constructed_*_40.json` renamed to `_50.json`
+with counts 17/10/6/2/4/1 -> 21/12/8/3/5/1. `minDeckSize` unchanged at 40.
+
 ## Round 212 (2026-09-15) - no engine edits
 
 Plane data only: `world/quests.json` (Raise the Banner stage 6, the five-castles quest, and the guard quest's
