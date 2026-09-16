@@ -1,0 +1,30 @@
+# Dawnbreak Tribunal v2 (W) - 2026-09-16, save 1 slot 2.
+# Two changes only. This deck is already doing what it means to do (four sweepers plus O-Ring
+# effects, then Angels and Dragons to close), and white has almost no depth in this collection to
+# rebuild from - eight names at 3+, most of them small creatures a wrath deck does not want.
+#   1. ILLEGAL -> LEGAL: Oblivion Ring was 5 (2 + 3 on two printing lines, which is exactly why a
+#      line-by-line check never caught it). Capped at the legal 4.
+#   2. That freed slot goes to a 19th Plains, which this deck wanted anyway: Kirtar's Wrath, Final
+#      Judgment, Wardscale Dragon and White Dragon are all 5+, on 18 lands.
+19 Plains
+4 Oblivion Ring
+3 Angel of Light
+2 Saltblast
+1 Wrath of God
+1 Kirtar's Wrath
+1 Doomskar
+1 Final Judgment
+1 Citizen's Arrest
+1 Glass Casket
+1 Luminous Bonds
+1 Legion's Judgment
+1 Swift Response
+1 Blessed Reversal
+1 Gerrard's Wisdom
+1 Guardian of Faith
+1 Hundred-Handed One
+1 Ojutai Exemplars
+1 Serra Paragon
+1 Staunch Defenders
+1 Wardscale Dragon
+1 White Dragon

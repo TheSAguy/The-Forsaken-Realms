@@ -1,0 +1,19 @@
+# Gravebound v2 (B) - 2026-09-16, save 4 slot 0.
+# Legality fix only. Save 4 is an older character (last played 2026-09-09), not the active game, so
+# this is the minimum change that makes the deck legal rather than a rebuild.
+#   Dire Fleet Hoarder was 5 copies; the limit is 4. The freed slot becomes a 17th Swamp, keeping
+#   the deck at 40 - trimming without replacing would have dropped it to 39, under the floor where
+#   DuelScene starts padding with colorless Wastes (see round 213).
+17 Swamp
+4 Dire Fleet Hoarder
+3 Bonepicker Skirge
+3 Testament Bearer
+2 Grimclaw Bats
+2 Chittering Rats
+2 Drown in Ichor
+2 Succumb to Temptation
+1 Skeleton Archer
+1 Gravedigger
+1 Deadly Derision
+1 Grisly Spectacle
+1 Salt Road Skirmish

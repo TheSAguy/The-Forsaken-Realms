@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 217 (2026-09-16): **the player's decks - legal, and rebuilt around what the collection supports.**
+  Round 215's finding came home: Dawnbreak Tribunal held 5 Oblivion Ring in saves 1, 2 **and 3** (save 3 had
+  been played since), Gravebound (B) held 5 Dire Fleet Hoarder in save 4; both capped at 4, with the freed
+  slot becoming a land so neither deck fell under the 40-card padding floor. The broader pass turned on one
+  measurement: **the collection is overwhelmingly singleton** - 1,106 names at one copy, only 60 at three or
+  more - so playsets are only available in black. Gempalm Legion got a real rebuild (it held **eight** Befoul
+  and played none; 18 distinct spells down to **11**), Warchief's Cleave got goblin density from the three
+  red multiples it was not using, and Dawnbreak Tribunal got the cap plus a 19th Plains. Every save
+  re-audited: no deck in any slot breaks the copy limit. **Flagged not fixed:** save 4 is a test character
+  (99,878 shards) whose "Norn's Verdict" holds 12 cards and no lands - it only ever resolved 12 of its 40,
+  and my `norns_verdict.txt`/`skyfall.txt` are themselves under-landed at ~10 in 40.
 - Round 216 (2026-09-16): **the Coin Challenge, and an Arena lock you can actually see.** The weekly-win
   refusal existed since round 141 but only fired on a click, as a transient toast - the label beside the
   start button now reads **"Won this week (N days)"** instead of the fee, so the reason and countdown are

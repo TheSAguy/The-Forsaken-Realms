@@ -1,0 +1,17 @@
+# Gempalm Legion v3 (B) - 2026-09-16 broader pass, save 1 slot 3.
+# v2 ran 18 singletons in 28 spells. The collection is overwhelmingly singleton (1,106 names at one
+# copy) so playsets are rare - but BLACK is the one colour with real depth, and the deck was using
+# almost none of it. Most glaring: zero Befoul while holding EIGHT.
+# Zombie/Skeleton core, because Gempalm Polluter's cycling drains for each Zombie and Changelings
+# are Zombies; Demon of Catastrophes' sacrifice cost is a feature next to recursive skeletons.
+18 Swamp
+4 Ghostly Changeling
+4 Reassembling Skeleton
+4 Befoul
+4 Ichor Slick
+3 Gempalm Polluter
+3 Skirk Ridge Exhumer
+2 Undead Servant
+2 Murder
+1 Go for the Throat
+1 Demon of Catastrophes

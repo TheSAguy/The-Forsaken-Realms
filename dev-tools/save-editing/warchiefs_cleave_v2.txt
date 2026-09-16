@@ -1,0 +1,30 @@
+# Warchief's Cleave v2 (R) - 2026-09-16 broader pass, save 1 slot 1.
+# Red has only six names at 3+ copies in this collection, so this stays singleton-heavy by force.
+# What it CAN do is raise goblin density, because the deck's best cards reward it: Goblin Warchief
+# (haste + cost reduction for goblins), Siege-Gang Commander, Skirk Drill Sergeant, Tar Pitcher.
+# In:  Stingscourger to a full 4, and the two goblins held at 3 that were not being played at all
+#      (Frenzied Goblin, Sokenzan Smelter).
+# Out: the vanilla/off-plan singletons - Goblin Assailant (vanilla 2/2), Goblin Scouts x2,
+#      Chandra's Outrage, Sardian Avenger, Volcanic Geyser, one Tuktuk. Lightning Bolt, Embercleave,
+#      Kiki-Jiki, Siege-Gang and Rolling Thunder all stay: they are the payoffs.
+17 Mountain
+4 Stingscourger
+3 Frenzied Goblin
+3 Sokenzan Smelter
+2 Dragon Fodder
+2 Skirk Commando
+2 Tar Pitcher
+1 Goblin Warchief
+1 Mogg War Marshal
+1 Siege-Gang Commander
+1 Skirk Drill Sergeant
+1 Kiki-Jiki, Mirror Breaker
+1 Tuktuk the Explorer
+1 Monastery Swiftspear
+1 Young Pyromancer
+1 Chandra, Spark Hunter
+1 Embercleave
+1 Lightning Bolt
+1 Burst Lightning
+1 Flames of the Firebrand
+1 Rolling Thunder

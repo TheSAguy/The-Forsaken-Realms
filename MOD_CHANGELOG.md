@@ -17757,6 +17757,45 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 217: the player's decks - legal, and rebuilt around what the collection can actually support (2026-09-16)
+
+User: "Game closed, fix the decks and do a broader pass."
+
+THE LEGALITY FIX, which was round 215's finding coming home. **Dawnbreak Tribunal** carried 5 Oblivion
+Ring in saves 1, 2 AND 3 (round 215 only knew about 1 and 2; save 3 had been played since), and
+**Gravebound (B)** carried 5 Dire Fleet Hoarder in save 4. Both were mine. Both are now 4, and in both
+cases the freed slot became a basic land rather than a smaller deck - trimming alone would have pushed
+Gravebound to 39, under the floor where DuelScene pads with colorless Wastes (round 213).
+
+THE BROADER PASS, and the finding that shaped it: **this collection is overwhelmingly singleton.**
+1,106 non-basic names at ONE copy, 128 at two, and only 60 at three or more. So "make it consistent by
+playing four-ofs" is mostly not available - except in black, which is the one colour with real depth.
+That single fact decided how much each deck could be improved:
+
+* **Gempalm Legion (B) - a real rebuild.** The deck was running 18 distinct cards across 28 spells
+  while the collection held EIGHT Befoul and it played none. Now 4 Befoul, 4 Ichor Slick, 4 Ghostly
+  Changeling, 4 Reassembling Skeleton, 3 Gempalm Polluter, 3 Skirk Ridge Exhumer: **18 distinct spells
+  down to 11**, which is the whole point. Kept the Zombie thread deliberately - Gempalm Polluter's
+  cycling drains for each Zombie and Changelings are Zombies - and kept Demon of Catastrophes, whose
+  sacrifice cost is an asset next to four recursive skeletons rather than a drawback.
+* **Warchief's Cleave (R) - moderate.** Red has six names at 3+, so this stays singleton-heavy by
+  force. What it could do is raise goblin density, because the deck's best cards reward exactly that
+  (Goblin Warchief, Siege-Gang Commander, Skirk Drill Sergeant, Tar Pitcher): Stingscourger to a full
+  4, plus Frenzied Goblin and Sokenzan Smelter, both held at 3 and both previously unplayed. Out went
+  the vanilla and off-plan singletons. 24 distinct spells -> 21.
+* **Dawnbreak Tribunal (W) - two changes only.** White has eight names at 3+, almost all small
+  creatures a four-sweeper control deck does not want. So: the Oblivion Ring cap, and the freed slot
+  to a 19th Plains, which the deck wanted anyway on four 5-drops.
+
+Every save was re-dumped and re-audited afterwards: **no deck in any save slot breaks the copy limit.**
+
+FOUND WHILE LOOKING, NOT FIXED. Save 4 is a test character (99,878 shards), and its other decks are in
+poor shape: "Norn's Verdict (W_B)" holds **12 cards and no lands** - it only ever resolved 12 of its
+40-card list, because that character did not own the rest - and "Skyfall (G_R)" runs 7 lands in 40.
+The cause is partly mine: `norns_verdict.txt` and `skyfall.txt` are both written with only ~10 lands
+in 40 (~25%, against the ~42% the working decks use). Left alone because save 4 is not a real
+playthrough and rebuilding it needs its own collection pass - flagged rather than silently reworked.
+
 ## Round 216: the Coin Challenge, and an Arena lock you can actually see (2026-09-16)
 
 Two Arena requests, both from screenshots of Orazca Arena.

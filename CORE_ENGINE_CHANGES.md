@@ -2779,6 +2779,14 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 217 (2026-09-16) - no engine edits
+
+Player save data and decklists only. New `dev-tools/save-editing/gempalm_legion_v3.txt`,
+`warchiefs_cleave_v2.txt`, `dawnbreak_tribunal_v2.txt` and `gravebound_v2.txt`, written into the
+player's saves with `WriteDecks.java` (game closed, `.bak` per save: `1_save_slot.sav.prededit14.bak`,
+`2_save_slot.sav.prededit4.bak`, `3_save_slot.sav.prededit6.bak`, `4_save_slot.sav.prededit5.bak`).
+No Java changed, no plane data changed.
+
 ## Round 216 (2026-09-16)
 
 `forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` - new `coinChallengeButton` (third on
