@@ -17757,6 +17757,54 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 214: the agent can leave a Forge screen, and stops landing on POIs it cannot enter (2026-09-16)
+
+The two bridge bugs round 213 deliberately left open, both traced during the 2026-09-15 play session.
+
+THE DECK EDITOR WAS A ONE-WAY DOOR. `DeckEditScene extends ForgeScene`, which is neither a `UIScene`
+nor a `HudScene`, so `AgentActions.back()` answered "back applies to menu scenes" and `key()` answered
+"no key handling on DeckEditScene". `AgentObserver` reports `ui=[]` and `forgeUi=null` for a
+ForgeScene, so `click` had nothing to aim at either: once the editor opened, the session was over.
+During the session the only escape was `cmd save slot=N` (which works from any scene) followed by
+killing the game and reloading. `back()` and `key()` now recognise a `ForgeScene` and call
+`Forge.back()` - the same call the app's own back button makes for a stock Forge screen. `key()` only
+does it for ESCAPE/BACK, since those are the ones that mean "close this screen".
+
+WALKS NO LONGER LAND ON A POINT OF INTEREST THEY CANNOT ENTER. `TileMapScene.leave()` sets the world
+player's `collisionHeight` to 0 and GameHUD restores it only after the ~2 s arrival flicker; the POI
+entry test is `collideWith()`, which is always false at height 0. A walk that ARRIVED on a point of
+interest inside that window therefore entered nothing and left the player standing on it - and then
+the next walk's `exemptPoiUnderPlayer()` (round 175, which stops the agent walking back into the town
+it just left) set `collidingPoint` to the POI underfoot, sealing it shut: "standing on White Tower -
+skipped by the entry check until the player steps off". The session hit this four times on one tower,
+each attempt cheerfully reporting "arrived at White Tower" from the world map.
+
+The walk now HOLDS at its destination while world collision is off rather than reporting arrival, up
+to a bounded 3.5 s, standing still so it does not drift off the footprint. On a normal walk collision
+is already on and the branch never runs. World walks only - inside a map there is no such flicker.
+This is the entry-side half; the separate "planner finds no path once you are stuck inside a
+footprint" deadlock is NOT addressed here and still needs a reproduction (the planner already has an
+`insideStart` escape hatch that should have covered it, so the real cause is narrower than it looks -
+agent slot 5 holds that exact world, White Tower at 349,372).
+
+LOG REVIEW (the user's own 2026-09-16 morning session, 311 lines, **zero exceptions**):
+
+* **Round 190's arena 60/40 is confirmed working** - the first hard evidence for it after four
+  sessions with nothing. `[TFR-ArenaSim] ... higher tier favoured 60%` fired seven times: four times
+  the higher tier advanced, three times it was upset (Dwarven Berserker over a Gladiator, Apprentice
+  Red Wizard over a Magma Ogre, Dwarf Demolisher over a Shaman of Zedruu). 4/7 is exactly the shape a
+  60/40 roll should produce at that sample size. Struck off the unverified list.
+* **Every `[TFR-AnteResult]` in that session read `won=0 lost=0 ... anteZone=0`** - worth explaining
+  rather than filing as a bug: the session was almost entirely arena brackets, and `ArenaScene` sets
+  `noAnte = true` on its per-fight enemy clones (lines 522/554/1258), so arena duels never ante by
+  design. `UI_ANTE=true` in both the user's profile and the agent's, so ordinary overworld duels do
+  ante - which is what round 213's 50-card starter change is for.
+* **`[TFR-RewardDup] pool exhausted` fired repeatedly** on a reward whose legal pool holds only FIVE
+  distinct names (Mountain, Dwarven Mine, The Lonely Mountain, Fabled Path of Searo Point...), paying
+  one card fewer rather than a third copy. The dedup logic is behaving exactly as designed; the
+  observation is that the pool behind it is very thin, so that reward mostly pays short. Flagged, not
+  changed - it is a content question, not a code one.
+
 ## Round 213: what five hours of agent play found - and one thing it got wrong (2026-09-16)
 
 Everything here came out of the 2026-09-15 evening play session (a fresh fair game, no cheats, ~3h50m,

@@ -2779,6 +2779,23 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 214 (2026-09-16)
+
+`forge-gui-mobile/src/forge/adventure/agent/AgentActions.java` - `back()` and `key()` gained a
+`ForgeScene` branch calling `Forge.back()` (`Forge.java:713`, what the app's own back button uses).
+`key()` restricts it to ESCAPE/BACK. Previously a ForgeScene matched neither `UIScene` nor `HudScene`,
+and since AgentObserver reports no clickable UI for one, the deck editor could not be left at all.
+New import: `forge.adventure.scene.ForgeScene`.
+
+`forge-gui-mobile/src/forge/adventure/agent/WalkController.java` - new
+`ARRIVAL_COLLISION_GRACE = 3.5f` and an `arrivalWait` accumulator (reset alongside `walkTime` when a
+walk starts). In `tick()`, the arrival branch now holds instead of finishing while
+`worldWalk && player.getCollisionHeight() <= 0f && arrivalWait < ARRIVAL_COLLISION_GRACE`, zeroing the
+touch knob so the player does not drift, and logging once. Collision is normally on at arrival, so the
+branch is inert on an ordinary walk; the bound guarantees a walk cannot hang on it.
+
+No plane data changed this round.
+
 ## Round 213 (2026-09-16)
 
 `forge-gui-mobile/src/forge/adventure/agent/AgentObserver.java` - the map actor list no longer drops

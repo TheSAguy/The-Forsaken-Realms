@@ -12,6 +12,7 @@ import forge.adventure.data.ItemData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.scene.AgentSceneAccess;
+import forge.adventure.scene.ForgeScene;
 import forge.adventure.scene.GameScene;
 import forge.adventure.scene.HudScene;
 import forge.adventure.scene.RewardScene;
@@ -246,6 +247,15 @@ final class AgentActions {
             ((UIScene) scene).back();
             return now(true, "back");
         }
+        // Round 214: a ForgeScene wraps a stock Forge FScreen (the deck editor, a match). It is
+        // neither a UIScene nor a HudScene, and AgentObserver reports ui=[] / forgeUi=null for it,
+        // so `click` has nothing to aim at either - opening the deck editor used to end the session,
+        // with save-then-restart the only way out (2026-09-15 play session). Forge.back() is exactly
+        // what the app's own back button calls for these screens.
+        if (scene instanceof ForgeScene) {
+            Forge.back();
+            return now(true, "back (Forge screen)");
+        }
         return now(false, "back applies to menu scenes; on a map use `leave` or click the HUD");
     }
 
@@ -259,6 +269,11 @@ final class AgentActions {
         } else if (scene instanceof HudScene) {
             ((HudScene) scene).keyDown(code);
             ((HudScene) scene).keyUp(code);
+        } else if (scene instanceof ForgeScene && (code == Input.Keys.ESCAPE || code == Input.Keys.BACK)) {
+            // Round 214: same escape hatch as back() - a ForgeScene has no key handling of its own
+            // here, but ESCAPE/BACK on one means "close this screen", which is Forge.back().
+            Forge.back();
+            return now(true, "pressed " + name + " (Forge screen -> back)");
         } else {
             return now(false, "no key handling on " + scene.getClass().getSimpleName());
         }

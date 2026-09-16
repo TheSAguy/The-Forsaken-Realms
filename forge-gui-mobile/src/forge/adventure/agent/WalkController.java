@@ -33,6 +33,11 @@ import java.util.concurrent.CompletableFuture;
  * a town or dungeon. Also runs the "wait N days" clock.
  */
 final class WalkController {
+    /** Round 214: how long a finished walk will stand on its destination waiting for world
+     *  collision to come back before reporting arrival. The flicker GameHUD waits out is ~2 s;
+     *  this is comfortably longer, and bounded so a walk can never hang on it. */
+    private static final float ARRIVAL_COLLISION_GRACE = 3.5f;
+
     private final AgentBridge bridge;
     private final TickActor tick = new TickActor();
     private final Map<GameStage, Boolean> attached = new HashMap<>();
@@ -50,6 +55,9 @@ final class WalkController {
     private int replans;
     private final Set<Long> blocked = new HashSet<>();
     private float walkTime;
+    /** Round 214: seconds spent standing on the destination waiting for world collision to come
+     *  back before the walk is allowed to report "arrived" - see the hold in tick(). */
+    private float arrivalWait;
 
     // the current wait
     private boolean waiting;
@@ -145,6 +153,7 @@ final class WalkController {
         noProgress = 0;
         lastDist = Float.MAX_VALUE;
         walkTime = 0;
+        arrivalWait = 0;
         walking = true;
         done = new CompletableFuture<>();
         StringBuilder first = new StringBuilder();
@@ -243,6 +252,31 @@ final class WalkController {
         while (index < path.size() && me.dst(path.get(index)) < 5f)
             index++;
         if (index >= path.size()) {
+            // Round 214: do not report "arrived" while world collision is still OFF.
+            //
+            // TileMapScene.leave() sets the world player's collisionHeight to 0 and GameHUD only
+            // switches it back after the ~2 s arrival flicker (see AgentStageAccess.
+            // exemptPoiUnderPlayer()'s comment). WorldStage's POI entry test is collideWith(), which
+            // is always false at height 0 - so a walk that LANDS on a point of interest inside that
+            // window enters nothing, and the player is left standing on an un-entered POI. The next
+            // walk then calls exemptPoiUnderPlayer(), which sets collidingPoint to the POI underfoot
+            // to stop the player walking back into the town they just left - and that seals the
+            // un-entered POI shut for good ("standing on White Tower - skipped by the entry check
+            // until the player steps off"). Observed in the 2026-09-15 session: four attempts to
+            // enter the same tower, each reporting "arrived at White Tower" from the world map.
+            //
+            // Holding here costs nothing on a normal walk (collision is on, the branch never runs)
+            // and lets the game's own entry check fire on the very next frame once collision
+            // returns. The grace is bounded so a walk can never hang on it.
+            if (worldWalk && player != null && player.getCollisionHeight() <= 0f
+                    && arrivalWait < ARRIVAL_COLLISION_GRACE) {
+                if (arrivalWait == 0f)
+                    bridge.log("[TFR-Agent] reached " + target + " while world collision is still off"
+                            + " - holding so the game's entry check can fire");
+                arrivalWait += delta;
+                stage.setTouchKnobInput(0, 0); // stand still rather than drift off the footprint
+                return;
+            }
             finish(true, "arrived at " + target);
             return;
         }

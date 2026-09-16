@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 214 (2026-09-16): **the agent can leave a Forge screen, and stops landing on POIs it cannot enter.**
+  The two bridge bugs round 213 left open. `DeckEditScene extends ForgeScene`, which is neither a `UIScene`
+  nor a `HudScene` and reports `ui=[]`/`forgeUi=null`, so opening the deck editor ended an agent session
+  outright; `back()`/`key()` now call `Forge.back()` for a ForgeScene (ESCAPE/BACK only for `key`).
+  And a walk that ARRIVED on a point of interest inside the ~2 s post-exit window where
+  `collisionHeight == 0` entered nothing - `collideWith()` is always false at height 0 - leaving the player
+  parked on it, after which round 175's `exemptPoiUnderPlayer()` sealed it shut; the walk now holds at its
+  destination (bounded 3.5 s, world walks only) until collision returns so the game's own entry check can
+  fire. The separate planner deadlock is still open pending a repro. **Log review:** round 190's arena
+  60/40 is **confirmed** at last (7 sims, 4 higher-tier wins / 3 upsets); the session's `anteZone=0` lines
+  are arena `noAnte` by design, not a bug; `[TFR-RewardDup] pool exhausted` keeps firing on a 5-name pool.
 - Round 213 (2026-09-16): **what five hours of agent play found.** From the 2026-09-15 fair-play session.
   **The Job Board was invisible to the agent** - `MapStage`:1353 builds it as a `QuestActor` with
   `setVisible(false)` (the visible thing is the map's board art; the actor is the collision box) and
