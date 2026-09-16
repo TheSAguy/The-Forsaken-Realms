@@ -17757,6 +17757,61 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 216: the Coin Challenge, and an Arena lock you can actually see (2026-09-16)
+
+Two Arena requests, both from screenshots of Orazca Arena.
+
+THE WEEKLY LOCK NOW SHOWS ITSELF. User: "you can't enter an arena match if you've won it in the
+current week. So I could not click on the check mark to start. But I think we should add to the
+button, when you click it, say why you can't enter... Maybe add in parentheses how many days to go."
+The refusal message already existed and already counted the days - `notifyWeeklyArenaLocked()`, round
+141 - but it only fires on a CLICK and it is a transient HUD toast, which is exactly how a locked
+button reads as a broken one. The label beside the start button now carries the state itself:
+**"Won this week (N days)"** in place of the entry fee, so the reason and the countdown are on screen
+before the player touches anything. The click message stays as it was. New `weeklyArenaDaysLeft()`
+shares the arithmetic so the label and the toast can never disagree.
+
+THE COIN CHALLENGE, to the player Capitol's Level 2 Arena. User spec, quoted whole because every
+clause became a rule: "This will be greyed out if no enemy has any of your bronze coins. If there
+are enemies with you coins, you can choose this option. When you click on it, it will list the
+enemies that has coins. For 50g (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and
+get your coin back. You can only challenge each enemy once a week. No Ante or gold loss if you lose
+(Besides the entry fee)."
+
+It hangs off machinery that already existed: paying a Bronze Challenge Coin to buy back a lost ante
+marks that enemy in `coinRansomedEnemies` (round 67), and beating them later returns it. Until now
+the only way to collect was to happen to meet them again - in an arena bracket, by luck. This is the
+deliberate route.
+
+* The button sits third on the Level 2 row. That row held two buttons already spanning the usable
+  strip (doneButton's x to the gold cluster at 380), so all three shrink to equal thirds at 117 wide
+  - which is how the user's own mockup drew it.
+* Greyed, not hidden, when nobody holds a coin. Hiding it would mean the feature only ever appears
+  after the player has already lost a coin, and nothing would hint that paying one can be undone.
+* The menu lists each holder with what blocks the attempt - "(next week)" or "(need [+GoldCoin] N)"
+  - rather than refusing silently, which is the same lesson as the other half of this round.
+* The duel is the real enemy with its real deck, stripped to `noAnte` and no rewards: the coin IS
+  the prize, and paying a loot table on top would make this the cheapest card faucet in the game.
+  The defeat gold penalty is waived up front via a one-shot flag, so a loss costs exactly the fee.
+* Once per opponent per week, recorded when the duel STARTS - the attempt is what the fee buys.
+  Persisted as `coinChallengeWeeks` (two parallel lists, since SaveFileData has no map shape), with
+  the same `containsKey` guard that loads every existing save cleanly with an empty map.
+* Fee lives in TuningData as a per-difficulty table (`coinChallengeFeeFor`), the same shape
+  `defeatGoldLossFor` uses, and the four keys were added to `validate_plane_data.py`'s hardcoded
+  field list - that list does not discover new keys on its own.
+
+LOG REVIEW (the user's 2026-09-16 midday session, 1,163 lines, **zero exceptions**):
+* The lock this round makes visible really did bite: `[TFR-ArenaWeekly] ... entry locked for week 1`
+  twice at the Player Capitol, which is the screenshot the request came from.
+* **No Bronze Coin has actually been paid yet.** All three `[TFR-CoinRansom]` lines are the pre-duel
+  probe (`offering=true` against a Magma Fire Elemental, `offering=false` twice against Slobad
+  because `boss=true`), and none is a "paid a Bronze Challenge Coin to" line. So `coinRansomedEnemies`
+  is empty and the new button will correctly show up greyed until the player first buys an ante back.
+  Worth stating plainly rather than letting a greyed button read as a broken feature.
+* The player is on **Insane** (`[TFR-DefeatGold] Insane: lost 200 ...` twice), so their Coin
+  Challenge fee is the 100g branch.
+* 18 towns restored, research running, road flood fills at 1-3 ms. Nothing alarming.
+
 ## Round 215: a copy-limit audit for every deck in the game (2026-09-16)
 
 User: "one of the decks you created me the other day had 5 copies of one card and 6 of another. Could

@@ -2779,6 +2779,29 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 216 (2026-09-16)
+
+`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` - new `coinChallengeButton` (third on
+the Level 2 row; `ARENA_TRIPLE_BUTTON_WIDTH`/`ARENA_TRIPLE_BUTTON_GAP` re-space the toggle and Deck
+Tester into equal thirds), `promptCoinChallenge()` (lists coin holders, disabling rows already used
+this week or unaffordable) and `launchCoinChallenge()` (re-checks every gate, takes the fee, waives
+the defeat gold loss, records the week, launches a `noAnte` reward-less duel against the real enemy).
+`setWinner()` gained a `coinChallengeMatch` branch beside the existing Deck Tester one - a win calls
+`reclaimCoinRansom()`, a loss clears the waiver so it cannot leak into an unrelated defeat. New
+`weeklyArenaDaysLeft()`, and `loadArenaData()` now writes the lock state into the gold label.
+
+`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` - new `coinRansomHolders()`,
+`suppressNextDefeatGoldLoss()`, `coinChallengeWeek()`, `recordCoinChallenge()`, and the persisted
+`coinChallengeWeeks` map (stored as parallel `coinChallengeNames`/`coinChallengeWeeks` lists, cleared
+in the same three places `coinRansomedEnemies` is: `clear()`, New Game+, and `load()`).
+
+`forge-gui-mobile/src/forge/adventure/data/TuningData.java` - `coinChallengeFeeEasy/Normal/Hard/
+Insane` (50/50/100/100) and `coinChallengeFeeFor(String)`, which falls back to the Normal fee rather
+than to free for an unrecognised difficulty.
+
+Plane data: the four fee keys in `config tables/settings.json`, and the same four added to
+`dev-tools/validate_plane_data.py`'s hardcoded TuningData field list.
+
 ## Round 215 (2026-09-16) - no engine edits
 
 Tooling and data only. New `dev-tools/deck_legality_audit.py` (reads copy limits from

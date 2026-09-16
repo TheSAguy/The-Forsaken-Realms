@@ -286,6 +286,15 @@ public class TuningData {
     public int defeatGoldLossHard = 0;
     public int defeatGoldLossInsane = 0;
 
+    // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
+    // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". Same
+    // per-difficulty table shape as the defeat loss above. 0 makes the challenge free on that
+    // difficulty rather than disabling it.
+    public int coinChallengeFeeEasy = 50;
+    public int coinChallengeFeeNormal = 50;
+    public int coinChallengeFeeHard = 100;
+    public int coinChallengeFeeInsane = 100;
+
     // Round 185 (user, after a duel paid four copies of one card: "It's okay to sometimes get duplicate reward
     // cards, but 4 seems extreme. Is there a way we can at least lower duplicate probability?"). How many extra
     // draws a card reward gets when a pick repeats a name already in that same reward - see
@@ -372,6 +381,21 @@ public class TuningData {
             case "hard":   return Math.max(0, defeatGoldLossHard);
             case "insane": return Math.max(0, defeatGoldLossInsane);
             default:       return 0;
+        }
+    }
+
+    /** Round 216: the Coin Challenge entry fee for a difficulty name. An unrecognised difficulty
+     *  falls back to the Normal fee rather than to free - a challenge that costs nothing would let
+     *  the player farm reclaim attempts. */
+    public int coinChallengeFeeFor(String difficultyName) {
+        if (difficultyName == null)
+            return Math.max(0, coinChallengeFeeNormal);
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, coinChallengeFeeEasy);
+            case "normal": return Math.max(0, coinChallengeFeeNormal);
+            case "hard":   return Math.max(0, coinChallengeFeeHard);
+            case "insane": return Math.max(0, coinChallengeFeeInsane);
+            default:       return Math.max(0, coinChallengeFeeNormal);
         }
     }
 

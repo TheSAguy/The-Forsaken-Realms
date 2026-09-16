@@ -86,6 +86,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     // available WHENEVER level >= 2, not mutually exclusive with the mode toggle - both show at
     // once at Level 2, so this gets its own row rather than sharing a position.
     private final TextraButton deckTesterButton;
+    /** Round 216: Capitol Arena Level 2 - duel an enemy holding one of your Bronze Coins. */
+    private final TextraButton coinChallengeButton;
+    /** Set while a Coin Challenge duel is in flight, so setWinner() knows this is not a bracket. */
+    private boolean coinChallengeMatch = false;
+    /** The enemy being Coin-Challenged, so a win knows whose coin to reclaim. */
+    private String coinChallengeFoe = null;
     // True only while a Deck Tester duel is in flight - setWinner() (the IAfterMatch callback
     // DuelScene invokes on this scene once ANY duel launched while ArenaScene was active ends,
     // bracket or not) checks this FIRST and skips all bracket-manipulation logic when set, since
@@ -101,6 +107,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     // Deck Tester's button, sharing a row with the toggle instead of its own row (round 7 fix) -
     // see the constructor's own comment for the space math.
     private static final float ARENA_DECK_TESTER_BUTTON_WIDTH = 140f;
+    /** Round 216: with the Coin Challenge added, the Level 2 row carries THREE buttons instead of
+     *  two. The usable strip runs from doneButton's x (5) to the gold/start cluster at x=380, so
+     *  three equal thirds with 8-unit gaps is 117 each - matching the user's own mockup. The
+     *  Level 1 upgrade button keeps ARENA_WIDE_BUTTON_WIDTH: it is alone on its row. */
+    private static final float ARENA_TRIPLE_BUTTON_WIDTH = 117f;
+    private static final float ARENA_TRIPLE_BUTTON_GAP = 8f;
     // Round 186: how much of a fighter spot a bracket portrait may fill. The Spot sprite is 20x20
     // and the 646 hand-drawn 16x16 Avatar regions were built to sit inside it with a 2px border,
     // so 0.8 reproduces the original layout EXACTLY and only ever shrinks something larger.
@@ -164,7 +176,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         ui.addActor(arenaUpgradeButton);
 
         arenaModeToggleButton = Controls.newTextButton("", this::toggleArenaMode);
-        arenaModeToggleButton.setSize(ARENA_WIDE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
+        // Round 216: a third button joined this row, so the three share it in equal thirds.
+        arenaModeToggleButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
         arenaModeToggleButton.setPosition(doneButton.getX(), doneButton.getY() + doneButton.getHeight() + 10f);
         arenaModeToggleButton.setVisible(false);
         ui.addActor(arenaModeToggleButton);
@@ -178,11 +191,21 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // Tester" is a short label, and this leaves the ~145 units of space actually available
         // between the toggle's right edge (5+220=225, plus a 10-unit gap) and the gold/start
         // buttons starting at x=380.
-        deckTesterButton = Controls.newTextButton("Deck Tester", this::promptDeckTester);
-        deckTesterButton.setSize(ARENA_DECK_TESTER_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        deckTesterButton.setPosition(doneButton.getX() + ARENA_WIDE_BUTTON_WIDTH + 10f, doneButton.getY() + doneButton.getHeight() + 10f);
+        deckTesterButton = Controls.newTextButton("[%80]Deck Tester", this::promptDeckTester);
+        deckTesterButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
+        deckTesterButton.setPosition(doneButton.getX() + ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP,
+                doneButton.getY() + doneButton.getHeight() + 10f);
         deckTesterButton.setVisible(false);
         ui.addActor(deckTesterButton);
+
+        // Round 216 (user spec): third button on the same row - duel an enemy still holding one of
+        // your Bronze Challenge Coins to win it back.
+        coinChallengeButton = Controls.newTextButton("[%80]Coin Challenge", this::promptCoinChallenge);
+        coinChallengeButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
+        coinChallengeButton.setPosition(doneButton.getX() + 2f * (ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP),
+                doneButton.getY() + doneButton.getHeight() + 10f);
+        coinChallengeButton.setVisible(false);
+        ui.addActor(coinChallengeButton);
     }
 
     /** Entry point for MapStage's "arena" collision case (2026-08-11) - replaces the old pre-entry
@@ -266,6 +289,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             arenaUpgradeButton.setVisible(false);
             arenaModeToggleButton.setVisible(false);
             deckTesterButton.setVisible(false);
+            coinChallengeButton.setVisible(false);
             return;
         }
         boolean midMatch = arenaStarted || roundsWon != 0;
@@ -286,6 +310,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // challengeArenaJson (unlike the toggle above), since deck testing has nothing to do with
         // whether this arena even has a Challenge pool.
         deckTesterButton.setVisible(!midMatch && level >= 2);
+        // Round 216 (user spec): same Level 2 gate as the Deck Tester, and "greyed out if no enemy
+        // has any of your bronze coins". Visible-but-disabled rather than hidden, so the feature is
+        // discoverable before the player has ever lost a coin - otherwise nothing would ever hint
+        // that paying a coin can be undone.
+        coinChallengeButton.setVisible(!midMatch && level >= 2);
+        coinChallengeButton.setDisabled(Current.player().coinRansomHolders().isEmpty());
     }
 
     private void promptUpgradeArena() {
@@ -338,6 +368,116 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     /** Deck Tester step 1 (user spec 2026-08-11, MOD_SCOPE.md #20): "which deck will YOU pilot" -
      *  lists every non-empty saved deck slot as a button. Built fresh each open, same convention
      *  as EconomyBuildings' Manage Guards dialog (buildManageGuardsDialog()). */
+    /** Round 216 (user spec): "When you click on it, it will list the enemies that has coins."
+     *  <p>
+     *  Each row shows the foe and what stands between the player and the attempt - already
+     *  challenged this week, or not enough gold - rather than silently refusing, because the whole
+     *  point of this round's other half is that a refusal the player cannot see reads as a bug. */
+    private void promptCoinChallenge() {
+        if (arenaMapStage == null || arenaStarted || roundsWon != 0 || !enable)
+            return;
+        java.util.List<String> holders = Current.player().coinRansomHolders();
+        if (holders.isEmpty()) {
+            // The button is greyed for this, but setDisabled() does not detach the handler - the
+            // same trap the entry fee and the Capitol toll were both caught by.
+            showDialog(createGenericDialog("Coin Challenge",
+                    "No one is holding any of your Bronze Challenge Coins.",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+            return;
+        }
+        int fee = Config.instance().getTuningData().coinChallengeFeeFor(
+                Current.player().getDifficultyData().name);
+        int week = WorldSave.getCurrentSave().getWorld().getCurrentWeek();
+
+        Dialog dialog = new Dialog("Coin Challenge", Controls.getSkin());
+        TypingLabel label = Controls.newTypingLabel("Win back a Bronze Challenge Coin. Entry [+GoldCoin] "
+                + fee + " - one attempt per opponent each week. No ante, and losing costs nothing more.");
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+        for (String foe : holders) {
+            int lastWeek = Current.player().coinChallengeWeek(foe);
+            boolean usedThisWeek = lastWeek == week;
+            boolean tooPoor = Current.player().getGold() < fee;
+            String suffix = usedThisWeek ? " (next week)" : tooPoor ? " (need [+GoldCoin] " + fee + ")" : "";
+            TextraButton row = Controls.newTextButton("[%80]" + foe + suffix, () -> {
+                removeDialog();
+                launchCoinChallenge(foe);
+            });
+            row.setDisabled(usedThisWeek || tooPoor);
+            dialog.getButtonTable().add(row).width(240f).row();
+        }
+        dialog.getButtonTable().add(Controls.newTextButton(
+                Forge.getLocalizer().getMessage("lblCancel"), this::removeDialog)).width(240f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog(dialog);
+    }
+
+    /** Round 216: one duel against a named coin holder. Same single-duel shell the Deck Tester uses
+     *  (ArenaScene is the IAfterMatch, setWinner() routes it), but against the real enemy and its
+     *  real deck - the point is to beat the foe who took the coin, not a stand-in.
+     *  <p>
+     *  The fight carries noAnte and the defeat gold penalty is waived up front, so per the spec a
+     *  loss costs exactly the entry fee. Rewards are stripped: the coin IS the prize, and paying a
+     *  normal loot table on top would make this the cheapest card faucet in the game. */
+    private void launchCoinChallenge(String foe) {
+        if (arenaMapStage == null || arenaStarted || roundsWon != 0 || !enable || foe == null)
+            return;
+        // Re-checked here rather than trusting the menu: setDisabled() does not gate clicks, and
+        // the week can tick over while a dialog sits open.
+        if (!Current.player().owesCoinRansom(foe)) {
+            showDialog(createGenericDialog("Coin Challenge", foe + " no longer holds a coin of yours.",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+            return;
+        }
+        int week = WorldSave.getCurrentSave().getWorld().getCurrentWeek();
+        if (Current.player().coinChallengeWeek(foe) == week) {
+            showDialog(createGenericDialog("Coin Challenge",
+                    "You have already challenged " + foe + " this week.",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+            return;
+        }
+        int fee = Config.instance().getTuningData().coinChallengeFeeFor(
+                Current.player().getDifficultyData().name);
+        if (Current.player().getGold() < fee) {
+            showDialog(createGenericDialog("Coin Challenge",
+                    "You need [+GoldCoin] " + fee + " to challenge " + foe + ".",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+            return;
+        }
+        EnemyData base = WorldData.getEnemy(foe);
+        if (base == null) {
+            // The mark is keyed by name; a catalog that no longer has that name cannot be fought.
+            System.out.println("[TFR-CoinChallenge] no enemy named \"" + foe + "\" in the catalog"
+                    + " - cannot stage the challenge");
+            showDialog(createGenericDialog("Coin Challenge", foe + " cannot be found to challenge.",
+                    Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
+            return;
+        }
+        EnemyData challengeData = new EnemyData(base);
+        challengeData.noAnte = true;
+        challengeData.rewards = new RewardData[0];
+        EnemySprite challenger = new EnemySprite(challengeData);
+
+        Current.player().takeGold(fee);
+        Current.player().suppressNextDefeatGoldLoss();
+        Current.player().recordCoinChallenge(foe, week);
+        coinChallengeMatch = true;
+        coinChallengeFoe = foe;
+        enable = false;
+        System.out.println("[TFR-CoinChallenge] challenging " + foe + " for a Bronze Coin - fee "
+                + fee + " (" + Current.player().getDifficultyData().name + "), week " + week
+                + ", noAnte, defeat gold loss waived");
+        refreshArenaBuildingButtons();
+        DuelScene duelScene = DuelScene.instance();
+        duelScene.initDuels(WorldStage.getInstance().getPlayerSprite(), challenger, false, null);
+        FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new TransitionScreen(() ->
+                Forge.switchScene(duelScene),
+                ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "",
+                Current.player().avatar(), challenger.getAtlasPath(),
+                Current.player().getName(), challenger.getName())));
+    }
+
     private void promptDeckTester() {
         if (arenaMapStage == null || arenaStarted || roundsWon != 0 || !enable)
             return;
@@ -664,6 +804,34 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             refreshArenaBuildingButtons();
             return;
         }
+        // Round 216: a Coin Challenge is a single duel with no bracket behind it - same shape as the
+        // Deck Tester above. Winning returns the coin; losing costs only the entry fee already paid
+        // (the gold penalty was waived before the duel, and the fight carries noAnte).
+        if (coinChallengeMatch) {
+            String foe = coinChallengeFoe;
+            coinChallengeMatch = false;
+            coinChallengeFoe = null;
+            if (winner && foe != null) {
+                boolean reclaimed = Current.player().reclaimCoinRansom(foe);
+                System.out.println("[TFR-CoinChallenge] beat " + foe + " -> "
+                        + (reclaimed ? "Bronze Coin reclaimed" : "NOT reclaimed - the mark was already gone"));
+                GameHUD.getInstance().addNotification(reclaimed
+                        ? "You won your Bronze Challenge Coin back from " + foe + "."
+                        : foe + " no longer held your coin.");
+            } else {
+                // The waiver is one-shot and defeated() consumes it, but a duel that ended without
+                // reaching defeated() would leave it armed for an unrelated loss - same leak
+                // clearSuppressDefeatGoldLoss() exists for.
+                Current.player().clearSuppressDefeatGoldLoss();
+                System.out.println("[TFR-CoinChallenge] lost to " + foe + " - coin stays with them,"
+                        + " no gold penalty beyond the entry fee");
+                GameHUD.getInstance().addNotification(foe + " keeps your Bronze Challenge Coin."
+                        + " You can challenge them again next week.");
+            }
+            enable = true;
+            refreshArenaBuildingButtons();
+            return;
+        }
         enable = false;
         Array<ArenaRecord> winners = new Array<>();
         Array<EnemySprite> winnersEnemies = new Array<>();
@@ -954,10 +1122,17 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return wonOn != null && wonOn == world.getCurrentWeek();
     }
 
+    /** Round 216: whole days until this arena's weekly win allowance resets. Weeks are day/7, so
+     *  the allowance returns when the week number ticks over - which is 7 - (day % 7) days away. */
+    private int weeklyArenaDaysLeft() {
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        return 7 - (world.getCurrentDay() % 7);
+    }
+
     /** Shared refusal message, so the button, the click and the fee point all say the same thing. */
     private void notifyWeeklyArenaLocked() {
         forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
-        int daysLeft = 7 - (world.getCurrentDay() % 7);
+        int daysLeft = weeklyArenaDaysLeft();
         System.out.println("[TFR-ArenaWeekly] " + weeklyArenaKey() + ": entry refused, already won in week "
                 + world.getCurrentWeek() + " (day " + world.getCurrentDay() + ")");
         GameHUD.getInstance().addNotification("You have already won this arena's tournament this week."
@@ -1281,6 +1456,14 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // unrewarding - see weeklyArenaLocked(). The player's arena splits by MODE, so switching
         // Normal <-> Challenging is still a different venue and unlocks the button again.
         boolean weeklyLocked = weeklyArenaLocked();
+        // Round 216 (user: "the player might not know why and needs to know how many more days till
+        // he can compete again"). notifyWeeklyArenaLocked() already said both - but only on a click,
+        // and only as a transient toast. The label beside the start button now carries it too, so
+        // the reason is on screen before the player touches anything.
+        if (weeklyLocked) {
+            int daysLeft = weeklyArenaDaysLeft();
+            goldLabel.setText("[%80]Won this week ([%]" + daysLeft + (daysLeft == 1 ? " day)" : " days)"));
+        }
         startButton.setDisabled(data.entryFee > Current.player().getGold() || weeklyLocked);
         if (weeklyLocked)
             System.out.println("[TFR-ArenaWeekly] " + weeklyArenaKey() + ": entry locked for week "

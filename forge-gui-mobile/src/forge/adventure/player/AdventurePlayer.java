@@ -322,6 +322,42 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return enemyName != null && coinRansomedEnemies.contains(enemyName);
     }
 
+    /** Round 216: every enemy currently holding one of the player's Bronze Coins, sorted for a
+     *  stable menu order. Backs the Capitol Arena's Coin Challenge - the button is greyed out when
+     *  this is empty and lists these names when it is not. */
+    public java.util.List<String> coinRansomHolders() {
+        java.util.List<String> names = new java.util.ArrayList<>(coinRansomedEnemies);
+        java.util.Collections.sort(names);
+        return names;
+    }
+
+    /** Round 216: waive the gold penalty for the NEXT defeat only.
+     *  <p>
+     *  The Coin Challenge is bought with its entry fee, and the user's spec is explicit that losing
+     *  costs nothing further ("No Ante or gold loss if you lose (Besides the entry fee)"). This is
+     *  the same one-shot flag {@link #payCoinRansom} arms, consumed by {@link #defeated()}; the
+     *  caller must clear it again if the duel never happens. */
+    public void suppressNextDefeatGoldLoss() {
+        suppressDefeatGoldLoss = true;
+    }
+
+    /** Round 216: the week this enemy was last Coin-Challenged, or -1 if never. */
+    public int coinChallengeWeek(String enemyName) {
+        Integer week = enemyName == null ? null : coinChallengeWeeks.get(enemyName);
+        return week == null ? -1 : week;
+    }
+
+    /** Round 216: record a Coin Challenge against this enemy in the given week (user spec: "You can
+     *  only challenge each enemy once a week"). Recorded when the duel STARTS, win or lose - the
+     *  attempt is what the week's allowance buys. */
+    public void recordCoinChallenge(String enemyName, int week) {
+        if (enemyName == null || enemyName.isEmpty())
+            return;
+        coinChallengeWeeks.put(enemyName, week);
+        System.out.println("[TFR-CoinChallenge] " + enemyName + " challenged in week " + week
+                + " - next attempt against them from week " + (week + 1));
+    }
+
     /** Beating a marked enemy returns the coin. Returns true if one was actually reclaimed.
      *  <p>
      *  Grants the item immediately and silently. As of 2026-09-01 this is only the FALLBACK for
@@ -508,6 +544,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         unsupportedCards.clear();
         unlockedEditions.clear();
         coinRansomedEnemies.clear();
+        coinChallengeWeeks.clear();
         unlockedShopTypes.clear();
         startingColorId = null;
         suppressDefeatGoldLoss = false;
@@ -547,6 +584,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // enemies are catalog entries respawned freely, so a name is the only durable identity.
     // Persisted with the same shape unlockedEditions above uses (stored as an ArrayList).
     private final Set<String> coinRansomedEnemies = new HashSet<>();
+    // Round 216 (user spec: "You can only challenge each enemy once a week"): enemy name -> the week
+    // number of the last Coin Challenge against them. Same name-keyed identity as
+    // coinRansomedEnemies above and the same reason for it. Persisted as two parallel ArrayLists
+    // (names, weeks) because SaveFileData stores lists, not maps - the same shape the set above uses,
+    // just doubled. Entries are never pruned: once the coin is back the enemy drops out of
+    // coinRansomedEnemies and the stale week is simply never consulted again.
+    private final java.util.Map<String, Integer> coinChallengeWeeks = new java.util.HashMap<>();
     // Shop-type blueprints (user spec 2026-08-30): the card shop TYPES this player has learned.
     // Seeded at character creation from the chosen color (its common trio) plus the race's two
     // tribal shops - 5 total - then grown by buying blueprints in AI shops and by rare drops.
@@ -754,8 +798,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         partnerOverhealActive = false;
         // Bronze Coin ante marks are keyed by enemy NAME, and every one of those names still
         // exists in the new world's catalog - so carrying them would hand out free coins for
-        // enemies this run never took one from.
+        // enemies this run never took one from. Round 216: the Coin Challenge's weekly
+        // allowance is keyed the same way and is dropped for the same reason.
         coinRansomedEnemies.clear();
+        coinChallengeWeeks.clear();
         // Round 160 (code review): the roster rides into the new run (the guards still hold their
         // decks), but every DAY-based field pointed at the old calendar - a guard benched on old
         // day 250 was "hurt for 279 more days" in a world back on day 1, and no wage was billed
@@ -1485,6 +1531,23 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             //noinspection unchecked
             coinRansomedEnemies.addAll((java.util.List<String>) data.readObject("coinRansomedEnemies"));
         }
+        // Round 216: the Coin Challenge's once-a-week-per-enemy allowance, stored as two parallel
+        // lists because SaveFileData has no map shape. Absent on every save before this round; the
+        // containsKey guard loads those with an empty map, which simply means "nobody challenged
+        // yet". Zipped defensively - a truncated pair is ignored rather than throwing mid-load.
+        coinChallengeWeeks.clear();
+        if (data.containsKey("coinChallengeNames") && data.containsKey("coinChallengeWeeks")) {
+            //noinspection unchecked
+            java.util.List<String> ccNames = (java.util.List<String>) data.readObject("coinChallengeNames");
+            //noinspection unchecked
+            java.util.List<Integer> ccWeeks = (java.util.List<Integer>) data.readObject("coinChallengeWeeks");
+            if (ccNames != null && ccWeeks != null) {
+                for (int i = 0; i < Math.min(ccNames.size(), ccWeeks.size()); i++) {
+                    if (ccNames.get(i) != null && ccWeeks.get(i) != null)
+                        coinChallengeWeeks.put(ccNames.get(i), ccWeeks.get(i));
+                }
+            }
+        }
         // Shop-type blueprints (2026-08-30). Absent on every pre-round-71 save; the containsKey
         // guard leaves the set EMPTY there, which isShopTypeUnlocked() deliberately reads as
         // "legacy save, everything unlocked" rather than "nothing unlocked" - see the field.
@@ -1564,6 +1627,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
         data.storeObject("unlockedEditions", new ArrayList<>(unlockedEditions));
         data.storeObject("coinRansomedEnemies", new ArrayList<>(coinRansomedEnemies));
+        // Round 216: parallel lists, same index = same entry. Built from one entrySet pass so the
+        // two can never fall out of step.
+        ArrayList<String> coinChallengeNameList = new ArrayList<>();
+        ArrayList<Integer> coinChallengeWeekList = new ArrayList<>();
+        for (java.util.Map.Entry<String, Integer> entry : coinChallengeWeeks.entrySet()) {
+            coinChallengeNameList.add(entry.getKey());
+            coinChallengeWeekList.add(entry.getValue());
+        }
+        data.storeObject("coinChallengeNames", coinChallengeNameList);
+        data.storeObject("coinChallengeWeeks", coinChallengeWeekList);
         data.storeObject("unlockedShopTypes", new ArrayList<>(unlockedShopTypes));
         // store() with a null String throws (writeUTF) - persist "" and read it back as null.
         data.store("startingColorId", startingColorId == null ? "" : startingColorId);

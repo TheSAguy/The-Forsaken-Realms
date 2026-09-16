@@ -195,6 +195,15 @@
     "defeatGoldLossHard": 150,
     "defeatGoldLossInsane": 200,
 
+    // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
+    // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". The
+    // duel carries no ante and waives the defeat gold penalty, so this fee is the entire cost of a
+    // losing attempt. One attempt per opponent per week.
+    "coinChallengeFeeEasy": 50,
+    "coinChallengeFeeNormal": 50,
+    "coinChallengeFeeHard": 100,
+    "coinChallengeFeeInsane": 100,
+
     // Round 185 (user, after one duel paid FOUR Oblivion Rings and the next three Angels of Light: "It's okay to
     // sometimes get duplicate reward cards, but 4 seems extreme. Is there a way we can at least lower duplicate
     // probability?"). Extra draws a card reward gets whenever a pick repeats a name already in that same reward.

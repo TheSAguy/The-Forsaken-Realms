@@ -97,6 +97,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 216 (2026-09-16): **the Coin Challenge, and an Arena lock you can actually see.** The weekly-win
+  refusal existed since round 141 but only fired on a click, as a transient toast - the label beside the
+  start button now reads **"Won this week (N days)"** instead of the fee, so the reason and countdown are
+  visible without touching anything. And the Capitol's Level 2 Arena gains **Coin Challenge**: duel an
+  enemy still holding a Bronze Challenge Coin you paid them (`coinRansomedEnemies`, round 67) to win it
+  back, instead of waiting to meet them by luck in a bracket. Greyed when nobody holds one - deliberately
+  visible so the feature is discoverable; lists each holder with what blocks the attempt; the duel is the
+  real enemy with `noAnte`, no rewards and the defeat gold penalty waived, so a loss costs exactly the
+  entry fee (50g Easy/Normal, 100g Hard/Insane, a `coinChallengeFeeFor` table in TuningData). Once per
+  opponent per week, persisted as `coinChallengeWeeks`. **Log:** 1,163 lines, zero exceptions; the arena
+  lock fired twice as reported; and **no coin has been paid yet**, so the button will show greyed until
+  the player first buys an ante back - stated so that is not mistaken for a bug.
 - Round 215 (2026-09-16): **a copy-limit audit for every deck in the game.** User spotted a deck I built
   holding 5 of one card and 6 of another. `dev-tools/deck_legality_audit.py` reads the limits out of Forge's
   own card scripts (`Types:Basic Land` / `K:A deck can have any number` = unlimited, `K:DeckLimit:N:` = N,
