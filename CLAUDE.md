@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 219 (2026-09-16): **cleaning up after round 218.** Two things shipped that should not have, both
+  spotted in the packager's overlay list. `common/maps/tileset/buildings.png` was committed as modified
+  despite round 218 saying `common/` was untouched - its pixels are identical (verified against HEAD~1,
+  difference bbox None), only the PNG encoding changed, because the first `--fix` pass re-saved any sheet
+  with any hit before the guard against that was added. Reverted. And its `.spritebak` was committed **and
+  copied into the live folder** - round 218 only cleaned backups under `The Forsaken Realms/`, and this one
+  sat in `common/`. Same shape as round 211's stray `.bak`: the plane folder ships wholesale. Removed from
+  both, and `*.spritebak` is gitignored now. Root cause fixed too - the backup used `Image.open().save()`,
+  which re-encodes (211,308 bytes vs the original 231,923), so it was never a faithful restore point; it is
+  a `shutil.copy2` byte copy now.
 - Round 218 (2026-09-16): **the stray pixels under 21 enemy sprites.** User: "some enemy sprites have this
   weird little piece at the bottom... captured something from another image that should not be there."
   Correct and systematic - every barnyard_hen frame is the hen on rows 0-19, five empty rows, then a solid

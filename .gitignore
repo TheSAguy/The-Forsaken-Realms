@@ -118,3 +118,6 @@ forge-gui-ios/robovm.properties
 
 # compiled dev tools (review T3, round 172) - compile into a scratch dir, never into the repo
 dev-tools/**/*.class
+
+# sprite_artifact_audit.py backups - never ship, the plane folder is copied wholesale
+*.spritebak

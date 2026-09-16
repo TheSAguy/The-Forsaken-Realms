@@ -17757,6 +17757,29 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 219: cleaning up after round 218 (2026-09-16)
+
+Round 218 shipped two things it should not have, both caught by reading the packager's own overlay
+list rather than by anything failing.
+
+`common/maps/tileset/buildings.png` was committed as modified even though round 218 states plainly
+that `common/` was left alone. It was: its pixels are byte-for-byte identical (verified against
+HEAD~1 - difference bbox None). What changed was only the PNG encoding, because the first `--fix`
+pass re-saved every sheet that had ANY hit, including sheets whose only hits were in the "needs
+eyes" class. The guard that stops that was added later in the same round, so this file slipped
+through ahead of it. Reverted.
+
+`common/maps/tileset/buildings.png.spritebak` was committed AND copied into the live folder - the
+packager's overlay list named it out loud. Round 218's cleanup deleted backups under
+`The Forsaken Realms/` only, and this one sat in `common/` because a Forsaken Realms atlas points at
+a png over there. Same shape as the round-211 `quests.json.r211.bak` incident: the plane folder is
+copied wholesale, so anything left beside the art ships with it. Removed from the repo and from the
+live folder, and `*.spritebak` is in `.gitignore` now so it cannot happen a third time.
+
+THE UNDERLYING FLAW, fixed: the backup itself was written with `Image.open().save()`, which
+re-encodes. The "backup" of that tileset came out 211,308 bytes against the original's 231,923 - a
+restore point that is not actually the original file. It is a `shutil.copy2` byte copy now.
+
 ## Round 218: the stray pixels under 21 enemy sprites (2026-09-16)
 
 User, with two screenshots circling the same defect: "some enemy sprites have this weird little piece

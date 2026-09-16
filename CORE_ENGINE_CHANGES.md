@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 219 (2026-09-16) - no engine edits
+
+Cleanup. `forge-gui/res/adventure/common/maps/tileset/buildings.png` reverted to its round-217 bytes
+(pixels were already identical), its stray `.spritebak` removed from the repo and the live folder,
+`*.spritebak` added to `.gitignore`, and `dev-tools/sprite_artifact_audit.py` now takes its backup
+with `shutil.copy2` instead of a PIL re-save.
+
 ## Round 218 (2026-09-16) - no engine edits
 
 Art and tooling only. New `dev-tools/sprite_artifact_audit.py` (parses libGDX atlases, profiles each

@@ -34,6 +34,7 @@ import collections
 import io
 import json
 import os
+import shutil
 import sys
 
 try:
@@ -209,8 +210,11 @@ def audit(root, plane=None, min_gap=1, only=None, fix=False):
                 if fix and to_erase:
                     backup = ipath + ".spritebak"
                     if not os.path.exists(backup):
-                        # format must be explicit - PIL cannot infer one from ".spritebak"
-                        Image.open(ipath).save(backup, format="PNG")
+                        # BYTE copy, not a PIL re-save. Round 218 used Image.open().save() here,
+                        # which re-encodes: the "backup" came out a different size from the
+                        # original (231,923 -> 211,308 bytes on one sheet) and so was not a faithful
+                        # restore point. shutil.copy2 preserves the file exactly.
+                        shutil.copy2(ipath, backup)
                     for hrec in to_erase:
                         s, e = (int(v) for v in hrec["island_rows"].split("-"))
                         for r in range(s, e + 1):
