@@ -17757,6 +17757,51 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 218: the stray pixels under 21 enemy sprites (2026-09-16)
+
+User, with two screenshots circling the same defect: "some enemy sprites have this weird little piece
+at the bottom. Looks like the image captured something from another image that should not be there."
+
+They were right, and it is systematic. `barnyard_hen.png` is the clearest case: every 12x28 frame is
+the hen on rows 0-19, then rows 20-24 COMPLETELY EMPTY, then a solid red bar on rows 25-27. The frame
+grid is sound (48x140 = five exact rows of 28), so this is not a slicing error - the junk is baked
+into the pixels, left behind by whatever image sat next to it when the sheet was cut.
+
+`dev-tools/sprite_artifact_audit.py` finds them by row profile: inside each atlas region, the artwork
+is the first run of non-empty rows; if MORE content appears after at least one completely empty row,
+that trailing run is a detached island.
+
+THE HARD PART WAS NOT FINDING THEM, IT WAS NOT DELETING THE WRONG ONES. A detached blob below a
+sprite is not automatically wrong - a hovering creature with a separate drop-shadow looks identical
+to this test. Three things separated them, and the first draft would have been wrong without all
+three:
+
+* SIZE. The first pass reported 236 frames including islands of 785-4,497 pixels. Those are the
+  CREATURES: a sprite drawn with a horizontal break (a raised weapon, a floating head) splits its own
+  row profile and the lower half reads as "detached". Anything over 80 px is now classed "needs eyes"
+  and is never erased.
+* POSITION. A real fragment is anchored to the frame's last rows. A body-split is not.
+* COLOUR, which is what settled `common/`. Running the same audit there returns 73 frames whose
+  islands are **rgb (0, 0, 0) at alpha 100** - semi-transparent black, directly under pixies, an
+  efreet, a stone elemental. Those are legitimate drop-shadows for floating creatures, and erasing
+  them would have deleted real art. **`common/` was deliberately left alone.** The Forsaken Realms'
+  own artifacts are the opposite signature: fully opaque and brightly coloured - the hen's is solid
+  red (78, 9, 9) at alpha 255.
+
+WHAT WAS FIXED: 184 frames across 21 sheets, all in this plane. Fifteen of the 21 are from the same
+Philippine-mythology set (amomongo, bungisngis, busaw, buwaya, ekek, kapre_old_balete, kolyog,
+malakat, manananggal, santelmo, sirena, syokoy, taong_tuod, tikbalang, tiburones) - one import, one
+defect, which is why they all share it. The rest are barnyard_hen, fighting_rooster, axe_orc,
+hex_witch, pitchfork_farmer and plumed_knight.
+
+VERIFIED RATHER THAN ASSUMED. Before/after crops were rendered for six sheets: the red bar, the blue
+fin under tiburones, the dark-green leaf under busaw and the yellow bar under bungisngis are gone,
+and every creature - plus its own legitimate grey shadow, which touches the body and so was never a
+candidate - is untouched. Then every modified PNG was diffed against its backup pixel by pixel:
+**21 sheets changed, every single changed pixel became fully transparent, nothing else moved.**
+`buildingsbosses.png` was reverted - the first fix pass re-saved it with no pixel change at all,
+which is pure churn in a binary file, and the tool now only writes a sheet it actually erases from.
+
 ## Round 217: the player's decks - legal, and rebuilt around what the collection can actually support (2026-09-16)
 
 User: "Game closed, fix the decks and do a broader pass."

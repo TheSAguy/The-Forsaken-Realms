@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 218 (2026-09-16) - no engine edits
+
+Art and tooling only. New `dev-tools/sprite_artifact_audit.py` (parses libGDX atlases, profiles each
+region's rows, classifies a detached trailing island as "artifact" only when it is <= 80 px, sits
+after a >= 2-row gap and is anchored to the frame's last rows; `--fix` erases only those, and only
+rewrites a sheet it actually changed). 21 enemy sprite PNGs under
+`forge-gui/res/adventure/The Forsaken Realms/sprites/enemy/` had their stray bottom islands cleared
+to full transparency. No atlas file changed - the frame grids were always correct. No Java, no plane
+data, and `common/` untouched.
+
 ## Round 217 (2026-09-16) - no engine edits
 
 Player save data and decklists only. New `dev-tools/save-editing/gempalm_legion_v3.txt`,

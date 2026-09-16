@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 218 (2026-09-16): **the stray pixels under 21 enemy sprites.** User: "some enemy sprites have this
+  weird little piece at the bottom... captured something from another image that should not be there."
+  Correct and systematic - every barnyard_hen frame is the hen on rows 0-19, five empty rows, then a solid
+  red bar on 25-27, with the frame grid itself sound. New `dev-tools/sprite_artifact_audit.py` finds a
+  detached island by row profile. **The care is in what it refuses to touch:** islands over 80 px are the
+  creature itself (a sprite with a horizontal break splits its own profile - the first pass flagged 236
+  frames including 4,497-px "islands"), and `common/`'s 73 hits are **rgb (0,0,0) alpha 100 drop-shadows**
+  under pixies and elementals, so common was deliberately left alone. Fixed 184 frames across 21 sheets in
+  this plane, 15 of them from the same Philippine-mythology import. Verified with before/after crops and a
+  pixel diff of every modified PNG: every changed pixel became fully transparent, nothing else moved.
 - Round 217 (2026-09-16): **the player's decks - legal, and rebuilt around what the collection supports.**
   Round 215's finding came home: Dawnbreak Tribunal held 5 Oblivion Ring in saves 1, 2 **and 3** (save 3 had
   been played since), Gravebound (B) held 5 Dire Fleet Hoarder in save 4; both capped at 4, with the freed
