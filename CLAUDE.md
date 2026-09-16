@@ -97,6 +97,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 215 (2026-09-16): **a copy-limit audit for every deck in the game.** User spotted a deck I built
+  holding 5 of one card and 6 of another. `dev-tools/deck_legality_audit.py` reads the limits out of Forge's
+  own card scripts (`Types:Basic Land` / `K:A deck can have any number` = unlimited, `K:DeckLimit:N:` = N,
+  else 4) and sums per NAME per section - the bug hid as `2 Oblivion Ring` + `3 Oblivion Ring` on two
+  printing lines, which a line-by-line check never sees. `DumpDecks.java` extends it to a save's own decks.
+  **TFR's 1,629 deck files are all legal.** The four broken lists were mine, in `dev-tools/save-editing/`,
+  and are fixed (gravebound gets a compensating Swamp so it stays at the 40-card floor). It did reach the
+  saves: slots 1 and 2 carry Dawnbreak Tribunal at 5 Oblivion Ring, save 4 Gravebound at 5 Dire Fleet
+  Hoarder - left for the user to decide, being their data. 11 stock decks are flagged not fixed: 5 in
+  Shandalar, 6 in `common/` of which five are reachable from TFR enemies (walter.dck plays 43 Camels, which
+  reads as a gag). Three false-positive classes were found and fixed before reporting - printing suffixes,
+  casing, and reward/shop POOLS that list one line per printing (117 hits became 22, all real).
 - Round 214 (2026-09-16): **the agent can leave a Forge screen, and stops landing on POIs it cannot enter.**
   The two bridge bugs round 213 left open. `DeckEditScene extends ForgeScene`, which is neither a `UIScene`
   nor a `HudScene` and reports `ui=[]`/`forgeUi=null`, so opening the deck editor ended an agent session

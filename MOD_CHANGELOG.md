@@ -17757,6 +17757,59 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 215: a copy-limit audit for every deck in the game (2026-09-16)
+
+User: "one of the decks you created me the other day had 5 copies of one card and 6 of another. Could
+we do an audit of all decks in the game, confirming they are all legal."
+
+They were right, and it was mine. `dev-tools/deck_legality_audit.py` now answers the question for the
+whole repo, and `dev-tools/save-editing/DumpDecks.java` extends it to the decks a SAVE actually holds.
+
+HOW LEGALITY IS DECIDED. Magic allows at most four cards of the same name, except basic lands and the
+handful of cards that say otherwise. Rather than hardcode a list that would rot, the tool reads the
+rules out of Forge's own card scripts: `Types:... Basic ... Land` and
+`K:A deck can have any number of cards named ...` mean unlimited, `K:DeckLimit:<N>:` means N (Seven
+Dwarves 7, Nazgul 9), everything else is 4. Across 33,709 cards that is 22 unlimited and 5 with a
+named limit.
+
+THREE THINGS THE FIRST DRAFT GOT WRONG, all caught before reporting, all worth recording because each
+would have produced confident nonsense:
+* Adventure deck templates write the PRINTING, not the name (`"Swamp|ISD"`), so every basic land in
+  every pile deck read as an illegal 15-of. The set suffix is stripped now.
+* Deck files are hand-written and the casing wanders - `plains`, `snow-covered Forest` - which missed
+  the basic-land rule and reported a 36-of. Name lookup falls back to case-insensitive.
+* `decks/rewards/` and `decks/shop/` are not decks at all. They are POOLS that deliberately list one
+  line per alternate printing (`Alt-Art_Staples.dck` holds "1 Sol Ring|ECC|[58]", "1 Sol Ring|ECC|[57]",
+  "1 Sol Ring|EOC|[57]"...). Summing those to "30 Sol Ring" and calling it illegal was nonsense; those
+  86 files are skipped and the skip is reported.
+First draft: 117 violations. After the three fixes: 22, every one of them real.
+
+THE HEADLINE RESULT: **The Forsaken Realms' own 1,629 deck files are all legal.** Nothing in the
+plane's own decks/ tree breaks the rule.
+
+WHAT WAS ACTUALLY BROKEN WAS MINE - four of the decklists in `dev-tools/save-editing/`, fixed here:
+`dawnbreak_tribunal` (5 Oblivion Ring), `gempalm_legion` (6 Ghostly Changeling, 5 Ichor Slick),
+`gempalm_legion_v2` (6 Ghostly Changeling, 6 Reassembling Skeleton), `gravebound` (5 Dire Fleet
+Hoarder). Trimming alone would have left gravebound at 39 cards, under the 40-card floor where
+DuelScene starts padding with colorless Wastes - the exact decay round 213 addressed - so it gets a
+compensating Swamp and stays at 40.
+
+AND IT REACHED THE LIVE SAVES. Dumping the player's slots shows the damage really shipped:
+save 1 and save 2 both carry "Dawnbreak Tribunal" with **2 Oblivion Ring + 3 Oblivion Ring = 5** (two
+printings, which is precisely why the audit sums per NAME - a line-by-line check sees 2 and 3 and
+shrugs), and save 4 carries "Gravebound (B)" with 5 Dire Fleet Hoarder. "Gempalm Legion" as stored is
+fine at 4 Ghostly Changeling - the writer capped it on the way in, so the bad list did not always
+land. The save decks are NOT rewritten here; that is the player's own data and their call.
+
+LEFT ALONE DELIBERATELY - 11 stock Forge decks that predate this mod. Five are in Shandalar Old
+Border (another plane entirely, not loaded by this one). Six are in `common/`, and five of those ARE
+reachable: TFR enemies reference `miniboss/kiora.dck` (11 Tropical Island, 5 Ancestral Recall),
+`miniboss/walter.dck` (43 Camel), `standard/slug.dck`, `standard/worm.dck` and
+`standard/goblinrager.dck`, one enemy each; `standard/rat_realmagic.dck` is referenced by none. These
+are AI decks, so the effect is an opponent cheating rather than the player, and several look like
+deliberate gags - a miniboss named Walter playing 43 Camels is hard to read as an accident. Flagged
+for a content decision rather than silently "corrected".
+
 ## Round 214: the agent can leave a Forge screen, and stops landing on POIs it cannot enter (2026-09-16)
 
 The two bridge bugs round 213 deliberately left open, both traced during the 2026-09-15 play session.

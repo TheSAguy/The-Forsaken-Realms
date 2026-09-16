@@ -3,7 +3,7 @@
 # lesson: adventure decks are views over one collection and handing one to a guard strips its cards
 # from every other deck - two decks meant for two guards must be disjoint or the first hand-over
 # guts the second. Built only from cards no deck the player is keeping already lists.
-5 Dire Fleet Hoarder
+4 Dire Fleet Hoarder
 2 Grimclaw Bats
 3 Bonepicker Skirge
 2 Chittering Rats
@@ -15,4 +15,4 @@
 1 Deadly Derision
 1 Grisly Spectacle
 1 Salt Road Skirmish
-16 Swamp
+17 Swamp

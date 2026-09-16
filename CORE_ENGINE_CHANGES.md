@@ -2779,6 +2779,15 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 215 (2026-09-16) - no engine edits
+
+Tooling and data only. New `dev-tools/deck_legality_audit.py` (reads copy limits from
+`forge-gui/res/cardsfolder`, scans every `*.dck`, adventure deck `*.json` and save-editing decklist,
+skips `decks/rewards/` and `decks/shop/` pools, accepts `--save-dump` files, exits 1 on any
+violation) and new read-only `dev-tools/save-editing/DumpDecks.java` (prints a save's deck slots as
+plain decklists so the audit can read them). Four decklists under `dev-tools/save-editing/` corrected.
+No Java in the game engine changed, no plane data changed.
+
 ## Round 214 (2026-09-16)
 
 `forge-gui-mobile/src/forge/adventure/agent/AgentActions.java` - `back()` and `key()` gained a
