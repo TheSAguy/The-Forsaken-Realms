@@ -97,6 +97,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 225 (2026-09-17): **HOTFIX - round 223's portal glyph corrupted every lowercase "l".** `Font.addImage(name,
+  region)` maps the image onto the LAST CHARACTER of `name` ("Portal" -> 'l') and registers no `[+name]`; the shared
+  font then drew a portal for every 'l' in the game and `[+Portal]` printed as "+". Now a one-region `TextureAtlas`
+  through `Font.addAtlas()`, the item-glyph route (own private-use code point, name registered). **v1.11 shipped with
+  the bug** - a v1.12 hotfix release is recommended and awaits the user's go-ahead. Lesson: `addImage` = "is this
+  character", `addAtlas` = "has this name"; only the latter feeds `[+name]`.
 - Round 224 (2026-09-16): **v1.11 "Standing Ground" RELEASED - PC + Android.** Log review of the first 09.16-engine
   session: 1,338 lines, zero exceptions, two Capitol brackets won, the Djinn's coin back via the bracket loot page;
   one fix - snow-covered basics now count as basics for the two-copy loot cap (`isBasicLand()` replaces

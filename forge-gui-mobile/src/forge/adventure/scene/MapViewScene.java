@@ -515,6 +515,16 @@ public class MapViewScene extends UIScene {
      * (EconomyBuildings, portal4.atlas) - the picture the player already knows as their portal. Names
      * are case-insensitive in the lookup; "Portal" is not a region of either atlas the font is built
      * from (the plane's items.atlas and pixelmana.atlas), so nothing is shadowed.
+     * <p>
+     * ROUND 225 (hotfix, user screenshots of the v1.11 Names view: "I see a ton of teleporters and the
+     * icons seem big"): round 223 called {@code Font.addImage("Portal", region)}, and TextraTypist's
+     * addImage maps the image onto the LAST CHARACTER of its first argument - the disassembly reads
+     * {@code mapping.put(character.charAt(character.length() - 1), ...)} - and registers no name. So
+     * every lowercase 'l' drawn by the shared font became the portal picture ("B▮ack Tower",
+     * "F▮ooded Cave") for the rest of the session, and {@code [+Portal]} itself, unknown, printed as a
+     * bare "+". The name-to-glyph route the item glyphs use is {@code addAtlas()}: it hands each region
+     * its own private-use code point (from U+E000) and registers {@code nameLookup}/{@code
+     * namesByCharCode}. A one-region atlas built from the same frame goes through exactly that path.
      */
     private static void ensurePortalGlyph() {
         com.github.tommyettinger.textra.Font font = Controls.getTextraFont();
@@ -524,8 +534,11 @@ public class MapViewScene extends UIScene {
                 EconomyBuildings.getTeleporterActiveAnimation().getKeyFrames();
         if (frames == null || frames.length == 0 || frames[0] == null)
             return;
-        font.addImage(PORTAL_GLYPH_NAME, frames[0]);
-        System.out.println("[TFR-MapView] registered the " + PORTAL_GLYPH + " glyph on the shared font");
+        com.badlogic.gdx.graphics.g2d.TextureAtlas portalAtlas = new com.badlogic.gdx.graphics.g2d.TextureAtlas();
+        portalAtlas.addRegion(PORTAL_GLYPH_NAME, frames[0]);
+        font.addAtlas(portalAtlas);
+        System.out.println("[TFR-MapView] registered the " + PORTAL_GLYPH + " glyph on the shared font as code point "
+                + font.nameLookup.get(PORTAL_GLYPH_NAME, -1));
     }
 
     /**

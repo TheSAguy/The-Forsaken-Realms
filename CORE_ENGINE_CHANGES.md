@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 225 (2026-09-17) - hotfix, adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` - `ensurePortalGlyph()` registers the portal
+image through a one-region `TextureAtlas` and `Font.addAtlas()` instead of `Font.addImage()` (which maps the
+image onto the last character of its name argument and registers no `[+name]`).
+
 ## Round 224 (2026-09-16) - the v1.11 release
 
 `forge-gui-mobile/src/forge/adventure/util/CardUtil.java` - `generateCards()`'s copy-cap exemption tests

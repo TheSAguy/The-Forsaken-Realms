@@ -17757,6 +17757,39 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 225: HOTFIX - the portal glyph turned every lowercase "l" into a portal (2026-09-17)
+
+User, two screenshots of the v1.11 Names view: *"The new show teleporters mini-map view is not correct. I only
+have 3 in my current game. 1 in capitol and two towns have 1. I see a ton of teleporters and the icons seem
+big."* The screenshots read "B▮ack Tower", "F▮ooded Cave", "Wo▮f's Nest", "Archaeo▮ogica▮ Dig" - a portal
+picture wherever a lowercase **l** should be - and the two marked player towns showed a bare "+ " prefix
+("+ Co▮dsnap Ho▮d", "+ Orazca"). So the ownership-and-Teleporter test was right (Orazca and Coldsnap Hold are
+two of the three portal towns) and the rendering was wrong.
+
+**Cause: the wrong TextraTypist call.** Round 223 registered the glyph with
+`Font.addImage("Portal", region)`. The disassembly of that method is
+`mapping.put(character.charAt(character.length() - 1), new GlyphRegion(...))`: it maps the image onto the
+LAST CHARACTER of its first argument - meant for a literal character or emoji, not a name - and touches
+`nameLookup` not at all. "Portal" ends in 'l', so every 'l' the shared font draws became the portal picture
+for the rest of the session (the font is one cached instance for every label in the game), and
+`[+Portal]`, unregistered, fell through Textra's markup as a "+". Round 223's own guard,
+`nameLookup.containsKey("Portal")`, never became true, so the mapping was re-done on every Names view.
+The "big icons" were the raw 16x16 frame drawn as a character cell.
+
+**Fix.** `ensurePortalGlyph()` now builds a one-region `TextureAtlas` (`new TextureAtlas()` +
+`addRegion("Portal", frame)`) and hands it to `Font.addAtlas()`, the route the `[+GoldCoin]`/`[+tfr]` item
+glyphs take: each region gets its own private-use code point (from U+E000, skipping used ones), and
+`nameLookup`/`namesByCharCode` are registered, so `[+Portal]` resolves and no real character is touched.
+The log line now prints the code point it landed on. Verified the API against the bundled jar
+(`TextureAtlas()`, `addRegion(String, TextureRegion)`, `Font.addAtlas(TextureAtlas)`).
+
+**Lesson, for the next glyph:** in TextraTypist, `addImage` is "this image IS this character";
+`addAtlas` is "this image has this NAME". Only the second one feeds `[+name]`.
+
+**v1.11 shipped with this** (published 04:37 UTC, this fix ~3 h later). Anyone who opens the Names view
+while owning a portal town gets the corrupted 'l' until they restart the game. A v1.12 hotfix release is
+the recommendation; it needs the user's go-ahead.
+
 ## Round 224: v1.11 "Standing Ground" - the release round, PC + Android (2026-09-16)
 
 User: *"Package the live game with round 223 - I'm done playing. Review the log. Release the game, PC and
