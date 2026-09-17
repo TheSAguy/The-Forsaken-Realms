@@ -1,12 +1,3 @@
-<!-- DRAFT (round 221, 2026-09-16) - delete this block before publishing.
-  Before tagging tfr-v1.11:
-  1. Round 222 (the 09.16 engine merge) must be in, packaged and PLAYTESTED - everything below runs on it.
-  2. Stamps: config.json modVersion 1.10 -> 1.11, modVersionDate 09.16, engineBuildVersion 2.0.15-SNAPSHOT-09.16;
-     forge-gui-android/pom.xml tfr.version 1.11, manifestVersionCode 11000.
-  3. Desktop zip: build_standalone.py --out C:\Users\User\TFR-Release --zip; Android per ANDROID_RELEASE.md from a C: copy.
-  4. gh release create tfr-v1.11 --draft -R TheSAguy/The-Forsaken-Realms, upload all three assets, then --draft=false --latest.
-  Rounds covered: 186-222. Nothing here needs a new world - every change reaches an existing save.
--->
 ## The Forsaken Realms — v1.11 — Standing Ground
 
 A smaller update than v1.10, and a safe one: **your v1.10 save carries straight over** and every change
@@ -33,6 +24,8 @@ went in since.
 - **A quest remembers where you have been.** "Go there" objectives complete on the spot if you already
   visited the place before the quest was issued, and an Inn tournament played before "Participate in an
   Inn Tournament" was offered counts for it.
+- **Portal towns on the mini-map.** The Names view marks every town of yours that has a Teleporter with
+  a small portal glyph in front of its name.
 - **Smaller additions:** the arena says "Won this week (N days)" instead of silently refusing; a crowned
   enemy is never drawn smaller than a Master; enemies in a cave with a dungeon effect carry a small cyan
   pip so the buff stays visible; a delivery quest pays the town that sent you as well as the one you

@@ -17757,6 +17757,40 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 224: v1.11 "Standing Ground" - the release round, PC + Android (2026-09-16)
+
+User: *"Package the live game with round 223 - I'm done playing. Review the log. Release the game, PC and
+Android. Give me a discord blurb. Once done, update my decks. Save 1."*
+
+**Log review (1,338 lines, zero exceptions) - the first full session on the 09.16 engine.** `Language
+'en-US' loaded successfully`, no adventure-bundle complaint for a plane without a `languages/` folder. Two
+Capitol/AI brackets won 3-0 (`[TFR-ArenaPayout]` twice), a Chest Illegal Arena bracket won 1 round, and the
+Djinn's Bronze Coin came back on the bracket loot page (`[TFR-ArenaCoin] ... added to the loot page`).
+Research thresholds reached for GRN (10/10) and M15 (7/7). `[TFR-MainQuest]` mineBuilt and a second ruined
+town entered. Round 208's Travel retro-completion and rounds 190/216 all quiet, as expected.
+Two findings:
+- **Snow-covered basics were capped at two per payout while plain basics were exempt.** Lines 676-692: a
+  lands pool of four names (Swamp, Snow-Covered Swamp, Leechridden Swamp, Witch's Cottage) paying a big land
+  reward logged `pool exhausted` for Snow-Covered Swamp again and again. Round 220's exemption used
+  `isVeryBasicLand()`, which is only the five plain basics. Now `getRules().getType().isBasicLand()` - the
+  Basic supertype, snow included. One token in `CardUtil.generateCards()`.
+- The engine banner reads `Forge v.2.0.15-SNAPSHOT-09.17`: the merged build's snapshot date is stamped in
+  UTC and the build crossed midnight. Cosmetic; `build.txt` and the plane's `engineBuildVersion` agree on
+  09.16, which is what the packager checks.
+
+**Stamps:** `config.json` modVersion 1.10 -> **1.11**, modVersionDate 09.11 -> **09.16** (engineBuildVersion
+already 09.16 from round 222); `forge-gui-android/pom.xml` tfr.version **1.11**, manifestVersionCode 11000 ->
+**11100**. `RELEASE_NOTES_v1.11.md` final: the draft checklist removed, the round-223 portal glyph added.
+
+**Release procedure, in order:** (1) this commit, tagged `tfr-v1.11`, pushed with the tag; (2) Maven, then the
+live folder packaged on the fast path (`PACKAGE_OK`, round 223 + the snow fix + the stamps) and the agent
+folder synced; (3) the desktop zip with `build_standalone.py --out C:\Users\User\TFR-Release --zip`;
+(4) Android from `C:\TFR-build` (fetch + reset to the tag, keystore + local.properties copied in, `subst R:`,
+ANDROID_RELEASE.md's maven line), verified with aapt badging / apksigner (EE:60:39:25) / the assets.zip
+layout; (5) `gh release create --draft`, all three assets uploaded, then `--draft=false --latest`; (6) the
+mandatory `mvn -pl forge-gui-mobile -am clean compile` after the Android build. Asset sizes and the publish
+time are in the addendum below this entry once uploaded.
+
 ## Round 223: a portal glyph on the mini-map's town names (2026-09-16, REPO ONLY - not packaged)
 
 User: *"On the mini-map, the view that shows the town names. Can we add a teleport symbol for player

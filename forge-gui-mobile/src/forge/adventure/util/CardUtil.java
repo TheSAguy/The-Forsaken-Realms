@@ -591,7 +591,10 @@ public class CardUtil {
                 if (candidate != null) {
                     String name = candidate.getCardName();
                     int already = takenNames.getOrDefault(name, 0);
-                    if (maxCopies > 0 && already >= maxCopies && !candidate.isVeryBasicLand()) {
+                    // Round 224 (log review): isVeryBasicLand() is only the five plain basics, so a
+                    // lands pool paid Swamps uncapped but stopped Snow-Covered Swamp at two and logged
+                    // "pool exhausted" for it - the Basic supertype is the right test, snow included.
+                    if (maxCopies > 0 && already >= maxCopies && !candidate.getRules().getType().isBasicLand()) {
                         long distinct = pool.stream().filter(java.util.Objects::nonNull)
                                 .map(PaperCard::getCardName).distinct().count();
                         System.out.println("[TFR-RewardDup] pool exhausted - " + name + " already paid "

@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 224 (2026-09-16) - the v1.11 release
+
+`forge-gui-mobile/src/forge/adventure/util/CardUtil.java` - `generateCards()`'s copy-cap exemption tests
+`getRules().getType().isBasicLand()` (the Basic supertype, snow basics included) instead of
+`isVeryBasicLand()`. `forge-gui-android/pom.xml` - `tfr.version` 1.11, `manifestVersionCode` 11100 (stamps
+only). Plane `config.json` modVersion 1.11 / modVersionDate 09.16.
+
 ## Round 223 (2026-09-16) - repo only
 
 `forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` only: `names()` prefixes `[+Portal]` to a

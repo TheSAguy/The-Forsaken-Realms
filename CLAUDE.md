@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-12 (round 185; v1.10 RELEASED; ENGINE = 09.16 daily since round 222) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-16 (round 224; v1.11 RELEASED; ENGINE = 09.16 daily since round 222) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 185, 2026-09-12).** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
@@ -75,8 +75,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   5. **Wider playtest feedback** on v1.09 and the v1.10 draft (`RELEASE_NOTES_v1.10.md`). The code review is
      down to its DESIGN rows and the quest-tag family below - E4 and the other fifteen were fixed in round 183.
   6. Small open items: characters already past "Raise the Banner"'s Capitol step keep the old quest steps (a load-time
-     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; rounds 172-184
-     are unreleased (v1.09 is the last release).
+     migration is possible if the user wants it); the user's "Norn's Verdict (W_B)" deck is 39 cards; nothing is unreleased -
+     v1.11 (rounds 186-224) shipped 2026-09-16 (round 224).
   Discord: the invite in the notes and the game (`TTRPKc9HYJ`, #general, no expiry) and the user's `yDJpfkzd9r`
   (#announcements, no expiry) both resolve to server 1539837658438697010 - nothing to change unless the user wants
   #announcements.
@@ -97,6 +97,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 224 (2026-09-16): **v1.11 "Standing Ground" RELEASED - PC + Android.** Log review of the first 09.16-engine
+  session: 1,338 lines, zero exceptions, two Capitol brackets won, the Djinn's coin back via the bracket loot page;
+  one fix - snow-covered basics now count as basics for the two-copy loot cap (`isBasicLand()` replaces
+  `isVeryBasicLand()` in `CardUtil.generateCards()`). Stamps 1.11 / 09.16 / tfr.version 1.11 / manifestVersionCode
+  11100; tag `tfr-v1.11`; the live folder packaged with round 223 + this; desktop zip from `--out C:\Users\User\
+  TFR-Release --zip`; Android from `C:\TFR-build`; published via `gh release` draft -> latest. Assets and the
+  publish time in the changelog addendum. Next: the user's decks in save 1 updated after the release.
 - Round 223 (2026-09-16, REPO ONLY - not packaged): **a `[+Portal]` glyph before the name of every player town
   or Capitol with a Teleporter, on the mini-map's Names view.** Registered in code on the shared Textra font from
   the teleporter's own portal4 "Active" frame (`MapViewScene.ensurePortalGlyph()`, idempotent via the font's
