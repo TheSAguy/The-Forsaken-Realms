@@ -103,7 +103,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `isVeryBasicLand()` in `CardUtil.generateCards()`). Stamps 1.11 / 09.16 / tfr.version 1.11 / manifestVersionCode
   11100; tag `tfr-v1.11`; the live folder packaged with round 223 + this; desktop zip from `--out C:\Users\User\
   TFR-Release --zip`; Android from `C:\TFR-build`; published via `gh release` draft -> latest. Assets and the
-  publish time in the changelog addendum. Next: the user's decks in save 1 updated after the release.
+  publish time in the changelog addendum. **Published 2026-09-17 04:37 UTC, tag @ `30d2cceb77c`, marked Latest:**
+  zip 265.3 MB / APK 13.3 MB / assets.zip 217.8 MB, build.txt pair `2026-09-17 04:29:13`. Save 1 decks then
+  updated (slots 3/4/5 at 48 cards, `.prededit16.bak`; the user's slot-4 edits kept, Fynn stays out because
+  they removed it). Rounds 186-224 are all shipped; nothing is unreleased.
 - Round 223 (2026-09-16, REPO ONLY - not packaged): **a `[+Portal]` glyph before the name of every player town
   or Capitol with a Teleporter, on the mini-map's Names view.** Registered in code on the shared Textra font from
   the teleporter's own portal4 "Active" frame (`MapViewScene.ensurePortalGlyph()`, idempotent via the font's

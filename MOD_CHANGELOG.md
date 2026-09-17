@@ -17791,6 +17791,29 @@ layout; (5) `gh release create --draft`, all three assets uploaded, then `--draf
 mandatory `mvn -pl forge-gui-mobile -am clean compile` after the Android build. Asset sizes and the publish
 time are in the addendum below this entry once uploaded.
 
+**Addendum - published.** Tag `tfr-v1.11` @ `30d2cceb77c`, published 2026-09-17 04:37 UTC and marked Latest:
+`The-Forsaken-Realms-v1.11.zip` (265.3 MB, built with `--out C:\Users\User\TFR-Release --zip`, config
+1.11 / PACKAGE_OK inside / no backup files), `forsaken-realms-1.11-signed-aligned.apk` (13.3 MB) and
+`assets.zip` (217.8 MB), the Android pair built in 2:29 from `C:\TFR-build` reset to the tag via `R:` and
+verified before upload: package `com.thesaguy.forsakenrealms`, versionCode 11100, versionName 1.11, signer
+CN=The Forsaken Realms with the EE:60:39:25 fingerprint, `res/adventure/` holding exactly `common` + the
+plane, and both `build.txt` stamps reading `2026-09-17 04:29:13` (the `res/conquest/planes/Shandalar/`
+paths inside are stock Planar Conquest data, not an adventure plane). The live folder was packaged first
+(PACKAGE_OK 21:35, 346 MB, round 223 + the snow fix + the stamps) and the agent folder mirrored (110 files).
+The post-Android `clean compile` was NOT run: the release build ran in the `C:\TFR-build` clone against
+`C:/m2`, so the F: repo's `target/` was never touched, and the desktop jar it packaged predates it.
+
+**Save 1 decks updated afterwards** (user: "Once done, update my decks"), the game closed, backup
+`1_save_slot.sav.prededit16.bak`, collection verified identical before and after, slot 4 still selected.
+The session added 85 cards (82 names, nothing anted away). Slot 4 "Fangbearer's Blight" (48): the user's
+own in-game edits kept - A-Ochre Jelly, Aspect of Wolf, Birds of Paradise added and **Fynn, the Fangbearer
+removed** (flagged to them: Fynn is the deathtouch-poison engine; it stays out only because they took it
+out) - plus 2 Dismember, Might of the Masses, a second Cloudthresher and an 18th Forest, with Thornado and
+Sabertooth Cobra cut. Slot 5 "Colossus Contagion" (48): + 2 Dismember, Birds of Paradise, Might of the
+Masses, 18th Forest. Slot 3 "Gempalm Legion" (48): + Zul Ashur, Lich Lord (recast Zombies from the
+graveyard), 2 Plague Belcher, Bloodghast, 2 Dismember; - 2 Befoul, 1 Ichor Slick, 1 Skirk Ridge Exhumer.
+Lists: `gempalm_legion_v4.txt`, `fangbearers_blight_v2.txt`, `colossus_contagion_v2.txt`.
+
 ## Round 223: a portal glyph on the mini-map's town names (2026-09-16, REPO ONLY - not packaged)
 
 User: *"On the mini-map, the view that shows the town names. Can we add a teleport symbol for player
