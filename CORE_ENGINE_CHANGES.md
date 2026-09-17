@@ -2779,6 +2779,14 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 223 (2026-09-16) - repo only
+
+`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` only: `names()` prefixes `[+Portal]` to a
+player holding's name when it has a Teleporter (restored town or the Capitol, `hasEconomyBuildingOfType`);
+new `ensurePortalGlyph()` registers that image on `Controls.getTextraFont()` via `Font.addImage()` from
+`EconomyBuildings.getTeleporterActiveAnimation()`'s first frame, guarded by `Font.nameLookup`. Three new
+imports (`PointOfInterestChanges`, `EconomyBuildings`, `TownRestoration`).
+
 ## Round 222 (2026-09-16) - upstream merge @ 994c5d9eb2d (the 09.16 daily)
 
 103 commits / 327 files / 58 Java since `26d8aff8750`. Conflicts, and how each was resolved:

@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 223: a portal glyph on the mini-map's town names (2026-09-16, REPO ONLY - not packaged)
+
+User: *"On the mini-map, the view that shows the town names. Can we add a teleport symbol for player
+towns that have a portal?"* Repo only by their instruction; the next package carries it.
+
+`MapViewScene.names()` now prefixes a **`[+Portal]` glyph** to the name of every player holding that
+has a Teleporter built - a restored town (`TownRestoration.isTownRestored`) or the Capitol
+(`CAPITOL_POI_NAME`), tested together with `changes.hasEconomyBuildingOfType(TELEPORTER)`. Ownership is
+tested as well as the building on purpose: a town an AI captures may keep its `economyBuildingObjectIds`
+(review S2-4 is still open), and a portal the player cannot walk into is not worth marking.
+
+**How the glyph exists without a new asset.** Inline `[+name]` images resolve against the two atlases
+the shared Textra font is built from (the plane's `items.atlas` - where round 178's `[+tfr]` medallion
+lives - and `pixelmana.atlas`). Rather than paint a new region into `items.png`, `ensurePortalGlyph()`
+registers the image in code with `Font.addImage("Portal", ...)`, using the first frame of the
+teleporter building's own "Active" shimmer (`EconomyBuildings.getTeleporterActiveAnimation()`,
+`common/sprites/portal4.atlas`) - the picture the player already knows as their portal. Idempotent
+through the font's own `nameLookup` rather than a static flag, so a font Assets ever rebuilds gets the
+glyph again instead of drawing the markup as text; "Portal" is not a region of either atlas, so nothing
+is shadowed. Diagnostic: `[TFR-MapView] names view: N player town(s) carry the portal glyph`, and one
+line when the glyph is registered.
+
+Not done: the Details view is untouched (the user named the Names view), and the glyph does not
+distinguish a lone Teleporter (network inactive until a second one exists) from a working one - it
+marks the building, as asked. Both are one-line follow-ups if wanted.
+
 ## Round 222: engine update to upstream `994c5d9eb2d` - the 09.16 daily (2026-09-16)
 
 User: *"Update to the latest Forge Engine E:\GAMES\Forge_2."* The install is the 09.16 daily

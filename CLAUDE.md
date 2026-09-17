@@ -97,6 +97,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 223 (2026-09-16, REPO ONLY - not packaged): **a `[+Portal]` glyph before the name of every player town
+  or Capitol with a Teleporter, on the mini-map's Names view.** Registered in code on the shared Textra font from
+  the teleporter's own portal4 "Active" frame (`MapViewScene.ensurePortalGlyph()`, idempotent via the font's
+  `nameLookup`), so no new asset; ownership tested as well as the building. `[TFR-MapView] names view: N ...`.
+  The next package carries it.
 - Round 222 (2026-09-16): **engine update to upstream `994c5d9eb2d` = Forge_2's 09.16 daily** (103 commits /
   327 files / 58 Java since `26d8aff8750`; no pom or Android change). Pinned by CONTENT probes, not build.txt's
   stamp: that commit's cards are in the install's `cardsfolder.zip` and its edition file matches, the two later

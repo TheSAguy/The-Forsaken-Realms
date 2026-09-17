@@ -20,11 +20,14 @@ import forge.Forge;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.AdventureQuestData;
 import forge.adventure.pointofintrest.PointOfInterest;
+import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
+import forge.adventure.util.EconomyBuildings;
+import forge.adventure.util.TownRestoration;
 import forge.adventure.world.WorldSave;
 
 import java.util.List;
@@ -467,14 +470,62 @@ public class MapViewScene extends UIScene {
                 placedLabelRects.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
         }
         List<PointOfInterest> allPois = activePointsOfInterest();
+        int portalTowns = 0;
         for (PointOfInterest poi : allPois) {
             String poiType = poi.getData().type;
-            if (("town".equalsIgnoreCase(poiType) || "capital".equalsIgnoreCase(poiType))
-                    && WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).isVisited()) {
-                TypingLabel nameLabel = Controls.newTypingLabel("[%?BLACKEN] " + poi.getDisplayName());
-                placeDetailLabel(nameLabel, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+            if (!"town".equalsIgnoreCase(poiType) && !"capital".equalsIgnoreCase(poiType))
+                continue;
+            PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID());
+            if (!changes.isVisited())
+                continue;
+            // Round 223 (user: "On the mini-map, the view that shows the town names. Can we add a
+            // teleport symbol for player towns that have a portal?"). A [+Portal] glyph ahead of the
+            // name of a player holding - a restored town, or the Capitol - that has a Teleporter
+            // built. Same inline-glyph mechanism as the [+tfr] medallion (round 178), except the
+            // image is registered in code from the teleporter building's own portal art, so there
+            // is no new asset. Ownership is tested as well as the building: a town an AI captured
+            // may keep its economyBuildingObjectIds (review S2-4 is still open), and a portal the
+            // player cannot walk into is not worth marking.
+            boolean portal = (TownRestoration.isTownRestored(changes)
+                        || TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name))
+                    && changes.hasEconomyBuildingOfType(EconomyBuildings.TELEPORTER);
+            if (portal) {
+                ensurePortalGlyph();
+                portalTowns++;
             }
+            TypingLabel nameLabel = Controls.newTypingLabel("[%?BLACKEN] "
+                    + (portal ? PORTAL_GLYPH + " " : "") + poi.getDisplayName());
+            placeDetailLabel(nameLabel, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
         }
+        if (portalTowns > 0)
+            System.out.println("[TFR-MapView] names view: " + portalTowns
+                    + " player town(s) carry the portal glyph");
+    }
+
+    /** Round 223: the markup name of the inline portal glyph - see {@link #ensurePortalGlyph()}. */
+    private static final String PORTAL_GLYPH_NAME = "Portal";
+    private static final String PORTAL_GLYPH = "[+" + PORTAL_GLYPH_NAME + "]";
+
+    /**
+     * Round 223: make {@code [+Portal]} resolvable on the shared Textra font.
+     * <p>
+     * Idempotent, and it checks the font's own name lookup rather than a static flag: Assets caches
+     * the font, but if it is ever rebuilt the glyph is re-registered instead of the markup being drawn
+     * as literal text. The image is the first frame of the teleporter building's "Active" shimmer
+     * (EconomyBuildings, portal4.atlas) - the picture the player already knows as their portal. Names
+     * are case-insensitive in the lookup; "Portal" is not a region of either atlas the font is built
+     * from (the plane's items.atlas and pixelmana.atlas), so nothing is shadowed.
+     */
+    private static void ensurePortalGlyph() {
+        com.github.tommyettinger.textra.Font font = Controls.getTextraFont();
+        if (font == null || font.nameLookup.containsKey(PORTAL_GLYPH_NAME))
+            return;
+        com.badlogic.gdx.graphics.g2d.TextureRegion[] frames =
+                EconomyBuildings.getTeleporterActiveAnimation().getKeyFrames();
+        if (frames == null || frames.length == 0 || frames[0] == null)
+            return;
+        font.addImage(PORTAL_GLYPH_NAME, frames[0]);
+        System.out.println("[TFR-MapView] registered the " + PORTAL_GLYPH + " glyph on the shared font");
     }
 
     /**
