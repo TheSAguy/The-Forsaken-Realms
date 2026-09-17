@@ -1,7 +1,7 @@
 package forge.adventure.world;
 
-import com.badlogic.gdx.Gdx;
 import forge.Forge;
+import com.badlogic.gdx.Gdx;
 import forge.OverlayText;
 import forge.adventure.data.DifficultyData;
 import forge.adventure.player.AdventurePlayer;
@@ -115,6 +115,9 @@ public class WorldSave {
     private static boolean saveBlocked = false;
 
     static public boolean load(int currentSlot) {
+
+        Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/");
+
         Forge.invokeWorldSave = true; // This is for dispose method check
         String fileName = WorldSave.getSaveFile(currentSlot);
         if (!new File(fileName).exists())
@@ -374,6 +377,10 @@ public class WorldSave {
         // generateNew() ever READS pointOfInterestChanges, so clearing first is behaviorally
         // identical for everything else and matches the already-correct order SaveLoadScene's
         // NewGamePlus path uses (clearChanges() before generateNew()).
+        // Round 222 (upstream da6148f71eb): the plane's adventure language bundle is (re)loaded before a
+        // new world is generated. A plane with no languages/ folder - this one - gets a null bundle and
+        // every string falls back to the main properties (Localizer.lookup), so this is a no-op here.
+        Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/");
         currentSave.pointOfInterestChanges.clear();
         currentSave.world.generateNew(seed);
         boolean chaos = mode == AdventureModes.Chaos;

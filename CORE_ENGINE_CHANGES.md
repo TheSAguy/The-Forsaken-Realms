@@ -2779,6 +2779,20 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 222 (2026-09-16) - upstream merge @ 994c5d9eb2d (the 09.16 daily)
+
+103 commits / 327 files / 58 Java since `26d8aff8750`. Conflicts, and how each was resolved:
+- **`adventure/scene/NewGameScene.java`** Duels tab - OURS (round 177's flat defeat-gold `goldLossText`);
+  upstream's `advDifficultyMatchImpacts` format has no slot for it.
+- **`adventure/scene/SettingsScene.java`** plane combobox - OURS (no-op callback, persist in the confirm
+  dialog), plus upstream's `Forge.getLocalizer().loadAdventureBundle(...)` in the confirm dialog's OK branch.
+- **`adventure/world/WorldSave.java`** `generateNewWorld()` - OURS (extra `startingColorId` parameter,
+  `pointOfInterestChanges.clear()` before `generateNew()`), plus upstream's bundle line ahead of the clear.
+Both-sides files (11 + `en-US.properties`) re-checked: every removed line is upstream's own rewrite; every mod
+addition present. No new dependency; no Android file; README untouched. Plane `config.json`
+`engineBuildVersion` -> `2.0.15-SNAPSHOT-09.16`. New upstream API this plane now calls on every new game and
+load: `forge-core Localizer.loadAdventureBundle(String)` - null bundle when the folder is missing, safe.
+
 ## Round 221 (2026-09-16)
 
 `forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` only. New `goldLabelHomeX`/`goldLabelHomeWidth`

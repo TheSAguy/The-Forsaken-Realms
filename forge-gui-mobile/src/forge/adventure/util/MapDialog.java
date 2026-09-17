@@ -68,6 +68,10 @@ public class MapDialog {
 
 
     public MapDialog(String S, MapStage stage, int parentID) {
+        this(S, stage, parentID, null);
+    }
+
+    public MapDialog(String S, MapStage stage, int parentID, String sourceMapFile) {
         this.stage = stage;
         this.parentID = parentID;
         try {
@@ -174,7 +178,7 @@ public class MapDialog {
         if (actor instanceof CharacterSprite)
             sprite = ((CharacterSprite) actor).getAvatar();
         String text; //Check for localized string (locname), otherwise print text.
-        if (dialog.loctext != null && !dialog.loctext.isEmpty()) text = L.getMessage(dialog.loctext);
+        if (dialog.loctext != null && !dialog.loctext.isEmpty()) text = L.getMessageorUseDefault(dialog.loctext, dialog.text);
         else text = dialog.text;
         disposeAudio();
         if (dialog.voiceFile != null) {
@@ -266,7 +270,7 @@ public class MapDialog {
                     continue;
                 {
                     String name; //Get localized label if present.
-                    if (option.locname != null && !option.locname.isEmpty()) name = L.getMessage(option.locname);
+                    if (option.locname != null && !option.locname.isEmpty()) name = L.getMessageorUseDefault(option.locname, option.name);
                     else name = option.name;
                     // Slight scale-down (2026-08-14, user report: "Rebuild Arena (250 [gold])"
                     // wrapping with the icon alone on its own line) - shared by every DialogData

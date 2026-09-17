@@ -74,6 +74,7 @@ public class SettingsScene extends UIScene {
             }
             Config.instance().getSettingData().plane = "<user>" + newPlaneName.getText();
             Config.instance().saveSettings();
+            Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/");
             showDialog(copyPlane);
         }
     }
@@ -132,6 +133,11 @@ public class SettingsScene extends UIScene {
                         localizer.getMessage("lblAbort"), () -> {
                             Config.instance().getSettingData().plane = selected;
                             Config.instance().saveSettings();
+                            // Round 222 (upstream da6148f71eb, adventure localization): the plane's
+                            // language bundle follows the plane. Upstream reloads it from the
+                            // combobox callback; ours is a no-op there (2026-08-29 fix) and persists
+                            // only here, so the reload lives here too - the restart reloads it anyway.
+                            Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(selected) + "languages/");
                             Forge.restart(true);
                             removeDialog();
                         }, () -> {

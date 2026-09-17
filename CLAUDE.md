@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-12 (round 185; v1.10 RELEASED; ENGINE = 09.11 daily since round 182) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-12 (round 185; v1.10 RELEASED; ENGINE = 09.16 daily since round 222) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 185, 2026-09-12).** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
@@ -68,8 +68,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      the Task Scheduler (`agent_launch.cmd`), stop with `powershell -ExecutionPolicy Bypass -File agent_stop.ps1`,
      `agent_sync.cmd` after every package; `goto x=.. y=..` walks to a point inside a map. Open: `newgame` parameters, a
      spectated-duel speed setting, the AI pilot's shard write-back, long fog routes ending "stuck".
-  4. **Engine = the 09.11 daily (round 182, upstream `26d8aff8750`)**. The next merge starts at `de171b17ffe`
-     (BigCrunch22's card branch) and `d4dc79a506b` (FRA cards 11 September) - only once the user installs a newer
+  4. **Engine = the 09.16 daily (round 222, upstream `994c5d9eb2d`)**. The next merge starts at `0fb53892698`
+     (Edition updates: FRA, FRC - the two commits cut after the 09.16 daily) - only once the user installs a newer
      daily into `E:\GAMES\Forge_2`. **E4 (the WorldSave load/save error paths) is unblocked** - the user's next ask
      is the code review's open items and E4.
   5. **Wider playtest feedback** on v1.09 and the v1.10 draft (`RELEASE_NOTES_v1.10.md`). The code review is
@@ -97,6 +97,21 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 222 (2026-09-16): **engine update to upstream `994c5d9eb2d` = Forge_2's 09.16 daily** (103 commits /
+  327 files / 58 Java since `26d8aff8750`; no pom or Android change). Pinned by CONTENT probes, not build.txt's
+  stamp: that commit's cards are in the install's `cardsfolder.zip` and its edition file matches, the two later
+  edition commits do not. Three conflicts, all from upstream's adventure localization groundwork
+  (`da6148f71eb`): NewGameScene (ours - the flat defeat-gold text), SettingsScene (ours + the bundle reload in
+  the confirm dialog), WorldSave.generateNewWorld (ours + upstream's bundle line before our clear()). A plane
+  without a `languages/` folder gets a null bundle and falls back to the main properties - verified in
+  Localizer. Upstream's 60 `common/` map edits that this plane copies were NOT ported (the loctext refit; our
+  copies carry their own text). `engineBuildVersion` -> 09.16. **Round 221 was never packaged** - the packager
+  refused on the base-install guard after the user installed the daily - so this package (full stock copy)
+  carries 221 + 222. Everything since is UNPLAYTESTED on the new engine. **Save 1 decks:** two mono-green
+  POISON decks written to the empty slots 4 "Fangbearer's Blight" (Blue Capital arena: reach, Fell the
+  Pheasant, Display of Dominance) and 5 "Colossus Contagion" (Black Capital arena: 2 Chameleon Colossus with
+  pro-black + Grafted Exoskeleton, Mire Boa), 42 cards each, `.prededit15.bak`, collection unchanged - poison
+  because Insane's x2.5 life puts arena Archmages at 113+. Lists in `dev-tools/save-editing/`.
 - Round 221 (2026-09-16): **the coin comes back on the loot page; the Arena's Level 2 row is centered.**
   Log review: clean; the Coin Challenge ran end to end against the Mummy (arena-flagged, coin reclaimed by
   round 216's direct grant), round 208's Travel retro-completion and the L1 weekly lock both observed.

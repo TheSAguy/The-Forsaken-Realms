@@ -17757,6 +17757,91 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 222: engine update to upstream `994c5d9eb2d` - the 09.16 daily (2026-09-16)
+
+User: *"Update to the latest Forge Engine E:\GAMES\Forge_2."* The install is the 09.16 daily
+(`.installationinformation` snapshot-version `2.0.15-SNAPSHOT-09.16`, jars dated 16 Sep 11:29). Which
+upstream commit that is was settled by CONTENT, not by `build.txt`'s "18:24:29" stamp: `994c5d9eb2d`
+("FRA cards (16th September)", 18:52 UTC) has its 21 new card scripts inside the install's
+`res/cardsfolder/cardsfolder.zip` and its `Reality Fracture Commander.txt` edition file matches byte for
+byte, while the two commits after it (`0fb53892698` "Edition updates: FRA, FRC", `bea7bab8308`) do not -
+the install's copy of that file differs from theirs. So the stamp is not the checkout time; the probes
+are, and the next merge starts at `0fb53892698`.
+
+**Size:** 103 commits / 327 files / 58 Java since `26d8aff8750` (the 09.11 daily). No pom change, no
+Android file, no README conflict. The bulk is card scripts, editions, token scripts, the AI's combat
+prediction (`24c625f97a7`, trigger mode checked before requirements) and one large adventure change:
+**"Adventure Mode: Internationalization groundwork + Spanish Shandalar localization"** (`da6148f71eb`,
+`12d5f8ac152`), which is where all three conflicts came from.
+
+**Conflicts (3), resolved by `r222_resolve.py` (HEAD side kept, then two insertions):**
+- `scene/NewGameScene.java` - upstream localized the Duels tab text (`advDifficultyMatchImpacts`); ours
+  carries round 177's flat defeat-gold amount, which that format string has no slot for. Ours kept.
+- `scene/SettingsScene.java` - upstream's plane combobox callback now also reloads the plane's language
+  bundle; ours made that callback a no-op (2026-08-29 fix) and persists only inside the confirm dialog.
+  Ours kept, and `loadAdventureBundle()` added to the confirm dialog's OK branch, before the restart.
+- `world/WorldSave.java` `generateNewWorld()` - ours has the extra `startingColorId` parameter and
+  clears `pointOfInterestChanges` BEFORE `generateNew()`; upstream reloads the bundle first. Ours kept
+  with upstream's bundle line ahead of the clear. The two other `loadAdventureBundle()` calls upstream put
+  in the load paths auto-merged.
+
+**The bundle mechanism is safe for a plane with no `languages/` folder - this one.**
+`Localizer.loadAdventureBundle()` catches the `MissingResourceException` and leaves `adventureBundle`
+null, and `lookup()` then reads the main properties, so every string resolves as before. `MapDialog`
+still prints plain `text` when `loctext` is empty (`getMessageorUseDefault`), and the 3-argument
+`MapDialog`/`DialogActor` constructors survive as delegates to the new `sourceMapFile` ones, so no
+call site changed.
+
+**The 8 other co-edited files auto-merged and were re-checked line by line** (`Player`, `MenuScene`,
+`GameHUD`, `GameStage`, `MapStage`, `Config`, `MapDialog`, `ForgePreferences`, plus
+`en-US.properties`): every line the merge removed from our side is an upstream line upstream itself
+rewrote (surveil/investigate resets, the localization refit, `UI_USE_LASER_ARROWS`, renamed
+properties keys) - no mod addition lost. Android identity markers (ANDROID_RELEASE.md's list) intact.
+
+**Deliberately NOT ported: upstream's edits to 60 `common/` maps that this plane holds its own copies
+of** (the five castles, the temples, the vampire castle, crypts, groves...). They are the localization
+refit - dialog text moved behind `loctext` keys - and this plane's copies carry their own English text,
+so taking them would change nothing visible and risk our map-specific edits. `common/` itself comes
+from BASE_INSTALL at package time and is therefore current.
+
+**Plane stamp:** `config.json` `engineBuildVersion` `2.0.15-SNAPSHOT-09.11` -> `-09.16` (the packager's
+base-install guard reads it). `modVersion`/`modVersionDate` stay 1.10 / 09.11 until the release.
+
+**Round 221 rides in this package.** Its own package was refused by that guard ("BASE_INSTALL build.txt
+says '2026-09-16 18:24:29' but the plane's engineBuildVersion is the 09.11 daily") after the user had
+already installed the new daily - the live folder stayed intact at round 220 (PACKAGE_OK 16:55) and the
+round-221 commit message's "packaged and synced" line was written before the refusal was read. This
+package is the first full stock-asset re-copy since the engine change (the slow path), and it carries
+221 + 222.
+
+Everything after this build is on the new engine and UNPLAYTESTED: re-test duels and the AI, a new
+game (the bundle load runs there), a save load, the arena, and round 221's coin loot page and
+centered buttons.
+
+**Save 1 decks (user: "I need a deck to compete in a Blue Arena tournament and one for black").**
+Two new mono-green POISON decks in the empty slots 4 and 5, 42 cards each (16 Forest + Inkmoth Nexus),
+backup `1_save_slot.sav.prededit15.bak`, collection verified byte-identical before and after, the selected
+deck (slot 2) untouched. Why poison: on Insane the arena's `enemyLifeFactor` 2.5 puts a Master at 50-65
+life and an Archmage at 113-133 (the log's Tidecaller Witch went 45 -> 113), and ten poison counters do
+not care. The collection is green-deep (243 names) and holds the package: Glistener Elf, Fynn the
+Fangbearer (two poison per deathtouch hit, with Moss Viper / Wren's Run Vanquisher / 3 Oakhame
+Adversary / 3 Death-Hood Cobra), Tyrranax Atrocity (toxic 3, haste), Phyrexian Swarmlord, four Corpse
+Cur (infect recursion), Grafted Exoskeleton, Mycosynth Fiend, Maulfist Revolutionary and Copper Longlegs
+(proliferate), Inkmoth Nexus, plus 3 Giant Growth / Insatiable Appetite for instant poison bursts.
+- Slot 4 **"Fangbearer's Blight"** for the BLUE Capital arena (pool: Counterspell / Cryptic Command
+  control, Boomerang + Inundate bounce, faeries, Master of Winds, merfolk lords, dragons): cheap curve
+  against counters, reach on Copper Longlegs and the Cobras, 2 Fell the Pheasant + Thornado for fliers,
+  Display of Dominance against blue targeting, no Islands so islandwalk is dead.
+- Slot 5 **"Colossus Contagion"** for the BLACK Capital arena (pool: Murder-style removal, Olivia's
+  Wrath, Massacre Wurm, reanimator, vampires): 2 Chameleon Colossus (protection from black - black
+  removal cannot target it and black creatures cannot block it; with Grafted Exoskeleton and one
+  {2}{G}{G} pump it is a 12/12 infect and one connection wins), Mire Boa (swampwalk, regenerates) as a
+  second unblockable Exoskeleton carrier, 3 Corpse Cur to rebuy what removal kills, Green Sun's Zenith to
+  find the piece that is missing.
+Lists in `dev-tools/save-editing/fangbearers_blight.txt` / `colossus_contagion.txt`. Not touched: the
+user's four existing decks. Flag: both decks share every singleton (decks are views over one collection),
+so they are alternatives, not a pair to run at once.
+
 ## Round 221: the coin comes back on the loot page; the Arena's Level 2 row is centered (2026-09-16)
 
 Three user asks on the round-220 build, plus one thing their screenshot showed that they did not ask
