@@ -47,6 +47,9 @@ public class ArenaScene extends UIScene implements IAfterMatch {
 
     private final TextraButton doneButton;
     private final TextraLabel goldLabel;
+    /** Round 221: where ui/arena.json put the gold label, restored whenever the fee is shown - the
+     *  weekly-lock text borrows a wider, right-aligned box (see loadArenaData). */
+    private final float goldLabelHomeX, goldLabelHomeWidth;
 
     private final Group arenaPlane;
     private final Table arenaTable;
@@ -145,6 +148,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         });
         ui.onButtonPress("start", this::startButton);
         doneButton = ui.findActor("done");
+        goldLabelHomeX = goldLabel.getX();
+        goldLabelHomeWidth = goldLabel.getWidth();
         ScrollPane pane = ui.findActor("arena");
         arenaPlane = new Table();
         arenaTable = new Table();
@@ -169,16 +174,28 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // edge at 53 and the gold/start buttons starting at x=380) - and a fixed, explicit width
         // (ARENA_WIDE_BUTTON_WIDTH) replaces the doneButton-relative multiplier, since doneButton's
         // own 48-unit width was never a meaningful size reference for these much longer labels.
+        // Round 221 (user, with a screenshot: "Center the 3 buttons on the Arena Lvl2. Currently they
+        // seem aligned to the left"). This row sits ABOVE done/gold/start with nothing beside it, so
+        // it is centered on the stage's own width rather than hung off doneButton's x. Clamped to
+        // doneButton's x for the portrait stage (270 wide), where the 367-unit row cannot fit and
+        // centering would push it off the left edge - there it keeps the old left alignment, which
+        // is a known pre-existing overflow, not made worse. The lone Level 1 upgrade button is
+        // centered the same way so the two levels agree.
+        float rowY = doneButton.getY() + doneButton.getHeight() + 10f;
+        float tripleRowWidth = 3f * ARENA_TRIPLE_BUTTON_WIDTH + 2f * ARENA_TRIPLE_BUTTON_GAP;
+        float tripleRowLeft = Math.max(doneButton.getX(), (stage.getWidth() - tripleRowWidth) / 2f);
+        float wideLeft = Math.max(doneButton.getX(), (stage.getWidth() - ARENA_WIDE_BUTTON_WIDTH) / 2f);
+
         arenaUpgradeButton = Controls.newTextButton("[%80]Upgrade to Level 2 (" + EconomyBuildings.costLabel(0, EconomyBuildings.ARENA_UPGRADE_WOOD, EconomyBuildings.ARENA_UPGRADE_STONE, 0) + ")", this::promptUpgradeArena);
         arenaUpgradeButton.setSize(ARENA_WIDE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        arenaUpgradeButton.setPosition(doneButton.getX(), doneButton.getY() + doneButton.getHeight() + 10f);
+        arenaUpgradeButton.setPosition(wideLeft, rowY);
         arenaUpgradeButton.setVisible(false);
         ui.addActor(arenaUpgradeButton);
 
         arenaModeToggleButton = Controls.newTextButton("", this::toggleArenaMode);
         // Round 216: a third button joined this row, so the three share it in equal thirds.
         arenaModeToggleButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        arenaModeToggleButton.setPosition(doneButton.getX(), doneButton.getY() + doneButton.getHeight() + 10f);
+        arenaModeToggleButton.setPosition(tripleRowLeft, rowY);
         arenaModeToggleButton.setVisible(false);
         ui.addActor(arenaModeToggleButton);
 
@@ -193,8 +210,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // buttons starting at x=380.
         deckTesterButton = Controls.newTextButton("[%80]Deck Tester", this::promptDeckTester);
         deckTesterButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        deckTesterButton.setPosition(doneButton.getX() + ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP,
-                doneButton.getY() + doneButton.getHeight() + 10f);
+        deckTesterButton.setPosition(tripleRowLeft + ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP, rowY);
         deckTesterButton.setVisible(false);
         ui.addActor(deckTesterButton);
 
@@ -202,8 +218,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // your Bronze Challenge Coins to win it back.
         coinChallengeButton = Controls.newTextButton("[%80]Coin Challenge", this::promptCoinChallenge);
         coinChallengeButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        coinChallengeButton.setPosition(doneButton.getX() + 2f * (ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP),
-                doneButton.getY() + doneButton.getHeight() + 10f);
+        coinChallengeButton.setPosition(tripleRowLeft + 2f * (ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP), rowY);
         coinChallengeButton.setVisible(false);
         ui.addActor(coinChallengeButton);
     }
@@ -828,12 +843,30 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // cost no gold. Cleared unconditionally, before either outcome is handled.
             Current.player().clearSuppressDefeatGoldLoss();
             if (winner && foe != null) {
-                boolean reclaimed = Current.player().reclaimCoinRansom(foe);
+                // Round 221 (user, after winning one back: "Let's make the normal reward screen when I
+                // get my coin back a card with the coin on it"). Same loot page the bracket payout and
+                // every ordinary win use: appendCoinRansomReward() clears the mark and appends the
+                // coin as an Item tile, granted when the page is dismissed - so the reclaim is SEEN.
+                // Round 216's direct grant survives only as that method's own fallback (a missing
+                // items.json entry), in which case the page has nothing to show and the corner
+                // notification says it instead.
+                Array<Reward> loot = new Array<>();
+                boolean paid = Current.player().appendCoinRansomReward(loot, foe);
                 System.out.println("[TFR-CoinChallenge] beat " + foe + " -> "
-                        + (reclaimed ? "Bronze Coin reclaimed" : "NOT reclaimed - the mark was already gone"));
-                GameHUD.getInstance().addNotification(reclaimed
-                        ? "You won your Bronze Challenge Coin back from " + foe + "."
-                        : foe + " no longer held your coin.");
+                        + (loot.size > 0 ? "Bronze Coin on the loot page"
+                            : paid ? "Bronze Coin reclaimed (direct grant - the loot tile could not be built)"
+                                   : "NOT reclaimed - the mark was already gone"));
+                enable = true;
+                refreshArenaBuildingButtons();
+                if (loot.size > 0) {
+                    RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
+                    Forge.switchScene(RewardScene.instance());
+                } else {
+                    GameHUD.getInstance().addNotification(paid
+                            ? "You won your Bronze Challenge Coin back from " + foe + "."
+                            : foe + " no longer held your coin.");
+                }
+                return;
             } else {
                 System.out.println("[TFR-CoinChallenge] lost to " + foe + " - coin stays with them,"
                         + " no gold penalty beyond the entry fee");
@@ -1461,6 +1494,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         player = fighters.get(fighters.size - 1).actor;
 
         goldLabel.setText("[+GoldCoin] " + data.entryFee);
+        // Round 221: back to the json's box - the lock text below may have widened it last time.
+        goldLabel.setX(goldLabelHomeX);
+        goldLabel.setWidth(goldLabelHomeWidth);
+        goldLabel.setAlignment(com.badlogic.gdx.utils.Align.left);
         goldLabel.layout();
         goldLabel.setVisible(true);
 
@@ -1474,7 +1511,23 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // the reason is on screen before the player touches anything.
         if (weeklyLocked) {
             int daysLeft = weeklyArenaDaysLeft();
-            goldLabel.setText("[%80]Won this week ([%]" + daysLeft + (daysLeft == 1 ? " day)" : " days)"));
+            // Round 221 (user screenshot: "Won this week (" with the rest under the start button).
+            // The json gives the fee a 48-unit box right beside a 48-unit button, and the lock text
+            // is three times that. Widen the box LEFT into the empty strip between Done and Start
+            // and right-align it, so the text ENDS where the fee used to and never reaches the
+            // button; where that strip is too short for the full sentence (portrait) use the
+            // short form instead of clipping.
+            float rightEdge = startButton.getX() - 4f;
+            float leftLimit = doneButton.getX() + doneButton.getWidth() + 4f;
+            float lockWidth = Math.min(220f, rightEdge - leftLimit);
+            String lockText = lockWidth >= 150f
+                    ? "[%80]Won this week ([%]" + daysLeft + (daysLeft == 1 ? " day)" : " days)")
+                    : "[%80]Won ([%]" + daysLeft + "d)";
+            goldLabel.setText(lockText);
+            goldLabel.setWidth(lockWidth);
+            goldLabel.setX(rightEdge - lockWidth);
+            goldLabel.setAlignment(com.badlogic.gdx.utils.Align.right);
+            goldLabel.layout();
         }
         startButton.setDisabled(data.entryFee > Current.player().getGold() || weeklyLocked);
         if (weeklyLocked)

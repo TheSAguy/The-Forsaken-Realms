@@ -17757,6 +17757,50 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 221: the coin comes back on the loot page; the Arena's Level 2 row is centered (2026-09-16)
+
+Three user asks on the round-220 build, plus one thing their screenshot showed that they did not ask
+about. All in `ArenaScene`.
+
+**Log review (372 lines, zero exceptions).** The Coin Challenge ran end to end for the first time:
+`[TFR-CoinChallenge] Mummy challenged in week 1`, the launch line reads `arena-flagged (no reputation
+shift)` (round 220's flag is in play), and `beat Mummy -> Bronze Coin reclaimed` - through round 216's
+direct grant, which is exactly what the user then asked to change. Also observed for the first time:
+round 208's Travel retro-completion (`stage "Travel" retro-completed on activation (Cracked Hammer was
+already visited...)`) and the Level 1 weekly lock (`[TFR-ArenaWeekly] ... :L1: entry locked for week 1`).
+
+**1. The coin comes back as a card on the loot page** (user: "I won my Bronze Coin back from the Mommy.
+Let's make the normal reward screen when I get my coin back a card with the coin on it").
+`setWinner()`'s Coin Challenge win branch now builds a one-tile loot array through
+`appendCoinRansomReward()` - the same call the bracket payout and every ordinary win use, which clears
+the mark and appends the coin as an Item tile granted when the page is dismissed - and opens
+`RewardScene` on it. Round 216's direct grant survives only as that method's own fallback (a missing
+items.json entry), where the page would be empty and the corner notification says it instead. The
+buttons are refreshed BEFORE the scene switch, so Coin Challenge greys out the moment the last coin is
+back. Log: `[TFR-CoinChallenge] beat <foe> -> Bronze Coin on the loot page`.
+
+**2. The Level 2 button row is centered** (user, with a screenshot: "Center the 3 buttons on the Arena
+Lvl2. Currently they seem aligned to the left"). The row (toggle / Deck Tester / Coin Challenge) had hung
+off doneButton's x=5 since round 5 fixed the original off-screen placement; it is now centered on the
+stage's own width - 367 units of buttons on the 480-unit landscape stage start at x=56 instead of 5.
+The lone Level 1 "Upgrade to Level 2" button is centered the same way so the two levels agree. Clamped
+to doneButton's x on the portrait stage (270 wide), where the row cannot fit either way - the
+pre-existing Android overflow round 220 noted, not made worse.
+
+**3. "Won this week (" no longer runs under the start button** (seen in the same screenshot, not
+asked). Round 216 put the lock text into the gold label, a 48-unit box the json places right beside a
+48-unit button; the text is three times that wide. The label now widens LEFT into the empty strip
+between Done and Start (up to 220 units) and right-aligns, so the text ENDS where the fee used to;
+where the strip is too short for the sentence (portrait) it shows the short form "Won (6d)" instead of
+clipping. The fee display restores the json's box every time the arena loads.
+
+**Engine note for round 222:** `E:\GAMES\Forge_2` now holds the 09.16 daily. Content probes place the
+install at upstream `994c5d9eb2d` ("FRA cards (16th September)"): that commit's new card scripts are in
+the install's `res/cardsfolder/cardsfolder.zip` and its `Reality Fracture Commander.txt` edition file
+matches byte for byte, while the two later edition commits (`0fb53892698`, `bea7bab8308`) do not.
+`build.txt`'s "18:24:29" stamp is NOT the checkout time - the probes are. 103 commits / 327 files /
+58 Java since `26d8aff8750`, 11 of them files this mod also edits.
+
 ## Round 220: the post-v1.10 review's fixes (2026-09-16)
 
 A deep read of every change since the v1.10 tag (43 commits, 31 Java files, the data and the tools)

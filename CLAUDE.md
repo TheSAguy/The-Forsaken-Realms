@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 221 (2026-09-16): **the coin comes back on the loot page; the Arena's Level 2 row is centered.**
+  Log review: clean; the Coin Challenge ran end to end against the Mummy (arena-flagged, coin reclaimed by
+  round 216's direct grant), round 208's Travel retro-completion and the L1 weekly lock both observed.
+  (1) A Coin Challenge win now opens `RewardScene` on a one-tile loot array from `appendCoinRansomReward()`
+  (the coin as an Item card, granted on dismiss); the direct grant is only the missing-item fallback.
+  (2) The Level 2 row (toggle / Deck Tester / Coin Challenge) and the Level 1 upgrade button are centered on
+  `stage.getWidth()`, clamped to doneButton's x in portrait. (3) The "Won this week (N days)" lock text was
+  running under the start button (user's screenshot): the gold label now widens LEFT into the Done-Start
+  strip, right-aligned, short form "Won (Nd)" where the strip is under 150 units. **Engine:** Forge_2 holds
+  the 09.16 daily = upstream `994c5d9eb2d` by content probe (its cards and edition file are in the install;
+  `0fb53892698`/`bea7bab8308` are not) - the merge is round 222.
 - Round 220 (2026-09-16): **the post-v1.10 review's fixes.** A deep read of everything since the
   v1.10 tag found two bugs, two narrow regressions and one unwritten consequence, all fixed:
   (1) `rewardMaxCopiesPerName` was truncating AUTHORED fixed-card rewards (Gitrog Bog's 12-land

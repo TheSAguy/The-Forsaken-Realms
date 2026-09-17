@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 221 (2026-09-16)
+
+`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` only. New `goldLabelHomeX`/`goldLabelHomeWidth`
+fields captured in the constructor; the Level 2 row and the Level 1 upgrade button are positioned from
+`tripleRowLeft`/`wideLeft` (centered on `stage.getWidth()`, clamped to `doneButton.getX()`) instead of
+`doneButton.getX()`; `loadArenaData()` restores the gold label's json box for the fee and, when weekly-locked,
+widens it left (up to 220 units, right-aligned, short text under 150) so the lock text never reaches the
+start button; `setWinner()`'s Coin Challenge win branch opens `RewardScene` on `appendCoinRansomReward()`'s
+loot tile instead of calling `reclaimCoinRansom()` directly.
+
 ## Round 220 (2026-09-16)
 
 `forge-gui-mobile/src/forge/adventure/util/CardUtil.java` - `generateCards()`'s random-draw branch:
