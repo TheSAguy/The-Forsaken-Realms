@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 228 (2026-09-18) - data only, no Java
+
+`forge-gui/res/adventure/The Forsaken Realms/world/points_of_interest.json` - `NoRotate` removed from eleven POIs
+and added to two (see MOD_CHANGELOG). New `dev-tools/norotate_scan.py`. No engine or adventure code touched.
+
 ## Round 227 (2026-09-18) - adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` - new public static

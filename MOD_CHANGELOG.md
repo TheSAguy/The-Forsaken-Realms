@@ -17757,6 +17757,55 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 228: eleven dungeons that could never despawn, and two that could vanish with their key (2026-09-18)
+
+User, with a screenshot from inside Black Dragon Mountain: *"On my latest game, I lost a duel in this dungeon, but
+it did not disappear. Do you know why?"*
+
+**Why.** The log shows the loss (Angelic Page, a Bronze Coin paid, `[TFR-Life] defeated ... 20/20 -> 14/20`) and
+then nothing from `[DungeonRotation]`: `onDungeonDefeat()` returned at its first line, because Black Dragon
+Mountain (`EvilGrove5`) carried the `NoRotate` quest tag and so was not rotatable at all. That tag is round 184's:
+it protects a map that hides a key in one room and consumes it at a sealed door in another, so that one lost duel
+cannot remove the door with the key already in the player's pack.
+
+**The tag was on the wrong dungeons - my error in round 184.** That round recorded "a scan of every rotatable POI
+against its own map's `removeItem` conditions found twelve". The maps do not say that. Black Dragon Mountain is
+one map with four enemies, two gold piles, two shard piles, two wood piles and a chest: no key, no door. The
+twelve were evidently picked by map FOLDER - `evilgrove/` and `vampirecastle/` do contain gated maps (Church of
+Valgavoth, Court of Paliano, Gitrog Bog, the Sorin's Key dungeon), but those belong to `Story` and `sidebosshard`
+POIs that never rotate anyway. Re-done from the maps themselves, following every linked map:
+
+| | POIs |
+|---|---|
+| tagged, and a gate really exists | `CaveLarge1` Forgotten Cave (five Shards, `cave_16BR3U.tmx`) |
+| tagged, NO gate anywhere in the map tree | `EvilGrove`, `EvilGrove1`-`6` (incl. Black Dragon Mountain), `WurmPond`, `VampireCastle`, `VampireCastle1`, `VampireCastle2` |
+| a real gate, NOT tagged | `MageTowerC8` and `MageTowerU7`, both "Blue Tower" on `magetower_8_illusion.tmx` - it awards the Illusionist's Key and its gate consumes it |
+
+So eleven dungeons had been made permanent for no reason - never despawning on a loss, on a clear ("silly to have
+an empty dungeon on the map", user, 2026-08-18) or on their timer - while the two that genuinely needed the
+protection did not have it. **Fixed in data:** the tag is off those eleven and on the two Blue Towers;
+`points_of_interest.json` only, no Java. The eleven get their original `"Sidequest"` / `]` closing lines back
+rather than round 184's odd 12-space form.
+
+**What an existing world does with this.** Nothing retroactive: the lost duel stays lost and Black Dragon Mountain
+stays where it is today. From the next day tick the eleven are ordinary rotatable dungeons -
+`processDaysPassed()` seeds each a fresh 'first sight' lifetime instead of despawning anything, and a loss or a
+full clear inside one despawns it as everywhere else. They were placed at 1x in a post-184 world (no reserve
+copies), and the active target was locked without them, so the visible dungeon count drifts down by about that
+many as they go and replacements appear only once it is below the target again. A Blue Tower currently visible
+becomes permanent; one sitting hidden in the reserve stays hidden, and quest targeting already skips inactive
+POIs, so no quest can point at it.
+
+**New tool: `dev-tools/norotate_scan.py`.** The scan round 184 should have kept. Prints the three lists above
+and exits 1 on any disagreement; it now reports 3 / 0 / 0. Two traps it encodes: (1) a reward of type `item` is not
+a gate - the first, looser pattern (`"item"` anywhere) flagged the vampire castles on exactly that, so the
+condition pattern requires the key form `"item":`; (2) `points_of_interest.json` is uniformly CRLF in the working
+tree although Git Bash's `sed | cat -A` shows bare `$` - count bytes in Python.
+
+Plane validator: clean (the same two informational categories as before). Follow-up for the next Java round:
+`onDungeonDefeat()` / `onDungeonClear()` return silently for a non-rotatable POI, which is why the log could not
+answer this question by itself - they should say `[DungeonRotation] <name> stays: <reason>`.
+
 ## Round 227: the floating "+N Wood" label on overworld resource pickups (2026-09-18)
 
 User: *"When collecting/grabbing/running over resources on the overworld. Please add the little white text
@@ -19852,6 +19901,12 @@ despawn it, and **losing a single duel inside a rotatable dungeon despawns it im
 shards already in the pack. The same held for the Evil Grove (three witch keys) and the vampire castle (Sorin's
 Key). A scan of every rotatable POI against its own map's `removeItem` conditions found twelve; all twelve now
 carry a new `NoRotate` quest tag that `DungeonRotation.isRotatableData()` honors, beside the existing Story rule.
+
+> **ERRATUM (round 228, 2026-09-18).** The rule is right; the list was wrong. The twelve were picked by map
+> folder, not by their own maps: only `CaveLarge1` has a gate, the seven Evil Groves, Wurm Pond and the three
+> Vampire Castles have none, and the two Blue Towers on `magetower_8_illusion.tmx` (Illusionist's Key) were missed.
+> Round 228 corrected the tags and added `dev-tools/norotate_scan.py`. The Evil Grove's "three witch keys" and
+> Sorin's Key belong to `Story` / `sidebosshard` POIs, which never rotate in the first place.
 
 ### "I just got this Fifth Shard item.... I think it might be a quest item?"
 

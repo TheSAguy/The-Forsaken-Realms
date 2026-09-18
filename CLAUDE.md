@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 228 (2026-09-18, DATA ONLY): **the `NoRotate` tag corrected** after the user's "I lost a duel in this dungeon,
+  but it did not disappear" (Black Dragon Mountain = `EvilGrove5`). Round 184 had picked its twelve by map FOLDER:
+  only `CaveLarge1` has a real key-and-door, the seven Evil Groves + Wurm Pond + three Vampire Castles have none
+  (they had become permanent - no despawn on loss, clear or timer), and the two Blue Towers on
+  `magetower_8_illusion.tmx` (Illusionist's Key) were missed. Tag now on exactly `CaveLarge1`, `MageTowerC8`,
+  `MageTowerU7`. New `dev-tools/norotate_scan.py` (follows linked maps; exits 1 on disagreement; a reward of type
+  `item` is NOT a gate). Existing worlds: nothing retroactive, lifetimes seeded at the next day tick. TODO next Java
+  round: `onDungeonDefeat()`/`onDungeonClear()` should log why a non-rotatable POI stays.
 - Round 227 (2026-09-18): **floating "+N Wood" label on overworld resource pickups** - `ResourceSpawns.award()` ->
   new `showPickupLabel()` -> the dungeon's own `AdventurePlayer.addStatusMessage()` over the player's head (Gold,
   Shards, Wood, Stone, and a Mystery that resolves into one; chests/blueprints/ambushes keep their dialogs; two
@@ -551,7 +559,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   the player at its entrance** (the user's "it said Autosaving and I could not move") - `BiomeData.getEnemy()` read
   the lazily-built `enemyList` field directly, and round 181's dungeon re-theme was the first caller to reach it on a
   biome that had never rolled a spawn; it initializes the pool itself now. **Twelve lock-and-key POIs got a new
-  `NoRotate` tag** (the five-shard cave, the Evil Grove, the vampire castle) - rotation could despawn a map holding
+  `NoRotate` tag** (the five-shard cave, the Evil Grove, the vampire castle - LIST WRONG, corrected in round 228:
+  only `CaveLarge1` + the two `magetower_8_illusion` Blue Towers qualify) - rotation could despawn a map holding
   the keys to its own door, and a LOSS inside one despawns it at once. **20 quest items had no description at all**;
   each now names the door it opens. **The Axe Orc's atlas was sliced on a grid its art does not use** (round-117
   import; new `dev-tools/atlas_align_qa.py` + `atlas_regrid.py`, 2 of 3 sheets re-cut and eyeballed).
