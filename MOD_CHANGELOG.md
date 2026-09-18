@@ -17790,6 +17790,31 @@ The log line now prints the code point it landed on. Verified the API against th
 while owning a portal town gets the corrupted 'l' until they restart the game. A v1.12 hotfix release is
 the recommendation; it needs the user's go-ahead.
 
+**Addendum - the first session on the hotfix (log 19:20, 1,461 lines, zero exceptions).** The glyph now
+lands on a private-use code point (`[TFR-MapView] registered the [+Portal] glyph on the shared font as
+code point 57974`) and `names view: 4 player town(s) carry the portal glyph` - four, not the user's "3",
+because the Teleporter's own destination dialog lists four stops (Orazca, Coldsnap Hold, Coldsnap Haven,
+Tinkers' Town), so the marker and the network agree. Also in the log: research started on NPH and SOM
+(day 11, both complete day 18), thresholds reached for BFZ, SOM, 9ED, CNS, TSR and ONE, another Capitol
+bracket won 3-0, four ruined towns entered, the deckCard gold fallback twice.
+
+**Save 1 decks, v3** (user: "See if any of my decks needs updating"; the session added 180 cards, nothing
+lost; backup `1_save_slot.sav.prededit17.bak`, collection identical before and after, slot 5 stays
+selected; the user's one in-game edit - a Death-Hood Cobra cut from slot 5 - kept). The green haul was the
+prize: **Rhonas the Indomitable** (5/5 deathtouch indestructible for three, and {2}{G} gives another
+creature +2/+0 and trample - with Fynn every hit is two poison), **Become Immense** (delve +6/+6 on an
+infect creature is six poison), **Necropede** (a two-mana infect body Corpse Cur can rebuy), two more
+Corpse Cur (six owned), **Rogue's Passage** (unblockable Exoskeleton carrier, in for a Forest) and
+Bassara Tower Archer (hexproof reach, against blue's fliers and bounce). Slot 5 "Colossus Contagion" 49:
++ Rhonas, Become Immense, Necropede, 4th Corpse Cur, Rogue's Passage; - Insatiable Appetite, 1 Giant
+Growth. Slot 4 "Fangbearer's Blight" 50: + Rhonas, Become Immense, Necropede, Bassara Tower Archer, 3rd
+Corpse Cur, Rogue's Passage; - 1 Death-Hood Cobra, Insatiable Appetite, 1 Giant Growth (Fynn still out -
+the user's choice, flagged again because Rhonas makes it better). Slot 3 "Gempalm Legion" 49: + 4th
+Gempalm Polluter, Diregraf Horde (three Zombie bodies for Polluter and Belcher), Doom Blade; - 1 Befoul,
+1 Undead Servant. Slot 2 "Dawnbreak Tribunal" 46: + Swords to Plowshares, Parallax Wave; - 1 Saltblast,
+Luminous Bonds. Slot 1 "Warchief's Cleave" 47: + Goblin King; - 1 Frenzied Goblin. Lists:
+`*_v3.txt` and `gempalm_legion_v5.txt` in `dev-tools/save-editing/`.
+
 ## Round 224: v1.11 "Standing Ground" - the release round, PC + Android (2026-09-16)
 
 User: *"Package the live game with round 223 - I'm done playing. Review the log. Release the game, PC and

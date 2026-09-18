@@ -102,7 +102,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   font then drew a portal for every 'l' in the game and `[+Portal]` printed as "+". Now a one-region `TextureAtlas`
   through `Font.addAtlas()`, the item-glyph route (own private-use code point, name registered). **v1.11 shipped with
   the bug** - a v1.12 hotfix release is recommended and awaits the user's go-ahead. Lesson: `addImage` = "is this
-  character", `addAtlas` = "has this name"; only the latter feeds `[+name]`.
+  character", `addAtlas` = "has this name"; only the latter feeds `[+name]`. Hotfix confirmed in play (code point
+  57974, 4 portal towns = the Teleporter's own stop list). **Save 1 decks v3** (`.prededit17.bak`): Rhonas the
+  Indomitable, Become Immense, Necropede, more Corpse Cur and Rogue's Passage into both poison decks; 4th Gempalm
+  Polluter + Diregraf Horde + Doom Blade into the zombies; Swords to Plowshares + Parallax Wave into white; Goblin
+  King into the goblins. Fynn stays out of slot 4 by the user's choice.
 - Round 224 (2026-09-16): **v1.11 "Standing Ground" RELEASED - PC + Android.** Log review of the first 09.16-engine
   session: 1,338 lines, zero exceptions, two Capitol brackets won, the Djinn's coin back via the bracket loot page;
   one fix - snow-covered basics now count as basics for the two-copy loot cap (`isBasicLand()` replaces
