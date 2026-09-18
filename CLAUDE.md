@@ -97,6 +97,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 226 (2026-09-18, REPO ONLY - not packaged): **arena countdowns on the mini-map's Reputation view** - `Arena:
+  ready` / `Arena: 3 days` under the reputation number at the Player Capitol (Normal + Challenging lines at Level 2)
+  and at each VISITED AI capital. The player's "Reputation" view is `MapViewScene.events()` (this plane's map.json
+  labels button id `events` as "Reputation", id `reputation` as "Landmarks"). `ArenaScene` gained the statics
+  `weeklyArenaKeyFor` / `daysUntilWeeklyReset` / `weeklyLockDaysLeft` (its own lock now calls them - one key, one
+  test) and notes `arenaSeen` / `arenaLevel2` on the town's mapFlags so the map knows the Capitol's arena level
+  without a new save field. `[TFR-MapView] reputation view: arena countdowns ...`. The next package carries it.
 - Round 225 (2026-09-17): **HOTFIX - round 223's portal glyph corrupted every lowercase "l".** `Font.addImage(name,
   region)` maps the image onto the LAST CHARACTER of `name` ("Portal" -> 'l') and registers no `[+name]`; the shared
   font then drew a portal for every 'l' in the game and `[+Portal]` printed as "+". Now a one-region `TextureAtlas`

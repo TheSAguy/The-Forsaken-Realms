@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 226: arena countdowns on the mini-map's Reputation view (2026-09-18, REPO ONLY - not packaged)
+
+User: *"Repo: On the Reputation view on the Mini-map, can we add to that how many days till you can compete
+in the next Arena match. So show the player's capitol and 5 AI capitol."*
+
+**Which view that is.** This plane's `ui/map.json` labels the button with id `events` as "Reputation" (and
+the one with id `reputation` as "Landmarks") - the ids are upstream's and are offset from what each view
+draws here. The view the player calls Reputation is `MapViewScene.events()`, the one that prints each
+town's reputation number. The lines went there; `reputation()` is untouched.
+
+**What it shows.** One line per venue, stacked under the town's reputation number by
+`placeDetailLabel()`'s collision avoidance: `Arena: ready` in green when the player may enter, otherwise
+`Arena: 3 days` in red - the days until the weekly allowance returns.
+- **The five AI capitals** (`TerritoryControl.isAiCapital`) have one venue each. Shown only once
+  VISITED, the same rule the Names view follows - a line on an unfound capital would mark its position
+  through the fog.
+- **The Player Capitol** has one venue at Level 1 and two at Level 2, because Normal and Challenging lock
+  separately (round 135): `Normal Arena: ...` and `Challenging Arena: ...`. A Capitol whose arena the
+  player has never opened shows nothing.
+
+**No second copy of the lock rule.** `ArenaScene` now exposes `weeklyArenaKeyFor(poiId, challenge)`,
+`daysUntilWeeklyReset(world)` and `weeklyLockDaysLeft(world, poiId, challenge)` as statics, and its own
+`weeklyArenaKey()` / `weeklyArenaDaysLeft()` call them - so the map's countdown and the arena's own lock
+use one key expression and one test (a recorded win in the CURRENT week) and cannot drift apart.
+
+**How the map learns the Capitol's arena level.** The building level is keyed by the arena's map object
+id, which only the arena screen knows. Rather than hard-code a TMX id or add a save field, `ArenaScene`
+notes two flags on the town's existing, already-persisted `mapFlags` - `arenaSeen` and `arenaLevel2` -
+from `enterArenaBuilding()` and from `refreshArenaBuildingButtons()` (so an upgrade bought on that screen
+reaches the map at once). Player holdings only, and only where `arenaUpgradesEnabled` is on. For saves
+that predate the flags, a win already in the ledger counts as proof (an `:L2` key means Level 2), so the
+lines appear for such a save the first time it matters and are complete after one visit to the arena.
+
+Diagnostic: `[TFR-MapView] reputation view: arena countdowns (day D, week W) - <town> <venue>=ready|Nd; ...`.
+Gated on `arenaUpgradesEnabled`, so stock planes are untouched. Not packaged by the user's instruction;
+the next package carries it. Not covered: the Chest's Illegal Arena and wild arenas have no weekly lock
+of their own place on the map, so they get no line.
+
 ## Round 225: HOTFIX - the portal glyph turned every lowercase "l" into a portal (2026-09-17)
 
 User, two screenshots of the v1.11 Names view: *"The new show teleporters mini-map view is not correct. I only

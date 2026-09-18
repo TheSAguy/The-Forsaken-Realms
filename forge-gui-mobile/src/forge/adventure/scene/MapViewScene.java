@@ -421,6 +421,77 @@ public class MapViewScene extends UIScene {
                 placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
             }
         }
+        addArenaCountdowns(allPois, placedLabelRects);
+    }
+
+    /**
+     * Round 226 (user: "On the Reputation view on the Mini-map, can we add to that how many days till you
+     * can compete in the next Arena match. So show the player's capitol and 5 AI capitol").
+     * <p>
+     * NOTE ON NAMES: this plane's ui/map.json labels the button with id "events" as "Reputation", so the
+     * view the player calls Reputation is events() - the one that draws the reputation numbers. (The
+     * button with id "reputation" is labelled "Landmarks".) The ids are upstream's and are offset from
+     * what each view shows here.
+     * <p>
+     * One line per venue, stacked under the town's reputation number by placeDetailLabel()'s collision
+     * avoidance: "ready" when the player may enter, otherwise the days until the weekly allowance
+     * returns - the very test and key the arena itself uses (ArenaScene.weeklyLockDaysLeft).
+     * <ul>
+     * <li>The five AI capitals each have one venue. Shown only once VISITED, the rule the Names view
+     *     follows: a line on an unfound capital would mark its position through the fog.</li>
+     * <li>The Player Capitol has one venue at Level 1 and two at Level 2 (Normal and Challenging lock
+     *     separately). The map cannot see the arena's building level - that is keyed by a map object id
+     *     only the arena screen knows - so ArenaScene notes "in use" and "Level 2" on the town's own
+     *     mapFlags, and a win already in the ledger counts as proof for saves that predate the flags.
+     *     A Capitol whose arena the player has never opened shows nothing.</li>
+     * </ul>
+     * Gated on arenaUpgradesEnabled like the rest of the arena economy, so stock planes are untouched.
+     */
+    private void addArenaCountdowns(List<PointOfInterest> pois, List<Rectangle> placedLabelRects) {
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        if (world == null || !Config.instance().getConfigData().arenaUpgradesEnabled)
+            return;
+        StringBuilder logLine = new StringBuilder();
+        for (PointOfInterest poi : pois) {
+            if (poi.getData() == null)
+                continue;
+            boolean playerCapitol = TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name);
+            boolean aiCapital = !playerCapitol && forge.adventure.util.TerritoryControl.isAiCapital(poi.getData());
+            if (!playerCapitol && !aiCapital)
+                continue;
+            PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID());
+            if (!changes.isVisited())
+                continue;
+            if (aiCapital) {
+                placeArenaLine(poi, "Arena", ArenaScene.weeklyLockDaysLeft(world, poi.getID(), false),
+                        placedLabelRects, logLine);
+                continue;
+            }
+            boolean wonNormal = world.getArenaWinWeek().containsKey(ArenaScene.weeklyArenaKeyFor(poi.getID(), false));
+            boolean wonChallenging = world.getArenaWinWeek().containsKey(ArenaScene.weeklyArenaKeyFor(poi.getID(), true));
+            boolean inUse = changes.getMapFlags().get(ArenaScene.ARENA_SEEN_FLAG) != null || wonNormal || wonChallenging;
+            if (!inUse)
+                continue;
+            boolean levelTwo = changes.getMapFlags().get(ArenaScene.ARENA_LEVEL2_FLAG) != null || wonChallenging;
+            placeArenaLine(poi, levelTwo ? "Normal Arena" : "Arena",
+                    ArenaScene.weeklyLockDaysLeft(world, poi.getID(), false), placedLabelRects, logLine);
+            if (levelTwo)
+                placeArenaLine(poi, "Challenging Arena",
+                        ArenaScene.weeklyLockDaysLeft(world, poi.getID(), true), placedLabelRects, logLine);
+        }
+        if (logLine.length() > 0)
+            System.out.println("[TFR-MapView] reputation view: arena countdowns (day " + world.getCurrentDay()
+                    + ", week " + world.getCurrentWeek() + ") -" + logLine);
+    }
+
+    /** Round 226: one "Arena: ready" / "Arena: 3 days" line at a capital - see addArenaCountdowns(). */
+    private void placeArenaLine(PointOfInterest poi, String venue, int daysLeft,
+                                List<Rectangle> placedLabelRects, StringBuilder logLine) {
+        String when = daysLeft <= 0 ? "[GREEN]ready" : "[RED]" + daysLeft + (daysLeft == 1 ? " day" : " days");
+        TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + venue + ": " + when);
+        placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+        logLine.append(' ').append(poi.getDisplayName()).append(' ').append(venue).append('=')
+                .append(daysLeft <= 0 ? "ready" : daysLeft + "d").append(';');
     }
 
     public void reputation() {

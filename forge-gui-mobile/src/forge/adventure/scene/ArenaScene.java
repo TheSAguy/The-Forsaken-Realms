@@ -235,6 +235,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         challengeMode = false;
         ArenaData data = JSONStringLoader.parse(ArenaData.class, regularArenaJson, "");
         loadArenaData(data, WorldSave.getCurrentSave().getWorld().getRandom().nextLong(), false);
+        rememberArenaOnMapFlags(); // round 226: the mini-map's Reputation view reads these
     }
 
     /** Ad-hoc entry point for a bracket with no MapStage/building behind it (2026-08-26, Chest's
@@ -309,6 +310,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         }
         boolean midMatch = arenaStarted || roundsWon != 0;
         int level = arenaBuildingLevel();
+        rememberArenaOnMapFlags(); // round 226: an upgrade bought on this screen reaches the map at once
         arenaUpgradeButton.setVisible(!midMatch && level < 2);
         // Text refreshed here too (round 4, difficulty price multiplier), not just at
         // construction - the label was previously baked in once from the raw constant.
@@ -1145,7 +1147,47 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     private String weeklyArenaKey() {
         if (arenaMapStage == null || TileMapScene.instance().rootPoint == null)
             return null;
-        return TileMapScene.instance().rootPoint.getID() + (challengeMode ? ":L2" : ":L1");
+        return weeklyArenaKeyFor(TileMapScene.instance().rootPoint.getID(), challengeMode);
+    }
+
+    /** Round 226: the ledger key for one venue. Shared with MapViewScene's Reputation view, so the
+     *  map's countdown and the arena's own lock can never key differently. */
+    public static String weeklyArenaKeyFor(String poiId, boolean challenge) {
+        return poiId + (challenge ? ":L2" : ":L1");
+    }
+
+    /** Round 226: whole days until the weekly arena allowance resets. Weeks are day/7, so the
+     *  allowance returns when the week number ticks over - which is 7 - (day % 7) days away. */
+    public static int daysUntilWeeklyReset(forge.adventure.world.World world) {
+        return 7 - (world.getCurrentDay() % 7);
+    }
+
+    /** Round 226: 0 when this venue is open to the player right now, otherwise the days until it
+     *  reopens. The same test weeklyArenaLocked() applies: a recorded win in the CURRENT week. */
+    public static int weeklyLockDaysLeft(forge.adventure.world.World world, String poiId, boolean challenge) {
+        if (world == null || poiId == null)
+            return 0;
+        Integer wonOn = world.getArenaWinWeek().get(weeklyArenaKeyFor(poiId, challenge));
+        return wonOn != null && wonOn == world.getCurrentWeek() ? daysUntilWeeklyReset(world) : 0;
+    }
+
+    /** Round 226: map flags on a PLAYER holding's changes, so the mini-map can tell that its arena is
+     *  in use - and whether it has the Level 2 Challenging venue - without knowing the arena's map
+     *  object id. mapFlags already persist with the town, so this adds no save field. */
+    public static final String ARENA_SEEN_FLAG = "arenaSeen";
+    public static final String ARENA_LEVEL2_FLAG = "arenaLevel2";
+
+    /** Round 226: note this arena on its town's mapFlags - see the two constants above. Player
+     *  holdings only, and only on planes that have the arena upgrade economy at all. */
+    private void rememberArenaOnMapFlags() {
+        if (arenaMapStage == null || arenaMapStage.getChanges() == null
+                || !Config.instance().getConfigData().arenaUpgradesEnabled
+                || !TownRestoration.isCurrentTownPlayerOwned(arenaMapStage.getChanges()))
+            return;
+        java.util.Map<String, Byte> flags = arenaMapStage.getChanges().getMapFlags();
+        flags.put(ARENA_SEEN_FLAG, (byte) 1);
+        if (arenaBuildingLevel() >= 2)
+            flags.put(ARENA_LEVEL2_FLAG, (byte) 1);
     }
 
     /**
@@ -1170,8 +1212,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
     /** Round 216: whole days until this arena's weekly win allowance resets. Weeks are day/7, so
      *  the allowance returns when the week number ticks over - which is 7 - (day % 7) days away. */
     private int weeklyArenaDaysLeft() {
-        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
-        return 7 - (world.getCurrentDay() % 7);
+        return daysUntilWeeklyReset(WorldSave.getCurrentSave().getWorld());
     }
 
     /** Shared refusal message, so the button, the click and the fee point all say the same thing. */

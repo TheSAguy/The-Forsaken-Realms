@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 226 (2026-09-18) - repo only
+
+`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java` - new public statics `weeklyArenaKeyFor()`,
+`daysUntilWeeklyReset()`, `weeklyLockDaysLeft()` (the instance `weeklyArenaKey()` / `weeklyArenaDaysLeft()`
+delegate to them), the `ARENA_SEEN_FLAG` / `ARENA_LEVEL2_FLAG` mapFlag names, and `rememberArenaOnMapFlags()`
+called from `enterArenaBuilding()` and `refreshArenaBuildingButtons()`.
+
+`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` - `events()` (the "Reputation" view) ends with
+`addArenaCountdowns()`; new `addArenaCountdowns()` and `placeArenaLine()`.
+
 ## Round 225 (2026-09-17) - hotfix, adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java` - `ensurePortalGlyph()` registers the portal
