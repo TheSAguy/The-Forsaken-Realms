@@ -79,6 +79,7 @@ public class PointOfInterestMapSprite extends MapSprite {
             }
             super.draw(batch, parentAlpha);
             drawGuardIndicator(batch, parentAlpha);
+            drawTeleporterIndicator(batch, parentAlpha); // round 231
         }
         //batch.draw(getDebugTexture(),getX(),getY());
     }
@@ -133,6 +134,46 @@ public class PointOfInterestMapSprite extends MapSprite {
                 xOffset += GUARD_ICON_DRAW_SIZE;
             }
         }
+        batch.setColor(pr, pg, pb, pa);
+    }
+
+    // Round 231 (user, with a mock-up: "For towns/Capitol, that has a Teleporter. Can we add a little icon
+    // on the overworld map, kinda like the guards. But let's have it to the right vs. Guards on left").
+    // The mirror of drawGuardIndicator(): the bottom-RIGHT corner of the sprite, measured from the texture
+    // actually being drawn (a restored town swaps in its own 48x48 art, so the actor's size can be stale).
+    // Like the guard icons it is placed against the UNSCALED sprite box, so on a 1.15x town the two sit
+    // the same few pixels inside their own edges. Worst case the Capitol shows two guards (24) and the
+    // portal (16) on a sprite at least 48 wide, so they never touch.
+    // Drawn at the portal frame's native 16x16 - the guard art is 8x8 scaled UP to 12, which stays crisp
+    // under Nearest filtering; scaling 16 DOWN to 12 would drop pixel rows instead.
+    // Same ownership rule as the mini-map's Names-view glyph (round 223): a restored town or the Capitol,
+    // with a Teleporter built. A captured town loses its buildings, so the icon goes with it.
+    private static final float TELEPORTER_ICON_DRAW_SIZE = 16f;
+    private boolean teleporterIconLogged;
+
+    private void drawTeleporterIndicator(Batch batch, float parentAlpha) {
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(pointOfInterest.getID());
+        if (changes == null || !changes.hasEconomyBuildingOfType(EconomyBuildings.TELEPORTER))
+            return;
+        if (pointOfInterest.getData() == null
+                || (!TownRestoration.isTownRestored(changes)
+                    && !TownRestoration.CAPITOL_POI_NAME.equals(pointOfInterest.getData().name)))
+            return;
+        TextureRegion icon = EconomyBuildings.getTeleporterMapIcon();
+        if (icon == null || texture == null)
+            return;
+        if (!teleporterIconLogged) {
+            // Once per sprite, not per frame: enough to confirm from forge.log which towns carry the icon.
+            teleporterIconLogged = true;
+            System.out.println("[TFR-MapIcon] " + pointOfInterest.getDisplayName() + ": teleporter icon at the sprite's"
+                    + " bottom-right (network active=" + EconomyBuildings.isTeleporterNetworkActive() + ")");
+        }
+        // Snapshot the batch color's components before changing it - see drawGuardIndicator().
+        Color prevRef = batch.getColor();
+        float pr = prevRef.r, pg = prevRef.g, pb = prevRef.b, pa = prevRef.a;
+        batch.setColor(pr, pg, pb, parentAlpha);
+        batch.draw(icon, getX() + texture.getRegionWidth() - TELEPORTER_ICON_DRAW_SIZE, getY(),
+                TELEPORTER_ICON_DRAW_SIZE, TELEPORTER_ICON_DRAW_SIZE);
         batch.setColor(pr, pg, pb, pa);
     }
 

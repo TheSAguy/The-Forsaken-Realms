@@ -17757,6 +17757,34 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 231: a teleporter icon on the overworld map (2026-09-18)
+
+User, with a mock-up: *"For towns/Capitol, that has a Teleporter. Can we add a little icon on the overworld map,
+kinda like the guards. But let's have it to the right vs. Guards on left."*
+
+**What it draws.** `PointOfInterestMapSprite.drawTeleporterIndicator()`, called right after the guard icons: the
+blue portal at the sprite's bottom-RIGHT corner, the mirror of the guards at the bottom-left. Same ownership rule
+as the mini-map's Names-view glyph (round 223) - a restored town or the Player Capitol, with a Teleporter built - so
+the two views always agree, and a captured town loses the icon with its buildings.
+
+**The picture is the building's own.** New `EconomyBuildings.getTeleporterMapIcon()` returns what the teleporter
+shows inside the town: the four-frame blue shimmer (`portal4.atlas`, "Active") while the network has somewhere to
+go, the empty archway ("Closed") while this is the player's only teleporter. Every icon reads one shared clock, so
+all the portals on screen shimmer in step; the clock wraps every 600 s, a whole number of 0.6 s loops, so the wrap
+cannot be seen. `isTeleporterNetworkActive()` walks the whole POI registry twice and the icon asks every frame, so
+the answer is cached for a second - a new build or a load shows within that second.
+
+**Size and placement.** Drawn at the frame's native 16x16. The guard art is 8x8 scaled UP to 12, which stays crisp
+under Nearest filtering; scaling 16 down to 12 would drop pixel rows. The x position comes from the texture being
+drawn, not the actor's size: a restored town swaps in its own 48x48 art, so the actor's size can be stale. Like
+the guards it is placed against the UNSCALED sprite box, so on a 1.15x town the two sit the same few pixels inside
+their own edges. Worst case is the Capitol - two guards (24) plus the portal (16) on a 64-wide sprite - so they
+never touch. Checked before building by compositing the real art (Capitol + two guards, town + one guard) at 8x:
+it matches the mock-up.
+
+Diagnostic: `[TFR-MapIcon] <town>: teleporter icon at the sprite's bottom-right (network active=...)`, once per
+sprite, not per frame. Not yet seen in a running game.
+
 ## Round 230: the weekly payday froze the game for 30 ms per mine (2026-09-18)
 
 User: *"review log here, just confirming everything looks okay"* - a 6,560-line `forge.log` from the 11:28 session

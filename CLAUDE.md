@@ -97,6 +97,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 231 (2026-09-18): **teleporter icon on the overworld map** - the blue portal at the bottom-RIGHT of a
+  restored town / the Player Capitol that has a Teleporter (guards stay bottom-left).
+  `PointOfInterestMapSprite.drawTeleporterIndicator()` + new `EconomyBuildings.getTeleporterMapIcon()`: the 4-frame
+  "Active" shimmer while the network has 2+ teleporters, the "Closed" archway for a lone one (network check cached 1 s;
+  one shared clock). Native 16x16, x from the DRAWN texture's width. Same ownership rule as the Names-view glyph
+  (round 223). `[TFR-MapIcon] ...` once per sprite. Not yet seen in a running game.
 - Round 230 (2026-09-18; built 12:01, PACKAGED 14:22 once the game closed - 346 MB, `PACKAGER EXIT 0`, live jar read
   back; agent folder synced, 0 failed. The 11:46 session log CONFIRMED ROUND 226 IN PLAY: six arena lines, all "1 day",
   and the save's `arenaWinWeek` ledger agrees - the player had won all five AI capital arenas and the Capitol's in

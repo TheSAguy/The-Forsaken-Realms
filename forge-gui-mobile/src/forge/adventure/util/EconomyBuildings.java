@@ -639,6 +639,30 @@ public class EconomyBuildings {
         return (capitolHasTeleporter() ? 1 : 0) + countTownTeleporters() >= 2;
     }
 
+    // Round 231: the overworld map icon (PointOfInterestMapSprite.drawTeleporterIndicator) asks for its
+    // picture EVERY FRAME, once per teleporter town on screen, and isTeleporterNetworkActive() walks the
+    // whole POI registry twice. The answer only changes when the player builds a teleporter or loses a
+    // town, so it is re-read at most once a second - a load or a new build shows within that second.
+    private static long teleporterNetworkCheckedAt;
+    private static boolean teleporterNetworkActiveCached;
+
+    /**
+     * Round 231: the picture for a teleporter town's overworld map icon - the same one its building shows
+     * inside the town: the blue portal's shimmer while the network has somewhere to go, the empty archway
+     * while this is the only teleporter. All icons share one clock, so every portal on screen shimmers in
+     * step; the clock wraps every 600 s, a whole number of 0.6 s loops, so the wrap is invisible.
+     */
+    public static TextureRegion getTeleporterMapIcon() {
+        long now = com.badlogic.gdx.utils.TimeUtils.millis();
+        if (now - teleporterNetworkCheckedAt > 1000L || now < teleporterNetworkCheckedAt) {
+            teleporterNetworkActiveCached = isTeleporterNetworkActive();
+            teleporterNetworkCheckedAt = now;
+        }
+        if (!teleporterNetworkActiveCached)
+            return getTeleporterClosedSprite();
+        return getTeleporterActiveAnimation().getKeyFrame((now % 600_000L) / 1000f, true);
+    }
+
     // The waste-town map template no longer has any baked-in building art at all (see
     // MOD_CHANGELOG.md) - a rebuilt shop needs *some* icon regardless of what it became, not just
     // the 6 economy building types. "Special" shops - the various *BoosterPackShop entries, plus
