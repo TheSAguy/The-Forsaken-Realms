@@ -60,6 +60,28 @@ public class PointOfInterestMapSprite extends MapSprite {
         return drawEnlarged ? 1.15f : 1f;
     }
 
+    // Round 232 (user, on round 231's preview: "The Capitol image looks good, the town seems like the icons
+    // are a little high, needs to come down a little to start same level as town image starts"). The box the
+    // texture is actually DRAWN in. MapSprite.draw() grows a scaled sprite around its own center, so a 48x48
+    // town at 1.15x starts 3.6 px left of getX() and 3.6 px below getY() - and both corner icons, placed at
+    // getX()/getY(), floated that far above the town's base. The Capitol is drawn at 1x, which is why it
+    // already looked right. These mirror draw()'s own arithmetic, so the icons follow whatever it does.
+    private float drawnGrowth(int nativeSize) {
+        return (nativeSize * getDrawScale() - nativeSize) / 2f;
+    }
+
+    private float drawnLeft() {
+        return getX() - (texture == null ? 0f : drawnGrowth(texture.getRegionWidth()));
+    }
+
+    private float drawnRight() {
+        return texture == null ? getX() : getX() + texture.getRegionWidth() + drawnGrowth(texture.getRegionWidth());
+    }
+
+    private float drawnBottom() {
+        return getY() - (texture == null ? 0f : drawnGrowth(texture.getRegionHeight()));
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (pointOfInterest.getActive()) {
@@ -122,7 +144,7 @@ public class PointOfInterestMapSprite extends MapSprite {
                 TextureRegion icon = EconomyBuildings.getGuardTierIconSprite(tier);
                 if (icon == null)
                     continue;
-                batch.draw(icon, getX() + xOffset, getY(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE);
+                batch.draw(icon, drawnLeft() + xOffset, drawnBottom(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE); // round 232
                 xOffset += GUARD_ICON_DRAW_SIZE;
             }
         } else {
@@ -130,7 +152,7 @@ public class PointOfInterestMapSprite extends MapSprite {
                 TextureRegion icon = EconomyBuildings.getGuardTierIconSprite(changes.getGuardTier(i));
                 if (icon == null)
                     continue;
-                batch.draw(icon, getX() + xOffset, getY(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE);
+                batch.draw(icon, drawnLeft() + xOffset, drawnBottom(), GUARD_ICON_DRAW_SIZE, GUARD_ICON_DRAW_SIZE); // round 232
                 xOffset += GUARD_ICON_DRAW_SIZE;
             }
         }
@@ -141,9 +163,10 @@ public class PointOfInterestMapSprite extends MapSprite {
     // on the overworld map, kinda like the guards. But let's have it to the right vs. Guards on left").
     // The mirror of drawGuardIndicator(): the bottom-RIGHT corner of the sprite, measured from the texture
     // actually being drawn (a restored town swaps in its own 48x48 art, so the actor's size can be stale).
-    // Like the guard icons it is placed against the UNSCALED sprite box, so on a 1.15x town the two sit
-    // the same few pixels inside their own edges. Worst case the Capitol shows two guards (24) and the
-    // portal (16) on a sprite at least 48 wide, so they never touch.
+    // Round 232: both icons sit on the DRAWN box - drawnLeft()/drawnRight()/drawnBottom() - so on a 1.15x
+    // town they start level with the town's base and flush with its sides, exactly as on the 1x Capitol.
+    // Worst case the Capitol shows two guards (24) and the portal (16) on a 64-wide sprite (a town: 12 + 16
+    // on 55), so they never touch.
     // Drawn at the portal frame's native 16x16 - the guard art is 8x8 scaled UP to 12, which stays crisp
     // under Nearest filtering; scaling 16 DOWN to 12 would drop pixel rows instead.
     // Same ownership rule as the mini-map's Names-view glyph (round 223): a restored town or the Capitol,
@@ -172,7 +195,7 @@ public class PointOfInterestMapSprite extends MapSprite {
         Color prevRef = batch.getColor();
         float pr = prevRef.r, pg = prevRef.g, pb = prevRef.b, pa = prevRef.a;
         batch.setColor(pr, pg, pb, parentAlpha);
-        batch.draw(icon, getX() + texture.getRegionWidth() - TELEPORTER_ICON_DRAW_SIZE, getY(),
+        batch.draw(icon, drawnRight() - TELEPORTER_ICON_DRAW_SIZE, drawnBottom(),
                 TELEPORTER_ICON_DRAW_SIZE, TELEPORTER_ICON_DRAW_SIZE);
         batch.setColor(pr, pg, pb, pa);
     }

@@ -17757,6 +17757,26 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 232: the town's corner icons floated above its base (2026-09-18)
+
+User, on round 231's preview image: *"The Capitol image looks good, the town seems like the icons are a little
+high, needs to come down a little to start same level as town image starts."*
+
+**Cause.** Restored towns (and ruins) are drawn 15% larger, and `MapSprite.draw()` grows a scaled sprite around its
+own CENTER - so a 48x48 town at 1.15x starts 3.6 px to the left of `getX()` and 3.6 px below `getY()`. Both corner
+icons were placed at `getX()` / `getY()`, the unscaled box, so on a town they floated 3.6 px above the base and sat
+3.6 px inside the sides. The Capitol is drawn at 1x, which is why it already looked right. The guard icons have
+done this since the enlargement arrived on 2026-08-25; it took an 8x preview to see it.
+
+**Fix.** `PointOfInterestMapSprite` gets `drawnLeft()` / `drawnRight()` / `drawnBottom()` - the box the texture is
+actually drawn in, computed with the same arithmetic as `MapSprite.draw()` - and both `drawGuardIndicator()` and
+round 231's `drawTeleporterIndicator()` place themselves on it. On a town the icons now start level with the town's
+base and flush with its sides, exactly as on the Capitol; at 1x the growth is zero, so the Capitol and every AI town
+(never enlarged) are unchanged to the pixel. A before/after composite of the real art went to the user.
+
+Round 231 had been packaged by itself at 16:22 (`PACKAGER EXIT 0`) just as this correction arrived; the game was
+closed throughout and the next package replaces it, so the user never played a build with the portal floating.
+
 ## Round 231: a teleporter icon on the overworld map (2026-09-18)
 
 User, with a mock-up: *"For towns/Capitol, that has a Teleporter. Can we add a little icon on the overworld map,

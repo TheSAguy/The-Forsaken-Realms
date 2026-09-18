@@ -97,6 +97,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 232 (2026-09-18): **corner icons sit on the DRAWN sprite** - restored towns draw at 1.15x around their
+  center (`MapSprite.draw()`), so icons placed at `getX()/getY()` floated 3.6 px above a town's base (user, on round
+  231's preview: "the icons are a little high"). New `drawnLeft()/drawnRight()/drawnBottom()` in
+  `PointOfInterestMapSprite`; the guard icons AND the teleporter icon use them. 1x sprites (Capitol, AI towns)
+  unchanged to the pixel. WORKFLOW WIN: composite the real art with PIL at 8x and send it BEFORE the 7-minute build.
 - Round 231 (2026-09-18): **teleporter icon on the overworld map** - the blue portal at the bottom-RIGHT of a
   restored town / the Player Capitol that has a Teleporter (guards stay bottom-left).
   `PointOfInterestMapSprite.drawTeleporterIndicator()` + new `EconomyBuildings.getTeleporterMapIcon()`: the 4-frame

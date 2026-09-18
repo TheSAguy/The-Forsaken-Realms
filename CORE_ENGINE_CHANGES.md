@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 232 (2026-09-18) - adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java` - new private `drawnGrowth()`,
+`drawnLeft()`, `drawnRight()`, `drawnBottom()`; `drawGuardIndicator()` and `drawTeleporterIndicator()` position
+against them instead of `getX()` / `getY()`.
+
 ## Round 231 (2026-09-18) - adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java` - `draw()` calls new
