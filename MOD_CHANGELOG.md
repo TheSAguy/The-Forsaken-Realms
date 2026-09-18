@@ -17784,6 +17784,10 @@ The round-184 comment inside the rule named the Evil Grove and the vampire castl
 says what round 228 found and points at `dev-tools/norotate_scan.py`. No behavior change anywhere - log lines and a
 refactor only. Not yet seen in a running game (it needs a lost duel).
 
+Built 11:02, packaged 11:14 (346 MB, `PACKAGER EXIT 0`) with the game closed; the live jar was read back and
+carries this round's line and round 227's `[TFR-PickupLabel]`. Agent folder synced. The user also settled the open
+release question the same day: **"No current full release yet"** - the next release carries rounds 225-229.
+
 ## Round 228: eleven dungeons that could never despawn, and two that could vanish with their key (2026-09-18)
 
 User, with a screenshot from inside Black Dragon Mountain: *"On my latest game, I lost a duel in this dungeon, but

@@ -97,7 +97,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
-- Round 229 (2026-09-18): **`[DungeonRotation] defeat at X - it stays on the map: <reason>`** - the log line round 228
+- Round 229 (2026-09-18; built 11:02, PACKAGED 11:14 - 346 MB, `PACKAGER EXIT 0`, live jar read back; agent folder
+  synced, 0 failed): **`[DungeonRotation] defeat at X - it stays on the map: <reason>`** - the log line round 228
   was missing. New `DungeonRotation.notRotatableReason()` IS the rule (`isRotatableData()` = "no reason against";
   parity-checked on all 413 POIs: 288 rotatable, 0 mismatches); `onDungeonDefeat()` logs every loss that does not
   despawn its map, `onDungeonClear()` logs only for a dungeon/cave (it is called for every emptied town too). No
