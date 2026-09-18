@@ -17777,6 +17777,10 @@ base and flush with its sides, exactly as on the Capitol; at 1x the growth is ze
 Round 231 had been packaged by itself at 16:22 (`PACKAGER EXIT 0`) just as this correction arrived; the game was
 closed throughout and the next package replaces it, so the user never played a build with the portal floating.
 
+The user approved the before/after image ("looks good") while the build was still running. Built 16:31, packaged
+16:43 (346 MB, `PACKAGER EXIT 0`); the live jar was read back and carries `drawTeleporterIndicator()` and
+`drawnBottom()`. Agent folder synced. Not yet seen in a running game.
+
 ## Round 231: a teleporter icon on the overworld map (2026-09-18)
 
 User, with a mock-up: *"For towns/Capitol, that has a Teleporter. Can we add a little icon on the overworld map,

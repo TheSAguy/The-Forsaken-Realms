@@ -97,7 +97,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
-- Round 232 (2026-09-18): **corner icons sit on the DRAWN sprite** - restored towns draw at 1.15x around their
+- Round 232 (2026-09-18; built 16:31, PACKAGED 16:43 with round 231 - 346 MB, `PACKAGER EXIT 0`, live jar read back;
+  agent folder synced, 0 failed; the user approved the before/after preview: "looks good"): **corner icons sit on
+  the DRAWN sprite** - restored towns draw at 1.15x around their
   center (`MapSprite.draw()`), so icons placed at `getX()/getY()` floated 3.6 px above a town's base (user, on round
   231's preview: "the icons are a little high"). New `drawnLeft()/drawnRight()/drawnBottom()` in
   `PointOfInterestMapSprite`; the guard icons AND the teleporter icon use them. 1x sprites (Capitol, AI towns)
