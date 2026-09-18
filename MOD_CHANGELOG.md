@@ -17802,6 +17802,10 @@ a gate - the first, looser pattern (`"item"` anywhere) flagged the vampire castl
 condition pattern requires the key form `"item":`; (2) `points_of_interest.json` is uniformly CRLF in the working
 tree although Git Bash's `sed | cat -A` shows bare `$` - count bytes in Python.
 
+Packaged 10:47 (346 MB, `PACKAGER EXIT 0`) with the game closed; the live folder's `points_of_interest.json` was
+read back and carries the tag on exactly the three. Round 227 had been packaged by itself at 10:33, so the live
+folder now holds rounds 226, 227 and 228; agent folder synced.
+
 Plane validator: clean (the same two informational categories as before). Follow-up for the next Java round:
 `onDungeonDefeat()` / `onDungeonClear()` return silently for a non-rotatable POI, which is why the log could not
 answer this question by itself - they should say `[DungeonRotation] <name> stays: <reason>`.

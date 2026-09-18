@@ -97,7 +97,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
-- Round 228 (2026-09-18, DATA ONLY): **the `NoRotate` tag corrected** after the user's "I lost a duel in this dungeon,
+- Round 228 (2026-09-18, DATA ONLY; PACKAGED 10:47 - 346 MB, `PACKAGER EXIT 0`; this package carries rounds 226 +
+  227 + 228, 227's own package finished first at 10:33; agent folder synced, 0 failed): **the `NoRotate` tag corrected** after the user's "I lost a duel in this dungeon,
   but it did not disappear" (Black Dragon Mountain = `EvilGrove5`). Round 184 had picked its twelve by map FOLDER:
   only `CaveLarge1` has a real key-and-door, the seven Evil Groves + Wurm Pond + three Vampire Castles have none
   (they had become permanent - no despawn on loss, clear or timer), and the two Blue Towers on
