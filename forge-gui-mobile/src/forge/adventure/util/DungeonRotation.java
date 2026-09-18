@@ -66,31 +66,58 @@ public class DungeonRotation {
     // NOT rotating rather than vanishing by surprise. Public data-level variant so World's POI
     // placement loop can apply POOL_MULTIPLIER to exactly the same set.
     public static boolean isRotatableData(PointOfInterestData data) {
+        return notRotatableReason(data) == null;
+    }
+
+    private static boolean isDungeonOrCave(PointOfInterestData data) {
+        return data != null && ("dungeon".equalsIgnoreCase(data.type) || "cave".equalsIgnoreCase(data.type));
+    }
+
+    /**
+     * Round 229: null when this POI data is rotatable, otherwise WHY it is not. This IS the rule -
+     * isRotatableData() is just "no reason against" - so the gate and the explanation the log prints
+     * for it (see logStays()) are one piece of code and cannot drift apart.
+     * <p>
+     * Why it exists: round 228's bug report was "I lost a duel in this dungeon, but it did not
+     * disappear", and the log could not answer it, because onDungeonDefeat() and onDungeonClear()
+     * returned without a word for anything not rotatable. The cause then was a NoRotate tag that did
+     * not belong there; the next one should take one grep, not an investigation.
+     */
+    public static String notRotatableReason(PointOfInterestData data) {
         if (data == null)
-            return false;
-        if (!"dungeon".equalsIgnoreCase(data.type) && !"cave".equalsIgnoreCase(data.type))
-            return false;
+            return "it has no POI data";
+        if (!isDungeonOrCave(data))
+            return "type '" + data.type + "' never rotates (only dungeons and caves do)";
         if (data.name == null || data.name.startsWith("Quest_") || "DEBUGZONE".equals(data.name) || "Test".equals(data.name))
-            return false;
+            return "'" + data.name + "' is a quest or debug map";
         boolean hostile = false;
         if (data.questTags != null) {
             for (String tag : data.questTags) {
                 if (tag == null)
                     continue; // real data has null entries (e.g. MageTowerC6)
                 if ("Story".equals(tag) || tag.startsWith("Quest_"))
-                    return false;
+                    return "it is tagged " + tag + " - story and quest maps never vanish";
                 // Round 184 (user-approved, after the "Fifth Shard" report): a map that locks part of itself
-                // behind an item found in ANOTHER part of itself cannot be allowed to vanish mid-collection.
-                // The five-shard cave, the Evil Grove and the vampire castle all do this, and all three were
-                // rotatable - and a LOSS inside a rotatable dungeon despawns it immediately, so losing one
-                // duel could put the sealed door out of reach with its keys already in your pack.
+                // behind an item found in ANOTHER part of itself cannot be allowed to vanish mid-collection -
+                // a LOSS inside a rotatable dungeon despawns it immediately, so losing one duel could put
+                // the sealed door out of reach with its keys already in your pack. Round 228 corrected
+                // WHICH maps do this: the five-shard cave and the two Blue Towers on
+                // magetower_8_illusion.tmx. (Round 184 had also named the Evil Grove and the vampire
+                // castle; their maps have no such gate.) dev-tools/norotate_scan.py decides it from the
+                // maps themselves - run it after map edits.
                 if ("NoRotate".equals(tag))
-                    return false;
+                    return "it is tagged NoRotate - it locks a door behind an item found inside it (dev-tools/norotate_scan.py)";
                 if ("Hostile".equals(tag))
                     hostile = true;
             }
         }
-        return hostile;
+        return hostile ? null : "it is not tagged Hostile";
+    }
+
+    /** Round 229: the one line that says a loss or a clear did NOT despawn a place, and why. */
+    private static void logStays(String event, PointOfInterest poi, String reason) {
+        System.out.println("[DungeonRotation] " + event + " at " + (poi == null ? "an unknown POI" : poi.getDisplayName())
+                + " - it stays on the map: " + reason);
     }
 
     static boolean isRotatable(PointOfInterest poi) {
@@ -302,12 +329,20 @@ public class DungeonRotation {
      * out" behavior stays exactly as it was for them.
      */
     public static void onDungeonDefeat(PointOfInterest poi) {
-        if (!isEnabled() || !isRotatable(poi))
+        if (!isEnabled())
             return;
+        if (!isRotatable(poi)) {
+            // Round 229: losses are rare, so every one of them says so - a castle, a boss lair and a
+            // NoRotate cave all get their line, and "why is it still here" is answered by the log.
+            logStays("defeat", poi, poi == null ? "the map has no root POI" : notRotatableReason(poi.getData()));
+            return;
+        }
         World world = WorldSave.getCurrentSave().getWorld();
         int questStatus = activeQuestStatus(poi);
-        if (questStatus == QUEST_STORY)
+        if (questStatus == QUEST_STORY) {
+            logStays("defeat", poi, "an active story quest targets it"); // round 229
             return; // story targets never vanish, defeat or not
+        }
         int currentDay = world.getCurrentDay();
         if (questStatus == QUEST_SIDE) {
             int attempts = world.getPoiFailedAttempts().getOrDefault(poi.getID(), 0) + 1;
@@ -410,10 +445,20 @@ public class DungeonRotation {
      * onDungeonDefeat().
      */
     public static void onDungeonClear(PointOfInterest poi) {
-        if (!isEnabled() || !isRotatable(poi))
+        if (!isEnabled())
             return;
-        if (activeQuestStatus(poi) == QUEST_STORY)
+        if (!isRotatable(poi)) {
+            // Round 229: only for a dungeon or a cave. MapStage calls in here on every exit from ANY
+            // emptied map - towns, the Capitol, castles (round 122 removed exactly that noise from
+            // [TFR-DungeonClear]) - and nobody wonders why a town is still there.
+            if (poi != null && isDungeonOrCave(poi.getData()))
+                logStays("cleared", poi, notRotatableReason(poi.getData()));
+            return;
+        }
+        if (activeQuestStatus(poi) == QUEST_STORY) {
+            logStays("cleared", poi, "an active story quest targets it"); // round 229
             return; // story targets never vanish
+        }
         World world = WorldSave.getCurrentSave().getWorld();
         int currentDay = world.getCurrentDay();
         // 2026-08-19 user request: same as onDungeonDefeat()'s routine case - no popup, this fires

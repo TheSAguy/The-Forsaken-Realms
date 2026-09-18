@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 229 (2026-09-18) - adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/util/DungeonRotation.java` - new public `notRotatableReason()` (the rule;
+`isRotatableData()` delegates to it), private `isDungeonOrCave()` and `logStays()`; `onDungeonDefeat()` and
+`onDungeonClear()` log instead of returning silently. Log lines and a refactor only.
+
 ## Round 228 (2026-09-18) - data only, no Java
 
 `forge-gui/res/adventure/The Forsaken Realms/world/points_of_interest.json` - `NoRotate` removed from eleven POIs

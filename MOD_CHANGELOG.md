@@ -17757,6 +17757,33 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 229: the log now says why a dungeon stays (2026-09-18)
+
+User, on round 228's open item: *"Do that if needed."* It was: round 228's question - "I lost a duel in this
+dungeon, but it did not disappear" - took an investigation only because `DungeonRotation.onDungeonDefeat()` and
+`onDungeonClear()` returned without a word for anything they would not despawn.
+
+**One rule, two views.** New `DungeonRotation.notRotatableReason(data)` returns null for a rotatable POI and
+otherwise the reason; `isRotatableData()` is now simply "no reason against". The gate and the explanation are the
+same code, so they cannot drift apart. Checked against the plane before building: all 413 POIs give the same
+yes/no as a verbatim copy of the old rule (288 rotatable, 0 mismatches), and the reasons fall into four groups -
+94 "type 'castle' never rotates (only dungeons and caves do)", 20 "it is tagged Story - story and quest maps
+never vanish", 8 quest/debug maps, and the 3 `NoRotate` dungeons.
+
+**What the log prints now** (`logStays()`):
+- `[DungeonRotation] defeat at Black Dragon Mountain - it stays on the map: <reason>` on EVERY lost duel inside a
+  map that does not despawn for it - a castle, a boss lair, a `NoRotate` cave, or a rotatable dungeon that an
+  active story quest protects. Losses are rare, so each one can afford its line.
+- `[DungeonRotation] cleared at Forgotten Cave - it stays on the map: <reason>` for a DUNGEON OR CAVE only.
+  `MapStage` calls `onDungeonClear()` on every exit from any emptied map - towns, the Capitol, castles - and
+  round 122 had removed exactly that noise from `[TFR-DungeonClear]`; nobody wonders why a town is still there.
+- The side-quest case already had its line ("N attempt(s) remaining") and is unchanged. `onDungeonLooted()` stays
+  silent for a non-rotatable POI: nothing the player can see is missing there.
+
+The round-184 comment inside the rule named the Evil Grove and the vampire castle as lock-and-key maps; it now
+says what round 228 found and points at `dev-tools/norotate_scan.py`. No behavior change anywhere - log lines and a
+refactor only. Not yet seen in a running game (it needs a lost duel).
+
 ## Round 228: eleven dungeons that could never despawn, and two that could vanish with their key (2026-09-18)
 
 User, with a screenshot from inside Black Dragon Mountain: *"On my latest game, I lost a duel in this dungeon, but

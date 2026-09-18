@@ -97,6 +97,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 229 (2026-09-18): **`[DungeonRotation] defeat at X - it stays on the map: <reason>`** - the log line round 228
+  was missing. New `DungeonRotation.notRotatableReason()` IS the rule (`isRotatableData()` = "no reason against";
+  parity-checked on all 413 POIs: 288 rotatable, 0 mismatches); `onDungeonDefeat()` logs every loss that does not
+  despawn its map, `onDungeonClear()` logs only for a dungeon/cave (it is called for every emptied town too). No
+  behavior change. Not yet seen in a running game. **The user has said: no full release for now** (asked 2026-09-18)
+  - do not re-raise v1.12 every turn; the next release carries 225-229.
 - Round 228 (2026-09-18, DATA ONLY; PACKAGED 10:47 - 346 MB, `PACKAGER EXIT 0`; this package carries rounds 226 +
   227 + 228, 227's own package finished first at 10:33; agent folder synced, 0 failed): **the `NoRotate` tag corrected** after the user's "I lost a duel in this dungeon,
   but it did not disappear" (Black Dragon Mountain = `EvilGrove5`). Round 184 had picked its twelve by map FOLDER:
@@ -104,8 +110,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (they had become permanent - no despawn on loss, clear or timer), and the two Blue Towers on
   `magetower_8_illusion.tmx` (Illusionist's Key) were missed. Tag now on exactly `CaveLarge1`, `MageTowerC8`,
   `MageTowerU7`. New `dev-tools/norotate_scan.py` (follows linked maps; exits 1 on disagreement; a reward of type
-  `item` is NOT a gate). Existing worlds: nothing retroactive, lifetimes seeded at the next day tick. TODO next Java
-  round: `onDungeonDefeat()`/`onDungeonClear()` should log why a non-rotatable POI stays.
+  `item` is NOT a gate). Existing worlds: nothing retroactive, lifetimes seeded at the next day tick. (Its TODO -
+  log why a non-rotatable POI stays - was done in round 229.)
 - Round 227 (2026-09-18): **floating "+N Wood" label on overworld resource pickups** - `ResourceSpawns.award()` ->
   new `showPickupLabel()` -> the dungeon's own `AdventurePlayer.addStatusMessage()` over the player's head (Gold,
   Shards, Wood, Stone, and a Mystery that resolves into one; chests/blueprints/ambushes keep their dialogs; two
