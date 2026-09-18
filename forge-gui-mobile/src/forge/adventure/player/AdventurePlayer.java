@@ -1931,11 +1931,46 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             editor.refresh();
     }
 
+    // Round 230 (log review 2026-09-18: [TFR-DayTick] showed economy=~590ms on every 7th day and 1-3ms on
+    // the others, identical week after week). Each SoundSystem.play() on this backend SLEEPS THE CALLING
+    // THREAD for 30 ms before it plays (forge.sound.AudioClip: "30ms delay before an OpenAL voice can be
+    // reused for the same sound"), and the calling thread here is the render thread. The payday paid every
+    // producing building through giveGold/addShards/addWood/addStone - one sound, so one 30 ms sleep, per
+    // building: 19 buildings = 570 ms of pure sleep, growing by 30 ms with every mine the player adds.
+    // Batched bookkeeping opens this scope; the grant methods below stay silent inside it and the caller
+    // plays ONE sound for the whole batch. Depth-counted so scopes may nest; GL thread only.
+    private static int quietSfxDepth;
+    private static int quietSfxSuppressed;
+
+    public static void beginQuietSfx() {
+        quietSfxDepth++;
+    }
+
+    /** Closes a scope opened by beginQuietSfx(). When the OUTERMOST scope closes, returns how many sounds
+     *  were held back inside it (so the caller can play one for the lot); otherwise 0. */
+    public static int endQuietSfx() {
+        if (quietSfxDepth > 0)
+            quietSfxDepth--;
+        if (quietSfxDepth > 0)
+            return 0;
+        int suppressed = quietSfxSuppressed;
+        quietSfxSuppressed = 0;
+        return suppressed;
+    }
+
+    private static void playSfx(SoundEffectType type) {
+        if (quietSfxDepth > 0) {
+            quietSfxSuppressed++;
+            return;
+        }
+        SoundSystem.instance.play(type, false);
+    }
+
     private void addGold(int goldCount) {
         gold += goldCount;
         onGoldChangeList.emit();
         if (goldCount > 0) // round 115: reward-path gold (dungeon drops, quest grants) was silent; overworld pickups use giveGold which already plays
-            SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
+            playSfx(SoundEffectType.CoinsDrop);
     }
 
     public void onShardsChange(Runnable o) {
@@ -2295,7 +2330,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.GOLD, gold - goldBefore);
         onGoldChangeList.emit();
         //play sfx
-        SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
+        playSfx(SoundEffectType.CoinsDrop); // round 230: silent inside a quiet-sfx scope
     }
 
     public void addShards(int number) {
@@ -2307,7 +2342,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         forge.adventure.util.ResourceLedger.moved(forge.adventure.util.ResourceLedger.SHARDS, -number);
         onShardsChangeList.emit();
         //play sfx
-        SoundSystem.instance.play(SoundEffectType.TakeShard, false);
+        playSfx(SoundEffectType.TakeShard); // round 230
     }
 
     public void setShards(int number) {
@@ -2322,7 +2357,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void addWood(int number) {
         takeWood(-number);
         if (number > 0) // round 115: every pickup makes a sound, in dungeons too
-            SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
+            playSfx(SoundEffectType.CoinsDrop); // round 230
     }
 
     public void takeWood(int number) {
@@ -2334,7 +2369,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public void addStone(int number) {
         takeStone(-number);
         if (number > 0) // round 115: every pickup makes a sound, in dungeons too
-            SoundSystem.instance.play(SoundEffectType.CoinsDrop, false);
+            playSfx(SoundEffectType.CoinsDrop); // round 230
     }
 
     public void takeStone(int number) {

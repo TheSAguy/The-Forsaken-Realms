@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 230 (2026-09-18): **the weekly payday froze the game ~590 ms** - found in the user's 11:28 session log
+  (`[TFR-DayTick] economy=585..591ms` on every 7th day, 1-3 ms otherwise). `forge.sound.AudioClip.play()` SLEEPS the
+  calling (render) thread 30 ms per sound, and the payday played one coin sound per producing building (19 in save 1
+  = 570 ms; +30 ms per extra mine/guard). New `AdventurePlayer.beginQuietSfx()/endQuietSfx()` scope + `playSfx()`
+  helper; `EconomyBuildings.processDaysPassed()` wraps `processPaydays()` in it and plays ONE sound.
+  `[TFR-Payday] ...`; proof = the next payday's `economy=` figure (~30 ms). REMEMBER THE TRAP: any batch of
+  `giveGold/addShards/addWood/addStone` calls costs 30 ms each on the render thread. Same log CONFIRMED round 228 in
+  play (`Black Dragon Mountain despawned until day 30` after a loss). Rounds 226/227/229 still unobserved.
 - Round 229 (2026-09-18; built 11:02, PACKAGED 11:14 - 346 MB, `PACKAGER EXIT 0`, live jar read back; agent folder
   synced, 0 failed): **`[DungeonRotation] defeat at X - it stays on the map: <reason>`** - the log line round 228
   was missing. New `DungeonRotation.notRotatableReason()` IS the rule (`isRotatableData()` = "no reason against";

@@ -2941,6 +2941,25 @@ public class EconomyBuildings {
     public static void processDaysPassed(int daysPassed, int newDayCount) {
         if (daysPassed <= 0)
             return;
+        // Round 230: every mine payout and every guard wage below used to play its own coin sound, and
+        // each sound blocks this (render) thread for 30 ms - see AdventurePlayer.beginQuietSfx(). With 19
+        // producing buildings the weekly payday froze the game for ~590 ms, measured by [TFR-DayTick].
+        // One sound for the whole payday instead: the player still hears that money moved.
+        AdventurePlayer.beginQuietSfx();
+        int heldBack;
+        try {
+            processPaydays(daysPassed, newDayCount);
+        } finally {
+            heldBack = AdventurePlayer.endQuietSfx();
+        }
+        if (heldBack > 0) {
+            forge.sound.SoundSystem.instance.play(forge.sound.SoundEffectType.CoinsDrop, false);
+            System.out.println("[TFR-Payday] day " + newDayCount + ": " + heldBack
+                    + " payout/wage sound(s) folded into one (each would have blocked the frame for 30 ms)");
+        }
+    }
+
+    private static void processPaydays(int daysPassed, int newDayCount) {
         // Round 148: roll the balance sheet's week over here as well as lazily on the next
         // movement, so a week in which the player neither earned nor spent anything still ends.
         ResourceLedger.onDaysPassed(newDayCount);

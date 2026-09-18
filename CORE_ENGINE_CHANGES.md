@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 230 (2026-09-18) - adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` - new public statics `beginQuietSfx()` /
+`endQuietSfx()`, private `playSfx()`; `addGold`, `takeGold`, `takeShards`, `addWood`, `addStone` play through it.
+
+`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java` - `processDaysPassed()` is now a wrapper that
+opens the quiet scope around the old body (renamed `processPaydays()`) and plays one sound afterwards.
+
+Not touched: `forge-gui-mobile/src/forge/sound/AudioClip.java` (the 30 ms sleep is upstream's).
+
 ## Round 229 (2026-09-18) - adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/util/DungeonRotation.java` - new public `notRotatableReason()` (the rule;

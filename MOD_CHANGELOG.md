@@ -17757,6 +17757,45 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 230: the weekly payday froze the game for 30 ms per mine (2026-09-18)
+
+User: *"review log here, just confirming everything looks okay"* - a 6,560-line `forge.log` from the 11:28 session
+on the round-229 build, which ran the world from day 13 to day 120.
+
+**What the log confirmed.** No exception anywhere. **Round 228 works in play:** the session opens with a second
+loss to the Angelic Page inside Black Dragon Mountain, and the very next rotation line is `[DungeonRotation] Black
+Dragon Mountain despawned until day 30` - the dungeon that "did not disappear" now does. (The player then
+reloaded, won the rematch, reclaimed the Bronze Coin, and `[TFR-DungeonLooted]` halved the place's timer on the way
+out, 63 -> 38: it is an ordinary rotatable dungeon again.) Memory sawtoothed between 333 and 819 MB over the 107
+days with no upward drift (first ten days and last ten days look alike). The rotation churn is steady at about
+nine despawns and nine appearances a day. The AI
+spread as designed - 153 mages sent, 130 towns taken, White and Green at 79 road-connected towns each by day 120,
+every color at radius 139/450 - and never once targeted one of the player's 20 towns, which is what a
+nearest-five candidate pool does while hundreds of neutral towns are still closer. Rounds 226, 227 and 229 stayed
+unobserved: the mini-map was never opened, nothing was picked up on the overworld, and no loss left its dungeon
+standing. One caution for the player, not a bug: in that run the side quest **Mechanical Problems (Slobad) expired
+on day 28**; saves 1 and 2 and the autosave were read back and are all still at day 13 with the quest live, so the
+real deadline is fifteen days away.
+
+**What it turned up.** `[TFR-DayTick]` read `economy=585..591ms` on all sixteen paydays and 1-3 ms on every other
+day - the same figure week after week, which is not what real work looks like. Cause:
+`forge.sound.AudioClip.play()` on this backend **sleeps the calling thread for 30 ms** before every sound ("30ms
+delay before an OpenAL voice can be reused for the same sound"), the caller here is the render thread, and the
+payday paid each producing building through `giveGold` / `addShards` / `addWood` / `addStone` - one coin sound,
+one 30 ms sleep, per building. Save 1 holds 19 producing buildings (4 Shard Mines, 5 Gold Mines, 5 Lumber Mills,
+5 Stone Mines): 19 x 30 = 570 ms of pure sleep against the 585-591 measured. It grows by 30 ms with every mine
+built and every guard paid from the purse, and under Speed-Up it lands every few seconds of real time.
+
+**Fix.** `AdventurePlayer` gets a depth-counted quiet-sfx scope (`beginQuietSfx()` / `endQuietSfx()`, which
+returns how many sounds were held back) and routes its five grant sounds through one `playSfx()` helper;
+`EconomyBuildings.processDaysPassed()` runs the whole payday (now `processPaydays()`) inside the scope and then
+plays ONE coin sound if anything moved. Same money, same ledger entries, same notifications; the payday costs
+one 30 ms sleep instead of nineteen. Nothing else opens the scope, so pickups, shops and rewards sound exactly as
+before. The engine's 30 ms sleep itself is upstream code and is left alone.
+
+Diagnostic: `[TFR-Payday] day N: M payout/wage sound(s) folded into one ...`; the proof is the next payday's
+`[TFR-DayTick] economy=` figure, which should drop from ~590 ms to ~30 ms. Not yet seen in a running game.
+
 ## Round 229: the log now says why a dungeon stays (2026-09-18)
 
 User, on round 228's open item: *"Do that if needed."* It was: round 228's question - "I lost a duel in this
