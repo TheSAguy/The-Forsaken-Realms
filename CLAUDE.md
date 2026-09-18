@@ -106,7 +106,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   57974, 4 portal towns = the Teleporter's own stop list). **Save 1 decks v3** (`.prededit17.bak`): Rhonas the
   Indomitable, Become Immense, Necropede, more Corpse Cur and Rogue's Passage into both poison decks; 4th Gempalm
   Polluter + Diregraf Horde + Doom Blade into the zombies; Swords to Plowshares + Parallax Wave into white; Goblin
-  King into the goblins. Fynn stays out of slot 4 by the user's choice.
+  King into the goblins. Fynn stays out of slot 4 by the user's choice. **Slot 6 "Tinker's Bane"** (`.prededit18.bak`)
+  is built for the Slobad boss (life 100, artifact creatures +0/+2, every damage point = a Scrap, 5 Scraps = a Construct,
+  10 = Darksteel Colossus; engine-checked: infect damage still triggers it): pure infect + one-turn bursts + destroy-based
+  artifact removal + deathtouch blockers. `tinkers_bane.txt`.
 - Round 224 (2026-09-16): **v1.11 "Standing Ground" RELEASED - PC + Android.** Log review of the first 09.16-engine
   session: 1,338 lines, zero exceptions, two Capitol brackets won, the Djinn's coin back via the bracket loot page;
   one fix - snow-covered basics now count as basics for the two-copy loot cap (`isBasicLand()` replaces

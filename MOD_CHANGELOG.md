@@ -17815,6 +17815,25 @@ Gempalm Polluter, Diregraf Horde (three Zombie bodies for Polluter and Belcher),
 Luminous Bonds. Slot 1 "Warchief's Cleave" 47: + Goblin King; - 1 Frenzied Goblin. Lists:
 `*_v3.txt` and `gempalm_legion_v5.txt` in `dev-tools/save-editing/`.
 
+**Save 1 slot 6 "Tinker's Bane" - a deck for Slobad** (user: "Create me a deck to fight Slobad"; game closed,
+backup `.prededit18.bak`, collection identical). Slobad (boss, Master, life 40 -> 100 on Insane, mono-red
+`common/decks/miniboss/slobad.dck`: Blitz Automatons, Skitterbeam Battalions, Phyrexian Fleshgorgers,
+Artificer's Dragons, Chiss-Goria, both Slobads, Goblin Welder/Engineer, Sol Rings and Mind Stones) fights in
+`slobad_factory.tmx` with `startBattleWithCardInCommandZone: ["Slobad's Boss Effect"]`: his artifact
+creatures get +0/+2, **every point of damage he takes makes a Scrap token**, five Scraps at his end step
+become a Construct (+1/+1 per artifact he controls), ten Scraps at his upkeep become a conjured Darksteel
+Colossus. Checked in the engine: infect damage still runs the damage-done triggers with its full amount
+(`Player.addDamageAfterPrevention`, `CardDamageTable.triggerDamageDoneOnce`), so poison feeds the Scraps
+too - it just does not care about the 100 life. Hence the deck: mono-green PURE infect (Glistener Elf,
+Necropede, 4 Corpse Cur, Phyrexian Swarmlord, Inkmoth Nexus, Grafted Exoskeleton on Chameleon Colossus or
+Rhonas), single-turn bursts (Become Immense, 2 Giant Growth, 2 Might of the Masses, Rogue's Passage) so the
+ten counters land in one or two hits rather than as chip damage that hands him Constructs, destroy-based
+artifact removal because -X/-X and burn bounce off +0/+2 (Broken Wings, Return to the Earth, Natural End,
+Return to Nature, Glissa's Scorn, Origin of Metalbending, 2 Thrashing Brontodon; Dismember only for the
+3/4s), deathtouch blockers that never attack (Moss Viper, Wren's Run Vanquisher, 2 Death-Hood Cobra with
+reach, Copper Longlegs), no Fynn and no toxic creatures (both deal real damage). 48 cards, 18 lands.
+`dev-tools/save-editing/tinkers_bane.txt`.
+
 ## Round 224: v1.11 "Standing Ground" - the release round, PC + Android (2026-09-16)
 
 User: *"Package the live game with round 223 - I'm done playing. Review the log. Release the game, PC and
