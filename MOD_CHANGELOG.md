@@ -17796,6 +17796,18 @@ before. The engine's 30 ms sleep itself is upstream code and is left alone.
 Diagnostic: `[TFR-Payday] day N: M payout/wage sound(s) folded into one ...`; the proof is the next payday's
 `[TFR-DayTick] economy=` figure, which should drop from ~590 ms to ~30 ms. Not yet seen in a running game.
 
+Built 12:01; packaged 14:22 (346 MB, `PACKAGER EXIT 0`) once the player closed the game - two and a half hours of
+watcher re-arms later; the live jar was read back, and the agent folder is synced.
+
+**Round 226 confirmed in play** by the session that ran meanwhile (11:46, round-229 build, 19 duels, all won, five
+towns restored, no exception): `[TFR-MapView] reputation view: arena countdowns (day 13, week 1) - Unbroken Bough
+Arena=1d; Blazing Peak Arena=1d; Orazca Arena=1d; New Avalon Arena=1d; Dead Man's Rest Arena=1d; Great Lighthouse
+Arena=1d;`. Six venues all locked looked wrong to me; the player said it was right, and the save's `arenaWinWeek`
+ledger proves it - a week-1 win recorded for all five AI capitals and for the Player Capitol ("Orazca"). The
+Capitol printed a single `Arena` line rather than Normal + Challenging because its Level 2 arena had not been opened
+since round 226 shipped, which is the one-visit catch-up that round documented. Rounds 227 (no overworld pickup
+happened) and 229 (every duel was a win) are still unobserved.
+
 ## Round 229: the log now says why a dungeon stays (2026-09-18)
 
 User, on round 228's open item: *"Do that if needed."* It was: round 228's question - "I lost a duel in this

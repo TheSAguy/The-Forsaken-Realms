@@ -97,7 +97,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
-- Round 230 (2026-09-18): **the weekly payday froze the game ~590 ms** - found in the user's 11:28 session log
+- Round 230 (2026-09-18; built 12:01, PACKAGED 14:22 once the game closed - 346 MB, `PACKAGER EXIT 0`, live jar read
+  back; agent folder synced, 0 failed. The 11:46 session log CONFIRMED ROUND 226 IN PLAY: six arena lines, all "1 day",
+  and the save's `arenaWinWeek` ledger agrees - the player had won all five AI capital arenas and the Capitol's in
+  week 1. The Capitol ("Orazca") showed one `Arena` line, not Normal + Challenging, because its arena had not been
+  opened since round 226 - the documented one-visit catch-up. Rounds 227, 229 and 230 remain unobserved):
+  **the weekly payday froze the game ~590 ms** - found in the user's 11:28 session log
   (`[TFR-DayTick] economy=585..591ms` on every 7th day, 1-3 ms otherwise). `forge.sound.AudioClip.play()` SLEEPS the
   calling (render) thread 30 ms per sound, and the payday played one coin sound per producing building (19 in save 1
   = 570 ms; +30 ms per extra mine/guard). New `AdventurePlayer.beginQuietSfx()/endQuietSfx()` scope + `playSfx()`
