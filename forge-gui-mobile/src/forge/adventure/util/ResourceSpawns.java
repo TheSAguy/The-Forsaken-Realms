@@ -325,6 +325,7 @@ public class ResourceSpawns {
         float pickupRadiusPx = PICKUP_RADIUS_TILES * tileSize;
         Iterator<int[]> it = world.getResourceSpawns().iterator();
         boolean changed = false;
+        pickupLabelsThisPass = 0; // round 227: see showPickupLabel()
         while (it.hasNext()) {
             int[] spawn = it.next();
             float spawnCenterX = spawn[0] * tileSize + tileSize / 2f;
@@ -385,9 +386,40 @@ public class ResourceSpawns {
             default:
                 return;
         }
+        showPickupLabel(what, value); // round 227
         String message = "You receive " + value + " " + what + "!";
         System.out.println("[ResourceSpawns] " + message);
         GameHUD.getInstance().addNotification(message);
+    }
+
+    // Round 227: labels shown by the current checkPickup() pass. Two spawns inside the pickup radius in
+    // the same frame would otherwise print their labels on top of each other.
+    private static int pickupLabelsThisPass;
+
+    /**
+     * Round 227 (user: "When collecting/grabbing/running over resources on the overworld. Please add the
+     * little white text that shows '+x gold' or wood, etc. This normally happens in dungeons, but not on
+     * the overworld to the resources we added").
+     * <p>
+     * The very label a dungeon's single-reward pickup floats - AdventurePlayer.addStatusMessage(), same
+     * glyph, same localized word, same height above the sprite - so the two read identically. It adds to
+     * the CURRENT stage, out here WorldStage, and GameStage already tracks these labels so that a save
+     * load or a town entered mid-animation drops them instead of replaying them later (round 129). A
+     * Mystery pickup that resolved into a resource comes through here too; chests, blueprints and
+     * ambushes return earlier in award() and keep their own dialogs.
+     */
+    private static void showPickupLabel(String what, int value) {
+        forge.adventure.character.PlayerSprite sprite = WorldStage.getInstance().getPlayerSprite();
+        if (sprite == null)
+            return;
+        float x = sprite.getX();
+        float y = sprite.getY() + sprite.getHeight() + pickupLabelsThisPass * 10f;
+        pickupLabelsThisPass++;
+        String word = Forge.getLocalizer().getMessageorUseDefault("lbl" + what, what);
+        Current.player().addStatusMessage(what, word, value, x, y);
+        System.out.println("[TFR-PickupLabel] +" + value + " " + what + " at (" + (int) x + ", " + (int) y
+                + ") on " + Current.player().getCurrentGameStage().getClass().getSimpleName()
+                + ", glyph=" + AdventurePlayer.resolveStatusGlyph(what));
     }
 
     // The mystery pickup's 5% outcome: the mage of whichever color the player's reputation is

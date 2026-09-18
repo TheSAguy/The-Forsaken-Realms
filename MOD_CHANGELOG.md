@@ -17757,6 +17757,41 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 227: the floating "+N Wood" label on overworld resource pickups (2026-09-18)
+
+User: *"When collecting/grabbing/running over resources on the overworld. Please add the little white text
+that shows '+x gold' or wood, etc. This normally happens in dungeons, but not on the overworld to the
+resources we added."*
+
+**What changed.** `ResourceSpawns.award()` now floats the same label a dungeon's single-reward pickup does
+- `AdventurePlayer.addStatusMessage()`, same glyph, same localized word, same height above the sprite -
+through a new `showPickupLabel()`. Gold, Shards, Wood and Stone spawns get it, and so does a Mystery pickup
+that resolves into one of those four. Chests, blueprints and ambushes return earlier in `award()` and keep
+their own dialogs. The label adds to the CURRENT stage (WorldStage out here), and `GameStage` already
+tracks these labels (round 129), so a save load or a town entered mid-animation drops them rather than
+replaying them later. Two spawns collected in the same frame stack their labels 10 units apart instead of
+printing on top of each other (`pickupLabelsThisPass`, reset by each `checkPickup()` pass). The corner
+notification ("You receive 12 Wood!") is unchanged.
+
+**The dungeon label gets its Wood and Stone icons.** `MapStage` hand-blocked the icon for those two types,
+with a comment from before any atlas had the regions. This plane's `sprites/items.atlas` has carried `Wood`
+and `Stone` since the 2026-08-12 cost overhaul - `costLabel()` draws `[+Wood]` / `[+Stone]` everywhere - so
+the block only kept that one label iconless. It now passes every type's own name, and the guard moved to
+where it belongs: new `AdventurePlayer.resolveStatusGlyph(name)` asks the label font's `nameLookup`
+whether the glyph exists, and `addStatusMessage()` leaves the icon out when it does not. A stock plane
+(no Wood/Stone regions) therefore still shows no icon rather than the stray "+" an unknown `[+name]` tag
+prints - the round 225 lesson.
+
+**A wrong turn worth recording.** A first grep of items.atlas for `^Gold$` and `^Life$` found nothing, which
+suggested `[+Gold]` was not a glyph at all and needed a `GoldCoin` fallback. Wrong: both atlas files write
+those two names with a TRAILING SPACE (`Gold `, `Life `), and libGDX trims region names on load. Parsed
+with libGDX's own `TextureAtlasData` (no GL needed), both planes have `Gold`, `Life`, `Shards` and
+`GoldCoin` at 16x16, and this plane adds `Wood` and `Stone`. When checking glyph names, parse the atlas or
+grep without the end anchor.
+
+Diagnostic: `[TFR-PickupLabel] +12 Wood at (x, y) on WorldStage, glyph=Wood` (`glyph=null` would mean the
+font lacks the region). Not yet seen in a running game. Carries round 226, which was repo only.
+
 ## Round 226: arena countdowns on the mini-map's Reputation view (2026-09-18, REPO ONLY - not packaged)
 
 User: *"Repo: On the Reputation view on the Mini-map, can we add to that how many days till you can compete

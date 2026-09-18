@@ -1776,9 +1776,27 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return WorldStage.getInstance();
     }
 
+    /**
+     * Round 227: {@code iconName} if the label font really has an inline glyph of that name, else null.
+     * <p>
+     * A {@code [+name]} tag the font does not know is drawn as a stray "+" (round 225 learned that the
+     * hard way). Gold, Life and Shards are regions of every plane's items.atlas; Wood and Stone exist
+     * only in this plane's, which is why MapStage used to hand-block those two. Asking the font settles
+     * it for every plane at once: a glyph that exists is shown, one that does not is left out.
+     */
+    public static String resolveStatusGlyph(String iconName) {
+        if (iconName == null || iconName.isEmpty())
+            return null;
+        com.github.tommyettinger.textra.Font font = Controls.getTextraFont();
+        if (font == null || font.nameLookup == null || !font.nameLookup.containsKey(iconName))
+            return null;
+        return iconName;
+    }
+
     public void addStatusMessage(String iconName, String message, Integer itemCount, float x, float y) {
         String symbol = itemCount == null || itemCount < 0 ? "" : " +";
-        String icon = iconName == null ? "" : "[+" + iconName + "]";
+        String glyph = resolveStatusGlyph(iconName); // round 227: only a glyph the font really has
+        String icon = glyph == null ? "" : "[+" + glyph + "]";
         String count = itemCount == null ? "" : String.valueOf(itemCount);
         TextraLabel actor = Controls.newTextraLabel("[%95]" + icon + "[WHITE]" + symbol + count + " " + message);
         actor.setPosition(x, y);

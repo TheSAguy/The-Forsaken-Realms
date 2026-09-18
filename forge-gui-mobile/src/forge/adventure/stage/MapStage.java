@@ -2111,12 +2111,14 @@ public class MapStage extends GameStage {
                             case Stone:
                             case Wood:
                                 String message = Forge.getLocalizer().getMessageorUseDefault("lbl" + reward.getType().name(), reward.getType().name());
-                                // Stone/Wood have no font-registered [+Stone]/[+Wood] bracket icon
-                                // (same constraint as the Exchange dialog's Lumber/Stone rows and
-                                // the combat gold-variance status popup - never registered, risked
-                                // a null-FileHandle crash on other planes) - pass no icon rather
-                                // than show a broken glyph; Life/Shards/Gold keep theirs.
-                                String icon = (reward.getType() == Reward.Type.Stone || reward.getType() == Reward.Type.Wood) ? null : reward.getType().name();
+                                // Round 227: all five pass their own name. This used to hand-block
+                                // Stone and Wood, from before any atlas had those regions. This plane's
+                                // sprites/items.atlas has carried both since the 2026-08-12 cost
+                                // overhaul (costLabel() draws [+Wood] and [+Stone] everywhere), so the
+                                // block only kept this label iconless. addStatusMessage() now asks the
+                                // font whether the glyph exists, so a plane without one - every stock
+                                // plane, for these two - still gets no icon rather than a stray "+".
+                                String icon = reward.getType().name();
                                 AdventurePlayer.current().addStatusMessage(icon, message, reward.getCount(), actor.getX(), actor.getY() + player.getHeight());
                                 AdventurePlayer.current().addReward(reward);
                                 break;

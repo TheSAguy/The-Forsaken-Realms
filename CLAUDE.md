@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 227 (2026-09-18): **floating "+N Wood" label on overworld resource pickups** - `ResourceSpawns.award()` ->
+  new `showPickupLabel()` -> the dungeon's own `AdventurePlayer.addStatusMessage()` over the player's head (Gold,
+  Shards, Wood, Stone, and a Mystery that resolves into one; chests/blueprints/ambushes keep their dialogs; two
+  pickups in one frame stack 10 units apart). New `AdventurePlayer.resolveStatusGlyph()` asks the font's `nameLookup`
+  whether a glyph exists, so `MapStage`'s dungeon label now shows its Wood/Stone icons too (the old hand-block was
+  stale) and a stock plane still gets no stray "+". TRAP: items.atlas writes `Gold ` and `Life ` with a trailing
+  space (libGDX trims it) - a `^Gold$` grep misses them; parse with `TextureAtlasData` instead.
+  `[TFR-PickupLabel] ...`. Carries round 226.
 - Round 226 (2026-09-18, REPO ONLY - not packaged): **arena countdowns on the mini-map's Reputation view** - `Arena:
   ready` / `Arena: 3 days` under the reputation number at the Player Capitol (Normal + Challenging lines at Level 2)
   and at each VISITED AI capital. The player's "Reputation" view is `MapViewScene.events()` (this plane's map.json
