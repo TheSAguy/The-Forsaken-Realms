@@ -995,7 +995,10 @@ public class World implements Disposable, SaveFileContent {
                 }
                 information.add(new DrawingInformation(baseNeighbors, regions, 0));
             }
-            information.add(new DrawingInformation(neighbors, regions, biomeTerrain));
+            // Round 236: an index this layer has no picture for is drawn as the layer's own equivalent -
+            // see drawableTerrainIndex(). The neighbor mask above was built on the raw index on purpose:
+            // adjacent tiles of one wasteland structure must still join up as one formation.
+            information.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain)));
 
         }
         int lastFullNeighbour = -1;
@@ -1018,6 +1021,85 @@ public class World implements Disposable, SaveFileContent {
         }
         return drawingPixmap;
 
+    }
+
+    // Round 236 (user, standing on open grass in Green land: "There is something preventing me from moving
+    // to the right ... But the map looks perfectly normal", then "I've found this several places on the
+    // Green Biome").
+    //
+    // Land a color claims from the wasteland is written in the WASTELAND's index space - claimWastelandRing()
+    // and generateNew()'s Pass B both place colorless "redirect" structures, whose indices run 3..16 (two sets
+    // of seven). The claiming color's layer then paints its own ground over the wasteland layer (it is the
+    // last layer with a full neighborhood, so everything beneath it is skipped) and draws the structure from
+    // its OWN BiomeTexture - which holds pictures only for its own terrain[] and structures[]: green 3..13,
+    // red 3..13, white 3..12, blue and black 3..15. BiomeTexture.drawPixmapOn() silently returns for an index
+    // past the end, so a wasteland tree4 / rock / mountain (14 / 15 / 16) on green land drew NOTHING while its
+    // collision bit went on blocking the player. The user's day-14 save held 614 such tiles (white 137, blue
+    // 61, black 65, red 195, green 156), and every daily expansion added more. The minimap never had this:
+    // it decodes claimed tiles with the colorless tables (see claimWastelandRing()).
+    //
+    // Fixed at DRAW time: an index the layer cannot draw is read as a wasteland structure and drawn as the
+    // layer's own structure of the same name, else of the same category, else its rock - the very ladder
+    // pickReplacement() uses for repaints, but taking the FIRST candidate so a tile always draws the same.
+    // Nothing is written back, so saves, collision and the minimap are untouched, and a save that already
+    // holds these tiles is fixed the moment its chunks are redrawn. Indices the layer CAN draw are left
+    // exactly as they have always looked.
+    private final Map<Long, Integer> drawableTerrainIndexCache = new ConcurrentHashMap<>();
+
+    private int drawableTerrainIndex(int biomeLayer, int terrainIndex) {
+        List<BiomeData> biomes = data.GetBiomes();
+        if (terrainIndex <= 0 || biomeLayer < 0 || biomeLayer >= biomes.size())
+            return terrainIndex; // plain ground, or the road layer (the texture after the last biome)
+        BiomeData layerBiome = biomes.get(biomeLayer);
+        if (terrainIndex <= highestOwnTerrainIndex(layerBiome))
+            return terrainIndex;
+        long key = ((long) biomeLayer << 32) | terrainIndex;
+        Integer cached = drawableTerrainIndexCache.get(key);
+        if (cached != null)
+            return cached;
+        int drawn = terrainIndex;
+        String wasteName = null;
+        BiomeData waste = null;
+        for (BiomeData b : biomes) {
+            if ("waste".equalsIgnoreCase(b.name)) {
+                waste = b;
+                break;
+            }
+        }
+        if (waste != null && waste != layerBiome && waste.structures != null) {
+            int counter = 1 + (waste.terrain != null ? waste.terrain.length : 0);
+            for (BiomeStructureData structure : waste.structures) {
+                int offset = terrainIndex - counter;
+                if (offset >= 0 && offset < structure.mappingInfo.length)
+                    wasteName = structure.mappingInfo[offset].name;
+                counter += structure.mappingInfo.length;
+            }
+        }
+        if (wasteName != null) {
+            List<Pair<Integer, BiomeStructureData.BiomeStructureDataMapping>> pool = candidatesByName(layerBiome, wasteName);
+            if (pool.isEmpty() && STRUCTURE_CATEGORY.get(wasteName) != null)
+                pool = candidatesForCategory(layerBiome, STRUCTURE_CATEGORY.get(wasteName));
+            if (pool.isEmpty())
+                pool = candidatesForCategory(layerBiome, UNIVERSAL_FALLBACK_CATEGORY);
+            if (!pool.isEmpty())
+                drawn = pool.get(0).getLeft();
+        }
+        drawableTerrainIndexCache.put(key, drawn);
+        System.out.println("[TFR-Terrain] " + layerBiome.name + " land: wasteland structure " + terrainIndex
+                + (wasteName != null ? " (" + wasteName + ")" : "") + " has no picture in this biome's set (1.."
+                + highestOwnTerrainIndex(layerBiome) + ") - " + (drawn != terrainIndex
+                ? "drawing it as this biome's index " + drawn : "nothing to draw it as, it stays invisible"));
+        return drawn;
+    }
+
+    /** Round 236: the last index a biome's own BiomeTexture has a picture for - ground is 0, then terrain[],
+     *  then every structures[].mappingInfo[] in order (the numbering generateNew() assigns). */
+    private static int highestOwnTerrainIndex(BiomeData biome) {
+        int highest = biome.terrain != null ? biome.terrain.length : 0;
+        if (biome.structures != null)
+            for (BiomeStructureData structure : biome.structures)
+                highest += structure.mappingInfo.length;
+        return highest;
     }
 
     public int getTerrainIndex(int x, int y) {

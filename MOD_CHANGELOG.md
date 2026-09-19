@@ -17757,6 +17757,59 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 236: invisible walls on land a color claimed from the wasteland (2026-09-18)
+
+User, with a screenshot of open grass in Green land and a saved game: *"There is something preventing me from
+moving to the right on the overworld where I'm standing now. But the map looks perfectly normal"*, then *"I've
+found this several places on the Green Biome."*
+
+**What the save said.** The player stood on tile (115, 463); the tile to the right read `collision + structure,
+index 15`, on a tile owned by green with the wasteland layer kept underneath (biome bits 1 and 6). Green's own
+structures are numbered 3..13. Index 15 is not a green structure at all.
+
+**Cause.** Land a color claims from the wasteland is written in the WASTELAND's index space: `claimWastelandRing()`
+(daily expansion) and `generateNew()`'s Pass B both place colorless "redirect" structures, numbered 3..16 (two sets
+of seven: crater/hole, tree..tree4, rock, mountain). When the tile is drawn, the claiming color's layer is the last
+one with a full neighborhood, so `generateBiomeSprite()` skips everything beneath it, paints the color's ground, and
+draws the structure from the color's OWN `BiomeTexture` - which holds pictures only for its own `terrain[]` and
+`structures[]`: green 3..13, red 3..13, white 3..12, blue and black 3..15. `BiomeTexture.drawPixmapOn()` silently
+returns for an index past the end. So a wasteland tree4 / rock / mountain (14 / 15 / 16) on green land drew
+NOTHING while its collision bit went on blocking. The minimap never had this - it decodes claimed tiles with the
+colorless tables, a fix made for exactly this mismatch on that side and never carried to the main map.
+
+**How much of it.** Counted in the user's day-14 save (`scratchpad/savetools/InvisibleBlockers.java`): **614
+blocking tiles with no picture** - white 137, blue 61, black 65, red 195, green 156 - and every daily expansion
+adds more. Player land (`player.json` is 7+7 like the wasteland) and the wasteland itself: none. It has been there
+since claimed land got redirect content; it took a player walking cross-country through AI land to meet one.
+
+**Fix - at draw time.** New `World.drawableTerrainIndex(layer, index)`: an index the layer's biome has no picture
+for is read as a wasteland structure and drawn as the layer's own structure of the same NAME, else the same
+CATEGORY, else its rock - the ladder `pickReplacement()` already uses for repaints, but taking the FIRST candidate
+so a tile always draws the same. Worked out from the biome files before building:
+
+| land | unpictured wasteland index -> drawn as |
+|---|---|
+| green | 14 tree4 -> tree4; 15 rock -> rock; 16 mountain -> mountain |
+| red | 14 tree4 -> tree4; 15 rock -> rock; 16 mountain -> mountain |
+| white | 13 tree3 -> tree3; 14 tree4 -> tree; 15 rock -> rock; 16 mountain -> plateau |
+| blue, black | 16 mountain -> rock (neither has a mountain) |
+
+Nothing is written back: saves, collision and the minimap are untouched, and a save that already holds these tiles
+is fixed as soon as its chunks are redrawn. The autotile neighbor mask is still built on the RAW index, so adjacent
+tiles of one formation still join up. Indices a layer CAN draw are left exactly as they have always looked - which
+means claimed land still shows the color's art at the wasteland's index (a wasteland crater, index 3, is green's
+water, index 3). That aliasing is older, visible, never blocks invisibly, and changing it would restyle every
+territory on the map; it is a design question for the user, not part of this fix.
+
+Diagnostic: `[TFR-Terrain] green land: wasteland structure 15 (rock) has no picture in this biome's set (1..13) -
+drawing it as this biome's index 10`, once per (layer, index) per session. Not yet seen in a running game.
+
+**Round 235, confirmed and packaged.** The session log closed at 18:58 carried the smoking gun verbatim - `stage
+"Rescue the White Captive" retro-completed on activation (flag Ch1WhiteCastleComplete already >= 0)` - and, for the
+first time, round 227's label: `[TFR-PickupLabel] +53 Gold at (2459, 7604) on WorldStage, glyph=Gold`. Round 235
+was packaged at 19:10 (346 MB, `PACKAGER EXIT 0`; the live `quests.json` read back with all five values at 1) and
+the agent folder synced; that package also carried rounds 233 and 234.
+
 ## Round 235: "Rescue the White Captive" ticked itself the moment the castle was found (2026-09-18)
 
 User, with the quest log open - *Find the White Castle* and *Rescue the White Captive* both green: *"What does

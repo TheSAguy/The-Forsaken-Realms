@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 236 (2026-09-18): **invisible walls on land a color claimed from the wasteland.** Claimed tiles keep their
+  structure index in WASTELAND numbering (3..16); the claiming color's layer paints over the wasteland layer and draws
+  from its OWN `BiomeTexture` (green/red 3..13, white 3..12, blue/black 3..15), and `drawPixmapOn()` silently skips an
+  index past the end - so wasteland tree4/rock/mountain (14/15/16) drew nothing but still blocked: 614 tiles in the
+  user's day-14 save. Fix at DRAW time: `World.drawableTerrainIndex()` maps an unpictured index to the layer's own
+  structure by name -> category -> rock (first candidate, deterministic); nothing written back, existing saves fixed on
+  redraw. NOT changed: in-range aliasing (wasteland crater 3 shows as green water 3) - a design question.
+  `[TFR-Terrain] ...`. Save readers in `scratchpad/savetools`: `TilesAroundPlayer`, `InvisibleBlockers`.
+  Round 235 was PACKAGED 19:10 (with 233 + 234), agent synced; its bug line and round 227's `[TFR-PickupLabel]` were
+  both seen in the 18:58 log.
 - Round 235 (2026-09-18): **"Rescue the <Color> Captive" ticked itself when the castle was merely FOUND** - my bug,
   in every build since 2026-08-26 (v1.10 and v1.11 carry it). `retroCompleteIfFlagSatisfied()` compared the flag to the stage's raw `mapFlagValue`; the five
   Rescue stages of story quest 52 omit it (0), an unset flag reads 0, `0 >= 0`. Fix in three layers: rule

@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 236 (2026-09-18) - adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/world/World.java` - `generateBiomeSprite()` draws a layer's terrain through
+new private `drawableTerrainIndex(layer, index)` (with `drawableTerrainIndexCache` and the static
+`highestOwnTerrainIndex()`); reuses `candidatesByName()`, `candidatesForCategory()` and `STRUCTURE_CATEGORY`.
+Draw-time only - no terrainMap, biomeMap, collision or minimap change.
+
 ## Round 235 (2026-09-18) - adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java` - `retroCompleteIfFlagSatisfied()` tests
