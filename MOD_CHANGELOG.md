@@ -17791,6 +17791,11 @@ Checked before building: all 207 stages of `quests.json` parse into the game's o
 libGDX `Json` (the ten read `Defeat count3=5`, quest 92 reads `ClearDungeons count3=3 anyPOI worldMapOK`); a plain
 load-and-save of the file is byte-identical, so the diff is only these edits; the plane validator is clean.
 
+Rounds 238, 239 and 240 were built together and packaged at 22:03 (346 MB, `PACKAGER EXIT 0`) with the game closed.
+Read back from the live folder: the jar carries `[TFR-CapitolSurge]`, `[TFR-Legend]`, `DUNGEONCLEARED` and the
+diamond's blessing; `quests.json` has 92 quests, "Sweep the Wilds" among them, and quest 63 at five kills. Agent
+folder synced. None of rounds 237-240 has been seen in a running game yet.
+
 **Flagged, not changed:** quest REWARDS sit outside round 237's card budget, and some are lavish - "Mechanical
 Problems" (Slobad) pays ten rare or mythic artifacts (up to fourteen below Insane). If cards are meant to be scarce, the quest reward
 tables are the next place to look.
