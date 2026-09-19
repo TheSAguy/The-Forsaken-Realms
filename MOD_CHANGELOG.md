@@ -17757,6 +17757,33 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 234: the 17:07 session log - two fixes proven, one log line too chatty, castles are not capitals (2026-09-18, REPO ONLY)
+
+**Round 230 proven in play.** `[TFR-Payday] day 14: 21 payout/wage sound(s) folded into one` and, on the same day,
+`[TFR-DayTick] day 14: economy=36ms` - against 585-591 ms on every payday of the previous long session (and the two
+mines built since would have made it about 630). One sound, one 30 ms sleep.
+
+**Round 231/232 seen in play.** `[TFR-MapIcon]` for Orazca, Tinkers' Town and Coldsnap Hold, all `network active=true`.
+
+**But that line was too chatty - fixed here.** Round 231 logged "once per sprite", on the assumption that a town has
+one sprite per session. It does not: map sprites are rebuilt whenever their chunk reloads, so the line repeated as
+the player walked about - 10 lines for 3 towns in a 417-line log. The flag is now a static set keyed by POI id
+(`TELEPORTER_ICON_LOGGED_FOR`), so it prints once per town per session. One class, log-only.
+
+**"Find the 5 capitols ... I've already visited all 5 ... Why did it not remember?"** (user, after finishing
+"Research a lost Volume"). It did remember - the quest is asking for different places. Story quest 52, "The Enemy of
+My Enemy...", has five `Travel` stages, "Find the Black / Blue / Green / Red / White **Castle**", each bound by
+`POITags` `[Biome<Color>, Chapter1Boss]` to the boss fortress of that color (`type: castle`). What the player had
+visited are the five color **capitals** (`type: capital` - Dead Man's Rest, Great Lighthouse, Unbroken Bough, Blazing
+Peak, New Avalon), where they have been winning arena tournaments. Read from the newest save (slot 3, day 14): all
+five capitals `isVisited`, none of the five castles, and the five Find stages ACTIVE. Round 208's retro-completion
+(`AdventureQuestStage.retroCompleteIfPoiAlreadyVisited()`, written for exactly this quest) keys on the castle's own
+`isVisited()`, which WorldStage sets when the map is entered - so any castle already entered would have been ticked
+the moment the quest was issued, as "Vome" and "Windlass Vale" were in earlier logs. Nothing to fix in code. Offered
+to the user: reword the stage text so a castle cannot be read as a capital.
+
+Rounds 227 (`[TFR-PickupLabel]`) and 229 (`it stays on the map`) are still unobserved; round 233 is unpackaged.
+
 ## Round 233: off-duty roaming guards stroll outside the Capitol (2026-09-18, REPO ONLY - not packaged)
 
 User: *"Repo only: For the roaming guards, If they are not out on assignment, they should wonder outside of the

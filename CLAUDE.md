@@ -97,6 +97,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 234 (2026-09-18, REPO ONLY): **`[TFR-MapIcon]` logs once per TOWN per session** (static set keyed by POI id -
+  map sprites are rebuilt on every chunk reload, so round 231's per-sprite flag printed 10 lines for 3 towns). The
+  17:07 log PROVED round 230 (`economy=36ms` on a payday with 21 sounds folded, was ~590) and showed 231/232 live.
+  USER QUESTION ANSWERED, no code change: story quest 52 "The Enemy of My Enemy..." wants the five CASTLES
+  (`Chapter1Boss`, `type: castle`), not the five color CAPITALS (`type: capital`, the arena towns) - the save had all
+  capitals visited and no castle; round 208's retro-completion keys on the castle's own `isVisited()` and works.
+  Still unobserved: 227 `[TFR-PickupLabel]`, 229 `it stays on the map`. Rounds 233 + 234 await the next package.
 - Round 233 (2026-09-18, REPO ONLY - not packaged): **off-duty roaming guards stroll outside the Capitol** - a guard
   at rest used to have NO map sprite. `RoamingGuardRuntime`: transient `Stroll` per guard (never written to the
   persisted `guard.x/y`), `strollStep()` / `pickStrollPoint()` / `strollable()`, ring = Capitol half-diagonal + 10..54

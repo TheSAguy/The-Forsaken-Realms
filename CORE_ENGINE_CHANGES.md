@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 234 (2026-09-18) - repo only, adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java` - the `[TFR-MapIcon]` line is gated by a
+static `TELEPORTER_ICON_LOGGED_FOR` set of POI ids instead of a per-sprite boolean. Log-only.
+
 ## Round 233 (2026-09-18) - repo only, adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/util/RoamingGuardRuntime.java` - new private `Stroll` class and `strolls`

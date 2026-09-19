@@ -172,7 +172,10 @@ public class PointOfInterestMapSprite extends MapSprite {
     // Same ownership rule as the mini-map's Names-view glyph (round 223): a restored town or the Capitol,
     // with a Teleporter built. A captured town loses its buildings, so the icon goes with it.
     private static final float TELEPORTER_ICON_DRAW_SIZE = 16f;
-    private boolean teleporterIconLogged;
+    // Round 234: keyed by POI id and static, NOT a field of this sprite. Map sprites are rebuilt every time
+    // their chunk reloads, so the round-231 per-sprite flag printed the same town again and again as the
+    // player walked about - 10 lines for 3 towns in the first session that had it.
+    private static final java.util.Set<String> TELEPORTER_ICON_LOGGED_FOR = new java.util.HashSet<>();
 
     private void drawTeleporterIndicator(Batch batch, float parentAlpha) {
         PointOfInterestChanges changes = WorldSave.getCurrentSave().peekPointOfInterestChanges(pointOfInterest.getID());
@@ -185,9 +188,8 @@ public class PointOfInterestMapSprite extends MapSprite {
         TextureRegion icon = EconomyBuildings.getTeleporterMapIcon();
         if (icon == null || texture == null)
             return;
-        if (!teleporterIconLogged) {
-            // Once per sprite, not per frame: enough to confirm from forge.log which towns carry the icon.
-            teleporterIconLogged = true;
+        if (TELEPORTER_ICON_LOGGED_FOR.add(pointOfInterest.getID())) {
+            // Once per town per session, not per frame: enough to confirm from forge.log which towns carry the icon.
             System.out.println("[TFR-MapIcon] " + pointOfInterest.getDisplayName() + ": teleporter icon at the sprite's"
                     + " bottom-right (network active=" + EconomyBuildings.isTeleporterNetworkActive() + ")");
         }
