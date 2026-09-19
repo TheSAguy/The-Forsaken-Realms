@@ -151,5 +151,13 @@
 ]</property>
    </properties>
   </object>
+  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="124" y="144"/>
+  <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="121.5" y="176"/>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="134.5" y="82"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="281.5" y="82"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="293" y="176"/>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="301" y="135.5"/>
+  <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="208" y="190"/>
+  <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="209" y="100"/>
  </objectgroup>
 </map>

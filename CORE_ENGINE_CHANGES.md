@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 248 (2026-09-19) - plane data only
+
+Fifteen plane `.tmx` maps (patrol waypoints: `magetower_7_church` gains waypoints 76-83; six maps gain a home waypoint;
+dead route steps dropped) and `dev-tools/validate_plane_data.py` (`ref-waypoint`). No Java. Stock's own copies under
+`common/maps/` still carry these routes - upstream's bug, untouched here.
+
 ## Round 247 (2026-09-19) - adventure-side only
 
 `player/AdventurePlayer.java` - new `HOMEWARD_RUNE_ITEM`; a `topUpChallengeCoins(String)` overload that returns the

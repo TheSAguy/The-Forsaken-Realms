@@ -737,6 +737,54 @@ for key, (path, tree) in parsed.items():
                         except Exception as e:
                             issue("tmx-json", "%s#%s: arena does not parse: %s" % (rel(path), o.get("id"), e))
 counts["tmx-parsed"] = tmx_count
+
+# ------------------------------------------ patrol routes (round 248)
+# An enemy's `waypoints` names waypoint OBJECTS of its own map: "<id>", "rA-B-C" (a random one of them), "wN" (wait N
+# seconds) - MovementBehavior.getNextTargetVector(). Anything else is skipped at runtime with a "Navigation error"
+# line on every visit. Round 248 found 20 such in 15 maps, inherited from stock (the church tower's wizard never
+# moved). An object's type is what libGDX puts in its MapProperties: its own "type" property, else its type/class
+# attribute, else the same from its template (MapStage.loadObjects).
+_TX_TYPES = {}
+
+
+def _template_type(path):
+    key = os.path.normcase(os.path.normpath(path))
+    if key not in _TX_TYPES:
+        t = None
+        try:
+            obj = ET.parse(path).getroot().find("object")
+            if obj is not None:
+                t = tmx_props(obj).get("type") or obj.get("type") or obj.get("class")
+        except Exception:
+            t = None
+        _TX_TYPES[key] = t
+    return _TX_TYPES[key]
+
+
+route_count = 0
+for key, (path, tree) in parsed.items():
+    here = os.path.dirname(path)
+    waypoint_ids, routes = set(), []
+    for o in tree.getroot().iter("object"):
+        props = tmx_props(o)
+        t = props.get("type") or o.get("type") or o.get("class")
+        if not t and o.get("template"):
+            t = _template_type(os.path.join(here, o.get("template")))
+        if t == "waypoint":
+            waypoint_ids.add(o.get("id"))
+        if (props.get("waypoints") or "").strip():
+            routes.append((o.get("id"), props.get("enemy", "?"), props["waypoints"].strip()))
+    for oid, enemy, value in routes:
+        route_count += 1
+        bad = []
+        for tok in [s.strip() for s in value.split(",") if s.strip()]:
+            if tok.startswith("w"):
+                continue
+            bad += [i for i in (tok[1:].split("-") if tok.startswith("r") else [tok]) if i not in waypoint_ids]
+        if bad:
+            issue("ref-waypoint", "%s#%s (%s): waypoints '%s' - not a waypoint in this map: %s"
+                  % (rel(path), oid, enemy, value, ", ".join(bad)))
+counts["enemy-routes"] = route_count
 F["ArenaData"] = set("enemyPool rounds entryFee rewards".split())
 
 # ---------------------------------------------------------------- decks referenced by enemies: quick sanity

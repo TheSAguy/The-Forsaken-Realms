@@ -17757,6 +17757,46 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 248: the Church tower wizard patrols; every patrol route in the plane names real waypoints (2026-09-19)
+
+User: *"Can we fix this 'The Apprentice White Wizard in the Church tower has a patrol route that points to waypoints
+missing from the map. It stands still and logs 8 errors per visit.'"* On round 247's other questions: *"For the
+'Towns on the map before the overworld', let's go with C."* (round 249) and, on trimming the doubled coins, *"I did
+this already. Just Discarded the additional."*
+
+**The wizard.** Stock Forge's church map has never had waypoints 76-83 - in any upstream version. Its enemy object
+(id 75, route `81,80,82,77,76,78,83,79`) was copied from the monastery (`magetower_4_monastery.tmx`: also 30x17, the
+same object id and route), where those eight waypoints walk an Armored Knight around the room; the waypoints were not
+copied with it. So the wizard never moved, in stock or here, and logged eight "Navigation error for object ID75"
+lines per visit. The eight waypoints are ADDED under exactly those ids (free in the church) on the monastery's loop,
+five of them nudged off pews onto open floor - a 16x16 box plus a 2 px margin clear of the tile collision and the
+map's own collision objects (scratchpad `r248_church_check.py`, built on `dev-tools/map_collision_render.py`) - and
+point 83 lowered so the wizard does not park on the stationary Holy Apparition. The route string is untouched.
+Enemies path around obstacles between waypoints (`navMaps.get(mobSize).findShortestPath()` in MapStage), so only the
+waypoints themselves had to be on open floor.
+
+**The other 19.** A scan of every map reachable from the plane's POIs (linked maps followed) found 20 enemy routes
+naming a waypoint that is not one, in 15 of our maps, all inherited from stock:
+- six name the enemy ITSELF - the author meant "walk back home": the Dwarf (`cave_dwarf`), Spider (`crypt_2`),
+  Homarid (`merfolkpool_6`), Hellion (`nest_white_1`), Green Sliver (`skep_outer`) and Bat (`vampirecastle_4`). Each
+  gets a waypoint at its spawn point and its route uses it; the two other Hellions name the first one's id and share
+  its waypoint. These enemies now walk home at that step - the one behavior change.
+- every other dead step (an id no object has, a reward chest, another enemy) is DROPPED. The engine already skipped
+  them (`MovementBehavior.getNextTargetVector()` logs the error and moves on), so behavior is unchanged and the error
+  is gone. Five routes had no valid step at all and lose the property - the crypt Zombie (`crypt_3`), the Yule Town
+  Polar Bear, the Disciple of Teferi and the two Unholy Skulls (`vampirecastle_4C`) stand where they spawn, as they
+  always have. Candidates for a real patrol, like the wizard's, if the user wants them.
+Text edits in Tiled's own layout (waypoint objects before `</objectgroup>`, `nextobjectid` raised, each file's own line
+ending); re-scanned after: none left in 417 reachable maps.
+
+**Validator.** New `ref-waypoint` rule in `dev-tools/validate_plane_data.py`: every enemy route in every reachable
+map (1,146) against that map's waypoint objects, typed the way libGDX types them (the object's own `type` property,
+else its type/class attribute, else its template's). Run over round 247's maps it lists exactly these 20; over round
+248's, none.
+
+Data only (15 `.tmx` maps) and the validator - no Java, no rebuild. The F: live folder was packaged with rounds 247
+and 248 together once the user closed the game (see round 249's entry for the time).
+
 ## Round 247: New Game+ no longer pays the skip-intro kit twice; nine imported creatures walk head first (2026-09-19)
 
 User, opening the round: *"I did a few NG+ and it seems I have double the coins. I did select skip tutorial."* and

@@ -126,7 +126,7 @@
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="351" y="72">
    <properties>
     <property name="enemy" value="Earth Elemental"/>
-    <property name="waypoints" value="62,81,82,81"/>
+    <property name="waypoints" value="62,82"/>
    </properties>
   </object>
   <object id="78" template="../../../../common/maps/obj/manashards.tx" x="4.5" y="20"/>

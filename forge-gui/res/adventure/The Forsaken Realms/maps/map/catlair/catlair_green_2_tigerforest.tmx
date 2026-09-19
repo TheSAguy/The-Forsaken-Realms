@@ -50,7 +50,7 @@
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="78,74,75,74,85,73,85,70,86,70,87"/>
+    <property name="waypoints" value="78,74,75,74,85,73,85,70,70,87"/>
    </properties>
   </object>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="179.121" y="131.33">
@@ -102,7 +102,7 @@
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="74,75,74,85,73,85,70,86,70,87,78"/>
+    <property name="waypoints" value="74,75,74,85,73,85,70,70,87,78"/>
    </properties>
   </object>
   <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="69.3126" y="202.696"/>

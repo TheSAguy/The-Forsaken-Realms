@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="155">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="156">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -107,7 +107,7 @@
    <properties>
     <property name="enemy" value="Hellion"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="79,75,76,77"/>
+    <property name="waypoints" value="155,75,76,77"/>
    </properties>
   </object>
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="20" y="431.5"/>
@@ -125,14 +125,14 @@
    <properties>
     <property name="enemy" value="Hellion"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="79,75,76,77"/>
+    <property name="waypoints" value="155,75,76,77"/>
    </properties>
   </object>
   <object id="87" template="../../../../common/maps/obj/enemy.tx" name="Hellion" x="579.5" y="699.5">
    <properties>
     <property name="enemy" value="Hellion"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="79,75,76,77"/>
+    <property name="waypoints" value="155,75,76,77"/>
    </properties>
   </object>
   <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="211" y="749.5"/>
@@ -290,5 +290,6 @@
   <object id="151" template="../../../../common/maps/obj/collision.tx" x="399.599" y="378.25" width="84.801" height="5.5"/>
   <object id="153" template="../../obj/wood.tx" x="595.5" y="607.25"/>
   <object id="154" template="../../obj/wood.tx" x="135.25" y="350"/>
+  <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="371.5" y="630"/>
  </objectgroup>
 </map>

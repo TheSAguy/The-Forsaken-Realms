@@ -159,7 +159,7 @@
    <properties>
     <property name="enemy" value="Fire Giant"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="191,190,189"/>
+    <property name="waypoints" value="191,189"/>
    </properties>
   </object>
   <object id="239" template="../../../../common/maps/obj/door_up.tx" x="227.922" y="152.857" width="19.6114" height="29.1114">

@@ -50,26 +50,21 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-19 (round 247; v1.12 "Reward Balancing" RELEASED, round 247 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-19 (round 248; v1.12 "Reward Balancing" RELEASED, rounds 247-248 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 247, 2026-09-19).** v1.12 is out; round 247 is the only unreleased round. In order:
-  1. **Towns show on the map before the overworld exposes them** (user, round 247: "Not the biggest deal, but can
-     anything be done...") - ANALYZED, NOT CHANGED, waiting for the user's pick. Map icons are painted into the map
-     image (4 px per tile, 16-32 px = 4-8 tiles), centered on the town's BOTTOM-LEFT corner (stock placement), and the
-     fog uncovers that image one explored tile at a time; the overworld draws a town once its sprite's CENTER tile is
-     explored, and fires the discovery burst within vision range (3 tiles; Easy 4, Insane 2) of its footprint. Ground
-     explored a few tiles southwest of a town - or by another town's burst - shows part of its icon while the town is
-     still in fog. Options: **(A, recommended)** discovery follows the icon - once any tile under a town's map icon is
-     explored, that town gets its normal discovery burst (a per-move check over the nearby POIs in `WorldBackground`,
-     plus one helper for the icon's tile rectangle shared with `World.redrawPoiMarkers()`; no save change, no map
-     re-bake; towns are found up to a few tiles sooner on their southwest side). **(B)** hide an icon until its town
-     is found - the icons are baked into the SAVED map image, so this needs an icon-free copy re-derived at load and a
-     rework of the fog pixmap's tile copy, the fog system's most bug-prone code. **(C, cosmetic, combines with A)**
-     center each icon on its town - existing saves need a map re-bake at load.
-  2. **Round 247 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a fresh
-     game that skips the intro) or `[TFR-RingGift] ... have 1/1 - nothing to grant` (a New Game+ that skips it); the
-     nine mirrored creatures should walk head first. The user's saves 1 and 2 still carry the doubled coins (6 bronze,
-     2 gold, 2 silver) - trimming them (a save edit, game closed) is their call. Packaged into the C: play-test folder (`C:\Users\User\TFR-Release`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
+- **NEXT SESSION starts here (updated round 248, 2026-09-19).** v1.12 is out; rounds 247-248 are unreleased. In order:
+  1. **Towns show on the map before the overworld exposes them** - the user picked **option C** in round 248: every
+     map icon centered on its POI instead of on its bottom-left corner. Being built as round 249: `World.
+     redrawPoiMarkers()` anchors on `PointOfInterest.getCenter()` (the point the overworld's own fog check uses), the
+     map view's labels, quest markers, bookmarks and attack/guard lines follow it, and a save baked with the old
+     layout gets ONE full map re-bake at load (`mapIconLayout`, the same re-bake a dungeon rotation runs in play).
+     What C leaves: an icon's rim can still show a tile or two before its town (icons are 5-8 tiles wide, towns 3-4) -
+     option A (discovery follows the icon) closes that if the user wants it.
+  2. **Rounds 247 + 248 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1`
+     (a fresh game that skips the intro) or `[TFR-RingGift] ... have 1/1 - nothing to grant` (New Game+ that skips
+     it); the nine mirrored creatures should walk head first; the Church tower's second Apprentice White Wizard
+     should walk a loop around the pews, and no "Navigation error" line should appear anywhere. The user discarded
+     save 1/2's extra coins in game themselves. Five enemies still stand still by design (round 248's list).
   3. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
      fix, the map icons, and (the 10:39 log, round 247) the world-gen town cut, the looted factor 0.25, a Bronze Coin
      ransom. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the five-kill color
@@ -138,6 +133,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 248 (2026-09-19): **the Church tower's wizard patrols** - stock Forge copied its route (81,80,82,77,76,78,83,79)
+  from the monastery map without the eight waypoints; they are added under those ids on the monastery's loop,
+  nudged off the pews. **All 20 dead patrol steps in 15 of our maps** (all inherited from stock) repaired: six enemies
+  that named themselves get a home waypoint, every other dead step is dropped (the engine skipped them already).
+  New validator rule `ref-waypoint`. Data only. The user chose option C for the map icons (round 249) and discarded
+  the doubled coins themselves.
 - Round 247 (2026-09-19): the user's first reports on v1.12. **New Game+ with "Skip the introduction" paid the kit
   twice** - quest 28's skip option handed its Homeward rune and 1/1/3 Challenge Coins over with plain `addItem`
   actions, on top of what a New Game+ run carries (its purse already topped up at reset); broken since round 76, and

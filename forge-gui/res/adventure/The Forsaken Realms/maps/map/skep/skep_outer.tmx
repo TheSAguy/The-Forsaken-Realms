@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="100" height="86" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="278">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="100" height="86" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="279">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -624,7 +624,7 @@
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="207,208,209,79,126,208,207"/>
+    <property name="waypoints" value="207,208,209,79,278,208,207"/>
    </properties>
   </object>
   <object id="127" template="../../../../common/maps/obj/enemy.tx" x="642" y="925.667" width="16" height="16" visible="1">
@@ -1358,5 +1358,6 @@
   <object id="275" template="../../obj/stone.tx" x="440" y="496.5"/>
   <object id="276" template="../../obj/stone.tx" x="823" y="829"/>
   <object id="277" template="../../obj/stone.tx" x="1420" y="1138.5"/>
+  <object id="278" template="../../../../common/maps/obj/waypoint.tx" x="672" y="1069"/>
  </objectgroup>
 </map>

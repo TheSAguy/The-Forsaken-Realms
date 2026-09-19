@@ -80,7 +80,6 @@
    <properties>
     <property name="enemy" value="Polar Bear"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="125,123,127,128,122,128"/>
    </properties>
   </object>
   <object id="60" template="../../../../common/maps/obj/enemy.tx" x="354.5" y="331.5">
@@ -107,7 +106,7 @@
    <properties>
     <property name="enemy" value="Penguin"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="80,79,77,78,77,79"/>
+    <property name="waypoints" value="80,79,78,79"/>
    </properties>
   </object>
   <object id="64" template="../../../../common/maps/obj/treasure.tx" x="472" y="186">

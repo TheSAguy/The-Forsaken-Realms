@@ -81,7 +81,7 @@
 }</property>
     <property name="enemy" value="Demon of Tibalt"/>
     <property name="threatRange" type="int" value="60"/>
-    <property name="waypoints" value="208,198,210,209"/>
+    <property name="waypoints" value="208,210,209"/>
    </properties>
   </object>
   <object id="173" template="../../../../common/maps/obj/manashards.tx" x="188.009" y="188.105"/>
