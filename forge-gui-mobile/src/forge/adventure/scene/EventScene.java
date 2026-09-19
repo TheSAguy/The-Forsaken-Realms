@@ -676,7 +676,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
     // attempt since being nudged), an early loss refunds the Coin entry fee, and a win gets a
     // plain acknowledgment - neither applies once the quest completes, so this stays a one-time
     // tutorial lifeline, not a standing rule for every future tournament.
-    private static final int INN_TOURNAMENT_TUTORIAL_QUEST_ID = 74;
+    public static final int INN_TOURNAMENT_TUTORIAL_QUEST_ID = 74; // public since round 245: AdventurePlayer.addQuest(), AdventureQuestController.showQuestDialogs()
 
     /**
      * The Coin refund is a ONE-TIME safety net, not a standing rule of the Inn - user decision,

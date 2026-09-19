@@ -83,6 +83,10 @@ fight. **Your v1.11 save carries straight over**; the two world-generation chang
 - **The weekly payday froze the game** for a moment per Mine; nineteen buildings made it over half a
   second. One coin sound now, no freeze.
 - A town's guard icons floated above its drawn base on the overworld.
+- Five creatures showed their hind legs where a portrait belongs (the Shellback Ankylosaur on an Inn's standings
+  page, the Magmaback Crawler, Mossback Dragon, Skyreef Shark and Ashen Spinewyrm).
+- "Participate in an Inn Tournament" is no longer handed to a player who has already played one, and never
+  pops up inside a ruined town.
 
 ## Engine
 

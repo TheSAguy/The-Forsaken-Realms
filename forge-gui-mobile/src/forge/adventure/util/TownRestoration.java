@@ -386,6 +386,30 @@ public class TownRestoration {
         return true;
     }
 
+    /** Round 245: is the player standing inside a town that is still a RUIN (a wasteland town that is not
+     *  restored, not a functioning Neutral town, not a Ring City)? The map-level form of InnScene.isRuinedTown(). */
+    public static boolean isCurrentTownRuined() {
+        if (MapStage.getInstance() == null || !MapStage.getInstance().isInMap())
+            return false;
+        PointOfInterest point = TileMapScene.instance().rootPoint;
+        if (point == null || TerritoryControl.isRingTown(point) || !isWastelandTown())
+            return false;
+        return !isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID()));
+    }
+
+    // Round 245: showQuestDialogs() runs often - say once per town that the Inn quest's dialogs are being held.
+    private static String innQuestHeldLoggedFor;
+
+    public static void logInnQuestHeldInRuin() {
+        PointOfInterest point = TileMapScene.instance().rootPoint;
+        String id = point == null ? "" : point.getID();
+        if (id.equals(innQuestHeldLoggedFor))
+            return;
+        innQuestHeldLoggedFor = id;
+        System.out.println("[TFR-MainQuest] the Inn tournament quest's dialogs are held back in "
+                + (point == null ? "this town" : point.getDisplayName()) + " - it is a ruin; they show in the next place that is not");
+    }
+
     /** Round 241: what the player is told at a ruined town's Inn door - see isInnClosedByRuin(). */
     public static MapDialog buildInnClosedDialog(MapStage stage, int objectId) {
         DialogData root = new DialogData();

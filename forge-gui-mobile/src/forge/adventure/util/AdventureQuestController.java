@@ -211,6 +211,15 @@ public class AdventureQuestController implements Serializable {
     public void showQuestDialogs(GameStage stage) {
         List<AdventureQuestData> finishedQuests = new ArrayList<>();
         for (AdventureQuestData quest : Current.player().getQuests()) {
+            // Round 245 (user: "Since we removed the Inn's from Ruined towns, this should not show in ruined
+            // towns"): the Inn tutorial quest talks about an Inn the player is standing next to the boarded-up
+            // door of. Its dialogs - and its completion bookkeeping, which rides on them - simply wait for the
+            // next call made anywhere else. Skipped BEFORE getPrologue(), which hands a prologue out only once.
+            if (quest.getID() == forge.adventure.scene.EventScene.INN_TOURNAMENT_TUTORIAL_QUEST_ID
+                    && TownRestoration.isCurrentTownRuined()) {
+                TownRestoration.logInnQuestHeldInRuin();
+                continue;
+            }
             DialogData prologue = quest.getPrologue();
             if (prologue != null){
                 dialogQueue.add(prologue);

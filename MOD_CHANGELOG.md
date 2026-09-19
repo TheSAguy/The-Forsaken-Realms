@@ -17757,6 +17757,43 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 245: three reports from the first play-test on the 09.18 build - five body-crop portraits, and the Inn quest (2026-09-19)
+
+The user closed the F: game and play-tested the `C:\Users\User\TFR-Release` build (rounds 241-244 on the 09.18 engine)
+while F: was rebuilt with the full stock copy. Three reports.
+
+**"There seems to be an issue with Shellback Ankylosaur's portrait"** (the Inn's Event Standings page showed its hind
+legs). Cause: `dev-tools/art-import/art_convert_generic.py` builds the 64x64 `Avatar` cell from the source sheet's
+painted portrait when it has one, and otherwise from the CENTER square of the first Idle frame - for a creature 2.6
+times as wide as it is tall, that is its middle. Surveyed all 75 atlases with the importer's layout
+(`r245_avatar_survey.py` / `r245_avatar_plan.py`, scratchpad): 51 carry an opaque painted portrait; of the other 24,
+two are painted portraits with a transparent edge and 22 are body crops - and for a near-square creature a body
+crop IS a fine portrait. Five miss the head: **Shellback Ankylosaur, Magmaback
+Crawler, Mossback Dragon, Skyreef Shark, Ashen Spinewyrm**. Their Avatar cell is repainted with the square at the
+HEAD end of the visible body (right for the first four, left for the Spinewyrm, which faces left). Which end is the
+head was decided by looking at a contact sheet, not by the script's "thicker end" guess - that guess picks the Grim
+Executioner's axe and would have replaced two painted portraits (the Harpy, the Ogre Matriarch) that are only partly
+opaque. PNG cells only; no `.atlas` changes. The Aurelian Dragon was looked at and kept (its close-up is better).
+
+**"The Participate in Inn Tournament quest fired, even though I already did it ... this should not fire if I do it
+before the quest starts. Since it basically already resolved."** Round 213 (the user's own 2026-09-16 request) made
+quest 74 issue and tick itself on the spot; seen in play, the user would rather not see it at all. Quest 74 is a
+nudge - no reward, nothing chained behind it - so `AdventurePlayer.addQuest()` now simply does not issue it when
+`PlayerStatistic.completedEventCount() > 0` (`[TFR-MainQuest] ... NOT issued`). Consequence, accepted: the one-time
+Coin safety net (`EventScene.innTutorialQuestActive()`) only ever exists for a player who takes the quest first.
+
+**"Since we removed the Inn's from Ruined towns, this should not show in ruined towns"** - the quest's "the Inn is
+worth your time" dialog had popped up in ruined Anaxis Haven, beside the boarded-up Inn. `showQuestDialogs()` now
+skips the Inn tutorial quest while the player stands in a ruin (`TownRestoration.isCurrentTownRuined()`, the map-level
+form of `InnScene.isRuinedTown()`); its dialogs and completion bookkeeping run at the next call made anywhere else.
+Skipped before `getPrologue()`, which hands a prologue out only once. Logged once per town.
+
+**Found, NOT changed - put to the user:** the importer treats a sheet's first Idle frame as right-facing, and the
+engine draws un-suffixed animations as facing right (`CharacterSprite`: `Left` = the mirror of `Right`). About ten
+imported creatures face LEFT in their art and so walk backwards on the map: Tyrant Rex, Stormcrag Griffin, Bonewhite
+Lizardragon, Ashen Spinewyrm, Shellplate Wyrm, Megamouth Wyrm, Astral Wyrm, Furhorn Wyvern, Aurelian Dragon (Crimson
+Burrower and Brood Spawn are unclear). In since round 179. The fix is mechanical (mirror each frame cell in the PNG).
+
 ## Round 244: the user's answers - ruins 6/9/18, quest payouts trimmed, color hunts count dungeon kills, dungeons live 20-40 days (2026-09-19, REPO ONLY until the next package)
 
 User, answering the open decisions: *"Ruined-town cut: Let's do 6/9/18. Quest rewards sit outside the card budget. -

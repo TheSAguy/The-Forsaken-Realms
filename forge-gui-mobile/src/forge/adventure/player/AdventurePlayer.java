@@ -2936,6 +2936,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     public void addQuest(int questID, boolean isNewGame) {
+        // Round 245 (user, seeing round 213's retro-completion in play: "this should not fire if I do it before
+        // the quest starts. Since it basically already resolved"). "Participate in an Inn Tournament" is a nudge
+        // toward the Inn, with no reward and nothing chained behind it - a player who has already finished a
+        // tournament has nothing to learn from it, so it is not issued at all (it used to be issued, tick itself
+        // on the spot and pop its "the Inn is worth your time" dialog wherever the player happened to stand).
+        if (questID == forge.adventure.scene.EventScene.INN_TOURNAMENT_TUTORIAL_QUEST_ID && statistic.completedEventCount() > 0) {
+            System.out.println("[TFR-MainQuest] \"Participate in an Inn Tournament\" NOT issued - "
+                    + statistic.completedEventCount() + " tournament(s) already finished, so it is already resolved");
+            return;
+        }
         AdventureQuestData toAdd = AdventureQuestController.instance().generateQuest(questID);
 
         if (toAdd != null) {

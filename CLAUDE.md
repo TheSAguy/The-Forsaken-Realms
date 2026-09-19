@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 245 (2026-09-19): first play-test of the 09.18 build (from `C:\Users\User\TFR-Release`). **Five body-crop
+  portraits repainted** at the head end (Shellback Ankylosaur, Magmaback Crawler, Mossback Dragon, Skyreef Shark, Ashen
+  Spinewyrm - the generic art importer cuts a portrait from the CENTER of the first Idle frame when the sheet has no
+  painted one; PNG Avatar cells only; chosen from a contact sheet, the "thicker end" guess is unreliable). **Quest 74
+  "Participate in an Inn Tournament" is NOT ISSUED** once a tournament has been finished (the user reversed their
+  round-213 wish after seeing it tick itself), and **its dialogs wait while the player stands in a ruined town**
+  (`TownRestoration.isCurrentTownRuined()`). OPEN FOR THE USER: ~10 imported creatures face LEFT in their art and walk
+  backwards (the engine assumes right-facing art) - mirror their frames?
 - Round 244 (2026-09-19, REPO ONLY): the user's answers. **Ruins cut 6 / 9 / 18** (settings). **Seven quest payouts
   trimmed** to the card budget's scale (25 Mechanical Problems 10(+5) -> 5(+2); 26 Spores of Death 10(+10) -> 5(+3); 24
   Pest Control 5(+10) -> 4(+3); 27/35/36/37 7(+7) -> 4(+2)); gold untouched; the eight-card town quests 10-16 left as a
