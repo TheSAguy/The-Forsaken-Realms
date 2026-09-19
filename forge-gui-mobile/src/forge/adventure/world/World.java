@@ -2504,6 +2504,91 @@ public class World implements Disposable, SaveFileContent {
         return null;
     }
 
+    /**
+     * Round 250: the map-image rectangle {x, y, w, h} (image pixels, y down) that redrawPoiMarkers() draws this POI's
+     * icon into, or null when it draws none. The same branches and sizes as that method - keep the two in step.
+     */
+    int[] mapIconPixelRect(PointOfInterest poi) {
+        if (poi == null || !poi.getActive() || data == null)
+            return null;
+        String name = poi.getData().name;
+        String type = poi.getData().type;
+        int w, h;
+        if (TownRestoration.CAPITOL_POI_NAME.equals(name) && poi.getSprite() != null) {
+            w = h = 32;
+        } else if (name != null && name.contains(" Town Center") && poi.getSprite() != null) {
+            w = h = 32;
+        } else if ("Spawn".equals(name) && poi.getSprite() != null) {
+            w = poi.getSprite().getRegionWidth();
+            h = poi.getSprite().getRegionHeight();
+        } else {
+            TextureAtlas mapMarker = Config.instance().getAtlas(Paths.MAP_MARKER);
+            boolean neutralSeeded = "town".equals(type)
+                    && TownRestoration.isNeutralSeededTown(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()));
+            if (neutralSeeded && mapMarker.findRegion("town") != null) {
+                w = h = 20;
+            } else if (!neutralSeeded && "town".equals(type) && poi.getSprite() != null) {
+                w = h = TownRestoration.getBrokenTownSprite(poi) != null ? Math.round(20 * 1.15f) : 20;
+            } else {
+                TextureAtlas.AtlasRegion marker = mapMarker.findRegion(mapMarkerKey(poi.getData()));
+                if (marker == null)
+                    return null;
+                w = marker.getRegionWidth();
+                h = marker.getRegionHeight();
+            }
+        }
+        int mm = data.miniMapTileSize;
+        Vector2 anchor = poi.getCenter();
+        return new int[]{(int) ((anchor.x / data.tileSize) * mm) - w / 2,
+                (int) ((height - (anchor.y / data.tileSize)) * mm) - h / 2, w, h};
+    }
+
+    /**
+     * Round 250 (the user's option A, "discovery follows the icon"): when a tile under this POI's map icon is explored
+     * but the POI's own center tile is not - the map shows part of its icon while the overworld (MapSprite.draw(), which
+     * keys on the center tile) still hides the place - every tile under the icon is explored, so the whole icon shows
+     * on the map and the place appears, dimmed, on the overworld at the same moment. Deliberately NOT the discovery
+     * burst: a burst uncovers part of the neighbors' icons, which would set off theirs in turn and open the fog in
+     * chains; this uncovers only the icon's own 4-8 tiles, and the burst still waits for the player to come close.
+     * Returns the number of tiles it explored (0 = nothing to do).
+     */
+    public int revealWithItsIcon(PointOfInterest poi, BiConsumer<Integer, Integer> onTileRevealed) {
+        if (!isFogOfWarEnabled() || explored == null || poi == null || !poi.getActive())
+            return 0;
+        Vector2 center = poi.getCenter();
+        if (isExploredWorld((int) (center.x / data.tileSize), (int) (center.y / data.tileSize)))
+            return 0;
+        int[] icon = mapIconPixelRect(poi);
+        if (icon == null)
+            return 0;
+        int mm = data.miniMapTileSize;
+        int x0 = Math.max(0, icon[0] / mm), x1 = Math.min(width - 1, (icon[0] + icon[2] - 1) / mm);
+        int rawY0 = Math.max(0, icon[1] / mm), rawY1 = Math.min(height - 1, (icon[1] + icon[3] - 1) / mm);
+        boolean partlyShown = false;
+        for (int x = x0; x <= x1 && !partlyShown; x++)
+            for (int rawY = rawY0; rawY <= rawY1; rawY++)
+                if (explored[x][rawY]) {
+                    partlyShown = true;
+                    break;
+                }
+        if (!partlyShown)
+            return 0;
+        int revealed = 0;
+        for (int x = x0; x <= x1; x++)
+            for (int rawY = rawY0; rawY <= rawY1; rawY++) {
+                if (explored[x][rawY])
+                    continue;
+                explored[x][rawY] = true;
+                updateFogOfWarPixmap(x, rawY);
+                if (onTileRevealed != null)
+                    onTileRevealed.accept(x, height - rawY - 1);
+                revealed++;
+            }
+        System.out.println("[TFR-IconReveal] " + poi.getData().name + " (" + poi.getData().type + ") appears with its map icon: "
+                + revealed + " tile(s) under the icon uncovered - part of the icon was showing, the place was not");
+        return revealed;
+    }
+
     public void refreshWorldMapMarkers() {
         if (biomeImage == null)
             return;

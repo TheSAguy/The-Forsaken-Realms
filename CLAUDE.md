@@ -50,21 +50,23 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-19 (round 249; v1.12 "Reward Balancing" RELEASED, rounds 247-249 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-19 (round 250; v1.12 "Reward Balancing" RELEASED, rounds 247-250 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 249, 2026-09-19).** v1.12 is out; rounds 247-249 are unreleased. In order:
-  1. **Map icons now sit on their towns (round 249, option C).** Every icon is centered on `PointOfInterest.getCenter()`
-     instead of stock's bottom-left corner, the map view's labels/markers/lines follow it, and a save baked before round
-     249 is re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). Tested on a copy of the user's save in the agent
-     game (round 249's entry). CORRECTION the user has seen: the "town" in their round-247 screenshot was their OWN
-     position marker (the Phyrexian avatar), not a town. Offered, not done: a distinct player marker on the map;
-     option A (discovery follows the icon) for the 1-2 tile rim an icon can still show early; aligning the full
-     re-bake's claimed-rim tiles with the day-by-day repaint (a few specks per AI territory, pre-existing).
-  2. **Rounds 247-249 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a
+- **NEXT SESSION starts here (updated round 250, 2026-09-19).** v1.12 is out; rounds 247-250 are unreleased. In order:
+  1. **Map icons (rounds 249-250).** 249: every icon centered on `PointOfInterest.getCenter()`, labels/markers/lines
+     follow, an older save re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250: option A built WITHOUT the
+     burst (a burst would cascade through neighbors' icons) - when part of an icon is uncovered, the tiles under it are
+     (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so the place appears on the overworld with its icon. **NOT YET
+     RUN IN A GAME** - the user was playing; test it in the agent game (a copy of their save, `agent_launch.cmd fair
+     <classes>`), then package F:. The user's round-247 "town" was their own position marker: a PLAYER-MARKER preview
+     (A pulsing gold ring / B bobbing arrow / C both, on their real map) is with the user - A recommended, NOT built.
+     Still offered: aligning the full re-bake's claimed-rim tiles with the day-by-day repaint (pre-existing specks).
+  2. **Rounds 247-250 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a
      fresh game that skips the intro) or `[TFR-RingGift] ... have 1/1 - nothing to grant` (New Game+ that skips it);
-     `[TFR-MapIcons] ... (layout 0 -> 1, N ms)` once per older save, then never again for it; the nine mirrored
-     creatures walk head first; the Church tower's second Apprentice White Wizard walks a loop around the pews; no
-     "Navigation error" line anywhere. The user discarded save 1/2's extra coins in game themselves.
+     `[TFR-MapIcons] ... (layout 0 -> 1, N ms)` once per older save; `[TFR-IconReveal]` as places appear with their
+     icons; the nine mirrored creatures walk head first; the Church tower's wizard, the crypt Zombie, the Disciple of
+     Teferi, the Yule Town Polar Bear and vampire castle 4C's two Unholy Skulls walk their routes; no "Navigation
+     error" line anywhere. The coin top-up grants only the difference per coin type (confirmed in round 250).
   3. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
      fix, the map icons, and (the 10:39 log, round 247) the world-gen town cut, the looted factor 0.25, a Bronze Coin
      ransom. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the five-kill color
@@ -133,6 +135,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 250 (2026-09-19): **option A, without the cascade** - a place appears on the overworld the moment part of its map
+  icon is uncovered (the tiles under the icon are explored; no burst, which would chain through neighbors' icons);
+  NOT yet run in a game. **The five standing enemies patrol** (crypt Zombie, Disciple of Teferi, Yule Town Polar Bear,
+  vampire castle 4C's two Unholy Skulls; 6 new waypoints, 4 reused). Coin top-up confirmed per coin type. Player-marker
+  preview sent (A recommended), not built. Built 13:21-13:28 (MVN EXIT 0), packaged into `C:\Users\User\TFR-Release`
+  (jar `05ff6f861f99`); F: waits for the game to close.
 - Round 249 (2026-09-19): **option C - every map icon sits on its point of interest** (`PointOfInterest.getCenter()`,
   not stock's bottom-left corner); the map view's labels, quest markers, bookmarks and lines follow; an older save's
   map image is re-baked once at load (`World.mapIconLayout` + `migrateMapIconLayout()`, `[TFR-MapIcons]`). Tested in

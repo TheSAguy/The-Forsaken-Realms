@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 250 (2026-09-19) - adventure-side only
+
+`world/World.java` - new `mapIconPixelRect()` (mirrors `redrawPoiMarkers()`'s icon sizes) and `revealWithItsIcon()`.
+`stage/WorldBackground.java` - `draw()`: the visibility-patch test is kept in a `movedTile` local, and the nearby-POI
+loop calls `revealWithItsIcon()` on those frames. Plane data: `crypt_3`, `teferi`, `yule_town`, `vampirecastle_4C`
+(patrol routes, 6 new waypoints).
+
 ## Round 249 (2026-09-19) - adventure-side only
 
 `world/World.java` - `MAP_ICON_LAYOUT` + `mapIconLayout` (load/save/`generateNew()` reset), `redrawPoiMarkers()` centers

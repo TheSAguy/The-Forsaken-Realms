@@ -122,7 +122,8 @@ public class WorldBackground extends Actor {
         // when nothing newly becomes known - re-patch the local neighborhood (one tile wider than
         // the vision radius, to also catch tiles that just left it) whenever the player's tile
         // position changes.
-        if (playerTileX != lastVisibilityPatchX || playerTileY != lastVisibilityPatchY) {
+        boolean movedTile = playerTileX != lastVisibilityPatchX || playerTileY != lastVisibilityPatchY; // round 250
+        if (movedTile) {
             lastVisibilityPatchX = playerTileX;
             lastVisibilityPatchY = playerTileY;
             int patchRadius = visionRadius + 1;
@@ -191,6 +192,12 @@ public class WorldBackground extends Actor {
                 if (world.hasUnexploredIn(poiTileX, poiTileY, discoveryRadius))
                     world.flashArea(poiTileX, poiTileY, discoveryRadius, this::onTileRevealed);
             }
+            // Round 250 (the user's option A): a place whose map icon is partly uncovered appears on the overworld
+            // too - World.revealWithItsIcon() explores the tiles under the icon. Checked on the frame the player steps
+            // onto a new tile, not every frame; the icons of POIs outside this 3x3 chunk area do not matter until the
+            // player is near enough to see those places anyway.
+            if (movedTile)
+                world.revealWithItsIcon(poi, this::onTileRevealed);
         }
         if (currentChunkX != pos.x || currentChunkY != pos.y) {
             int xDiff = currentChunkX - pos.x;

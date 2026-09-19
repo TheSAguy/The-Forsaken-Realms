@@ -247,6 +247,7 @@
    <properties>
     <property name="enemy" value="Zombie"/>
     <property name="threatRange" type="int" value="20"/>
+    <property name="waypoints" value="123,124"/>
    </properties>
   </object>
   <object id="118" template="../../../../common/maps/obj/enemy.tx" x="327" y="364">

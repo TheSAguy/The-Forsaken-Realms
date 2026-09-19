@@ -17757,6 +17757,47 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 250: a place appears on the overworld when its map icon does (option A, without the cascade); the five standing enemies patrol (2026-09-19)
+
+User: *"1. Can you show me an example of 'Go with the distinct player marker' 2. Sure. 3. Yes, create real patrol
+routs."* And: *"I want to confirm ... 'With Skip the introduction you get 3 bronze / 1 gold / 1 silver coins, not
+double' This only be true if the player does not have any coins, else he should only get the difference. Say he has
+1 gold and nothing else, he should then get 3 bronze and 1 silver, etc."*
+
+**The coins - confirmed, no change.** `grantMissingCoins()` tops each coin type up to its target (1 gold, 1 silver,
+3 bronze) and grants only the difference, counting the inventory AND the Armory storage (`countItem()`). The user's
+example - 1 gold, nothing else - gets 1 silver and 3 bronze. Both paths use it: the New Game+ reset
+(`SaveLoadScene`) and, since round 247, the skip-intro gift; in New Game+ the reset runs first, so the gift then
+grants nothing. My round-247 summary line described a fresh character only.
+
+**The player marker - a preview only.** Three options drawn on the user's real map (their avatar on their own town):
+A a pulsing gold ring, B a bobbing gold arrow, C both. Recommended A. Nothing built; waiting for the user's pick.
+
+**Option A, built safer than first described.** Described in round 247 as "that town gets its normal discovery
+burst". Checked before building: a burst uncovers an 11-tile disc, which uncovers part of the neighbors' icons, which
+would fire their bursts in turn - fog of war opening in chains across a region. Built instead: when a tile under a
+POI's map icon is explored but the POI's own center tile is not (the map shows part of the icon while the overworld,
+which draws a POI once its center tile is explored, still hides the place), every tile under the icon is explored -
+the whole icon shows on the map and the place appears, dimmed, on the overworld at the same moment. The bright burst
+still waits for the player to come close. `World.mapIconPixelRect()` (the rectangle `redrawPoiMarkers()` draws the
+icon into - the same branches and sizes, keep them in step) + `World.revealWithItsIcon()`, called from
+`WorldBackground.draw()`'s nearby-POI loop on the frame the player steps onto a new tile; `[TFR-IconReveal] <name>
+(<type>) appears with its map icon: N tile(s) under the icon uncovered`. At most one icon's tiles (4-8 per side) per
+place; a short chain only where two icons overlap. NOT yet run in a game at commit time (the user was playing).
+
+**The five standing enemies patrol** (round 248 left them standing: their copied routes named nothing):
+- crypt Zombie 117 (`crypt_3`): `123,124` - existing waypoints along its hall; wp124 sits beside Zombie 95, whom its
+  old route named.
+- Disciple of Teferi 104 (`teferi`): `86,113` - the other Disciple's two courtyard points; passes its post by the study.
+- Yule Town Polar Bear 59: new waypoints 88-90 - its spawn, the north-east clearing, below the fence corner (a loop;
+  its old route came from the aerie's Scarab, whose points lie off this map).
+- vampire castle 4C, the two Unholy Skulls (their route came from floor 4B): the west one `85,89` (wp85 at the
+  corridor's west end, a new turn point before the second doorway); the east one `90,91` (new: below the Vampire
+  Lord's door, and the corridor's east end - x 740, the wall starts at 764). Short beats near their spawns rather
+  than the whole corridor, which would stop the player far more often than the map was built for.
+Every new point checked clear (16x16 box + 2 px; `r250_route.py`, scratchpad, generalizing round 248's church tools)
+and drawn on a review sheet the user was sent. Validator: 1,151 enemy routes, none dangling.
+
 ## Round 249: every map icon sits on its point of interest (option C); an old save's map is re-baked once (2026-09-19)
 
 User (round 248): *"For the 'Towns on the map before the overworld', let's go with C."*
