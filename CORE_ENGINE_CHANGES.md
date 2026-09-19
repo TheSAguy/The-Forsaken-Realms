@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 251 (2026-09-19) - adventure-side only
+
+`scene/MapViewScene.java` - `miniMapPlayer` is an `Image` subclass whose `draw()` calls the new static
+`drawPlayerRing()` first; two imports (`Batch`, `TimeUtils`). New plane asset `ui/player_ring.png`. Nothing else.
+
 ## Round 250 (2026-09-19) - adventure-side only
 
 `world/World.java` - new `mapIconPixelRect()` (mirrors `redrawPoiMarkers()`'s icon sizes) and `revealWithItsIcon()`.

@@ -50,17 +50,16 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-19 (round 250; v1.12 "Reward Balancing" RELEASED, rounds 247-250 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-19 (round 251; v1.12 "Reward Balancing" RELEASED, rounds 247-251 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 250, 2026-09-19).** v1.12 is out; rounds 247-250 are unreleased. In order:
-  1. **Map icons (rounds 249-250).** 249: every icon centered on `PointOfInterest.getCenter()`, labels/markers/lines
-     follow, an older save re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250: option A built WITHOUT the
-     burst (a burst would cascade through neighbors' icons) - when part of an icon is uncovered, the tiles under it are
-     (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so the place appears on the overworld with its icon. **NOT YET
-     RUN IN A GAME** - the user was playing; test it in the agent game (a copy of their save, `agent_launch.cmd fair
-     <classes>`), then package F:. The user's round-247 "town" was their own position marker: a PLAYER-MARKER preview
-     (A pulsing gold ring / B bobbing arrow / C both, on their real map) is with the user - A recommended, NOT built.
-     Still offered: aligning the full re-bake's claimed-rim tiles with the day-by-day repaint (pre-existing specks).
+- **NEXT SESSION starts here (updated round 251, 2026-09-19).** v1.12 is out; rounds 247-251 are unreleased. In order:
+  1. **The map (rounds 249-251).** 249: every icon centered on `PointOfInterest.getCenter()`, an older save re-baked
+     ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250: option A without the burst - when part of an icon is
+     uncovered so are the tiles under it (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so a place appears on the
+     overworld with its icon. 251: the player's marker wears a pulsing gold ring (`ui/player_ring.png`,
+     `MapViewScene.drawPlayerRing()`) - the user's round-247 "town" was that marker. Still offered, NOT done: aligning
+     the full re-bake's claimed-rim tiles with the day-by-day repaint (pre-existing specks per AI territory), and the
+     same ring on the HUD's corner minimap (left alone - it is always centered on the player).
   2. **Rounds 247-250 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a
      fresh game that skips the intro) or `[TFR-RingGift] ... have 1/1 - nothing to grant` (New Game+ that skips it);
      `[TFR-MapIcons] ... (layout 0 -> 1, N ms)` once per older save; `[TFR-IconReveal]` as places appear with their
@@ -135,6 +134,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 251 (2026-09-19): **the player's map marker wears a pulsing gold ring** (`ui/player_ring.png` +
+  `MapViewScene.drawPlayerRing()`, drawn by the marker itself so zoom and scroll carry it) - the user picked option A
+  from a preview drawn on their own map. Packaged into `C:\Users\User\TFR-Release` (jar `be6bb7ea998b`, the 604-byte asset shipped); the F: live folder waits for the user to close their game, and rounds 250 + 251 will reach it together.
 - Round 250 (2026-09-19): **option A, without the cascade** - a place appears on the overworld the moment part of its map
   icon is uncovered (the tiles under the icon are explored; no burst, which would chain through neighbors' icons);
   NOT yet run in a game. **The five standing enemies patrol** (crypt Zombie, Disciple of Teferi, Yule Town Polar Bear,

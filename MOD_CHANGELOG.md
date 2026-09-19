@@ -17757,6 +17757,27 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 251: the player's marker on the map wears a pulsing gold ring (option A of the preview) (2026-09-19)
+
+User, from the three drawn options: *"Go with A, the pulsing ring"*.
+
+The marker the map view draws at the player's position is the race's own portrait art, which reads like a building
+icon - round 247's *"the town showing on the mini-map, but it's not yet exposed on the Overworld"* was that marker,
+not a town. New plane asset `ui/player_ring.png` (64x64 pixel art from `r251_ring.py`, scratchpad: a gold band at
+radius 24-29 between dark rims at 22-24 and 29-31, measured from each pixel's center so the circle stays crisp) is
+drawn around the marker at 1.45x its drawn size, with a fainter copy that grows to 1.35x and fades away every 1.2
+seconds. `miniMapPlayer` is now an `Image` whose own `draw()` paints the ring first (`MapViewScene.drawPlayerRing()`),
+so every zoom and scroll adjustment the scene already makes to the marker applies to the ring as well, and the
+rectangle used is the one `Image.draw()` fills (scaled about the origin, which zooming leaves at the bottom-left).
+The texture comes from the asset cache on each frame with `required = false` - a plane without the file simply gets no
+ring, and nothing holds a texture across a disposal - and with nearest filtering (`is2D = true`), like the rest of the
+map's art. The HUD's corner minimap was deliberately left alone: it is always centered on the player, so nothing is
+ambiguous there.
+
+NOT yet seen in a running game at commit time (the user was playing): the ring was matched against the approved preview by compositing the real asset onto the map screenshot at the size and pulse the game uses (`r251_ring.py`), not in the game itself. Test it with round 250 in the agent game.
+
+Built 14:03-14:10 (MVN EXIT 0; the jar carries the `player_ring` lookup). Packaged into `C:\Users\User\TFR-Release` (jar `be6bb7ea998b`, the 604-byte asset shipped); the F: live folder waits for the user to close their game, and rounds 250 + 251 will reach it together.
+
 ## Round 250: a place appears on the overworld when its map icon does (option A, without the cascade); the five standing enemies patrol (2026-09-19)
 
 User: *"1. Can you show me an example of 'Go with the distinct player marker' 2. Sure. 3. Yes, create real patrol

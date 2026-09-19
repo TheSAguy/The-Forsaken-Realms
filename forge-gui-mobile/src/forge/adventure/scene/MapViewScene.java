@@ -2,6 +2,7 @@ package forge.adventure.scene;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TypingLabel;
 import com.google.common.collect.Lists;
@@ -113,7 +115,13 @@ public class MapViewScene extends UIScene {
         table = new Group();
         scroll.setActor(table);
         img = new Image();
-        miniMapPlayer = new Image();
+        miniMapPlayer = new Image() {
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                drawPlayerRing(batch, parentAlpha, this); // round 251: the pulsing gold ring, under the avatar
+                super.draw(batch, parentAlpha);
+            }
+        };
         img.setPosition(0, 0);
         table.addActor(img);
         table.addActor(miniMapPlayer);
@@ -135,6 +143,32 @@ public class MapViewScene extends UIScene {
         });
         stage.setScrollFocus(ui);
 
+    }
+
+    /**
+     * Round 251 (the user picked "A - a gold ring that pulses" from a preview): the player's avatar reads like a
+     * building icon on this map - round 247's reported "town" was the player's own marker - so it is drawn inside a
+     * gold ring (ui/player_ring.png, pixel art), with a fainter copy that grows to 1.35x and fades every 1.2 s. Called
+     * from miniMapPlayer's own draw(), so every zoom and scroll adjustment made to the marker applies to the ring too;
+     * the rectangle is the one Image.draw() fills (scaled about the origin). No ring on a plane without the file.
+     */
+    private static void drawPlayerRing(Batch batch, float parentAlpha, Image marker) {
+        Texture ring = Forge.getAssets().getTexture(Config.instance().getFile("ui/player_ring.png"), true, false);
+        float w = marker.getWidth() * marker.getScaleX();
+        float h = marker.getHeight() * marker.getScaleY();
+        if (ring == null || w <= 0 || h <= 0)
+            return;
+        float cx = marker.getX() + marker.getOriginX() * (1f - marker.getScaleX()) + w / 2f;
+        float cy = marker.getY() + marker.getOriginY() * (1f - marker.getScaleY()) + h / 2f;
+        float size = Math.max(w, h) * 1.45f;
+        float t = (TimeUtils.millis() % 1200L) / 1200f;
+        float halo = size * (1f + 0.35f * t);
+        float packed = batch.getPackedColor();
+        batch.setColor(1f, 1f, 1f, 0.55f * (1f - t) * parentAlpha);
+        batch.draw(ring, cx - halo / 2f, cy - halo / 2f, halo, halo);
+        batch.setColor(1f, 1f, 1f, parentAlpha);
+        batch.draw(ring, cx - size / 2f, cy - size / 2f, size, size);
+        batch.setPackedColor(packed);
     }
 
     public void test() {
