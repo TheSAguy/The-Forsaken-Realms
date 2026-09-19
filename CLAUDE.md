@@ -53,19 +53,21 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 ## STATE 2026-09-19 (round 251; v1.12 "Reward Balancing" RELEASED, rounds 247-251 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 251, 2026-09-19).** v1.12 is out; rounds 247-251 are unreleased. In order:
-  1. **The map (rounds 249-251).** 249: every icon centered on `PointOfInterest.getCenter()`, an older save re-baked
-     ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250: option A without the burst - when part of an icon is
-     uncovered so are the tiles under it (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so a place appears on the
-     overworld with its icon. 251: the player's marker wears a pulsing gold ring (`ui/player_ring.png`,
-     `MapViewScene.drawPlayerRing()`) - the user's round-247 "town" was that marker. Still offered, NOT done: aligning
-     the full re-bake's claimed-rim tiles with the day-by-day repaint (pre-existing specks per AI territory), and the
-     same ring on the HUD's corner minimap (left alone - it is always centered on the player).
-  2. **Rounds 247-250 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a
-     fresh game that skips the intro) or `[TFR-RingGift] ... have 1/1 - nothing to grant` (New Game+ that skips it);
-     `[TFR-MapIcons] ... (layout 0 -> 1, N ms)` once per older save; `[TFR-IconReveal]` as places appear with their
-     icons; the nine mirrored creatures walk head first; the Church tower's wizard, the crypt Zombie, the Disciple of
-     Teferi, the Yule Town Polar Bear and vampire castle 4C's two Unholy Skulls walk their routes; no "Navigation
-     error" line anywhere. The coin top-up grants only the difference per coin type (confirmed in round 250).
+  1. **The map (rounds 249-251), all three SEEN IN A RUNNING GAME (round 251's entry).** 249: every icon centered on
+     `PointOfInterest.getCenter()`, an older save re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250:
+     option A without the burst - when part of an icon is uncovered so are the tiles under it
+     (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so a place appears on the overworld with its icon. 251: the
+     player's marker wears a pulsing gold ring (`ui/player_ring.png`, `MapViewScene.drawPlayerRing()`) - the user's
+     round-247 "town" was that marker. Still offered, NOT done: aligning the full re-bake's claimed-rim tiles with the
+     day-by-day repaint (pre-existing specks per AI territory), and the same ring on the HUD's corner minimap (left
+     alone - it is always centered on the player).
+  2. **Rounds 247-251 are IN THE F: LIVE FOLDER** (packaged 15:04, jar `be6bb7ea998b`; C: and the agent folder match).
+     In the user's own next log: `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a fresh game that skips the
+     intro) or `... have 1/1 - nothing to grant` (New Game+ that skips it); `[TFR-MapIcons] ... (layout 0 -> 1, N ms)`
+     ONCE for each older save; `[TFR-IconReveal]` as places appear with their icons; the nine mirrored creatures
+     walking head first; the crypt Zombie, the Disciple of Teferi, the Yule Town Polar Bear and vampire castle 4C's
+     two Unholy Skulls walking their new routes (the Church tower's wizard was watched doing exactly that); no
+     "Navigation error" line anywhere. Save 1 gained two decks in slots 1-2 (round 251's entry).
   3. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
      fix, the map icons, and (the 10:39 log, round 247) the world-gen town cut, the looted factor 0.25, a Bronze Coin
      ransom. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the five-kill color

@@ -17774,9 +17774,37 @@ ring, and nothing holds a texture across a disposal - and with nearest filtering
 map's art. The HUD's corner minimap was deliberately left alone: it is always centered on the player, so nothing is
 ambiguous there.
 
-NOT yet seen in a running game at commit time (the user was playing): the ring was matched against the approved preview by compositing the real asset onto the map screenshot at the size and pulse the game uses (`r251_ring.py`), not in the game itself. Test it with round 250 in the agent game.
+**Rounds 250 + 251 in a running game, and save 1's two new decks (2026-09-19 14:46-15:10).** The user closed their
+game (*"game closed. Please also create me 2 new decks, Save 1."*) and both rounds were run in the agent game on a
+copy of their save (the round 250-251 classes ahead of the agent jar; the four changed maps and `ui/player_ring.png`
+were copied into the agent folder first, so the test ran against the real data):
+- **251, the ring**: drawn around the avatar on the map view, gold band and dark rims, as the preview showed.
+- **250, option A**: two places appeared with their icons on load - `[TFR-IconReveal] Waste Town Identity (town) ... 41
+  tile(s) under the icon uncovered` and `MageTowerU1 (dungeon) ... 18 tile(s)` - and both are icons that were NOT on
+  the round-249 map screenshot of the same save. No re-bake line (that save was already migrated), no exception.
+- **The patrol routes**: teleported into the Church tower. With its entry dialog closed (AN OPEN DIALOG FREEZES THE
+  MAP - worth knowing for agent testing: enemies sit still until `dialogs` clears it), wizard 75 - the one that never
+  moved in any build - walked east across the pews toward its first waypoint, (169,153) -> (251,145) -> (307,146),
+  while wizard 72 walked its aisle. No "Navigation error" line anywhere. The four round-250 routes are the same data
+  shape and were all checked by the validator.
+- **The F: live folder was packaged at 15:04** with rounds 250 + 251 (PACKAGER EXIT 0, jar `be6bb7ea998b` = the
+  repo's; the ring asset and the new routes read back from it), and the agent folder was re-synced.
 
-Built 14:03-14:10 (MVN EXIT 0; the jar carries the `player_ring` lookup). Packaged into `C:\Users\User\TFR-Release` (jar `be6bb7ea998b`, the 604-byte asset shipped); the F: live folder waits for the user to close their game, and rounds 250 + 251 will reach it together.
+**Save 1's two new decks** (the user's ask; `WriteDecks`, backup `1_save_slot.sav.prededit19.bak`, both exactly 40
+cards with nothing silently capped, slot 0 "Black Pool" untouched and still selected):
+- **slot 1 "Ichor Wings"** - mono-black toxic: 2 Bilious Skulldweller, 3 Flensermite, 2 Pestilent Syphoner, 2
+  Blightbelly Rat, Plague Stinger, Ichor Rats, 2 Karumonix, 4 Bonepicker Skirge, 2 Ravenous Necrotitan, 2 Prosthetic
+  Injector, 2 Anoint with Affliction, 2 Drown in Ichor, 3 The Dross Pits, 12 Swamp. Poison first: the Skirges fly and
+  turn on at three poison, Necrotitan is a free 6/6 once corrupted, and both removal spells proliferate.
+- **slot 2 "Verdant Blight"** - mono-green toxic stompy: 3 Ichorspit Basilisk, 2 Contagious Vorrac, 2 Venomous
+  Brutalizer, 4 Lattice-Blade Mantis, Evolved Spinoderm, Old-Growth Troll, Primal Adversary, Hunted Wumpus, Greater
+  Tanuki, Paladin of Predation, Plague Nurse, 2 Rampant Growth, Infectious Bite, Viral Spawning, Noxious Assault, 2
+  The Hunter Maze, 15 Forest (8 free basics added, as the editor's Add Basic Lands does). Deathtouch blockers hold the
+  ground on Insane; toxic 3 and toxic 6 close it.
+The two decks share no card, so either can be played without disturbing the other or "Black Pool". Selecting a deck
+sets the character's color identity, which is what reputation and spawns read - the green deck moves it off B.
+
+Built 14:03-14:10 (MVN EXIT 0; the jar carries the `player_ring` lookup). Packaged into `C:\Users\User\TFR-Release` and, at 15:04, into the F: live folder (jar `be6bb7ea998b`, the 604-byte asset shipped).
 
 ## Round 250: a place appears on the overworld when its map icon does (option A, without the cascade); the five standing enemies patrol (2026-09-19)
 
@@ -17804,7 +17832,7 @@ still waits for the player to come close. `World.mapIconPixelRect()` (the rectan
 icon into - the same branches and sizes, keep them in step) + `World.revealWithItsIcon()`, called from
 `WorldBackground.draw()`'s nearby-POI loop on the frame the player steps onto a new tile; `[TFR-IconReveal] <name>
 (<type>) appears with its map icon: N tile(s) under the icon uncovered`. At most one icon's tiles (4-8 per side) per
-place; a short chain only where two icons overlap. NOT yet run in a game at commit time (the user was playing).
+place; a short chain only where two icons overlap. Seen in a running game the same day - see round 251's entry.
 
 **The five standing enemies patrol** (round 248 left them standing: their copied routes named nothing):
 - crypt Zombie 117 (`crypt_3`): `123,124` - existing waypoints along its hall; wp124 sits beside Zombie 95, whom its
