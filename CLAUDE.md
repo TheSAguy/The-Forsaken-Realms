@@ -97,7 +97,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
-- Round 236 (2026-09-18): **invisible walls on land a color claimed from the wasteland.** Claimed tiles keep their
+- Round 236 (2026-09-18; built 19:24, PACKAGED 19:36 - 346 MB, `PACKAGER EXIT 0`, live jar read back; agent folder
+  synced, 0 failed): **invisible walls on land a color claimed from the wasteland.** Claimed tiles keep their
   structure index in WASTELAND numbering (3..16); the claiming color's layer paints over the wasteland layer and draws
   from its OWN `BiomeTexture` (green/red 3..13, white 3..12, blue/black 3..15), and `drawPixmapOn()` silently skips an
   index past the end - so wasteland tree4/rock/mountain (14/15/16) drew nothing but still blocked: 614 tiles in the

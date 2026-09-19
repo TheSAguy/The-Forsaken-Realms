@@ -17804,6 +17804,9 @@ territory on the map; it is a design question for the user, not part of this fix
 Diagnostic: `[TFR-Terrain] green land: wasteland structure 15 (rock) has no picture in this biome's set (1..13) -
 drawing it as this biome's index 10`, once per (layer, index) per session. Not yet seen in a running game.
 
+Built 19:24, packaged 19:36 (346 MB, `PACKAGER EXIT 0`) with the game closed; the live jar was read back and carries
+this round's line and round 235's repair. Agent folder synced.
+
 **Round 235, confirmed and packaged.** The session log closed at 18:58 carried the smoking gun verbatim - `stage
 "Rescue the White Captive" retro-completed on activation (flag Ch1WhiteCastleComplete already >= 0)` - and, for the
 first time, round 227's label: `[TFR-PickupLabel] +53 Gold at (2459, 7604) on WorldStage, glyph=Gold`. Round 235
