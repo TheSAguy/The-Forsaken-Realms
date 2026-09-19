@@ -279,6 +279,16 @@ public class TuningData {
     // the spot it leaves stays empty before it can be used again. Constants in DungeonRotation until now
     // (20-60 and 10-30). A visible dungeon whose timer was rolled under a longer ceiling is pulled in to the
     // current one on the next day tick - quest targets excepted.
+    // Round 252 (user, with two screenshots: "The enemy by the chest does not move at all. I was able to walk right
+    // by it and take the chest. Can we audit all dungeons and give all enemies a small radius of reaction?"). An audit
+    // of every map a TFR player can reach found 378 of 2,359 enemies with threatRange AND fleeRange at 0 - what
+    // obj/enemy.tx defaults them to - and EnemySprite.getTargetVector() skips its whole player-seeking block for
+    // those, so they never notice anyone (59 of them walk patrol routes while ignoring the player). MapStage gives an
+    // enemy that reacts to nothing this radius at load, in PIXELS (a tile is 16), with the pursue range below.
+    // An authored range of any kind wins; a NEGATIVE threatRange in a map means "this one really never reacts";
+    // 0 here switches the whole default off. Deliberately under the authored norm (30-50) - it is a small radius.
+    public float mapEnemyDefaultThreatRange = 32f;
+    public float mapEnemyDefaultPursueRange = 64f;
     public int dungeonLifespanMinDays = 20;
     public int dungeonLifespanMaxDays = 40;
     public int dungeonSpotRestMinDays = 10;

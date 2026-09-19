@@ -17757,6 +17757,47 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 252: every map enemy reacts to the player within a small radius (2026-09-19)
+
+User, with two screenshots of a crypt - an enemy standing beside a chest, and the same enemy after the player had
+walked past it and taken the chest: *"Look at these two screenshots. The enemy by the chest does not move at all. I
+was able to walk right by it and take the chest. Can we audit all dungeons and give all enemies a small radius of
+reaction?"*
+
+**The audit** (`r252_threat_audit.py`, scratchpad; every map reachable from the plane's POIs, linked maps followed):
+2,359 enemies in 374 maps, of which **378 (16%) react to nothing at all** - `threatRange` AND `fleeRange` both 0,
+which is what `common/maps/obj/enemy.tx` defaults them to, and `EnemySprite.getTargetVector()` skips its entire
+player-seeking block unless one of them is set. **59 of those even walk patrol routes** while ignoring the player.
+The ranges that authors DID set cluster at 20/30/40/50/60 px (a tile is 16), 40 being the most common. The worst
+maps: `cave_huge` 26 of 26, `templeofchandra` 20 of 44, `skep_outer` 17 of 56, `Planeswalker_Dueling_Club` 13 of 13,
+`debug_map` 12 of 13, `temple_of_liliana/town` 10 of 30, `Gitrog_Bog_1` 10 of 15, `Valors_Reach_Arena` 7 of 8,
+`naktamun/gym` 7 of 7.
+
+**The fix, at load rather than in 378 map objects.** `MapStage.loadObjects()` now calls new
+`applyDefaultReactionRange()`: an enemy that reacts to nothing is given the plane's default radius -
+`mapEnemyDefaultThreatRange` 32 px (two tiles) and `mapEnemyDefaultPursueRange` 64 px, both new TuningData settings in
+`config tables/settings.json`. Deliberately under the authored norm - the user asked for a small radius, and this way
+an enemy an author made watchful stays the more watchful one. Any authored range wins untouched; a NEGATIVE
+`threatRange` in a map is the author's way to say "this one really never reacts" (cleared to 0 after the test); 0 in
+settings switches the whole default off. Stamping a number into 378 objects instead would have been undone by the
+next map edit or upstream map, and would not cover maps added later. One line per map that needed it:
+`[TFR-Threat] <map>: N enemy(s) reacted to nothing - given the plane's default radius 32.0 px (pursue 64.0 px)`.
+
+**A stock bug fixed on the way:** the `pursueRange` read was gated on `prop.containsKey("threatRange")` - a
+copy-paste - so an enemy object carrying `threatRange` but no `pursueRange` key would have thrown an NPE inside
+`loadObjects()` and killed the map load (round 184's lesson). It never fired only because `obj/enemy.tx` gives every
+enemy both keys; any hand-made enemy object without the template would have hit it.
+
+Checked: `javac` clean; the plane validator clean with the two new keys; and the SHIPPED settings table parsed with
+the SHIPPED classes (`TuneCheck.java`, scratchpad - a bad key makes Config fall back to defaults silently, which would
+revert every tuning value): `mapEnemyDefaultThreatRange=32.0 mapEnemyDefaultPursueRange=64.0`, the rest intact.
+
+Built 16:08-16:15 (MVN EXIT 0), packaged into `C:\Users\User\TFR-Release`. NOT yet run in a game and NOT yet in the
+F: live folder - the user had started playing again. To verify: the `[TFR-Threat]` line on entering a map, then walk
+past the chest enemy in the crypt from their screenshots. FOR THE USER, since they now react: the dueling club
+(13 enemies), Valor's Reach Arena (7), the Naktamun gym (7) and `debug_map` (12) read like set-pieces - say if any of
+them should stay inert, and a `threatRange` of -1 in those maps does it.
+
 ## Round 251: the player's marker on the map wears a pulsing gold ring (option A of the preview) (2026-09-19)
 
 User, from the three drawn options: *"Go with A, the pulsing ring"*.

@@ -990,8 +990,35 @@ public class MapStage extends GameStage {
                 + " takes placement " + caveChampionObjectId + " of " + candidates.size + " candidate(s)");
     }
 
+    /**
+     * Round 252 (the user walked past an enemy standing beside a chest): an enemy whose map sets NEITHER threatRange
+     * nor fleeRange reacts to nothing at all - EnemySprite.getTargetVector() skips its player-seeking block entirely -
+     * and 378 of the plane's 2,359 map enemies were in that state, 59 of them walking patrol routes while ignoring
+     * the player. Such an enemy is given the plane's default reaction radius here, at load, rather than stamping a
+     * number into 378 map objects that the next map edit or upstream map would undo. Any authored range wins, and a
+     * negative threatRange is a map author's "this one really never reacts" (cleared to 0 after the test).
+     * Returns true when the default was applied, for the one summary line per map.
+     */
+    private boolean applyDefaultReactionRange(EnemySprite mob) {
+        if (mob.threatRange < 0) {
+            mob.threatRange = 0;
+            return false;
+        }
+        if (mob.threatRange > 0 || mob.fleeRange > 0)
+            return false;
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        float threat = tuning == null ? 0f : tuning.mapEnemyDefaultThreatRange;
+        if (threat <= 0)
+            return false;
+        mob.threatRange = threat;
+        if (mob.pursueRange <= 0)
+            mob.pursueRange = Math.max(threat, tuning.mapEnemyDefaultPursueRange);
+        return true;
+    }
+
     private void loadObjects(MapLayer layer, String sourceMap, String currentMap) {
         player.setMoveModifier(2);
+        int reactionDefaults = 0; // round 252
         Array<String> shopsAlreadyPresent = new Array<>();
         for (MapObject obj : layer.getObjects()) {
             MapProperties prop = obj.getProperties();
@@ -1206,14 +1233,16 @@ public class MapStage extends GameStage {
                             {
                                 mob.threatRange = Float.parseFloat(prop.get("threatRange").toString());
                             }
-                            if (prop.containsKey("threatRange")) //Check for threat range.
-                            {
+                            if (prop.containsKey("pursueRange")) // round 252: this tested "threatRange" (stock typo) and
+                            {                                    // only worked because obj/enemy.tx gives every enemy both keys
                                 mob.pursueRange = Float.parseFloat(prop.get("pursueRange").toString());
                             }
                             if (prop.containsKey("fleeRange")) //Check for flee range.
                             {
                                 mob.fleeRange = Float.parseFloat(prop.get("fleeRange").toString());
                             }
+                            if (applyDefaultReactionRange(mob)) // round 252
+                                reactionDefaults++;
                             if (prop.containsKey("speed")) //Check for flee range.
                             {
                                 mob.getData().speed = Float.parseFloat(prop.get("speed").toString());
@@ -1633,6 +1662,11 @@ public class MapStage extends GameStage {
                 }
             }
         }
+        if (reactionDefaults > 0) // round 252
+            System.out.println("[TFR-Threat] " + currentMap + ": " + reactionDefaults
+                    + " enemy(s) reacted to nothing - given the plane's default radius "
+                    + Config.instance().getTuningData().mapEnemyDefaultThreatRange + " px (pursue "
+                    + Config.instance().getTuningData().mapEnemyDefaultPursueRange + " px)");
     }
 
     //We could track MapObject IDs more generally but for now this is the only one we might need.

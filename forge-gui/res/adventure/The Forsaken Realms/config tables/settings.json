@@ -208,6 +208,12 @@
     // before another can appear there. Clearing a dungeon, or losing a duel inside one, still removes it at once;
     // a side-quest target gets 30 days on top. A dungeon already on the map with more days left than the ceiling
     // is pulled in to it on the next day - quest targets excepted.
+    // Round 252: an enemy whose map sets neither threatRange nor fleeRange (obj/enemy.tx defaults both to 0) reacts
+    // to nothing - 378 of the plane's 2,359 map enemies. Each of those is given this radius at load, in PIXELS (a
+    // tile is 16), with the pursue range below it. An authored range wins; a negative threatRange in a map means
+    // "never reacts"; 0 here switches the default off.
+    "mapEnemyDefaultThreatRange": 32,
+    "mapEnemyDefaultPursueRange": 64,
     "dungeonLifespanMinDays": 20,
     "dungeonLifespanMaxDays": 40,
     "dungeonSpotRestMinDays": 10,

@@ -2779,6 +2779,13 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 252 (2026-09-19) - adventure-side only
+
+`stage/MapStage.java` - `loadObjects()` reads `pursueRange` under its OWN key (stock tested `threatRange`, an NPE
+waiting for an enemy object made without `obj/enemy.tx`), new `applyDefaultReactionRange()` + the `[TFR-Threat]`
+summary line. `data/TuningData.java` - `mapEnemyDefaultThreatRange` / `mapEnemyDefaultPursueRange`. Plane data:
+`config tables/settings.json` (the two keys). `dev-tools/validate_plane_data.py` (the two names).
+
 ## Round 251 (2026-09-19) - adventure-side only
 
 `scene/MapViewScene.java` - `miniMapPlayer` is an `Image` subclass whose `draw()` calls the new static
