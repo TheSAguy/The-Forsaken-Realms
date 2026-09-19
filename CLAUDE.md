@@ -97,7 +97,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
-- Round 241 (2026-09-19): **the RESOURCE PURSE** (`util/ResourcePurse.java`, companion of `CardBudget`) - gold /
+- Round 241 (2026-09-19; built 07:11, IN THE LIVE FOLDER 07:26 - but NOT through the packager: the user reinstalled
+  `E:\GAMES\Forge_2` at the **09.18 daily** seconds before the package ran, and `build_standalone.py` rightly refused
+  (repo = 09.16 engine). The live folder already held the right 09.16 stock tree, so the scratchpad bridge
+  `r241_sync_live.py` did the fast path's own steps - plane folder + jar + overlay re-apply + docs + the step-8
+  verification and the PACKAGE_OK discipline - with the packager's helpers, never reading BASE_INSTALL, and only after
+  checking that the live marker's daily equals `engineBuildVersion`. Read back: live jar strings, live settings keys,
+  3,146 plane files. Agent folder NOT synced (the user went straight to playtesting). Nothing of 237-241 seen in a
+  running game yet. **THE ENGINE MERGE TO THE 09.18 DAILY IS THE NEXT ROUND** - the installed daily pins by content to
+  upstream `3146e4b1036` (it has `codie_ravenous_codex.txt`, and `way_of_the_pyromancer.txt` still without
+  `aa2b5d0410c`'s fix; three edition files match it byte for byte): 19 commits past the merge base `994c5d9eb2d`. The packager stays blocked until it lands.
+  Lesson (also in memory): a Java COMMENT edited after `MVN EXIT 0` trips the packager's jar-freshness guard.):
+  **the RESOURCE PURSE** (`util/ResourcePurse.java`, companion of `CardBudget`) - gold /
   shards / wood / stone by RANK (`resourcePurseCommon/Uncommon/Rare/Mythic` 60/90/130/160 gold-equivalent) x
   difficulty (1.5 / 1.25 / 1 / 0.8) x1.5 first win x0.7 colorless x +-20% luck; 35% always gold, the rest ONE bonus
   resource rolled on the enemy's COLOR (White gold, Blue shards, Red stone, Green wood at 55 vs 15; Black/colorless

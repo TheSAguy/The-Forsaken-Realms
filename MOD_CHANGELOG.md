@@ -17847,6 +17847,21 @@ Inn without leaving the map. The Inn still never needs a rebuild of its own.
   door-box one - the lights go out, no dark square around the roof. User, on seeing it: "The middle ruble Inn looks
   good."
 
+**How it reached the live folder.** Built 07:00, then rebuilt 07:11: two Java COMMENT corrections made after the
+first `MVN EXIT 0` left sources newer than the jar, and the packager's freshness guard refused (live folder
+untouched). Then the user reinstalled `E:\GAMES\Forge_2` at the 09.18 daily seconds before the second package ran,
+and the packager refused again - rightly: the repo is merged to the 09.16 daily, and a package would have copied
+09.18 stock res under a 09.16 engine (`--allow-base-mismatch` forces exactly that full copy). The live folder
+already held the right 09.16 stock tree, and round 241 changed only what the fast path replaces every round, so a
+scratchpad bridge (`r241_sync_live.py`) ran the fast path's own steps with the packager's own helpers
+(`assert_jar_is_fresh`, `assert_target_not_in_use`, `git_overlay_list`, `rmtree_with_retry`), never reading
+BASE_INSTALL: refuse unless the live marker's daily equals `engineBuildVersion` and no file left the overlay list;
+PACKAGE_OK off first; plane folder + jar + exe + overlay re-apply + docs; the step-8 verification; PACKAGE_OK on
+last (07:26). Read back from the live folder: the jar's round-241 strings, the new settings keys, 3,146 plane files
+(the repo's 3,144 + the mirrored LICENSE and CREDITS). Worth a packager flag if it happens again. The agent folder
+was not synced - the user went straight to playtesting. **The engine merge is the next round**: the installed 09.18
+daily pins by content to upstream `3146e4b1036`, 19 commits past the merge base.
+
 Checked before building: the plane's `settings.json` loads into the game's own `TuningData` and every new key reads
 back, with the per-difficulty tables right for all four names and an unknown one; the color rows (including "RG",
 "WB", "UBRWG", lower case, "C", null); the purse over the whole enemy catalog; the plane validator clean with the 28
