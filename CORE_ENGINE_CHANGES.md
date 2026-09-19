@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 246 (2026-09-19) - release stamps only
+
+`forge-gui-android/pom.xml` - `tfr.version` 1.12, `manifestVersionCode` 11200. Plane `config.json` - `modVersion`
+1.12, `modVersionDate` 09.19. No Java.
+
 ## Round 245 (2026-09-19) - adventure-side only
 
 `player/AdventurePlayer.java` - `addQuest(int, boolean)` does not issue quest 74 after a finished tournament.

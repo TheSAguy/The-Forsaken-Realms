@@ -1,20 +1,3 @@
-<!--
-DRAFT - delete this block before publishing. Written 2026-09-19 (round 243).
-
-Before v1.12 can be tagged:
-  [ ] The user has play-tested the 09.18 engine build (rounds 241-243 on it) - nothing of 237-243 had been seen in
-      a running game when this was written; 229, 233, 239 and 240 neither.
-  [x] The open decisions were settled in round 244 (ruins 6/9/18, seven quest payouts trimmed, color hunts count
-      dungeon kills, dungeon lifespan 20-40 and the looted rule at 25%) and are written in below.
-  [x] The release name is the user's: "Reward Balancing".
-  [ ] Stamps: config.json modVersion 1.12 + modVersionDate; forge-gui-android/pom.xml tfr.version 1.12 and
-      manifestVersionCode 11200; the APK file name in the Android section below.
-  [ ] The live folder is packaged from the tagged commit (full stock copy - the engine changed), the agent folder
-      synced, the release zip built with --out C:\Users\User\TFR-Release --zip, Android per ANDROID_RELEASE.md.
-  [ ] Draft release first, all three assets uploaded, THEN --draft=false --latest. Confirm with the user before
-      publishing.
--->
-
 ## The Forsaken Realms — v1.12 — Reward Balancing
 
 This one is about what a victory is worth. Duels pay fewer cards and better ones, what they pay in gold and

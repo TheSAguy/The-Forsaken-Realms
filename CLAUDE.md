@@ -97,6 +97,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 246 (2026-09-19): **v1.12 "Reward Balancing" - the release round.** Stamps modVersion 1.12 / modVersionDate
+  09.19 / tfr.version 1.12 / manifestVersionCode 11200 / engine 09.18; `RELEASE_NOTES_v1.12.md` final. The 08:55 log
+  (C: build, new Insane character) was clean and showed the card budget and the resource purse IN PLAY for the first
+  time. v1.12 = rounds 225-246. Tag `tfr-v1.12` and the GitHub release are made only on the user's word.
 - Round 245 (2026-09-19): first play-test of the 09.18 build (from `C:\Users\User\TFR-Release`). **Five body-crop
   portraits repainted** at the head end (Shellback Ankylosaur, Magmaback Crawler, Mossback Dragon, Skyreef Shark, Ashen
   Spinewyrm - the generic art importer cuts a portrait from the CENTER of the first Idle frame when the sheet has no

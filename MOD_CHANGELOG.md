@@ -17757,6 +17757,26 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 246: v1.12 "Reward Balancing" - the release round, PC + Android (2026-09-19)
+
+User, after play-testing the 09.18 build from `C:\Users\User\TFR-Release`: *"Game closed, Please review log and get
+everything ready for full release."*
+
+**The log** (the C: session, 08:55-09:22, a new Insane character, day 2): no exception, no warning. First sight in
+a running game of the card budget (`Archer Initiate (Apprentice, FIRST win): the list rolled 13 card(s), budget 2 ->
+kept 2 best-first, first-win bonus [Tranquility]`; `Ooze (Adept, FIRST win): rolled 6 -> kept 3`) and of the resource
+purse (`Archer Initiate ... colors G ... purse 73 = 60 base x0.80 difficulty x1.50 first win x1.02 luck -> 26 gold + 3
+wood`; the Blue-Green Ooze rolled on the averaged row 15 / 35 / 35 / 15 and paid 4 shards). Also seen: round 227's
+pickup label, round 228's despawn after a lost duel, and the quest-74 retro-completion the user reported (changed in
+round 245). Not in this log: world generation (the character was made in the earlier F: session, whose log the next
+launch overwrote), legend sightings, the Capitol surge, the Coin Challenge's shard fee, the ruined Inn's notice.
+
+**Stamps:** `modVersion` 1.12, `modVersionDate` 09.19, `tfr.version` 1.12, `manifestVersionCode` 11200 (engine
+`2.0.15-SNAPSHOT-09.18`, stamped by round 242). `RELEASE_NOTES_v1.12.md` is final - the draft block is gone.
+
+v1.12 carries rounds 225-246: the v1.11 portal-glyph hotfix, the card budget, the resource purse, legend sightings,
+the Capitol surge, two quest families, the ruined Inn, dungeon turnover, the 09.18 engine.
+
 ## Round 245: three reports from the first play-test on the 09.18 build - five body-crop portraits, and the Inn quest (2026-09-19)
 
 The user closed the F: game and play-tested the `C:\Users\User\TFR-Release` build (rounds 241-244 on the 09.18 engine)
