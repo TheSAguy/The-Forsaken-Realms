@@ -17777,6 +17777,19 @@ launch overwrote), legend sightings, the Capitol surge, the Coin Challenge's sha
 v1.12 carries rounds 225-246: the v1.11 portal-glyph hotfix, the card budget, the resource purse, legend sightings,
 the Capitol surge, two quest families, the ruined Inn, dungeon turnover, the 09.18 engine.
 
+**Released.** User: *"Proceed with a full release, including PC and Android. Discord Blurb. And close out the
+thread."* Annotated tag `tfr-v1.12` @ `38d27f3b001`, branch and tag pushed. Desktop zip from
+`--out C:\Users\User\TFR-Release --zip` (265.4 MB; stamps, exactly `common` + the plane, no backup files - read back
+from the zip). Android from `C:\TFR-build` reset to the tag, `subst R:`, 2m33s: `aapt` says
+`com.thesaguy.forsakenrealms` 11200 / 1.12, `apksigner` says CN=The Forsaken Realms with the `EE:60:39:25`
+fingerprint, `assets.zip` holds exactly `common` + the plane and its `res/build.txt` equals the APK's
+`assets/build.txt` (`2026-09-19 16:50:56` - one Maven run, a matched pair). Draft first, three assets uploaded and
+their sizes compared with the local files (`The-Forsaken-Realms-v1.12.zip` 265,367,519; `assets.zip` 217,829,627;
+`forsaken-realms-1.12-signed-aligned.apk` 13,331,871), then `--draft=false --latest`: **published 2026-09-19
+16:54:31 UTC, marked Latest**; all three download URLs answer 200.
+
+**The F: live folder is v1.12**: rebuilt by the packager's full stock copy (08:40-10:25, PACKAGER EXIT 0, 346 MB - it started on round 244's jar, but copies the plane folder and the jar LAST, and by then the repo stood at the tag). Read back: the jar's SHA-1 equals the release jar's (the one inside the v1.12 zip), config.json / settings.json / quests.json / the repainted portraits equal the tagged commit, the guide equals it but for line endings, 3,146 plane files, stock marker 2026-09-18 18:23:51. The agent folder sync (a full re-copy, F: to F:) was started at 10:26 and was still running when the thread closed - check it next session.
+
 ## Round 245: three reports from the first play-test on the 09.18 build - five body-crop portraits, and the Inn quest (2026-09-19)
 
 The user closed the F: game and play-tested the `C:\Users\User\TFR-Release` build (rounds 241-244 on the 09.18 engine)

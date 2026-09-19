@@ -50,9 +50,36 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-16 (round 224; v1.11 RELEASED; ENGINE = 09.16 daily since round 222) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-19 (round 246; v1.12 "Reward Balancing" RELEASED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 185, 2026-09-12).** The user's calls, in their order:
+- **NEXT SESSION starts here (updated round 246, 2026-09-19).** v1.12 is out and NOTHING is unreleased. In order:
+  1. **Imported creatures that face LEFT walk backwards** - found in round 245, put to the user, NOT answered and NOT
+     fixed. The engine draws an un-suffixed animation as facing right (`CharacterSprite`: `Left` is the mirror of
+     `Right`); `dev-tools/art-import/art_convert_generic.py` assumed every sheet's first Idle frame faced right. Facing
+     left in their art: Tyrant Rex, Stormcrag Griffin, Bonewhite Lizardragon, Ashen Spinewyrm, Shellplate Wyrm,
+     Megamouth Wyrm, Astral Wyrm, Furhorn Wyvern, Aurelian Dragon (Crimson Burrower and Brood Spawn unclear - LOOK).
+     Fix = mirror every animation frame inside its own atlas rectangle in the PNG (frames are bottom-centered in
+     uniform cells, so the alignment holds); leave the 64x64 Avatar cell; no `.atlas` change. Show the user a
+     before/after sheet first. The importer should also stop cutting a portrait from the CENTER of a wide body.
+  2. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
+     fix, the map icons. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the
+     five-kill color hunts (240), the ruined Inn's notice, the Coin Challenge's shard fee, the world-gen town cut
+     (241), the record bonus (243), the dungeon-lifespan pull-in and hunts counting inside dungeons (244), quest 74
+     not issued after a tournament / held inside a ruin (245), the strolling guards (233).
+  3. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
+     were left alone when seven outlier payouts were trimmed; "Sweep the Wilds" counts a dungeon when its last enemy
+     dies, not when its loot is gone; round 236's terrain look-alike (a claimed wasteland crater drawn as green water).
+  4. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`). The next merge is
+     `3146e4b1036..upstream/master`, only once the user installs a newer daily into `E:\GAMES\Forge_2` - and from
+     that moment the packager refuses until the merge lands. If a round must reach the live folder in between, see
+     round 241: the live folder's stock tree still matches the repo, so plane folder + jar can be synced without
+     BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad script.
+  5. **A full new-engine build takes 90 seconds with `--out C:\Users\User\TFR-Release`** (SSD) against an hour on
+     F: - the user play-tested from there this time. Check the running javaw's `-jar` path before packaging into
+     either folder.
+  6. Older small items: five `common/` AI decks over the 4-copy limit; the Level 2 arena row overflows a portrait
+     phone (in the notes as known); agent play (`tfr-play` skill).
+- **Older pointer (round 185, 2026-09-12) - kept for its history, superseded by the list above.** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
      later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
      rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
@@ -100,7 +127,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - Round 246 (2026-09-19): **v1.12 "Reward Balancing" - the release round.** Stamps modVersion 1.12 / modVersionDate
   09.19 / tfr.version 1.12 / manifestVersionCode 11200 / engine 09.18; `RELEASE_NOTES_v1.12.md` final. The 08:55 log
   (C: build, new Insane character) was clean and showed the card budget and the resource purse IN PLAY for the first
-  time. v1.12 = rounds 225-246. Tag `tfr-v1.12` and the GitHub release are made only on the user's word.
+  time. v1.12 = rounds 225-246. **RELEASED on the user's word: tag `tfr-v1.12` @ `38d27f3b001`, published
+  2026-09-19 16:54 UTC, Latest; zip 265.4 MB / APK 13.3 MB / assets.zip 217.8 MB; NOTHING is unreleased.**
+  **The F: live folder is v1.12**: rebuilt by the packager's full stock copy (08:40-10:25, PACKAGER EXIT 0, 346 MB - it started on round 244's jar, but copies the plane folder and the jar LAST, and by then the repo stood at the tag). Read back: the jar's SHA-1 equals the release jar's (the one inside the v1.12 zip), config.json / settings.json / quests.json / the repainted portraits equal the tagged commit, the guide equals it but for line endings, 3,146 plane files, stock marker 2026-09-18 18:23:51. The agent folder sync (a full re-copy, F: to F:) was started at 10:26 and was still running when the thread closed - check it next session.
 - Round 245 (2026-09-19): first play-test of the 09.18 build (from `C:\Users\User\TFR-Release`). **Five body-crop
   portraits repainted** at the head end (Shellback Ankylosaur, Magmaback Crawler, Mossback Dragon, Skyreef Shark, Ashen
   Spinewyrm - the generic art importer cuts a portrait from the CENTER of the first Idle frame when the sheet has no

@@ -9,7 +9,7 @@ diagnosed failure.
 ## How the Android app works (30-second model)
 
 The APK is small (~15MB): engine code only. On first launch the app downloads `assets.zip`
-(~180MB) from **this repo's GitHub release whose tag matches the APK's own versionName**
+(~210MB) from **this repo's GitHub release whose tag matches the APK's own versionName**
 (`tfr-v` + versionName), extracts it to its asset dir, and restarts. After that it plays fully
 offline (card art still downloads lazily from Card-Forge's image CDNs, same as desktop).
 The app also checks the repo's releases.atom feed and offers self-update when a newer
@@ -158,7 +158,7 @@ Consequences:
 > 2. Tap the downloaded file and allow your browser/file manager to install unknown apps when
 >    prompted (the game is signed by us, not the Play Store).
 > 3. Grant the storage permission the app asks for (it stores the game data it downloads).
-> 4. On first launch, tap Download when offered the resource files (~180MB — use Wi-Fi).
+> 4. On first launch, tap Download when offered the resource files (~210MB — use Wi-Fi).
 >    The app restarts itself when done. After that it plays offline.
 > 5. Problems? Report on Discord with your device model + Android version.
 

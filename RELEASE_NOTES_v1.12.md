@@ -87,7 +87,7 @@ resolve faster.
 2. Tap the downloaded file and allow your browser/file manager to install unknown apps when
    prompted (the game is signed by us, not the Play Store).
 3. Grant the storage permission the app asks for — it stores the game data it downloads.
-4. On first launch, tap **Download** when offered the resource files (~180 MB — use Wi-Fi). The app
+4. On first launch, tap **Download** when offered the resource files (~210 MB — use Wi-Fi). The app
    restarts itself when finished. After that it plays offline.
 5. Works alongside the official Forge app — different app, different data. Updating over any earlier
    version keeps your saves.
