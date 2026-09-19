@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 233 (2026-09-18) - repo only, adventure-side only
+
+`forge-gui-mobile/src/forge/adventure/util/RoamingGuardRuntime.java` - new private `Stroll` class and `strolls`
+map, `spriteFor()`, `isOffDuty()`, `strollStep()`, `pickStrollPoint()`, `strollable()`, public `standStill()`;
+`moveGuards()` keeps a sprite for an off-duty guard and starts a stroll when one arrives home; `assignMissions()`
+hands a stroller's position to `guard.x/y` on dispatch; `reset()` clears the strolls.
+
+`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` - `onActing()`'s world-stopped branch calls
+`RoamingGuardRuntime.standStill()`.
+
 ## Round 232 (2026-09-18) - adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java` - new private `drawnGrowth()`,

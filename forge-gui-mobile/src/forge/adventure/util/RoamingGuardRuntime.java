@@ -52,6 +52,48 @@ public class RoamingGuardRuntime {
      *  load, a dismissal or a New Game+ cannot leave an orphan on the map. */
     private static final Map<RoamingGuardData, CharacterSprite> sprites = new HashMap<>();
 
+    // ------------------------------------------------------------------ off duty (round 233)
+    // User: "For the roaming guards, If they are not out on assignment, they should wander outside of the
+    // Capitol. This will be cosmetic only, since they won't interact with any enemies in the area. (Unless
+    // defending capitol) Just have them move around outside the capitol."
+    //
+    // A guard at rest used to have no sprite at all. Now it strolls a ring around the Capitol: walk to a
+    // nearby point, stand a few seconds, walk on. COSMETIC BY CONSTRUCTION:
+    //  - the sprite is a plain CharacterSprite in foregroundSprites, exactly like a travelling guard's. It
+    //    is not in WorldStage's enemy list, so no monster, mage or player can collide with or fight it;
+    //  - where it stands lives in a transient Stroll, never in the persisted guard.x/y, so a save taken
+    //    mid-stroll is byte-for-byte the save it would have been, and a load simply re-places the guards;
+    //  - it uses MathUtils.random, NOT the world's seeded Random, so strolling cannot shift a single
+    //    gameplay roll;
+    //  - missions are untouched. An attack on the Capitol itself is an ordinary mission whose target happens
+    //    to be home (the Capitol carries TOWN_RESTORED_FLAG), so "defending the Capitol" already works: the
+    //    stroller is dispatched, walks the few steps to the gate, and intercepts there.
+    // The one thing a stroll does feed back: a dispatched guard sets out from where it was standing rather
+    // than from the Capitol's origin, so the sprite does not jump. That moves its start by at most the ring's
+    // radius - a second or two on a journey of minutes, and as often nearer the target as farther.
+    // Like everything else on the overworld it only moves while the player does (update() runs inside
+    // WorldStage's time block); standStill() drops every guard to Idle when the world stops.
+    private static final class Stroll {
+        float x, y, goalX, goalY, pause;
+        boolean hasGoal;
+    }
+
+    private static final Map<RoamingGuardData, Stroll> strolls = new HashMap<>();
+    /** A stroll is a fraction of the guard's travel speed - someone off duty, not someone racing a mage. */
+    private static final float STROLL_SPEED_FACTOR = 0.35f;
+    /** The ring: from this far beyond the Capitol's half-diagonal (so never inside the building) ... */
+    private static final float STROLL_RING_INNER = 10f;
+    /** ... to this much farther out. */
+    private static final float STROLL_RING_WIDTH = 44f;
+    /** Each new goal is at most this far round the ring from where the guard stands, so its straight path
+     *  stays outside the building instead of cutting through it to the far side. */
+    private static final float STROLL_MAX_TURN_DEGREES = 70f;
+    private static final float STROLL_PAUSE_MIN_SECONDS = 1.5f;
+    private static final float STROLL_PAUSE_MAX_SECONDS = 5f;
+    /** Half a character sprite's width: ring points are where the guard's feet go, not its left edge. */
+    private static final float STROLL_SPRITE_HALF_WIDTH = 8f;
+    private static final com.badlogic.gdx.math.Rectangle strollProbe = new com.badlogic.gdx.math.Rectangle();
+
     /** Set while a guard duel is being fought, so WorldStage.setWinner() knows to route the result
      *  here instead of treating it as one of the player's own fights. */
     private static RoamingGuardData duellingGuard;
@@ -143,6 +185,13 @@ public class RoamingGuardRuntime {
             guard.missionPoiId = targetId;
             guard.returningHome = false;
             guard.deployed = true;
+            // Round 233: a guard that was strolling sets out from where it stands, so its sprite walks
+            // off instead of jumping to the Capitol's origin first - see the off-duty notes above.
+            Stroll stroll = strolls.remove(guard);
+            if (stroll != null) {
+                guard.x = stroll.x;
+                guard.y = stroll.y;
+            }
             // A guard at rest sits at the Capitol, so that is where it sets out from. Teleporting
             // is decided on arrival at the destination, not here, so the log reads in order.
             PointOfInterest home = RoamingGuards.capitol();
@@ -191,11 +240,13 @@ public class RoamingGuardRuntime {
     private static void moveGuards(float delta, int day, SpriteGroup foregroundSprites) {
         PointOfInterest home = RoamingGuards.capitol();
         List<RoamingGuardData> roster = RoamingGuards.roster();
-        // Drop sprites for guards that are gone, downed, or no longer deployed.
+        // Drop sprites for guards that are gone or downed. Round 233: a guard that is merely not deployed
+        // keeps its sprite now - it is strolling outside the Capitol.
         List<RoamingGuardData> stale = new ArrayList<>();
         for (Map.Entry<RoamingGuardData, CharacterSprite> entry : sprites.entrySet()) {
             RoamingGuardData guard = entry.getKey();
-            if (!roster.contains(guard) || !guard.deployed || guard.isOutOfCommission(day))
+            if (!roster.contains(guard) || guard.isOutOfCommission(day)
+                    || (!guard.deployed && !isOffDuty(guard, day, home)))
                 stale.add(guard);
         }
         for (RoamingGuardData guard : stale) {
@@ -203,10 +254,16 @@ public class RoamingGuardRuntime {
             if (sprite != null)
                 foregroundSprites.removeActor(sprite);
         }
+        strolls.keySet().removeIf(guard -> !roster.contains(guard) || !isOffDuty(guard, day, home));
 
         for (RoamingGuardData guard : roster) {
-            if (!guard.deployed || guard.isOutOfCommission(day))
+            if (guard.isOutOfCommission(day))
                 continue;
+            if (!guard.deployed) {
+                if (isOffDuty(guard, day, home))
+                    strollStep(guard, home, delta, foregroundSprites); // round 233
+                continue;
+            }
             PointOfInterest destination = guard.isIdle() ? home : poiById(guard.missionPoiId);
             if (destination == null) {
                 guard.deployed = false;
@@ -227,6 +284,13 @@ public class RoamingGuardRuntime {
                     guard.missionPoiId = "";
                     System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
                             + " is home at the Capitol and available again");
+                    // Round 233: it starts its stroll from the gate it just walked up to, not from a
+                    // random spot on the ring - that is for guards that were already home (a load, a hire).
+                    Stroll fromTheGate = new Stroll();
+                    fromTheGate.x = guard.x;
+                    fromTheGate.y = guard.y;
+                    fromTheGate.pause = STROLL_PAUSE_MIN_SECONDS;
+                    strolls.put(guard, fromTheGate);
                 }
                 // Otherwise it is standing at the threatened town, waiting to intercept.
             } else {
@@ -237,14 +301,7 @@ public class RoamingGuardRuntime {
                 guard.y += stepY;
             }
 
-            CharacterSprite sprite = sprites.get(guard);
-            if (sprite == null) {
-                sprite = new CharacterSprite(AdventurePlayer.current().spriteName());
-                sprite.setTierCue(guard.tier); // round 160: the same rank size cue as the mages it races
-                sprites.put(guard, sprite);
-                foregroundSprites.addActor(sprite);
-                sprite.setPosition(guard.x, guard.y);
-            }
+            CharacterSprite sprite = spriteFor(guard, guard.x, guard.y, foregroundSprites);
             // Round 156 (user: "the guards... appear to just have a static image moving"). They
             // were positioned with setPosition(), which moves the actor and nothing else, so every
             // guard sat on its constructor's Idle frame forever. moveBy() is what the mages use -
@@ -256,6 +313,129 @@ public class RoamingGuardRuntime {
                 sprite.setAnimation(CharacterSprite.AnimationTypes.Idle);
             sprite.setPosition(guard.x, guard.y); // authoritative: guard.x/y is what persists
         }
+    }
+
+    /** The live sprite for this guard, created where it stands the first time it is needed. */
+    private static CharacterSprite spriteFor(RoamingGuardData guard, float x, float y, SpriteGroup foregroundSprites) {
+        CharacterSprite sprite = sprites.get(guard);
+        if (sprite == null) {
+            sprite = new CharacterSprite(AdventurePlayer.current().spriteName());
+            sprite.setTierCue(guard.tier); // round 160: the same rank size cue as the mages it races
+            sprites.put(guard, sprite);
+            foregroundSprites.addActor(sprite);
+            sprite.setPosition(x, y);
+        }
+        return sprite;
+    }
+
+    /** Round 233: at home, fit for duty, and with nothing to do - the guards that stroll. A guard with no
+     *  deck strolls too: it cannot take a fight, but it is still standing around the Capitol. */
+    private static boolean isOffDuty(RoamingGuardData guard, int day, PointOfInterest home) {
+        return home != null && guard.isIdle() && !guard.deployed && !guard.returningHome
+                && !guard.isOutOfCommission(day);
+    }
+
+    /** Round 233: one frame of an off-duty guard's stroll - see the notes on the Stroll class. */
+    private static void strollStep(RoamingGuardData guard, PointOfInterest home, float delta, SpriteGroup foregroundSprites) {
+        Stroll stroll = strolls.get(guard);
+        if (stroll == null) {
+            // Already home when we first see it (a load, a new hire, a recovery): put it somewhere on the
+            // ring rather than have every guard walk out of the same corner of the Capitol together, and
+            // give each its own first pause so they do not move in step either.
+            stroll = new Stroll();
+            com.badlogic.gdx.math.Rectangle box = home.getBoundingRectangle();
+            stroll.x = box.x + box.width / 2f - STROLL_SPRITE_HALF_WIDTH;
+            stroll.y = box.y - STROLL_RING_INNER; // fallback: just below the gate
+            pickStrollPoint(stroll, home, false);
+            if (stroll.hasGoal) {
+                stroll.x = stroll.goalX;
+                stroll.y = stroll.goalY;
+                stroll.hasGoal = false;
+            }
+            stroll.pause = com.badlogic.gdx.math.MathUtils.random(0f, STROLL_PAUSE_MAX_SECONDS);
+            strolls.put(guard, stroll);
+            System.out.println("[TFR-RoamGuard] " + RoamingGuards.displayName(guard.tier)
+                    + " is off duty - strolling outside the Capitol (cosmetic; " + strolls.size() + " strolling)");
+        }
+        float stepX = 0f, stepY = 0f;
+        if (stroll.pause > 0f) {
+            stroll.pause -= delta;
+        } else {
+            if (!stroll.hasGoal)
+                pickStrollPoint(stroll, home, true);
+            if (!stroll.hasGoal) {
+                stroll.pause = STROLL_PAUSE_MIN_SECONDS; // nowhere walkable this time - look again shortly
+            } else {
+                float dx = stroll.goalX - stroll.x, dy = stroll.goalY - stroll.y;
+                float distance = (float) Math.sqrt(dx * dx + dy * dy);
+                if (distance <= 1f) {
+                    stroll.hasGoal = false;
+                    stroll.pause = com.badlogic.gdx.math.MathUtils.random(STROLL_PAUSE_MIN_SECONDS, STROLL_PAUSE_MAX_SECONDS);
+                } else {
+                    float step = Math.min(distance, RoamingGuards.speedFor(guard.tier) * STROLL_SPEED_FACTOR * delta);
+                    stepX = dx / distance * step;
+                    stepY = dy / distance * step;
+                    stroll.x += stepX;
+                    stroll.y += stepY;
+                }
+            }
+        }
+        CharacterSprite sprite = spriteFor(guard, stroll.x, stroll.y, foregroundSprites);
+        if (stepX != 0f || stepY != 0f)
+            sprite.moveBy(stepX, stepY, delta); // the Walk animation and the facing - see moveGuards()
+        else
+            sprite.setAnimation(CharacterSprite.AnimationTypes.Idle);
+        sprite.setPosition(stroll.x, stroll.y);
+    }
+
+    /**
+     * Round 233: choose the next point on the ring around the Capitol, or leave {@code hasGoal} false when
+     * eight tries find nothing walkable (a Capitol hemmed in by water or mountains).
+     *
+     * @param nearby true to stay within STROLL_MAX_TURN_DEGREES of where the guard stands (a stroll leg);
+     *               false for anywhere on the ring (first placement)
+     */
+    private static void pickStrollPoint(Stroll stroll, PointOfInterest home, boolean nearby) {
+        com.badlogic.gdx.math.Rectangle box = home.getBoundingRectangle();
+        float centerX = box.x + box.width / 2f, centerY = box.y + box.height / 2f;
+        float inner = (float) Math.sqrt(box.width * box.width + box.height * box.height) / 2f + STROLL_RING_INNER;
+        float here = com.badlogic.gdx.math.MathUtils.atan2(stroll.y - centerY, stroll.x + STROLL_SPRITE_HALF_WIDTH - centerX);
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        stroll.hasGoal = false;
+        for (int attempt = 0; attempt < 8; attempt++) {
+            float angle = nearby
+                    ? here + com.badlogic.gdx.math.MathUtils.random(-STROLL_MAX_TURN_DEGREES, STROLL_MAX_TURN_DEGREES)
+                            * com.badlogic.gdx.math.MathUtils.degreesToRadians
+                    : com.badlogic.gdx.math.MathUtils.random(0f, com.badlogic.gdx.math.MathUtils.PI2);
+            float radius = inner + com.badlogic.gdx.math.MathUtils.random(0f, STROLL_RING_WIDTH);
+            float goalX = centerX + com.badlogic.gdx.math.MathUtils.cos(angle) * radius - STROLL_SPRITE_HALF_WIDTH;
+            float goalY = centerY + com.badlogic.gdx.math.MathUtils.sin(angle) * radius;
+            if (!strollable(world, goalX, goalY))
+                continue;
+            if (nearby && !strollable(world, (stroll.x + goalX) / 2f, (stroll.y + goalY) / 2f))
+                continue; // the goal is dry land but the way there crosses water
+            stroll.goalX = goalX;
+            stroll.goalY = goalY;
+            stroll.hasGoal = true;
+            return;
+        }
+    }
+
+    /** Round 233: can a guard stand here - inside the world and not on a colliding tile (water, peaks). */
+    private static boolean strollable(forge.adventure.world.World world, float x, float y) {
+        if (x < 0f || y < 0f || x + 16f > world.getWidthInPixels() || y + 8f > world.getHeightInPixels())
+            return false;
+        return !world.collidingTile(strollProbe.set(x, y, 16f, 8f));
+    }
+
+    /**
+     * Round 233: the world has stopped (the player is standing still, so WorldStage is not calling
+     * update()). Every guard sprite drops to Idle, the way WorldStage already idles its enemies - without
+     * this a guard caught mid-step kept playing its Walk cycle on the spot.
+     */
+    public static void standStill() {
+        for (CharacterSprite sprite : sprites.values())
+            sprite.setAnimation(CharacterSprite.AnimationTypes.Idle);
     }
 
     // ------------------------------------------------------------------ interception
@@ -478,6 +658,7 @@ public class RoamingGuardRuntime {
                 foregroundSprites.removeActor(sprite);
         }
         sprites.clear();
+        strolls.clear(); // round 233
         clearDuel();
         waitingMage = null;
     }

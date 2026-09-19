@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 233 (2026-09-18, REPO ONLY - not packaged): **off-duty roaming guards stroll outside the Capitol** - a guard
+  at rest used to have NO map sprite. `RoamingGuardRuntime`: transient `Stroll` per guard (never written to the
+  persisted `guard.x/y`), `strollStep()` / `pickStrollPoint()` / `strollable()`, ring = Capitol half-diagonal + 10..54
+  px, legs within 70 degrees so paths never cut through the building, 35% travel speed, 1.5-5 s pauses,
+  `MathUtils.random` (NOT the world RNG). Cosmetic: not in the enemy list, missions untouched (the Capitol already
+  counts as a mission target). A dispatched stroller sets out from where it stands. New `standStill()` idles ALL
+  guard sprites when the world stops (fixes travelling guards walking on the spot since round 156). Downed guards do
+  not stroll. `[TFR-RoamGuard] ... is off duty ...`. The next package carries it.
 - Round 232 (2026-09-18; built 16:31, PACKAGED 16:43 with round 231 - 346 MB, `PACKAGER EXIT 0`, live jar read back;
   agent folder synced, 0 failed; the user approved the before/after preview: "looks good"): **corner icons sit on
   the DRAWN sprite** - restored towns draw at 1.15x around their

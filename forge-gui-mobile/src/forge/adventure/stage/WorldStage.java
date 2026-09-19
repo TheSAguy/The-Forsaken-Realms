@@ -519,6 +519,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             for (Pair<Float, EnemySprite> pair : enemies) {
                 pair.getValue().setAnimation(CharacterSprite.AnimationTypes.Idle);
             }
+            RoamingGuardRuntime.standStill(); // round 233: guards idle with everything else
         }
         collided = false;
     }

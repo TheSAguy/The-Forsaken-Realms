@@ -17757,6 +17757,51 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 233: off-duty roaming guards stroll outside the Capitol (2026-09-18, REPO ONLY - not packaged)
+
+User: *"Repo only: For the roaming guards, If they are not out on assignment, they should wonder outside of the
+Capitol. This will be cosmetic only, since they won't interact with any enemies in the area. (Unless defending
+capitol) Just have them move around outside the capitol."*
+
+**Before.** A roaming guard had a map sprite only while travelling - to a threatened town or back home. At rest it
+simply did not exist on the map. **Now** every guard that is home, fit for duty and unassigned strolls a ring around
+the Capitol: walk to a nearby point, stand 1.5-5 s, walk on, at 35% of its travel speed. A guard with no deck
+strolls too (it cannot take a fight, but it is still standing around). A guard that is out of commission does
+not - it is recovering, and a sprite would read as "available".
+
+**Cosmetic by construction** (`RoamingGuardRuntime`, the notes on the new `Stroll` class):
+- the sprite is a plain `CharacterSprite` in `foregroundSprites`, exactly like a travelling guard's. It is not in
+  WorldStage's enemy list, so no monster, mage or player can collide with it or fight it;
+- where it stands lives in a transient `Stroll`, never in the persisted `guard.x/y`, so a save taken mid-stroll is
+  the save it would have been, and a load simply re-places the guards (each at a random point on the ring, each
+  with its own first pause, so they neither start in a pile nor move in step);
+- it draws from `MathUtils.random`, NOT the world's seeded `Random`, so strolling cannot shift one gameplay roll;
+- missions are untouched. "Unless defending capitol" already works and needed nothing: the Capitol carries
+  `TOWN_RESTORED_FLAG`, so an attack on it is an ordinary mission whose target happens to be home - the stroller is
+  dispatched, walks the few steps to the gate (or "teleports" there), and intercepts.
+
+The one thing a stroll feeds back: a dispatched guard sets out from where it was standing rather than from the
+Capitol's origin, so its sprite walks off instead of jumping. That moves its start by at most the ring's radius
+(99 px from the Capitol's center) - a second or two on a journey of minutes, as often nearer the target as farther.
+
+**The ring.** From 10 px beyond the Capitol's half-diagonal (so never inside the building) to 44 px farther out.
+Each new goal lies within 70 degrees of where the guard stands, so its straight path stays outside the building
+instead of cutting through to the far side; a goal must be on a walkable tile, and so must the midpoint of the way
+there (eight tries, then look again shortly - a Capitol hemmed in by water just has calmer guards). Checked before
+building with a Python port of the same arithmetic: three guards, ten minutes, 0 frames inside the Capitol's box,
+0 beyond the ring; the trail picture went to the user.
+
+**Also fixed: guards walking on the spot.** Like everything on the overworld a guard only moves while the player
+does - `update()` runs inside WorldStage's time block. WorldStage idles its enemies when the world stops, but
+nothing idled the guards: `CharacterSprite.moveBy()` sets Walk and only an explicit `setAnimation(Idle)` clears it,
+so a guard caught mid-step keeps playing its Walk cycle in place. Read from the code, never reported - travelling
+guards have been open to it since round 156 gave them a walk animation, and strollers, always on screen at the
+Capitol, would have made it obvious. New `RoamingGuardRuntime.standStill()`, called from that same else-branch.
+
+Diagnostic: `[TFR-RoamGuard] <rank> is off duty - strolling outside the Capitol (cosmetic; N strolling)`, once per
+stroll started from a load, a hire or a recovery. Not packaged by the user's instruction; the next package carries
+it. Not yet seen in a running game.
+
 ## Round 232: the town's corner icons floated above its base (2026-09-18)
 
 User, on round 231's preview image: *"The Capitol image looks good, the town seems like the icons are a little
