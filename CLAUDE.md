@@ -97,6 +97,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 240 (2026-09-18): **quest 92 "Sweep the Wilds"** - clear three dungeons/caves (new objective `ClearDungeons`,
+  new event `DUNGEONCLEARED` fired from `DungeonRotation.onDungeonClear()` only when a rotatable POI REALLY despawns;
+  counted from acceptance), offered at every town board, 600 gold + a rare. **Color quests 54-63 now ask for FIVE
+  kills** (they existed since 2026-08-29 asking for one): `count3: 5`, texts rewritten, 600 gold, +2 color reputation;
+  still overworld kills only. **Quest log shows progress** - `AdventureQuestStage.getProgressText()` " (2/5)" + a HUD
+  line per step. quests.json round-trips byte-identical through json.dumps(indent=tab). FLAGGED to the user: quest
+  REWARDS are outside the card budget and some are lavish (Slobad's quest: 10 rare/mythic artifacts, 14 below Insane).
 - Round 239 (2026-09-18): **the Capitol draws fire** - `capitolBonus` (+1, `capitolBuiltMageCapBonus`) in
   `TerritoryControl.maxActiveMagesPerColor()` while the Capitol stands, and `onPlayerCapitolBuilt()` (called from
   `TownRestoration.upgradeToCapitol()`) sends one mage from every undefeated color AT ONCE via the ordinary

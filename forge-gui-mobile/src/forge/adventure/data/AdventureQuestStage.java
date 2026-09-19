@@ -387,11 +387,21 @@ public class AdventureQuestStage implements Serializable {
                     status = COMPLETE;
                 }
                 break;
+            case ClearDungeons:
+                // Round 240: one DUNGEONCLEARED per dungeon the player really emptied - see
+                // AdventureQuestController.updateDungeonCleared(). Counted from the moment the quest is
+                // taken, like Defeat: dungeons cleared before it was offered do not count.
+                if (event.type != AdventureQuestEventType.DUNGEONCLEARED)
+                    break;
+                status = ++progress3 >= count3 ? COMPLETE : status;
+                announceProgress();
+                break;
             case Defeat:
                 if (event.type != AdventureQuestEventType.MATCHCOMPLETE)
                     break;
                 if (event.winner) {
                     status = ++progress3 >= count3 ? COMPLETE : status;
+                    announceProgress(); // round 240: "2 of 5" - the color quests now ask for five
                 } else {
                     status = ++progress4 >= count4 && count4 > 0 ? FAILED : status;
                 }
@@ -536,6 +546,24 @@ public class AdventureQuestStage implements Serializable {
                     + mapFlag + " already >= " + required + ")");
         }
         return satisfied;
+    }
+
+    /** Round 240: " (2/5)" for a stage that counts toward more than one, else "". The quest log appends it
+     *  to the stage name - a "kill five" or "clear three" quest cannot be played blind. */
+    public String getProgressText() {
+        if (count3 <= 1)
+            return "";
+        if (objective != Defeat && objective != ClearDungeons && objective != CompleteQuest
+                && objective != Arena && objective != EventFinish)
+            return "";
+        return " (" + Math.min(progress3, count3) + "/" + count3 + ")";
+    }
+
+    /** Round 240: a HUD line each time a counted stage moves, short of the last step (which the quest's
+     *  own "Quest Updated" notice announces). */
+    private void announceProgress() {
+        if (count3 > 1 && progress3 < count3)
+            forge.adventure.stage.GameHUD.getInstance().addNotification(name + ": " + progress3 + " of " + count3);
     }
 
     /** Round 235: what a flag must have reached for a STATE check to call it satisfied - never below 1,

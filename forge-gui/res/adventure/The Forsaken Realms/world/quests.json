@@ -11550,7 +11550,7 @@
 		"id": 54,
 		"isTemplate": true,
 		"name": "Blot Out the Dark",
-		"description": "Defeat a Black-aligned enemy for White.",
+		"description": "Defeat five Black-aligned enemies for White.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the White cause has little patience for Black incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -11578,11 +11578,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "white",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -11593,18 +11593,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Black enemy",
-				"description": "Find and defeat a Black-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Black enemies",
+				"description": "Find and defeat five Black-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "B",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on White's borders. Time to head back and report it.",
+					"text": "That makes five - White's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11640,7 +11640,7 @@
 		"id": 55,
 		"isTemplate": true,
 		"name": "Cool the Flames",
-		"description": "Defeat a Red-aligned enemy for White.",
+		"description": "Defeat five Red-aligned enemies for White.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the White cause has little patience for Red incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -11668,11 +11668,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "white",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -11683,18 +11683,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Red enemy",
-				"description": "Find and defeat a Red-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Red enemies",
+				"description": "Find and defeat five Red-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "R",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on White's borders. Time to head back and report it.",
+					"text": "That makes five - White's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11730,7 +11730,7 @@
 		"id": 56,
 		"isTemplate": true,
 		"name": "Quench the Flames",
-		"description": "Defeat a Red-aligned enemy for Blue.",
+		"description": "Defeat five Red-aligned enemies for Blue.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Blue cause has little patience for Red incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -11758,11 +11758,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "blue",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -11773,18 +11773,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Red enemy",
-				"description": "Find and defeat a Red-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Red enemies",
+				"description": "Find and defeat five Red-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "R",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Blue's borders. Time to head back and report it.",
+					"text": "That makes five - Blue's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11820,7 +11820,7 @@
 		"id": 57,
 		"isTemplate": true,
 		"name": "Prune the Wilds",
-		"description": "Defeat a Green-aligned enemy for Blue.",
+		"description": "Defeat five Green-aligned enemies for Blue.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Blue cause has little patience for Green incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -11848,11 +11848,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "blue",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -11863,18 +11863,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Green enemy",
-				"description": "Find and defeat a Green-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Green enemies",
+				"description": "Find and defeat five Green-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "G",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Blue's borders. Time to head back and report it.",
+					"text": "That makes five - Blue's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11910,7 +11910,7 @@
 		"id": 58,
 		"isTemplate": true,
 		"name": "Wither the Green",
-		"description": "Defeat a Green-aligned enemy for Black.",
+		"description": "Defeat five Green-aligned enemies for Black.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Black cause has little patience for Green incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -11938,11 +11938,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "black",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -11953,18 +11953,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Green enemy",
-				"description": "Find and defeat a Green-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Green enemies",
+				"description": "Find and defeat five Green-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "G",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Black's borders. Time to head back and report it.",
+					"text": "That makes five - Black's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -12000,7 +12000,7 @@
 		"id": 59,
 		"isTemplate": true,
 		"name": "Silence the Faithful",
-		"description": "Defeat a White-aligned enemy for Black.",
+		"description": "Defeat five White-aligned enemies for Black.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Black cause has little patience for White incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -12028,11 +12028,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "black",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -12043,18 +12043,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a White enemy",
-				"description": "Find and defeat a White-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five White enemies",
+				"description": "Find and defeat five White-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "W",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Black's borders. Time to head back and report it.",
+					"text": "That makes five - Black's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -12090,7 +12090,7 @@
 		"id": 60,
 		"isTemplate": true,
 		"name": "Burn the Banners",
-		"description": "Defeat a White-aligned enemy for Red.",
+		"description": "Defeat five White-aligned enemies for Red.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Red cause has little patience for White incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -12118,11 +12118,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "red",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -12133,18 +12133,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a White enemy",
-				"description": "Find and defeat a White-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five White enemies",
+				"description": "Find and defeat five White-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "W",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Red's borders. Time to head back and report it.",
+					"text": "That makes five - Red's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -12180,7 +12180,7 @@
 		"id": 61,
 		"isTemplate": true,
 		"name": "Boil the Tides",
-		"description": "Defeat a Blue-aligned enemy for Red.",
+		"description": "Defeat five Blue-aligned enemies for Red.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Red cause has little patience for Blue incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -12208,11 +12208,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "red",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -12223,18 +12223,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Blue enemy",
-				"description": "Find and defeat a Blue-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Blue enemies",
+				"description": "Find and defeat five Blue-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "U",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Red's borders. Time to head back and report it.",
+					"text": "That makes five - Red's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -12270,7 +12270,7 @@
 		"id": 62,
 		"isTemplate": true,
 		"name": "Choke the Currents",
-		"description": "Defeat a Blue-aligned enemy for Green.",
+		"description": "Defeat five Blue-aligned enemies for Green.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Green cause has little patience for Blue incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -12298,11 +12298,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "green",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -12313,18 +12313,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Blue enemy",
-				"description": "Find and defeat a Blue-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Blue enemies",
+				"description": "Find and defeat five Blue-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "U",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Green's borders. Time to head back and report it.",
+					"text": "That makes five - Green's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -12360,7 +12360,7 @@
 		"id": 63,
 		"isTemplate": true,
 		"name": "Root Out Rot",
-		"description": "Defeat a Black-aligned enemy for Green.",
+		"description": "Defeat five Black-aligned enemies for Green.",
 		"offerDialog": {
 			"text": "The notice board here carries a standing request: the Green cause has little patience for Black incursions on these borders. Whoever thins their numbers earns the town's thanks.",
 			"options": [
@@ -12388,11 +12388,11 @@
 							"grantRewards": [
 								{
 									"type": "gold",
-									"count": 250
+									"count": 600
 								}
 							],
 							"addColorReputationColor": "green",
-							"addColorReputationAmount": 1
+							"addColorReputationAmount": 2
 						}
 					]
 				}
@@ -12403,18 +12403,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Defeat a Black enemy",
-				"description": "Find and defeat a Black-aligned enemy anywhere in the wilds.",
+				"name": "Defeat five Black enemies",
+				"description": "Find and defeat five Black-aligned enemies anywhere in the wilds.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
-				"count3": 1,
+				"count3": 5,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
 				"enemyColorLetter": "B",
 				"prologue": {},
 				"epilogue": {
-					"text": "That's one less threat on Green's borders. Time to head back and report it.",
+					"text": "That makes five - Green's borders are quieter for it. Time to head back and report it.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -15222,5 +15222,117 @@
 				"epilogue": {}
 			}
 		]
+	},
+	{
+		"id": 92,
+		"isTemplate": true,
+		"name": "Sweep the Wilds",
+		"description": "Clear out three dungeons or caves - every enemy defeated, so the place is abandoned.",
+		"offerDialog": {
+			"text": "A notice, much handled: the dens and delvings around here empty the roads of travelers. Clear three of them out - leave nothing alive inside - and the town will make it worth your while.",
+			"options": [
+				{
+					"name": "You have your own business to attend to. (Decline Quest)"
+				},
+				{
+					"name": "You take the job. (Accept Quest)",
+					"action": [
+						{
+							"issueQuest": "92"
+						}
+					]
+				}
+			]
+		},
+		"prologue": {},
+		"epilogue": {
+			"text": "Three fewer holes for trouble to crawl out of. The town pays what it promised, and adds a card from its own strongbox.",
+			"options": [
+				{
+					"name": "(Continue)",
+					"action": [
+						{
+							"grantRewards": [
+								{
+									"type": "gold",
+									"probability": 1,
+									"count": 600
+								},
+								{
+									"type": "card",
+									"probability": 1,
+									"count": 1,
+									"rarity": [
+										"Rare"
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"failureDialog": {},
+		"rewardDescription": "Gold and a rare card",
+		"stages": [
+			{
+				"id": 1,
+				"name": "Clear three dungeons",
+				"description": "Defeat every enemy inside three dungeons or caves. A cleared place vanishes from the map - that is how you know it counted.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"count3": 3,
+				"anyPOI": true,
+				"worldMapOK": true,
+				"objective": "ClearDungeons",
+				"prologue": {},
+				"epilogue": {
+					"text": "That is the third. Time to head back and collect.",
+					"options": [
+						{
+							"name": "(Continue)"
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 2,
+				"name": "Travel",
+				"description": "Return to where the quest began to collect your reward.",
+				"mapFlag": "",
+				"mapFlagValue": 1,
+				"here": true,
+				"objective": "Travel",
+				"prerequisiteIDs": [
+					1
+				],
+				"prologue": {},
+				"epilogue": {},
+				"POIToken": ""
+			}
+		],
+		"questSourceTags": [
+			"waste_town_generic",
+			"waste_town_identity",
+			"waste_town_tribal",
+			"plains_town_generic",
+			"plains_town_identity",
+			"plains_town_tribal",
+			"island_town_generic",
+			"island_town_identity",
+			"island_town_tribal",
+			"swamp_town_generic",
+			"swamp_town_identity",
+			"swamp_town_tribal",
+			"mountain_town_generic",
+			"mountain_town_identity",
+			"mountain_town_tribal",
+			"forest_town_generic",
+			"forest_town_identity",
+			"forest_town_tribal",
+			"player_capital"
+		],
+		"offerProbability": 0.08
 	}
 ]

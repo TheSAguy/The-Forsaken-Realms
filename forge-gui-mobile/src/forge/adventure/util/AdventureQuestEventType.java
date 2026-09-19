@@ -15,6 +15,9 @@ public enum AdventureQuestEventType {
     EVENTCOMPLETE,
     EVENTMATCHCOMPLETE,
     RECEIVEITEM,
-    USEITEM
+    USEITEM,
+    /** Round 240: a rotatable dungeon or cave despawned because the player cleared it - see
+     *  DungeonRotation.onDungeonClear() and the ClearDungeons objective. */
+    DUNGEONCLEARED
 
 }

@@ -463,7 +463,10 @@ public class DungeonRotation {
         int currentDay = world.getCurrentDay();
         // 2026-08-19 user request: same as onDungeonDefeat()'s routine case - no popup, this fires
         // too often over a normal playthrough to be worth a notification every time.
+        boolean wasOnTheMap = poi.getActive(); // round 240: hidePoi() is a no-op the second time this is called
         hidePoi(world, poi, currentDay, null);
+        if (wasOnTheMap)
+            AdventureQuestController.instance().updateDungeonCleared(poi); // round 240: "clear N dungeons" quests
         activateFromReserve(world, currentDay); // a replacement appears elsewhere - density stays level
         world.refreshWorldMapMarkers();
     }

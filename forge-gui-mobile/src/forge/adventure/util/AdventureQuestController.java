@@ -166,6 +166,7 @@ public class AdventureQuestController implements Serializable {
         Arena,
         CharacterFlag,
         Clear,
+        ClearDungeons, // round 240: clear count3 rotatable dungeons/caves (any of them) - counted by DUNGEONCLEARED
         CompleteQuest,
         Defeat,
         Delivery,
@@ -545,6 +546,24 @@ public class AdventureQuestController implements Serializable {
         event.winner = false;
         event.enemy = defeatedBy;
         event.clear = false;
+        for(AdventureQuestData currentQuest : Current.player().getQuests()) {
+            currentQuest.updateStages(event);
+        }
+        activateNextStages();
+    }
+
+    /**
+     * Round 240 (user: "Add a quest: Clear out 3 dungeons. So the player has to kill all enemies + loot, so they
+     * dissipear"). Called by DungeonRotation.onDungeonClear() at the moment a rotatable dungeon or cave really
+     * despawns because the player emptied it - the last enemy killed, or the player walking out of a place with
+     * no enemies and no loot left. The event carries the cleared POI: checkIfTargetLocation() reads its tags.
+     */
+    public void updateDungeonCleared(PointOfInterest cleared){
+        if (cleared == null)
+            return;
+        AdventureQuestEvent event = new AdventureQuestEvent();
+        event.type = AdventureQuestEventType.DUNGEONCLEARED;
+        event.poi = cleared;
         for(AdventureQuestData currentQuest : Current.player().getQuests()) {
             currentQuest.updateStages(event);
         }

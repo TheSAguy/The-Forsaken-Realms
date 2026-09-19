@@ -188,7 +188,7 @@ public class QuestLogScene extends UIScene {
 
         for (AdventureQuestStage stage : quest.getActiveStages()) {
             // Active Stages will have Blank box unicode
-            TypingLabel activeLabel = Controls.newTypingLabel("\u2610  " + stage.name);
+            TypingLabel activeLabel = Controls.newTypingLabel("\u2610  " + stage.name + stage.getProgressText()); // round 240: " (2/5)"
             activeLabel.skipToTheEnd();
             activeLabel.setColor(Color.BLACK);
             activeLabel.setWrap(true);

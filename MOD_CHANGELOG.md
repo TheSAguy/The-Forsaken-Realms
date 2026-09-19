@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 240: a "clear three dungeons" quest; the color quests ask for five kills; quest progress in the log (2026-09-18)
+
+User: *"Add a quest: Clear out 3 dungeons. So the player has to kill all enemies + loot, so they dissipear."* and
+*"If we don't already have this: Quest. Give each color the quest. Kill 5 of the opposite color enemies. So Green
+will give you a quest to kill 5 blue or 5 black., etc."*
+
+**"Sweep the Wilds" (quest 92).** Offered at every town's board (the waste towns, all five colors' towns, the
+player's Capitol; `offerProbability` 0.08 like its neighbors): clear three dungeons or caves, report back, 600 gold
+and a rare card. It needed a way to COUNT clears, which the quest system did not have - `Clear` is "this one target
+dungeon". New objective `ClearDungeons` and new event `DUNGEONCLEARED`, fired by
+`AdventureQuestController.updateDungeonCleared()` from `DungeonRotation.onDungeonClear()` at the moment a rotatable
+dungeon or cave REALLY despawns because the player emptied it (`poi.getActive()` read before `hidePoi()`, which is a
+no-op the second time the clear fires). So it counts exactly the places that vanish - a story dungeon or a
+`NoRotate` one never counts, and never vanishes. Counted from the moment the quest is taken, like `Defeat`.
+*What "cleared" means in code:* a dungeon despawns when its last enemy dies, or when the player walks out of one
+that has no enemies and no loot left - so the loot half of the user's description is how the second path works,
+and the first does not wait for it.
+
+**The color quests already existed** (ids 54-63, 2026-08-29): each color's towns offer two, one per enemy color -
+Green's are "Choke the Currents" (Blue) and "Root Out Rot" (Black). They asked for ONE kill. Now `count3: 5`,
+with the stage name, both descriptions and the stage's closing line rewritten to say five; gold 250 -> 600 and the
+color reputation reward +1 -> +2 for five times the work. Unchanged: these count OVERWORLD kills only (the stage is
+`worldMapOK` with no POI, so a kill inside a dungeon does not count) - worth knowing now that it takes five.
+A quest already in a save keeps the single kill it was issued with.
+
+**Progress you can see.** Neither quest is playable blind, and the log showed nothing. New
+`AdventureQuestStage.getProgressText()` - " (2/5)" for a counted Defeat / ClearDungeons / CompleteQuest / Arena /
+EventFinish stage - appended to the stage name in `QuestLogScene`, and a HUD line ("Root Out Rot: 2 of 5") each time
+a counted stage moves short of its last step. "Prove the banner - complete three quests" gets the same for free.
+
+Checked before building: all 207 stages of `quests.json` parse into the game's own `AdventureQuestStage` through
+libGDX `Json` (the ten read `Defeat count3=5`, quest 92 reads `ClearDungeons count3=3 anyPOI worldMapOK`); a plain
+load-and-save of the file is byte-identical, so the diff is only these edits; the plane validator is clean.
+
+**Flagged, not changed:** quest REWARDS sit outside round 237's card budget, and some are lavish - "Mechanical
+Problems" (Slobad) pays ten rare or mythic artifacts (up to fourteen below Insane). If cards are meant to be scarce, the quest reward
+tables are the next place to look.
+
 ## Round 239: the colors answer your Capitol; a life blessing from the Mystery diamond; legend sightings (2026-09-18)
 
 User: *"When the Player builds his capitol, the AI gets +1 to max attacking mage spawns and spawn one for each AI
