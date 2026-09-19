@@ -532,6 +532,40 @@ public class AdventureQuestData implements Serializable {
         //todo: handle any necessary cleanup or reputation loss
     }
 
+    /**
+     * Round 235: repair a loaded quest whose flag stages were ticked by the unset-flag bug (see
+     * AdventureQuestStage.reopenIfCompletedByUnsetFlag()). Reopens those stages, then walks ACTIVE stages
+     * back to INACTIVE while any of them stands on a reopened prerequisite - for story quest 52 that is
+     * "Get Some Answers", which a player who had found all five castles would otherwise keep as an open
+     * objective with five unfinished rescues behind it. Called from AdventurePlayer.load().
+     *
+     * @return how many stages were reopened
+     */
+    public int reopenStagesCompletedByUnsetFlag(forge.adventure.player.AdventurePlayer player) {
+        int reopened = 0;
+        for (AdventureQuestStage stage : stages) {
+            if (stage.reopenIfCompletedByUnsetFlag(player)) {
+                reopened++;
+                System.out.println("[TFR-MainQuest] \"" + name + "\": stage \"" + stage.name + "\" REOPENED - it had been"
+                        + " ticked by the unset-flag bug (flag " + stage.mapFlag + " has never been set)");
+            }
+        }
+        if (reopened == 0)
+            return 0;
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (AdventureQuestStage stage : stages) {
+                if (stage.deactivateIfPrerequisiteOpen(getCompletedStageIDs())) {
+                    changed = true;
+                    System.out.println("[TFR-MainQuest] \"" + name + "\": stage \"" + stage.name
+                            + "\" set back to waiting - a stage it depends on was reopened");
+                }
+            }
+        }
+        return reopened;
+    }
+
     public void activateNextStages() {
         boolean showNotification = false;
         // Stabilization loop (2026-08-26 user request: "add safeguards if the player does

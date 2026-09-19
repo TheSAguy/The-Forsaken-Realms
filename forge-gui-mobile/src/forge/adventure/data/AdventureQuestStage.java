@@ -493,12 +493,20 @@ public class AdventureQuestStage implements Serializable {
     public boolean retroCompleteIfFlagSatisfied() {
         if (status != ACTIVE || mapFlag == null || mapFlag.isEmpty())
             return false;
+        // Round 235 (user, with the quest log open: "What does 'rescue the white captive' mean. I just found
+        // the white castle and it's already checked off. I did not do anything"). A stage that names NO
+        // mapFlagValue means "once this flag is set at all" - the live path in handleEvent() completes it on
+        // any event for that flag, since every event value is >= 0. But this check reads STATE, and an unset
+        // flag reads 0, so against the raw value it was 0 >= 0: true for a flag nobody had ever touched. The
+        // five "Rescue the <Color> Captive" stages of story quest 52 are written that way, and each ticked
+        // itself the instant its "Find the Castle" prerequisite completed. "Set at all" is >= 1.
+        final int required = retroFlagThreshold();
         boolean satisfied = false;
         try {
             if (objective == CharacterFlag) {
-                satisfied = Current.player().getCharacterFlag(mapFlag) >= mapFlagValue;
+                satisfied = Current.player().getCharacterFlag(mapFlag) >= required;
             } else if (objective == QuestFlag) {
-                satisfied = Current.player().getQuestFlag(mapFlag) >= mapFlagValue;
+                satisfied = Current.player().getQuestFlag(mapFlag) >= required;
             } else if (objective == MapFlag) {
                 // Per-POI flags: check the bound target if there is one, otherwise (anyPOI
                 // stages like "restore a town" / "build a Trader") scan every recorded POI's
@@ -508,11 +516,11 @@ public class AdventureQuestStage implements Serializable {
                     forge.adventure.pointofintrest.PointOfInterestChanges targetChanges =
                             forge.adventure.world.WorldSave.getCurrentSave().peekPointOfInterestChanges(targetPOI.getID());
                     satisfied = targetChanges != null
-                            && targetChanges.getMapFlags().getOrDefault(mapFlag, (byte) 0) >= mapFlagValue;
+                            && targetChanges.getMapFlags().getOrDefault(mapFlag, (byte) 0) >= required;
                 } else if (anyPOI) {
                     for (forge.adventure.pointofintrest.PointOfInterestChanges anyChanges
                             : forge.adventure.world.WorldSave.getCurrentSave().getAllPointOfInterestChanges()) {
-                        if (anyChanges.getMapFlags().getOrDefault(mapFlag, (byte) 0) >= mapFlagValue) {
+                        if (anyChanges.getMapFlags().getOrDefault(mapFlag, (byte) 0) >= required) {
                             satisfied = true;
                             break;
                         }
@@ -525,9 +533,55 @@ public class AdventureQuestStage implements Serializable {
         if (satisfied) {
             status = COMPLETE;
             System.out.println("[TFR-MainQuest] stage \"" + name + "\" retro-completed on activation (flag "
-                    + mapFlag + " already >= " + mapFlagValue + ")");
+                    + mapFlag + " already >= " + required + ")");
         }
         return satisfied;
+    }
+
+    /** Round 235: what a flag must have reached for a STATE check to call it satisfied - never below 1,
+     *  because 0 is what an unset flag reads. See retroCompleteIfFlagSatisfied(). */
+    private int retroFlagThreshold() {
+        return Math.max(1, mapFlagValue);
+    }
+
+    /**
+     * Round 235: undo the bug above in a save that already carries it. Reopens this stage when it is
+     * COMPLETE, names no flag value, and its player-level flag has never been set - a combination only the
+     * 0 >= 0 retro-check could produce, because a live completion needs an event for the flag, and the maps
+     * only ever set these flags to 1. Deliberately narrow: a stage WITH a value is left alone even if its
+     * flag has since dropped below it (a town count can fall after "restore five towns" was honestly done),
+     * and MapFlag stages are per-POI and not part of this bug.
+     *
+     * @return true when the stage was reopened
+     */
+    public boolean reopenIfCompletedByUnsetFlag(forge.adventure.player.AdventurePlayer player) {
+        if (status != COMPLETE || mapFlag == null || mapFlag.isEmpty() || mapFlagValue > 0 || player == null)
+            return false;
+        int current;
+        if (objective == QuestFlag)
+            current = player.getQuestFlag(mapFlag);
+        else if (objective == CharacterFlag)
+            current = player.getCharacterFlag(mapFlag);
+        else
+            return false;
+        if (current > 0)
+            return false;
+        status = ACTIVE;
+        return true;
+    }
+
+    /** Round 235: an ACTIVE stage goes back to INACTIVE when one of its prerequisites has been reopened -
+     *  activateNextStages() brings it back the normal way once they are honestly complete. */
+    public boolean deactivateIfPrerequisiteOpen(List<Integer> completedStages) {
+        if (status != ACTIVE)
+            return false;
+        for (Integer prereqID : prerequisiteIDs) {
+            if (!completedStages.contains(prereqID)) {
+                status = INACTIVE;
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Retroactive Travel-objective completion (2026-09-15 user request, with a screenshot of the

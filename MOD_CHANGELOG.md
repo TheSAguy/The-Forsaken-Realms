@@ -17757,6 +17757,50 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 235: "Rescue the White Captive" ticked itself the moment the castle was found (2026-09-18)
+
+User, with the quest log open - *Find the White Castle* and *Rescue the White Captive* both green: *"What does
+'rescue the white captive' mean. I just found the white castle and it's already checked off. I did not do
+anything."*
+
+**What the stage means.** Fight up to the top floor of the White Castle and defeat its boss, Akroma. Her
+`defeatDialog` (`white_castle_f1.tmx`) is what sets quest flag `Ch1WhiteCastleComplete` to 1. Checked in all five
+`*_castle_f1.tmx` maps: Black = Griselbrand, Blue = Lorthos, Green = Ghalta, Red = Lathliss, White = Akroma, each
+setting its own `Ch1<Color>CastleComplete`. Finding the castle is the stage BEFORE it.
+
+**Why it was already ticked - a bug of mine, in every build since 2026-08-26 (so v1.10 and v1.11 carry it).** `retroCompleteIfFlagSatisfied()` (2026-08-26,
+"add safeguards if the player does something before a quest") runs when a flag stage turns ACTIVE and completes
+it if the player's flag is already `>= mapFlagValue`. The five "Rescue the <Color> Captive" stages of story quest
+52 name NO `mapFlagValue`. On the live path that is fine and means "once this flag is set at all" - handleEvent()
+completes the stage on any event for the flag, every event value being >= 0. But the retro-check reads STATE, an
+unset flag reads 0, and the omitted value is 0: `0 >= 0`. So each rescue completed the instant its "Find the
+Castle" prerequisite did, for a flag nobody had ever touched. Every player who reached this quest since the
+safeguard went in has had the five boss fights silently ticked off; the story still could not be finished
+without them, because the last stage needs `mainQuest >= 3`, but the log said the work was done. A scan of
+`quests.json` finds exactly these five stages written this way.
+
+**Fix, three layers.**
+- The rule: new `AdventureQuestStage.retroFlagThreshold()` = `max(1, mapFlagValue)`. "Set at all" is `>= 1`, for
+  all three flag objectives. Live completion is unchanged.
+- The data: the five stages now say `"mapFlagValue": 1`, which is what the castle maps set.
+- The saves: a stage already ticked stays ticked in the save, and the SAVED stage objects keep their value of 0.
+  New `AdventureQuestData.reopenStagesCompletedByUnsetFlag()`, run from `AdventurePlayer.load()` once both flag
+  maps are in, reopens a stage that is COMPLETE, names no value, and whose player-level flag has never been set - a
+  combination only the `0 >= 0` check could produce, since a live completion needs an event for the flag and the
+  maps only ever set these to 1. Deliberately narrow: a stage WITH a value is left alone even if its flag has since
+  fallen (a town count can drop after "restore five towns" was honestly done), and per-POI MapFlag stages are not
+  part of this bug. ACTIVE stages standing on a reopened prerequisite go back to INACTIVE ("Get Some Answers", for
+  a player who had found all five castles) and return the normal way.
+
+**Tested on the user's own save before building** (a copy of the 18:40 autosave, the player allocated without its
+constructor and handed exactly the save's two flag maps): `Ch1WhiteCastleComplete = 0`, stage COMPLETE ->
+"REOPENED", now ACTIVE; nothing else in either quest moved; a second pass reopened 0. The saved stages did carry
+`mapFlagValue = 0`, so it is the rule, not the data, that keeps this save's other four rescues honest.
+
+Diagnostics: `[TFR-MainQuest] "<quest>": stage "<stage>" REOPENED - it had been ticked by the unset-flag bug ...`
+and `... set back to waiting ...`. Nothing was lost or gained by the false tick: the stage has no reward and no
+dialog. This package also carries rounds 233 (strolling guards) and 234, which were repo only until now.
+
 ## Round 234: the 17:07 session log - two fixes proven, one log line too chatty, castles are not capitals (2026-09-18, REPO ONLY)
 
 **Round 230 proven in play.** `[TFR-Payday] day 14: 21 payout/wage sound(s) folded into one` and, on the same day,

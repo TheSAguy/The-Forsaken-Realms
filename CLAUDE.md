@@ -97,6 +97,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 235 (2026-09-18): **"Rescue the <Color> Captive" ticked itself when the castle was merely FOUND** - my bug,
+  in every build since 2026-08-26 (v1.10 and v1.11 carry it). `retroCompleteIfFlagSatisfied()` compared the flag to the stage's raw `mapFlagValue`; the five
+  Rescue stages of story quest 52 omit it (0), an unset flag reads 0, `0 >= 0`. Fix in three layers: rule
+  (`retroFlagThreshold()` = `max(1, value)`), data (`"mapFlagValue": 1` on the five), saves
+  (`AdventureQuestData.reopenStagesCompletedByUnsetFlag()` from `AdventurePlayer.load()` - narrow signature: COMPLETE +
+  no value + player-level flag never set; dependents go back to INACTIVE). TESTED on a copy of the user's autosave
+  (reopened exactly 1, idempotent). What the stage really needs: beat the castle's top-floor boss (White = Akroma),
+  whose defeatDialog sets `Ch1<Color>CastleComplete`. TRAP: an activation-time STATE check must never treat an
+  omitted threshold as 0. This package carries 233 + 234 too.
 - Round 234 (2026-09-18, REPO ONLY): **`[TFR-MapIcon]` logs once per TOWN per session** (static set keyed by POI id -
   map sprites are rebuilt on every chunk reload, so round 231's per-sprite flag printed 10 lines for 3 towns). The
   17:07 log PROVED round 230 (`economy=36ms` on a payday with 21 sounds folded, was ~590) and showed 231/232 live.

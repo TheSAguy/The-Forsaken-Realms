@@ -1331,6 +1331,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 for (Object itsReallyAQuest : q)
                     quests.add((AdventureQuestData) itsReallyAQuest);
             }
+            // Round 235: a save made before the unset-flag fix may carry "Rescue the <Color> Captive" ticked
+            // for a castle that was only ever FOUND. Both flag maps are loaded above, so the check is sound.
+            for (AdventureQuestData quest : quests)
+                quest.reopenStagesCompletedByUnsetFlag(this);
         }
         if (data.containsKey("events")) {
             events.clear();

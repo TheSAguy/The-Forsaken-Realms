@@ -11374,6 +11374,7 @@
 				"name": "Rescue the Black Captive",
 				"description": "Free the wizard being held captive inside the Black Castle.",
 				"mapFlag": "Ch1BlackCastleComplete",
+				"mapFlagValue": 1,
 				"POITags": [
 					"BiomeBlack",
 					"Chapter1Boss"
@@ -11391,6 +11392,7 @@
 				"name": "Rescue the Blue Captive",
 				"description": "Free the wizard being held captive inside the Blue Castle.",
 				"mapFlag": "Ch1BlueCastleComplete",
+				"mapFlagValue": 1,
 				"POITags": [
 					"BiomeBlue",
 					"Chapter1Boss"
@@ -11408,6 +11410,7 @@
 				"name": "Rescue the Green Captive",
 				"description": "Free the wizard being held captive inside the Green Castle.",
 				"mapFlag": "Ch1GreenCastleComplete",
+				"mapFlagValue": 1,
 				"POITags": [
 					"BiomeGreen",
 					"Chapter1Boss"
@@ -11425,6 +11428,7 @@
 				"name": "Rescue the Red Captive",
 				"description": "Free the wizard being held captive inside the Red Castle.",
 				"mapFlag": "Ch1RedCastleComplete",
+				"mapFlagValue": 1,
 				"POITags": [
 					"BiomeRed",
 					"Chapter1Boss"
@@ -11442,6 +11446,7 @@
 				"name": "Rescue the White Captive",
 				"description": "Free the wizard being held captive inside the White Castle.",
 				"mapFlag": "Ch1WhiteCastleComplete",
+				"mapFlagValue": 1,
 				"POITags": [
 					"BiomeWhite",
 					"Chapter1Boss"
