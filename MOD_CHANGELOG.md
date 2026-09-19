@@ -17757,6 +17757,83 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 237: the card budget - fewer cards, rank matters, the first win counts (2026-09-18)
+
+User: *"I want to cut down on the number of cards. I feel like currently you receive so many cards so fast and
+that makes you 'hunt' for those special cards less exciting. Less cards also means more duels. I want enemy rank
+to matter more. Defeating an enemy for the first time should count more than a repeat win."* After the proposal
+and a table of worked examples: *"Go ahead and build it with the table as proposed, with one change, for first win,
+add +1 random Common or Uncommon from enemy deck on Normal, Hard and Insane and +1 random common or uncommon or
+rare for easy. All non-land."* And while it was building: *"Let's reduce Sun Titan to 2 or 4. For the enemies
+paying out more, let's weight the payout to Common and taper drastically down to Rare. leave Gear that adds reward
+cards as is."*
+
+**Where it was.** Measured from `enemies.json` for the 1,071 roaming enemies, on Insane (where `rewardMaxFactor`
+is 0, so the random extras never apply): 4.4 cards per win on average - 4.0 for an Apprentice, 5.1 for an Archmage,
+so rank barely mattered - with 107 enemies paying a guaranteed 7 and Sun Titan averaging 14 (up to 26). The count
+came from WHICH enemy it was, not from rank and not from luck.
+
+**What it is now.** New `forge.adventure.util.CardBudget`, called from `EnemySprite.getRewards()`. Every enemy's
+hand-written reward list still decides WHAT can drop - the Angelic Page's Angel, a wizard's color cards, the
+set-unlock restriction, the two-copy cap, the gold fallback, all as before - and the budget then keeps this many of
+the cards that list produced:
+
+| rank | repeat win | first win | first win with its bonus card |
+|---|---|---|---|
+| Apprentice | 1 | 2 | 3 |
+| Adept | 2 | 3 | 4 |
+| Master | 2 | 4 | 5 |
+| Archmage | 3 | 5 | 6 |
+
+- **Which cards are kept.** Master and Archmage keep their best rarities first; Apprentice and Adept keep random
+  ones; a FIRST win keeps the best first at every rank. So a low rank is stingy with its special drops on a repeat
+  win (the Golgari Elf's three 50% rares: about 1.5 a win before, about 0.8 now) while a high rank loses only its
+  filler (the Fanged Behemoth still yields about 1.3 rares a win, in 2 cards instead of 5).
+- **A target, not only a cap.** A list that rolls fewer cards than the budget is topped up from the enemy's own
+  deck (no basic lands, the color's set restriction applied). 15 enemies gain on a repeat win and 196 on a first
+  win (Master Red Wizard 2 -> 4, Archer 1 -> 2) - kept, because the first win is meant to be the reward. **But
+  those extra cards are filler by the user's wish** ("weight the payout to Common and taper drastically down to
+  Rare"): each top-up card rolls its rarity on `cardBudgetTopUpWeight*` - Common 80, Uncommon 17, Rare 3, Mythic
+  never - and a deck with nothing legal at the rolled rarity steps DOWN to the commoner ones before it steps up.
+- **Sun Titan** (8 guaranteed, 14 on average, up to 26 before) needs no data change: it is a Master, so it pays 2
+  on a repeat win and 4 on a first win like any other.
+- **The first-win bonus card** (the user's change): one more NON-LAND card from the enemy's deck, Common or
+  Uncommon on Normal/Hard/Insane, Common/Uncommon/Rare on Easy. On top of the budget, never trimmed, and its rarity
+  is never relaxed - a deck with nothing that fits pays the gold fallback, not a bonus rare.
+- **What cannot be paid** becomes `deckCardFallbackGold` (50) per card, the rule round 203 set.
+- **Gear that adds reward cards** (Generous items, the victory medals; capped at +3) is left as it was, by the
+  user's decision: it always added that many cards to a payout, so it raises the budget by that many on every
+  win. (A repeat-win cap I had proposed was built and removed before this round was committed.)
+- **Easy** gets `cardBudgetEasyBonus` (1) extra card per win: the random extras that used to separate the
+  difficulties are trimmed away by the budget, so this is what keeps Easy the generous one.
+- **"First victory over X - bonus loot!"** on the HUD, so a first win reads as one.
+
+**Not budgeted:** gold, shards, items and life; the ante card; bosses, arena and event fighters and every other
+spawnRate-0 enemy (`SpawnTierWeighting.isExempt()` - their rewards are dedicated); fixed-deck enemies, which never
+record a win and would count as a first win forever; and the extra rewards a map places on one specific enemy
+(`this.rewards`), which are added after the budget runs.
+
+**"First win" needs no new save data.** It reads the saved win/loss record (`PlayerStatistic`), which
+`DuelScene.recordStatistics()` updates BEFORE the winner callback that builds the loot - so on a first win the
+record already says one, overworld or dungeon alike. Enemies already beaten in an existing save are repeats.
+
+**What it adds up to.** Each enemy counted once: 4.4 cards a win before, 1.8 on a repeat win, 3.1 on a first win
+(4.1 with the bonus card). A 30-win session (12 Apprentice, 10 Adept, 6 Master, 2 Archmage): about 131 cards
+before; about 73 when a third are first wins, about 57 when one in ten is.
+
+**Fourteen tuning keys** in `config tables/settings.json` / `TuningData` (`cardBudgetEnabled`, the eight table
+values named by tier word like `enemyTierScale*`, `cardBudgetFirstWinBonusCards`, `cardBudgetEasyBonus`, and the
+three `cardBudgetTopUpWeight*`), all registered in `dev-tools/validate_plane_data.py`. Loaded through libGDX `Json`
+exactly as `Config` does before building: all fourteen read back with the intended values; the validator is clean.
+
+Diagnostic, one line per payout, of the form `[TFR-CardBudget] Master Red Wizard (Master, FIRST win): the list
+rolled 2 card(s), budget 4 (4 base) -> kept 2 best-first, topped up 2 from its deck [Common, Common], first-win
+bonus [<card>]`. Not yet seen in a running game.
+
+**Also asked: "Symbiote Bondband ... says it's a foot location although it looks like a ring.... (Toe ring??)"**
+By design. It is one of 26 ankle-band items in the Boots slot - 13 "Anklets" and 13 "-bands" (Bondband,
+Sliverband, Tailband) - all drawn as bands. An anklet, so "toe ring" was close. No data change.
+
 ## Round 236: invisible walls on land a color claimed from the wasteland (2026-09-18)
 
 User, with a screenshot of open grass in Green land and a saved game: *"There is something preventing me from

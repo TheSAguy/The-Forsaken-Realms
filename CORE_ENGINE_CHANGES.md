@@ -2779,6 +2779,19 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 237 (2026-09-18) - adventure-side only
+
+New `forge-gui-mobile/src/forge/adventure/util/CardBudget.java`.
+
+`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java` - `getRewards()` generates the type's standard
+rewards into their own array, passes them through `CardBudget.apply()` (with the enemy's deck and the color's
+edition restriction), then adds the map-instance rewards untouched.
+
+`forge-gui-mobile/src/forge/adventure/data/TuningData.java` - fourteen `cardBudget*` fields.
+
+`forge-gui/res/adventure/The Forsaken Realms/config tables/settings.json` - the same fourteen keys.
+`dev-tools/validate_plane_data.py` - the keys added to the TuningData field list.
+
 ## Round 236 (2026-09-18) - adventure-side only
 
 `forge-gui-mobile/src/forge/adventure/world/World.java` - `generateBiomeSprite()` draws a layer's terrain through

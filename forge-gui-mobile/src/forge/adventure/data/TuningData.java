@@ -344,6 +344,43 @@ public class TuningData {
     // if it turns up often in play. 0 disables the fallback and the reward simply pays fewer cards.
     public int deckCardFallbackGold = 50;
 
+    // Round 237 (user: "I want to cut down on the number of cards ... I want enemy rank to matter more.
+    // Defeating an enemy for the first time should count more than a repeat win"). The CARD BUDGET: how many
+    // cards a defeated roaming or dungeon enemy pays, by rank and by first win - see forge.adventure.util.
+    // CardBudget for every rule. The enemy's own reward list still decides WHAT can drop; these only set how
+    // many of those cards are kept (and topped up to, from its deck, when the list rolls fewer).
+    // Measured against enemies.json on Insane before the change: 4.4 cards per win on average (4.0 Apprentice
+    // to 5.1 Archmage, 107 enemies paying 7, one paying up to 26). With these values a repeat win averages 1.8
+    // and a first win 3.1 before its bonus card.
+    // Named by the data's tier words, like enemyTierScale*: Common = Apprentice, Uncommon = Adept, Rare =
+    // Master, Mythic = Archmage.
+    public boolean cardBudgetEnabled = true;
+    public int cardBudgetRepeatCommon = 1;
+    public int cardBudgetRepeatUncommon = 2;
+    public int cardBudgetRepeatRare = 2;
+    public int cardBudgetRepeatMythic = 3;
+    public int cardBudgetFirstCommon = 2;
+    public int cardBudgetFirstUncommon = 3;
+    public int cardBudgetFirstRare = 4;
+    public int cardBudgetFirstMythic = 5;
+    // User, approving the table: "for first win, add +1 random Common or Uncommon from enemy deck on Normal,
+    // Hard and Insane and +1 random common or uncommon or rare for easy. All non-land." On top of the budget,
+    // never trimmed, rarity never relaxed. 0 turns it off.
+    public int cardBudgetFirstWinBonusCards = 1;
+    // Extra budget on Easy. The random extras that used to separate the difficulties (rewardMaxFactor 1.5 /
+    // 1 / 0.5 / 0) are trimmed away by the budget, so this is what keeps Easy the generous one.
+    public int cardBudgetEasyBonus = 1;
+    // Gear that adds reward cards (Generous items, victory medals - up to +3) is deliberately NOT a key here:
+    // user, "leave Gear that adds reward cards as is" - it raises the budget in full on every win.
+    //
+    // Rarity of a TOP-UP card - the ones drawn from the enemy's deck when its list rolled fewer cards than the
+    // budget, which is what makes some enemies pay MORE than they used to (196 of them on a first win). User:
+    // "weight the payout to Common and taper drastically down to Rare". Relative weights; Mythic is never
+    // rolled. A deck with nothing legal at the rolled rarity steps down to the commoner ones before it steps up.
+    public int cardBudgetTopUpWeightCommon = 80;
+    public int cardBudgetTopUpWeightUncommon = 17;
+    public int cardBudgetTopUpWeightRare = 3;
+
     // Round 205 (user: "Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
     // defense when warding off mage attacks"). Defense a player town or the Capitol gains per point of its OWN
     // reputation (PointOfInterestChanges.getMapReputation) against an attacking war mage. For a town it comes off

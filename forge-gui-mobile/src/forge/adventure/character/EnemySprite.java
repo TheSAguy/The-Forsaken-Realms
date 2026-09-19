@@ -655,6 +655,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 // 949 of 1,071 roamers (88.6%) dropped cards from any set; only untagged legend
                 // entries were restricted. Quest rewards themselves come from the quest, not from here.
                 Iterable<RewardData> standardRewardSource = java.util.Arrays.asList(data.rewards);
+                List<String> budgetEditions = null; // round 237: the same restriction, for CardBudget's own draws
                 if (Current.world().isEditionProgressionEnabled()) {
                     if (!forge.adventure.util.SpawnTierWeighting.isExempt(data)) {
                         String color = ColorReputation.singleColorOfEnemy(data.colors);
@@ -664,6 +665,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                         System.out.println("[TFR-LootEditions] enemy=" + data.name + " colors=" + data.colors
                                 + " -> " + colorLabel + " restriction(" + editionRestriction.size() + ")=" + editionRestriction);
                         standardRewardSource = EditionProgression.restrictToEditions(standardRewardSource, editionRestriction);
+                        budgetEditions = editionRestriction;
                     } else {
                         // Diagnostic logging (2026-08-13) - this exemption (dedicated boss/quest
                         // rewards deliberately skip edition restriction, per user spec) previously
@@ -674,9 +676,17 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                                 + " -> EXEMPT boss=" + data.boss + " spawnRate=" + data.spawnRate);
                     }
                 }
+                // Round 237: the list decides WHAT can drop; CardBudget then decides how many of those cards
+                // are kept, by rank and by whether this is the first win. Only this enemy TYPE's list goes
+                // through it - what a map places on one specific enemy (this.rewards, below) is dedicated
+                // loot and is added untouched. Still inside the payout scope, so the budget's own draws obey
+                // the same copy cap as everything else in this duel.
+                Array<Reward> standard = new Array<>();
                 for (RewardData rdata : standardRewardSource) {
-                    rewards.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
+                    standard.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
                 }
+                rewards.addAll(forge.adventure.util.CardBudget.apply(standard, getName() != null ? getName() : data.getName(),
+                        data, enemyDeck == null ? null : deckNoBasicLands.toFlatList(), budgetEditions));
             }
             if(this.rewards != null) { //Collect additional rewards.
                 for(RewardData rdata : this.rewards) {

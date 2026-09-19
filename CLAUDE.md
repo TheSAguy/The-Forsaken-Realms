@@ -97,6 +97,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 237 (2026-09-18): **THE CARD BUDGET** - new `forge.adventure.util.CardBudget`, called from
+  `EnemySprite.getRewards()` on the enemy TYPE's own list only (a map's extras on one enemy are added after). The list
+  still decides WHAT drops; the budget keeps repeat/first = Apprentice 1/2, Adept 2/3, Master 2/4, Archmage 3/5
+  (Master/Archmage and every first win keep best rarity first, the rest random), tops a short list up from the enemy's
+  deck (TOP-UP cards roll Common 80 / Uncommon 17 / Rare 3, never Mythic, stepping down before up - user: "weight
+  the payout to Common and taper drastically down to Rare"), and on a FIRST win adds 1 non-land deck card (C/U; C/U/R
+  on Easy; rarity never relaxed). Unpayable -> 50 gold. Gear +cards LEFT AS IS (user) = full bonus on every win.
+  Easy +1. First win = `PlayerStatistic` wins <= 1 (recorded BEFORE loot is built). Exempt: bosses/spawnRate 0
+  (`isExempt`), fixedDeck, doppelganger. Was 4.4 cards/win on Insane; now 1.8 repeat / 3.1 first (+1 bonus); Sun Titan
+  14 -> 2/4 with no data change. 14 `cardBudget*` tuning keys (settings.json + TuningData + validator list).
+  `[TFR-CardBudget] ...` per payout. The Bondband/Anklet family (26 items, Boots slot, band art) is by design.
 - Round 236 (2026-09-18; built 19:24, PACKAGED 19:36 - 346 MB, `PACKAGER EXIT 0`, live jar read back; agent folder
   synced, 0 failed): **invisible walls on land a color claimed from the wasteland.** Claimed tiles keep their
   structure index in WASTELAND numbering (3..16); the claiming color's layer paints over the wasteland layer and draws

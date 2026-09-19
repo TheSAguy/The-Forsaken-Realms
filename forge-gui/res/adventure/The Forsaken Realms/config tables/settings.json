@@ -244,6 +244,35 @@
     // payouts turn out to be common in play. 0 disables the fallback (the reward just pays fewer cards).
     "deckCardFallbackGold": 50,
 
+    // Round 237 - THE CARD BUDGET (user: "cut down on the number of cards ... enemy rank to matter more ...
+    // defeating an enemy for the first time should count more than a repeat win"). How many CARDS a defeated
+    // roaming or dungeon enemy pays. Its own reward list still decides what can drop; the budget keeps this
+    // many of them - Master and Archmage keep their best rarities first, Apprentice and Adept keep random ones,
+    // and a FIRST win keeps the best first at any rank - and tops a short list up from the enemy's deck.
+    // Before this: 4.4 cards per win on average on Insane. With these values: 1.8 on a repeat win, 3.1 on a
+    // first win. Gold, shards, items, the ante card, bosses, arena/event fighters and a map's own extras on one
+    // enemy are not budgeted. Common = Apprentice, Uncommon = Adept, Rare = Master, Mythic = Archmage.
+    "cardBudgetEnabled": true,
+    "cardBudgetRepeatCommon": 1,
+    "cardBudgetRepeatUncommon": 2,
+    "cardBudgetRepeatRare": 2,
+    "cardBudgetRepeatMythic": 3,
+    "cardBudgetFirstCommon": 2,
+    "cardBudgetFirstUncommon": 3,
+    "cardBudgetFirstRare": 4,
+    "cardBudgetFirstMythic": 5,
+    // First win only: this many extra NON-LAND cards from the enemy's deck, on top of the budget - Common or
+    // Uncommon on Normal/Hard/Insane, Common/Uncommon/Rare on Easy. 0 turns it off.
+    "cardBudgetFirstWinBonusCards": 1,
+    // Extra cards per win on Easy (the old random extras no longer separate the difficulties).
+    "cardBudgetEasyBonus": 1,
+    // Rarity of a TOP-UP card (drawn from the enemy's deck when its list rolled fewer cards than the budget -
+    // the reason some enemies pay more than they used to). Relative weights, Common-heavy by the user's wish;
+    // Mythic is never rolled. Gear that adds reward cards is left as it was: it raises the budget in full.
+    "cardBudgetTopUpWeightCommon": 80,
+    "cardBudgetTopUpWeightUncommon": 17,
+    "cardBudgetTopUpWeightRare": 3,
+
     // Round 205 (user: "Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
     // defense when warding off mage attacks"). Defense per point of a player town's OWN reputation against an
     // attacking war mage - subtracted from the attacker's capture chance for a town, and for the Capitol (which
