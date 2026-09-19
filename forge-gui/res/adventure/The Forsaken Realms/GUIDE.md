@@ -60,7 +60,9 @@ into on their land - roaming enemies skew noticeably weaker with a Partner or Ha
 tougher the worse things get, down to War. Unhappy and War land also draws the realm's oversized
 legends out of hiding - dragon lords, gods, Slivers - wherever the land's color is one of theirs, and a
 color at War sends its own arena champions roaming; the few colorless legends haunt the wasteland and
-Neutral land instead. Your own territory is always the safest place to fight,
+Neutral land instead. A legend never arrives unannounced: you are told which one it is and in which
+direction, a **gold dot** marks it on the minimap and the map for as long as it stays, and it lingers
+three times as long as an ordinary roamer - long enough to go and find it. Your own territory is always the safest place to fight,
 regardless of anyone else's standing. Separately, the world as a whole trends toward tougher
 roaming enemies the longer a run goes on, week by week, capped well short of an endless escalation
 - so the opening weeks are the gentlest part of any run, by design.
@@ -124,12 +126,36 @@ access to buildings no ordinary town offers (Bank, Exchange, Archaeologist). Upg
 old town's accumulated reputation and buildings forward, and adds a flat reputation bonus on top
 for good measure.
 
+Raising it draws fire. The moment your Capitol stands, every color still in the game sends a war
+mage at once, and for as long as it stands each color may keep one more attack mage in the field.
+
 ### Wood & Stone
 
-Beyond Gold and Shards, you'll collect **Wood** and **Stone**. They come from winning duels,
-from world-map resource sparkles and dungeon pickups, from chests and quest rewards, and - once
-you own a town - as steady weekly income from a Lumber Mill or Stone Mine. They're spent on
-building and upgrading structures, and on the Capitol upgrade itself.
+Beyond Gold and Shards, you'll collect **Wood** and **Stone**. They come from winning duels
+(Green enemies lean to Wood, Red ones to Stone - see below), from world-map resource sparkles and
+dungeon pickups, from chests and quest rewards, and - once you own a town - as steady weekly income
+from a Lumber Mill or Stone Mine. They're spent on building and upgrading structures, and on the
+Capitol upgrade itself.
+
+### What a Win Pays
+
+Roaming and dungeon enemies pay by **rank** - Apprentice, Adept, Master, Archmage, shown in the
+enemy's name - and your **first victory** over each kind of enemy is the big one.
+
+- **Cards.** A repeat win pays 1 / 2 / 2 / 3 cards by rank. A first victory pays 2 / 3 / 4 / 5,
+  keeps the best rarities the enemy rolled, and adds one more non-land card from its deck (Common
+  or Uncommon; Rare too on Easy). Masters and Archmages always keep their best cards first; an
+  Apprentice or Adept pays at random on a repeat win. Gear that adds reward cards still adds them,
+  and Easy pays one more card per win.
+- **Gold and resources.** Every win pays gold plus, usually, one bonus resource that leans to the
+  enemy's color: **White** to more Gold, **Blue** to Shards, **Red** to Stone, **Green** to Wood.
+  **Black** is balanced, an enemy of two colors leans both ways, and a **colorless** one is
+  balanced with a smaller purse. The purse grows with rank, is half again as large on a first
+  victory, and a quarter larger when you beat an enemy that had the better record against you. So
+  hunt the color whose resource you need.
+- Bosses, Arena and tournament opponents, chests and quest rewards pay what they always did.
+- Every number here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in
+  the plane's `config tables/settings.json`.
 
 ### Buildings & the Economy
 
@@ -322,6 +348,10 @@ deck tier before assuming it's just you.
 
 Losing a duel costs gold: a flat 50 on Easy, 100 on Normal, 150 on Hard and 200 on Insane - or all of it, if you
 carry less. Handing over a Bronze Coin at the ante prompt saves your gold (the life loss still applies).
+
+Difficulty also scales what a win pays in gold and resources (half again as much on Easy, a fifth less on
+Insane), and a new world on Normal, Hard or Insane starts with slightly fewer functioning Neutral towns and
+ruins to restore.
 
 
 ---
@@ -526,6 +556,11 @@ You start with three, and they have two separate uses.
    your anted cards — you get every anted card back *and* keep your gold. Beat that same enemy
    later and you take the coin back as part of the reward.
 
+**Or challenge for it.** A **Level 2 Arena** offers the **Coin Challenge**: a staged duel against any
+enemy holding one of your coins. Entry is 50 gold on Easy and Normal and 100 on Hard and Insane, plus
+5 / 10 / 15 Shards on Normal / Hard / Insane. One attempt per opponent each week, no ante, and a
+loss costs nothing beyond the entry - the coin is the only prize.
+
 **One coin per enemy.** If a Fox already holds a coin of yours, the option won't be offered again
 against Foxes until you've won it back. (Bosses, Arena fights and tournament matches never take
 one at all.)
@@ -547,8 +582,9 @@ Every Inn runs one, refreshed on a cooldown. The entry fee scales with the town'
   offer Draft and Sealed from then on.
 - Tournament wins **don't** count toward your win/loss record, and don't push up the enemy tiers
   you meet in the world.
-- A **ruined town's** Inn runs tournaments and nothing else — no card sales, no Potion of False
-  Life.
+- A **ruined town's** Inn is boarded up until you restore the town at its Job Board — restoring it
+  is the only thing a ruin offers. (A tournament you had already entered there can still be
+  finished.)
 
 ### Territory, and Defending What's Yours
 
@@ -655,7 +691,10 @@ discarded**, including cards you've drafted but not yet banked.
   anything from an Apprentice to an Archmage, so look before you step in. Each holds a card chest,
   gold and building stone; the deeper ones add wood, mana shards, a second gold pile and sometimes
   a booster pack. They spawn in new worlds and join the dungeon rotation.
-- The **blue dot** in the quest list marks the quest you're currently tracking.
+- The **blue dot** in the quest list marks the quest you're currently tracking. Quests that count -
+  "defeat five Blue enemies", "clear three dungeons" - show their progress there, "(2/5)".
+- A **Mystery pickup** (the diamond) can bless you: a 15% chance of **+3 starting life in your next
+  duel**, added to whatever blessing you already carry.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
   it. Dispatched mages are capped at Adept in week 1 and Master in weeks 2–3.
 - Settings has an **"avoid restricted edition art"** toggle (on by default) that steers card art
@@ -665,7 +704,7 @@ discarded**, including cards you've drafted but not yet banked.
 
 ---
 
-*This guide covers the state of The Forsaken Realms as of 2026-09-05. See `MOD_CHANGELOG.md` in
+*This guide covers the state of The Forsaken Realms as of 2026-09-19. See `MOD_CHANGELOG.md` in
 the repository for the full history of how the mod got here, if you're curious.*
 
 ## Support & Community

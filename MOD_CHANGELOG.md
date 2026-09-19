@@ -17757,6 +17757,38 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 243: the purse pays +25% against an enemy that had the better record; the game guide catches up (2026-09-19, REPO ONLY until the next package)
+
+User, settling the purse's open knobs (income level: "Good with this"; difficulty 1.5 / 1.25 / 1 / 0.8: "Good with
+this"; first win +50%: yes; rich enemies: "Let's not worry about this"): *"Also, let's add +25% to the purse for any
+enemy that has a winning record against the player."*
+
+**The record bonus.** `resourcePurseLosingRecordFactor` 1.25 (TuningData, `settings.json`, the validator's list; 1
+turns it off). "Has a winning record" is judged as the record stood going INTO the duel:
+`DuelScene.recordStatistics()` has already counted this win when the loot is built (the fact `CardBudget`'s first-win
+test leans on), so the earlier wins are `wins - 1`, and the enemy was ahead when the player's losses to it exceed
+them - `ResourcePurse.hadBetterRecord()`. So: lose twice to a Forest Titan, then beat it - x1.25, and since that is
+also a first win, x1.5 on top (x1.875; every purse factor multiplies). At 2 wins to 4 losses it still pays; level or
+ahead, it does not. A HUD line says so ("Payback! <enemy> had the better of you - a richer purse."), and the
+`[TFR-ResourcePurse]` line carries the record: `x1.25 it had the better record (4 losses to 2 wins before this
+duel)`. Checked with the real class and the real settings: nine (wins, losses) cases, and three staged payouts.
+
+**GUIDE.md** (ships as `GAME_GUIDE.md`) was last dated 2026-09-05 and had drifted:
+- **wrong** - "a ruined town's Inn runs tournaments and nothing else": now "boarded up until you restore the town"
+  (round 241);
+- **missing** - a new section **What a Win Pays** (the card budget by rank and first victory, the color-leaning
+  resource purse, the first-win and record bonuses, where the settings live); the **Coin Challenge** (round 216 was
+  never in the guide: a Level 2 Arena, 50 / 100 gold plus 5 / 10 / 15 Shards, one attempt per opponent a week, no
+  ante); **legend sightings** and the **Capitol drawing fire** (239); the Mystery diamond's **+3 life** blessing
+  (239); **quest progress** "(2/5)" (240); what **difficulty** changes about pay and the new world (241).
+
+Built 07:48 on the 09.18 engine, `MVN EXIT 0`; plane validator clean. Not packaged - the user was play-testing round
+241. The next package (a FULL stock copy) carries 242 and 243.
+
+**Answered for the user this round, from the code:** a rotatable dungeon lives 20-60 days (uniform, ~40 on average;
+`DungeonRotation.DESPAWN_MIN/MAX_DAYS` - constants, not settings), sooner if cleared or lost in, half the remaining
+days once looted with enemies left, +30 days as a side-quest target; its spot rests 10-30 days.
+
 ## Round 242: engine update to upstream 3146e4b1036 - the 09.18 daily (2026-09-19, REPO ONLY until the next package)
 
 The user installed the latest Forge into `E:\GAMES\Forge_2` to get ready for a release (their rule: the upstream

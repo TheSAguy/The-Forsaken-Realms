@@ -447,6 +447,10 @@ public class TuningData {
     public float resourcePurseColorlessFactor = 0.7f;
     // First win over this enemy - the card budget's rule, applied to resources.
     public float resourcePurseFirstWinFactor = 1.5f;
+    // Round 243 (user: "add +25% to the purse for any enemy that has a winning record against the player").
+    // Judged as the record stood going into the duel (losses > the wins before this one); stacks with the
+    // first-win factor. 1 turns it off.
+    public float resourcePurseLosingRecordFactor = 1.25f;
     // Luck: the purse is multiplied by a random 1 +- this. 0 pays the same amounts every time.
     public float resourcePurseVariance = 0.2f;
     // The old per-difficulty spread came from random extras (rewardMaxFactor), which the purse no longer rolls.

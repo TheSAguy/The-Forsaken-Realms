@@ -333,6 +333,9 @@
     "resourcePurseColorlessFactor": 0.7,
     // The first win over an enemy pays this much more - the card budget's rule, for resources.
     "resourcePurseFirstWinFactor": 1.5,
+    // Round 243: beating an enemy that HAD THE BETTER RECORD against you (you had lost to it more often than you
+    // had beaten it, going into the duel) pays this much more. Stacks with the first-win factor. 1 = off.
+    "resourcePurseLosingRecordFactor": 1.25,
     // Luck: every purse is multiplied by a random 1 +- this. 0 pays identical amounts every time.
     "resourcePurseVariance": 0.2,
     // Difficulty.

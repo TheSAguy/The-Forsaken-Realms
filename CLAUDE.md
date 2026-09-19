@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 243 (2026-09-19, REPO ONLY - built 07:48 on the 09.18 engine, not packaged): **purse x1.25 when the enemy HAD
+  THE BETTER RECORD** going into the duel (`resourcePurseLosingRecordFactor`; `ResourcePurse.hadBetterRecord(wins,
+  losses)` = `losses > wins - 1`, because this win is already recorded when loot is built; multiplies with the
+  first-win x1.5; HUD "Payback! ..."). The user also CONFIRMED the purse's knobs (income level, difficulty factors,
+  first win +50%) and waved off the 51 rich enemies ("Let's not worry about this"). **GUIDE.md caught up** (dated
+  2026-09-19): new "What a Win Pays" section, the Coin Challenge (never documented since 216), legend sightings, the
+  Capitol drawing fire, the diamond's +3 life, quest progress, the ruined Inn now "boarded up". STILL OPEN FOR THE
+  USER (asked 2026-09-19): the ruined-town cut's scale (-9 of ~260 = 3%; ~13/26/39 would match the Neutral cut), quest
+  rewards outside the card budget, color quests counting overworld kills only, "Sweep the Wilds" counting on the last
+  enemy (not the loot), the terrain look-alike from 236, and the release's name (suggested: v1.12 "Spoils of War").
 - Round 242 (2026-09-19, REPO ONLY - not packaged, the user was play-testing 241): **ENGINE = the 09.18 daily @ upstream
   `3146e4b1036`** (19 commits / 64 files / 23 Java past `994c5d9eb2d`; pinned by content - `codie_ravenous_codex.txt`
   present, `aa2b5d0410c`'s pyromancer fix absent, three edition files byte-identical). ONE conflict,

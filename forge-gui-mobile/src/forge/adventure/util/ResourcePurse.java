@@ -28,11 +28,16 @@ import java.util.Random;
  * <pre>
  *   rank         purse      x difficulty   Easy 1.5 / Normal 1.25 / Hard 1 / Insane 0.8
  *   Apprentice     60       x 1.5 on the first win over this enemy (the card budget's rule)
- *   Adept          90       x 0.7 for a colorless enemy ("balanced, but just less than black")
- *   Master        130       x a little luck (resourcePurseVariance, +-20%)
- *   Archmage      160
+ *   Adept          90       x 1.25 when the enemy had the better record against the player (round 243)
+ *   Master        130       x 0.7 for a colorless enemy ("balanced, but just less than black")
+ *   Archmage      160       x a little luck (resourcePurseVariance, +-20%)
  * </pre>
- * resourcePurseGoldShare (35%) of it is always paid as gold. The rest is paid as ONE bonus resource, rolled on
+ * "Had the better record" (user: "add +25% to the purse for any enemy that has a winning record against the
+ * player") is judged as the record stood going INTO the duel: this win is already counted when loot is built, so
+ * the earlier wins are wins - 1, and the enemy was ahead when the player's losses to it exceed them. It stacks
+ * with the first-win factor - beating, for the first time, something that has beaten you pays x1.875.
+ * <p>
+ * resourcePurseGoldShare (35%) of the purse is always paid as gold. The rest is paid as ONE bonus resource, rolled on
  * the enemy's color - the favored resource at resourcePurseFavoredWeight (55), the other three at
  * resourcePurseOtherWeight (15) each:
  * <pre>
@@ -105,18 +110,28 @@ public final class ResourcePurse {
             return new Array<>();
         Pair<Integer, Integer> record = Current.player().getStatistic().getWinLossRecord().get(enemyName);
         int wins = record == null ? 0 : record.getLeft(); // DuelScene.recordStatistics() has already counted this win - see CardBudget
+        int losses = record == null ? 0 : record.getRight();
         // Loot is deliberately unseeded, like RewardData.generate()'s drops.
-        return pay(enemyName, data, wins, Current.player().getDifficulty().name, tuning, new Random(), replacedEntries);
+        Array<Reward> purse = pay(enemyName, data, wins, losses, Current.player().getDifficulty().name, tuning, new Random(), replacedEntries);
+        if (hadBetterRecord(wins, losses) && tuning.resourcePurseLosingRecordFactor > 1f && purse.size > 0)
+            forge.adventure.stage.GameHUD.getInstance().addNotification("Payback! " + enemyName + " had the better of you - a richer purse.");
+        return purse;
     }
 
-    /** The purse itself, free of any game state - generate() supplies the win count and the difficulty. */
-    static Array<Reward> pay(String enemyName, EnemyData data, int wins, String difficulty, TuningData tuning,
+    /** Round 243: did the enemy have the better record going INTO this duel? wins already includes this win. */
+    static boolean hadBetterRecord(int wins, int losses) {
+        return losses > Math.max(0, wins - 1);
+    }
+
+    /** The purse itself, free of any game state - generate() supplies the record and the difficulty. */
+    static Array<Reward> pay(String enemyName, EnemyData data, int wins, int losses, String difficulty, TuningData tuning,
                              Random random, int replacedEntries) {
         Array<Reward> result = new Array<>();
         int tier = tierIndex(data.tier);
         if (tier < 0)
             return result;
         boolean firstWin = wins <= 1;
+        boolean enemyWasAhead = hadBetterRecord(wins, losses);
 
         float[] weights = new float[4];
         boolean colorless = colorWeights(data.colors, tuning, weights);
@@ -125,9 +140,10 @@ public final class ResourcePurse {
         float difficultyFactor = tuning.resourcePurseFactorFor(difficulty);
         float colorFactor = colorless ? Math.max(0f, tuning.resourcePurseColorlessFactor) : 1f;
         float firstWinFactor = firstWin ? Math.max(0f, tuning.resourcePurseFirstWinFactor) : 1f;
+        float recordFactor = enemyWasAhead ? Math.max(0f, tuning.resourcePurseLosingRecordFactor) : 1f;
         float spread = Math.max(0f, Math.min(0.9f, tuning.resourcePurseVariance));
         float luck = 1f + (random.nextFloat() * 2f - 1f) * spread;
-        int purse = Math.max(0, Math.round(base * difficultyFactor * colorFactor * firstWinFactor * luck));
+        int purse = Math.max(0, Math.round(base * difficultyFactor * colorFactor * firstWinFactor * recordFactor * luck));
         if (purse <= 0) {
             System.out.println("[TFR-ResourcePurse] " + enemyName + " (" + RANKS[tier] + "): the purse works out to nothing"
                     + " (base " + base + ", difficulty x" + fmt(difficultyFactor) + ") - no resources paid");
@@ -155,7 +171,10 @@ public final class ResourcePurse {
                 + (colorless ? "none" : data.colors) + ", " + (firstWin ? "FIRST win" : "win #" + wins) + ", " + difficulty
                 + "): purse " + purse + " = " + base + " base x" + fmt(difficultyFactor) + " difficulty"
                 + (colorless ? " x" + fmt(colorFactor) + " colorless" : "")
-                + (firstWin ? " x" + fmt(firstWinFactor) + " first win" : "") + " x" + fmt(luck) + " luck -> "
+                + (firstWin ? " x" + fmt(firstWinFactor) + " first win" : "")
+                + (enemyWasAhead ? " x" + fmt(recordFactor) + " it had the better record (" + losses + " loss" + (losses == 1 ? "" : "es")
+                        + " to " + Math.max(0, wins - 1) + " win" + (wins - 1 == 1 ? "" : "s") + " before this duel)" : "")
+                + " x" + fmt(luck) + " luck -> "
                 + gold + " gold" + (units > 0 ? " + " + units + " " + RESOURCES[rolled] : " (the bonus roll came up gold too)")
                 + "; bonus " + bonus + " rolled on gold " + fmt(weights[GOLD]) + " / shards " + fmt(weights[SHARDS])
                 + " / wood " + fmt(weights[WOOD]) + " / stone " + fmt(weights[STONE])

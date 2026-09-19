@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 243 (2026-09-19) - adventure-side only
+
+`util/ResourcePurse.java` - `hadBetterRecord()`, the record factor in `pay()` (now takes the losses too), the HUD line
+in `generate()`. `data/TuningData.java`, `config tables/settings.json`, `dev-tools/validate_plane_data.py` -
+`resourcePurseLosingRecordFactor`. `GUIDE.md` - eight edits.
+
 ## Round 242 (2026-09-19) - ENGINE MERGE to upstream 3146e4b1036 (the 09.18 daily)
 
 19 upstream commits, 64 files, 23 Java. Stock files of ours that upstream also edited: `forge-gui-mobile/src/forge/
