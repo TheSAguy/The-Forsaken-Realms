@@ -7056,24 +7056,6 @@
 							"name": "(Continue)",
 							"action": [
 								{
-									"addItem": "Homeward rune"
-								},
-								{
-									"addItem": "Bronze Challenge Coin"
-								},
-								{
-									"addItem": "Bronze Challenge Coin"
-								},
-								{
-									"addItem": "Bronze Challenge Coin"
-								},
-								{
-									"addItem": "Challenge Coin"
-								},
-								{
-									"addItem": "Silver Challenge Coin"
-								},
-								{
 									"setCharacterFlag": {
 										"key": "freeChallengeCoins",
 										"val": 1

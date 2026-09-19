@@ -417,6 +417,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public static final String SILVER_COIN_ITEM = "Silver Challenge Coin";
     /** The gold coin's data name really is just "Challenge Coin" - no colour word (world/items.json). */
     public static final String GOLD_COIN_ITEM = "Challenge Coin";
+    /** Round 247: the rune in the skip-intro kit (quest 28), handed over by grantRingGift("all") - world/items.json. */
+    public static final String HOMEWARD_RUNE_ITEM = "Homeward rune";
     // The loadout every run is meant to begin with (user spec 2026-08-31): 1 gold, 1 silver,
     // 3 bronze. One coin per event format - gold a free draft, silver a free sealed, bronze a
     // free Jumpstart - plus the bronze surplus that doubles as ante ransom.
@@ -434,27 +436,35 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
      * keeps the surplus instead of having it clipped back to three. Additive and idempotent -
      * running it twice grants nothing the second time.
      * <p>
-     * Called on the New Game+ path only. An ordinary New Game already arrives at this loadout
-     * through the intro quest's own coin grant.
+     * Called at the New Game+ reset (SaveLoadScene), and since round 247 by the skip-intro gift
+     * (grantRingGift("all")), which used to pay the coins outright on top of that reset's top-up.
+     * The tutorial path's coins come in Llanowar's kit (grantRingGift("items")), which skips them
+     * in New Game+.
      */
     public void topUpChallengeCoins() {
-        grantMissingCoins(GOLD_COIN_ITEM, START_GOLD_COINS);
-        grantMissingCoins(SILVER_COIN_ITEM, START_SILVER_COINS);
-        grantMissingCoins(BRONZE_COIN_ITEM, START_BRONZE_COINS);
+        topUpChallengeCoins("[TFR-NewGamePlus]");
     }
 
-    private void grantMissingCoins(String itemName, int target) {
+    /** Round 247: the same top-up under the caller's log tag; returns how many coins it handed over. */
+    public int topUpChallengeCoins(String logTag) {
+        return grantMissingCoins(logTag, GOLD_COIN_ITEM, START_GOLD_COINS)
+                + grantMissingCoins(logTag, SILVER_COIN_ITEM, START_SILVER_COINS)
+                + grantMissingCoins(logTag, BRONZE_COIN_ITEM, START_BRONZE_COINS);
+    }
+
+    private int grantMissingCoins(String logTag, String itemName, int target) {
         int have = countItem(itemName);
         int missing = target - have;
         if (missing <= 0) {
-            System.out.println("[TFR-NewGamePlus] " + itemName + ": have " + have + "/" + target
+            System.out.println(logTag + " " + itemName + ": have " + have + "/" + target
                     + " - nothing to grant");
-            return;
+            return 0;
         }
         for (int i = 0; i < missing; i++)
             addItem(itemName);
-        System.out.println("[TFR-NewGamePlus] " + itemName + ": had " + have + ", granted "
+        System.out.println(logTag + " " + itemName + ": had " + have + ", granted "
                 + missing + " -> " + countItem(itemName) + "/" + target);
+        return missing;
     }
 
     public PlayerStatistic getStatistic() {
@@ -780,9 +790,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // ---- narrative / progression bookkeeping -------------------------------------------
         quests.clear();
         questFlags.clear();
-        // Before the newGamePlus flag below, or quest 28's "Been here, done that (New Game+)"
-        // branch never fires. Also clears one-shot grant flags like firstArmoryTorchGranted, which
-        // otherwise deny the new run its first Armory torch forever.
+        // Before the newGamePlus flag below. Clears the one-shot grant flags - firstArmoryTorchGranted,
+        // which would otherwise deny the new run its first Armory torch forever, and ringGiftGranted, so
+        // a run that skips the intro is handed its starting kit again. (The quest 28 "Been here, done
+        // that (New Game+)" branch this comment used to name was folded into "Skip the introduction" in
+        // round 76.)
         characterFlags.clear();
         events.clear();
         AdventureQuestController.clear();
@@ -2236,12 +2248,27 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             addStone(cfg.startingStone);
             int items = 0;
             for (String s : cfg.startItems) {
+                // Round 247: the New Game+ rule of the "items" branch above holds here too - this loop used to
+                // hand a carried starting item over a second time, right after that branch logged "not granted again".
+                if (newGamePlus && countItem(s) > 0)
+                    continue;
                 ItemData i = ItemListData.getItem(s);
                 if (i != null) {
                     inventoryItems.add(i);
                     items++;
                 }
             }
+            // Round 247 (user report: "I did a few NG+ and it seems I have double the coins. I did select skip
+            // tutorial"). Quest 28's skip option paid its Homeward rune and its 1 gold / 1 silver / 3 bronze Challenge
+            // Coins with plain addItem actions, on top of everything a New Game+ run carries - a purse that
+            // resetForNewGamePlus() had already topped up. They are handed over here now, only what is missing: a
+            // new character gets the whole kit, a New Game+ run keeps what it has, and a repeat call stops at the
+            // ringGiftGranted flag above like the rest of the kit (the dialog's addItem actions never did).
+            if (countItem(HOMEWARD_RUNE_ITEM) > 0)
+                System.out.println("[TFR-RingGift] already carrying " + HOMEWARD_RUNE_ITEM + " - not granted again");
+            else if (addItem(HOMEWARD_RUNE_ITEM))
+                items++;
+            items += topUpChallengeCoins("[TFR-RingGift]");
             int ringCities = 0;
             forge.adventure.world.World world = Current.world();
             if (world != null && world.getStarTownTiles() != null) {

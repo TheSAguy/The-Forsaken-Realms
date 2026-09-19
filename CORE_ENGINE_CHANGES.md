@@ -2779,6 +2779,14 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 247 (2026-09-19) - adventure-side only
+
+`player/AdventurePlayer.java` - new `HOMEWARD_RUNE_ITEM`; a `topUpChallengeCoins(String)` overload that returns the
+count (the no-arg form keeps the `[TFR-NewGamePlus]` tag); `grantRingGift("all")` grants the rune and tops the coins
+up, and its start-item loop skips carried items in New Game+; a comment in `resetForNewGamePlus()`. Plane data:
+`world/quests.json` (quest 28's skip option loses six `addItem` actions), nine `sprites/enemy/tfr/*.png` (animation
+frames mirrored). `dev-tools/art-import/portrait_and_facing.py`.
+
 ## Round 246 (2026-09-19) - release stamps only
 
 `forge-gui-android/pom.xml` - `tfr.version` 1.12, `manifestVersionCode` 11200. Plane `config.json` - `modVersion`

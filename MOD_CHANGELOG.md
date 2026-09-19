@@ -17757,6 +17757,69 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 247: New Game+ no longer pays the skip-intro kit twice; nine imported creatures walk head first (2026-09-19)
+
+User, opening the round: *"I did a few NG+ and it seems I have double the coins. I did select skip tutorial."* and
+*"Also proceed with this fix: ... Nine imported creatures face left in their art; the engine assumes art faces right,
+so they walk backwards. Left = now, right = mirrored."* Then, with two screenshots: *"Not the biggest deal, but can
+anything be done about the town showing on the mini-map, but it's not yet exposed on the Overworld?"*
+
+**The double coins.** The dropped log (10:39-10:57: two New Game+ runs of save 1's character on Insane, intro
+skipped) has the reset doing its job - `[TFR-NewGamePlus] Challenge Coin: have 1/1 - nothing to grant`, 1/1/3 coins
+and six items carried - and the next load reading ELEVEN items. Saves 1 and 2 (10:53 / 10:54) hold 6 bronze, 2 gold,
+2 silver and one Homeward rune. Cause: quest 28's "Skip the introduction" -> "(Continue)" paid its Homeward rune and
+the five coins with plain `addItem` actions, which know nothing of New Game+. Round 76 (2026-08-31) folded the old
+coin-gated skip and the old New Game+ branch (which paid no coins) into this one always-shown option; round 113 fixed
+the same double grant on the tutorial path (Llanowar's kit, `grantRingGift("items")`) but not here - so every New
+Game+ that skipped the intro since round 76 was paid twice. Found on the way: `grantRingGift("all")`'s start-item loop
+ignored the New Game+ rule the "items" branch applies a few lines above it - right after that branch had logged
+"already carrying X - not granted again" (Easy and Normal only; Hard and Insane have no start items) - and the
+dialog's coins sat outside round 151's `ringGiftGranted` guard, so a repeated click would have paid them again.
+
+Fix: the six `addItem` actions are gone from quest 28 (it keeps its flags, quest 43, the teleport and
+`grantRingGift("all")`). `grantRingGift("all")` now hands over the rune unless one is carried and calls
+`topUpChallengeCoins("[TFR-RingGift]")` - the New Game+ reset's own idempotent top-up, given a log-tag overload that
+returns the count - inside the `ringGiftGranted` guard, and its start-item loop skips carried items in New Game+. A new
+character's kit is unchanged (rune, 1/1/3 coins, the difficulty's start items); a New Game+ run keeps what it
+carries. The HUD's "and N item(s)" now counts the rune and the coins (it said 0 on Insane while the dialog handed over
+six). New constant `AdventurePlayer.HOMEWARD_RUNE_ITEM`; the `resetForNewGamePlus()` comment that still named the
+round-76 branch is corrected. NOT done: saves 1 and 2 keep their doubled coins - trimming them is the user's call.
+The next log should show, for a fresh game that skips the intro, `[TFR-RingGift] Challenge Coin: had 0, granted 1 ->
+1/1` (and the silver, and bronze 0 -> 3); for a New Game+ that skips, `[TFR-RingGift] ... have 1/1 - nothing to
+grant`, plus `already carrying Homeward rune` when one is carried. Not run headless: `grantRingGift()` needs the
+config, the world and the HUD.
+
+**Facing** (round 245's prepared fix, applied on the user's word): `dev-tools/art-import/portrait_and_facing.py facing
+--apply` mirrored every animation frame of the nine inside its own atlas rectangle - Tyrant Rex 16, Stormcrag Griffin
+20, Bonewhite Lizardragon 15, Ashen Spinewyrm 10, Shellplate Wyrm 13, Megamouth Wyrm 16, Astral Wyrm 12, Furhorn Wyvern
+14, Aurelian Dragon 17 (133 frames). Pre-flight first (`r247_facing_check.py`, scratchpad): no rotated or trimmed
+regions, no partially overlapping cells, nothing over the Avatar cell, every frame centered in its cell within 0.5 px -
+so a mirrored sprite does not shift. Checked after, against git HEAD: each animation cell is HEAD's cell mirrored, each
+Avatar cell identical. PNGs only, no `.atlas` change. Crimson Burrower and Brood Spawn were looked at again and left
+alone (three-quarter and frontal views; neither reads as walking backwards). The tool's `--apply` is not idempotent, so
+`FACES_LEFT` is empty now (the nine are recorded in `MIRRORED_R247`) and `facing` refuses; `PORTRAIT_FIX` says "right"
+for the Spinewyrm now that its head is at that end.
+
+**Asked, not changed - a town on the map before the overworld shows it.** Map icons are painted INTO the map image at
+4 px per tile (16-32 px, so 4-8 tiles), centered on the town's BOTTOM-LEFT corner (stock placement:
+`poi.getPosition()` is the sprite's corner), and the fog uncovers that image one explored tile at a time
+(`World.updateFogOfWarPixmap()`). The overworld draws a town once its sprite's CENTER tile is explored
+(`MapSprite.draw()`), and the discovery burst fires within vision range of the footprint (3 tiles; Easy 4, Insane 2).
+So ground explored a few tiles southwest of a town - or uncovered by another town's burst - shows part of its icon
+while the town itself is still in fog; the Ring Cities' 32 px icons overhang their corner by 4 tiles.
+`markRingVisited()` (the skip path) reveals nothing. The options are in CLAUDE.md's NEXT SESSION list.
+
+**Log review** (the same 10:39 log): no exceptions. First sightings in play: round 241's world-gen town cut
+(`placing 21 fewer wasteland town(s) (3 functioning Neutral + 18 ruined)` - round 244's 18), round 244's looted factor
+(`22 days left x0.25 = 6`), a Bronze Coin ransom with the defeat gold waived. Worth knowing: an Immerwolf's first win
+paid no card at all (`[TFR-DeckLoot] deck paid only 0 of 2 card(s) ... its editions are locked for this color` ->
+`[TFR-CardBudget] ... 3 unpayable -> 150 gold`) - the budget's fallback working as designed, on an enemy whose whole
+deck sits outside green's editions. `MageTower7Church` logs eight "Navigation error for object ID75" lines per visit:
+in `maps/map/magetower/magetower_7_church.tmx` the Apprentice White Wizard (object 75) names patrol waypoints 76-83
+that the map no longer has, so it stands still - left for the user (their own map pass, commit 978ad21dfea).
+
+Built 11:14-11:24 on the 09.18 engine (MVN EXIT 0; the jar's `AdventurePlayer.class` carries the new `[TFR-RingGift]` strings); plane validator clean. Packaged into the C: play-test folder (`C:\Users\User\TFR-Release`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
+
 ## Round 246: v1.12 "Reward Balancing" - the release round, PC + Android (2026-09-19)
 
 User, after play-testing the 09.18 build from `C:\Users\User\TFR-Release`: *"Game closed, Please review log and get

@@ -50,34 +50,48 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-19 (round 246; v1.12 "Reward Balancing" RELEASED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-19 (round 247; v1.12 "Reward Balancing" RELEASED, round 247 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 246, 2026-09-19).** v1.12 is out and NOTHING is unreleased. In order:
-  1. **Imported creatures that face LEFT walk backwards** - found in round 245, put to the user, NOT answered and NOT
-     fixed. The engine draws an un-suffixed animation as facing right (`CharacterSprite`: `Left` is the mirror of
-     `Right`); `dev-tools/art-import/art_convert_generic.py` assumed every sheet's first Idle frame faced right. Facing
-     left in their art: Tyrant Rex, Stormcrag Griffin, Bonewhite Lizardragon, Ashen Spinewyrm, Shellplate Wyrm,
-     Megamouth Wyrm, Astral Wyrm, Furhorn Wyvern, Aurelian Dragon (Crimson Burrower and Brood Spawn unclear - LOOK).
-     Fix = mirror every animation frame inside its own atlas rectangle in the PNG (frames are bottom-centered in
-     uniform cells, so the alignment holds); leave the 64x64 Avatar cell; no `.atlas` change. Show the user a
-     before/after sheet first. The importer should also stop cutting a portrait from the CENTER of a wide body.
-  2. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
-     fix, the map icons. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the
-     five-kill color hunts (240), the ruined Inn's notice, the Coin Challenge's shard fee, the world-gen town cut
-     (241), the record bonus (243), the dungeon-lifespan pull-in and hunts counting inside dungeons (244), quest 74
-     not issued after a tournament / held inside a ruin (245), the strolling guards (233).
-  3. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
+- **NEXT SESSION starts here (updated round 247, 2026-09-19).** v1.12 is out; round 247 is the only unreleased round. In order:
+  1. **Towns show on the map before the overworld exposes them** (user, round 247: "Not the biggest deal, but can
+     anything be done...") - ANALYZED, NOT CHANGED, waiting for the user's pick. Map icons are painted into the map
+     image (4 px per tile, 16-32 px = 4-8 tiles), centered on the town's BOTTOM-LEFT corner (stock placement), and the
+     fog uncovers that image one explored tile at a time; the overworld draws a town once its sprite's CENTER tile is
+     explored, and fires the discovery burst within vision range (3 tiles; Easy 4, Insane 2) of its footprint. Ground
+     explored a few tiles southwest of a town - or by another town's burst - shows part of its icon while the town is
+     still in fog. Options: **(A, recommended)** discovery follows the icon - once any tile under a town's map icon is
+     explored, that town gets its normal discovery burst (a per-move check over the nearby POIs in `WorldBackground`,
+     plus one helper for the icon's tile rectangle shared with `World.redrawPoiMarkers()`; no save change, no map
+     re-bake; towns are found up to a few tiles sooner on their southwest side). **(B)** hide an icon until its town
+     is found - the icons are baked into the SAVED map image, so this needs an icon-free copy re-derived at load and a
+     rework of the fog pixmap's tile copy, the fog system's most bug-prone code. **(C, cosmetic, combines with A)**
+     center each icon on its town - existing saves need a map re-bake at load.
+  2. **Round 247 in play.** The next log should show `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a fresh
+     game that skips the intro) or `[TFR-RingGift] ... have 1/1 - nothing to grant` (a New Game+ that skips it); the
+     nine mirrored creatures should walk head first. The user's saves 1 and 2 still carry the doubled coins (6 bronze,
+     2 gold, 2 silver) - trimming them (a save edit, game closed) is their call. Packaged into the C: play-test folder (`C:\Users\User\TFR-Release`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
+  3. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
+     fix, the map icons, and (the 10:39 log, round 247) the world-gen town cut, the looted factor 0.25, a Bronze Coin
+     ransom. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the five-kill color
+     hunts (240), the ruined Inn's notice, the Coin Challenge's shard fee (241), the record bonus (243), the
+     dungeon-lifespan pull-in and hunts counting inside dungeons (244), quest 74 not issued after a tournament / held
+     inside a ruin (245), the strolling guards (233).
+  4. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
      were left alone when seven outlier payouts were trimmed; "Sweep the Wilds" counts a dungeon when its last enemy
      dies, not when its loot is gone; round 236's terrain look-alike (a claimed wasteland crater drawn as green water).
-  4. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`). The next merge is
+  5. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`; on 2026-09-19 upstream stood 12 commits past it,
+     tip `db4304cc40d`: 9 Java files, none under `adventure/`, two in files we edit - `forge-game` `Game.java` and
+     `player/Player.java` - and `git merge-tree` previewed the merge as CLEAN). The next merge is
      `3146e4b1036..upstream/master`, only once the user installs a newer daily into `E:\GAMES\Forge_2` - and from
      that moment the packager refuses until the merge lands. If a round must reach the live folder in between, see
      round 241: the live folder's stock tree still matches the repo, so plane folder + jar can be synced without
      BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad script.
-  5. **A full new-engine build takes 90 seconds with `--out C:\Users\User\TFR-Release`** (SSD) against an hour on
+  6. **A full new-engine build takes 90 seconds with `--out C:\Users\User\TFR-Release`** (SSD) against an hour on
      F: - the user play-tested from there this time. Check the running javaw's `-jar` path before packaging into
      either folder.
-  6. Older small items: five `common/` AI decks over the 4-copy limit; the Level 2 arena row overflows a portrait
+  7. Older small items: `dev-tools/art-import/art_convert_generic.py` still assumes right-facing art and cuts a wide
+     creature's portrait from its middle - rounds 245/247 repaired its output, not the importer, so fix it before the
+     next import; five `common/` AI decks over the 4-copy limit; the Level 2 arena row overflows a portrait
      phone (in the notes as known); agent play (`tfr-play` skill).
 - **Older pointer (round 185, 2026-09-12) - kept for its history, superseded by the list above.** The user's calls, in their order:
   1. **Playtest the 197 new enemies (round 179)** - roaming in every color from week 2-3 on (Masters and Archmages
@@ -124,6 +138,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 247 (2026-09-19): the user's first reports on v1.12. **New Game+ with "Skip the introduction" paid the kit
+  twice** - quest 28's skip option handed its Homeward rune and 1/1/3 Challenge Coins over with plain `addItem`
+  actions, on top of what a New Game+ run carries (its purse already topped up at reset); broken since round 76, and
+  round 113 had fixed only the tutorial path. Now `grantRingGift("all")` grants the rune unless one is carried and tops
+  the coins up (`topUpChallengeCoins("[TFR-RingGift]")`) inside the `ringGiftGranted` guard, and its start-item loop
+  obeys the New Game+ rule too. **Nine left-facing imported creatures mirrored** (`portrait_and_facing.py facing
+  --apply`, 133 frames, PNGs only; the tool now refuses a second run). **Asked, not changed:** towns showing on the map
+  before the overworld exposes them - NEXT SESSION item 1. Packaged into the C: play-test folder (`C:\Users\User\TFR-Release`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
 - Round 246 (2026-09-19): **v1.12 "Reward Balancing" - the release round.** Stamps modVersion 1.12 / modVersionDate
   09.19 / tfr.version 1.12 / manifestVersionCode 11200 / engine 09.18; `RELEASE_NOTES_v1.12.md` final. The 08:55 log
   (C: build, new Insane character) was clean and showed the card budget and the resource purse IN PLAY for the first

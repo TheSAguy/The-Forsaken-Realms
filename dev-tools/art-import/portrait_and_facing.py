@@ -15,7 +15,9 @@ Both come from one assumption in the importer - "the first Idle frame faces righ
    sheet whose frames face left walks backwards. `facing` shows  now | mirrored  for the slugs in FACES_LEFT and with
    --apply mirrors every animation frame inside its own atlas rectangle (frames are bottom-centered in uniform cells,
    so the alignment holds). The Avatar cell is left alone; no .atlas file changes.
-   NOT APPLIED as of v1.12 - it was put to the user in round 245 and not answered. Show them the sheet first.
+   APPLIED in round 247 to the nine now listed in MIRRORED_R247 (user: "proceed with this fix"). --apply is NOT
+   idempotent - a second run flips a sheet back - so FACES_LEFT is empty and `facing` refuses until a new slug is
+   added to it.
 
 usage:  python portrait_and_facing.py portraits [--apply] [--out sheet.png]
         python portrait_and_facing.py facing    [--apply] [--out sheet.png]
@@ -29,13 +31,18 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PLANE = os.path.normpath(os.path.join(HERE, "..", "..", "forge-gui", "res", "adventure", "The Forsaken Realms"))
 ROOT = os.path.join(PLANE, "sprites", "enemy")
 
-# slug -> which end of the first Idle frame holds the head (round 245, from the contact sheet)
+# slug -> which end of the first Idle frame holds the head (round 245, from the contact sheet). The Ashen Spinewyrm
+# was "left" when its portrait was cut in round 245; round 247 mirrored its frames, so its head is at the RIGHT end now
+# (a re-run would cut the head again, as the mirror image of the round-245 portrait - never the tail).
 PORTRAIT_FIX = {"shellback_ankylosaur": "right", "magmaback_crawler": "right", "mossback_dragon": "right",
-                "skyreef_shark": "right", "ashen_spinewyrm": "left"}
-# head on the LEFT in the first Idle frame (round 245, from the contact sheet). Unclear, look again: crimson_burrower,
-# brood_spawn. void_dragon, ironstride_construct and serpleg_stalker were checked and face right.
-FACES_LEFT = ["tyrant_rex", "stormcrag_griffin", "bonewhite_lizardragon", "ashen_spinewyrm", "shellplate_wyrm",
-              "megamouth_wyrm", "astral_wyrm", "furhorn_wyvern", "aurelian_dragon"]
+                "skyreef_shark": "right", "ashen_spinewyrm": "right"}
+# Sheets to mirror: head on the LEFT in the first Idle frame. EMPTY since round 247 - see MIRRORED_R247.
+FACES_LEFT = []
+# Mirrored in round 247 (from the round-245 contact sheet). Do NOT put them back in FACES_LEFT. Looked at again in
+# round 247 and left alone: crimson_burrower, brood_spawn (three-quarter / frontal views). void_dragon,
+# ironstride_construct and serpleg_stalker were checked in round 245 and face right.
+MIRRORED_R247 = ["tyrant_rex", "stormcrag_griffin", "bonewhite_lizardragon", "ashen_spinewyrm", "shellplate_wyrm",
+                 "megamouth_wyrm", "astral_wyrm", "furhorn_wyvern", "aurelian_dragon"]
 
 
 def read_atlas(path):
@@ -125,6 +132,9 @@ def portraits(apply, out):
 
 
 def facing(apply, out):
+    assert FACES_LEFT, "FACES_LEFT is empty - the round-247 nine are already mirrored (MIRRORED_R247); a second --apply flips them back"
+    twice = [s for s in FACES_LEFT if s in MIRRORED_R247]
+    assert not twice, "already mirrored in round 247, a second --apply flips them back: %s" % twice
     found = {slug: (img_path, regions, i0) for slug, img_path, regions, i0 in importer_atlases() if slug in FACES_LEFT}
     missing = [s for s in FACES_LEFT if s not in found]
     assert not missing, "no importer-layout atlas for: %s" % missing
