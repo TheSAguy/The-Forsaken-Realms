@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 244 (2026-09-19) - adventure-side only
+
+`util/DungeonRotation.java` - the four lifespan constants replaced by TuningData-backed helpers
+(`despawnMinDays()` ...), the ceiling pull-in in `processDaysPassed()`, the looted factor's fallback 0.25.
+`data/AdventureQuestStage.java` + `data/AdventureQuestData.java` - `adoptDungeonKillsForColorHunt()`;
+`player/AdventurePlayer.java` - `load()` calls it. `data/TuningData.java`, `config tables/settings.json`,
+`dev-tools/validate_plane_data.py` - four `dungeon*Days` keys, `dungeonLootedDespawnFactor` 0.25, ruined cuts
+6/9/18. `world/quests.json` - seven card payouts trimmed, quests 54-63 `anyPOI`. `GUIDE.md`,
+`RELEASE_NOTES_v1.12.md`.
+
 ## Round 243 (2026-09-19) - adventure-side only
 
 `util/ResourcePurse.java` - `hadBetterRecord()`, the record factor in `pay()` (now takes the losses too), the HUD line

@@ -541,6 +541,15 @@ public class AdventureQuestData implements Serializable {
      *
      * @return how many stages were reopened
      */
+    /** Round 244: see AdventureQuestStage.adoptDungeonKillsForColorHunt() - called once per quest on load. */
+    public void adoptDungeonKillsForColorHunt() {
+        for (AdventureQuestStage stage : stages) {
+            if (stage.adoptDungeonKillsForColorHunt())
+                System.out.println("[TFR-Quest] \"" + name + "\": stage \"" + stage.name
+                        + "\" now counts kills inside dungeons too (issued before round 244)");
+        }
+    }
+
     public int reopenStagesCompletedByUnsetFlag(forge.adventure.player.AdventurePlayer player) {
         int reopened = 0;
         for (AdventureQuestStage stage : stages) {

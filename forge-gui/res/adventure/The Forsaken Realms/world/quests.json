@@ -6306,8 +6306,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 5,
-									"addMaxCount": 10,
+									"count": 4,
+									"addMaxCount": 3,
 									"rarity": [
 										"Rare",
 										"Mythic Rare",
@@ -6507,8 +6507,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 10,
-									"addMaxCount": 5,
+									"count": 5,
+									"addMaxCount": 2,
 									"rarity": [
 										"Rare",
 										"Mythic Rare"
@@ -6718,8 +6718,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 10,
-									"addMaxCount": 10,
+									"count": 5,
+									"addMaxCount": 3,
 									"subTypes": [
 										"Fungus"
 									]
@@ -6919,8 +6919,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 7,
-									"addMaxCount": 7,
+									"count": 4,
+									"addMaxCount": 2,
 									"colors": [
 										"Green",
 										"Blue",
@@ -7905,8 +7905,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 7,
-									"addMaxCount": 7,
+									"count": 4,
+									"addMaxCount": 2,
 									"colors": [
 										"Green",
 										"Blue",
@@ -8116,8 +8116,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 7,
-									"addMaxCount": 7,
+									"count": 4,
+									"addMaxCount": 2,
 									"colors": [
 										"Green",
 										"Blue",
@@ -8327,8 +8327,8 @@
 								{
 									"type": "card",
 									"probability": 1,
-									"count": 7,
-									"addMaxCount": 7,
+									"count": 4,
+									"addMaxCount": 2,
 									"colors": [
 										"Green",
 										"Blue",
@@ -11594,10 +11594,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Black enemies",
-				"description": "Find and defeat five Black-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Black-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -11684,10 +11685,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Red enemies",
-				"description": "Find and defeat five Red-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Red-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -11774,10 +11776,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Red enemies",
-				"description": "Find and defeat five Red-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Red-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -11864,10 +11867,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Green enemies",
-				"description": "Find and defeat five Green-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Green-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -11954,10 +11958,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Green enemies",
-				"description": "Find and defeat five Green-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Green-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -12044,10 +12049,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five White enemies",
-				"description": "Find and defeat five White-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five White-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -12134,10 +12140,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five White enemies",
-				"description": "Find and defeat five White-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five White-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -12224,10 +12231,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Blue enemies",
-				"description": "Find and defeat five Blue-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Blue-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -12314,10 +12322,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Blue enemies",
-				"description": "Find and defeat five Blue-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Blue-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,
@@ -12404,10 +12413,11 @@
 			{
 				"id": 1,
 				"name": "Defeat five Black enemies",
-				"description": "Find and defeat five Black-aligned enemies anywhere in the wilds.",
+				"description": "Find and defeat five Black-aligned enemies anywhere - out in the wilds or down in a dungeon.",
 				"mapFlag": "",
 				"mapFlagValue": 1,
 				"count3": 5,
+				"anyPOI": true,
 				"worldMapOK": true,
 				"objective": "Defeat",
 				"mixedEnemies": true,

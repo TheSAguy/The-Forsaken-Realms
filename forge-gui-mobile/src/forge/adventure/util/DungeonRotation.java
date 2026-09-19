@@ -42,13 +42,24 @@ public class DungeonRotation {
     // despawn activates a RESERVE location instead of the same spot returning later - dungeons
     // genuinely appear somewhere else. World.generateNew()'s placement loop reads this multiplier.
     public static final int POOL_MULTIPLIER = 5;
-    // First-guess constants, tune after testing - a visible dungeon lives 20-60 days before
-    // vanishing; a just-hidden location can't be re-picked as a fresh spawn for 10-30 days (so a
-    // vanished dungeon doesn't pop straight back where it was).
-    private static final int DESPAWN_MIN_DAYS = 20;
-    private static final int DESPAWN_MAX_DAYS = 60;
-    private static final int RESPAWN_MIN_DAYS = 10;
-    private static final int RESPAWN_MAX_DAYS = 30;
+    // A visible dungeon lives dungeonLifespanMinDays..MaxDays before vanishing; a just-hidden location
+    // can't be re-picked as a fresh spawn for dungeonSpotRestMinDays..MaxDays (so a vanished dungeon
+    // doesn't pop straight back where it was). These were constants (20-60 and 10-30, "first-guess,
+    // tune after testing") until round 244 (user: "let's trim the upper end from 60 day lifespan, to
+    // 40") made them TuningData settings - read through the four helpers below, which also keep a
+    // mis-set pair (max below min, or nothing at all) from ever reaching rollDays().
+    private static int despawnMinDays() {
+        return Math.max(1, Config.instance().getTuningData().dungeonLifespanMinDays);
+    }
+    private static int despawnMaxDays() {
+        return Math.max(despawnMinDays(), Config.instance().getTuningData().dungeonLifespanMaxDays);
+    }
+    private static int respawnMinDays() {
+        return Math.max(1, Config.instance().getTuningData().dungeonSpotRestMinDays);
+    }
+    private static int respawnMaxDays() {
+        return Math.max(respawnMinDays(), Config.instance().getTuningData().dungeonSpotRestMaxDays);
+    }
     // Per user spec, exactly: "+30 days added to the timer" for an active side-quest target,
     // "3 chances" on losses inside one.
     private static final int SIDEQUEST_EXTENSION_DAYS = 30;
@@ -201,14 +212,14 @@ public class DungeonRotation {
             world.getPoiFailedAttempts().remove(id);
             world.getPoiLootedDay().remove(id); // round 128
             world.getPoiDespawnDay().put(id,
-                    currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS) + SIDEQUEST_EXTENSION_DAYS);
+                    currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()) + SIDEQUEST_EXTENSION_DAYS);
             world.refreshWorldMapMarkers();
             System.out.println("[DungeonRotation] " + poi.getDisplayName()
                     + " force-spawned from reserve as a new quest target, despawns day " + world.getPoiDespawnDay().get(id));
         } else {
             Integer despawnDay = world.getPoiDespawnDay().get(id);
             int base = despawnDay != null ? despawnDay
-                    : currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS);
+                    : currentDay + rollDays(world, despawnMinDays(), despawnMaxDays());
             world.getPoiDespawnDay().put(id, base + SIDEQUEST_EXTENSION_DAYS);
             System.out.println("[DungeonRotation] quest target " + poi.getDisplayName()
                     + " timer extended " + SIDEQUEST_EXTENSION_DAYS + " days, despawns day " + world.getPoiDespawnDay().get(id));
@@ -237,7 +248,19 @@ public class DungeonRotation {
             if (despawnDay == null) {
                 // First sight of this POI (fresh world, newly activated, or a save predating the
                 // feature) - seed a lifetime rather than despawning anything on day one.
-                world.getPoiDespawnDay().put(id, newDayCount + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS));
+                world.getPoiDespawnDay().put(id, newDayCount + rollDays(world, despawnMinDays(), despawnMaxDays()));
+                continue;
+            }
+            // Round 244: a timer rolled under a LONGER ceiling (the 60 days before this round, or a
+            // settings value since lowered) is pulled in to today's ceiling, so shortening the lifespan
+            // takes effect in a running save instead of weeks later. Never for a quest target - its
+            // runway (SIDEQUEST_EXTENSION_DAYS, the story re-roll) is deliberately longer than any lifespan.
+            if (despawnDay - newDayCount > despawnMaxDays() && activeQuestStatus(poi) == QUEST_NONE) {
+                int pulledIn = newDayCount + despawnMaxDays();
+                System.out.println("[DungeonRotation] " + poi.getDisplayName() + " had " + (despawnDay - newDayCount)
+                        + " days left, more than the " + despawnMaxDays() + "-day lifespan ceiling - despawn day "
+                        + despawnDay + " -> " + pulledIn);
+                world.getPoiDespawnDay().put(id, pulledIn);
                 continue;
             }
             if (newDayCount < despawnDay)
@@ -245,7 +268,7 @@ public class DungeonRotation {
             int questStatus = activeQuestStatus(poi);
             if (questStatus == QUEST_STORY) {
                 // Never pull a story quest's target out from under the player - just re-roll.
-                world.getPoiDespawnDay().put(id, newDayCount + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS));
+                world.getPoiDespawnDay().put(id, newDayCount + rollDays(world, despawnMinDays(), despawnMaxDays()));
             } else if (questStatus == QUEST_SIDE) {
                 // Active side quest points here - "30 days should be added to the timer before it
                 // disappears" (user spec). Re-extended each time it comes due while the quest is
@@ -315,7 +338,7 @@ public class DungeonRotation {
             world.getPoiRespawnDay().remove(pick.getID());
             world.getPoiFailedAttempts().remove(pick.getID());
             world.getPoiLootedDay().remove(pick.getID()); // round 128
-            world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS));
+            world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()));
             System.out.println("[DungeonRotation] " + pick.getDisplayName() + " has appeared on the map");
             activeCount++;
             changed = true;
@@ -410,7 +433,7 @@ public class DungeonRotation {
             // Not seeded yet (a world whose first day tick has not run, or a POI activated this
             // same day): seed the lifetime processDaysPassed() would have given it, then halve
             // that, so the rule is not silently skipped just because of tick ordering.
-            despawnDay = currentDay + rollDays(world, DESPAWN_MIN_DAYS, DESPAWN_MAX_DAYS);
+            despawnDay = currentDay + rollDays(world, despawnMinDays(), despawnMaxDays());
         }
         int remaining = despawnDay - currentDay;
         if (remaining <= 1) {
@@ -421,7 +444,7 @@ public class DungeonRotation {
         }
         float factor = Config.instance().getTuningData().dungeonLootedDespawnFactor;
         if (!(factor > 0f) || factor > 1f)
-            factor = 0.5f;
+            factor = 0.25f; // round 244: the user's "remove 75% of remaining time left"
         int halved = Math.max(1, Math.round(remaining * factor));
         world.getPoiDespawnDay().put(id, currentDay + halved);
         world.getPoiLootedDay().put(id, currentDay);
@@ -493,7 +516,7 @@ public class DungeonRotation {
         world.getPoiDespawnDay().remove(poi.getID());
         world.getPoiFailedAttempts().remove(poi.getID());
         world.getPoiLootedDay().remove(poi.getID()); // round 128: next incarnation may be halved again
-        world.getPoiRespawnDay().put(poi.getID(), currentDay + rollDays(world, RESPAWN_MIN_DAYS, RESPAWN_MAX_DAYS));
+        world.getPoiRespawnDay().put(poi.getID(), currentDay + rollDays(world, respawnMinDays(), respawnMaxDays()));
         System.out.println("[DungeonRotation] " + poi.getDisplayName() + " despawned until day " + world.getPoiRespawnDay().get(poi.getID()));
         if (notification != null)
             GameHUD.getInstance().addNotification(notification);

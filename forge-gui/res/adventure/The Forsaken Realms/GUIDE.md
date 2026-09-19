@@ -152,7 +152,8 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
   **Black** is balanced, an enemy of two colors leans both ways, and a **colorless** one is
   balanced with a smaller purse. The purse grows with rank, is half again as large on a first
   victory, and a quarter larger when you beat an enemy that had the better record against you. So
-  hunt the color whose resource you need.
+  hunt the color whose resource you need. A color's "defeat five" quest counts those kills wherever
+  they happen, out in the wilds or down in a dungeon.
 - Bosses, Arena and tournament opponents, chests and quest rewards pay what they always did.
 - Every number here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in
   the plane's `config tables/settings.json`.
@@ -186,10 +187,12 @@ in [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).*
 
 ### Dungeons That Actually Rotate
 
-Dungeons and caves aren't fixed forever. Every visible one has a lifespan - it'll despawn on its
-own after a few weeks (faster if you lose a fight there and it isn't a story target), and a fresh
-one appears elsewhere to take its place, drawn from a much larger reserve pool than what's ever
-visible at once. Clearing a dungeon out completely also retires it, making room for something new.
+Dungeons and caves aren't fixed forever. Every visible one has a lifespan - 20 to 40 days - after
+which it despawns on its own (at once if you lose a fight there and it isn't a story target), and a
+fresh one appears elsewhere to take its place, drawn from a much larger reserve pool than what's
+ever visible at once. Clearing a dungeon out completely also retires it, making room for something
+new - and stripping one of its loot while its guards still stand leaves it only a quarter of the
+days it had left.
 Side-quest-linked dungeons get extra grace: three failed attempts before they're gone for good,
 and their lifespan extends automatically while a quest still points at them. Story-critical
 locations never disappear.

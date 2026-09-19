@@ -4,9 +4,9 @@ DRAFT - delete this block before publishing. Written 2026-09-19 (round 243).
 Before v1.12 can be tagged:
   [ ] The user has play-tested the 09.18 engine build (rounds 241-243 on it) - nothing of 237-243 had been seen in
       a running game when this was written; 229, 233, 239 and 240 neither.
-  [ ] The open decisions are settled (CLAUDE.md, round 243): the ruined-town cut's scale, quest rewards vs the card
-      budget, color quests and dungeon kills. Re-word the lines marked (*) below if any of them changes.
-  [ ] The release name is the user's call - "Spoils of War" is a suggestion.
+  [x] The open decisions were settled in round 244 (ruins 6/9/18, seven quest payouts trimmed, color hunts count
+      dungeon kills, dungeon lifespan 20-40 and the looted rule at 25%) and are written in below.
+  [x] The release name is the user's: "Reward Balancing".
   [ ] Stamps: config.json modVersion 1.12 + modVersionDate; forge-gui-android/pom.xml tfr.version 1.12 and
       manifestVersionCode 11200; the APK file name in the Android section below.
   [ ] The live folder is packaged from the tagged commit (full stock copy - the engine changed), the agent folder
@@ -15,7 +15,7 @@ Before v1.12 can be tagged:
       publishing.
 -->
 
-## The Forsaken Realms — v1.12 — Spoils of War
+## The Forsaken Realms — v1.12 — Reward Balancing
 
 This one is about what a victory is worth. Duels pay fewer cards and better ones, what they pay in gold and
 resources now depends on who you beat, and the world gives you more reasons to go looking for a particular
@@ -42,7 +42,8 @@ fight. **Your v1.11 save carries straight over**; the two world-generation chang
   each may keep one more in the field for as long as it stands.
 - **Two kinds of quest.** "Sweep the Wilds" - clear three dungeons or caves - is offered at every town's
   board. Each color's towns now ask you to defeat **five** enemies of an opposing color (it was one), for
-  600 gold and twice the reputation. (*) The quest log shows progress on any counted quest, "(2/5)".
+  600 gold and twice the reputation - and those kills count wherever they happen, out in the wilds or down
+  in a dungeon. The quest log shows progress on any counted quest, "(2/5)".
 - **Teleporter towns on the overworld.** A town or Capitol of yours with a Teleporter wears a small
   shimmering portal at its lower right, opposite the guard icons.
 - **Arena countdowns.** The map's Reputation view lists, for your Capitol and each AI capital you have
@@ -57,10 +58,17 @@ fight. **Your v1.11 save carries straight over**; the two world-generation chang
   ruin offers. (A tournament you had already entered there can still be finished.)
 - **The Coin Challenge costs Shards as well** on Normal, Hard and Insane: 5 / 10 / 15 on top of the gold.
 - **Harder worlds start with fewer towns.** A new world on Normal / Hard / Insane has 1 / 2 / 3 fewer
-  functioning Neutral towns and 3 / 6 / 9 fewer ruins. (*)
+  functioning Neutral towns and 6 / 9 / 18 fewer ruins.
+- **Dungeons turn over faster.** A dungeon or cave stays 20 to 40 days (it was 20 to 60), and one you strip
+  of its loot while its guards still stand keeps only a quarter of the days it had left (it was half). A
+  dungeon already on your map with more than 40 days left is pulled in to 40.
+- **The richest quests pay fewer cards.** Seven boss-dungeon quests paid 5 to 10 guaranteed cards plus as
+  many random extras, nearly all rare or mythic - Mechanical Problems, Spores of Death, Pest Control, Slimy
+  Business, Kiora's Fall, Teferi's Fall, The Drunken Plea. They now pay 4 or 5 (plus a random extra or two
+  below Insane), in line with what a duel pays. Their gold is unchanged.
 - **More of the balance is yours to edit.** `config tables/settings.json` gained the card counts per rank
-  (1 to 5 each), the purse per rank and every factor above, the Coin Challenge's Shard fee and the
-  world-generation cuts.
+  (1 to 5 each), the purse per rank and every factor above, the Coin Challenge's Shard fee, the
+  world-generation cuts and how long dungeons last.
 
 ## Fixed
 

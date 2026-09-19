@@ -163,18 +163,18 @@
     // NeutralTownCut comes off functioningNeutralTownCount above (the five star towns are never cut).
     // NeutralTownCut + RuinedTownCut is how many fewer ordinary Waste Towns are placed at all, so a cut
     // Neutral town is gone rather than left as one more ruin.
-    // For scale: a world holds about 283 ordinary Waste Towns, some 260 of them ruins - so -9 ruins is
-    // about 3%, where -3 of the 20 Neutral towns is 15%. Ruined cuts of about 13 / 26 / 39 would thin the
-    // ruins as much as the Neutral towns. The ceiling is 57 towns in all (Neutral + Ruined): only the 60 the
-    // waste biome places itself can be cut, and each of its three kinds keeps at least one.
+    // For scale: a world holds about 283 ordinary Waste Towns, some 260 of them ruins - so -18 ruins is
+    // about 7%, where -3 of the 20 Neutral towns is 15%. Round 244: the user raised the Ruined cuts from
+    // 3 / 6 / 9 to 6 / 9 / 18. The ceiling is 57 towns in all (Neutral + Ruined): only the 60 the waste
+    // biome places itself can be cut, and each of its three kinds keeps at least one.
     "worldGenNeutralTownCutEasy": 0,
     "worldGenNeutralTownCutNormal": 1,
     "worldGenNeutralTownCutHard": 2,
     "worldGenNeutralTownCutInsane": 3,
     "worldGenRuinedTownCutEasy": 0,
-    "worldGenRuinedTownCutNormal": 3,
-    "worldGenRuinedTownCutHard": 6,
-    "worldGenRuinedTownCutInsane": 9,
+    "worldGenRuinedTownCutNormal": 6,
+    "worldGenRuinedTownCutHard": 9,
+    "worldGenRuinedTownCutInsane": 18,
 
     // Roaming-spawn duplicate limiting (user report 2026-09-01: three Khenra Warriors standing
     // together). A fresh roll of an enemy that already has maxSameEnemyNearby of itself alive
@@ -200,7 +200,18 @@
     // days remaining on its despawn timer - 0.5 = cut in half. Applied once per visible lifetime, and
     // never to a dungeon an active quest points at. Set to 1.0 to switch the rule off. Grep forge.log
     // for "[TFR-DungeonLooted]".
-    "dungeonLootedDespawnFactor": 0.5,
+    // Round 244 (user: "let's remove 75% of remaining time left"): 0.5 -> 0.25 - a looted dungeon keeps a quarter
+    // of the days it had left.
+    "dungeonLootedDespawnFactor": 0.25,
+    // Round 244 - how long a rotatable dungeon or cave stays on the map, in in-game days (rolled evenly between
+    // the two; it was 20-60 until the user trimmed the top to 40), and how long the spot it leaves stays empty
+    // before another can appear there. Clearing a dungeon, or losing a duel inside one, still removes it at once;
+    // a side-quest target gets 30 days on top. A dungeon already on the map with more days left than the ceiling
+    // is pulled in to it on the next day - quest targets excepted.
+    "dungeonLifespanMinDays": 20,
+    "dungeonLifespanMaxDays": 40,
+    "dungeonSpotRestMinDays": 10,
+    "dungeonSpotRestMaxDays": 30,
 
     // Enemy size by tier (round 178, user decision: one size per rank, so the size tells you the rank).
     // Every non-boss enemy's "scale" in world/enemies.json draws its BODY at the hero's body size

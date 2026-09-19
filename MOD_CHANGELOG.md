@@ -17757,6 +17757,54 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 244: the user's answers - ruins 6/9/18, quest payouts trimmed, color hunts count dungeon kills, dungeons live 20-40 days (2026-09-19, REPO ONLY until the next package)
+
+User, answering the open decisions: *"Ruined-town cut: Let's do 6/9/18. Quest rewards sit outside the card budget. -
+Trim outliers. Color quests don't count kills inside dungeons. - Make them count. Release name: Reward Balancing.
+For Dungeon lifespan, let's trim the upper end from 60 day lifespan, to 40. Currently we 50% the time left after all
+resources are looted. let's remove 75% of remaining time left."*
+
+**Ruined towns.** `worldGenRuinedTownCutNormal / Hard / Insane` 3 / 6 / 9 -> **6 / 9 / 18** (with the Neutral cut of
+1 / 2 / 3 that is 7 / 11 / 21 fewer towns placed; the ceiling is 57). -18 of some 260 ruins is about 7%. New worlds only.
+
+**Quest payouts - the outliers.** A survey of every `grantRewards` in `quests.json`, per completion path: the median
+quest that pays cards pays 4; seven pay 5-10 guaranteed cards plus up to 5-10 random extras, nearly all rare or
+mythic. Those seven, and only those, are trimmed to the card budget's scale (an Archmage's first win is 5 cards):
+
+| quest | was | now |
+|---|---|---|
+| 25 Mechanical Problems (rare/mythic artifacts) | 10 (+5) | 5 (+2) |
+| 26 Spores of Death (Fungus cards, any rarity) | 10 (+10) | 5 (+3) |
+| 24 Pest Control (uncommon and up) | 5 (+10) | 4 (+3) |
+| 27 Slimy Business, 35 Kiora's Fall, 36 Teferi's Fall, 37 The Drunken Plea (rare/mythic) | 7 (+7) | 4 (+2) |
+
+The "(+N)" is `addMaxCount`: up to N-1 random extras, scaled by the difficulty's `rewardMaxFactor` - none at all on
+Insane. Their gold (500-1,000 plus extras) and shards are untouched; so are the eight-card town quests (11-16 and
+10's two branches: 4 rare + 2 uncommon + 2 any), which are a cluster, not outliers - say if they should come down too.
+
+**Color hunts count dungeon kills.** `checkIfTargetLocation()` answers a kill inside a map with `anyPOI` when the
+stage has no bound POI; the ten color-hunt stages (quests 54-63) were `worldMapOK` only. They now carry
+`"anyPOI": true` (the combination "Sweep the Wilds" already uses - `setTargetPOI()` returns early for a `worldMapOK`
+stage, so nothing is bound and no arrow is drawn), and their text says "out in the wilds or down in a dungeon". A quest
+ALREADY in a save carries its stage as issued, so `AdventurePlayer.load()` calls new
+`AdventureQuestData.adoptDungeonKillsForColorHunt()` - `[TFR-Quest] ... now counts kills inside dungeons too`.
+Checked with the game's own `AdventureQuestStage`: run over the OLD file it adopts exactly quests 54-63 and nothing
+else; over the new file, nothing (idempotent); all 207 stages parse.
+
+**Dungeon lifespan.** The four rotation constants in `DungeonRotation` ("first-guess, tune after testing") are now
+settings: `dungeonLifespanMinDays` / `MaxDays` **20 / 40** (was 20-60) and `dungeonSpotRestMinDays` / `MaxDays`
+10 / 30, read through four helpers that also keep a mis-set pair from reaching `rollDays()`. So a visible dungeon
+now lasts 30 days on average instead of 40. **It takes effect in a running save:** on the day tick, a visible
+dungeon with more days left than the ceiling is pulled in to it (`[DungeonRotation] ... had 55 days left, more than
+the 40-day lifespan ceiling`) - never a quest target, whose runway is deliberately longer.
+`dungeonLootedDespawnFactor` 0.5 -> **0.25**: a dungeon stripped of its loot with enemies still inside keeps a quarter
+of the days it had left (once per appearance, never a quest target - unchanged rules).
+
+**Release name:** "Reward Balancing" (v1.12). `RELEASE_NOTES_v1.12.md` retitled and brought in line with the above.
+GUIDE.md: the rotation section now gives the numbers.
+
+Built on the 09.18 engine; plane validator clean. Repo only - the user was still play-testing round 241 on F:.
+
 ## Round 243: the purse pays +25% against an enemy that had the better record; the game guide catches up (2026-09-19, REPO ONLY until the next package)
 
 User, settling the purse's open knobs (income level: "Good with this"; difficulty 1.5 / 1.25 / 1 / 0.8: "Good with

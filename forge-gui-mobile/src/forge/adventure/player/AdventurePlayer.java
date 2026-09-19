@@ -1335,6 +1335,9 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             // for a castle that was only ever FOUND. Both flag maps are loaded above, so the check is sound.
             for (AdventureQuestData quest : quests)
                 quest.reopenStagesCompletedByUnsetFlag(this);
+            // Round 244: a color-hunt quest taken before dungeon kills counted adopts the new rule.
+            for (AdventureQuestData quest : quests)
+                quest.adoptDungeonKillsForColorHunt();
         }
         if (data.containsKey("events")) {
             events.clear();

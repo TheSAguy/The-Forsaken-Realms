@@ -548,6 +548,19 @@ public class AdventureQuestStage implements Serializable {
         return satisfied;
     }
 
+    /** Round 244 (user: "Color quests don't count kills inside dungeons. - Make them count."). quests.json now
+     *  gives the ten color-hunt stages anyPOI, which is what lets checkIfTargetLocation() accept a kill inside a
+     *  map; a quest ALREADY in a save carries its stage as it was issued, so the same flag is adopted on load.
+     *  The shape tested is exactly that family: a Defeat stage that picks its prey by color letter and counts
+     *  on the world map. Nothing else in quests.json has it.
+     *  @return true when this stage was changed */
+    public boolean adoptDungeonKillsForColorHunt() {
+        if (objective != Defeat || anyPOI || !worldMapOK || enemyColorLetter == null || enemyColorLetter.isEmpty())
+            return false;
+        anyPOI = true;
+        return true;
+    }
+
     /** Round 240: " (2/5)" for a stage that counts toward more than one, else "". The quest log appends it
      *  to the stage name - a "kill five" or "clear three" quest cannot be played blind. */
     public String getProgressText() {

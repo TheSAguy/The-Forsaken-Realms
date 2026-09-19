@@ -97,6 +97,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 244 (2026-09-19, REPO ONLY): the user's answers. **Ruins cut 6 / 9 / 18** (settings). **Seven quest payouts
+  trimmed** to the card budget's scale (25 Mechanical Problems 10(+5) -> 5(+2); 26 Spores of Death 10(+10) -> 5(+3); 24
+  Pest Control 5(+10) -> 4(+3); 27/35/36/37 7(+7) -> 4(+2)); gold untouched; the eight-card town quests 10-16 left as a
+  cluster. **Color hunts 54-63 count dungeon kills** (`anyPOI` + `worldMapOK`; a quest already in a save adopts it on
+  load - `AdventureQuestData.adoptDungeonKillsForColorHunt()`, `[TFR-Quest]`). **Dungeon lifespan 20-40 days** - the
+  four `DungeonRotation` constants are now settings (`dungeonLifespanMin/MaxDays`, `dungeonSpotRestMin/MaxDays`), and
+  a visible non-quest dungeon with more days left than the ceiling is pulled in on the day tick;
+  `dungeonLootedDespawnFactor` 0.5 -> 0.25. **RELEASE NAME: v1.12 "Reward Balancing"** (the user's). Still open, not
+  blocking: "Sweep the Wilds" counting on the last enemy (left as is unless they say), the round-236 terrain
+  look-alike (deferred), Android yes/no (assumed yes, as every release so far).
 - Round 243 (2026-09-19, REPO ONLY - built 07:48 on the 09.18 engine, not packaged): **purse x1.25 when the enemy HAD
   THE BETTER RECORD** going into the duel (`resourcePurseLosingRecordFactor`; `ResourcePurse.hadBetterRecord(wins,
   losses)` = `losses > wins - 1`, because this win is already recorded when loot is built; multiplies with the

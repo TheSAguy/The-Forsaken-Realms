@@ -271,7 +271,18 @@ public class TuningData {
     // should be cut in half"). Multiplier applied to the REMAINING days on a looted-but-still-guarded
     // dungeon's despawn timer, once per visible lifetime. 1.0 disables the rule without touching code;
     // values above 1 would extend instead, which is why the code clamps to (0, 1].
-    public float dungeonLootedDespawnFactor = 0.5f;
+    // Round 244 (user: "Currently we 50% the time left after all resources are looted. let's remove 75% of
+    // remaining time left"): 0.5 -> 0.25, the share of the remaining days that is KEPT.
+    public float dungeonLootedDespawnFactor = 0.25f;
+    // Round 244 (user: "For Dungeon lifespan, let's trim the upper end from 60 day lifespan, to 40"). How long a
+    // rotatable dungeon or cave stays on the map (rolled evenly between the two, in in-game days) and how long
+    // the spot it leaves stays empty before it can be used again. Constants in DungeonRotation until now
+    // (20-60 and 10-30). A visible dungeon whose timer was rolled under a longer ceiling is pulled in to the
+    // current one on the next day tick - quest targets excepted.
+    public int dungeonLifespanMinDays = 20;
+    public int dungeonLifespanMaxDays = 40;
+    public int dungeonSpotRestMinDays = 10;
+    public int dungeonSpotRestMaxDays = 30;
 
     public float torchPulseMultiplier = 3f;
     public float torchPulseSeconds = 2f;
