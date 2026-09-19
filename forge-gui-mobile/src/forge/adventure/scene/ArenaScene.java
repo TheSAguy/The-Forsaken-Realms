@@ -404,19 +404,24 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         }
         int fee = Config.instance().getTuningData().coinChallengeFeeFor(
                 Current.player().getDifficultyData().name);
+        // Round 241 (user: "Up 'coin duel' cost, Easy, no change. Normal +5 Shards, Hard +10 shards, Insane +15
+        // shards"): shards on top of the gold. Like the gold, checked here AND in launchCoinChallenge().
+        int shardFee = Config.instance().getTuningData().coinChallengeShardFeeFor(
+                Current.player().getDifficultyData().name);
+        String price = coinChallengePrice(fee, shardFee);
         int week = WorldSave.getCurrentSave().getWorld().getCurrentWeek();
 
         Dialog dialog = new Dialog("Coin Challenge", Controls.getSkin());
-        TypingLabel label = Controls.newTypingLabel("Win back a Bronze Challenge Coin. Entry [+GoldCoin] "
-                + fee + " - one attempt per opponent each week. No ante, and losing costs nothing more.");
+        TypingLabel label = Controls.newTypingLabel("Win back a Bronze Challenge Coin. Entry " + price
+                + " - one attempt per opponent each week. No ante, and losing costs nothing more.");
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
         for (String foe : holders) {
             int lastWeek = Current.player().coinChallengeWeek(foe);
             boolean usedThisWeek = lastWeek == week;
-            boolean tooPoor = Current.player().getGold() < fee;
-            String suffix = usedThisWeek ? " (next week)" : tooPoor ? " (need [+GoldCoin] " + fee + ")" : "";
+            boolean tooPoor = Current.player().getGold() < fee || Current.player().getShards() < shardFee;
+            String suffix = usedThisWeek ? " (next week)" : tooPoor ? " (need " + price + ")" : "";
             TextraButton row = Controls.newTextButton("[%80]" + foe + suffix, () -> {
                 removeDialog();
                 launchCoinChallenge(foe);
@@ -428,6 +433,12 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 Forge.getLocalizer().getMessage("lblCancel"), this::removeDialog)).width(240f).row();
         dialog.setKeepWithinStage(true);
         showDialog(dialog);
+    }
+
+    /** Round 241: the Coin Challenge's price as cost text - the gold fee, plus the shard fee on the
+     *  difficulties that charge one. */
+    private static String coinChallengePrice(int goldFee, int shardFee) {
+        return "[+GoldCoin] " + goldFee + (shardFee > 0 ? "  [+Shards] " + shardFee : "");
     }
 
     /** Round 216: one duel against a named coin holder. Same single-duel shell the Deck Tester uses
@@ -457,9 +468,11 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         }
         int fee = Config.instance().getTuningData().coinChallengeFeeFor(
                 Current.player().getDifficultyData().name);
-        if (Current.player().getGold() < fee) {
+        int shardFee = Config.instance().getTuningData().coinChallengeShardFeeFor(
+                Current.player().getDifficultyData().name); // round 241
+        if (Current.player().getGold() < fee || Current.player().getShards() < shardFee) {
             showDialog(createGenericDialog("Coin Challenge",
-                    "You need [+GoldCoin] " + fee + " to challenge " + foe + ".",
+                    "You need " + coinChallengePrice(fee, shardFee) + " to challenge " + foe + ".",
                     Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, this::removeDialog));
             return;
         }
@@ -478,13 +491,15 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         EnemySprite challenger = new EnemySprite(challengeData);
 
         Current.player().takeGold(fee);
+        if (shardFee > 0)
+            Current.player().takeShards(shardFee); // round 241
         Current.player().suppressNextDefeatGoldLoss();
         Current.player().recordCoinChallenge(foe, week);
         coinChallengeMatch = true;
         coinChallengeFoe = foe;
         enable = false;
         System.out.println("[TFR-CoinChallenge] challenging " + foe + " for a Bronze Coin - fee "
-                + fee + " (" + Current.player().getDifficultyData().name + "), week " + week
+                + fee + " gold + " + shardFee + " shards (" + Current.player().getDifficultyData().name + "), week " + week
                 + ", noAnte, defeat gold loss waived, arena-flagged (no reputation shift)");
         refreshArenaBuildingButtons();
         DuelScene duelScene = DuelScene.instance();

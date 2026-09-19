@@ -324,6 +324,11 @@ public class SaveLoadScene extends UIScene {
                         loaded = false;
                         if (WorldSave.load(currentSlot)) {
                             WorldSave.getCurrentSave().clearChanges();
+                            // Round 241: world-gen thins the wasteland towns by difficulty, and the new
+                            // difficulty is only applied to the player below - so the World is told first.
+                            WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(difficulty != null
+                                    ? Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()].name
+                                    : Current.player().getDifficulty().name);
                             if (WorldSave.getCurrentSave().getWorld().generateNew(0)) {
                                 if (difficulty != null)
                                     Current.player().updateDifficulty(Config.instance().getConfigData().difficulties[difficulty.getSelectedIndex()]);

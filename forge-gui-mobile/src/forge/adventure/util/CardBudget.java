@@ -175,7 +175,25 @@ public final class CardBudget {
         return -1;
     }
 
+    /** Round 241 (user: "Add the guarantee card drop count per tier as a variable the player can change in the
+     *  config file. Maybe make it a range 1-5"): the settings value, held to MIN_BASE..MAX_BASE. */
+    private static final int MIN_BASE = 1;
+    private static final int MAX_BASE = 5;
+    private static boolean rangeWarningLogged;
+
     private static int base(TuningData tuning, int tier, boolean firstWin) {
+        int configured = configuredBase(tuning, tier, firstWin);
+        int held = Math.max(MIN_BASE, Math.min(MAX_BASE, configured));
+        if (held != configured && !rangeWarningLogged) {
+            rangeWarningLogged = true; // once a session - this runs on every win
+            System.out.println("[TFR-CardBudget] settings.json asks for " + configured + " card(s) for a "
+                    + RANKS[Math.max(0, Math.min(RANKS.length - 1, tier))] + (firstWin ? " first win" : " repeat win")
+                    + " - the counts run " + MIN_BASE + " to " + MAX_BASE + ", using " + held);
+        }
+        return held;
+    }
+
+    private static int configuredBase(TuningData tuning, int tier, boolean firstWin) {
         switch (tier) {
             case 0: return firstWin ? tuning.cardBudgetFirstCommon : tuning.cardBudgetRepeatCommon;
             case 1: return firstWin ? tuning.cardBudgetFirstUncommon : tuning.cardBudgetRepeatUncommon;

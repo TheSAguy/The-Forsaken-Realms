@@ -97,6 +97,21 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 241 (2026-09-19): **the RESOURCE PURSE** (`util/ResourcePurse.java`, companion of `CardBudget`) - gold /
+  shards / wood / stone by RANK (`resourcePurseCommon/Uncommon/Rare/Mythic` 60/90/130/160 gold-equivalent) x
+  difficulty (1.5 / 1.25 / 1 / 0.8) x1.5 first win x0.7 colorless x +-20% luck; 35% always gold, the rest ONE bonus
+  resource rolled on the enemy's COLOR (White gold, Blue shards, Red stone, Green wood at 55 vs 15; Black/colorless
+  balanced; multicolor = average). REPLACES the enemy type's own gold/shards entries (skipped before they roll in
+  `EnemySprite.getRewards()`) and switches the old 25% gold->wood/stone swap off for every payout. Same exemptions
+  as the card budget. `[TFR-ResourcePurse]`; `pay()` is state-free for headless checks. OFF in TuningData, ON in the
+  plane's settings. FLAGGED: 51 enemies had more authored gold than their whole purse (up to 210) - no floor built.
+  **Coin Challenge +shards** (`coinChallengeShardFee*` 0/5/10/15). **Card budget counts held to 1-5**
+  (`CardBudget.base()`). **World gen by difficulty** (`worldGenNeutralTownCut*` 0/1/2/3, `worldGenRuinedTownCut*`
+  0/3/6/9): the world generates BEFORE the player has a difficulty, so both callers now call
+  `World.setGenerationDifficulty()`; towns are cut at PLACEMENT (`wasteTownPlacementCuts()`, roads), the Neutral
+  seed target drops by the Neutral cut; `[TFR-WorldGenTowns]`. FLAGGED: a world has ~283 ordinary Waste Towns, ~260
+  ruins, so -9 is ~3%. **A ruined town's Inn is SHUT** until restored (`TownRestoration.isInnClosedByRuin()`,
+  `OnCollide.withRuinOverlay()`, `[TFR-Inn]`) - except to finish a tournament already entered there.
 - Round 240 (2026-09-18; rounds 238 + 239 + 240 built together 21:50, PACKAGED 22:03 - 346 MB, `PACKAGER EXIT 0`, live
   jar and live quests.json read back; agent folder synced, 0 failed; none of 237-240 seen in a running game yet):
   **quest 92 "Sweep the Wilds"** - clear three dungeons/caves (new objective `ClearDungeons`,

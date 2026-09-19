@@ -110,6 +110,10 @@ public class InnScene extends UIScene {
      * isWastelandTown() already exempts neutral-seeded towns, so a functioning Neutral town's Inn
      * keeps every option - which until now was the ONLY behaviour either kind of town had, since
      * ruined and Neutral towns both report no color and were therefore indistinguishable here.
+     * <p>
+     * Round 241: a ruined town's Inn is now SHUT at the door (TownRestoration.isInnClosedByRuin), so this
+     * scene is only ever reached in a ruin to finish a tournament entered before that rule - which is why
+     * an Available tournament cannot be started here any more (startEvent(), refreshStatus()).
      */
     private boolean isRuinedTown() {
         return TownRestoration.isWastelandTown() && !TownRestoration.isTownRestored(changes);
@@ -200,6 +204,11 @@ public class InnScene extends UIScene {
             switch (localEvent.eventStatus){
                 case Available:
                     eventDescription.setText(localEvent.format.toString() + " available");
+                    if (ruined) { // round 241: nothing new starts in a ruin - see startEvent()
+                        eventDescription.setText("[GREY]Closed until the town is restored");
+                        event.setDisabled(true);
+                        reroll.setDisabled(true);
+                    }
                     break;
                 case Entered:
                     eventDescription.setText(localEvent.format.toString() + " [GREEN]entered");
@@ -353,6 +362,10 @@ public class InnScene extends UIScene {
     }
 
     private void startEvent(){
+        // Round 241: a ruined town's Inn only lets the player FINISH a tournament - see isRuinedTown().
+        // Re-checked here because setDisabled() does not detach this handler.
+        if (isRuinedTown() && (localEvent == null || localEvent.eventStatus == AdventureEventController.EventStatus.Available))
+            return;
 
         Forge.switchScene(EventScene.instance(this, localEvent, changes), true);
 

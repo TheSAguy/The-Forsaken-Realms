@@ -681,12 +681,25 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                 // through it - what a map places on one specific enemy (this.rewards, below) is dedicated
                 // loot and is added untouched. Still inside the payout scope, so the budget's own draws obey
                 // the same copy cap as everything else in this duel.
+                // Round 241: the RESOURCE PURSE pays this enemy's gold / shards / wood / stone by rank and by
+                // color (forge.adventure.util.ResourcePurse), so the list's own entries of those types are
+                // skipped before they roll. Skipped here rather than filtered out afterwards: a deck card that
+                // cannot be paid becomes GOLD too (deckCardFallbackGold), and that is compensation for a card.
+                boolean purse = forge.adventure.util.ResourcePurse.appliesTo(data);
+                int replacedResourceEntries = 0;
                 Array<Reward> standard = new Array<>();
                 for (RewardData rdata : standardRewardSource) {
+                    if (purse && forge.adventure.util.ResourcePurse.isResourceEntry(rdata)) {
+                        replacedResourceEntries++;
+                        continue;
+                    }
                     standard.addAll(rdata.generate(false,  enemyDeck == null ? null : deckNoBasicLands.toFlatList(),true ));
                 }
-                rewards.addAll(forge.adventure.util.CardBudget.apply(standard, getName() != null ? getName() : data.getName(),
+                String payoutName = getName() != null ? getName() : data.getName();
+                rewards.addAll(forge.adventure.util.CardBudget.apply(standard, payoutName,
                         data, enemyDeck == null ? null : deckNoBasicLands.toFlatList(), budgetEditions));
+                if (purse)
+                    rewards.addAll(forge.adventure.util.ResourcePurse.generate(payoutName, data, replacedResourceEntries));
             }
             if(this.rewards != null) { //Collect additional rewards.
                 for(RewardData rdata : this.rewards) {
@@ -698,7 +711,11 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         } finally {
             CardUtil.endRewardPayout();
         }
-        applyGoldVariance(rewards);
+        // Round 241: while the resource purse is on, wood and stone come from it - the 25% gold swap below
+        // (15 wood for 30 gold is about 240 gold at the Exchange) no longer runs for ANY payout, a boss's or a
+        // map's own extras included. A plane that leaves the purse off keeps the swap exactly as it was.
+        if (!forge.adventure.util.ResourcePurse.isEnabled())
+            applyGoldVariance(rewards);
         return rewards;
     }
 

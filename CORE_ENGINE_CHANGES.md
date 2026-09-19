@@ -2779,6 +2779,19 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 241 (2026-09-19) - adventure-side only
+
+New `util/ResourcePurse.java`. `character/EnemySprite.java` - `getRewards()` skips the type's resource entries and
+adds the purse; `applyGoldVariance()` only runs with the purse off. `util/CardBudget.java` - `base()` holds the
+counts to 1-5 (`configuredBase()`). `scene/ArenaScene.java` - Coin Challenge shard fee (`coinChallengePrice()`).
+`world/World.java` - `setGenerationDifficulty()` / `getGenerationDifficulty()`, `wasteTownPlacementCuts()`, the
+placement loop's `placeCount`. `world/WorldSave.java` and `scene/SaveLoadScene.java` - hand the difficulty to the
+World before `generateNew()`. `util/TownRestoration.java` - the Neutral seed target by difficulty;
+`isInnClosedByRuin()`, `buildInnClosedDialog()`. `stage/MapStage.java` - the `inn` actor. `character/OnCollide.java`
+- `withRuinOverlay()`. `scene/InnScene.java` - no new tournament starts in a ruin. `data/TuningData.java`,
+`config tables/settings.json`, `dev-tools/validate_plane_data.py` - 28 keys and four per-difficulty lookups.
+(All Java paths under `forge-gui-mobile/src/forge/adventure/`.) No engine module touched.
+
 ## Round 240 (2026-09-18) - adventure-side only
 
 `util/AdventureQuestEventType.java` - `DUNGEONCLEARED`. `util/AdventureQuestController.java` - objective

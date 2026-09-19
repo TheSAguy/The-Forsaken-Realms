@@ -444,6 +444,66 @@ public class World implements Disposable, SaveFileContent {
     private static boolean isOrdinaryTownData(PointOfInterestData d) {
         return d != null && "town".equals(d.type) && d.name != null && !"Spawn".equals(d.name) && !d.name.startsWith("Waste Town Center");
     }
+
+    // Round 241 (user: "World Gen: Reduce the number of Neutral towns / Ruined towns per difficulty"). The
+    // difficulty the NEXT generateNew() builds for. It has to be handed over: both callers generate the world
+    // FIRST and only then give the player their difficulty (WorldSave.generateNewWorld() creates the player
+    // afterwards, New Game+ calls updateDifficulty() afterwards), so Current.player() still holds the previous
+    // game's during generation. Not saved - it only matters while generating. null = cut nothing.
+    private String generationDifficulty;
+    public void setGenerationDifficulty(String difficultyName) { generationDifficulty = difficultyName; }
+    public String getGenerationDifficulty() { return generationDifficulty; }
+
+    /**
+     * Round 241: how many fewer of each ordinary wasteland town template to PLACE, keyed "biome/template".
+     * The total is the difficulty's Neutral cut + Ruined cut (TuningData.worldGen*TownCutFor): a functioning
+     * Neutral town that is cut must not be left behind as one more ruin, so both come off the towns placed,
+     * and TownRestoration.seedFunctioningNeutralTowns() then seeds that many fewer Neutral ones.
+     * <p>
+     * Taken at PLACEMENT rather than by deleting towns afterwards because world-gen lays its roads BETWEEN the towns it placed -
+     * a deleted one would leave a road to nowhere. The cost is that the same seed gives a different map on a
+     * different difficulty (fewer placements draw fewer random numbers). Only the waste biome's own templates
+     * qualify (TownRestoration.isWastelandTown(): inert on a plane without town reconstruction); spread
+     * round-robin over them, and none is cut below one.
+     */
+    private Map<String, Integer> wasteTownPlacementCuts() {
+        Map<String, Integer> cuts = new LinkedHashMap<>();
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        int neutralCut = tuning.worldGenNeutralTownCutFor(generationDifficulty);
+        int ruinedCut = tuning.worldGenRuinedTownCutFor(generationDifficulty);
+        int wanted = neutralCut + ruinedCut;
+        if (wanted <= 0) {
+            System.out.println("[TFR-WorldGenTowns] difficulty " + generationDifficulty + ": no wasteland towns cut");
+            return cuts;
+        }
+        List<String> keys = new ArrayList<>();
+        List<Integer> counts = new ArrayList<>();
+        for (BiomeData biome : data.GetBiomes()) {
+            for (PointOfInterestData poi : biome.getPointsOfInterest()) {
+                if (isOrdinaryTownData(poi) && TownRestoration.isWastelandTown(poi) && poi.count > 1) {
+                    keys.add(biome.name + "/" + poi.name);
+                    counts.add(poi.count);
+                }
+            }
+        }
+        int left = wanted;
+        boolean progress = true;
+        while (left > 0 && progress) {
+            progress = false;
+            for (int i = 0; i < keys.size() && left > 0; i++) {
+                int already = cuts.getOrDefault(keys.get(i), 0);
+                if (counts.get(i) - already > 1) {
+                    cuts.put(keys.get(i), already + 1);
+                    left--;
+                    progress = true;
+                }
+            }
+        }
+        System.out.println("[TFR-WorldGenTowns] difficulty " + generationDifficulty + ": placing " + (wanted - left)
+                + " fewer wasteland town(s) (" + neutralCut + " functioning Neutral + " + ruinedCut + " ruined"
+                + (left > 0 ? "; " + left + " could not be cut - the templates ran out" : "") + ") - " + cuts);
+        return cuts;
+    }
     private static int starTownExclusionRadius() {
         int r = Config.instance().getTuningData().starTownExclusionRadiusTiles;
         return r > 0 ? r : 24;
@@ -1394,6 +1454,7 @@ public class World implements Disposable, SaveFileContent {
             clearTerrain((int) (data.width * data.playerStartPosX), (int) (data.height * data.playerStartPosY), 10);
             //otherPoints.add(new Rectangle(((float) data.width * data.playerStartPosX * (float) data.tileSize) - data.tileSize * 3, ((float) data.height * data.playerStartPosY * data.tileSize) - data.tileSize * 3, data.tileSize * 6, data.tileSize * 6));
             boolean running = true;
+            final Map<String, Integer> wasteTownCuts = wasteTownPlacementCuts(); // round 241: fewer towns on the harder difficulties
             // Rerun budget for the essential-POI no-silent-drop check below - array so the
             // count survives the labeled `continue here` restarts.
             final int[] essentialPlacementReruns = {0};
@@ -1436,6 +1497,9 @@ public class World implements Disposable, SaveFileContent {
                         // the map instead of returning in place. Non-rotatable POIs and planes
                         // without the flag place exactly as stock.
                         int placeCount = poi.count;
+                        Integer wasteTownCut = wasteTownCuts.get(biome.name + "/" + poi.name); // round 241
+                        if (wasteTownCut != null)
+                            placeCount = Math.max(0, placeCount - wasteTownCut);
                         if (isDungeonRotationEnabled() && DungeonRotation.isRotatableData(poi))
                             placeCount *= DungeonRotation.POOL_MULTIPLIER;
                         for (int i = 0; i < placeCount; i++) {

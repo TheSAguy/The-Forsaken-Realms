@@ -158,6 +158,23 @@
     // 0 disables the cooldown.
     "capitolTargetCooldownDays": 7,
     "functioningNeutralTownCount": 20,
+    // Round 241 (user: "World Gen: Reduce the number of Neutral towns / Ruined towns per difficulty"). How many
+    // FEWER wasteland towns a NEW world gets, by difficulty - an existing save is not touched.
+    // NeutralTownCut comes off functioningNeutralTownCount above (the five star towns are never cut).
+    // NeutralTownCut + RuinedTownCut is how many fewer ordinary Waste Towns are placed at all, so a cut
+    // Neutral town is gone rather than left as one more ruin.
+    // For scale: a world holds about 283 ordinary Waste Towns, some 260 of them ruins - so -9 ruins is
+    // about 3%, where -3 of the 20 Neutral towns is 15%. Ruined cuts of about 13 / 26 / 39 would thin the
+    // ruins as much as the Neutral towns. The ceiling is 57 towns in all (Neutral + Ruined): only the 60 the
+    // waste biome places itself can be cut, and each of its three kinds keeps at least one.
+    "worldGenNeutralTownCutEasy": 0,
+    "worldGenNeutralTownCutNormal": 1,
+    "worldGenNeutralTownCutHard": 2,
+    "worldGenNeutralTownCutInsane": 3,
+    "worldGenRuinedTownCutEasy": 0,
+    "worldGenRuinedTownCutNormal": 3,
+    "worldGenRuinedTownCutHard": 6,
+    "worldGenRuinedTownCutInsane": 9,
 
     // Roaming-spawn duplicate limiting (user report 2026-09-01: three Khenra Warriors standing
     // together). A fresh roll of an enemy that already has maxSameEnemyNearby of itself alive
@@ -212,6 +229,12 @@
     "coinChallengeFeeNormal": 50,
     "coinChallengeFeeHard": 100,
     "coinChallengeFeeInsane": 100,
+    // Round 241 (user: "Up 'coin duel' cost, Easy, no change. Normal +5 Shards, Hard +10 shards, Insane +15
+    // shards"). Shards charged ON TOP of the gold fee above, per attempt. 0 = gold only.
+    "coinChallengeShardFeeEasy": 0,
+    "coinChallengeShardFeeNormal": 5,
+    "coinChallengeShardFeeHard": 10,
+    "coinChallengeShardFeeInsane": 15,
 
     // Round 185 (user, after one duel paid FOUR Oblivion Rings and the next three Angels of Light: "It's okay to
     // sometimes get duplicate reward cards, but 4 seems extreme. Is there a way we can at least lower duplicate
@@ -261,6 +284,8 @@
     // Before this: 4.4 cards per win on average on Insane. With these values: 1.8 on a repeat win, 3.1 on a
     // first win. Gold, shards, items, the ante card, bosses, arena/event fighters and a map's own extras on one
     // enemy are not budgeted. Common = Apprentice, Uncommon = Adept, Rare = Master, Mythic = Archmage.
+    // Round 241: each of the eight counts below may be 1 to 5. A value outside that range is pulled back into
+    // it (and logged once as [TFR-CardBudget]); gear and the Easy bonus are added on top afterwards.
     "cardBudgetEnabled": true,
     "cardBudgetRepeatCommon": 1,
     "cardBudgetRepeatUncommon": 2,
@@ -281,6 +306,40 @@
     "cardBudgetTopUpWeightCommon": 80,
     "cardBudgetTopUpWeightUncommon": 17,
     "cardBudgetTopUpWeightRare": 3,
+
+    // Round 241 - THE RESOURCE PURSE (user: "I want Green to drop more wood, Red more Stone, White more gold,
+    // Blue more Shards, black be balanced. Neutral will also be balanced, but just less than black"). What a
+    // defeated roaming or dungeon enemy pays in gold / shards / wood / stone. It REPLACES the gold and shards
+    // entries of the enemy's own reward list, and the old rule that turned a quarter of all duel gold into wood
+    // or stone. Bosses, arena/event fighters, a map's own extras on one enemy, chests and quest rewards are not
+    // touched. false = everything pays as it did before round 241.
+    "resourcePurseEnabled": true,
+    // BASE PURSE PER RANK, in gold-equivalent value (Common = Apprentice, Uncommon = Adept, Rare = Master,
+    // Mythic = Archmage). About what a win was worth before, so total income stays level.
+    "resourcePurseCommon": 60,
+    "resourcePurseUncommon": 90,
+    "resourcePurseRare": 130,
+    "resourcePurseMythic": 160,
+    // This share of the purse is always paid as gold. The rest is ONE bonus resource, rolled on the enemy's color.
+    "resourcePurseGoldShare": 0.35,
+    // Gold value of one wood / stone / shard when the bonus is paid in them (the Exchange buys 5 for 80).
+    "resourcePurseUnitValue": 16,
+    // The bonus roll. A color's own resource - White gold, Blue shards, Red stone, Green wood - gets the
+    // Favored weight and each of the other three the Other weight (55 / 15 / 15 / 15). Black and colorless are
+    // balanced (25 each); an enemy of several colors uses the average of its colors.
+    "resourcePurseFavoredWeight": 55,
+    "resourcePurseOtherWeight": 15,
+    // A colorless enemy's purse is this much of the full one.
+    "resourcePurseColorlessFactor": 0.7,
+    // The first win over an enemy pays this much more - the card budget's rule, for resources.
+    "resourcePurseFirstWinFactor": 1.5,
+    // Luck: every purse is multiplied by a random 1 +- this. 0 pays identical amounts every time.
+    "resourcePurseVariance": 0.2,
+    // Difficulty.
+    "resourcePurseFactorEasy": 1.5,
+    "resourcePurseFactorNormal": 1.25,
+    "resourcePurseFactorHard": 1,
+    "resourcePurseFactorInsane": 0.8,
 
     // Round 205 (user: "Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
     // defense when warding off mage attacks"). Defense per point of a player town's OWN reputation against an

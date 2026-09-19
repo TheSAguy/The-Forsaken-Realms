@@ -123,7 +123,12 @@ public class TownRestoration {
             if (isWastelandTown(poi.getData()))
                 candidates.add(poi);
         }
-        int target = Config.instance().getTuningData().functioningNeutralTownCount;
+        // Round 241 (user: "Normal: - 1 Neutral (fixed) town ... Hard: - 2 ... Insane: - 3"): fewer on the
+        // harder difficulties. World.wasteTownPlacementCuts() already placed that many fewer towns, so the
+        // ones not seeded here are absent, not extra ruins. The star towns below are never part of the cut.
+        int configuredTarget = Config.instance().getTuningData().functioningNeutralTownCount;
+        int difficultyCut = Config.instance().getTuningData().worldGenNeutralTownCutFor(world.getGenerationDifficulty());
+        int target = Math.max(0, configuredTarget - difficultyCut);
         java.util.Collections.shuffle(candidates, world.getRandom());
         // Center Towns (MOD_SCOPE #102, user spec 2026-09-03): the five star towns are ALWAYS functioning
         // neutral towns - moved to the front so the seeding loop below takes them first, and added to
@@ -168,7 +173,9 @@ public class TownRestoration {
         // interaction (see the placement-failure logging added alongside this) worth surfacing.
         System.out.println("[TFR-NeutralTowns] seeded " + seeded + "/" + target
                 + " functioning neutral towns out of " + candidates.size() + " wasteland town candidate(s), "
-                + totalBroken + " total permanently-broken shop slot(s) across them");
+                + totalBroken + " total permanently-broken shop slot(s) across them (target = " + configuredTarget
+                + " configured - " + difficultyCut + " for difficulty " + world.getGenerationDifficulty()
+                + " + " + starFirst.size() + " star town(s))");
     }
 
     // The 9 shop slot object ids inside maps/map/towns/player_town.tmx - confirmed by direct
@@ -341,6 +348,54 @@ public class TownRestoration {
      *  don't need the peek-by-id lookup. */
     public static boolean isNeutralSeededTown(PointOfInterestChanges changes) {
         return changes != null && changes.getMapFlags().get(NEUTRAL_SEEDED_FLAG) != null;
+    }
+
+    /**
+     * Round 241 (user 2026-09-19: "On the ruined towns, currently you can do Tournament matches. Let's actually
+     * disable the Inn till the town is restored. So the only function you can do is restore the town.").
+     * Is the Inn of the CURRENTLY-LOADED town shut because the town is still a ruin? Reverses the 2026-08-09
+     * "the Inn always works" decision for ruins only, and with it the 2026-08-31 "tournaments only" ruined Inn.
+     * Restoring the town opens the Inn at once - it still never needs a rebuild of its own.
+     * <p>
+     * Not shut: a functioning Neutral town (isWastelandTown() exempts it), a Ring City, the Capitol, any
+     * restored town, any color's town. One exception inside a ruin: a tournament the player has ALREADY
+     * entered at this Inn - a save from before this rule - stays reachable until it is finished and its
+     * rewards are collected, so an entry fee or a prize is never stranded behind a restoration bill.
+     */
+    public static boolean isInnClosedByRuin(PointOfInterestChanges changes, int innObjectId) {
+        if (!isWastelandTown() || isTownRestored(changes))
+            return false;
+        PointOfInterest point = TileMapScene.instance().rootPoint;
+        if (point == null || TerritoryControl.isRingTown(point))
+            return false;
+        for (forge.adventure.data.AdventureEventData event : forge.adventure.player.AdventurePlayer.current().getEvents()) {
+            if (event == null || event.sourceID == null || event.eventStatus == null)
+                continue;
+            if (!event.sourceID.equals(point.getID()) || event.eventOrigin != innObjectId)
+                continue;
+            switch (event.eventStatus) {
+                case Entered:
+                case Ready:
+                case Started:
+                case Completed:
+                    return false; // under way - let the player finish it
+                default:
+                    break;
+            }
+        }
+        return true;
+    }
+
+    /** Round 241: what the player is told at a ruined town's Inn door - see isInnClosedByRuin(). */
+    public static MapDialog buildInnClosedDialog(MapStage stage, int objectId) {
+        DialogData root = new DialogData();
+        root.text = "The Inn is boarded up. Restore the town at its Job Board and the innkeeper will return.";
+
+        DialogData ok = new DialogData();
+        ok.name = "OK";
+
+        root.options = new DialogData[]{ok};
+        return new MapDialog(root, stage, objectId, null);
     }
 
     // PROTOTYPE for MOD_SCOPE.md #7: hardcoded to always recolor "player" (was "green" - flipped

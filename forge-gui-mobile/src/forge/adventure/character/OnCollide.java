@@ -49,6 +49,16 @@ public class OnCollide extends MapActor {
         return this;
     }
 
+    // Round 241: an UNGATED building that can still be shut - the Inn of a ruined town. While the supplier
+    // says so, the rubble overlay is drawn over it; the visit itself is refused by the Runnable, which asks the
+    // same question. A supplier for the rebuiltIcon reason above: the town can be restored while this map is open.
+    private java.util.function.BooleanSupplier ruinOverlay;
+
+    public OnCollide withRuinOverlay(java.util.function.BooleanSupplier shutNow) {
+        ruinOverlay = shutNow;
+        return this;
+    }
+
     // Custom rebuild cost/verb (2026-08-12 cost table: the Arena's rebuild price differs from a
     // plain shop's). Null verb = the default plain-shop cost path.
     private int[] rebuildCost;
@@ -92,6 +102,10 @@ public class OnCollide extends MapActor {
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
+        if (ruinOverlay != null && ruinOverlay.getAsBoolean()) { // round 241: shut, not broken - see withRuinOverlay()
+            RubbleOverlay.draw(batch, getX(), getY(), getWidth(), getHeight(), alpha);
+            return;
+        }
         if (!isDestroyed()) {
             // Rebuilt gated building in a template with no baked art: draw its icon (user report
             // 2026-08-09 - a restored Arena/Spellsmith showed nothing at all). Same

@@ -230,6 +230,23 @@ public class TuningData {
     // blocks that color until day 13. 0 disables the cooldown entirely.
     public int capitolTargetCooldownDays = 7;
     public int functioningNeutralTownCount = 20;
+    // Round 241 (user: "World Gen: Reduce the number of Neutral towns / Ruined towns per difficulty: Easy: As
+    // is. Normal: - 1 Neutral (fixed) town, - 3 Ruined towns. Hard: - 2 ..., - 6 .... Insane: - 3 ..., - 9").
+    // How many FEWER wasteland towns a new world gets. The Neutral cut comes off functioningNeutralTownCount
+    // (never off the five star towns); Neutral + Ruined together is how many fewer ordinary Waste Towns the
+    // waste biome places at all - so a cut Neutral town is gone, not left behind as one more ruin. See
+    // World.wasteTownPlacementCuts() and TownRestoration.seedFunctioningNeutralTowns(). All 0 here: a plane
+    // without the keys generates as before.
+    // Scale, measured on a real save: a world holds about 283 ordinary Waste Towns (60 placed by the waste
+    // biome, the rest are color towns swept to neutral outside each castle's radius) - some 260 of them ruins.
+    public int worldGenNeutralTownCutEasy = 0;
+    public int worldGenNeutralTownCutNormal = 0;
+    public int worldGenNeutralTownCutHard = 0;
+    public int worldGenNeutralTownCutInsane = 0;
+    public int worldGenRuinedTownCutEasy = 0;
+    public int worldGenRuinedTownCutNormal = 0;
+    public int worldGenRuinedTownCutHard = 0;
+    public int worldGenRuinedTownCutInsane = 0;
     // Roaming-spawn duplicate limiting (user report 2026-09-01), gated by
     // ConfigData.spawnDuplicateLimitEnabled. How many of the SAME enemy may already be alive
     // within sameEnemyNearbyRadius before a fresh roll of that same enemy gets re-rolled. 2 means
@@ -307,6 +324,13 @@ public class TuningData {
     public int coinChallengeFeeNormal = 50;
     public int coinChallengeFeeHard = 100;
     public int coinChallengeFeeInsane = 100;
+    // Round 241 (user: "Up 'coin duel' cost, Easy, no change. Normal +5 Shards, Hard +10 shards, Insane +15
+    // shards"). Shards charged on top of the gold fee above, per attempt. 0 here, so a plane without the keys
+    // keeps a gold-only challenge; The Forsaken Realms' settings.json sets 0 / 5 / 10 / 15.
+    public int coinChallengeShardFeeEasy = 0;
+    public int coinChallengeShardFeeNormal = 0;
+    public int coinChallengeShardFeeHard = 0;
+    public int coinChallengeShardFeeInsane = 0;
 
     // Round 185 (user, after a duel paid four copies of one card: "It's okay to sometimes get duplicate reward
     // cards, but 4 seems extreme. Is there a way we can at least lower duplicate probability?"). How many extra
@@ -367,6 +391,9 @@ public class TuningData {
     // and a first win 3.1 before its bonus card.
     // Named by the data's tier words, like enemyTierScale*: Common = Apprentice, Uncommon = Adept, Rare =
     // Master, Mythic = Archmage.
+    // Round 241 (user: "Add the guarantee card drop count per tier as a variable the player can change in the
+    // config file. Maybe make it a range 1-5. Keep current defaults"): each of the eight counts is held to
+    // 1-5 by CardBudget.base() - a value outside it is pulled back in and logged once.
     public boolean cardBudgetEnabled = true;
     public int cardBudgetRepeatCommon = 1;
     public int cardBudgetRepeatUncommon = 2;
@@ -393,6 +420,40 @@ public class TuningData {
     public int cardBudgetTopUpWeightCommon = 80;
     public int cardBudgetTopUpWeightUncommon = 17;
     public int cardBudgetTopUpWeightRare = 3;
+
+    // Round 241 (user: "I want Green to drop more wood, Red more Stone, White more gold, Blue more Shards,
+    // black be balanced. Neutral will also be balanced, but just less than black" and "add the Base Purse size
+    // per rank as a variable to the config/settings file"). The RESOURCE PURSE: what a defeated roaming or
+    // dungeon enemy pays in gold / shards / wood / stone - see forge.adventure.util.ResourcePurse for every
+    // rule. It replaces the enemy's own gold and shards entries and EnemySprite's old 25% gold swap.
+    // Off here, so a plane without the keys pays as before; The Forsaken Realms' settings.json turns it on.
+    public boolean resourcePurseEnabled = false;
+    // The purse per rank, in gold-equivalent value, before the factors below (Common = Apprentice ... Mythic =
+    // Archmage). About what a win was worth before the change, so income stays level.
+    public int resourcePurseCommon = 60;
+    public int resourcePurseUncommon = 90;
+    public int resourcePurseRare = 130;
+    public int resourcePurseMythic = 160;
+    // This share of the purse is always gold; the rest is ONE bonus resource rolled on the enemy's color.
+    public float resourcePurseGoldShare = 0.35f;
+    // Gold value of one wood / stone / shard - the Exchange buys 5 for 80.
+    public int resourcePurseUnitValue = 16;
+    // The bonus roll: a color's own resource (White gold, Blue shards, Red stone, Green wood) against each of
+    // the other three. Black and colorless are balanced - the average of those four rows - and an enemy of
+    // several colors uses the average of its colors' rows.
+    public int resourcePurseFavoredWeight = 55;
+    public int resourcePurseOtherWeight = 15;
+    // A colorless enemy's purse ("balanced, but just less than black").
+    public float resourcePurseColorlessFactor = 0.7f;
+    // First win over this enemy - the card budget's rule, applied to resources.
+    public float resourcePurseFirstWinFactor = 1.5f;
+    // Luck: the purse is multiplied by a random 1 +- this. 0 pays the same amounts every time.
+    public float resourcePurseVariance = 0.2f;
+    // The old per-difficulty spread came from random extras (rewardMaxFactor), which the purse no longer rolls.
+    public float resourcePurseFactorEasy = 1.5f;
+    public float resourcePurseFactorNormal = 1.25f;
+    public float resourcePurseFactorHard = 1f;
+    public float resourcePurseFactorInsane = 0.8f;
 
     // Round 205 (user: "Town/Capitol reputation in player towns each reputation point should add 1% town/capitol
     // defense when warding off mage attacks"). Defense a player town or the Capitol gains per point of its OWN
@@ -446,6 +507,60 @@ public class TuningData {
             case "hard":   return Math.max(0, coinChallengeFeeHard);
             case "insane": return Math.max(0, coinChallengeFeeInsane);
             default:       return Math.max(0, coinChallengeFeeNormal);
+        }
+    }
+
+    /** Round 241: the Coin Challenge's SHARD fee for a difficulty name, on top of coinChallengeFeeFor().
+     *  An unrecognised difficulty pays the Normal fee, like the gold half. */
+    public int coinChallengeShardFeeFor(String difficultyName) {
+        if (difficultyName == null)
+            return Math.max(0, coinChallengeShardFeeNormal);
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, coinChallengeShardFeeEasy);
+            case "normal": return Math.max(0, coinChallengeShardFeeNormal);
+            case "hard":   return Math.max(0, coinChallengeShardFeeHard);
+            case "insane": return Math.max(0, coinChallengeShardFeeInsane);
+            default:       return Math.max(0, coinChallengeShardFeeNormal);
+        }
+    }
+
+    /** Round 241: the resource purse's difficulty factor. An unrecognised difficulty is not scaled. */
+    public float resourcePurseFactorFor(String difficultyName) {
+        if (difficultyName == null)
+            return 1f;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0f, resourcePurseFactorEasy);
+            case "normal": return Math.max(0f, resourcePurseFactorNormal);
+            case "hard":   return Math.max(0f, resourcePurseFactorHard);
+            case "insane": return Math.max(0f, resourcePurseFactorInsane);
+            default:       return 1f;
+        }
+    }
+
+    /** Round 241: how many fewer FUNCTIONING NEUTRAL towns a new world seeds on this difficulty. An unknown
+     *  difficulty (or none handed to the World) cuts nothing - world-gen then behaves as it did before. */
+    public int worldGenNeutralTownCutFor(String difficultyName) {
+        if (difficultyName == null)
+            return 0;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, worldGenNeutralTownCutEasy);
+            case "normal": return Math.max(0, worldGenNeutralTownCutNormal);
+            case "hard":   return Math.max(0, worldGenNeutralTownCutHard);
+            case "insane": return Math.max(0, worldGenNeutralTownCutInsane);
+            default:       return 0;
+        }
+    }
+
+    /** Round 241: how many fewer RUINED towns a new world holds on this difficulty - see above. */
+    public int worldGenRuinedTownCutFor(String difficultyName) {
+        if (difficultyName == null)
+            return 0;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, worldGenRuinedTownCutEasy);
+            case "normal": return Math.max(0, worldGenRuinedTownCutNormal);
+            case "hard":   return Math.max(0, worldGenRuinedTownCutHard);
+            case "insane": return Math.max(0, worldGenRuinedTownCutInsane);
+            default:       return 0;
         }
     }
 

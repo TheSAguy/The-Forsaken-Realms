@@ -382,6 +382,9 @@ public class WorldSave {
         // every string falls back to the main properties (Localizer.lookup), so this is a no-op here.
         Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(Config.instance().getSettingData().plane) + "languages/");
         currentSave.pointOfInterestChanges.clear();
+        // Round 241: world-gen thins the wasteland towns by difficulty, and the player (who carries the
+        // difficulty) is only created below - so the World is told first.
+        currentSave.world.setGenerationDifficulty(diff == null ? null : diff.name);
         currentSave.world.generateNew(seed);
         boolean chaos = mode == AdventureModes.Chaos;
         boolean custom = mode == AdventureModes.Custom;

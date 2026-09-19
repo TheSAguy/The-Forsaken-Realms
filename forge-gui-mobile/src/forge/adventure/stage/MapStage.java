@@ -1268,11 +1268,25 @@ public class MapStage extends GameStage {
                         break;
                     case "inn":
                         localInnID = id;
-                        // Ungated on purpose (user decision 2026-08-09, reversing the earlier
-                        // wasteland-rubble gating): the Inn always works from the start, in
-                        // destroyed towns and the Capitol alike - single-arg OnCollide, never
-                        // shows as rubble, never needs repair.
-                        addMapActor(obj, new OnCollide(() -> Forge.switchScene(InnScene.instance(TileMapScene.instance(), TileMapScene.instance().rootPoint.getID(), changes, id))));
+                        // Never needs REPAIR (user decision 2026-08-09: single-arg OnCollide, no
+                        // rebuild cost, open the moment a town is restored and always in the
+                        // Capitol) - but round 241 (user 2026-09-19: "disable the Inn till the town
+                        // is restored. So the only function you can do is restore the town") shuts
+                        // it while the town is still a RUIN: the door shows rubble and answers with a
+                        // notice instead of the Inn. Both ask TownRestoration.isInnClosedByRuin()
+                        // live, so restoring the town at its Job Board opens the Inn without the
+                        // player having to leave the map.
+                        addMapActor(obj, new OnCollide(() -> {
+                            if (TownRestoration.isInnClosedByRuin(changes, id)) {
+                                System.out.println("[TFR-Inn] closed: " + TileMapScene.instance().rootPoint.getDisplayName()
+                                        + " is still a ruin - its Inn opens once the town is restored");
+                                getPlayerSprite().stop();
+                                if (TownRestoration.buildInnClosedDialog(this, id).activate())
+                                    showDialog();
+                                return;
+                            }
+                            Forge.switchScene(InnScene.instance(TileMapScene.instance(), TileMapScene.instance().rootPoint.getID(), changes, id));
+                        }).withRuinOverlay(() -> TownRestoration.isInnClosedByRuin(changes, id)));
                         break;
                     case "spellsmith":
                         addMapActor(obj, new OnCollide(() -> {

@@ -17757,6 +17757,101 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 241: the resource purse; shards on the Coin Challenge; card counts held to 1-5; fewer towns on harder worlds; a ruin's Inn is shut (2026-09-19)
+
+User, on the resource proposal: *"I like your proposal, add the Base Purse size per rank as a variable to the
+config/settings file. I want to implement the following: Up 'coin duel' cost, Easy, no change. Normal +5 Shards, Hard
++10 shards, Insane +15 shards. Add the guarantee card drop count per tier as a variable the player can change in the
+config file. Maybe make it a range 1-5. Keep current defaults we're using. World Gen: Reduce the number of Neutral
+towns / Ruined towns per difficulty: Easy: As is. Normal: - 1 Neutral (fixed) town, - 3 Ruined towns. Hard: - 2 ...,
+- 6 .... Insane: - 3 ..., - 9 ...."* and then: *"On the ruined towns, currently you can do Tournament matches. Let's
+actually disable the Inn till the town is restored. So the only function you can do is restore the town."*
+
+**The resource purse** (new `util/ResourcePurse.java`, the companion of round 237's `CardBudget`). What a defeated
+roaming or dungeon enemy pays in gold / shards / wood / stone is now sized by its RANK and mixed by its COLOR (user:
+*"Green to drop more wood, Red more Stone, White more gold, Blue more Shards, black be balanced. Neutral will also
+be balanced, but just less than black"*). Before: 1,059 of the 1,070 roaming enemies carried a hand-written gold
+entry (median 20) and 406 a shards entry; none listed wood or stone, which came only from a side rule
+(`EnemySprite.applyGoldVariance`: a quarter of all gold rewards became wood or stone at HALF the gold amount - about
+eight times the value at the Exchange's 16-20 gold a unit, so two thirds of a duel's value rode on that one roll).
+Color made no difference.
+- **Purse** (gold-equivalent): Apprentice 60, Adept 90, Master 130, Archmage 160 - `resourcePurseCommon / Uncommon /
+  Rare / Mythic`, the keys the user asked for. Times the difficulty (`resourcePurseFactor*`: Easy 1.5, Normal 1.25,
+  Hard 1, Insane 0.8 - the old spread came from random extras the purse no longer rolls), x1.5 on a first win
+  (`resourcePurseFirstWinFactor`, the card budget's rule and the same saved win record), x0.7 for a colorless enemy
+  (`resourcePurseColorlessFactor`), and a little luck (`resourcePurseVariance` 0.2 = +-20%; 0 pays fixed amounts).
+- **Payout**: `resourcePurseGoldShare` (35%) always as gold; the rest as ONE bonus resource rolled on the enemy's
+  color - its own resource at `resourcePurseFavoredWeight` 55 against 15 (`resourcePurseOtherWeight`) for each of the
+  other three: White gold, Blue shards, Red stone, Green wood. Black and colorless are balanced (the average of those
+  four rows, 25 each); several colors use the average of their rows (Green-Red: 35 wood / 35 stone / 15 / 15). A unit
+  of wood / stone / shards counts as `resourcePurseUnitValue` 16 gold (the Exchange buys 5 for 80), so the purse is
+  worth the same whichever way the roll goes; a bonus roll that comes up gold merges into the one gold tile.
+- **It replaces** the enemy TYPE's own gold / shards / wood / stone entries - `EnemySprite.getRewards()` skips them
+  before they roll (not filtered afterwards: an unpayable deck card also becomes gold, and that is compensation for a
+  card). With the purse on, the 25% gold swap no longer runs for ANY payout, a boss's or a map's extras included.
+- **Not covered**, as for the card budget: bosses, arena and event fighters and every other spawnRate-0 enemy,
+  fixed-deck and deck-copying enemies, enemies with no rank, a map's own extras on one enemy, chests, quest rewards.
+- Off in `TuningData` (a plane without the keys pays as before); The Forsaken Realms' `settings.json` turns it on.
+- `[TFR-ResourcePurse] <enemy> (Adept, colors G, FIRST win, Insane): purse 122 = 90 base x0.80 difficulty x1.50
+  first win x1.13 luck -> 43 gold + 5 wood; bonus 79 rolled on gold 15.00 / shards 15.00 / wood 55.00 / stone 15.00;
+  replaces 2 resource entries of its own list`.
+- *Measured* with the real class over all 1,070 enemies, 400 wins each (`ResourcePurse.pay()` is free of game state
+  for exactly this): a repeat win on Hard is worth 60 / 90 / 130 / 160 by rank for every color and 43 / 64 / 90 for
+  colorless; a Green Adept averages 40 gold, 2.0 wood, 0.54 shards, 0.55 stone; a White Adept 64 gold and 0.54 of
+  each; Black 46 gold and 0.9 of each. First wins come out at x1.5, Insane at x0.8.
+- **Flagged, not changed:** 51 of the 1,070 had MORE authored gold than their whole purse - Orzhov Cleric and the
+  Challengers 210, Shade / Froghemoth / Nightmare / Arcane Golem 200, the slivers and the "of Shandalar" wizards 150.
+  Under a pure rank rule they pay like their rank. Keeping authored gold as a floor was offered; the user did not ask
+  for it.
+
+**Coin Challenge: shards on top of the gold.** `coinChallengeShardFeeEasy / Normal / Hard / Insane` = 0 / 5 / 10 /
+15 (`TuningData.coinChallengeShardFeeFor()`; 0 in the class, so another plane stays gold-only). Shown as cost text
+with the glyphs (`[+GoldCoin] 100  [+Shards] 15`), and enforced in all three places the gold fee already was - the
+menu row's greyed state, its "(need ...)" suffix, and `launchCoinChallenge()`'s own re-check before it charges.
+
+**Card budget: 1 to 5.** The eight per-rank counts have been `settings.json` keys since round 237
+(`cardBudgetRepeat*` 1/2/2/3, `cardBudgetFirst*` 2/3/4/5 - defaults unchanged). New: `CardBudget.base()` holds each
+to 1-5 and logs once a session when it had to; the file says so beside the keys. Gear and the Easy bonus are still
+added on top.
+
+**World gen: fewer wasteland towns on the harder difficulties.** `worldGenNeutralTownCut*` 0/1/2/3 and
+`worldGenRuinedTownCut*` 0/3/6/9 (0 in the class).
+- *The difficulty was not known during generation.* Both callers build the world FIRST and give the player their
+  difficulty afterwards (`WorldSave.generateNewWorld()` creates the player after `generateNew()`; New Game+ calls
+  `updateDifficulty()` after it), so `Current.player()` still held the previous game's. New
+  `World.setGenerationDifficulty()`, called by both just before `generateNew()`.
+- *Cut at placement, not by deleting towns:* world-gen lays its roads BETWEEN the towns it placed (thinned by
+  `initialTownRoadSkipFraction`), so deleting one afterwards could leave a road to nowhere. `World.wasteTownPlacementCuts()` takes Neutral + Ruined off the waste biome's three ordinary town
+  templates, round-robin, never below one each - Normal 4 (Generic 2, Identity 1, Tribal 1), Hard 8 (3/3/2), Insane
+  12 (4/4/4) - and `TownRestoration.seedFunctioningNeutralTowns()` then seeds `functioningNeutralTownCount` minus the
+  Neutral cut (the five star towns are never cut). So a cut Neutral town is absent, not one more ruin. The cost: the
+  same seed gives a different map on a different difficulty. `[TFR-WorldGenTowns]`, and the `[TFR-NeutralTowns]` line
+  now shows the arithmetic. New worlds only.
+- **Flagged to the user - the scale.** A census of their day-15 save (`TownCensus`, read-only): 283 ordinary Waste
+  Towns (60 placed by the waste biome, the rest color towns swept to neutral outside each castle's radius), about
+  260 of them ruins. So -9 ruins is about 3% - nobody will feel it. The Neutral cut does bite (-3 of 20 = 15%). For
+  ruins to thin as much they would need roughly -13 / -26 / -39; only the waste biome's own 60 are cuttable today.
+
+**A ruined town's Inn is shut until the town is restored.** Reverses the 2026-08-09 "the Inn always works" decision
+for ruins only, and with it the 2026-08-31 "tournaments only" ruined Inn. `TownRestoration.isInnClosedByRuin()`:
+the current town is a wasteland town, not restored, not a Ring City (a functioning Neutral town is exempt through
+`isWastelandTown()`, the Capitol through being restored). `MapStage`'s `inn` actor answers a visit with a notice
+("The Inn is boarded up. Restore the town at its Job Board and the innkeeper will return.", `[TFR-Inn]`) and
+`OnCollide.withRuinOverlay()` draws the rubble overlay on its door - both ask live, so restoring the town opens the
+Inn without leaving the map. The Inn still never needs a rebuild of its own.
+- *One exception:* a tournament the player has ALREADY entered at that Inn (Entered / Ready / Started / Completed -
+  a save from before this rule) stays reachable until it is finished and collected, so an entry fee or a prize is
+  never stranded behind a restoration bill. `InnScene` no longer lets an Available tournament start in a ruin
+  (`startEvent()` re-checks, since `setDisabled()` does not detach a handler).
+- Preview rendered from the real `player_town.tmx` tiles (door-box rubble vs whole-building rubble); built the
+  door-box one - the lights go out, no dark square around the roof. User, on seeing it: "The middle ruble Inn looks
+  good."
+
+Checked before building: the plane's `settings.json` loads into the game's own `TuningData` and every new key reads
+back, with the per-difficulty tables right for all four names and an unknown one; the color rows (including "RG",
+"WB", "UBRWG", lower case, "C", null); the purse over the whole enemy catalog; the plane validator clean with the 28
+new keys in its list. NOT yet seen in a running game: any of it.
+
 ## Round 240: a "clear three dungeons" quest; the color quests ask for five kills; quest progress in the log (2026-09-18)
 
 User: *"Add a quest: Clear out 3 dungeons. So the player has to kill all enemies + loot, so they dissipear."* and
