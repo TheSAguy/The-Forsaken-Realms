@@ -2779,6 +2779,15 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 242 (2026-09-19) - ENGINE MERGE to upstream 3146e4b1036 (the 09.18 daily)
+
+19 upstream commits, 64 files, 23 Java. Stock files of ours that upstream also edited: `forge-gui-mobile/src/forge/
+adventure/stage/GameHUD.java` (CONFLICT in `touchDown()` - upstream's `touchDownDirection` field replaces the local
+`c`; our World-standings-button guard kept, renamed), `forge-gui-mobile/src/forge/adventure/util/RewardActor.java`
+and `forge-gui-mobile/src/forge/toolbox/FCardPanel.java` (both auto-merged; upstream's foil shader removed
+`shaderGrayscale` / `shaderRoundRect` / `graphics` / `fetcher` from RewardActor, none used by our edits). Plane
+`config.json`: `engineBuildVersion` 09.16 -> 09.18.
+
 ## Round 241 (2026-09-19) - adventure-side only
 
 New `util/ResourcePurse.java`. `character/EnemySprite.java` - `getRewards()` skips the type's resource entries and

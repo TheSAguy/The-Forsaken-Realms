@@ -17757,6 +17757,40 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 242: engine update to upstream 3146e4b1036 - the 09.18 daily (2026-09-19, REPO ONLY until the next package)
+
+The user installed the latest Forge into `E:\GAMES\Forge_2` to get ready for a release (their rule: the upstream
+engine merge comes first, as its own round, and is re-tested before anything is tagged). Merged while they
+play-tested round 241 on the 09.16 engine; nothing was packaged - the game was running.
+
+**Pinned by content, not by `build.txt`** (which says `2026-09-18 18:23:51`): the install's `cardsfolder.zip` HAS
+`upcoming/codie_ravenous_codex.txt` (upstream `3146e4b1036`, 17:34 UTC) and its `way_of_the_pyromancer.txt` still
+lacks the `AB$` fix of the very next commit (`aa2b5d0410c`, 18:29 UTC); the three edition files `0cde7ff1e36` touched
+(Reality Fracture, Reality Fracture Commander, Media and Collaboration Promos) match `3146e4b1036` byte for byte and
+differ from the old merge base. So the daily is exactly `3146e4b1036`: **19 commits, 64 files, 23 Java** past
+`994c5d9eb2d`.
+
+**One conflict - `GameHUD.touchDown()`.** Upstream `2ce1bacd6e1` ("reuse vectors") replaced the method's local
+`Vector2 c` with a reused field, `touchDownDirection`; our World-standings-button guard (2026-08-08: a click on the
+button where it overlaps the minimap belongs to the button) sat inside the same `if` and was written against `c`.
+Resolved by script: upstream's condition, then our guard with `c -> touchDownDirection`. Nothing else in the file
+referenced the removed locals.
+
+**Auto-merged, read afterwards:** `RewardActor` - upstream's foil-shader work (#11929) removed the fields
+`shaderGrayscale`, `shaderRoundRect`, `graphics` and the static `fetcher`; none of our 43 lines there used them.
+`FCardPanel` - our SUPERFAST animation skip is untouched by upstream's edit.
+
+**What upstream brought:** the foil effect drawn with a shader (`Graphics`, `CardImage`, `CardImageRenderer`,
+`CardRenderer`, `CardRendererUtils`, `ShaderUtil`, `Shaders`, `RewardActor`, `FCardPanel`); a faster resolution of
+wide token cascades (Scute Swarm); the online lobby's freeze and second-seat avatar fixes; "extrapolate the
+impossible"; a desktop test-suite fix for JDK 25 (the only pom touched is `forge-gui-desktop`'s, outside our module
+chain - the offline Maven build passed, no new dependency); 33 card scripts and 6 edition files (Reality Fracture
+previews). No adventure resource was touched.
+
+`engineBuildVersion` -> `2.0.15-SNAPSHOT-09.18`. Built 07:38, `MVN EXIT 0`. **The next package is a FULL stock copy**
+(the base install changed; about an hour on F:) and must wait until the game is closed. The next merge is
+`3146e4b1036..upstream/master` - 12 commits today.
+
 ## Round 241: the resource purse; shards on the Coin Challenge; card counts held to 1-5; fewer towns on harder worlds; a ruin's Inn is shut (2026-09-19)
 
 User, on the resource proposal: *"I like your proposal, add the Base Purse size per rank as a variable to the

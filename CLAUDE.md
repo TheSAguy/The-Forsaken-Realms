@@ -97,6 +97,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 242 (2026-09-19, REPO ONLY - not packaged, the user was play-testing 241): **ENGINE = the 09.18 daily @ upstream
+  `3146e4b1036`** (19 commits / 64 files / 23 Java past `994c5d9eb2d`; pinned by content - `codie_ravenous_codex.txt`
+  present, `aa2b5d0410c`'s pyromancer fix absent, three edition files byte-identical). ONE conflict,
+  `GameHUD.touchDown()`: upstream renamed the local `c` to the reused field `touchDownDirection`; our World-standings
+  guard kept with the rename. `RewardActor`/`FCardPanel` auto-merged clean (upstream's foil shader removed fields we
+  never used). `engineBuildVersion` -> 09.18; offline Maven passed (07:38). **NEXT PACKAGE = FULL STOCK COPY (~1 h on
+  F:)**; next merge = `3146e4b1036..upstream/master` (12 commits).
 - Round 241 (2026-09-19; built 07:11, IN THE LIVE FOLDER 07:26 - but NOT through the packager: the user reinstalled
   `E:\GAMES\Forge_2` at the **09.18 daily** seconds before the package ran, and `build_standalone.py` rightly refused
   (repo = 09.16 engine). The live folder already held the right 09.16 stock tree, so the scratchpad bridge
