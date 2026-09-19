@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 238 (2026-09-18) - repo only, log-only
+
+`forge-gui-mobile/src/forge/adventure/world/World.java` - `drawableTerrainIndex()` returns early for a layer biome
+with no structures.
+
 ## Round 237 (2026-09-18) - adventure-side only
 
 New `forge-gui-mobile/src/forge/adventure/util/CardBudget.java`.

@@ -97,6 +97,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 238 (2026-09-18, REPO ONLY, log-only): `World.drawableTerrainIndex()` ignores a layer biome with no structures
+  (the ocean/base layer) - round 236's first log in play printed eleven misleading "ocean land ... stays invisible"
+  lines; those tiles are drawn by the wasteland layer above. The 20:35 log CONFIRMED round 235 (`"Rescue the White
+  Captive" REOPENED` on load) and round 236 (green 14/15/16 -> 8/10/11, red 15 -> 8). Round 237 was PACKAGED 21:15
+  (live settings.json has all 14 `cardBudget*` keys), agent synced; unobserved so far: 229, 233, 237.
 - Round 237 (2026-09-18): **THE CARD BUDGET** - new `forge.adventure.util.CardBudget`, called from
   `EnemySprite.getRewards()` on the enemy TYPE's own list only (a map's extras on one enemy are added after). The list
   still decides WHAT drops; the budget keeps repeat/first = Apprentice 1/2, Adept 2/3, Master 2/4, Archmage 3/5

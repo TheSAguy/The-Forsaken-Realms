@@ -17757,6 +17757,25 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 238: the 20:35 log - rounds 235 and 236 confirmed in play; one misleading log line fixed (2026-09-18, REPO ONLY)
+
+**Round 237 packaged** at 21:15 (346 MB, `PACKAGER EXIT 0`; the live jar carries `CardBudget` and the live
+`settings.json` all fourteen `cardBudget*` keys); agent folder synced. Not yet seen in a running game.
+
+**Confirmed by the session log closed at 20:35** (round-236 build, no exception):
+- Round 235: `[TFR-MainQuest] "The Enemy of My Enemy...": stage "Rescue the White Captive" REOPENED - it had been
+  ticked by the unset-flag bug (flag Ch1WhiteCastleComplete has never been set)` - the save repair ran on load.
+- Round 236: `[TFR-Terrain] green land: wasteland structure 14 (tree4) ... drawing it as this biome's index 8`,
+  `16 (mountain) -> 11`, `15 (rock) -> 10`, and `red land: ... 15 (rock) -> 8` - exactly the table worked out
+  before building.
+
+**And one thing wrong with round 236's own diagnostic.** The same log had eleven lines of the form `[TFR-Terrain]
+ocean land: wasteland structure 8 (rock) has no picture in this biome's set (1..2) - nothing to draw it as, it
+stays invisible`. Misleading as well as noisy: on a multi-layer tile the ocean (base) layer never drew structures
+and never needed to - the wasteland layer above it does, and those tiles look right. `drawableTerrainIndex()` now
+returns the index unchanged, silently, for a layer biome that has no structures of its own. Log-only; nothing a
+player sees changes. Built, not packaged - the next package carries it.
+
 ## Round 237: the card budget - fewer cards, rank matters, the first win counts (2026-09-18)
 
 User: *"I want to cut down on the number of cards. I feel like currently you receive so many cards so fast and

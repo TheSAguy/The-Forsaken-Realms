@@ -1053,6 +1053,12 @@ public class World implements Disposable, SaveFileContent {
         BiomeData layerBiome = biomes.get(biomeLayer);
         if (terrainIndex <= highestOwnTerrainIndex(layerBiome))
             return terrainIndex;
+        // Round 238: a layer with no structures of its own (the ocean/base layer under a multi-bit tile) has
+        // nothing to map an index to and never drew structures in the first place - the wasteland layer above
+        // it does. Round 236's first log in play reported eleven of these as "stays invisible", which was
+        // wrong as well as noisy.
+        if (layerBiome.structures == null || layerBiome.structures.length == 0)
+            return terrainIndex;
         long key = ((long) biomeLayer << 32) | terrainIndex;
         Integer cached = drawableTerrainIndexCache.get(key);
         if (cached != null)
