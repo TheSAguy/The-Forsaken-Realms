@@ -137,6 +137,19 @@ public class TuningData {
     // number of attacking mages by 1 per color. So Easy = 1 and Insane would be 4") -> 1/2/3/4.
     public int baseAttackingMagesPerColor = 2;
 
+    // Round 239 (user: "When the Player builds his capitol, the AI gets +1 to max attacking mage spawns and
+    // spawn one for each AI immediately after the capitol is built"). The bonus applies for as long as the
+    // Capitol stands; the immediate mages go out once, from TownRestoration.upgradeToCapitol(), through the
+    // ordinary dispatch. 0 / false turn each half off.
+    public int capitolBuiltMageCapBonus = 1;
+    public boolean capitolBuiltSendsMages = true;
+
+    // Round 239 (user: "double or possibly triple how long a legend is active before it fades out"). How many
+    // times longer than an ordinary roamer (20 s of travel time, or its own data.lifetime) a sighted frontier
+    // legend stays on the overworld. Tripled, the top of the range asked for: the sighting is announced with a
+    // direction, and it has to still be there when the player arrives. 1 = no change.
+    public float legendLifetimeFactor = 3f;
+
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an
     // edition's own real card count you must have found before the Research Lab offers to unlock

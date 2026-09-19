@@ -97,6 +97,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 239 (2026-09-18): **the Capitol draws fire** - `capitolBonus` (+1, `capitolBuiltMageCapBonus`) in
+  `TerritoryControl.maxActiveMagesPerColor()` while the Capitol stands, and `onPlayerCapitolBuilt()` (called from
+  `TownRestoration.upgradeToCapitol()`) sends one mage from every undefeated color AT ONCE via the ordinary
+  `dispatch()`; `[TFR-CapitolSurge]`. **Mystery diamond: 15% for +3 life next duel** - a BLESSING (one-duel slot,
+  cleared by DuelScene; an existing blessing gains the life instead of being replaced). **Legend sightings** -
+  frontier legends (`FrontierSpawns.isCandidate`) are announced with a compass direction, get a GOLD dot on both
+  minimaps (no fog gate; `WorldStage.getLegendSightings()`), and live `legendLifetimeFactor` (3) x longer;
+  `[TFR-Legend]`. Three new tuning keys.
 - Round 238 (2026-09-18, REPO ONLY, log-only): `World.drawableTerrainIndex()` ignores a layer biome with no structures
   (the ocean/base layer) - round 236's first log in play printed eleven misleading "ocean land ... stays invisible"
   lines; those tiles are drawn by the wasteland layer above. The 20:35 log CONFIRMED round 235 (`"Rescue the White

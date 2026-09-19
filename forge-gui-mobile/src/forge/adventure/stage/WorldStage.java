@@ -1775,8 +1775,45 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (enemyData == null)
             return false;
         EnemySprite sprite = new EnemySprite(enemyData);
-        return spawn(sprite);
+        boolean spawned = spawn(sprite);
+        if (spawned && forge.adventure.util.FrontierSpawns.isCandidate(enemyData))
+            announceLegendSighting(sprite); // round 239
+        return spawned;
 
+    }
+
+    /**
+     * Round 239 (user: "I like the 'Legend sightings.' Let's implement that"). The frontier legends - the
+     * oversized legend/commander cycle that roams hostile and unowned land (FrontierSpawns, round 142) - used
+     * to arrive without a word; the only trace was a [TFR-Frontier] log line. Now the player is told which
+     * legend and in which direction, a gold dot marks it on the corner minimap and the map view for as long
+     * as it lives (GameHUD.updateMageMinimapMarkers, MapViewScene.enter), and it lives legendLifetimeFactor
+     * times as long as an ordinary roamer (EnemySprite.getLifetime) so the sighting can be acted on.
+     */
+    private void announceLegendSighting(EnemySprite legend) {
+        float dx = legend.getX() - player.getX();
+        float dy = legend.getY() - player.getY();
+        String[] compass = {"east", "north-east", "north", "north-west", "west", "south-west", "south", "south-east"};
+        float degrees = (com.badlogic.gdx.math.MathUtils.atan2(dy, dx) * com.badlogic.gdx.math.MathUtils.radiansToDegrees + 360f) % 360f;
+        String direction = compass[Math.round(degrees / 45f) % 8];
+        String name = legend.getData().getTieredDisplayName();
+        System.out.println("[TFR-Legend] sighting: " + name + " at (" + (int) legend.getX() + ", " + (int) legend.getY()
+                + "), " + direction + " of the player, " + (int) Math.sqrt(dx * dx + dy * dy) + " units away, stays "
+                + (int) legend.getLifetime() + "s of travel time");
+        GameHUD.getInstance().addNotification("A legend has been sighted to the " + direction + ": " + name
+                + "! A gold dot marks it on the map.", true);
+    }
+
+    /** Round 239: the frontier legends alive on the overworld right now, for the map view's gold dots - the
+     *  same reason getTerritoryMages() exists (the enemy list is not visible from the scene package). */
+    public List<EnemySprite> getLegendSightings() {
+        List<EnemySprite> legends = new ArrayList<>();
+        for (Pair<Float, EnemySprite> pair : enemies) {
+            EnemySprite mob = pair.getValue();
+            if (mob != null && mob.territoryTarget == null && forge.adventure.util.FrontierSpawns.isCandidate(mob.getData()))
+                legends.add(mob);
+        }
+        return legends;
     }
 
     private boolean spawnQuestSprite(EnemySprite sprite, float distanceMultiplier){

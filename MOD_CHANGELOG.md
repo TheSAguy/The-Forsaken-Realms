@@ -17757,6 +17757,43 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 239: the colors answer your Capitol; a life blessing from the Mystery diamond; legend sightings (2026-09-18)
+
+User: *"When the Player builds his capitol, the AI gets +1 to max attacking mage spawns and spawn one for each AI
+immediately after the capitol is built. On the Diamond Resource spawn we've added. Add a possible outcome +3 life
+for next duel. I like the 'Legend sightings.' Let's implement that, also double or possibly triple how long a
+legend is active before it fades out."*
+
+**The Capitol draws fire.** `TerritoryControl.maxActiveMagesPerColor()` gains `capitolBonus` - +1
+(`capitolBuiltMageCapBonus`) to every color's in-flight mage cap for as long as the player's Capitol stands, on top
+of the per-N-towns step that already counts the Capitol as a town; the `[TFR-MageCap]` line now shows it. And
+`TownRestoration.upgradeToCapitol()` calls new `TerritoryControl.onPlayerCapitolBuilt()`: every color still in the
+game sends a mage AT ONCE through the ordinary `dispatch()` - same targeting, same launch from its castle, same cap
+(which has just grown, so the extra mage has room). The colors' own attack timers are untouched: this is on top of
+their schedule. `[TFR-CapitolSurge] <color> answers ...` per color, and a red HUD line. `capitolBuiltSendsMages:
+false` turns the volley off.
+
+**The diamond can bless.** The Mystery pickup (the diamond icon) rolls a new outcome after the 5% ambush and the
+25% blueprint: 15% (`MYSTERY_VIGOR_CHANCE`) for **+3 starting life in the next duel**. It is a BLESSING - the
+one-duel effect slot `DuelScene` already applies at the start of the next duel and clears after it, win or lose,
+and that the statistics screen already shows - so it needed no new state and no save field. A player who is already
+blessed keeps that blessing and gains the life on top ("Diamond's Vigor" is only the name of a fresh one). It floats
+`+3 Life next duel` over the player like any other pickup (round 227) and says so on the HUD.
+
+**Legend sightings.** The frontier legends (round 142: the oversized legend/commander cycle that roams hostile and
+unowned land) used to arrive without a word - I only knew Zhulodok was about from a log line. Now, when one spawns:
+- the HUD says which legend and in which of eight compass directions (`WorldStage.announceLegendSighting()`);
+- a GOLD dot marks it on the corner minimap and on the map view for as long as it lives, with no fog gate - the
+  sighting was announced, so where it is is exactly what the player has been told
+  (`GameHUD.updateMageMinimapMarkers()`, `MapViewScene.enter()` via new `WorldStage.getLegendSightings()`);
+- it stays `legendLifetimeFactor` (3) times as long as an ordinary roamer - 60 s of travel time instead of 20 -
+  so the sighting can be acted on (`EnemySprite.getLifetime()`). Tripled, the top of the range asked for.
+A legend is recognized by `FrontierSpawns.isCandidate()` wherever it is needed, so nothing new is saved and a
+legend on the map when the game is saved is still one after a load. `[TFR-Legend] sighting: ...`.
+
+Three tuning keys (`capitolBuiltMageCapBonus`, `capitolBuiltSendsMages`, `legendLifetimeFactor`) in
+`config tables/settings.json`, `TuningData` and the validator's list.
+
 ## Round 238: the 20:35 log - rounds 235 and 236 confirmed in play; one misleading log line fixed (2026-09-18, REPO ONLY)
 
 **Round 237 packaged** at 21:15 (346 MB, `PACKAGER EXIT 0`; the live jar carries `CardBudget` and the live

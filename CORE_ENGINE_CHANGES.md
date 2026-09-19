@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 239 (2026-09-18) - adventure-side only
+
+`util/TerritoryControl.java` - `maxActiveMagesPerColor()` adds `capitolBonus`; new public `onPlayerCapitolBuilt()`.
+`util/TownRestoration.java` - `upgradeToCapitol()` calls it. `util/ResourceSpawns.java` - Mystery outcome
+`grantVigor()` (+ `MYSTERY_VIGOR_CHANCE`, `MYSTERY_VIGOR_LIFE`). `character/EnemySprite.java` - `getLifetime()`
+multiplies a frontier legend's by `legendLifetimeFactor`. `stage/WorldStage.java` - `spawn(EnemyData)` announces a
+legend; new `announceLegendSighting()`, public `getLegendSightings()`. `stage/GameHUD.java` and
+`scene/MapViewScene.java` - gold legend dots. `data/TuningData.java`, `config tables/settings.json`,
+`dev-tools/validate_plane_data.py` - three keys. (All paths under `forge-gui-mobile/src/forge/adventure/`.)
+
 ## Round 238 (2026-09-18) - repo only, log-only
 
 `forge-gui-mobile/src/forge/adventure/world/World.java` - `drawableTerrainIndex()` returns early for a layer biome

@@ -1008,6 +1008,7 @@ public class TownRestoration {
         // upgrade happen.
         Current.player().setCharacterFlag("capitolBuilt", 1);
         System.out.println("[TFR-MainQuest] capitolBuilt -> 1");
+        TerritoryControl.onPlayerCapitolBuilt(world); // round 239: every color answers with a mage
         // Kick to the world map so re-entry loads the capital layout.
         stage.exitDungeon(false, false);
     }

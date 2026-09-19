@@ -79,6 +79,15 @@
     // Color Defeat bonuses stack on top of this base.
     "baseAttackingMagesPerColor": 2,
 
+    // Round 239 - the AI answers the player's Capitol: +this many to every color's attacking-mage cap for as
+    // long as the Capitol stands, and (capitolBuiltSendsMages) one mage from every color the moment it is built.
+    "capitolBuiltMageCapBonus": 1,
+    "capitolBuiltSendsMages": true,
+
+    // Round 239 - legend sightings: how many times longer than an ordinary roamer (20 s of travel time) a
+    // sighted frontier legend stays on the overworld before it fades. 1 = no change.
+    "legendLifetimeFactor": 3,
+
     // Fraction of an edition's own card count you must have found before the Research
     // Lab offers to unlock it (e.g. 0.10 = 10%). Floored at 5 cards regardless of this
     // value, so a tiny supplemental set can't become a 1-2 card unlock.

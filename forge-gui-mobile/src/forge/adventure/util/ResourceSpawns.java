@@ -72,6 +72,13 @@ public class ResourceSpawns {
     // filling in a type the player has not happened to walk past. Self-disabling once every type
     // is known - see grantRandomBlueprint().
     private static final float MYSTERY_BLUEPRINT_CHANCE = 0.25f;
+    // Round 239 (user: "On the Diamond Resource spawn we've added. Add a possible outcome +3 life for next
+    // duel"). Rolled after the ambush and the blueprint, before the plain resources. It is a BLESSING -
+    // the one-duel effect slot DuelScene already applies at the start of the next duel and clears after it,
+    // win or lose, and that the statistics screen already shows - so it needs no new state and no new save
+    // field. A player who is already blessed keeps that blessing and gains the life on top of it.
+    private static final float MYSTERY_VIGOR_CHANCE = 0.15f;
+    private static final int MYSTERY_VIGOR_LIFE = 3;
 
     /**
      * Grants one random shop type the player does not already know. Returns false - so the caller
@@ -359,6 +366,10 @@ public class ResourceSpawns {
             // produce a dud pickup.
             if (world.getRandom().nextFloat() < MYSTERY_BLUEPRINT_CHANCE && grantRandomBlueprint("Mystery drop"))
                 return;
+            if (world.getRandom().nextFloat() < MYSTERY_VIGOR_CHANCE) {
+                grantVigor();
+                return;
+            }
             // Otherwise it resolves into one of the four ordinary resources, value rolled now.
             type = world.getRandom().nextInt(4);
             value = type == TYPE_GOLD
@@ -390,6 +401,28 @@ public class ResourceSpawns {
         String message = "You receive " + value + " " + what + "!";
         System.out.println("[ResourceSpawns] " + message);
         GameHUD.getInstance().addNotification(message);
+    }
+
+    /** Round 239: +3 starting life in the next duel - see MYSTERY_VIGOR_CHANCE. */
+    private static void grantVigor() {
+        forge.adventure.data.EffectData blessing = Current.player().getBlessing();
+        if (blessing == null) {
+            blessing = new forge.adventure.data.EffectData();
+            blessing.name = "Diamond's Vigor";
+            blessing.lifeModifier = MYSTERY_VIGOR_LIFE;
+            Current.player().addBlessing(blessing);
+        } else {
+            blessing.lifeModifier += MYSTERY_VIGOR_LIFE; // keep what they had; the life rides along
+            Current.player().addBlessing(blessing);      // re-announce it to anything listening
+        }
+        String message = "The diamond's light fills you: +" + MYSTERY_VIGOR_LIFE + " life in your next duel!";
+        System.out.println("[ResourceSpawns] " + message + " (blessing \"" + blessing.name + "\" now [+Life] "
+                + blessing.lifeModifier + ")");
+        GameHUD.getInstance().addNotification(message);
+        forge.adventure.character.PlayerSprite sprite = WorldStage.getInstance().getPlayerSprite();
+        if (sprite != null)
+            Current.player().addStatusMessage("Life", "Life next duel", MYSTERY_VIGOR_LIFE, sprite.getX(),
+                    sprite.getY() + sprite.getHeight() + pickupLabelsThisPass++ * 10f);
     }
 
     // Round 227: labels shown by the current checkPickup() pass. Two spawns inside the pickup radius in

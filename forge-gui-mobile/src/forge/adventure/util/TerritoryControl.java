@@ -1183,6 +1183,28 @@ public class TerritoryControl {
         return 0;
     }
 
+    /**
+     * Round 239 (user: "... and spawn one for each AI immediately after the capitol is built"). Called by
+     * TownRestoration.upgradeToCapitol() once the Capitol exists. Every color still in the game sends a mage at
+     * once, through the ordinary dispatch() - same targeting, same launch from its castle, same per-color cap
+     * (which has just grown by capitolBuiltMageCapBonus, so the extra mage has room). The colors' own attack
+     * timers are not touched: this is on top of their schedule, not instead of it.
+     */
+    public static void onPlayerCapitolBuilt(World world) {
+        if (world == null || !isEnabled() || !Config.instance().getTuningData().capitolBuiltSendsMages)
+            return;
+        int sent = 0;
+        for (String color : COLORS) {
+            if (world.isColorDefeated(color))
+                continue;
+            System.out.println("[TFR-CapitolSurge] " + color + " answers the player's new Capitol with a mage at once");
+            dispatch(world, color);
+            sent++;
+        }
+        if (sent > 0)
+            GameHUD.getInstance().addNotification("[RED]Your Capitol has not gone unnoticed - every color sends a mage!", true);
+    }
+
     /** A captured town's former owner answers at once with an attacking mage, using the standard
      *  dispatch/targeting logic (user spec 2026-09-03). */
     public static void dispatchRetaliation(World world, String color, String townName) {
@@ -1651,7 +1673,12 @@ public class TerritoryControl {
         // lowered the shipped base to 2 -> Easy 1 / Normal 2 / Hard 3 / Insane 4.
         int difficultyOffset = index == 0 ? -1 : index - 1;
         int base = Config.instance().getTuningData().baseAttackingMagesPerColor;
-        int cap = base + difficultyOffset + townBonus + defeatBonus;
+        // Round 239 (user: "When the Player builds his capitol, the AI gets +1 to max attacking mage spawns").
+        // A Capitol is the player declaring a realm, and every color takes notice for as long as it stands.
+        // On top of townBonus, which already counts the Capitol as one town toward its per-N-towns step.
+        int capitolBonus = TownRestoration.capitolExists()
+                ? Math.max(0, Config.instance().getTuningData().capitolBuiltMageCapBonus) : 0;
+        int cap = base + difficultyOffset + townBonus + defeatBonus + capitolBonus;
         // Diagnostic logging standard (user request 2026-08-13) - the town-count scaling term is
         // otherwise invisible: the caller only ever sees the final cap, with no way to tell how
         // much of it came from the flat difficulty base vs. this rubber-band bonus.
@@ -1660,7 +1687,8 @@ public class TerritoryControl {
         // always prints, so a log still shows the cap in force for that session.
         String line = "[TFR-MageCap] base=" + base + " difficultyOffset=" + difficultyOffset
                 + " playerTowns=" + playerTowns
-                + " divisor=" + (11 - index) + " townBonus=" + townBonus + " defeatBonus=" + defeatBonus + " -> cap=" + cap;
+                + " divisor=" + (11 - index) + " townBonus=" + townBonus + " defeatBonus=" + defeatBonus
+                + " capitolBonus=" + capitolBonus + " -> cap=" + cap;
         if (!line.equals(lastMageCapLine)) {
             System.out.println(line);
             lastMageCapLine = line;

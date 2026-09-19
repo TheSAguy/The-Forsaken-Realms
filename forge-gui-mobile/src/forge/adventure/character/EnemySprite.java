@@ -851,7 +851,16 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     public float getLifetime() {
         //default and minimum value for time to remain on overworld map
         float lifetime = 20f;
-        return Math.max(data.lifetime, lifetime);
+        float base = Math.max(data.lifetime, lifetime);
+        // Round 239 (user: "double or possibly triple how long a legend is active before it fades out"). A
+        // sighting is only worth announcing if the player can still get there: the legends of the frontier
+        // pool stay legendLifetimeFactor times as long as an ordinary roamer.
+        if (forge.adventure.util.FrontierSpawns.isCandidate(data)) {
+            float factor = Config.instance().getTuningData().legendLifetimeFactor;
+            if (factor > 1f)
+                return base * factor;
+        }
+        return base;
     }
 
     //Pathfinding integration below this line

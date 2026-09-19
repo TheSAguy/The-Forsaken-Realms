@@ -905,6 +905,20 @@ public class MapViewScene extends UIScene {
             mageMarkers.add(marker);
         }
 
+        // Round 239: sighted legends, in gold. In mageMarkers for the same reason the guard dots are - that
+        // list is what zooming re-positions and what enter() clears. No fog gate: the sighting was announced.
+        int legendDots = 0;
+        for (EnemySprite legend : WorldStage.getInstance().getLegendSightings()) {
+            Image marker = new Image(Forge.getAssets().getTexture(Config.instance().getFile("ui/minimap_player.png")));
+            marker.setColor(com.badlogic.gdx.graphics.Color.GOLD);
+            table.addActor(marker);
+            marker.setPosition(getMapX(legend.getX()) - marker.getWidth() / 2, getMapY(legend.getY()) - marker.getHeight() / 2);
+            mageMarkers.add(marker);
+            legendDots++;
+        }
+        if (legendDots > 0)
+            System.out.println("[TFR-MapView] " + legendDots + " sighted legend(s) marked in gold");
+
         setOverlayButtonStates(0);
         TextraButton zoomInButton = ui.findActor("zoomIn");
         if (zoomInButton != null) {
