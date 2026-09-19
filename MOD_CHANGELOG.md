@@ -17757,6 +17757,51 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 249: every map icon sits on its point of interest (option C); an old save's map is re-baked once (2026-09-19)
+
+User (round 248): *"For the 'Towns on the map before the overworld', let's go with C."*
+
+**The user's screenshot, corrected first.** The green glowing icon at the end of the road in the user's map screenshot
+is their OWN position marker - the Phyrexian race avatar that `MapViewScene` draws where the player stands, the same
+art as the HUD portrait - not a town. So that picture was the map showing where they were, and C does not change it.
+The offset C fixes is real all the same (found in the code, round 247); a distinct player marker was offered.
+
+**What changed.** The map image is baked pixels, and stock drew every POI icon centered on the POI's BOTTOM-LEFT
+corner (`poi.getPosition()`, the sprite's corner): an icon 16-32 px wide (4-8 tiles) hung half off its town toward the
+lower-left, over ground the player could explore while the town was still in fog - and the overworld draws a town
+only once its sprite's CENTER tile is explored (`MapSprite.draw()`). `World.redrawPoiMarkers()` now centers every icon
+on `PointOfInterest.getCenter()`, the middle of the rectangle the overworld draws the POI in, and `MapViewScene`
+places everything that sits on a POI on the same point: the detail labels (Under Attack, garrison, arena countdowns,
+names), quest markers, bookmarks, attack and guard lines, and the two label fog gates (26 calls). World-gen's stock
+marker pass (`generateNew()`, corner-anchored) is untouched: on this plane the post-sweep re-bake replaces it first.
+
+**Existing saves** hold their map image with the old icons baked in. New `World.mapIconLayout` (0 = stock, what every
+earlier save reads as, having no key; 1 = centered), saved with the world. `WorldSave.load()` calls new
+`World.migrateMapIconLayout()` once `pointOfInterestChanges` has loaded (a town's icon follows its ruined/restored
+state) and before the fog overlay is rebuilt: below layout 1 it runs, once, the ground re-bake + icon redraw that
+`refreshWorldMapMarkers()` runs on every dungeon rotation in play, and logs `[TFR-MapIcons] map image re-baked with
+every icon centered on its point of interest (layout 0 -> 1, N ms)`. Territory Control planes only.
+
+**Tested in the agent game** (its own folder and profile) on a copy of the user's 11:50 save (their slot 1 -> agent
+slot 6), the same map view before (the v1.12 jar alone) and after (round 249's classes ahead of it): every icon moved
+onto its POI - the five Ring City castles now sit on the star's road ends, the AI capitals on their roads - and no
+old icon was left anywhere. The log shows the re-bake once (`layout 0 -> 1, 155 ms`); saved to agent slot 7 and
+reloaded, the save carries `mapIconLayout=1` and nothing re-bakes. Both saves' map images were extracted
+(`ExtractMap.java`, scratchpad) and diffed: the explored masks are identical, and the changed pixels are the old and
+new icon footprints plus a few single-tile specks on the rim of each AI color's territory. Those come from the full
+re-bake itself - the same one every dungeon rotation runs - which draws some freshly claimed edge tiles differently
+from the day-by-day repaint (`redrawMinimapTile(x, y, decodeBiome)` decodes an expansion-claimed tile in colorless
+index space; `rebakeMinimapAfterTerritoryControl()` does not). Pre-existing, left alone, raised for the user.
+
+What C leaves: an icon is wider than its town (4-8 tiles against a 3-4 tile sprite), so its rim can still show a tile
+or two before the town is found. Option A (discovery follows the icon) would close that.
+
+Also seen in the agent session, with the v1.12 jar as well (so not this round): after the bridge's `load` from the
+start screen the HUD's corner minimap drew black, and the map view first opened at a zoom showing only fog. Probably
+the bridge loading without the Load screen's refresh; not seen in the user's own game.
+
+Built 12:05-12:12 on the 09.18 engine (MVN EXIT 0; the jar's `World.class` carries `[TFR-MapIcons]`, `WorldSave.class` the `migrateMapIconLayout` call). Rounds 247 + 248 reached the F: live folder at 12:04 (fast path, PACKAGER EXIT 0, jar `78bc464f6117`) once the user closed the game; round 249 followed at 12:26 (PACKAGER EXIT 0) and into `C:\Users\User\TFR-Release` - both hold jar SHA-1 `6b7000ef637c`. The agent folder sync (`agent_sync.cmd`) was started right after.
+
 ## Round 248: the Church tower wizard patrols; every patrol route in the plane names real waypoints (2026-09-19)
 
 User: *"Can we fix this 'The Apprentice White Wizard in the Church tower has a patrol route that points to waypoints

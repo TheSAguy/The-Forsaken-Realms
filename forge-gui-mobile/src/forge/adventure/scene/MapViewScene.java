@@ -273,14 +273,14 @@ public class MapViewScene extends UIScene {
             // marker loop in enter() already applies to the mage's OWN position; without it this
             // label leaked an unexplored town's existence/location/under-attack status through
             // solid fog, since it draws at the TARGET's position rather than the mage's.
-            int targetTileX = (int) (targetPoi.getPosition().x / WorldSave.getCurrentSave().getWorld().getTileSize());
-            int targetTileY = (int) (targetPoi.getPosition().y / WorldSave.getCurrentSave().getWorld().getTileSize());
+            int targetTileX = (int) (targetPoi.getCenter().x / WorldSave.getCurrentSave().getWorld().getTileSize());
+            int targetTileY = (int) (targetPoi.getCenter().y / WorldSave.getCurrentSave().getWorld().getTileSize());
             if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(targetTileX, targetTileY))
                 continue;
             int attackers = attackersPerTown.getOrDefault(targetPoi.getID(), 1);
             TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] Under Attack!" + (attackers > 1 ? " x" + attackers : ""));
             label.setColor(GameHUD.getMageMarkerColor(mage.territoryColor));
-            placeDetailLabel(label, targetPoi.getPosition().x, targetPoi.getPosition().y, placedLabelRects);
+            placeDetailLabel(label, targetPoi.getCenter().x, targetPoi.getCenter().y, placedLabelRects);
         }
 
         // Garrison strength (round 147, user request). Added to THIS overlay rather than a new one
@@ -293,8 +293,8 @@ public class MapViewScene extends UIScene {
                     WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
             if (changes == null || !forge.adventure.util.TownRestoration.isTownRestored(changes))
                 continue;
-            int tileX = (int) (poi.getPosition().x / WorldSave.getCurrentSave().getWorld().getTileSize());
-            int tileY = (int) (poi.getPosition().y / WorldSave.getCurrentSave().getWorld().getTileSize());
+            int tileX = (int) (poi.getCenter().x / WorldSave.getCurrentSave().getWorld().getTileSize());
+            int tileY = (int) (poi.getCenter().y / WorldSave.getCurrentSave().getWorld().getTileSize());
             if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(tileX, tileY))
                 continue;
             StringBuilder garrison = new StringBuilder();
@@ -315,7 +315,7 @@ public class MapViewScene extends UIScene {
             if (garrison.length() == 0)
                 continue;
             TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] Guards: " + garrison);
-            placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+            placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
         }
     }
 
@@ -418,7 +418,7 @@ public class MapViewScene extends UIScene {
             int rep = WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).getMapReputation();
             if (rep != 0) {
                 TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + rep);
-                placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+                placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
             }
         }
         addArenaCountdowns(allPois, placedLabelRects);
@@ -489,7 +489,7 @@ public class MapViewScene extends UIScene {
                                 List<Rectangle> placedLabelRects, StringBuilder logLine) {
         String when = daysLeft <= 0 ? "[GREEN]ready" : "[RED]" + daysLeft + (daysLeft == 1 ? " day" : " days");
         TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + venue + ": " + when);
-        placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+        placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
         logLine.append(' ').append(poi.getDisplayName()).append(' ').append(venue).append('=')
                 .append(daysLeft <= 0 ? "ready" : daysLeft + "d").append(';');
     }
@@ -511,7 +511,7 @@ public class MapViewScene extends UIScene {
             if (WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).isVisited()) {
                 if ("cave".equalsIgnoreCase(poi.getData().type) || "dungeon".equalsIgnoreCase(poi.getData().type) || "castle".equalsIgnoreCase(poi.getData().type)) {
                     TypingLabel label = Controls.newTypingLabel("[%?BLACKEN] " + poi.getDisplayName());
-                    placeDetailLabel(label, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+                    placeDetailLabel(label, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
                 }
             }
         }
@@ -566,7 +566,7 @@ public class MapViewScene extends UIScene {
             }
             TypingLabel nameLabel = Controls.newTypingLabel("[%?BLACKEN] "
                     + (portal ? PORTAL_GLYPH + " " : "") + poi.getDisplayName());
-            placeDetailLabel(nameLabel, poi.getPosition().x, poi.getPosition().y, placedLabelRects);
+            placeDetailLabel(nameLabel, poi.getCenter().x, poi.getCenter().y, placedLabelRects);
         }
         if (portalTowns > 0)
             System.out.println("[TFR-MapView] names view: " + portalTowns
@@ -644,7 +644,7 @@ public class MapViewScene extends UIScene {
             int mageTileY = (int) (mage.getY() / WorldSave.getCurrentSave().getWorld().getTileSize());
             if (!WorldSave.getCurrentSave().getWorld().isCurrentlyVisible(mageTileX, mageTileY))
                 continue;
-            attackEnds.add(new float[]{mage.getX(), mage.getY(), target.getPosition().x, target.getPosition().y});
+            attackEnds.add(new float[]{mage.getX(), mage.getY(), target.getCenter().x, target.getCenter().y});
             attackColors.add(GameHUD.getMageMarkerColor(mage.territoryColor));
             mages++;
         }
@@ -657,7 +657,7 @@ public class MapViewScene extends UIScene {
             PointOfInterest destination = forge.adventure.util.RoamingGuardRuntime.destination(guard, day);
             if (destination == null)
                 continue;
-            attackEnds.add(new float[]{guard.x, guard.y, destination.getPosition().x, destination.getPosition().y});
+            attackEnds.add(new float[]{guard.x, guard.y, destination.getCenter().x, destination.getCenter().y});
             attackColors.add(guard.returningHome ? GUARD_HOMEWARD : Color.LIME);
             guards++;
         }
@@ -852,20 +852,20 @@ public class MapViewScene extends UIScene {
         for (AdventureQuestData adq : Current.player().getQuests()) {
             PointOfInterest poi = adq.getTargetPOI();
             if (poi != null) {
-                if (positions.contains(poi.getPosition()))
+                if (positions.contains(poi.getCenter()))
                     continue; //don't map duplicate position to prevent stacking
                 TypingLabel label = Controls.newTypingLabel("[+GPS][%?BLACKEN] " + adq.name);
                 labels.add(label);
                 table.addActor(label);
-                label.setPosition(getMapX(poi.getPosition().x) - label.getWidth() / 2, getMapY(poi.getPosition().y) - label.getHeight() / 2);
+                label.setPosition(getMapX(poi.getCenter().x) - label.getWidth() / 2, getMapY(poi.getCenter().y) - label.getHeight() / 2);
                 label.skipToTheEnd();
-                positions.add(poi.getPosition());
+                positions.add(poi.getCenter());
             }
         }
         for (PointOfInterest poi : bookmark) {
             TypingLabel label = Controls.newTypingLabel("[%75][+Star] ");
             table.addActor(label);
-            label.setPosition(getMapX(poi.getPosition().x) - label.getWidth() / 2, getMapY(poi.getPosition().y) - label.getHeight() / 2);
+            label.setPosition(getMapX(poi.getCenter().x) - label.getWidth() / 2, getMapY(poi.getCenter().y) - label.getHeight() / 2);
             label.skipToTheEnd();
         }
 
@@ -942,6 +942,8 @@ public class MapViewScene extends UIScene {
 
         super.enter();
     }
+    // Round 249: callers placing something ON a point of interest pass its getCenter() - World.redrawPoiMarkers()
+    // centers each map icon there (stock centered it on the POI's bottom-left corner, getPosition()).
     float getMapX(float posX) {
         return (posX / (float) WorldSave.getCurrentSave().getWorld().getTileSize() / (float) WorldSave.getCurrentSave().getWorld().getWidthInTiles()) * img.getWidth();
     }

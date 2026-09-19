@@ -71,6 +71,12 @@ public class World implements Disposable, SaveFileContent {
     // re-trigger (and re-notify) the check every day forever, since the 80% threshold would keep
     // trivially re-passing. See checkFogOfWarStage2().
     private boolean fogOfWarStage2Revealed = false;
+    // Round 249 (the user chose option C): the layout the map icons in biomeImage were baked with. biomeImage is saved
+    // with its icons in it, so moving them means repainting the ground under the old ones - migrateMapIconLayout()
+    // does that ONCE for a save below MAP_ICON_LAYOUT. 0 = stock, each icon centered on its POI's bottom-left corner
+    // (every save before round 249, which has no key); 1 = centered on the POI (PointOfInterest.getCenter()).
+    public static final int MAP_ICON_LAYOUT = 1;
+    private int mapIconLayout = MAP_ICON_LAYOUT;
 
     // Day/night cycle: dayProgress is the fraction of the current day elapsed, in [0,1), where
     // 0 = midnight. It only advances via advanceTime(), which WorldStage calls once per frame
@@ -737,6 +743,7 @@ public class World implements Disposable, SaveFileContent {
         dayProgress = saveFileData.containsKey("dayProgress") ? saveFileData.readFloat("dayProgress") : 0.375f;
         dayCount = saveFileData.containsKey("dayCount") ? saveFileData.readInt("dayCount") : 1;
         fogOfWarStage2Revealed = saveFileData.containsKey("fogOfWarStage2Revealed") && saveFileData.readBool("fogOfWarStage2Revealed");
+        mapIconLayout = saveFileData.containsKey("mapIconLayout") ? saveFileData.readInt("mapIconLayout") : 0; // round 249
 
         colorNextAttackDay.clear();
         if (saveFileData.containsKey("colorNextAttackDay")) {
@@ -914,6 +921,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("dayProgress", dayProgress);
         data.store("dayCount", dayCount);
         data.store("fogOfWarStage2Revealed", fogOfWarStage2Revealed);
+        data.store("mapIconLayout", mapIconLayout); // round 249
         data.storeObject("colorTerritoryRadius", colorTerritoryRadius);
         data.storeObject("defeatedColors", defeatedColors);
         data.storeObject("forcedPlayerTargetPending", forcedPlayerTargetPending);
@@ -1316,6 +1324,7 @@ public class World implements Disposable, SaveFileContent {
             // 2026-09-02 review finding: the one-shot full-map reveal flag survived into a New Game
             // or New Game+ started from a finished run, so the reveal could never fire again.
             fogOfWarStage2Revealed = false;
+            mapIconLayout = MAP_ICON_LAYOUT; // round 249: the post-sweep redrawAllPoiMarkers() bakes this world's icons centered
             ResourceSpawns.forceResync();
             poiDespawnDay.clear();
             poiRespawnDay.clear();
@@ -2274,8 +2283,13 @@ public class World implements Disposable, SaveFileContent {
             // without this, a vanished dungeon kept its baked icon until the next full rebake.
             if (!poi.getActive())
                 continue;
-            int poiTileX = (int) (poi.getPosition().x / data.tileSize);
-            int poiTileY = (int) (poi.getPosition().y / data.tileSize);
+            // Round 249 (the user chose option C): each icon is centered on its POI - the middle of the footprint the
+            // overworld draws it in and checks for fog (MapSprite.draw()) - not on its bottom-left corner, stock's
+            // placement, which hung half an icon off the town's lower-left side over ground the player could explore
+            // while the town itself was still in fog. MapViewScene centers its labels, markers and lines on this point.
+            Vector2 anchor = poi.getCenter();
+            int poiTileX = (int) (anchor.x / data.tileSize);
+            int poiTileY = (int) (anchor.y / data.tileSize);
             if (poiTileX < minTileX || poiTileX > maxTileX || poiTileY < minTileY || poiTileY > maxTileY)
                 continue; // outside the caller's dirty rect - marker untouched, nothing to restore
             // Player Capitol (user request 2026-08-13): its minimap marker is a scaled-down copy
@@ -2290,8 +2304,8 @@ public class World implements Disposable, SaveFileContent {
                 com.badlogic.gdx.graphics.g2d.TextureRegion capSprite = poi.getSprite();
                 Pixmap capPixmap = markerPixmapFor(pixmapCache, capSprite.getTexture());
                 int dstSize = 32;
-                int cx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
-                int cy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
+                int cx = (int) ((anchor.x / data.tileSize) * mm) - dstSize / 2;
+                int cy = (int) ((height - (anchor.y / data.tileSize)) * mm) - dstSize / 2;
                 biomeImage.drawPixmap(capPixmap, capSprite.getRegionX(), capSprite.getRegionY(),
                         capSprite.getRegionWidth(), capSprite.getRegionHeight(), cx, cy, dstSize, dstSize);
                 refreshFogForMarkerRect(cx, cy, dstSize, dstSize);
@@ -2308,8 +2322,8 @@ public class World implements Disposable, SaveFileContent {
                 com.badlogic.gdx.graphics.g2d.TextureRegion starSprite = poi.getSprite();
                 Pixmap starPixmap = markerPixmapFor(pixmapCache, starSprite.getTexture());
                 int starSize = 32;
-                int sx = (int) ((poi.getPosition().x / data.tileSize) * mm) - starSize / 2;
-                int sy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - starSize / 2;
+                int sx = (int) ((anchor.x / data.tileSize) * mm) - starSize / 2;
+                int sy = (int) ((height - (anchor.y / data.tileSize)) * mm) - starSize / 2;
                 biomeImage.drawPixmap(starPixmap, starSprite.getRegionX(), starSprite.getRegionY(),
                         starSprite.getRegionWidth(), starSprite.getRegionHeight(), sx, sy, starSize, starSize);
                 refreshFogForMarkerRect(sx, sy, starSize, starSize);
@@ -2318,8 +2332,8 @@ public class World implements Disposable, SaveFileContent {
             if ("Spawn".equals(poi.getData().name) && poi.getSprite() != null) {
                 com.badlogic.gdx.graphics.g2d.TextureRegion spawnSprite = poi.getSprite();
                 Pixmap spawnPixmap = markerPixmapFor(pixmapCache, spawnSprite.getTexture());
-                int sx = (int) ((poi.getPosition().x / data.tileSize) * mm) - spawnSprite.getRegionWidth() / 2;
-                int sy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - spawnSprite.getRegionHeight() / 2;
+                int sx = (int) ((anchor.x / data.tileSize) * mm) - spawnSprite.getRegionWidth() / 2;
+                int sy = (int) ((height - (anchor.y / data.tileSize)) * mm) - spawnSprite.getRegionHeight() / 2;
                 biomeImage.drawPixmap(spawnPixmap, spawnSprite.getRegionX(), spawnSprite.getRegionY(),
                         spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight(), sx, sy,
                         spawnSprite.getRegionWidth(), spawnSprite.getRegionHeight());
@@ -2351,8 +2365,8 @@ public class World implements Disposable, SaveFileContent {
                 TextureAtlas.AtlasRegion hutGlyph = mapMarker.findRegion("town");
                 if (hutGlyph != null) {
                     int dstSize = 20;
-                    int hx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
-                    int hy = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
+                    int hx = (int) ((anchor.x / data.tileSize) * mm) - dstSize / 2;
+                    int hy = (int) ((height - (anchor.y / data.tileSize)) * mm) - dstSize / 2;
                     biomeImage.drawPixmap(mapMarkerPixmap, hutGlyph.getRegionX(), hutGlyph.getRegionY(),
                             hutGlyph.getRegionWidth(), hutGlyph.getRegionHeight(), hx, hy, dstSize, dstSize);
                     refreshFogForMarkerRect(hx, hy, dstSize, dstSize);
@@ -2374,8 +2388,8 @@ public class World implements Disposable, SaveFileContent {
                 // dwarf every other minimap icon; ruined keeps the existing ~15% bump on top
                 // (2026-08-15 user request: "they look small next to the fixed/repaired towns").
                 int dstSize = brokenTexture != null ? Math.round(20 * 1.15f) : 20;
-                int tx = (int) ((poi.getPosition().x / data.tileSize) * mm) - dstSize / 2;
-                int ty = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm) - dstSize / 2;
+                int tx = (int) ((anchor.x / data.tileSize) * mm) - dstSize / 2;
+                int ty = (int) ((height - (anchor.y / data.tileSize)) * mm) - dstSize / 2;
                 biomeImage.drawPixmap(townPixmap, townTexture.getRegionX(), townTexture.getRegionY(),
                         townTexture.getRegionWidth(), townTexture.getRegionHeight(), tx, ty, dstSize, dstSize);
                 refreshFogForMarkerRect(tx, ty, dstSize, dstSize);
@@ -2386,8 +2400,8 @@ public class World implements Disposable, SaveFileContent {
                 continue;
             // This fallback draws non-town markers (dungeons, castles, etc.) at native size, plus
             // the pre-seeded functioning neutral towns routed here deliberately (see above).
-            int xInPixels = (int) ((poi.getPosition().x / data.tileSize) * mm);
-            int yInPixels = (int) ((height - (poi.getPosition().y / data.tileSize)) * mm);
+            int xInPixels = (int) ((anchor.x / data.tileSize) * mm);
+            int yInPixels = (int) ((height - (anchor.y / data.tileSize)) * mm);
             xInPixels -= marker.getRegionWidth() / 2;
             yInPixels -= marker.getRegionHeight() / 2;
             biomeImage.drawPixmap(mapMarkerPixmap, marker.getRegionX(), marker.getRegionY(),
@@ -2500,6 +2514,25 @@ public class World implements Disposable, SaveFileContent {
         // ever landed in the hidden biomeImage (user-reported: the Capitol's new castle icon
         // showed without fog of war but not with it). No-ops when fog of war is off.
         rebuildFogOfWarPixmap();
+    }
+
+    /**
+     * Round 249: a save whose map image still has its icons where round 248 and earlier baked them (centered on each
+     * POI's bottom-left corner) gets ONE re-bake - the ground re-derived from biomeMap/terrainMap, then every icon
+     * drawn centered - the same two steps refreshWorldMapMarkers() runs on every dungeon rotation in play. Called by
+     * WorldSave.load() once pointOfInterestChanges has loaded (a town's icon follows its ruined/restored state) and
+     * before it rebuilds the fog overlay from the image. Territory Control planes only: a stock plane never re-bakes
+     * its map, so it keeps stock's layout.
+     */
+    public void migrateMapIconLayout() {
+        if (mapIconLayout >= MAP_ICON_LAYOUT || biomeImage == null || !isTerritoryControlEnabled())
+            return;
+        long started = System.nanoTime();
+        rebakeMinimapAfterTerritoryControl();
+        redrawAllPoiMarkers();
+        System.out.println("[TFR-MapIcons] map image re-baked with every icon centered on its point of interest (layout "
+                + mapIconLayout + " -> " + MAP_ICON_LAYOUT + ", " + (System.nanoTime() - started) / 1_000_000 + " ms)");
+        mapIconLayout = MAP_ICON_LAYOUT;
     }
 
     private void rebakeMinimapAfterTerritoryControl() {

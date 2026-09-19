@@ -2779,6 +2779,14 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 249 (2026-09-19) - adventure-side only
+
+`world/World.java` - `MAP_ICON_LAYOUT` + `mapIconLayout` (load/save/`generateNew()` reset), `redrawPoiMarkers()` centers
+each icon on `PointOfInterest.getCenter()`, new `migrateMapIconLayout()`. `world/WorldSave.java` - `load()` calls it
+before the fog rebuild. `scene/MapViewScene.java` - 26 `getPosition()` -> `getCenter()` (labels, lines, fog gates;
+NOTE two of them are STOCK lines in `enter()`, the quest-marker and bookmark placement - merge friction if upstream
+edits those), a comment on `getMapX()`. Stock's own marker pass in `generateNew()` (corner-anchored) is untouched.
+
 ## Round 248 (2026-09-19) - plane data only
 
 Fifteen plane `.tmx` maps (patrol waypoints: `magetower_7_church` gains waypoints 76-83; six maps gain a home waypoint;

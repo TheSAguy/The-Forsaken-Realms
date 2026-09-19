@@ -253,6 +253,10 @@ public class WorldSave {
                     // (same pattern as the two repair calls above): strips the player's race
                     // editions from the AI color shards on every load, no-op once clean.
                     forge.adventure.util.EditionProgression.reservePlayerEditions(currentSave.world, currentSave.player);
+                    // Round 249: a save baked before map icons were centered on their POI gets its one re-bake
+                    // here - after pointOfInterestChanges (each town's icon follows its ruined/restored state) and
+                    // before the fog overlay below copies the image.
+                    currentSave.world.migrateMapIconLayout();
                     // Re-derive the minimap fog overlay now that the vision cache is real -
                     // World.load()'s own rebuild ran before pointOfInterestChanges loaded, so its
                     // Revealed tier (owned-town vision circles) was computed against an empty
