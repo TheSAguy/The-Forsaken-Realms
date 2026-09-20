@@ -801,6 +801,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // the event starts, but this wipe cleared it, so every New Game+ was offered another one. Read before the
         // clear, written back after the newGamePlus flag below.
         int jumpstartPlayed = getCharacterFlag("jumpstartPlayed");
+        int innTournamentQuest = getCharacterFlag(INN_TOURNAMENT_QUEST_FLAG); // round 259, same rule
         characterFlags.clear();
         events.clear();
         AdventureQuestController.clear();
@@ -814,6 +815,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             setCharacterFlag("jumpstartPlayed", jumpstartPlayed);
             System.out.println("[TFR-Jumpstart] New Game+ keeps jumpstartPlayed=" + jumpstartPlayed
                     + " - one Jumpstart tournament per player, not per run");
+        }
+        if (innTournamentQuest > 0) { // round 259: and one Inn-tournament nudge per player
+            setCharacterFlag(INN_TOURNAMENT_QUEST_FLAG, innTournamentQuest);
+            System.out.println("[TFR-MainQuest] New Game+ keeps " + INN_TOURNAMENT_QUEST_FLAG
+                    + " - \"Participate in an Inn Tournament\" is once per player, not per run");
         }
 
         // ---- per-run combat / buff state ----------------------------------------------------
@@ -861,7 +867,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " | RESEEDED shopTypes(" + unlockedShopTypes.size() + ")=" + new java.util.TreeSet<>(unlockedShopTypes)
                 + " editions(" + unlockedEditions.size() + ")=" + new java.util.TreeSet<>(unlockedEditions)
                 + " colorRepEntries=" + colorReputationHalfPoints.size() + "(reseeded from the deck)"
-                + " | CLEARED characterFlags=" + characterFlags.size() + "(expect 1, or 2 with a kept jumpstartPlayed)"
+                + " | CLEARED characterFlags=" + characterFlags.size() + "(expect 1, plus any kept once-per-player flags)"
                 + " events=" + events.size()
                 + " coinRansomMarks=" + coinRansomedEnemies.size()
                 + " blessing=" + (blessing == null ? "null" : "SET(LEAK)")
@@ -2932,6 +2938,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     }
 
     // Quest functions.
+    /** Round 259: "Participate in an Inn Tournament" is a one-per-PLAYER nudge, like the Jumpstart tournament -
+     *  this is what remembers it through a New Game+. See addQuest() and resetForNewGamePlus(). */
+    public static final String INN_TOURNAMENT_QUEST_FLAG = "innTournamentQuestGiven";
+
     public void setQuestFlag(String key, int value) {
         if (value != 0)
             questFlags.put(key, (byte) value);
@@ -2979,15 +2989,32 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // toward the Inn, with no reward and nothing chained behind it - a player who has already finished a
         // tournament has nothing to learn from it, so it is not issued at all (it used to be issued, tick itself
         // on the spot and pop its "the Inn is worth your time" dialog wherever the player happened to stand).
-        if (questID == forge.adventure.scene.EventScene.INN_TOURNAMENT_TUTORIAL_QUEST_ID && statistic.completedEventCount() > 0) {
-            System.out.println("[TFR-MainQuest] \"Participate in an Inn Tournament\" NOT issued - "
-                    + statistic.completedEventCount() + " tournament(s) already finished, so it is already resolved");
-            return;
+        if (questID == forge.adventure.scene.EventScene.INN_TOURNAMENT_TUTORIAL_QUEST_ID) {
+            // Round 259 (user: "if the Play in an Inn Tournament quest already fired, it should not fire again in
+            // a NG+. Like Kickstart Tournaments, you only get it once"). Round 245's event-count gate is right
+            // within a run, but resetForNewGamePlus() clears the statistics, so a New Game+ read zero finished
+            // tournaments and handed the nudge out again. The flag below outlives that wipe.
+            if (getCharacterFlag(INN_TOURNAMENT_QUEST_FLAG) > 0) {
+                System.out.println("[TFR-MainQuest] \"Participate in an Inn Tournament\" NOT issued - this player "
+                        + "has already had it (once per player, across every New Game+)");
+                return;
+            }
+            if (statistic.completedEventCount() > 0) {
+                System.out.println("[TFR-MainQuest] \"Participate in an Inn Tournament\" NOT issued - "
+                        + statistic.completedEventCount() + " tournament(s) already finished, so it is already resolved");
+                setCharacterFlag(INN_TOURNAMENT_QUEST_FLAG, 1); // resolved counts as had it
+                return;
+            }
         }
         AdventureQuestData toAdd = AdventureQuestController.instance().generateQuest(questID);
 
         if (toAdd != null) {
             addQuest(toAdd, isNewGame);
+            if (questID == forge.adventure.scene.EventScene.INN_TOURNAMENT_TUTORIAL_QUEST_ID) {
+                setCharacterFlag(INN_TOURNAMENT_QUEST_FLAG, 1); // round 259: it has now fired, once and for all
+                System.out.println("[TFR-MainQuest] \"Participate in an Inn Tournament\" issued - flagged as had, "
+                        + "it will not return in a New Game+");
+            }
         }
     }
 

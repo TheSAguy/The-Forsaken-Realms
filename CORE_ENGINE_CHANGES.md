@@ -2779,6 +2779,12 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 259 (2026-09-20) - adventure-side only
+
+`player/AdventurePlayer.java` - `INN_TOURNAMENT_QUEST_FLAG`, stamped in `addQuest(int, boolean)` when quest 74 is
+issued or already resolved, checked there before the event-count gate, and carried through
+`resetForNewGamePlus()` alongside `jumpstartPlayed`.
+
 ## Round 256 (2026-09-20) - adventure-side only
 
 `world/World.java` - `clearObstaclesAroundSettlements()` replaces `clearGroundAroundSettlements()` and runs at the

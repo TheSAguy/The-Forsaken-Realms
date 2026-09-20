@@ -17757,6 +17757,29 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 259: the Inn-tournament nudge is once per player too (2026-09-20)
+
+User, mid-test: *"Let's make it that if the Play in an Inn Tournament quest already fired, it should not fire again
+in a NG+. Like Kickstart Tournaments, you only get it once."*
+
+Round 245 already refused to issue quest 74 when `statistic.completedEventCount() > 0` - a player who has finished
+a tournament has nothing to learn from a nudge towards one. That gate is correct WITHIN a run and useless across
+runs: `resetForNewGamePlus()` calls `statistic.clear()`, so every New Game+ read zero finished tournaments and
+handed the quest out again.
+
+Fixed exactly the way round 253c fixed Jumpstart. `AdventurePlayer.INN_TOURNAMENT_QUEST_FLAG`
+(`innTournamentQuestGiven`) is stamped the moment the quest is issued - and also when the event-count gate
+resolves it as already-done, since that is the same thing from the player's side - the gate checks the flag first,
+and the flag is carried across the New Game+ wipe next to `jumpstartPlayed`. Those two are now the
+once-per-PLAYER pair, and the reset's own proof line says so rather than naming Jumpstart alone.
+
+**Existing saves do not carry the flag**, so a save that has already had the quest will still see it once more on
+its next New Game+, and be quiet from then on. Seeding it at load for any player whose statistics show a finished
+tournament would close that too - offered, not done.
+
+Built (MVN EXIT 0) but NOT packaged: the user was playing from `C:\TFR\live` at the time, and after round 258's
+packaging ended their session mid-duel, a running game now waits rather than being stopped.
+
 ## Round 256: the obstacles standing inside a town's icon, frozen set-pieces, and half the rares (2026-09-20)
 
 **"I see that rock still there, and it's colliding."** The user, with three screenshots - a boulder against
