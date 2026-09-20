@@ -641,6 +641,9 @@ public class World implements Disposable, SaveFileContent {
     // tick tops the pool back up).
     private final List<int[]> resourceSpawns = new ArrayList<>();
     private boolean resourceSpawnsSeeded = false;
+    /** Round 256: has this save had its settlements swept of obstacles? Worlds generated before round 256 get
+     *  the sweep once, at load. */
+    private boolean obstaclesSwept = false;
 
     public List<int[]> getResourceSpawns() {
         return resourceSpawns;
@@ -824,6 +827,7 @@ public class World implements Disposable, SaveFileContent {
             resourceSpawns.addAll((List<int[]>) saveFileData.readObject("resourceSpawns"));
         }
         resourceSpawnsSeeded = saveFileData.containsKey("resourceSpawnsSeeded") && saveFileData.readInt("resourceSpawnsSeeded") != 0;
+        obstaclesSwept = saveFileData.containsKey("obstaclesSwept") && saveFileData.readInt("obstaclesSwept") != 0;
         ResourceSpawns.forceResync(); // actors on WorldStage must rebuild from this loaded state
 
         poiDespawnDay.clear();
@@ -906,6 +910,13 @@ public class World implements Disposable, SaveFileContent {
         // Repair any color missing its capital (worlds generated before the placement
         // safeguards); idempotent, inert unless territoryControlEnabled.
         TerritoryControl.repairMissingCapitals(this);
+        // Round 256: the obstacle sweep is a generation step, so a world made before it keeps whatever rocks and
+        // dead trees landed inside a settlement's icon - which is what the user was looking at. Run it once here
+        // and remember, the same shape as round 249's one-time map-icon re-bake. A swept world finds nothing.
+        if (!obstaclesSwept) {
+            obstaclesSwept = true;
+            clearObstaclesAroundSettlements();
+        }
     }
 
     @Override
@@ -940,6 +951,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("standingsHistoryCounts", standingsHistoryCounts);
         data.storeObject("resourceSpawns", new ArrayList<>(resourceSpawns));
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
+        data.store("obstaclesSwept", obstaclesSwept ? 1 : 0);
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
@@ -1261,37 +1273,61 @@ public class World implements Disposable, SaveFileContent {
      * site's CENTRE tile (a town's art is 48x48 or 64x64, so its position corner is up to two tiles off centre),
      * and reports the lot in one line.
      */
-    private void clearGroundAroundSettlements() {
+    private void clearObstaclesAroundSettlements() {
         if (mapPoiIds == null)
             return;
         int sites = 0;
-        int blocked = 0;
+        int removed = 0;
         for (PointOfInterest poi : getAllPointOfInterest()) {
             PointOfInterestData poiData = poi.getData();
             if (poiData == null || poiData.type == null)
                 continue;
             if (!poiData.type.equals("town") && !poiData.type.equals("capital") && !poiData.type.equals("castle"))
                 continue;
-            int tiles = TownRestoration.ORAZCA_POI_NAME.equals(poiData.name)
-                    ? ORAZCA_CLEAR_TILES : SETTLEMENT_CLEAR_TILES;
+            sites++;
             int tileX = (int) (poi.getCenter().x / data.tileSize);
             int tileY = (int) (poi.getCenter().y / data.tileSize);
-            for (int dx = -tiles; dx < tiles; dx++)
-                for (int dy = -tiles; dy < tiles; dy++)
-                    if (isColliding(tileX + dx, tileY + dy))
-                        blocked++;
-            clearTerrain(tileX, tileY, tiles);
-            sites++;
+            removed += clearObstacles(tileX, tileY, clearTilesFor(poi, poiData));
         }
-        System.out.println("[TFR-ClearGround] " + sites + " town/capital/castle site(s) cleared ("
-                + SETTLEMENT_CLEAR_TILES + " tiles each, " + ORAZCA_CLEAR_TILES + " around Orazca) - "
-                + blocked + " colliding tile(s) removed");
+        System.out.println("[TFR-ClearGround] " + sites + " town/capital/castle site(s) swept (the icon's own tiles"
+                + " plus " + CLEAR_MARGIN_TILES + ", " + ORAZCA_CLEAR_TILES + " around Orazca) - "
+                + removed + " colliding obstacle(s) removed");
     }
 
-    /** Round 254: how far around Orazca the ground is guaranteed walkable; round 255: and around every other
-     *  town, capital and castle. */
+    /** Round 256, the user's "just the stuff that basically falls within the town icon radius": half the POI's
+     *  own sprite in tiles, plus a margin. Orazca - the one place every run begins at - gets its own wider sweep. */
+    private int clearTilesFor(PointOfInterest poi, PointOfInterestData poiData) {
+        if (TownRestoration.ORAZCA_POI_NAME.equals(poiData.name))
+            return ORAZCA_CLEAR_TILES;
+        int widest = poi.getSprite() == null ? data.tileSize
+                : (int) Math.max(poi.getSprite().getRegionWidth(), poi.getSprite().getRegionHeight());
+        return (int) Math.ceil(widest / (double) data.tileSize / 2d) + CLEAR_MARGIN_TILES;
+    }
+
+    /** Removes obstacles - and only obstacles - from a square of tiles: a cell is zeroed when it carries a
+     *  collision or structure bit, which is the same test the road pass uses to cut a path through terrain.
+     *  Plain ground, roads and the settlement's own tiles are left exactly as they are. Returns the count. */
+    private int clearObstacles(int x, int y, int tiles) {
+        int removed = 0;
+        for (int dx = -tiles; dx <= tiles; dx++) {
+            for (int dy = -tiles; dy <= tiles; dy++) {
+                try {
+                    int rawY = height - 1 - (y + dy);
+                    if ((terrainMap[x + dx][rawY] & (collisionBit | isStructureBit)) != 0) {
+                        terrainMap[x + dx][rawY] = 0;
+                        removed++;
+                    }
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                }
+            }
+        }
+        return removed;
+    }
+
+    /** Round 254: how far around Orazca the ground is guaranteed walkable; rounds 255-256: and around every other
+     *  town, capital and castle, sized to each one's icon plus this margin. */
     private static final int ORAZCA_CLEAR_TILES = 6;
-    private static final int SETTLEMENT_CLEAR_TILES = 4;
+    private static final int CLEAR_MARGIN_TILES = 2;
 
     private void clearTerrain(int x, int y, int size) {
 
@@ -1738,7 +1774,6 @@ public class World implements Disposable, SaveFileContent {
             // Hide the reserve 4/5 of the rotation pool BEFORE anything bakes markers or picks
             // quest targets - see the placement loop's POOL_MULTIPLIER comment above.
             recordStarTowns(); // Center Towns (MOD_SCOPE #102): positions are final once placement is done
-            clearGroundAroundSettlements(); // rounds 254-255: walkable ground around every town/capital/castle
             DungeonRotation.initializeNewWorld(this);
 
 //////////////////
@@ -2242,6 +2277,12 @@ public class World implements Disposable, SaveFileContent {
             // comment for why this runs here (world's own seeded Random, reproducible from seed).
             if (isEditionProgressionEnabled())
                 EditionProgression.seedColorShards(this);
+            // Round 256: LAST, deliberately. Rounds 254-255 ran this right after POI placement, which is before
+            // generateNew() stamps each biome's own structures and before the road pass - so every obstacle it
+            // cleared was stamped straight back, and it honestly reported "0 colliding tile(s) removed" while a
+            // boulder sat against Orazca's gate. Nothing writes terrainMap after this point.
+            clearObstaclesAroundSettlements();
+            obstaclesSwept = true; // round 256: generation did it, load need not repeat it
             System.out.println("Generating world took :\t\t" + ((System.currentTimeMillis() - startTime) / 1000f) + " s");
             WorldStage.getInstance().clearCache();
 

@@ -2779,6 +2779,14 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 256 (2026-09-20) - adventure-side only
+
+`world/World.java` - `clearObstaclesAroundSettlements()` replaces `clearGroundAroundSettlements()` and runs at the
+END of `generateNew()`; `clearTilesFor()` sizes the sweep from the POI's own sprite (`CLEAR_MARGIN_TILES`);
+`clearObstacles()` zeroes only cells carrying `collisionBit`/`isStructureBit`; `obstaclesSwept` is persisted and
+`load()` runs the sweep once for older saves. Plane data: the four set-piece maps (`threatRange -1` on 39
+enemies), `quests.json` (the coin-flip rares of quests 10-16).
+
 ## Round 255 (2026-09-20) - adventure-side only
 
 `stage/PointOfInterestMapSprite.java` - the capped entry box is centred in both axes. `world/World.java` -

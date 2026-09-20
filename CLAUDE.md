@@ -50,14 +50,21 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-20 (round 255; v1.12 "Reward Balancing" RELEASED, rounds 247-255 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-20 (round 256; v1.12 "Reward Balancing" RELEASED, rounds 247-256 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 255, 2026-09-20).** v1.12 is out; rounds 247-255 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 256, 2026-09-20).** v1.12 is out; rounds 247-256 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **Round 255 - the opening reads as one story, plus four corrections from play.** Quest 53 gained **stage 3
+  1. **Round 256 - the obstacles inside a town's icon, frozen set-pieces, half the rares.** The clear-ground pass
+     ran BEFORE `generateNew()` stamps the biomes' structures and roads, so everything it cleared was put back -
+     that is why the log said "0 colliding tile(s) removed" while a boulder sat against Orazca's gate. It runs
+     LAST now, sized to each POI's own icon (half its sprite in tiles + 2; Orazca 6), zeroing only cells with a
+     collision/structure bit, and **`World.load()` runs it once per existing save** (`obstaclesSwept`). Also: the
+     four set-piece maps are frozen again (39 enemies at `threatRange -1`; two authored ranges kept), and the
+     seven town quests lost their two coin-flip rares (4 rares -> 2). NOT yet verified in a game.
+  2. **Round 255 - the opening reads as one story, plus four corrections from play.** Quest 53 gained **stage 3
      "Find the Warden at Orazca"**: leaving the cave no longer issues the Ring quest, the Warden in the ruin does
      (he sets `wardenOrazca`, the stage's epilogue issues 75). The Capitol surge now sends its Archmage at the
      attackable town **nearest the player's Capitol** (`towardCapitol`, replacing round 254's "furthest"; the log
@@ -66,7 +73,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      town reveals centre on `getCenter()` instead of the POI's corner - that was the "player terrain is not 100%
      centre" report. Round 254's entry box is centred in both axes now (its first cut left a 64x64 town's north
      side unenterable). **NEW WORLDS ONLY** for the terrain and quest parts. NOT yet verified in a game.
-  2. **Round 254 - the five things a new game found in round 253.** Entry boxes are capped at two tiles
+  3. **Round 254 - the five things a new game found in round 253.** Entry boxes are capped at two tiles
      (`PointOfInterestMapSprite.ENTRY_BOX_MAX`; Orazca's 64x64 sprite was pulling the player in from four tiles
      out); `World.clearGroundAroundOrazca()` clears a 6-tile radius after placement (`[TFR-Orazca]`); quest 53's
      "Talk to the nearby mage" names the spawn cave by tag with `allowInactivePOI` (it had latched onto a random
@@ -76,7 +83,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      in both towns. Plus: the Capitol surge sends an **Archmage at the furthest** attackable town per color
      (`dispatch(world, color, forceArchmage, furthestTarget)`). **NEW WORLDS ONLY** for the placement/terrain/quest
      parts. NOT yet verified in a game - C: packaged for the user to test.
-  3. **Orazca, the ruin at the centre of the star (round 253).** The campfire's tile is now a ruined town named
+  4. **Orazca, the ruin at the centre of the star (round 253).** The campfire's tile is now a ruined town named
      Orazca - `radiusFactor` 0 puts it at the biome's exact centre - which the player restores like any wasteland
      town (200 gold + 5 wood) and which is the ONLY town the Capitol can be raised from, on the unchanged gate (5
      restored towns including it, 1000/100/100/50). Other towns show a disabled "Upgrade to Capitol (only at
@@ -100,7 +107,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      **`MapDialog` note worth keeping:** `activate()` loads EVERY entry whose condition passes, each overwriting the
      last, so the LAST match is what shows and every match's `action` fires - write dialog arrays least-specific
      first.
-  4. **Enemies that never reacted (round 252).** 378 of the plane's 2,359 map enemies had no `threatRange` and no
+  5. **Enemies that never reacted (round 252).** 378 of the plane's 2,359 map enemies had no `threatRange` and no
      `fleeRange`, so they ignored the player entirely (the user walked past one and took the chest beside it); 59 of
      them even patrol. `MapStage.applyDefaultReactionRange()` now gives such an enemy the plane's default radius at
      load - `mapEnemyDefaultThreatRange` 32 px (two tiles) / `mapEnemyDefaultPursueRange` 64 px in settings.json -
@@ -111,7 +118,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      Naktamun gym and `debug_map` are exempt automatically now, only their fighters take the default. Still open if
      the user wants whole set-pieces inert: a `threatRange` of -1 in those maps does it. **IN F: since 18:11**
      (packaged with round 253), not yet watched in the user's own play.
-  5. **The map (rounds 249-251), all three SEEN IN A RUNNING GAME (round 251's entry).** 249: every icon centered on
+  6. **The map (rounds 249-251), all three SEEN IN A RUNNING GAME (round 251's entry).** 249: every icon centered on
      `PointOfInterest.getCenter()`, an older save re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250:
      option A without the burst - when part of an icon is uncovered so are the tiles under it
      (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so a place appears on the overworld with its icon. 251: the
@@ -119,30 +126,30 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      round-247 "town" was that marker. Still offered, NOT done: aligning the full re-bake's claimed-rim tiles with the
      day-by-day repaint (pre-existing specks per AI territory), and the same ring on the HUD's corner minimap (left
      alone - it is always centered on the player).
-  6. **Rounds 247-251 are IN THE F: LIVE FOLDER** (packaged 15:04, jar `be6bb7ea998b`; C: and the agent folder match).
+  7. **Rounds 247-251 are IN THE F: LIVE FOLDER** (packaged 15:04, jar `be6bb7ea998b`; C: and the agent folder match).
      In the user's own next log: `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a fresh game that skips the
      intro) or `... have 1/1 - nothing to grant` (New Game+ that skips it); `[TFR-MapIcons] ... (layout 0 -> 1, N ms)`
      ONCE for each older save; `[TFR-IconReveal]` as places appear with their icons; the nine mirrored creatures
      walking head first; the crypt Zombie, the Disciple of Teferi, the Yule Town Polar Bear and vampire castle 4C's
      two Unholy Skulls walking their new routes (the Church tower's wizard was watched doing exactly that); no
      "Navigation error" line anywhere. Save 1 gained two decks in slots 1-2 (round 251's entry).
-  7. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
+  8. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
      fix, the map icons, and (the 10:39 log, round 247) the world-gen town cut, the looted factor 0.25, a Bronze Coin
      ransom. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the five-kill color
      hunts (240), the ruined Inn's notice, the Coin Challenge's shard fee (241), the record bonus (243), the
      dungeon-lifespan pull-in and hunts counting inside dungeons (244), quest 74 not issued after a tournament / held
      inside a ruin (245), the strolling guards (233).
-  8. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
+  9. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
      were left alone when seven outlier payouts were trimmed; "Sweep the Wilds" counts a dungeon when its last enemy
      dies, not when its loot is gone; round 236's terrain look-alike (a claimed wasteland crater drawn as green water).
-  9. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`; on 2026-09-19 upstream stood 12 commits past it,
+  10. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`; on 2026-09-19 upstream stood 12 commits past it,
      tip `db4304cc40d`: 9 Java files, none under `adventure/`, two in files we edit - `forge-game` `Game.java` and
      `player/Player.java` - and `git merge-tree` previewed the merge as CLEAN). The next merge is
      `3146e4b1036..upstream/master`, only once the user installs a newer daily into `E:\GAMES\Forge_2` - and from
      that moment the packager refuses until the merge lands. If a round must reach the live folder in between, see
      round 241: the live folder's stock tree still matches the repo, so plane folder + jar can be synced without
      BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad script.
-  10. **A full new-engine build takes 90 seconds with `--out C:\TFR\live`** (SSD) against an hour on
+  11. **A full new-engine build takes 90 seconds with `--out C:\TFR\live`** (SSD) against an hour on
      F: - the user play-tested from there this time. Check the running javaw's `-jar` path before packaging into
      either folder.
   9. Older small items: `dev-tools/art-import/art_convert_generic.py` still assumes right-facing art and cuts a wide
@@ -194,6 +201,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 256 (2026-09-20): **the obstacles standing inside a town's icon.** The sweep ran before the biomes'
+  structures and the roads were stamped, so it cleared nothing that lasted (the log's honest "0 removed" while a
+  boulder sat against Orazca). It runs last now, sized to each POI's icon, zeroing only collision/structure cells,
+  and once per existing save on load. Plus: the dueling club, Valor's Reach Arena, the Naktamun gym and debug_map
+  are frozen again (39 enemies, `threatRange -1`), and the seven town quests pay 2 rares instead of 4.
 - Round 255 (2026-09-20): **the opening reads as one story, and four corrections from play.** Quest 53 stage 3
   "Find the Warden at Orazca" now issues the Ring quest, so the Warden's move into the ruin is part of the main
   line instead of a dead end. The Capitol surge aims at the town nearest the player's Capitol (was "furthest"),

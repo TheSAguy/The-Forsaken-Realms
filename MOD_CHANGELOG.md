@@ -17757,6 +17757,49 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 256: the obstacles standing inside a town's icon, frozen set-pieces, and half the rares (2026-09-20)
+
+**"I see that rock still there, and it's colliding."** The user, with three screenshots - a boulder against
+Orazca's ruined gate, dead trees planted on two castles - after round 255 claimed to have cleared the ground.
+Their log had already admitted it: `[TFR-Orazca] cleared the ground within 6 tiles of (350,350) - 0 colliding
+tile(s) removed`. **My ordering was wrong.** The sweep ran immediately after POI placement, and `generateNew()`
+stamps each biome's own structures - the rocks, the craters, the dead trees - and lays the roads AFTERWARDS. Every
+obstacle it cleared was put straight back, and the count was honestly zero because at that moment nothing
+collided.
+
+It now runs **last** in `generateNew()`, after the structure pass and the road pass, and nothing writes
+`terrainMap` after it. Two more changes came with the move:
+
+- **Sized to the icon,** which is what the user asked for ("just the stuff that basically falls within the town
+  icon radius"): half the POI's own sprite in tiles plus a two-tile margin, so a 64x64 town sweeps 4 tiles, a
+  48x48 one 3, a castle by its own art, and Orazca keeps 6.
+- **It removes obstacles, not ground.** A cell is zeroed only when it carries a collision or structure bit -
+  exactly the test the road pass uses to cut a path - so roads, plain ground and the settlement's own tiles are
+  untouched. `[TFR-ClearGround] N town/capital/castle site(s) swept ... M colliding obstacle(s) removed`.
+- **Existing saves get it too** (round 256b): the sweep is a generation step, so a world made before today would
+  have kept its boulder forever. `World.load()` runs it once per save and remembers with a persisted
+  `obstaclesSwept` flag - the same shape as round 249's one-time map-icon re-bake.
+
+**"#4 - Freeze them again."** Round 252 gave every rangeless enemy a reaction radius and round 253 exempted the
+ones carrying dialog; the user has now asked for the four set-piece maps to go back to standing still, since the
+dueling club and the arena are places you CHOOSE your fights. 39 enemies get `threatRange = -1`, which
+`MapStage.applyDefaultReactionRange()` reads as "this one really never reacts": `Planeswalker_Dueling_Club` 13,
+`Valors_Reach_Arena` 7, `naktamun/gym` 7, `debug_map` 12. Two enemies in those maps carry an AUTHORED positive
+range and were left exactly as they are - an author who set one meant it.
+
+**"Eight-card town quests - Trim the Rares to 2 vs. 4."** Each of the seven (ids 10-16) paid, per completion, two
+GUARANTEED rares (one `Rare` entry of count 2) plus two more at 50% (two `Rare`/`Mythic Rare` entries of count 1),
+alongside two uncommons and two any-rarity - the "4 rare" of the notes. The two coin-flips are gone; the
+guaranteed pair, the uncommons and the any-rarity cards are untouched. 16 blocks removed (quest 10 carries the
+package on both of its epilogue branches), a 180-line diff with no reformatting - `quests.json` round-trips
+byte-identically through `json.dumps(indent="\t")`, which is what made a structural edit safe.
+
+**Seen in the user's own world.** Their save 3 was loaded in the agent game on this build: the boulder that stood
+against Orazca's gate in their screenshot is gone, the rocks and dead trees further out are untouched, and the
+ground around the ruin is clear in every direction - the load-time sweep doing exactly what generation now does.
+
+Checked: `javac` + checkstyle clean, the plane validator clean, all four set-piece maps re-parsed as XML.
+
 ## Round 255: the opening reads as one story, and four corrections from play (2026-09-20)
 
 **The main quest's opening.** User: *"I think we need to tweak the main quest start. - After leaving the cave, go

@@ -97,7 +97,7 @@
     <property name="enemy" value="Venser"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="76,66"/>
    </properties>
   </object>
@@ -116,6 +116,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
   </object>
   <object id="88" template="../../../../common/maps/obj/enemy.tx" x="332" y="118.5">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="dialog">[
 	{
 		&quot;name&quot;: &quot;&quot;,
@@ -173,7 +174,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="enemy" value="Sifa Grent"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="75,65"/>
    </properties>
   </object>
@@ -191,7 +192,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="enemy" value="Freyalise"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="77,68"/>
    </properties>
   </object>
@@ -209,7 +210,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="enemy" value="Sivitri"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="78,67"/>
    </properties>
   </object>
@@ -227,7 +228,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="enemy" value="Worzel"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="84,81"/>
    </properties>
   </object>
@@ -245,7 +246,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="enemy" value="Thomil"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="83,82"/>
    </properties>
   </object>
@@ -265,7 +266,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="84,81"/>
    </properties>
   </object>
@@ -285,7 +286,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="83,82"/>
    </properties>
   </object>
@@ -305,7 +306,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="77,68"/>
    </properties>
   </object>
@@ -325,7 +326,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="78,67"/>
    </properties>
   </object>
@@ -345,7 +346,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="76,66"/>
    </properties>
   </object>
@@ -365,7 +366,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="waypoints" value="75,65"/>
    </properties>
   </object>

@@ -2719,30 +2719,6 @@
 							"grantRewards": [
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Green"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Green"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"colors": [
 										"Green"
@@ -2794,30 +2770,6 @@
 					"action": [
 						{
 							"grantRewards": [
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Green"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Green"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
 								{
 									"type": "card",
 									"count": 2,
@@ -3032,15 +2984,6 @@
 								},
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"rarity": [
 										"Uncommon"
@@ -3051,15 +2994,6 @@
 									"count": 2,
 									"rarity": [
 										"Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
 									]
 								},
 								{
@@ -3251,18 +3185,6 @@
 								},
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"White"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"colors": [
 										"White"
@@ -3279,18 +3201,6 @@
 									],
 									"rarity": [
 										"Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"White"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
 									]
 								},
 								{
@@ -3652,18 +3562,6 @@
 								},
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Black"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"colors": [
 										"Black"
@@ -3680,18 +3578,6 @@
 									],
 									"rarity": [
 										"Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Black"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
 									]
 								},
 								{
@@ -4002,18 +3888,6 @@
 								},
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Red"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"colors": [
 										"Red"
@@ -4030,18 +3904,6 @@
 									],
 									"rarity": [
 										"Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Red"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
 									]
 								},
 								{
@@ -4259,18 +4121,6 @@
 								},
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Blue"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"colors": [
 										"Blue"
@@ -4287,18 +4137,6 @@
 									],
 									"rarity": [
 										"Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"colors": [
-										"Blue"
-									],
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
 									]
 								},
 								{
@@ -4511,15 +4349,6 @@
 								},
 								{
 									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
-									]
-								},
-								{
-									"type": "card",
 									"count": 2,
 									"rarity": [
 										"Uncommon"
@@ -4530,15 +4359,6 @@
 									"count": 2,
 									"rarity": [
 										"Rare"
-									]
-								},
-								{
-									"type": "card",
-									"probability": 0.5,
-									"count": 1,
-									"rarity": [
-										"Rare",
-										"Mythic Rare"
 									]
 								},
 								{

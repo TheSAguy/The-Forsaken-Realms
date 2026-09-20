@@ -182,36 +182,43 @@
  <objectgroup id="4" name="Enemies" locked="1">
   <object id="12" template="../../../../common/maps/obj/enemy.tx" name="Falcon-headed Aven Initiate" x="592" y="320">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Falcon-headed Aven Warrior"/>
    </properties>
   </object>
   <object id="13" template="../../../../common/maps/obj/enemy.tx" name="Ibis-headed Aven Initiate" x="592" y="272">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Ibis-headed Aven Warrior"/>
    </properties>
   </object>
   <object id="14" template="../../../../common/maps/obj/enemy.tx" name="Minotaur Initiate" x="592" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Amonkhet Minotaur Warrior"/>
    </properties>
   </object>
   <object id="15" template="../../../../common/maps/obj/enemy.tx" name="Khenra Initiate" x="752" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Khenra Warrior"/>
    </properties>
   </object>
   <object id="16" template="../../../../common/maps/obj/enemy.tx" name="Naga Initiate" x="752" y="272">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Naga Warrior"/>
    </properties>
   </object>
   <object id="17" template="../../../../common/maps/obj/enemy.tx" name="Human Initiate" x="752" y="320">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Warrior"/>
    </properties>
   </object>
   <object id="18" template="../../../../common/maps/obj/enemy.tx" name="Anointed" x="672" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Mummy"/>
    </properties>
   </object>

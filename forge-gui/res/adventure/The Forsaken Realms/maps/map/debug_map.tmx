@@ -41,6 +41,7 @@
   <object id="47" template="../../../common/maps/obj/gold.tx" x="48" y="352"/>
   <object id="50" template="../../../common/maps/obj/enemy.tx" x="128" y="192" width="64" height="64">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: -25,
  &quot;opponent&quot;:{
@@ -95,6 +96,7 @@
   </object>
   <object id="80" template="../../../common/maps/obj/enemy.tx" x="112" y="304">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="defeatDialog">[
   {
     &quot;text&quot;:&quot;Impressive...&quot;,
@@ -203,6 +205,7 @@
   </object>
   <object id="81" template="../../../common/maps/obj/enemy.tx" x="64" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="dialog">[
   {
     &quot;text&quot;: &quot;You...you hurt Grog!\nYou...you filthy swine! I will stop at nothing until I see you defeated!\nGods...anyone! Grant me strength! Grant me REVENGE!!!!&quot;,
@@ -237,6 +240,7 @@
   </object>
   <object id="82" template="../../../common/maps/obj/enemy.tx" gid="2147495067" x="48" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="dialog">[
   {
     &quot;text&quot;:&quot;...&quot;,
@@ -252,6 +256,7 @@
   <object id="83" template="../../../common/maps/obj/gate.tx" type="dummy" gid="3651" x="80" y="336" width="16" height="16"/>
   <object id="84" template="../../../common/maps/obj/enemy.tx" x="336" y="304">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="dialog">[
   {
     &quot;text&quot;:&quot;I have some things to offer for that life you have...&quot;,
@@ -346,6 +351,7 @@
   </object>
   <object id="88" template="../../../common/maps/obj/enemy.tx" x="48" y="400">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Geist"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Hard" type="bool" value="true"/>
@@ -353,6 +359,7 @@
   </object>
   <object id="89" template="../../../common/maps/obj/enemy.tx" x="48" y="416">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Geist"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="false"/>
@@ -360,6 +367,7 @@
   </object>
   <object id="93" template="../../../common/maps/obj/enemy.tx" x="304" y="400">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Geist"/>
     <property name="reward" value=""/>
     <property name="spawn.Easy" type="bool" value="true"/>
@@ -380,6 +388,7 @@
   <object id="91" template="../../../common/maps/obj/treasure.tx" x="32" y="384"/>
   <object id="94" template="../../../common/maps/obj/enemy.tx" x="400" y="240">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="dialog">[
   {
     &quot;text&quot;:&quot;*glub*\n(According to your Fish to English dictionary, he's greeting you)&quot;,
@@ -406,11 +415,13 @@
   </object>
   <object id="95" template="../../../common/maps/obj/enemy.tx" x="288" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Doppelganger"/>
    </properties>
   </object>
   <object id="96" template="../../../common/maps/obj/enemy.tx" x="304" y="224">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Doppelganger"/>
    </properties>
   </object>
@@ -433,6 +444,7 @@
   </object>
   <object id="101" template="../../../common/maps/obj/enemy.tx" x="128" y="400">
    <properties>
+    <property name="threatRange" type="int" value="-1"/>
     <property name="enemy" value="Plague Rat Swarm"/>
    </properties>
   </object>
