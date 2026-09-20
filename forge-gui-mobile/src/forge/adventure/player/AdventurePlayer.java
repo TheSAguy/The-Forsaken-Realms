@@ -795,6 +795,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         // a run that skips the intro is handed its starting kit again. (The quest 28 "Been here, done
         // that (New Game+)" branch this comment used to name was folded into "Skip the introduction" in
         // round 76.)
+        // Round 253 (user: "I want to confirm that the player can only partake in one Jumpstart tournament. Even
+        // if they do NG+, if they have done one before, they should not get another one."): jumpstartPlayed is the
+        // ONE character flag that outlives a run. Round 118 made the Jumpstart gate once-per-run by setting it when
+        // the event starts, but this wipe cleared it, so every New Game+ was offered another one. Read before the
+        // clear, written back after the newGamePlus flag below.
+        int jumpstartPlayed = getCharacterFlag("jumpstartPlayed");
         characterFlags.clear();
         events.clear();
         AdventureQuestController.clear();
@@ -804,6 +810,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         forge.adventure.util.ResourceLedger.reset(ledger);
         statistic.clear();
         setCharacterFlag("newGamePlus", 1);
+        if (jumpstartPlayed > 0) { // round 253: one Jumpstart per player, across every New Game+
+            setCharacterFlag("jumpstartPlayed", jumpstartPlayed);
+            System.out.println("[TFR-Jumpstart] New Game+ keeps jumpstartPlayed=" + jumpstartPlayed
+                    + " - one Jumpstart tournament per player, not per run");
+        }
 
         // ---- per-run combat / buff state ----------------------------------------------------
         blessing = null;
@@ -850,7 +861,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 + " | RESEEDED shopTypes(" + unlockedShopTypes.size() + ")=" + new java.util.TreeSet<>(unlockedShopTypes)
                 + " editions(" + unlockedEditions.size() + ")=" + new java.util.TreeSet<>(unlockedEditions)
                 + " colorRepEntries=" + colorReputationHalfPoints.size() + "(reseeded from the deck)"
-                + " | CLEARED characterFlags=" + characterFlags.size() + "(expect 1: newGamePlus)"
+                + " | CLEARED characterFlags=" + characterFlags.size() + "(expect 1, or 2 with a kept jumpstartPlayed)"
                 + " events=" + events.size()
                 + " coinRansomMarks=" + coinRansomedEnemies.size()
                 + " blessing=" + (blessing == null ? "null" : "SET(LEAK)")

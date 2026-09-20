@@ -2779,6 +2779,23 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 253 (2026-09-19) - adventure-side only
+
+`world/World.java` - the star's spokes radiate from Orazca (campfire fallback), and Orazca is exempt from
+`isOrdinaryTownData()`/`isRingOrSpawnTown()`. `util/TownRestoration.java` - `ORAZCA_POI_NAME`, `isOrazca()`,
+`findOrazca()`, `findHome()`; Orazca skipped by `migrateGenericTownNames()` and `seedFunctioningNeutralTowns()`;
+the Capitol upgrade is offered at Orazca alone. `util/TerritoryControl.java` - `findAttackableTowns()` skips Orazca.
+`stage/GameStage.java` - `resetPlayerLocation()` uses `findHome()`. `stage/ConsoleCommandInterpreter.java` -
+"teleport home" is one position-only branch on `findHome()`. `stage/MapStage.java` - `applyDefaultReactionRange()`
+returns early for an enemy with a dialog (round 252 correction). Plane data: `points_of_interest.json` (new Orazca
+POI, the cave's offsets), `biomes/colorless.json`, `quests.json` (28/43/52), `items.json` (rune + five keys),
+new `maps/map/towns/orazca.tmx`, `maps/map/main_story/spawn.tmx`.
+
+`data/AdventureEventData.java` + `util/AdventureEventController.java` + `player/AdventurePlayer.java` -
+`jumpstartPlayed` survives `resetForNewGamePlus()` (one Jumpstart per player, round 253c).
+`scene/RewardScene.java` - the card row is clamped to its card region so it cannot cover the shop's buttons
+(round 253d, Android). `world/World.java` - the spawn POI is inactive and out of the road pass on an Orazca plane.
+
 ## Round 252 (2026-09-19) - adventure-side only
 
 `stage/MapStage.java` - `loadObjects()` reads `pursueRange` under its OWN key (stock tested `threatRange`, an NPE

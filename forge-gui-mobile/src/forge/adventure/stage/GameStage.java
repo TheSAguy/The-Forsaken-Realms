@@ -843,7 +843,9 @@ public abstract class GameStage extends Stage {
     }
 
     public void resetPlayerLocation() {
-        PointOfInterest poi = Current.world().findPointsOfInterest("Spawn");
+        // Round 253: home, not the cave the game began in - the Capitol once it stands, else Orazca at the centre
+        // of the star (pre-253 worlds have neither and fall back to "Spawn", which is what this always was).
+        PointOfInterest poi = forge.adventure.util.TownRestoration.findHome();
         if (poi != null) {
             Forge.advFreezePlayerControls = true;
             PlayerSprite playerSprite = getPlayerSprite();

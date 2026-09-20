@@ -7050,7 +7050,7 @@
 				},
 				{
 					"name": "Skip the introduction - straight to building your Capitol",
-					"text": "You have walked this ash before. The stasis sloughs away and the cave mouth stands open - no lecture required. What matters has not changed: five rivals hold five castles, the five Ring Cities around your fire owe you their gifts, and the realm answers to whoever plants a banner first. Take what the Ring owes you and go build your Capitol.",
+					"text": "You have walked this ash before. The stasis sloughs away and the cave mouth stands open - no lecture required. What matters has not changed: five rivals hold five castles, the five Ring Cities around Orazca's ruin owe you their gifts, and the realm answers to whoever plants a banner first. Take what the Ring owes you and go build your Capitol.",
 					"options": [
 						{
 							"name": "(Continue)",
@@ -7077,7 +7077,7 @@
 									"issueQuest": "43"
 								},
 								{
-									"runCommand": "teleport to poi Spawn"
+									"runCommand": "teleport home"
 								},
 								{
 									"grantRingGift": "all"
@@ -9363,7 +9363,7 @@
 			"options": [
 				{
 					"name": "(Continue)",
-					"text": "And the Five have noticed. Their colors press harder against your borders; their wizards march with real intent now. The Warden's counsel arrives by messenger: \"You are no longer merely awake, Guardian - you are a rival. Come see me at the cave when you are ready to speak of the Seals.\"",
+					"text": "And the Five have noticed. Their colors press harder against your borders; their wizards march with real intent now. The Warden's counsel arrives by messenger: \"You are no longer merely awake, Guardian - you are a rival. Come and find me in Orazca when you are ready to speak of the Seals.\"",
 					"options": [
 						{
 							"action": [
@@ -9388,18 +9388,18 @@
 		"stages": [
 			{
 				"id": 1,
-				"name": "Raise Orazca - build your Capitol",
-				"description": "Upgrade one of your restored towns into your Capitol at its Job Board.",
+				"name": "Raise Orazca - restore the ruin and crown it",
+				"description": "Restore Orazca at the heart of the star, then upgrade it to your Capitol at its Job Board.",
 				"anyPOI": true,
 				"worldMapOK": true,
 				"POITags": [
-					"Town"
+					"Orazca"
 				],
 				"mapFlag": "capitolBuilt",
 				"mapFlagValue": 1,
 				"objective": "CharacterFlag",
 				"prologue": {
-					"text": "Choose your seat carefully - any of your restored towns can become Orazca reborn. Speak at its Job Board and pay the cost (gold, wood, stone, and shards). A Capitol grants buildings no ordinary town can offer... and losing it ends your reign, so choose ground you can hold.",
+					"text": "There is only one seat, and you have already seen it: Orazca, the ruin at the centre of the star, where you first walked out of the stone. Restore it as you would any ruined town, hold five towns in all, then speak at its Job Board and pay the cost (gold, wood, stone, and shards). A Capitol grants buildings no ordinary town can offer... and losing it ends your reign, so raise what you can hold.",
 					"options": [
 						{
 							"name": "(Continue)"
@@ -11444,11 +11444,11 @@
 			{
 				"id": 11,
 				"name": "Get Some Answers",
-				"description": "Return to the spawn point at the center of the wastes and speak to the mage there.",
+				"description": "Return to Orazca at the center of the wastes and speak to the Warden there.",
 				"mapFlag": "mainQuest",
 				"mapFlagValue": 3,
 				"POITags": [
-					"Spawn"
+					"Orazca"
 				],
 				"objective": "QuestFlag",
 				"prerequisiteIDs": [

@@ -1086,6 +1086,25 @@ public class RewardScene extends UIScene {
         }
         cardWidth = (cardHeight / CARD_WIDTH_TO_HEIGHT) * mul;
 
+        // Round 253 (Android report: "When trying to research/do upgrades, you need to buy the items in the way
+        // before you can access it on android"). The loop above chose rows/columns to FIT - its own test is
+        // `cols * cardWidth < targetWidth` - but the device-aspect multiplier is applied here, AFTER that, and on
+        // a tall portrait display it reaches 1.6x. A row wider than the region it is centered in makes the xOff
+        // below negative, and the cards spill out of the card region over the shop's own button column (Upgrade
+        // Armory, Expand Inventory, Storage, Re-roll), swallowing their taps. The reporter's workaround - the
+        // rewardCardAdj size setting - works because it replaces `mul` outright. Shrink back into the region,
+        // keeping the card aspect; where the row already fits this changes nothing.
+        float rowWidth = cardWidth * numberOfColumns;
+        if (rowWidth > targetWidth && rowWidth > 0f) {
+            float shrink = targetWidth / rowWidth;
+            cardWidth *= shrink;
+            cardHeight *= shrink;
+            System.out.println("[TFR-RewardGrid] " + numberOfColumns + " card column(s) overflowed the "
+                    + String.format("%.0f", targetWidth) + "px card region by "
+                    + String.format("%.0f", rowWidth - targetWidth) + "px - shrunk to fit (x"
+                    + String.format("%.2f", shrink) + ") so the shop's buttons stay reachable");
+        }
+
         yOff += (targetHeight - (cardHeight * numberOfRows)) / 2f;
         xOff += (targetWidth - (cardWidth * numberOfColumns)) / 2f;
 
@@ -1137,6 +1156,7 @@ public class RewardScene extends UIScene {
             }
             i++;
         }
+        liftModButtonsAboveCards(); // round 253 (Android): see the method
         if (type == Type.Shop) {
             updateBuyButtons();
             updateRestockButton();
@@ -1150,6 +1170,25 @@ public class RewardScene extends UIScene {
             // tile looked clickable and silently did nothing when tapped. Mirrors the Shop
             // case's updateBuyButtons() call immediately above.
             updateChooseRewardButtons();
+        }
+    }
+
+    /**
+     * Round 253, Android report ("When trying to research/do upgrades, you need to buy the items in the way before
+     * you can access it on android"). The card actors are added with stage.addActor() AFTER the ui group, so they
+     * draw on top of everything in `ui` and swallow its touches - and in PORTRAIT the shop's own buttons are inside
+     * the card area by layout: items_portrait.json gives the cards x 5..265 of 270 and puts `detail` at x 140..268
+     * inside them, which is where placeModButton() stacks Upgrade Armory / Manage Guards / Re-roll / Storage /
+     * Buy Blueprint / Destroy. Re-parenting the visible ones to the stage once the cards exist puts them last in
+     * draw order, above the cards. Their positions do not change: UIActor is an unscaled group at the origin, so
+     * its coordinate space and the stage's are the same one. In landscape nothing overlaps in the first place
+     * (cards x 5..410 of 480, buttons at x 420), so this is a no-op there.
+     */
+    private void liftModButtonsAboveCards() {
+        for (TextraButton button : new TextraButton[]{destroyButton, guardsButton, upgradeButton, rerollButton,
+                shopTypeRerollButton, buyBlueprintButton, storageButton}) {
+            if (button != null && button.isVisible())
+                stage.addActor(button); // addActor re-parents: it removes the actor from `ui` first
         }
     }
 

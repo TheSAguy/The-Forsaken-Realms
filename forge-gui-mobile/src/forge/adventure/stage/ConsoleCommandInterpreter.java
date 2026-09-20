@@ -164,32 +164,21 @@ public class ConsoleCommandInterpreter {
             }, ScreenUtil.getInstance().takeScreenshot())));
             return "Teleported to " + s[0] + "(" + poi.getPosition() + ")";
         });
-        // Colorless rune (MOD_CHANGELOG.md 2026-08-22, user request: "take you to the spawn area,
-        // until you have a Capitol, then take you to just outside the cap"). Before a Capitol
-        // exists, reproduces the item's original "teleport to poi Spawn" behavior exactly (enters
-        // Spawn's interior). Once TownRestoration.capitolExists(), goes to the Capitol instead -
-        // deliberately position-only (no loadPOI(), same as the raw "teleport to X Y" command
-        // above) so the player lands just outside the Capitol on the overworld rather than being
-        // dropped inside it, per the user's explicit "just outside" wording.
+        // Homeward rune (MOD_CHANGELOG.md 2026-08-22, user request: "take you to the spawn area,
+        // until you have a Capitol, then take you to just outside the cap"). Round 253 (user: "So the
+        // homeward ruin will basically work like it has once you have a capitol from the start"): there
+        // IS a home from the first minute now - Orazca, the ruin at the centre of the star - so the two
+        // halves collapse into one. Always position-only (no loadPOI(), same as the raw "teleport to X Y"
+        // command above): the player lands just outside home on the overworld rather than being dropped
+        // inside it, per the user's original "just outside" wording. findHome() falls back to the spawn
+        // cave for a world generated before round 253, which is where this used to go.
         registerCommand(new String[]{"teleport", "home"}, s -> {
-            PointOfInterest capitol = TownRestoration.findCapitol();
-            if (capitol == null) {
-                PointOfInterest spawn = Current.world().findPointsOfInterest("Spawn");
-                if (spawn == null)
-                    return "PoI Spawn not found";
-
-                Forge.advFreezePlayerControls = true;
-                FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new CoverScreen(() -> {
-                    Forge.advFreezePlayerControls = false;
-                    WorldStage.getInstance().setPosition(new Vector2(spawn.getPosition().x - 16f, spawn.getPosition().y + 16f));
-                    WorldStage.getInstance().loadPOI(spawn);
-                    Forge.clearTransitionScreen();
-                }, ScreenUtil.getInstance().takeScreenshot())));
-                return "Teleported to Spawn(" + spawn.getPosition() + ")";
-            }
-            WorldStage.getInstance().setPosition(new Vector2(capitol.getPosition().x - 16f, capitol.getPosition().y + 16f));
+            PointOfInterest home = TownRestoration.findHome();
+            if (home == null)
+                return "No home to return to";
+            WorldStage.getInstance().setPosition(new Vector2(home.getPosition().x - 16f, home.getPosition().y + 16f));
             WorldStage.getInstance().player.playEffect(Paths.EFFECT_TELEPORT, 10);
-            return "Teleported outside the Capitol(" + capitol.getPosition() + ")";
+            return "Teleported outside " + home.getDisplayName() + "(" + home.getPosition() + ")";
         });
         // Rally rune (round 122, user request 2026-09-05): "teleport rally" carries the player just
         // outside the next player town under attack - TerritoryControl.nextRallyTarget() cycles

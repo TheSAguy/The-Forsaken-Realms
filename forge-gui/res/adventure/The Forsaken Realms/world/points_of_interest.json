@@ -3721,6 +3721,25 @@
 		]
 	},
 	{
+		"name": "Orazca",
+		"displayName": "Orazca",
+		"type": "town",
+		"count": 1,
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/center_towns.atlas",
+		"sprite": "CenterTownNeutral",
+		"map": "../The Forsaken Realms/maps/map/towns/orazca.tmx",
+		"radiusFactor": 0,
+		"questTags": [
+			"Story",
+			"Town",
+			"TownGeneric",
+			"BiomeColorless",
+			"Sidequest",
+			"QuestSource",
+			"Orazca"
+		]
+	},
+	{
 		"name": "Spawn",
 		"displayName": "Secluded Encampment",
 		"type": "town",
@@ -3728,6 +3747,9 @@
 		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
 		"sprite": "Spawn",
 		"map": "../The Forsaken Realms/maps/map/main_story/spawn.tmx",
+		"radiusFactor": 0,
+		"offsetX": 0.005697,
+		"offsetY": 0.007277,
 		"questTags": [
 			"Story",
 			"Spawn",

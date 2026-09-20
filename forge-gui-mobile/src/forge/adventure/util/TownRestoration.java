@@ -61,6 +61,10 @@ public class TownRestoration {
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             if (!isWastelandTown(poi.getData()))
                 continue;
+            if (isOrazca(poi.getData())) { // round 253: named in the plane data, never from the waste pool
+                usedNames.add(poi.getDisplayName());
+                continue;
+            }
             if (poi.getDisplayName().equals(poi.getData().name))
                 needRename.add(poi);
             else
@@ -120,7 +124,8 @@ public class TownRestoration {
     public static void seedFunctioningNeutralTowns(forge.adventure.world.World world) {
         java.util.List<PointOfInterest> candidates = new java.util.ArrayList<>();
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
-            if (isWastelandTown(poi.getData()))
+            // Round 253: never Orazca. It is the ruin the story asks the player to raise - it has to BE a ruin.
+            if (isWastelandTown(poi.getData()) && !isOrazca(poi.getData()))
                 candidates.add(poi);
         }
         // Round 241 (user: "Normal: - 1 Neutral (fixed) town ... Hard: - 2 ... Insane: - 3"): fewer on the
@@ -782,6 +787,40 @@ public class TownRestoration {
     // Capitol "Orazca" - bigger castle-sized icon, its own 40x40 player_capital.tmx layout.
     // (The earlier Rename-town option was dropped the same day per user - names showing in
     // messages/map made it unnecessary.)
+    /**
+     * Round 253 (user: "The name should be Orazca for the ruin. Same gate. Once the player has restored 5 towns
+     * (including Orazca), they can come back and upgrade it"). Orazca is the ruined town at the exact centre of
+     * the star - the first town the player restores, the only one the Capitol can be raised from, and where the
+     * Warden waits once the player walks out of the spawn cave. Its data name doubles as its POI tag.
+     * <p>
+     * Worlds generated before round 253 have no Orazca POI at all: every lookup here returns null for them and
+     * the pre-253 behavior stands (home is the spawn cave, any restored town can be upgraded).
+     */
+    public static final String ORAZCA_POI_NAME = "Orazca";
+
+    public static boolean isOrazca(PointOfInterestData data) {
+        return data != null && ORAZCA_POI_NAME.equals(data.name);
+    }
+
+    public static PointOfInterest findOrazca() {
+        for (PointOfInterest poi : WorldSave.getCurrentSave().getWorld().getAllPointOfInterest()) {
+            if (isOrazca(poi.getData()))
+                return poi;
+        }
+        return null;
+    }
+
+    /** Where "home" is: the Capitol once it stands, else Orazca, else - only in a pre-253 world - the spawn cave.
+     *  The Homeward rune and death respawn both ask this. */
+    public static PointOfInterest findHome() {
+        PointOfInterest home = findCapitol();
+        if (home == null)
+            home = findOrazca();
+        if (home == null)
+            home = WorldSave.getCurrentSave().getWorld().findPointsOfInterest("Spawn");
+        return home;
+    }
+
     public static final String CAPITOL_POI_NAME = "Player Capitol";
     // 2026-08-12 user cost table: 1000 gold + 100 stone + 100 wood + 50 shards.
     // Wood/Stone components halved 2026-08-21 (v1.00 feedback round) - gold/shards untouched.
@@ -817,7 +856,20 @@ public class TownRestoration {
             openQuestBoard.run();
         })).width(240f).row();
         boolean isCapitolItself = point != null && CAPITOL_POI_NAME.equals(point.getData().name);
-        if (!isCapitolItself && !capitolExists()) {
+        // Round 253 (user: "Only town that can become your capitol ... Same gate"): the gate itself is unchanged -
+        // CAPITOL_TOWNS_REQUIRED owned towns, Orazca among them, and the same resource cost - but the upgrade is
+        // offered at Orazca alone. Every other town says so rather than showing nothing, so a player carrying the
+        // cost around knows where to take it. A world generated before round 253 has no Orazca: there, any
+        // restored town still upgrades, exactly as it did.
+        boolean orazcaSeat = findOrazca() != null;
+        boolean seatIsHere = !orazcaSeat || (point != null && isOrazca(point.getData()));
+        if (!isCapitolItself && !capitolExists() && !seatIsHere) {
+            com.github.tommyettinger.textra.TextraButton elsewhere = Controls.newTextButton(
+                    "Upgrade to Capitol (only at Orazca)", () -> {});
+            elsewhere.setDisabled(true);
+            dialog.getButtonTable().add(elsewhere).width(240f).row();
+        }
+        if (!isCapitolItself && !capitolExists() && seatIsHere) {
             int owned = countPlayerTowns();
             if (owned < CAPITOL_TOWNS_REQUIRED) {
                 com.github.tommyettinger.textra.TextraButton needMore = Controls.newTextButton(

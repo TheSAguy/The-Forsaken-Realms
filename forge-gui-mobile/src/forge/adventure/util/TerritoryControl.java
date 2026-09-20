@@ -2022,6 +2022,12 @@ public class TerritoryControl {
         List<PointOfInterest> towns = new ArrayList<>();
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             PointOfInterestData data = poi.getData();
+            // Round 253: Orazca is not a prize on this board. Ruined, it is the seat the story promises the
+            // player; restored, it is the one town the Capitol can rise from. Once it IS the Capitol its data
+            // name is "Player Capitol" and it becomes an ordinary target again, under the weekly lockout below -
+            // which is also why no capture path has to cope with a town name that has no " Town " in it.
+            if (TownRestoration.isOrazca(data))
+                continue;
             if (TownRestoration.isWastelandTown(data)) {
                 towns.add(poi);
                 continue;

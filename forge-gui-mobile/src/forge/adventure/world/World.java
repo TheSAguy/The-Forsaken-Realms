@@ -445,10 +445,12 @@ public class World implements Disposable, SaveFileContent {
     public java.util.Set<String> getCapitolLostColors() { return capitolLostColors; }
     public boolean isRingVisited(int tileX, int tileY) { return ringVisitedTiles.contains(tileX + "," + tileY); }
     public boolean markRingVisited(int tileX, int tileY) { return ringVisitedTiles.add(tileX + "," + tileY); }
-    /** Center Towns (MOD_SCOPE #102): ordinary towns (not Spawn, not the star towns themselves) are kept
-     *  out of the star's disc - see the placement loop in generateNew(). */
+    /** Center Towns (MOD_SCOPE #102): ordinary towns (not Spawn, not Orazca, not the star towns themselves) are
+     *  kept out of the star's disc - see the placement loop in generateNew(). Round 253: Orazca sits at the exact
+     *  centre of that disc, so it has to be exempt from its own rule or it could never place. */
     private static boolean isOrdinaryTownData(PointOfInterestData d) {
-        return d != null && "town".equals(d.type) && d.name != null && !"Spawn".equals(d.name) && !d.name.startsWith("Waste Town Center");
+        return d != null && "town".equals(d.type) && d.name != null && !"Spawn".equals(d.name)
+                && !TownRestoration.ORAZCA_POI_NAME.equals(d.name) && !d.name.startsWith("Waste Town Center");
     }
 
     // Round 241 (user: "World Gen: Reduce the number of Neutral towns / Ruined towns per difficulty"). The
@@ -577,10 +579,12 @@ public class World implements Disposable, SaveFileContent {
         }
         return reached;
     }
-    /** Round 100: Ring Cities and Spawn are exempt from the world-gen link rules (their star roads are explicit). */
+    /** Round 100: Ring Cities and Spawn are exempt from the world-gen link rules (their star roads are explicit).
+     *  Round 253: so is Orazca, the star's hub - the spokes below are its roads. */
     private static boolean isRingOrSpawnTown(PointOfInterest t) {
         PointOfInterestData d = t.getData();
-        return d != null && d.name != null && ("Spawn".equals(d.name) || d.name.contains(" Town Center"));
+        return d != null && d.name != null && ("Spawn".equals(d.name) || d.name.contains(" Town Center")
+                || TownRestoration.ORAZCA_POI_NAME.equals(d.name));
     }
     private static boolean roadLinkFull(List<PointOfInterest> towns, int[] degree, int idx, int maxLinks) {
         return !isRingOrSpawnTown(towns.get(idx)) && degree[idx] >= maxLinks;
@@ -1479,6 +1483,9 @@ public class World implements Disposable, SaveFileContent {
             final int[] highAttemptPlacements = {0};
             final int[] totalPlacements = {0};
             final int HIGH_ATTEMPT_THRESHOLD = 50;
+            // Round 253: does this plane put Orazca at the centre of the star? (See the "Spawn" case below.)
+            final boolean orazcaHoldsTheCentre =
+                    PointOfInterestData.getPointOfInterest(TownRestoration.ORAZCA_POI_NAME) != null;
             here:
             while (running) {
                 mapPoiIds = new PointOfInterestMap(getChunkSize(), data.tileSize, data.width / getChunkSize(), data.height / getChunkSize());
@@ -1619,7 +1626,20 @@ public class World implements Disposable, SaveFileContent {
                                             newPoint.setDisplayName(poi.getDisplayName());
                                         }
                                     }
-                                    towns.add(newPoint);
+                                    // Round 253 (user, watching the agent game: "I don't want the camp fire at all.
+                                    // The ruin should be dead center of the map, no fire"): where Orazca holds the
+                                    // centre, the spawn cave is not a place on the map. It still opens every new game
+                                    // - WorldStage.enterSpawnPOI() finds it by name and loadPOI() ignores getActive()
+                                    // - but inactive hides it everywhere the flag is honored (overworld sprite, world
+                                    // map and minimap markers, entry collision, quest targets), and keeping it out of
+                                    // `towns` stops the road pass drawing a stub to a cave nobody can see. Guarded on
+                                    // Orazca existing: "Spawn" is also the start POI of Shandalar Old Border, Realm of
+                                    // Legends and Crystal Kingdoms, where it is an ordinary visible location.
+                                    if (orazcaHoldsTheCentre && "Spawn".equals(poi.name)) {
+                                        newPoint.setActive(false);
+                                    } else {
+                                        towns.add(newPoint);
+                                    }
                                 } else {
                                     notTowns.add(newPoint);
                                 }
@@ -1893,21 +1913,28 @@ public class World implements Disposable, SaveFileContent {
                 countRoadLink(towns, roadDegree, anyRoadLink, i, nearest);
                 rescuedTowns++;
             }
-            // Center Towns (MOD_SCOPE #102): a road from the campfire straight to each star town, drawn
-            // by the same pass as every other town road - the star's spokes.
-            PointOfInterest campfire = null;
+            // Center Towns (MOD_SCOPE #102): a road from the star's centre straight to each star town, drawn
+            // by the same pass as every other town road - the star's spokes. Round 253 (user: "Where the camp-fire
+            // is currently, should be a town ruin ... So it's the center of the world!"): the hub is Orazca, the
+            // ruin the player restores first and crowns later; the spawn cave still sits a few tiles off it and
+            // keeps its campfire, and stands in as the hub for any plane whose data has no Orazca.
+            PointOfInterest hub = null, campfire = null;
             List<PointOfInterest> starTowns = new ArrayList<>();
             for (PointOfInterest t : towns) {
                 if (t.getData() == null || t.getData().name == null)
                     continue;
-                if ("Spawn".equals(t.getData().name))
+                if (TownRestoration.ORAZCA_POI_NAME.equals(t.getData().name))
+                    hub = t;
+                else if ("Spawn".equals(t.getData().name))
                     campfire = t;
                 else if (t.getData().name.startsWith("Waste Town Center"))
                     starTowns.add(t);
             }
-            if (campfire != null)
+            if (hub == null)
+                hub = campfire;
+            if (hub != null)
                 for (PointOfInterest st : starTowns)
-                    allSortedTowns.add(Pair.of(campfire, st));
+                    allSortedTowns.add(Pair.of(hub, st));
             // ... and the star's rim: every Center Town joined to every other (user spec 2026-09-03),
             // ten edges for five towns - explicit pairs bypass maxRoadDistance like the spokes do.
             for (int a = 0; a < starTowns.size(); a++)

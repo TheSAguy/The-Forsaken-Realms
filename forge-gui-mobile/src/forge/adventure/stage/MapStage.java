@@ -1000,6 +1000,12 @@ public class MapStage extends GameStage {
      * Returns true when the default was applied, for the one summary line per map.
      */
     private boolean applyDefaultReactionRange(EnemySprite mob) {
+        // Round 253: never an NPC. EnemySprite.dialog "Overrides standard battle" - contact opens a conversation
+        // instead of a duel - and 43 of the 378 rangeless enemies round 252 found are exactly that: the Warden,
+        // the mages who hand out quests, the five castle bosses' heralds, the whole Skep village. Giving them a
+        // reaction radius would have them walk up to the player and fire their dialog unasked.
+        if (mob.dialog != null)
+            return false;
         if (mob.threatRange < 0) {
             mob.threatRange = 0;
             return false;

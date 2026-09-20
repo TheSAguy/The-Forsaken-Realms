@@ -58,7 +58,7 @@
                 &quot;options&quot;: [
                   {
                     &quot;name&quot;: &quot;(Continue)&quot;,
-                    &quot;text&quot;: &quot;Take this rune. If you ever need to get back to me, use it - it will carry you home to this fire, from anywhere in the realm. The realm waited three thousand years for you, Guardian; do not make it wait again.&quot;,
+                    &quot;text&quot;: &quot;Take this rune. It will carry you home from anywhere in the realm - and home is Orazca, the ruin at the heart of the star, a few hundred paces from this cave's mouth. That is where I will be. The realm waited three thousand years for you, Guardian; do not make it wait again.&quot;,
                     &quot;action&quot;: [
                       {
                         &quot;grantRewards&quot;: [
@@ -73,7 +73,7 @@
                     &quot;options&quot;: [
                       {
                         &quot;name&quot;: &quot;Thank you.&quot;,
-                        &quot;text&quot;: &quot;I will reopen the portal now. On the other side lie the ash-barrens of the Forsaken Realms - your realm, Guardian, grey as it is. Bring the color back.&quot;,
+                        &quot;text&quot;: &quot;I will reopen the portal now. On the other side lie the ash-barrens of the Forsaken Realms - your realm, Guardian, grey as it is. Walk to the broken stones you will see from the cave mouth: that was Orazca. I will be waiting there. Bring the color back.&quot;,
                         &quot;options&quot;: [
                           {
                             &quot;name&quot;: &quot;(Leave)&quot;,
@@ -83,7 +83,8 @@
                                   &quot;key&quot;: &quot;mainQuest&quot;,
                                   &quot;val&quot;: 1
                                 },
-                                &quot;activateMapObject&quot;: 78
+                                &quot;activateMapObject&quot;: 78,
+                                &quot;deleteMapObject&quot;: 69
                               }
                             ]
                           }
@@ -100,161 +101,33 @@
       {
         &quot;name&quot;: &quot;Goodbye.&quot;
       }
+    ],
+    &quot;condition&quot;: [
+      {
+        &quot;checkQuestFlag&quot;: &quot;mainQuest&quot;,
+        &quot;not&quot;: true
+      }
     ]
   },
   {
-    &quot;condition&quot;: [
-      {
-        &quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;,
-        &quot;getQuestFlag&quot;: {
-          &quot;key&quot;: &quot;Ch1CastlesComplete&quot;,
-          &quot;op&quot;: &quot;&lt;&quot;,
-          &quot;val&quot;: 5
-        }
-      }
-    ],
-    &quot;text&quot;: &quot;\&quot;{var=player_name}! I feel the Guardians' spell growing weaker! Defeat them all and you may save us yet.\&quot;&quot;,
+    &quot;text&quot;: &quot;The Warden has rolled up his maps and banked the fire. \&quot;Nothing is left for either of us in this hole, Guardian,\&quot; he says, shouldering his pack. \&quot;Orazca is a few hundred paces out - the broken stones at the heart of the star. Come and find me there.\&quot;&quot;,
     &quot;options&quot;: [
       {
-        &quot;name&quot;: &quot;\&quot;Goodbye.\&quot;&quot;
+        &quot;name&quot;: &quot;(Leave)&quot;,
+        &quot;action&quot;: [
+          {
+            &quot;deleteMapObject&quot;: 69
+          }
+        ]
       }
-    ]
-  },
-  {
+    ],
     &quot;condition&quot;: [
       {
         &quot;getQuestFlag&quot;: {
-          &quot;key&quot;: &quot;Ch1CastlesComplete&quot;,
+          &quot;key&quot;: &quot;mainQuest&quot;,
           &quot;op&quot;: &quot;&gt;=&quot;,
-          &quot;val&quot;: 5
+          &quot;val&quot;: 1
         }
-      }
-    ],
-    &quot;text&quot;: &quot;\&quot;Orazca stands, and the five thrones are broken. Welcome home, {var=player_name}.\&quot;&quot;,
-    &quot;options&quot;: [
-      {
-        &quot;action&quot;: [
-          {
-            &quot;removeItem&quot;: &quot;&quot;,
-            &quot;setColorIdentity&quot;: &quot;&quot;,
-            &quot;advanceQuestFlag&quot;: &quot;&quot;,
-            &quot;advanceMapFlag&quot;: &quot;&quot;,
-            &quot;setQuestFlag&quot;: {
-              &quot;key&quot;: &quot;mainQuest&quot;,
-              &quot;val&quot;: 3
-            },
-            &quot;setMapFlag&quot;: {
-              &quot;key&quot;: &quot;&quot;
-            },
-            &quot;issueQuest&quot;: &quot;&quot;,
-            &quot;POIReference&quot;: &quot;&quot;
-          }
-        ],
-        &quot;name&quot;: &quot;\&quot;The five castles have fallen. The Seals are mine again.\&quot;&quot;,
-        &quot;text&quot;: &quot;\&quot;Then it is done - what was stolen is restored. But hear an old man's last warning: the Five did not invent your prison. They found its design.\&quot;&quot;,
-        &quot;options&quot;: [
-          {
-            &quot;name&quot;: &quot;\&quot;Found it... where?\&quot;&quot;,
-            &quot;text&quot;: &quot;\&quot;Beneath this realm there are older doors, Guardian - older than my order, older than your wardenship. Your Seals were never only bindings. They were also locks.\&quot;&quot;,
-            &quot;options&quot;: [
-              {
-                &quot;name&quot;: &quot;(Continue)&quot;,
-                &quot;text&quot;: &quot;\&quot;Now those locks sit in your pocket instead of on the doors - and whatever slept behind them has had three thousand years to grow hungry. Rest. Rebuild. And keep your deck close, Guardian.\&quot;&quot;,
-                &quot;options&quot;: [
-                  {
-                    &quot;name&quot;: &quot;(Continue)&quot;,
-                    &quot;text&quot;: &quot;[RED]Developer's note:[] You have reached the end of The Forsaken Realms' current story content - but the realm fights on: territory, research, restoration and the Five continue. Several difficult dungeons have also been added to your world map.&quot;,
-                    &quot;options&quot;: [
-                      {
-                        &quot;name&quot;: &quot;(Continue)&quot;,
-                        &quot;text&quot;: &quot;[RED]Developer's note:[] Watch for the next release to continue the story - and thanks for coming on this Adventure with us!&quot;,
-                        &quot;options&quot;: [
-                          {
-                            &quot;name&quot;: &quot;(Chapter 1 complete)&quot;
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    &quot;condition&quot;: [
-      {
-        &quot;item&quot;: &quot;Blue Key&quot;
-      },
-      {
-        &quot;item&quot;: &quot;Green Key&quot;
-      },
-      {
-        &quot;item&quot;: &quot;Black Key&quot;
-      },
-      {
-        &quot;item&quot;: &quot;White Key&quot;
-      },
-      {
-        &quot;item&quot;: &quot;Red Key&quot;
-      }
-    ],
-    &quot;text&quot;: &quot;Hello again&quot;,
-    &quot;options&quot;: [
-      {
-        &quot;name&quot;: &quot;I want to trade in the five colored keys for a mox of my choice and the key to Emrakul's room&quot;,
-        &quot;action&quot;: [
-          {
-            &quot;grantRewardsChoice&quot;: [
-              {
-                &quot;type&quot;: &quot;card&quot;,
-                &quot;count&quot;: 1,
-                &quot;cardName&quot;: &quot;Mox Jet&quot;
-              },
-              {
-                &quot;type&quot;: &quot;card&quot;,
-                &quot;count&quot;: 1,
-                &quot;cardName&quot;: &quot;Mox Ruby&quot;
-              },
-              {
-                &quot;type&quot;: &quot;card&quot;,
-                &quot;count&quot;: 1,
-                &quot;cardName&quot;: &quot;Mox Sapphire&quot;
-              },
-              {
-                &quot;type&quot;: &quot;card&quot;,
-                &quot;count&quot;: 1,
-                &quot;cardName&quot;: &quot;Mox Pearl&quot;
-              },
-              {
-                &quot;type&quot;: &quot;card&quot;,
-                &quot;count&quot;: 1,
-                &quot;cardName&quot;: &quot;Mox Emerald&quot;
-              }
-            ]
-          },
-          {
-            &quot;removeItem&quot;: &quot;Blue Key&quot;
-          },
-          {
-            &quot;removeItem&quot;: &quot;Green Key&quot;
-          },
-          {
-            &quot;removeItem&quot;: &quot;Black Key&quot;
-          },
-          {
-            &quot;removeItem&quot;: &quot;White Key&quot;
-          },
-          {
-            &quot;removeItem&quot;: &quot;Red Key&quot;
-          },
-          {
-            &quot;addItem&quot;: &quot;Strange Key&quot;
-          }
-        ]
       }
     ]
   }

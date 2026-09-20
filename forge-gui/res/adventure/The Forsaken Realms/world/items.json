@@ -482,35 +482,35 @@
     },
     {
         "name":  "Red Key",
-        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
+        "description":  "One of five colored keys. The Warden, in Orazca, wants all five.",
         "iconName":  "RedKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "White Key",
-        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
+        "description":  "One of five colored keys. The Warden, in Orazca, wants all five.",
         "iconName":  "WhiteKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Blue Key",
-        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
+        "description":  "One of five colored keys. The Warden, in Orazca, wants all five.",
         "iconName":  "BlueKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Green Key",
-        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
+        "description":  "One of five colored keys. The Warden, in Orazca, wants all five.",
         "iconName":  "GreenKey",
         "questItem":  true,
         "rarity":  "Common"
     },
     {
         "name":  "Black Key",
-        "description":  "One of five colored keys. The Warden, in the camp where you began, wants all five.",
+        "description":  "One of five colored keys. The Warden, in Orazca, wants all five.",
         "iconName":  "BlackKey",
         "questItem":  true,
         "rarity":  "Common"
@@ -519,7 +519,7 @@
         "name":  "Homeward rune",
         "usableOnWorldMap":  true,
         "equipmentSlot":  "Ability2",
-        "description":  "Teleports you home - to the mysterious library, or just outside your Capitol once you've built one",
+        "description":  "Teleports you home - to just outside Orazca, or your Capitol once you've raised one",
         "commandOnUse":  "teleport home",
         "iconName":  "ColorlessRune",
         "questItem":  true,

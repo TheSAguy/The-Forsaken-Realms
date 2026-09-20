@@ -17757,6 +17757,122 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 253: Orazca, the ruin at the centre of the star (2026-09-19)
+
+User: *"I'd like to tweak the world-map. Where the camp-fire is currently, should be a town ruin. This is the ruin that
+you will first restore to a town, then your capitol. So it's the center of the world! ... Only town that can become
+your capitol. Once you teleport out of the spawn dungeon, you will be outside this town. ... if you don't ever need to
+see the Warden again, it's not needed."* Then: *"The name should be Orazca for the ruin. Same gate. Once the player has
+restored 5 towns (including Orazca), they can come back and upgrade it. Move Warden to the town."*
+
+The name was already in the game's mouth: the Warden's first speech is *"So rebuild, Guardian. Raise Orazca"*, and the
+Capitol POI has carried the displayName "Orazca" since it was written. Until now Orazca was a title any restored town
+could take. Now it is a place.
+
+**The centre.** A new `Orazca` POI, `radiusFactor` 0, which puts it at the biome's exact centre - the tile the campfire
+used to hold (that is how the campfire got there: no radius, no offset). It is type `town` + `BiomeColorless` and
+carries no `Spawn` tag, so `TownRestoration.isWastelandTown()` is true for it and the whole ruined-town machinery
+applies unchanged: broken overworld art, rubble, the ordinary restoration cost (200 gold + 5 wood), shops rebuilt one
+by one, a Job Board once restored. Its map is the new `towns/orazca.tmx`, a copy of the `player_town.tmx` layout every
+wasteland town and the five Center Towns already use - same shop slots, same inn, same ids, so restoring, rebuilding
+and the Capitol upgrade all migrate exactly as they do anywhere else. Two guards keep it a ruin and keep it the
+player's: it is never one of the functioning neutral towns `seedFunctioningNeutralTowns()` hands out, and it never
+takes a name from the waste pool (`migrateGenericTownNames()` would have renamed it, since its displayName equals its
+data name). The star's five spokes now radiate from Orazca instead of the campfire.
+
+**The spawn cave stays, the campfire does not.** It steps ~5 tiles aside (`offsetX`/`offsetY`) so the centre tile is
+free, and the player still wakes there, still gets the rune, the wood and the hidden card, and walks out of the portal
+within sight of the ruin - *"Once you teleport out of the spawn dungeon, you will be outside this town."* But the user,
+watching the agent game: *"I don't want the camp fire at all. The ruin should be dead center of the map, no fire."* So
+the POI is marked inactive at generation, which hides it everywhere the engine already honors `getActive()` - the
+overworld sprite, the world-map and minimap markers, `MapViewScene`, world-entry collision, background objects, quest
+targeting, even the agent bridge's own listings - and it is kept out of the road pass, which would otherwise have drawn
+a five-tile stub from Orazca to a cave nobody can see. The opening is untouched: `WorldStage.enterSpawnPOI()` finds the
+POI by name and `loadPOI()` never consults `getActive()`. Guarded on the plane having an Orazca at all, because
+"Spawn" is also the name of the start POI in Shandalar Old Border, Realm of Legends and Crystal Kingdoms, where it is
+an ordinary visible place.
+
+**The Warden moves in.** He keeps only the introduction in the cave; its last line now says where he is going, and
+closing it deletes his map object (`deleteMapObject`, persisted through `PointOfInterestChanges`), so the cave is empty
+behind the player. Anyone who skipped the introduction and wanders back in gets a farewell that removes him the same
+way. Everything he used to say afterwards is on a Warden beside Orazca's bulletin board (user, with a screenshot of
+where he first stood): the castles nag, the "five thrones are broken" finale that completes quest 52's *"Get Some
+Answers"* (its stage now points at Orazca, not at the spawn point), and the five-keys mox trade. The finale is
+additionally gated on `mainQuest < 3` - the flag it sets itself - so it fires once and then stands aside for the trade
+instead of repeating forever.
+
+**How `MapDialog` actually chooses an entry, learned the hard way.** `activate()` does NOT stop at the first entry
+whose conditions pass: it walks the whole array, calls `loadDialog()` for EVERY match, and each call clears the dialog
+tables and rebuilds them. So **the LAST match is what the player sees**, and every matching entry's own `action` fires
+on the way, including for entries nobody ever sees. I had assumed first-match-wins, gave the cave's farewell no
+condition at all, and put it last - so the Warden greeted a brand-new game with his goodbye. Both dialogs are now
+written for the real rule: in the cave the two entries are mutually exclusive (`mainQuest` unset / `mainQuest >= 1`),
+and in town they run least-specific FIRST - greeting, castles nag, finale, five-keys trade - which is the order the
+stock plane data was already written in. Holding all five keys therefore still gets the trade, exactly as it did in
+the cave.
+
+**The Capitol, same gate.** `CAPITOL_TOWNS_REQUIRED` is still 5 restored towns (Orazca among them) and the cost is
+still 1000 gold / 100 wood / 100 stone / 50 shards - but the Job Board offers the upgrade at Orazca alone. Every other
+town shows a disabled *"Upgrade to Capitol (only at Orazca)"*, so a player carrying the cost around knows where to take
+it. Quest 43 *"Raise the Banner"* says the same thing now instead of *"any of your restored towns can become Orazca
+reborn"*. The Five cannot take Orazca either: `findAttackableTowns()` skips it while it is ruined or the player's, and
+once it IS the Capitol its data name is `Player Capitol` and the existing weekly-lockout rules apply as before.
+
+**Home.** `TownRestoration.findHome()` - the Capitol if it stands, else Orazca, else (only in a pre-253 world) the
+spawn cave - is what the Homeward rune and death respawn now ask. The rune is position-only in both cases, so it always
+lands just outside, which is what the user meant by *"the homeward rune will basically work like it has once you have a
+capitol from the start."*
+
+**Round 252 correction, found while reading this code.** Round 252 gave every map enemy with no `threatRange` and no
+`fleeRange` a default reaction radius - and 43 of those 378 are not fighters at all but NPCs carrying a `dialog`, which
+"overrides standard battle": the Warden himself, the mages who hand out quests, the heralds in the five castles, the
+whole Skep village, Zo-Zu at the dueling club, Gwafa Hazid at the arena. They would have walked up to the player and
+fired their dialog unasked. `applyDefaultReactionRange()` now returns early for any enemy with a dialog. (That also
+answers part of the question left open in round 252: the talkers in the dueling club, the arena, the gym and
+`debug_map` are exempt automatically - only their fighters take the default.)
+
+**New worlds only** - all of it is world-generation data. An existing save has no Orazca POI, and every lookup added
+here returns null for it: home stays the spawn cave, any restored town still upgrades, nothing moves.
+
+**Seen in a running game** (agent game, a brand-new world on the round 253 classes): the world map at tile
+(353, 355) with Orazca 3 tiles south and no campfire anywhere; the Warden's introduction in the cave, the Homeward rune
+granted, and object 69 gone from the actor list the moment it ended; Orazca entered with nine `(destroyed)` shops, its
+Job Board and the Warden inside.
+
+Checked: `javac` + checkstyle clean; the plane validator clean (428 maps parsed, none unreachable - `orazca.tmx`
+is wired to its POI); both maps' dialog JSON re-parsed after the edit.
+
+## Round 253c: one Jumpstart tournament per player, not per run (2026-09-19)
+
+User: *"I also want to confirm that the player can only partake in one Jumpstart tournament. Even if they do NG+, if
+they have done one before, they should not get another one."*
+
+It was once per RUN. Round 118 set the `jumpstartPlayed` character flag the moment a Jumpstart event starts, and
+`AdventureEventController` stops rolling the format while it is set - but `resetForNewGamePlus()` calls
+`characterFlags.clear()` (deliberately: that is what hands a new run its first Armory torch and its ring gift again),
+which wiped `jumpstartPlayed` with everything else. Every New Game+ was offered another Jumpstart. The flag is now read
+before the wipe and written back after it - the only character flag that outlives a run - and says so in the log:
+`[TFR-Jumpstart] New Game+ keeps jumpstartPlayed=1 - one Jumpstart tournament per player, not per run`. The reset's own
+proof line expects 1 or 2 flags now rather than exactly 1.
+
+## Round 253d: Android - the shop's card grid swallowed the shop's own buttons (2026-09-19)
+
+Player report (Android, relayed by the user): *"When trying to research/do upgrades, you need to buy the items in the
+way before you can access it on android."* And then: *"Oh, adjusting the tooltip size from the settings fixed!"* - that
+setting is `rewardCardAdj`, the reward-card size adjustment, and it is what finds the bug.
+
+`RewardScene.generateRewards()` picks rows, columns and card height with a search loop whose own test is
+`cols * cardWidth < targetWidth`, so the grid FITS the card region at that point. The device-aspect multiplier is then
+applied *afterwards* - up to 1.6x on a tall immersive portrait display - which can push the row past the width it was
+just fitted into. `xOff += (targetWidth - cardWidth * numberOfColumns) / 2f` goes negative, the row spills out of the
+card region on both sides, and the cards land on top of the shop's right-hand button column (Upgrade Armory, Expand
+Inventory, Storage, Re-roll) and take the taps meant for it. Setting `rewardCardAdj` "fixed" it because that setting
+replaces the multiplier outright. The row is now shrunk back into its region with the card aspect preserved, and says
+so once per screen: `[TFR-RewardGrid] 2 card column(s) overflowed the 300px card region by 41px - shrunk to fit
+(x0.86) so the shop's buttons stay reachable`. Where the row already fits - every landscape layout, and portrait at
+the sizes that were fine - nothing changes. NOT yet confirmed on a phone: the reporter should see the buttons
+reachable at the default card size, and can leave `rewardCardAdj` alone.
+
 ## Round 252: every map enemy reacts to the player within a small radius (2026-09-19)
 
 User, with two screenshots of a crypt - an enemy standing beside a chest, and the same enemy after the player had
