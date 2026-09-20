@@ -3,7 +3,7 @@ rarity, set type), filtered to cards a TFR enemy deck may use. Cached to carddb.
 usage: python carddb.py   (rebuilds the cache)"""
 import json, os, re
 
-REPO = r"F:\FORGE\C--Users-vicwaver-MTG-Forge"
+REPO = r"C:\TFR\repo"
 RES = os.path.join(REPO, "forge-gui", "res")
 PLANE = os.path.join(RES, "adventure", "The Forsaken Realms")
 HERE = os.path.dirname(os.path.abspath(__file__))

@@ -6,7 +6,7 @@ picks evenly over the five colors, and is deterministic - sorted names, round-ro
 picks the same 36. Edits only the "enemies" array, in place, preserving the file's hand-written layout."""
 import json, re, collections, os
 
-PLANE = r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms"
+PLANE = r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms"
 ENEMIES = os.path.join(PLANE, "world", "enemies.json")
 PLAYER = os.path.join(PLANE, "world", "biomes", "player.json")
 

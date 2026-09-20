@@ -11,7 +11,7 @@ Round 125 (2026-09-06); deterministic - the same seeds always produce the same 7
 import xml.etree.ElementTree as ET, random, json, os, sys, collections, re
 from PIL import Image, ImageDraw
 
-REPO = r"F:\FORGE\C--Users-vicwaver-MTG-Forge"
+REPO = r"C:\TFR\repo"
 PLANE = os.path.join(REPO, "forge-gui", "res", "adventure", "The Forsaken Realms")
 COMMON = os.path.join(REPO, "forge-gui", "res", "adventure", "common")
 OUTDIR = os.path.join(PLANE, "maps", "map", "cave")

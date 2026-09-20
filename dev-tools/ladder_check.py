@@ -3,7 +3,7 @@ SpawnTierWeighting.targetTierWeight() does: max(0, base + delta) * scale. Confir
 the changelog/release notes, and that no hostile row can conjure a rank the week bracket zeroes."""
 import json, re, sys
 
-P = (r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms"
+P = (r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms"
      r"\config tables\spawn_tier_weighting.json")
 raw = open(P, encoding="utf-8").read()
 raw = re.sub(r"^\s*//.*$", "", raw, flags=re.M)          # line comments, as libGDX's reader tolerates

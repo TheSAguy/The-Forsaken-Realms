@@ -11576,7 +11576,7 @@ and Shandalar Old Border teams; all licensing in the mod folder too.
   `core.quotepath=off` so non-ASCII deck filenames don't confuse it) + docs, then self-verifies
   (title marker + dir-rebrand marker present inside the shipped jar's classes, adventure folder
   exactly 2 entries). `--zip` flag produces the release zip.
-- **First package BUILT and verified**: `F:\FORGE\TFR-Standalone\The Forsaken Realms\` (307 MB)
+- **First package BUILT and verified**: `C:\TFR\live\The Forsaken Realms\` (307 MB)
   - `The Forsaken Realms.exe`/`.cmd` launchers, 2.0.15 jar with all mod code, TFR as the only
   world, LICENSE/CREDITS/GUIDE both at root and inside the plane folder. Ready for the user's
   side-by-side smoke test - the live 2.0.14 install at `E:\GAMES\FORGE` was not touched.
@@ -13822,7 +13822,7 @@ anywhere) were deleted per explicit user request in this same round.
 ### Validation performed
 - `mvn -pl forge-gui-mobile -am compile -DskipTests -o` - clean, exit 0.
 - `python standalone-packaging/build_standalone.py` - exit 0; `PACKAGE_OK.txt` read directly; new
-  output folder is `F:\FORGE\TFR-Standalone\The Forsaken Realms\`.
+  output folder is `C:\TFR\live\The Forsaken Realms\`.
 - Repo-wide grep for `The Forsaken Realms` / `ForgottenRealms` / `forgottenrealms` re-run after
   every edit pass; only the two historical changelogs (by design) and one explanatory note in
   `PLAYTEST_LOG_CHECKLIST.md` (explaining why `[TFR-` stayed put) still match.
@@ -14169,7 +14169,7 @@ landmines, and keystore rules: ANDROID_RELEASE.md (authoritative). Highlights:
   shortening. Both documented in ANDROID_RELEASE.md.
 - **Signing**: new permanent TFR keystore (alias Forge, CN=The Forsaken Realms, SHA-256
   ee603925...) - gitignored at forge-gui-android/forge.keystore, backup at
-  F:\FORGE\TFR-Standalone\forsaken-realms-android.keystore. Every future APK must use it.
+  C:\TFR\live\forsaken-realms-android.keystore. Every future APK must use it.
 - Verified before upload (no device): aapt badging (package/versionCode 10300/versionName
   1.03/label), apksigner cert fingerprint, assets.zip layout (20,564 entries, top-level res/,
   two planes only, build.txt + cardsfolder.zip present). upstream publish.bat (plaintext FTP
@@ -17675,7 +17675,7 @@ from if needed."
   engine 09.05, save-integrity pin, fixes, credits, Android install steps.
 - **Built beside the live game, not in it.** `build_standalone.py` gained `--out DIR`: the lock probe,
   the full static copy and `PACKAGE_OK.txt` all apply to that folder, so a release can be assembled
-  while the live folder is being played. `--zip --out C:\Users\User\TFR-Release` produced
+  while the live folder is being played. `--zip --out C:\TFR\live` produced
   `The-Forsaken-Realms-v1.05.zip` in about thirty seconds on the internal SSD (the same full copy
   took forty minutes on the F: USB drive in round 116). Zip verified: PACKAGE_OK, launcher exe, jar,
   GAME_GUIDE, `res/adventure` = exactly `common` + the plane, modVersion 1.05 inside.
@@ -17756,6 +17756,47 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   items, v1.06 starts with the upstream merge - 6 commits behind tonight); MOD_SCOPE #87 (More Attacking Options) and
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
+
+## Round 255: the opening reads as one story, and four corrections from play (2026-09-20)
+
+**The main quest's opening.** User: *"I think we need to tweak the main quest start. - After leaving the cave, go
+meet the Warden in the ruin. He will tell you, you need to fix it, but first go talk to the other 5 guys, then
+kick-off that part. Just seems a little disjointed currently."* It was: quest 53's *"Exit the cave"* issued quest 75
+(*Oaths at the Ring*) the instant the player stepped outside, so the Ring errand arrived from nowhere and the
+Warden - who moved to Orazca in round 253 - had no part in the opening at all. Now stage 2 only sets the scene, a
+new **stage 3 "Find the Warden at Orazca"** sends the player to the ruin, and the Warden there explains what Orazca
+is and that the five Ring Cities owe them the means to raise it. That conversation sets `wardenOrazca`, which
+completes the stage, and the stage's epilogue issues 75. Everything downstream (75 -> 30 -> 43 -> 52) is untouched.
+His new dialog entry sits SECOND in both his maps - after the greeting, before the nag/finale/trade - because
+`MapDialog` shows the LAST entry whose condition passes (round 253's lesson), so it wins while its flag is unset
+and stands aside once set.
+
+**The Capitol surge marches inward.** User, revising round 254's rule: *"Make the target the one of the 5 that's
+the closest to the player capitol. So, it will target a town pointing in the direction of the capitol basically."*
+`dispatch()`'s `furthestTarget` is now `towardCapitol`: among everything a color can attack it takes the town
+NEAREST the player's Capitol - the Capitol itself excluded, since the point is the approach and not a direct
+assault - so five colors answering at once all converge instead of each wandering off. **Also fixed the log line,**
+which printed a squared pixel distance as tiles (`4925269 tiles from its nearest holding` in their log);
+`distToNearestSource()` returns `dst2`.
+
+**Clear ground everywhere.** User: *"'Clear ground' - Is it possible to apply this to all towns/capitols and AI
+castles?"* `clearGroundAroundOrazca()` became `clearGroundAroundSettlements()`: every town, capital and castle site
+gets 4 walkable tiles, Orazca keeps 6, and one line reports the lot - `[TFR-ClearGround] N town/capital/castle
+site(s) cleared (4 tiles each, 6 around Orazca) - M colliding tile(s) removed`.
+
+**The player's terrain sat off-centre.** User, with a screenshot: *"the center of the player terrain does not seem
+100% center of the map ... it seems off from the 5 surrounding cities."* The territory paint
+(`repaintBiomeAroundTown`), the town vision circle (`playerTownVisionAreas`) and the town reveals
+(`applyTownVisionReveal`, the Capitol's disc, the Outlook refresh) all centred on `getPosition()` - the POI's
+BOTTOM-LEFT CORNER - while a town's art is 48x48 or 64x64. The disc therefore sat up to two tiles off the town it
+belonged to. They use `getCenter()` now, the same correction round 249 made for the map icons.
+
+**And a correction to round 254's own entry box:** capping it at two tiles was right, but sitting it on the
+sprite's base left the north side of a 64x64 town unenterable at the tiles a player naturally walks (caught in the
+agent game, where `goto poi` stood next to Orazca and never went in). It is centred in both axes now.
+
+Checked: `javac` + checkstyle clean, the plane validator clean, quest 53's three stages and both Warden dialogs
+re-parsed.
 
 ## Round 254: what a new game found in round 253, and the Capitol's answering Archmage (2026-09-20)
 
@@ -17959,7 +18000,7 @@ Checked: `javac` clean; the plane validator clean with the two new keys; and the
 the SHIPPED classes (`TuneCheck.java`, scratchpad - a bad key makes Config fall back to defaults silently, which would
 revert every tuning value): `mapEnemyDefaultThreatRange=32.0 mapEnemyDefaultPursueRange=64.0`, the rest intact.
 
-Built 16:08-16:15 (MVN EXIT 0), packaged into `C:\Users\User\TFR-Release`. NOT yet run in a game and NOT yet in the
+Built 16:08-16:15 (MVN EXIT 0), packaged into `C:\TFR\live`. NOT yet run in a game and NOT yet in the
 F: live folder - the user had started playing again. To verify: the `[TFR-Threat]` line on entering a map, then walk
 past the chest enemy in the crypt from their screenshots. FOR THE USER, since they now react: the dueling club
 (13 enemies), Valor's Reach Arena (7), the Naktamun gym (7) and `debug_map` (12) read like set-pieces - say if any of
@@ -18012,7 +18053,7 @@ cards with nothing silently capped, slot 0 "Black Pool" untouched and still sele
 The two decks share no card, so either can be played without disturbing the other or "Black Pool". Selecting a deck
 sets the character's color identity, which is what reputation and spawns read - the green deck moves it off B.
 
-Built 14:03-14:10 (MVN EXIT 0; the jar carries the `player_ring` lookup). Packaged into `C:\Users\User\TFR-Release` and, at 15:04, into the F: live folder (jar `be6bb7ea998b`, the 604-byte asset shipped).
+Built 14:03-14:10 (MVN EXIT 0; the jar carries the `player_ring` lookup). Packaged into `C:\TFR\live` and, at 15:04, into the F: live folder (jar `be6bb7ea998b`, the 604-byte asset shipped).
 
 ## Round 250: a place appears on the overworld when its map icon does (option A, without the cascade); the five standing enemies patrol (2026-09-19)
 
@@ -18098,7 +18139,7 @@ Also seen in the agent session, with the v1.12 jar as well (so not this round): 
 start screen the HUD's corner minimap drew black, and the map view first opened at a zoom showing only fog. Probably
 the bridge loading without the Load screen's refresh; not seen in the user's own game.
 
-Built 12:05-12:12 on the 09.18 engine (MVN EXIT 0; the jar's `World.class` carries `[TFR-MapIcons]`, `WorldSave.class` the `migrateMapIconLayout` call). Rounds 247 + 248 reached the F: live folder at 12:04 (fast path, PACKAGER EXIT 0, jar `78bc464f6117`) once the user closed the game; round 249 followed at 12:26 (PACKAGER EXIT 0) and into `C:\Users\User\TFR-Release` - both hold jar SHA-1 `6b7000ef637c`. The agent folder sync (`agent_sync.cmd`) was started right after.
+Built 12:05-12:12 on the 09.18 engine (MVN EXIT 0; the jar's `World.class` carries `[TFR-MapIcons]`, `WorldSave.class` the `migrateMapIconLayout` call). Rounds 247 + 248 reached the F: live folder at 12:04 (fast path, PACKAGER EXIT 0, jar `78bc464f6117`) once the user closed the game; round 249 followed at 12:26 (PACKAGER EXIT 0) and into `C:\TFR\live` - both hold jar SHA-1 `6b7000ef637c`. The agent folder sync (`agent_sync.cmd`) was started right after.
 
 ## Round 248: the Church tower wizard patrols; every patrol route in the plane names real waypoints (2026-09-19)
 
@@ -18201,11 +18242,11 @@ deck sits outside green's editions. `MageTower7Church` logs eight "Navigation er
 in `maps/map/magetower/magetower_7_church.tmx` the Apprentice White Wizard (object 75) names patrol waypoints 76-83
 that the map no longer has, so it stands still - left for the user (their own map pass, commit 978ad21dfea).
 
-Built 11:14-11:24 on the 09.18 engine (MVN EXIT 0; the jar's `AdventurePlayer.class` carries the new `[TFR-RingGift]` strings); plane validator clean. Packaged into the C: play-test folder (`C:\Users\User\TFR-Release`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
+Built 11:14-11:24 on the 09.18 engine (MVN EXIT 0; the jar's `AdventurePlayer.class` carries the new `[TFR-RingGift]` strings); plane validator clean. Packaged into the C: play-test folder (`C:\TFR\live`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
 
 ## Round 246: v1.12 "Reward Balancing" - the release round, PC + Android (2026-09-19)
 
-User, after play-testing the 09.18 build from `C:\Users\User\TFR-Release`: *"Game closed, Please review log and get
+User, after play-testing the 09.18 build from `C:\TFR\live`: *"Game closed, Please review log and get
 everything ready for full release."*
 
 **The log** (the C: session, 08:55-09:22, a new Insane character, day 2): no exception, no warning. First sight in
@@ -18225,7 +18266,7 @@ the Capitol surge, two quest families, the ruined Inn, dungeon turnover, the 09.
 
 **Released.** User: *"Proceed with a full release, including PC and Android. Discord Blurb. And close out the
 thread."* Annotated tag `tfr-v1.12` @ `38d27f3b001`, branch and tag pushed. Desktop zip from
-`--out C:\Users\User\TFR-Release --zip` (265.4 MB; stamps, exactly `common` + the plane, no backup files - read back
+`--out C:\TFR\live --zip` (265.4 MB; stamps, exactly `common` + the plane, no backup files - read back
 from the zip). Android from `C:\TFR-build` reset to the tag, `subst R:`, 2m33s: `aapt` says
 `com.thesaguy.forsakenrealms` 11200 / 1.12, `apksigner` says CN=The Forsaken Realms with the `EE:60:39:25`
 fingerprint, `assets.zip` holds exactly `common` + the plane and its `res/build.txt` equals the APK's
@@ -18238,7 +18279,7 @@ their sizes compared with the local files (`The-Forsaken-Realms-v1.12.zip` 265,3
 
 ## Round 245: three reports from the first play-test on the 09.18 build - five body-crop portraits, and the Inn quest (2026-09-19)
 
-The user closed the F: game and play-tested the `C:\Users\User\TFR-Release` build (rounds 241-244 on the 09.18 engine)
+The user closed the F: game and play-tested the `C:\TFR\live` build (rounds 241-244 on the 09.18 engine)
 while F: was rebuilt with the full stock copy. Three reports.
 
 **"There seems to be an issue with Shellback Ankylosaur's portrait"** (the Inn's Event Standings page showed its hind
@@ -19209,7 +19250,7 @@ already 09.16 from round 222); `forge-gui-android/pom.xml` tfr.version **1.11**,
 
 **Release procedure, in order:** (1) this commit, tagged `tfr-v1.11`, pushed with the tag; (2) Maven, then the
 live folder packaged on the fast path (`PACKAGE_OK`, round 223 + the snow fix + the stamps) and the agent
-folder synced; (3) the desktop zip with `build_standalone.py --out C:\Users\User\TFR-Release --zip`;
+folder synced; (3) the desktop zip with `build_standalone.py --out C:\TFR\live --zip`;
 (4) Android from `C:\TFR-build` (fetch + reset to the tag, keystore + local.properties copied in, `subst R:`,
 ANDROID_RELEASE.md's maven line), verified with aapt badging / apksigner (EE:60:39:25) / the assets.zip
 layout; (5) `gh release create --draft`, all three assets uploaded, then `--draft=false --latest`; (6) the
@@ -19217,7 +19258,7 @@ mandatory `mvn -pl forge-gui-mobile -am clean compile` after the Android build. 
 time are in the addendum below this entry once uploaded.
 
 **Addendum - published.** Tag `tfr-v1.11` @ `30d2cceb77c`, published 2026-09-17 04:37 UTC and marked Latest:
-`The-Forsaken-Realms-v1.11.zip` (265.3 MB, built with `--out C:\Users\User\TFR-Release --zip`, config
+`The-Forsaken-Realms-v1.11.zip` (265.3 MB, built with `--out C:\TFR\live --zip`, config
 1.11 / PACKAGE_OK inside / no backup files), `forsaken-realms-1.11-signed-aligned.apk` (13.3 MB) and
 `assets.zip` (217.8 MB), the Android pair built in 2:29 from `C:\TFR-build` reset to the tag via `R:` and
 verified before upload: package `com.thesaguy.forsakenrealms`, versionCode 11100, versionName 1.11, signer
@@ -21595,7 +21636,7 @@ changes drops game-wide, so it went to the user rather than into this round.
   render sheets (free sprite-sheet sites, thegamingpot.com among them; many GameDeveloperStudio designs) - the art is
   the user's informed choice (2026-09-11). README: "1,900+ enemies".
 - The toolchain moved into the repo: `dev-tools/art-import/` (README lists the steps; inputs stay in
-  `F:\FORGE\TFR-Art-Staging\`; `carddb.json` is a gitignored cache).
+  `C:\TFR\art-staging\`; `carddb.json` is a gitignored cache).
 - The boss floor from the end of round 178 (51 bosses and set pieces raised to a 30-px body - "Boss enemies should
   remain larger than Archmage") ships in this commit.
 
@@ -21670,7 +21711,7 @@ game (every border touching). Files in the plane's `guide/`; the packager copies
 
 ### The new art: converters (staging, outside the repo)
 
-`F:\FORGE\TFR-Art-Staging\tools\`: `art_convert_generic.py` (the 73 render sheets: portrait = avatar, bands as
+`C:\TFR\art-staging\tools\`: `art_convert_generic.py` (the 73 render sheets: portrait = avatar, bands as
 Idle/Walk/Attack/Death, watermark text and thumbnail strips dropped, every frame turned to face right by silhouette
 match, per-sheet `overrides_generic.json` for 48 of them), `art_bands.py` (band strips to label), `art_catalog.py` (the
 naming catalog). All 73 convert; with round 177's 124 Ragnarok atlases that is the user's 197.
@@ -21749,7 +21790,7 @@ the sheets are ripped commercial-game art - 126 are Ragnarok Online monster rips
 named characters from other commercial games (RAID: Shadow Legends x13, Final Fantasy x3, Warcraft, Star Wars, Assassin's
 Creed, Mortal Kombat, Tales of Arise, El Conquista) and the other 79 are 3D / comic renders, many carrying a
 thegamingpot.com watermark; renaming the monsters does not change who owns the pictures, and the game ships publicly.
-Prep lives OUTSIDE the repo, in `F:\FORGE\TFR-Art-Staging\` (`tools\art_convert.py`, `art_preview.py`,
+Prep lives OUTSIDE the repo, in `C:\TFR\art-staging\` (`tools\art_convert.py`, `art_preview.py`,
 `art_triage3.py`; QA contact sheets in `qa\`). The converter reads the TSR layout on its own - connected components,
 label text and bracket detection, rows paired front/back by frame count, a single low rule fences off the unused
 extras - keeps the front view flipped to face right, and packs Avatar / Idle / Walk / Attack / Hit / Death into a
@@ -21801,11 +21842,11 @@ round ran unattended after *"go ahead and set everything up"*.
 
 ### The isolated setup
 
-- **Game folder** `F:\FORGE\TFR-Agent\The Forsaken Realms`: the user's copy of the live folder (20,918 files,
+- **Game folder** `C:\TFR\agent\The Forsaken Realms`: the user's copy of the live folder (20,918 files,
   378,314,493 bytes, jar sha256 identical), renamed. `dev-tools/agent/agent_sync.cmd` mirrors the live folder into it
   after a package (robocopy /MIR of the game folder only - 5 s, 18 changed files after rounds 173-174; it refuses
   while the agent game runs).
-- **Profile** `F:\FORGE\TFR-Agent\profile`: the launcher sets `APPDATA` there, and Forge's data directory follows it
+- **Profile** `C:\TFR\agent\profile`: the launcher sets `APPDATA` there, and Forge's data directory follows it
   (`ForgeProfileProperties.getDefaultDirs()`), so the agent game has its own saves, preferences and `forge.log`.
   `dev-tools/agent/agent_setup.py` seeds it once: a 1280x720 window (the user's own settings are 4K full screen),
   sound and music off, the rest of the user's preferences copied. Card art stays shared through `%LOCALAPPDATA%`.
@@ -22094,7 +22135,7 @@ checking, and fixed where it was a document:
 The user's calls for what comes next (2026-09-10): round 173 fixes review G10 (free PayShards for a watched guard), S8
 (war champions in re-themed placements) and G6 (a watched guard duel cut off by a quit or crash must count as the
 guard LOSING, not cancel the attack), and brings back S1 (frontier spawns) and S4 (the heavyweight Archmage fallback);
-after that, agent play in an isolated setup on F: (its own `APPDATA` profile under `F:\FORGE\TFR-Agent\`; the user
+after that, agent play in an isolated setup on F: (its own `APPDATA` profile under `C:\TFR\agent\`; the user
 asked for F: rather than C:).
 
 **Files touched**: `CLAUDE.md`, `MOD_CHANGELOG.md`, `CORE_ENGINE_CHANGES.md`,
@@ -22112,7 +22153,7 @@ Tag `tfr-v1.09` @ `bb3bf4d2cc1`, published 2026-09-10 23:10:08 UTC and marked La
 <https://github.com/TheSAguy/The-Forsaken-Realms/releases/tag/tfr-v1.09>
 
 Three assets, created as a DRAFT and published only once both platforms were attached:
-- **`The-Forsaken-Realms-v1.09.zip`** (269.9 MB) - `build_standalone.py --out C:\Users\User\TFR-Release --zip`, built
+- **`The-Forsaken-Realms-v1.09.zip`** (269.9 MB) - `build_standalone.py --out C:\TFR\live --zip`, built
   from a copy because the user was playing the live folder (round 119's rule). Full stock copy on the 09.09 base install.
   Shipped `config.json`: modVersion 1.09 / modVersionDate 09.10 / engineBuildVersion 2.0.15-SNAPSHOT-09.09.
 - **`forsaken-realms-1.09-signed-aligned.apk`** (12.7 MB) and **`assets.zip`** (175.5 MB) - one Maven run (the matched-pair
@@ -24518,7 +24559,7 @@ Tag `tfr-v1.06` @ `17d3fcbf54b`, published 2026-09-07 01:31 UTC and marked Lates
 
 Three assets, all verified before the release left draft state. It was created as a DRAFT and published only once
 both platforms were attached, so it never went public PC-only:
-- **`The-Forsaken-Realms-v1.06.zip`** (237.3 MB) - `build_standalone.py --out C:\Users\User\TFR-Release --zip`. The
+- **`The-Forsaken-Realms-v1.06.zip`** (237.3 MB) - `build_standalone.py --out C:\TFR\live --zip`. The
   base install had moved to the 09.06 daily, so this was a full stock copy; still under six minutes on the SSD.
   Shipped `config.json` verified at modVersion 1.06 / modVersionDate 09.06 / engineBuildVersion
   2.0.15-SNAPSHOT-09.06 / disableGeneticDeckOverrides true.

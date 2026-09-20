@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import carddb
 from roster179 import ROSTER
 
-OUT = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else r"F:\FORGE\TFR-Art-Staging\decks"
+OUT = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else r"C:\TFR\art-staging\decks"
 ONLY = set(sys.argv[sys.argv.index("--only") + 1].split(",")) if "--only" in sys.argv else None
 DB = carddb.load()
 

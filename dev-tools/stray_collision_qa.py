@@ -32,7 +32,7 @@ try:
 except ImportError:
     sys.exit("PIL required: pip install pillow")
 
-PLANE = r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms"
+PLANE = r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms"
 COLLISION_LAYER = "Collision"
 FLOOR_RATIO = 0.80     # a tile walkable in >= this share of its appearances counts as floor
 MIN_SAMPLES = 4        # ...and it must appear at least this many times, to avoid one-off noise

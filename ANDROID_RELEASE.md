@@ -43,7 +43,7 @@ Consequences:
 
 - Location used by the build: `forge-gui-android/forge.keystore` (gitignored — NEVER commit;
   the repo is public and the passwords are in the pom).
-- Backup: `F:\FORGE\TFR-Standalone\forsaken-realms-android.keystore`. Keep at least one copy
+- Backup: `C:\TFR\live\forsaken-realms-android.keystore`. Keep at least one copy
   off the F: drive too.
 - Parameters (must match `forge-gui-android/pom.xml`'s SignV2 exec): alias `Forge`,
   storepass/keypass `forge72`. Generated 2026-08-27, RSA 2048, valid ~27 years,
@@ -55,7 +55,7 @@ Consequences:
 ## Per-release steps
 
 0. Desktop release first: the normal desktop flow (build, `build_standalone.py --zip`
-   - add `--out C:\Users\User\TFR-Release` when the live folder is being played; round 119 - publish
+   - add `--out C:\TFR\live` when the live folder is being played; round 119 - publish
    the `tfr-vX.YZ` GitHub release with the desktop zip). The Android artifacts attach to the
    SAME release.
 1. Bump **`<tfr.version>`** in `forge-gui-android/pom.xml` to match the new `modVersion`
@@ -73,7 +73,7 @@ Consequences:
    never sees this because their CI is Linux. Fix = shrink every path in the command:
    ```
    cmd //c "mklink /J C:\m2 C:\Users\User\.m2\repository"     # junction, no admin needed (once per machine)
-   cmd //c "subst R: F:\FORGE\C--Users-vicwaver-MTG-Forge"     # short drive alias (after every reboot)
+   cmd //c "subst R: C:\TFR\repo"     # short drive alias (after every reboot)
    export PATH="/c/Users/User/.claude/skills/apache-maven-3.9.16/bin:$PATH"
    cd /r/
    mvn -pl forge-gui-android -am clean install -P android-release-build -DskipTests \

@@ -18,9 +18,9 @@ sys.path.insert(0, HERE)
 from roster179 import ROSTER
 from deckgen179 import THEMES
 
-REPO = r"F:\FORGE\C--Users-vicwaver-MTG-Forge"
+REPO = r"C:\TFR\repo"
 PLANE = os.path.join(REPO, "forge-gui", "res", "adventure", "The Forsaken Realms")
-STAGE = r"F:\FORGE\TFR-Art-Staging"
+STAGE = r"C:\TFR\art-staging"
 SPRITE_DIR = "sprites/enemy/tfr"
 DECK_DIR = "decks/standard/tfr"
 DRY = "--dry" in sys.argv

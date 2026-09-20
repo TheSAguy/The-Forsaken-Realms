@@ -18,7 +18,7 @@ usage: python dev-tools/agent/agent_setup.py [--force] [--root F:\\FORGE\\TFR-Ag
 import argparse, json, os, sys
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--root", default=r"F:\FORGE\TFR-Agent")
+ap.add_argument("--root", default=r"C:\TFR\agent")
 ap.add_argument("--force", action="store_true")
 a = ap.parse_args()
 

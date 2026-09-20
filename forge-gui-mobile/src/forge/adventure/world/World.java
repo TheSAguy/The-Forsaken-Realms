@@ -1254,31 +1254,44 @@ public class World implements Disposable, SaveFileContent {
 
     /**
      * Round 254 (user: "Is there anyway to make sure there are no collision terrain in a small circle around this
-     * ruin?"). generateNew() already clears the map centre before placement and three tiles around every POI, but
-     * the biome's own structures are stamped BEFORE that centre clear and the player biome's crater/ring models
-     * sit exactly on the world centre - so colliding tiles come back around the one POI the player walks past
-     * most. Runs after placement, on Orazca's real tile rather than the nominal centre, and reports what it
-     * removed. Silent no-op on a plane without an Orazca.
+     * ruin?"), widened in round 255 ("Is it possible to apply this to all towns/capitols and AI castles?").
+     * generateNew() already clears the map centre before placement and three tiles around every POI, but the
+     * biome's own structures are stamped BEFORE that centre clear, and a structure that lands on a settlement
+     * puts colliding tiles back around the places the player walks to most. This runs after placement, on each
+     * site's CENTRE tile (a town's art is 48x48 or 64x64, so its position corner is up to two tiles off centre),
+     * and reports the lot in one line.
      */
-    private void clearGroundAroundOrazca() {
-        PointOfInterest orazca = mapPoiIds == null ? null
-                : mapPoiIds.findPointsOfInterest(TownRestoration.ORAZCA_POI_NAME);
-        if (orazca == null)
+    private void clearGroundAroundSettlements() {
+        if (mapPoiIds == null)
             return;
-        int tileX = (int) (orazca.getPosition().x / data.tileSize);
-        int tileY = (int) (orazca.getPosition().y / data.tileSize);
+        int sites = 0;
         int blocked = 0;
-        for (int dx = -ORAZCA_CLEAR_TILES; dx <= ORAZCA_CLEAR_TILES; dx++)
-            for (int dy = -ORAZCA_CLEAR_TILES; dy <= ORAZCA_CLEAR_TILES; dy++)
-                if (dx * dx + dy * dy <= ORAZCA_CLEAR_TILES * ORAZCA_CLEAR_TILES && isColliding(tileX + dx, tileY + dy))
-                    blocked++;
-        clearTerrain(tileX, tileY, ORAZCA_CLEAR_TILES);
-        System.out.println("[TFR-Orazca] cleared the ground within " + ORAZCA_CLEAR_TILES + " tiles of ("
-                + tileX + "," + tileY + ") - " + blocked + " colliding tile(s) removed");
+        for (PointOfInterest poi : getAllPointOfInterest()) {
+            PointOfInterestData poiData = poi.getData();
+            if (poiData == null || poiData.type == null)
+                continue;
+            if (!poiData.type.equals("town") && !poiData.type.equals("capital") && !poiData.type.equals("castle"))
+                continue;
+            int tiles = TownRestoration.ORAZCA_POI_NAME.equals(poiData.name)
+                    ? ORAZCA_CLEAR_TILES : SETTLEMENT_CLEAR_TILES;
+            int tileX = (int) (poi.getCenter().x / data.tileSize);
+            int tileY = (int) (poi.getCenter().y / data.tileSize);
+            for (int dx = -tiles; dx < tiles; dx++)
+                for (int dy = -tiles; dy < tiles; dy++)
+                    if (isColliding(tileX + dx, tileY + dy))
+                        blocked++;
+            clearTerrain(tileX, tileY, tiles);
+            sites++;
+        }
+        System.out.println("[TFR-ClearGround] " + sites + " town/capital/castle site(s) cleared ("
+                + SETTLEMENT_CLEAR_TILES + " tiles each, " + ORAZCA_CLEAR_TILES + " around Orazca) - "
+                + blocked + " colliding tile(s) removed");
     }
 
-    /** Round 254: how far around Orazca the ground is guaranteed walkable. */
+    /** Round 254: how far around Orazca the ground is guaranteed walkable; round 255: and around every other
+     *  town, capital and castle. */
     private static final int ORAZCA_CLEAR_TILES = 6;
+    private static final int SETTLEMENT_CLEAR_TILES = 4;
 
     private void clearTerrain(int x, int y, int size) {
 
@@ -1725,7 +1738,7 @@ public class World implements Disposable, SaveFileContent {
             // Hide the reserve 4/5 of the rotation pool BEFORE anything bakes markers or picks
             // quest targets - see the placement loop's POOL_MULTIPLIER comment above.
             recordStarTowns(); // Center Towns (MOD_SCOPE #102): positions are final once placement is done
-            clearGroundAroundOrazca(); // round 254 (user: "no collision terrain in a small circle around this ruin")
+            clearGroundAroundSettlements(); // rounds 254-255: walkable ground around every town/capital/castle
             DungeonRotation.initializeNewWorld(this);
 
 //////////////////
@@ -3352,8 +3365,11 @@ public class World implements Disposable, SaveFileContent {
             return;
         BiomeData biome = biomes.get(biomeIndex);
 
-        int centerWorldX = (int) (point.getPosition().x / data.tileSize);
-        int centerWorldY = (int) (point.getPosition().y / data.tileSize);
+        // Round 255 (user: "the center of the player terrain does not seem 100% center of the map ... it seems
+        // off from the 5 surrounding cities"). A town's art is 48x48 or 64x64 and getPosition() is its bottom-left
+        // corner, so painting a disc around it landed up to two tiles off the town it belongs to. Centre.
+        int centerWorldX = (int) (point.getCenter().x / data.tileSize);
+        int centerWorldY = (int) (point.getCenter().y / data.tileSize);
         int radiusSq = radius * radius;
         int mm = data.miniMapTileSize;
         // Roads are one extra bit past the last real biome (see the road-drawing pass in
@@ -4545,9 +4561,9 @@ public class World implements Disposable, SaveFileContent {
                     WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID());
             if (!TownRestoration.isTownRestored(changes))
                 continue;
-            playerTownVisionAreas.add(new int[]{
-                    (int) (poi.getPosition().x / data.tileSize),
-                    (int) (poi.getPosition().y / data.tileSize),
+            playerTownVisionAreas.add(new int[]{ // round 255: the town's centre, not its corner
+                    (int) (poi.getCenter().x / data.tileSize),
+                    (int) (poi.getCenter().y / data.tileSize),
                     getTownVisionRadiusTiles(poi, changes)});
         }
         // Squared once, after the fact, so getTownVisionRadiusTiles() can stay in plain tiles for

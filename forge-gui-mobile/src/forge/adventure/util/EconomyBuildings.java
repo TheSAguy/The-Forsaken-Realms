@@ -1054,8 +1054,8 @@ public class EconomyBuildings {
             return;
         int radiusAfter = currentTownVisionRadius();
         int radius = Math.max(radiusBefore, radiusAfter) + 2;
-        int centerX = (int) (point.getPosition().x / world.getTileSize());
-        int centerY = (int) (point.getPosition().y / world.getTileSize());
+        int centerX = (int) (point.getCenter().x / world.getTileSize()); // round 255: centre, not corner
+        int centerY = (int) (point.getCenter().y / world.getTileSize());
         world.revealArea(centerX, centerY, radiusAfter, WorldStage.getInstance()::refreshBackgroundTile);
         world.refreshFogInRadius(centerX, centerY, radius, WorldStage.getInstance()::refreshBackgroundTile);
     }

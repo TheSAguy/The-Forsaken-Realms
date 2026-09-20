@@ -56,7 +56,7 @@ import zipfile
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_INSTALL = r"E:\GAMES\Forge_2"
-OUT_DIR = r"F:\FORGE\TFR-Standalone"
+OUT_DIR = r"C:\TFR\live"
 GAME_NAME = "The Forsaken Realms"
 PLANE = "The Forsaken Realms"
 

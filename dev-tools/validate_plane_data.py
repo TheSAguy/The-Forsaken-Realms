@@ -15,7 +15,7 @@ Writes a report to the path given as argv[2] (default: stdout only).
 import glob, json, os, re, sys, xml.etree.ElementTree as ET
 from collections import defaultdict, Counter
 
-PLANE = sys.argv[1] if len(sys.argv) > 1 else r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms"
+PLANE = sys.argv[1] if len(sys.argv) > 1 else r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms"
 COMMON = os.path.normpath(os.path.join(PLANE, "..", "common"))
 REPORT = sys.argv[2] if len(sys.argv) > 2 else None
 

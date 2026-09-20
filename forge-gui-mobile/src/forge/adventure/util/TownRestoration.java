@@ -1289,8 +1289,8 @@ public class TownRestoration {
      */
     static void applyTownVisionReveal(forge.adventure.world.World world, PointOfInterest poi,
                                        PointOfInterestChanges changes) {
-        int centerX = (int) (poi.getPosition().x / world.getTileSize());
-        int centerY = (int) (poi.getPosition().y / world.getTileSize());
+        int centerX = (int) (poi.getCenter().x / world.getTileSize()); // round 255: centre, not corner
+        int centerY = (int) (poi.getCenter().y / world.getTileSize());
         int radius = world.getTownVisionRadiusTiles(poi, changes);
         world.revealArea(centerX, centerY, radius, WorldStage.getInstance()::refreshBackgroundTile);
         world.refreshFogInRadius(centerX, centerY, radius + 2, WorldStage.getInstance()::refreshBackgroundTile);
@@ -1337,8 +1337,8 @@ public class TownRestoration {
             if (CAPITOL_POI_NAME.equals(poi.getData().name)) {
                 Integer capitolRadius = world.getColorTerritoryRadius("player");
                 if (capitolRadius != null && capitolRadius > world.getTownVisionRadiusTiles(poi, changes)) {
-                    int centerX = (int) (poi.getPosition().x / world.getTileSize());
-                    int centerY = (int) (poi.getPosition().y / world.getTileSize());
+                    int centerX = (int) (poi.getCenter().x / world.getTileSize()); // round 255
+                    int centerY = (int) (poi.getCenter().y / world.getTileSize());
                     int revealed = world.revealPlayerOwnedTiles(centerX, centerY, capitolRadius,
                             WorldStage.getInstance()::refreshBackgroundTile);
                     if (revealed > 0)

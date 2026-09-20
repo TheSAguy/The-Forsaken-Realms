@@ -50,10 +50,23 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-20 (round 254; v1.12 "Reward Balancing" RELEASED, rounds 247-254 after it; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-20 (round 255; v1.12 "Reward Balancing" RELEASED, rounds 247-255 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 254, 2026-09-20).** v1.12 is out; rounds 247-254 are unreleased. In order:
-  1. **Round 254 - the five things a new game found in round 253.** Entry boxes are capped at two tiles
+- **NEXT SESSION starts here (updated round 255, 2026-09-20).** v1.12 is out; rounds 247-255 are unreleased. In order:
+- **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
+  until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
+  and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
+
+  1. **Round 255 - the opening reads as one story, plus four corrections from play.** Quest 53 gained **stage 3
+     "Find the Warden at Orazca"**: leaving the cave no longer issues the Ring quest, the Warden in the ruin does
+     (he sets `wardenOrazca`, the stage's epilogue issues 75). The Capitol surge now sends its Archmage at the
+     attackable town **nearest the player's Capitol** (`towardCapitol`, replacing round 254's "furthest"; the log
+     line also stopped printing squared pixels as tiles). `clearGroundAroundSettlements()` clears 4 tiles around
+     every town/capital/castle and 6 around Orazca (`[TFR-ClearGround]`). The territory paint, town vision and
+     town reveals centre on `getCenter()` instead of the POI's corner - that was the "player terrain is not 100%
+     centre" report. Round 254's entry box is centred in both axes now (its first cut left a 64x64 town's north
+     side unenterable). **NEW WORLDS ONLY** for the terrain and quest parts. NOT yet verified in a game.
+  2. **Round 254 - the five things a new game found in round 253.** Entry boxes are capped at two tiles
      (`PointOfInterestMapSprite.ENTRY_BOX_MAX`; Orazca's 64x64 sprite was pulling the player in from four tiles
      out); `World.clearGroundAroundOrazca()` clears a 6-tile radius after placement (`[TFR-Orazca]`); quest 53's
      "Talk to the nearby mage" names the spawn cave by tag with `allowInactivePOI` (it had latched onto a random
@@ -63,7 +76,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      in both towns. Plus: the Capitol surge sends an **Archmage at the furthest** attackable town per color
      (`dispatch(world, color, forceArchmage, furthestTarget)`). **NEW WORLDS ONLY** for the placement/terrain/quest
      parts. NOT yet verified in a game - C: packaged for the user to test.
-  2. **Orazca, the ruin at the centre of the star (round 253).** The campfire's tile is now a ruined town named
+  3. **Orazca, the ruin at the centre of the star (round 253).** The campfire's tile is now a ruined town named
      Orazca - `radiusFactor` 0 puts it at the biome's exact centre - which the player restores like any wasteland
      town (200 gold + 5 wood) and which is the ONLY town the Capitol can be raised from, on the unchanged gate (5
      restored towns including it, 1000/100/100/50). Other towns show a disabled "Upgrade to Capitol (only at
@@ -87,7 +100,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      **`MapDialog` note worth keeping:** `activate()` loads EVERY entry whose condition passes, each overwriting the
      last, so the LAST match is what shows and every match's `action` fires - write dialog arrays least-specific
      first.
-  3. **Enemies that never reacted (round 252).** 378 of the plane's 2,359 map enemies had no `threatRange` and no
+  4. **Enemies that never reacted (round 252).** 378 of the plane's 2,359 map enemies had no `threatRange` and no
      `fleeRange`, so they ignored the player entirely (the user walked past one and took the chest beside it); 59 of
      them even patrol. `MapStage.applyDefaultReactionRange()` now gives such an enemy the plane's default radius at
      load - `mapEnemyDefaultThreatRange` 32 px (two tiles) / `mapEnemyDefaultPursueRange` 64 px in settings.json -
@@ -98,7 +111,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      Naktamun gym and `debug_map` are exempt automatically now, only their fighters take the default. Still open if
      the user wants whole set-pieces inert: a `threatRange` of -1 in those maps does it. **IN F: since 18:11**
      (packaged with round 253), not yet watched in the user's own play.
-  4. **The map (rounds 249-251), all three SEEN IN A RUNNING GAME (round 251's entry).** 249: every icon centered on
+  5. **The map (rounds 249-251), all three SEEN IN A RUNNING GAME (round 251's entry).** 249: every icon centered on
      `PointOfInterest.getCenter()`, an older save re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250:
      option A without the burst - when part of an icon is uncovered so are the tiles under it
      (`World.revealWithItsIcon()`, `[TFR-IconReveal]`), so a place appears on the overworld with its icon. 251: the
@@ -106,30 +119,30 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      round-247 "town" was that marker. Still offered, NOT done: aligning the full re-bake's claimed-rim tiles with the
      day-by-day repaint (pre-existing specks per AI territory), and the same ring on the HUD's corner minimap (left
      alone - it is always centered on the player).
-  5. **Rounds 247-251 are IN THE F: LIVE FOLDER** (packaged 15:04, jar `be6bb7ea998b`; C: and the agent folder match).
+  6. **Rounds 247-251 are IN THE F: LIVE FOLDER** (packaged 15:04, jar `be6bb7ea998b`; C: and the agent folder match).
      In the user's own next log: `[TFR-RingGift] Challenge Coin: had 0, granted 1 -> 1/1` (a fresh game that skips the
      intro) or `... have 1/1 - nothing to grant` (New Game+ that skips it); `[TFR-MapIcons] ... (layout 0 -> 1, N ms)`
      ONCE for each older save; `[TFR-IconReveal]` as places appear with their icons; the nine mirrored creatures
      walking head first; the crypt Zombie, the Disciple of Teferi, the Yule Town Polar Bear and vampire castle 4C's
      two Unholy Skulls walking their new routes (the Church tower's wizard was watched doing exactly that); no
      "Navigation error" line anywhere. Save 1 gained two decks in slots 1-2 (round 251's entry).
-  6. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
+  7. **Playtest v1.12.** Seen in a running game: the card budget, the resource purse, the pickup labels, the payday
      fix, the map icons, and (the 10:39 log, round 247) the world-gen town cut, the looted factor 0.25, a Bronze Coin
      ransom. NOT yet seen: legend sightings and the Capitol surge (239), "Sweep the Wilds" and the five-kill color
      hunts (240), the ruined Inn's notice, the Coin Challenge's shard fee (241), the record bonus (243), the
      dungeon-lifespan pull-in and hunts counting inside dungeons (244), quest 74 not issued after a tournament / held
      inside a ruin (245), the strolling guards (233).
-  7. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
+  8. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
      were left alone when seven outlier payouts were trimmed; "Sweep the Wilds" counts a dungeon when its last enemy
      dies, not when its loot is gone; round 236's terrain look-alike (a claimed wasteland crater drawn as green water).
-  8. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`; on 2026-09-19 upstream stood 12 commits past it,
+  9. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`; on 2026-09-19 upstream stood 12 commits past it,
      tip `db4304cc40d`: 9 Java files, none under `adventure/`, two in files we edit - `forge-game` `Game.java` and
      `player/Player.java` - and `git merge-tree` previewed the merge as CLEAN). The next merge is
      `3146e4b1036..upstream/master`, only once the user installs a newer daily into `E:\GAMES\Forge_2` - and from
      that moment the packager refuses until the merge lands. If a round must reach the live folder in between, see
      round 241: the live folder's stock tree still matches the repo, so plane folder + jar can be synced without
      BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad script.
-  9. **A full new-engine build takes 90 seconds with `--out C:\Users\User\TFR-Release`** (SSD) against an hour on
+  10. **A full new-engine build takes 90 seconds with `--out C:\TFR\live`** (SSD) against an hour on
      F: - the user play-tested from there this time. Check the running javaw's `-jar` path before packaging into
      either folder.
   9. Older small items: `dev-tools/art-import/art_convert_generic.py` still assumes right-facing art and cuts a wide
@@ -141,14 +154,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      later), the capital arenas' new Masters / Archmages, the caves. Watch for: a sprite whose size reads wrong for its
      rank (per-sprite fix: `enemy_scale.py` rule or a data override), a deck that plays badly (regenerate one with
      `deckgen179.py --only <slug>`), loot. Tooling in `dev-tools/art-import/` (README), inputs in
-     `F:\FORGE\TFR-Art-Staging\`.
+     `C:\TFR\art-staging\`.
      **Closed in round 183** (user: "Go with our recommendation", "Sure why not. Add some."): town-assault
      defenders and Archmage attack mages now read the biome's own roster with `SpawnTierWeighting.isExempt` instead of
      the quest-tag test, the Chest's Illegal Arena takes every Archmage (legends keep their bounty), and 36 of the 197
      joined the player-land roster (72 -> 108 entries). Nothing of the nine-site quest-tag list is left open.
   2. **Playtest rounds 173 + 177-183 (182 = a new engine: re-test duels and the AI; 183 = the hostility ladder)**: flat defeat gold, on-color Archmages, the Wasteland mix-in, one size per rank,
      the TFR medallion when loading on your own land, the three-quests step (+100 stone), the camp's hidden rare.
-  3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `F:\FORGE\TFR-Agent\`; launch via
+  3. **Agent play (MOD_SCOPE #117)** - read the `tfr-play` skill first. Isolated game `C:\TFR\agent\`; launch via
      the Task Scheduler (`agent_launch.cmd`), stop with `powershell -ExecutionPolicy Bypass -File agent_stop.ps1`,
      `agent_sync.cmd` after every package; `goto x=.. y=..` walks to a point inside a map. Open: `newgame` parameters, a
      spectated-duel speed setting, the AI pilot's shard write-back, long fog routes ending "stuck".
@@ -181,6 +194,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 255 (2026-09-20): **the opening reads as one story, and four corrections from play.** Quest 53 stage 3
+  "Find the Warden at Orazca" now issues the Ring quest, so the Warden's move into the ruin is part of the main
+  line instead of a dead end. The Capitol surge aims at the town nearest the player's Capitol (was "furthest"),
+  with the log's distance rooted. Clear ground extends to every town/capital/castle (4 tiles; Orazca 6). The
+  territory paint, town vision and reveals centre on the POI's centre rather than its corner. Round 254's entry
+  box is centred in both axes.
 - Round 254 (2026-09-20): **the five things a new game found in round 253**, plus the Capitol's answering Archmage.
   POI entry boxes capped at two tiles (Orazca's sprite is 64x64 and the entry box was the whole texture); the ground
   within 6 tiles of Orazca cleared after placement; quest 53's mage stage repointed at the spawn cave by tag +
@@ -204,18 +223,18 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   NPE on any enemy object made without the template. Built, in C:; F: and the first run in a game are owed.
 - Round 251 (2026-09-19): **the player's map marker wears a pulsing gold ring** (`ui/player_ring.png` +
   `MapViewScene.drawPlayerRing()`, drawn by the marker itself so zoom and scroll carry it) - the user picked option A
-  from a preview drawn on their own map. Packaged into `C:\Users\User\TFR-Release` (jar `be6bb7ea998b`, the 604-byte asset shipped); the F: live folder waits for the user to close their game, and rounds 250 + 251 will reach it together.
+  from a preview drawn on their own map. Packaged into `C:\TFR\live` (jar `be6bb7ea998b`, the 604-byte asset shipped); the F: live folder waits for the user to close their game, and rounds 250 + 251 will reach it together.
 - Round 250 (2026-09-19): **option A, without the cascade** - a place appears on the overworld the moment part of its map
   icon is uncovered (the tiles under the icon are explored; no burst, which would chain through neighbors' icons);
   NOT yet run in a game. **The five standing enemies patrol** (crypt Zombie, Disciple of Teferi, Yule Town Polar Bear,
   vampire castle 4C's two Unholy Skulls; 6 new waypoints, 4 reused). Coin top-up confirmed per coin type. Player-marker
-  preview sent (A recommended), not built. Built 13:21-13:28 (MVN EXIT 0), packaged into `C:\Users\User\TFR-Release`
+  preview sent (A recommended), not built. Built 13:21-13:28 (MVN EXIT 0), packaged into `C:\TFR\live`
   (jar `05ff6f861f99`); F: waits for the game to close.
 - Round 249 (2026-09-19): **option C - every map icon sits on its point of interest** (`PointOfInterest.getCenter()`,
   not stock's bottom-left corner); the map view's labels, quest markers, bookmarks and lines follow; an older save's
   map image is re-baked once at load (`World.mapIconLayout` + `migrateMapIconLayout()`, `[TFR-MapIcons]`). Tested in
   the agent game on a copy of the user's save: icons moved, no leftovers, one re-bake. The user's screenshot showed
-  their own position marker, not a town - told them. Rounds 247 + 248 reached the F: live folder at 12:04 (fast path, PACKAGER EXIT 0, jar `78bc464f6117`) once the user closed the game; round 249 followed at 12:26 (PACKAGER EXIT 0) and into `C:\Users\User\TFR-Release` - both hold jar SHA-1 `6b7000ef637c`. The agent folder sync (`agent_sync.cmd`) was started right after.
+  their own position marker, not a town - told them. Rounds 247 + 248 reached the F: live folder at 12:04 (fast path, PACKAGER EXIT 0, jar `78bc464f6117`) once the user closed the game; round 249 followed at 12:26 (PACKAGER EXIT 0) and into `C:\TFR\live` - both hold jar SHA-1 `6b7000ef637c`. The agent folder sync (`agent_sync.cmd`) was started right after.
 - Round 248 (2026-09-19): **the Church tower's wizard patrols** - stock Forge copied its route (81,80,82,77,76,78,83,79)
   from the monastery map without the eight waypoints; they are added under those ids on the monastery's loop,
   nudged off the pews. **All 20 dead patrol steps in 15 of our maps** (all inherited from stock) repaired: six enemies
@@ -229,14 +248,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   the coins up (`topUpChallengeCoins("[TFR-RingGift]")`) inside the `ringGiftGranted` guard, and its start-item loop
   obeys the New Game+ rule too. **Nine left-facing imported creatures mirrored** (`portrait_and_facing.py facing
   --apply`, 133 frames, PNGs only; the tool now refuses a second run). **Asked, not changed:** towns showing on the map
-  before the overworld exposes them - NEXT SESSION item 1. Packaged into the C: play-test folder (`C:\Users\User\TFR-Release`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
+  before the overworld exposes them - NEXT SESSION item 1. Packaged into the C: play-test folder (`C:\TFR\live`, 11:25, jar SHA-1 `78bc464f6117`, same saves); the F: live folder is still v1.12 - the user was playing from it and the round-246 agent sync was still reading it - so F: gets round 247 (fast path: plane folder + jar) once the game is closed.
 - Round 246 (2026-09-19): **v1.12 "Reward Balancing" - the release round.** Stamps modVersion 1.12 / modVersionDate
   09.19 / tfr.version 1.12 / manifestVersionCode 11200 / engine 09.18; `RELEASE_NOTES_v1.12.md` final. The 08:55 log
   (C: build, new Insane character) was clean and showed the card budget and the resource purse IN PLAY for the first
   time. v1.12 = rounds 225-246. **RELEASED on the user's word: tag `tfr-v1.12` @ `38d27f3b001`, published
   2026-09-19 16:54 UTC, Latest; zip 265.4 MB / APK 13.3 MB / assets.zip 217.8 MB; NOTHING is unreleased.**
   **The F: live folder is v1.12**: rebuilt by the packager's full stock copy (08:40-10:25, PACKAGER EXIT 0, 346 MB - it started on round 244's jar, but copies the plane folder and the jar LAST, and by then the repo stood at the tag). Read back: the jar's SHA-1 equals the release jar's (the one inside the v1.12 zip), config.json / settings.json / quests.json / the repainted portraits equal the tagged commit, the guide equals it but for line endings, 3,146 plane files, stock marker 2026-09-18 18:23:51. The agent folder sync (a full re-copy, F: to F:) was started at 10:26 and was still running when the thread closed - check it next session.
-- Round 245 (2026-09-19): first play-test of the 09.18 build (from `C:\Users\User\TFR-Release`). **Five body-crop
+- Round 245 (2026-09-19): first play-test of the 09.18 build (from `C:\TFR\live`). **Five body-crop
   portraits repainted** at the head end (Shellback Ankylosaur, Magmaback Crawler, Mossback Dragon, Skyreef Shark, Ashen
   Spinewyrm - the generic art importer cuts a portrait from the CENTER of the first Idle frame when the sheet has no
   painted one; PNG Avatar cells only; chosen from a contact sheet, the "thicker end" guess is unreliable). **Quest 74
@@ -918,12 +937,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   it). **Archmage attackers and the chest duel pick from the color's own roster** (14-18 per color, was all 56 catalog
   Archmages). **The Wasteland mix-in on the player's land fires** (it looked for biome "colorless"; the file says
   "waste") at 40% (`playerColorlessMixChance`). Three decks written into the user's save slot 1 (slots 5-7). Art prep
-  in `F:\FORGE\TFR-Art-Staging\` (outside the repo) and the tier-size table - both wait on the user.
+  in `C:\TFR\art-staging\` (outside the repo) and the tier-size table - both wait on the user.
 - Round 176 (2026-09-11, client only - nothing to build): **the first watched agent session** began (Jordan Lipswalker, Blue
   Dragon / Green, Normal) and ended early at the user's call after a lost interception duel. `settle` no longer answers a lost
   ante's Bronze Coin / Buy Back prompt with OK. A long session is cheaper from a FRESH conversation (this one's context
   made every agent step expensive). Agent saves: slot 2 "Jordan start", slot 3 "Jordan day 1".
-- Round 175 (2026-09-10, built 22:05, PACKAGED 22:15, 310 MB - live folder = v1.09 + rounds 173-175; agent folder synced): **agent play, isolated.** `F:\FORGE\TFR-Agent\` = the user's copy
+- Round 175 (2026-09-10, built 22:05, PACKAGED 22:15, 310 MB - live folder = v1.09 + rounds 173-175; agent folder synced): **agent play, isolated.** `C:\TFR\agent\` = the user's copy
   of the live folder (renamed) + its own APPDATA profile; launcher / stop / sync / setup scripts in `dev-tools/agent/`;
   isolation verified (the user's log and saves untouched). Walker fixes in mod-added files: exclusive far edges on
   point-of-interest rectangles, the ring next to a point of interest stays closed unless the player stands on it,
@@ -964,7 +983,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   marked Latest. Three assets: `The-Forsaken-Realms-v1.09.zip` (269.9 MB), `forsaken-realms-1.09-signed-aligned.apk` (12.7 MB),
   `assets.zip` (175.5 MB). `RELEASE_NOTES_v1.09.md` is the body. **Rounds 137-170 are all shipped - nothing is unreleased.**
   Stamps: modVersion 1.09 / modVersionDate 09.10 / tfr.version 1.09 / manifestVersionCode 10900 / engineBuildVersion
-  2.0.15-SNAPSHOT-09.09. Built from a copy (`--out C:\Users\User\TFR-Release`) while the user played; the live folder
+  2.0.15-SNAPSHOT-09.09. Built from a copy (`--out C:\TFR\live`) while the user played; the live folder
   still carries the pre-stamp config (modVersion 1.08) until its next package. Android from `C:\TFR-build` reset to the
   tag + `subst R:`, keystore EE:60:39:25 verified.
 - Round 170 (2026-09-10, PACKAGED 15:24 - live folder = the 09.09 engine with rounds 158-170): storage deposit rule fixed - `canDeposit` used the STALE `isEquipped` flag
@@ -1374,7 +1393,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   runtime failure, three `serialVersionUID` pins, a `BiomeStructure` index bug; plus `dev-tools/validate_plane_data.py`
   (run it before packaging) and the **Rally rune as the "Hire a guard" reward** (quest 43 stage 2 epilogue: guard
   briefing, then `grantRewards`; only quests issued AFTER this round carry it - the user's NG+ save keeps its old copy).
-- **Live folder** `F:\FORGE\TFR-Standalone\The Forsaken Realms\` = the round-128 jar (built 14:53), `PACKAGE_OK` 16:13,
+- **Live folder** `C:\TFR\live\The Forsaken Realms\` = the round-128 jar (built 14:53), `PACKAGE_OK` 16:13,
   on the 09.06 stock assets. **This package is the user's re-test of the merged engine** (release step 4). Verified in
   the shipped jar: `[TFR-DungeonLooted]`/`poiLootedDay` (r128) and upstream's `FrameRate.sampleAdventure`/
   `updateHistoricalPeak` (r127); shipped plane data reads `engineBuildVersion` 09.06 + `dungeonLootedDespawnFactor` 0.5.
@@ -1408,7 +1427,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   merge); (4) **the user re-tests the merged engine** - the gate before anything is stamped; (5) then: bump plane
   `config.json` `modVersion` 1.06 / `modVersionDate`, `forge-gui-android/pom.xml` `tfr.version` 1.06 +
   `manifestVersionCode` 10600, write `RELEASE_NOTES_v1.06.md` (rounds 120-127: the merge plus every post-v1.05
-  round), desktop zip via `python standalone-packaging/build_standalone.py --out C:\Users\User\TFR-Release --zip`
+  round), desktop zip via `python standalone-packaging/build_standalone.py --out C:\TFR\live --zip`
   (**NEVER repackage the live folder while `javaw.exe` runs** - the user may be playing; the `--out` build is the
   release/backup copy), Android APK + `assets.zip` per ANDROID_RELEASE.md **from a C: copy of the repo**, tag
   `tfr-v1.06`, publish with `gh -R TheSAguy/The-Forsaken-Realms`.
@@ -1770,7 +1789,7 @@ Maven + JDK are installed portably on each machine (not tracked in git). Verify 
 `mvn -pl forge-gui-mobile -am compile -DskipTests -o` (add `-o` once dependencies are already
 cached locally) before considering a change done.
 
-## Deploy (live game folder at `F:\FORGE\TFR-Standalone\The Forsaken Realms\`)
+## Deploy (live game folder at `C:\TFR\live\The Forsaken Realms\`)
 
 **This is the folder the user actually plays.** The old `E:\GAMES\FORGE` three-jar splice-deploy
 target is **retired** (since round 26, 2026-08-19) - don't touch it, and don't reintroduce `jar uf`
@@ -1795,14 +1814,14 @@ Deploy loop, in order:
    the TFR icon. This is the only jar the game ships - the three-jar problem is gone with the old
    deploy target.
 3. **Package** - `python standalone-packaging/build_standalone.py`. Assembles
-   `F:\FORGE\TFR-Standalone\The Forsaken Realms\` from `BASE_INSTALL` (stock engine shell) + the
+   `C:\TFR\live\The Forsaken Realms\` from `BASE_INSTALL` (stock engine shell) + the
    repo-built jar + `forge-gui/res/adventure/The Forsaken Realms/` + a git-derived overlay of the
    mod's non-adventure `res` edits (so future rounds' res edits are picked up automatically).
    The plane folder is **always** rebuilt fresh, so a changed resource needs no separate copy step -
    and unlike the old `cp -r` mirror, files deleted from the repo really do disappear from the live
    folder.
    - `--zip` **only** when building a release asset; it also forces the full stock-asset copy. No
-     local zips are kept - upload it, then delete it from `F:\FORGE\TFR-Standalone\`.
+     local zips are kept - upload it, then delete it from `C:\TFR\live\`.
    - `--full` forces the stock-asset re-copy on a local build - needed only for suspected local
      corruption. An engine-version change forces it automatically without the flag.
 4. **Read `PACKAGE_OK.txt`** in the live folder before telling the user it is safe to play. The

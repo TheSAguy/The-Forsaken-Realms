@@ -5,8 +5,8 @@ import collections, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from roster179 import ROSTER
 
-PLANE = r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms"
-STAGE = r"F:\FORGE\TFR-Art-Staging"
+PLANE = r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms"
+STAGE = r"C:\TFR\art-staging"
 RANK = {"A": "Common", "D": "Uncommon", "M": "Rare", "X": "Mythic"}
 E = json.load(open(os.path.join(PLANE, "world", "enemies.json"), encoding="utf-8"))
 names = {e["name"].lower() for e in E} | {(e.get("nameOverride") or "").lower() for e in E}

@@ -130,6 +130,41 @@
   {
     &quot;condition&quot;: [
       {
+        &quot;getQuestFlag&quot;: {
+          &quot;key&quot;: &quot;mainQuest&quot;,
+          &quot;op&quot;: &quot;&gt;=&quot;,
+          &quot;val&quot;: 1
+        }
+      },
+      {
+        &quot;checkQuestFlag&quot;: &quot;wardenOrazca&quot;,
+        &quot;not&quot;: true
+      }
+    ],
+    &quot;text&quot;: &quot;\&quot;You found it, then.\&quot; The Warden sets a hand on a fallen pillar. \&quot;Orazca. Your seat, before the Night of Chains - and the first thing you will put back. Stone and coin will raise it, and you have neither yet.\&quot;&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;\&quot;Where do I start?\&quot;&quot;,
+        &quot;text&quot;: &quot;\&quot;With the five who owe you. Benalia, Tolaria, Urborg, Shiv, Llanowar - the Ring Cities whose councils cracked your prison. Every one of them pledged you a gift and none have paid it. Walk the Ring, Guardian, collect what is owed, and come back able to build.\&quot;&quot;,
+        &quot;options&quot;: [
+          {
+            &quot;name&quot;: &quot;(Walk the Ring)&quot;,
+            &quot;action&quot;: [
+              {
+                &quot;setQuestFlag&quot;: {
+                  &quot;key&quot;: &quot;wardenOrazca&quot;,
+                  &quot;val&quot;: 1
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;condition&quot;: [
+      {
         &quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;,
         &quot;getQuestFlag&quot;: {
           &quot;key&quot;: &quot;Ch1CastlesComplete&quot;,

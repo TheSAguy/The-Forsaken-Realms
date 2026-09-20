@@ -10,16 +10,16 @@ jar and OFF unless the game starts with `TFR_AGENT_PORT`. Claude drives the over
 and decks over loopback HTTP; **Forge's AI plays every duel on the player's seat** (the fight stays the player's:
 equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-play.md`. Client:
 `dev-tools/agent/tfr_agent.py` (its docstring lists every verb and command). Repo root:
-`F:\FORGE\C--Users-vicwaver-MTG-Forge` - run the commands below from there.
+`C:\TFR\repo` - run the commands below from there.
 
 ## 1. Isolation - the rule that makes this safe
 
-- The agent game runs from **`F:\FORGE\TFR-Agent\The Forsaken Realms`** (a mirror of the live folder) with
-  **`APPDATA=F:\FORGE\TFR-Agent\profile`**, so Forge keeps its saves, preferences and `forge.log` in
-  `F:\FORGE\TFR-Agent\profile\ForsakenRealms`. The user's `%APPDATA%\ForsakenRealms` is never opened, and it can
+- The agent game runs from **`C:\TFR\agent\The Forsaken Realms`** (a mirror of the live folder) with
+  **`APPDATA=C:\TFR\agent\profile`**, so Forge keeps its saves, preferences and `forge.log` in
+  `C:\TFR\agent\profile\ForsakenRealms`. The user's `%APPDATA%\ForsakenRealms` is never opened, and it can
   run while the user plays their own game.
 - **Never** start the bridge from the live folder with the user's profile, and never touch the user's slots.
-- Check isolation after a launch: the agent's log is `F:\FORGE\TFR-Agent\profile\ForsakenRealms\forge.log`; the
+- Check isolation after a launch: the agent's log is `C:\TFR\agent\profile\ForsakenRealms\forge.log`; the
   user's `%APPDATA%\ForsakenRealms\forge.log` must NOT rotate (a second game on the same profile renames it to
   `forge.<timestamp>.log` at launch). The Load screen lists only the agent's own saves.
 - Card art is shared (`%LOCALAPPDATA%\Forge\Cache\pics`), which is intended.
@@ -31,7 +31,7 @@ equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-pla
 
 ```
 python dev-tools/agent/agent_setup.py        # once: seeds the profile (1280x720 window, sound off); keeps existing files
-schtasks /create /tn TFR-Agent /tr "cmd /c F:\FORGE\C--Users-vicwaver-MTG-Forge\dev-tools\agent\agent_launch.cmd" /sc once /st 00:00 /f
+schtasks /create /tn TFR-Agent /tr "cmd /c C:\TFR\repo\dev-tools\agent\agent_launch.cmd" /sc once /st 00:00 /f
 schtasks /run /tn TFR-Agent
 python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the first usable scene
 ```

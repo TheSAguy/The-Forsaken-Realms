@@ -35,12 +35,15 @@ public class PointOfInterestMapSprite extends MapSprite {
         // WorldStage tests the player against to enter a POI, and it used to be the whole texture - which for a
         // Center Town / Orazca is CenterTownNeutral at 64x64, four tiles, while the broken-town art actually
         // drawn over a ruin is a fraction of that. The player was pulled in from four tiles out. Cap it at two
-        // tiles, centred on the sprite's width and sitting on its base, so entering means walking into the
-        // building rather than its aura. A POI whose art is already this small (most caves and dungeons, the old
-        // campfire) is untouched.
+        // tiles, CENTRED on the sprite in both axes, so entering means walking onto the icon itself rather than
+        // into its aura, and it reads the same from every direction. (First cut sat the box on the sprite's base,
+        // which made the north side of a 64x64 town unenterable at the tiles the player naturally walks - caught
+        // in the agent game.) A POI whose art is already this small (most caves and dungeons, the old campfire)
+        // is untouched.
         float entryW = Math.min(texture.getRegionWidth(), ENTRY_BOX_MAX);
         float entryH = Math.min(texture.getRegionHeight(), ENTRY_BOX_MAX);
-        boundingRect = new Rectangle(getX() + (texture.getRegionWidth() - entryW) / 2f, getY(), entryW, entryH);
+        boundingRect = new Rectangle(getX() + (texture.getRegionWidth() - entryW) / 2f,
+                getY() + (texture.getRegionHeight() - entryH) / 2f, entryW, entryH);
     }
 
     public PointOfInterest getPointOfInterest() {

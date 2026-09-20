@@ -11503,7 +11503,7 @@
 				],
 				"prologue": {},
 				"epilogue": {
-					"text": "The portal's light fades behind you. Grey ash to every horizon - and around your fire, five roads run out like the points of a star to five walled cities: the Ring. Their councils cracked your prison; now they owe you the means to fight. Far beyond them, five alien presences press against your awareness: the Five, already carving up the corpse of your realm. Not for long.",
+					"text": "The portal's light fades behind you. Grey ash to every horizon - and around the broken stones at the heart of the star, five roads run out to five walled cities: the Ring. Their councils cracked your prison; now they owe you the means to fight. Far beyond them, five alien presences press against your awareness: the Five, already carving up the corpse of your realm. Not for long.",
 					"options": [
 						{
 							"name": "(Continue)",
@@ -11520,8 +11520,37 @@
 									"setMapFlag": {
 										"key": ""
 									},
-									"issueQuest": "75",
+									"issueQuest": "",
 									"POIReference": ""
+								}
+							]
+						}
+					]
+				},
+				"POIToken": ""
+			},
+			{
+				"id": 3,
+				"name": "Find the Warden at Orazca",
+				"description": "The broken stones at the heart of the star are Orazca - your seat, before the Night of Chains. The Warden went ahead of you. Find him there.",
+				"POITags": [
+					"Orazca"
+				],
+				"mapFlag": "wardenOrazca",
+				"mapFlagValue": 1,
+				"objective": "QuestFlag",
+				"prerequisiteIDs": [
+					2
+				],
+				"prologue": {},
+				"epilogue": {
+					"text": "The Warden watches you take in the ruin. \"Five roads, five cities, five debts,\" he says. \"Collect them, and Orazca rises. Leave them, and the Five take the rest of the realm while you argue with rubble.\"",
+					"options": [
+						{
+							"name": "(Continue)",
+							"action": [
+								{
+									"issueQuest": "75"
 								}
 							]
 						}

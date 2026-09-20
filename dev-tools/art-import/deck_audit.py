@@ -7,7 +7,7 @@ import carddb
 from roster179 import ROSTER
 from deckgen179 import THEMES, BAD, BAD_OK
 
-D = sys.argv[1] if len(sys.argv) > 1 else r"F:\FORGE\TFR-Art-Staging\decks"
+D = sys.argv[1] if len(sys.argv) > 1 else r"C:\TFR\art-staging\decks"
 DB = carddb.load()
 flags = collections.Counter()
 rows = []

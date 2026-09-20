@@ -4921,7 +4921,7 @@ loopback HTTP bridge (`forge.adventure.agent`, off unless `TFR_AGENT_PORT` is se
 pace of a turn-based game (time only passes while the player moves or waits); Forge's AI pilots the player's seat in
 every duel with the fight staying the player's (equipment, ante, rewards, statistics). Round 161 built the bridge,
 the observation, the actions, the walker and the client (`dev-tools/agent/tfr_agent.py`). Round 175 isolated it (its own
-game folder `F:\FORGE\TFR-Agent` and APPDATA profile - never the user's saves), fixed the walker walking back into the
+game folder `C:\TFR\agent` and APPDATA profile - never the user's saves), fixed the walker walking back into the
 town it had just left, and wrote the `tfr-play` skill. Remaining: the first full session for the user to watch,
 `newgame` parameters, a speed setting for the spectated duel, the AI pilot's shard write-back.
 

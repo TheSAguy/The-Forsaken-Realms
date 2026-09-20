@@ -1201,7 +1201,7 @@ public class TerritoryControl {
             // Round 254 (user: "That one that gets generated, make sure it's an Archmage and make sure it targets
             // the furthest of the 5 possible target towns to attack"). The one-off answer to the Capitol is the
             // top tier and goes for the far edge of what this color can reach, not the near pick it would roll.
-            dispatch(world, color, true, true);
+            dispatch(world, color, true, true); // Archmage, aimed at the town nearest the player's Capitol
             sent++;
         }
         if (sent > 0)
@@ -1335,11 +1335,12 @@ public class TerritoryControl {
 
     /**
      * Round 254: the two overrides the Capitol surge asks for.
-     * @param forceArchmage  skip the tier roll and send the color's Archmage tier (one of its named Archmages).
-     * @param furthestTarget pick the attackable town FURTHEST from this color's holdings instead of the weighted
-     *                       near pick - the Capitol's answer comes from the far edge of the map, not next door.
+     * @param forceArchmage skip the tier roll and send the color's Archmage tier (one of its named Archmages).
+     * @param towardCapitol pick the attackable town NEAREST the player's Capitol instead of the weighted near
+     *                      pick (round 255, user: "make the target the one of the 5 that's the closest to the
+     *                      player capitol ... it will target a town pointing in the direction of the capitol").
      */
-    private static void dispatch(World world, String color, boolean forceArchmage, boolean furthestTarget) {
+    private static void dispatch(World world, String color, boolean forceArchmage, boolean towardCapitol) {
         // TARGET selection is frontier-aware, but the LAUNCH is castle-only (user refinement
         // 2026-08-08, same day this briefly launched from the nearest owned property): candidates
         // are ranked by distance to the color's NEAREST owned property (castle + its towns/
@@ -1500,27 +1501,32 @@ public class TerritoryControl {
         List<Float> weights = new ArrayList<>();
         float originalRoll = 0f;
         float totalWeight = 0f;
-        // Round 254 (user, on the mage every color sends when the player's Capitol goes up: "make sure it targets
-        // the furthest of the 5 possible target towns to attack"). Same distance measure the ordinary pick ranks
-        // by - to this color's nearest holding - and the same in-flight exclusion, so the answer sets out for the
-        // far edge of what this color can reach instead of the town next door.
-        if (furthestTarget && target == null) {
-            PointOfInterest furthest = null;
-            double bestDistance = -1;
-            for (PointOfInterest candidate : attackable) {
-                if (inFlightTargetIds.contains(candidate.getID()))
-                    continue;
-                double distance = distToNearestSource(candidate, ownedSources);
-                if (distance > bestDistance) {
-                    bestDistance = distance;
-                    furthest = candidate;
+        // Round 255 (user, revising round 254's "furthest" rule: "Make the target the one of the 5 that's the
+        // closest to the player capitol. So, it will target a town pointing in the direction of the capitol
+        // basically"). Among everything this color can attack, take the town nearest the player's seat - the
+        // Capitol ITSELF excluded, since the point is the approach and not a direct assault on it - so five
+        // colors answering at once all march inward rather than each picking something convenient. Same
+        // in-flight exclusion as the ordinary pool. Distances are squared pixels (dst2), rooted only for the log.
+        if (towardCapitol && target == null) {
+            PointOfInterest capitol = TownRestoration.findCapitol();
+            if (capitol != null) {
+                PointOfInterest nearest = null;
+                double bestDistance = Double.MAX_VALUE;
+                for (PointOfInterest candidate : attackable) {
+                    if (inFlightTargetIds.contains(candidate.getID()) || candidate == capitol)
+                        continue;
+                    double distance = candidate.getCenter().dst2(capitol.getCenter());
+                    if (distance < bestDistance) {
+                        bestDistance = distance;
+                        nearest = candidate;
+                    }
                 }
-            }
-            if (furthest != null) {
-                target = furthest;
-                System.out.println("[TFR-CapitolSurge] " + color + " aims at the furthest target it can reach: "
-                        + furthest.getDisplayName() + " (" + Math.round(bestDistance / 16d) + " tiles from its nearest holding, "
-                        + attackable.size() + " attackable)");
+                if (nearest != null) {
+                    target = nearest;
+                    System.out.println("[TFR-CapitolSurge] " + color + " marches on the town nearest the Capitol: "
+                            + nearest.getDisplayName() + " (" + Math.round(Math.sqrt(bestDistance) / 16d)
+                            + " tiles from it, " + attackable.size() + " attackable)");
+                }
             }
         }
         if (target == null) {

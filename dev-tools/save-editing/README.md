@@ -31,8 +31,8 @@ A `.sav` is zlib-compressed **Java serialization** (`forge.adventure.util.SaveFi
 ## Running them
 
 ```bash
-S="F:/FORGE/C--Users-vicwaver-MTG-Forge/dev-tools/save-editing"
-JAR="F:/FORGE/TFR-Standalone/The Forsaken Realms/forge-gui-mobile-dev-2.0.15-SNAPSHOT-jar-with-dependencies.jar"
+S="C:/TFR/repo/dev-tools/save-editing"
+JAR="C:/TFR/live/The Forsaken Realms/forge-gui-mobile-dev-2.0.15-SNAPSHOT-jar-with-dependencies.jar"
 SAV="C:/Users/User/AppData/Roaming/ForsakenRealms/adventure/The Forsaken Realms/1_save_slot.sav"
 
 "/c/Program Files/Java/jdk-22/bin/javac" -cp "$JAR" -d "$S" "$S/Inspect.java"

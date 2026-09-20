@@ -2,7 +2,7 @@
 
 The toolchain that turned the user's art folder (227 sheets: 124 usable Ragnarok Online sheets and 73 generic 3D /
 comic renders) into 197 enemies with sprites, themed decks, stats, rewards and spawn tables. Inputs and the converted
-atlases live OUTSIDE the repo in `F:\FORGE\TFR-Art-Staging\` (`ro\`, `gen\`, `decks\`, `qa\`); these scripts are the
+atlases live OUTSIDE the repo in `C:\TFR\art-staging\` (`ro\`, `gen\`, `decks\`, `qa\`); these scripts are the
 record of how, and the start of the next import. Licensing: the user decided on 2026-09-11 to use this art; the
 sources are credited in `standalone-packaging/CREDITS.md`.
 

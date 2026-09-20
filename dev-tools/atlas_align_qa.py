@@ -22,7 +22,7 @@ except ImportError:
     sys.exit("PIL required: pip install pillow")
 
 PLANE = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else (
-    r"F:\FORGE\C--Users-vicwaver-MTG-Forge\forge-gui\res\adventure\The Forsaken Realms")
+    r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms")
 ALPHA = 8        # a pixel counts as drawn above this alpha
 MERGE_GAP = 4    # blobs closer than this are one figure (a raised axe, a trailing tail)
 TOLERANCE = 0.12 # a measured pitch this far from the declared width is a real mismatch

@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 255 (2026-09-20) - adventure-side only
+
+`stage/PointOfInterestMapSprite.java` - the capped entry box is centred in both axes. `world/World.java` -
+`clearGroundAroundSettlements()` (towns, capitals and castles; `SETTLEMENT_CLEAR_TILES`), and
+`repaintBiomeAroundTown()` / `playerTownVisionAreas` centre on `getCenter()`. `util/TownRestoration.java` +
+`util/EconomyBuildings.java` - the same centre for `applyTownVisionReveal()`, the Capitol's reveal disc and the
+Outlook refresh. `util/TerritoryControl.java` - `dispatch()`'s fourth argument is `towardCapitol` (nearest the
+player's Capitol, Capitol excluded), and the surge log roots its distance. Plane data: `quests.json` (quest 53
+stage 3), `maps/map/towns/orazca.tmx` + `maps/map/towns/player_capital.tmx` (the Warden's Ring send-off).
+
 ## Round 254 (2026-09-20) - adventure-side only
 
 `stage/PointOfInterestMapSprite.java` - `ENTRY_BOX_MAX` caps the POI entry rectangle at two tiles, centred on the
