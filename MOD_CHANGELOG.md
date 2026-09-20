@@ -17795,6 +17795,15 @@ belonged to. They use `getCenter()` now, the same correction round 249 made for 
 sprite's base left the north side of a 64x64 town unenterable at the tiles a player naturally walks (caught in the
 agent game, where `goto poi` stood next to Orazca and never went in). It is centred in both axes now.
 
+**Engine note, learned the hard way while wiring this.** `issueQuest` in a dialog only works from a QUEST-SYSTEM
+dialog. `MapDialog` handles the field by setting `questAccepted` and firing `emitQuestAccepted()`, whose listener
+list is populated only for a PREBUILT dialog - the kind `AdventureQuestController.displayNextDialog()` builds
+(`new MapDialog(data, stage, -1, null)`). A dialog parsed from a map's own `dialog` property reads the field and
+drops it. Moving the Ring hand-off into the Warden's .tmx dialog looked tidier and quietly did nothing; it belongs
+in quest 53's stage-3 epilogue, which is how this chain always issued 75. Seen in the agent game: the conversation
+completes the stage, and `Oaths at the Ring` is active at the next dialog-drain point - entering a location - since
+the queue only drains when no dialog is already on screen.
+
 Checked: `javac` + checkstyle clean, the plane validator clean, quest 53's three stages and both Warden dialogs
 re-parsed.
 
