@@ -17757,6 +17757,42 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 261: nothing that roams draws taller than its rank (2026-09-20)
+
+User, watching the Capitol surge arrive: *"I just saw the size of the Archmages sent to attack. They are
+HUGE.... Green looked correct in size, the rest looks way too big. Blue was close, Black was MASSIVE."* Then, on
+being told they are named legends: *"even a named legendary creature can never be that big, it's the size of the
+screen."*
+
+The surge did not cause this. Round 254 forces the Mythic tier, so the rarest art in each colour's roster now
+walks up to the player every time a Capitol is built - the tail of a distribution that was always there became
+the thing you meet.
+
+Round 178 normalized every non-boss enemy to the hero's body, one size per rank: Apprentice 13 / Adept 16 /
+Master 20 / Archmage 24. But `dev-tools/enemy_scale.py` sets `EnemyData.scale` from the **body box** - the opaque
+pixels of the Idle frames, minus the outer tenth - while `CharacterSprite` draws the **whole frame**. For
+ordinary art those agree within a quarter: 656 of the 1,071 roaming tiered enemies draw between 1.0x and 1.25x
+their rank's body. Art with wings, a tail, an aura or a wide transparent margin does not:
+
+| enemy | rank | body | drawn |
+|---|---|---|---|
+| Sporeshell Crawler | Adept | 16px | 46.1px |
+| Aurelian Dragon | Archmage | 24px | 56.0px |
+| Minotaur Warcaller | Master | 20px | 45.9px |
+| Mill Mole | Archmage | 24px | 44.6px |
+
+So the ceiling went where the drawing happens rather than into the data. `TuningData.tierSizeMultiplier` gained
+the third argument its second one was always there for: the frame may draw up to `enemySpriteFrameCap` (1.4)
+times the rank's own body, and past that the cue is scaled down to land exactly on it. Each rank keeps its own
+ceiling - a capped Archmage at 33.6px still reads bigger than a capped Master at 28px - and the cap only ever
+shrinks, so 118 of 1,071 sprites change and the other 953 are untouched. Bosses and `keepSize` set pieces are
+exempt; they are authored large on purpose and round 178's BOSS_MIN floor keeps them above an Archmage.
+
+`EnemySprite`'s constructor takes the same ceiling, so the collision box shrinks with the art instead of
+claiming ground the sprite no longer covers.
+
+The cap lives in `settings.json`, so retuning it is a repackage rather than a rebuild.
+
 ## Round 260: the Capitol surge picks from the attacker's own five (2026-09-20)
 
 User, with a screenshot of a mage walking at their Capitol from the far side of the world: *"I think there was a

@@ -299,15 +299,21 @@ public class CharacterSprite extends MapActor {
         // guards the same cue through setTierCue().
         float scale = 1f;
         String tier = tierCue;
+        // Round 261: a boss or a hand-placed set piece is authored large on purpose and keeps its native frame;
+        // everything else is held to the ceiling in tierSizeMultiplier. A sprite with no EnemyData behind it (a
+        // roaming guard given a cue through setTierCue) is ordinary, so it is capped like any other.
+        boolean keepNativeSize = false;
         if (this instanceof EnemySprite) {
             forge.adventure.data.EnemyData enemyData = ((EnemySprite) this).getData();
             if (enemyData != null) {
                 scale = enemyData.scale;
                 tier = enemyData.tier;
+                keepNativeSize = enemyData.boss || enemyData.keepSize;
             }
         }
         if (tier != null)
-            scale *= Config.instance().getTuningData().tierSizeMultiplier(tier, currentFrame.getRegionHeight() * scale);
+            scale *= Config.instance().getTuningData().tierSizeMultiplier(tier,
+                    currentFrame.getRegionHeight() * scale, keepNativeSize);
 
         setHeight(currentFrame.getRegionHeight() * scale);
         setWidth(currentFrame.getRegionWidth() * scale);

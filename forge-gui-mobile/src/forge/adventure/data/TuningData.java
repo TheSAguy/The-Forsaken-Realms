@@ -311,6 +311,10 @@ public class TuningData {
     public float enemyTierScaleUncommon = 1.0f;  // Adept 16
     public float enemyTierScaleRare = 1.25f;     // Master 20/16
     public float enemyTierScaleMythic = 1.5f;    // Archmage 24/16
+    // Round 261 (user, on the surge's Archmages: "even a named legendary creature can never be that big, it's
+    // the size of the screen"). The ceiling on what a roaming enemy DRAWS, as a multiple of its rank's body -
+    // see tierSizeMultiplier(String, float, boolean). 0 or less turns the ceiling off.
+    public float enemySpriteFrameCap = 1.4f;
 
     /** Render multiplier for an enemy tier; 1.0 for anything unrecognised, so a stock plane or a
      *  hand-edited tier string can never shrink a sprite to nothing. */
@@ -606,6 +610,41 @@ public class TuningData {
      * stays for CharacterSprite's call.
      */
     public float tierSizeMultiplier(String tier, float baseHeight) {
-        return tierScale(tier);
+        return tierSizeMultiplier(tier, baseHeight, false);
     }
+
+    /**
+     * The rank cue, with a ceiling on how tall the sprite may actually draw (round 261).
+     * <p>
+     * Round 178 made a rank one size - Apprentice 13 / Adept 16 / Master 20 / Archmage 24, against the hero's
+     * 13px body - and dev-tools/enemy_scale.py set each EnemyData.scale so the creature's BODY BOX lands there.
+     * A body box is the opaque pixels of the Idle frames minus the outer tenth; what gets DRAWN is the whole
+     * frame. For ordinary art the two agree within a quarter, but art with wings, a tail, an aura or a wide
+     * transparent margin does not, and the tail of that distribution reached 4.7x - the user watched a 107px
+     * Tikbalang walk on a map whose tiles are 16px.
+     * <p>
+     * So the frame is capped here, at {@link #enemySpriteFrameCap} times the rank's own body. Each rank keeps
+     * its own ceiling, so a capped Archmage still draws bigger than a capped Master and the size still reads as
+     * rank. The cap only ever shrinks - a sprite already under it comes back with the plain cue, which is 94 of
+     * the 1,071 roaming tiered enemies changed and the other 977 untouched.
+     *
+     * @param baseHeight     the frame height the sprite would draw at BEFORE this cue, in pixels. 0 or less (a
+     *                       caller that does not know it) skips the ceiling and returns the plain cue.
+     * @param keepNativeSize a boss or a keepSize set piece - authored large on purpose, never capped.
+     */
+    public float tierSizeMultiplier(String tier, float baseHeight, boolean keepNativeSize) {
+        float cue = tierScale(tier);
+        if (keepNativeSize || baseHeight <= 0f || enemySpriteFrameCap <= 0f)
+            return cue;
+        float ceiling = tierScale(tier) * STANDARD_BODY_PIXELS * enemySpriteFrameCap;
+        float drawn = baseHeight * cue;
+        if (drawn <= ceiling)
+            return cue;
+        return cue * (ceiling / drawn);
+    }
+
+    /** The hero's body, the size every rank is a multiple of - enemyTierScale* are 13/16, 1, 20/16 and 24/16 of
+     *  it. Round 178's measured hero body is 13px inside a 16px frame; the rank scales are written against the
+     *  frame, so 16 is the reference here too. */
+    private static final float STANDARD_BODY_PIXELS = 16f;
 }

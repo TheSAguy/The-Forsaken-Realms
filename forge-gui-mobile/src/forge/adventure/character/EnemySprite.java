@@ -125,7 +125,8 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         // spawn's collision test uses (and the first frames' bounding rect) was the art size alone, while the
         // sprite draws at art x scale x cue - an Archmage was placement-tested at two thirds of its drawn size.
         if (data.tier != null)
-            scale *= Config.instance().getTuningData().tierSizeMultiplier(data.tier, getHeight() * scale);
+            scale *= Config.instance().getTuningData().tierSizeMultiplier(data.tier, getHeight() * scale,
+                    data.boss || data.keepSize); // round 261: the box has to shrink with the art, or it lies
         setWidth(getWidth() * scale);
         setHeight(getHeight() * scale);
         updateBoundingRect();

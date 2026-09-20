@@ -1,0 +1,29 @@
+# Verdant Blight v2 - save 1 slot 2, mono-green toxic (2026-09-20)
+#
+# v1 mixed the toxic core with green beaters that do nothing for the poison clock, and one of them -
+# Hunted Wumpus - hands the AI a free creature out of its hand. A toxic creature deals its damage AND
+# its poison, so a body with toxic is strictly ahead of a vanilla body of the same size here.
+#
+# The curve now runs Branchblight Stalker (3/1 toxic 2 on turn two) into Ichorspit Basilisk, which
+# blocks all day on deathtouch while still adding poison, into Venomous Brutalizer and Tyrranax
+# Atrocity at toxic 3. Paladin of Predation ends it: toxic 6 twice is ten poison.
+#
+# Cut from v1: Hunted Wumpus (see above), Old-Growth Troll, Primal Adversary, Greater Tanuki,
+# Evolved Spinoderm, Contagious Vorrac x2 (all beaters with no toxic), Rampant Growth x2 and The
+# Hunter Maze x2 (ramp a 16-land mono-colour deck topping out at seven does not need).
+
+16 Forest
+
+1 Venerated Rotpriest
+3 Branchblight Stalker
+2 Copper Longlegs
+4 Ichorspit Basilisk
+1 Bloated Contaminator
+3 Venomous Brutalizer
+4 Lattice-Blade Mantis
+2 Plague Nurse
+2 Tyrranax Atrocity
+1 Paladin of Predation
+
+2 Noxious Assault
+1 Goliath Hatchery

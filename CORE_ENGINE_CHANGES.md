@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 261 (2026-09-20) - adventure-side only
+
+`data/TuningData.java` - `enemySpriteFrameCap` (settings.json) and the three-argument
+`tierSizeMultiplier(String, float, boolean)`: the rank cue, scaled down when the frame would draw past
+`enemySpriteFrameCap` x the rank's body. The two-argument form delegates to it with `keepNativeSize=false`.
+
+`character/CharacterSprite.java` - the draw path passes `enemyData.boss || enemyData.keepSize` through.
+
+`character/EnemySprite.java` - the constructor does the same, so the collision box follows the capped art.
+
 ## Round 260 (2026-09-20) - adventure-side only
 
 `util/TerritoryControl.java` - the `towardCapitol` branch of `dispatch()` now ranks `attackable` by

@@ -1,0 +1,28 @@
+# Ichor Wings v2 - save 1 slot 1, mono-black toxic (2026-09-20)
+#
+# The v1 list had singletons of cards the collection holds three and four of, and left the best
+# black card in the save - Vraska, Betrayal's Sting - sitting unused. This is the same deck, played
+# to its full copies: the poison clock runs on cheap toxic bodies, Karumonix pumps the rats, and
+# everything expensive is either removal that proliferates or a 6/6 that costs four.
+#
+# Corrupted (Bonepicker Skirge, Ravenous Necrotitan) wants three poison on the opponent early, which
+# is what the one-drops and Ichor Rats' "each player gets a poison counter" are there to guarantee.
+#
+# Cut from v1: Prosthetic Injector x2 (a +0/+2 equipment is slower than another toxic body),
+# Pestilent Syphoner x2 and Plague Stinger (1/1 fliers, outclassed by Bonepicker Skirge).
+
+12 Swamp
+3 The Dross Pits
+
+3 Bilious Skulldweller
+3 Flensermite
+3 Blightbelly Rat
+2 Ichor Rats
+3 Karumonix, the Rat King
+3 Bonepicker Skirge
+3 Ravenous Necrotitan
+1 Phyrexian Obliterator
+
+4 Drown in Ichor
+2 Anoint with Affliction
+1 Vraska, Betrayal's Sting

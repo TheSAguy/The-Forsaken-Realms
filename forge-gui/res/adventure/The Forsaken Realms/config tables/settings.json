@@ -230,6 +230,13 @@
     "enemyTierScaleRare": 1.25,
     "enemyTierScaleMythic": 1.5,
 
+    // Round 261 (user, on an Archmage that filled the screen: "even a named legendary creature can never be
+    // that big"). A rank sets the size of a creature's BODY; what gets drawn is the whole frame, and art with
+    // wings, a tail or an aura draws far past its body - up to 4.7x before this. The ceiling below is a
+    // multiple of the rank's own body, so an Archmage may reach 33.6px and a Master 28px, and the size still
+    // reads as rank. Bosses and keepSize set pieces are exempt. 0 turns the ceiling off.
+    "enemySpriteFrameCap": 1.4,
+
     // Round 177 (user request): losing a duel costs a FLAT amount of the gold you carry - or all of it when you
     // have less. Replaces the difficulty's percentage (config.json "goldLoss", still the fallback when a value
     // here is 0). A Bronze Coin handed over on the ante prompt still waives it. Applies to existing characters.
