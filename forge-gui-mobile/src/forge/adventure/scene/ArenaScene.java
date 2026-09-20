@@ -177,25 +177,44 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // Round 221 (user, with a screenshot: "Center the 3 buttons on the Arena Lvl2. Currently they
         // seem aligned to the left"). This row sits ABOVE done/gold/start with nothing beside it, so
         // it is centered on the stage's own width rather than hung off doneButton's x. Clamped to
-        // doneButton's x for the portrait stage (270 wide), where the 367-unit row cannot fit and
-        // centering would push it off the left edge - there it keeps the old left alignment, which
-        // is a known pre-existing overflow, not made worse. The lone Level 1 upgrade button is
-        // centered the same way so the two levels agree.
+        // doneButton's x for the portrait stage (270 wide), where the 367-unit row cannot fit.
+        // The lone Level 1 upgrade button is centered the same way so the two levels agree.
+        // Round 263 (user, testing on a 2160x3840 phone: "The new Coin Duel in the Arena needs
+        // tweaking"). Round 221 left the portrait case as "a known pre-existing overflow, not made
+        // worse"; on a real phone it is Coin Challenge starting at x=255 on a 270-wide stage and
+        // running a hundred units past the edge. Thirds of the portrait width would be 81 units and
+        // would truncate "Switch to Challenging Arena", so when the row does not fit it WRAPS: the
+        // long toggle takes the full width on its own row, the two short labels share the row under
+        // it. 16 units of extra height on a 445-unit canvas, and no label loses room.
+        float buttonHeight = doneButton.getHeight() * 0.8f;
         float rowY = doneButton.getY() + doneButton.getHeight() + 10f;
         float tripleRowWidth = 3f * ARENA_TRIPLE_BUTTON_WIDTH + 2f * ARENA_TRIPLE_BUTTON_GAP;
-        float tripleRowLeft = Math.max(doneButton.getX(), (stage.getWidth() - tripleRowWidth) / 2f);
-        float wideLeft = Math.max(doneButton.getX(), (stage.getWidth() - ARENA_WIDE_BUTTON_WIDTH) / 2f);
+        float margin = doneButton.getX();
+        float usableWidth = stage.getWidth() - 2f * margin;
+        boolean wrapRow = tripleRowWidth > usableWidth;
+        float tripleRowLeft = Math.max(margin, (stage.getWidth() - tripleRowWidth) / 2f);
+        float wideLeft = Math.max(margin, (stage.getWidth() - ARENA_WIDE_BUTTON_WIDTH) / 2f);
+        // Wrapped: the toggle alone on the upper row, Deck Tester and Coin Challenge sharing the
+        // lower one. Unwrapped: the original three-across row, unchanged.
+        float pairWidth = (usableWidth - ARENA_TRIPLE_BUTTON_GAP) / 2f;
+        float toggleWidth = wrapRow ? usableWidth : ARENA_TRIPLE_BUTTON_WIDTH;
+        float toggleX = wrapRow ? margin : tripleRowLeft;
+        float toggleY = wrapRow ? rowY + buttonHeight + 4f : rowY;
+        float shortWidth = wrapRow ? pairWidth : ARENA_TRIPLE_BUTTON_WIDTH;
+        float testerX = wrapRow ? margin : tripleRowLeft + ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP;
+        float coinX = wrapRow ? margin + pairWidth + ARENA_TRIPLE_BUTTON_GAP
+                : tripleRowLeft + 2f * (ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP);
 
         arenaUpgradeButton = Controls.newTextButton("[%80]Upgrade to Level 2 (" + EconomyBuildings.costLabel(0, EconomyBuildings.ARENA_UPGRADE_WOOD, EconomyBuildings.ARENA_UPGRADE_STONE, 0) + ")", this::promptUpgradeArena);
-        arenaUpgradeButton.setSize(ARENA_WIDE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
+        arenaUpgradeButton.setSize(Math.min(ARENA_WIDE_BUTTON_WIDTH, usableWidth), buttonHeight);
         arenaUpgradeButton.setPosition(wideLeft, rowY);
         arenaUpgradeButton.setVisible(false);
         ui.addActor(arenaUpgradeButton);
 
         arenaModeToggleButton = Controls.newTextButton("", this::toggleArenaMode);
         // Round 216: a third button joined this row, so the three share it in equal thirds.
-        arenaModeToggleButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        arenaModeToggleButton.setPosition(tripleRowLeft, rowY);
+        arenaModeToggleButton.setSize(toggleWidth, buttonHeight);
+        arenaModeToggleButton.setPosition(toggleX, toggleY);
         arenaModeToggleButton.setVisible(false);
         ui.addActor(arenaModeToggleButton);
 
@@ -209,16 +228,16 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // between the toggle's right edge (5+220=225, plus a 10-unit gap) and the gold/start
         // buttons starting at x=380.
         deckTesterButton = Controls.newTextButton("[%80]Deck Tester", this::promptDeckTester);
-        deckTesterButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        deckTesterButton.setPosition(tripleRowLeft + ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP, rowY);
+        deckTesterButton.setSize(shortWidth, buttonHeight);
+        deckTesterButton.setPosition(testerX, rowY);
         deckTesterButton.setVisible(false);
         ui.addActor(deckTesterButton);
 
         // Round 216 (user spec): third button on the same row - duel an enemy still holding one of
         // your Bronze Challenge Coins to win it back.
         coinChallengeButton = Controls.newTextButton("[%80]Coin Challenge", this::promptCoinChallenge);
-        coinChallengeButton.setSize(ARENA_TRIPLE_BUTTON_WIDTH, doneButton.getHeight() * 0.8f);
-        coinChallengeButton.setPosition(tripleRowLeft + 2f * (ARENA_TRIPLE_BUTTON_WIDTH + ARENA_TRIPLE_BUTTON_GAP), rowY);
+        coinChallengeButton.setSize(shortWidth, buttonHeight);
+        coinChallengeButton.setPosition(coinX, rowY);
         coinChallengeButton.setVisible(false);
         ui.addActor(coinChallengeButton);
     }

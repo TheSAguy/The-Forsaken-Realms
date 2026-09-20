@@ -65,8 +65,56 @@ public class EditionProgression {
             Set<String> restricted = new HashSet<>(Arrays.asList(configData.restrictedEditions));
             all.removeIf(e -> restricted.contains(e.getCode()));
         }
+        // Round 262 (user, at the research station: "How can there be 0 cards for that edition?").
+        // CAN_MAKE_BOOSTER is Forge's question, not ours. Unlimited (2ED) answers yes, and then not
+        // one card in the live reward pool is printed as 2ED - so the station listed it as
+        // "(0/5) - 0 cards": unreachable, because a card you can never be given can never raise the
+        // owned count, and pointless, because researching it would unlock nothing. The pickup side
+        // (ResearchScene.thresholdForEditionCode) already answered Integer.MAX_VALUE for these while
+        // the screen floored the same question to THRESHOLD_MIN; dropping them here is what makes
+        // the two agree. The colour shards are dealt from this list too, so this also stops a dud
+        // edition becoming some colour's reward pool.
+        Map<String, Integer> totals = cardsPerEdition();
+        if (!totals.isEmpty()) {
+            int before = all.size();
+            List<String> empty = new ArrayList<>();
+            all.removeIf(e -> {
+                if (totals.getOrDefault(e.getCode(), 0) > 0)
+                    return false;
+                empty.add(e.getCode());
+                return true;
+            });
+            if (!loggedEmptyEditions) {
+                loggedEmptyEditions = true;
+                System.out.println("[TFR-Research] " + all.size() + " of " + before
+                        + " boosterable editions hold cards in the reward pool; hiding the "
+                        + empty.size() + " that hold none: " + empty);
+            }
+        }
         return all;
     }
+
+    /**
+     * How many cards of the live reward pool each edition holds, counted once per session.
+     * <p>
+     * Empty when the card database has not loaded yet - {@link #getMasterEditionList()} then skips
+     * the filter rather than returning nothing, because a pool that has not loaded must never be
+     * read as "every edition is empty".
+     */
+    private static Map<String, Integer> cardsPerEdition() {
+        if (cardsPerEdition == null) {
+            Map<String, Integer> totals = new HashMap<>();
+            for (forge.item.PaperCard pc : RewardData.getAllCards())
+                totals.merge(pc.getEdition(), 1, Integer::sum);
+            cardsPerEdition = totals;
+        }
+        return cardsPerEdition;
+    }
+
+    /** Backing cache for {@link #cardsPerEdition()}. */
+    private static Map<String, Integer> cardsPerEdition;
+    /** So the line above is printed once a session rather than on every research screen open. */
+    private static boolean loggedEmptyEditions = false;
 
     /**
      * Splits the master edition list into 6 groups (5 colors + neutral) and stores the result on

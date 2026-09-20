@@ -2779,6 +2779,17 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Rounds 262-263 (2026-09-20) - adventure-side only
+
+`util/EditionProgression.java` - `cardsPerEdition()` (session cache of the reward pool's per-edition counts) and
+a filter in `getMasterEditionList()` dropping editions the pool holds none of. An empty tally (card DB not
+loaded) skips the filter.
+
+`scene/ArenaScene.java` - the Level 2 button row wraps to two rows when three across would not fit the stage;
+sizes and positions come from `stage.getWidth()` rather than the landscape canvas's constants.
+
+`util/TerritoryControl.java` - the revert notification names the attacking colour as well as the former owner.
+
 ## Round 261 (2026-09-20) - adventure-side only
 
 `data/TuningData.java` - `enemySpriteFrameCap` (settings.json) and the three-argument

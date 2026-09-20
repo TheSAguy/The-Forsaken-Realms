@@ -2609,7 +2609,12 @@ public class TerritoryControl {
         if (isSacked)
             message = displayName + " was sacked by " + capitalize(mage.territoryColor) + " and left in ruins!";
         else if (isRevert)
-            message = displayName + " breaks free from " + capitalize(revertedFromColor) + " - reverts to neutral!";
+            // Round 263 (user, reading their own log: "was held, I think by Blue, then it just went
+            // back to Neutral and I have no idea why"). The sentence named the colour the town broke
+            // FROM and never the attacker whose failed roll broke it, so a player who had just watched
+            // a blue mage walk up to a green town read it as Blue having held the place. Both ends now.
+            message = capitalize(mage.territoryColor) + "'s assault on " + displayName + " failed - it breaks free from "
+                    + capitalize(revertedFromColor) + " and reverts to neutral!";
         else
             message = displayName + " has fallen to " + capitalize(mage.territoryColor) + "!";
         System.out.println("[TerritoryControl] " + message);

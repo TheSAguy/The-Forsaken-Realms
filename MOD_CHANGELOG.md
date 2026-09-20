@@ -17757,6 +17757,57 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 263: the Arena's three buttons fit a phone, and a freed town names its attacker (2026-09-20)
+
+**The Arena on a phone.** User, testing v1.12 on a 2160x3840 emulator: *"The Armory buttons and The new Coin
+Duel in the Arena needs tweaking."* The Armory half is round 253's shop-overlap fix
+(`liftModButtonsAboveCards`), which landed after v1.12 and is in the current build - nothing to do but re-test.
+The Arena half is real.
+
+Round 216 put three buttons on the Level 2 row and sized them against the LANDSCAPE canvas: the strip from
+`doneButton`'s x (5) to the gold/start cluster at x=380, three thirds of 117 with 8-unit gaps. Portrait loads
+`ui/arena_portrait.json`, which is 270 wide with done/gold/start stacked along the bottom at x=5/65/125. Three
+117-wide buttons need 367, so **Coin Challenge began at x=255 and ran to 372** - a hundred units past the right
+edge. Round 221's comment called that *"a known pre-existing overflow, not made worse"*; on a real phone it is
+the button not being there.
+
+Thirds of the portrait width would be 81 units and would truncate "Switch to Challenging Arena". So when the row
+does not fit it **wraps**: the long toggle takes the full usable width on its own row, the two short labels share
+the row beneath. 16 units of extra height on a 445-unit canvas; no label loses room; landscape is byte-identical.
+
+**A freed town now names its attacker.** User, from their own log: *"The white city in the middle,
+5-ring-cities, was held, I think by Blue, then it just went back to Neutral and I have no idea why."*
+
+The log had it exactly. Green took Benalia on day 5 (a Mythic mage against a neutral town at chance 0.8). On day
+6 a **blue** Mythic mage attacked it at chance 0.9, **lost the roll**, and a lost roll against an enemy colour's
+town reverts it to neutral rather than flipping it to the attacker - the rule from MOD_SCOPE.md #7. Benalia broke
+free and the player's Ring City life bonus went back up, 11/11 to 12/12.
+
+Working as designed, but the notification read *"Benalia breaks free from Green - reverts to neutral!"* - naming
+the colour it broke from and never the attacker whose failure did it. A player who had just watched a BLUE mage
+walk up to the town read that as Blue having held it. It now names both ends: *"Blue's assault on Benalia failed
+- it breaks free from Green and reverts to neutral!"*
+
+## Round 262: an edition with no cards is not something to research (2026-09-20)
+
+User, at the research station with a screenshot of `Unlimited Edition (2ED) (0/5) - 0 cards`: *"How can there be
+0 cards for that edition?"*
+
+The row was honest. "0 cards" is how many cards of the live reward pool are printed as 2ED, and that is genuinely
+none. The list comes from `EditionProgression.getMasterEditionList()`, which asks Forge's question - can this
+edition make a booster - and never ours: does our pool contain any of it. So 2ED was offered as something to work
+towards while being **unreachable** (a card you can never be given can never raise the owned count) and
+**worthless** (researching it unlocks nothing).
+
+The two halves of the code already disagreed. `ResearchScene.thresholdForEditionCode()`, the card-pickup side,
+answers `Integer.MAX_VALUE` - never - for an edition with no cards. The screen asked the same question through
+`thresholdFor(total)`, which floors to `THRESHOLD_MIN`, and so printed an attainable-looking "0/5". Filtering at
+the source is what makes them agree.
+
+`getMasterEditionList()` is also what the colour shards are dealt from, so this stops a dud edition becoming some
+colour's reward pool as well. If the card database has not loaded when the count first runs, every edition would
+count zero - so an empty tally skips the filter entirely rather than emptying the list.
+
 ## Round 261: nothing that roams draws taller than its rank (2026-09-20)
 
 User, watching the Capitol surge arrive: *"I just saw the size of the Archmages sent to attack. They are
