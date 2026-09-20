@@ -1962,16 +1962,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             + "\" from save (renamed or removed from enemies.json?)");
                     continue;
                 }
-                // Territory mages keep their dispatch-time sprite-scale normalization across a
-                // save/load (2026-08-26, companion to TerritoryControl.dispatch()'s own clone) -
-                // this rebuild reads the SHARED template, which still carries an oversized
-                // "Legends" scale, so without re-normalizing here a saved 1x mage came back 2x.
-                boolean isTerritoryMage = territoryTargetIds != null && i < territoryTargetIds.size()
-                        && territoryTargetIds.get(i) != null;
-                if (isTerritoryMage && resolved.scale != 1.0f) {
-                    resolved = new EnemyData(resolved);
-                    resolved.scale = 1.0f;
-                }
+                // Round 264: NO scale override here. What stood here forced `resolved.scale = 1.0f`
+                // for every territory mage, as the companion to a clone TerritoryControl.dispatch()
+                // made on 2026-08-26 - back when `scale` meant "this creature is deliberately drawn
+                // big" and 1.0 meant "ordinary size". Round 178 inverted that: `scale` is now the
+                // NORMALIZING factor, art x scale = the hero's body, so 1.0 means "draw this art
+                // raw". Round 178 removed the override from dispatch() for exactly that reason and
+                // missed this copy, so a mage drew correctly when it set out and was inflated by
+                // 1/scale the moment it came back from a save - which, with autosave on the day
+                // tick, is nearly always. The user saw it colour by colour, in proportion to each
+                // mage's own scale: a 16px wizard (1.08) looked right, a 124px dragon (0.30) was
+                // three times too big. The sprite is built from the template's own normalized scale
+                // now, exactly like a freshly dispatched one.
                 EnemySprite sprite = new EnemySprite(resolved);
                 sprite.setX(x.get(i));
                 sprite.setY(y.get(i));

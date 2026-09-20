@@ -17757,6 +17757,58 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 265: a repelled attack leaves the town with its defender (2026-09-20)
+
+User: *"I don't understand that logic. If green held it, Blue attacks and loses, but then it 'Breaks free' back
+to Neutral... That does not make sense to me. IF blue loses, it should just remain green."*
+
+The rule was deliberate. MOD_SCOPE.md #7: *"it reverts to neutral/broken instead of changing hands directly
+color-to-color. The revert case is deliberate - it's what gives the player a window to step in and
+claim/restore a contested town themselves rather than territory just ping-ponging between the 5 colors."*
+
+The goal is sound and the implementation had a flaw underneath the fiction: **an attack on an enemy town could
+not lose.** Win and you take it; lose and your rival loses it anyway. A gamble that pays either way is not a
+gamble - which is why Benalia changed hands four times in ten days of the user's save (green took it, blue's
+failed roll freed it, blue later took it, red's failed roll freed it, black took it). Round 99's own comment on
+Ring Towns already read *"captured or repelled only"* - "repelled" meaning the defender keeps it - and the roll
+never implemented that.
+
+A failed capture roll is now a repel: the mage is spent, the town does not change hands, and the defender is
+announced as holding it. **The cost, accepted by the user when choosing this over a softer 75/25 split:** the
+five colors will consolidate and hold towns longer, and fewer towns will drift back to neutral for the player to
+claim - including Ring Cities, which pushes on the 3-of-5 loss condition. The player's window does not close
+entirely: a WINNING attacker still sacks the town into a neutral ruin on the separate 20%
+`ATTACKER_SACKS_TOWN_CHANCE` roll.
+
+`isRevert` was set in exactly one place - the branch this removes - so the whole revert path went with it,
+including round 263's rewording of the revert notification, which can no longer fire.
+
+## Round 264: the real reason the Archmages were huge (2026-09-20)
+
+Round 261 capped what a roaming enemy may DRAW, and that stopped the Archmages filling the screen. Right
+ceiling, wrong diagnosis: the mages were not merely big-framed art, they were being actively **un-normalized
+every time the game reloaded them**.
+
+Round 178 made `EnemyData.scale` the NORMALIZING factor - art x scale = the hero's body - and removed the scale
+override from `TerritoryControl.dispatch()`, saying why in the code: *"1.0 would UNDO that and draw a
+high-resolution sprite several times too big."* Its companion, added the same day and named by that very comment
+(*"companion to TerritoryControl.dispatch()'s own clone"*), was never removed. `WorldStage`'s roaming-enemy load
+path still forced `resolved.scale = 1.0f` for every territory mage.
+
+So a mage drew correctly when it set out and was inflated the moment it came back from a save - which, with
+autosave on the day tick, is nearly always. The error is exactly 1/scale, which is why the user read it color by
+color:
+
+| art | normalized scale | forced to 1.0 | reported |
+|---|---|---|---|
+| ~16px wizard | 1.08 | no visible change | *"Green looked correct in size"* |
+| ~40px | 0.78 | 1.3x too big | *"Blue was close"* |
+| 124px Aurelian Dragon | 0.30 | **3.3x too big** | *"Black was MASSIVE"* |
+
+The override is gone; the sprite is built from the template's own normalized scale, exactly like a freshly
+dispatched one. Round 261's ceiling stays - it is a real backstop for art whose FRAME outruns its body - but it
+is no longer doing the work of hiding this.
+
 ## Round 263: the Arena's three buttons fit a phone, and a freed town names its attacker (2026-09-20)
 
 **The Arena on a phone.** User, testing v1.12 on a 2160x3840 emulator: *"The Armory buttons and The new Coin

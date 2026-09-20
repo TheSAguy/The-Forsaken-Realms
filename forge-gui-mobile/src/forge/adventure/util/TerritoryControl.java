@@ -2390,11 +2390,10 @@ public class TerritoryControl {
 
         PointOfInterestData newData;
         String repaintColor;
-        boolean isRevert = false;
-        String revertedFromColor = null;
-        // "Sacked" (user spec 2026-08-11): distinct from isRevert above (which means the attacker
-        // LOST the capture roll) - this means the attacker WON but a separate roll destroyed the
-        // town instead of keeping it. Both end up colorless/neutral, but need different messaging.
+        // Round 265 removed isRevert/revertedFromColor: a lost capture roll used to hand the town
+        // back to neutral, and now leaves it exactly where it was, so nothing reaches here to report.
+        // "Sacked" (user spec 2026-08-11) is the remaining way an attack ends in a neutral town: the
+        // attacker WON and a separate roll destroyed the place instead of keeping it.
         boolean isSacked = false;
 
         if (targetNeutral) {
@@ -2517,7 +2516,8 @@ public class TerritoryControl {
             boolean sackedInstead = attackerWins && !isRingTown(target) && attackerSacksInstead(world); // Ring Towns: captured or repelled only (round 99)
             System.out.println("[TFR-CaptureOdds] " + mage.territoryColor + " mage (tier=" + mage.getData().tier
                     + ", chance=" + captureChance + ") attacking " + target.getDisplayName() + " (" + targetOwnerColor
-                    + ") -> " + (sackedInstead ? "CAPTURED but SACKED" : attackerWins ? "CAPTURED" : "REVERTED to neutral"));
+                    + ") -> " + (sackedInstead ? "CAPTURED but SACKED" : attackerWins
+                    ? "CAPTURED" : "REPELLED - " + targetOwnerColor + " holds it"));
             if (sackedInstead) {
                 // Attacker won the capture roll but the separate sack roll destroyed the town
                 // instead of keeping it - reuses the SAME waste-template lookup the losing-roll
@@ -2530,10 +2530,17 @@ public class TerritoryControl {
                 newData = matchingTownData(target.getData(), mage.territoryColor);
                 repaintColor = mage.territoryColor;
             } else {
-                newData = matchingWasteData(target.getData(), targetOwnerColor);
-                repaintColor = "colorless";
-                isRevert = true;
-                revertedFromColor = targetOwnerColor;
+                // Round 265 (user: "IF blue loses, it should just remain green. Why would it go to
+                // Neutral"). A lost roll used to revert the town to neutral - MOD_SCOPE.md #7 wanted
+                // the player to get a window at contested towns - but it also meant an attack could
+                // not lose: take the town on a win, deny it to the rival on a loss. Now a failed
+                // assault is what it says it is. The mage is spent (the caller removes the sprite
+                // either way) and the town does not change hands, so there is nothing to transform.
+                // The player's window survives in the sack roll above, which still ruins a town the
+                // attacker WON.
+                GameHUD.getInstance().addNotification(capitalize(targetOwnerColor) + " holds "
+                        + target.getDisplayName() + " against " + capitalize(mage.territoryColor) + "!");
+                return;
             }
         }
         if (newData == null)
@@ -2556,7 +2563,7 @@ public class TerritoryControl {
             if (lostChanges != null) {
                 lostChanges.getMapFlags().remove(TownRestoration.TOWN_RESTORED_FLAG);
                 System.out.println("[TFR-Ownership] " + displayName + " leaves player hands ("
-                        + (isSacked ? "sacked" : isRevert ? "reverted" : "captured") + ") - townRestored flag cleared");
+                        + (isSacked ? "sacked" : "captured") + ") - townRestored flag cleared");
             }
         }
         // The town's territory may have GROWN past RECOLOR_RADIUS (town expansion, up to
@@ -2578,7 +2585,7 @@ public class TerritoryControl {
         // and the townRestored flag, for free. Both ids are cleared, the old one so nothing can be
         // resurrected and the new one so an earlier occupant's leftovers cannot be inherited.
         forgetTownState(world, preCaptureId, target.getID(), displayName,
-                isSacked ? "sacked" : isRevert ? "reverted" : "captured");
+                isSacked ? "sacked" : "captured");
         if (newData.name != null && newData.name.startsWith("Waste Town Center")) // Center Towns revert to FUNCTIONING neutral towns
             WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID()).getMapFlags().put(TownRestoration.NEUTRAL_SEEDED_FLAG, (byte) 1);
         // Seed the captured town's territory at everything the repaint below actually paints
@@ -2608,14 +2615,9 @@ public class TerritoryControl {
         String message;
         if (isSacked)
             message = displayName + " was sacked by " + capitalize(mage.territoryColor) + " and left in ruins!";
-        else if (isRevert)
-            // Round 263 (user, reading their own log: "was held, I think by Blue, then it just went
-            // back to Neutral and I have no idea why"). The sentence named the colour the town broke
-            // FROM and never the attacker whose failed roll broke it, so a player who had just watched
-            // a blue mage walk up to a green town read it as Blue having held the place. Both ends now.
-            message = capitalize(mage.territoryColor) + "'s assault on " + displayName + " failed - it breaks free from "
-                    + capitalize(revertedFromColor) + " and reverts to neutral!";
         else
+            // Round 265: there is no "breaks free" message any more - a failed assault leaves the town
+            // with its defender and returns long before here, announcing itself where it happens.
             message = displayName + " has fallen to " + capitalize(mage.territoryColor) + "!";
         System.out.println("[TerritoryControl] " + message);
         GameHUD.getInstance().addNotification(message);

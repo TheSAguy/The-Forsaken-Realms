@@ -2779,6 +2779,14 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Rounds 264-265 (2026-09-20) - adventure-side only
+
+`stage/WorldStage.java` - the roaming-enemy load path no longer forces `scale = 1.0f` on territory mages; they
+rebuild from the template's own round-178 normalized scale.
+
+`util/TerritoryControl.java` - a lost capture roll against an enemy colour's town is a repel: notification, and
+return without transforming the town. `isRevert`/`revertedFromColor` and the revert notification are removed.
+
 ## Rounds 262-263 (2026-09-20) - adventure-side only
 
 `util/EditionProgression.java` - `cardsPerEdition()` (session cache of the reward pool's per-edition counts) and
