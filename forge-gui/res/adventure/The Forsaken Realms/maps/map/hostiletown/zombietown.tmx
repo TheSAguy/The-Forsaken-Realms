@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="113">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="117">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -55,6 +55,7 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="535.91" y="247.089">
    <properties>
+    <property name="waypoints" value="115,116"/>
     <property name="enemy" value="Ghoul Gravecaller"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>
@@ -133,6 +134,7 @@
   </object>
   <object id="72" template="../../../../common/maps/obj/enemy.tx" x="633.844" y="232.766">
    <properties>
+    <property name="waypoints" value="113,114"/>
     <property name="enemy" value="Demoncaller"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>
@@ -232,5 +234,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="113" template="../../../../common/maps/obj/waypoint.tx" x="560" y="208"/>
+  <object id="114" template="../../../../common/maps/obj/waypoint.tx" x="592" y="208"/>
+  <object id="115" template="../../../../common/maps/obj/waypoint.tx" x="464" y="208"/>
+  <object id="116" template="../../../../common/maps/obj/waypoint.tx" x="496" y="208"/>
  </objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="156">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="158">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -28,6 +28,7 @@
  <objectgroup id="4" name="Objects">
   <object id="50" template="../../../../common/maps/obj/enemy.tx" name="Sand Golem" x="468.333" y="324.667">
    <properties>
+    <property name="waypoints" value="156,157"/>
     <property name="enemy" value="Sand Golem"/>
    </properties>
   </object>
@@ -39,7 +40,7 @@
     <property name="waypoints" value="110,82,75,71"/>
    </properties>
   </object>
-  <object id="54" template="../../../../common/maps/obj/enemy.tx" name="Griffin" x="407.751" y="441.583">
+  <object id="54" template="../../../../common/maps/obj/enemy.tx" name="Griffin" x="416" y="384">
    <properties>
     <property name="enemy" value="Griffin"/>
     <property name="threatRange" type="int" value="40"/>
@@ -252,12 +253,12 @@
     <property name="enemy" value="Greater Sandwurm"/>
    </properties>
   </object>
-  <object id="120" template="../../../../common/maps/obj/enemy.tx" name="Greater Sandwurm" x="443" y="732">
+  <object id="120" template="../../../../common/maps/obj/enemy.tx" name="Greater Sandwurm" x="432" y="752">
    <properties>
     <property name="enemy" value="Greater Sandwurm"/>
    </properties>
   </object>
-  <object id="121" template="../../../../common/maps/obj/enemy.tx" name="Griffin" x="561" y="427">
+  <object id="121" template="../../../../common/maps/obj/enemy.tx" name="Griffin" x="464" y="416">
    <properties>
     <property name="enemy" value="Griffin"/>
     <property name="threatRange" type="int" value="40"/>
@@ -291,5 +292,7 @@
   <object id="153" template="../../obj/wood.tx" x="595.5" y="607.25"/>
   <object id="154" template="../../obj/wood.tx" x="135.25" y="350"/>
   <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="371.5" y="630"/>
+  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="448" y="448"/>
+  <object id="157" template="../../../../common/maps/obj/waypoint.tx" x="432" y="464"/>
  </objectgroup>
 </map>

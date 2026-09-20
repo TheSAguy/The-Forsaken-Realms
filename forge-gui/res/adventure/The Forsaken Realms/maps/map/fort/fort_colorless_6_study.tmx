@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="76">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="82">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -50,7 +50,7 @@
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>
-  <object id="54" template="../../../../common/maps/obj/enemy.tx" x="276.084" y="266.166">
+  <object id="54" template="../../../../common/maps/obj/enemy.tx" x="352" y="224">
    <properties>
     <property name="enemy" value="Apprentice Black Wizard"/>
     <property name="threatRange" type="int" value="40"/>
@@ -201,5 +201,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="336" y="48"/>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="336" y="32"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="144" y="112"/>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="96" y="128"/>
  </objectgroup>
 </map>

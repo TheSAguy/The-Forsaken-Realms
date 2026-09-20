@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="93">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="95">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -35,7 +35,7 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="54" template="../../../../common/maps/obj/enemy.tx" x="290.426" y="219.634">
+  <object id="54" template="../../../../common/maps/obj/enemy.tx" x="256" y="208">
    <properties>
     <property name="enemy" value="Crab"/>
     <property name="threatRange" type="int" value="40"/>
@@ -51,7 +51,7 @@
   <object id="60" template="../../../../common/maps/obj/treasure.tx" x="485.073" y="231.023"/>
   <object id="61" template="../../../../common/maps/obj/gold.tx" x="401.404" y="198.409"/>
   <object id="91" template="../../obj/wood.tx" x="402.737" y="226.409"/>
-  <object id="62" template="../../../../common/maps/obj/enemy.tx" x="375.677" y="184.811">
+  <object id="62" template="../../../../common/maps/obj/enemy.tx" x="416" y="176">
    <properties>
     <property name="enemy" value="Bird"/>
     <property name="threatRange" type="int" value="60"/>
@@ -59,6 +59,7 @@
   </object>
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="485.76" y="250.144">
    <properties>
+    <property name="waypoints" value="93,94"/>
     <property name="enemy" value="Bird"/>
     <property name="threatRange" type="int" value="60"/>
    </properties>
@@ -145,5 +146,7 @@
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="324.808" y="188.659"/>
   <object id="90" template="../../../../common/maps/obj/collision.tx" x="160" y="432" width="480" height="16"/>
   <object id="92" template="../../obj/wood.tx" x="508.667" y="152"/>
+  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="480" y="208"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="464" y="224"/>
  </objectgroup>
 </map>

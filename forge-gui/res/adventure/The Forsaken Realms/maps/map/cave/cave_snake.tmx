@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="82">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="84">
  <editorsettings>
   <export target="cave_1..tmx" format="tmx"/>
  </editorsettings>
@@ -45,7 +45,7 @@
    </properties>
   </object>
   <object id="49" template="../../../../common/maps/obj/gold.tx" x="112.522" y="340.819"/>
-  <object id="50" template="../../../../common/maps/obj/enemy.tx" x="134.676" y="345.362">
+  <object id="50" template="../../../../common/maps/obj/enemy.tx" x="64" y="352">
    <properties>
     <property name="enemy" value="Poisonous Snake"/>
     <property name="threatRange" type="int" value="20"/>
@@ -116,6 +116,7 @@
   </object>
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="124.369" y="26.7066">
    <properties>
+    <property name="waypoints" value="82,83"/>
     <property name="enemy" value="Poisonous Snake"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
@@ -158,5 +159,7 @@
   <object id="79" template="../../obj/stone.tx" x="101.723" y="98.5121"/>
   <object id="80" template="../../obj/stone.tx" x="375.764" y="289.056"/>
   <object id="81" template="../../obj/stone.tx" x="231.053" y="62.6512"/>
+  <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="64" y="48"/>
+  <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="48" y="64"/>
  </objectgroup>
 </map>

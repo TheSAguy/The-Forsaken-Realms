@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="12">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="14">
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
@@ -141,7 +141,7 @@
     <property name="enemy" value="Sandveil Blademaster"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="2,3,4,5"/>
+    <property name="waypoints" value="12,13"/>
    </properties>
   </object>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="336" y="144">
@@ -167,5 +167,7 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/gold.tx" x="560" y="160"/>
   <object id="11" template="../../obj/stone.tx" x="416" y="144"/>
+  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="48" y="128"/>
+  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="32" y="144"/>
  </objectgroup>
 </map>

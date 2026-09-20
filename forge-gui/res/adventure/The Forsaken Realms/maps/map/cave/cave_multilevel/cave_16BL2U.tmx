@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="80">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="85">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -39,6 +39,7 @@
   </object>
   <object id="73" template="../../../../../common/maps/obj/enemy.tx" x="286.448" y="226.273">
    <properties>
+    <property name="waypoints" value="83,84"/>
     <property name="enemy" value="Hulking Brute"/>
     <property name="speedModifier" type="float" value="20"/>
     <property name="threatRange" type="int" value="50"/>
@@ -59,5 +60,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="81" template="../../../../../common/maps/obj/waypoint.tx" x="432" y="176"/>
+  <object id="82" template="../../../../../common/maps/obj/waypoint.tx" x="416" y="144"/>
+  <object id="83" template="../../../../../common/maps/obj/waypoint.tx" x="64" y="96"/>
+  <object id="84" template="../../../../../common/maps/obj/waypoint.tx" x="80" y="96"/>
  </objectgroup>
 </map>

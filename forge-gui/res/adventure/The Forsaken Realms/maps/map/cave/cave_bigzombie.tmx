@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="56">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="59">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -39,5 +39,7 @@
     <property name="threatRange" type="int" value="60"/>
    </properties>
   </object>
+  <object id="57" template="../../../../common/maps/obj/waypoint.tx" x="192" y="144"/>
+  <object id="58" template="../../../../common/maps/obj/waypoint.tx" x="176" y="144"/>
  </objectgroup>
 </map>

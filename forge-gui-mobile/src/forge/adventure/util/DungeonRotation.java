@@ -275,6 +275,13 @@ public class DungeonRotation {
                 // still active, so a long-running quest keeps its target.
                 world.getPoiDespawnDay().put(id, despawnDay + SIDEQUEST_EXTENSION_DAYS);
                 System.out.println("[DungeonRotation] " + poi.getDisplayName() + " is a side-quest target, extending its timer " + SIDEQUEST_EXTENSION_DAYS + " days");
+            } else if (world.getPoiLootHeldDay().containsKey(id)) {
+                // Round 257 (user: "Don't de-spawn till all loot is cleared"): the player has been here and left
+                // reward objects on the floor. Hold the place and re-roll, so the timer does not simply pile up
+                // and fire the moment the loot is taken.
+                world.getPoiDespawnDay().put(id, newDayCount + rollDays(world, despawnMinDays(), despawnMaxDays()));
+                System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName()
+                        + " still has loot in it - its despawn is held (timer re-rolled)");
             } else {
                 hidePoi(world, poi, newDayCount, null);
                 changed = true;
@@ -414,12 +421,58 @@ public class DungeonRotation {
      * therefore keeps its full timer; the rule applies to it again only if it later returns from
      * reserve with no quest attached.
      */
+    /**
+     * Round 257: the player left this place with reward objects still in it, so the day tick must not rotate it
+     * away (user: "Don't de-spawn till all loot is cleared"). Recorded per POI and released by
+     * releaseLootHold() the moment the last reward is taken. Self-gates like its neighbours: only rotatable,
+     * non-story dungeons can be held, because only those can rotate away in the first place.
+     */
+    public static void holdForLoot(PointOfInterest poi) {
+        if (!isEnabled() || poi == null || !isRotatableData(poi.getData()))
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        String id = poi.getID();
+        if (world.getPoiLootHeldDay().containsKey(id))
+            return;
+        world.getPoiLootHeldDay().put(id, world.getCurrentDay());
+        System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName()
+                + " keeps its loot - it will not rotate away until the player takes it");
+    }
+
+    /** Round 257: the loot is gone, so the hold goes with it. */
+    public static void releaseLootHold(PointOfInterest poi) {
+        if (poi == null)
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world.getPoiLootHeldDay().remove(poi.getID()) != null)
+            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is emptied - its despawn hold is lifted");
+    }
+
+    /**
+     * Round 257 (user: "let's apply the same rule as when all enemies are dead, cut time de-spawn by 75%. Apply
+     * to all dungeons"): the last enemy is down, so the place is spent as a fight even if loot remains. Cuts the
+     * remaining days by the same factor looting does, once per visible lifetime - the loot hold above still stops
+     * it vanishing before the player comes back for what is on the floor.
+     */
+    public static void onDungeonCleared(PointOfInterest poi) {
+        cutRemainingDays(poi, "cleared of enemies");
+    }
+
     public static void onDungeonLooted(PointOfInterest poi) {
+        cutRemainingDays(poi, "emptied of loot with enemies still inside");
+    }
+
+    /**
+     * Round 257: the shared body of onDungeonLooted() and onDungeonCleared(). One cut per incarnation, whichever
+     * reason comes first - the poiLootedDay guard below is what stops a place being cut twice for being both
+     * cleared and looted.
+     */
+    private static void cutRemainingDays(PointOfInterest poi, String reason) {
         if (!isEnabled() || !isRotatable(poi))
             return;
         int questStatus = activeQuestStatus(poi);
         if (questStatus != QUEST_NONE) {
-            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is emptied of loot but is an active "
+            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is " + reason + " but is an active "
                     + (questStatus == QUEST_STORY ? "story" : "side") + "-quest target - timer left alone");
             return;
         }
@@ -437,7 +490,7 @@ public class DungeonRotation {
         }
         int remaining = despawnDay - currentDay;
         if (remaining <= 1) {
-            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is emptied of loot but only "
+            System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " is " + reason + " but only "
                     + remaining + " day(s) remain - timer left alone");
             world.getPoiLootedDay().put(id, currentDay);
             return;
@@ -448,7 +501,7 @@ public class DungeonRotation {
         int halved = Math.max(1, Math.round(remaining * factor));
         world.getPoiDespawnDay().put(id, currentDay + halved);
         world.getPoiLootedDay().put(id, currentDay);
-        System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " emptied of loot with enemies still inside"
+        System.out.println("[TFR-DungeonLooted] " + poi.getDisplayName() + " " + reason
                 + " - despawn day " + despawnDay + " -> " + (currentDay + halved)
                 + " (day " + currentDay + ", " + remaining + " days left x" + factor + " = " + halved + ")");
     }

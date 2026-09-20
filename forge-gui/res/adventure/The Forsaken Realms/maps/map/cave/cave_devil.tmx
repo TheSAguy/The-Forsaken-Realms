@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="65">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="70">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -38,6 +38,7 @@
   <object id="55" template="../../../../common/maps/obj/treasure.tx" x="42.4167" y="115"/>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="166.833" y="144.5">
    <properties>
+    <property name="waypoints" value="66,67"/>
     <property name="enemy" value="Demon"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
@@ -50,6 +51,7 @@
   </object>
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="183.417" y="198.167">
    <properties>
+    <property name="waypoints" value="68,69"/>
     <property name="enemy" value="Devil"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
@@ -83,5 +85,9 @@
   </object>
   <object id="63" template="../../obj/stone.tx" x="173.273" y="64.0909"/>
   <object id="64" template="../../obj/stone.tx" x="84.1819" y="88.7273"/>
+  <object id="66" template="../../../../common/maps/obj/waypoint.tx" x="176" y="48"/>
+  <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="176" y="64"/>
+  <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="48" y="112"/>
+  <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="64" y="112"/>
  </objectgroup>
 </map>

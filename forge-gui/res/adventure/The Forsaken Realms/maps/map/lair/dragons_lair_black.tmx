@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="63">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="65">
  <editorsettings>
   <export target="dragons_lair_black.tmx" format="tmx"/>
  </editorsettings>
@@ -36,6 +36,7 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/enemy.tx" type="enemy" x="172.15" y="139.497" width="16" height="16">
    <properties>
+    <property name="waypoints" value="63,64"/>
     <property name="enemy" value="Dracur of Shandalar"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>
@@ -152,5 +153,7 @@
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
+  <object id="63" template="../../../../common/maps/obj/waypoint.tx" x="192" y="128"/>
+  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="192" y="144"/>
  </objectgroup>
 </map>

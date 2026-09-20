@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="72">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="76">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -104,7 +104,7 @@
    <properties>
     <property name="enemy" value="Bear"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="66,65,68,67"/>
+    <property name="waypoints" value="74,75"/>
    </properties>
   </object>
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="239.385" y="235.35">
@@ -115,6 +115,7 @@
   </object>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="350.769" y="330.187">
    <properties>
+    <property name="waypoints" value="72,73"/>
     <property name="enemy" value="Treefolk"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
@@ -146,5 +147,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="288" y="288"/>
+  <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="272" y="304"/>
+  <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="336" y="96"/>
+  <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="320" y="112"/>
  </objectgroup>
 </map>

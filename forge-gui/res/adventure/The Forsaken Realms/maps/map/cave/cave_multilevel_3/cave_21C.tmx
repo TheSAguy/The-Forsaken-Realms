@@ -45,7 +45,7 @@
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>
-  <object id="76" template="../../../../../common/maps/obj/enemy.tx" x="324" y="266">
+  <object id="76" template="../../../../../common/maps/obj/enemy.tx" x="336" y="288">
    <properties>
     <property name="enemy" value="Gorgon 2"/>
     <property name="speedModifier" type="float" value="12"/>

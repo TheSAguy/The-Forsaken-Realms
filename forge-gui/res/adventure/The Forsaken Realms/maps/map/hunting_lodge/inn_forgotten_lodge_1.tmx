@@ -56,7 +56,7 @@
     <property name="threatRange" type="int" value="45"/>
    </properties>
   </object>
-  <object id="99" template="../../../../common/maps/obj/enemy.tx" name="Enemy" x="121.75" y="138.25" visible="1">
+  <object id="99" template="../../../../common/maps/obj/enemy.tx" name="Enemy" x="80" y="128" visible="1">
    <properties>
     <property name="enemy" value="Watcher in the Web"/>
     <property name="hidden" type="bool" value="false"/>

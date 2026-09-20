@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="27" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="107">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="27" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="113">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -271,6 +271,7 @@
   </object>
   <object id="80" template="../../../../common/maps/obj/enemy.tx" x="159.283" y="181.373" width="26.041" height="20.418">
    <properties>
+    <property name="waypoints" value="108,109"/>
     <property name="enemy" value="Naked Mole Rat"/>
     <property name="inactive" type="bool" value="true"/>
     <property name="speedModifier" type="float" value="3"/>
@@ -722,5 +723,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="108" template="../../../../common/maps/obj/waypoint.tx" x="160" y="32"/>
+  <object id="109" template="../../../../common/maps/obj/waypoint.tx" x="176" y="32"/>
+  <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
+  <object id="112" template="../../../../common/maps/obj/waypoint.tx" x="208" y="32"/>
  </objectgroup>
 </map>

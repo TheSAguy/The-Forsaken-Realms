@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="20" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="107">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="20" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="109">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -60,7 +60,7 @@
     <property name="enemy" value="Wolfkin Outcast"/>
     <property name="pursueRange" type="int" value="20"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="101,102,104,105,99,100,105,101,102,104,105,99,100,105,104"/>
+    <property name="waypoints" value="107,108"/>
    </properties>
   </object>
   <object id="96" template="../../../../common/maps/obj/enemy.tx" x="151.901" y="39.0909" width="9.81818" height="10.1818">
@@ -100,5 +100,7 @@
   <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="228.772" y="123.86"/>
   <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="152.25" y="128"/>
   <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="153.25" y="179.75"/>
+  <object id="107" template="../../../../common/maps/obj/waypoint.tx" x="240" y="112"/>
+  <object id="108" template="../../../../common/maps/obj/waypoint.tx" x="256" y="128"/>
  </objectgroup>
 </map>

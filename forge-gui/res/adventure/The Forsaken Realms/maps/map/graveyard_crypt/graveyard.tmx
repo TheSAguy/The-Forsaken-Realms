@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="35" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="94">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="35" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="96">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -46,6 +46,7 @@
   <object id="91" template="../../obj/stone.tx" x="206.609" y="105.617"/>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="375.5" y="127.5">
    <properties>
+    <property name="waypoints" value="94,95"/>
     <property name="enemy" value="Orzhov Cleric"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
@@ -56,7 +57,7 @@
     <property name="threatRange" type="int" value="30"/>
    </properties>
   </object>
-  <object id="58" template="../../../../common/maps/obj/enemy.tx" x="476" y="46">
+  <object id="58" template="../../../../common/maps/obj/enemy.tx" x="368" y="80">
    <properties>
     <property name="enemy" value="Crocodile"/>
     <property name="threatRange" type="int" value="50"/>
@@ -200,5 +201,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="320" y="48"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="304" y="64"/>
  </objectgroup>
 </map>

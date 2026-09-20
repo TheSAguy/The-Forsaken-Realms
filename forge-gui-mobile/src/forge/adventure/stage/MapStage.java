@@ -1717,10 +1717,24 @@ public class MapStage extends GameStage {
                 break;
             }
         }
+        boolean lootLeft = false;
         for (MapActor actor : new Array.ArrayIterator<>(actors)) {
-            if (actor instanceof RewardSprite && actor.getStage() != null)
-                return; // loot still sitting there - neither rule applies
+            if (actor instanceof RewardSprite && actor.getStage() != null) {
+                lootLeft = true;
+                break;
+            }
         }
+        if (lootLeft) {
+            // Round 257 (user: "Don't de-spawn till all loot is cleared. but let's apply the same rule as when all
+            // enemies are dead, cut time de-spawn by 75%"): the place keeps what is on its floor until the player
+            // comes back for it, so the day tick may not rotate it away - and if the last enemy is already down,
+            // it is spent as a fight, so its timer gets the same 75% cut looting would have given it.
+            DungeonRotation.holdForLoot(root);
+            if (!enemiesLeft)
+                DungeonRotation.onDungeonCleared(root);
+            return;
+        }
+        DungeonRotation.releaseLootHold(root); // round 257: nothing left on the floor
         if (enemiesLeft) {
             // Round 128: looted but still guarded - bring the despawn forward instead of firing it.
             DungeonRotation.onDungeonLooted(root);

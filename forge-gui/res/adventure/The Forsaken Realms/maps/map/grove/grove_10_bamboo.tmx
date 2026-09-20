@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="103">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="105">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -111,6 +111,7 @@
   <object id="93" template="../../../../common/maps/obj/collision.tx" x="480.265" y="-2.64674" width="16" height="418.1"/>
   <object id="94" template="../../../../common/maps/obj/enemy.tx" x="124.859" y="71.5233">
    <properties>
+    <property name="waypoints" value="103,104"/>
     <property name="enemy" value="Giant Panda"/>
     <property name="speedModifier" type="float" value="10"/>
     <property name="threatRange" type="int" value="10"/>
@@ -145,5 +146,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="103" template="../../../../common/maps/obj/waypoint.tx" x="112" y="48"/>
+  <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="128" y="64"/>
  </objectgroup>
 </map>

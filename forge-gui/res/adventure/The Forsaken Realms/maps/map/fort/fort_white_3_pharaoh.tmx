@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="36" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="77">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="36" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="83">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -48,6 +48,7 @@
   <object id="52" template="../../../../common/maps/obj/gold.tx" x="225.064" y="177.386"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="273.222" y="251.626">
    <properties>
+    <property name="waypoints" value="79,80"/>
     <property name="enemy" value="Khenra Warrior"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
@@ -70,6 +71,7 @@
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="459.28" y="273.299"/>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="276.684" y="204.18">
    <properties>
+    <property name="waypoints" value="77,78"/>
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Wall of Forgotten Pharaohs&quot; ] }"/>
     <property name="enemy" value="Pharaoh"/>
     <property name="speedModifier" type="float" value="10"/>
@@ -125,6 +127,7 @@
   <object id="72" template="../../../../common/maps/obj/treasure.tx" x="550.333" y="305"/>
   <object id="73" template="../../../../common/maps/obj/enemy.tx" x="535.438" y="303.644">
    <properties>
+    <property name="waypoints" value="81,82"/>
     <property name="enemy" value="Greater Sandwurm"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="speedModifier" type="float" value="40"/>
@@ -164,5 +167,11 @@
 ]</property>
    </properties>
   </object>
+  <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="320" y="160"/>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="336" y="176"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="240" y="128"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="224" y="144"/>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="544" y="288"/>
+  <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="528" y="304"/>
  </objectgroup>
 </map>

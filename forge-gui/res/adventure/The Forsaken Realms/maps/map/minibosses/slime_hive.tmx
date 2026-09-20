@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="153">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="157">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -61,7 +61,7 @@
     <property name="waypoints" value="120,121"/>
    </properties>
   </object>
-  <object id="100" template="../../../../common/maps/obj/enemy.tx" x="178.149" y="186.67">
+  <object id="100" template="../../../../common/maps/obj/enemy.tx" x="176" y="144">
    <properties>
     <property name="displayNameOverride" value="The Mother Slime"/>
     <property name="effect">{ &quot;startBattleWithCardInCommandZone&quot;: [ &quot;The Mother Slime&quot;]
@@ -76,7 +76,7 @@
    <properties>
     <property name="enemy" value="Ooze"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="123,122,123,131,123"/>
+    <property name="waypoints" value="153,154"/>
    </properties>
   </object>
   <object id="104" template="../../../../common/maps/obj/gold.tx" x="695.216" y="457.21"/>
@@ -163,6 +163,7 @@
   <object id="149" template="../../../../common/maps/obj/collision.tx" x="589.077" y="146.797" width="87.4262" height="28.1816"/>
   <object id="150" template="../../../../common/maps/obj/enemy.tx" x="178.169" y="185.88">
    <properties>
+    <property name="waypoints" value="155,156"/>
     <property name="displayNameOverride" value="The Mother Slime"/>
     <property name="effect">{ &quot;startBattleWithCardInCommandZone&quot;: [ &quot;The Mother Slime&quot;],&quot;startBattleWithCard&quot;: [ &quot;Ravenous Slime&quot;]
 }</property>
@@ -184,5 +185,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="153" template="../../../../common/maps/obj/waypoint.tx" x="512" y="208"/>
+  <object id="154" template="../../../../common/maps/obj/waypoint.tx" x="496" y="224"/>
+  <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="128" y="144"/>
+  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="160" y="144"/>
  </objectgroup>
 </map>

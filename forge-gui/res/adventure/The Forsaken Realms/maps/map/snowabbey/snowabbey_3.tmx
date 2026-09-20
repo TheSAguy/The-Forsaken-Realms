@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="67">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="71">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -45,6 +45,7 @@
   </object>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="266.429" y="134.025">
    <properties>
+    <property name="waypoints" value="67,68"/>
     <property name="enemy" value="Adept Red Wizard"/>
     <property name="threatRange" type="int" value="30"/>
    </properties>
@@ -55,7 +56,7 @@
    <properties>
     <property name="enemy" value="Magma Fire Elemental"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="62,61"/>
+    <property name="waypoints" value="69,70"/>
    </properties>
   </object>
   <object id="58" template="../../../../common/maps/obj/manashards.tx" x="296" y="28.75"/>
@@ -81,5 +82,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="272" y="128"/>
+  <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="288" y="96"/>
+  <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="80" y="128"/>
+  <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="80" y="112"/>
  </objectgroup>
 </map>

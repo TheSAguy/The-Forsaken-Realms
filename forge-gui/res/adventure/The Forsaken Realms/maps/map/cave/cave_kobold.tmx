@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="94">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="96">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -63,6 +63,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="623.665" y="105.589">
    <properties>
+    <property name="waypoints" value="94,95"/>
     <property name="enemy" value="Kobold Slinger"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>
@@ -106,5 +107,7 @@
   <object id="91" template="../../obj/stone.tx" x="797.333" y="178.167"/>
   <object id="92" template="../../obj/stone.tx" x="136.75" y="49.75"/>
   <object id="93" template="../../obj/stone.tx" x="130.167" y="494.583"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="112" y="64"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="128" y="64"/>
  </objectgroup>
 </map>

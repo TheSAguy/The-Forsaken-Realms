@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="150">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="158">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -50,6 +50,7 @@
   <object id="145" template="../../obj/wood.tx" x="100.083" y="707.084"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="568.371" y="142.166">
    <properties>
+    <property name="waypoints" value="152,153"/>
     <property name="enemy" value="Swamp Troll"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>
@@ -64,7 +65,7 @@
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="766.319" y="672.03">
    <properties>
     <property name="enemy" value="Bat"/>
-    <property name="waypoints" value="136,118"/>
+    <property name="waypoints" value="156,157"/>
    </properties>
   </object>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="412.666" y="78.8333">
@@ -76,6 +77,7 @@
   </object>
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="153" y="516">
    <properties>
+    <property name="waypoints" value="150,151"/>
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Exquisite Blood&quot; ] }"/>
     <property name="enemy" value="Fallen Angel"/>
     <property name="threatRange" type="int" value="60"/>
@@ -83,6 +85,7 @@
   </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="91" y="50.333">
    <properties>
+    <property name="waypoints" value="154,155"/>
     <property name="enemy" value="Fungus"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>
@@ -297,5 +300,13 @@
 ]</property>
    </properties>
   </object>
+  <object id="150" template="../../../../common/maps/obj/waypoint.tx" x="112" y="512"/>
+  <object id="151" template="../../../../common/maps/obj/waypoint.tx" x="144" y="512"/>
+  <object id="152" template="../../../../common/maps/obj/waypoint.tx" x="560" y="128"/>
+  <object id="153" template="../../../../common/maps/obj/waypoint.tx" x="544" y="144"/>
+  <object id="154" template="../../../../common/maps/obj/waypoint.tx" x="96" y="16"/>
+  <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="128" y="16"/>
+  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="400" y="784"/>
+  <object id="157" template="../../../../common/maps/obj/waypoint.tx" x="400" y="736"/>
  </objectgroup>
 </map>

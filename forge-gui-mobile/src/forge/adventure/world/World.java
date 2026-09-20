@@ -333,6 +333,14 @@ public class World implements Disposable, SaveFileContent {
     // are (hidePoi, activateFromReserve, a quest force-spawn), so the next incarnation can halve
     // again. Absent on saves predating this round, which simply means "not halved yet".
     private final java.util.Map<String, Integer> poiLootedDay = new java.util.HashMap<>();
+    /** Round 257 (user: "Don't de-spawn till all loot is cleared"): POIs the player walked out of with loot still
+     *  on the floor, and the day they did. DungeonRotation's day tick refuses to despawn one of these; taking the
+     *  last reward releases it. Persisted like poiLootedDay so a hold survives a save. */
+    private final java.util.Map<String, Integer> poiLootHeldDay = new java.util.HashMap<>();
+
+    public java.util.Map<String, Integer> getPoiLootHeldDay() {
+        return poiLootHeldDay;
+    }
     // Round 135 (user spec 2026-09-07: "The player can only win 1 arena tournament per week...
     // each of the 5 AI's is its own location and level 1 and level 2 player arenas are their own
     // location. You can enter/try as many as you want, but only allowed to win 1 per location per
@@ -850,6 +858,11 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             poiLootedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiLootedDay"));
         }
+        poiLootHeldDay.clear(); // round 257
+        if (saveFileData.containsKey("poiLootHeldDay")) {
+            //noinspection unchecked
+            poiLootHeldDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiLootHeldDay"));
+        }
         arenaWinWeek.clear();
         if (saveFileData.containsKey("arenaWinWeek")) {
             //noinspection unchecked
@@ -956,6 +969,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
         data.storeObject("poiLootedDay", poiLootedDay);
+        data.storeObject("poiLootHeldDay", poiLootHeldDay); // round 257
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
@@ -1082,7 +1096,7 @@ public class World implements Disposable, SaveFileContent {
             // Round 236: an index this layer has no picture for is drawn as the layer's own equivalent -
             // see drawableTerrainIndex(). The neighbor mask above was built on the raw index on purpose:
             // adjacent tiles of one wasteland structure must still join up as one formation.
-            information.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain)));
+            information.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex)));
 
         }
         int lastFullNeighbour = -1;
@@ -1130,12 +1144,20 @@ public class World implements Disposable, SaveFileContent {
     // exactly as they have always looked.
     private final Map<Long, Integer> drawableTerrainIndexCache = new ConcurrentHashMap<>();
 
-    private int drawableTerrainIndex(int biomeLayer, int terrainIndex) {
+    private int drawableTerrainIndex(int biomeLayer, int terrainIndex, long tileBiomes) {
         List<BiomeData> biomes = data.GetBiomes();
         if (terrainIndex <= 0 || biomeLayer < 0 || biomeLayer >= biomes.size())
             return terrainIndex; // plain ground, or the road layer (the texture after the last biome)
         BiomeData layerBiome = biomes.get(biomeLayer);
-        if (terrainIndex <= highestOwnTerrainIndex(layerBiome))
+        // Round 257 (user: "Round 236's terrain look-alike: - Can we fix this"). Round 236 remapped only the
+        // indices this layer has NO picture for, and said the in-range case was a design question: a claimed
+        // wasteland crater (index 3) drew as the claiming colour's own index 3, which for green is water - a tile
+        // that reads as one thing and is another. The tile itself settles it: biomeMap is a bitmask and claiming
+        // ORs the colour's bit in, so land taken from the wasteland still carries the WASTE bit under the colour
+        // it was claimed by. When it does, the index is in wasteland numbering whatever its size, so map it by
+        // name like any out-of-range one. Land the colour generated itself has no waste bit and is left alone.
+        boolean claimedFromWasteland = isClaimedWasteland(biomeLayer, tileBiomes);
+        if (!claimedFromWasteland && terrainIndex <= highestOwnTerrainIndex(layerBiome))
             return terrainIndex;
         // Round 238: a layer with no structures of its own (the ocean/base layer under a multi-bit tile) has
         // nothing to map an index to and never drew structures in the first place - the wasteland layer above
@@ -1180,6 +1202,20 @@ public class World implements Disposable, SaveFileContent {
                 + highestOwnTerrainIndex(layerBiome) + ") - " + (drawn != terrainIndex
                 ? "drawing it as this biome's index " + drawn : "nothing to draw it as, it stays invisible"));
         return drawn;
+    }
+
+    /** Round 257: is this tile wasteland that `biomeLayer` claimed? True when the tile carries the waste
+     *  biome's bit as well as this layer's, and this layer is not the wasteland itself. */
+    private boolean isClaimedWasteland(int biomeLayer, long tileBiomes) {
+        if (tileBiomes == 0)
+            return false;
+        List<BiomeData> biomes = data.GetBiomes();
+        for (int i = 0; i < biomes.size(); i++) {
+            if (!"waste".equalsIgnoreCase(biomes.get(i).name))
+                continue;
+            return i != biomeLayer && (tileBiomes & (1L << i)) != 0;
+        }
+        return false;
     }
 
     /** Round 236: the last index a biome's own BiomeTexture has a picture for - ground is 0, then terrain[],
@@ -1411,6 +1447,7 @@ public class World implements Disposable, SaveFileContent {
             poiRespawnDay.clear();
             poiFailedAttempts.clear();
             poiLootedDay.clear();
+            poiLootHeldDay.clear(); // round 257
             arenaWinWeek.clear(); // round 135
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be

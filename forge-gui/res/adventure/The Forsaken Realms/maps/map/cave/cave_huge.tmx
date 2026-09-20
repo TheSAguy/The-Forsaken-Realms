@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="164">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="187">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -39,6 +39,7 @@
   </object>
   <object id="84" template="../../../../common/maps/obj/enemy.tx" x="183" y="923">
    <properties>
+    <property name="waypoints" value="164,165"/>
     <property name="enemy" value="Death Knight"/>
    </properties>
   </object>
@@ -46,6 +47,7 @@
   <object id="86" template="../../../../common/maps/obj/gold.tx" x="200.5" y="1595.5"/>
   <object id="87" template="../../../../common/maps/obj/enemy.tx" x="578.25" y="1866.25">
    <properties>
+    <property name="waypoints" value="169,170"/>
     <property name="enemy" value="Geist"/>
    </properties>
   </object>
@@ -73,6 +75,7 @@
   </object>
   <object id="94" template="../../../../common/maps/obj/enemy.tx" x="521.667" y="3000.67">
    <properties>
+    <property name="waypoints" value="171,172"/>
     <property name="enemy" value="Lich"/>
    </properties>
   </object>
@@ -96,6 +99,7 @@
   </object>
   <object id="101" template="../../../../common/maps/obj/enemy.tx" x="1341" y="1289.5">
    <properties>
+    <property name="waypoints" value="173,174"/>
     <property name="enemy" value="Harpy"/>
    </properties>
   </object>
@@ -111,6 +115,7 @@
   <object id="107" template="../../../../common/maps/obj/treasure.tx" x="2071.33" y="91.6667"/>
   <object id="108" template="../../../../common/maps/obj/enemy.tx" x="2843" y="330">
    <properties>
+    <property name="waypoints" value="175,176"/>
     <property name="enemy" value="Cyclops"/>
    </properties>
   </object>
@@ -134,6 +139,7 @@
   <object id="114" template="../../../../common/maps/obj/gold.tx" x="3036" y="275"/>
   <object id="115" template="../../../../common/maps/obj/enemy.tx" x="3007.67" y="1415.67">
    <properties>
+    <property name="waypoints" value="177,178"/>
     <property name="enemy" value="Red Beast"/>
    </properties>
   </object>
@@ -145,6 +151,7 @@
   <object id="121" template="../../../../common/maps/obj/gold.tx" x="2925.5" y="2571.5"/>
   <object id="122" template="../../../../common/maps/obj/enemy.tx" x="2889" y="2745.5">
    <properties>
+    <property name="waypoints" value="179,180"/>
     <property name="enemy" value="Hellhound"/>
    </properties>
   </object>
@@ -160,11 +167,13 @@
   </object>
   <object id="125" template="../../../../common/maps/obj/enemy.tx" x="2983" y="2602">
    <properties>
+    <property name="waypoints" value="181,182"/>
     <property name="enemy" value="Apprentice Black Wizard"/>
    </properties>
   </object>
   <object id="126" template="../../../../common/maps/obj/enemy.tx" x="2089.5" y="3097.5">
    <properties>
+    <property name="waypoints" value="185,186"/>
     <property name="enemy" value="Spider"/>
    </properties>
   </object>
@@ -180,6 +189,7 @@
   </object>
   <object id="129" template="../../../../common/maps/obj/enemy.tx" x="2211.5" y="3104">
    <properties>
+    <property name="waypoints" value="183,184"/>
     <property name="enemy" value="Apprentice Green Wizard"/>
    </properties>
   </object>
@@ -199,5 +209,27 @@
   <object id="161" template="../../obj/stone.tx" x="1249.33" y="1038"/>
   <object id="162" template="../../obj/stone.tx" x="3036.67" y="592"/>
   <object id="163" template="../../obj/stone.tx" x="2424.67" y="613.333"/>
+  <object id="164" template="../../../../common/maps/obj/waypoint.tx" x="736" y="688"/>
+  <object id="165" template="../../../../common/maps/obj/waypoint.tx" x="752" y="688"/>
+  <object id="167" template="../../../../common/maps/obj/waypoint.tx" x="192" y="1584"/>
+  <object id="168" template="../../../../common/maps/obj/waypoint.tx" x="176" y="1552"/>
+  <object id="169" template="../../../../common/maps/obj/waypoint.tx" x="32" y="1936"/>
+  <object id="170" template="../../../../common/maps/obj/waypoint.tx" x="32" y="1920"/>
+  <object id="171" template="../../../../common/maps/obj/waypoint.tx" x="480" y="3008"/>
+  <object id="172" template="../../../../common/maps/obj/waypoint.tx" x="496" y="3008"/>
+  <object id="173" template="../../../../common/maps/obj/waypoint.tx" x="1440" y="1328"/>
+  <object id="174" template="../../../../common/maps/obj/waypoint.tx" x="1456" y="1344"/>
+  <object id="175" template="../../../../common/maps/obj/waypoint.tx" x="2064" y="96"/>
+  <object id="176" template="../../../../common/maps/obj/waypoint.tx" x="2080" y="96"/>
+  <object id="177" template="../../../../common/maps/obj/waypoint.tx" x="3088" y="1344"/>
+  <object id="178" template="../../../../common/maps/obj/waypoint.tx" x="3072" y="1360"/>
+  <object id="179" template="../../../../common/maps/obj/waypoint.tx" x="2848" y="2656"/>
+  <object id="180" template="../../../../common/maps/obj/waypoint.tx" x="2864" y="2656"/>
+  <object id="181" template="../../../../common/maps/obj/waypoint.tx" x="3024" y="2736"/>
+  <object id="182" template="../../../../common/maps/obj/waypoint.tx" x="3008" y="2736"/>
+  <object id="183" template="../../../../common/maps/obj/waypoint.tx" x="2144" y="3120"/>
+  <object id="184" template="../../../../common/maps/obj/waypoint.tx" x="2128" y="3136"/>
+  <object id="185" template="../../../../common/maps/obj/waypoint.tx" x="2208" y="3104"/>
+  <object id="186" template="../../../../common/maps/obj/waypoint.tx" x="2192" y="3104"/>
  </objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="109">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="112">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -46,7 +46,7 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="50" template="../../../../common/maps/obj/enemy.tx" x="612.849" y="129.33">
+  <object id="50" template="../../../../common/maps/obj/enemy.tx" x="592" y="64">
    <properties>
     <property name="displayNameOverride" value="Plebeian Overseer"/>
     <property name="enemy" value="Human Mercenary"/>
@@ -258,7 +258,7 @@
     <property name="waypoints" value="102,103"/>
    </properties>
   </object>
-  <object id="96" template="../../../../common/maps/obj/enemy.tx" x="542.667" y="304.667">
+  <object id="96" template="../../../../common/maps/obj/enemy.tx" x="528" y="224">
    <properties>
     <property name="enemy" value="Clay Golem"/>
     <property name="threatRange" type="int" value="40"/>
@@ -317,5 +317,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="110" template="../../../../common/maps/obj/waypoint.tx" x="432" y="224"/>
+  <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="416" y="160"/>
  </objectgroup>
 </map>

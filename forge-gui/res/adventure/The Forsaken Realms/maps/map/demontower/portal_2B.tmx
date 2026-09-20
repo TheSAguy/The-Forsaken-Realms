@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="162">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="166">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -69,7 +69,7 @@
     <property name="waypoints" value="143,156,157"/>
    </properties>
   </object>
-  <object id="121" template="../../../../common/maps/obj/enemy.tx" x="795.283" y="136.842">
+  <object id="121" template="../../../../common/maps/obj/enemy.tx" x="800" y="48">
    <properties>
     <property name="enemy" value="Immersturm Demon"/>
     <property name="speedModifier" type="float" value="10"/>
@@ -142,6 +142,7 @@
   <object id="145" template="../../../../common/maps/obj/waypoint.tx" x="862.489" y="313.951"/>
   <object id="146" template="../../../../common/maps/obj/enemy.tx" x="145.758" y="146.875">
    <properties>
+    <property name="waypoints" value="164,165"/>
     <property name="enemy" value="Immersturm Demon"/>
     <property name="speedModifier" type="float" value="10"/>
     <property name="threatRange" type="int" value="50"/>
@@ -153,6 +154,7 @@
   <object id="150" template="../../../../common/maps/obj/waypoint.tx" x="162.707" y="633.574"/>
   <object id="151" template="../../../../common/maps/obj/enemy.tx" x="441.974" y="348.657">
    <properties>
+    <property name="waypoints" value="162,163"/>
     <property name="enemy" value="Immersturm Demon"/>
     <property name="speedModifier" type="float" value="10"/>
     <property name="threatRange" type="int" value="50"/>
@@ -197,5 +199,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="162" template="../../../../common/maps/obj/waypoint.tx" x="432" y="304"/>
+  <object id="163" template="../../../../common/maps/obj/waypoint.tx" x="416" y="320"/>
+  <object id="164" template="../../../../common/maps/obj/waypoint.tx" x="96" y="32"/>
+  <object id="165" template="../../../../common/maps/obj/waypoint.tx" x="128" y="32"/>
  </objectgroup>
 </map>

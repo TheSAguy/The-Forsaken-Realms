@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="37" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="119">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="37" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="121">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -60,7 +60,7 @@
     <property name="waypoints" value="75,101,75,102,103,102,75,101"/>
    </properties>
   </object>
-  <object id="71" template="../../../../common/maps/obj/enemy.tx" x="304.49" y="112.991">
+  <object id="71" template="../../../../common/maps/obj/enemy.tx" x="240" y="16">
    <properties>
     <property name="enemy" value="Eldrazi Devastator"/>
     <property name="speedModifier" type="float" value="15"/>
@@ -110,7 +110,7 @@
    <properties>
     <property name="enemy" value="Eldrazi"/>
     <property name="threatRange" type="int" value="50"/>
-    <property name="waypoints" value="111,112,113,114,113,112,111"/>
+    <property name="waypoints" value="119,120"/>
    </properties>
   </object>
   <object id="99" template="../../../../common/maps/obj/gold.tx" x="192.274" y="47.344"/>
@@ -160,5 +160,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="119" template="../../../../common/maps/obj/waypoint.tx" x="304" y="32"/>
+  <object id="120" template="../../../../common/maps/obj/waypoint.tx" x="288" y="48"/>
  </objectgroup>
 </map>

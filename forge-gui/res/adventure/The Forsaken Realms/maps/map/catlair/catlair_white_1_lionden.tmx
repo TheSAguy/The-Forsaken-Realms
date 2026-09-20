@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="80">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="82">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -70,7 +70,7 @@
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/manashards.tx" x="289.784" y="117.036"/>
-  <object id="63" template="../../../../common/maps/obj/enemy.tx" x="254.261" y="98.1235">
+  <object id="63" template="../../../../common/maps/obj/enemy.tx" x="288" y="64">
    <properties>
     <property name="enemy" value="Lion"/>
     <property name="pursueRange" type="int" value="30"/>
@@ -79,6 +79,7 @@
   </object>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="208.514" y="129.121">
    <properties>
+    <property name="waypoints" value="80,81"/>
     <property name="enemy" value="Lion"/>
     <property name="pursueRange" type="int" value="30"/>
    </properties>
@@ -125,5 +126,7 @@
    </properties>
   </object>
   <object id="79" template="../../obj/stone.tx" x="26.2588" y="77.3238"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="272" y="48"/>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="272" y="80"/>
  </objectgroup>
 </map>

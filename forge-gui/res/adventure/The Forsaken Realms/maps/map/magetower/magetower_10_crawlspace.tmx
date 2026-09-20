@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="60">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="62">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -80,6 +80,7 @@
   </object>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" gid="11419" x="288.527" y="172.914" rotation="0">
    <properties>
+    <property name="waypoints" value="60,61"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 4,
  &quot;startBattleWithCard&quot;: [ &quot;Ensnaring Bridge|2XM|1&quot; ]
@@ -108,5 +109,7 @@
    </properties>
   </object>
   <object id="58" template="../../../../common/maps/obj/manashards.tx" x="105" y="91.6667"/>
+  <object id="60" template="../../../../common/maps/obj/waypoint.tx" x="336" y="160"/>
+  <object id="61" template="../../../../common/maps/obj/waypoint.tx" x="352" y="160"/>
  </objectgroup>
 </map>

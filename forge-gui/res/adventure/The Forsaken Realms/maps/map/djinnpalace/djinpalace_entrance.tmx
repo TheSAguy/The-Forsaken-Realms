@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="133">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="137">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -80,6 +80,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="81" y="479.333">
    <properties>
+    <property name="waypoints" value="133,134"/>
     <property name="enemy" value="Pirate"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
@@ -158,6 +159,7 @@
   </object>
   <object id="105" template="../../../../common/maps/obj/enemy.tx" x="213.333" y="333.333">
    <properties>
+    <property name="waypoints" value="135,136"/>
     <property name="effect">{ &quot;startBattleWithCard&quot;: [ &quot;Lapis Orb of Dragonkind&quot;]
 }</property>
     <property name="enemy" value="Ancient Silver Dragon"/>
@@ -237,5 +239,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="133" template="../../../../common/maps/obj/waypoint.tx" x="80" y="448"/>
+  <object id="134" template="../../../../common/maps/obj/waypoint.tx" x="64" y="464"/>
+  <object id="135" template="../../../../common/maps/obj/waypoint.tx" x="160" y="304"/>
+  <object id="136" template="../../../../common/maps/obj/waypoint.tx" x="144" y="320"/>
  </objectgroup>
 </map>

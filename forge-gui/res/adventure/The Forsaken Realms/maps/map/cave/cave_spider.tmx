@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="71">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="73">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -65,6 +65,7 @@
   <object id="49" template="../../../../common/maps/obj/gold.tx" x="144.327" y="139.568"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="109.994" y="43.33">
    <properties>
+    <property name="waypoints" value="71,72"/>
     <property name="enemy" value="Cave Spider"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
@@ -135,5 +136,7 @@
   <object id="68" template="../../obj/stone.tx" x="19.5918" y="154.42"/>
   <object id="69" template="../../obj/stone.tx" x="407.231" y="154.523"/>
   <object id="70" template="../../obj/stone.tx" x="192.579" y="101.193"/>
+  <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="128" y="32"/>
+  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="160" y="32"/>
  </objectgroup>
 </map>

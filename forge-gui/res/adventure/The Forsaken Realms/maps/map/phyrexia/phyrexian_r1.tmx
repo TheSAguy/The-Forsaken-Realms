@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="94">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="98">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -45,6 +45,7 @@
   <object id="54" template="../../../../common/maps/obj/gold.tx" x="330.774" y="393.463"/>
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="215.667" y="164">
    <properties>
+    <property name="waypoints" value="94,95"/>
     <property name="enemy" value="Furnace Tormentor"/>
     <property name="threatRange" value="20"/>
    </properties>
@@ -54,10 +55,10 @@
     <property name="enemy" value="Furnace Goblin"/>
     <property name="speedModifier" type="float" value="3"/>
     <property name="threatRange" value="30"/>
-    <property name="waypoints" value="75,76,74,62"/>
+    <property name="waypoints" value="96,97"/>
    </properties>
   </object>
-  <object id="79" template="../../../../common/maps/obj/enemy.tx" x="277.667" y="200">
+  <object id="79" template="../../../../common/maps/obj/enemy.tx" x="176" y="128">
    <properties>
     <property name="enemy" value="Furnace Goblin"/>
     <property name="speedModifier" type="float" value="3"/>
@@ -159,5 +160,9 @@
   <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="295.955" y="648.318"/>
   <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="136.011" y="199.967"/>
   <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="295.953" y="200.866"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="160" y="144"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="192" y="128"/>
+  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="176" y="144"/>
+  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="192" y="144"/>
  </objectgroup>
 </map>

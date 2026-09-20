@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="81">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="83">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -123,6 +123,7 @@
   </object>
   <object id="78" template="../../../../common/maps/obj/enemy.tx" x="162" y="63.6667">
    <properties>
+    <property name="waypoints" value="81,82"/>
     <property name="enemy" value="Apprentice Black Wizard"/>
    </properties>
   </object>
@@ -137,5 +138,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="176" y="48"/>
+  <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="160" y="64"/>
  </objectgroup>
 </map>

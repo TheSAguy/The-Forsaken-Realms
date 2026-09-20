@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="98">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="105">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -75,6 +75,7 @@
   </object>
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="303" y="176">
    <properties>
+    <property name="waypoints" value="101,102"/>
     <property name="effect">{ &quot;startBattleWithCard&quot;: [ &quot;Dual Nature&quot;]
 }</property>
     <property name="enemy" value="Beastmaster"/>
@@ -105,7 +106,7 @@
    <properties>
     <property name="enemy" value="Badger"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="90,88,89"/>
+    <property name="waypoints" value="103,104"/>
    </properties>
   </object>
   <object id="74" template="../../../../common/maps/obj/enemy.tx" x="29" y="542.75">
@@ -183,5 +184,11 @@
 ]</property>
    </properties>
   </object>
+  <object id="99" template="../../../../common/maps/obj/waypoint.tx" x="448" y="64"/>
+  <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="480" y="64"/>
+  <object id="101" template="../../../../common/maps/obj/waypoint.tx" x="352" y="128"/>
+  <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="336" y="144"/>
+  <object id="103" template="../../../../common/maps/obj/waypoint.tx" x="176" y="464"/>
+  <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="160" y="480"/>
  </objectgroup>
 </map>

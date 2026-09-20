@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="104">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="108">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -52,6 +52,7 @@
   </object>
   <object id="75" template="../../../../common/maps/obj/enemy.tx" x="106.034" y="305.243">
    <properties>
+    <property name="waypoints" value="104,105"/>
     <property name="defeatDialog">[
    {
    &quot;action&quot;: [
@@ -69,6 +70,7 @@
   </object>
   <object id="74" template="../../../../common/maps/obj/enemy.tx" x="231.069" y="255.542">
    <properties>
+    <property name="waypoints" value="106,107"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 15,
  &quot;changeStartCards&quot;: 2,
@@ -77,7 +79,7 @@
     <property name="enemy" value="Doppelganger"/>
    </properties>
   </object>
-  <object id="71" template="../../../../common/maps/obj/enemy.tx" x="140.117" y="386.888">
+  <object id="71" template="../../../../common/maps/obj/enemy.tx" x="96" y="352">
    <properties>
     <property name="effect">{
  &quot;lifeModifier&quot;: 10,
@@ -86,14 +88,14 @@
     <property name="enemy" value="Master Blue Wizard"/>
    </properties>
   </object>
-  <object id="67" template="../../../../common/maps/obj/enemy.tx" x="247.673" y="379.931">
+  <object id="67" template="../../../../common/maps/obj/enemy.tx" x="320" y="352">
    <properties>
     <property name="enemy" value="Djinn"/>
     <property name="threatRange" type="int" value="30"/>
     <property name="waypoints" value="87,85,87,97"/>
    </properties>
   </object>
-  <object id="82" template="../../../../common/maps/obj/enemy.tx" x="205.049" y="301.238">
+  <object id="82" template="../../../../common/maps/obj/enemy.tx" x="288" y="304">
    <properties>
     <property name="effect">{
  &quot;lifeModifier&quot;: 30,
@@ -107,7 +109,7 @@
     <property name="waypoints" value="100,93,92,93"/>
    </properties>
   </object>
-  <object id="80" template="../../../../common/maps/obj/enemy.tx" x="285.049" y="316.722">
+  <object id="80" template="../../../../common/maps/obj/enemy.tx" x="304" y="304">
    <properties>
     <property name="enemy" value="Master Blue Wizard"/>
     <property name="threatRange" type="int" value="30"/>
@@ -302,5 +304,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="128" y="352"/>
+  <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="112" y="320"/>
+  <object id="106" template="../../../../common/maps/obj/waypoint.tx" x="176" y="224"/>
+  <object id="107" template="../../../../common/maps/obj/waypoint.tx" x="176" y="208"/>
  </objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="49">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="51">
  <properties>
   <property name="preventEscape" type="bool" value="true"/>
  </properties>
@@ -204,7 +204,7 @@
    <properties>
     <property name="enemy" value="Black Golem"/>
     <property name="threatRange" type="int" value="50"/>
-    <property name="waypoints" value="23,r45-46,r19-20,r8-15,r19-20,r45-46,r10-14"/>
+    <property name="waypoints" value="49,50"/>
    </properties>
   </object>
   <object id="43" template="../../../../common/maps/obj/enemy.tx" x="232" y="48">
@@ -261,5 +261,7 @@
   <object id="23" template="../../../../common/maps/obj/waypoint.tx" name="23" x="336" y="256"/>
   <object id="45" template="../../../../common/maps/obj/waypoint.tx" name="45" x="416" y="160"/>
   <object id="46" template="../../../../common/maps/obj/waypoint.tx" name="46" x="416" y="128"/>
+  <object id="49" template="../../../../common/maps/obj/waypoint.tx" x="304" y="256"/>
+  <object id="50" template="../../../../common/maps/obj/waypoint.tx" x="288" y="272"/>
  </objectgroup>
 </map>

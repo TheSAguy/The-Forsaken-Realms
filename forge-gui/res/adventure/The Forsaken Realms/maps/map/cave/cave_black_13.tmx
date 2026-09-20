@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="48" height="24" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="19">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="48" height="24" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="21">
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
@@ -195,7 +195,7 @@
     <property name="enemy" value="Apprentice Black Wizard"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="4,5,6,7,2,3"/>
+    <property name="waypoints" value="19,20"/>
    </properties>
   </object>
   <object id="13" template="../../../../common/maps/obj/treasure.tx" x="704" y="112">
@@ -212,5 +212,7 @@
   <object id="16" template="../../obj/wood.tx" x="288" y="272"/>
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="176" y="224"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="624" y="96"/>
+  <object id="19" template="../../../../common/maps/obj/waypoint.tx" x="704" y="96"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="688" y="112"/>
  </objectgroup>
 </map>

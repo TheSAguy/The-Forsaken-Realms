@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="70">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="76">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -72,5 +72,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="320" y="144"/>
+  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="304" y="144"/>
+  <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="320" y="112"/>
+  <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="288" y="144"/>
  </objectgroup>
 </map>

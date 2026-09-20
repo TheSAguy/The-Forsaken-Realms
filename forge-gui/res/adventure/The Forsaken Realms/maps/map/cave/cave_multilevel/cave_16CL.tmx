@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="97">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="102">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -44,7 +44,7 @@
   <object id="77" template="../../../../../common/maps/obj/enemy.tx" x="172.586" y="141.581">
    <properties>
     <property name="enemy" value="Zombie"/>
-    <property name="waypoints" value="93,94,92,89,90,91,90,89,94"/>
+    <property name="waypoints" value="97,98"/>
    </properties>
   </object>
   <object id="80" template="../../../../../common/maps/obj/treasure.tx" x="200" y="33.5"/>
@@ -57,6 +57,7 @@
   <object id="86" template="../../../../../common/maps/obj/manashards.tx" x="233.412" y="210.586"/>
   <object id="87" template="../../../../../common/maps/obj/enemy.tx" x="205.17" y="200.527" visible="1">
    <properties>
+    <property name="waypoints" value="99,100"/>
     <property name="enemy" value="Skeleton Soldier"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="pursueRange" type="float" value="60"/>
@@ -89,5 +90,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="97" template="../../../../../common/maps/obj/waypoint.tx" x="192" y="48"/>
+  <object id="98" template="../../../../../common/maps/obj/waypoint.tx" x="208" y="48"/>
+  <object id="99" template="../../../../../common/maps/obj/waypoint.tx" x="208" y="256"/>
+  <object id="100" template="../../../../../common/maps/obj/waypoint.tx" x="208" y="240"/>
  </objectgroup>
 </map>

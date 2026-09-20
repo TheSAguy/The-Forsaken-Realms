@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="50">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="56">
  <properties>
   <property name="preventEscape" type="bool" value="true"/>
  </properties>
@@ -101,14 +101,14 @@
     <property name="waypoints" value="19,r24-5-23-13"/>
    </properties>
   </object>
-  <object id="35" template="../../../../common/maps/obj/enemy.tx" x="384" y="480">
+  <object id="35" template="../../../../common/maps/obj/enemy.tx" x="416" y="512">
    <properties>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Gorilla"/>
     <property name="waypoints" value="r10-12-23-13"/>
    </properties>
   </object>
-  <object id="36" template="../../../../common/maps/obj/enemy.tx" x="64" y="352">
+  <object id="36" template="../../../../common/maps/obj/enemy.tx" x="16" y="160">
    <properties>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Elephant"/>
@@ -124,7 +124,7 @@
     <property name="pursueRange" type="int" value="100"/>
     <property name="speedModifier" type="float" value="10"/>
     <property name="threatRange" type="int" value="60"/>
-    <property name="waypoints" value="13"/>
+    <property name="waypoints" value="52,53"/>
    </properties>
   </object>
   <object id="40" template="../../../../common/maps/obj/enemy.tx" x="224" y="160">
@@ -133,7 +133,7 @@
     <property name="enemy" value="Ape"/>
     <property name="pursueRange" type="int" value="100"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="18,r20-26,r14-25,r15-22, r14-25, r20-26"/>
+    <property name="waypoints" value="54,55"/>
    </properties>
   </object>
   <object id="41" template="../../../../common/maps/obj/enemy.tx" x="240" y="272">
@@ -160,7 +160,7 @@
     <property name="pursueRange" type="int" value="100"/>
     <property name="speedModifier" type="float" value="10"/>
     <property name="threatRange" type="int" value="75"/>
-    <property name="waypoints" value="16"/>
+    <property name="waypoints" value="50,51"/>
    </properties>
   </object>
   <object id="44" template="../../../../common/maps/obj/enemy.tx" x="400" y="96">
@@ -235,5 +235,11 @@
   <object id="49" template="../../obj/stone.tx" x="403" y="225"/>
   <object id="29" template="../../../../common/maps/obj/gold.tx" x="32" y="400"/>
   <object id="30" template="../../../../common/maps/obj/gold.tx" x="224" y="496"/>
+  <object id="50" template="../../../../common/maps/obj/waypoint.tx" x="304" y="32"/>
+  <object id="51" template="../../../../common/maps/obj/waypoint.tx" x="288" y="48"/>
+  <object id="52" template="../../../../common/maps/obj/waypoint.tx" x="416" y="336"/>
+  <object id="53" template="../../../../common/maps/obj/waypoint.tx" x="400" y="352"/>
+  <object id="54" template="../../../../common/maps/obj/waypoint.tx" x="64" y="80"/>
+  <object id="55" template="../../../../common/maps/obj/waypoint.tx" x="48" y="96"/>
  </objectgroup>
 </map>

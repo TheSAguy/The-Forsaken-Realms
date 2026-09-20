@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="78">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="82">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -48,7 +48,7 @@
    <properties>
     <property name="enemy" value="Elf"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="71,72,66"/>
+    <property name="waypoints" value="78,79"/>
    </properties>
   </object>
   <object id="51" template="../../../../common/maps/obj/enemy.tx" x="368.667" y="189.833">
@@ -66,6 +66,7 @@
   </object>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="270.5" y="276.834">
    <properties>
+    <property name="waypoints" value="80,81"/>
     <property name="enemy" value="High Elf"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
@@ -135,5 +136,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="192" y="48"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="224" y="48"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="336" y="256"/>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="320" y="272"/>
  </objectgroup>
 </map>

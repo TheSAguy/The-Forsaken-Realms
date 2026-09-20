@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="115">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="119">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -39,6 +39,7 @@
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="229.833" y="327.25"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="106.591" y="85.4096">
    <properties>
+    <property name="waypoints" value="117,118"/>
     <property name="enemy" value="Fire Dragon"/>
    </properties>
   </object>
@@ -82,6 +83,7 @@
   </object>
   <object id="76" template="../../../../common/maps/obj/enemy.tx" x="278.333" y="343.667">
    <properties>
+    <property name="waypoints" value="115,116"/>
     <property name="enemy" value="Kobold Slinger"/>
     <property name="threatRange" type="int" value="30"/>
    </properties>
@@ -98,7 +100,7 @@
     <property name="threatRange" type="int" value="30"/>
    </properties>
   </object>
-  <object id="79" template="../../../../common/maps/obj/enemy.tx" x="202" y="506.333">
+  <object id="79" template="../../../../common/maps/obj/enemy.tx" x="144" y="608">
    <properties>
     <property name="enemy" value="Kobold Warrior"/>
     <property name="threatRange" type="int" value="50"/>
@@ -286,5 +288,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="115" template="../../../../common/maps/obj/waypoint.tx" x="224" y="304"/>
+  <object id="116" template="../../../../common/maps/obj/waypoint.tx" x="208" y="320"/>
+  <object id="117" template="../../../../common/maps/obj/waypoint.tx" x="48" y="144"/>
+  <object id="118" template="../../../../common/maps/obj/waypoint.tx" x="32" y="160"/>
  </objectgroup>
 </map>

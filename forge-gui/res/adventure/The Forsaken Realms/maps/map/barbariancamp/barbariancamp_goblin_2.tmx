@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="95">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="99">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -58,7 +58,7 @@
    <properties>
     <property name="enemy" value="Goblin Fanatic"/>
     <property name="threatRange" type="int" value="60"/>
-    <property name="waypoints" value="66,65"/>
+    <property name="waypoints" value="97,98"/>
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="54.333" y="285.833">
@@ -68,7 +68,7 @@
     <property name="waypoints" value="68,61,62,61,68,69,70,69"/>
    </properties>
   </object>
-  <object id="56" template="../../../../common/maps/obj/enemy.tx" x="198.736" y="96.909">
+  <object id="56" template="../../../../common/maps/obj/enemy.tx" x="160" y="48">
    <properties>
     <property name="enemy" value="Goblin Chief"/>
     <property name="speedModifier" type="float" value="6"/>
@@ -126,7 +126,7 @@
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="351" y="72">
    <properties>
     <property name="enemy" value="Earth Elemental"/>
-    <property name="waypoints" value="62,82"/>
+    <property name="waypoints" value="95,96"/>
    </properties>
   </object>
   <object id="78" template="../../../../common/maps/obj/manashards.tx" x="4.5" y="20"/>
@@ -207,5 +207,9 @@
 ]</property>
    </properties>
   </object>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
+  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="224" y="64"/>
+  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="80" y="128"/>
+  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="112" y="128"/>
  </objectgroup>
 </map>

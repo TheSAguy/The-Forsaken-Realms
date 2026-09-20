@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="64">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="66">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -42,6 +42,7 @@
   </object>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="219.432" y="140.105">
    <properties>
+    <property name="waypoints" value="64,65"/>
     <property name="enemy" value="Merfolk warrior"/>
     <property name="threatRange" type="int" value="60"/>
    </properties>
@@ -86,7 +87,7 @@
   <object id="58" template="../../../../common/maps/obj/waypoint.tx" x="291.688" y="131.218"/>
   <object id="59" template="../../../../common/maps/obj/waypoint.tx" x="322.047" y="217.525"/>
   <object id="60" template="../../../../common/maps/obj/waypoint.tx" x="124.713" y="73.9697"/>
-  <object id="61" template="../../../../common/maps/obj/enemy.tx" x="248.318" y="76.5719">
+  <object id="61" template="../../../../common/maps/obj/enemy.tx" x="288" y="16">
    <properties>
     <property name="enemy" value="Sand Golem"/>
    </properties>
@@ -102,5 +103,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="192" y="16"/>
+  <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="208" y="32"/>
  </objectgroup>
 </map>

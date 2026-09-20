@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="11">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="13">
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
@@ -156,7 +156,7 @@
     <property name="enemy" value="Gorgon 2"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="3,4,2"/>
+    <property name="waypoints" value="11,12"/>
    </properties>
   </object>
   <object id="8" template="../../../../common/maps/obj/treasure.tx" x="528" y="128">
@@ -166,5 +166,7 @@
   </object>
   <object id="9" template="../../../../common/maps/obj/gold.tx" x="320" y="144"/>
   <object id="10" template="../../obj/stone.tx" x="400" y="144"/>
+  <object id="11" template="../../../../common/maps/obj/waypoint.tx" x="528" y="112"/>
+  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="512" y="128"/>
  </objectgroup>
 </map>
