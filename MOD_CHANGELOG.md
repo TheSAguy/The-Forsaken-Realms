@@ -17834,6 +17834,8 @@ answers part of the question left open in round 252: the talkers in the dueling 
 **New worlds only** - all of it is world-generation data. An existing save has no Orazca POI, and every lookup added
 here returns null for it: home stays the spawn cave, any restored town still upgrades, nothing moves.
 
+Packaged into the F: live folder 18:11 carrying rounds 252 and 253 (jar `5b677a96de6a`), agent folder re-synced.
+
 **Seen in a running game** (agent game, a brand-new world on the round 253 classes): the world map at tile
 (353, 355) with Orazca 3 tiles south and no campfire anywhere; the Warden's introduction in the cave, the Homeward rune
 granted, and object 69 gone from the actor list the moment it ended; Orazca entered with nine `(destroyed)` shops, its

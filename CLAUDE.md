@@ -62,7 +62,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      dialogs - quest 52's "Get Some Answers" and quest 43 "Raise the Banner" point there. `findHome()` (Capitol,
      else Orazca, else the cave) is what the Homeward rune and death respawn ask. The Five cannot take Orazca until
      it is the Capitol. **NEW WORLDS ONLY** - a pre-253 save has no Orazca POI and behaves exactly as before.
-     **NOT yet run in a game**: start a new game in the agent game, walk out of the cave, and look for the ruin.
+     **SEEN IN A RUNNING GAME** (agent game, a brand-new world): out of the cave at tile (353, 355), Orazca 3 tiles
+     south, no campfire anywhere; the introduction, the rune, and the Warden gone from the cave the moment it ended;
+     Orazca entered with nine `(destroyed)` shops, its Job Board and the Warden. **F: live folder packaged 18:11 with
+     rounds 252 AND 253** (jar `5b677a96de6a`); the agent folder was re-synced from it.
      Also in this round: round 252's default reaction radius no longer touches the 43 NPCs that carry a dialog
      (the Warden, quest mages, castle heralds, the Skep village) - they would have walked up and talked unasked.
      Round 253 also: **no campfire at all** (the spawn POI is inactive - hidden everywhere `getActive()` is honored,
@@ -79,10 +82,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      them even patrol. `MapStage.applyDefaultReactionRange()` now gives such an enemy the plane's default radius at
      load - `mapEnemyDefaultThreatRange` 32 px (two tiles) / `mapEnemyDefaultPursueRange` 64 px in settings.json -
      authored ranges win, a negative `threatRange` in a map means "never reacts", `[TFR-Threat]` logs it per map. Also
-     fixed a stock NPE waiting to happen (the `pursueRange` read was gated on the `threatRange` key). **NOT yet run in
-     a game, NOT yet in F:** - the user was playing; package F: and watch for `[TFR-Threat]`. ASKED, unanswered:
-     whether the dueling club (13), Valor's Reach Arena (7), the Naktamun gym (7) and `debug_map` (12) should stay
-     inert (a `threatRange` of -1 does it).
+     fixed a stock NPE waiting to happen (the `pursueRange` read was gated on the `threatRange` key). Round 253 then
+     exempted the 43 of those 378 that carry a dialog - they are NPCs, and would have walked up and talked unasked -
+     which also answers most of what was asked here: the talkers in the dueling club, Valor's Reach Arena, the
+     Naktamun gym and `debug_map` are exempt automatically now, only their fighters take the default. Still open if
+     the user wants whole set-pieces inert: a `threatRange` of -1 in those maps does it. **IN F: since 18:11**
+     (packaged with round 253), not yet watched in the user's own play.
   3. **The map (rounds 249-251), all three SEEN IN A RUNNING GAME (round 251's entry).** 249: every icon centered on
      `PointOfInterest.getCenter()`, an older save re-baked ONCE at load (`mapIconLayout`, `[TFR-MapIcons]`). 250:
      option A without the burst - when part of an icon is uncovered so are the tiles under it
