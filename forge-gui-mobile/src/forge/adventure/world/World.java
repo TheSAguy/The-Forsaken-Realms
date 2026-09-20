@@ -1252,6 +1252,34 @@ public class World implements Disposable, SaveFileContent {
         return false;
     }
 
+    /**
+     * Round 254 (user: "Is there anyway to make sure there are no collision terrain in a small circle around this
+     * ruin?"). generateNew() already clears the map centre before placement and three tiles around every POI, but
+     * the biome's own structures are stamped BEFORE that centre clear and the player biome's crater/ring models
+     * sit exactly on the world centre - so colliding tiles come back around the one POI the player walks past
+     * most. Runs after placement, on Orazca's real tile rather than the nominal centre, and reports what it
+     * removed. Silent no-op on a plane without an Orazca.
+     */
+    private void clearGroundAroundOrazca() {
+        PointOfInterest orazca = mapPoiIds == null ? null
+                : mapPoiIds.findPointsOfInterest(TownRestoration.ORAZCA_POI_NAME);
+        if (orazca == null)
+            return;
+        int tileX = (int) (orazca.getPosition().x / data.tileSize);
+        int tileY = (int) (orazca.getPosition().y / data.tileSize);
+        int blocked = 0;
+        for (int dx = -ORAZCA_CLEAR_TILES; dx <= ORAZCA_CLEAR_TILES; dx++)
+            for (int dy = -ORAZCA_CLEAR_TILES; dy <= ORAZCA_CLEAR_TILES; dy++)
+                if (dx * dx + dy * dy <= ORAZCA_CLEAR_TILES * ORAZCA_CLEAR_TILES && isColliding(tileX + dx, tileY + dy))
+                    blocked++;
+        clearTerrain(tileX, tileY, ORAZCA_CLEAR_TILES);
+        System.out.println("[TFR-Orazca] cleared the ground within " + ORAZCA_CLEAR_TILES + " tiles of ("
+                + tileX + "," + tileY + ") - " + blocked + " colliding tile(s) removed");
+    }
+
+    /** Round 254: how far around Orazca the ground is guaranteed walkable. */
+    private static final int ORAZCA_CLEAR_TILES = 6;
+
     private void clearTerrain(int x, int y, int size) {
 
         for (int xclear = -size; xclear < size; xclear++)
@@ -1697,6 +1725,7 @@ public class World implements Disposable, SaveFileContent {
             // Hide the reserve 4/5 of the rotation pool BEFORE anything bakes markers or picks
             // quest targets - see the placement loop's POOL_MULTIPLIER comment above.
             recordStarTowns(); // Center Towns (MOD_SCOPE #102): positions are final once placement is done
+            clearGroundAroundOrazca(); // round 254 (user: "no collision terrain in a small circle around this ruin")
             DungeonRotation.initializeNewWorld(this);
 
 //////////////////

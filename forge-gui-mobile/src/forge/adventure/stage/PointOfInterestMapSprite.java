@@ -19,6 +19,8 @@ public class PointOfInterestMapSprite extends MapSprite {
     PointOfInterest pointOfInterest;
     Texture debugTexture;
     Rectangle boundingRect;
+    /** Round 254: the largest entry box any POI gets, in pixels - two 16px tiles. See the constructor. */
+    private static final float ENTRY_BOX_MAX = 32f;
     MapSprite mapSprite;
     // Ruin/Player-town main-map icon bump (2026-08-25 user request: "still a little small
     // compared to the Neutral town or AI towns... increase the size of Ruin Towns and Player
@@ -29,7 +31,16 @@ public class PointOfInterestMapSprite extends MapSprite {
         super(point.getPosition(), point.getSprite(), point);
         pointOfInterest = point;
         mapSprite = this;
-        boundingRect = new Rectangle(getX(), getY(), texture.getRegionWidth(), texture.getRegionHeight());
+        // Round 254 (user, on Orazca: "the radius to enter the center ruin seems huge"). This box is what
+        // WorldStage tests the player against to enter a POI, and it used to be the whole texture - which for a
+        // Center Town / Orazca is CenterTownNeutral at 64x64, four tiles, while the broken-town art actually
+        // drawn over a ruin is a fraction of that. The player was pulled in from four tiles out. Cap it at two
+        // tiles, centred on the sprite's width and sitting on its base, so entering means walking into the
+        // building rather than its aura. A POI whose art is already this small (most caves and dungeons, the old
+        // campfire) is untouched.
+        float entryW = Math.min(texture.getRegionWidth(), ENTRY_BOX_MAX);
+        float entryH = Math.min(texture.getRegionHeight(), ENTRY_BOX_MAX);
+        boundingRect = new Rectangle(getX() + (texture.getRegionWidth() - entryW) / 2f, getY(), entryW, entryH);
     }
 
     public PointOfInterest getPointOfInterest() {

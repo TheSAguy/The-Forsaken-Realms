@@ -2779,6 +2779,16 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 254 (2026-09-20) - adventure-side only
+
+`stage/PointOfInterestMapSprite.java` - `ENTRY_BOX_MAX` caps the POI entry rectangle at two tiles, centred on the
+sprite and on its base. `world/World.java` - `clearGroundAroundOrazca()` after `recordStarTowns()`, plus
+`ORAZCA_CLEAR_TILES`. `util/TerritoryControl.java` - `dispatch(world, color, forceArchmage, furthestTarget)` (the
+two-arg form delegates), the furthest-target pick, the forced Archmage tier with a fallback, and
+`onPlayerCapitolBuilt()` asking for both. Plane data: `quests.json` (quest 53 stage 1 tags),
+`points_of_interest.json` (the Capitol's `Orazca` tag), `maps/map/towns/orazca.tmx` and
+`maps/map/towns/player_capital.tmx` (the Warden).
+
 ## Round 253 (2026-09-19) - adventure-side only
 
 `world/World.java` - the star's spokes radiate from Orazca (campfire fallback), and Orazca is exempt from

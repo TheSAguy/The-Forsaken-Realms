@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="105">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="111">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -19566,6 +19566,185 @@
     <property name="signYOffset" type="float" value="-2"/>
     <property name="uncommonShopList" value="Artifact,Land,Assembly,Golem,Sliver,Wall,Equip,Enchantment,Instant,Creature,Battle,Black2,Black4,Black6,Blue2,Blue4,Blue6,Green2,Green4,Green6,Red2,Red4,Red6,White2,White4,White6,Instant4Black,Instant4Blue,Instant4Green,Instant4Red,Instant4White,Land4Blue,Land4Black,Land4Red,Land4Green,Land4White,Human4White,Sliver4Black,Sliver4Blue,Sliver4Green,Sliver4Red,Sliver4White,Enchantment4Black,Enchantment4Blue,Enchantment4Green,Enchantment4Red,Enchantment4White,Artifact4Black,Artifact4Blue,Artifact4Green,Artifact4Red,Artifact4White,Multicolor8Black,Multicolor8Blue,Multicolor8Green,Multicolor8Red,Multicolor8White,Ogre4Red,Dinosaur4Green,Dinosaur4Red,Soldier4Red,Soldier4White,Wand4Black,Wand4Blue,Wand4Green,Wand4Red,Wand4White,Bird4Blue,Bird4White,Bird4Azorius,Spirit4Blue,Spirit4White,Wolf4Green,Wolf4Red,Knight4Black,Knight4Red,Knight4White,Pirate4Blue,Rogue4Black,Rogue4Blue"/>
     <property name="noRestock" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="110" template="../../../../common/maps/obj/enemy.tx" gid="2147495067" x="160" y="256">
+   <properties>
+    <property name="dialog">[
+  {
+    &quot;text&quot;: &quot;The Warden stands in the shadow of Orazca's new walls, the old map still under his arm. \&quot;You raised it after all,\&quot; he says. \&quot;Three thousand years, and the realm has a heart again.\&quot;&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;(Leave)&quot;
+      }
+    ]
+  },
+  {
+    &quot;condition&quot;: [
+      {
+        &quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;,
+        &quot;getQuestFlag&quot;: {
+          &quot;key&quot;: &quot;Ch1CastlesComplete&quot;,
+          &quot;op&quot;: &quot;&lt;&quot;,
+          &quot;val&quot;: 5
+        }
+      }
+    ],
+    &quot;text&quot;: &quot;\&quot;{var=player_name}! I feel the Guardians' spell growing weaker! Defeat them all and you may save us yet.\&quot;&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;\&quot;Goodbye.\&quot;&quot;
+      }
+    ]
+  },
+  {
+    &quot;condition&quot;: [
+      {
+        &quot;getQuestFlag&quot;: {
+          &quot;key&quot;: &quot;Ch1CastlesComplete&quot;,
+          &quot;op&quot;: &quot;&gt;=&quot;,
+          &quot;val&quot;: 5
+        }
+      },
+      {
+        &quot;getQuestFlag&quot;: {
+          &quot;key&quot;: &quot;mainQuest&quot;,
+          &quot;op&quot;: &quot;&lt;&quot;,
+          &quot;val&quot;: 3
+        }
+      }
+    ],
+    &quot;text&quot;: &quot;\&quot;Orazca stands, and the five thrones are broken. Welcome home, {var=player_name}.\&quot;&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;action&quot;: [
+          {
+            &quot;removeItem&quot;: &quot;&quot;,
+            &quot;setColorIdentity&quot;: &quot;&quot;,
+            &quot;advanceQuestFlag&quot;: &quot;&quot;,
+            &quot;advanceMapFlag&quot;: &quot;&quot;,
+            &quot;setQuestFlag&quot;: {
+              &quot;key&quot;: &quot;mainQuest&quot;,
+              &quot;val&quot;: 3
+            },
+            &quot;setMapFlag&quot;: {
+              &quot;key&quot;: &quot;&quot;
+            },
+            &quot;issueQuest&quot;: &quot;&quot;,
+            &quot;POIReference&quot;: &quot;&quot;
+          }
+        ],
+        &quot;name&quot;: &quot;\&quot;The five castles have fallen. The Seals are mine again.\&quot;&quot;,
+        &quot;text&quot;: &quot;\&quot;Then it is done - what was stolen is restored. But hear an old man's last warning: the Five did not invent your prison. They found its design.\&quot;&quot;,
+        &quot;options&quot;: [
+          {
+            &quot;name&quot;: &quot;\&quot;Found it... where?\&quot;&quot;,
+            &quot;text&quot;: &quot;\&quot;Beneath this realm there are older doors, Guardian - older than my order, older than your wardenship. Your Seals were never only bindings. They were also locks.\&quot;&quot;,
+            &quot;options&quot;: [
+              {
+                &quot;name&quot;: &quot;(Continue)&quot;,
+                &quot;text&quot;: &quot;\&quot;Now those locks sit in your pocket instead of on the doors - and whatever slept behind them has had three thousand years to grow hungry. Rest. Rebuild. And keep your deck close, Guardian.\&quot;&quot;,
+                &quot;options&quot;: [
+                  {
+                    &quot;name&quot;: &quot;(Continue)&quot;,
+                    &quot;text&quot;: &quot;[RED]Developer's note:[] You have reached the end of The Forsaken Realms' current story content - but the realm fights on: territory, research, restoration and the Five continue. Several difficult dungeons have also been added to your world map.&quot;,
+                    &quot;options&quot;: [
+                      {
+                        &quot;name&quot;: &quot;(Continue)&quot;,
+                        &quot;text&quot;: &quot;[RED]Developer's note:[] Watch for the next release to continue the story - and thanks for coming on this Adventure with us!&quot;,
+                        &quot;options&quot;: [
+                          {
+                            &quot;name&quot;: &quot;(Chapter 1 complete)&quot;
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;condition&quot;: [
+      {
+        &quot;item&quot;: &quot;Blue Key&quot;
+      },
+      {
+        &quot;item&quot;: &quot;Green Key&quot;
+      },
+      {
+        &quot;item&quot;: &quot;Black Key&quot;
+      },
+      {
+        &quot;item&quot;: &quot;White Key&quot;
+      },
+      {
+        &quot;item&quot;: &quot;Red Key&quot;
+      }
+    ],
+    &quot;text&quot;: &quot;\&quot;You have all five keys. I will take them - and give you something older in return.\&quot;&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;I want to trade in the five colored keys for a mox of my choice and the key to Emrakul's room&quot;,
+        &quot;action&quot;: [
+          {
+            &quot;grantRewardsChoice&quot;: [
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Jet&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Ruby&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Sapphire&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Pearl&quot;
+              },
+              {
+                &quot;type&quot;: &quot;card&quot;,
+                &quot;count&quot;: 1,
+                &quot;cardName&quot;: &quot;Mox Emerald&quot;
+              }
+            ]
+          },
+          {
+            &quot;removeItem&quot;: &quot;Blue Key&quot;
+          },
+          {
+            &quot;removeItem&quot;: &quot;Green Key&quot;
+          },
+          {
+            &quot;removeItem&quot;: &quot;Black Key&quot;
+          },
+          {
+            &quot;removeItem&quot;: &quot;White Key&quot;
+          },
+          {
+            &quot;removeItem&quot;: &quot;Red Key&quot;
+          },
+          {
+            &quot;addItem&quot;: &quot;Strange Key&quot;
+          }
+        ]
+      }
+    ]
+  }
+]</property>
+    <property name="displayNameOverride" value="The Warden"/>
+    <property name="enemy" value="Adept Black Wizard"/>
    </properties>
   </object>
  </objectgroup>

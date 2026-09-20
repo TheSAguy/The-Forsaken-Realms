@@ -17757,6 +17757,55 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 254: what a new game found in round 253, and the Capitol's answering Archmage (2026-09-20)
+
+The user played round 253 from a fresh world and sent five things back, with screenshots and their log.
+
+**"After leaving the cave, the radius to enter the center ruin seems huge."** True, and it was not Orazca's fault
+alone: `PointOfInterestMapSprite`'s entry box - the rectangle `WorldStage` tests the player against to enter a POI -
+was the POI texture's FULL size. Orazca's sprite is `CenterTownNeutral` at 64x64, **four tiles**, while the broken-town
+art actually drawn over a ruin is a fraction of that, so the player was swallowed from four tiles out. The box is now
+capped at two tiles (`ENTRY_BOX_MAX`), centred on the sprite's width and sitting on its base - you walk into the
+building, not its aura. A POI whose art is already that small (most caves and dungeons, the old campfire) is untouched;
+the five Center Towns get the same correction for free.
+
+**"Is there anyway to make sure there are no collision terrain in a small circle around this ruin?"** `generateNew()`
+clears the map centre before POIs are placed and three tiles around each one, but the biome's own structures are
+stamped BEFORE that centre clear, and the player biome's crater/ring models sit exactly on the world centre - so
+colliding tiles came back around the one POI the player walks past most. `clearGroundAroundOrazca()` now runs after
+placement, on Orazca's real tile rather than the nominal centre, clearing a 6-tile radius and reporting what it
+removed: `[TFR-Orazca] cleared the ground within 6 tiles of (350,350) - N colliding tile(s) removed`.
+
+**"The quest said to meet him, but it was pointing to a nearby cave... The quest did not seem to trigger properly."**
+Their log named it: `[DungeonRotation] quest target Cave timer extended 30 days`. Quest 53's *"Talk to the nearby
+mage"* carries no POITags, and `AdventureQuestStage.setTargetPOI()` then picks the NEAREST ACTIVE POI - which was
+always the spawn cave the player is standing in, until round 253 made that POI inactive. The nearest *active* one, a
+random cave up the road, became the quest's target. The stage now names the cave by tag (`POITags: ["Spawn"]`) and
+sets `allowInactivePOI`, which is exactly what that flag is for.
+
+**A second quest break, found while fixing the first:** upgrading renames the POI to `Player Capitol`, so every stage
+that points at Orazca - quest 43's *"Raise Orazca"*, quest 52's *"Get Some Answers"* - would have found nothing once
+the Capitol stood. The Capitol POI now carries the `Orazca` quest tag as well. (Its displayName has been "Orazca" all
+along; this just makes the tag agree.)
+
+**"He was missing all together in the Capitol."** Of course he was: the upgrade swaps the POI's map, and
+`towns/player_capital.tmx` had no Warden in it. He is in it now, left of the bulletin board building (col 10, row 16)
+where the user's screenshot asked for him, carrying the same four dialog entries - only the unconditional greeting
+differs, since "sits among Orazca's fallen stones" stops being true once the walls are up. In the ruin town he moved
+to the matching spot, left of the board building at col 7 rather than right of the board.
+
+**"after building your capitol, the 5 AI get a mage sent out... make sure it's an Archmage and make sure it targets
+the furthest of the 5 possible target towns."** `dispatch()` takes two overrides now. `forceArchmage` skips the tier
+roll and sends the "Mythic" tier - which is the Archmage tier in this code, drawn from the color's own named
+Archmages by `pickGrandmasterMage()` (no color has an "Archmage <Color> Wizard" catalog entry, which is why the tier
+goes through that picker); if a color has none, it falls back to the ordinary roll rather than aborting the dispatch
+on the null check twenty lines later. `furthestTarget` binds the target before the weighted near-pick runs, choosing
+the attackable town FURTHEST from this color's holdings by the same `distToNearestSource()` the ordinary pick ranks
+by, skipping anything that color already has a mage flying at. One line per color:
+`[TFR-CapitolSurge] white aims at the furthest target it can reach: <town> (N tiles from its nearest holding, M attackable)`.
+
+Checked: `javac` + checkstyle clean, the plane validator clean, both maps' XML and dialog JSON re-parsed.
+
 ## Round 253: Orazca, the ruin at the centre of the star (2026-09-19)
 
 User: *"I'd like to tweak the world-map. Where the camp-fire is currently, should be a town ruin. This is the ruin that

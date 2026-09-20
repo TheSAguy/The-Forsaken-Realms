@@ -116,7 +116,7 @@
     <property name="questtype" value="waste_town_generic"/>
    </properties>
   </object>
-  <object id="100" template="../../../../common/maps/obj/enemy.tx" gid="2147495067" x="200" y="224">
+  <object id="100" template="../../../../common/maps/obj/enemy.tx" gid="2147495067" x="112" y="224">
    <properties>
     <property name="dialog">[
   {

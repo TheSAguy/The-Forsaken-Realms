@@ -11478,6 +11478,10 @@
 			{
 				"id": 1,
 				"name": "Talk to the nearby mage",
+				"POITags": [
+					"Spawn"
+				],
+				"allowInactivePOI": true,
 				"description": "There's not a lot to do in here other than talk to him, and any information is more than you have right now.",
 				"mapFlag": "mainQuest",
 				"mapFlagValue": 1,

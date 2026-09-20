@@ -1197,8 +1197,11 @@ public class TerritoryControl {
         for (String color : COLORS) {
             if (world.isColorDefeated(color))
                 continue;
-            System.out.println("[TFR-CapitolSurge] " + color + " answers the player's new Capitol with a mage at once");
-            dispatch(world, color);
+            System.out.println("[TFR-CapitolSurge] " + color + " answers the player's new Capitol with an Archmage at once");
+            // Round 254 (user: "That one that gets generated, make sure it's an Archmage and make sure it targets
+            // the furthest of the 5 possible target towns to attack"). The one-off answer to the Capitol is the
+            // top tier and goes for the far edge of what this color can reach, not the near pick it would roll.
+            dispatch(world, color, true, true);
             sent++;
         }
         if (sent > 0)
@@ -1327,6 +1330,16 @@ public class TerritoryControl {
     // notifications in dispatch()/onMageArrived() below - MOD_SCOPE.md #7 was reported as "ran a
     // week, saw zero mages" with no way to tell which stage of the pipeline that pointed at.
     private static void dispatch(World world, String color) {
+        dispatch(world, color, false, false);
+    }
+
+    /**
+     * Round 254: the two overrides the Capitol surge asks for.
+     * @param forceArchmage  skip the tier roll and send the color's Archmage tier (one of its named Archmages).
+     * @param furthestTarget pick the attackable town FURTHEST from this color's holdings instead of the weighted
+     *                       near pick - the Capitol's answer comes from the far edge of the map, not next door.
+     */
+    private static void dispatch(World world, String color, boolean forceArchmage, boolean furthestTarget) {
         // TARGET selection is frontier-aware, but the LAUNCH is castle-only (user refinement
         // 2026-08-08, same day this briefly launched from the nearest owned property): candidates
         // are ranked by distance to the color's NEAREST owned property (castle + its towns/
@@ -1487,6 +1500,29 @@ public class TerritoryControl {
         List<Float> weights = new ArrayList<>();
         float originalRoll = 0f;
         float totalWeight = 0f;
+        // Round 254 (user, on the mage every color sends when the player's Capitol goes up: "make sure it targets
+        // the furthest of the 5 possible target towns to attack"). Same distance measure the ordinary pick ranks
+        // by - to this color's nearest holding - and the same in-flight exclusion, so the answer sets out for the
+        // far edge of what this color can reach instead of the town next door.
+        if (furthestTarget && target == null) {
+            PointOfInterest furthest = null;
+            double bestDistance = -1;
+            for (PointOfInterest candidate : attackable) {
+                if (inFlightTargetIds.contains(candidate.getID()))
+                    continue;
+                double distance = distToNearestSource(candidate, ownedSources);
+                if (distance > bestDistance) {
+                    bestDistance = distance;
+                    furthest = candidate;
+                }
+            }
+            if (furthest != null) {
+                target = furthest;
+                System.out.println("[TFR-CapitolSurge] " + color + " aims at the furthest target it can reach: "
+                        + furthest.getDisplayName() + " (" + Math.round(bestDistance / 16d) + " tiles from its nearest holding, "
+                        + attackable.size() + " attackable)");
+            }
+        }
         if (target == null) {
             attackable.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
             int candidateCount = Math.min(NEAREST_CANDIDATES, attackable.size());
@@ -1559,12 +1595,27 @@ public class TerritoryControl {
             target = candidates.get(pick);
         }
 
-        String dispatchTier = rollDispatchMageTier(world.getRandom(), world, color);
+        // Round 254: the Capitol surge skips the roll and sends the Archmage tier - "Mythic" here, which
+        // pickGrandmasterMage() draws from this color's named Archmages (there is no "Archmage <Color> Wizard"
+        // catalog entry for any color, which is why the tier goes through that picker).
+        String dispatchTier = forceArchmage ? "Mythic" : rollDispatchMageTier(world.getRandom(), world, color);
         EnemyData enemyData;
         String enemyName;
         if ("Mythic".equals(dispatchTier)) {
             enemyData = pickGrandmasterMage(world, color);
             enemyName = enemyData != null ? enemyData.getName() : "(no Mythic-tier " + color + " enemy available)";
+            if (enemyData == null && forceArchmage) {
+                // Rather than abort the whole dispatch on the null check below, fall back to the ordinary roll -
+                // the Capitol still gets answered, just not by an Archmage.
+                dispatchTier = rollDispatchMageTier(world.getRandom(), world, color);
+                System.out.println("[TFR-CapitolSurge] " + color + " has no named Archmage - falling back to the "
+                        + "rolled tier " + EnemyData.tierDisplayName(dispatchTier));
+                if ("Mythic".equals(dispatchTier)) {
+                    dispatchTier = "Rare"; // the roll can only return Mythic again if the color HAS one
+                }
+                enemyName = EnemyData.tierDisplayName(dispatchTier) + " " + capitalize(color) + " Wizard";
+                enemyData = WorldData.getEnemy(enemyName);
+            }
         } else {
             enemyName = EnemyData.tierDisplayName(dispatchTier) + " " + capitalize(color) + " Wizard";
             enemyData = WorldData.getEnemy(enemyName);
