@@ -50,20 +50,25 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-20 (round 259; v1.12 "Reward Balancing" RELEASED, rounds 247-259 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-20 (round 260; v1.12 "Reward Balancing" RELEASED, rounds 247-259 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 259, 2026-09-20).** v1.12 is out; rounds 247-259 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 260, 2026-09-20).** v1.12 is out; rounds 247-260 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **Round 259 - "Participate in an Inn Tournament" is once per player.** Round 245's gate reads
+  1. **Round 260 - the Capitol surge targets correctly.** Round 255 searched every attackable town for the one
+     nearest the player's Capitol, which sent far-away colours marching across the map (the user watched one
+     walk at their Capitol). The pool is the colour's own five nearest targets again; the surge only picks which
+     of those five is closest to the Capitol. `capitolBuiltMageCapBonus` already covered the "+1 attacking mage"
+     half. **Built, NOT packaged** (rounds 259-260 both wait on the user's game being closed).
+  2. **Round 259 - "Participate in an Inn Tournament" is once per player.** Round 245's gate reads
      `statistic.completedEventCount()`, which `resetForNewGamePlus()` clears, so every NG+ re-issued the nudge.
      `INN_TOURNAMENT_QUEST_FLAG` (`innTournamentQuestGiven`) is stamped when the quest is issued and carried
      across the wipe beside `jumpstartPlayed`. **Built, NOT packaged** - the user was mid-test; package into
      `C:\TFR\live` when their game is closed. An existing save has no flag yet, so it fires once more on its
      next NG+ (offered, not done: seeding the flag at load from the statistics).
-  2. **Round 256 - the obstacles inside a town's icon, frozen set-pieces, half the rares.** The clear-ground pass
+  3. **Round 256 - the obstacles inside a town's icon, frozen set-pieces, half the rares.** The clear-ground pass
      ran BEFORE `generateNew()` stamps the biomes' structures and roads, so everything it cleared was put back -
      that is why the log said "0 colliding tile(s) removed" while a boulder sat against Orazca's gate. It runs
      LAST now, sized to each POI's own icon (half its sprite in tiles + 2; Orazca 6), zeroing only cells with a
@@ -207,6 +212,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 260 (2026-09-20): **the Capitol surge picks from the attacker's own five.** Round 255's "nearest the
+  Capitol" searched the whole map and sent distant colours across the world; the pool is `NEAREST_CANDIDATES`
+  again and the surge only chooses which of those five faces the player's seat.
 - Round 259 (2026-09-20): **the Inn-tournament nudge is once per player**, like Jumpstart. Round 245's gate keyed
   on the event count, which the New Game+ reset clears; `innTournamentQuestGiven` now survives that wipe. Built,
   not packaged - the user was playing.

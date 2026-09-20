@@ -2779,6 +2779,11 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Round 260 (2026-09-20) - adventure-side only
+
+`util/TerritoryControl.java` - the `towardCapitol` branch of `dispatch()` now ranks `attackable` by
+`distToNearestSource()`, cuts it to `NEAREST_CANDIDATES`, and only then takes the member closest to the Capitol.
+
 ## Round 259 (2026-09-20) - adventure-side only
 
 `player/AdventurePlayer.java` - `INN_TOURNAMENT_QUEST_FLAG`, stamped in `addQuest(int, boolean)` when quest 74 is

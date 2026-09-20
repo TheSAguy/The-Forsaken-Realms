@@ -1501,18 +1501,24 @@ public class TerritoryControl {
         List<Float> weights = new ArrayList<>();
         float originalRoll = 0f;
         float totalWeight = 0f;
-        // Round 255 (user, revising round 254's "furthest" rule: "Make the target the one of the 5 that's the
-        // closest to the player capitol. So, it will target a town pointing in the direction of the capitol
-        // basically"). Among everything this color can attack, take the town nearest the player's seat - the
-        // Capitol ITSELF excluded, since the point is the approach and not a direct assault on it - so five
-        // colors answering at once all march inward rather than each picking something convenient. Same
-        // in-flight exclusion as the ordinary pool. Distances are squared pixels (dst2), rooted only for the log.
+        // Round 260 (user, watching a mage set out across the world at their Capitol: "it still needs to be one
+        // of the 5 closest to the AI castle. So the pool of available targets is sill that 5, but the target is
+        // the one that is also the closest to the Player Capitol"). Round 255 searched everything the colour
+        // could attack, which let a colour on the far side of the map pick a town beside the Capitol and march
+        // the width of the world to reach it. The POOL is the same NEAREST_CANDIDATES the ordinary pick uses -
+        // ranked by distance to this colour's nearest holding - and the surge only changes which of those five
+        // is taken: the one nearest the player's seat, so the blow lands on the side of the player's territory
+        // facing that colour. The Capitol itself is excluded; the point is the approach, not a direct assault.
+        // Distances are squared pixels (dst2), rooted only for the log.
         if (towardCapitol && target == null) {
             PointOfInterest capitol = TownRestoration.findCapitol();
             if (capitol != null) {
+                List<PointOfInterest> pool = new ArrayList<>(attackable);
+                pool.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
+                pool = new ArrayList<>(pool.subList(0, Math.min(NEAREST_CANDIDATES, pool.size())));
                 PointOfInterest nearest = null;
                 double bestDistance = Double.MAX_VALUE;
-                for (PointOfInterest candidate : attackable) {
+                for (PointOfInterest candidate : pool) {
                     if (inFlightTargetIds.contains(candidate.getID()) || candidate == capitol)
                         continue;
                     double distance = candidate.getCenter().dst2(capitol.getCenter());
@@ -1523,9 +1529,11 @@ public class TerritoryControl {
                 }
                 if (nearest != null) {
                     target = nearest;
-                    System.out.println("[TFR-CapitolSurge] " + color + " marches on the town nearest the Capitol: "
-                            + nearest.getDisplayName() + " (" + Math.round(Math.sqrt(bestDistance) / 16d)
-                            + " tiles from it, " + attackable.size() + " attackable)");
+                    System.out.println("[TFR-CapitolSurge] " + color + " marches on " + nearest.getDisplayName()
+                            + " - the one of its " + pool.size() + " nearest targets closest to the Capitol ("
+                            + Math.round(Math.sqrt(bestDistance) / 16d) + " tiles from the Capitol, "
+                            + Math.round(Math.sqrt(distToNearestSource(nearest, ownedSources)) / 16d)
+                            + " from its own holdings)");
                 }
             }
         }

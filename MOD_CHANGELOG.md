@@ -17757,6 +17757,28 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 260: the Capitol surge picks from the attacker's own five (2026-09-20)
+
+User, with a screenshot of a mage walking at their Capitol from the far side of the world: *"I think there was a
+miss-communication... This new Archmage attacks the closest town to the capitol, BUT it still needs to be one of
+the 5 closest to the AI castle. So the pool of available targets is sill that 5, but the target is the one that is
+also the closest to the Player Capitol."*
+
+Round 255 read "closest to the player capitol" as a search over everything a colour could attack, so a colour on
+the opposite edge of the map picked a town beside the Capitol and set out to cross the world. The POOL is now the
+same `NEAREST_CANDIDATES` five the ordinary dispatch ranks by distance to that colour's nearest holding; the surge
+only changes WHICH of the five is taken - the one nearest the player's seat - so each colour strikes the side of
+the player's territory that faces it. The Capitol itself stays excluded: the point is the approach, not a direct
+assault. The log prints both distances, so the pick can be read at a glance:
+`[TFR-CapitolSurge] white marches on <town> - the one of its 5 nearest targets closest to the Capitol (34 tiles
+from the Capitol, 12 from its own holdings)`.
+
+The other half of the user's spec - *"+1 to total allowed attacking mages"* - was already in place:
+`TuningData.capitolBuiltMageCapBonus`, applied by `maxActiveMagesPerColor()` alongside the difficulty base, the
+per-10-towns rubber band and the colour-defeat bonus. The extra Archmage has room to fly without any change.
+
+Built (MVN EXIT 0), NOT packaged - the user was still playing.
+
 ## Round 259: the Inn-tournament nudge is once per player too (2026-09-20)
 
 User, mid-test: *"Let's make it that if the Play in an Inn Tournament quest already fired, it should not fire again
