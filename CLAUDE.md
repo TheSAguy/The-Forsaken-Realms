@@ -105,10 +105,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      those with a `defeatDialog`, so one of them means the dungeon never despawns, never satisfies a
      ClearDungeons objective, and stalls "Sweep the Wilds" forever. `dev-tools/unstrand_enemies.py` **moved
      22** (whole-tile offsets from their own authored coordinates, each verified reachable, all but one by 1-3
-     tiles); **28 stranded -> 6**. **LEFT FOR THE USER: `phyrexian_black1.tmx`, all five of its enemies** - its
-     single entry reaches 28,653 of 75,489 legal positions, so the ENTRY looks misplaced and moving the enemies
-     would hide the real question. Plus one Knight in `skep_outer.tmx` with no reachable tile within 8 tiles.
-     NOT verified in a game.
+     tiles); **28 stranded -> 6**. **`phyrexian_black1.tmx` is CLOSED: the user checked it in the game and said
+     "it looks good as is. Leave alone" (2026-09-21).** Rounds 278/279 both read it as a misplaced entry and
+     were wrong; it reads worse to a flood fill than it plays. Recorded in
+     `pixel_collision_qa.ACCEPTED_UNREACHABLE` so the three tools that flag it report it as ACCEPTED instead of
+     re-raising it - **do not "fix" it without asking again.** Still open: one Knight in `skep_outer.tmx` with no
+     reachable tile within 8 tiles. NOT verified in a game.
   5. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
      a death respawn onto Shimmering Crossing, `goto`, `explore` AND `wait` all answered "no path" to
      everything, for twenty-five minutes - no bridge command could move the player at all. Round 175's

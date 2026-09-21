@@ -93,6 +93,14 @@ def main():
             continue
         if not rows:
             continue
+        # A map the user has looked at and accepted counts as guarded - see q.ACCEPTED_UNREACHABLE. Without
+        # this, phyrexian_black1's booster sits in the UNGUARDED total for ever even though its guard is one
+        # tenth of a tile away and the user has said the room plays fine.
+        if os.path.basename(tmx) in q.ACCEPTED_UNREACHABLE:
+            tg += g + u
+            print("%-42s ACCEPTED by the user as designed - %d booster(s) counted as guarded"
+                  % (os.path.basename(tmx), g + u))
+            continue
         tg += g
         tu += u
         rel = os.path.relpath(tmx, q.DEFAULT_ROOT).replace("\\", "/")

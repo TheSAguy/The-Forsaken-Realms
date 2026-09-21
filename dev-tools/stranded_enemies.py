@@ -67,6 +67,12 @@ def main():
             continue
         if not res:
             continue
+        # A map the user has looked at and accepted is not a finding - see q.ACCEPTED_UNREACHABLE.
+        if os.path.basename(tmx) in q.ACCEPTED_UNREACHABLE:
+            if res:
+                print("%-44s ACCEPTED by the user as designed - %d placement(s) not reported"
+                      % (os.path.basename(tmx), len(res)))
+            continue
         for e, verdict, detail in res:
             tally[verdict] += 1
             rows.append((os.path.relpath(tmx, q.DEFAULT_ROOT).replace("\\", "/"), e, verdict, detail))

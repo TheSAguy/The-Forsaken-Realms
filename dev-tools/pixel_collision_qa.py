@@ -225,6 +225,17 @@ ENGAGE_SLACK = 20          # px; see the --enemies note in the module docstring
 DEFAULT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
                             "forge-gui", "res", "adventure", "The Forsaken Realms", "maps", "map")
 
+# Maps whose unreachable placements the USER has inspected in the game and accepted as designed. Every
+# reachability tool here consumes this, so an accepted map is reported as ACCEPTED rather than as a finding - an
+# audit that keeps re-raising a settled question is how people learn to skim its output.
+#
+# phyrexian_black1.tmx: its single entry_left reaches 28,653 of 75,489 legal player positions, and all five of
+# its enemies plus its booster sit outside that region, so rounds 278 and 279 both flagged it and left it alone
+# on the theory that the ENTRY was misplaced. The user checked it in the game: "I checked, it looks good as is.
+# Leave alone" (2026-09-21). The geometry reads worse to a flood fill than it plays - most likely the entry
+# region connects through something the pixel fill cannot follow. Do not "fix" it without asking again.
+ACCEPTED_UNREACHABLE = {"phyrexian_black1.tmx"}
+
 _TPL = {}
 
 

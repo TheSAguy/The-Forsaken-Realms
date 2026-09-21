@@ -17859,6 +17859,26 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 279 (cont.): phyrexian_black1 is accepted, and the audits now say so (2026-09-21)
+
+Asked what to do about `phyrexian_black1.tmx` - single entry reaching 28,653 of 75,489 legal positions, all five
+enemies and its booster outside that region - the user checked it in the game and answered: *"I checked, it looks
+good as is. Leave alone."*
+
+So rounds 278 and 279 were both wrong to read it as a misplaced entry. The geometry reads worse to a pixel flood
+fill than it plays, most likely because the entry region connects through something the fill cannot follow. The
+answer is recorded rather than just obeyed, because three tools flag that map and every future run would have
+re-raised a settled question: `pixel_collision_qa.ACCEPTED_UNREACHABLE` now holds it, `stranded_enemies.py` and
+`booster_guards.py` report it as ACCEPTED instead of as a finding, and `unstrand_enemies.py`'s default skip is
+documented as settled rather than pending. The booster total reads **260 of 261 guarded**.
+
+The one remaining unguarded booster is `cave_spider.tmx`, which has a Cave Spider 1.2 tiles away and no entry
+object, so reachability there cannot be verified either way - it is a limit of the tool, not a known defect.
+
+Three other answers from the same exchange, all "no change": the round-279 chase range stays at 64 px for all
+2,021 enemies (*"Keep it - all enemies chase"*), slot 2 keeps the soak's day-65 end state, and there is no release
+yet - playtest first, so rounds 247-279 keep accumulating.
+
 ## Round 278: fifteen dungeons that could never be cleared (2026-09-20)
 
 Round 275 read its own list of 52 unreachable enemy placements as a bestiary - jellyfish, crocodiles, griffins,

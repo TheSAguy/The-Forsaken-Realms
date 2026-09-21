@@ -17,9 +17,11 @@ top or bottom edge" question cannot corrupt a write), out to --radius tiles, the
 reachable from an entry, it must not already hold another object, and the nearest one wins. An enemy that has no
 reachable tile within the radius is left alone and reported.
 
-`--skip-map` leaves a whole file out. `phyrexian_black1.tmx` is skipped by default: all five of its enemies are
-stranded and its single entry reaches only 28,653 of 75,489 legal positions, so the ENTRY is what looks misplaced
-there, and moving the enemies would paper over the real question.
+`--skip-map` leaves a whole file out. `phyrexian_black1.tmx` is skipped by default, and that skip is now
+SETTLED rather than pending: all five of its enemies are stranded and its single entry reaches only 28,653 of
+75,489 legal positions, which is why rounds 278 and 279 both left it for the user to judge. They judged it -
+"I checked, it looks good as is. Leave alone" (2026-09-21) - so it stays skipped on purpose, not on suspicion.
+See `pixel_collision_qa.ACCEPTED_UNREACHABLE`.
 
 usage: python dev-tools/unstrand_enemies.py --list
        python dev-tools/unstrand_enemies.py --apply [--radius 8]
