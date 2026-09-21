@@ -174,7 +174,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="80" y="208">
    <properties>
-    <property name="enemy" value="Falcon-headed Aven Warrior"/>
+    <property name="enemy" value="Blazeplate Orc"/>
     <property name="speedModifier" type="float" value="4"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="7,6,5,4,3,2"/>

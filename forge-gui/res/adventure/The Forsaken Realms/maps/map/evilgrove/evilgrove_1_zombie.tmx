@@ -52,7 +52,7 @@
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="63.8333" y="53.6667">
    <properties>
     <property name="threatRange" type="int" value="20"/>
-    <property name="enemy" value="Zombie"/>
+    <property name="enemy" value="Zombie Lord"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="128.111" y="58.3844">

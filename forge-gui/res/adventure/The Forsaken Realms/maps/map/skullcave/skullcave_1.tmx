@@ -124,5 +124,11 @@
   <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="322.473" y="296.142"/>
   <object id="85" template="../../obj/stone.tx" x="106.184" y="157.477"/>
   <object id="86" template="../../obj/stone.tx" x="419.074" y="160.376"/>
- </objectgroup>
+   <object id="87" template="../../../../common/maps/obj/enemy.tx" x="399.669" y="337.266">
+   <properties>
+    <property name="enemy" value="Cosmic Horror"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

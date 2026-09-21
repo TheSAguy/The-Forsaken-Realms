@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="273">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="274">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -69,7 +69,7 @@
   </object>
   <object id="162" template="../../../../common/maps/obj/enemy.tx" x="494.842" y="191.105">
    <properties>
-    <property name="enemy" value="Camel"/>
+    <property name="enemy" value="Owl"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
@@ -422,5 +422,11 @@
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="273" template="../../../../common/maps/obj/enemy.tx" x="77.1754" y="247.772">
+   <properties>
+    <property name="enemy" value="Dwarf Mercenary"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

@@ -58,7 +58,7 @@
   </object>
   <object id="99" template="../../../../common/maps/obj/enemy.tx" name="Enemy" x="80" y="128" visible="1">
    <properties>
-    <property name="enemy" value="Watcher in the Web"/>
+    <property name="enemy" value="Carapace Stalker"/>
     <property name="hidden" type="bool" value="false"/>
     <property name="pursueRange" type="int" value="300"/>
     <property name="threatRange" type="int" value="80"/>

@@ -97,6 +97,23 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     private ProgressableGraphPath<NavigationVertex> navPath;
     public Vector2 fleeTarget;
 
+    // Round 279, user: "I'd like to make sure all boosters are protected ... This goes for all Booster Guards:
+    // They should all have a small reaction radius and then go back to the booster once the player leaves the
+    // radius."
+    //
+    // A guard that chases and then stands wherever the chase ended is not guarding anything, and neither is one
+    // walking a patrol route away from its post - which is what the Blue Tower screenshot showed. The map puts a
+    // Master Blue Wizard and two Djinn within a tile of their boosters, and FIVE of that map's seven enemies
+    // carry `waypoints`, so by the time the player arrives the boosters are unattended. With guardPost set,
+    // losing aggro sends the enemy back and it holds there instead of resuming its patrol.
+    //
+    // The post is the enemy's own AUTHORED spawn position, not the booster's tile: it already sits beside the
+    // booster and it is known-walkable, which is the lesson rounds 269 and 275 paid for twice.
+    public Vector2 guardPost;
+    /** Round 279: how close to its post counts as being at it. Half a tile - close enough to read as standing on
+     *  it, loose enough that the walker does not jitter trying to hit an exact pixel. */
+    public static final float GUARD_POST_TOLERANCE = 8.0f;
+
     // Territory Control (MOD_SCOPE.md #7): set only on a "mage" sent by a colored castle to
     // capture a nearby neutral town - null for every ordinary enemy. When set, WorldStage.onActing
     // seeks this town instead of the player; reaching it (or being defeated first) is handled by
@@ -475,6 +492,18 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
                     navPath.clear();
                 initializeBaseMovementBehavior();
             }
+        }
+
+        // Round 279: a booster guard goes back to its post and stays on it. Placed AFTER the pursuit and flee
+        // blocks so chasing and fleeing both still win, and BEFORE movementBehaviors so a patrol route cannot
+        // walk a guard off its booster - which is the whole complaint. Returns Zero once it is home, because
+        // "stand on the booster" is the behaviour being asked for; without that the deque would take over again
+        // on the next frame and stroll it away.
+        if (guardPost != null && !aggro) {
+            Vector2 toPost = new Vector2(guardPost).sub(pos());
+            if (toPost.len() > GUARD_POST_TOLERANCE)
+                return new Vector2(guardPost);
+            return Vector2.Zero;
         }
 
         if (movementBehaviors.peek() != null){

@@ -39,6 +39,16 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 `MOD_CHANGELOG.md`, search for the linked feature).
 
 ### World generation & the overworld map
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — round 279 added `guardPost` and a
+  return-to-post branch inside `getTargetVector()`, between the pursuit/flee blocks and the stock
+  `movementBehaviors` deque. Stock's own behaviour is untouched when `guardPost` is null, which is every enemy
+  except a booster's guard. Upstream conflict note: the insertion point is the line right before
+  `if (movementBehaviors.peek() != null)`; if the daily rewrites that method, re-add the branch in the same
+  position, since being ahead of the deque is the entire point (a patrol must not walk a guard off its post).
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — round 279 added a timeout beside the existing
+  `TypingAdapter.end()` listener that reveals the option buttons if the typing animation never ends. Stock relies
+  on that callback alone, which makes a stalled `TypingLabel` an unrecoverable softlock; the timeout is additive
+  and does nothing on the normal path.
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — round 272 replaced the THIRD copy of stock's
   minimap-tile drawing rule. `generateNew()`'s own "draw mini map" loop (stock, ~34 lines decoding every tile
   against `highestBiome()`) is now a two-line call to the mod's `drawMinimapTile()`, which is also what

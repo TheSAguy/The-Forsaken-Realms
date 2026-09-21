@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="138">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="140">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -273,5 +273,17 @@
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="138" template="../../../../common/maps/obj/enemy.tx" x="394.5" y="386">
+   <properties>
+    <property name="enemy" value="Griffin"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="139" template="../../../../common/maps/obj/enemy.tx" x="415.5" y="387.5">
+   <properties>
+    <property name="enemy" value="Griffin"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="79">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="80">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -151,5 +151,11 @@
   <object id="75" template="../../../../common/maps/obj/collision.tx" x="145.341" y="1.1218" width="13.3186" height="29.7564"/>
   <object id="76" template="../../../../common/maps/obj/collision.tx" x="321.674" y="176.455" width="13.3186" height="29.7564"/>
   <object id="77" template="../../../../common/maps/obj/collision.tx" x="144.674" y="177.455" width="13.3186" height="29.7564"/>
- </objectgroup>
+   <object id="79" template="../../../../common/maps/obj/enemy.tx" x="278.308" y="269.487">
+   <properties>
+    <property name="enemy" value="Gyome"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

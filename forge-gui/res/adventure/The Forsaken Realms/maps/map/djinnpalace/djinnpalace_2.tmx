@@ -131,5 +131,11 @@
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="79" template="../../../../common/maps/obj/enemy.tx" x="80.1148" y="144.623">
+   <properties>
+    <property name="enemy" value="Adept Blue Wizard"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

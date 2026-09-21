@@ -344,7 +344,7 @@
   </object>
   <object id="87" template="../../../common/maps/obj/enemy.tx" x="48" y="320">
    <properties>
-    <property name="enemy" value="Geist"/>
+    <property name="enemy" value="Elf warrior"/>
     <property name="pursueRange" type="int" value="80"/>
     <property name="spawn.Hard" type="bool" value="true"/>
     <property name="spawn.Normal" type="bool" value="true"/>

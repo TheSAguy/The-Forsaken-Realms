@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="179">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="180">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -172,5 +172,11 @@
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="179" template="../../../../common/maps/obj/enemy.tx" x="226.398" y="116.332">
+   <properties>
+    <property name="enemy" value="Tibalt"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

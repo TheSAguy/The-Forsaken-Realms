@@ -62,7 +62,7 @@
   </object>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="44.7339" y="350.568">
    <properties>
-    <property name="enemy" value="Scarab"/>
+    <property name="enemy" value="Greater Sandwurm"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="speedModifier" type="float" value="30"/>
     <property name="threatRange" type="int" value="30"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="65" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="291">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="65" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="295">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -636,5 +636,29 @@ NORTH: DOMAIN OF THE THREE WITCHES&quot;,
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="291" template="../../../../common/maps/obj/enemy.tx" x="6.135" y="868.221">
+   <properties>
+    <property name="enemy" value="Agatha"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="292" template="../../../../common/maps/obj/enemy.tx" x="562" y="798">
+   <properties>
+    <property name="enemy" value="Agatha"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="293" template="../../../../common/maps/obj/enemy.tx" x="24.8333" y="339.5">
+   <properties>
+    <property name="enemy" value="Agatha"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="294" template="../../../../common/maps/obj/enemy.tx" x="858.5" y="139.5">
+   <properties>
+    <property name="enemy" value="Agatha"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

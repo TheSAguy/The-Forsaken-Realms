@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="352">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="353">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -590,5 +590,11 @@
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="352" template="../../../../common/maps/obj/enemy.tx" x="109.842" y="326.772">
+   <properties>
+    <property name="enemy" value="Baron Bertram"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

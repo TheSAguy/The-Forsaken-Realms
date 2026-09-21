@@ -220,6 +220,45 @@ public class MapDialog {
                 }
             }
         });
+        // Round 279: a safety net, because the ONLY thing that reveals a dialog's options is the typing
+        // animation reaching its end. Every option button below is created setVisible(false).
+        //
+        // A player reported a "grey window" over the spawn dungeon during the intro that "doesn't allow me to
+        // do anything" - one report, fullscreen the only non-default setting, nobody else able to reproduce it.
+        // That symptom IS this dialog with its buttons still invisible: the frame draws over the map, the
+        // options never appear, and there is nothing to click or dismiss. TypingLabel advances its typing from
+        // act() and fires end() from there, so anything that stops it advancing - a degenerate layout width at
+        // an unusual resolution or DPI, a markup token the parser stalls on, a label that never gets laid out -
+        // turns a cosmetic glitch into an unrecoverable softlock at the very start of a new game.
+        //
+        // The cause on that machine is still unknown and may never be reproducible here. This does not pretend
+        // to fix it; it makes it survivable, which is the part that does not need a repro. The timeout scales
+        // with the text so a legitimately long speech is never cut short - 10 characters per second is far
+        // slower than the real typing speed - and it only acts if a button is still hidden when it fires.
+        float timeout = Math.min(60f, 5f + (text == null ? 0 : text.length()) / 10f);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                if (buttons.isEmpty())
+                    return;
+                boolean stuck = false;
+                for (TextraButton button : buttons) {
+                    if (!button.isVisible()) {
+                        stuck = true;
+                        break;
+                    }
+                }
+                if (!stuck)
+                    return;
+                System.out.println("[TFR-Dialog] the typing animation never ended after " + timeout
+                        + "s - revealing the " + buttons.size + " option(s) anyway so the dialog can be "
+                        + "answered (dialog " + parentID + ", " + (text == null ? 0 : text.length())
+                        + " chars). If you are reading this in a bug report, THIS is the softlock.");
+                A.skipToTheEnd();
+                for (TextraButton button : buttons)
+                    button.setVisible(true);
+            }
+        }, timeout);
         float width;
         if (sprite != null) {
             if (actor instanceof EnemySprite && !((EnemySprite) actor).hidden) {

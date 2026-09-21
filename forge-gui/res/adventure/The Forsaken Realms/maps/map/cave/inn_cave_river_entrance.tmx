@@ -462,7 +462,7 @@
   </object>
   <object id="12" template="../../../../common/maps/obj/enemy.tx" x="80" y="432">
    <properties>
-    <property name="enemy" value="Falkenrath Tormentor"/>
+    <property name="enemy" value="Bloodveil Countess"/>
     <property name="threatRange" type="int" value="70"/>
    </properties>
   </object>

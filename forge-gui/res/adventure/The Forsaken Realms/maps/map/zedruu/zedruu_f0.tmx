@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="35" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="27" nextobjectid="236">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="35" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="27" nextobjectid="238">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -256,7 +256,7 @@
   </object>
   <object id="230" template="../../../../common/maps/obj/enemy.tx" x="348.342" y="70.6053">
    <properties>
-    <property name="enemy" value="Construct"/>
+    <property name="enemy" value="Clockwork Siegewalker"/>
     <property name="spawn.Easy" type="bool" value="false"/>
     <property name="spawn.Normal" type="bool" value="true"/>
     <property name="threatRange" type="int" value="40"/>
@@ -276,5 +276,17 @@
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="236" template="../../../../common/maps/obj/enemy.tx" x="9.3421" y="369.605">
+   <properties>
+    <property name="enemy" value="Dwarf Demolisher"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="237" template="../../../../common/maps/obj/enemy.tx" x="423.342" y="284.105">
+   <properties>
+    <property name="enemy" value="Dwarf Demolisher"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

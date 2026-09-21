@@ -49,7 +49,7 @@
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="592" y="64">
    <properties>
     <property name="displayNameOverride" value="Plebeian Overseer"/>
-    <property name="enemy" value="Human Mercenary"/>
+    <property name="enemy" value="Farmer"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>

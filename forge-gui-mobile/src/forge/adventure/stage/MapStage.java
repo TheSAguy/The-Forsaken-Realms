@@ -763,6 +763,7 @@ public class MapStage extends GameStage {
         spawnClassified.clear();
         sourceMapMatch.clear();
         enemies.clear();
+        boosterPositions.clear(); // round 279 - per map, like everything else here
         localInnID = -1;
         prepareCaveChampion(map);
         for (MapLayer layer : map.getLayers()) {
@@ -781,6 +782,7 @@ public class MapStage extends GameStage {
         // slot in the same file contradicts. No-ops unless this map is player_town.tmx or
         // player_capital.tmx, the two templates the table is derived from.
         EconomyBuildings.auditFlatTownTierFallback(shopTierPools.values(), targetMap);
+        assignBoosterGuards(targetMap); // round 279, after the layer loop so every booster and enemy is loaded
         spawn(spawnTargetId);
 
         if (effect != null && enemies.size() > 0) {
@@ -999,6 +1001,61 @@ public class MapStage extends GameStage {
      * negative threatRange is a map author's "this one really never reacts" (cleared to 0 after the test).
      * Returns true when the default was applied, for the one summary line per map.
      */
+    // Round 279: booster positions collected while the layers load, consumed by assignBoosterGuards() once the
+    // whole map is in. Cleared per load with everything else.
+    private final Array<Vector2> boosterPositions = new Array<>();
+
+    /**
+     * Round 279, user: *"I entered the Blue Tower and there are two unguarded boosters. I'd like to make sure all
+     * boosters are protected ... This goes for all Booster Guards: They should all have a small reaction radius
+     * and then go back to the booster once the player leaves the radius."*
+     * <p>
+     * The map data was not the whole story. An audit of all 261 boosters found 71 with no guard within three
+     * tiles - a real gap, fixed in the maps - but the Blue Tower's were NOT among them: the map puts a Master
+     * Blue Wizard and two Djinn within a tile of theirs, and five of that map's seven enemies carry `waypoints`.
+     * They patrol off and never come back, so the player arrives to an empty room. Marking the nearest enemy as
+     * that booster's guard pins it: {@link EnemySprite#guardPost} takes precedence over the movement-behaviour
+     * deque, so a patrol can no longer walk a guard away from its post, and losing aggro walks it home.
+     * <p>
+     * The nearest non-dialog enemy wins, one guard per booster, and the post is the enemy's OWN authored
+     * position - beside the booster already and known-walkable, which is what rounds 269 and 275 paid for.
+     * Dialog carriers are never guards: round 253 exempted them from reaction ranges because a quest NPC that
+     * charges the player is a bug, and pinning the Warden to a booster would be the same mistake.
+     */
+    private void assignBoosterGuards(String targetMap) {
+        if (boosterPositions.isEmpty())
+            return;
+        // Three tiles, the same radius dev-tools/booster_guards.py audits with, so the tool and the runtime
+        // agree about what "guarding this booster" means.
+        float reach = Current.world().getTileSize() * 3f;
+        int paired = 0, unguarded = 0;
+        for (Vector2 booster : boosterPositions) {
+            EnemySprite best = null;
+            float bestDist = Float.MAX_VALUE;
+            for (MapActor actor : actors) {
+                if (!(actor instanceof EnemySprite))
+                    continue;
+                EnemySprite mob = (EnemySprite) actor;
+                if (mob.dialog != null || mob.guardPost != null)
+                    continue; // an NPC, or already another booster's guard
+                float d = new Vector2(mob.pos()).sub(booster).len();
+                if (d <= reach && d < bestDist) {
+                    best = mob;
+                    bestDist = d;
+                }
+            }
+            if (best == null) {
+                unguarded++;
+                continue;
+            }
+            best.guardPost = new Vector2(best.pos());
+            paired++;
+        }
+        System.out.println("[TFR-BoosterGuard] " + targetMap + ": " + paired + " of " + boosterPositions.size
+                + " booster(s) have a guard pinned to its post"
+                + (unguarded > 0 ? ", " + unguarded + " with no enemy within 3 tiles" : ""));
+    }
+
     private boolean applyDefaultReactionRange(EnemySprite mob) {
         // Round 253: never an NPC. EnemySprite.dialog "Overrides standard battle" - contact opens a conversation
         // instead of a duel - and 43 of the 378 rangeless enemies round 252 found are exactly that: the Warden,
@@ -1010,16 +1067,32 @@ public class MapStage extends GameStage {
             mob.threatRange = 0;
             return false;
         }
-        if (mob.threatRange > 0 || mob.fleeRange > 0)
-            return false;
         forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
         float threat = tuning == null ? 0f : tuning.mapEnemyDefaultThreatRange;
-        if (threat <= 0)
-            return false;
-        mob.threatRange = threat;
-        if (mob.pursueRange <= 0)
-            mob.pursueRange = Math.max(threat, tuning.mapEnemyDefaultPursueRange);
-        return true;
+        boolean applied = false;
+        if (mob.threatRange <= 0 && mob.fleeRange <= 0) {
+            if (threat <= 0)
+                return false;
+            mob.threatRange = threat;
+            applied = true;
+        }
+        // Round 279: the pursueRange fill used to sit BEHIND an early return on "threatRange already set", so it
+        // only ever reached the enemies that had no threatRange at all. Measured across the plane: 2,021 of
+        // 2,361 placements - 85.6% - carried a threatRange and no pursueRange, and that combination cannot
+        // chase. EnemySprite pursues while `len <= threatRange || (aggro && len <= pursueRange)` and drops aggro
+        // the moment `aggro && len > pursueRange`, so with pursueRange 0 an enemy notices the player at one or
+        // two tiles and gives up a pixel later. It is the reason the user twice walked up to booster guards and
+        // looted unopposed, and round 271 made it worse by stamping threatRange=20 into 251 more enemies, which
+        // moved them from "no range, gets the runtime default for both" into exactly this state.
+        //
+        // The two fields are independent: honouring an authored threatRange never meant leaving pursueRange at
+        // zero. Same expression the method already used, just no longer gated - so the numbers are round 252's
+        // own (`mapEnemyDefaultPursueRange`, 64 px), which the user has already accepted for the 378.
+        if (mob.threatRange > 0 && mob.pursueRange <= 0 && tuning != null) {
+            mob.pursueRange = Math.max(mob.threatRange, tuning.mapEnemyDefaultPursueRange);
+            applied = true;
+        }
+        return applied;
     }
 
     private void loadObjects(MapLayer layer, String sourceMap, String currentMap) {
@@ -1128,6 +1201,12 @@ public class MapStage extends GameStage {
                             RewardSprite RW = new RewardSprite(id, R.toString(), Sp);
                             RW.hidden = hidden;
                             addMapActor(obj, RW);
+                            // Round 279: remember where the boosters are, for assignBoosterGuards(). The sprite
+                            // is the discriminator - booster.tx is the only reward template that ships
+                            // "sprites/booster.atlas" - and it is read from the object rather than from the
+                            // reward JSON, which is a card list indistinguishable from a treasure's.
+                            if (Sp.contains("booster"))
+                                boosterPositions.add(new Vector2(RW.getX(), RW.getY()));
                         }
                         break;
                     case "enemy":

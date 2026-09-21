@@ -103,7 +103,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="171.481" y="287.219">
    <properties>
-    <property name="enemy" value="Bull"/>
+    <property name="enemy" value="Horse"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

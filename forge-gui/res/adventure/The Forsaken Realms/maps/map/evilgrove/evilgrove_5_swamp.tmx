@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="144">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="145">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -68,7 +68,7 @@
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="336.667" y="624.667">
    <properties>
     <property name="threatRange" type="int" value="20"/>
-    <property name="enemy" value="Ghoul"/>
+    <property name="enemy" value="Dark Knight"/>
    </properties>
   </object>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="626.333" y="304">
@@ -281,7 +281,7 @@
   </object>
   <object id="110" template="../../../../common/maps/obj/enemy.tx" x="592" y="160" visible="1">
    <properties>
-    <property name="enemy" value="Skeleton Soldier"/>
+    <property name="enemy" value="Dark Knight"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="pursueRange" type="float" value="60"/>
     <property name="threatRange" type="float" value="30"/>
@@ -395,5 +395,11 @@
   <object id="141" template="../../../../common/maps/obj/waypoint.tx" x="112" y="352"/>
   <object id="142" template="../../../../common/maps/obj/waypoint.tx" x="768" y="208"/>
   <object id="143" template="../../../../common/maps/obj/waypoint.tx" x="752" y="224"/>
- </objectgroup>
+   <object id="144" template="../../../../common/maps/obj/enemy.tx" x="141.5" y="799.5">
+   <properties>
+    <property name="enemy" value="Zombie Lord"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

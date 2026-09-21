@@ -71,7 +71,7 @@
   </object>
   <object id="121" template="../../../../common/maps/obj/enemy.tx" x="800" y="48">
    <properties>
-    <property name="enemy" value="Immersturm Demon"/>
+    <property name="enemy" value="Magma Elemental"/>
     <property name="speedModifier" type="float" value="10"/>
     <property name="threatRange" type="int" value="50"/>
    </properties>

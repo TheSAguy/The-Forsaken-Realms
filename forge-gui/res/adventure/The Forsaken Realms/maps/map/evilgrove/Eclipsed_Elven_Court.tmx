@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="172">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="173">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -303,5 +303,11 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
 ]</property>
    </properties>
   </object>
- </objectgroup>
+   <object id="172" template="../../../../common/maps/obj/enemy.tx" x="384.5" y="556">
+   <properties>
+    <property name="enemy" value="Morcant"/>
+    <property name="threatRange" type="int" value="30"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

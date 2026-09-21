@@ -67,7 +67,7 @@
   </object>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="304" y="112">
    <properties>
-    <property name="enemy" value="Reassembling Skeleton"/>
+    <property name="enemy" value="Barrow Bonebow"/>
     <property name="threatRange" type="int" value="10"/>
     <property name="waypoints" value="74,78,83,81,80"/>
    </properties>

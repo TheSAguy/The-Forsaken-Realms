@@ -90,7 +90,7 @@
   <object id="61" template="../../../../common/maps/obj/enemy.tx" x="282.194" y="34.0691">
    <properties>
     <property name="threatRange" type="int" value="20"/>
-    <property name="enemy" value="Sand Golem"/>
+    <property name="enemy" value="Merfolk Fighter"/>
    </properties>
   </object>
   <object id="63" template="../../obj/wood.tx" x="214.607" y="35.2678">

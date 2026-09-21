@@ -47,7 +47,7 @@
   <object id="49" template="../../../../common/maps/obj/gold.tx" x="112.522" y="340.819"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="64" y="352">
    <properties>
-    <property name="enemy" value="Poisonous Snake"/>
+    <property name="enemy" value="Hidden Snake"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -12,7 +12,7 @@ biomes -> enemies / POIs / atlases, quests -> items / enemy tags / POI tags, tmx
 templates / enemies / shops / rewards / dialogs, atlas -> png.
 Writes a report to the path given as argv[2] (default: stdout only).
 """
-import glob, json, os, re, sys, xml.etree.ElementTree as ET
+import glob, io, json, os, re, sys, xml.etree.ElementTree as ET
 from collections import defaultdict, Counter
 
 PLANE = sys.argv[1] if len(sys.argv) > 1 else r"C:\TFR\repo\forge-gui\res\adventure\The Forsaken Realms"
@@ -169,6 +169,41 @@ F["BiomeTerrainData"] = set("spriteName min max resolution".split())
 F["BiomeSpriteData"] = set("name startArea endArea density resolution layer atlas".split())
 if len(sys.argv) > 3 and os.path.exists(sys.argv[3]):
     F["AdventureQuestStage"] = set(open(sys.argv[3]).read().split())
+
+# Round 279: the hardcoded field lists above go stale the moment someone adds a setting, and a validator that
+# cries wolf is worse than no validator - you learn to skim its output. `enemySpriteFrameCap` proved it: round 261
+# added the field to TuningData.java AND to settings.json, wired it up, documented it as retunable without a
+# rebuild, and this tool reported it as an unknown key for eighteen rounds. So the real class is read from the
+# source, and the hardcoded set is kept only as a floor (a union, never a replacement) in case the parse comes up
+# short against some future syntax.
+JAVA_DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                             "forge-gui-mobile", "src", "forge", "adventure", "data")
+_FIELD_RE = re.compile(r'^\s*public\s+(?:static\s+)?(?:final\s+)?'
+                       r'(?:boolean|int|long|float|double|String|String\[\]|int\[\]|float\[\])\s+'
+                       r'(\w+)\s*(?:=|;)', re.M)
+
+
+def fields_from_source(cls):
+    """Every public scalar/array field declared in <cls>.java, or an empty set if it cannot be read."""
+    path = os.path.normpath(os.path.join(JAVA_DATA_DIR, cls + ".java"))
+    try:
+        with io.open(path, encoding="utf-8", errors="replace") as fh:
+            return set(_FIELD_RE.findall(fh.read()))
+    except OSError:
+        return set()
+
+
+for _cls in list(F):
+    if not isinstance(F[_cls], set):
+        continue  # F["AdventureQuestStage"] is deliberately None until argv[3] fills it in
+    _parsed = fields_from_source(_cls)
+    if _parsed:
+        _added = _parsed - F[_cls]
+        F[_cls] |= _parsed
+        if _added and os.environ.get("VALIDATE_VERBOSE"):
+            print("  (%s: %d field(s) read from source that the hardcoded list lacked: %s)"
+                  % (_cls, len(_added), ", ".join(sorted(_added))))
+
 
 def check_keys(obj, cls, where, strict=True):
     fields = F.get(cls)

@@ -152,7 +152,7 @@
   </object>
   <object id="86" template="../../../../common/maps/obj/enemy.tx" x="240" y="256">
    <properties>
-    <property name="enemy" value="Minotaur"/>
+    <property name="enemy" value="Efreet"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="94,93,92,93,94,95,96,97,98,99,100,101,100,99,98,97,96"/>
    </properties>
@@ -173,7 +173,7 @@
   </object>
   <object id="89" template="../../../../common/maps/obj/enemy.tx" x="464" y="560">
    <properties>
-    <property name="enemy" value="Minotaur"/>
+    <property name="enemy" value="Efreet"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="113,114,115,114,113,157"/>
    </properties>
