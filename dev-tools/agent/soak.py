@@ -129,11 +129,21 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--minutes", type=float, default=300)
     ap.add_argument("--journal", default=os.path.join(HERE, "soak_journal.txt"))
+    ap.add_argument("--no-fast-time", action="store_true",
+                    help="leave the day clock at its normal speed (default is to speed it up - see main)")
     args = ap.parse_args()
 
     j = Journal(args.journal)
     deadline = time.time() + args.minutes * 60
     j.say("start", "soak for %.0f minutes, journal %s" % (args.minutes, args.journal))
+    # Fast time, because the day tick is what this is for. Measured on the first runs: ninety minutes of play
+    # and the game was still on DAY 2, because the driver spends nearly all of it inside dungeons and duels
+    # while the clock only advances on the overworld. Territory expansion, mage dispatch, dungeon rotation and
+    # the full minimap re-bake all hang off the day tick, so a soak that never changes day is not soaking the
+    # systems worth soaking. `fasttime` is a normal agent command, not a cheat-gated one.
+    if not args.no_fast_time:
+        r = cmd("fasttime", on="true")
+        j.say("clock", "fast time on: %s" % str(r.get("message"))[:80])
 
     last_day = None
     last_life = None
@@ -263,6 +273,9 @@ def main():
                 continue
             j.say("map", "%s cleared - leaving" % p.get("location"))
             cmd("leave")
+            # A cleared dungeon is a natural place to let a day turn over, and it is the cheapest way to
+            # raise the day count in a run that spends most of its time indoors.
+            legs_since_day += 1
             settle()
             continue
 
