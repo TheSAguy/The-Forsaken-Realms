@@ -6,11 +6,27 @@ Per sheet (bands and frame boxes from art_triage3's art_rows.json):
   1. drop text frames (mostly dark ink) and thumbnails (under 40% of the sheet's median frame height); the first
      near-opaque, roughly square frame is the PORTRAIT (the duel avatar);
   2. bands in order: Idle, Walk, Attack; a later band whose last frame lies down is Death (its first frame is Hit);
-  3. every frame is turned to face RIGHT: Idle's first frame is taken as right-facing (overridable), and each other
-     frame is flipped when its mirrored silhouette matches that reference better than itself;
-  4. frames downscaled (LANCZOS) so the Idle body is BODY px, packed bottom-centered into uniform cells.
-Overrides (overrides_generic.json, by sheet index): {"flip": true} (the reference faces left), "idle"/"walk"/
-"attack"/"death": band numbers, "skip": [band numbers], "portrait": false.
+  3. every frame is made to face the SAME WAY as Idle's first frame: each other frame is flipped when its mirrored
+     silhouette matches that reference better than itself. Which way that is comes from the overrides file, NOT
+     from this step - see "facing" below;
+  4. frames downscaled (LANCZOS) so the Idle body is BODY px, packed bottom-centered into uniform cells;
+  5. the duel avatar is the sheet's painted portrait when it has one, else a square cut from the first Idle frame
+     at the creature's HEAD end, which is the end it faces (round 272 - it used to be cut from the middle, which
+     for anything wider than tall is its belly: the Shellback Ankylosaur showed its hind legs on a standings page).
+
+FACING (round 272). This step used to DEFAULT to "the reference already faces right" and say nothing, so a
+left-facing sheet shipped walking backwards - nine of them did, repaired after the fact in round 247, and the same
+assumption put five portraits on a creature's flank (round 245). The engine draws an un-suffixed animation facing
+right and mirrors it for Left, so the answer has to be right, and nothing on the sheet reliably says which end is
+the head: `facing_detect.py` scores 81% against the 16 labelled sheets and is CONFIDENTLY wrong on three, so it is
+used to order a review, never to decide. The answer is recorded per sheet in the overrides file as
+`"facing": "right"|"left"`, and a sheet without one is converted anyway but reported as UNREVIEWED, both in the
+manifest (`"facing": "unreviewed"`) and in a summary line at the end of the run. `facing_review.py` builds the
+contact sheet and writes the answers.
+
+Overrides (overrides_generic.json, by sheet index): "facing": "right"|"left" (which way the reference faces;
+the legacy key `{"flip": true}` still reads as "left"), "idle"/"walk"/"attack"/"death": band numbers,
+"skip": [band numbers], "portrait": false.
 usage: python art_convert_generic.py <art dir> <art_rows.json> <out dir> [--only N,N]"""
 import json, os, re, statistics, sys
 from PIL import Image
@@ -175,9 +191,13 @@ def convert(idx, name, bands_boxes):
     anim = {k: v for k, v in anim.items() if v}
     if "Walk" not in anim:
         anim["Walk"] = anim["Idle"]
-    # facing: everything to the right, judged against Idle's first frame
+    # facing: every frame made to agree with Idle's first frame, then the whole sheet turned to face right.
+    # Round 272: which way the reference faces is RECORDED, not assumed - see the module docstring. An
+    # unreviewed sheet is still converted (self-consistent, and half of them are right by luck) but says so.
     ref = silhouette(anim["Idle"][0])
-    ref_flip = ov.get("flip", False)
+    recorded = ov.get("facing", "left" if ov.get("flip", False) else None)
+    reviewed = recorded in ("left", "right")
+    ref_flip = recorded == "left"
     flips = 0
     for k in anim:
         out = []
@@ -200,14 +220,22 @@ def convert(idx, name, bands_boxes):
     names = [k for k in ("Idle", "Walk", "Attack", "Hit", "Death") if k in anim]
     ncol = max(len(anim[k]) for k in names)
     if portrait is not None:
+        # a painted portrait is already a framed head - its middle is the right place to cut
         side = min(portrait.size)
         px0, py0 = (portrait.size[0] - side) // 2, 0
         av = portrait.crop((px0, py0, px0 + side, py0 + side)).resize((AVATAR, AVATAR), Image.LANCZOS)
     else:
+        # Round 272: no painted portrait, so the avatar is cut from the first Idle frame - at the HEAD end, not
+        # the middle. Every frame above was just turned to face right, so the head is at the right end; that is
+        # the same answer round 245 reached by eye for all five it repaired ("right", 5 of 5). Only a frame
+        # appreciably wider than tall needs this - a humanoid's head is top-centre, where the old cut already
+        # landed - so the narrow case keeps its previous framing exactly.
         f0 = anim["Idle"][0]
-        side = min(f0.size)
-        ax = (f0.size[0] - side) // 2
-        av = f0.crop((ax, 0, ax + side, side)).resize((AVATAR, AVATAR), Image.LANCZOS)
+        bb = alpha_box(f0) or (0, 0, f0.size[0], f0.size[1])
+        bw, bh = bb[2] - bb[0], bb[3] - bb[1]
+        side = min(bw, bh)
+        ax = max(bb[0], bb[2] - side) if bw >= 1.25 * bh else bb[0] + (bw - side) // 2
+        av = f0.crop((ax, bb[1], ax + side, bb[1] + side)).resize((AVATAR, AVATAR), Image.LANCZOS)
     slug = slug_of(name)
     page = Image.new("RGBA", (max(ncol * cw, AVATAR), AVATAR + len(names) * ch), (0, 0, 0, 0))
     page.paste(av, (0, 0))
@@ -227,7 +255,9 @@ def convert(idx, name, bands_boxes):
     open(os.path.join(d, slug + ".atlas"), "w", newline="\n").write("\n".join(lines) + "\n")
     return {"slug": slug, "source": name, "index": idx, "status": "ok", "cell": [cw, ch],
             "idle_visible": list(anim["Idle"][0].size), "counts": {k: len(anim[k]) for k in names},
-            "notes": (["portrait"] if portrait is not None else ["no portrait"]) + ["flips %d" % flips],
+            "facing": recorded if reviewed else "unreviewed",
+            "notes": (["portrait"] if portrait is not None else ["no portrait"]) + ["flips %d" % flips]
+                     + ([] if reviewed else ["FACING UNREVIEWED"]),
             "bands": order}, ""
 
 
@@ -251,6 +281,19 @@ def main():
         man[info["slug"]] = info
         print("#%-4d %-40s bands %-18s %s %s" % (idx, info["slug"][:40], info["bands"], info["counts"], " ".join(info["notes"])))
     json.dump(man, open(mp, "w"), indent=1)
+    # Round 272: the run does not end quietly on an unanswered facing question. This is the whole point of
+    # recording the answer instead of defaulting to "right" - a sheet nobody looked at used to be
+    # indistinguishable from one that was checked, and nine of them shipped walking backwards.
+    unreviewed = sorted(v["index"] for v in man.values() if v.get("facing") == "unreviewed")
+    if unreviewed:
+        print("\n!! %d sheet(s) converted with an UNREVIEWED facing: %s"
+              % (len(unreviewed), ",".join(str(i) for i in unreviewed)))
+        print("   Each one is self-consistent but may face left, which the engine draws walking backwards, and")
+        print("   its portrait is cut at whichever end that makes the head. Settle them before shipping:")
+        print("       python facing_review.py %s --out facing_review.png" % OUT)
+        print("   then re-run this converter for the ones it wrote a \"facing\" into (--only N,N).")
+    else:
+        print("\nfacing: all %d sheet(s) carry a recorded answer." % len(man))
 
 
 if __name__ == "__main__":

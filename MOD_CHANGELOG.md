@@ -17757,6 +17757,158 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 273: the importer stops assuming which way the art faces (2026-09-20)
+
+User: *"art_convert_generic.py still assumes right-facing art ... Please do this now."*
+
+Two defects, one assumption: *"the first Idle frame faces right, and its middle is its face."* It shipped nine
+creatures walking backwards (repaired in round 247) and five portraits cut from a creature's flank (round 245) -
+both repaired in the OUTPUT, so the next import would have reproduced them.
+
+**The portrait half is fixed outright, and it is exact.** With no painted portrait the avatar was cut from the
+CENTRE square of the first Idle frame, which for anything wider than tall is its belly. It is now cut at the
+creature's HEAD end - and the head is simply the end it faces, which after the facing normalisation is the right
+end. Validated against the only ground truth available, round 245's five hand repairs that the user accepted:
+**five of five reproduce exactly** (mean per-pixel delta 0.0). Four match the shipped avatar directly; the fifth,
+the Ashen Spinewyrm, matches its MIRROR - round 247 mirrored that sheet's frames and deliberately left the Avatar
+alone, so the shipped one faces left while its body faces right. The new rule cuts the same head facing right,
+which is what the sheet should have had. A frame not appreciably wider than tall (`w < 1.25h`) keeps the old
+top-centre cut, because a humanoid's head is already there.
+
+**The facing half cannot be automated, and pretending otherwise is the bug.** `facing_detect.py` (new) scores four
+independent cues - upper-half detail energy, chroma spread, how high each end reaches, and how sharply each end
+tapers - against the 16 labelled sheets, doubled by testing each one mirrored so the set is balanced:
+
+| cue | accuracy |
+|---|---|
+| detail | 26/32 = 81% |
+| chroma | 26/32 = 81% |
+| reach | 24/32 = 75% |
+| taper | 16/32 = 50% (a coin flip - kept only because it is nearly free and helps the ranking) |
+| **ensemble** | **26/32 = 81%** |
+
+A confidence gate does not rescue it: above the margin threshold the ensemble is 78%, i.e. **it is confidently
+wrong** on the Astral Wyrm, the Ironstride Construct and the Megamouth Wyrm. A fifth cue was tried and discarded -
+"an attack pose lunges toward what it faces", measured as the growth of the Attack frame's reach against Idle's.
+Frames are bottom-CENTRED in uniform cells, which destroys the signal: 11 of 16 sheets scored |0.05| or less and
+the cue landed on 81% as well, the same three-ish failures.
+
+So the importer no longer decides. It converts the sheet self-consistently (unchanged, and that part works), takes
+the facing from a RECORDED answer in `overrides_generic.json` (`"facing": "right"|"left"`; the legacy `"flip":
+true` still reads as left), and a sheet with no answer is converted but reported as **UNREVIEWED** - in the
+manifest and in a summary line the run cannot end without printing. `facing_review.py` (new) builds one contact
+sheet - each creature as converted beside its mirror, unreviewed first, most doubtful first by the detector's
+confidence - and `--set 23=left,41=right` writes the answers back. There is deliberately **no bulk-accept of the
+guesses**; at 81% with confident errors that would just re-create the original bug with extra steps.
+
+**`--seed-known` keeps what rounds 245/247 learned.** Those two rounds settled 16 sheets by eye; the nine round 247
+mirrored mean the IMPORTED art faced left. Mapping the final slugs back through `roster179.py`'s table to sheet
+indices records all 16 (9 left, 7 right). Without this, a re-import would quietly reproduce those nine walking
+backwards - the exact trap this round exists to close. The remaining **57 of 73 are honestly marked unreviewed**:
+round 245's contact sheet only covered atlases whose avatar was a body crop, so the rest were never checked. The
+detector agrees with 13 of the 16 recorded labels, which is a useful independent check that the labels are real
+knowledge and not a restatement of the detector.
+
+Not done, deliberately: answering the 57. That is a look-at-the-picture job of a couple of minutes, and guessing
+on the user's behalf is what this round removed.
+
+## Round 272: which index space is a tile's terrain value in? (2026-09-20)
+
+User: *"Start with the claim-path index-space trace."* Round 268 recorded the doubt: round 266 taught the minimap
+re-bake that every claimed-wasteland tile decodes against the WASTE tables, and that may not be true.
+
+**It is not true, and the tiles it is wrong about are exactly the ones that produced the reported specks.**
+
+### The trace
+
+`terrainMap` holds an index into *some* biome's `terrain[] + structures[]` tables, and nothing records WHICH
+biome's. Every consumer derives it. Four writers produce a tile carrying the waste bit under a higher biome's bit,
+and they do not agree:
+
+| writer | bits it leaves | index space | round 266 decoded it |
+|---|---|---|---|
+| `claimWastelandRing()` (daily expansion) | colour + waste | **wasteland** (native, colourless tables) | correctly |
+| `generateNew()` Pass B, inside `CASTLE_KEEP_RADIUS_TILES` of the castle | colour + waste | **the colour's own** | **wrongly** |
+| `generateNew()` Pass B, outside it | colour + waste | wasteland (colourless redirect) | correctly |
+| `repaintBiomeAroundTown()` for an AI colour | colour only | the colour's own | correctly (own tables) |
+| `repaintBiomeAroundTown()` for the player | player + waste | player, an exact clone of waste | harmlessly |
+| `neutralizeTerritoryOutsideRadius()` | waste only | whatever was there | see below |
+
+The dual-bit tile from world-gen was the missing case. Pass A claims biomes with `biomeMap[x][y] |= bit`, and
+colourless's disc (centre, extent 0.85, `distWeight` 1) covers every colour's centre (extent 0.7, `distWeight`
+1.5), so a tile inside both carries both bits **from birth** - and Pass B then writes it with the colour's own
+tables inside the castle keep and the colourless redirect outside. Same bits, two spaces, split by a radius.
+
+### Measured, not argued
+
+`dev-tools/save-editing/BiomeSpace.java` (new, read-only) reads `biomeMap`/`terrainMap` straight out of a save.
+Each biome's table has a different length, so the histogram of raw indices fingerprints the space: waste runs
+3..16 (2 terrain + 7 + 7), green 3..13, white 3..12. An index above a colour's own maximum can only be wasteland
+space. In the user's save 2 (day 2, the save round 266 was made against):
+
+- 3,192 dual-bit tiles, which is exactly what that save's `[TFR-Minimap]` line reported.
+- **Every AI colour's dual-bit tiles are one tight disc**: white 666 tiles in a 43x43 box, blue 182, black 91,
+  red 123, green 143 - boxes 42x43, farthest tile 23-27 from the centroid. A `CASTLE_KEEP_RADIUS_TILES` = 20 disc
+  is 41x41. Not rings, not expansion fronts.
+- White's dual-bit tiles hold an out-of-range index 6 times in 666 (0.9%) where waste space predicts 7.2% - so
+  ~87% of them are NOT wasteland space. In save 3 (day 1, before expansion had run) it is **0 of 591**, against
+  42 expected. That is not a fluke, it is the world-gen population.
+- The player's 1,987 dual-bit tiles are the opposite shape - box 63x81, only 28% within 20 tiles of the centroid,
+  no castle - so they are `claimWastelandRing()` claims, wasteland space, decoded correctly.
+
+Structure tiles are the only ones that can draw wrong (indices 0-2 are ground and both spaces have 2 terrain
+entries): **215 of them across the five keep discs**, 88 of those white's.
+
+### What changed
+
+There was still not one rule but THREE copies of "what does a minimap tile look like": `drawMinimapTile()`,
+the full re-bake, and **world-gen's own first bake**, which round 266 never touched. That third copy is stock's,
+it decodes against `highestBiome()`, and it is what every new world's map image is baked from - which is why the
+specks appeared only after a dungeon rotation forced a re-bake, and why they had "looked right while you played".
+All three call `drawMinimapTile()` now, and round 266's `decodeBiome` PARAMETER is gone: a caller could pass the
+wrong one and the re-bake did, for every tile inside a keep. A tile's look is a pure function of the tile.
+
+`holdsWasteSpaceValue(layer, x, y, bits)` is the one derivation - the waste bit AND, for an AI colour, outside
+`CASTLE_KEEP_RADIUS_TILES` of that colour's castle, using Pass B's own anchor, radius and raw-y flip verbatim so
+the two cannot disagree. The castle tiles are cached per loaded world (`findCastle()` is a full POI scan and the
+callers run over 490,000 tiles). No castle - the player, the wasteland, a fallen colour - means wasteland space,
+which is what every runtime writer produces.
+
+It also fixes the game map: round 257's `drawableTerrainIndex()` had the same wrong test, so a white plateau
+inside white's keep was being remapped by wasteland NAME into a rock. Same predicate, both paths.
+
+### A second, larger bug the trace turned up
+
+`repaintBiomeAroundTown()` read the SOURCE space from `highestBiome()`. On a tile daily expansion had claimed -
+colour bit over waste bit, value in wasteland numbering - it translated out of the *colour's* tables: a crater
+read as green's water, a wasteland mountain as green's tree5, and values 14..16, which white/red/green cannot
+express at all, fell off the end of the table and came back as **0**, erasing the structure and its collision bit.
+Every town capture did this to most of its own disc (radius = the territory radius, 1,257+ tiles). It now
+translates out of the space the value is actually in. For the player it stops translating at all - the player's
+tables are an index-for-index clone of the wasteland's, so the value already names the same structure, and leaving
+it makes "dual bit means wasteland space" true by construction rather than by luck.
+
+### The one residual, stated rather than hidden
+
+A tile expansion claims INSIDE a colour's own keep radius gets a wasteland-space value where the positional rule
+answers "the colour's own space". It needs world-gen to have left a hole in the colour's claim that close to its
+castle: **43 such tiles inside white's keep in save 2, ~3% of the disc**. At ~13% structure density that is a few
+dozen tiles map-wide against the 215 this round fixes. The exact cure is to stop deriving the space and record it
+per tile - `terrainMap` bit 29 is free, `terrainMask` would grow to cover it, and an existing save migrates once
+using the positional rule. Offered, not done: it is a save-format change and the measured win is small.
+
+Also corrected, two stale comments that said the opposite of the code: `neutralizeTerritoryOutsideRadius()` does
+NOT reskin structures via `translateStructure()` (it deliberately leaves `terrainMap` alone), and its dead
+`colorlessBiome` local is gone. That leaves a real, unfixed consequence recorded in `TerritoryControl.defeatColor()`:
+its radius-0 sweep flips every tile a defeated colour held to waste-owned while the tiles inside the old keep still
+hold that colour's OWN index values, so a fallen colour's castle surroundings draw the wrong KIND of structure
+(its water as the wasteland's crater). Left for the user: whether a fallen colour's ground should reskin at all.
+
+**Round 268's own evidence was a red herring, and it is worth saying why.** The `[TFR-Terrain]` lines fire only for
+"player land" - which round 268 read as "AI claims must be translated". They are not. `drawableTerrainIndex()` runs
+per biome LAYER while a ground chunk is built, and chunks are only built near the player, who was standing in their
+own territory. Nothing to do with index spaces.
+
 ## Round 271: every enemy reacts now (2026-09-20)
 
 User, after walking up to two guards standing beside a booster in the Blue Tower and looting it unopposed: *"I

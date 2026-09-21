@@ -728,6 +728,11 @@ public class World implements Disposable, SaveFileContent {
         // different-land save in the same session kept computing the fully-explored percentage
         // against the FIRST save's land-tile count).
         cachedLandTileTotal = -1;
+        // Round 272: same reasoning for the terrain-decoding caches - a second save loaded in one app
+        // run is a different world, with its castles somewhere else (see holdsWasteSpaceValue()).
+        castleKeepTiles = null;
+        cachedWasteBiomeIndex = -2;
+        drawableTerrainIndexCache.clear();
 
         biomeImage = saveFileData.readPixmap("biomeImage");
         biomeMap = (long[][]) saveFileData.readObject("biomeMap");
@@ -1096,7 +1101,7 @@ public class World implements Disposable, SaveFileContent {
             // Round 236: an index this layer has no picture for is drawn as the layer's own equivalent -
             // see drawableTerrainIndex(). The neighbor mask above was built on the raw index on purpose:
             // adjacent tiles of one wasteland structure must still join up as one formation.
-            information.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex)));
+            information.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y)));
 
         }
         int lastFullNeighbour = -1;
@@ -1144,7 +1149,7 @@ public class World implements Disposable, SaveFileContent {
     // exactly as they have always looked.
     private final Map<Long, Integer> drawableTerrainIndexCache = new ConcurrentHashMap<>();
 
-    private int drawableTerrainIndex(int biomeLayer, int terrainIndex, long tileBiomes) {
+    private int drawableTerrainIndex(int biomeLayer, int terrainIndex, long tileBiomes, int worldX, int worldY) {
         List<BiomeData> biomes = data.GetBiomes();
         if (terrainIndex <= 0 || biomeLayer < 0 || biomeLayer >= biomes.size())
             return terrainIndex; // plain ground, or the road layer (the texture after the last biome)
@@ -1156,7 +1161,12 @@ public class World implements Disposable, SaveFileContent {
         // ORs the colour's bit in, so land taken from the wasteland still carries the WASTE bit under the colour
         // it was claimed by. When it does, the index is in wasteland numbering whatever its size, so map it by
         // name like any out-of-range one. Land the colour generated itself has no waste bit and is left alone.
-        boolean claimedFromWasteland = isClaimedWasteland(biomeLayer, tileBiomes);
+        //
+        // Round 272: the waste bit alone was the wrong test - Pass A's OR means a colour's own world-gen
+        // land can carry it too, and inside the castle keep Pass B wrote that land with the colour's OWN
+        // tables. Remapping those by wasteland name turned white's plateau into a rock. holdsWasteSpaceValue()
+        // is the positional version of the same question; see it for the four writers it has to separate.
+        boolean claimedFromWasteland = holdsWasteSpaceValue(biomeLayer, worldX, worldY, tileBiomes);
         if (!claimedFromWasteland && terrainIndex <= highestOwnTerrainIndex(layerBiome))
             return terrainIndex;
         // Round 238: a layer with no structures of its own (the ocean/base layer under a multi-bit tile) has
@@ -1205,17 +1215,106 @@ public class World implements Disposable, SaveFileContent {
     }
 
     /** Round 257: is this tile wasteland that `biomeLayer` claimed? True when the tile carries the waste
-     *  biome's bit as well as this layer's, and this layer is not the wasteland itself. */
+     *  biome's bit as well as this layer's, and this layer is not the wasteland itself. Round 272: says
+     *  only that the bits look like a claim - {@link #holdsWasteSpaceValue} is what decides the index
+     *  space, because a colour's own world-gen land can carry these same bits. */
     private boolean isClaimedWasteland(int biomeLayer, long tileBiomes) {
         if (tileBiomes == 0)
             return false;
-        List<BiomeData> biomes = data.GetBiomes();
-        for (int i = 0; i < biomes.size(); i++) {
-            if (!"waste".equalsIgnoreCase(biomes.get(i).name))
-                continue;
-            return i != biomeLayer && (tileBiomes & (1L << i)) != 0;
+        int waste = wasteBiomeIndex();
+        return waste >= 0 && waste != biomeLayer && (tileBiomes & (1L << waste)) != 0;
+    }
+
+    // Round 272: cached, because the two per-tile decoders below run over all 490,000 tiles and both used
+    // to walk the biome list by name to find the wasteland. Cleared with the other per-world caches.
+    private int cachedWasteBiomeIndex = -2; // -2 = not looked up yet, -1 = this plane has no wasteland
+
+    private int wasteBiomeIndex() {
+        if (cachedWasteBiomeIndex == -2) {
+            cachedWasteBiomeIndex = -1;
+            List<BiomeData> biomes = data.GetBiomes();
+            for (int i = 0; i < biomes.size(); i++)
+                if ("waste".equalsIgnoreCase(biomes.get(i).name)) {
+                    cachedWasteBiomeIndex = i;
+                    break;
+                }
         }
-        return false;
+        return cachedWasteBiomeIndex;
+    }
+
+    /** The plane's colourless/wasteland biome, or null on a plane without one (every stock plane). */
+    private BiomeData wasteBiome() {
+        int waste = wasteBiomeIndex();
+        return waste < 0 ? null : data.GetBiomes().get(waste);
+    }
+
+    /**
+     * Round 272: which index space is this tile's `terrainMap` value written in - the WASTELAND's, or the
+     * owning biome's own? Nothing in the save records it, so every consumer has to derive it, and for two
+     * rounds they derived it differently. This is the one derivation; everything that decodes a terrain
+     * value asks here.
+     * <p>
+     * Round 257 answered "does the tile carry the waste bit as well as its owner's?" and round 266 shared
+     * that answer with the full minimap re-bake. The trace this round put through all three claim paths
+     * (see MOD_CHANGELOG.md) says the bit alone is not enough, because four writers produce a dual-bit
+     * tile and they do not agree:
+     * <ul>
+     * <li>{@link #claimWastelandRing} (daily expansion) writes the value natively in colourless space and
+     *     ORs the colour's bit over the waste bit - wasteland space, the case round 257 was built for.</li>
+     * <li>{@link #generateNew}'s Pass B: Pass A's claim loop ORs every qualifying biome's bit, so a tile
+     *     inside BOTH the wasteland's disc and a colour's is dual-bit from birth, and Pass B then writes it
+     *     with the COLOUR's own tables inside `CASTLE_KEEP_RADIUS_TILES` of that colour's castle and with
+     *     the colourless redirect outside it. Same bits, two spaces, split by that radius - which is why
+     *     this test is positional. Measured in the user's saves 1-3: five tight 43x43 discs, one per
+     *     colour (white 666 tiles, 88 of them structures), all of them colour space.</li>
+     * <li>{@link #repaintBiomeAroundTown} drops the waste bit for an AI colour (its translated value is in
+     *     the colour's own space, correctly decoded by the owner) and keeps it for the player, where round
+     *     272 also stops translating - so a dual-bit player tile is always wasteland space.</li>
+     * <li>{@link #neutralizeTerritoryOutsideRadius} leaves a waste-OWNED tile, never a dual-bit one.</li>
+     * </ul>
+     * The castle test is Pass B's own, verbatim: same `getPosition()` anchor, same radius, same raw-y
+     * flip, so the two cannot disagree about a tile. No castle to test against (the player, the wasteland
+     * itself, or a colour whose castle has fallen) means wasteland space, which is what every runtime
+     * writer produces.
+     */
+    private boolean holdsWasteSpaceValue(int biomeLayer, int worldX, int worldY, long tileBiomes) {
+        if (!isClaimedWasteland(biomeLayer, tileBiomes))
+            return false;
+        int[] castle = castleKeepTile(biomeLayer);
+        if (castle == null)
+            return true;
+        int dx = worldX - castle[0], dy = worldY - castle[1];
+        int keep = TerritoryControl.CASTLE_KEEP_RADIUS_TILES;
+        return dx * dx + dy * dy > keep * keep;
+    }
+
+    // The tile position of each biome's own castle, the anchor holdsWasteSpaceValue() needs. Built once
+    // per loaded world rather than per tile: findCastle() is a full POI scan and the callers run it over
+    // all 490,000 tiles. Reset with the rest of the per-world caches in generateNew() and load().
+    // A castle that falls mid-session leaves a stale entry here, which cannot matter: defeatColor()
+    // sweeps that colour's ownership bit off every tile it held, so isClaimedWasteland() above says no
+    // before the anchor is ever consulted.
+    private int[][] castleKeepTiles;
+
+    private int[] castleKeepTile(int biomeIndex) {
+        if (castleKeepTiles == null) {
+            List<BiomeData> biomes = data.GetBiomes();
+            int[][] built = new int[biomes.size()][];
+            StringBuilder found = new StringBuilder();
+            for (int i = 0; i < biomes.size(); i++) {
+                PointOfInterest castle = TerritoryControl.findCastle(this, biomes.get(i).name);
+                if (castle == null)
+                    continue;
+                built[i] = new int[] {(int) (castle.getPosition().x / data.tileSize),
+                                      (int) (castle.getPosition().y / data.tileSize)};
+                found.append(found.length() == 0 ? "" : ", ").append(biomes.get(i).name)
+                        .append(" (").append(built[i][0]).append(",").append(built[i][1]).append(")");
+            }
+            castleKeepTiles = built;
+            System.out.println("[TFR-Terrain] castle keeps anchored for terrain decoding: "
+                    + (found.length() == 0 ? "none found" : found.toString()));
+        }
+        return biomeIndex >= 0 && biomeIndex < castleKeepTiles.length ? castleKeepTiles[biomeIndex] : null;
     }
 
     /** Round 236: the last index a biome's own BiomeTexture has a picture for - ground is 0, then terrain[],
@@ -1411,6 +1510,9 @@ public class World implements Disposable, SaveFileContent {
             structureSwapCache = null; // don't inherit a previous game's random structure picks
             nativeStructurePatternCache.clear(); // same reasoning - a new seed needs fresh patterns
             colorlessRedirectStructureCache.clear(); // same reasoning
+            castleKeepTiles = null;   // round 272: a new world puts the castles somewhere else
+            cachedWasteBiomeIndex = -2; // ... and a different plane may not have a wasteland at all
+            drawableTerrainIndexCache.clear(); // keyed by (layer, index), both plane-specific
             // WorldSave.currentSave (and this World instance with it) is a singleton constructed
             // once per app run, not recreated per game - starting a new game without restarting the
             // app reuses the SAME World object, so anything only ever reset inside load() (never
@@ -2169,40 +2271,15 @@ public class World implements Disposable, SaveFileContent {
             Pixmap pix = new Pixmap(width * data.miniMapTileSize, height * data.miniMapTileSize, Pixmap.Format.RGBA8888);
             pix.setColor(1, 0, 0, 1);
             pix.fill();
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    if (highestBiome(biomeMap[x][y]) >= data.GetBiomes().size()) {
-                        Pixmap smallPixmap = createSmallPixmap(data.roadTileset.tilesetAtlas, data.roadTileset.tilesetName, 0);
-                        pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-                    } else {
-
-                        BiomeData biome = data.GetBiomes().get(highestBiome(biomeMap[x][y]));
-                        int terrainIndex = terrainMap[x][y] & ~terrainMask;
-                        if (terrainIndex > biome.terrain.length) {
-                            Pixmap smallPixmap = createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, 0);
-                            pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-
-                            terrainIndex -= biome.terrain.length;
-                            terrainIndex--;
-                            for (BiomeStructureData structData : biome.structures) {
-                                if (terrainIndex >= structData.mappingInfo.length) {
-                                    terrainIndex -= structData.mappingInfo.length;
-                                    continue;
-                                }
-                                smallPixmap = createSmallPixmap(structData.structureAtlasPath, structData.mappingInfo[terrainIndex].name, 0);
-                                pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-                                break;
-                            }
-                        } else {
-                            Pixmap smallPixmap = createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, terrainIndex);
-                            pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-                        }
-
-                    }
-
-                }
-
-            }
+            // Round 272: this was the THIRD copy of "what does a minimap tile look like" (stock's own,
+            // written before any of the index-space rules existed) and the one every new world's map is
+            // baked from. It decoded every tile against highestBiome(), which is right for a colour's own
+            // world-gen land and wrong for the colourless-redirect land outside each castle keep - and it
+            // disagreed with the re-bake either way, which is what made the specks appear only after a
+            // dungeon rotation forced one. One function now: drawMinimapTile() asks the tile itself.
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                    drawMinimapTile(pix, x, y);
             for (Map.Entry<String, Pair<Pixmap, HashMap<String, Pixmap>>> entry : pixmapHash.entrySet()) {
                 try {
                     entry.getValue().getLeft().dispose();
@@ -2777,28 +2854,27 @@ public class World implements Disposable, SaveFileContent {
         // is now the claiming COLOUR, drew the wrong structure pixel or none. redrawMinimapTile() was
         // taught that in round 257 and this copy never was, which is why the rim of every AI colour
         // looked right while you played and changed the moment a dungeon rotation forced a re-bake.
-        // Both paths go through drawMinimapTile() now, and the decode biome is DERIVED from the tile
-        // rather than assumed.
-        List<BiomeData> rebakeBiomes = data.GetBiomes();
-        BiomeData wasteBiome = null;
-        for (BiomeData b : rebakeBiomes) {
-            if ("waste".equalsIgnoreCase(b.name)) {
-                wasteBiome = b;
-                break;
-            }
-        }
-        int claimedFromWaste = 0;
+        //
+        // Round 272 finished the job. Round 266 left the DERIVATION here, and it derived the wrong
+        // answer for the tiles that actually produced the specks: every dual-bit tile inside a castle
+        // keep, which world-gen wrote in the colour's own space. drawMinimapTile() asks the tile now,
+        // so this loop only counts what it decided.
+        int claimedFromWaste = 0, insideAKeep = 0;
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 int layer = highestBiome(biomeMap[x][y]);
-                BiomeData decode = wasteBiome != null && layer < rebakeBiomes.size()
-                        && isClaimedWasteland(layer, biomeMap[x][y]) ? wasteBiome : null;
-                if (decode != null)
-                    claimedFromWaste++;
-                drawMinimapTile(pix, x, y, decode);
+                if (layer < data.GetBiomes().size() && isClaimedWasteland(layer, biomeMap[x][y])) {
+                    if (holdsWasteSpaceValue(layer, x, height - y - 1, biomeMap[x][y]))
+                        claimedFromWaste++;
+                    else
+                        insideAKeep++;
+                }
+                drawMinimapTile(pix, x, y);
             }
         }
-        System.out.println("[TFR-Minimap] full re-bake: " + claimedFromWaste
+        System.out.println("[TFR-Minimap] full re-bake: " + insideAKeep
+                + " dual-bit tile(s) decoded in their own colour's space (inside a castle keep - round 272), "
+                + claimedFromWaste
                 + " tile(s) decoded in wasteland space (land an AI colour claimed by expansion)");
         for (Map.Entry<String, Pair<Pixmap, HashMap<String, Pixmap>>> entry : pixmapHash.entrySet()) {
             try {
@@ -2840,52 +2916,48 @@ public class World implements Disposable, SaveFileContent {
     // repaint since, by drawing the tile's REAL current content instead of a flat stamp. Reads
     // biomeMap/terrainMap directly, so callers must update those first, then call this.
     private void redrawMinimapTile(int x, int rawY) {
-        redrawMinimapTile(x, rawY, null);
-    }
-
-    // decodeBiome, when non-null, is the biome whose terrain/structures tables this tile's
-    // terrainMap value was ENCODED against, when that differs from the biome that owns the tile.
-    // Needed by claimWastelandRing(): an expansion-claimed tile's value is written in colorless
-    // index space (colorless's terrain table + the colorless-clone redirect structures), but
-    // highestBiome() names the claiming COLOR, whose real structures[] tables are differently
-    // sized for every AI color (e.g. white 3+7 entries vs colorless's 7+7) - decoding a
-    // colorless-space value against the color's table draws the wrong structure pixel for most
-    // values and NO structure pixel for values past the color's shorter table, which is exactly
-    // the "flat minimap where it spreads" symptom this method exists to fix. The base ground
-    // pixel still draws from the OWNING biome's tileset either way, so claimed territory keeps
-    // reading as the owner's color on the minimap - only the structure lookup switches tables,
-    // matching what the main map actually renders there (the kept waste layer's own art).
-    private void redrawMinimapTile(int x, int rawY, BiomeData decodeBiome) {
         if (biomeImage == null)
             return;
-        drawMinimapTile(biomeImage, x, rawY, decodeBiome);
+        drawMinimapTile(biomeImage, x, rawY);
     }
 
     /**
      * Draw one tile of the minimap into {@code target} - the ONE place that decides what a tile looks
-     * like (round 266).
+     * like (round 266, finished in round 272).
      * <p>
-     * There used to be two: this, and a near-identical loop inside
-     * {@link #rebakeMinimapAfterTerritoryControl()}. Only this one learned round 257's rule about
-     * claimed wasteland, so the live repaint and the full re-bake disagreed about the rim tiles of
-     * every AI colour's territory - the reported specks. The re-bake now calls this too, passing the
-     * decode biome it derives from {@link #isClaimedWasteland}.
+     * There used to be three near-identical copies of this rule: this one, the loop inside
+     * {@link #rebakeMinimapAfterTerritoryControl()}, and world-gen's own first bake in
+     * {@link #generateNew}. Only this one learned round 257's rule about claimed wasteland, so the live
+     * repaint and the full re-bake disagreed about the rim tiles of every AI colour's territory - the
+     * reported specks. All three call this now.
      * <p>
-     * The ground pixel always comes from the biome that OWNS the tile, so claimed land keeps reading
-     * as its owner's colour; only the structure lookup follows {@code decodeBiome}.
-     *
-     * @param decodeBiome the biome whose terrain/structures tables this tile's terrainMap value was
-     *                    ENCODED against, when that differs from the biome that owns the tile; null
-     *                    when they are the same.
+     * Round 266 had the caller pass the decode biome. Round 272 removed that parameter: the caller could
+     * pass the wrong one (and the re-bake did, for every tile inside a castle keep), while the tile
+     * itself knows the answer through {@link #holdsWasteSpaceValue}. A tile's look is now a pure
+     * function of the tile.
+     * <p>
+     * Why the decode biome matters at all: an expansion-claimed tile's value is written in colourless
+     * index space (colourless's terrain table plus the colourless-clone redirect structures) while
+     * highestBiome() names the claiming COLOUR, whose real structures[] tables are differently sized for
+     * every AI colour (white 3+7 entries against colourless's 7+7). Decoding a colourless-space value
+     * against the colour's table draws the wrong structure pixel for most values and none at all past
+     * the colour's shorter table - the "flat minimap where it spreads" symptom.
+     * <p>
+     * The ground pixel always comes from the biome that OWNS the tile, so claimed land keeps reading as
+     * its owner's colour; only the structure lookup switches tables.
      */
-    private void drawMinimapTile(Pixmap target, int x, int rawY, BiomeData decodeBiome) {
+    private void drawMinimapTile(Pixmap target, int x, int rawY) {
         int mm = data.miniMapTileSize;
         if (highestBiome(biomeMap[x][rawY]) >= data.GetBiomes().size()) {
             target.drawPixmap(createSmallPixmap(data.roadTileset.tilesetAtlas, data.roadTileset.tilesetName, 0), x * mm, rawY * mm);
             return;
         }
-        BiomeData biome = data.GetBiomes().get(highestBiome(biomeMap[x][rawY]));
-        BiomeData decode = decodeBiome != null ? decodeBiome : biome;
+        int owner = highestBiome(biomeMap[x][rawY]);
+        BiomeData biome = data.GetBiomes().get(owner);
+        BiomeData decode = holdsWasteSpaceValue(owner, x, height - rawY - 1, biomeMap[x][rawY])
+                ? wasteBiome() : biome;
+        if (decode == null)
+            decode = biome;
         int terrainLength = decode.terrain == null ? 0 : decode.terrain.length;
         int terrainIndex = terrainMap[x][rawY] & ~terrainMask;
         if (terrainIndex > terrainLength) {
@@ -3521,10 +3593,29 @@ public class World implements Disposable, SaveFileContent {
                 int oldBiomeIndex = highestBiome(biomeMap[wx][rawY]); // read before overwriting below
                 if ((biomeMap[wx][rawY] & ~roadBit) == 0L || oldBiomeIndex == oceanIdx)
                     continue; // round 98: water stays water
-                Integer newTerrain = translateStructure(oldBiomeIndex, biomeIndex, terrainMap[wx][rawY]);
+                // Round 272, found by the claim-path trace: the SOURCE space is not always the owner's.
+                // A tile daily expansion claimed carries the colour's bit over the wasteland's while its
+                // value stays in WASTELAND numbering, so translating it out of the owner's tables read a
+                // crater as green's water, a wasteland mountain as green's tree5 - and values 14..16,
+                // which white/red/green cannot express at all, fell off the end of the table and came
+                // back as 0, erasing the structure and its collision bit. Every town capture did this to
+                // most of its own disc. Translate out of the space the value is actually in.
+                boolean sourceIsWasteSpace = oldBiomeIndex == colorlessIdx // the wasteland's own land
+                        || holdsWasteSpaceValue(oldBiomeIndex, wx, wy, biomeMap[wx][rawY]);
+                int sourceBiomeIndex = sourceIsWasteSpace ? colorlessIdx : oldBiomeIndex;
+                // The player's tables are an index-for-index clone of the wasteland's (2 terrain + 7 + 7,
+                // same names in the same order - verified in world.json), so a wasteland-space value is
+                // already a valid player-space value naming the same structure. Keeping it as-is, rather
+                // than translating, is what makes "dual bit means wasteland space" true by construction
+                // instead of true by luck - holdsWasteSpaceValue() relies on exactly that. It also stops
+                // pickReplacement() re-rolling between the two identical tree/rock/mountain entries on
+                // every capture, which shuffled the ground for no reason.
+                boolean keepAsWasteSpace = keepWasteUnder && sourceIsWasteSpace;
+                Integer newTerrain = keepAsWasteSpace ? terrainMap[wx][rawY]
+                        : translateStructure(sourceBiomeIndex, biomeIndex, terrainMap[wx][rawY]);
                 if (newTerrain == null)
                     continue;
-                long wasteUnderBit = (keepWasteUnder && oldBiomeIndex == colorlessIdx) ? (1L << colorlessIdx) : 0L;
+                long wasteUnderBit = keepAsWasteSpace ? (1L << colorlessIdx) : 0L;
                 biomeMap[wx][rawY] = existingRoadBit | wasteUnderBit | (1L << biomeIndex);
                 terrainMap[wx][rawY] = newTerrain;
 
@@ -3617,7 +3708,6 @@ public class World implements Disposable, SaveFileContent {
         }
         if (colorIndex < 0 || colorlessIndex < 0)
             return;
-        BiomeData colorlessBiome = biomes.get(colorlessIndex);
 
         int centerTileX = (int) (keepCenter.x / data.tileSize);
         int centerTileY = (int) (keepCenter.y / data.tileSize);
@@ -4041,11 +4131,19 @@ public class World implements Disposable, SaveFileContent {
                 tilesClaimed++;
                 claimedTiles.add(packTile(wx, wy));
 
-                // colorlessBiome as the decode table: this tile's terrainMap was just written in
-                // colorless index space above - see redrawMinimapTile()'s own comment for why
-                // decoding it against the claiming color's differently-sized tables instead drew
-                // wrong (or no) structure pixels, i.e. the flat-minimap symptom persisting.
-                redrawMinimapTile(wx, rawY, colorlessBiome); // real content, not a flat stamp
+                // This tile's terrainMap was just written in colorless index space above, and
+                // drawMinimapTile() works that out for itself now (round 272) instead of being told -
+                // see holdsWasteSpaceValue() for why being told was not safe.
+                //
+                // THE ONE RESIDUAL, measured rather than assumed: a tile this method claims INSIDE the
+                // colour's own castle keep gets a wasteland-space value at a position where
+                // holdsWasteSpaceValue() answers "the colour's own space". It happens where world-gen
+                // left a hole in the colour's claim that close to its castle - 43 such tiles inside
+                // white's keep in the user's save 2, ~3% of the disc - and expansion later fills it.
+                // Around 13% of tiles carry a structure, so the ceiling is a few dozen mis-drawn tiles
+                // map-wide against the ~215 this round fixes. The exact cure is to stop deriving the
+                // space and record it per tile (terrainMap bit 29 is free) - MOD_CHANGELOG round 272.
+                redrawMinimapTile(wx, rawY); // real content, not a flat stamp
                 updateFogOfWarPixmap(wx, rawY);
 
                 minX = Math.min(minX, wx); maxX = Math.max(maxX, wx);
@@ -4214,8 +4312,8 @@ public class World implements Disposable, SaveFileContent {
         }
     }
 
-    // Companion to neutralizeTerritoryOutsideRadius() - that method reskins structures via
-    // translateStructure() but, like this one used to, never touches mapObjectIds (rocks/flowers/
+    // Companion to neutralizeTerritoryOutsideRadius() - that method never touches mapObjectIds
+    // (rocks/flowers/
     // etc), so a color's own original doodads were left sitting untouched on now-wasteland ground
     // even after every structure nearby was correctly reskinned - part of why the swept area
     // didn't read as "one continuous area" with wasteland's own core territory. Full-map scan

@@ -39,6 +39,14 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 `MOD_CHANGELOG.md`, search for the linked feature).
 
 ### World generation & the overworld map
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — round 272 replaced the THIRD copy of stock's
+  minimap-tile drawing rule. `generateNew()`'s own "draw mini map" loop (stock, ~34 lines decoding every tile
+  against `highestBiome()`) is now a two-line call to the mod's `drawMinimapTile()`, which is also what
+  `redrawMinimapTile()` and `rebakeMinimapAfterTerritoryControl()` call — one rule, so the three cannot drift
+  again (they had, and that was the reported minimap specks). The stock loop's behaviour is preserved for every
+  tile whose terrain value is in its owner's index space; it changes only for a tile carrying the wasteland's bit
+  under a colour's, which stock never had a concept of. Upstream conflict note: if the daily moves that loop, take
+  upstream's frame and keep the `drawMinimapTile(pix, x, y)` body.
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — the single most-touched file.
   Added: `repaintBiomeAroundTown()` (live terrain recolor, #7), fog-of-war state/rendering
   (`explored`/`fogOfWarPixmap`/`isCurrentlyVisible`, #3), day/night clock (`dayProgress`/

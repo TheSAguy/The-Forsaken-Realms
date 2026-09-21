@@ -3033,9 +3033,19 @@ public class TerritoryControl {
             // re-randomize rocks/trees on ground an EARLIER defeat already settled (and the player
             // may have already explored), as an unrelated side effect - plus a real perf cost,
             // repeated per defeat instead of once. Trade-off accepted: this color's original
-            // doodads linger cosmetically on the newly-neutral ground (rocks/trees, not buildings -
-            // those already reskin correctly via neutralizeTerritoryOutsideRadius()) rather than
-            // risk visibly rewriting ground the player has already seen.
+            // doodads linger cosmetically on the newly-neutral ground rather than risk visibly
+            // rewriting ground the player has already seen.
+            //
+            // Round 272's claim-path trace corrected the rest of what this comment used to say.
+            // neutralizeTerritoryOutsideRadius() does NOT reskin structures - it deliberately leaves
+            // terrainMap alone, which is right for the tiles world-gen already wrote with the
+            // colourless recipe (everything outside CASTLE_KEEP_RADIUS_TILES) and wrong for the ones
+            // inside the keep, which hold this color's OWN index values and now sit under a
+            // waste-owned tile that decodes them against the wasteland's tables. A defeated color's
+            // castle surroundings therefore draw the wrong KIND of structure (its water as the
+            // wasteland's crater, and so on). Left alone deliberately: the cure is a translate pass
+            // over the keep disc at defeat time, and whether a fallen color's ground should reskin at
+            // all is the user's call, not a silent fix. See MOD_CHANGELOG round 272.
             System.out.println("[TFR-ColorDefeat] " + color + ": terrain swept to neutral, " + converted + " town/capital POI(s) reverted");
         }
 
