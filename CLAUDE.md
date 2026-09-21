@@ -67,7 +67,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      exempts the POI underfoot from entry until the player steps off. **Agent-only** (a person moves by direct
      input), but it strands an unattended session permanently. The in-game way out is the **Homeward rune** -
      `equip` then `use`, it teleports instead of pathing - and `soak.py` now does that itself after three
-     failed routes. Also checked rather than assumed: the Warden in Orazca, which the driver reported as
+     failed routes. **Also in this round, and the more reusable lesson: `state --brief` was not passing `forgeUi`
+     through.** A second stall read as a frozen duel (scene DuelScene, frozen true, nothing to click, forty
+     identical iterations) and a thread dump said the game was FINE - `main` RUNNABLE in `glfwSwapBuffers`. A
+     screenshot found the ante's "Card Lost" prompt on screen (OK / Buy Back (100 gold) / Use Bronze Coin) over
+     a player at -5 life. The full `/state` had all three buttons; `brief()` dropped the field, and `--brief` is
+     what the skill's loop tells you to read. So the one part of the UI that BLOCKS a session was invisible to
+     every reader of it, and both soak stalls were that single missing field. Fixed in `tfr_agent.py`.
+     Also checked rather than assumed: the Warden in Orazca, which the driver reported as
      unreachable, is fine (`--enemies` on `towns/orazca.tmx`: 0 of 1) - he is an enemy-type object with a
      DIALOG, so walking into him talks instead of duelling and he is still there afterwards.
   2. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found

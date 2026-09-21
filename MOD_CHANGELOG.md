@@ -17791,6 +17791,23 @@ The way out, in the meantime, was the game's own: the **Homeward rune** teleport
 built. `soak.py` now does that for itself: three failed routes in a row is the stranded signature, and it
 equips the rune, uses it, and falls back to reloading its own checkpoint if even that fails.
 
+### The brief state was hiding the buttons that stop a session
+
+The next stall looked worse than the last one: `scene DuelScene`, `frozen true`, `forgeUi=None`, `dialog=None`,
+and a state fingerprint that did not move for forty iterations. A thread dump said the game was **fine** - `main`
+RUNNABLE in `glfwSwapBuffers`, the render loop turning, no AI thread working, nothing waiting to lock. A
+screenshot said what the state would not: the ante's **"Card Lost"** prompt was on screen, with `OK`,
+`Buy Back (100 gold)` and `Use Bronze Coin`, over a player at **-5 life**.
+
+The full `/state` had all three buttons. `brief()` in `tfr_agent.py` did not pass `forgeUi` through, and
+`state --brief` is what the skill's own loop says to read - for "the open dialog, clickable UI", which is exactly
+what these are. So the one part of the UI that BLOCKS a session until something taps it - the win/lose view, an
+option pane, the ante prompts - was invisible to every reader of the brief state, and a screenshot was the only
+way to find out. `forgeUi` is in the brief state now.
+
+Worth keeping as a lesson about instrumentation rather than about Forge: two separate soak stalls, one of them
+chased through a thread dump, were both this single missing field. The observer had the data the whole time.
+
 ### Also seen, and NOT a bug
 
 `PROBLEM walker gave up on enemy 110 (The Warden (Adept) (Uncommon, 15 life)) in Orazca three times`. The Warden

@@ -12,7 +12,7 @@ Then, from anywhere:
     python tfr_agent.py settle                    # back to an idle map: duel, win/lose view, reward screen, dialogs
     python tfr_agent.py dialogs [choose=TEXT]     # walk single-option dialogs; take the option containing TEXT
     python tfr_agent.py state                     # the observation (add --cheat for the fog-free view)
-    python tfr_agent.py state --brief             # scene, player, nearby pois/enemies/actors, dialog, ui
+    python tfr_agent.py state --brief             # scene, player, nearby pois/enemies/actors, dialog, ui, forgeUi
     python tfr_agent.py wait [--timeout 30]       # block until the game is idle, then print the brief state
     python tfr_agent.py shot [file.png]           # screenshot -> path
     python tfr_agent.py cmd goto poi="Waste Town Tribal"
@@ -89,6 +89,15 @@ def brief(s):
         out["dialog"] = s["dialog"]
     if s.get("ui"):
         out["ui"] = [(u["id"], u.get("text") or u.get("name") or u.get("class")) for u in s["ui"]]
+    # Round 277: forgeUi belongs in the brief state, and leaving it out cost two soak stalls. It is the
+    # stock-Forge side of the UI - the win/lose view, an option pane, the ante prompts - i.e. exactly the
+    # buttons that BLOCK a session until something taps one, and `state --brief` is what the skill's own loop
+    # tells you to read ("the open dialog, clickable UI"). Without it the ante's "Card Lost" prompt (OK /
+    # Buy Back (100 gold) / Use Bronze Coin) was on screen, present in the full state, and invisible to every
+    # reader of the brief one, which looks exactly like a frozen duel: scene DuelScene, frozen true, nothing
+    # to click. A screenshot was the only way to find out, and that should not be the only way.
+    if s.get("forgeUi"):
+        out["forgeUi"] = [(u.get("id"), u.get("text")) for u in s["forgeUi"]]
     if s.get("shop"):
         out["shop"] = s["shop"]["items"]
     q = s.get("quests")
