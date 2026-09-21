@@ -22,7 +22,7 @@ Consequences:
   alone; if anything changes, rebuild both and re-upload both.
 - **The release tag must be `tfr-v<versionName>`** or first-run asset download 404s.
 
-## One-time machine prerequisites (already true on the F:-drive dev machine)
+## One-time machine prerequisites (already true on this machine)
 
 1. Android SDK at `%LOCALAPPDATA%\Android\Sdk` with `build-tools;35.0.0` and
    `platforms;android-35` (installed via Android Studio). `forge-gui-android/local.properties`
@@ -73,7 +73,7 @@ Consequences:
    never sees this because their CI is Linux. Fix = shrink every path in the command:
    ```
    cmd //c "mklink /J C:\m2 C:\Users\User\.m2\repository"     # junction, no admin needed (once per machine)
-   cmd //c "subst R: C:\TFR\repo"     # short drive alias (after every reboot)
+   cmd //c "subst R: C:\TFR-build"     # short drive alias (after every reboot)
    export PATH="/c/Users/User/.claude/skills/apache-maven-3.9.16/bin:$PATH"
    cd /r/
    mvn -pl forge-gui-android -am clean install -P android-release-build -DskipTests \
@@ -81,6 +81,28 @@ Consequences:
        "-Dandroid.sdk.path=C:/Users/User/AppData/Local/Android/Sdk" \
        -Dandroid.buildToolsVersion=35.0.0
    ```
+   **Build from `C:\TFR-build`, a clone, not from `C:\TFR\repo` itself** (R: is substituted to the
+   clone above). The reason is the last section of this file: the release build cleans the shared
+   modules and rebuilds them against `C:/m2`, which leaves whatever tree it ran in unable to compile
+   normally. Run it in the clone and the working repo never notices - measured round 281,
+   `forge-game/target/classes` held 900 classes afterwards, not the 83 that is the signature of that
+   breakage - so the mandatory reset at the end of this file is only needed if you built in place.
+   That matters when the user is play-testing, because the desktop package stays ready.
+
+   Refresh the clone from the working repo first. Its `origin` and branch have both moved before
+   (round 281 found it still pointing at the old `F:/FORGE/...` path with v1.12 checked out), so set
+   the URL rather than assuming it:
+   ```
+   git -C C:/TFR-build remote set-url origin C:/TFR/repo
+   git -c safe.directory='*' -C C:/TFR-build fetch origin main
+   git -c safe.directory='*' -C C:/TFR-build reset --hard FETCH_HEAD
+   ```
+   `reset --hard` leaves untracked files alone, which is what keeps the gitignored
+   `forge.keystore` + `local.properties` in place - **never** `clean -fdx` there, it would delete the
+   keystore. Confirm the keystore survived and is the right one (`md5sum` it against the working
+   repo's) before trusting the signature. **A clone only carries committed work**, so commit the
+   round first or the APK is built from stale source.
+
    `-am` is NOT optional: building `-pl forge-gui-android` alone fails at compile with
    "cannot access com.badlogic.gdx.Application" — this project versions modules with
    `${revision}` placeholders, so the poms Maven installs to the local repo don't resolve
@@ -92,7 +114,9 @@ Consequences:
    failing command's length if Result=1-with-no-output ever returns.
    Outputs in `forge-gui-android/target/`: the signed+aligned APK (uber-apk-signer names it
    from `finalName`, look for `*aligned*.apk` with "signed" in the name) and `assets.zip`.
-4. Verify BEFORE uploading (no device needed):
+4. Verify BEFORE uploading (no device needed). Note that assets.zip also carries stock Forge's
+   `CONTRIBUTORS.txt` / `INSTALLATION.txt` / `ISSUES.txt` / `LICENSE.txt` beside `res/` - that is
+   normal, only `res/` has to be there:
    ```
    # identity + version: expect package=com.thesaguy.forsakenrealms,
    # versionCode matching step 2, versionName matching tfr.version,
@@ -149,6 +173,31 @@ Consequences:
 - JDK: the build currently runs on JDK 22 with the patched plugin. Upstream CI pins JDK 17
   for sdkmanager; if a future JDK upgrade breaks the plugin ("Unknown packaging: apk" or
   dex errors), install Temurin 17 and set JAVA_HOME for this build only.
+
+## Testing an UNRELEASED version (emulator or device) - added round 281
+
+The APK builds its assets URL from its own versionName, so a 1.13 APK looks for
+`releases/download/tfr-v1.13/assets.zip`. Before that release exists - which is the normal state
+while accumulating rounds - **first launch has nothing to download and cannot start**. That is not
+a bug to fix; place the assets by hand instead. `AssetsDownloader` returns early when the on-device
+`version.txt` matches the APK's version and the skin resolves, so nothing is ever fetched:
+
+```
+adb install -r forsaken-realms-1.13-signed-aligned.apk        # then launch once, so Android makes the dir
+adb shell getprop ro.build.version.sdk                        # >= 30 -> obb path below; <= 29 -> /sdcard/ForsakenRealms
+D=/sdcard/Android/obb/com.thesaguy.forsakenrealms/ForsakenRealms
+adb shell mkdir -p $D
+adb push res $D/                                              # res/ is the top level of assets.zip (~210MB)
+printf 1.13 > version.txt && adb push version.txt $D/version.txt
+```
+
+`version.txt` must hold exactly the versionName. Two things worth knowing if it still prompts:
+
+- `res/skins/default/adv_bg_texture.jpg` must be present on the device. If it is missing (a partial
+  push) `AssetsDownloader` deletes `version.txt` and forces a fresh download.
+- the prompt is *skippable* once `res/` exists and `version.txt` is non-empty, so Ignore works. It
+  is only mandatory when the two `build.txt` dates differ, which cannot happen for an APK and
+  assets.zip from one `mvn` run. Turning the device's network off also makes it skippable.
 
 ## Player-facing install instructions (canonical copy)
 

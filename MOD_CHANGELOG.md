@@ -17917,6 +17917,21 @@ without their stagger, which is not a bug a player can see.
 The line also names the signal that caught it and the character the typing stopped at, so the next report carries
 its own diagnosis instead of one ambiguous number.
 
+### The replacement had its own cry-wolf case, found by tracing it rather than by running it
+
+Walking the new code through each case before packaging turned up a second one, which is the kind this round is
+about. **After the typing ends, no new character is ever coming** - so `quiet` climbs for an entirely innocent
+reason, and the stall signal would eventually fire on a dialog that finished normally. What saves it on an
+ordinary dialog is that the options become visible and the watchdog stops; but the reveal is *staggered*
+(`0.09 + 0.10 x n`), and past about twenty options that stagger outlasts the two-second stall window. A 20-option
+chooser would have tripped the stall check mid-reveal.
+
+Authored dialogs top out at five options, so this was not reachable from the plane's JSON - but the scrolling
+layout exists precisely for runtime-built lists (it was added for the shop chooser), which is where twenty is
+plausible. One line: the stall signal stands down while `hasEnded()` is true, leaving `revealFailed` - which
+already allows for the stagger - as the signal that covers that case. Worth the extra build cycle: shipping a new
+false positive in the round whose entire point is that a watchdog must not cry wolf would have been absurd.
+
 ### What the log now says about the grey window
 
 Nothing, which is the honest answer. The single candidate line was this false positive, so the reporter's case is
@@ -17936,6 +17951,19 @@ been pushed. A fresh install would 404 on first launch. No code change is needed
 downloader returns early when the on-device `version.txt` already matches and the skin is present, so the assets
 are placed on the emulator once by hand and no download is ever attempted. The adb recipe ships next to the
 artifacts.
+
+**Built and verified** in 2:10 from the `C:\TFR-build` clone: package `com.thesaguy.forsakenrealms`, versionName
+1.13, versionCode 11300, label "The Forsaken Realms", signed `EE:60:39:25` - the same key as every release, so it
+installs over an existing 1.12 instead of demanding an uninstall - all four ABIs including `x86_64` so an ordinary
+emulator image runs it, `res/adventure` holding exactly `common` + `The Forsaken Realms`, and the APK's and
+assets.zip's `build.txt` identical (`2026-09-21 17:16:08`), which is the matched-pair rule the in-app guard checks.
+
+Two things learned in the doing, both now in ANDROID_RELEASE.md. Its paths still described the F: drive: the build
+clone's `origin` pointed at `F:/FORGE/...` with v1.12 still checked out, and the branch is `main`. And building in
+the clone rather than in place **left the working repo's desktop build state intact** - `forge-game` held 900
+classes afterwards, not the 83 that is the signature of the documented breakage - so that file's mandatory "reset
+the desktop build state" step is only needed for an in-place build. That is worth having straight while the user
+is play-testing, because it means the desktop package stays ready.
 
 A TEST build, not a release: nothing pushed, no tag, nothing uploaded.
 

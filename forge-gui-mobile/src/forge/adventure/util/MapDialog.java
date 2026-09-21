@@ -308,7 +308,13 @@ public class MapDialog {
                 // once that whole stagger has had time to run. Derived from the button count rather than
                 // guessed, so it stays correct if the stagger is ever retimed.
                 boolean revealFailed = ended > 0.09f + 0.10f * buttons.size + DIALOG_POLL;
-                boolean stalled = quiet >= DIALOG_STALL;
+                // ...and the stall signal has to stand down once the typing HAS ended, because after that
+                // no new character is ever coming and `quiet` would climb for an innocent reason. It would
+                // have been the next cry-wolf case: a long option list's stagger outlasts DIALOG_STALL
+                // (0.09 + 0.10 x 20 = 2.09s), so a 20-option chooser - the scrolling layout exists for
+                // exactly those runtime-built lists - would have tripped the stall check mid-reveal. With
+                // the typing ended, revealFailed above is the right signal and already allows for it.
+                boolean stalled = quiet >= DIALOG_STALL && !A.hasEnded();
                 if (!revealFailed && !stalled && waited < deadline)
                     return;
                 done = true;

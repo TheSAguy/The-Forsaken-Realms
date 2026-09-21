@@ -76,7 +76,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      1.13, `manifestVersionCode` 11300. The APK's assets URL is `tfr-v1.13`, which does not exist (nothing is
      pushed), so a fresh install 404s on first launch - **by design, not a bug**: `AssetsDownloader` returns early
      when the on-device `version.txt` matches and the skin is present, so the emulator is seeded by hand once. A
-     TEST build: no push, no tag, no upload.
+     TEST build: no push, no tag, no upload. **BUILT AND VERIFIED** (2:10, from the `C:\TFR-build`
+     clone): package `com.thesaguy.forsakenrealms`, versionName 1.13, versionCode 11300, label "The
+     Forsaken Realms", signed `EE:60:39:25` (the same key as every release, so it installs over 1.12),
+     all four ABIs incl. `x86_64` so an emulator image works, `res/adventure` = exactly common + The
+     Forsaken Realms, and the APK's and assets.zip's `build.txt` match (`2026-09-21 17:16:08`) - the
+     matched-pair rule. Artifacts + an adb seeding guide in `C:\Users\User\Pictures\Screenshots\Android`.
+     ANDROID_RELEASE.md gained the clone recipe (its paths still said F:) and an "unreleased version"
+     section; **building in the clone left this repo's desktop build state intact**, so its mandatory
+     reset step is only for in-place builds. A second cry-wolf case was caught before packaging and
+     fixed: after the typing ENDS no new character ever arrives, so the 2s stall signal had to stand
+     down on `hasEnded()` - a >20-option chooser's reveal stagger (0.09 + 0.10 x n) outlasts it.
   2. **Round 280 - rob a guard and it hunts you.** User: *"If the Booster or Chest is taken, and the guard is
      still alive, to have the guard chase the player?"* One hook: `MapStage`'s player-collision loop has exactly
      one place a reward is ever collected (both the inline pickups and the reward-screen path go through it), so
@@ -423,7 +433,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad script.
   22. **A full new-engine build takes 90 seconds with `--out C:\TFR\live`** (SSD) against an hour on
      F: - the user play-tested from there this time. Check the running javaw's `-jar` path before packaging into
-     either folder.
+     either folder. **Pass that path with FORWARD slashes** (`--out "C:/TFR/live"`): round 281 passed
+     `C:\TFR\live` through the Bash tool, the backslashes were eaten before Python saw them, and the packager
+     resolved the remains relative to the cwd - it reported `output folder overridden: C:\TFR\repo\TFRlive`,
+     built a complete 397 MB copy INSIDE the repo, left the real live folder on the previous jar, and `TFRlive/`
+     is not gitignored, so the next `git add -A` would have committed all of it. The packager's own first output
+     line names the folder it chose - read it rather than the exit code.
   9. Older small items: `dev-tools/art-import/art_convert_generic.py` still assumes right-facing art and cuts a wide
      creature's portrait from its middle - rounds 245/247 repaired its output, not the importer, so fix it before the
      next import; five `common/` AI decks over the 4-copy limit; the Level 2 arena row overflows a portrait
