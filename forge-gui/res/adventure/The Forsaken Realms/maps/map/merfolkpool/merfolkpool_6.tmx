@@ -41,12 +41,14 @@
   <object id="84" template="../../obj/stone.tx" x="967.08" y="623"/>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="433.667" y="1085.67">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Jellyfish"/>
     <property name="waypoints" value="69,72,70,71"/>
    </properties>
   </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="423.56" y="805.915">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="88,89"/>
     <property name="enemy" value="Homarid"/>
    </properties>
@@ -66,6 +68,7 @@
   </object>
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="813.333" y="892">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Homarid"/>
     <property name="waypoints" value="87,81"/>
    </properties>
@@ -80,17 +83,20 @@
   </object>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="319.333" y="580">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Sea Monster"/>
    </properties>
   </object>
   <object id="66" template="../../../../common/maps/obj/enemy.tx" x="374" y="1292.67">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Scorpion"/>
     <property name="waypoints" value="76,77,78,76"/>
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="660.667" y="1089.33">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Jellyfish"/>
     <property name="waypoints" value="70,71,69,72"/>
    </properties>

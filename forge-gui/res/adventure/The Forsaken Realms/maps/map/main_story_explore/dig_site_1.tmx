@@ -81,6 +81,7 @@
   </object>
   <object id="86" template="../../../../common/maps/obj/enemy.tx" x="336.667" y="99.6667">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
   { 
     &quot;text&quot;:&quot;As the machine collapses to the ground in a heap of parts, several levers and gears come free from within its metal carapace.&quot;, 

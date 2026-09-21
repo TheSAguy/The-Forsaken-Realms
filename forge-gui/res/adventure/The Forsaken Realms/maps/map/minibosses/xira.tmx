@@ -35,6 +35,7 @@
  <objectgroup id="4" name="Objects" opacity="0.9">
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="341.187" y="51.2782" width="16" height="17.6724">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{ &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Xira's Boss Effect&quot;]
 }</property>
     <property name="enemy" value="Xira"/>
@@ -162,6 +163,7 @@
   </object>
   <object id="104" template="../../../../common/maps/obj/enemy.tx" x="344.509" y="51.8737" width="16" height="17.6724">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{ &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Xira's Boss Effect&quot;],&quot;startBattleWithCard&quot;: [ &quot;Xira Arien&quot;]
 }</property>
     <property name="enemy" value="Xira"/>

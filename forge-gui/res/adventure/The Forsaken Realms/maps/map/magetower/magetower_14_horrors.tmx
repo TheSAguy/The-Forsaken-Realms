@@ -37,6 +37,7 @@
  <objectgroup id="4" name="Objects">
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="127.7" y="133.6" width="16.6667" height="16">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="displayNameOverride" value="Strange Horror"/>
     <property name="enemy" value="Devil of Tibalt"/>
    </properties>

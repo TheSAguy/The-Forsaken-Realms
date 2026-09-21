@@ -196,6 +196,7 @@
   <object id="186" template="../../../../../common/maps/obj/gold.tx" x="448" y="112"/>
   <object id="187" template="../../../../../common/maps/obj/enemy.tx" x="415.742" y="152.75">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
   {
     &quot;text&quot;:&quot;The cleric drops several items and rushes toward the nearby building.&quot;,
@@ -353,6 +354,7 @@
   </object>
   <object id="234" template="../../../../../common/maps/obj/enemy.tx" x="373.125" y="46.375">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Golgari Elf"/>
    </properties>
   </object>
@@ -366,6 +368,7 @@
   </object>
   <object id="236" template="../../../../../common/maps/obj/enemy.tx" x="307" y="287.333">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Golgari Elf"/>
    </properties>
   </object>
@@ -379,6 +382,7 @@
   </object>
   <object id="238" template="../../../../../common/maps/obj/enemy.tx" x="16.375" y="239.25">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Liliana's Herbalist"/>
    </properties>
   </object>
@@ -412,6 +416,7 @@
   </object>
   <object id="243" template="../../../../../common/maps/obj/enemy.tx" x="374" y="464">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Liliana's Herbalist"/>
    </properties>
   </object>

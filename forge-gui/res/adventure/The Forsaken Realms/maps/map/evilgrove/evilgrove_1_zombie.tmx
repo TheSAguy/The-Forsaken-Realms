@@ -51,6 +51,7 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="63.8333" y="53.6667">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Zombie"/>
    </properties>
   </object>
@@ -70,6 +71,7 @@
   </object>
   <object id="60" template="../../../../common/maps/obj/enemy.tx" x="370.599" y="33.4093">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="89,90"/>
     <property name="enemy" value="Zombie"/>
    </properties>

@@ -44,6 +44,7 @@
   <object id="54" template="../../../../common/maps/obj/gold.tx" x="229.667" y="329.333"/>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="237.423" y="57.4597">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Dwarf Demolisher"/>
    </properties>
   </object>
@@ -60,6 +61,7 @@
   <object id="63" template="../../../../common/maps/obj/gold.tx" x="648" y="393.333"/>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="367.597" y="512.301">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Dwarf"/>
     <property name="waypoints" value="107,105,106,105"/>
    </properties>
@@ -85,6 +87,7 @@
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="698.507" y="163.983">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Big Zombie"/>
     <property name="waypoints" value="94,93,92,91,89,91,92,93"/>
    </properties>
@@ -188,6 +191,7 @@
   <object id="114" template="../../../../common/maps/obj/treasure.tx" x="670.333" y="281"/>
   <object id="115" template="../../../../common/maps/obj/enemy.tx" x="686.667" y="212">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="126,127"/>
     <property name="enemy" value="Big Zombie"/>
    </properties>

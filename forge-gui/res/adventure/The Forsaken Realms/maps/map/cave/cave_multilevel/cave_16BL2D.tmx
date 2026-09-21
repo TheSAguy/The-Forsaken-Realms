@@ -47,27 +47,32 @@
   <object id="71" template="../../../../../common/maps/obj/treasure.tx" x="208" y="251.5"/>
   <object id="72" template="../../../../../common/maps/obj/enemy.tx" x="198.5" y="91">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Goblin"/>
    </properties>
   </object>
   <object id="73" template="../../../../../common/maps/obj/enemy.tx" x="274" y="168">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Goblin"/>
    </properties>
   </object>
   <object id="74" template="../../../../../common/maps/obj/enemy.tx" x="351.5" y="174.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Goblin"/>
    </properties>
   </object>
   <object id="75" template="../../../../../common/maps/obj/enemy.tx" x="365.818" y="124.455">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="78,79"/>
     <property name="enemy" value="Goblin Warrior"/>
    </properties>
   </object>
   <object id="76" template="../../../../../common/maps/obj/enemy.tx" x="438.5" y="228.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Goblin Chief"/>
    </properties>
   </object>

@@ -229,6 +229,7 @@
   <object id="179" template="../../../../common/maps/obj/collision.tx" x="1040.5" y="-18.472" width="16" height="978.944"/>
   <object id="197" template="../../../../common/maps/obj/enemy.tx" x="59" y="88.6638" width="16" height="17.6724">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Tatsunari"/>
    </properties>
   </object>
@@ -517,6 +518,7 @@ NORTH: DOMAIN OF THE THREE WITCHES&quot;,
   <object id="276" template="../../../../common/maps/obj/collision.tx" x="640.228" y="112.666" width="31.9069" height="15.3955"/>
   <object id="277" template="../../../../common/maps/obj/enemy.tx" x="888" y="647.164" width="16" height="17.6724">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Glarb"/>
    </properties>
   </object>
@@ -529,6 +531,7 @@ NORTH: DOMAIN OF THE THREE WITCHES&quot;,
   </object>
   <object id="279" template="../../../../common/maps/obj/enemy.tx" x="482" y="703.164" width="16" height="17.6724">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Clement"/>
    </properties>
   </object>

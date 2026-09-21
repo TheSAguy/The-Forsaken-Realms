@@ -125,6 +125,7 @@
   <object id="76" template="../../../../common/maps/obj/manashards.tx" x="12.5" y="298.5"/>
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="351" y="72">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Earth Elemental"/>
     <property name="waypoints" value="95,96"/>
    </properties>

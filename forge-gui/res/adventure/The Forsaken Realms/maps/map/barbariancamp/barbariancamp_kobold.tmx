@@ -39,6 +39,7 @@
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="229.833" y="327.25"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="106.591" y="85.4096">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="117,118"/>
     <property name="enemy" value="Fire Dragon"/>
    </properties>

@@ -38,6 +38,7 @@
   </object>
   <object id="68" template="../../../../../common/maps/obj/enemy.tx" x="82.0833" y="509.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Mimic"/>
    </properties>
   </object>
@@ -46,6 +47,7 @@
   <object id="70" template="../../../../../common/maps/obj/manashards.tx" x="105.333" y="472.667"/>
   <object id="71" template="../../../../../common/maps/obj/enemy.tx" x="222" y="39.3333">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Evil Wall"/>
    </properties>
   </object>

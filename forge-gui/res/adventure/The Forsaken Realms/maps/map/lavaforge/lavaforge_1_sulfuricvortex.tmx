@@ -145,6 +145,7 @@
   </object>
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="250.613" y="155.704">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="71,72"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 6,
@@ -155,6 +156,7 @@
   </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="400" y="128">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 4,
  &quot;startBattleWithCard&quot;: [ &quot;Irencrag Pyromancer|ELD|1&quot; ]

@@ -150,6 +150,7 @@
   <object id="76" template="../../../../common/maps/obj/manashards.tx" x="82.5" y="96"/>
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="16.5" y="95.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Goblin"/>
    </properties>
   </object>

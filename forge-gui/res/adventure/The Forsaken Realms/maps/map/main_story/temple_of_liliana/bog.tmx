@@ -182,6 +182,7 @@
   <object id="5" template="../../../../../common/maps/obj/collision.tx" x="0" y="-16" width="496.295" height="16"/>
   <object id="187" template="../../../../../common/maps/obj/enemy.tx" x="112" y="576">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 5,
  &quot;startBattleWithCard&quot;: [ &quot;Deathspore Thallid&quot;,&quot;Deathspore Thallid&quot;,&quot;Thallid Shell-Dweller&quot;,&quot;Thallid Shell-Dweller&quot; ]
@@ -191,6 +192,7 @@
   </object>
   <object id="188" template="../../../../../common/maps/obj/enemy.tx" x="112" y="304">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Necromancer"/>
    </properties>
   </object>
@@ -255,6 +257,7 @@
   </object>
   <object id="198" template="../../../../../common/maps/obj/enemy.tx" x="272" y="304">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Liliana's Alchemist"/>
    </properties>
   </object>
@@ -275,6 +278,7 @@
   </object>
   <object id="201" template="../../../../../common/maps/obj/enemy.tx" x="224" y="320">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Dimir Faerie"/>
    </properties>
   </object>
@@ -529,6 +533,7 @@
   </object>
   <object id="242" template="../../../../../common/maps/obj/enemy.tx" x="0" y="336">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Viper"/>
     <property name="waypoints" value="243,244,wait5"/>
    </properties>

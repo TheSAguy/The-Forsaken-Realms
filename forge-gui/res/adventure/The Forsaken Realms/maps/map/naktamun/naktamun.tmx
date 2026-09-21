@@ -1011,6 +1011,7 @@
  <objectgroup id="15" name="Enemies">
   <object id="42" template="../../../../common/maps/obj/enemy.tx" name="Khenra" x="137" y="396">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Khenra Warrior"/>
    </properties>
   </object>
@@ -1066,6 +1067,7 @@
   </object>
   <object id="45" template="../../../../common/maps/obj/enemy.tx" name="Mummy" gid="2147495535" x="151" y="396" width="16" height="16">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Mummy"/>
     <property name="waypoints" value="38"/>
    </properties>

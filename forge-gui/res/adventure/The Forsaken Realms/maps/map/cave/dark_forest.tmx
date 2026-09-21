@@ -175,6 +175,7 @@
   </object>
   <object id="11" template="../../../../common/maps/obj/enemy.tx" x="321.455" y="187.091">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Loam Dryad"/>
    </properties>
   </object>

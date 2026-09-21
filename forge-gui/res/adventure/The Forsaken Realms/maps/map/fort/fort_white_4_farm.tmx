@@ -84,6 +84,7 @@
   <object id="52" template="../../../../common/maps/obj/gold.tx" x="30.0087" y="46.013"/>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="273.845" y="528.006">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="displayNameOverride" value="Oppressed Farmer"/>
     <property name="enemy" value="Farmer"/>
     <property name="waypoints" value="wait1,93,97,93,78,wait1,93"/>
@@ -162,6 +163,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="710.333" y="284.667">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="displayNameOverride" value="Oppressed Farmer"/>
     <property name="enemy" value="Farmer"/>
     <property name="waypoints" value="wait1,75,77,98,76"/>
@@ -169,6 +171,7 @@
   </object>
   <object id="72" template="../../../../common/maps/obj/enemy.tx" x="321" y="35.3333">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="displayNameOverride" value="Oppressed Farmer"/>
     <property name="enemy" value="Farmer"/>
     <property name="waypoints" value="wait1,66,99"/>
@@ -198,6 +201,7 @@
   </object>
   <object id="83" template="../../../../common/maps/obj/enemy.tx" x="374.333" y="230.333">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Adept White Wizard"/>
    </properties>
   </object>

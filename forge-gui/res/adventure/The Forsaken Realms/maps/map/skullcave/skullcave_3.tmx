@@ -49,11 +49,13 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="313.667" y="123">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Abyssal Baron"/>
    </properties>
   </object>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="112" y="240">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Abyssal Baron"/>
    </properties>
   </object>
@@ -89,6 +91,7 @@
   <object id="61" template="../../../../common/maps/obj/gold.tx" x="111" y="352.667"/>
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="216.333" y="183">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{ &quot;startBattleWithCard&quot;: [ &quot;Mask of Griselbrand&quot;]
 }</property>
     <property name="enemy" value="Archfiend"/>

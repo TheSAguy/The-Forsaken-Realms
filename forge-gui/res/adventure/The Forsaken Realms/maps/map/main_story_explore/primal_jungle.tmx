@@ -89,6 +89,7 @@
   </object>
   <object id="33" template="../../../../common/maps/obj/enemy.tx" x="192" y="544">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Ape"/>
     <property name="waypoints" value="r11-21-10-23"/>
@@ -96,6 +97,7 @@
   </object>
   <object id="34" template="../../../../common/maps/obj/enemy.tx" x="112" y="400">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Gorilla"/>
     <property name="waypoints" value="19,r24-5-23-13"/>
@@ -103,6 +105,7 @@
   </object>
   <object id="35" template="../../../../common/maps/obj/enemy.tx" x="416" y="512">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Gorilla"/>
     <property name="waypoints" value="r10-12-23-13"/>
@@ -146,6 +149,7 @@
   </object>
   <object id="42" template="../../../../common/maps/obj/enemy.tx" x="192" y="358">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Poisonous Snake"/>
     <property name="waypoints" value="r10-13-15-17-18-21-24-25"/>
    </properties>
@@ -165,6 +169,7 @@
   </object>
   <object id="44" template="../../../../common/maps/obj/enemy.tx" x="400" y="96">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Poisonous Snake"/>
     <property name="waypoints" value="r11-12-16-19-22-23-26"/>
    </properties>
@@ -219,6 +224,7 @@
   </object>
   <object id="47" template="../../../../common/maps/obj/enemy.tx" x="144" y="560">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Gorilla"/>
     <property name="waypoints" value=""/>

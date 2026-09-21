@@ -1,0 +1,32 @@
+# Golgari Blight - save 1 slot 1, green/black toxic (2026-09-20, user: "create me a green/black deck")
+#
+# Replaces "Ichor Wings". The two colours the player's collection is deepest in (B 220, G 149) share one
+# mechanic - toxic - so the gold deck is not a compromise, it is the best of each half: green supplies the
+# bodies that carry poison, black supplies the removal that clears the way and the single best card in the
+# collection, Vraska, Betrayal's Sting.
+#
+# Green: Branchblight Stalker is a 3/1 toxic 2 on turn two; Ichorspit Basilisk blocks all day on deathtouch
+# while still adding poison; Venomous Brutalizer and Tyrranax Atrocity are toxic 3 beaters.
+# Black: Bilious Skulldweller and Flensermite are one- and two-drops that trade up on deathtouch/infect,
+# Drown in Ichor is removal that PROLIFERATES (every poison counter on the board ticks up), and Anoint with
+# Affliction exiles.
+#
+# Mana: 8 Forest / 6 Swamp / 2 The Dross Pits (taps for B, and makes toxic Mites late). The greediest costs
+# are 2GG (Brutalizer) and Vraska's 4BBP, which Phyrexian mana lets you pay with life if black is short.
+
+8 Forest
+6 Swamp
+2 The Dross Pits
+
+1 Venerated Rotpriest
+3 Branchblight Stalker
+3 Bilious Skulldweller
+3 Flensermite
+4 Ichorspit Basilisk
+1 Bloated Contaminator
+3 Venomous Brutalizer
+2 Tyrranax Atrocity
+
+4 Drown in Ichor
+1 Anoint with Affliction
+1 Vraska, Betrayal's Sting

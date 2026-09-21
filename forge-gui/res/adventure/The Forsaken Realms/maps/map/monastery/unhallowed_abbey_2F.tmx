@@ -368,6 +368,7 @@
   </object>
   <object id="116" template="../../../../common/maps/obj/enemy.tx" x="203.566" y="96.2358" width="24" height="24">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="122,123"/>
     <property name="defeatDialog">[{
     &quot;text&quot;:&quot;*With a snarl of pain, the demon collapses to the floor.* \n Congratulations, mortal, you've bested me. In exchange for my life, I offer a lesson - the same killing power I wield.&quot;,

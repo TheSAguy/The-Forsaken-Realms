@@ -34,11 +34,13 @@
   <object id="74" template="../../../../common/maps/obj/treasure.tx" x="729.333" y="692.333"/>
   <object id="80" template="../../../../common/maps/obj/enemy.tx" x="968.667" y="788.333">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Beholder"/>
    </properties>
   </object>
   <object id="84" template="../../../../common/maps/obj/enemy.tx" x="183" y="923">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="164,165"/>
     <property name="enemy" value="Death Knight"/>
    </properties>
@@ -47,12 +49,14 @@
   <object id="86" template="../../../../common/maps/obj/gold.tx" x="200.5" y="1595.5"/>
   <object id="87" template="../../../../common/maps/obj/enemy.tx" x="578.25" y="1866.25">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="169,170"/>
     <property name="enemy" value="Geist"/>
    </properties>
   </object>
   <object id="88" template="../../../../common/maps/obj/enemy.tx" x="349.75" y="1960.25">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Geist"/>
    </properties>
   </object>
@@ -60,21 +64,25 @@
   <object id="90" template="../../../../common/maps/obj/treasure.tx" x="24.6667" y="1947"/>
   <object id="91" template="../../../../common/maps/obj/enemy.tx" x="592.333" y="3030.67">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Zombie"/>
    </properties>
   </object>
   <object id="92" template="../../../../common/maps/obj/enemy.tx" x="591.333" y="3008">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Big Zombie"/>
    </properties>
   </object>
   <object id="93" template="../../../../common/maps/obj/enemy.tx" x="591.333" y="2984">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Ghoul"/>
    </properties>
   </object>
   <object id="94" template="../../../../common/maps/obj/enemy.tx" x="521.667" y="3000.67">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="171,172"/>
     <property name="enemy" value="Lich"/>
    </properties>
@@ -84,21 +92,25 @@
   <object id="97" template="../../../../common/maps/obj/gold.tx" x="489.333" y="3048.33"/>
   <object id="98" template="../../../../common/maps/obj/enemy.tx" x="1639.33" y="2433.33">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Mimic"/>
    </properties>
   </object>
   <object id="99" template="../../../../common/maps/obj/enemy.tx" x="1557.5" y="1108.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Harpy"/>
    </properties>
   </object>
   <object id="100" template="../../../../common/maps/obj/enemy.tx" x="1630" y="1257.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Harpy"/>
    </properties>
   </object>
   <object id="101" template="../../../../common/maps/obj/enemy.tx" x="1341" y="1289.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="173,174"/>
     <property name="enemy" value="Harpy"/>
    </properties>
@@ -109,28 +121,33 @@
   <object id="105" template="../../../../common/maps/obj/gold.tx" x="1503.5" y="1280"/>
   <object id="106" template="../../../../common/maps/obj/enemy.tx" x="2112.33" y="112.167">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Vampire Lord"/>
    </properties>
   </object>
   <object id="107" template="../../../../common/maps/obj/treasure.tx" x="2071.33" y="91.6667"/>
   <object id="108" template="../../../../common/maps/obj/enemy.tx" x="2843" y="330">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="175,176"/>
     <property name="enemy" value="Cyclops"/>
    </properties>
   </object>
   <object id="109" template="../../../../common/maps/obj/enemy.tx" x="2909" y="165.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Elk"/>
    </properties>
   </object>
   <object id="110" template="../../../../common/maps/obj/enemy.tx" x="3038" y="157">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Elk"/>
    </properties>
   </object>
   <object id="111" template="../../../../common/maps/obj/enemy.tx" x="2978.5" y="238.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Elk"/>
    </properties>
   </object>
@@ -139,6 +156,7 @@
   <object id="114" template="../../../../common/maps/obj/gold.tx" x="3036" y="275"/>
   <object id="115" template="../../../../common/maps/obj/enemy.tx" x="3007.67" y="1415.67">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="177,178"/>
     <property name="enemy" value="Red Beast"/>
    </properties>
@@ -151,44 +169,52 @@
   <object id="121" template="../../../../common/maps/obj/gold.tx" x="2925.5" y="2571.5"/>
   <object id="122" template="../../../../common/maps/obj/enemy.tx" x="2889" y="2745.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="179,180"/>
     <property name="enemy" value="Hellhound"/>
    </properties>
   </object>
   <object id="123" template="../../../../common/maps/obj/enemy.tx" x="2858.5" y="2656.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Devil"/>
    </properties>
   </object>
   <object id="124" template="../../../../common/maps/obj/enemy.tx" x="3030" y="2738.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Demon"/>
    </properties>
   </object>
   <object id="125" template="../../../../common/maps/obj/enemy.tx" x="2983" y="2602">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="181,182"/>
     <property name="enemy" value="Apprentice Black Wizard"/>
    </properties>
   </object>
   <object id="126" template="../../../../common/maps/obj/enemy.tx" x="2089.5" y="3097.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="185,186"/>
     <property name="enemy" value="Spider"/>
    </properties>
   </object>
   <object id="127" template="../../../../common/maps/obj/enemy.tx" x="2102" y="2874">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Giant Spider"/>
    </properties>
   </object>
   <object id="128" template="../../../../common/maps/obj/enemy.tx" x="2132" y="3016">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Giant Spider"/>
    </properties>
   </object>
   <object id="129" template="../../../../common/maps/obj/enemy.tx" x="2211.5" y="3104">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="183,184"/>
     <property name="enemy" value="Apprentice Green Wizard"/>
    </properties>

@@ -30,6 +30,7 @@
  <objectgroup id="4" name="Objects">
   <object id="69" template="../../../../common/maps/obj/enemy.tx" gid="11419" x="215.166" y="258.333">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 	{
 	   &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the ground. 'Excellent... Well done {var=player_name}. I am truly sorry for all the trouble...' With that he collapses, dead despite his immortality.&quot;,
@@ -184,6 +185,7 @@
   <object id="152" template="../../../../common/maps/obj/collision.tx" x="319.623" y="99.0039" width="17.4208" height="221.992"/>
   <object id="153" template="../../../../common/maps/obj/enemy.tx" gid="11419" x="215.636" y="258.182">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 	{
 	   &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the ground. 'Excellent... Well done {var=player_name}. I am truly sorry for all the trouble...' With that he collapses, dead despite his immortality.&quot;,

@@ -31,6 +31,7 @@
  <objectgroup id="5" name="Objects">
   <object id="25" template="../../../../common/maps/obj/enemy.tx" x="80" y="272">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Mimic"/>
    </properties>
   </object>
@@ -209,6 +210,7 @@
   </object>
   <object id="43" template="../../../../common/maps/obj/enemy.tx" x="232" y="48">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Spirit"/>
     <property name="spawn.Easy" type="bool" value="true"/>
    </properties>

@@ -64,6 +64,7 @@
   </object>
   <object id="122" template="../../../../common/maps/obj/enemy.tx" x="45.042" y="175.604">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Farmer"/>
    </properties>
   </object>
@@ -115,16 +116,19 @@
   <object id="199" template="../../../../common/maps/obj/waypoint.tx" x="109.805" y="213.071"/>
   <object id="201" template="../../../../common/maps/obj/enemy.tx" x="42.1754" y="220.772">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Farmer"/>
    </properties>
   </object>
   <object id="202" template="../../../../common/maps/obj/enemy.tx" x="45.5088" y="281.439">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Farmer"/>
    </properties>
   </object>
   <object id="203" template="../../../../common/maps/obj/enemy.tx" x="333.509" y="281.439">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Farmer"/>
    </properties>
   </object>

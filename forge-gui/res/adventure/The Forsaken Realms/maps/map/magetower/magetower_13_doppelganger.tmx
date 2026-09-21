@@ -47,11 +47,13 @@
   </object>
   <object id="66" template="../../../../common/maps/obj/enemy.tx" x="163.605" y="388.194">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Doppelganger"/>
    </properties>
   </object>
   <object id="75" template="../../../../common/maps/obj/enemy.tx" x="106.034" y="305.243">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="104,105"/>
     <property name="defeatDialog">[
    {
@@ -70,6 +72,7 @@
   </object>
   <object id="74" template="../../../../common/maps/obj/enemy.tx" x="231.069" y="255.542">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="106,107"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 15,
@@ -81,6 +84,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="96" y="352">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 10,
  &quot;startBattleWithCard&quot;: [ &quot;Hesitation&quot; ]

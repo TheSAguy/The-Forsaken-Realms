@@ -49,6 +49,7 @@
   <object id="81" template="../../obj/stone.tx" x="178.32" y="249.216"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="223.16" y="41.762">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;The Biblioplex|STX&quot;, &quot;Fractal Harness&quot;]}"/>
     <property name="enemy" value="Tanazir"/>
     <property name="reward">[

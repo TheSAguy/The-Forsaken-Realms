@@ -89,6 +89,7 @@
   <object id="60" template="../../../../common/maps/obj/waypoint.tx" x="124.713" y="73.9697"/>
   <object id="61" template="../../../../common/maps/obj/enemy.tx" x="248.318" y="76.5719">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Sand Golem"/>
    </properties>
   </object>

@@ -17757,6 +17757,26 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 271: every enemy reacts now (2026-09-20)
+
+User, after walking up to two guards standing beside a booster in the Blue Tower and looting it unopposed: *"I
+know some enemies have a 'reaction radius'. Can we add that to enemies who currently don't have one. Just
+something small."*
+
+251 of the plane's 2,361 map enemies carried no `threatRange`. Round 252 gave them a runtime default, but a
+default is invisible to anyone reading the maps, one refactor from being lost, and - as the user found twice -
+evidently not doing the job. Each now has `threatRange=20` written into the map: the low end of what the
+hand-authored maps already use, a bit over one tile. Enough to notice someone in arm's reach, not enough to
+drag a room across the map.
+
+Two deliberate exclusions. **23 enemies with a `dialog` property** are scripted encounters, and
+`MapStage.applyDefaultReactionRange()` already refuses to give those a range - a quest NPC that charges you is
+a bug. The data pass uses the runtime's own rule. **The enemies with an explicit `threatRange=0`** are left
+alone: zero is a statement, not an omission. Someone typed it, and overriding it would be this pass deciding it
+knows better than the map's author.
+
+Verified after writing: 2,361 enemies, 0 without a reaction radius. Maps are data - no rebuild.
+
 ## Round 270: castles get the unvisited marker too (2026-09-20)
 
 User, with a screenshot of the Wizard Palace sitting unmarked between a marked cave and a marked tower: *"This

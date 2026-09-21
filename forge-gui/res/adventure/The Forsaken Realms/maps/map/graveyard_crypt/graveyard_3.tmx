@@ -45,6 +45,7 @@
   </object>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="368" y="109">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="111,112"/>
     <property name="enemy" value="Grave Titan"/>
    </properties>

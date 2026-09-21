@@ -40,6 +40,7 @@
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="447.956" y="56.4352"/>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="463.371" y="300.481">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Horse"/>
    </properties>
   </object>
@@ -76,6 +77,7 @@
   <object id="64" template="../../../../common/maps/obj/treasure.tx" x="12.1132" y="367.884"/>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="254.374" y="297.137">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Chicken"/>
    </properties>
   </object>
@@ -88,6 +90,7 @@
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="238" y="307.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Chicken"/>
    </properties>
   </object>
@@ -120,6 +123,7 @@
   </object>
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="472.682" y="349.959">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Horse"/>
    </properties>
   </object>

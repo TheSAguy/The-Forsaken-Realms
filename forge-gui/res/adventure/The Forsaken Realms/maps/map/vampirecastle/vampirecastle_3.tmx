@@ -52,6 +52,7 @@
   <object id="82" template="../../obj/stone.tx" x="196.784" y="145.308"/>
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="208.042" y="98.2767" width="15.6274" height="17.4905">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Bat"/>
     <property name="waypoints" value="72,73,74,75"/>
    </properties>
@@ -71,12 +72,14 @@
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="184.641" y="206.252">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="84,85"/>
     <property name="enemy" value="Vampire"/>
    </properties>
   </object>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="192.466" y="320.645">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="displayNameOverride" value="Minor Vampire"/>
     <property name="enemy" value="Vampire"/>
     <property name="speedModifier" type="float" value="40"/>

@@ -50,17 +50,20 @@
   </object>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="231.667" y="233.583">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Spiked Ravager"/>
    </properties>
   </object>
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="183.417" y="198.167">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Spiked Ravager"/>
    </properties>
   </object>
   <object id="60" template="../../../../common/maps/obj/gold.tx" x="268.5" y="241"/>
   <object id="61" template="../../../../common/maps/obj/enemy.tx" x="96" y="104">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="67,68"/>
     <property name="enemy" value="Spiked Ravager"/>
    </properties>

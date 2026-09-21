@@ -55,6 +55,7 @@
   <object id="177" template="../../obj/stone.tx" x="271.152" y="102.522"/>
   <object id="150" template="../../../../common/maps/obj/enemy.tx" x="141.842" y="91.272">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{ &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Tibalt's Boss Effect&quot;]
 }</property>
     <property name="enemy" value="Tibalt"/>

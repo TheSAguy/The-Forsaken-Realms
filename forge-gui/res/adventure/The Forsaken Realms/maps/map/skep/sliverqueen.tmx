@@ -43,6 +43,7 @@
   </object>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="224.189" y="175.454" width="16" height="16" visible="1">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
   {
     &quot;action&quot;: [

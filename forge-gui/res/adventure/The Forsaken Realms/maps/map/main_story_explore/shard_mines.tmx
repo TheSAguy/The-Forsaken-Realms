@@ -1183,18 +1183,21 @@
   </object>
   <object id="19" template="../../../../common/maps/obj/enemy.tx" x="256" y="912">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Pirate 3"/>
     <property name="waypoints" value="45, 46, 48, 49"/>
    </properties>
   </object>
   <object id="20" template="../../../../common/maps/obj/enemy.tx" x="352" y="736">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Parrot"/>
     <property name="waypoints" value="50,51,52,53"/>
    </properties>
   </object>
   <object id="21" template="../../../../common/maps/obj/enemy.tx" x="432" y="1008">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Pirate 2"/>
     <property name="waypoints" value="42, 43"/>
    </properties>
@@ -1220,6 +1223,7 @@
   </object>
   <object id="25" template="../../../../common/maps/obj/enemy.tx" x="128" y="112">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Revel in Riches&quot;, &quot;Fell Flagship&quot;]}"/>
     <property name="enemy" value="Pirate Captain"/>
    </properties>
@@ -1261,6 +1265,7 @@
   </object>
   <object id="31" template="../../../../common/maps/obj/enemy.tx" x="128" y="1056">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Pirate"/>
     <property name="waypoints" value="44, w5, 47, w5, 44, 47"/>
    </properties>
@@ -1275,6 +1280,7 @@
   <object id="37" template="../../../../common/maps/obj/entry_up.tx" x="73" y="1600" width="100" height="31"/>
   <object id="75" template="../../../../common/maps/obj/enemy.tx" x="176" y="144">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Parrot"/>
     <property name="waypoints" value="74, 63,65,70, 57,68,71, 50,51, 49, 44, 49, 50,51, 57,68,71, 63,65,70"/>
    </properties>

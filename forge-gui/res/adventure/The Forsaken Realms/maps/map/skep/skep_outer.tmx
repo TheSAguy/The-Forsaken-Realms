@@ -204,6 +204,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="960.333" y="223.833" width="16" height="16" visible="1">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
    {
    &quot;action&quot;: [
@@ -473,6 +474,7 @@
   </object>
   <object id="106" template="../../../../common/maps/obj/enemy.tx" x="373.667" y="577" width="16" height="16" visible="1">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
    {
    &quot;action&quot;: [
@@ -977,6 +979,7 @@
   <object id="218" template="../../../../common/maps/obj/waypoint.tx" x="1118.67" y="1074"/>
   <object id="219" template="../../../../common/maps/obj/enemy.tx" x="1549.33" y="1048.67" width="16" height="16" visible="1">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
    {
    &quot;action&quot;: [

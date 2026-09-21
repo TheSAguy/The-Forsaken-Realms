@@ -103,6 +103,7 @@
   <object id="49" template="../../../../common/maps/obj/gold.tx" x="72" y="200"/>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="199.823" y="96.2516">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 4,
  &quot;startBattleWithCard&quot;: [ &quot;Heirloom Mirror|MID|1&quot; ]
@@ -112,6 +113,7 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/enemy.tx" x="200.079" y="127.263">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="59,60"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 3,
@@ -122,17 +124,20 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="265.246" y="59.2632">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Walking Brain"/>
    </properties>
   </object>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="101.579" y="108.263">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="61,62"/>
     <property name="enemy" value="Black Golem"/>
    </properties>
   </object>
   <object id="52" template="../../../../common/maps/obj/enemy.tx" x="154.184" y="231.579">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Dark Knight"/>
    </properties>
   </object>

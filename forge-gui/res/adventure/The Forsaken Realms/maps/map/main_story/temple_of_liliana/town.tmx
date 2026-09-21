@@ -218,6 +218,7 @@
   </object>
   <object id="188" template="../../../../../common/maps/obj/enemy.tx" x="384" y="48">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -341,6 +342,7 @@
   </object>
   <object id="193" template="../../../../../common/maps/obj/enemy.tx" x="640" y="112">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -396,6 +398,7 @@
   <object id="194" template="../../../../../common/maps/obj/treasure.tx" x="512" y="32"/>
   <object id="197" template="../../../../../common/maps/obj/enemy.tx" x="112" y="96">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -621,6 +624,7 @@
   </object>
   <object id="209" template="../../../../../common/maps/obj/enemy.tx" x="72" y="40">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -675,6 +679,7 @@
   </object>
   <object id="210" template="../../../../../common/maps/obj/enemy.tx" x="32" y="96">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -887,6 +892,7 @@
   </object>
   <object id="214" template="../../../../../common/maps/obj/enemy.tx" x="544" y="128">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -941,6 +947,7 @@
   </object>
   <object id="215" template="../../../../../common/maps/obj/enemy.tx" x="167" y="50">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -1051,6 +1058,7 @@
   </object>
   <object id="217" template="../../../../../common/maps/obj/enemy.tx" x="72" y="144">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -1217,6 +1225,7 @@
   </object>
   <object id="220" template="../../../../../common/maps/obj/enemy.tx" x="223" y="64">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
 {&quot;condition&quot;: [
       {&quot;checkMapFlag&quot;:&quot;mayorSpawned&quot;, &quot;not&quot;:true},
@@ -1779,6 +1788,7 @@
   <object id="243" template="../../../../../common/maps/obj/manashards.tx" x="896" y="96"/>
   <object id="251" template="../../../../../common/maps/obj/enemy.tx" x="864" y="112">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Waker of the Dead&quot; ]
 }</property>

@@ -52,11 +52,13 @@
   <object id="52" template="../../../../common/maps/obj/gold.tx" x="91.5" y="423"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="231.263" y="156.93">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Cloud Guardian"/>
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="354.825" y="227.365">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Cloud Giant"/>
    </properties>
   </object>
@@ -74,12 +76,14 @@
   <object id="61" template="../../../../common/maps/obj/collision.tx" x="481.5" y="-11.0415" width="16" height="502.083"/>
   <object id="62" template="../../../../common/maps/obj/enemy.tx" x="175.622" y="197.414">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="67,68"/>
     <property name="enemy" value="Cloud Guardian"/>
    </properties>
   </object>
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="231.718" y="263.196">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Cloud Giant"/>
    </properties>
   </object>

@@ -555,6 +555,7 @@
   <object id="30" template="../../../../common/maps/obj/treasure.tx" x="506.75" y="133.08"/>
   <object id="31" template="../../../../common/maps/obj/enemy.tx" x="813" y="192.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Mimic"/>
     <property name="reward">[
   {
@@ -570,6 +571,7 @@
   </object>
   <object id="32" template="../../../../common/maps/obj/enemy.tx" x="279.5" y="599">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Mimic"/>
     <property name="reward">[
   {
@@ -624,6 +626,7 @@
   </object>
   <object id="36" template="../../../../common/maps/obj/enemy.tx" x="112.333" y="517.67">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Keral Keep Disciples&quot; ]
 }</property>
@@ -659,6 +662,7 @@
   </object>
   <object id="38" template="../../../../common/maps/obj/enemy.tx" x="253.333" y="305">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Ring of Valkas&quot; ]
 }</property>
@@ -710,6 +714,7 @@
   </object>
   <object id="41" template="../../../../common/maps/obj/enemy.tx" x="736" y="508.33">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Fire of Kaladesh&quot; ]
 }</property>
@@ -730,6 +735,7 @@
   </object>
   <object id="42" template="../../../../common/maps/obj/enemy.tx" x="737" y="427.33">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Keral Keep Disciples&quot; ]
 }</property>
@@ -748,6 +754,7 @@
   </object>
   <object id="43" template="../../../../common/maps/obj/enemy.tx" x="737" y="452.33">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Keral Keep Disciples&quot; ]
 }</property>
@@ -817,6 +824,7 @@
   </object>
   <object id="47" template="../../../../common/maps/obj/enemy.tx" x="736.25" y="706.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Flame Elemental"/>
     <property name="reward">[
   {
@@ -850,6 +858,7 @@
   </object>
   <object id="49" template="../../../../common/maps/obj/enemy.tx" x="509.333" y="510.83">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Circle of Flame&quot; ]
 }</property>
@@ -869,6 +878,7 @@
   </object>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="673" y="844.83">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Chandra's Scorcher"/>
     <property name="reward">[
   {
@@ -988,6 +998,7 @@
   </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="64.3334" y="299">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Staff of the Flame Magus&quot; ]
 }</property>
@@ -1006,6 +1017,7 @@
   </object>
   <object id="60" template="../../../../common/maps/obj/enemy.tx" x="39.5" y="131.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Hazoret's Monument&quot; ]
 }</property>
@@ -1024,6 +1036,7 @@
   </object>
   <object id="61" template="../../../../common/maps/obj/enemy.tx" x="585.591" y="591.36">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Blood Moon&quot; ]
 }</property>
@@ -1042,6 +1055,7 @@
   </object>
   <object id="62" template="../../../../common/maps/obj/enemy.tx" x="805.939" y="158.55">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Oath of Chandra&quot; ]
 }</property>
@@ -1079,6 +1093,7 @@
   </object>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="231" y="874">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Lavaclaw Reaches&quot; ]
 }</property>
@@ -1137,6 +1152,7 @@
   </object>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="834.045" y="873.68">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Chandra's Acolyte"/>
     <property name="reward">[
   {
@@ -1152,6 +1168,7 @@
   </object>
   <object id="70" template="../../../../common/maps/obj/enemy.tx" x="766" y="888.5">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Chandra's Firestarter"/>
     <property name="reward">[
   {
@@ -1262,6 +1279,7 @@
   </object>
   <object id="171" template="../../../../common/maps/obj/enemy.tx" x="736.083" y="497.25">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCardInCommandZone&quot;: [ &quot;Fire of Kaladesh&quot; ]
 }</property>
@@ -1497,6 +1515,7 @@
   <object id="179" template="../../../../common/maps/obj/treasure.tx" x="460.932" y="131.48"/>
   <object id="180" template="../../../../common/maps/obj/enemy.tx" x="482.545" y="130.36">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Taurean Mauler&quot;, &quot;Torchling&quot;]
 }</property>

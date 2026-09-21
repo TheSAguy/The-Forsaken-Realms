@@ -56,6 +56,7 @@
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="288.729" y="226.312">
    <properties>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="73,74"/>
     <property name="enemy" value="Hidden Snake"/>
    </properties>
