@@ -388,12 +388,25 @@ def main():
                 settle()
                 continue
             target = None
-            for row in s.get("pois") or []:
-                name = row[0]
-                if name in visited:
-                    continue
-                target = row
-                break
+            # Hurt? Go to a town. Entering one is a FREE FULL HEAL - TileMapScene.enter() calls
+            # fullHeal() unless that colour's reputation blocks it, and a player-owned town is exempt from
+            # the block - so the play loop is fight, get hurt, walk to a town, heal, fight again. Ignoring
+            # the recently-visited list here is deliberate: the nearest town is the right answer even if it
+            # was the last place we were, and without this the driver wandered at 0 life indefinitely,
+            # because life does not regenerate on its own.
+            if low_life[0]:
+                towns = [r for r in (s.get("pois") or []) if r[1] in ("town", "capital")]
+                if towns:
+                    target = min(towns, key=lambda r: r[3] if r[3] is not None else 1 << 30)
+                    j.say("heal", "life %s/%s - heading for %s (%s tiles %s) to heal"
+                          % (p.get("life"), p.get("maxLife"), target[0], target[3], target[4]))
+            if target is None:
+                for row in s.get("pois") or []:
+                    name = row[0]
+                    if name in visited:
+                        continue
+                    target = row
+                    break
             if target is None:
                 # Every POI in sight has been visited recently. Clearing the short-term memory is the fix;
                 # the old code set legs_since_day high instead, which made the driver WAIT A DAY and try the
@@ -405,7 +418,8 @@ def main():
                     continue
                 legs_since_day = 99
                 continue
-            visited.append(target[0])
+            if not low_life[0]:
+                visited.append(target[0])
             r = cmd("goto", poi=target[0])
             legs_since_day += 1
             if not r.get("ok"):
