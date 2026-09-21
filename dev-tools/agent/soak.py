@@ -157,6 +157,7 @@ def main():
     peak_gold = 0
     stuck_enemies = {}
     day_cap_hit = [False]
+    low_life = [False]
     giveups = set()
     unknown_scenes = {}
     # Nothing above can prove the loop is making progress, and the first run proved it can fail to: the
@@ -269,7 +270,24 @@ def main():
             # (map, actor) for the whole run, not per visit.
             here = p.get("location") or "?"
             skip = {aid for (loc, aid) in giveups if loc == here}
-            enemy = nearest(actors, "enemy", skip)
+            # Below a quarter life, stop picking fights. Forge's AI plays the player's seat and loses more
+            # than it wins with this deck: the third long run went from 2,581 gold and 12/12 life to 101 gold
+            # and 0/12 over about fifty in-game days. `defeated()` subtracts life and the callers only
+            # relocate the player - there is no game-over (MapStage: "If hardcore mode is added, check and
+            # redirect to game over screen here") - so at 0 life the game keeps going and every duel is a
+            # loss. That is a fine thing to have learned once and a waste of the remaining hours, and the
+            # systems worth soaking (territory expansion, mage dispatch, dungeon rotation, the minimap
+            # re-bake) all hang off the day tick rather than off winning. So: collect, travel, pass days.
+            hurt = p.get("maxLife") and p.get("life") is not None \
+                and p["life"] <= max(1, p["maxLife"] // 4)
+            if hurt and not low_life[0]:
+                low_life[0] = True
+                j.say("hurt", "life %s/%s - no longer seeking duels, collecting and travelling instead"
+                      % (p.get("life"), p.get("maxLife")))
+            elif not hurt and low_life[0]:
+                low_life[0] = False
+                j.say("hurt", "life %s/%s - fighting again" % (p.get("life"), p.get("maxLife")))
+            enemy = None if hurt else nearest(actors, "enemy", skip)
             reward = nearest(actors, "reward", skip)
             if enemy:
                 r = cmd("goto", actor=enemy[0])
