@@ -17757,6 +17757,69 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 276: the agent that exited but would not die (2026-09-20)
+
+Found by running the thing rather than reasoning about it. The user asked for a five-hour soak; eleven minutes in,
+every `/state` came back `{"scene": null, "idle": null, "frozen": null, "transition": null}` and `/screenshot`
+timed out inside `AgentBridge.screenshot`, which reads as a frozen render thread. `jcmd <pid> Thread.print` said
+otherwise, and it is worth quoting what it showed, because the shape of it IS the diagnosis:
+
+* **no `main` thread and no LWJGL thread** - the application had already exited,
+* a **`DestroyJavaVM`** parked and waiting, i.e. the JVM was trying to shut down,
+* **`"HTTP-Dispatcher" #49 ... runnable`**, with no `daemon` marker, sitting in
+  `sun.net.httpserver.ServerImpl$Dispatcher.run`.
+
+So the game had exited eight minutes earlier and the JVM could not follow it, because a non-daemon thread was
+still alive. The process kept answering the bridge with an empty snapshot - indistinguishable from a freeze -
+while holding the save files and blocking any package.
+
+**Two separate bugs, both fixed.**
+
+**1. `HttpServer.start()` spawns a thread the bridge never accounted for.** `AgentBridge.start()` already sets a
+daemon executor (`tfr-agent-bridge`), and that thread was a daemon in the dump, exactly as intended. But the JDK's
+`HttpServer` runs its own dispatcher thread, which is not the executor and which inherits its daemon flag from
+whichever thread called `start()` - the render thread, so it came out non-daemon. A shutdown hook cannot help: the
+JVM never begins shutting down while a non-daemon thread lives. `server.start()` now runs on a short-lived daemon
+thread, so the dispatcher is created a daemon by inheritance and the process dies with the game.
+
+**2. `back` during a duel exits the game.** A `DuelScene` is a `ForgeScene`, so `AgentActions.back()` fell into
+round 214's `Forge.back()` branch - which backs out of the match screen, and with nothing behind it closes the
+app. That is what the soak driver did: it met a duel already in progress, did not recognise the scene, and pressed
+back. `back()` now refuses on a `DuelScene` and says what to use instead, since the duel is Forge's AI playing the
+player's seat and finishes on its own.
+
+### The soak driver (dev-tools/agent/soak.py, new)
+
+The `tfr-play` loop is read state -> decide ONE action -> settle, which is right for judging a feature and far too
+slow for a five-hour stress test. `soak.py` is the same loop with a fixed policy - fight the nearest enemy, then
+the nearest reward, then leave; on the world map visit the nearest unvisited POI and pass a day every few legs -
+keeping a journal and a tally of failure modes. Passing days is the point of it: a day tick runs territory
+expansion, mage dispatch, dungeon rotation (which forces the full minimap re-bake round 272 rewrote) and the quest
+clocks.
+
+Three things it learned about itself in the first run, all now in the code:
+
+* a `DuelScene`, `RewardScene` or `InfoTextScene` goes to `settle`, never to `back` (see bug 2);
+* an all-null state means the game is GONE or mid-transition, so it retries three times and then stops rather
+  than hammering a dead bridge for hours;
+* `"no path"` from the planner is a real finding and gets reported; `"stuck near"` is the WALKER giving up after
+  four replans, which the skill already documents for long legs through unexplored land, so it is retried. The
+  first run reported an Archmage in the Autonomous Factory as unreachable on that basis and it was wrong - all
+  four `factory_*.tmx` maps report 0 unreachable placements under round 275's static test, and the live walker
+  reached it on the retry.
+
+### Two notes for the skill file
+
+`SKILL.md` still gives the agent's paths as `F:\FORGE\TFR-Agent` and the repo as
+`F:\FORGE\C--Users-vicwaver-MTG-Forge`; both moved to `C:\TFR\agent` and `C:\TFR\repo`, and the scripts it
+tells you to run already use the C: paths. Also worth recording, because an hour went into it: **the agent's
+`forge.log` cannot be read while the game runs at all.** The skill says "stop it to read the log", which is
+correct, and the reason is that Forge holds a byte-range lock over the whole file - a `FileShare.ReadWrite` handle
+opens fine and then every read throws "another process has locked a portion of the file", including
+`Get-Content -Tail`. A helper that reads the readable prefix was written this round and deleted, because there is
+no readable prefix. Use `/state`'s own `agent.log` during a session; it carries the `[TFR-Agent]` walk lines,
+which is what diagnosed the walk failures above.
+
 ## Round 275: reachability, and the audit that was reading a mirror (2026-09-20)
 
 User: *"Reachability flood-fill for guard placement - needed to re-place the ten guards I reverted in round 269

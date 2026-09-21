@@ -12,6 +12,7 @@ import forge.adventure.data.ItemData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.scene.AgentSceneAccess;
+import forge.adventure.scene.DuelScene;
 import forge.adventure.scene.ForgeScene;
 import forge.adventure.scene.GameScene;
 import forge.adventure.scene.HudScene;
@@ -246,6 +247,16 @@ final class AgentActions {
         if (scene instanceof UIScene) {
             ((UIScene) scene).back();
             return now(true, "back");
+        }
+        // Round 276: NOT during a duel. A DuelScene is a ForgeScene, so this used to fall into the
+        // Forge.back() branch below and back out of the match screen - with nothing behind it, that EXITS
+        // THE GAME. It cost a soak run: the driver met a duel already in progress, pressed back, and the
+        // session ended (and then the process would not die - see AgentBridge.start()). The duel belongs to
+        // Forge's AI on the player's seat and finishes on its own; `settle` is what waits for it and taps
+        // the win/lose view afterwards.
+        if (scene instanceof DuelScene) {
+            return now(false, "a duel is in progress - the AI is playing the player's seat. Use `settle` to "
+                    + "wait it out and take the win/lose view; `back` here would exit the game");
         }
         // Round 214: a ForgeScene wraps a stock Forge FScreen (the deck editor, a match). It is
         // neither a UIScene nor a HudScene, and AgentObserver reports ui=[] / forgeUi=null for it,

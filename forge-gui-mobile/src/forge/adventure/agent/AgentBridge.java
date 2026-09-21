@@ -155,7 +155,27 @@ public final class AgentBridge {
             t.setDaemon(true);
             return t;
         }));
-        server.start();
+        // Round 276: the executor above is only half of it. HttpServer.start() spawns its OWN
+        // "HTTP-Dispatcher" thread, which is not the executor and which inherits its daemon flag from
+        // whichever thread called start() - the render thread, so it came out NON-daemon. The cost showed up
+        // on the first long agent soak: the driver pressed `back` during a duel, the game exited, and the JVM
+        // then could NOT exit. `jcmd Thread.print` on the survivor was unambiguous - no main thread, no LWJGL
+        // thread, a DestroyJavaVM parked waiting, and "HTTP-Dispatcher" runnable in
+        // sun.net.httpserver.ServerImpl$Dispatcher.run. The process lingered for eight minutes still answering
+        // /state with an all-null snapshot, which reads as a FREEZE rather than an exit, and it would keep the
+        // save files locked and block a package for as long as nobody noticed.
+        //
+        // A shutdown hook cannot fix this: the JVM never begins shutting down while a non-daemon thread lives.
+        // Starting the server from a daemon thread does, because Thread inherits daemon from its creator, so
+        // the dispatcher is created as a daemon and the process dies with the game.
+        Thread starter = new Thread(() -> server.start(), "tfr-agent-bridge-start");
+        starter.setDaemon(true);
+        starter.start();
+        try {
+            starter.join(5000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         System.out.println("[TFR-Agent] bridge listening on http://127.0.0.1:" + port + (cheats ? " (cheats allowed)" : ""));
     }
 
