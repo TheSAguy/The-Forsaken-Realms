@@ -399,6 +399,7 @@ def main():
                 settle()
                 continue
             target = None
+            heading_to_heal = False
             # Hurt? Go to a town. Entering one is a FREE FULL HEAL - TileMapScene.enter() calls
             # fullHeal() unless that colour's reputation blocks it, and a player-owned town is exempt from
             # the block - so the play loop is fight, get hurt, walk to a town, heal, fight again. Ignoring
@@ -409,6 +410,7 @@ def main():
                 towns = [r for r in (s.get("pois") or []) if r[1] in ("town", "capital")]
                 if towns:
                     target = min(towns, key=lambda r: r[3] if r[3] is not None else 1 << 30)
+                    heading_to_heal = True
                     j.say("heal", "life %s/%s - heading for %s (%s tiles %s) to heal"
                           % (p.get("life"), p.get("maxLife"), target[0], target[3], target[4]))
             if target is None:
@@ -429,7 +431,11 @@ def main():
                     continue
                 legs_since_day = 99
                 continue
-            if not low_life[0]:
+            # Skip the bookkeeping ONLY for a heal run, where returning to the same town is the point.
+            # Keying this off low_life instead was a bug: --no-duels pins that flag on for the whole run, so
+            # `visited` never filled, the driver always picked the first POI in the list, and it retargeted
+            # the same one forever - twelve unchanged turns on an empty world map with nothing to give up on.
+            if not heading_to_heal:
                 visited.append(target[0])
             r = cmd("goto", poi=target[0])
             legs_since_day += 1
