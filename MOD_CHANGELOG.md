@@ -17813,9 +17813,25 @@ chased through a thread dump, were both this single missing field. The observer 
 `PROBLEM walker gave up on enemy 110 (The Warden (Adept) (Uncommon, 15 life)) in Orazca three times`. The Warden
 is an enemy-TYPE map object carrying a dialog - which is why round 253 had to exempt dialog NPCs from the default
 reaction range - so walking into him opens a conversation instead of starting a duel, he is still standing there
-afterwards, and a driver that fights the nearest enemy picks him again. Worth checking rather than assuming,
-because an unreachable Warden would stall quest 52 and quest 43: `pixel_collision_qa.py --enemies` on
-`towns/orazca.tmx` reports **0 of 1 unreachable**. He is fine; the driver's three-strikes rule moved on.
+afterwards, and a driver that fights the nearest enemy picks him again. Give-ups are now remembered per (map,
+actor) for the whole run instead of per visit, so one such actor costs three approaches once.
+
+Worth checking rather than assuming, though, because an unreachable Warden would stall quest 52 and quest 43 -
+and the first check was of the WRONG MAP. `towns/orazca.tmx` holds its Warden as object **100** at (112,224);
+the live game reported object **110**, which is `towns/player_capital.tmx` at (160,256). Tested against the map
+the game actually loaded: **0 of 1 unreachable**, every one of its 400,685 legal player positions reachable from
+the entry (100%), the Warden standing exactly ON a reachable position, and tile (21,7) - where the walker
+reported getting stuck - both legal and reachable. The map is fine and the static test is right.
+
+**So the failure is the agent's own walker, and the reason is worth writing down.** `WalkController.planMap()`
+does not use the pixel-accurate collision this file's static test uses, and it does not use the overworld's
+`passable()` either: inside a map it asks **the enemy AI's navigation graph** (`MapStage.navMaps`, keyed by agent
+size) and falls back to a straight line when that graph returns nothing. The nav graph is coarser than the
+player's actual freedom of movement, so for a target in a nook - the Warden stands left of the board building -
+there may be no vertex near it, the straight line runs into the building, and the walk dies after four replans.
+Not fixed: giving the agent a pixel-accurate in-map planner is real work, it is agent-only, and the static test
+already answers the question that matters (is this placement reachable at all). Recorded so the next session does
+not re-derive it - and so nobody reads a walker give-up as evidence about a map again.
 
 ## Round 276: the agent that exited but would not die (2026-09-20)
 

@@ -74,9 +74,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      a player at -5 life. The full `/state` had all three buttons; `brief()` dropped the field, and `--brief` is
      what the skill's loop tells you to read. So the one part of the UI that BLOCKS a session was invisible to
      every reader of it, and both soak stalls were that single missing field. Fixed in `tfr_agent.py`.
-     Also checked rather than assumed: the Warden in Orazca, which the driver reported as
-     unreachable, is fine (`--enemies` on `towns/orazca.tmx`: 0 of 1) - he is an enemy-type object with a
-     DIALOG, so walking into him talks instead of duelling and he is still there afterwards.
+     Also checked rather than assumed: the Warden the driver reported as unreachable in
+     Orazca is FINE - and the first check was of the wrong map (`orazca.tmx` holds object 100; the live game
+     said 110, which is `player_capital.tmx`). Against the map the game actually loads: 0 of 1 unreachable,
+     100% of its 400,685 legal player positions reachable from the entry, and the tile the walker got stuck on
+     both legal and reachable. **The failure is the agent walker's:** `planMap()` asks the ENEMY AI's navigation
+     graph (`MapStage.navMaps`) and falls back to a straight line, and that graph is coarser than the player's
+     real freedom of movement - for a target in a nook the line runs into a building and the walk dies after
+     four replans. Not fixed (agent-only, and the static test already answers "is this placement reachable").
+     **Do not read a walker give-up as evidence about a map.**
   2. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
      by soaking, both fixed. `jcmd Thread.print` on what looked like a frozen game showed NO main thread, a
      parked `DestroyJavaVM` and a runnable non-daemon `"HTTP-Dispatcher"`: the game had EXITED and the JVM could
