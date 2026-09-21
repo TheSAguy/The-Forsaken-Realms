@@ -131,6 +131,11 @@ def main():
     ap.add_argument("--journal", default=os.path.join(HERE, "soak_journal.txt"))
     ap.add_argument("--no-fast-time", action="store_true",
                     help="leave the day clock at its normal speed (default is to speed it up - see main)")
+    ap.add_argument("--no-duels", action="store_true",
+                    help="never seek a fight - travel, collect and pass days only. For a run whose SAVE "
+                         "matters: the ante takes a CARD on every loss, and Forge's AI on the player's seat "
+                         "loses most of them, so a long unattended session strips the collection it was "
+                         "supposed to be testing")
     ap.add_argument("--day-cap", type=int, default=80,
                     help="stop advancing the clock once the game reaches this day (default 80). Fast time "
                          "plus `wait days=1` runs away - a day every few seconds - and an uncapped soak ends "
@@ -278,12 +283,13 @@ def main():
             # loss. That is a fine thing to have learned once and a waste of the remaining hours, and the
             # systems worth soaking (territory expansion, mage dispatch, dungeon rotation, the minimap
             # re-bake) all hang off the day tick rather than off winning. So: collect, travel, pass days.
-            hurt = p.get("maxLife") and p.get("life") is not None \
-                and p["life"] <= max(1, p["maxLife"] // 4)
+            hurt = args.no_duels or (p.get("maxLife") and p.get("life") is not None
+                                     and p["life"] <= max(1, p["maxLife"] // 4))
             if hurt and not low_life[0]:
                 low_life[0] = True
-                j.say("hurt", "life %s/%s - no longer seeking duels, collecting and travelling instead"
-                      % (p.get("life"), p.get("maxLife")))
+                j.say("hurt", "%s - no longer seeking duels, collecting and travelling instead"
+                      % ("--no-duels" if args.no_duels else
+                         "life %s/%s" % (p.get("life"), p.get("maxLife"))))
             elif not hurt and low_life[0]:
                 low_life[0] = False
                 j.say("hurt", "life %s/%s - fighting again" % (p.get("life"), p.get("maxLife")))
@@ -394,7 +400,7 @@ def main():
             # the recently-visited list here is deliberate: the nearest town is the right answer even if it
             # was the last place we were, and without this the driver wandered at 0 life indefinitely,
             # because life does not regenerate on its own.
-            if low_life[0]:
+            if low_life[0] and not args.no_duels:
                 towns = [r for r in (s.get("pois") or []) if r[1] in ("town", "capital")]
                 if towns:
                     target = min(towns, key=lambda r: r[3] if r[3] is not None else 1 << 30)
