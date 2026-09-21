@@ -733,6 +733,10 @@ public class MapStage extends GameStage {
         float tileHeight = Float.parseFloat(map.getProperties().get("tileheight").toString());
         float tileWidth = Float.parseFloat(map.getProperties().get("tilewidth").toString());
         setBounds(width * tileWidth, height * tileHeight);
+        // Round 280: the map's diagonal in pixels, for onRewardTaken()'s hunt range. Captured here because
+        // `map` is a parameter of this method, not a field, and the dimensions are already to hand.
+        lootHuntRange = (float) Math.sqrt((width * tileWidth) * (width * tileWidth)
+                + (height * tileHeight) * (height * tileHeight));
         //collision = new Array[(int) width][(int) height];
 
         //Load dungeon effects.
@@ -763,7 +767,7 @@ public class MapStage extends GameStage {
         spawnClassified.clear();
         sourceMapMatch.clear();
         enemies.clear();
-        boosterPositions.clear(); // round 279 - per map, like everything else here
+        lootPositions.clear(); // round 279 - per map, like everything else here
         localInnID = -1;
         prepareCaveChampion(map);
         for (MapLayer layer : map.getLayers()) {
@@ -782,7 +786,7 @@ public class MapStage extends GameStage {
         // slot in the same file contradicts. No-ops unless this map is player_town.tmx or
         // player_capital.tmx, the two templates the table is derived from.
         EconomyBuildings.auditFlatTownTierFallback(shopTierPools.values(), targetMap);
-        assignBoosterGuards(targetMap); // round 279, after the layer loop so every booster and enemy is loaded
+        assignLootGuards(targetMap); // round 279, after the layer loop so every booster, chest and enemy is in
         spawn(spawnTargetId);
 
         if (effect != null && enemies.size() > 0) {
@@ -1001,9 +1005,25 @@ public class MapStage extends GameStage {
      * negative threatRange is a map author's "this one really never reacts" (cleared to 0 after the test).
      * Returns true when the default was applied, for the one summary line per map.
      */
-    // Round 279: booster positions collected while the layers load, consumed by assignBoosterGuards() once the
-    // whole map is in. Cleared per load with everything else.
-    private final Array<Vector2> boosterPositions = new Array<>();
+    // Round 279: loot positions collected while the layers load, consumed by assignLootGuards() once the whole
+    // map is in. Cleared per load with everything else. Round 280 added the object id and the booster flag: the
+    // id so a guard can be woken when ITS loot is taken, the flag because holding a post is booster-only while
+    // chasing a thief applies to chests too (see assignLootGuards).
+    private static final class GuardedLoot {
+        final int id;
+        final Vector2 pos;
+        final boolean booster;
+
+        GuardedLoot(int id, Vector2 pos, boolean booster) {
+            this.id = id;
+            this.pos = pos;
+            this.booster = booster;
+        }
+    }
+
+    private final Array<GuardedLoot> lootPositions = new Array<>();
+    /** Round 280: the current map's diagonal in pixels - how far a robbed guard will hunt. Set in loadMap(). */
+    private float lootHuntRange;
 
     /**
      * Round 279, user: *"I entered the Blue Tower and there are two unguarded boosters. I'd like to make sure all
@@ -1021,39 +1041,98 @@ public class MapStage extends GameStage {
      * position - beside the booster already and known-walkable, which is what rounds 269 and 275 paid for.
      * Dialog carriers are never guards: round 253 exempted them from reaction ranges because a quest NPC that
      * charges the player is a bug, and pinning the Warden to a booster would be the same mistake.
+     * <p>
+     * Round 280, user: *"If the Booster or Chest is taken, and the guard is still alive, to have the guard chase
+     * the player?"* So every reward gets a guard REGISTERED here, chests included, and the two behaviours are
+     * deliberately not the same shape:
+     * <ul>
+     * <li>holding a post is BOOSTER-only, which is what was asked for in round 279. A chest's guard keeps its
+     *     patrol.</li>
+     * <li>chasing the thief applies to both, via {@link EnemySprite#guardedRewardId} and
+     *     {@link #onRewardTaken}.</li>
+     * </ul>
+     * A wandering chest guard that turns and hunts you the moment the lid opens is the better version of that
+     * anyway - it does not require it to have been standing there when you arrived.
      */
-    private void assignBoosterGuards(String targetMap) {
-        if (boosterPositions.isEmpty())
+    private void assignLootGuards(String targetMap) {
+        if (lootPositions.isEmpty())
             return;
         // Three tiles, the same radius dev-tools/booster_guards.py audits with, so the tool and the runtime
         // agree about what "guarding this booster" means.
         float reach = Current.world().getTileSize() * 3f;
-        int paired = 0, unguarded = 0;
-        for (Vector2 booster : boosterPositions) {
+        int paired = 0, unguarded = 0, posts = 0;
+        for (GuardedLoot loot : lootPositions) {
             EnemySprite best = null;
             float bestDist = Float.MAX_VALUE;
             for (MapActor actor : actors) {
                 if (!(actor instanceof EnemySprite))
                     continue;
                 EnemySprite mob = (EnemySprite) actor;
-                if (mob.dialog != null || mob.guardPost != null)
-                    continue; // an NPC, or already another booster's guard
-                float d = new Vector2(mob.pos()).sub(booster).len();
+                if (mob.dialog != null || mob.guardedRewardId != 0)
+                    continue; // an NPC, or already another piece of loot's guard
+                float d = new Vector2(mob.pos()).sub(loot.pos).len();
                 if (d <= reach && d < bestDist) {
                     best = mob;
                     bestDist = d;
                 }
             }
             if (best == null) {
-                unguarded++;
+                if (loot.booster)
+                    unguarded++;
                 continue;
             }
-            best.guardPost = new Vector2(best.pos());
+            best.guardedRewardId = loot.id;
+            if (loot.booster) {
+                best.guardPost = new Vector2(best.pos());
+                posts++;
+            }
             paired++;
         }
-        System.out.println("[TFR-BoosterGuard] " + targetMap + ": " + paired + " of " + boosterPositions.size
-                + " booster(s) have a guard pinned to its post"
-                + (unguarded > 0 ? ", " + unguarded + " with no enemy within 3 tiles" : ""));
+        System.out.println("[TFR-BoosterGuard] " + targetMap + ": " + paired + " of " + lootPositions.size
+                + " booster(s)/chest(s) have a guard, " + posts + " of them pinned to a post"
+                + (unguarded > 0 ? "; " + unguarded + " booster(s) with no enemy within 3 tiles" : ""));
+    }
+
+    /**
+     * Round 280, user: *"If the Booster or Chest is taken, and the guard is still alive, to have the guard chase
+     * the player?"*
+     * <p>
+     * Called from the one place a reward is ever collected - the `RewardSprite` branch of the player-collision
+     * loop, which both the inline pickups (gold, life, shards) and the reward-screen path pass through - so
+     * there is no second route a theft can take. A guard that is already dead is not in `actors`, which is
+     * exactly the "if the guard is still alive" condition, for free.
+     * <p>
+     * The hunt range is the map's own diagonal, so pursuit cannot lapse anywhere inside it:
+     * `EnemySprite.getTargetVector()` gives up only when the player is further off than `pursueRange`.
+     * <p>
+     * It also gets a speed, because without one the feature would be decoration: the median enemy runs 30
+     * against the player's 40, and only 434 of the plane's 1,974 enemies are faster than the player, so for
+     * roughly four fifths of guards the chase could never close. `robbedGuardSpeedFactor` x the plane's own
+     * `playerBaseSpeed` (1.1 x 40 = 44 by default), derived rather than hardcoded for the reason
+     * `RoamingGuards.speedFor()` gives. Set the factor to 0 in settings.json for a chase the player always
+     * outruns; it needs no rebuild.
+     */
+    private void onRewardTaken(int rewardId) {
+        if (rewardId == 0)
+            return;
+        // lootHuntRange is the map's own diagonal, captured in loadMap() where the dimensions are already to
+        // hand. NOT the viewport's world size: that is what setBounds() feeds and a window resize updates it,
+        // so it is no reliable stand-in for how big the map is.
+        float huntRange = lootHuntRange > 0 ? lootHuntRange : 2048f;
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        float factor = tuning == null ? 0f : tuning.robbedGuardSpeedFactor;
+        float targetSpeed = factor > 0 ? Config.instance().getConfigData().playerBaseSpeed * factor : 0f;
+        for (MapActor actor : actors) {
+            if (!(actor instanceof EnemySprite))
+                continue;
+            EnemySprite mob = (EnemySprite) actor;
+            if (mob.guardedRewardId != rewardId)
+                continue;
+            mob.enrageOverStolenLoot(huntRange, targetSpeed);
+            System.out.println("[TFR-BoosterGuard] " + mob.getName() + " saw its loot (object " + rewardId
+                    + ") taken - abandoning its post and hunting the player across the map at speed "
+                    + mob.speed());
+        }
     }
 
     private boolean applyDefaultReactionRange(EnemySprite mob) {
@@ -1201,12 +1280,13 @@ public class MapStage extends GameStage {
                             RewardSprite RW = new RewardSprite(id, R.toString(), Sp);
                             RW.hidden = hidden;
                             addMapActor(obj, RW);
-                            // Round 279: remember where the boosters are, for assignBoosterGuards(). The sprite
-                            // is the discriminator - booster.tx is the only reward template that ships
+                            // Round 279: remember where the loot is, for assignLootGuards(). The sprite is the
+                            // discriminator - booster.tx is the only reward template that ships
                             // "sprites/booster.atlas" - and it is read from the object rather than from the
                             // reward JSON, which is a card list indistinguishable from a treasure's.
-                            if (Sp.contains("booster"))
-                                boosterPositions.add(new Vector2(RW.getX(), RW.getY()));
+                            // Round 280 records chests as well, since "chase the thief" covers those too.
+                            lootPositions.add(new GuardedLoot(id, new Vector2(RW.getX(), RW.getY()),
+                                    Sp.contains("booster")));
                         }
                         break;
                     case "enemy":
@@ -2276,6 +2356,7 @@ public class MapStage extends GameStage {
                     } else {
                         showRewardScene(rewards);
                     }
+                    onRewardTaken(RS.getId()); // round 280 - BEFORE the actor goes, so the id still matches
                     RS.remove();
                     actors.removeValue(RS, true);
                     changes.deleteObject(RS.getId());

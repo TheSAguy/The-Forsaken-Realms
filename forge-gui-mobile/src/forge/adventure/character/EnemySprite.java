@@ -114,6 +114,37 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
      *  it, loose enough that the walker does not jitter trying to hit an exact pixel. */
     public static final float GUARD_POST_TOLERANCE = 8.0f;
 
+    /** Round 280: the map object id of the booster or chest this enemy is guarding, or 0. Set at load by
+     *  {@link forge.adventure.stage.MapStage#assignLootGuards}, consumed when that loot is taken. */
+    public int guardedRewardId;
+
+    /**
+     * Round 280, user: *"If the Booster or Chest is taken, and the guard is still alive, to have the guard chase
+     * the player?"*
+     * <p>
+     * Once the loot is gone the post is meaningless - standing on an empty pedestal is the one thing a guard
+     * should NOT still be doing - so it abandons the post and hunts instead. `aggro` is set directly rather than
+     * waiting for the player to wander back inside `threatRange`, because the theft IS the trigger: the player
+     * may already be halfway to the door.
+     * <p>
+     * `huntRange` is passed in as the map's own diagonal, so pursuit never lapses inside that map -
+     * `getTargetVector()` drops aggro only when the player is further away than `pursueRange`, and nowhere in
+     * the map is. `fleeRange` is cleared too: the chase branch already wins over the flee branch, so leaving it
+     * set would only be a contradiction waiting to confuse the next reader.
+     */
+    public void enrageOverStolenLoot(float huntRange, float targetSpeed) {
+        guardPost = null;
+        guardedRewardId = 0;
+        aggro = true;
+        fleeRange = 0f;
+        threatRange = Math.max(threatRange, huntRange);
+        pursueRange = Math.max(pursueRange, huntRange);
+        // speedModifier is ADDITIVE (speed() returns data.speed + speedModifier), and this only ever raises:
+        // a guard that was already faster than the target keeps its own speed.
+        if (targetSpeed > 0 && data != null && data.speed + speedModifier < targetSpeed)
+            speedModifier = targetSpeed - data.speed;
+    }
+
     // Territory Control (MOD_SCOPE.md #7): set only on a "mage" sent by a colored castle to
     // capture a nearby neutral town - null for every ordinary enemy. When set, WorldStage.onActing
     // seeks this town instead of the player; reaching it (or being defeated first) is handled by

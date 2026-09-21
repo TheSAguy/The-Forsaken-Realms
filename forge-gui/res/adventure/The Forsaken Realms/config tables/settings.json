@@ -242,6 +242,14 @@
     // reads as rank. Bosses and keepSize set pieces are exempt. 0 turns the ceiling off.
     "enemySpriteFrameCap": 1.4,
 
+    // Round 280 (user: "If the Booster or Chest is taken, and the guard is still alive, to have the guard chase
+    // the player?"). How fast a robbed guard becomes, as a multiple of playerBaseSpeed - so retuning the player
+    // carries the guards with it. It has to exceed 1.0 for the chase to mean anything: the median enemy runs 30
+    // against the player's 40 and only 434 of 1,974 enemies are faster than the player, so at 1.0 or below the
+    // guard follows the thief to the door and never closes. 1.1 catches a player who dawdles and loses one who
+    // runs for the exit. Set 0 for a chase the player can always outrun.
+    "robbedGuardSpeedFactor": 1.1,
+
     // Round 177 (user request): losing a duel costs a FLAT amount of the gold you carry - or all of it when you
     // have less. Replaces the difficulty's percentage (config.json "goldLoss", still the fallback when a value
     // here is 0). A Bronze Coin handed over on the ante prompt still waives it. Applies to existing characters.

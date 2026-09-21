@@ -315,6 +315,15 @@ public class TuningData {
     // the size of the screen"). The ceiling on what a roaming enemy DRAWS, as a multiple of its rank's body -
     // see tierSizeMultiplier(String, float, boolean). 0 or less turns the ceiling off.
     public float enemySpriteFrameCap = 1.4f;
+    // Round 280 (user: "If the Booster or Chest is taken, and the guard is still alive, to have the guard chase
+    // the player?"). A robbed guard's speed, as a multiple of the plane's own playerBaseSpeed - derived rather
+    // than hardcoded for the reason RoamingGuards.speedFor() gives: retuning the player then carries the guards
+    // with it. It has to be ABOVE 1.0 for the chase to mean anything: the median enemy runs 30 against the
+    // player's 40, and only 434 of 1,974 enemies are faster than the player at all, so without this the guard
+    // follows the thief to the door and never closes. At 1.1 it catches a player who dawdles and loses one who
+    // runs straight for the exit, which is the shape of a consequence rather than a cutscene. 0 or less leaves
+    // the guard's own speed alone (a chase you can always outrun).
+    public float robbedGuardSpeedFactor = 1.1f;
 
     /** Render multiplier for an enemy tier; 1.0 for anything unrecognised, so a stock plane or a
      *  hand-edited tier string can never shrink a sprite to nothing. */

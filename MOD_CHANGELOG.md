@@ -17859,6 +17859,57 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 280: rob a guard and it comes after you (2026-09-21)
+
+User: *"Is it possible to do the following: If the Booster or Chest is taken, and the guard is still alive, to
+have the guard chase the player?"*
+
+Yes, and it needed one hook rather than a new system. `MapStage`'s player-collision loop has exactly one place
+where a reward is ever collected - the `RewardSprite` branch that both the inline pickups (gold, life, shards)
+and the reward-screen path pass through - so `onRewardTaken(id)` goes there, before the actor is removed while
+the id still matches. There is no second route a theft can take.
+
+**Scope, extended as asked.** Round 279 paired guards with boosters only; every reward registers a guard now,
+chests included (`EnemySprite.guardedRewardId`). The two behaviours are deliberately different shapes:
+
+* **holding a post** stays booster-only, which is what round 279 was asked for. A chest's guard keeps its patrol.
+* **chasing the thief** applies to both.
+
+A wandering chest guard that turns and hunts the moment the lid opens is the better version of that anyway - it
+does not require the guard to have been standing there when the player arrived.
+
+`enrageOverStolenLoot()` drops the post, sets `aggro` directly rather than waiting for the player to wander back
+inside `threatRange` (the theft IS the trigger - they may already be at the door), clears `fleeRange` so a
+normally-skittish guard cannot contradict itself, and takes `threatRange`/`pursueRange` up to the map's own
+diagonal, so pursuit cannot lapse anywhere inside that room. A guard that is already dead is not in `actors`,
+which is the *"if the guard is still alive"* condition for free.
+
+### The part that decided whether this was a feature or scenery
+
+Measured before writing it: the plane's median enemy speed is **30 against the player's 40**, and only **434 of
+1,974** enemies are faster than the player at all. So for roughly four fifths of guards the chase could never
+close - it would have been a guard trotting after the player to the exit, for ever, harmlessly.
+
+So a robbed guard gets a speed, `robbedGuardSpeedFactor` x the plane's own `playerBaseSpeed`, derived rather than
+hardcoded for the reason `RoamingGuards.speedFor()` already gives: retuning the player carries the guards with
+it. `speedModifier` is additive (`speed()` returns `data.speed + speedModifier`) and the raise is one-way, so a
+guard already faster than the target keeps its own speed.
+
+**Default 1.1 - 44 against the player's 40.** Fast enough to catch a player who dawdles, slow enough to lose one
+who runs straight for the exit, which is the shape of a consequence rather than a cutscene. It is in
+`settings.json`, so it retunes or switches off (0) with no rebuild. That number is the one judgment call here and
+it is the user's to overrule.
+
+    [TFR-BoosterGuard] Djinn saw its loot (object 78) taken - abandoning its post and
+                       hunting the player across the map at speed 44.0
+
+Also worth recording: `validate_plane_data.py` accepted `robbedGuardSpeedFactor` the moment it was added, with no
+edit to the tool. That is yesterday's fix earning itself back - before it, a new setting was reported as an
+unknown key until somebody remembered to update a hardcoded list.
+
+NOT yet seen in a game: the user was play-testing round 279's guards while this was built, so the live folder
+still carries the previous jar. Packaging waits for the game to close.
+
 ## Round 279 (cont.): the grey window, with the reporter's log in hand (2026-09-21)
 
 The reporter's `forge.log` arrived. **It contains no error of any kind.** World generation completes in 20.2 s,

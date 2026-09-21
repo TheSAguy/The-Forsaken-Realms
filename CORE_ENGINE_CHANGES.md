@@ -39,6 +39,11 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 `MOD_CHANGELOG.md`, search for the linked feature).
 
 ### World generation & the overworld map
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — round 280 added one call,
+  `onRewardTaken(RS.getId())`, immediately before stock's `RS.remove(); actors.removeValue(RS, true);
+  changes.deleteObject(RS.getId());` in the `RewardSprite` branch of the player-collision loop. Upstream conflict
+  note: if the daily rewrites that branch, the call has to stay BEFORE the removal, since it matches guards by the
+  reward's object id.
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — round 279 added `guardPost` and a
   return-to-post branch inside `getTargetVector()`, between the pursuit/flee blocks and the stock
   `movementBehaviors` deque. Stock's own behaviour is untouched when `guardPost` is null, which is every enemy

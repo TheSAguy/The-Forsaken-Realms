@@ -50,14 +50,28 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-21 (round 279; v1.12 "Reward Balancing" RELEASED, rounds 247-279 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-21 (round 280; v1.12 "Reward Balancing" RELEASED, rounds 247-280 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 279, 2026-09-21).** v1.12 is out; rounds 247-279 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 280, 2026-09-21).** v1.12 is out; rounds 247-280 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **Round 279 - 85.6% of the plane's enemies could notice the player and never chase, and round 271 caused
+  1. **Round 280 - rob a guard and it hunts you.** User: *"If the Booster or Chest is taken, and the guard is
+     still alive, to have the guard chase the player?"* One hook: `MapStage`'s player-collision loop has exactly
+     one place a reward is ever collected (both the inline pickups and the reward-screen path go through it), so
+     `onRewardTaken(id)` sits there before the actor is removed. Every reward now registers a guard, **chests
+     included** (`EnemySprite.guardedRewardId`), but the behaviours differ on purpose: holding a post stays
+     BOOSTER-only (round 279's ask), chasing the thief covers both. `enrageOverStolenLoot()` drops the post, sets
+     `aggro` directly (the theft is the trigger - the player may already be at the door), clears `fleeRange`, and
+     raises threat/pursue to the map's diagonal so pursuit cannot lapse in-room. A dead guard is not in `actors`,
+     so "still alive" is free. **THE JUDGMENT CALL:** the median enemy runs speed 30 against the player's 40 and
+     only 434 of 1,974 are faster than the player, so without a speed bump the chase could never close for ~4/5
+     of guards - it would be scenery. `robbedGuardSpeedFactor` x `playerBaseSpeed`, derived not hardcoded (the
+     `RoamingGuards.speedFor()` pattern), **default 1.1 = 44 vs 40**; in `settings.json`, retune or 0 it with no
+     rebuild. NOT YET SEEN IN A GAME - built while the user was play-testing round 279, so the live folder still
+     had the previous jar; package once their game closes.
+  2. **Round 279 - 85.6% of the plane's enemies could notice the player and never chase, and round 271 caused
      part of it.** `EnemySprite` drops aggro the moment `len > pursueRange`, so **a threatRange with no
      pursueRange cannot chase at all** - it notices at one or two tiles and gives up a pixel later.
      `applyDefaultReactionRange()`'s pursue fill sat behind an early return on "threatRange already set", so it
@@ -78,7 +92,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `Biome*`/`Identity*` put a *Market Trader* on a booster; on creature tags it gives
      `Minotaur -> Minotaur Warcaller`, `Poisonous Snake -> Hidden Snake`. New tools:
      `dev-tools/booster_guards.py` (audit), `add_booster_guards.py`, `upgrade_booster_guards.py`.
-  2. **Round 279 - the reported "grey window" is a `MapDialog` with its buttons still invisible.** A player
+  3. **Round 279 - the reported "grey window" is a `MapDialog` with its buttons still invisible.** A player
      reported a grey window over the spawn dungeon during the intro that "doesn't allow me to do anything";
      fullscreen was their only non-default setting and nobody else can reproduce it. Every option button is
      created `setVisible(false)` and the ONLY thing that reveals them is `TypingLabel`'s `end()` callback, which
@@ -98,12 +112,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      for him, that is a different, input-level problem; and ask his **Windows display scaling** (HP OmniBook X
      Flip convertible, 1920x1200 panel, typically 150-200%, launcher uses `HdpiMode.Logical` while exclusive
      fullscreen reports the PHYSICAL mode).
-  3. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
+  4. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
      `enemySpriteFrameCap` as an unknown key although the field exists in `TuningData.java` and in
      `settings.json`, because its class field lists are hardcoded. They are READ from the Java source now (the
      hardcoded set kept as a floor), which revealed how stale they were: **DialogData was missing 41 fields**,
      SpawnTierWeightData 10, ArmoryRarityData 6 - a typo in any of those would never have been reported.
-  4. **Round 278 - fifteen dungeons could never be cleared, and round 275's "leave them alone" was wrong.**
+  5. **Round 278 - fifteen dungeons could never be cleared, and round 275's "leave them alone" was wrong.**
      The user's own example found it: "Blue Tower" is several `magetower_*` dungeons, and
      `magetower_11_dreamhalls.tmx` has ONE entry, no doors, only 32% of its legal player positions reachable,
      and its two Jellyfish in the sealed band between the room and the outer wall - walled off, not swimming.
@@ -121,7 +135,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `pixel_collision_qa.ACCEPTED_UNREACHABLE` so the three tools that flag it report it as ACCEPTED instead of
      re-raising it - **do not "fix" it without asking again.** Still open: one Knight in `skep_outer.tmx` with no
      reachable tile within 8 tiles. NOT verified in a game.
-  5. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
+  6. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
      a death respawn onto Shimmering Crossing, `goto`, `explore` AND `wait` all answered "no path" to
      everything, for twenty-five minutes - no bridge command could move the player at all. Round 175's
      exemption reopens only the **3x3 around the player** when standing on a footprint, which is enough for a
@@ -147,7 +161,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      real freedom of movement - for a target in a nook the line runs into a building and the walk dies after
      four replans. Not fixed (agent-only, and the static test already answers "is this placement reachable").
      **Do not read a walker give-up as evidence about a map.**
-  6. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
+  7. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
      by soaking, both fixed. `jcmd Thread.print` on what looked like a frozen game showed NO main thread, a
      parked `DestroyJavaVM` and a runnable non-daemon `"HTTP-Dispatcher"`: the game had EXITED and the JVM could
      not follow, because `HttpServer.start()` spawns its own dispatcher thread (not the daemon executor the
@@ -167,7 +181,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `F:\FORGE\TFR-Agent` / `F:\FORGE\C--Users-vicwaver-MTG-Forge`; both are on C: now. And the agent's
      `forge.log` genuinely CANNOT be read while the game runs - Forge byte-range-locks the whole file, so even
      `Get-Content -Tail` fails; use `/state`'s `agent.log`, which carries the `[TFR-Agent]` walk lines.
-  7. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
+  8. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
      SETTLED, from `MapStage.loadCollision()`: collision does NOT come from the layer named "Collision" - that
      method walks EVERY tile layer and reads the rectangles authored on each TILE in its tileset, the boxes are
      SUB-TILE (one fort map: 240 full-tile, 330 partial), and the player is a **10 x 6.4 box at the sprite's
@@ -188,10 +202,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `phyrexian_black1.tmx` has 75,489 legal player positions but only 28,653 in its largest region, and its one
      entry reaches none of its five enemies - the Blue Tower "stranded outside the wall" case at map scale.
      NOT YET SEEN IN A GAME.
-  8. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
+  9. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
      the flag is absent, so a pre-259 save stops re-issuing the nudge on its next NG+. A no-op after a New Game+
      (count 0, flag carried), and it only sets what `addQuest()` would set on the same evidence.
-  9. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
+  10. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
      validated: with no painted portrait the avatar is cut at the creature's HEAD end (the end it faces) instead of
      the middle of its body, and that reproduces all five of round 245's hand repairs EXACTLY (delta 0.0). The
      FACING half cannot be automated - `facing_detect.py`'s four cues reach 81% on the 16 labelled sheets and are
@@ -209,7 +223,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      pictures. Still NOT guessed on the user's behalf. Also spotted there: **`#200 gen_parasitic_zombie_2`'s frame
      holds what looks like two creatures back to back**, possibly a merge that slipped under the importer's
      1.8x-median width guard.
-  10. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
+  11. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
      holds an index into *some* biome's tables and nothing records which; four writers produce a dual-bit tile and
      they disagree. The missing case: world-gen's Pass A claims biomes with `|=`, so a tile inside both the
      wasteland's disc and a colour's carries BOTH bits from birth, and Pass B writes it with the COLOUR's own
@@ -227,15 +241,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      structure and its collision bit. Fixed. **One residual, stated:** a tile expansion claims inside a colour's own
      keep (43 such holes inside white's, ~3% of the disc) reads as colour space when it is waste space; the exact
      cure is recording the space in `terrainMap` bit 29, offered not done. NOT YET SEEN IN A GAME.
-  11. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
+  12. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
      round 252's runtime default). 23 `dialog` NPCs and the explicit `0`s deliberately untouched. **PACKAGED.**
-  12. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
+  13. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
      plus round 113's side-bosses; `castle` was never added, so all 13 of them went unmarked. Built, **NOT
      packaged** - the user was playing. Capitals/towns deliberately excluded.
-  13. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see item 1): all
+  14. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see item 1): all
      ten are back on booster duty and verified reachable. Its `oob_audit.py` was reading a mirrored y and should
      not be reused - `pixel_collision_qa.py --enemies` replaces it.
-  14. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
+  15. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
      268's own evidence was a red herring: the `[TFR-Terrain]` lines fire only for "player land" because
      `drawableTerrainIndex()` runs while a ground CHUNK is built and chunks are only built near the player, who was
      standing in their own territory - nothing to do with index spaces. `structureSwapCache` does translate, but
