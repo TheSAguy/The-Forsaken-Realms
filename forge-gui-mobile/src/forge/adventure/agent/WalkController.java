@@ -422,6 +422,21 @@ final class WalkController {
             boolean insideStart = isStart && sx >= rx0 && sx <= rx1 && sy >= ry0 && sy <= ry1;
             if (isGoal)
                 continue; // the one we are walking to
+            // Round 277: standing INSIDE a footprint opens the WHOLE of it, not just the 3x3 around the
+            // player. The exemption below only ever opened the player's own neighbourhood, which is enough
+            // for a 16px POI and not enough for anything bigger: Shimmering Crossing's rectangle is 48x48 px
+            // = 3x3 tiles, 5x5 with its margin, so a player in the middle could take one step and no more -
+            // every route out had to cross the ring at distance 2, and the planner answered "no path" to
+            // everything. `goto`, `explore` and `wait` (which steps clear first) all failed, which means NO
+            // bridge command could move the player at all: a permanent strand, found when a death respawn
+            // dropped the player there during a soak (player rect [8210,5816 10x6] inside poiRect
+            // [8189,5796 48x48]). The way out was an in-game teleport, the Homeward rune.
+            //
+            // Safe, and for the same reason the 3x3 exemption was safe: the game already exempts the POI
+            // underfoot from entry (exemptPoiUnderPlayer()) until the player steps off, so crossing the rest
+            // of its own footprint enters nothing.
+            if (insideStart)
+                continue;
             for (int x = x0; x <= x1; x++)
                 for (int y = y0; y <= y1; y++) {
                     // Standing ON a footprint (the game puts you there when you leave a town): the

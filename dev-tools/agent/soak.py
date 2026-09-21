@@ -145,6 +145,7 @@ def main():
     # state was byte-identical for twenty-five minutes while the driver span. This is the backstop.
     last_fingerprint = None
     same_count = 0
+    walk_failures = 0
     duels = 0
     days_passed = 0
 
@@ -262,6 +263,27 @@ def main():
                     j.say("wait", str(r.get("message"))[:160])
                 settle()
                 continue
+            # Stranded? Every route failing in a row means the player is standing INSIDE a point of
+            # interest's footprint. The walker exempts the POI it stands on from the ENTRY check (round 175)
+            # but not from the planner's obstacle set, so there is no legal first step and `goto`, `explore`
+            # and even `wait` (which has to step clear first) all answer "no path". A death respawn can drop
+            # the player there, which is how the third soak run lost half an hour on Shimmering Crossing:
+            # player rect [8210,5816 10x6] inside poiRect [8189,5796 48x48].
+            #
+            # The game's own way out is the Homeward rune, which teleports and does not path. It has to be
+            # EQUIPPED to be used, exactly as in the HUD.
+            if walk_failures >= 3:
+                walk_failures = 0
+                j.problem("stranded - every route failed; the player is probably standing inside a POI "
+                          "footprint (see the [TFR-Agent] walk start line). Using the Homeward rune")
+                cmd("equip", item='Homeward rune')
+                r = cmd("use", item='Homeward rune')
+                j.say("escape", "Homeward rune: %s" % str(r.get("message"))[:120])
+                if not r.get("ok"):
+                    j.problem("the rune did not work either - reloading the session checkpoint (slot 5)")
+                    cmd("load", slot=5)
+                settle()
+                continue
             target = None
             for row in s.get("pois") or []:
                 name = row[0]
@@ -279,7 +301,11 @@ def main():
                 msg = str(r.get("message"))
                 j.say("walk", "%s (%s tiles %s): %s" % (target[0], target[3], target[4], msg[:110]))
                 # try one leg in the target's own direction, the documented recovery
-                cmd("explore", dir=target[4], tiles=8)
+                e = cmd("explore", dir=target[4], tiles=8)
+                # Both failing is the stranded signature - a planner that cannot leave the start node.
+                walk_failures = walk_failures + 1 if not e.get("ok") else 0
+            else:
+                walk_failures = 0
             settle()
             continue
 

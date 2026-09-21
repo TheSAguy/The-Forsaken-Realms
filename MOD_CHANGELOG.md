@@ -17757,6 +17757,49 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 277: stranded in the middle of a point of interest (2026-09-20)
+
+The soak lost half an hour to a state no bridge command could leave. The player had died in the Barnacle Gallery,
+respawned, and come to rest on Shimmering Crossing - and from there `goto`, `explore` and `wait` all answered
+**"no path"**, to every destination, for twenty-five minutes. `wait` fails too because it steps clear of the POI
+first, so even passing time was impossible.
+
+The `[TFR-Agent] walk start:` line says it exactly:
+
+    player rect [8210,5816 10x6] collisionHeight 0.4, collidingPoint Shimmering Crossing;
+    Shimmering Crossing sprite [8197,5804 32x32] poiRect [8189,5796 48x48] COLLIDING
+    standing on Shimmering Crossing (the game had it already) - skipped by the entry check until the player steps off
+
+Round 175's exemption was doing its job, and it was the wrong job. Touching any POI enters it, so the planner
+treats every footprint plus a one-tile margin as an obstacle; standing on one, it reopens **the 3x3 around the
+player** so a path can step out. That is enough for a 16px POI, whose whole rectangle is one tile. Shimmering
+Crossing's rectangle is 48x48 px - **3x3 tiles, 5x5 with the margin** - so a player in the middle could take one
+step and no more: every route out crossed the ring at distance 2, which was still closed. No legal path existed
+from the start node, to anywhere.
+
+`insideStart` now opens that POI's whole footprint, not the neighbourhood. It is safe for the same reason the 3x3
+was safe: the game already exempts the POI underfoot from entry (`exemptPoiUnderPlayer()`) until the player steps
+off, so crossing the rest of its own footprint enters nothing.
+
+**Agent-only.** `WalkController` is `forge.adventure.agent`; a person moves by direct input and walks off a
+footprint without asking a planner. But it strands an unattended session permanently, which is exactly what the
+user asked for tonight.
+
+The way out, in the meantime, was the game's own: the **Homeward rune** teleports instead of pathing
+(`equip` first - abilities must be equipped to be used, as in the HUD - then `use`), and it reported
+*"Teleported outside Orazca((5600.0,5600.0))"*, which is round 253's `findHome()` picking Orazca with no Capitol
+built. `soak.py` now does that for itself: three failed routes in a row is the stranded signature, and it
+equips the rune, uses it, and falls back to reloading its own checkpoint if even that fails.
+
+### Also seen, and NOT a bug
+
+`PROBLEM walker gave up on enemy 110 (The Warden (Adept) (Uncommon, 15 life)) in Orazca three times`. The Warden
+is an enemy-TYPE map object carrying a dialog - which is why round 253 had to exempt dialog NPCs from the default
+reaction range - so walking into him opens a conversation instead of starting a duel, he is still standing there
+afterwards, and a driver that fights the nearest enemy picks him again. Worth checking rather than assuming,
+because an unreachable Warden would stall quest 52 and quest 43: `pixel_collision_qa.py --enemies` on
+`towns/orazca.tmx` reports **0 of 1 unreachable**. He is fine; the driver's three-strikes rule moved on.
+
 ## Round 276: the agent that exited but would not die (2026-09-20)
 
 Found by running the thing rather than reasoning about it. The user asked for a five-hour soak; eleven minutes in,
