@@ -123,8 +123,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      and a sheet without one converts but is reported UNREVIEWED, in the manifest and in a summary the run always
      prints. `facing_review.py --seed-known` recorded the 16 rounds 245/247 settled (9 left, 7 right) by mapping
      final slugs back through `roster179.py` - without that, a re-import would quietly reproduce the nine walking
-     backwards. **57 of 73 sheets are honestly unreviewed**; answering them is a look-at-the-picture job of a few
-     minutes (`python facing_review.py <out dir>` builds the contact sheet) and was deliberately NOT guessed.
+     backwards. **57 of 73 sheets are honestly unreviewed**, but reading the contact sheet cut the real job to about a
+     dozen: the LEAST confident sheets are nearly all FRONTAL views where facing has no answer, so the review is
+     now ordered MOST confident first (a confident score means a clear side view, where a wrong answer walks the
+     creature backwards) and `facing_review.py --unreviewed --top 14` prints just those. Reading those fourteen is
+     also the sharpest test the detector has had, and it is visibly wrong more than once - `gen_serratongue`'s
+     head is plainly at the left while it says right with 0.77 - which is the auto-accept argument settled in
+     pictures. Still NOT guessed on the user's behalf. Also spotted there: **`#200 gen_parasitic_zombie_2`'s frame
+     holds what looks like two creatures back to back**, possibly a merge that slipped under the importer's
+     1.8x-median width guard.
   6. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
      holds an index into *some* biome's tables and nothing records which; four writers produce a dual-bit tile and
      they disagree. The missing case: world-gen's Pass A claims biomes with `|=`, so a tile inside both the

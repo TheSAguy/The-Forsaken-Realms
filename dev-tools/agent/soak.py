@@ -146,6 +146,7 @@ def main():
     last_fingerprint = None
     same_count = 0
     walk_failures = 0
+    escapes = 0
     duels = 0
     days_passed = 0
 
@@ -276,12 +277,24 @@ def main():
                 walk_failures = 0
                 j.problem("stranded - every route failed; the player is probably standing inside a POI "
                           "footprint (see the [TFR-Agent] walk start line). Using the Homeward rune")
-                cmd("equip", item='Homeward rune')
-                r = cmd("use", item='Homeward rune')
-                j.say("escape", "Homeward rune: %s" % str(r.get("message"))[:120])
-                if not r.get("ok"):
-                    j.problem("the rune did not work either - reloading the session checkpoint (slot 5)")
-                    cmd("load", slot=5)
+                escapes += 1
+                # The rune is worth ONE try per strand, because its own destination is a POI. Measured:
+                # it reports "Teleported outside Orazca((5600,5600))" and Orazca's footprint covers that
+                # spot, so the second strand arrived NINE SECONDS after the first escape - left alone the
+                # driver would have spent the night teleporting into the same trap. After that, reload the
+                # checkpoint: a load puts the player back where they stood when it was taken, which is by
+                # definition somewhere the planner had already walked to.
+                if escapes <= 1:
+                    cmd("equip", item='Homeward rune')
+                    r = cmd("use", item='Homeward rune')
+                    j.say("escape", "Homeward rune: %s" % str(r.get("message"))[:120])
+                else:
+                    j.say("escape", "stranded again after a rune - reloading the checkpoint (slot 5)")
+                    r = cmd("load", slot=5)
+                    if not r.get("ok"):
+                        j.problem("could not reload the checkpoint either: %s" % str(r.get("message"))[:140])
+                        break
+                    escapes = 0
                 settle()
                 continue
             target = None

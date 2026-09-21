@@ -18026,8 +18026,29 @@ round 245's contact sheet only covered atlases whose avatar was a body crop, so 
 detector agrees with 13 of the 16 recorded labels, which is a useful independent check that the labels are real
 knowledge and not a restatement of the detector.
 
-Not done, deliberately: answering the 57. That is a look-at-the-picture job of a couple of minutes, and guessing
-on the user's behalf is what this round removed.
+### Looking at the contact sheet changed the review order
+
+Built and read, and it says something the numbers did not. The LEAST confident sheets are almost all **frontal
+views** - a zombie with its arms out, an elephantman, a harpy's face, a maw seen head-on, a devil empress - where
+"which way does it face" has no answer at all and mirroring changes nothing that matters. The cues score near zero
+on them precisely because they are symmetric. So `facing_review.py` now orders unreviewed sheets **most confident
+first**, which is the opposite of the obvious order and the useful one: a confident score means a clear SIDE view,
+which is where a wrong answer makes a creature walk backwards. `--unreviewed [--top N]` cuts the sheet to just
+those.
+
+That shortens the real job from 57 sheets to about the top dozen, and reading those dozen is also the sharpest
+test the detector has had. Of the 14 most confident unreviewed sheets, roughly half are frontal (no answer
+needed), and among the genuine side views it is **visibly wrong more than once** - `gen_serratongue`'s head (two
+antennae) is plainly at the left while the detector says right with 0.77 confidence, and `gen_fanged_behemoth`
+and `gen_free_game_assetes` look the same way. Which is the whole argument for not letting it decide, made in
+pictures rather than in percentages.
+
+One thing to look at while there: **`#200 gen_parasitic_zombie_2`'s frame holds what looks like two creatures back
+to back.** The importer drops a frame more than 1.8x its band-mates' median width as a merge; this one may have
+slipped under that bar, or it may be one genuinely wide creature. Not touched.
+
+Not done, deliberately: answering the rest. That is a look-at-the-picture job, and guessing on the user's behalf
+is what this round removed.
 
 ## Round 272: which index space is a tile's terrain value in? (2026-09-20)
 

@@ -13,6 +13,7 @@ animation facing RIGHT and mirrors it for Left, so a wrong answer here is a crea
 usage: python facing_review.py <out dir> [--out facing_review.png]        build the contact sheet
        python facing_review.py <out dir> --set 23=left,41=right           record answers (by sheet index)
        python facing_review.py <out dir> --list                           text only, no image
+       python facing_review.py <out dir> --unreviewed [--top 15]           only what still needs an answer
        python facing_review.py <out dir> --seed-known                     record what rounds 245/247 established
 
 After recording, re-run the converter for the sheets that changed:
@@ -73,8 +74,13 @@ def rows(out_dir):
         # head on the left means the sheet faces left
         out.append({"slug": slug, "index": info.get("index"), "recorded": recorded,
                     "guess": guess, "conf": conf, "frame": frame})
-    # unreviewed first, then least confident first - the ones most likely to be wrong come to the top
-    out.sort(key=lambda r: (r["recorded"] != "unreviewed", r["conf"]))
+    # Unreviewed first, then MOST confident first. That ordering is the opposite of the obvious one, and the
+    # contact sheet is why: the low-confidence rows are almost all FRONTAL views - a zombie with its arms out,
+    # an elephantman, a harpy's face, a maw seen head-on - where "which way does it face" has no answer and
+    # mirroring changes nothing that matters. The cues score near zero on them precisely because they are
+    # symmetric. The consequential sheets are the clear SIDE views, which is where the cues score high, so
+    # those are what a reviewer should spend their eyes on first.
+    out.sort(key=lambda r: (r["recorded"] != "unreviewed", -r["conf"]))
     return out
 
 
@@ -180,6 +186,10 @@ def main():
         return
     data = rows(out_dir)
     unreviewed = [r for r in data if r["recorded"] == "unreviewed"]
+    if "--unreviewed" in sys.argv:
+        data = unreviewed
+        if "--top" in sys.argv:
+            data = data[:int(sys.argv[sys.argv.index("--top") + 1])]
     print("%-5s %-26s %-11s %-6s %s" % ("index", "slug", "recorded", "guess", "confidence"))
     for r in data:
         print("%-5s %-26s %-11s %-6s %.2f%s" % (r["index"], r["slug"][:26], r["recorded"], r["guess"], r["conf"],
