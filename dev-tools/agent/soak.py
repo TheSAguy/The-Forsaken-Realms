@@ -131,6 +131,10 @@ def main():
     ap.add_argument("--journal", default=os.path.join(HERE, "soak_journal.txt"))
     ap.add_argument("--no-fast-time", action="store_true",
                     help="leave the day clock at its normal speed (default is to speed it up - see main)")
+    ap.add_argument("--day-cap", type=int, default=80,
+                    help="stop advancing the clock once the game reaches this day (default 80). Fast time "
+                         "plus `wait days=1` runs away - a day every few seconds - and an uncapped soak ends "
+                         "in a world nobody recognises")
     args = ap.parse_args()
 
     j = Journal(args.journal)
@@ -152,6 +156,7 @@ def main():
     consecutive_failures = 0
     peak_gold = 0
     stuck_enemies = {}
+    day_cap_hit = [False]
     giveups = set()
     unknown_scenes = {}
     # Nothing above can prove the loop is making progress, and the first run proved it can fail to: the
@@ -281,13 +286,22 @@ def main():
 
         # ---------------------------------------------------------------- world map
         if scene == "GameScene":
-            if legs_since_day >= 3:
+            # Deliberately advance the clock, but only up to the cap. Fast time makes `wait days=1` overshoot
+            # - the clock races while the wait runs, so day 3 became day 6 in one call - and an uncapped run
+            # reaches four figures in an evening. Past the cap the soak keeps PLAYING and stops skipping time,
+            # which is what leaves a save the user can still recognise.
+            if legs_since_day >= 3 and p.get("day", 0) < args.day_cap:
                 legs_since_day = 0
                 r = cmd("wait", days=1)
                 if not r.get("ok"):
                     j.say("wait", str(r.get("message"))[:160])
                 settle()
                 continue
+            if p.get("day", 0) >= args.day_cap and not day_cap_hit[0]:
+                day_cap_hit[0] = True
+                cmd("fasttime", on="false")
+                j.say("clock", "day cap %d reached - fast time off, no more deliberate waiting"
+                      % args.day_cap)
             # Stranded? Every route failing in a row means the player is standing INSIDE a point of
             # interest's footprint. The walker exempts the POI it stands on from the ENTRY check (round 175)
             # but not from the planner's obstacle set, so there is no legal first step and `goto`, `explore`
@@ -329,6 +343,14 @@ def main():
                 target = row
                 break
             if target is None:
+                # Every POI in sight has been visited recently. Clearing the short-term memory is the fix;
+                # the old code set legs_since_day high instead, which made the driver WAIT A DAY and try the
+                # same exhausted list again - days 6 to 10 went by in half a minute with gold unchanged,
+                # because it was skipping time rather than playing.
+                if visited:
+                    j.say("world", "every nearby POI visited recently - forgetting the list and going round again")
+                    visited.clear()
+                    continue
                 legs_since_day = 99
                 continue
             visited.append(target[0])
