@@ -120,13 +120,13 @@
     <property name="enemy" value="Farmer"/>
    </properties>
   </object>
-  <object id="202" template="../../../../common/maps/obj/enemy.tx" x="45.5088" y="281.439">
+  <object id="202" template="../../../../common/maps/obj/enemy.tx" x="77.5088" y="281.439">
    <properties>
     <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Farmer"/>
    </properties>
   </object>
-  <object id="203" template="../../../../common/maps/obj/enemy.tx" x="333.509" y="281.439">
+  <object id="203" template="../../../../common/maps/obj/enemy.tx" x="301.509" y="281.439">
    <properties>
     <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Farmer"/>

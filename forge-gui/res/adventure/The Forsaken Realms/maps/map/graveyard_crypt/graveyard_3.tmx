@@ -106,7 +106,7 @@
 </property>
    </properties>
   </object>
-  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="455" y="250.5">
+  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="455" y="266.5">
    <properties>
     <property name="enemy" value="Wraith"/>
     <property name="threatRange" type="int" value="20"/>

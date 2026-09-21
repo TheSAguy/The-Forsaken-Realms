@@ -193,7 +193,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="193" template="../../../../common/maps/obj/enemy.tx" x="68" y="720.497" width="16" height="17.6724">
+  <object id="193" template="../../../../common/maps/obj/enemy.tx" x="100" y="736.497" width="16" height="17.6724">
    <properties>
     <property name="enemy" value="Frog"/>
     <property name="threatRange" type="int" value="20"/>

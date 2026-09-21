@@ -343,7 +343,7 @@
     <property name="waypoints" value="231,234,233,232"/>
    </properties>
   </object>
-  <object id="246" template="../../../../../common/maps/obj/enemy.tx" x="117.333" y="396.833" visible="1">
+  <object id="246" template="../../../../../common/maps/obj/enemy.tx" x="117.333" y="380.833" visible="1">
    <properties>
     <property name="effect">{ &quot;startBattleWithCard&quot;: [ &quot;Nether Shadow&quot;,&quot;Nether Shadow&quot;]
 }</property>
@@ -367,7 +367,7 @@
     <property name="waypoints" value="233,232,234,231"/>
    </properties>
   </object>
-  <object id="248" template="../../../../../common/maps/obj/enemy.tx" x="320" y="399.333" visible="1">
+  <object id="248" template="../../../../../common/maps/obj/enemy.tx" x="288" y="367.333" visible="1">
    <properties>
     <property name="effect">{ &quot;startBattleWithCard&quot;: [ &quot;Infernal Kirin&quot;]
 }</property>

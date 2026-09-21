@@ -75,7 +75,7 @@
   </object>
   <object id="163" template="../../../../common/maps/obj/waypoint.tx" x="608.372" y="250.56" width="10.4545" height="10.8485"/>
   <object id="165" template="../../../../common/maps/obj/waypoint.tx" x="58.569" y="451.878"/>
-  <object id="169" template="../../../../common/maps/obj/enemy.tx" x="386.842" y="36.1053">
+  <object id="169" template="../../../../common/maps/obj/enemy.tx" x="418.842" y="68.1053">
    <properties>
     <property name="enemy" value="Vulture"/>
     <property name="spawn.Hard" type="bool" value="true"/>

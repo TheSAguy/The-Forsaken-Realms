@@ -17757,6 +17757,61 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 278: fifteen dungeons that could never be cleared (2026-09-20)
+
+Round 275 read its own list of 52 unreachable enemy placements as a bestiary - jellyfish, crocodiles, griffins,
+bats, nine farmers - and concluded "they swim, fly or stand in crops, leave them alone". **That conclusion was
+wrong, and the user's own example is what proved it.** They had asked for "pre-existing enemies stranded outside
+walls, like the one above Blue Tower's wall"; the soak happened to walk into a Blue Tower, so it got looked at.
+
+"Blue Tower" is the display name of several `magetower_*` dungeons. `magetower_11_dreamhalls.tmx` has **one entry
+object and no doors or teleports**, and only 32% of its legal player positions are reachable from that entry. Its
+two Jellyfish sit in the sealed band of drawn-but-unreachable floor between the room and the outer wall. Printing
+the tile neighbourhood settles it - `#Eoo...` reads as outer wall, jellyfish, two tiles of art nobody can stand
+on, then the floor. Not water. Walled off.
+
+### The split that means something
+
+The creature's name is the wrong discriminator. `dev-tools/stranded_enemies.py` (new) uses the only one that
+matters: **could the PLAYER stand on that tile, if a route existed?**
+
+| verdict | test | count |
+|---|---|---|
+| **STRANDED** | the tile holds a legal 10x6 player position with no route to it | **28** |
+| in place | collision covers the tile - water, a chasm, a roof | 23 |
+| off-map | outside the map rectangle | 0 (round 275's Mimic was the only one) |
+
+### Why the 28 are a bug and not set dressing
+
+`AdventureQuestController.updateQuestsWin()` sets `allEnemiesCleared` false if ANY enemy is still on the map,
+exempting only those carrying a `defeatDialog`. So one walled-off enemy means that dungeon:
+
+* never despawns - the 2026-08-18 "silly to have an empty dungeon on the map" behaviour cannot fire,
+* can never satisfy a ClearDungeons objective,
+* stalls "Sweep the Wilds" and any quest stage keyed to clearing it, permanently.
+
+Fifteen maps were in that state. The 23 "in place" ones do not have the same problem in practice: a swimmer or
+flier with round 252's reaction range comes OUT to the player and can be killed there.
+
+### The fix
+
+`dev-tools/unstrand_enemies.py` (new) moves each one the way round 275 moved the ten booster guards, and for the
+same reasons: candidates are whole-tile offsets from the enemy's **own** authored x/y (no coordinate conversion,
+so the top-or-bottom-edge question cannot corrupt a write), the tile must hold a player position reachable from an
+entry, it must not already hold another object, nearest wins. **22 moved**, all but one by 1-3 tiles; the
+exceptions worth naming are a Dragonfly that was sitting on tile (0,0) - the literal map corner - and a Farmer in
+`skep_outer.tmx` that needed 7 tiles. Re-classified afterwards: **28 stranded -> 6**.
+
+The 6 left, deliberately:
+
+* **`phyrexian_black1.tmx`, all five of its enemies.** Its single `entry_left` reaches 28,653 of 75,489 legal
+  positions, so the ENTRY is what looks misplaced, not the enemies - moving them would paper over the real
+  question. Skipped by policy (`--include-skipped` overrides). **This is the one to look at by hand.**
+* one Knight in `skep_outer.tmx` with no reachable tile within 8 tiles, reported rather than flung somewhere.
+
+NOT verified in a game yet - the moves are verified against the static test that round 275 validated (the ten
+guards, and `player_capital.tmx` coming back 100% connected), not by walking each one.
+
 ## Round 277: stranded in the middle of a point of interest (2026-09-20)
 
 The soak lost half an hour to a state no bridge command could leave. The player had died in the Barnacle Gallery,

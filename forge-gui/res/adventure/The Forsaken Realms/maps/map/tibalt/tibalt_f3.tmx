@@ -61,7 +61,7 @@
    </properties>
   </object>
   <object id="115" template="../../../../common/maps/obj/gold.tx" x="525.88" y="209.537"/>
-  <object id="117" template="../../../../common/maps/obj/enemy.tx" x="143.319" y="265.121">
+  <object id="117" template="../../../../common/maps/obj/enemy.tx" x="175.319" y="265.121">
    <properties>
     <property name="displayNameOverride" value="Prisoner"/>
     <property name="enemy" value="Farmer"/>
@@ -239,7 +239,7 @@
 }]</property>
    </properties>
   </object>
-  <object id="205" template="../../../../common/maps/obj/enemy.tx" x="141.675" y="196.105">
+  <object id="205" template="../../../../common/maps/obj/enemy.tx" x="173.675" y="196.105">
    <properties>
     <property name="displayNameOverride" value="Prisoner"/>
     <property name="enemy" value="Farmer"/>
@@ -253,7 +253,7 @@
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
-  <object id="207" template="../../../../common/maps/obj/enemy.tx" x="140.009" y="331.772">
+  <object id="207" template="../../../../common/maps/obj/enemy.tx" x="172.009" y="331.772">
    <properties>
     <property name="displayNameOverride" value="Prisoner"/>
     <property name="enemy" value="Farmer"/>

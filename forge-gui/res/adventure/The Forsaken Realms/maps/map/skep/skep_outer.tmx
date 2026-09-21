@@ -231,7 +231,7 @@
     <property name="waypoints" value="160,164,161,162,161,189"/>
    </properties>
   </object>
-  <object id="73" template="../../../../common/maps/obj/enemy.tx" x="1378.5" y="1327.75" width="16" height="16" visible="1">
+  <object id="73" template="../../../../common/maps/obj/enemy.tx" x="1378.5" y="1215.75" width="16" height="16" visible="1">
    <properties>
     <property name="dialog">[
   {
@@ -849,7 +849,7 @@
     <property name="waypoints" value="161,189,190,189,191,192,191,189"/>
    </properties>
   </object>
-  <object id="150" template="../../../../common/maps/obj/enemy.tx" x="1131" y="1334" width="16" height="16" visible="1">
+  <object id="150" template="../../../../common/maps/obj/enemy.tx" x="1131" y="1286" width="16" height="16" visible="1">
    <properties>
     <property name="dialog">[
   {
@@ -868,7 +868,7 @@
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
-  <object id="151" template="../../../../common/maps/obj/enemy.tx" x="1439" y="1308" width="16" height="16" visible="1">
+  <object id="151" template="../../../../common/maps/obj/enemy.tx" x="1439" y="1228" width="16" height="16" visible="1">
    <properties>
     <property name="dialog">[
   {

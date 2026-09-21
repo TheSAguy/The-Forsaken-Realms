@@ -193,11 +193,33 @@ def main():
                        len(s.get("actors") or []))
         if fingerprint == last_fingerprint:
             same_count += 1
-            if same_count in (12, 40):
-                j.problem("no change in %d iterations: %s  forgeUi=%s dialog=%s"
-                          % (same_count, fingerprint, str(s.get("forgeUi"))[:160], str(s.get("dialog"))[:160]))
-            if same_count >= 40:
-                j.problem("livelocked - stopping so the session can be looked at rather than spun on")
+            # A livelock has to become PROGRESS, not a stop. The give-up counters only count commands that
+            # FAIL, and the stall that kept ending the run did not fail: `goto actor=N` returned ok, the walk
+            # "arrived" or "stopped: entering / event", no duel started, the actor stayed, and the driver
+            # picked it again - forty times in twenty seconds at the Archaeological Dig. So escalate on the
+            # fingerprint instead, which notices "nothing changed" however the command reported itself.
+            if same_count == 12:
+                loc = p.get("location") or "?"
+                target = nearest(s.get("actors") or [], "enemy",
+                                 {aid for (l, aid) in giveups if l == loc}) \
+                    or nearest(s.get("actors") or [], "reward",
+                               {aid for (l, aid) in giveups if l == loc})
+                if target is not None:
+                    giveups.add((loc, target[0]))
+                    j.say("skip", "nothing changed for 12 turns - giving up on actor %s (%s) in %s"
+                          % (target[0], target[2], loc))
+                    same_count = 0
+                else:
+                    j.problem("no change in 12 iterations and nothing to give up on: %s  forgeUi=%s"
+                              % (fingerprint, str(s.get("forgeUi"))[:140]))
+            elif same_count == 25:
+                j.say("skip", "still nothing after 25 turns - leaving %s" % (p.get("location") or "?"))
+                cmd("leave")
+                settle()
+                same_count = 0
+            elif same_count >= 40:
+                j.problem("livelocked with nothing left to try: %s  forgeUi=%s dialog=%s"
+                          % (fingerprint, str(s.get("forgeUi"))[:160], str(s.get("dialog"))[:160]))
                 break
         else:
             same_count = 0
@@ -273,7 +295,19 @@ def main():
                 settle()
                 continue
             if reward:
-                cmd("goto", actor=reward[0])
+                # The same three-strikes rule as an enemy, and for the same reason. A reward the walker
+                # cannot reach had NO give-up path at all, so the loop retried it forever: the third soak
+                # stall was four actors in the Archaeological Dig with the state unchanged for forty
+                # iterations. Any actor the in-map planner cannot reach has to be droppable - see the note
+                # in MOD_CHANGELOG round 277 about planMap() borrowing the enemy AI's navigation graph.
+                r = cmd("goto", actor=reward[0])
+                if not r.get("ok"):
+                    key = (here, reward[0])
+                    stuck_enemies[key] = stuck_enemies.get(key, 0) + 1
+                    if stuck_enemies[key] >= 3:
+                        j.say("skip", "giving up on reward %s in %s for the rest of the run - three failed "
+                                      "approaches" % (reward[0], here))
+                        giveups.add(key)
                 settle()
                 continue
             j.say("map", "%s cleared - leaving" % p.get("location"))

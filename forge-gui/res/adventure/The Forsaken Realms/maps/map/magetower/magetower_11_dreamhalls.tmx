@@ -151,14 +151,14 @@
     <property name="enemy" value="Penguin"/>
    </properties>
   </object>
-  <object id="52" template="../../../../common/maps/obj/enemy.tx" x="390.006" y="145.61">
+  <object id="52" template="../../../../common/maps/obj/enemy.tx" x="374.006" y="145.61">
    <properties>
     <property name="enemy" value="Jellyfish"/>
     <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="60,59,58,61,58,59"/>
    </properties>
   </object>
-  <object id="57" template="../../../../common/maps/obj/enemy.tx" x="28.3333" y="102.667">
+  <object id="57" template="../../../../common/maps/obj/enemy.tx" x="44.3333" y="86.667">
    <properties>
     <property name="enemy" value="Jellyfish"/>
     <property name="threatRange" type="int" value="40"/>

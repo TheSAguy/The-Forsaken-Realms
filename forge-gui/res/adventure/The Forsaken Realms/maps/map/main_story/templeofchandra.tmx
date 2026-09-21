@@ -788,7 +788,7 @@
     <property name="waypoints" value="78,79,80,81,82,83,84,85,120,86,87,88,89,90,91,92,93,94,95,96,97,96,95,94,93,92,91,90,89,88,87,86,120,85,84,83,82,81,80,79"/>
    </properties>
   </object>
-  <object id="45" template="../../../../common/maps/obj/enemy.tx" x="127.5" y="541.5">
+  <object id="45" template="../../../../common/maps/obj/enemy.tx" x="111.5" y="541.5">
    <properties>
     <property name="enemy" value="Magma Elemental"/>
     <property name="flying" type="bool" value="true"/>
@@ -1110,7 +1110,7 @@
     <property name="waypoints" value="114,115"/>
    </properties>
   </object>
-  <object id="65" template="../../../../common/maps/obj/enemy.tx" x="552.5" y="376">
+  <object id="65" template="../../../../common/maps/obj/enemy.tx" x="552.5" y="360">
    <properties>
     <property name="effect">{
  &quot;startBattleWithCard&quot;: [ &quot;Chandra's Phoenix&quot; ]
