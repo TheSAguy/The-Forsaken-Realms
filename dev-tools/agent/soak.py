@@ -237,8 +237,13 @@ def main():
                   % (last_day, p["day"], p["life"], p["maxLife"], p["gold"]))
         if last_life is not None and p["life"] < last_life:
             j.say("hurt", "life %s -> %s" % (last_life, p["life"]))
-        if p["life"] <= 0:
-            j.problem("life reached %s - the player is dead" % p["life"])
+        # Once, on the way down - not every iteration. 0 life is a RESTING state in this game, not an
+        # end: defeated() subtracts life and its callers only relocate the player (MapStage: "If hardcore
+        # mode is added, check and redirect to game over screen here"), so the player can sit at 0/12
+        # indefinitely and this fired on every loop, burying the events worth reading.
+        if p["life"] <= 0 and (last_life is None or last_life > 0):
+            j.problem("life reached %s - the player is at zero (the game has no game-over; healing is a "
+                      "town visit)" % p["life"])
         last_day, last_life = p["day"], p["life"]
         peak_gold = max(peak_gold, p.get("gold") or 0)
 
