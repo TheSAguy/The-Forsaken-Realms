@@ -1832,7 +1832,16 @@ from the plane's `config tables/settings.json`).
   `%APPDATA%\ForgottenRealms` — existing test saves under `%APPDATA%\Forge\adventure\The
   Forsaken Realms` must be copied over once (the old 2.0.14 install at `E:\GAMES\FORGE` is
   unaffected, its jars predate this change).
-- **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** — `checkForUpdates()` gets a
+- **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** — round 282 added `isRemoteNewer()` and
+  routed BOTH `verifyUpdatable` assignments through it, replacing stock's
+  `!versionString.equals(version)`. Stock asks whether the installed version DIFFERS from the newest
+  published release, so any build ahead of the latest tag is offered a DOWNGRADE on every launch — a 1.13
+  test APK against `tfr-v1.12` downloaded the 1.12 APK, and since stock deliberately exits after
+  `openFile(installer)` the game appeared to close on "update" while Android refused the install
+  (versionCode 11200 < 11300). Segments compare numerically; anything unparseable ("GIT", SNAPSHOT) keeps
+  stock's inequality, so the only changed behavior is local-ahead-of-remote. Upstream conflict note: if a
+  merge restores the `equals` test, the symptom returns only for unreleased builds, which is precisely when
+  nobody is watching for it. Also in this file, `checkForUpdates()` gets a
   desktop-only early-out (`if (!GuiBase.isAndroid()) { run(runnable); return; }`) killing the
   stock-Forge updater: on a pinned fork the "New Version Available" prompt would fire on nearly
   every launch (upstream ships daily snapshots) and accepting it downloads PLAIN Forge over the

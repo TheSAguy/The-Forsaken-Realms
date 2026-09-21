@@ -17859,6 +17859,55 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 282: an update has to be NEWER, not merely different (2026-09-21)
+
+Reported from the emulator within minutes of the 1.13 test APK landing, with screenshots: *"I launch
+Forsaken, it says an update is available. After I click on update, it just closes."*
+
+Both halves are stock, behaving exactly as written.
+
+    verifyUpdatable = !StringUtils.isEmpty(version) && !versionString.equals(version);
+
+That asks whether the installed version DIFFERS from the newest published release - not whether the release
+is newer. A 1.13 test APK against a newest tag of `tfr-v1.12` therefore reads as "an update is available",
+and the dialog says so with the numbers the wrong way round, which the screenshot catches nicely: *"A new
+version of The Forsaken Realms is available. (v.1.12) You are currently on an older version. (v.1.13)"*.
+It is offering a downgrade and calling the newer build old.
+
+The close is stock too, and is not a crash. "Update Now" downloads
+`forsaken-realms-1.12-signed-aligned.apk`, hands it to the package installer via
+`getDeviceAdapter().openFile(installer)`, and then calls `Forge.exitAnimation(false)` - the app is SUPPOSED
+to exit so the installer can replace it. Android then refuses the install as a version downgrade
+(versionCode 11200 under 11300), so the whole visible result is a game that closes when you ask it to
+update and comes back unchanged. Nothing was broken on the device; there was nothing to update to.
+
+`isRemoteNewer()` compares segment by segment as numbers. A string compare happens to work while the scheme
+stays zero-padded two-digit minors (1.09 < 1.13) - which is exactly why it is not worth relying on: it
+breaks silently the day someone writes 1.9 or 2.0, and the failure is either a prompt that nags for ever or
+a real release that is never offered. Unparseable names ("GIT", SNAPSHOT) fall back to stock's inequality,
+so the only behavior that changes is the one that was wrong.
+
+Checked against the real sequence before building, not after: published 1.12 against installed 1.13 -> no
+offer (the reported case); 1.13 against 1.12 -> offered; equal -> nothing; 1.09 against 1.13 -> no offer
+(the two-digit minor); 2.00 against 1.13 -> offered.
+
+**This was only ever reachable for an UNRELEASED build**, because a published release is never behind a
+player's install - which is why v1.03 through v1.12 never saw it, and why it took handing someone a 1.13
+APK to find it. Worth fixing anyway: every future test build would hit it, and it also covers a re-tagged
+or withdrawn release offering a real player a downgrade.
+
+Two consequences worth stating plainly for the emulator:
+
+* **The seeded assets survive a reinstall.** The assets check returns early on a matching `version.txt`
+  *before* it ever compares `build.txt`, so a fresh 1.13 APK over the same 1.13 assets needs no re-push of
+  the 210 MB.
+* **Until this APK is installed, "Update Later" is the correct answer** and the game runs normally. That
+  was the whole of the immediate problem.
+
+Also corrected while in the file: the comment above the desktop early-out still said Android builds were
+not shipped. That stopped being true at v1.03 (round 61), and round 282's bug was reported from exactly
+the pipeline the line waved away as unshipped.
+
 ## Round 281: the softlock watchdog was crying wolf, and 1.13 for the emulator (2026-09-21)
 
 This round came out of reviewing the user's own play-test log. 147 KB, **zero exceptions**, round 279's guards

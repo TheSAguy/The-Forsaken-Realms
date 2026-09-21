@@ -35,6 +35,40 @@ public class AssetsDownloader {
     private final static ImmutableList<String> downloadIgnoreExit = ImmutableList.of("Download", "Ignore", "Exit");
     private final static ImmutableList<String> downloadExit = ImmutableList.of("Download", "Exit");
 
+    /**
+     * Round 282: is the GitHub release's version actually NEWER than the installed one?
+     * <p>
+     * Stock asks only whether the two DIFFER, which is true of any unreleased build: a 1.13 test APK
+     * against a newest published tag of tfr-v1.12 was told it was "currently on an older version",
+     * offered 1.12 as the update, and - because stock hands the APK to the package installer and then
+     * calls {@code Forge.exitAnimation(false)} - closed itself on every launch, while Android quietly
+     * refused the install as a version downgrade (versionCode 11200 under 11300). Reported from the
+     * emulator, 2026-09-21.
+     * <p>
+     * Compared segment by segment as NUMBERS. A string compare happens to work while the scheme stays
+     * zero-padded two-digit minors (1.09 < 1.13), which is exactly why it is not worth relying on -
+     * it breaks silently the day someone writes 1.9 or 2.0, and the failure is an update prompt that
+     * either nags forever or hides a real release. Anything unparseable (a "GIT" or SNAPSHOT version
+     * name) falls back to stock's inequality, so the only behavior that changes is the one that was
+     * wrong - a local version AHEAD of the published one no longer offers a downgrade, and equal
+     * versions still offer nothing.
+     */
+    private static boolean isRemoteNewer(String remote, String local) {
+        String[] r = remote.trim().split("\\."), l = local.trim().split("\\.");
+        for (int i = 0; i < Math.max(r.length, l.length); i++) {
+            int rp, lp;
+            try {
+                rp = i < r.length ? Integer.parseInt(r[i].trim()) : 0;
+                lp = i < l.length ? Integer.parseInt(l[i].trim()) : 0;
+            } catch (NumberFormatException e) {
+                return !local.equals(remote); // not a number pair - stock's test
+            }
+            if (rp != lp)
+                return rp > lp;
+        }
+        return false; // identical
+    }
+
     public static void checkForUpdates(boolean exited, Runnable runnable) {
         if (exited)
             return;
@@ -42,7 +76,10 @@ public class AssetsDownloader {
         // stock-Forge updater must never run - accepting its prompt would download plain Forge
         // over the game and leave a broken half-updated install. Desktop-only shortcut: every
         // non-Android path below ends in run(runnable) anyway, so nothing else is skipped.
-        // (Android builds, which we don't ship, keep the stock asset pipeline below.)
+        // (Android keeps the stock asset pipeline below - it is the RETARGETED updater, pointed at
+        // this fork's own tfr-v releases, plus round 282's "newer, not merely different" test. This
+        // line used to say Android was not shipped; that stopped being true at v1.03 / round 61, and
+        // round 282's bug was reported from exactly the pipeline it waved away.)
         if (!GuiBase.isAndroid()) {
             run(runnable);
             return;
@@ -116,11 +153,11 @@ public class AssetsDownloader {
                             verifyUpdatable = DateUtil.getElapsedHours(buildTimeStamp, snapsTimestamp) > 23;
                         } else {
                             //fallback to old version comparison
-                            verifyUpdatable = !StringUtils.isEmpty(version) && !versionString.equals(version);
+                            verifyUpdatable = !StringUtils.isEmpty(version) && isRemoteNewer(version, versionString);
                         }
                     }
                 } else {
-                    verifyUpdatable = !StringUtils.isEmpty(version) && !versionString.equals(version);
+                    verifyUpdatable = !StringUtils.isEmpty(version) && isRemoteNewer(version, versionString);
                 }
 
                 if (verifyUpdatable) {
