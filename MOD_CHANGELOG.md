@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 268: the clock, not the legs (2026-09-20)
+
+User: *"Not Walking speed, please change that back, I meant game speed as in how long a day lasts. Speed that up
+by 10%."*
+
+Round 267 read "game speed" as how fast the player moves. Wrong axis. `playerBaseSpeed` is back to 40, and
+`dayLengthSeconds` goes 300 -> 270: a day passes in 4m30s of wall clock instead of 5m. Everything measured IN
+days - quest timers, dungeon rotation, mage travel, the spawn-tier week brackets - is untouched; they simply
+arrive 10% sooner in real time. Both are data files, so this shipped without a rebuild.
+
+### The round 266 caveat, recorded before it is forgotten
+
+Chasing the user's second screenshot (water-coloured tiles in the LIVE WORLD, not the map view) turned up
+something that undercuts round 266's assumption, and it is written down here because the fix is already
+packaged.
+
+The first screenshot is explained exactly: the wasteland's structure table starts with `crater` and green's
+starts with `water`, both at offset 0, so decoding a claimed tile against the wrong table turns craters into
+water. That is the minimap, and round 266 aligns the re-bake with the live repaint.
+
+But claiming does not always leave a tile in wasteland index space. `structureSwapCache` TRANSLATES terrain
+values from one biome's index space into another's when land changes hands, and the `[TFR-Terrain]` remap lines
+in the user's log fire **only for "player land"** - never for any AI colour, which is what you would expect if
+AI claims are translated rather than left in waste space.
+
+Round 266 assumes every claimed-wasteland tile is in colourless space and decodes it against waste. That is
+right for expansion-claimed tiles - `claimWastelandRing()` passes `colorlessBiome` to `redrawMinimapTile()` for
+exactly that reason - but is NOT verified for tiles claimed through `repaintBiomeAroundTown()`, which may
+already be translated. If they are, the re-bake now mis-draws those instead.
+
+**User's decision (2026-09-20): leave it in and trace it next round** - the failure is cosmetic either way and
+reversible. What to trace: for each of the three claim paths (`claimWastelandRing`,
+`repaintBiomeAroundTown`, `neutralizeTerritoryOutsideRadius`), which index space the stored `terrainMap` value
+ends up in, and whether `structureSwapCache` ran on it. Then the re-bake's decode biome must follow THAT, not a
+blanket "claimed wasteland means colourless". The `[TFR-Minimap]` line added in round 266 reports how many tiles
+the re-bake decoded in wasteland space - if that count is large next to the number of expansion-claimed tiles,
+the assumption is wrong.
+
 ## Round 267: a little faster on foot, a quieter surge, and a stop script that works (2026-09-20)
 
 **Walking speed +10%.** User: *"Increase the game speed by 10%. Feels a little slow."* `playerBaseSpeed`
