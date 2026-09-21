@@ -1345,6 +1345,29 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             }
         }
 
+        // Round 274 (user: "Seeding innTournamentQuestGiven at load for saves whose statistics already show a
+        // finished tournament - offered, please implement"). Round 259 made the Inn-tournament nudge once per
+        // PLAYER by stamping a character flag when it is issued or found already resolved. A save written before
+        // that round carries no flag, so its statistics are the only record that it happened - and
+        // resetForNewGamePlus() clears the statistics, which means the evidence disappears exactly when the flag
+        // is needed. Reading it here, while both are still in hand, is the one moment that works.
+        //
+        // Safe to run on every load, not just old saves: it only ever sets the flag that addQuest() would set
+        // itself on the same evidence (`completedEventCount() > 0` means "already resolved"), so it cannot issue,
+        // suppress or double-count anything a current save would not already have decided. After a New Game+ the
+        // count is 0 and the flag was carried across the wipe, so this is a no-op there.
+        //
+        // Ordering: statistic.load() ran at the top of this method and characterFlags just above, so both are
+        // populated. Set directly rather than through setCharacterFlag() - this is a migration of what the save
+        // already implies, not a game event, and the setter is the hook other systems listen on.
+        if (getCharacterFlag(INN_TOURNAMENT_QUEST_FLAG) == 0 && statistic != null
+                && statistic.completedEventCount() > 0) {
+            characterFlags.put(INN_TOURNAMENT_QUEST_FLAG, (byte) 1);
+            System.out.println("[TFR-MainQuest] seeded " + INN_TOURNAMENT_QUEST_FLAG + " from this save's "
+                    + statistic.completedEventCount() + " finished tournament(s) - the \"Participate in an Inn "
+                    + "Tournament\" nudge is already resolved for this player and will not return in a New Game+");
+        }
+
         if (data.containsKey("questFlagsKey") && data.containsKey("questFlagsValue")) {
             String[] keys = (String[]) data.readObject("questFlagsKey");
             Byte[] values = (Byte[]) data.readObject("questFlagsValue");

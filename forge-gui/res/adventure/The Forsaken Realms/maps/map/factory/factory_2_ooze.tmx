@@ -64,7 +64,7 @@
     <property name="waypoints" value="79,80"/>
    </properties>
   </object>
-  <object id="69" template="../../../../common/maps/obj/enemy.tx" x="224.586" y="125.875">
+  <object id="69" template="../../../../common/maps/obj/enemy.tx" x="65.5" y="44.5">
    <properties>
     <property name="enemy" value="Golem"/>
     <property name="threatRange" type="int" value="30"/>

@@ -17757,6 +17757,104 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 275: reachability, and the audit that was reading a mirror (2026-09-20)
+
+User: *"Reachability flood-fill for guard placement - needed to re-place the ten guards I reverted in round 269
+... Blocked on determining what the Collision layer actually means, since legitimate enemies stand on collision
+tiles"* and *"The 13 pre-existing out-of-bounds enemies my first sweep found - all predate my work, none fixed."*
+
+### The blocker, answered from the code rather than the maps
+
+`MapStage.loadCollision()` settles it in eight lines:
+
+* **Collision does not come from the layer named "Collision."** The method runs over EVERY `TiledMapTileLayer`
+  and, per non-empty cell, reads the rectangles authored on that TILE in its tileset (`cell.getTile().getObjects()`),
+  offset by the cell's position. A wall tile in `Walls` blocks exactly as much. The layer name is decoration.
+* **The boxes are sub-tile.** `fort_colorless_3_human.tmx` alone has 240 full-tile rects and **330 partial** ones.
+  A tile carrying a box across its top half is still somewhere you can stand.
+* **The player is not the sprite.** `CharacterSprite.updateBoundingRect()` is `(x+4, y, width-6, height*0.4)` -
+  for a 16px hero a **10 x 6.4 box at the feet**, two thirds of a tile wide and under half a tile high.
+
+Which is exactly why legitimate enemies stand on "collision tiles", and why round 269's first draft called 173 of
+them sealed. Walkability is a POSITION question, not a tile question.
+
+### It already existed
+
+`dev-tools/pixel_collision_qa.py` (round ~230) already rasterises every collision rectangle to pixels, computes
+the configuration space of the player's real 10x6 box with a sliding window, and flood-fills it. A second copy was
+written this round before that was noticed, and **deleted** - round 266's lesson is that two copies of one rule
+drift, and this is the same rule. What it lacked was a starting point and a question, so it gained:
+
+* `map_objects()` / `template_kind()` - objects resolved through their `.tx` templates, since the type and the
+  `spawn` property live in the template, not in the map.
+* `reachable_from_entries()` - the flood fill seeded at the map's entries instead of at its largest free region.
+* `--enemies` - every enemy placement no reachable player position can get within `ENGAGE_SLACK` (20px) of, which
+  is how a duel starts: by walking into it.
+
+### Round 269's audit was reading a vertical mirror
+
+A `.tmx` tile object's `y` is its BOTTOM edge, and the layer grid is top-down. Round 269's audit used the raw `y`
+as a **bottom-up tile index**, which flips the map upside down. Proof, not inference - entry objects are provably
+standable, because the game spawns the player onto them, so the right convention puts them on legal ground. Over
+82 entries:
+
+| conversion | legal player position within 3px |
+|---|---|
+| y as the bottom edge (correct) | **80/82 = 97.6%** |
+| y as the top edge | 28/82 = 34.1% |
+| round 269's mirror | 7/82 = 8.5% |
+
+A floor-art test could not tell these apart (99.3% vs 99.4%) because these rooms fill most of their map and are
+near enough vertically symmetric. Collision geometry is not.
+
+**So the "13 pre-existing out-of-bounds enemies" were an artifact.** Re-checked with the real test, the eight in
+`fort_colorless_3_human.tmx` are all perfectly reachable, and so are four of the other five. **One was real:** the
+Mimic in `library_of_varsil_3.tmx`, at tmx (512,-32) on a 480x320 map - outside the rectangle on both axes, and the
+one offender no convention argument can explain away. Moved beside the enemy at (232,58), one tile away, verified
+reachable.
+
+### The ten guards are placed, and verified
+
+`dev-tools/guard_placement.py` puts each of round 269's ten back on booster duty. Candidate tiles are whole-tile
+offsets from the BOOSTER's own authored x/y - offsetting by tile multiples from a coordinate the file already
+contains needs no conversion at all, so the 16px top-or-bottom-edge question cannot corrupt a write. A candidate
+has to hold a player position reachable from an entry, and must not sit on another object. All ten landed **one
+tile from their booster**, and re-running `--enemies` on all ten maps reports 0 unreachable placements in each.
+
+### The other 51, deliberately left alone
+
+The full sweep flags 52 of 2,361 placements as unreachable, and the list reads as a bestiary rather than a bug
+report: 6 Jellyfish, 5 Crocodile, 3 Dragonfly, 3 Griffin, 2 Turtle, plus Bat, Raven, Vulture, Owl, Frog, Giant
+Fly, Phoenix. **Things that swim or fly, standing in water or over a chasm** - where they belong, and where round
+252's default reaction range means they come to the player rather than the player to them. Moving them onto dry
+land would be the tool dictating design. The 9 Farmers (in `tibalt_f3`, `zedruu_f1`, `skep_outer`) are the same
+shape of thing: standing in crop fields.
+
+**One genuine finding for the user to look at:** `phyrexian_black1.tmx` has 75,489 legal player positions but only
+28,653 in its largest connected region, and its single `entry_left` opens into a component that reaches none of its
+five enemies. That is the "enemy stranded outside the wall" class the user mentioned at Blue Tower, but at map
+scale - the entrance may be on the wrong side of its own geometry. Not touched: it needs a decision about the map,
+not a tool.
+
+## Round 274: the Inn-tournament flag, seeded from what the save already knows (2026-09-20)
+
+User: *"Seeding innTournamentQuestGiven at load for saves whose statistics already show a finished tournament -
+offered, please implement."*
+
+Round 259 made "Participate in an Inn Tournament" once per PLAYER by stamping `innTournamentQuestGiven` when the
+quest is issued or found already resolved. A save written before that round carries no flag, so its STATISTICS are
+the only record that it happened - and `resetForNewGamePlus()` clears the statistics, so the evidence disappears at
+exactly the moment the flag would be needed. `AdventurePlayer.load()` now reads one against the other while both
+are still in hand: no flag plus `completedEventCount() > 0` stamps the flag, with a `[TFR-MainQuest]` line saying
+so.
+
+Safe on every load, not just old saves: it only sets the flag `addQuest()` would set itself on the same evidence,
+so it cannot issue, suppress or double-count anything a current save would not already have decided. After a New
+Game+ the count is 0 and the flag was carried across the wipe, so it is a no-op. Ordering matters and holds -
+`statistic.load()` runs at the top of `load()` and `characterFlags` just above the new block. It writes
+`characterFlags` directly rather than through `setCharacterFlag()`, because this is a migration of what the save
+already implies, not a game event, and that setter is the hook other systems listen on.
+
 ## Round 273: the importer stops assuming which way the art faces (2026-09-20)
 
 User: *"art_convert_generic.py still assumes right-facing art ... Please do this now."*

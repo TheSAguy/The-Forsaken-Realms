@@ -20,9 +20,29 @@ height * 0.4), about 10x6 for a 16px sprite - and reports two things:
   pockets  free space the player cannot reach from the entrance, i.e. sealed-off rooms, and
            gaps too narrow for the player's box to fit through.
 
+  enemies  (round 275, --enemies) every enemy placement the player can never walk into. Round 269 wanted
+           this to re-place ten booster guards and said it was blocked on "what the Collision layer actually
+           means, since legitimate enemies stand on collision tiles". That question is answered by
+           MapStage.loadCollision(), not by the maps: collision does NOT come from the layer called
+           "Collision" - loadCollision() runs over EVERY tile layer and reads the rectangles authored on each
+           TILE in its tileset, so a wall tile in the Walls layer blocks exactly as much, the layer name is
+           decoration, and the boxes are sub-tile. A tile carrying a box over its top half is still somewhere
+           you can stand. This file already modelled all of that; --enemies just asks the existing grid a new
+           question.
+
+           An enemy counts as reachable when a reachable player box exists within ENGAGE_SLACK px of it -
+           that is how a duel starts, by walking into it. The slack is deliberately larger than one tile
+           because a .tmx tile object's y is its BOTTOM edge while this grid is top-down, a 16px ambiguity
+           that no amount of care removes from the FILE; a sealed enemy is many tiles from free space, so a
+           tolerance wider than the ambiguity settles every real case. Round 269's own audit got this wrong
+           in the other direction - it used the raw y as a bottom-up tile index, a vertical MIRROR, which is
+           why its "13 pre-existing out of bounds" list does not survive re-checking.
+
 Usage
 -----
     python dev-tools/pixel_collision_qa.py <map.tmx> [...] [--max-island 256] [--player 10x6]
+    python dev-tools/pixel_collision_qa.py --enemies <map.tmx> [...]      unreachable enemy placements
+    python dev-tools/pixel_collision_qa.py --enemies --all                every dungeon map
 """
 
 import argparse
@@ -201,6 +221,106 @@ def flood(mask, wpx, hpx, seeds, want=1):
     return seen
 
 
+ENGAGE_SLACK = 20          # px; see the --enemies note in the module docstring
+DEFAULT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                            "forge-gui", "res", "adventure", "The Forsaken Realms", "maps", "map")
+
+_TPL = {}
+
+
+def template_kind(path):
+    """('entry'|'enemy'|other, width, height) for an object template, from its own <object type=...>."""
+    path = os.path.normpath(path)
+    if path in _TPL:
+        return _TPL[path]
+    kind, w, h = None, 16.0, 16.0
+    try:
+        obj = ET.parse(path).getroot().find("object")
+        if obj is not None:
+            kind = obj.get("type")
+            w = float(obj.get("width", 16) or 16)
+            h = float(obj.get("height", 16) or 16)
+    except (OSError, ET.ParseError, TypeError, ValueError):
+        pass
+    _TPL[path] = (kind, w, h)
+    return _TPL[path]
+
+
+def map_objects(tmx_path):
+    """[{kind, id, x, y, w, h, name}] with x/y exactly as the .tmx stores them (no conversion - see the
+    docstring; callers compare with slack and write back by whole-tile offsets from an authored value)."""
+    root = ET.parse(tmx_path).getroot()
+    base = os.path.dirname(os.path.abspath(tmx_path))
+    out = []
+    for o in root.findall(".//object"):
+        tpl = o.get("template")
+        kind, tw, tht = (None, 16.0, 16.0)
+        if tpl:
+            kind, tw, tht = template_kind(os.path.join(base, tpl))
+        kind = o.get("type") or kind
+        if kind not in ("entry", "enemy"):
+            continue
+        try:
+            x, y = float(o.get("x")), float(o.get("y"))
+        except (TypeError, ValueError):
+            continue
+        props = {pr.get("name"): pr.get("value") for pr in o.findall(".//property")}
+        out.append({"kind": kind, "id": int(o.get("id", 0)), "x": x, "y": y,
+                    "w": float(o.get("width", tw) or tw), "h": float(o.get("height", tht) or tht),
+                    "name": props.get("enemy") or ""})
+    return out
+
+
+def reachable_from_entries(tmx_path, player=(10, 6)):
+    """(free, reachable, wpx, hpx, tw, th, objects) - reachable is the flood fill seeded at the entries.
+
+    Seeds snap to the nearest legal box within one tile in every direction, which is what makes the y
+    ambiguity harmless: an entry sits in a doorway, and every legal position within a tile of it belongs to
+    the same connected component as the room behind it.
+    """
+    blocked, wpx, hpx, tw, th = build_grid(tmx_path)
+    pw, ph = player
+    free = free_positions(blocked, wpx, hpx, pw, ph)
+    objs = map_objects(tmx_path)
+    seeds = []
+    for o in objs:
+        if o["kind"] != "entry":
+            continue
+        for dy in range(-th - 2, th + 3):
+            for dx in range(-4, 5):
+                bx, by = int(o["x"] + 4 + dx), int(o["y"] + dy)
+                if 0 <= bx < wpx and 0 <= by < hpx and free[by * wpx + bx]:
+                    seeds.append(by * wpx + bx)
+    if not seeds:
+        return free, None, wpx, hpx, tw, th, objs
+    return free, flood(free, wpx, hpx, seeds, want=1), wpx, hpx, tw, th, objs
+
+
+def engageable(reachable, wpx, hpx, ox, oy, slack=ENGAGE_SLACK):
+    """Can a reachable player box get within `slack` px of an object at (ox, oy)?"""
+    for by in range(max(0, int(oy) - slack), min(hpx, int(oy) + slack + 1)):
+        row = by * wpx
+        for bx in range(max(0, int(ox) - slack), min(wpx, int(ox) + slack + 1)):
+            if reachable[row + bx]:
+                return True
+    return False
+
+
+def enemy_report(tmx_path, player=(10, 6)):
+    """[(enemy dict, why)] for every placement the player can never walk into."""
+    free, reachable, wpx, hpx, tw, th, objs = reachable_from_entries(tmx_path, player)
+    enemies = [o for o in objs if o["kind"] == "enemy"]
+    if reachable is None:
+        return None, len(enemies)
+    bad = []
+    for e in enemies:
+        if e["x"] < 0 or e["y"] < 0 or e["x"] >= wpx or e["y"] > hpx:
+            bad.append((e, "outside the map (%dx%d px)" % (wpx, hpx)))
+        elif not engageable(reachable, wpx, hpx, e["x"], e["y"]):
+            bad.append((e, "no reachable player position within %d px" % ENGAGE_SLACK))
+    return bad, len(enemies)
+
+
 def analyse(tmx_path, player, max_island):
     blocked, wpx, hpx, tw, th = build_grid(tmx_path)
     pw, ph = player
@@ -266,13 +386,45 @@ def analyse(tmx_path, player, max_island):
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("maps", nargs="+")
+    ap.add_argument("maps", nargs="*")
+    ap.add_argument("--enemies", action="store_true",
+                    help="report enemy placements the player can never walk into (round 275)")
+    ap.add_argument("--all", action="store_true", help="with --enemies: every dungeon map")
     ap.add_argument("--player", default="10x6", help="player collision box, WxH px (default 10x6)")
     ap.add_argument("--max-island", type=int, default=256,
                     help="largest free-standing obstacle to report, in px (default 256 = one tile)")
     args = ap.parse_args()
     pw, ph = (int(v) for v in args.player.lower().split("x"))
-    for m in args.maps:
+    targets = args.maps
+    if args.all:
+        import glob as _glob
+        targets = sorted(_glob.glob(os.path.join(DEFAULT_ROOT, "**", "*.tmx"), recursive=True))
+    if args.enemies:
+        total_bad = total_enemies = no_entry = 0
+        for m in targets:
+            try:
+                bad, count = enemy_report(m, (pw, ph))
+            except Exception as ex:
+                print("%-46s SKIPPED (%s)" % (os.path.basename(m), ex))
+                continue
+            total_enemies += count
+            if bad is None:
+                no_entry += 1
+                continue
+            if not bad:
+                continue
+            total_bad += len(bad)
+            print("%s  -  %d of %d enemy placement(s) unreachable"
+                  % (os.path.relpath(m, DEFAULT_ROOT).replace("\\", "/"), len(bad), count))
+            for e, why in bad:
+                print("    obj %-5d %-26s tmx (%.0f,%.0f)  tile (%d,%d)  %s"
+                      % (e["id"], (e["name"] or "?")[:26], e["x"], e["y"],
+                         int(e["x"] // 16), int(e["y"] // 16) - 1, why))
+        print("\n%d map(s) scanned, %d had no entry object to flood-fill from, "
+              "%d of %d enemy placement(s) unreachable"
+              % (len(targets), no_entry, total_bad, total_enemies))
+        return 0
+    for m in targets:
         analyse(m, (pw, ph), args.max_island)
     return 0
 

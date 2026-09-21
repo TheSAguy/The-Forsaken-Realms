@@ -101,7 +101,7 @@
     <property name="threatRange" type="int" value="30"/>
    </properties>
   </object>
-  <object id="79" template="../../../../common/maps/obj/enemy.tx" x="202" y="506.333">
+  <object id="79" template="../../../../common/maps/obj/enemy.tx" x="157" y="609.333">
    <properties>
     <property name="enemy" value="Kobold Warrior"/>
     <property name="threatRange" type="int" value="50"/>

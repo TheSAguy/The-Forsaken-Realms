@@ -50,14 +50,38 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-20 (round 273; v1.12 "Reward Balancing" RELEASED, rounds 247-273 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-20 (round 275; v1.12 "Reward Balancing" RELEASED, rounds 247-275 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 273, 2026-09-20).** v1.12 is out; rounds 247-273 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 275, 2026-09-20).** v1.12 is out; rounds 247-275 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
+  1. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
+     SETTLED, from `MapStage.loadCollision()`: collision does NOT come from the layer named "Collision" - that
+     method walks EVERY tile layer and reads the rectangles authored on each TILE in its tileset, the boxes are
+     SUB-TILE (one fort map: 240 full-tile, 330 partial), and the player is a **10 x 6.4 box at the sprite's
+     feet** (`(x+4, y, width-6, height*0.4)`), not the 16x16 sprite. That is why legitimate enemies stand on
+     "collision tiles". Walkability is a POSITION question, never a tile question.
+     `dev-tools/pixel_collision_qa.py` already did all of this; a second copy written this round was DELETED, and
+     that file gained entry seeding, template-resolved objects and an `--enemies` report instead.
+     **Round 269's audit used a .tmx tile object's y as a bottom-up tile index, which is a vertical MIRROR** - a
+     tile object's y is its BOTTOM edge in a top-down grid. Measured against 82 entry objects (provably standable,
+     the game spawns onto them): the correct conversion puts 97.6% on legal ground, round 269's 8.5%. So the "13
+     pre-existing out-of-bounds enemies" were an artifact; 12 of them are perfectly reachable. **One was real** -
+     the Mimic in `library_of_varsil_3.tmx` at (512,-32) on a 480x320 map - and is moved and verified.
+     **The ten round-269 guards are re-placed** by `dev-tools/guard_placement.py`, each one tile from its booster,
+     each verified reachable (candidates are whole-tile offsets from the booster's OWN authored coordinates, so no
+     conversion is involved in a write). **51 other "unreachable" placements are deliberately left alone**: they
+     are Jellyfish, Crocodiles, Griffins, Bats and 9 Farmers - things that swim, fly or stand in crops, which
+     round 252's reaction range brings to the player. **For the user to look at:**
+     `phyrexian_black1.tmx` has 75,489 legal player positions but only 28,653 in its largest region, and its one
+     entry reaches none of its five enemies - the Blue Tower "stranded outside the wall" case at map scale.
+     NOT YET SEEN IN A GAME.
+  2. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
+     the flag is absent, so a pre-259 save stops re-issuing the nudge on its next NG+. A no-op after a New Game+
+     (count 0, flag carried), and it only sets what `addQuest()` would set on the same evidence.
+  3. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
      validated: with no painted portrait the avatar is cut at the creature's HEAD end (the end it faces) instead of
      the middle of its body, and that reproduces all five of round 245's hand repairs EXACTLY (delta 0.0). The
      FACING half cannot be automated - `facing_detect.py`'s four cues reach 81% on the 16 labelled sheets and are
@@ -68,7 +92,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      final slugs back through `roster179.py` - without that, a re-import would quietly reproduce the nine walking
      backwards. **57 of 73 sheets are honestly unreviewed**; answering them is a look-at-the-picture job of a few
      minutes (`python facing_review.py <out dir>` builds the contact sheet) and was deliberately NOT guessed.
-  2. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
+  4. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
      holds an index into *some* biome's tables and nothing records which; four writers produce a dual-bit tile and
      they disagree. The missing case: world-gen's Pass A claims biomes with `|=`, so a tile inside both the
      wasteland's disc and a colour's carries BOTH bits from birth, and Pass B writes it with the COLOUR's own
@@ -86,17 +110,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      structure and its collision bit. Fixed. **One residual, stated:** a tile expansion claims inside a colour's own
      keep (43 such holes inside white's, ~3% of the disc) reads as colour space when it is waste space; the exact
      cure is recording the space in `terrainMap` bit 29, offered not done. NOT YET SEEN IN A GAME.
-  3. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
+  5. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
      round 252's runtime default). 23 `dialog` NPCs and the explicit `0`s deliberately untouched. **PACKAGED.**
-  4. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
+  6. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
      plus round 113's side-bosses; `castle` was never added, so all 13 of them went unmarked. Built, **NOT
      packaged** - the user was playing. Capitals/towns deliberately excluded.
-  5. **Round 269 - ten of round 258's guards stood outside the room.** Placement put them on the tile next to
-     the booster without checking it was inside the playable area; all ten restored to pre-258 positions, so
-     those ten boosters are UNGUARDED again. **To redo properly:** a reachability flood-fill from the entry,
-     which first needs the Collision layer's real meaning settled (legit enemies stand on collision tiles).
-     Audit scripts: `oob_audit.py` / `moved_audit.py` in the round-269 scratchpad.
-  6. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
+  7. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see item 1): all
+     ten are back on booster duty and verified reachable. Its `oob_audit.py` was reading a mirrored y and should
+     not be reused - `pixel_collision_qa.py --enemies` replaces it.
+  8. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
      268's own evidence was a red herring: the `[TFR-Terrain]` lines fire only for "player land" because
      `drawableTerrainIndex()` runs while a ground CHUNK is built and chunks are only built near the player, who was
      standing in their own territory - nothing to do with index spaces. `structureSwapCache` does translate, but
