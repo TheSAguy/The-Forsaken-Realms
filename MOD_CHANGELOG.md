@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 269: ten guards standing outside the room (2026-09-20)
+
+User, with a screenshot of the Autonomous Factory and a golem circled above the room's wall: *"you placed a guy
+way out of bounds. Please check to see if he is the only one."*
+
+He was not. Round 258 moved 101 enemies to guard boosters, and **ten landed in the map's outer ring** - the
+drawn-but-unreachable strip outside the room. The placement picked a tile ADJACENT TO THE LOOT without asking
+whether that tile was inside the playable area, so a booster sitting against a wall got a guard on the wrong
+side of it. All ten are within two tiles of their booster and all ten sit at x<=1 or y<=1 or the far edge.
+
+The first sweep missed them, and how it missed them is the lesson. It asked "is this tile void, or off the
+map?" - and the border strip is neither. It has art. It is simply not somewhere a player can stand. Asking
+instead "which enemies did round 258 MOVE, and where did they land?" found all ten immediately. (That sweep
+also silently scanned nothing at first: git's `+++ b/` lines carry a trailing tab, so every path missed
+`os.path.exists` and every map was skipped while the script cheerfully reported success.)
+
+Each of the ten is restored to its exact pre-258 coordinates - hand-authored positions, known good:
+`factory_2_ooze` 69, `factory_3_wizard` 68, `barbariancamp_kobold` 79, `fort_blue_2_canyon` 76,
+`grove_9_eldrazi` 71, `magetower_8_illusion_basement` 68, `primal_jungle` 36, `merfolkpool_1` 61,
+`merfolkpool_3` 57, `phyrexian_w1` 68.
+
+That un-guards those ten boosters again, which is the honest trade: a guard nothing can reach guards nothing.
+Re-placing them needs a reachability test - flood-fill from the entry over walkable tiles - which also has to
+settle what the Collision layer actually means here, since legitimate enemies stand on collision tiles (a first
+draft of the audit flagged 173 of them as "sealed", which was the test being wrong, not the data).
+
 ## Round 268: the clock, not the legs (2026-09-20)
 
 User: *"Not Walking speed, please change that back, I meant game speed as in how long a day lasts. Speed that up

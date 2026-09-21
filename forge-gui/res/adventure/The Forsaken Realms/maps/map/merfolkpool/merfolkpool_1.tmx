@@ -87,7 +87,7 @@
   <object id="58" template="../../../../common/maps/obj/waypoint.tx" x="291.688" y="131.218"/>
   <object id="59" template="../../../../common/maps/obj/waypoint.tx" x="322.047" y="217.525"/>
   <object id="60" template="../../../../common/maps/obj/waypoint.tx" x="124.713" y="73.9697"/>
-  <object id="61" template="../../../../common/maps/obj/enemy.tx" x="288" y="16">
+  <object id="61" template="../../../../common/maps/obj/enemy.tx" x="248.318" y="76.5719">
    <properties>
     <property name="enemy" value="Sand Golem"/>
    </properties>

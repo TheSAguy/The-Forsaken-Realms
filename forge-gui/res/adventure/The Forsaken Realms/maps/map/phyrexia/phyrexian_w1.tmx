@@ -43,7 +43,7 @@
   </object>
   <object id="67" template="../../../../common/maps/obj/treasure.tx" x="317.667" y="43.1667"/>
   <object id="79" template="../../obj/stone.tx" x="279.197" y="72.8334"/>
-  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="96" y="16">
+  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="207" y="94">
    <properties>
     <property name="enemy" value="Orthodoxy Angel"/>
    </properties>

@@ -31,7 +31,7 @@
   </data>
  </layer>
  <objectgroup id="4" name="Objects">
-  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="240" y="16">
+  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="287.074" y="141.29">
    <properties>
     <property name="enemy" value="Mimic"/>
    </properties>

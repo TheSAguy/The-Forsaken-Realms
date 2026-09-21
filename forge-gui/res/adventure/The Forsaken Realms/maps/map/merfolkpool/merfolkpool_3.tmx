@@ -48,7 +48,7 @@
     <property name="waypoints" value="62,63,64,65"/>
    </properties>
   </object>
-  <object id="57" template="../../../../common/maps/obj/enemy.tx" x="400" y="16">
+  <object id="57" template="../../../../common/maps/obj/enemy.tx" x="408.733" y="86.681">
    <properties>
     <property name="enemy" value="Scorpion"/>
     <property name="threatRange" type="int" value="40"/>

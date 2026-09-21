@@ -50,14 +50,19 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-20 (round 268; v1.12 "Reward Balancing" RELEASED, rounds 247-268 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-20 (round 269; v1.12 "Reward Balancing" RELEASED, rounds 247-269 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 268, 2026-09-20).** v1.12 is out; rounds 247-268 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 269, 2026-09-20).** v1.12 is out; rounds 247-269 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **TRACE THIS FIRST: round 266's decode assumption may be wrong (see MOD_CHANGELOG round 268).** The
+  1. **Round 269 - ten of round 258's guards stood outside the room.** Placement put them on the tile next to
+     the booster without checking it was inside the playable area; all ten restored to pre-258 positions, so
+     those ten boosters are UNGUARDED again. **To redo properly:** a reachability flood-fill from the entry,
+     which first needs the Collision layer's real meaning settled (legit enemies stand on collision tiles).
+     Audit scripts: `oob_audit.py` / `moved_audit.py` in the round-269 scratchpad.
+  2. **TRACE THIS FIRST: round 266's decode assumption may be wrong (see MOD_CHANGELOG round 268).** The
      minimap re-bake now decodes every claimed-wasteland tile against the WASTE tables. That matches
      `claimWastelandRing()`, which writes those tiles in colourless index space - but `structureSwapCache`
      TRANSLATES values between index spaces when land changes hands, and the `[TFR-Terrain]` lines in the user's
@@ -66,7 +71,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      make the decode biome follow the space each one actually leaves behind. **The user knows and chose to ship
      it meanwhile** (cosmetic, reversible). The confirmed part: waste's `crater` and green's `water` are both at
      offset 0, which is why mis-decoded tiles read as WATER - the user's screenshots.
-  2. **Round 268 - the clock, not the legs.** Round 267 raised `playerBaseSpeed` reading "game speed" as
+  3. **Round 268 - the clock, not the legs.** Round 267 raised `playerBaseSpeed` reading "game speed" as
      movement; the user meant the day. `playerBaseSpeed` back to 40, `dayLengthSeconds` 300 -> 270 (a day is
      4m30s, not 5m). Data-only, shipped without a rebuild. **PACKAGED with 266 + 267.**
   3. **Round 267 - speed, silence, and a stop script that works.** `playerBaseSpeed` 40 -> 44 (walking only;
@@ -264,6 +269,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   authored count and logs the suppression. Counted, not assumed: **150 land-only entries across 150 enemies** are exempt,
   and exactly **2** list Land beside spell types and keep the bonus. **Still open:** `bonusDeckCards()` applies PER ENTRY,
   so a +1 item on a 3-entry enemy is really +3 cards - long-standing, possibly intended, but it is why this was visible.
+- Round 269 (2026-09-20): **ten guards were standing in the border strip.** Round 258 placed them beside
+  wall-adjacent boosters without checking the tile was reachable; all ten restored to their pre-258 spots.
 - Round 268 (2026-09-20): **the clock, not the legs.** `playerBaseSpeed` back to 40 and `dayLengthSeconds`
   300 -> 270 - the user meant how long a day lasts, not how fast the player walks. Also records round 266's
   unverified decode assumption, which the user chose to ship pending a trace.
