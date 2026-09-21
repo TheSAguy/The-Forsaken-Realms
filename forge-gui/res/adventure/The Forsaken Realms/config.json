@@ -2,7 +2,7 @@
   "screenWidth": 480,
   "screenHeight": 270,
   "skin": "skin/ui_skin.json",
-  "playerBaseSpeed": 40,
+  "playerBaseSpeed": 44,
   "minDeckSize": 40,
   "maxNumberOfDecks": 50,
   "colorIds":["W","U","B","R","G"],  

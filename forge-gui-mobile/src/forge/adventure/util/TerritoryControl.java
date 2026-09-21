@@ -1204,8 +1204,13 @@ public class TerritoryControl {
             dispatch(world, color, true, true); // Archmage, aimed at the town nearest the player's Capitol
             sent++;
         }
+        // Round 267 (user: "You don't need to give a message when you build the capitol about AI
+        // sending mages. Let's keep that a hidden mechanic"). The surge is unchanged; it simply no
+        // longer announces itself. What still reaches the player is a mage ARRIVING - at one of their
+        // towns, or at the Capitol itself - which is the part they can act on. The [TFR-CapitolSurge]
+        // lines above remain for diagnosis.
         if (sent > 0)
-            GameHUD.getInstance().addNotification("[RED]Your Capitol has not gone unnoticed - every color sends a mage!", true);
+            System.out.println("[TFR-CapitolSurge] " + sent + " Archmage(s) sent, unannounced");
     }
 
     /** A captured town's former owner answers at once with an attacking mage, using the standard

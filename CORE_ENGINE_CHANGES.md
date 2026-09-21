@@ -2779,6 +2779,18 @@ discovery flash uses `flashArea` gated on it), `adventure/data/DialogData` + `ad
 opt-in `greyOutIfUnavailable` disabled-button path), and plane data (`ancient_diamond_mine.tmx`, 14 maps' stray
 `Collision` cells, version stamps).
 
+## Rounds 266-267 (2026-09-20) - adventure-side only
+
+`world/World.java` - `drawMinimapTile(Pixmap, int, int, BiomeData)` is now the single tile-drawing rule;
+`redrawMinimapTile()` delegates to it and `rebakeMinimapAfterTerritoryControl()` calls it per tile with a decode
+biome derived from `isClaimedWasteland()`. New `[TFR-Minimap]` re-bake line.
+
+`util/TerritoryControl.java` - the Capitol surge no longer posts a notification.
+
+`res/adventure/The Forsaken Realms/config.json` - `playerBaseSpeed` 40 -> 44.
+
+`dev-tools/agent/agent_stop.ps1` - matches the agent by its own folder, and never anything under `C:\TFR\live`.
+
 ## Rounds 264-265 (2026-09-20) - adventure-side only
 
 `stage/WorldStage.java` - the roaming-enemy load path no longer forces `scale = 1.0f` on territory mages; they

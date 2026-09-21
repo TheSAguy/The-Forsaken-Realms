@@ -17757,6 +17757,58 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 267: a little faster on foot, a quieter surge, and a stop script that works (2026-09-20)
+
+**Walking speed +10%.** User: *"Increase the game speed by 10%. Feels a little slow."* `playerBaseSpeed`
+40 -> 44 in the plane's `config.json` (the stock planes use 32). This is the overworld walking speed that
+`PlayerSprite` multiplies by the territory and equipment modifiers; the day clock (`secondsPerDay`) is
+untouched, so a day is still a day and the player simply covers more of it.
+
+**The Capitol surge stops announcing itself.** User: *"You don't need to give a message when you build the
+capitol about AI sending mages. Let's keep that a hidden mechanic."* The one-off *"Your Capitol has not gone
+unnoticed - every color sends a mage!"* is gone. The surge is otherwise unchanged, and everything about a mage
+ARRIVING - at a town or at the Capitol - still reaches the player, which is the part they can act on. The
+`[TFR-CapitolSurge]` log lines stay.
+
+**`agent_stop.ps1` could not find the agent.** Discovered while stopping an agent run: the script matched
+`*TFR-Agent*`, from when the agent lived in `F:\FORGE\TFR-Agent`. The move to `C:\TFR\agent` left nothing
+matching, so it reported *"No agent game running."* while the agent was running - silently useless in the one
+place where being useless is dangerous, because a stop script that does not work is what makes someone reach
+for a blanket "stop every javaw", which is exactly what ended the player's session mid-duel in round 258. It
+now matches the agent's own folder and explicitly refuses anything running from `C:\TFR\live`. Verified live:
+two games running, the agent stopped, the player's untouched.
+
+## Round 266: one rule for drawing a minimap tile (2026-09-20)
+
+User: *"Go ahead and fix the rim specks, use my current save 2."*
+
+Round 249 found them by diffing two extracted map images: besides the expected icon footprints, single-tile
+specks sat on the rim of every AI color's territory. The cause was two copies of one rule, only one of which
+learned round 257's lesson.
+
+`biomeMap` is a bitmask and claiming ORs the claiming color's bit into a tile that already carries the
+wasteland's. So a tile taken by territory expansion reads as the COLOR under `highestBiome()` while its
+`terrainMap` value is still written in WASTELAND index space. Decode that against the color's own
+`structures[]` - white has 3+7 entries where the wasteland has 7+7 - and most values draw the wrong structure
+while anything past the shorter table draws none.
+
+`redrawMinimapTile()` knows this: `claimWastelandRing()` hands it the colorless biome to decode against while
+the ground pixel still comes from the owning color, so claimed land keeps reading as its owner.
+`rebakeMinimapAfterTerritoryControl()` - a near-copy of the same drawing code, written before that argument
+existed - always decoded against `highestBiome()`. The rim looked right while you played and changed under you
+the moment anything forced a full re-bake, which every dungeon rotation does.
+
+Teaching the second copy would leave two copies to drift again, so there is now **one**:
+`drawMinimapTile(target, x, y, decodeBiome)`. `redrawMinimapTile()` calls it with `biomeImage`, the re-bake
+calls it with its fresh pixmap, and the re-bake DERIVES the decode biome per tile from `isClaimedWasteland()` -
+the same predicate round 257 gave the game map - instead of assuming. The re-bake also picks up the null-safety
+the per-tile version already had. A new `[TFR-Minimap]` line reports how many tiles a re-bake decoded in
+wasteland space.
+
+**Not yet seen changing on screen.** The agent game was loaded with the user's save 3 and driven for two days,
+but nothing triggered a full re-bake in that window, so there is no before/after image. The argument for the
+fix is structural - the two paths are now one function, so they cannot disagree - not photographic.
+
 ## Round 265: a repelled attack leaves the town with its defender (2026-09-20)
 
 User: *"I don't understand that logic. If green held it, Blue attacks and loses, but then it 'Breaks free' back

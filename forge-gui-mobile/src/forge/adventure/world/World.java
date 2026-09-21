@@ -2771,36 +2771,35 @@ public class World implements Disposable, SaveFileContent {
         Pixmap pix = new Pixmap(width * data.miniMapTileSize, height * data.miniMapTileSize, Pixmap.Format.RGBA8888);
         pix.setColor(1, 0, 0, 1);
         pix.fill();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if (highestBiome(biomeMap[x][y]) >= data.GetBiomes().size()) {
-                    Pixmap smallPixmap = createSmallPixmap(data.roadTileset.tilesetAtlas, data.roadTileset.tilesetName, 0);
-                    pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-                } else {
-                    BiomeData biome = data.GetBiomes().get(highestBiome(biomeMap[x][y]));
-                    int terrainIndex = terrainMap[x][y] & ~terrainMask;
-                    if (terrainIndex > biome.terrain.length) {
-                        Pixmap smallPixmap = createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, 0);
-                        pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-
-                        terrainIndex -= biome.terrain.length;
-                        terrainIndex--;
-                        for (BiomeStructureData structData : biome.structures) {
-                            if (terrainIndex >= structData.mappingInfo.length) {
-                                terrainIndex -= structData.mappingInfo.length;
-                                continue;
-                            }
-                            smallPixmap = createSmallPixmap(structData.structureAtlasPath, structData.mappingInfo[terrainIndex].name, 0);
-                            pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-                            break;
-                        }
-                    } else {
-                        Pixmap smallPixmap = createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, terrainIndex);
-                        pix.drawPixmap(smallPixmap, x * data.miniMapTileSize, y * data.miniMapTileSize);
-                    }
-                }
+        // Round 266 (user: "Go ahead and fix the rim specks"). This loop used to be its own copy of
+        // the per-tile drawing code and decoded every tile against highestBiome() - so a tile claimed
+        // from the wasteland, whose terrainMap value is in WASTELAND index space but whose highest bit
+        // is now the claiming COLOUR, drew the wrong structure pixel or none. redrawMinimapTile() was
+        // taught that in round 257 and this copy never was, which is why the rim of every AI colour
+        // looked right while you played and changed the moment a dungeon rotation forced a re-bake.
+        // Both paths go through drawMinimapTile() now, and the decode biome is DERIVED from the tile
+        // rather than assumed.
+        List<BiomeData> rebakeBiomes = data.GetBiomes();
+        BiomeData wasteBiome = null;
+        for (BiomeData b : rebakeBiomes) {
+            if ("waste".equalsIgnoreCase(b.name)) {
+                wasteBiome = b;
+                break;
             }
         }
+        int claimedFromWaste = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int layer = highestBiome(biomeMap[x][y]);
+                BiomeData decode = wasteBiome != null && layer < rebakeBiomes.size()
+                        && isClaimedWasteland(layer, biomeMap[x][y]) ? wasteBiome : null;
+                if (decode != null)
+                    claimedFromWaste++;
+                drawMinimapTile(pix, x, y, decode);
+            }
+        }
+        System.out.println("[TFR-Minimap] full re-bake: " + claimedFromWaste
+                + " tile(s) decoded in wasteland space (land an AI colour claimed by expansion)");
         for (Map.Entry<String, Pair<Pixmap, HashMap<String, Pixmap>>> entry : pixmapHash.entrySet()) {
             try {
                 entry.getValue().getLeft().dispose();
@@ -2859,9 +2858,30 @@ public class World implements Disposable, SaveFileContent {
     private void redrawMinimapTile(int x, int rawY, BiomeData decodeBiome) {
         if (biomeImage == null)
             return;
+        drawMinimapTile(biomeImage, x, rawY, decodeBiome);
+    }
+
+    /**
+     * Draw one tile of the minimap into {@code target} - the ONE place that decides what a tile looks
+     * like (round 266).
+     * <p>
+     * There used to be two: this, and a near-identical loop inside
+     * {@link #rebakeMinimapAfterTerritoryControl()}. Only this one learned round 257's rule about
+     * claimed wasteland, so the live repaint and the full re-bake disagreed about the rim tiles of
+     * every AI colour's territory - the reported specks. The re-bake now calls this too, passing the
+     * decode biome it derives from {@link #isClaimedWasteland}.
+     * <p>
+     * The ground pixel always comes from the biome that OWNS the tile, so claimed land keeps reading
+     * as its owner's colour; only the structure lookup follows {@code decodeBiome}.
+     *
+     * @param decodeBiome the biome whose terrain/structures tables this tile's terrainMap value was
+     *                    ENCODED against, when that differs from the biome that owns the tile; null
+     *                    when they are the same.
+     */
+    private void drawMinimapTile(Pixmap target, int x, int rawY, BiomeData decodeBiome) {
         int mm = data.miniMapTileSize;
         if (highestBiome(biomeMap[x][rawY]) >= data.GetBiomes().size()) {
-            biomeImage.drawPixmap(createSmallPixmap(data.roadTileset.tilesetAtlas, data.roadTileset.tilesetName, 0), x * mm, rawY * mm);
+            target.drawPixmap(createSmallPixmap(data.roadTileset.tilesetAtlas, data.roadTileset.tilesetName, 0), x * mm, rawY * mm);
             return;
         }
         BiomeData biome = data.GetBiomes().get(highestBiome(biomeMap[x][rawY]));
@@ -2869,7 +2889,7 @@ public class World implements Disposable, SaveFileContent {
         int terrainLength = decode.terrain == null ? 0 : decode.terrain.length;
         int terrainIndex = terrainMap[x][rawY] & ~terrainMask;
         if (terrainIndex > terrainLength) {
-            biomeImage.drawPixmap(createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, 0), x * mm, rawY * mm);
+            target.drawPixmap(createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, 0), x * mm, rawY * mm);
             terrainIndex -= terrainLength;
             terrainIndex--;
             if (decode.structures != null) {
@@ -2878,12 +2898,12 @@ public class World implements Disposable, SaveFileContent {
                         terrainIndex -= structData.mappingInfo.length;
                         continue;
                     }
-                    biomeImage.drawPixmap(createSmallPixmap(structData.structureAtlasPath, structData.mappingInfo[terrainIndex].name, 0), x * mm, rawY * mm);
+                    target.drawPixmap(createSmallPixmap(structData.structureAtlasPath, structData.mappingInfo[terrainIndex].name, 0), x * mm, rawY * mm);
                     break;
                 }
             }
         } else {
-            biomeImage.drawPixmap(createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, terrainIndex), x * mm, rawY * mm);
+            target.drawPixmap(createSmallPixmap(biome.tilesetAtlas, biome.tilesetName, terrainIndex), x * mm, rawY * mm);
         }
     }
 
