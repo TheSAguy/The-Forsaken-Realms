@@ -17859,6 +17859,86 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 281: the softlock watchdog was crying wolf, and 1.13 for the emulator (2026-09-21)
+
+This round came out of reviewing the user's own play-test log. 147 KB, **zero exceptions**, round 279's guards
+pinning in six maps, the pursue fix live in the `[TFR-Threat]` lines - and one line that looked like the worst
+thing in the file:
+
+    [TFR-Dialog] the typing animation never ended after 23.0s - revealing the 1 option(s) anyway so the
+                 dialog can be answered (dialog 100, 180 chars). If you are reading this in a bug report,
+                 THIS is the softlock.
+
+On the user's own windowed machine, which would have meant the reported "grey window" is not fullscreen-specific
+at all. That is not what happened.
+
+### The line was a false positive, and round 253 already explained why
+
+`activate()` loads EVERY dialog entry whose condition passes, and each `loadDialog()` clears the tables and
+overwrites the last, so the LAST match is what the player sees. Three lines earlier in the same log, dialog 100
+was shown three times back to back - 180, 209 and 259 characters. The 180-character instance was superseded
+immediately; its label was left off the stage, and **a `TypingLabel` that never acts never ends**, so its `end()`
+never fired and its buttons stayed hidden. They stayed hidden correctly - they were not on screen. Twenty-three
+seconds later the watchdog fired on buttons nobody could have clicked.
+
+The player never saw a softlock. The one line in the log that claimed they did was about a dialog that had already
+been thrown away, and a watchdog that cries wolf is worse than no watchdog: the next real report would have been
+read as this one.
+
+**A button counts only while it is still in the live UI tree.** `getStage()` is the test - scene2d propagates
+`setStage(null)` down through `clearChildren()`, so a superseded instance's buttons report no stage. `hasParent()`
+would NOT have worked: in the scrolling layout a detached button keeps its own (equally detached) `optionHost` as
+a parent, so every dialog with more than six options would have gone on crying wolf.
+
+### And it no longer sits through the whole deadline
+
+The old shape was one shot at `5s + chars/10` - 23 seconds for the logged dialog, 60 for a long speech. If the
+freeze were real, that is how long the player stares at it. Two cheap signals now, polled twice a second:
+
+* **`hasEnded()` still true after the staggered reveal should have finished.** Decisive: the typing DID end and
+  the reveal never arrived, so there is nothing left to wait for. The window is derived from the button count
+  (`0.09 + 0.10 x buttons`) rather than guessed, so it stays correct if the stagger is ever retimed.
+* **No new character for two seconds while the label says it has not ended.** That is the reported symptom -
+  typing that never advances at all, which is exactly what the old deadline sat through. Progress comes from
+  `TypingListener.onChar()`, the supported hook; `glyphCharIndex` is private with no accessor and reflection was
+  not worth it.
+
+That second signal was checked before being relied on: **`onChar` really is invoked** from the label's act loop
+(the call is in textratypist 0.8.2's bytecode). Worth verifying rather than assuming - if it were never called the
+counter would sit at zero, every dialog would look stalled, and every dialog in the game would have revealed its
+options 2.5 seconds in. That is a visible regression, not a safe failure.
+
+Two seconds is safe because **no plane's dialog text uses a `{WAIT}` or a speed token** - checked across all seven
+planes in `res/adventure/`, not just this one - so typing runs at a uniform speed and a two-second gap is not slow
+typing. The scaled deadline stays as the backstop for anything neither signal catches. A genuine freeze now
+releases in about two seconds instead of twenty-three, and the worst a false positive can do is show the options
+without their stagger, which is not a bug a player can see.
+
+The line also names the signal that caught it and the character the typing stopped at, so the next report carries
+its own diagnosis instead of one ambiguous number.
+
+### What the log now says about the grey window
+
+Nothing, which is the honest answer. The single candidate line was this false positive, so the reporter's case is
+still unexplained and still a single report. The instrumentation is what will settle it: their next log either
+shows a watchdog line (the stall is real) or a `dialog N shown` line with no watchdog after it (something else
+entirely).
+
+### 1.13 stamped, for the emulator
+
+User: *"Could you create me the Android files for 1.13 here ... I'd like to test that on the emulator."* Stamps
+per ANDROID_RELEASE.md steps 1-2: `modVersion` 1.13 and `modVersionDate` 09.21, `tfr.version` 1.13 - it MUST equal
+`modVersion`, since it feeds versionName, which feeds the assets URL - and `manifestVersionCode` 11300.
+
+**The APK cannot download its own assets, and that is expected.** `AssetsDownloader` builds the URL from the APK's
+own versionName (`releases/download/tfr-v1.13/assets.zip`) and there is no tfr-v1.13 release, because nothing has
+been pushed. A fresh install would 404 on first launch. No code change is needed to get round it: the same
+downloader returns early when the on-device `version.txt` already matches and the skin is present, so the assets
+are placed on the emulator once by hand and no download is ever attempted. The adb recipe ships next to the
+artifacts.
+
+A TEST build, not a release: nothing pushed, no tag, nothing uploaded.
+
 ## Round 280: rob a guard and it comes after you (2026-09-21)
 
 User: *"Is it possible to do the following: If the Booster or Chest is taken, and the guard is still alive, to

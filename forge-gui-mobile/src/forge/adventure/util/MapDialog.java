@@ -53,6 +53,12 @@ public class MapDialog {
      *  being added straight to the dialog's button table (2026-08-30). At or below this the old
      *  direct-add path is used unchanged, so no existing dialog's layout shifts. */
     private final static int MAX_UNSCROLLED_OPTIONS = 6;
+    // Round 281: the dialog watchdog's cadence (see the safety net in loadDialog). Twice a second costs
+    // nothing against the frame it shares, and four consecutive quiet polls is two orders of magnitude past
+    // the default per-character cooldown - no plane's dialog text uses a {WAIT} or a speed token, so the
+    // typing speed is uniform and a two-second gap is not slow typing.
+    private final static float DIALOG_POLL = 0.5f;
+    private final static float DIALOG_STALL = 2f;
     public String questAccepted = "";
     static private final String defaultJSON = "[\n" +
             "  {\n" +
@@ -205,7 +211,17 @@ public class MapDialog {
         TypingLabel A = Controls.newTypingLabel(text);
         A.setWrap(true);
         Array<TextraButton> buttons = new Array<>();
+        // Round 281: how many characters the animation has actually put on screen. TypingLabel keeps its
+        // glyphCharIndex private with no accessor, and onChar() is the supported way to watch progress - no
+        // reflection, and it counts exactly what the player can see appearing.
+        final int[] typed = {0};
         A.setTypingListener(new TypingAdapter() {
+            @Override
+            public void onChar(long ch) {
+                super.onChar(ch);
+                typed[0]++;
+            }
+
             @Override
             public void end() {
                 float delay = 0.09f;
@@ -232,33 +248,83 @@ public class MapDialog {
         // turns a cosmetic glitch into an unrecoverable softlock at the very start of a new game.
         //
         // The cause on that machine is still unknown and may never be reproducible here. This does not pretend
-        // to fix it; it makes it survivable, which is the part that does not need a repro. The timeout scales
+        // to fix it; it makes it survivable, which is the part that does not need a repro. The deadline scales
         // with the text so a legitimately long speech is never cut short - 10 characters per second is far
-        // slower than the real typing speed - and it only acts if a button is still hidden when it fires.
-        float timeout = Math.min(60f, 5f + (text == null ? 0 : text.length()) / 10f);
+        // slower than the real typing speed.
+        //
+        // Round 281 rewrote HOW it decides, because the user's own play-test log fired it once and that line
+        // turned out to be a FALSE POSITIVE. activate() loads EVERY entry whose condition passes and each
+        // loadDialog() clears the tables and overwrites the last (round 253), so dialog 100 was built three
+        // times in a row; the first two instances' labels were left off the stage, and a TypingLabel that
+        // never acts never ends. Their buttons were never going to be revealed and never needed to be - they
+        // were not on screen. A watchdog that cries wolf is worse than none, so a button counts only while it
+        // is still in the live UI tree. getStage() is the test: scene2d propagates setStage(null) down through
+        // clearChildren(), and unlike hasParent() it is also right for the scrolling layout, where a detached
+        // button keeps its own (equally detached) optionHost as a parent.
+        //
+        // It no longer waits out the whole deadline either. Two cheap signals, polled twice a second:
+        //   - hasEnded() still true after the staggered reveal should have finished. Decisive: the typing DID
+        //     end and the reveal never arrived, so there is nothing left to wait for.
+        //   - no new character for DIALOG_STALL seconds while the label says it has not ended. That is the
+        //     reported symptom - typing that never advances at all - and it is what the deadline used to sit
+        //     through.
+        // The scaled deadline stays as the backstop for whatever neither signal catches. A genuine freeze now
+        // releases in about two seconds instead of twenty-three, and the worst a false positive can do is show
+        // the options without their stagger, which is not a bug a player can see.
+        float deadline = Math.min(60f, 5f + (text == null ? 0 : text.length()) / 10f);
+        // Bounded repeats rather than cancel() from inside run(): Timer.update() walks its task list by
+        // index, so a task that removes itself mid-iteration makes it skip the next task for that frame.
+        int polls = (int) Math.ceil(deadline / DIALOG_POLL) + 2;
         Timer.schedule(new Timer.Task() {
+            private int lastTyped = -1;
+            private float quiet = 0f, ended = 0f, waited = 0f;
+            private boolean done = false;
+
             @Override
             public void run() {
-                if (buttons.isEmpty())
+                if (done)
                     return;
-                boolean stuck = false;
+                waited += DIALOG_POLL;
+                int live = 0, hidden = 0;
                 for (TextraButton button : buttons) {
-                    if (!button.isVisible()) {
-                        stuck = true;
-                        break;
-                    }
+                    if (button.getStage() == null)
+                        continue; // superseded by a later entry, or the dialog is already closed
+                    live++;
+                    if (!button.isVisible())
+                        hidden++;
                 }
-                if (!stuck)
+                if (live == 0 || hidden == 0) {
+                    done = true; // nothing on screen to rescue, or the typing revealed them itself
                     return;
-                System.out.println("[TFR-Dialog] the typing animation never ended after " + timeout
-                        + "s - revealing the " + buttons.size + " option(s) anyway so the dialog can be "
+                }
+                if (typed[0] != lastTyped) {
+                    lastTyped = typed[0];
+                    quiet = 0f;
+                } else {
+                    quiet += DIALOG_POLL;
+                }
+                ended = A.hasEnded() ? ended + DIALOG_POLL : 0f;
+                // end() reveals the options one at a time, so "ended but still hidden" only means anything
+                // once that whole stagger has had time to run. Derived from the button count rather than
+                // guessed, so it stays correct if the stagger is ever retimed.
+                boolean revealFailed = ended > 0.09f + 0.10f * buttons.size + DIALOG_POLL;
+                boolean stalled = quiet >= DIALOG_STALL;
+                if (!revealFailed && !stalled && waited < deadline)
+                    return;
+                done = true;
+                System.out.println("[TFR-Dialog] " + (revealFailed
+                        ? "the typing animation ended but the options stayed hidden"
+                        : stalled ? "the typing animation stopped advancing for " + quiet + "s at character "
+                                + typed[0] + " of " + (text == null ? 0 : text.length())
+                                : "the typing animation never ended within " + deadline + "s")
+                        + " - revealing " + hidden + " of " + live + " live option(s) so the dialog can be "
                         + "answered (dialog " + parentID + ", " + (text == null ? 0 : text.length())
                         + " chars). If you are reading this in a bug report, THIS is the softlock.");
                 A.skipToTheEnd();
                 for (TextraButton button : buttons)
                     button.setVisible(true);
             }
-        }, timeout);
+        }, DIALOG_POLL, DIALOG_POLL, polls);
         float width;
         if (sprite != null) {
             if (actor instanceof EnemySprite && !((EnemySprite) actor).hidden) {
@@ -384,12 +450,13 @@ public class MapDialog {
                 // about the intro. The dialog that trapped him left no trace at all, so the diagnosis had to
                 // come from measuring a screenshot against a working one.
                 //
-                // With this and the [TFR-Dialog] timeout line above, the next report answers itself: text and
-                // options present, then the timeout fires = the stalled-typing softlock; 0 chars or the
-                // timeout never firing = something else entirely, and we stop guessing.
+                // With this and the [TFR-Dialog] watchdog line above, the next report answers itself: text
+                // and options present, then the watchdog fires = the stalled-typing softlock, and its own
+                // line names the signal that caught it and the character the typing stopped at; 0 chars, or
+                // no watchdog line at all = something else entirely, and we stop guessing.
                 System.out.println("[TFR-Dialog] dialog " + parentID + " shown: "
                         + (text == null ? 0 : text.length()) + " chars, " + buttons.size
-                        + " option(s) hidden until the typing ends (deadline " + timeout + "s)");
+                        + " option(s) hidden until the typing ends (deadline " + deadline + "s)");
                 stage.showDialog();
                 return true;
             }

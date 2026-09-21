@@ -50,10 +50,16 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   except a booster's guard. Upstream conflict note: the insertion point is the line right before
   `if (movementBehaviors.peek() != null)`; if the daily rewrites that method, re-add the branch in the same
   position, since being ahead of the deque is the entire point (a patrol must not walk a guard off its post).
-- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — round 279 added a timeout beside the existing
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — round 279 added a watchdog beside the existing
   `TypingAdapter.end()` listener that reveals the option buttons if the typing animation never ends. Stock relies
-  on that callback alone, which makes a stalled `TypingLabel` an unrecoverable softlock; the timeout is additive
-  and does nothing on the normal path.
+  on that callback alone, which makes a stalled `TypingLabel` an unrecoverable softlock; the watchdog is additive
+  and does nothing on the normal path. Round 281 also **overrides `TypingListener.onChar(long)`** (calling
+  `super`) purely to count typed characters — the only supported way to watch typing progress, since
+  `TypingLabel.glyphCharIndex` is private with no accessor. Upstream conflict notes: the watchdog reads
+  `TextraButton.getStage()` to tell a live option from one belonging to a superseded `loadDialog()` call, so it
+  must stay AFTER the buttons are added; and it depends on no dialog text using a `{WAIT}` or speed token, which
+  is true of all seven shipped planes — if a future plane adds one, the 2-second stall signal needs a longer
+  window or an `isPaused()` guard.
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — round 272 replaced the THIRD copy of stock's
   minimap-tile drawing rule. `generateNew()`'s own "draw mini map" loop (stock, ~34 lines decoding every tile
   against `highestBiome()`) is now a two-line call to the mod's `drawMinimapTile()`, which is also what
