@@ -80,6 +80,39 @@ class Journal:
         self.say("PROBLEM", text)
 
 
+# settle() deliberately stops at a REAL choice and prints it - the skill says so - so something has to
+# choose. The first long run livelocked here for twenty-five minutes: the player lost a duel, Forge put up
+# OK / "Use Bronze Coin" / "Buy Back (500 gold)", and the driver answered every settle with another settle.
+#
+# The policy is "keep playing, spend nothing": take the option that just acknowledges, never one that burns
+# the save's gold, shards or items. A soak that pays 500 gold per death would be measuring the wallet.
+PREFERRED = ("ok", "done", "continue", "back to adventure", "close", "leave", "no", "decline", "cancel")
+SPENDS = ("gold", "shard", "coin", "buy", "use ", "pay", "purchase", "spend")
+
+
+def choose(options):
+    """-> (id, text) for the option to take, or None. options are [id, text, ...] rows."""
+    rows = []
+    for o in options or []:
+        if isinstance(o, dict):
+            rows.append((o.get("id"), str(o.get("text") or "")))
+        elif isinstance(o, (list, tuple)) and len(o) >= 2:
+            rows.append((o[0], str(o[1] or "")))
+    if not rows:
+        return None
+    free = [r for r in rows if not any(w in r[1].lower() for w in SPENDS)]
+    pool = free or rows
+    for want in PREFERRED:
+        for r in pool:
+            if r[1].strip().lower() == want:
+                return r
+    for want in PREFERRED:
+        for r in pool:
+            if want in r[1].strip().lower():
+                return r
+    return pool[0]
+
+
 def nearest(actors, kind):
     best = None
     for a in actors or []:
@@ -108,6 +141,10 @@ def main():
     peak_gold = 0
     stuck_enemies = {}
     unknown_scenes = {}
+    # Nothing above can prove the loop is making progress, and the first run proved it can fail to: the
+    # state was byte-identical for twenty-five minutes while the driver span. This is the backstop.
+    last_fingerprint = None
+    same_count = 0
     duels = 0
     days_passed = 0
 
@@ -132,6 +169,20 @@ def main():
         p = s["player"]
         scene = s.get("scene")
 
+        fingerprint = (scene, p.get("day"), p.get("life"), p.get("gold"), p.get("location"),
+                       len(s.get("actors") or []))
+        if fingerprint == last_fingerprint:
+            same_count += 1
+            if same_count in (12, 40):
+                j.problem("no change in %d iterations: %s  forgeUi=%s dialog=%s"
+                          % (same_count, fingerprint, str(s.get("forgeUi"))[:160], str(s.get("dialog"))[:160]))
+            if same_count >= 40:
+                j.problem("livelocked - stopping so the session can be looked at rather than spun on")
+                break
+        else:
+            same_count = 0
+            last_fingerprint = fingerprint
+
         if last_day is not None and p["day"] != last_day:
             days_passed += p["day"] - last_day
             j.say("day", "day %s -> %s (life %s/%s, gold %s)"
@@ -151,6 +202,20 @@ def main():
             r = settle()
             if not r.get("ok", True):
                 j.say("settle", str(r.get("message"))[:160])
+            # Did settle actually clear it? If the same prompt is still up, it is a real choice and settle
+            # will never take it - decide, once, and say what was decided.
+            after = state()
+            if after.get("forgeUi") or after.get("dialog"):
+                pick = choose(after.get("forgeUi") or after.get("dialog"))
+                if pick and pick[0]:
+                    j.say("choice", "%r from %s" % (pick[1], [str(o[1] if isinstance(o, (list, tuple)) else
+                                                              o.get("text")) for o in
+                                                             (after.get("forgeUi") or after.get("dialog"))][:6]))
+                    cmd("click", id=pick[0])
+                else:
+                    j.problem("a prompt is up that cannot be answered: %s"
+                              % str(after.get("forgeUi") or after.get("dialog"))[:200])
+                    cmd("key", key="ESCAPE")
             continue
 
         # ---------------------------------------------------------------- inside a map

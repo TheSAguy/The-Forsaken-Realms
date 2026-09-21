@@ -67,7 +67,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `AgentActions.back()` called `Forge.back()` on a live match and CLOSED THE APP; it now refuses and says to
      use `settle`. Also new: **`dev-tools/agent/soak.py`**, a fixed-policy driver for long unattended sessions
      (journal + failure tally; a day tick is the point of it - territory expansion, mage dispatch, dungeon
-     rotation and the minimap re-bake). **NOTE for the `tfr-play` skill:** its prose still says
+     rotation and the minimap re-bake). It took three runs to get right, and the third bug is the reusable
+     lesson: **`settle` stops at a real choice by design, so the driver has to answer one.** A lost duel put up
+     `OK` / `Use Bronze Coin` / `Buy Back (500 gold)` and the driver replied with another `settle` for
+     twenty-five minutes. It now chooses - acknowledge, spend nothing (anything naming gold/shards/coin/buy/
+     pay/use is filtered out first) - and a (scene, day, life, gold, location, actor count) fingerprint that
+     does not change for 12 iterations logs a PROBLEM, 40 stops the run, because a healthy fight loop logs
+     nothing and silence could not be allowed to mean "fine". **NOTE for the `tfr-play` skill:** its prose still says
      `F:\FORGE\TFR-Agent` / `F:\FORGE\C--Users-vicwaver-MTG-Forge`; both are on C: now. And the agent's
      `forge.log` genuinely CANNOT be read while the game runs - Forge byte-range-locks the whole file, so even
      `Get-Content -Tail` fails; use `/state`'s `agent.log`, which carries the `[TFR-Agent]` walk lines.

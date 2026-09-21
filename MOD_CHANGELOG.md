@@ -17797,7 +17797,7 @@ keeping a journal and a tally of failure modes. Passing days is the point of it:
 expansion, mage dispatch, dungeon rotation (which forces the full minimap re-bake round 272 rewrote) and the quest
 clocks.
 
-Three things it learned about itself in the first run, all now in the code:
+Four things it learned about itself in the first two runs, all now in the code:
 
 * a `DuelScene`, `RewardScene` or `InfoTextScene` goes to `settle`, never to `back` (see bug 2);
 * an all-null state means the game is GONE or mid-transition, so it retries three times and then stops rather
@@ -17806,7 +17806,20 @@ Three things it learned about itself in the first run, all now in the code:
   four replans, which the skill already documents for long legs through unexplored land, so it is retried. The
   first run reported an Archmage in the Autonomous Factory as unreachable on that basis and it was wrong - all
   four `factory_*.tmx` maps report 0 unreachable placements under round 275's static test, and the live walker
-  reached it on the retry.
+  reached it on the retry;
+* **somebody has to answer a real choice, and settle will not.** The second run livelocked for twenty-five
+  minutes on a state that was byte-identical throughout: the player had LOST a duel in the Barnacle Gallery and
+  Forge was holding up `OK` / `Use Bronze Coin` / `Buy Back (500 gold)` with the game `frozen: true`. `settle`
+  stops at a real choice and prints it - that is its documented job - and the driver replied to every one with
+  another `settle`. It now picks an option and logs which: the policy is **acknowledge, spend nothing**, so
+  anything naming gold, shards, a coin, "buy", "pay" or "use" is filtered out before preferring OK / Done /
+  Continue / Back to Adventure. A soak that pays 500 gold per death would be measuring the wallet. Answering the
+  prompt by hand confirmed the mechanics are fine: the player respawned on the world map at 8/12 life, 200 gold
+  poorer, and play resumed.
+  On top of that there is now a **fingerprint livelock guard** - (scene, day, life, gold, location, actor count)
+  unchanged for 12 iterations logs a PROBLEM with whatever prompt is up, and 40 stops the run. The whole reason
+  the first stall went unnoticed for twenty-five minutes is that a healthy fight loop logs nothing, so silence
+  had to stop meaning "fine".
 
 ### Two notes for the skill file
 
