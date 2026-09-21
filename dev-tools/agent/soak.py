@@ -113,10 +113,12 @@ def choose(options):
     return pool[0]
 
 
-def nearest(actors, kind):
+def nearest(actors, kind, skip=()):
     best = None
     for a in actors or []:
         if len(a) < 4 or a[1] != kind or a[3] is None:
+            continue
+        if a[0] in skip:
             continue
         if best is None or a[3] < best[3]:
             best = a
@@ -140,6 +142,7 @@ def main():
     consecutive_failures = 0
     peak_gold = 0
     stuck_enemies = {}
+    giveups = set()
     unknown_scenes = {}
     # Nothing above can prove the loop is making progress, and the first run proved it can fail to: the
     # state was byte-identical for twenty-five minutes while the driver span. This is the backstop.
@@ -223,8 +226,14 @@ def main():
         # ---------------------------------------------------------------- inside a map
         if scene in ("TileMapScene",):
             actors = s.get("actors") or []
-            enemy = nearest(actors, "enemy")
-            reward = nearest(actors, "reward")
+            # Some "enemies" are not fights. The Warden in Orazca is an enemy-TYPE object carrying a
+            # dialog, so walking into him talks and leaves him standing there - and the driver picked him
+            # again on every visit, giving up three times per visit, all night. Give-ups are remembered per
+            # (map, actor) for the whole run, not per visit.
+            here = p.get("location") or "?"
+            skip = {aid for (loc, aid) in giveups if loc == here}
+            enemy = nearest(actors, "enemy", skip)
+            reward = nearest(actors, "reward", skip)
             if enemy:
                 r = cmd("goto", actor=enemy[0])
                 duels += 1
@@ -239,11 +248,13 @@ def main():
                                   % (enemy[0], enemy[2], p.get("location")))
                         cmd("leave")
                     else:
-                        stuck_enemies[enemy[0]] = stuck_enemies.get(enemy[0], 0) + 1
-                        if stuck_enemies[enemy[0]] >= 3:
-                            j.problem("walker gave up on enemy %s (%s) in %s three times"
-                                      % (enemy[0], enemy[2], p.get("location")))
-                            cmd("leave")
+                        key = (here, enemy[0])
+                        stuck_enemies[key] = stuck_enemies.get(key, 0) + 1
+                        if stuck_enemies[key] >= 3:
+                            j.say("skip", "giving up on %s (%s) in %s for the rest of the run - three failed "
+                                          "approaches; a dialog NPC or a spot the walker cannot reach"
+                                  % (enemy[0], enemy[2], here))
+                            giveups.add(key)
                 settle()
                 continue
             if reward:
