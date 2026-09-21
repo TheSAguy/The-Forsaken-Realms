@@ -85,9 +85,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      fires from `act()` - so anything that stalls the typing (a degenerate layout width at an unusual
      resolution/DPI, a markup token the parser trips on, a label never laid out) leaves the frame drawn with
      nothing to click. **NOT diagnosed - made survivable:** after `5s + textLength/10` (capped at 60s) the text
-     is skipped to the end and the options shown regardless, with a `[TFR-Dialog]` line. **To ask the reporter
-     for:** `%APPDATA%\ForsakenRealms\forge.log`, their resolution + Windows display scaling, and above all
-     **whether it still happens with fullscreen OFF** - the one A/B test that isolates their only change.
+     is skipped to the end and the options shown regardless, with a `[TFR-Dialog]` line. **HIS LOG ARRIVED and contains NO error** - world-gen completes, the starter
+     deck builds, and it ends on `[Controllers] removed manager for application`, the app exiting. Nothing about
+     the intro at all. Measuring his screenshot against a working one settles that the grey window IS this
+     dialog with its text and buttons unrendered (same frame, same relative size - and `UIScene` uses
+     `ScalingViewport(Scaling.stretch)`, so a dialog is the same fraction of the screen at any resolution: never
+     a sizing bug). **Still unproven: why the typing stalled.** Not the focus flag (`hasWindowFocus()` gates
+     controller input only, not `act()`). He confirmed **fullscreen OFF lets him proceed**. Round 279 now also
+     logs `[TFR-Dialog]` when a dialog is SHOWN (id, chars, hidden options, deadline), so the next report is
+     diagnosable instead of pixel forensics. **Two things to relay:** clicking the dialog box already skips the
+     typing and reveals the options (`D.addListener` -> `skipToTheEnd()`) - if clicking the panel did nothing
+     for him, that is a different, input-level problem; and ask his **Windows display scaling** (HP OmniBook X
+     Flip convertible, 1920x1200 panel, typically 150-200%, launcher uses `HdpiMode.Logical` while exclusive
+     fullscreen reports the PHYSICAL mode).
   3. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
      `enemySpriteFrameCap` as an unknown key although the field exists in `TuningData.java` and in
      `settings.json`, because its class field lists are hardcoded. They are READ from the Java source now (the

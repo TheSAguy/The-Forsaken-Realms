@@ -17859,6 +17859,43 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 279 (cont.): the grey window, with the reporter's log in hand (2026-09-21)
+
+The reporter's `forge.log` arrived. **It contains no error of any kind.** World generation completes in 20.2 s,
+the starter deck builds, the editions are dealt out, and the log ends on `[Controllers] removed manager for
+application` - the app exiting, i.e. he quit. Not one line about the intro, no exception, no warning. Device: HP
+OmniBook X Flip 14 (a convertible), Windows 11 build 26200, engine 09.19. He reports 1900x1200, and that
+**unchecking fullscreen let him proceed**.
+
+**What the screenshots settle.** Measured against the user's own working shot of the same moment, the grey window
+is that intro dialog: same stone frame, same relative size (67% vs 55% of the frame - the earlier "covers most of
+the screen" reading was wrong, and `UIScene`'s `ScalingViewport(Scaling.stretch, ...)` means a dialog occupies the
+same fraction of the screen at any resolution, so it was never a sizing bug). What is missing is its TEXT and its
+BUTTONS. Zero characters typed, and since the options are revealed only by `TypingLabel`'s `end()` callback, they
+stayed hidden. That is the softlock this round already made survivable.
+
+**What is still unproven:** why the typing stalled on that machine. It is not the window-focus flag -
+`hasWindowFocus()` gates controller input only, not `act()`. It is not the viewport. The honest answer is that
+nothing in the intro path logs anything, so the diagnosis came from pixels rather than evidence.
+
+So the round's second half is instrumentation: `[TFR-Dialog]` now prints **when a dialog is shown** (id, text
+length, hidden option count, reveal deadline) as well as when the timeout fires. Text and options present, then
+the timeout fires = this softlock, confirmed. 0 chars, or the timeout never firing = something else, and the
+guessing stops.
+
+**Two things to relay, recorded because they are easy to lose:**
+
+* **Clicking the dialog box already skips the typing** - `D.addListener(new ClickListener(){ ... A.skipToTheEnd()
+  ... })` has been there all along, and it fires `end()`, which reveals the options. If he only pressed keys or
+  clicked outside the panel, that was the escape hatch he missed. If he clicked the panel and nothing happened,
+  that is a different and more interesting problem (input not reaching the stage) and worth knowing.
+* **Ask for his Windows display scaling.** That device is a convertible with a 1920x1200 touchscreen, typically
+  150-200%. The launcher sets `HdpiMode.Logical`, and in exclusive fullscreen GLFW reports the PHYSICAL mode, so
+  logical-vs-physical divergence is a plausible route to a degenerate text layout. Worth confirming whether
+  "1900x1200" is literal or 1920x1200 too - a non-standard mode would be its own clue.
+
+No general defect for other players, which matches the user's own read of it.
+
 ## Round 279 (cont.): phyrexian_black1 is accepted, and the audits now say so (2026-09-21)
 
 Asked what to do about `phyrexian_black1.tmx` - single entry reaching 28,653 of 75,489 legal positions, all five

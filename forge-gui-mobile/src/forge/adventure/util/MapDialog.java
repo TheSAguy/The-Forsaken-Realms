@@ -378,6 +378,18 @@ public class MapDialog {
                 return false;
             }
             else{
+                // Round 279 (cont.): one line per dialog opened, because the reporter's log for the "grey
+                // window" could not confirm anything. It runs from world generation straight to "[Controllers]
+                // removed manager for application" - the app exiting - with no exception and not one line
+                // about the intro. The dialog that trapped him left no trace at all, so the diagnosis had to
+                // come from measuring a screenshot against a working one.
+                //
+                // With this and the [TFR-Dialog] timeout line above, the next report answers itself: text and
+                // options present, then the timeout fires = the stalled-typing softlock; 0 chars or the
+                // timeout never firing = something else entirely, and we stop guessing.
+                System.out.println("[TFR-Dialog] dialog " + parentID + " shown: "
+                        + (text == null ? 0 : text.length()) + " chars, " + buttons.size
+                        + " option(s) hidden until the typing ends (deadline " + timeout + "s)");
                 stage.showDialog();
                 return true;
             }
