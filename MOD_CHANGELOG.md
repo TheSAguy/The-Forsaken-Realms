@@ -17757,6 +17757,19 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 270: castles get the unvisited marker too (2026-09-20)
+
+User, with a screenshot of the Wizard Palace sitting unmarked between a marked cave and a marked tower: *"This
+dungeon did not have a magnifying glass, for not yet visited. I know it's a special place, but should still
+have it."*
+
+It is not special-cased out - it was never in. `MapSprite` showed the magnifier for `cave`, `dungeon` and
+(since round 113) `sideboss*`, and the Wizard Palace is type **`castle`**, so **all 13 castle POIs** have been
+missing it, not just this one. The marker asks one question - have you been inside? - and that is just as real
+for a castle, which is a hand-built map you clear like any other.
+
+Capitals and towns stay out on purpose: they are hubs you trade in, not places with an inside to discover.
+
 ## Round 269: ten guards standing outside the room (2026-09-20)
 
 User, with a screenshot of the Autonomous Factory and a golem circled above the room's wall: *"you placed a guy

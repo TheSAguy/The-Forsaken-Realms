@@ -34,7 +34,15 @@ public class MapSprite extends Actor {
             setBookmarked(changes.isBookmarked(), point);
             String poiType = point.getData().type;
             isCaveDungeon = "cave".equalsIgnoreCase(poiType) || "dungeon".equalsIgnoreCase(poiType)
+                    || "castle".equalsIgnoreCase(poiType) // round 270: castles are explorable too - see below
                     || (poiType != null && poiType.toLowerCase().startsWith("sideboss")); // round 113: side-boss lairs get the unvisited marker too
+            // Round 270 (user, with a screenshot of the Wizard Palace next to a marked cave and tower: "This
+            // dungeon did not have a magnifying glass, for not yet visited. I know it's a special place, but
+            // should still have it"). The marker asks one question - have you been inside? - and that question
+            // is just as real for the 13 `castle` POIs, which are hand-built maps you clear like any other.
+            // They were left out because the original rule listed the two GENERATED types and round 113 added
+            // the side-boss lairs one at a time. Capitals and towns stay out: they are hubs you trade in, not
+            // places with an inside to discover.
             if (point.getData().map != null && point.getID() != null) {
                 isOldorVisited = changes.hasDeletedObjects();
             }
