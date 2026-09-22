@@ -17859,6 +17859,122 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 289: the engine moves to the 09.22 daily, and an allocation refactor lands on top of ours (2026-09-22)
+
+User: *"Please update to the latest forge version E:\GAMES\Forge_2"*
+
+`E:\GAMES\Forge_2` had been reinstalled at the **09.22 daily** - `.installationinformation` records
+`snapshot-version 2.0.15-SNAPSHOT-09.22`, `build.txt` says `2026-09-22 18:26:39`, and `CHANGES.txt` tops out at
+upstream `6eb449b787d`. From that moment `build_standalone.py`'s base-install guard refuses every package until the
+repo's engine matches, so this had to land before anything else could ship.
+
+Merged `3146e4b1036..6eb449b787d`: **80 commits / 2766 files / 101 Java**. Unlike round 165 there was no "merge to
+the daily, not to the tip" call to make - the daily IS upstream's tip right now (0 commits after it). `config.json`'s
+`engineBuildVersion` 09.18 -> **09.22**. Upstream touched nothing under `res/adventure/The Forsaken Realms/`, as
+always; its 2513 `cardsfolder` files, 68 `formats`, 42 `draft` and 25 `editions` merged untouched.
+
+### The merge was big because upstream refactored exactly where this mod lives
+
+`09ec07abed8` **"Refactor Adventure Stages, Scenes, Sprites (#11945)"** (kevlahnota) is an allocation-reduction pass
+over 44 adventure files: object pools, reused collections, hoisted locals, method bodies rewritten wholesale. That is
+the same code this plane hooks into, so the overlap was **29 files touched by both sides, 14 conflicted, 30 hunks** -
+against round 242's single conflict and round 222's three. Our side is far larger in most of them (World +4295 lines,
+WorldStage +1664, MapStage +1357), and almost all of that is additions rather than edits to what upstream rewrote,
+which is why 15 of the 29 shared files still auto-merged.
+
+The through-line for every resolution: **take upstream's optimization unless it contradicts a contract this plane
+depends on.** Four did.
+
+### The four that contradicted something, and what happened instead
+
+**1. `MapActor.getCenter()` - upstream reintroduced the round-178 bug.** Its version multiplies width/height by
+`EnemyData.scale` again, and its OWN `EnemySprite` constructor still does `setWidth(getWidth() * scale)` - so the
+size already includes it, and every scaled enemy's center (and its effects) lands off to one side. Kept our math,
+took their pooled `getCenterVec`. That vector is per-actor and REUSED, and `MapActor.act()` calls `getCenter()`
+every frame while an effect plays, so the one caller that stores the result past the next call -
+`AgentObserver`'s actor snapshot, which outlives the loop that builds it - now takes a `.cpy()`. `walkTo()` was
+already defensive (`destPx.cpy()`); `getClosestValidPOI` only reads distances.
+
+**2. `DuelScene` - three `fb.dispose()` calls on what is now a SHARED avatar.** Upstream changed
+`getFBEnemyAvatar()` from "a fresh `FBufferedImage` per dialog" to "return the static `enemyAvatar` field", which is
+why its own version passes `null` where ours passed `fb::dispose`. The auto-merge took their cached accessor while
+our conflict sides kept the disposes - which would have blanked the enemy avatar for every boss dialog after the
+first in a session. All three are gone; the tiered display name (`getTieredDisplayName()`, the 2026-08-13 review)
+stays, as does their cached `insultKeysMap`/`introKeysMap` lookup.
+
+**3. `World.generateBiomeSprite()` - the shared tile pixmap is the opposite of this plane's contract.** Upstream
+composites into one reused static `globalTileDrawing` and returns it. `getBiomeSprite()` here documents its result
+as **caller-owned** (round 123 review S2-2, a real native-memory leak): the fog path does `hazeTile(real)` then
+`real.dispose()`, and both `WorldBackground` callers dispose what they get - the chunk build and the per-tile fog
+repatch. Under upstream's contract every one of those disposes the single shared pixmap and takes the terrain down
+with it. So `generateBiomeSprite()` allocates its own again and the `globalTileDrawing` field is removed (its
+`dispose()` entry too; `globalTexture`, upstream's marker sheet, stays). Their reusable `drawingInfoCache` IS
+taken - it never escapes the method, so it is free.
+
+**4. `GameScene` - the `[+tfr]` medallion would have silently become `[+c]`.** The switch that mapped a biome to its
+color glyph was replaced by a static `cachedColorIDsMap` holding the stock six biomes. Round 178's "player" entry
+(the medallion on the player's own land) had nowhere to live. Registered in their table instead, which also gives
+"player" the same `"Player Map"` header the old `TextUtil.capitalize(name) + " Map"` produced.
+
+### The rest: renames and idiom changes our code had to follow
+
+- **`WorldStage`'s despawn loop is indexed now, not an Iterator.** The auto-merged tail already used
+  `enemies.remove(i); i--;`, so the two `it.remove()` calls in our territory-mage arrival branch had to become the
+  same. (The separate iterator further down the file is a different method and keeps its own.)
+- **`MapSprite.magnifier` is `spriteMagnifier`.** Our fog-of-war draw guard and `getDrawScale()` block referenced the
+  old name - it would not have compiled.
+- **`RewardSprite.getRewards()` caches.** Its edition-progression restriction now runs inside upstream's one-time
+  fill. The restriction reads the current point of interest, which cannot change while a map is open, so asking once
+  per sprite returns what the per-call version returned - and the `generate()` roll is fixed at first request instead
+  of re-rolled, which is upstream's point. Neither caller mutates the array, and the sprite is removed on pickup.
+- **`EnemySprite.getRewards()` lost its collection to the auto-merge.** Upstream replaced
+  `Array<Reward> rewards = new Array<>()` with a per-enemy pool, and the chaos-battle section above it (stock code
+  this plane never modified) merged in wholesale - leaving the entire TFR payout pipeline below with nothing to add
+  to. A fresh `Array` is restored deliberately rather than the pool: `getReward()` hands it straight to
+  `appendCoinRansomReward()`, which APPENDS, and `RewardScene` holds it while it draws, while the pool is cleared at
+  the top of every call. One allocation per duel win is not what upstream's pooling was aimed at.
+- **`MapStage`'s pickup switch** keeps our `case Stone:`/`case Wood:` (round 227) on top of their cached label key;
+  the icon they pass, `rewardTypeName`, is exactly what round 227's own `icon` local was.
+- **`MapDialog`** keeps the scrolling option list and takes their shared `skipClickListener`, which reaches the same
+  TypingLabel by walking the dialog's content table instead of closing over the local `A`.
+- **`WorldStage.save()` keeps our fresh lists** rather than their reused `cachedSave*` fields. Save is not a hot path,
+  and a reused list handed to `data.storeObject()` is an aliasing question nobody needs; our version also carries the
+  three territory lists and the raw-name fix (the three Arena Challengers share a `nameOverride`).
+- **`PointOfInterestMapSprite`** keeps the round-254 two-tile entry box and takes their `pointOfInterest != null`
+  guard.
+
+### Build
+
+Three imports upstream dropped had to come back, because its slimmer versions no longer needed what our kept code
+still uses: `Texture` and `Color` in `PointOfInterestMapSprite`, `ArrayList` in `WorldBackground`. That was the whole
+of the first compile's failure. `mvn -pl forge-gui-mobile -am compile` then **BUILD SUCCESS**.
+
+**Not verified in play.** The merge compiles and the reasoning above is on paper; nothing here has been seen running.
+The places to watch are the four contract calls - a scaled enemy's effects sitting off-center, a second boss dialog
+with a blank avatar, terrain corrupting after a fog repatch, and the player's own land showing a colorless glyph.
+
+## Rounds 287, 288 and 288b: the docs these three owed (2026-09-22)
+
+Recorded late - all three shipped code with no `MOD_CHANGELOG` / `CLAUDE.md` / `CORE_ENGINE_CHANGES` entry at all,
+against the standing rule that a round updates the three in the same commit. Two of them touched core engine files,
+which is exactly what `CORE_ENGINE_CHANGES.md` exists to track through an upstream merge like round 289's.
+
+- **Round 287** (`e0db036c457`, 109 files): **arena weeks start on day 1** - the reset moves from days 7/14/21 to
+  **8/15/22** (user: *"Currently at 7, 14, 21. Let's change that to 8, 15, 22, etc. So start of the week"*), and
+  **every booster and chest gets its OWN guard**. `MapStage.assignLootGuards()` does a MATCHING, not a proximity
+  test - one enemy satisfies "is something within 3 tiles" for every chest in a room at once, which is why the
+  graveyards audited as covered while the game logged "3 of 12 have a guard". `dev-tools/add_loot_guards.py` replays
+  that matching and places what is missing: **137 guards**, boosters Adept+ at threatRange 40, chests Apprentice at
+  20, leaving 10 unguarded pieces the user then waved off (*"We are good as is"*).
+- **Round 288** (`81003cf6b15`, 5 files): **one definition of the week.** Round 287 changed the arena and left four
+  other clocks computing `day / 7` by hand - shop-restock surcharges, mine payouts, guard salaries, the resource
+  ledger - so the arena would have reset on day 8 while wages were drawn on day 7. `World.weekOf()` /
+  `nextWeekBoundary()` / `lastWeekBoundary()` are now the single source, and all of them point here. On an existing
+  save this pays one early: anything last paid on day 7 pays on day 8 rather than 14, once.
+- **Round 288b** (`d582005fca2`, 1 file): the retracted capital-W claim removed from a `fix_routes.py` comment, which
+  still said Magma Elemental's blocked legs were "what the capital-W flip is waiting on". Round 286f had retracted
+  that hazard everywhere else; this was the last copy. Nothing was ever built on it, so there was nothing to revert.
+
 ## Round 286: the stray patrols, a log line that lied, and a real gap between booster and chest guards (2026-09-22)
 
 User: *"Please implement all you can, including ... I do all 33 patrol routes"*, and separately

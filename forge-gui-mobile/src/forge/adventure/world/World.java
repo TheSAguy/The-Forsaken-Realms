@@ -57,6 +57,7 @@ public class World implements Disposable, SaveFileContent {
     private final Random random = new Random();
     private boolean worldDataLoaded = false;
     private Texture globalTexture = null;
+    private final ArrayList<DrawingInformation> drawingInfoCache = new ArrayList<>(32);
 
     // Fog of war: explored[x][y] is stored in the same raw/image-space orientation as biomeMap's
     // internal array (matches the unflipped x,y loop used to build biomeImage), so it lines up
@@ -1078,8 +1079,9 @@ public class World implements Disposable, SaveFileContent {
      * second copy for hazed tiles). libGDX Pixmaps have no finalizer, so this only ever grew.
      */
     public Pixmap getBiomeSprite(int x, int y) {
-        if (x < 0 || y <= 0 || x >= width || y > height)
+        if (x < 0 || y <= 0 || x >= width || y > height) {
             return new Pixmap(data.tileSize, data.tileSize, Pixmap.Format.RGBA8888);
+        }
         if (!isExploredWorld(x, y))
             return copyTile(getFogTile());
         Pixmap real = generateBiomeSprite(x, y);
@@ -1106,12 +1108,21 @@ public class World implements Disposable, SaveFileContent {
     private Pixmap generateBiomeSprite(int x, int y) {
         long biomeIndex = getBiome(x, y);
         int biomeTerrain = getTerrainIndex(x, y);
+        // Round 289: a FRESH pixmap per call, not upstream's shared `globalTileDrawing`.
+        //
+        // The 09.22 refactor made this method composite into one reused static pixmap and return it. That
+        // contract is the opposite of this plane's: getBiomeSprite() above documents its result as
+        // CALLER-OWNED (round 123 review S2-2, a real native-memory leak), its fog path does
+        // hazeTile(real) then real.dispose(), and both WorldBackground callers dispose what they get -
+        // the chunk build and the per-tile fog repatch. Under upstream's contract every one of those
+        // would dispose the one shared pixmap and take the whole terrain down with it. The reusable
+        // DrawingInformation list IS taken (see below): it never escapes this method, so it is free.
         Pixmap drawingPixmap = new Pixmap(data.tileSize, data.tileSize, Pixmap.Format.RGBA8888);
-        ArrayList<DrawingInformation> information = new ArrayList<>();
+
+        drawingInfoCache.clear();
+
         for (int i = 0; i < biomeTexture.length; i++) {
-            if ((biomeIndex & 1L << i) == 0) {
-                continue;
-            }
+            if ((biomeIndex & 1L << i) == 0) continue;
             BiomeTexture regions = biomeTexture[i];
             if (x <= 0 || y <= 1 || x >= width - 1 || y >= height)//edge
             {
@@ -1123,19 +1134,12 @@ public class World implements Disposable, SaveFileContent {
                 return drawingPixmap;
             }
 
-
             int neighbors = 0b000_000_000;
-
             int bitIndex = 8;
             for (int ny = 1; ny > -2; ny--) {
                 for (int nx = -1; nx < 2; nx++) {
-                    long otherBiome = getBiome(x + nx, y + ny);
-                    int otherTerrain = getTerrainIndex(x + nx, y + ny);
-
-
-                    if ((otherBiome & 1L << i) != 0 && (biomeTerrain == otherTerrain) | biomeTerrain == 0)
+                    if ((getBiome(x + nx, y + ny) & 1L << i) != 0 && (biomeTerrain == getTerrainIndex(x + nx, y + ny) || biomeTerrain == 0))
                         neighbors |= (1 << bitIndex);
-
                     bitIndex--;
                 }
             }
@@ -1149,34 +1153,36 @@ public class World implements Disposable, SaveFileContent {
                         bitIndex--;
                     }
                 }
-                information.add(new DrawingInformation(baseNeighbors, regions, 0));
+                drawingInfoCache.add(new DrawingInformation(baseNeighbors, regions, 0));
             }
             // Round 236: an index this layer has no picture for is drawn as the layer's own equivalent -
             // see drawableTerrainIndex(). The neighbor mask above was built on the raw index on purpose:
             // adjacent tiles of one wasteland structure must still join up as one formation.
-            information.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y)));
-
+            //
+            // Round 289: the list is upstream's reused `drawingInfoCache` rather than a fresh ArrayList per
+            // call - safe to take, since it is cleared on entry and never escapes this method.
+            drawingInfoCache.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y)));
         }
+
         int lastFullNeighbour = -1;
         int counter = 0;
-        for (DrawingInformation info : information) {
-            if (info.neighbors == 0b111_111_111)
-                lastFullNeighbour = counter;
+        for (DrawingInformation info : drawingInfoCache) {
+            if (info.neighbors == 0b111_111_111) lastFullNeighbour = counter;
             counter++;
-
         }
         counter = 0;
-        if (lastFullNeighbour < 0 && information.size() != 0)
-            information.get(0).neighbors = 0b111_111_111;
-        for (DrawingInformation info : information) {
+        if (lastFullNeighbour < 0 && !drawingInfoCache.isEmpty()) {
+            drawingInfoCache.get(0).neighbors = 0b111_111_111;
+        }
+        for (DrawingInformation info : drawingInfoCache) {
             if (counter < lastFullNeighbour) {
                 counter++;
                 continue;
             }
             info.draw(drawingPixmap);
         }
-        return drawingPixmap;
 
+        return drawingPixmap;
     }
 
     // Round 236 (user, standing on open grass in Green land: "There is something preventing me from moving
@@ -5137,9 +5143,12 @@ public class World implements Disposable, SaveFileContent {
     }
 
     public void dispose() {
+        drawingInfoCache.clear();
         // Engine merge 09.11: upstream's safeDispose (tolerates an already-disposed Pixmap) for the fog-of-war
         // pixmaps this plane adds too.
-        Forge.safeDispose(biomeImage, fogOfWarPixmap, fogTilePixmap);
+        // Round 289: globalTileDrawing is deliberately absent - this plane does not use upstream's shared tile
+        // pixmap (see generateBiomeSprite). globalTexture is upstream's marker sheet and still belongs here.
+        Forge.safeDispose(biomeImage, fogOfWarPixmap, fogTilePixmap, globalTexture);
     }
 
     public void setSeed(long seedOffset) {

@@ -24,11 +24,19 @@ public class MapSprite extends Actor {
 
     static public int BackgroundLayer = -1;
     static public int SpriteLayer = 0;
+    private Sprite spriteStar = null;
+    private Sprite spriteMagnifier = null;
     TextureRegion texture;
-    Sprite bookmark = Config.instance().getItemSprite("Star");
-    Sprite magnifier = Config.instance().getItemSprite("Magnifier");
     boolean isCaveDungeon, isOldorVisited, isBookmarked;
     public MapSprite(Vector2 pos, TextureRegion sprite, PointOfInterest point) {
+        // Lazy-initialize shared indicators exactly once
+        if (spriteStar == null) {
+            spriteStar = Config.instance().getItemSprite("Star");
+        }
+        if (spriteMagnifier == null) {
+            spriteMagnifier = Config.instance().getItemSprite("Magnifier");
+        }
+
         if (point != null) {
             PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());
             setBookmarked(changes.isBookmarked(), point);
@@ -47,7 +55,9 @@ public class MapSprite extends Actor {
                 isOldorVisited = changes.hasDeletedObjects();
             }
         } else {
-            setBookmarked(false, null);
+            isBookmarked = false;
+            isCaveDungeon = false;
+            isOldorVisited = false;
         }
         texture = sprite;
         setPosition(pos.x, pos.y);
@@ -61,11 +71,12 @@ public class MapSprite extends Actor {
 
     public void setBookmarked(boolean val, PointOfInterest poi) {
         isBookmarked = val;
-        if (isBookmarked)
-            MapViewScene.instance().addBookmark(poi);
-        else
-            MapViewScene.instance().removeBookmark(poi);
-
+        if (poi != null) {
+            if (isBookmarked)
+                MapViewScene.instance().addBookmark(poi);
+            else
+                MapViewScene.instance().removeBookmark(poi);
+        }
     }
 
     public static Array<Actor> getMapSprites(int chunkX, int chunkY, int layer) {
@@ -122,17 +133,17 @@ public class MapSprite extends Actor {
             batch.draw(texture, getX() - (w - texture.getRegionWidth()) / 2f,
                     getY() - (h - texture.getRegionHeight()) / 2f, w, h);
         }
-        if (isCaveDungeon && !isOldorVisited && magnifier != null) {
-            magnifier.setScale(0.7f, 0.7f);
-            magnifier.setPosition(getX() - 7, getY() + 2);
-            magnifier.draw(batch, parentAlpha);
+        // Round 289: this field is `spriteMagnifier` since upstream's 09.22 rename of `magnifier`.
+        if (isCaveDungeon && !isOldorVisited && spriteMagnifier != null) {
+            spriteMagnifier.setScale(0.7f, 0.7f);
+            spriteMagnifier.setPosition(getX() - 7, getY() + 2);
+            spriteMagnifier.draw(batch, parentAlpha);
         }
-        if (isBookmarked && bookmark != null) {
-            bookmark.setScale(0.7f, 0.7f);
-            bookmark.setPosition(getRight() - 8, getY() + getHeight() / 1.5f);
-            bookmark.draw(batch, parentAlpha);
+        if (isBookmarked && spriteStar != null) {
+            spriteStar.setScale(0.7f, 0.7f);
+            spriteStar.setPosition(getRight() - 8, getY() + getHeight() / 1.5f);
+            spriteStar.draw(batch, parentAlpha);
         }
-        //font.draw(batch,String.valueOf(getZIndex()),getX()-(getWidth()/2),getY());
     }
 
 }

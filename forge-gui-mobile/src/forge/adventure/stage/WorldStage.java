@@ -143,6 +143,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private static float fastTimeMultiplier() {
         return Config.instance().getTuningData().speedUpMultiplier;
     }
+    private final Vector2 navDirectionVec = new Vector2();
+    private final ArrayList<Float> cachedSaveTimeouts = new ArrayList<>(32);
+    private final ArrayList<String> cachedSaveNames = new ArrayList<>(32);
+    private final ArrayList<Float> cachedSaveXCoords = new ArrayList<>(32);
+    private final ArrayList<Float> cachedSaveYCoords = new ArrayList<>(32);
+    private final ArrayList<String> cachedSaveQuestIDs = new ArrayList<>(32);
 
     public WorldStage() {
         super();
@@ -402,9 +408,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
             handleMonsterSpawn(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;
-            Iterator<Pair<Float, EnemySprite>> it = enemies.iterator();
-            while (it.hasNext()) {
-                Pair<Float, EnemySprite> pair = it.next();
+
+            for (int i = 0; i < enemies.size(); i++) {
+                Pair<Float, EnemySprite> pair = enemies.get(i);
                 // Territory Control (MOD_SCOPE.md #7): a mage is exempt from the ordinary
                 // roaming-monster despawn timer below - getLifetime() defaults to a real-time
                 // 20s floor meant for a monster that wanders near the player and should vanish if
@@ -412,11 +418,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // time (especially without 10x speed) to reach a distant town. It already has its
                 // own, deliberate lifecycle: removed on arrival (TerritoryControl.onMageArrived())
                 // or on defeat (the normal path below, unaffected by this check).
+                //
+                // Round 289: upstream's 09.22 refactor replaced this loop's Iterator with an indexed
+                // walk, so the two removals in the mage-arrival branch below read
+                // `enemies.remove(i); i--;` instead of it.remove(). The separate iterator further
+                // down this file (removeEnemy) is a different method and still uses its own.
                 if (pair.getValue().territoryTarget == null && globalTimer >= pair.getKey() + pair.getValue().getLifetime()) {
                     AdventureQuestController.instance().updateDespawn(pair.getValue());
                     AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
                     foregroundSprites.removeActor(pair.getValue());
-                    it.remove();
+                    enemies.remove(i);
+                    i--; // index pointer after index reduction step
                     continue;
                 }
                 EnemySprite mob = pair.getValue();
@@ -440,13 +452,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             continue; // round 166: a guard fight is running - the mage waits at the gate, asked again next frame
                         if (arrival == RoamingGuardRuntime.Arrival.FIGHT) {
                             foregroundSprites.removeActor(mob);
-                            it.remove();
+                            enemies.remove(i);
+                            i--;
                             startGuardDuel(mob);
                             continue;
                         }
                         TerritoryControl.onMageArrived(mob);
                         foregroundSprites.removeActor(mob);
-                        it.remove();
+                        enemies.remove(i);
+                        i--;
                         continue;
                     }
                     enemyMoveVector.set(mob.territoryTarget.getPosition()).sub(mob.pos());
@@ -457,18 +471,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     enemyMoveVector.setLength(mob.speed() * delta);
                     tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY() + enemyMoveVector.y, mob.getWidth(), mob.getHeight() * mob.getCollisionHeight());
 
-                    if (!mob.getData().flying && WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect))//if direct path is not possible
-                    {
+                    if (!mob.getData().flying && WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect)) {
                         tempBoundingRect.set(mob.getX() + enemyMoveVector.x, mob.getY(), mob.getWidth(), mob.getHeight());
-                        if (WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect))//if only x path is not possible
-                        {
+                        if (WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect)) {
                             tempBoundingRect.set(mob.getX(), mob.getY() + enemyMoveVector.y, mob.getWidth(), mob.getHeight());
-                            if (!WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect))//if y path is possible
-                            {
+                            if (!WorldSave.getCurrentSave().getWorld().collidingTile(tempBoundingRect)) {
                                 mob.moveBy(0, enemyMoveVector.y);
                             }
                         } else {
-
                             mob.moveBy(enemyMoveVector.x, 0);
                         }
                     } else {
@@ -516,8 +526,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // intercept while the player is on the overworld and out of dialogs.
             RoamingGuardRuntime.update(delta, enemies, foregroundSprites);
         } else {
-            for (Pair<Float, EnemySprite> pair : enemies) {
-                pair.getValue().setAnimation(CharacterSprite.AnimationTypes.Idle);
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies.get(i).getValue().setAnimation(CharacterSprite.AnimationTypes.Idle);
             }
             RoamingGuardRuntime.standStill(); // round 233: guards idle with everything else
         }
@@ -1930,6 +1940,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     @Override
     public void leave() {
         getPlayerSprite().storePos();
+        background.dispose();
     }
 
     @Override
@@ -2164,18 +2175,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
     }
 
-    private void drawNavigationArrow(){
+    private void drawNavigationArrow() {
         Vector2 navDirection = null;
-        for (AdventureQuestData adq: Current.player().getQuests())
-        {
+        for (AdventureQuestData adq : Current.player().getQuests()) {
             if (adq.isTracked) {
                 PointOfInterest nearestValidPOI = adq.getClosestValidPOI(player.getCenter());
                 if (nearestValidPOI != null) {
-                    navDirection = new Vector2(nearestValidPOI.getCenter()).sub(player.getCenter());
+                    navDirectionVec.set(nearestValidPOI.getCenter()).sub(player.getCenter());
+                    navDirection = navDirectionVec;
                     break;
                 }
 
-                if(adq.getTargetEnemySprite() == null
+                if (adq.getTargetEnemySprite() == null
                         && adq.getActiveStages().size() > 0
                         && adq.qualifiesForDetachedQuest(adq.getActiveStages().get(0))) {
                     AdventureQuestStage brokenStage = adq.getActiveStages().get(0);
@@ -2188,25 +2199,22 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
                 if (adq.getTargetEnemySprite() != null) {
                     EnemySprite target = adq.getTargetEnemySprite();
-                    for (Pair<Float, EnemySprite> active :enemies)
-                    {
-                        EnemySprite sprite = active.getValue();
-                        if (sprite.equals(target)){
-                            navDirection = new Vector2(adq.getTargetEnemySprite().getCenter()).sub(player.getCenter());
+                    for (int i = 0; i < enemies.size(); i++) {
+                        EnemySprite sprite = enemies.get(i).getValue();
+                        if (sprite.equals(target)) {
+                            navDirectionVec.set(adq.getTargetEnemySprite().getCenter()).sub(player.getCenter());
+                            navDirection = navDirectionVec;
                         }
                     }
                 }
                 break;
             }
         }
-        if (navDirection != null)
-        {
+        if (navDirection != null) {
             navArrow.navTargetAngle = navDirection.angleDeg();
             navArrow.setVisible(true);
-            navArrow.setPosition(getPlayerSprite().getX() + (getPlayerSprite().getWidth()/2), getPlayerSprite().getY() + (getPlayerSprite().getHeight()/2));
-        }
-        else
-        {
+            navArrow.setPosition(getPlayerSprite().getX() + (getPlayerSprite().getWidth() / 2), getPlayerSprite().getY() + (getPlayerSprite().getHeight() / 2));
+        } else {
             navArrow.setVisible(false);
         }
     }

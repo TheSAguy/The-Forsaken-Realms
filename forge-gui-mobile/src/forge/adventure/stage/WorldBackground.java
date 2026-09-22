@@ -100,10 +100,21 @@ public class WorldBackground extends Actor {
     private int lastVisibilityPatchX = Integer.MIN_VALUE;
     private int lastVisibilityPatchY = Integer.MIN_VALUE;
 
+    private final GridPoint2 playerChunkPos = new GridPoint2();
+    private final Array<GridPoint2> chunkPointsList = new Array<>(18);
+    private final GridPoint2[] gridPointPool = new GridPoint2[18];
+
+    {
+        for (int i = 0; i < gridPointPool.length; i++) {
+            gridPointPool[i] = new GridPoint2();
+        }
+    }
+
     public WorldBackground(GameStage gameStage) {
         stage = gameStage;
     }
 
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         if (chunks == null) {
             initialize();
@@ -199,46 +210,66 @@ public class WorldBackground extends Actor {
             if (movedTile)
                 world.revealWithItsIcon(poi, this::onTileRevealed);
         }
-        if (currentChunkX != pos.x || currentChunkY != pos.y) {
-            int xDiff = currentChunkX - pos.x;
-            int yDiff = currentChunkY - pos.y;
-            ArrayList<GridPoint2> points = new ArrayList<GridPoint2>();
+        int px = pos.x;
+        int py = pos.y;
+
+        if (currentChunkX != px || currentChunkY != py) {
+            chunkPointsList.clear();
+            int poolIndex = 0;
+
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                    points.add(new GridPoint2(pos.x + x, pos.y + y));
+                    GridPoint2 pt = gridPointPool[poolIndex++];
+                    pt.set(px + x, py + y);
+                    chunkPointsList.add(pt);
                 }
             }
+
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                    GridPoint2 point = new GridPoint2(currentChunkX + x, currentChunkY + y);
-                    if (points.contains(point))// old Point is part of new points
-                    {
-                        points.remove(point);
-                    } else {
-                        if (point.y < 0 || point.x < 0 || point.y >= chunks[0].length || point.x >= chunks.length)
-                            continue;
-                        unLoadChunk(point.x, point.y);
+                    int oldX = currentChunkX + x;
+                    int oldY = currentChunkY + y;
+
+                    boolean remainsVisible = false;
+                    for (int i = 0; i < chunkPointsList.size; i++) {
+                        GridPoint2 pt = chunkPointsList.get(i);
+                        if (pt.x == oldX && pt.y == oldY) {
+                            remainsVisible = true;
+                            // remove
+                            chunkPointsList.removeIndex(i);
+                            break;
+                        }
+                    }
+
+                    if (!remainsVisible) {
+                        if (oldY >= 0 && oldX >= 0 && oldY < chunks[0].length && oldX < chunks.length) {
+                            unLoadChunk(oldX, oldY);
+                        }
                     }
                 }
             }
-            for (GridPoint2 point : points) {
+
+            for (int i = 0; i < chunkPointsList.size; i++) {
+                GridPoint2 point = chunkPointsList.get(i);
                 if (point.y < 0 || point.x < 0 || point.y >= chunks[0].length || point.x >= chunks.length)
                     continue;
                 loadChunk(point.x, point.y);
             }
-            currentChunkX = pos.x;
-            currentChunkY = pos.y;
+
+            currentChunkX = px;
+            currentChunkY = py;
         }
+
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
-                if (pos.y + y < 0 || pos.x + x < 0 || pos.y >= chunks[0].length || pos.x >= chunks.length)
+                int targetX = px + x;
+                int targetY = py + y;
+                if (targetY < 0 || targetX < 0 || targetY >= chunks[0].length || targetX >= chunks.length)
                     continue;
 
-
-                batch.draw(getChunkTexture(pos.x + x, pos.y + y), transChunkToWorld(pos.x + x), transChunkToWorld(pos.y + y));
+                batch.draw(getChunkTexture(targetX, targetY), transChunkToWorld(targetX), transChunkToWorld(targetY));
             }
         }
-
     }
 
     public void loadChunk(int x, int y) {
@@ -349,7 +380,8 @@ public class WorldBackground extends Actor {
     GridPoint2 translateFromWorldToChunk(float x, float y) {
         float worldWidthTiles = x / tileSize;
         float worldHeightTiles = y / tileSize;
-        return new GridPoint2((int) worldWidthTiles / chunkSize, (int) worldHeightTiles / chunkSize);
+        playerChunkPos.set((int) worldWidthTiles / chunkSize, (int) worldHeightTiles / chunkSize);
+        return playerChunkPos;
     }
 
     public void setPlayerPos(float x, float y) {
@@ -435,5 +467,27 @@ public class WorldBackground extends Actor {
         Pixmap tile = WorldSave.getCurrentSave().getWorld().getBiomeSprite(worldTileX, worldTileY);
         tex.draw(tile, localX * tileSize, (chunkSize * tileSize) - (localY + 1) * tileSize);
         tile.dispose(); // round 123 review S2-2: getBiomeSprite() hands out caller-owned pixmaps
+    }
+
+    public void dispose() {
+        if (chunks != null) {
+            for (int x = 0; x < chunks.length; x++) {
+                for (int y = 0; y < chunks[x].length; y++) {
+                    if (chunks[x][y] != null) {
+                        chunks[x][y].dispose();
+                        chunks[x][y] = null;
+                    }
+                }
+            }
+        }
+        if (loadingTexture != null) {
+            loadingTexture.dispose();
+            loadingTexture = null;
+        }
+        if (t != null) {
+            t.dispose();
+            t = null;
+        }
+        chunkPointsList.clear();
     }
 }

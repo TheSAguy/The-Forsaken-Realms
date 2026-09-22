@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import forge.Forge;
 import forge.adventure.util.Config;
@@ -21,9 +22,21 @@ import forge.util.MyRandom;
 public class MapActor extends Actor {
 
     private boolean removeIfEffectsAreFinished;
+    private final Vector2 getCenterVec = new Vector2();
 
     public void removeAfterEffects() {
         removeIfEffectsAreFinished = true;
+    }
+
+    // Override setStage to detect when the actor is removed
+    @Override
+    public void setStage(Stage stage) {
+        super.setStage(stage);
+
+        // If stage becomes null, it means the actor was removed
+        if (stage == null) {
+            Forge.safeDispose(debugTexture);
+        }
     }
 
     static class CurrentEffect {
@@ -48,7 +61,6 @@ public class MapActor extends Actor {
     Array<CurrentEffect> effects = new Array<>();
 
     public void removeEffect(String effectFly) {
-
         for (int i = 0; i < effects.size; i++) {
             CurrentEffect currentEffect = effects.get(i);
             if (currentEffect.path.equals(effectFly)) {
@@ -131,16 +143,22 @@ public class MapActor extends Actor {
             batch.draw(getDebugTexture(), getX(), getY());
         }
 
-        for (CurrentEffect effect : effects) {
-            if (effect.overlay)
+        int effectCount = effects.size;
+        for (int i = 0; i < effectCount; i++) {
+            CurrentEffect effect = effects.get(i);
+            if (effect != null && effect.overlay) {
                 effect.effect.draw(batch);
+            }
         }
     }
 
     protected void beforeDraw(Batch batch, float parentAlpha) {
-        for (CurrentEffect effect : effects) {
-            if (!effect.overlay)
+        int effectCount = effects.size;
+        for (int i = 0; i < effectCount; i++) {
+            CurrentEffect effect = effects.get(i);
+            if (effect != null && !effect.overlay) {
                 effect.effect.draw(batch);
+            }
         }
     }
 
@@ -148,24 +166,36 @@ public class MapActor extends Actor {
         // Round 178: width/height are already the DRAWN size (EnemySprite's constructor and CharacterSprite.draw()
         // both apply EnemyData.scale), so multiplying by scale again put the center of every scaled enemy - and
         // its effects - off to one side. Invisible at scale 1; round 178 made small scales common.
-        return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
+        //
+        // Round 289 keeps that fix ON TOP of upstream's pooled vector. The 09.22 refactor reintroduced the scale
+        // multiply, but its own EnemySprite constructor still does setWidth(getWidth() * scale), so the bug is
+        // unchanged and only the pooling is taken. The vector is per-actor and REUSED: a caller that stores the
+        // result past the next call on the same actor must copy it (MapActor.act() calls this every frame while
+        // an effect is playing) - see AgentObserver's actor snapshot, which does.
+        getCenterVec.set(getX() + getWidth() / 2f, getY() + getHeight() / 2f);
+        return getCenterVec;
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+
         for (int i = 0; i < effects.size; i++) {
             CurrentEffect effect = effects.get(i);
             effect.effect.update(delta);
-            effect.effect.setPosition(getCenter().x + effect.offset.x, getCenter().y + effect.offset.y);
+
+            Vector2 actorCenter = getCenter();
+            effect.effect.setPosition(actorCenter.x + effect.offset.x, actorCenter.y + effect.offset.y);
+
             if (effect.effect.isComplete()) {
                 effects.removeIndex(i);
                 i--;
                 Forge.getAssets().manager().unload(effect.fileHandle.path());
             }
         }
-        if (effects.size == 0 && removeIfEffectsAreFinished && getParent() != null)
+        if (effects.size == 0 && removeIfEffectsAreFinished && getParent() != null) {
             getParent().removeActor(this);
+        }
     }
 
     @Override

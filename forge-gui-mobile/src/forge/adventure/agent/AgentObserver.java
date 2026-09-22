@@ -398,7 +398,9 @@ final class AgentObserver {
             am.put("id", a.getObjectId());
             am.put("kind", kind);
             if (label != null) am.put("label", label);
-            Vector2 c = a.getCenter();
+            // Round 289: copy - upstream's 09.22 refactor made MapActor.getCenter() return a pooled
+            // per-actor vector, and this snapshot outlives the loop that builds it.
+            Vector2 c = a.getCenter().cpy();
             am.put("pos", c);
             am.put("distance", Math.round(me.dst(c)));
             actors.add(am);

@@ -50,14 +50,38 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-22 (round 286; v1.12 "Reward Balancing" RELEASED, rounds 247-286 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-22 (round 289; v1.12 "Reward Balancing" RELEASED, rounds 247-289 after it, UNPUSHED; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 286, 2026-09-22).** v1.12 is out; rounds 247-286 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 289, 2026-09-22).** v1.12 is out; rounds 247-289 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **Round 286 - stray patrols fixed where it is honest to, a log line that lied, and a real gap between
+  1. **Round 289 - ENGINE = the 09.22 daily, and upstream refactored exactly where this mod lives.**
+     User: *"Please update to the latest forge version E:\GAMES\Forge_2"*. Merged
+     `3146e4b1036..6eb449b787d` - **80 commits / 2766 files / 101 Java**; the daily IS upstream's tip (0
+     commits after it), so no "merge to the daily, not the tip" call this time. `engineBuildVersion` 09.18
+     -> **09.22**; the plane folder was untouched by upstream as always. The size came from
+     `09ec07abed8` **"Refactor Adventure Stages, Scenes, Sprites (#11945)"**, an allocation-reduction pass
+     over 44 adventure files - **29 files touched by both sides, 14 conflicted, 30 hunks**, against round
+     242's ONE. Rule applied throughout: take upstream's optimization unless it contradicts a contract this
+     plane depends on. **Four did, and each would have been a silent bug:** `MapActor.getCenter()`
+     reintroduced round 178's double-scaling (kept our math, took their pooled vector, `.cpy()` in
+     `AgentObserver` because it is reused per-actor); `DuelScene`'s avatar is now a SHARED static, so our
+     three `fb.dispose()` calls would have blanked every boss dialog after the first; `World`'s shared
+     `globalTileDrawing` is the opposite of `getBiomeSprite()`'s documented caller-owned contract (the fog
+     path and both `WorldBackground` callers dispose what they get), so it was NOT adopted and the field is
+     gone; and `GameScene`'s new color-glyph cache would have dropped round 178's `[+tfr]` medallion to
+     `[+c]` (registered in their table instead). Followed upstream on the rest: the indexed despawn loop in
+     `WorldStage` (our territory-mage `it.remove()` calls converted), `magnifier` -> `spriteMagnifier`,
+     `RewardSprite`'s one-time reward cache, their shared `MapDialog` skip listener. Three imports upstream
+     dropped had to come back (`Texture`/`Color`, `ArrayList`) - that was the whole first compile failure.
+     **BUILD SUCCESS, NOT verified in play**: watch a scaled enemy's effects, a second boss dialog's avatar,
+     terrain after a fog repatch, and the glyph on the player's own land. Full detail in
+     `MOD_CHANGELOG.md`; the next merge's landmines are in `CORE_ENGINE_CHANGES.md`'s new 09.22 section.
+     **Rounds 287, 288 and 288b shipped no docs at all** (against the standing rule, and two touched engine
+     files) - both files were back-filled this round.
+  2. **Round 286 - stray patrols fixed where it is honest to, a log line that lied, and a real gap between
      booster and chest guards.** **`dev-tools/fix_routes.py`**: 32 bad routes across 28 maps -> **21 across
      20**, 25 waypoints moved in 14 maps, each by 1-2 tiles. It fixes ONLY "outside" strays (a legal tile the
      entry flood-fill never reaches - the sealed band; nothing is meant to patrol there) and REPORTS the 31
@@ -80,7 +104,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      238 guarded) - the other half of the user's ask, and a balance decision (296 enemies across 221 maps on a
      Hard save at 12 life), left for them to size. Facings: the user accepted the art as it ships, so
      `overrides_generic.json` is untouched and the 57 stay listed as unreviewed by agreement.
-  2. **Round 285 - the Armory's buttons move to the bottom; 1.13 CONFIRMED RUNNING ON ANDROID.**
+  3. **Round 285 - the Armory's buttons move to the bottom; 1.13 CONFIRMED RUNNING ON ANDROID.**
      User: *"Armory still a little funky. The buttons are now just on top of the equipment, can we
      possibly put those at the bottom, like arena for Android?"* `placeModButton()`'s portrait branch
      anchored to `detailButton` and stacked UPWARD = y 138..264 on a 270x480 stage, i.e. the middle of
@@ -104,7 +128,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      LDPlayer rewrites the file on exit), and **Git Bash rewrites device paths** - `/sdcard/Download`
      became `C:/Program Files/Git/sdcard/Download` and 217 MB went nowhere while adb said "1 file
      pushed" (`MSYS_NO_PATHCONV=1`; trap 7, now confirmed for adb).
-  3. **Round 284 - a Basilica guard, and an APK that can be handed its own assets.** User: *"add a guard
+  4. **Round 284 - a Basilica guard, and an APK that can be handed its own assets.** User: *"add a guard
      to the Orthodoxy Basilica protecting those two chests on the top right"*. `phyrexian_w1.tmx`:
      `treasure 67` tile(19,2) and `treasure 78` tile(19,4) had no enemy within five tiles, so
      `assignLootGuards()` registered neither. New **Orthodoxy Angel at tile(19,3)** - one tile from EACH
@@ -125,7 +149,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      says where to put the file. Shippable, not a hack: a zip is accepted ONLY when its `res/build.txt`
      matches the APK's (the existing matched-pair rule), and the tester's file is COPIED first because
      `extract()` deletes the zip it is handed. Prompt skipped when a usable zip is found.
-  4. **Round 283 - nobody had ever validated a patrol ROUTE, and a capital W is protecting the game.**
+  5. **Round 283 - nobody had ever validated a patrol ROUTE, and a capital W is protecting the game.**
      User: *"The blue tower top mage still leaves the area and is too high, needs it's route edited."* Every
      placement audit called the map clean and was RIGHT - `stranded_enemies.py` checks where an enemy stands,
      and this one stands somewhere legal. **Routes had never been checked by anything.**
@@ -151,7 +175,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `templeofchandra`'s Magma Elemental route alone has ~23 blocked/outside legs. The typo is the only thing
      keeping 51 broken routes dormant - repair routes first, then flip the case, then play the story maps.
      NOT yet in the live folder (the user was playing; live carries round 282).
-  5. **Round 282 - the 1.13 APK offered itself a DOWNGRADE on every launch, and closing was stock doing
+  6. **Round 282 - the 1.13 APK offered itself a DOWNGRADE on every launch, and closing was stock doing
      as told.** Reported from the emulator with screenshots: *"it says an update is available. After I
      click on update, it just closes."* Stock's test is
      `!versionString.equals(version)` - DIFFERENT, not newer - so a 1.13 test APK against a newest
@@ -169,7 +193,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      210 MB re-push. Before this APK is installed the right answer is just "Update Later". Also corrected:
      the comment above the desktop early-out still claimed Android was not shipped (untrue since v1.03 /
      round 61, and this bug came from that very pipeline).
-  6. **Round 281 - the softlock watchdog was crying wolf; 1.13 is stamped for an emulator test.** Round 279's
+  7. **Round 281 - the softlock watchdog was crying wolf; 1.13 is stamped for an emulator test.** Round 279's
      safety net fired once in the user's own play-test log and the line was a **FALSE POSITIVE**. Round 253's
      behavior explains it: `activate()` loads EVERY passing entry and each `loadDialog()` overwrites the last, so
      dialog 100 was built three times back to back (180/209/259 chars); the first two labels were left off the
@@ -199,7 +223,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      reset step is only for in-place builds. A second cry-wolf case was caught before packaging and
      fixed: after the typing ENDS no new character ever arrives, so the 2s stall signal had to stand
      down on `hasEnded()` - a >20-option chooser's reveal stagger (0.09 + 0.10 x n) outlasts it.
-  7. **Round 280 - rob a guard and it hunts you.** User: *"If the Booster or Chest is taken, and the guard is
+  8. **Round 280 - rob a guard and it hunts you.** User: *"If the Booster or Chest is taken, and the guard is
      still alive, to have the guard chase the player?"* One hook: `MapStage`'s player-collision loop has exactly
      one place a reward is ever collected (both the inline pickups and the reward-screen path go through it), so
      `onRewardTaken(id)` sits there before the actor is removed. Every reward now registers a guard, **chests
@@ -213,7 +237,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `RoamingGuards.speedFor()` pattern), **default 1.1 = 44 vs 40**; in `settings.json`, retune or 0 it with no
      rebuild. NOT YET SEEN IN A GAME - built while the user was play-testing round 279, so the live folder still
      had the previous jar; package once their game closes.
-  8. **Round 279 - 85.6% of the plane's enemies could notice the player and never chase, and round 271 caused
+  9. **Round 279 - 85.6% of the plane's enemies could notice the player and never chase, and round 271 caused
      part of it.** `EnemySprite` drops aggro the moment `len > pursueRange`, so **a threatRange with no
      pursueRange cannot chase at all** - it notices at one or two tiles and gives up a pixel later.
      `applyDefaultReactionRange()`'s pursue fill sat behind an early return on "threatRange already set", so it
@@ -234,7 +258,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `Biome*`/`Identity*` put a *Market Trader* on a booster; on creature tags it gives
      `Minotaur -> Minotaur Warcaller`, `Poisonous Snake -> Hidden Snake`. New tools:
      `dev-tools/booster_guards.py` (audit), `add_booster_guards.py`, `upgrade_booster_guards.py`.
-  9. **Round 279 - the reported "grey window" is a `MapDialog` with its buttons still invisible.** A player
+  10. **Round 279 - the reported "grey window" is a `MapDialog` with its buttons still invisible.** A player
      reported a grey window over the spawn dungeon during the intro that "doesn't allow me to do anything";
      fullscreen was their only non-default setting and nobody else can reproduce it. Every option button is
      created `setVisible(false)` and the ONLY thing that reveals them is `TypingLabel`'s `end()` callback, which
@@ -254,12 +278,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      for him, that is a different, input-level problem; and ask his **Windows display scaling** (HP OmniBook X
      Flip convertible, 1920x1200 panel, typically 150-200%, launcher uses `HdpiMode.Logical` while exclusive
      fullscreen reports the PHYSICAL mode).
-  10. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
+  11. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
      `enemySpriteFrameCap` as an unknown key although the field exists in `TuningData.java` and in
      `settings.json`, because its class field lists are hardcoded. They are READ from the Java source now (the
      hardcoded set kept as a floor), which revealed how stale they were: **DialogData was missing 41 fields**,
      SpawnTierWeightData 10, ArmoryRarityData 6 - a typo in any of those would never have been reported.
-  11. **Round 278 - fifteen dungeons could never be cleared, and round 275's "leave them alone" was wrong.**
+  12. **Round 278 - fifteen dungeons could never be cleared, and round 275's "leave them alone" was wrong.**
      The user's own example found it: "Blue Tower" is several `magetower_*` dungeons, and
      `magetower_11_dreamhalls.tmx` has ONE entry, no doors, only 32% of its legal player positions reachable,
      and its two Jellyfish in the sealed band between the room and the outer wall - walled off, not swimming.
@@ -277,7 +301,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `pixel_collision_qa.ACCEPTED_UNREACHABLE` so the three tools that flag it report it as ACCEPTED instead of
      re-raising it - **do not "fix" it without asking again.** Still open: one Knight in `skep_outer.tmx` with no
      reachable tile within 8 tiles. NOT verified in a game.
-  12. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
+  13. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
      a death respawn onto Shimmering Crossing, `goto`, `explore` AND `wait` all answered "no path" to
      everything, for twenty-five minutes - no bridge command could move the player at all. Round 175's
      exemption reopens only the **3x3 around the player** when standing on a footprint, which is enough for a
@@ -303,7 +327,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      real freedom of movement - for a target in a nook the line runs into a building and the walk dies after
      four replans. Not fixed (agent-only, and the static test already answers "is this placement reachable").
      **Do not read a walker give-up as evidence about a map.**
-  13. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
+  14. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
      by soaking, both fixed. `jcmd Thread.print` on what looked like a frozen game showed NO main thread, a
      parked `DestroyJavaVM` and a runnable non-daemon `"HTTP-Dispatcher"`: the game had EXITED and the JVM could
      not follow, because `HttpServer.start()` spawns its own dispatcher thread (not the daemon executor the
@@ -323,7 +347,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `F:\FORGE\TFR-Agent` / `F:\FORGE\C--Users-vicwaver-MTG-Forge`; both are on C: now. And the agent's
      `forge.log` genuinely CANNOT be read while the game runs - Forge byte-range-locks the whole file, so even
      `Get-Content -Tail` fails; use `/state`'s `agent.log`, which carries the `[TFR-Agent]` walk lines.
-  14. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
+  15. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
      SETTLED, from `MapStage.loadCollision()`: collision does NOT come from the layer named "Collision" - that
      method walks EVERY tile layer and reads the rectangles authored on each TILE in its tileset, the boxes are
      SUB-TILE (one fort map: 240 full-tile, 330 partial), and the player is a **10 x 6.4 box at the sprite's
@@ -344,10 +368,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `phyrexian_black1.tmx` has 75,489 legal player positions but only 28,653 in its largest region, and its one
      entry reaches none of its five enemies - the Blue Tower "stranded outside the wall" case at map scale.
      NOT YET SEEN IN A GAME.
-  15. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
+  16. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
      the flag is absent, so a pre-259 save stops re-issuing the nudge on its next NG+. A no-op after a New Game+
      (count 0, flag carried), and it only sets what `addQuest()` would set on the same evidence.
-  16. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
+  17. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
      validated: with no painted portrait the avatar is cut at the creature's HEAD end (the end it faces) instead of
      the middle of its body, and that reproduces all five of round 245's hand repairs EXACTLY (delta 0.0). The
      FACING half cannot be automated - `facing_detect.py`'s four cues reach 81% on the 16 labelled sheets and are
@@ -365,7 +389,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      pictures. Still NOT guessed on the user's behalf. Also spotted there: **`#200 gen_parasitic_zombie_2`'s frame
      holds what looks like two creatures back to back**, possibly a merge that slipped under the importer's
      1.8x-median width guard.
-  17. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
+  18. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
      holds an index into *some* biome's tables and nothing records which; four writers produce a dual-bit tile and
      they disagree. The missing case: world-gen's Pass A claims biomes with `|=`, so a tile inside both the
      wasteland's disc and a colour's carries BOTH bits from birth, and Pass B writes it with the COLOUR's own
@@ -383,15 +407,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      structure and its collision bit. Fixed. **One residual, stated:** a tile expansion claims inside a colour's own
      keep (43 such holes inside white's, ~3% of the disc) reads as colour space when it is waste space; the exact
      cure is recording the space in `terrainMap` bit 29, offered not done. NOT YET SEEN IN A GAME.
-  18. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
+  19. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
      round 252's runtime default). 23 `dialog` NPCs and the explicit `0`s deliberately untouched. **PACKAGED.**
-  19. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
+  20. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
      plus round 113's side-bosses; `castle` was never added, so all 13 of them went unmarked. Built, **NOT
      packaged** - the user was playing. Capitals/towns deliberately excluded.
-  20. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see the round 275 item): all
+  21. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see the round 275 item): all
      ten are back on booster duty and verified reachable. Its `oob_audit.py` was reading a mirrored y and should
      not be reused - `pixel_collision_qa.py --enemies` replaces it.
-  21. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
+  22. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
      268's own evidence was a red herring: the `[TFR-Terrain]` lines fire only for "player land" because
      `drawableTerrainIndex()` runs while a ground CHUNK is built and chunks are only built near the player, who was
      standing in their own territory - nothing to do with index spaces. `structureSwapCache` does translate, but
@@ -536,13 +560,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   20. **Balance questions left with the user:** the eight-card town quests (ids 10-16: 4 rare + 2 uncommon + 2 any)
      were left alone when seven outlier payouts were trimmed; "Sweep the Wilds" counts a dungeon when its last enemy
      dies, not when its loot is gone; round 236's terrain look-alike (a claimed wasteland crater drawn as green water).
-  21. **Engine = the 09.18 daily** (round 242, upstream `3146e4b1036`; on 2026-09-19 upstream stood 12 commits past it,
-     tip `db4304cc40d`: 9 Java files, none under `adventure/`, two in files we edit - `forge-game` `Game.java` and
-     `player/Player.java` - and `git merge-tree` previewed the merge as CLEAN). The next merge is
-     `3146e4b1036..upstream/master`, only once the user installs a newer daily into `E:\GAMES\Forge_2` - and from
-     that moment the packager refuses until the merge lands. If a round must reach the live folder in between, see
-     round 241: the live folder's stock tree still matches the repo, so plane folder + jar can be synced without
-     BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad script.
+  21. **Engine = the 09.22 daily** (round 289, upstream `6eb449b787d` = `E:\GAMES\Forge_2`'s current install;
+     `.installationinformation` says `2.0.15-SNAPSHOT-09.22`, `build.txt` 2026-09-22 18:26:39). The next merge is
+     `6eb449b787d..upstream/master`, only once the user installs a newer daily into `E:\GAMES\Forge_2` - and from
+     that moment the packager refuses until the merge lands. **Read `CORE_ENGINE_CHANGES.md`'s 09.22 section
+     first**: after round 289 our code sits INSIDE method bodies upstream rewrote once already, and four of those
+     are contract conflicts (the pooled `getCenter()`, the shared duel avatar, the caller-owned biome pixmap, the
+     color-glyph cache) that a careless merge would silently undo. If a round must reach the live folder in
+     between, see round 241: the live folder's stock tree still matches the repo, so plane folder + jar can be
+     synced without BASE_INSTALL. A guarded packager flag for that would be better than the one-off scratchpad
+     script.
   22. **A full new-engine build takes 90 seconds with `--out C:\TFR\live`** (SSD) against an hour on
      F: - the user play-tested from there this time. Check the running javaw's `-jar` path before packaging into
      either folder. **Pass that path with FORWARD slashes** (`--out "C:/TFR/live"`): round 281 passed

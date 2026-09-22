@@ -38,6 +38,72 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### The 09.22 engine merge (round 289) — where our code now sits on top of upstream's refactor
+
+Upstream `09ec07abed8` "Refactor Adventure Stages, Scenes, Sprites (#11945)" is an allocation-reduction pass over 44
+adventure files (object pools, reused collections, hoisted locals, whole method bodies rewritten). It overlapped this
+mod harder than any daily so far: **29 files touched by both sides, 14 conflicted, 30 hunks.** The rule applied
+throughout was *take upstream's optimization unless it contradicts a contract this plane depends on*. Anyone merging
+a later daily needs these, because in each one our line now sits INSIDE code upstream rewrote once already and may
+rewrite again.
+
+**Contract conflicts — do not let a future merge quietly undo these:**
+
+- **`forge-gui-mobile/src/forge/adventure/character/MapActor.java`** — `getCenter()` keeps round 178's math (NO
+  `EnemyData.scale` multiply; width/height already include it, see `EnemySprite`'s constructor) on top of upstream's
+  pooled `getCenterVec`. The vector is per-actor and reused, so any NEW caller that keeps the result past the next
+  call on the same actor must `.cpy()` it — `AgentObserver`'s actor snapshot does. If a daily rewrites this method,
+  re-check the multiply: upstream's version has had the bug since 178 and reintroduced it here.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** — `getFBEnemyAvatar()` is upstream's SHARED static
+  `enemyAvatar`, not a fresh `FBufferedImage` per dialog. Nothing may call `dispose()` on it; our three
+  `fb.dispose()` / `fb::dispose` calls were removed in this merge. The boss intro and boss-loss dialogs keep
+  `enemy.getTieredDisplayName()` where upstream passes `enemy.getName()`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `getBiomeSprite()` / `generateBiomeSprite()` keep the
+  **caller-owned pixmap** contract (round 123 review S2-2). Upstream's shared `globalTileDrawing` was NOT adopted and
+  its field is deleted: the fog path does `hazeTile(real)` then `real.dispose()`, and both `WorldBackground` callers
+  dispose what they get, so a shared pixmap would be destroyed on first use. Upstream's reusable `drawingInfoCache`
+  IS used — it never escapes the method. If a daily reintroduces `globalTileDrawing`, keep the fresh allocation.
+- **`forge-gui-mobile/src/forge/adventure/scene/GameScene.java`** — the biome→color-glyph switch is now upstream's
+  static `cachedColorIDsMap`/`cachedHeaderNamesMap`, and round 178's `"player"` → `"[+tfr]"` medallion is registered
+  by extending their `colors`/`colorTags` arrays. A daily that rewrites that static block must keep the extra entry
+  or the player's own land silently falls back to `[+c]`.
+
+**Idiom changes our code had to follow (a later daily may move them again):**
+
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — the despawn loop is an INDEXED walk
+  (`enemies.remove(i); i--;`), not an Iterator. The territory-mage arrival branch inside it was converted to match.
+  `save()` deliberately keeps fresh `ArrayList`s rather than upstream's reused `cachedSave*` fields (those fields are
+  now unused), because it also stores the three territory lists and hands the lists to `data.storeObject()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** — the field is `spriteMagnifier` (upstream's rename
+  of `magnifier`). Our fog-of-war draw guard and `getDrawScale()` block live in the rewritten `draw()`.
+- **`forge-gui-mobile/src/forge/adventure/character/RewardSprite.java`** — the edition-progression restriction runs
+  inside upstream's one-time `isMapPopulated` fill and adds to the cached `rewardCollection`.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — the TFR payout pipeline builds into its own
+  fresh `Array<Reward> rewards`, NOT upstream's `rewardCollectionPool` (which the chaos-battle early returns do use).
+  `getReward()` appends to the result and `RewardScene` holds it, while the pool is cleared on every call.
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — the scrolling option list is ours; the click-to-
+  skip listener is upstream's shared `skipClickListener`.
+- **`forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java`** — round 254's two-tile entry box and
+  the ruin/player-town texture swap, plus upstream's `pointOfInterest != null` guard. Needs the `Texture` and `Color`
+  imports upstream dropped.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldBackground.java`** — the 3x3 POI reveal loop runs before
+  upstream's pooled chunk-diff block; needs the `java.util.ArrayList` import upstream dropped.
+
+### Rounds 287-288: the weekly clock and the loot guards (recorded late)
+
+Neither round updated this file at the time, against the standing rule. Both touched shared engine code.
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — round 288 added `weekOf(int)`,
+  `nextWeekBoundary(int)` and `lastWeekBoundary(int)` as the single definition of a week, and `getCurrentWeek()`
+  delegates to `weekOf()`. Weeks run 1-7, 8-14, 15-21, so boundaries land on **8/15/22**, not 7/14/21. `floorDiv`,
+  not `/`: Java truncates toward zero, so day 0 would otherwise share a week with day 1.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** (round 287),
+  **`pointofintrest/PointOfInterestChanges.java`**, **`util/BalanceSheet.java`**, **`util/EconomyBuildings.java`**
+  (three payday sites) and **`util/ResourceLedger.java`** (round 288) — every one of these computed `day / 7` by
+  hand and now calls the `World` helpers instead. Upstream conflict note: these are one-line call sites inside
+  otherwise stock methods, so a daily that rewrites the method just needs the `World.` call kept rather than
+  reverted to `/ 7`.
+
 ### World generation & the overworld map
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — round 280 added one call,
   `onRewardTaken(RS.getId())`, immediately before stock's `RS.remove(); actors.removeValue(RS, true);

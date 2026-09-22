@@ -10,10 +10,15 @@ import forge.adventure.util.MapDialog;
 import forge.adventure.util.RubbleOverlay;
 import forge.adventure.util.TownRestoration;
 
+/**
+ * QuestActor
+ * Specialized actor to handle Quest interactions
+ */
 public class QuestActor extends DialogActor {
-    String POI_ID;
-    PointOfInterestChanges changes;
-    String questOrigin;
+    private final String POI_ID;
+    private final PointOfInterestChanges changes;
+    private final String questOrigin;
+    private final ChangeListener dialogFinishedListener;
 
     public QuestActor(String POI_ID, PointOfInterestChanges changes, String questOrigin, MapStage stage, int id) {
         super(null, stage, id);
@@ -21,6 +26,13 @@ public class QuestActor extends DialogActor {
         this.changes = changes;
         this.questOrigin = questOrigin;
 
+        this.dialogFinishedListener = new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                removeFromMap();
+                dialog = null;
+            }
+        };
     }
 
     private boolean isDestroyed() {
@@ -68,14 +80,7 @@ public class QuestActor extends DialogActor {
 
         dialog = new MapDialog(questData.offerDialog, stage, objectId, questData);
 
-        ChangeListener finished = new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                removeFromMap();
-                dialog = null;
-            }
-        };
-        dialog.addDialogCompleteListener(finished);
+        dialog.addDialogCompleteListener(dialogFinishedListener);
 
         if (dialog != null) {
             if (dialog.activate()){
