@@ -17859,6 +17859,77 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 285: the Armory's buttons move to the bottom, and 1.13 is confirmed on Android (2026-09-22)
+
+### 1.13 runs on the emulator - the missing piece was a permission, not a path
+
+Round 284's local-assets.zip support is **verified on device**. The log line that settles it:
+
+    [TFR-Assets] using the local assets.zip at /storage/emulated/0/Android/obb/
+                 com.thesaguy.forsakenrealms/ForsakenRealms/assets.zip
+                 (build 2026-09-22 05:21:45 matches this APK) - no download needed
+
+Afterwards `version.txt` reads 1.13, `res/build.txt` matches the APK, `assets.zip` is still on disk
+(the copy-before-extract earning itself), the game reaches the overworld, and the run logs **zero
+exceptions**. The next launch prints no `[TFR-Assets]` lines at all, which is the correct steady
+state - the early return fires and nothing is checked.
+
+Three findings from getting there, none of which were about folders:
+
+* **LDPlayer 14's ADB bridge is off by default.** `basicSettings.adbDebug` = 0 in
+  `vms/config/leidian0.config`; the only port it listens on is 2222, its own control channel, so
+  `adb connect` is refused and `ldconsole push` - which goes through adb internally - fails with
+  "not found emulator!" even while `ldconsole list2` shows the instance running. Flipped to 1 with
+  the instance STOPPED, because LDPlayer rewrites that file when an instance exits and would have
+  discarded the edit.
+* **The real blocker was `MANAGE_EXTERNAL_STORAGE`.** The APK declares it; it had been *rejected*.
+  Without it the app cannot read `/sdcard/Download` or `/sdcard/Pictures` - the user's shared-folder
+  copy was sitting at `/sdcard/Pictures/assets.zip`, correct and unreadable - and scoped storage even
+  hid a `shell`-owned file inside the app's OWN obb directory. `appops set ... allow` is what
+  accepting the first-launch prompt does on a real device.
+* **Git Bash rewrote the device path.** `adb push ... /sdcard/Download/assets.zip` became
+  `C:/Program Files/Git/sdcard/Download/assets.zip` and the 217 MB went nowhere while adb reported
+  "1 file pushed". `MSYS_NO_PATHCONV=1`. This is trap 7 in the build notes, now confirmed for adb.
+
+The per-path logging added in round 284 is what made this diagnosable at all: "wrong folder" and
+"cannot read folder" are indistinguishable from outside, and the log said which.
+
+### The Armory's buttons, off the equipment and onto the bottom
+
+User: *"Armory still a little funky. The buttons are now just on top of the equipment, can we
+possibly put those at the bottom, like arena for Android?"*
+
+Correct about the cause as well as the cure. `placeModButton()`'s portrait branch anchors to
+`detailButton` and stacks UPWARD, which on the 270x480 portrait stage puts the buttons at y=138..264
+- the middle of the card grid. The screenshot shows Storage / Re-roll / Manage Guards floating over
+the equipment exactly there.
+
+`layoutPortraitModButtons()` gives them `ArenaScene`'s bottom-row shape (round 263): a block just
+above Done, spanning the grid's own content width, two per row, and **an odd last button takes the
+full width** rather than leaving a hole beside it. At most four are ever visible together - an Armory
+shows Storage + Re-roll + Guards-or-Upgrade + Destroy, a card shop shows Destroy + Re-assign +
+Blueprint - so two rows always suffice.
+
+The interesting part is where the space comes from. The bottom band between the grid and the gold
+label is about 16 units tall, so the grid has to give some up; the question is how without hurting
+anything else:
+
+* **Not by editing `ui/items_portrait.json`.** Every plane shares that file, and Shandalar's shops
+  show none of these buttons - they would lose grid height for nothing.
+* **At runtime, after the visibility switch and before the card-fitting loop.** That ordering was
+  already there to be used: the `case Shop:` block decides which buttons show at line ~888, and
+  `targetHeight`/`targetArea` are not consumed until the fitting loop at ~1035. Reserving in between
+  means the grid is sized once, for the space it actually gets, with no re-layout - and because the
+  cards are fitted by an area search over the container rather than placed at a fixed size, they
+  **scale** rather than clip. 85 units for the three-button case, and the grid keeps its 3x3.
+
+Landscape is untouched: the right-hand column has room there and is what desktop has always looked
+like.
+
+Mocked before building rather than after. A 270x480 render of both layouts with the real labels
+caught a bug in the first attempt - the lower row clipped `playerGold` by 8 units - which would
+otherwise have cost a desktop build, an APK build and an install to discover.
+
 ## Round 284: a guard for the Basilica, and an APK that can be handed its own assets (2026-09-21)
 
 ### The Basilica's two chests

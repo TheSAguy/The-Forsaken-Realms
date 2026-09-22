@@ -1840,6 +1840,16 @@ from the plane's `config tables/settings.json`).
   `%APPDATA%\ForgottenRealms` — existing test saves under `%APPDATA%\Forge\adventure\The
   Forsaken Realms` must be copied over once (the old 2.0.14 install at `E:\GAMES\FORGE` is
   unaffected, its jars predate this change).
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** — round 285 added
+  `layoutPortraitModButtons()` and one call to it between the `case Shop:` visibility switch and the
+  card-fitting loop, where it adjusts `yOff`/`targetHeight`/`targetArea`. In PORTRAIT the mod buttons
+  (Storage / Re-roll / Guards / Upgrade / Re-assign / Blueprint / Destroy) become a bottom block
+  instead of `placeModButton()`'s upward stack, which overlapped the card grid. Upstream conflict
+  notes: the reservation MUST stay after the switch and before the loop — earlier and the button
+  visibilities are unknown, later and the grid has already been fitted; `targetArea` must be
+  recomputed alongside `targetHeight` or the fitting loop's `newArea <= targetArea` test silently
+  keeps the old budget; and the block's geometry is taken from the `cards` actor, so it follows the
+  grid if that layout ever moves. Landscape still goes through `placeModButton()` unchanged.
 - **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** — round 284 added `localAssetsZip()` and
   routed the asset extraction through it: a hand-placed `assets.zip` found on the device is extracted instead
   of downloading, which is the only way to test a build whose GitHub release does not exist yet (the URL is

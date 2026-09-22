@@ -290,6 +290,74 @@ public class RewardScene extends UIScene {
         button.setPosition(doneButton.getX() + doneButton.getWidth() - button.getWidth(), base + (slot - 1) * (height + 8f));
     }
 
+    /**
+     * Round 285: in PORTRAIT, the mod buttons become a block at the BOTTOM instead of a column
+     * stacked up the right-hand side.
+     * <p>
+     * User, testing 1.13 on the emulator: *"Armory still a little funky. The buttons are now just on
+     * top of the equipment, can we possibly put those at the bottom, like arena for Android?"* They
+     * were right about the cause as well as the cure - `placeModButton()`'s portrait branch anchors
+     * to `detailButton` and stacks UPWARD, which on a 270x480 stage lands the buttons at y=138..264,
+     * squarely over the middle of the card grid.
+     * <p>
+     * The shape is `ArenaScene`'s bottom row (round 263): a block sitting just above the Done button,
+     * spanning the content width, wrapping rather than overflowing. Two per row, and an odd LAST
+     * button takes the full width instead of leaving a hole beside it - at most four are ever visible
+     * together (an Armory shows Storage + Re-roll + Guards-or-Upgrade + Destroy; a card shop shows
+     * Destroy + Re-assign Type + Blueprint), so two rows always suffice.
+     * <p>
+     * Two things this deliberately does NOT do. It does not touch `ui/items_portrait.json`: that file
+     * is shared by every plane, and Shandalar's shops - which show none of these buttons - would lose
+     * grid height for nothing. And it does not run in landscape, where the existing right-hand column
+     * has room and is what the desktop build has always looked like.
+     *
+     * @return the height the card grid must give up, or 0 when there is no block to make room for.
+     *         Applied by the caller BEFORE the card-fitting loop, which then re-optimises the card
+     *         size for the smaller area on its own - the cards scale, they are not clipped.
+     */
+    private float layoutPortraitModButtons() {
+        if (Forge.isLandscapeMode())
+            return 0f;
+        // Reading order of the block, most-used first.
+        TextraButton[] order = {storageButton, rerollButton, guardsButton, upgradeButton,
+                shopTypeRerollButton, buyBlueprintButton, destroyButton};
+        Array<TextraButton> shown = new Array<>();
+        for (TextraButton b : order) {
+            if (b != null && b.isVisible())
+                shown.add(b);
+        }
+        if (shown.isEmpty())
+            return 0f;
+        Actor cards = ui.findActor("cards");
+        if (cards == null)
+            return 0f;
+        float height = doneButton.getHeight() * 0.8f;
+        float gap = 6f;
+        // The content column, taken from the grid itself so the block lines up with the cards
+        // rather than with a second guess at the margin.
+        float margin = cards.getX();
+        float usable = cards.getWidth();
+        float half = (usable - gap) / 2f;
+        int rows = (shown.size + 1) / 2;
+        // Clear of whichever bottom furniture reaches highest: playerGold sits above playerShards on
+        // the left, doneButton on the right, and they are not the same height off the floor.
+        float bottom = Math.max(playerGold.getY() + playerGold.getHeight(),
+                doneButton.getY() + doneButton.getHeight()) + 4f;
+        for (int i = 0; i < shown.size; i++) {
+            TextraButton b = shown.get(i);
+            int row = i / 2; // 0 is the UPPER row - the block is laid out from the bottom up
+            boolean alone = i == shown.size - 1 && shown.size % 2 == 1;
+            b.setSize(alone ? usable : half, height);
+            b.setPosition(alone ? margin : margin + (i % 2) * (half + gap),
+                    bottom + (rows - 1 - row) * (height + gap));
+            b.layout();
+        }
+        float reserve = bottom + rows * height + (rows - 1) * gap + 4f - cards.getY();
+        // Never starve the grid: on any stage where the block would eat most of it, leave the
+        // layout alone rather than produce something worse than the overlap.
+        return cards.getHeight() - reserve > 120f ? Math.max(0f, reserve) : 0f;
+    }
+
     /** Round 163 (MOD_SCOPE #118): the Armory storage dialog. */
     private void promptArmoryStorage() {
         if (shopActor == null || changes == null)
@@ -1031,6 +1099,16 @@ public class RewardScene extends UIScene {
                 // walk away from. FREE picks (quest-authored grantRewardsChoice) keep the
                 // original mandatory-pick contract unchanged.
                 doneButton.setDisabled(remainingSelections > 0 && selectionPriceMultiplier <= 0f);
+        }
+        // Round 285: portrait moves the mod buttons to a bottom block, which needs grid height.
+        // Done HERE, after the switch above has decided which buttons are visible and before the
+        // fitting loop below reads targetHeight/targetArea - so the grid is sized for the space it
+        // actually gets, in one pass, with no re-layout.
+        float modReserve = layoutPortraitModButtons();
+        if (modReserve > 0f) {
+            yOff += modReserve;
+            targetHeight -= modReserve;
+            targetArea = targetHeight * targetWidth;
         }
         for (int h = 1; h < targetHeight; h++) {
             cardHeight = h;
