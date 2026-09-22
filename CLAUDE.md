@@ -50,12 +50,33 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-22 (round 289; v1.12 "Reward Balancing" RELEASED, rounds 247-289 after it, UNPUSHED; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-22 (round 290; the user CALLED the v1.13 release - rounds 247-290 go out as v1.13; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 289, 2026-09-22).** v1.12 is out; rounds 247-289 are unreleased. In order:
-- **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
-  until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
-  and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
+- **NEXT SESSION starts here (updated round 290, 2026-09-22).** The user called the full v1.13 release (PC,
+  Android, push) in round 290's message, conditional on the agent play review passing - it did. The release itself
+  is round 291. **If this block does not say v1.13 is PUBLISHED, the release did not finish:** check
+  `gh release view tfr-v1.13 -R TheSAguy/The-Forsaken-Realms` and `git ls-remote origin refs/tags/tfr-v1.13`, then
+  resume the release recipe rather than starting over.
+- **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
+  online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
+  push and the tag happen together at release time.
+- **Round 290 - the post-1.12 review's fixes, the fog leak, and two things only the play review showed.** Review of
+  `tfr-v1.12..HEAD` scoped to the mod's own code: (a) `ResourceLedger.onDaysPassed()` still rolled on `day / 7`
+  after round 288 moved `post()` to `World.weekOf()` - every 7th day the book rolled forward then BACK, so the
+  Balance Sheet's "last week" held one day; (b) round 279's guard post answered "stand here" with `Vector2.Zero` =
+  world (0,0), so booster guards PACED at their posts - now own `pos()` at the post and the `guardPost` object on
+  the way home (MapStage's path cache compares `destination` by identity since the 09.22 merge's pooled
+  `targetVec` - see CORE_ENGINE_CHANGES); (c) the round-257 loot hold survived `hidePoi()`, so a dungeon lost in
+  with loot on its floor never rotated out again. User's screenshot: AI guard dots drew in black fog -
+  `PointOfInterestMapSprite` now asks `MapSprite.isHiddenByFog()` before its corner icons. Minor: "centre" ->
+  "center" in quests.json, `getCurrentWeek()` javadoc, upstream's unused `cachedSave*` deleted, `EditionProgression`
+  never caches an empty pool. **The agent play review found two more:** the 09.22 shared boss avatar rendered once
+  and CACHED, so every boss after the first showed the first boss's face (`getFBEnemyAvatar()` clears it - SEEN:
+  Ancient Silver Dragon then Garruk, each correct); and the dialog watchdog cried wolf for a dialog built while its
+  map scene was not on screen (loot screen, new-game welcome) - it pauses now. Verified in the agent game: no guard
+  dots 12 tiles from an undiscovered capital; the djinn tower's pinned booster guard motionless while the chest
+  guards patrol; no exceptions. NOT seen in play: the ledger, the loot hold, a scaled enemy's effect centring.
+  Also: round 279's main MOD_CHANGELOG entry sat above round 289 by mistake and is back above round 278.
 
   1. **Round 289 - ENGINE = the 09.22 daily, and upstream refactored exactly where this mod lives.**
      User: *"Please update to the latest forge version E:\GAMES\Forge_2"*. Merged

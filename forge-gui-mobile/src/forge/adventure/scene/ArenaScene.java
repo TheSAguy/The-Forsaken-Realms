@@ -1269,7 +1269,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         // are never blocked - only a completed bracket's payout is, and only after this location
         // has already paid one out in the current week. A partial run (rounds won, bracket lost)
         // is not a tournament win, so it neither consumes the week's allowance nor is blocked by
-        // it. Weeks are day/7, so the allowance returns the moment the week number ticks over.
+        // it. Weeks run days 1-7, 8-14, ... (World.weekOf, rounds 287-288), so the allowance returns
+        // the moment the week number ticks over, on day 8, 15, 22.
         boolean fullBracketWin = arenaData != null && roundsWon == arenaData.rounds;
         String weeklyKey = weeklyArenaKey();
         if (fullBracketWin && weeklyKey != null) {

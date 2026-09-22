@@ -60,6 +60,9 @@ public class MapDialog {
     // typing speed is uniform and a two-second gap is not slow typing.
     private final static float DIALOG_POLL = 0.5f;
     private final static float DIALOG_STALL = 2f;
+    // Round 290: extra polls the watchdog may spend WAITING while its map scene is not on screen (see run()).
+    // Two minutes at DIALOG_POLL - after that it expires, as it always did once its deadline passed.
+    private final static int DIALOG_OFFSCREEN_POLLS = 240;
     public String questAccepted = "";
     static private final String defaultJSON = "[\n" +
             "  {\n" +
@@ -312,7 +315,7 @@ public class MapDialog {
         float deadline = Math.min(60f, 5f + (text == null ? 0 : text.length()) / 10f);
         // Bounded repeats rather than cancel() from inside run(): Timer.update() walks its task list by
         // index, so a task that removes itself mid-iteration makes it skip the next task for that frame.
-        int polls = (int) Math.ceil(deadline / DIALOG_POLL) + 2;
+        int polls = (int) Math.ceil(deadline / DIALOG_POLL) + 2 + DIALOG_OFFSCREEN_POLLS;
         Timer.schedule(new Timer.Task() {
             private int lastTyped = -1;
             private float quiet = 0f, ended = 0f, waited = 0f;
@@ -322,6 +325,18 @@ public class MapDialog {
             public void run() {
                 if (done)
                     return;
+                // Round 290: the watchdog's SECOND false alarm, found in the user's 09-21 log and again in the
+                // agent's new game. A dialog can be built while its map scene is not the one on screen - a quest
+                // stage completing on the loot screen after a duel, the spawn cave's intro behind the new game's
+                // welcome screen. The map stage does not act then, so the typing cannot advance, and two seconds
+                // later this logged "THIS is the softlock" at character 0 and revealed the options early - which
+                // is only cosmetic, but it plants a false lead in every bug report. Nothing is stuck while the
+                // player is looking at another scene, so the clocks pause until the map is back on screen.
+                if (Forge.getCurrentScene() != TileMapScene.instance()) {
+                    quiet = 0f;
+                    ended = 0f;
+                    return;
+                }
                 waited += DIALOG_POLL;
                 int live = 0, hidden = 0;
                 for (TextraButton button : buttons) {

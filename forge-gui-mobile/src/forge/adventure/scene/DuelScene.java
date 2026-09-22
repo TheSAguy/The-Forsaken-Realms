@@ -1346,7 +1346,16 @@ public class DuelScene extends ForgeScene {
         return AI;
     }
 
+    /**
+     * Round 290: the boss dialogs' portrait. Since the 09.22 merge it is ONE shared image - upstream's
+     * allocation refactor - and an FBufferedImage renders its frame buffer the first time it is drawn and
+     * then keeps it. Nothing ever cleared it, so every boss dialog after the first in a session showed the
+     * FIRST boss's portrait. clear() drops the cached render (disposing it on the EDT) and the next draw
+     * re-renders from the current duel's avatar, FSkin avatar key 90001, which the duel set up before any
+     * of these dialogs is built. Round 289 removed the dispose() calls that would have blanked it instead.
+     */
     private FBufferedImage getFBEnemyAvatar() {
+        enemyAvatar.clear();
         return enemyAvatar;
     }
 }

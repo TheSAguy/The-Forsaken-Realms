@@ -103,8 +103,14 @@ public class PointOfInterestMapSprite extends MapSprite {
                 drawEnlarged = playerTownTexture != null;
             }
             super.draw(batch, parentAlpha);
-            drawGuardIndicator(batch, parentAlpha);
-            drawTeleporterIndicator(batch, parentAlpha); // round 231
+            // Round 290 (user, with a screenshot of a lone guard shield in black fog): super.draw() skips a
+            // town that is still under fog, and these two used to draw regardless - an AI town's guard dots
+            // gave away a town the player had not found yet. Same test as the town's own sprite, so an icon
+            // shows exactly when its town does.
+            if (!isHiddenByFog()) {
+                drawGuardIndicator(batch, parentAlpha);
+                drawTeleporterIndicator(batch, parentAlpha); // round 231
+            }
         }
         //batch.draw(getDebugTexture(),getX(),getY());
     }

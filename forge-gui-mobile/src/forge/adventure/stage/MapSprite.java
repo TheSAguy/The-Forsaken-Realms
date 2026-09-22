@@ -102,6 +102,24 @@ public class MapSprite extends Actor {
         return actorGroup;
     }
 
+    /**
+     * Fog of war: is this sprite still under unexplored ground? Checks the sprite's center, not its
+     * bottom-left corner: for multi-tile buildings (towns, castles), the corner tile can sit outside
+     * the player's actual approach path even while they're standing right at the entrance, leaving
+     * the icon permanently hidden.
+     * <p>
+     * Round 290: a method rather than inline in draw(), so PointOfInterestMapSprite's corner icons -
+     * the guard shields and the teleporter - ask the same question. They were drawn after draw() had
+     * already returned for the town, so an AI town's guards stood alone in the black fog.
+     */
+    protected boolean isHiddenByFog() {
+        World world = WorldSave.getCurrentSave().getWorld();
+        int tileSize = world.getTileSize();
+        int centerTileX = (int) ((getX() + getWidth() / 2f) / tileSize);
+        int centerTileY = (int) ((getY() + getHeight() / 2f) / tileSize);
+        return !world.isExploredWorld(centerTileX, centerTileY);
+    }
+
     // Overridable draw-size multiplier, native size when 1f (the default for every non-town
     // MapSprite). PointOfInterestMapSprite overrides this for ruined/player-restored towns.
     protected float getDrawScale() {
@@ -113,14 +131,7 @@ public class MapSprite extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         if (texture == null)
             return;
-        World world = WorldSave.getCurrentSave().getWorld();
-        int tileSize = world.getTileSize();
-        // Check the sprite's center, not its bottom-left corner: for multi-tile buildings (towns,
-        // castles), the corner tile can sit outside the player's actual approach path even while
-        // they're standing right at the entrance, leaving the icon permanently hidden.
-        int centerTileX = (int) ((getX() + getWidth() / 2f) / tileSize);
-        int centerTileY = (int) ((getY() + getHeight() / 2f) / tileSize);
-        if (!world.isExploredWorld(centerTileX, centerTileY))
+        if (isHiddenByFog())
             return;
         float scale = getDrawScale();
         if (scale == 1f) {

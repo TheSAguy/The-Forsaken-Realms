@@ -544,14 +544,23 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
 
         // Round 279: a booster guard goes back to its post and stays on it. Placed AFTER the pursuit and flee
         // blocks so chasing and fleeing both still win, and BEFORE movementBehaviors so a patrol route cannot
-        // walk a guard off its booster - which is the whole complaint. Returns Zero once it is home, because
-        // "stand on the booster" is the behaviour being asked for; without that the deque would take over again
-        // on the next frame and stroll it away.
+        // walk a guard off its booster - which is the whole complaint. Once it is home it answers with its own
+        // position, because "stand on the booster" is the behavior being asked for; without that the deque
+        // would take over again on the next frame and stroll it away.
+        //
+        // Round 290 (code review): what this method returns is a POSITION to walk to, and the at-post answer
+        // used to be Vector2.Zero - world (0,0), the map's bottom-left corner. MapStage pathed the guard toward
+        // it, the guard stepped off its post, came back past the tolerance and set off again: a guard pacing
+        // beside its booster instead of standing on it. `target` is still this frame's pos(), which MapStage's
+        // `destination.epsilonEquals(mob.pos())` reads as "stand still" and idles.
+        // The walk home returns the guardPost object itself, NOT the pooled targetVec: since the 09.22 merge
+        // MapStage keeps a mob's path while `destination.equals(mob.targetVector)`, and the pooled vector is
+        // the SAME object every frame, so it would always compare equal and a guard could keep following its
+        // stale chase path home. The post never moves, so one stable object is exactly what that cache wants.
         if (guardPost != null && !aggro) {
-            Vector2 toPost = new Vector2(guardPost).sub(pos());
-            if (toPost.len() > GUARD_POST_TOLERANCE)
-                return new Vector2(guardPost);
-            return Vector2.Zero;
+            if (guardPost.dst(target) > GUARD_POST_TOLERANCE)
+                return guardPost;
+            return target;
         }
 
         if (movementBehaviors.peek() != null){

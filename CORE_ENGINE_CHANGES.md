@@ -57,7 +57,9 @@ rewrite again.
 - **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** — `getFBEnemyAvatar()` is upstream's SHARED static
   `enemyAvatar`, not a fresh `FBufferedImage` per dialog. Nothing may call `dispose()` on it; our three
   `fb.dispose()` / `fb::dispose` calls were removed in this merge. The boss intro and boss-loss dialogs keep
-  `enemy.getTieredDisplayName()` where upstream passes `enemy.getName()`.
+  `enemy.getTieredDisplayName()` where upstream passes `enemy.getName()`. **Round 290:** `getFBEnemyAvatar()` also
+  calls `enemyAvatar.clear()` - the image renders once and caches, so without it every boss dialog after the first
+  showed the FIRST boss's portrait. Keep the clear() if a daily rewrites this.
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `getBiomeSprite()` / `generateBiomeSprite()` keep the
   **caller-owned pixmap** contract (round 123 review S2-2). Upstream's shared `globalTileDrawing` was NOT adopted and
   its field is deleted: the fog path does `hazeTile(real)` then `real.dispose()`, and both `WorldBackground` callers
@@ -72,8 +74,9 @@ rewrite again.
 
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — the despawn loop is an INDEXED walk
   (`enemies.remove(i); i--;`), not an Iterator. The territory-mage arrival branch inside it was converted to match.
-  `save()` deliberately keeps fresh `ArrayList`s rather than upstream's reused `cachedSave*` fields (those fields are
-  now unused), because it also stores the three territory lists and hands the lists to `data.storeObject()`.
+  `save()` deliberately keeps fresh `ArrayList`s rather than upstream's reused `cachedSave*` fields, because it also
+  stores the three territory lists and hands the lists to `data.storeObject()`. Round 290 deleted the five unused
+  fields; a daily that brings them back needs them deleted again, not wired up.
 - **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** — the field is `spriteMagnifier` (upstream's rename
   of `magnifier`). Our fog-of-war draw guard and `getDrawScale()` block live in the rewritten `draw()`.
 - **`forge-gui-mobile/src/forge/adventure/character/RewardSprite.java`** — the edition-progression restriction runs
@@ -103,6 +106,30 @@ Neither round updated this file at the time, against the standing rule. Both tou
   hand and now calls the `World` helpers instead. Upstream conflict note: these are one-line call sites inside
   otherwise stock methods, so a daily that rewrites the method just needs the `World.` call kept rather than
   reverted to `/ 7`.
+
+### Round 290: the post-1.12 review's fixes
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** — the fog test in `draw()` is now the protected
+  `isHiddenByFog()` (same centre-tile rule), so subclasses can ask it.
+- **`forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java`** — `drawGuardIndicator()` and
+  `drawTeleporterIndicator()` run only when `!isHiddenByFog()`. They drew after `super.draw()` had skipped a fogged
+  town, so AI guard dots showed in solid black.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — the round-279 guard-post branch of
+  `getTargetVector()` returns `target` (this frame's `pos()`) at the post and the `guardPost` object on the way
+  home - never `Vector2.Zero` (world 0,0) and never the pooled `targetVec`. **Merge note:** since the 09.22 merge
+  MapStage caches a path while `destination.equals(mob.targetVector)`, and the pooled vector is the same object
+  every frame; any new branch here that wants its path recomputed must return a vector whose identity changes.
+- **`forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`** — `getFBEnemyAvatar()` clears the shared avatar
+  before returning it (see the merge section above).
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — the round-279/281 watchdog pauses while
+  `Forge.getCurrentScene() != TileMapScene.instance()` and has `DIALOG_OFFSCREEN_POLLS` extra repeats, so a dialog
+  built behind the loot screen or the new game's welcome screen is not reported as a softlock.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — upstream's `cachedSave*` fields deleted.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — javadoc and one log string only.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** — comment only.
+- Mod-owned (listed for completeness, no upstream counterpart): `util/ResourceLedger.java` (`onDaysPassed()` rolls
+  to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
+  `util/EditionProgression.java` (never caches an empty pool).
 
 ### World generation & the overworld map
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — round 280 added one call,

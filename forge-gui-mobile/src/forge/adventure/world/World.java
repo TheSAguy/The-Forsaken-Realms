@@ -426,13 +426,14 @@ public class World implements Disposable, SaveFileContent {
      * what a person means by "the start of the week".
      * <p>
      * floorDiv, not `/`: Java truncates toward zero, so a day 0 save would land on the same week
-     * number as day 1 and the very first reset would go missing. Only the ARENA reads this - the
-     * other weekly clocks (shop restock in PointOfInterestChanges, payday in BalanceSheet, the
-     * ResourceLedger week) each compute `day / 7` themselves and are deliberately NOT changed here.
+     * number as day 1 and the very first reset would go missing. Round 288 made {@link #weekOf} the
+     * one definition every weekly clock uses - the arena, shop-restock surcharges, mine payouts,
+     * guard wages, the Balance Sheet's projection and the ResourceLedger - and round 290 caught the
+     * ledger's day sweep, which round 288 had missed. Nothing computes `day / 7` by hand any more.
      * <p>
      * Existing saves: `arenaWinWeek` stores the week a win happened. A win recorded on a day that
      * changes week number under the new boundary (day 7, 14, 21...) compares unequal to the current
-     * week once, so that arena unlocks a day early. One-off, in the player's favour, not worth
+     * week once, so that arena unlocks a day early. One-off, in the player's favor, not worth
      * migrating a save field for.
      */
     public int getCurrentWeek() {
@@ -2932,9 +2933,9 @@ public class World implements Disposable, SaveFileContent {
             }
         }
         System.out.println("[TFR-Minimap] full re-bake: " + insideAKeep
-                + " dual-bit tile(s) decoded in their own colour's space (inside a castle keep - round 272), "
+                + " dual-bit tile(s) decoded in their own color's space (inside a castle keep - round 272), "
                 + claimedFromWaste
-                + " tile(s) decoded in wasteland space (land an AI colour claimed by expansion)");
+                + " tile(s) decoded in wasteland space (land an AI color claimed by expansion)");
         for (Map.Entry<String, Pair<Pixmap, HashMap<String, Pixmap>>> entry : pixmapHash.entrySet()) {
             try {
                 entry.getValue().getLeft().dispose();

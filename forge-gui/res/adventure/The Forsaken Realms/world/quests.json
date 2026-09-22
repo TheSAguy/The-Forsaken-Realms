@@ -9219,7 +9219,7 @@
 				"mapFlagValue": 1,
 				"objective": "CharacterFlag",
 				"prologue": {
-					"text": "There is only one seat, and you have already seen it: Orazca, the ruin at the centre of the star, where you first walked out of the stone. Restore it as you would any ruined town, hold five towns in all, then speak at its Job Board and pay the cost (gold, wood, stone, and shards). A Capitol grants buildings no ordinary town can offer... and losing it ends your reign, so raise what you can hold.",
+					"text": "There is only one seat, and you have already seen it: Orazca, the ruin at the center of the star, where you first walked out of the stone. Restore it as you would any ruined town, hold five towns in all, then speak at its Job Board and pay the cost (gold, wood, stone, and shards). A Capitol grants buildings no ordinary town can offer... and losing it ends your reign, so raise what you can hold.",
 					"options": [
 						{
 							"name": "(Continue)"

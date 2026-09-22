@@ -211,6 +211,7 @@ public class DungeonRotation {
             world.getPoiRespawnDay().remove(id);
             world.getPoiFailedAttempts().remove(id);
             world.getPoiLootedDay().remove(id); // round 128
+            world.getPoiLootHeldDay().remove(id); // round 290: a new incarnation starts with no hold
             world.getPoiDespawnDay().put(id,
                     currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()) + SIDEQUEST_EXTENSION_DAYS);
             world.refreshWorldMapMarkers();
@@ -345,6 +346,7 @@ public class DungeonRotation {
             world.getPoiRespawnDay().remove(pick.getID());
             world.getPoiFailedAttempts().remove(pick.getID());
             world.getPoiLootedDay().remove(pick.getID()); // round 128
+            world.getPoiLootHeldDay().remove(pick.getID()); // round 290: nor does one back from reserve
             world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()));
             System.out.println("[DungeonRotation] " + pick.getDisplayName() + " has appeared on the map");
             activeCount++;
@@ -569,6 +571,11 @@ public class DungeonRotation {
         world.getPoiDespawnDay().remove(poi.getID());
         world.getPoiFailedAttempts().remove(poi.getID());
         world.getPoiLootedDay().remove(poi.getID()); // round 128: next incarnation may be halved again
+        // Round 290 (code review): the round-257 loot hold goes with the place, like poiLootedDay above. It
+        // used to survive a despawn, so a dungeon despawned by a LOSS while loot sat on its floor came back
+        // later still "held", and the day tick re-rolled its timer every time it came due - it could stay on
+        // the map for the rest of the run. Also cleared on the two re-activation paths above.
+        world.getPoiLootHeldDay().remove(poi.getID());
         world.getPoiRespawnDay().put(poi.getID(), currentDay + rollDays(world, respawnMinDays(), respawnMaxDays()));
         System.out.println("[DungeonRotation] " + poi.getDisplayName() + " despawned until day " + world.getPoiRespawnDay().get(poi.getID()));
         if (notification != null)

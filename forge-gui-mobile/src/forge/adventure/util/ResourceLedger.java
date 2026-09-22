@@ -173,11 +173,14 @@ public final class ResourceLedger {
     }
 
     /** Called from the day sweep so the roll happens on schedule even in a week where the player
-     *  neither earned nor spent anything. */
+     *  neither earned nor spent anything. Round 290: World.weekOf(), the same week post() rolls to
+     *  through currentWeek(). Round 288 moved post() and missed this line, so on every 7th day the
+     *  sweep rolled FORWARD on the old day/7 week and that day's first entry rolled the book BACK,
+     *  wiping the page - the Balance Sheet's "last week" ended up holding a single day. */
     public static void onDaysPassed(int newDayCount) {
         Book book = book();
         if (book != null)
-            roll(book, newDayCount / 7);
+            roll(book, forge.adventure.world.World.weekOf(newDayCount));
     }
 
     // ------------------------------------------------------------------ reading

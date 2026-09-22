@@ -144,11 +144,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return Config.instance().getTuningData().speedUpMultiplier;
     }
     private final Vector2 navDirectionVec = new Vector2();
-    private final ArrayList<Float> cachedSaveTimeouts = new ArrayList<>(32);
-    private final ArrayList<String> cachedSaveNames = new ArrayList<>(32);
-    private final ArrayList<Float> cachedSaveXCoords = new ArrayList<>(32);
-    private final ArrayList<Float> cachedSaveYCoords = new ArrayList<>(32);
-    private final ArrayList<String> cachedSaveQuestIDs = new ArrayList<>(32);
+    // Round 290: upstream's 09.22 cachedSave* lists are deliberately NOT here. They belonged to its save(),
+    // which this plane does not use - ours also writes the territory-mage fields (territoryColors,
+    // lastDuelDays, territoryTargetIds) that upstream's version drops. Round 289 took the five fields
+    // anyway and nothing read them; do not re-add them on the next merge.
 
     public WorldStage() {
         super();

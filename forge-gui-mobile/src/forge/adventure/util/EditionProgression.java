@@ -106,6 +106,10 @@ public class EditionProgression {
             Map<String, Integer> totals = new HashMap<>();
             for (forge.item.PaperCard pc : RewardData.getAllCards())
                 totals.merge(pc.getEdition(), 1, Integer::sum);
+            // Round 290 (code review): cache only a real count. An empty pool means the reward cards are
+            // not built yet, and caching THAT switched the filter off for the rest of the session.
+            if (totals.isEmpty())
+                return totals;
             cardsPerEdition = totals;
         }
         return cardsPerEdition;

@@ -17757,107 +17757,85 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
-## Round 279: the guards could never chase, and a dialog could trap you (2026-09-21)
+## Round 290: the post-1.12 review's fixes, a guard icon in the fog, and two things only play could show (2026-09-22)
 
-User, with a Blue Tower screenshot: *"there are two unguarded boosters. I'd like to make sure all boosters are
-protected, even if you have to add new mages to do so. This goes for all Booster Guards: They should all have a
-small reaction radius and then go back to the booster once the player leaves the radius."* Then: *"make booster
-guards minimum level be Adept, so no Apprentices."* And separately, a player's bug report about a *"grey window"*
-during the intro.
+User: *"Review all code since the 1.12 release. We are ready to release 1.13, so I want to make sure all is good."*
+Then, with a screenshot of a lone guard shield in black fog: *"Fix those 3 and also, the AI's guard icons on their
+towns/capitol is visible on the FOG ... Do an agent game play review. Update the game if needed. If all is okay,
+proceed with the Full release."*
 
-### 85.6% of the plane's enemies could notice the player and not chase
+### The review
 
-This is the third report about booster guards - round 258 placed 101, round 269 reverted ten, round 275 re-placed
-those - and the reason it keeps coming back was never the placement. `EnemySprite` pursues while
-`len <= threatRange || (aggro && len <= pursueRange)` and drops aggro the moment `aggro && len > pursueRange`. So
-**a threatRange with no pursueRange cannot chase at all**: it notices at one or two tiles and gives up a pixel
-later. `MapStage.applyDefaultReactionRange()` would have filled one in, but the fill sat behind an early return
-on *"threatRange already set"*, so it only ever reached enemies that had no threatRange whatsoever.
+Scoped to what this mod wrote: `tfr-v1.12..d582005fca2` (round 288b, the last commit before the engine merge -
+32 Java files, ~2,200 lines added) plus round 289's conflict resolutions (`git show --remerge-diff`), not
+upstream's 2,700 files. The plane validator ran clean. Three real bugs:
 
-Measured across all 2,361 placements:
+- **The Balance Sheet's weekly history was broken by round 288.** `ResourceLedger.post()` rolls the book to
+  `currentWeek()` = `World.weekOf()`, but `onDaysPassed()` still rolled to `newDayCount / 7`. On day 7 the sweep
+  rolled FORWARD to week 1, the day's first entry rolled it BACK to week 0 (a backwards roll zeroes last week and
+  clears this week), and day 8's sweep rolled forward again carrying only day 7. Every 7th day, in any week the
+  player earned or spent anything on it. Fix: the sweep rolls to `World.weekOf(newDayCount)`.
+- **Booster guards paced at their posts.** `getTargetVector()` returns a POSITION to walk to; round 279's at-post
+  answer was `Vector2.Zero` - world (0,0), the map's bottom-left corner. MapStage pathed the guard toward it, it
+  left the 8 px tolerance, was sent back, and set off again. Now the at-post answer is `target` (this frame's
+  `pos()`), which MapStage's `destination.epsilonEquals(mob.pos())` idles; the walk home returns the `guardPost`
+  OBJECT. That second part matters since the 09.22 merge: MapStage keeps a mob's cached path while
+  `destination.equals(mob.targetVector)`, and upstream's pooled `targetVec` is the same object every frame, so it
+  always compares equal - a guard sent home through it could follow its stale chase path. The post never moves, so
+  a stable object is exactly what that cache wants.
+- **A dungeon could stop rotating for good.** Round 257's loot hold (`World.poiLootHeldDay`) was cleared only when
+  the player took the last reward. `hidePoi()`, `activateFromReserve()` and `onQuestTargetBound()` clear
+  `poiLootedDay` for the next incarnation and did not clear the hold, so a place despawned by a LOSS while loot sat
+  on its floor came back still held, and the day tick re-rolled its timer every time it came due. All three now
+  clear it. A stale hold already in a save lifts when that dungeon next returns from reserve.
 
-| | count | share |
-|---|---|---|
-| **threatRange, no pursueRange - notices, cannot chase** | **2,021** | **85.6%** |
-| healthy (pursue > threat) | 148 | 6.3% |
-| no threatRange at all | 91 | 3.9% |
-| pursue <= threat | 61 | 2.6% |
-| threatRange -1 (deliberate) | 39 | 1.7% |
+### The fog leak (the user's screenshot)
 
-**Round 271 made this worse, not better.** Its whole point was "every enemy reacts now", and it stamped
-`threatRange=20` into 251 enemies that previously had none - moving them out of the one category the runtime
-default still served and into this one. They went from chasing 64 px to not chasing at all. The user reported
-walking up to guards and looting unopposed twice, before and after that round, which is exactly what it looks
-like from the inside.
+`MapSprite.draw()` returns early for a sprite whose centre tile is unexplored. `PointOfInterestMapSprite.draw()`
+called it and then drew its guard dots and teleporter icon unconditionally - so an AI town or capital the player
+had never found announced itself with its guard shields in solid black. The fog test is now
+`MapSprite.isHiddenByFog()` and the corner icons ask it too, so an icon shows exactly when its town does. Verified
+in a fresh agent world: 12 tiles from an undiscovered AI capital (which always carries two Archmage dots), the
+black shows nothing; walk close enough to discover it and town and dots appear together.
 
-The two fields are independent, and honouring an authored threatRange never meant leaving pursueRange at zero.
-The fill is the same expression the method already contained - `max(threatRange, mapEnemyDefaultPursueRange)`,
-round 252's own 64 px, which the user already accepted for the 378 - just no longer gated. **Blast radius, stated
-plainly: 2,021 enemies across every hand-authored map now chase for about four tiles where they previously chased
-for none.** That is a real difficulty change, and it is the behaviour the last three rounds were all trying to
-produce.
+### The minor findings
 
-### A guard that goes back to its booster
+- `quests.json`: "the centre of the star" -> "center" (the only British spelling in player-visible plane text).
+- `World.getCurrentWeek()`'s javadoc still said the other weekly clocks were "deliberately NOT changed" - the
+  sentence that let the ledger miss above go unnoticed. Rewritten; `ArenaScene`'s "Weeks are day/7" too.
+- Upstream's five `cachedSave*` lists in `WorldStage`, unused since round 289 kept our `save()`, deleted with a
+  do-not-re-add note (ours also writes the territory-mage fields upstream's version drops).
+- `EditionProgression.cardsPerEdition()` cached whatever it counted first, an empty pool included - which would
+  have switched the research station's empty-edition filter off for the session. It caches only a real count.
+- The player ring's texture lookup was NOT changed: `Config.getFile()` already caches, so the per-frame cost is two
+  map lookups. The review's efficiency note was wrong about that.
 
-`EnemySprite.guardPost` (new): when set, losing aggro walks the enemy back to it, and it holds there. Placed after
-the pursuit and flee blocks so both still win, and BEFORE the `movementBehaviors` deque so a **patrol route can no
-longer walk a guard off its post** - which is the other half of the Blue Tower screenshot. Its boosters are not in
-the unguarded list at all: the map puts a Master Blue Wizard and two Djinn within one tile of them, and five of
-that map's seven enemies carry `waypoints`. They stroll off and never come back, so the player arrives to an empty
-room. `MapStage.assignBoosterGuards()` pairs each booster with its nearest non-dialog enemy within three tiles at
-load and pins it to its own authored position - beside the booster already, and known-walkable, which is what
-rounds 269 and 275 paid for. Dialog carriers are never guards (round 253's rule: a quest NPC that charges the
-player is a bug). One `[TFR-BoosterGuard]` line per map.
+### What the play review caught that the code review did not
 
-### Every booster guarded, and none of them an Apprentice
+- **The second boss of a session wore the first boss's face.** Round 289 removed our `fb.dispose()` calls because
+  upstream's avatar became ONE shared `FBufferedImage` - that stopped the blank portrait. But an
+  `FBufferedImage` renders its frame buffer the first time it is drawn and keeps it, and nothing cleared this
+  one: every later boss dialog showed the first boss rendered in the session. `getFBEnemyAvatar()` now `clear()`s
+  it (the old buffer is disposed on the EDT; the next draw re-renders from avatar key 90001, which the duel sets
+  first). SEEN: Ancient Silver Dragon's intro, then Garruk's - each its own portrait, tiered names intact - and
+  the boss-LOSS dialog path ran too (Garruk won).
+- **The dialog watchdog's second cry-wolf case.** A dialog can be built while its map scene is not on screen:
+  a quest stage completing on the loot screen after a duel (the user's 09-21 22:06 log), or the spawn cave's
+  intro behind the new game's welcome screen (the agent's first run today). The map stage does not act then, so
+  the typing cannot advance, and two seconds later the watchdog logged "THIS is the softlock" at character 0 and
+  revealed the options early. Nothing was stuck - but that line is written for bug reports, and it was lying in
+  every new game. The watchdog now pauses while `Forge.getCurrentScene() != TileMapScene.instance()`, with
+  `DIALOG_OFFSCREEN_POLLS` (240 = two minutes) of extra budget so pausing cannot use up its deadline. SEEN: six
+  seconds on the welcome screen, then the intro was still typing and finished on its own; no watchdog line.
 
-`dev-tools/booster_guards.py` (new) audits; `add_booster_guards.py` and `upgrade_booster_guards.py` (new) write.
+### Verified in the agent game (isolated profile, the user's save copied to agent slot 9, plus a fresh world)
 
-* **261 boosters, 71 unguarded** - maps round 258 never covered (the Strixhaven-style Classrooms, the Gitrog
-  Bogs, the groves). **69 new guards written**, each a fresh `enemy.tx` object at a whole-tile offset from the
-  booster's own coordinates, on a tile that itself holds a reachable player position. Now **259 of 261 guarded**;
-  the two left are `cave_spider.tmx` (which has a Cave Spider 1.2 tiles away but no entry object to verify
-  reachability from) and `phyrexian_black1.tmx`, already flagged in round 278 for its misplaced entry.
-* **49 Apprentice guards promoted to Adept or better.** The replacement is chosen by `questTags` overlap, and
-  getting that ordering right took two tries: sorting by rank first put a **Market Trader** on a booster, and
-  counting `Biome*`/`Identity*` as theme kept it there, because every enemy in a white cave shares BiomeWhite. On
-  creature tags only it reads correctly - `Minotaur -> Minotaur Warcaller`, `Poisonous Snake -> Hidden Snake`,
-  `Cloaker -> Beholder`, `Cracked Shieldbone -> Barrow Legionnaire`. Adept is preferred over Master and Archmage
-  at equal overlap: the user asked for a floor, not an escalation.
-
-A write bug worth recording: `--apply` reported 0 changes while `--list` kept reporting 49, because the rewrite
-pattern used `id="%d"\b` - and a closing quote followed by a space is not a word boundary, so it matched nothing.
-The pattern is also tempered with `(?:(?!</object>).)*?` now, so an object with no inline `enemy` property cannot
-reach forward and rename the next enemy in the file.
-
-### The "grey window": made survivable, not diagnosed
-
-A player reported a grey window over the spawn dungeon during the intro that *"doesn't allow me to do anything"*,
-with fullscreen the only non-default setting, and nobody else able to reproduce it. **That symptom is this
-dialog.** `MapDialog` creates every option button `setVisible(false)` and the ONLY thing that reveals them is
-`TypingLabel`'s `end()` callback. TypingLabel advances its typing from `act()` and fires `end()` from there, so
-anything that stops it advancing - a degenerate layout width at an unusual resolution or DPI, a markup token the
-parser stalls on, a label that never gets laid out - leaves the frame drawn over the map with nothing to click, at
-the very start of a new game.
-
-The cause on that machine is still unknown and may not be reproducible here. This does not pretend to fix it; it
-makes it survivable, which is the part that needs no repro: after a timeout the text is skipped to the end and the
-options are shown regardless, with a `[TFR-Dialog]` line saying so. The timeout scales with the text
-(`5s + length/10`, capped at 60) so a legitimately long speech is never cut short, and it only acts if a button is
-still hidden when it fires.
-
-**What to ask the reporter for** is in CLAUDE.md's state block, but the short version: the `forge.log` from
-`%APPDATA%\ForsakenRealms\`, their resolution and Windows display scaling, and above all whether it still
-happens with fullscreen OFF - that is the one A/B test that isolates their only non-default setting.
-
-### And a QA tool that had been crying wolf
-
-`validate_plane_data.py` checks JSON keys against hardcoded lists of the Java loader classes' fields, and reported
-`enemySpriteFrameCap` as an unknown key for eighteen rounds - a field round 261 added to `TuningData.java` AND to
-`settings.json`, wired up and documented as retunable without a rebuild. The lists are now READ from the Java
-source, with the hardcoded set kept as a floor. That one false positive was hiding how stale they were:
-**DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
-would have gone unreported. A validator you learn to skim is worse than no validator.
+The djinn Blue Tower (`magetower_1_djinn.tmx`): the log says 1 booster, 1 guard pinned. That guard, Djinn 71, is a
+waypoint patroller by map data and stood motionless on its post across every sample; the chest guard (Blue
+Wizard) and the other Djinn kept patrolling, as designed. Skip-intro kit: Homeward rune + 1/1/3 coins, granted once.
+Terrain drew correctly after every reveal. No exceptions in either session. NOT checked in play: the ledger fix
+(logic only), the loot-hold fix (needs a loss inside a dungeon with loot left), a scaled enemy's effect centring
+(the round-289 `getCenter()` math is unchanged).
 
 ## Round 289: the engine moves to the 09.22 daily, and an allocation refactor lands on top of ours (2026-09-22)
 
@@ -18540,6 +18518,108 @@ object, so reachability there cannot be verified either way - it is a limit of t
 Three other answers from the same exchange, all "no change": the round-279 chase range stays at 64 px for all
 2,021 enemies (*"Keep it - all enemies chase"*), slot 2 keeps the soak's day-65 end state, and there is no release
 yet - playtest first, so rounds 247-279 keep accumulating.
+
+## Round 279: the guards could never chase, and a dialog could trap you (2026-09-21)
+
+User, with a Blue Tower screenshot: *"there are two unguarded boosters. I'd like to make sure all boosters are
+protected, even if you have to add new mages to do so. This goes for all Booster Guards: They should all have a
+small reaction radius and then go back to the booster once the player leaves the radius."* Then: *"make booster
+guards minimum level be Adept, so no Apprentices."* And separately, a player's bug report about a *"grey window"*
+during the intro.
+
+### 85.6% of the plane's enemies could notice the player and not chase
+
+This is the third report about booster guards - round 258 placed 101, round 269 reverted ten, round 275 re-placed
+those - and the reason it keeps coming back was never the placement. `EnemySprite` pursues while
+`len <= threatRange || (aggro && len <= pursueRange)` and drops aggro the moment `aggro && len > pursueRange`. So
+**a threatRange with no pursueRange cannot chase at all**: it notices at one or two tiles and gives up a pixel
+later. `MapStage.applyDefaultReactionRange()` would have filled one in, but the fill sat behind an early return
+on *"threatRange already set"*, so it only ever reached enemies that had no threatRange whatsoever.
+
+Measured across all 2,361 placements:
+
+| | count | share |
+|---|---|---|
+| **threatRange, no pursueRange - notices, cannot chase** | **2,021** | **85.6%** |
+| healthy (pursue > threat) | 148 | 6.3% |
+| no threatRange at all | 91 | 3.9% |
+| pursue <= threat | 61 | 2.6% |
+| threatRange -1 (deliberate) | 39 | 1.7% |
+
+**Round 271 made this worse, not better.** Its whole point was "every enemy reacts now", and it stamped
+`threatRange=20` into 251 enemies that previously had none - moving them out of the one category the runtime
+default still served and into this one. They went from chasing 64 px to not chasing at all. The user reported
+walking up to guards and looting unopposed twice, before and after that round, which is exactly what it looks
+like from the inside.
+
+The two fields are independent, and honouring an authored threatRange never meant leaving pursueRange at zero.
+The fill is the same expression the method already contained - `max(threatRange, mapEnemyDefaultPursueRange)`,
+round 252's own 64 px, which the user already accepted for the 378 - just no longer gated. **Blast radius, stated
+plainly: 2,021 enemies across every hand-authored map now chase for about four tiles where they previously chased
+for none.** That is a real difficulty change, and it is the behaviour the last three rounds were all trying to
+produce.
+
+### A guard that goes back to its booster
+
+`EnemySprite.guardPost` (new): when set, losing aggro walks the enemy back to it, and it holds there. Placed after
+the pursuit and flee blocks so both still win, and BEFORE the `movementBehaviors` deque so a **patrol route can no
+longer walk a guard off its post** - which is the other half of the Blue Tower screenshot. Its boosters are not in
+the unguarded list at all: the map puts a Master Blue Wizard and two Djinn within one tile of them, and five of
+that map's seven enemies carry `waypoints`. They stroll off and never come back, so the player arrives to an empty
+room. `MapStage.assignBoosterGuards()` pairs each booster with its nearest non-dialog enemy within three tiles at
+load and pins it to its own authored position - beside the booster already, and known-walkable, which is what
+rounds 269 and 275 paid for. Dialog carriers are never guards (round 253's rule: a quest NPC that charges the
+player is a bug). One `[TFR-BoosterGuard]` line per map.
+
+### Every booster guarded, and none of them an Apprentice
+
+`dev-tools/booster_guards.py` (new) audits; `add_booster_guards.py` and `upgrade_booster_guards.py` (new) write.
+
+* **261 boosters, 71 unguarded** - maps round 258 never covered (the Strixhaven-style Classrooms, the Gitrog
+  Bogs, the groves). **69 new guards written**, each a fresh `enemy.tx` object at a whole-tile offset from the
+  booster's own coordinates, on a tile that itself holds a reachable player position. Now **259 of 261 guarded**;
+  the two left are `cave_spider.tmx` (which has a Cave Spider 1.2 tiles away but no entry object to verify
+  reachability from) and `phyrexian_black1.tmx`, already flagged in round 278 for its misplaced entry.
+* **49 Apprentice guards promoted to Adept or better.** The replacement is chosen by `questTags` overlap, and
+  getting that ordering right took two tries: sorting by rank first put a **Market Trader** on a booster, and
+  counting `Biome*`/`Identity*` as theme kept it there, because every enemy in a white cave shares BiomeWhite. On
+  creature tags only it reads correctly - `Minotaur -> Minotaur Warcaller`, `Poisonous Snake -> Hidden Snake`,
+  `Cloaker -> Beholder`, `Cracked Shieldbone -> Barrow Legionnaire`. Adept is preferred over Master and Archmage
+  at equal overlap: the user asked for a floor, not an escalation.
+
+A write bug worth recording: `--apply` reported 0 changes while `--list` kept reporting 49, because the rewrite
+pattern used `id="%d"\b` - and a closing quote followed by a space is not a word boundary, so it matched nothing.
+The pattern is also tempered with `(?:(?!</object>).)*?` now, so an object with no inline `enemy` property cannot
+reach forward and rename the next enemy in the file.
+
+### The "grey window": made survivable, not diagnosed
+
+A player reported a grey window over the spawn dungeon during the intro that *"doesn't allow me to do anything"*,
+with fullscreen the only non-default setting, and nobody else able to reproduce it. **That symptom is this
+dialog.** `MapDialog` creates every option button `setVisible(false)` and the ONLY thing that reveals them is
+`TypingLabel`'s `end()` callback. TypingLabel advances its typing from `act()` and fires `end()` from there, so
+anything that stops it advancing - a degenerate layout width at an unusual resolution or DPI, a markup token the
+parser stalls on, a label that never gets laid out - leaves the frame drawn over the map with nothing to click, at
+the very start of a new game.
+
+The cause on that machine is still unknown and may not be reproducible here. This does not pretend to fix it; it
+makes it survivable, which is the part that needs no repro: after a timeout the text is skipped to the end and the
+options are shown regardless, with a `[TFR-Dialog]` line saying so. The timeout scales with the text
+(`5s + length/10`, capped at 60) so a legitimately long speech is never cut short, and it only acts if a button is
+still hidden when it fires.
+
+**What to ask the reporter for** is in CLAUDE.md's state block, but the short version: the `forge.log` from
+`%APPDATA%\ForsakenRealms\`, their resolution and Windows display scaling, and above all whether it still
+happens with fullscreen OFF - that is the one A/B test that isolates their only non-default setting.
+
+### And a QA tool that had been crying wolf
+
+`validate_plane_data.py` checks JSON keys against hardcoded lists of the Java loader classes' fields, and reported
+`enemySpriteFrameCap` as an unknown key for eighteen rounds - a field round 261 added to `TuningData.java` AND to
+`settings.json`, wired up and documented as retunable without a rebuild. The lists are now READ from the Java
+source, with the hardcoded set kept as a floor. That one false positive was hiding how stale they were:
+**DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
+would have gone unreported. A validator you learn to skim is worse than no validator.
 
 ## Round 278: fifteen dungeons that could never be cleared (2026-09-20)
 
