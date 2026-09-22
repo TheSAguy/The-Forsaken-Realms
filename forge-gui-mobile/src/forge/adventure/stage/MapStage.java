@@ -1013,11 +1013,15 @@ public class MapStage extends GameStage {
         final int id;
         final Vector2 pos;
         final boolean booster;
+        /** Round 286e: a chest. Needed because "everything else" - gold, wood, stone, shards - also
+         *  registers here, and the three tiers are prioritised differently for guards. */
+        final boolean treasure;
 
-        GuardedLoot(int id, Vector2 pos, boolean booster) {
+        GuardedLoot(int id, Vector2 pos, boolean booster, boolean treasure) {
             this.id = id;
             this.pos = pos;
             this.booster = booster;
+            this.treasure = treasure;
         }
     }
 
@@ -1054,6 +1058,13 @@ public class MapStage extends GameStage {
      * A wandering chest guard that turns and hunts you the moment the lid opens is the better version of that
      * anyway - it does not require it to have been standing there when you arrived.
      */
+    /** Booster first, then chest, then any other reward - see assignLootGuards(). */
+    private static int lootPriority(GuardedLoot loot) {
+        if (loot.booster)
+            return 2;
+        return loot.treasure ? 1 : 0;
+    }
+
     private void assignLootGuards(String targetMap) {
         if (lootPositions.isEmpty())
             return;
@@ -1061,7 +1072,21 @@ public class MapStage extends GameStage {
         // agree about what "guarding this booster" means.
         float reach = Current.world().getTileSize() * 3f;
         int paired = 0, unguarded = 0, posts = 0;
-        for (GuardedLoot loot : lootPositions) {
+        // Round 286e: BOOSTERS get first pick of the guards.
+        //
+        // Every reward registers here, not just boosters and chests - round 280 hooked the whole
+        // RewardSprite branch, so a gold pile, a wood stack and a shard cache are all "loot" with a
+        // guard. One enemy can only guard ONE piece (guardedRewardId != 0 skips it afterwards), so on
+        // the plane's own numbers 141 boosters and chests end up with no dedicated guard at all -
+        // and in file order a gold pile can take the enemy that should have been watching the chest
+        // beside it. `graveyard_5.tmx` logged "3 of 12" while containing no booster or chest
+        // whatsoever: 5 gold, 2 stone, 3 manashards, 2 wood.
+        //
+        // Sorting the pass so boosters are matched first, then chests, then everything else does not
+        // add a single enemy; it just stops the cheapest pickup in the room outbidding the best one.
+        Array<GuardedLoot> byValue = new Array<>(lootPositions);
+        byValue.sort((a, b) -> Integer.compare(lootPriority(b), lootPriority(a)));
+        for (GuardedLoot loot : byValue) {
             EnemySprite best = null;
             float bestDist = Float.MAX_VALUE;
             for (MapActor actor : actors) {
@@ -1088,8 +1113,20 @@ public class MapStage extends GameStage {
             }
             paired++;
         }
-        System.out.println("[TFR-BoosterGuard] " + targetMap + ": " + paired + " of " + lootPositions.size
-                + " booster(s)/chest(s) have a guard, " + posts + " of them pinned to a post"
+        // Round 286e: the old wording said "booster(s)/chest(s)" for a total that counts EVERY
+        // reward, so graveyard_5 - 5 gold, 2 stone, 3 manashards, 2 wood and not one chest - reported
+        // "3 of 12 booster(s)/chest(s)". Count the three tiers separately and say which is which.
+        int boosters = 0, chests = 0;
+        for (GuardedLoot l : lootPositions) {
+            if (l.booster)
+                boosters++;
+            else if (l.treasure)
+                chests++;
+        }
+        System.out.println("[TFR-BoosterGuard] " + targetMap + ": " + paired + " of "
+                + lootPositions.size + " reward(s) have a guard (" + boosters + " booster(s), "
+                + chests + " chest(s), " + (lootPositions.size - boosters - chests)
+                + " other pickup(s)), " + posts + " of them pinned to a post"
                 + (unguarded > 0 ? "; " + unguarded + " booster(s) with no enemy within 3 tiles" : ""));
     }
 
@@ -1307,7 +1344,7 @@ public class MapStage extends GameStage {
                             // reward JSON, which is a card list indistinguishable from a treasure's.
                             // Round 280 records chests as well, since "chase the thief" covers those too.
                             lootPositions.add(new GuardedLoot(id, new Vector2(RW.getX(), RW.getY()),
-                                    Sp.contains("booster")));
+                                    Sp.contains("booster"), Sp.contains("treasure")));
                         }
                         break;
                     case "enemy":
