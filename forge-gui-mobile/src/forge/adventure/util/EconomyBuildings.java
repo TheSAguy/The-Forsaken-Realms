@@ -3019,7 +3019,8 @@ public class EconomyBuildings {
                     // a long fast-forward that skips several paydays at once still pays each one.
                     int lastPaid = changes.getEconomyBuildingLastPayoutDay(type);
                     while (true) {
-                        int nextPayday = ((lastPaid / 7) + 1) * 7;
+                        // Round 288: the shared boundary (days 8, 15, 22...), not ((lastPaid/7)+1)*7.
+                        int nextPayday = forge.adventure.world.World.nextWeekBoundary(lastPaid);
                         if (nextPayday > newDayCount)
                             break;
                         int amount = mineWeeklyAmount(type);
@@ -3092,7 +3093,7 @@ public class EconomyBuildings {
                 // fast-forward that skips several paydays at once still charges/disbands correctly
                 // for each one, same reasoning as the Bank interest periods above.
                 while (true) {
-                    int nextPayday = ((lastPaid / 7) + 1) * 7;
+                    int nextPayday = forge.adventure.world.World.nextWeekBoundary(lastPaid); // round 288
                     if (nextPayday > newDayCount)
                         break;
                     int goldCost = guardWeeklyGoldCost(tier);
@@ -3145,13 +3146,14 @@ public class EconomyBuildings {
             if (!RoamingGuards.isArmed(guard)) {
                 // Round 146: an unarmed guard draws no wage. Its payday still advances, so arming
                 // it later does not immediately bill for every week it stood idle.
-                guard.lastPaidDay = Math.max(guard.lastPaidDay, (newDayCount / 7) * 7);
+                guard.lastPaidDay = Math.max(guard.lastPaidDay, // round 288: shared boundary
+                        forge.adventure.world.World.lastWeekBoundary(newDayCount));
                 continue;
             }
             int lastPaid = guard.lastPaidDay;
             boolean disbanded = false;
             while (true) {
-                int nextPayday = ((lastPaid / 7) + 1) * 7;
+                int nextPayday = forge.adventure.world.World.nextWeekBoundary(lastPaid); // round 288
                 if (nextPayday > newDayCount)
                     break;
                 // Round 160 (code review): the ROAMING table. Round 157 gave roaming guards their

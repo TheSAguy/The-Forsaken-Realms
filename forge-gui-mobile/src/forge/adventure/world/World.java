@@ -435,7 +435,43 @@ public class World implements Disposable, SaveFileContent {
      * migrating a save field for.
      */
     public int getCurrentWeek() {
-        return Math.floorDiv(getCurrentDay() - 1, 7);
+        return weekOf(getCurrentDay());
+    }
+
+    /**
+     * The week a day falls in. Round 288 made this the SINGLE definition for the whole game.
+     * <p>
+     * Weeks run days 1-7, 8-14, 15-21 (user, round 287: *"So start of the week"*), so the boundary
+     * lands on 8, 15, 22 rather than 7, 14, 21. floorDiv, not `/`: Java truncates toward zero, so a
+     * day 0 would otherwise share a week number with day 1 and the first boundary would vanish.
+     * <p>
+     * Round 287 changed only the arena and left four other clocks computing `day / 7` by hand -
+     * shop-restock surcharges, mine payouts, guard salaries and the resource ledger - which would
+     * have meant the arena reset on day 8 while wages were drawn on day 7. Round 288 pointed all of
+     * them here, on the user's call ("Do the Weekly clock alignment").
+     */
+    public static int weekOf(int day) {
+        return Math.floorDiv(day - 1, 7);
+    }
+
+    /**
+     * The next weekly boundary STRICTLY after `day` - i.e. the next payday/restock day.
+     * <p>
+     * Replaces `((day / 7) + 1) * 7`, which was written out separately for mine payouts, guard
+     * salaries and the balance-sheet projection. Same shape, new boundary: a mine last paid on day 3
+     * next pays on 8 (was 7), one last paid on day 8 next pays on 15.
+     */
+    public static int nextWeekBoundary(int day) {
+        return day + (7 - Math.floorMod(day - 1, 7));
+    }
+
+    /**
+     * The most recent weekly boundary at or before `day`. Replaces `(day / 7) * 7`, used where a
+     * guard returning to service must not be billed for the weeks it stood idle: it is credited as
+     * paid up to the current week's start, which is now day 8/15/22 rather than 7/14/21.
+     */
+    public static int lastWeekBoundary(int day) {
+        return day - Math.floorMod(day - 1, 7);
     }
 
     public java.util.Map<String, Integer> getEnemyPermanentKillCount() {

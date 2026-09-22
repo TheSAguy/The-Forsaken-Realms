@@ -411,7 +411,10 @@ public class PointOfInterestChanges implements SaveFileContent  {
      *  (day a multiple of 7); +1 per restock already used since then. See recordReroll(). */
     public int rerollSurcharge(int objectID, int currentDay) {
         Integer lastDay = shopManualRerollLastDay.get(objectID);
-        if (lastDay == null || lastDay / 7 != currentDay / 7)
+        // Round 288: World.weekOf, so the surcharge resets on the same day the arena and the
+        // payday do. Was lastDay / 7 != currentDay / 7, which boundaried on 7/14/21.
+        if (lastDay == null || forge.adventure.world.World.weekOf(lastDay)
+                != forge.adventure.world.World.weekOf(currentDay))
             return 0; // never restocked, or a weekly boundary has passed since - fresh start
         Integer count = shopRerollCountThisWeek.get(objectID);
         return count == null ? 0 : count;

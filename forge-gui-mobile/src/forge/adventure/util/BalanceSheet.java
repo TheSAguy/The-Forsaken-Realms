@@ -148,7 +148,10 @@ public class BalanceSheet {
         // committed for the payday ahead. A player who hired a guard yesterday needs to see the
         // bill before it lands, and no amount of history shows that.
         Weekly next = compute();
-        int nextPayday = ((WorldSave.getCurrentSave().getWorld().getCurrentDay() / 7) + 1) * 7;
+        // Round 288: shared with the code that actually pays, so the projected day and the day the
+        // gold moves cannot drift apart.
+        int nextPayday = forge.adventure.world.World.nextWeekBoundary(
+                WorldSave.getCurrentSave().getWorld().getCurrentDay());
         // Round 151 (user playtest: "Gold seems to vary slightly 322, 304, 75... I only had one
         // gold mine, so the income each week should have only been 75"). It was, and the recorded
         // Mines line said so every week - the varying figure was this projection, which folded BANK

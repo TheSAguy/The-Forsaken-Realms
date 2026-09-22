@@ -243,7 +243,9 @@ public final class ResourceLedger {
             WorldSave save = WorldSave.getCurrentSave();
             if (save == null || save.getWorld() == null)
                 return -1;
-            return save.getWorld().getCurrentDay() / 7;
+            // Round 288: the shared week, so a ledger page covers exactly the span the payday on
+            // its last day paid for.
+            return save.getWorld().getCurrentWeek();
         } catch (RuntimeException e) {
             return -1;
         }
