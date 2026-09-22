@@ -50,6 +50,14 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   except a booster's guard. Upstream conflict note: the insertion point is the line right before
   `if (movementBehaviors.peek() != null)`; if the daily rewrites that method, re-add the branch in the same
   position, since being ahead of the deque is the entire point (a patrol must not walk a guard off its post).
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — round 283 changed NOTHING here, and that is
+  the point. The enemy loader reads its patrol with `prop.get("waypoints")`, and libGDX's `MapProperties` is
+  case-sensitive, so the 22 objects in this plane (and 29 in `common/`) authored as **`Waypoints`** are silently
+  ignored — 51 enemies that have never walked a step of their route, all in story maps. Adding a
+  `prop.get("Waypoints")` fallback is two lines and is **the wrong move today**: routes that never ran were never
+  tested, and `dev-tools/waypoint_routes_qa.py` shows `templeofchandra`'s Magma Elemental route alone carrying
+  ~23 legs that are blocked or outside the playable area. The typo is currently the only thing keeping those
+  routes dormant. Repair the routes, THEN flip the case, then play the story maps — in that order.
 - **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — round 279 added a watchdog beside the existing
   `TypingAdapter.end()` listener that reveals the option buttons if the typing animation never ends. Stock relies
   on that callback alone, which makes a stalled `TypingLabel` an unrecoverable softlock; the watchdog is additive

@@ -17859,6 +17859,77 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 283: nobody had ever validated a patrol ROUTE (2026-09-21)
+
+User, with a screenshot: *"The blue tower top mage still leaves the area and is too high, needs it's route
+edited."*
+
+"Still" is fair. This enemy was item 1 of the list that started rounds 275-279, and every audit built for it
+reported the map clean - correctly. `stranded_enemies.py` checks where an enemy STANDS, and the Blue Tower's
+Doppelganger stands somewhere perfectly legal. The user's own phrasing had the answer in it: **route**. Nothing
+had ever looked at one.
+
+### The one-tile bug
+
+`magetower_13_doppelganger.tmx` is one of six maps sharing the display name "Blue Tower" (the shape in the
+screenshot - an octagon with a cross of corridors - is what identified it; the log was locked by the running
+game). The top chest is `treasure 101` at tile (11,15), and `enemy 74`, a Doppelganger, sits beside it at
+(14,15) as its guard. Its patrol is `waypoints = 106,107`:
+
+* waypoint 106, tile (11,14) - reachable, inside.
+* waypoint 107, tile (11,13) - **one tile further north, and row 14 is the room's northernmost walkable row.**
+
+Row 13 upward is drawn-but-sealed void, and *nothing up there carries collision*, so "walk to 107" is a
+perfectly executable instruction that takes the guard out of the building on every lap. That is the whole bug,
+and it is why it looked like a placement problem while every placement audit passed: the authored position is
+fine, the destination is not.
+
+Waypoint 107 now sits at tile (14,14) - reachable (verified with the audit's own test), directly north of both
+the chest and the guard's own tile, which turns the route into a three-tile pace across the top of the alcove.
+It is referenced by this one enemy only, and `common/`'s copy of the map does not even contain object 107, so
+no other plane is touched.
+
+### `waypoint_routes_qa.py`
+
+The gap was structural, so it got a tool rather than a one-off edit. Routes are not coordinates: a `waypoints`
+property holds OBJECT IDS of `waypoint.tx` objects elsewhere in the map, and `map_objects()` deliberately keeps
+only `entry` and `enemy`, so waypoints were invisible to every existing audit. The new tool resolves each leg
+and classifies it with `stranded_enemies.py`'s distinction - *blocked* (collision covers it) versus *outside*
+(legal, but not in the flood fill from the entries).
+
+**Its first run cried wolf, which is this month's recurring lesson.** It reported 16 routes as having dangling
+waypoint ids. They were fine: the grammar is not "a list of ids". From `EnemySprite.parseWaypoints()` and
+`MovementBehavior.resolve()`, in precedence order - `waitN` is a pause, `rA-B-C` picks ONE of those waypoints at
+random each lap, `wN` is also a pause, and only a bare integer is an id. Fixed before the report was written
+rather than after it was sent; findings dropped from 52 maps to 36.
+
+### Triage: 1348 routes, 5474 legs, 428 maps
+
+Split by whether the enemy is one the player is meant to walk up to - the same test that makes
+`stranded_enemies.py` useful:
+
+* **33 routes across 29 maps are the Blue Tower bug again** - the home is a legal, reachable player position, so
+  it is a ground fight, but the route leaves the playable area. Bears, Wraiths, Kobolds, a Clay Golem, a Hydra,
+  a Polar Bear.
+* **25 routes across 16 maps are by design** - the home is not a legal player position at all, so a swimmer or
+  flier lives there and its route belongs out there too. Jellyfish, Griffin, Crocodile, Raven, Magma Elemental.
+
+### The finding worth more than the fix: a capital W has been protecting the game
+
+22 objects in this plane and 29 more in `common/` author the property as **`Waypoints`**. `MapStage` reads
+`prop.get("waypoints")`, and libGDX's `MapProperties` is case-sensitive - so **51 enemies have never taken a
+single step of their authored patrol.** All of them are in story maps (`templeofchandra`, the six
+`temple_of_liliana` maps, `bandit_cave`, the `frostbitten_cavern` pair, the dig sites).
+
+The obvious fix is two lines: fall back to `prop.get("Waypoints")`. **Do not do it yet.** Those routes have never
+run, so they have never been tested, and the new audit says what waking them would do -
+`templeofchandra`'s Magma Elemental route alone has about 23 blocked-or-outside legs, walking it through walls
+and off the map from one end of its patrol to the other. Right now the typo is the only thing keeping 51
+untested routes dormant. Repair the routes first, then flip the case, then play the story maps. Flipping it
+first would turn one reported mage into fifty-one.
+
+NOT yet seen in a game: the user was playing while this was built, so the live folder still carries round 282.
+
 ## Round 282: an update has to be NEWER, not merely different (2026-09-21)
 
 Reported from the emulator within minutes of the 1.13 test APK landing, with screenshots: *"I launch
