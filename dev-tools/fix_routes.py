@@ -96,7 +96,12 @@ def main():
     # but a mistake. Matched by NAME on purpose: adding a creature here is a visible decision, not a
     # tag lookup that quietly changes scope when someone edits enemies.csv.
     ground_only = '--ground-blocked' in sys.argv
-    GROUND = {'Bear', 'Polar Bear', 'Tiger', 'Hydra', 'Clay Golem', 'Pyromancer'}
+    # 'Magma Elemental' added on the user's call ("Make Magma Elemental a walker too"). Its 8 blocked
+    # legs are all in templeofchandra, and they are the reason that map's dormant routes could not be
+    # cleared - which is what the capital-W flip is waiting on. Note 'Fire Giant' and 'Earth Elemental'
+    # are still OUT: same lava/rock argument, not covered by that instruction.
+    GROUND = {'Bear', 'Polar Bear', 'Tiger', 'Hydra', 'Clay Golem', 'Pyromancer',
+              'Magma Elemental'}
     maps = args or sorted(glob.glob(os.path.join(PLANE, '**', '*.tmx'), recursive=True))
     moved = too_far = left_blocked = written = 0
     for path in maps:
