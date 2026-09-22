@@ -18122,6 +18122,28 @@ Split by whether the enemy is one the player is meant to walk up to - the same t
 * **25 routes across 16 maps are by design** - the home is not a legal player position at all, so a swimmer or
   flier lives there and its route belongs out there too. Jellyfish, Griffin, Crocodile, Raven, Magma Elemental.
 
+### RETRACTED in round 286f - the capital-W landmine never existed
+
+The claim below is WRONG and is kept only so the mistake is legible. There is no enemy anywhere whose
+patrol is silently ignored.
+
+The round-283 grep was `name="Waypoints"` against the raw .tmx text. That matches two completely
+different things, and every single one of the 51 hits was the second:
+
+    <property   name="Waypoints" value="72,73"/>     would break - MapStage reads "waypoints"
+    <objectgroup id="6" name="Waypoints">            a TILED LAYER NAME - harmless, and normal
+
+Checked properly: `<property name="Waypoints"` occurs **0 times** in this plane and 0 times in
+`common/`. The 22 and 29 hits were all `<objectgroup ... name="Waypoints">`, i.e. the layer authors
+put their waypoint objects in - exactly what you would expect a layer to be called.
+
+`bandit_cave.tmx`, named below as one of the dormant maps, has five ordinary lowercase
+`<property name="waypoints">` and its enemies have always patrolled.
+
+Worst of all, `waypoint_routes_qa.py` was built in the SAME round with a CASE check for precisely this
+and reports 0. The tool was right; the grep was wrong; the grep won for three rounds because nobody
+asked it to prove itself. A hand grep is not evidence when a purpose-built checker disagrees with it.
+
 ### The finding worth more than the fix: a capital W has been protecting the game
 
 22 objects in this plane and 29 more in `common/` author the property as **`Waypoints`**. `MapStage` reads

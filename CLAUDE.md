@@ -141,7 +141,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      integer = id (`parseWaypoints` + `MovementBehavior.resolve`). Fixed before reporting; 52 maps -> 36.
      Triage of 1348 routes / 5474 legs: **33 routes / 29 maps are this same bug** (reachable home, route leaves
      the area - Bear, Wraith, Hydra, Clay Golem, Polar Bear), 25 routes / 16 maps are fliers/swimmers by design
-     (home not a legal player position). **THE BIG ONE: 22 objects here + 29 in `common/` say `Waypoints`, and
+     (home not a legal player position). **RETRACTED IN ROUND 286f - THIS WAS WRONG, see that round: the grep matched
+     `<objectgroup name="Waypoints">` (a Tiled LAYER name, harmless) and there are ZERO
+     `<property name="Waypoints">` anywhere; `waypoint_routes_qa.py`'s CASE check reported 0 the whole
+     time.** The false claim as written was: 22 objects here + 29 in `common/` say `Waypoints`, and
      `MapStage` reads `prop.get("waypoints")` case-sensitively - 51 enemies have NEVER taken a step of their
      patrol**, all in story maps (templeofchandra, the six temple_of_liliana maps, bandit_cave, frostbitten
      caverns, dig sites). **DO NOT fix the case yet.** Never running means never tested:
