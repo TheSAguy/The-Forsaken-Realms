@@ -166,7 +166,16 @@ def fit_into(frame, w, h):
 def main():
     apply_it = '--apply' in sys.argv
     backup = '--backup' in sys.argv
+    # Round 286d: which portraits to refit is the USER's pick from the ones this tool flags. That
+    # choice is aesthetic and cannot be automated - the first pass refitted all 54 and made most of
+    # them worse, trading a dramatic close-up for a small distant body. So the detector decides what
+    # is CAPABLE of being refitted; a person decides what SHOULD be.
+    only = None
+    for i, arg in enumerate(sys.argv):
+        if arg == '--only' and i + 1 < len(sys.argv):
+            only = {n.strip().lower() for n in sys.argv[i + 1].split(',') if n.strip()}
     bad = fixed = skipped = 0
+    asked = set(only) if only else set()
     for atlas in sorted(glob.glob(os.path.join(SPRITES, '*.atlas'))):
         png = atlas[:-6] + '.png'
         if not os.path.isfile(png):
@@ -193,6 +202,10 @@ def main():
         if not is_cut:
             continue
         bad += 1
+        if only is not None:
+            asked.discard(name.lower())
+            if name.lower() not in only:
+                continue
         print('  %-34s sim %.3f  frame %dx%d  avatar %dx%d  %s'
               % (name, sim, iw, ih, aw, ah, why))
         if not apply_it:
@@ -209,6 +222,11 @@ def main():
     print('\n%s: %d avatar(s) cut off, %d repaired, %d with no Idle frame (of %d atlases)'
           % ('APPLIED' if apply_it else 'AUDIT', bad, fixed, skipped,
              len(glob.glob(os.path.join(SPRITES, '*.atlas')))))
+    if asked:
+        # Named but never reached: either not flagged as cut off, or no such atlas. Reported rather
+        # than silently dropped - a typo in a 21-name list is otherwise invisible.
+        print('NOT TOUCHED (not flagged as cut off, or no such atlas): %s'
+              % ', '.join(sorted(asked)))
     return 0
 
 
