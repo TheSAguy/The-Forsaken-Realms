@@ -17771,6 +17771,24 @@ that dungeon loot. Give me the Discord blurb."* The agent play review passed (se
   cycle (the paced guards, the ledger, the shared boss avatar, the loot hold) are not listed - no player ever had them.
 - Contents: rounds 247-290 - everything since v1.12's tag.
 
+### Published (close-out)
+
+- **Tag `tfr-v1.13` @ `e2a3eb5b89c`** (annotated), pushed with `main:master` - origin/master had been at round 254
+  (`e8823b206a1`), a clean fast-forward of 133 commits. Remote `main` is still the stale round-159 branch from the
+  2026-09-09 mistake; left alone, as every release since.
+- **Published 2026-09-22 22:31:46 UTC, Latest:** `The-Forsaken-Realms-v1.13.zip` 265,549,025 B,
+  `forsaken-realms-1.13-signed-aligned.apk` 13,348,255 B, `assets.zip` 218,025,757 B - each compared against the
+  local file after upload; all three download URLs answer (206 to a one-byte range request).
+- **Desktop:** jar SHA-1 `c2dd47de312b` - the 15:16 build the agent play review ran. `--zip` package 15:28, 346 MB,
+  PACKAGE_OK; the zip holds 1.13 / 09.22 / engine 09.22.
+- **Android:** built from `C:\TFR-build` reset to the tag (keystore md5 `ab910316...` = the working repo's), `subst R:`,
+  2m31s. `aapt`: `com.thesaguy.forsakenrealms`, versionCode 11300, versionName 1.13, label "The Forsaken Realms";
+  `apksigner`: CN=The Forsaken Realms, SHA-256 `ee603925...`; assets.zip = `res/` with `adventure/` holding exactly
+  `common` + the plane, `build.txt` + `cardsfolder.zip` present; **build.txt pair matches** (2026-09-22 22:28:36).
+  Built in the clone, so the working repo needs no `clean compile` afterwards.
+- `C:\TFR\live` = v1.13 (the release package itself); the agent folder re-synced from it. The uploaded zip is still
+  at `C:\TFR\live\The-Forsaken-Realms-v1.13.zip` - the procedure says delete it after upload; left for the user.
+
 ## Round 290: the post-1.12 review's fixes, a guard icon in the fog, and two things only play could show (2026-09-22)
 
 User: *"Review all code since the 1.12 release. We are ready to release 1.13, so I want to make sure all is good."*

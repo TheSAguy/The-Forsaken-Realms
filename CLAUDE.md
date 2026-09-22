@@ -50,13 +50,15 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-22 (round 291; v1.13 "Heart of the Realm" release IN PROGRESS - rounds 247-290; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-22 (round 291; **v1.13 "Heart of the Realm" RELEASED** - tag `tfr-v1.13` @ `e2a3eb5b89c`, PC + Android, pushed; NOTHING is unreleased; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 290, 2026-09-22).** The user called the full v1.13 release (PC,
-  Android, push) in round 290's message, conditional on the agent play review passing - it did. The release itself
-  is round 291. **If this block does not say v1.13 is PUBLISHED, the release did not finish:** check
-  `gh release view tfr-v1.13 -R TheSAguy/The-Forsaken-Realms` and `git ls-remote origin refs/tags/tfr-v1.13`, then
-  resume the release recipe rather than starting over.
+- **NEXT SESSION starts here (updated round 291 close-out, 2026-09-22).** **v1.13 is PUBLISHED** (2026-09-22
+  22:31:46 UTC, Latest): `The-Forsaken-Realms-v1.13.zip` 265.5 MB, `forsaken-realms-1.13-signed-aligned.apk`
+  13.3 MB (versionCode 11300), `assets.zip` 218.0 MB, build.txt pair 2026-09-22 22:28:36. It carries rounds 247-290
+  on the 09.22 engine; the live folder and the agent folder ARE v1.13. Nothing is pending on the code; what comes
+  next is the user's play-test feedback on 1.13. Still open from before, the user's call: 296 chests have no guard
+  (round 286). Not yet seen in play: the ledger fix, the loot-hold fix (both round 290, logic only). The next
+  release's version is 1.14 / manifestVersionCode 11400.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.
