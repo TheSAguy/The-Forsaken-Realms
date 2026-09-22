@@ -283,7 +283,7 @@
     "weightedSpawnTiersEnabled": true,
     "functioningNeutralTownsEnabled": true,
     "modVersion": "1.13",
-    "modVersionDate": "09.21",
+    "modVersionDate": "09.22",
     "engineBuildVersion": "2.0.15-SNAPSHOT-09.22",
     "disableGeneticDeckOverrides": true,
     "caveChampionChance": 0.25,

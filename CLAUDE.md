@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-22 (round 290; the user CALLED the v1.13 release - rounds 247-290 go out as v1.13; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-22 (round 291; v1.13 "Heart of the Realm" release IN PROGRESS - rounds 247-290; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated round 290, 2026-09-22).** The user called the full v1.13 release (PC,
   Android, push) in round 290's message, conditional on the agent play review passing - it did. The release itself

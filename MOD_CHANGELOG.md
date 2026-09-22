@@ -17757,6 +17757,20 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 291: v1.13 "Heart of the Realm" - release stamps and notes (2026-09-22)
+
+User, in round 290's message: *"If all is okay, proceed with the Full release. PC, Android and Update online Repo.
+Keep the release notes brief. Highlight that your capitol is now in the center of the map and you need to work for
+that dungeon loot. Give me the Discord blurb."* The agent play review passed (see round 290), so this is the release.
+
+- Stamps: `modVersion` 1.13 and `tfr.version` 1.13 / `manifestVersionCode` 11300 were already set in round 281 for
+  the emulator test; `modVersionDate` 09.21 -> **09.22**; `engineBuildVersion` 09.22 since round 289.
+- `RELEASE_NOTES_v1.13.md`, brief as asked: Orazca and the loot guards lead, one short list each for new / fixed,
+  the Android install steps kept. **The name "Heart of the Realm" is mine** - the user did not give one this time;
+  rename with `gh release edit tfr-v1.13 --title` if they want another. Bugs introduced AND fixed inside this
+  cycle (the paced guards, the ledger, the shared boss avatar, the loot hold) are not listed - no player ever had them.
+- Contents: rounds 247-290 - everything since v1.12's tag.
+
 ## Round 290: the post-1.12 review's fixes, a guard icon in the fog, and two things only play could show (2026-09-22)
 
 User: *"Review all code since the 1.12 release. We are ready to release 1.13, so I want to make sure all is good."*
