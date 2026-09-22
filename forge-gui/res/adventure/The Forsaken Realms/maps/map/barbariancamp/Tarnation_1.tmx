@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="128">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="129">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -314,6 +314,12 @@ LAWMEN STAY OUT.&quot;,
   <object id="125" template="../../obj/stone.tx" x="129" y="402.333"/>
   <object id="126" template="../../obj/stone.tx" x="421" y="559.667"/>
    <object id="127" template="../../../../common/maps/obj/enemy.tx" x="32.6667" y="156.667">
+   <properties>
+    <property name="enemy" value="Mysterious Mage"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="128" template="../../../../common/maps/obj/enemy.tx" x="221.083" y="370.25">
    <properties>
     <property name="enemy" value="Mysterious Mage"/>
     <property name="threatRange" type="int" value="20"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="46" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="212">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="46" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="213">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -275,6 +275,12 @@
    <properties>
     <property name="enemy" value="Farmer"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="212" template="../../../../common/maps/obj/enemy.tx" x="493.503" y="120.175">
+   <properties>
+    <property name="enemy" value="Skeleton"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

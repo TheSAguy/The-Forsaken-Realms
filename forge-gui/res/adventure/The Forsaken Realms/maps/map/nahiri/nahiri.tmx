@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="111">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="112">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -130,6 +130,12 @@
   <object id="108" template="../../obj/stone.tx" x="175.25" y="72"/>
   <object id="109" template="../../obj/stone.tx" x="166" y="350"/>
    <object id="110" template="../../../../common/maps/obj/enemy.tx" x="160.166" y="54.6663">
+   <properties>
+    <property name="enemy" value="Yeti"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="111" template="../../../../common/maps/obj/enemy.tx" x="71.024" y="381.417">
    <properties>
     <property name="enemy" value="Yeti"/>
     <property name="threatRange" type="int" value="20"/>

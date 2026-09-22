@@ -416,9 +416,26 @@ public class World implements Disposable, SaveFileContent {
         arenaWinWeek.remove(poiId + ":L2");
     }
 
-    /** Round 135: weeks are day/7, so the lock lifts the moment the week number ticks over. */
+    /**
+     * The arena week. Round 287, user: *"Arena reset. Currently at 7, 14, 21. Let's change that to
+     * 8, 15, 22, etc. So start of the week."*
+     * <p>
+     * Round 135 used `day / 7`, which puts the boundary on days 7, 14, 21 - the END of a week that
+     * began on day 0. Counting the first week as days 1-7 instead moves it to 8, 15, 22, which is
+     * what a person means by "the start of the week".
+     * <p>
+     * floorDiv, not `/`: Java truncates toward zero, so a day 0 save would land on the same week
+     * number as day 1 and the very first reset would go missing. Only the ARENA reads this - the
+     * other weekly clocks (shop restock in PointOfInterestChanges, payday in BalanceSheet, the
+     * ResourceLedger week) each compute `day / 7` themselves and are deliberately NOT changed here.
+     * <p>
+     * Existing saves: `arenaWinWeek` stores the week a win happened. A win recorded on a day that
+     * changes week number under the new boundary (day 7, 14, 21...) compares unequal to the current
+     * week once, so that arena unlocks a day early. One-off, in the player's favour, not worth
+     * migrating a save field for.
+     */
     public int getCurrentWeek() {
-        return getCurrentDay() / 7;
+        return Math.floorDiv(getCurrentDay() - 1, 7);
     }
 
     public java.util.Map<String, Integer> getEnemyPermanentKillCount() {

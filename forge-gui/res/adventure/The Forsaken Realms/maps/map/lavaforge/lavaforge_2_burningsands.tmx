@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="99">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="100">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -307,6 +307,12 @@
    </properties>
   </object>
   <object id="98" template="../../../../common/maps/obj/enemy.tx" x="402" y="238.667">
+   <properties>
+    <property name="enemy" value="Amonkhet Minotaur Warrior"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="99" template="../../../../common/maps/obj/enemy.tx" x="384.667" y="93">
    <properties>
     <property name="enemy" value="Amonkhet Minotaur Warrior"/>
     <property name="threatRange" type="int" value="20"/>

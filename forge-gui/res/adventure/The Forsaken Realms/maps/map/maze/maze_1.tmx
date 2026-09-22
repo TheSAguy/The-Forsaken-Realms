@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="176">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="178">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -295,6 +295,18 @@
    </properties>
   </object>
   <object id="175" template="../../../../common/maps/obj/enemy.tx" x="615.21" y="213.512">
+   <properties>
+    <property name="enemy" value="Minotaur"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="176" template="../../../../common/maps/obj/enemy.tx" x="204.343" y="303.161">
+   <properties>
+    <property name="enemy" value="Minotaur"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="177" template="../../../../common/maps/obj/enemy.tx" x="232.738" y="300.795">
    <properties>
     <property name="enemy" value="Minotaur"/>
     <property name="threatRange" type="int" value="20"/>

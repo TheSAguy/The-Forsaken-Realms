@@ -1190,10 +1190,13 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return poiId + (challenge ? ":L2" : ":L1");
     }
 
-    /** Round 226: whole days until the weekly arena allowance resets. Weeks are day/7, so the
-     *  allowance returns when the week number ticks over - which is 7 - (day % 7) days away. */
+    /** Round 226, retimed in round 287: whole days until the weekly arena allowance resets. The
+     *  week now runs days 1-7, 8-14, ... (World.getCurrentWeek), so the allowance returns on days
+     *  8, 15, 22 and the countdown is 7 - ((day - 1) mod 7). floorMod for the same day-0 reason the
+     *  week itself uses floorDiv. This MUST track getCurrentWeek(): if the two disagree the arena
+     *  tells the player a number of days that is not when it actually reopens. */
     public static int daysUntilWeeklyReset(forge.adventure.world.World world) {
-        return 7 - (world.getCurrentDay() % 7);
+        return 7 - Math.floorMod(world.getCurrentDay() - 1, 7);
     }
 
     /** Round 226: 0 when this venue is open to the player right now, otherwise the days until it
@@ -1243,8 +1246,8 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         return wonOn != null && wonOn == world.getCurrentWeek();
     }
 
-    /** Round 216: whole days until this arena's weekly win allowance resets. Weeks are day/7, so
-     *  the allowance returns when the week number ticks over - which is 7 - (day % 7) days away. */
+    /** Round 216: whole days until this arena's weekly win allowance resets. Delegates, so the
+     *  round-287 retiming (weeks run 1-7, resets on 8/15/22) is stated in exactly one place. */
     private int weeklyArenaDaysLeft() {
         return daysUntilWeeklyReset(WorldSave.getCurrentSave().getWorld());
     }

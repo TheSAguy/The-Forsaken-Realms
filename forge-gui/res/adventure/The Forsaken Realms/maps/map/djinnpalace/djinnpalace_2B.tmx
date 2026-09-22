@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="82">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="84">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -107,5 +107,17 @@
   </object>
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="176" y="128"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="208" y="128"/>
- </objectgroup>
+   <object id="82" template="../../../../common/maps/obj/enemy.tx" x="203.52" y="118.063">
+   <properties>
+    <property name="enemy" value="Mighty Djinn"/>
+    <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="83" template="../../../../common/maps/obj/enemy.tx" x="190.037" y="135.253">
+   <properties>
+    <property name="enemy" value="Skeleton"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

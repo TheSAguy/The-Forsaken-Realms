@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="98">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="100">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -164,5 +164,17 @@
   <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="192" y="128"/>
   <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="176" y="144"/>
   <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="192" y="144"/>
- </objectgroup>
+   <object id="98" template="../../../../common/maps/obj/enemy.tx" x="162.35" y="127.684">
+   <properties>
+    <property name="enemy" value="Skeleton"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="99" template="../../../../common/maps/obj/enemy.tx" x="162" y="144.273">
+   <properties>
+    <property name="enemy" value="Skeleton"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

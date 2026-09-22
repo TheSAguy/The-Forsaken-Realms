@@ -63,6 +63,14 @@ def map_roster(tmx, want_rank=1):
             ranked[o["name"]] += 1
     if ranked:
         return ranked.most_common(1)[0][0]
+    # Round 287: the any-rank fallback is right for BOOSTERS (want Adept+, settle for whatever the
+    # room has - still themed, and upgrade_booster_guards is the backstop) but backwards for CHESTS.
+    # Asked for an Apprentice in a map whose roster has none, it returned the map's commonest enemy of
+    # ANY rank - which put a MYTHIC Phoenix on templeofchandra's chests and an Adept Demon on
+    # unhallowed_abbey_2F's, against an explicit "make them Apprentice level". Settling UP is worse
+    # than being off-theme, so the caller's --fallback (Skeleton, Common) wins instead.
+    if not want_rank:
+        return None
     return any_rank.most_common(1)[0][0] if any_rank else None
 
 
@@ -78,10 +86,20 @@ def template_for(tmx):
     return TEMPLATE_BY_DEPTH
 
 
-def plan(tmx, radius, fallback, loot="booster", want_rank=1):
-    """[(loot, x, y, enemy name)] for each unguarded piece of loot that can be given a guard."""
-    _g, _u, rows = bg.audit(tmx, radius, loot=loot)
-    need = [r for r in rows if not r["ok"]]
+def plan(tmx, radius, fallback, loot="booster", want_rank=1, need_override=None):
+    """[(loot, x, y, enemy name)] for each unguarded piece of loot that can be given a guard.
+
+    `need_override` (round 287) supplies the work list directly, as [{...loot object...}]. Without it
+    this derives the list from bg.audit(), which is a PROXIMITY test - "is any non-dialog enemy within
+    3 tiles" - and one enemy answers yes for every chest in the room. add_loot_guards.py replays the
+    game's actual MATCHING instead (one enemy per piece) and passes the result in, which is the only
+    way loot that has a neighbour but no dedicated guard ever reaches the placement code below.
+    """
+    if need_override is not None:
+        need = [{"booster": p, "ok": False} for p in need_override]
+    else:
+        _g, _u, rows = bg.audit(tmx, radius, loot=loot)
+        need = [r for r in rows if not r["ok"]]
     if not need:
         return [], []
     free, reach, wpx, hpx, tw, th, _o = q.reachable_from_entries(tmx)
