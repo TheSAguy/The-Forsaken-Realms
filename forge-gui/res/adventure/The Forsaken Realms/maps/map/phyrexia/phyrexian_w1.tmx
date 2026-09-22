@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="86">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="87">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -49,12 +49,18 @@
     <property name="enemy" value="Orthodoxy Angel"/>
    </properties>
   </object>
+  <object id="86" template="../../../../common/maps/obj/enemy.tx" x="304" y="48">
+   <properties>
+    <property name="threatRange" type="int" value="20"/>
+    <property name="enemy" value="Orthodoxy Angel"/>
+   </properties>
+  </object>
   <object id="74" template="../../../../common/maps/obj/enemy.tx" x="239.167" y="176">
    <properties>
     <property name="threatRange" type="int" value="20"/>
     <property name="enemy" value="Orthodoxy Duelist"/>
     <property name="spawn.Easy" type="bool" value="true"/>
-    <property name="waypoints" value="81,82"/>
+    <property name="waypoints" value="84,85"/>
    </properties>
   </object>
   <object id="75" template="../../../../common/maps/obj/enemy.tx" x="175" y="128">

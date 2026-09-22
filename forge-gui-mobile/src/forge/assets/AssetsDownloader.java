@@ -1,5 +1,6 @@
 package forge.assets;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -67,6 +68,82 @@ public class AssetsDownloader {
                 return rp > lp;
         }
         return false; // identical
+    }
+
+    /**
+     * Round 284: an assets.zip the tester placed on the device by hand, used INSTEAD of downloading.
+     * <p>
+     * User: *"Can you make the test version point to C:\\Users\\User\\Pictures\\Screenshots\\Android to get
+     * the assets. I think it's trying to download it from the Repo and the Repo online is 1.12."* The
+     * diagnosis is exactly right - an unreleased build asks for
+     * `releases/download/tfr-v<version>/assets.zip`, which 404s until that release exists - but the
+     * destination cannot be a Windows path: this code runs inside the emulator, where
+     * `C:\Users\...` does not exist. The equivalent that does work is a file placed in the emulator's
+     * own storage, which LDPlayer's shared folder and drag-and-drop both reach.
+     * <p>
+     * Several locations are tried because which one a given emulator exposes to the host varies, and
+     * EVERY path checked is logged - so if it still is not found, the log says where to put it rather
+     * than leaving anyone guessing.
+     * <p>
+     * **Safe to ship.** A zip is only accepted when its `res/build.txt` matches the timestamp baked
+     * into this APK, which is the same matched-pair rule `AssetsDownloader` already enforces after a
+     * download: the two artifacts match only when they came from one `mvn` run. A stale or unrelated
+     * assets.zip left in Downloads is therefore ignored rather than extracted over good assets.
+     *
+     * @param expectedBuild this APK's own build.txt contents, or null if it has none
+     * @return an absolute path to a usable zip, or null to download as usual
+     */
+    private static String localAssetsZip(String expectedBuild) {
+        String[] candidates = {
+                ASSETS_DIR + "assets.zip",
+                "/sdcard/Download/assets.zip",
+                "/sdcard/Pictures/assets.zip",
+                "/sdcard/Documents/assets.zip",
+                "/sdcard/Screenshots/assets.zip",
+                "/sdcard/assets.zip",
+                "/storage/emulated/0/Download/assets.zip",
+        };
+        for (String path : candidates) {
+            File f = new File(path);
+            if (!f.isFile()) {
+                System.out.println("[TFR-Assets] no local assets.zip at " + path);
+                continue;
+            }
+            String zipBuild = null;
+            try (java.util.zip.ZipFile zf = new java.util.zip.ZipFile(f)) {
+                java.util.zip.ZipEntry e = zf.getEntry("res/build.txt");
+                if (e != null) {
+                    try (java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(
+                            zf.getInputStream(e), java.nio.charset.StandardCharsets.UTF_8))) {
+                        zipBuild = r.readLine();
+                    }
+                }
+            } catch (Exception ex) {
+                System.out.println("[TFR-Assets] local assets.zip at " + path + " could not be read ("
+                        + ex + ") - ignoring it");
+                continue;
+            }
+            if (zipBuild == null) {
+                System.out.println("[TFR-Assets] local assets.zip at " + path
+                        + " has no res/build.txt, so it is not one of ours - ignoring it");
+                continue;
+            }
+            if (expectedBuild == null || expectedBuild.trim().isEmpty()) {
+                System.out.println("[TFR-Assets] this APK has no build.txt to compare against, so the local "
+                        + "assets.zip at " + path + " cannot be verified as its pair - ignoring it");
+                continue;
+            }
+            if (!expectedBuild.trim().equals(zipBuild.trim())) {
+                System.out.println("[TFR-Assets] local assets.zip at " + path + " is a DIFFERENT build ("
+                        + zipBuild.trim() + ", this APK is " + expectedBuild.trim() + ") - ignoring it rather "
+                        + "than extracting a mismatched pair");
+                continue;
+            }
+            System.out.println("[TFR-Assets] using the local assets.zip at " + path + " (build "
+                    + zipBuild.trim() + " matches this APK) - no download needed");
+            return f.getAbsolutePath();
+        }
+        return null;
     }
 
     public static void checkForUpdates(boolean exited, Runnable runnable) {
@@ -298,6 +375,11 @@ public class AssetsDownloader {
         } else {
             message += "so it's highly recommended that you connect to wifi first.";
         }
+        // Round 284: a hand-placed, build-matched assets.zip makes the whole download moot - prompt
+        // included. Computed here rather than at the extract site so the tester is not asked to approve
+        // a download that is not going to happen.
+        final String localZip = localAssetsZip(buildTxtFileHandle.exists() ? buildTxtFileHandle.readString() : null);
+
         final List<String> options;
         message += "\n\n";
         if (canIgnoreDownload) {
@@ -308,20 +390,22 @@ public class AssetsDownloader {
             options = downloadExit;
         }
 
-        switch (SOptionPane.showOptionDialog(message + build, "", null, options)) {
-            case 1:
-                if (!canIgnoreDownload) {
+        if (localZip == null) {
+            switch (SOptionPane.showOptionDialog(message + build, "", null, options)) {
+                case 1:
+                    if (!canIgnoreDownload) {
+                        Forge.isMobileAdventureMode = Forge.advStartup;
+                        Forge.exitAnimation(false); //exit if can't ignore download
+                        return;
+                    } else {
+                        run(runnable);
+                        return;
+                    }
+                case 2:
                     Forge.isMobileAdventureMode = Forge.advStartup;
-                    Forge.exitAnimation(false); //exit if can't ignore download
+                    Forge.exitAnimation(false);
                     return;
-                } else {
-                    run(runnable);
-                    return;
-                }
-            case 2:
-                Forge.isMobileAdventureMode = Forge.advStartup;
-                Forge.exitAnimation(false);
-                return;
+            }
         }
 
         //allow deletion on Android 10 or if using app-specific directory
@@ -330,8 +414,27 @@ public class AssetsDownloader {
         // APK's version ("tfr-v" + versionName) - the app and its assets always update together.
         String assetURL = isSnapshots ? snapsURL + "assets.zip"
                 : GITHUB_FORGE_URL + "releases/download/tfr-v" + versionString + "/assets.zip";
-        new GuiDownloadZipService("", "resource files", assetURL,
-                ASSETS_DIR, RES_DIR, Forge.getSplashScreen().getProgressBar(), allowDeletion).downloadAndUnzip();
+        GuiDownloadZipService assets = new GuiDownloadZipService("", "resource files", assetURL,
+                ASSETS_DIR, RES_DIR, Forge.getSplashScreen().getProgressBar(), allowDeletion);
+        if (localZip == null) {
+            assets.downloadAndUnzip();
+        } else {
+            // extract() DELETES the zip it is handed (it is normally a temp download), so the tester's
+            // own file is copied first - otherwise a 210MB file has to be re-copied after every run,
+            // and after any failure.
+            String scratch = ASSETS_DIR + "local_assets.zip";
+            try {
+                java.nio.file.Files.copy(new File(localZip).toPath(), new File(scratch).toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                System.out.println("[TFR-Assets] could not stage " + localZip + " (" + e
+                        + ") - falling back to the download");
+                assets.downloadAndUnzip();
+                scratch = null;
+            }
+            if (scratch != null)
+                assets.extract(scratch);
+        }
 
         if (allowDeletion)
             FSkinFont.deleteCachedFiles(); //delete cached font files in case any skin's .ttf file changed

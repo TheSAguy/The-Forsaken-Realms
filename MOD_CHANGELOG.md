@@ -17859,6 +17859,68 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 284: a guard for the Basilica, and an APK that can be handed its own assets (2026-09-21)
+
+### The Basilica's two chests
+
+User: *"Let's add a guard to the Orthodoxy Basilica protecting those two chests on the top right."*
+
+`phyrexian_w1.tmx`. `treasure 67` at tile(19,2) and `treasure 78` at tile(19,4) had no enemy within five
+tiles, so `assignLootGuards()` registered neither and nothing watched that corner. The new guard sits at
+**tile(19,3) - one tile from EACH chest**, inside the 3-tile registration reach for both (14 px and 28 px
+against a 48 px limit), and verified reachable with the audit's own standable test.
+
+**Orthodoxy Angel**, because `enemies.csv` has exactly two white Phyrexian enemies and the other is already
+used twice in this map; both are Uncommon = Adept, which satisfies round 279's "no Apprentice guards". It is
+stationary - no waypoints - with `threatRange` 20, copying the Angel that already guards this map's booster.
+That is deliberately the shape the user asked for in round 279: a small reaction radius on something that
+cannot wander off before the player arrives.
+
+Checked rather than assumed: `enemy.tx` supplies `spawn.Easy/Normal/Hard/Insane` = true, so omitting them is
+safe. It matters - `canSpawn()` unboxes all four `Boolean`s, and the user plays on Hard.
+
+### The same route bug, in the map they asked about
+
+Enemy 74's patrol was `81,82` - tiles (19,1) and (18,1), the sealed strip directly above these chests. So the
+Duelist walked out of the map in the very corner this round is about. Meanwhile waypoints **84** at tile(20,4)
+and **85** at tile(19,5) sit correctly inside the chest corner and were referenced by nothing at all, which
+reads like a correction someone made and never wired up. Enemy 74 now uses them: the intended patrol survives
+and the excursion is gone. Round 283's audit reports the map clean.
+
+Worth noting what this says about the round-279 design: waypoints 81-85 clustered by the chests mean the
+author *did* intend a guard here. It never worked, for the reason the user described for boosters - the map
+puts a patroller near the loot and by the time the player arrives it has wandered off. A stationary guard is
+the fix, not a better route.
+
+### An APK that can be handed its own assets
+
+User: *"Can you make the test version point to C:\Users\User\Pictures\Screenshots\Android to get the
+assets. I think it's trying to download it from the Repo and the Repo online is 1.12."*
+
+The diagnosis is exactly right and the destination is impossible, which is worth separating. Right: an
+unreleased build asks for `releases/download/tfr-v1.13/assets.zip` and 404s, because the newest published
+release really is v1.12. Impossible: that code runs **inside the emulator**, where `C:\Users\...` does not
+exist - an Android app cannot read a Windows path. Round 282 fixed the APK *self-update* prompt; this is the
+separate *assets* download, and no amount of fixing the updater addresses it.
+
+So `AssetsDownloader` now prefers a local `assets.zip` over downloading one. It searches the app's own asset
+dir, `/sdcard/Download`, `/sdcard/Pictures`, `/sdcard/Documents`, `/sdcard/Screenshots` and `/sdcard` itself,
+**logging every path it checks** - so a miss tells the tester where to put the file instead of leaving them
+guessing, which is the whole reason the request arrived twice.
+
+Two decisions keep this shippable rather than a debug hack:
+
+* **A zip is accepted only when its `res/build.txt` matches the timestamp baked into the APK.** That is the
+  matched-pair rule this file already enforces after a download - the two artifacts agree only when they came
+  from one `mvn` run. A stale assets.zip sitting in Downloads is ignored, with a line saying so, instead of
+  being extracted over good assets.
+* **The tester's file is copied before extraction**, because `GuiDownloadZipService.extract()` deletes the zip
+  it is handed (normally a temp download). Without the copy, a 210 MB file would have to be re-copied after
+  every run and after every failure.
+
+When a usable zip is found the download prompt is skipped entirely - being asked to approve a download that is
+not going to happen is worse than not being asked.
+
 ## Round 283: nobody had ever validated a patrol ROUTE (2026-09-21)
 
 User, with a screenshot: *"The blue tower top mage still leaves the area and is too high, needs it's route

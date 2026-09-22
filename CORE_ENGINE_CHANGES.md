@@ -1840,6 +1840,15 @@ from the plane's `config tables/settings.json`).
   `%APPDATA%\ForgottenRealms` — existing test saves under `%APPDATA%\Forge\adventure\The
   Forsaken Realms` must be copied over once (the old 2.0.14 install at `E:\GAMES\FORGE` is
   unaffected, its jars predate this change).
+- **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** — round 284 added `localAssetsZip()` and
+  routed the asset extraction through it: a hand-placed `assets.zip` found on the device is extracted instead
+  of downloading, which is the only way to test a build whose GitHub release does not exist yet (the URL is
+  built from the APK's own versionName, so an unreleased version always 404s). Accepted ONLY when the zip's
+  `res/build.txt` equals the APK's, which is this file's existing matched-pair rule, so a stale zip in
+  Downloads cannot be extracted over good assets; the file is copied before `extract()`, which deletes the zip
+  it is handed. The download prompt is wrapped in `if (localZip == null)`. Upstream conflict note: the wrap and
+  the `downloadAndUnzip()` call site are the two places a merge will touch — keep the prompt skipped and keep
+  the copy, or testers lose their 210 MB file on the first run.
 - **`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`** — round 282 added `isRemoteNewer()` and
   routed BOTH `verifyUpdatable` assignments through it, replacing stock's
   `!versionString.equals(version)`. Stock asks whether the installed version DIFFERS from the newest
