@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="157">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="45" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="158">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -189,5 +189,11 @@
   <object id="154" template="../../../../common/maps/obj/waypoint.tx" x="496" y="224"/>
   <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="128" y="144"/>
   <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="160" y="144"/>
- </objectgroup>
+   <object id="157" template="../../../../common/maps/obj/enemy.tx" x="499.922" y="237.91">
+   <properties>
+    <property name="enemy" value="Wild Rat"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

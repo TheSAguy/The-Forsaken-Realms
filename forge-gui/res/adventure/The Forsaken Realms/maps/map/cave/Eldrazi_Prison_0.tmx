@@ -139,5 +139,11 @@ You are confident that this portal is the one you've been looking for throughout
 </property>
    </properties>
   </object>
- </objectgroup>
+   <object id="95" template="../../../../common/maps/obj/enemy.tx" x="958.5" y="294.5">
+   <properties>
+    <property name="enemy" value="Skeleton"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="13">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="14">
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx"/>
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx"/>
  <tileset firstgid="11905" source="../../../../common/maps/tileset/dungeon.tsx"/>
@@ -158,5 +158,11 @@
   <object id="10" template="../../obj/stone.tx" x="272" y="208"/>
   <object id="11" template="../../../../common/maps/obj/waypoint.tx" x="416" y="128"/>
   <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="400" y="144"/>
- </objectgroup>
+   <object id="13" template="../../../../common/maps/obj/enemy.tx" x="400" y="144">
+   <properties>
+    <property name="enemy" value="Busaw"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

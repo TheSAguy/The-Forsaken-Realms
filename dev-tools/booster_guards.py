@@ -25,16 +25,21 @@ sys.path.insert(0, HERE)
 import pixel_collision_qa as q
 
 
-def objects_of(tmx):
-    """[{kind, id, x, y, name, has_dialog}] for boosters and enemies, x/y exactly as the .tmx stores them."""
+def objects_of(tmx, loot="booster"):
+    """[{kind, id, x, y, name, has_dialog}] for the loot kind and enemies, x/y as the .tmx stores them.
+
+    Round 286b generalised `loot` from the hardcoded "booster" so the same audit answers the user's
+    *"I want Boosters and Chests guarded"* - chests are `treasure.tx`. The returned kind is always
+    "loot", so callers do not branch on which was asked for.
+    """
     root = ET.parse(tmx).getroot()
     base = os.path.dirname(os.path.abspath(tmx))
     out = []
     for o in root.findall(".//object"):
         tpl = os.path.basename(o.get("template") or "")
         kind = None
-        if tpl.startswith("booster"):
-            kind = "booster"
+        if tpl.startswith(loot):
+            kind = "loot"
         elif tpl.startswith("enemy"):
             kind = "enemy"
         if kind is None:
@@ -50,10 +55,10 @@ def objects_of(tmx):
     return out
 
 
-def audit(tmx, radius, verbose=False):
+def audit(tmx, radius, verbose=False, loot="booster"):
     """(guarded, unguarded, rows) for one map."""
-    objs = objects_of(tmx)
-    boosters = [o for o in objs if o["kind"] == "booster"]
+    objs = objects_of(tmx, loot)
+    boosters = [o for o in objs if o["kind"] == "loot"]
     if not boosters:
         return 0, 0, []
     enemies = [o for o in objs if o["kind"] == "enemy"]

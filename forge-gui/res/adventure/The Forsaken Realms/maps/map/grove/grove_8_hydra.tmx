@@ -89,7 +89,7 @@
    </properties>
   </object>
   <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="650.485" y="448.365"/>
-  <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="236.985" y="289.365"/>
+  <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="252.985" y="289.365"/>
   <object id="105" template="../../../../common/maps/obj/enemy.tx" x="222.162" y="243.01">
    <properties>
     <property name="effect">{

@@ -44,5 +44,11 @@
   <object id="68" template="../../../../../common/maps/obj/treasure.tx" x="207" y="252.25"/>
   <object id="69" template="../../../../../common/maps/obj/gold.tx" x="193" y="250.75"/>
   <object id="70" template="../../../obj/stone.tx" x="173.825" y="155.423"/>
- </objectgroup>
+   <object id="71" template="../../../../../common/maps/obj/enemy.tx" x="191" y="252.25">
+   <properties>
+    <property name="enemy" value="Master Blue Wizard"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

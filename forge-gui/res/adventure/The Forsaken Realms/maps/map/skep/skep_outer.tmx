@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="100" height="86" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="281">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="100" height="86" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="285">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -1372,6 +1372,30 @@
    <properties>
     <property name="enemy" value="Sliver_Black"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="281" template="../../../../common/maps/obj/enemy.tx" x="751.667" y="492.667">
+   <properties>
+    <property name="enemy" value="Archer"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="282" template="../../../../common/maps/obj/enemy.tx" x="1406.33" y="1018.33">
+   <properties>
+    <property name="enemy" value="Archer"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="283" template="../../../../common/maps/obj/enemy.tx" x="1065" y="943.667">
+   <properties>
+    <property name="enemy" value="Archer"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="284" template="../../../../common/maps/obj/enemy.tx" x="150.667" y="668.667">
+   <properties>
+    <property name="enemy" value="Archer"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

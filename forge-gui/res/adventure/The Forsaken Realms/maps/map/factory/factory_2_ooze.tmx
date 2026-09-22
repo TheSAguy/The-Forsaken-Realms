@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="94">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="95">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -130,7 +130,7 @@
   <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="25.5" y="180.5"/>
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="29.5" y="47"/>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="111.5" y="45"/>
-  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="136" y="128"/>
+  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="120" y="128"/>
   <object id="90" template="../../obj/stone.tx" x="28.1913" y="85.8144"/>
   <object id="91" template="../../obj/wood.tx" x="40.5247" y="195.399">
    <properties>
@@ -145,5 +145,11 @@
   </object>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="208" y="112"/>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="208" y="128"/>
- </objectgroup>
+   <object id="94" template="../../../../common/maps/obj/enemy.tx" x="194" y="130">
+   <properties>
+    <property name="enemy" value="Golem"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

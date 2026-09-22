@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="187">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="194">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -257,5 +257,47 @@
   <object id="184" template="../../../../common/maps/obj/waypoint.tx" x="2128" y="3136"/>
   <object id="185" template="../../../../common/maps/obj/waypoint.tx" x="2208" y="3104"/>
   <object id="186" template="../../../../common/maps/obj/waypoint.tx" x="2192" y="3104"/>
- </objectgroup>
+   <object id="187" template="../../../../common/maps/obj/enemy.tx" x="729.333" y="676.333">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="188" template="../../../../common/maps/obj/enemy.tx" x="168.5" y="1597.5">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="189" template="../../../../common/maps/obj/enemy.tx" x="24.6667" y="1931">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="190" template="../../../../common/maps/obj/enemy.tx" x="473.667" y="2988.33">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="191" template="../../../../common/maps/obj/enemy.tx" x="1439.5" y="1356.5">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="192" template="../../../../common/maps/obj/enemy.tx" x="3074.67" y="1362.33">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="193" template="../../../../common/maps/obj/enemy.tx" x="2128.5" y="3149">
+   <properties>
+    <property name="enemy" value="Harpy"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

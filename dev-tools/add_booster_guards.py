@@ -39,7 +39,7 @@ TEMPLATE_BY_DEPTH = "../" * 4 + "common/maps/obj/enemy.tx"
 FALLBACK_ENEMY = "Skeleton"
 
 
-def map_roster(tmx):
+def map_roster(tmx, want_rank=1):
     """The most plausible guard name for this map: its commonest non-dialog enemy of Adept rank or better.
 
     Round 279, user: *"make booster guards minimum level be Adept, so no Apprentices."* The first cut took the
@@ -55,7 +55,11 @@ def map_roster(tmx):
         if o["kind"] != "enemy" or o["has_dialog"] or not o["name"]:
             continue
         any_rank[o["name"]] += 1
-        if enemies.get(o["name"], {}).get("rank", 0) >= 1:
+        rank = enemies.get(o["name"], {}).get("rank", 0)
+        # want_rank 1 = Adept or better (boosters, round 279). want_rank 0 = Apprentice EXACTLY, which
+        # is round 286b's chest rule: the user asked for chests to be guarded too but deliberately
+        # weaker than boosters - "All, but make them Apprentice level."
+        if (rank >= 1) if want_rank else (rank == 0):
             ranked[o["name"]] += 1
     if ranked:
         return ranked.most_common(1)[0][0]
@@ -74,9 +78,9 @@ def template_for(tmx):
     return TEMPLATE_BY_DEPTH
 
 
-def plan(tmx, radius, fallback):
-    """[(booster, x, y, enemy name)] for each unguarded booster that can be given a guard."""
-    _g, _u, rows = bg.audit(tmx, radius)
+def plan(tmx, radius, fallback, loot="booster", want_rank=1):
+    """[(loot, x, y, enemy name)] for each unguarded piece of loot that can be given a guard."""
+    _g, _u, rows = bg.audit(tmx, radius, loot=loot)
     need = [r for r in rows if not r["ok"]]
     if not need:
         return [], []
@@ -84,7 +88,7 @@ def plan(tmx, radius, fallback):
     if reach is None:
         return [], [(r["booster"], "no entry object to flood-fill from") for r in need]
     taken = {(int(o["x"] // tw), int(o["y"] // th)) for o in bg.objects_of(tmx)}
-    name = map_roster(tmx) or fallback
+    name = map_roster(tmx, want_rank) or fallback
     def standable_here(cx, cy):
         """The guard's OWN tile must hold a player position reachable from an entry.
 
@@ -167,12 +171,16 @@ def main():
     ap.add_argument("--radius", type=int, default=3)
     ap.add_argument("--threat", type=int, default=30)
     ap.add_argument("--fallback", default=FALLBACK_ENEMY)
+    ap.add_argument("--loot", default="booster", choices=["booster", "treasure"],
+                    help="which loot template to guard (treasure = chests)")
+    ap.add_argument("--rank", type=int, default=1,
+                    help="1 = pick an Adept+ guard (boosters), 0 = pick an Apprentice (chests)")
     args = ap.parse_args()
     targets = args.maps or sorted(glob.glob(os.path.join(q.DEFAULT_ROOT, "**", "*.tmx"), recursive=True))
     total = skipped = 0
     for tmx in targets:
         try:
-            made, failed = plan(tmx, args.radius, args.fallback)
+            made, failed = plan(tmx, args.radius, args.fallback, args.loot, args.rank)
         except Exception as ex:
             print("%-44s ERROR %r" % (os.path.basename(tmx), ex))
             continue

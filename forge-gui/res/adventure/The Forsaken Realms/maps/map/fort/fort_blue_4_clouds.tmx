@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="71">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="72">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -114,5 +114,11 @@
   <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="48" y="64"/>
   <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="48" y="416"/>
   <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="80" y="416"/>
- </objectgroup>
+   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="62.75" y="65">
+   <properties>
+    <property name="enemy" value="Cloud Guardian"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

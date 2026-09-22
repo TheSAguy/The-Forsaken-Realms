@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="95">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="96">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -115,5 +115,11 @@ Your manasight stone blazes with power, near-blindingly bright.&quot;,
   </object>
   <object id="93" template="../../obj/stone.tx" x="220.47" y="29.2022"/>
   <object id="94" template="../../obj/stone.tx" x="198.634" y="27.3826"/>
- </objectgroup>
+   <object id="95" template="../../../../common/maps/obj/enemy.tx" x="352.101" y="76.1694">
+   <properties>
+    <property name="enemy" value="Nephilim Epochal"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

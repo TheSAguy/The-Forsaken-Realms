@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="82">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="83">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -123,5 +123,11 @@
   <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="256" y="80"/>
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="192" y="80"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="224" y="80"/>
- </objectgroup>
+   <object id="82" template="../../../../common/maps/obj/enemy.tx" x="270.638" y="78.836">
+   <properties>
+    <property name="enemy" value="Copper Host Infector"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

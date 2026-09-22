@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="34" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="74">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="34" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="75">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -77,5 +77,11 @@
     <property name="threatRange" type="int" value="100"/>
    </properties>
   </object>
- </objectgroup>
+   <object id="74" template="../../../../common/maps/obj/enemy.tx" x="246.912" y="290.514">
+   <properties>
+    <property name="enemy" value="Ulamog"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

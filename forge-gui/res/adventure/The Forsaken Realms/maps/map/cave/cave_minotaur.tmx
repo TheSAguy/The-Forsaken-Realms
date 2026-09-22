@@ -139,5 +139,11 @@
   <object id="89" template="../../obj/stone.tx" x="351.922" y="74.562"/>
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="64" y="208"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="80" y="208"/>
- </objectgroup>
+   <object id="93" template="../../../../common/maps/obj/enemy.tx" x="343.333" y="170.667">
+   <properties>
+    <property name="enemy" value="Minotaur"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+</objectgroup>
 </map>

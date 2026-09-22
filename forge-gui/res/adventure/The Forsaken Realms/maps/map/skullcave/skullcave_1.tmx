@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="88">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="89">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -128,6 +128,12 @@
    <properties>
     <property name="enemy" value="Cosmic Horror"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="88" template="../../../../common/maps/obj/enemy.tx" x="385.172" y="59.4556">
+   <properties>
+    <property name="enemy" value="Devil"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

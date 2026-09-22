@@ -89,6 +89,14 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
     apply_it = '--apply' in sys.argv
     include_blocked = '--include-blocked' in sys.argv
+    # Round 286b, user: "Proceed with your recommendation" - also move the BLOCKED legs, but only for
+    # plainly terrestrial creatures. Collision under a Magma Elemental or Fire Giant reads as lava,
+    # under an Earth Elemental as rock, under a Bat / Drake / Dimir Faerie as air, under a Crocodile or
+    # Jellyfish as water - all plausibly authored. Collision under a Bear or a Tiger reads as nothing
+    # but a mistake. Matched by NAME on purpose: adding a creature here is a visible decision, not a
+    # tag lookup that quietly changes scope when someone edits enemies.csv.
+    ground_only = '--ground-blocked' in sys.argv
+    GROUND = {'Bear', 'Polar Bear', 'Tiger', 'Hydra', 'Clay Golem', 'Pyromancer'}
     maps = args or sorted(glob.glob(os.path.join(PLANE, '**', '*.tmx'), recursive=True))
     moved = too_far = left_blocked = written = 0
     for path in maps:
@@ -123,7 +131,8 @@ def main():
                     legal, ok = w.standable(free, reach, wpx, hpx, th, wx, wy)
                     if ok:
                         continue
-                    if not legal and not include_blocked:
+                    movable = legal or include_blocked or (ground_only and name in GROUND)
+                    if not movable:
                         blocked[wid] = (name, wx, wy)
                     else:
                         todo[wid] = (name, wx, wy, 'blocked' if not legal else 'outside')

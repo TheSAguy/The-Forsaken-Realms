@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="27" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="199">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="27" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="202">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -233,6 +233,24 @@
    <properties>
     <property name="enemy" value="Fire Dragon"/>
     <property name="threatRange" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="199" template="../../../../common/maps/obj/enemy.tx" x="231.342" y="222.438">
+   <properties>
+    <property name="enemy" value="Fire Dragon"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="200" template="../../../../common/maps/obj/enemy.tx" x="179.509" y="222.772">
+   <properties>
+    <property name="enemy" value="Fire Dragon"/>
+    <property name="threatRange" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="201" template="../../../../common/maps/obj/enemy.tx" x="298.175" y="296.105">
+   <properties>
+    <property name="enemy" value="Fire Dragon"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>
