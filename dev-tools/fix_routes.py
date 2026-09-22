@@ -97,9 +97,16 @@ def main():
     # tag lookup that quietly changes scope when someone edits enemies.csv.
     ground_only = '--ground-blocked' in sys.argv
     # 'Magma Elemental' added on the user's call ("Make Magma Elemental a walker too"). Its 8 blocked
-    # legs are all in templeofchandra, and they are the reason that map's dormant routes could not be
-    # cleared - which is what the capital-W flip is waiting on. Note 'Fire Giant' and 'Earth Elemental'
-    # are still OUT: same lava/rock argument, not covered by that instruction.
+    # legs were all in templeofchandra.
+    #
+    # An earlier version of this comment said those legs were blocking a "capital-W flip" - a claim
+    # round 286f RETRACTED, because that hazard never existed: the grep behind it matched
+    # <objectgroup name="Waypoints">, a Tiled LAYER name, not <property name="Waypoints">, of which
+    # there are zero. templeofchandra's routes really were broken and are really fixed; they were
+    # just never gating anything.
+    #
+    # Note 'Fire Giant' and 'Earth Elemental' are still OUT: same lava/rock argument, not covered by
+    # that instruction.
     GROUND = {'Bear', 'Polar Bear', 'Tiger', 'Hydra', 'Clay Golem', 'Pyromancer',
               'Magma Elemental'}
     maps = args or sorted(glob.glob(os.path.join(PLANE, '**', '*.tmx'), recursive=True))
