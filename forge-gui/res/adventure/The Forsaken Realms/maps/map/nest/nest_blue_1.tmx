@@ -61,7 +61,7 @@
    <properties>
     <property name="waypoints" value="93,94"/>
     <property name="enemy" value="Bird"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="65" template="../../../../common/maps/obj/manashards.tx" x="493.373" y="283.747"/>
@@ -129,7 +129,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="320" y="320"/>
+  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="352" y="352"/>
   <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="189.38" y="314.723"/>
   <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="182.896" y="57.5531"/>
   <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="517.145" y="40.2644"/>
@@ -140,8 +140,8 @@
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="664.099" y="246.288"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="664.82" y="315.443"/>
   <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="620.878" y="350.021"/>
-  <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="490.492" y="366.589"/>
-  <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="420.616" y="331.291"/>
+  <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="490.492" y="398.589"/>
+  <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="388.616" y="331.291"/>
   <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="284.468" y="248.45"/>
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="324.808" y="188.659"/>
   <object id="90" template="../../../../common/maps/obj/collision.tx" x="160" y="432" width="480" height="16"/>

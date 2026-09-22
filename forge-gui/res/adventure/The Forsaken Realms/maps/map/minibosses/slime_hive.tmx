@@ -69,7 +69,7 @@
     <property name="enemy" value="Ooze Boss"/>
     <property name="spawn.Hard" type="bool" value="false"/>
     <property name="spawn.Insane" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="101" template="../../../../common/maps/obj/enemy.tx" x="439.44" y="279.41">

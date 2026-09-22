@@ -51,7 +51,7 @@
    <properties>
     <property name="waypoints" value="84,85"/>
     <property name="enemy" value="Esper Artificer"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="118.183" y="301.039">
@@ -82,7 +82,7 @@
    <properties>
     <property name="waypoints" value="86,87"/>
     <property name="enemy" value="Esper Artificer"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="65" template="../../../../common/maps/obj/booster.tx" x="239.385" y="255.931">

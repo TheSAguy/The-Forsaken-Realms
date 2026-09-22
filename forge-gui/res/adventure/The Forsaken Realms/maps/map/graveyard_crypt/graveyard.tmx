@@ -60,7 +60,7 @@
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="368" y="80">
    <properties>
     <property name="enemy" value="Crocodile"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="87,86,85,84,84,85,86,87,88"/>
    </properties>
   </object>

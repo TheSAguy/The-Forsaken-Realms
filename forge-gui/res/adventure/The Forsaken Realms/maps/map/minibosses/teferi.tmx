@@ -119,7 +119,7 @@
    <properties>
     <property name="displayNameOverride" value="Desert Nomad"/>
     <property name="enemy" value="Warrior"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="99" template="../../../../common/maps/obj/enemy.tx" x="830.229" y="522.209" width="15.5419" height="16.9162">
@@ -253,7 +253,7 @@
    <object id="122" template="../../../../common/maps/obj/enemy.tx" x="445" y="69.3333">
    <properties>
     <property name="enemy" value="Disciple of Teferi"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

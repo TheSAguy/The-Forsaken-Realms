@@ -70,7 +70,7 @@
    <properties>
     <property name="enemy" value="Spider"/>
     <property name="pursueRange" type="float" value="60"/>
-    <property name="threatRange" type="float" value="30"/>
+    <property name="threatRange" type="float" value="20"/>
     <property name="waypoints" value="72,74,82"/>
    </properties>
   </object>
@@ -112,7 +112,7 @@
    <properties>
     <property name="enemy" value="Spider"/>
     <property name="pursueRange" type="float" value="60"/>
-    <property name="threatRange" type="float" value="30"/>
+    <property name="threatRange" type="float" value="40"/>
     <property name="waypoints" value="67,66"/>
    </properties>
   </object>

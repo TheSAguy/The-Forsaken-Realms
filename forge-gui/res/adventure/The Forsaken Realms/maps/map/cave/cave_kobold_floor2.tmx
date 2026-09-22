@@ -44,7 +44,7 @@
     <property name="waypoints" value="95,96"/>
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Kobold Taskmaster&quot; ] }"/>
     <property name="enemy" value="Kobold Dragoncaller"/>
-    <property name="threatRange" type="int" value="100"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="79" template="../../../../common/maps/obj/enemy.tx" x="199.5" y="234">

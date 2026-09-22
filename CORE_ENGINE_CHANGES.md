@@ -1840,6 +1840,13 @@ from the plane's `config tables/settings.json`).
   `%APPDATA%\ForgottenRealms` — existing test saves under `%APPDATA%\Forge\adventure\The
   Forsaken Realms` must be copied over once (the old 2.0.14 install at `E:\GAMES\FORGE` is
   unaffected, its jars predate this change).
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — round 286 changed
+  `applyDefaultReactionRange()` from `boolean` to an int returning `REACTION_NONE` / `REACTION_THREAT` /
+  `REACTION_PURSUE`, and `loadObjects()` keeps two counters so the `[TFR-Threat]` line no longer reports
+  round 279's pursue-only fills as "reacted to nothing". Behaviour of the fills themselves is unchanged —
+  this is diagnostics only. Upstream conflict note: if a merge reverts the signature, the two cases collapse
+  back into one misleading count; the fills must stay independent (honouring an authored `threatRange` never
+  meant leaving `pursueRange` at zero, which was the round-279 bug).
 - **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** — round 285 added
   `layoutPortraitModButtons()` and one call to it between the `case Shop:` visibility switch and the
   card-fitting loop, where it adjusts `yOff`/`targetHeight`/`targetArea`. In PORTRAIT the mod buttons

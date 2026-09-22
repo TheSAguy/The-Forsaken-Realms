@@ -50,7 +50,7 @@
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Bard Class&quot; ] }"/>
     <property name="enemy" value="Human Bard"/>
     <property name="speedModifier" type="float" value="10"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="51" template="../../../../common/maps/obj/treasure.tx" x="119.354" y="112.639"/>
@@ -60,7 +60,7 @@
     <property name="waypoints" value="79,80"/>
     <property name="enemy" value="Human elite"/>
     <property name="speedModifier" type="float" value="10"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="343.924" y="114.932">

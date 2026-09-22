@@ -38,7 +38,7 @@
     <property name="enemy" value="Chimera"/>
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="79" template="../../../../common/maps/obj/manashards.tx" x="46.377" y="106.249"/>

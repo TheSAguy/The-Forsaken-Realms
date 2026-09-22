@@ -593,7 +593,7 @@
    <object id="352" template="../../../../common/maps/obj/enemy.tx" x="109.842" y="326.772">
    <properties>
     <property name="enemy" value="Baron Bertram"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

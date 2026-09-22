@@ -161,7 +161,7 @@
    <properties>
     <property name="enemy" value="Phyrexian Renegade"/>
     <property name="speedModifier" type="float" value="4"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="20,21"/>
    </properties>
   </object>

@@ -223,7 +223,7 @@
    <object id="223" template="../../../../common/maps/obj/enemy.tx" x="420.343" y="41.438">
    <properties>
     <property name="enemy" value="Horror of Tibalt"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

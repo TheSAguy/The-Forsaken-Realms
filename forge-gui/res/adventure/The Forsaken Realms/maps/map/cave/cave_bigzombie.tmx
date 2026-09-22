@@ -36,7 +36,7 @@
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [&quot;Dreadhorde Invasion&quot;]}"/>
     <property name="enemy" value="Big Zombie"/>
     <property name="speedModifier" type="float" value="3"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="57" template="../../../../common/maps/obj/waypoint.tx" x="192" y="144"/>

@@ -161,7 +161,7 @@
 }</property>
     <property name="enemy" value="Volcano Dragon"/>
     <property name="fleeRange" value="0"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="89" template="../../../../common/maps/obj/manashards.tx" x="121.426" y="370.22"/>

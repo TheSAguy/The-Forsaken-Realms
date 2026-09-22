@@ -45,7 +45,7 @@
   <object id="79" template="../../obj/stone.tx" x="279.197" y="72.8334"/>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="114.6667" y="43">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="enemy" value="Orthodoxy Angel"/>
    </properties>
   </object>

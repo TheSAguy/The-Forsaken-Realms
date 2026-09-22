@@ -105,7 +105,7 @@
   </object>
   <object id="35" template="../../../../common/maps/obj/enemy.tx" x="416" y="512">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="deckOverride" value=""/>
     <property name="enemy" value="Gorilla"/>
     <property name="waypoints" value="r10-12-23-13"/>
@@ -126,7 +126,7 @@
     <property name="enemy" value="Green Beast"/>
     <property name="pursueRange" type="int" value="100"/>
     <property name="speedModifier" type="float" value="10"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="52,53"/>
    </properties>
   </object>

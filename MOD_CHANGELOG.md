@@ -17859,6 +17859,81 @@ source, with the hardcoded set kept as a floor. That one false positive was hidi
 **DialogData was missing 41 fields**, SpawnTierWeightData 10, ArmoryRarityData 6 - so a typo in any of those keys
 would have gone unreported. A validator you learn to skim is worse than no validator.
 
+## Round 286: the stray patrols, a log line that lied, and a real gap between booster and chest guards (2026-09-22)
+
+User: *"Please implement all you can, including ... I do all 33 patrol routes"*, and separately
+*"I want Boosters and Chests guarded please. Boosters need stronger more aggressive guards than chests."*
+
+### The patrol routes: 32 down to 21, and why not to zero
+
+`dev-tools/fix_routes.py`. Round 283 found the shape of the bug and fixed two by hand; this does the rest
+of the ones that can be done honestly. **32 route(s) across 28 maps -> 21 across 20**, 25 waypoints moved
+in 14 maps, every move one or two tiles.
+
+The interesting part is what it refuses. The audit reports two kinds of stray and they are NOT equally
+diagnosable:
+
+* **"outside"** - a legal player position the entry flood-fill never reaches, i.e. the drawn-but-sealed
+  band between a room and its outer wall. Nothing is meant to patrol there. That is the Blue Tower bug,
+  and pulling it inside cannot destroy intent. **These are fixed.**
+* **"blocked"** - collision covers the tile. Collision means terrain, and terrain can be deliberate: a
+  Magma Elemental crossing lava in Chandra's temple, a Jellyfish over water. From a script those look
+  exactly like a Cleric stuck in a wall. **31 of these are reported, not touched.**
+
+Two guards on top of that. The move cap is **two tiles**, because every case the user reported by hand was
+one tile past the room's edge - an authoring slip - while `nest_blue_1`'s Jellyfish wanted **9.9 tiles**,
+and moving it would have been inventing a patrol rather than repairing one. And a waypoint shared by
+several enemies is called out in the log; pulling it inside is right for all of them, but it should not be
+a surprise.
+
+The first draft of this tool would have moved 60 waypoints. That number was the warning, not the
+achievement.
+
+### `[TFR-Threat]` stops claiming things it did not find
+
+The line said *"N enemy(s) reacted to nothing"* for the sum of two different fills - round 252's enemies
+that genuinely had no reaction, and round 279's, which DID react and merely could not sustain a chase. In
+a real play-test log it announced eight enemies in a mage tower as having no reaction when most of them
+carried an authored `threatRange`. `applyDefaultReactionRange()` now returns WHICH default it filled
+(`REACTION_THREAT` / `REACTION_PURSUE` / none) and the two are counted and phrased separately. A
+diagnostic that misdescribes its own finding costs more than it saves - the same lesson as round 281's
+false positive, in a quieter place.
+
+### Booster guards vs chest guards: the gap was aggression, not strength
+
+Measuring first changed what the work was. **Boosters did not need guarding** - `booster_guards.py`
+reports 260 of 261 already guarded (the exception is a map with no entry object, so reachability is
+unknowable there), and `upgrade_booster_guards.py` finds **0** Apprentice booster guards left; round 279
+did that. An intermediate survey of mine said "10 unguarded" and it was wrong: it skipped the
+reachability test and counted boosters whose guard exists but cannot be reached.
+
+What genuinely was not differentiated is how *keenly* the two react. Across the plane, booster guards
+carried threatRange 30 (113 of them), 40 (59), 20 (30), 50 (27) - and chest guards carried a near-identical
+spread. A booster's guard was as likely to be sleepier than a chest's as keener.
+
+`dev-tools/loot_guard_ranges.py` sets the two sides of one gap: **141 booster guards raised to >= 40**,
+**109 chest guards held to <= 20**, across 167 maps. Afterwards every booster guard is 40+ and 162 chest
+guards sit at 20.
+
+Three things it deliberately does not do. It leaves `threatRange -1` alone (an authored "never react",
+which round 252 honours). It leaves dialog carriers alone (round 253: an NPC that charges the player is a
+bug). And where one enemy guards a booster AND a chest, **the booster wins** - which is why the survey
+still shows 45 "chest" guards at 40, and is the point rather than a miss.
+
+The absent case is the one worth recording: with no authored threatRange the runtime fills the plane
+default of 32 px, which is ABOVE the chest cap - so leaving a chest guard blank would have quietly made it
+keener than the floor a booster guard gets. Writing 20 explicitly is what makes the gap real.
+
+### Still open, and why
+
+**296 chests have no guard at all** (534 total, 238 guarded). That is the other half of the user's request
+and it is not a scripting problem, it is a balance decision: 296 new enemies across 221 maps, on a Hard
+save where the player has 12 life. Left for the user to size rather than assumed.
+
+Also recorded: the user reviewed the 57-sheet facing contact sheet and accepted the art as it ships, so no
+re-conversion was run and `overrides_generic.json` is untouched - the audit will keep listing them as
+unreviewed, which is now a known and accepted state rather than a to-do.
+
 ## Round 285: the Armory's buttons move to the bottom, and 1.13 is confirmed on Android (2026-09-22)
 
 ### 1.13 runs on the emulator - the missing piece was a permission, not a path

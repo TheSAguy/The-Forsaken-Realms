@@ -138,7 +138,7 @@ ALL SUMMERS MUST BE VEILED&quot;,
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Homarid&quot;, &quot;Tidal Influence&quot;, &quot;Homarid Warrior&quot;]}"/>
     <property name="enemy" value="Rikala"/>
     <property name="speedModifier" type="float" value="20"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value=""/>
    </properties>
   </object>

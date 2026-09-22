@@ -70,7 +70,7 @@
   <object id="162" template="../../../../common/maps/obj/enemy.tx" x="494.842" y="191.105">
    <properties>
     <property name="enemy" value="Owl"/>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="163" template="../../../../common/maps/obj/waypoint.tx" x="608.372" y="250.56" width="10.4545" height="10.8485"/>
@@ -425,7 +425,7 @@
    <object id="273" template="../../../../common/maps/obj/enemy.tx" x="77.1754" y="247.772">
    <properties>
     <property name="enemy" value="Dwarf Mercenary"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

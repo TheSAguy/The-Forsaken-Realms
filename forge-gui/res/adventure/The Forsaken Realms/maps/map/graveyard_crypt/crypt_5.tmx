@@ -324,7 +324,7 @@
    <object id="92" template="../../../../common/maps/obj/enemy.tx" x="422.333" y="663.667">
    <properties>
     <property name="enemy" value="Master Black Wizard"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

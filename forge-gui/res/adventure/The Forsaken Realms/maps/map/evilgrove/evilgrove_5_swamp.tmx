@@ -49,7 +49,7 @@
    <properties>
     <property name="waypoints" value="142,143"/>
     <property name="enemy" value="Walking Brain"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="383.278" y="236.128">
@@ -67,7 +67,7 @@
   </object>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="336.667" y="624.667">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="enemy" value="Dark Knight"/>
    </properties>
   </object>
@@ -284,7 +284,7 @@
     <property name="enemy" value="Dark Knight"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="pursueRange" type="float" value="60"/>
-    <property name="threatRange" type="float" value="30"/>
+    <property name="threatRange" type="float" value="40"/>
    </properties>
   </object>
   <object id="111" template="../../../../common/maps/obj/enemy.tx" x="723" y="95" visible="1">
@@ -309,7 +309,7 @@
     <property name="enemy" value="Crocodile"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="pursueRange" type="float" value="60"/>
-    <property name="threatRange" type="float" value="30"/>
+    <property name="threatRange" type="float" value="20"/>
    </properties>
   </object>
   <object id="115" template="../../../../common/maps/obj/enemy.tx" x="755" y="32">
@@ -398,7 +398,7 @@
    <object id="144" template="../../../../common/maps/obj/enemy.tx" x="141.5" y="799.5">
    <properties>
     <property name="enemy" value="Zombie Lord"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

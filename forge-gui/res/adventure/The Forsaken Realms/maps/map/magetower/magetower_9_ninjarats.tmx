@@ -50,7 +50,7 @@
     <property name="enemy" value="Nezumi Ninja"/>
     <property name="spawn.Normal" type="bool" value="true"/>
     <property name="speedModifier" type="float" value="30"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/gold.tx" x="89.6918" y="125.224"/>
@@ -126,7 +126,7 @@
    <object id="83" template="../../../../common/maps/obj/enemy.tx" x="142.196" y="72.7342">
    <properties>
     <property name="enemy" value="Nezumi Ninja"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

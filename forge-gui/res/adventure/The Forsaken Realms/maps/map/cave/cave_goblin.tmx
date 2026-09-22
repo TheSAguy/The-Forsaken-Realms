@@ -125,7 +125,7 @@
    <properties>
     <property name="waypoints" value="83,84"/>
     <property name="enemy" value="Goblin"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="79" template="../../../../common/maps/obj/enemy.tx" x="238.676" y="38.5827">

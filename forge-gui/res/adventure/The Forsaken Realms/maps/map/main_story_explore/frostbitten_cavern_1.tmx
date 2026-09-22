@@ -83,7 +83,7 @@
    <properties>
     <property name="enemy" value="Polar Bear"/>
     <property name="pursueRange" type="int" value="60"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="28,29"/>
    </properties>
   </object>

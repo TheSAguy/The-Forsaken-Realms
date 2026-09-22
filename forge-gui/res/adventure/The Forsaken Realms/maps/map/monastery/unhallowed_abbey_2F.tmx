@@ -62,7 +62,7 @@
   <object id="75" template="../../../../common/maps/obj/enemy.tx" x="272" y="64">
    <properties>
     <property name="enemy" value="Demon"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="100,101,99"/>
    </properties>
   </object>
@@ -433,13 +433,13 @@
    <object id="131" template="../../../../common/maps/obj/enemy.tx" x="127.667" y="110">
    <properties>
     <property name="enemy" value="Demon"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="132" template="../../../../common/maps/obj/enemy.tx" x="159" y="63">
    <properties>
     <property name="enemy" value="Demon"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

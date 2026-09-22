@@ -109,7 +109,7 @@
    <object id="90" template="../../../../common/maps/obj/enemy.tx" x="488.333" y="282.667">
    <properties>
     <property name="enemy" value="Eldrazi Devastator"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

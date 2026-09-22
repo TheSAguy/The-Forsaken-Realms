@@ -477,7 +477,7 @@
    <properties>
     <property name="waypoints" value="55,56"/>
     <property name="enemy" value="Wandering Geist"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="15" template="../../../../common/maps/obj/enemy.tx" x="118.667" y="507.667">

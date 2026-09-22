@@ -118,7 +118,7 @@
   <object id="104" template="../../../../common/maps/obj/enemy.tx" x="81.5489" y="352.323">
    <properties>
     <property name="enemy" value="Yeti"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="106" template="../../../../common/maps/obj/door_down.tx" x="117" y="287">

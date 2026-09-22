@@ -62,7 +62,7 @@
    <properties>
     <property name="enemy" value="Furnace Goblin"/>
     <property name="speedModifier" type="float" value="3"/>
-    <property name="threatRange" value="30"/>
+    <property name="threatRange" value="40"/>
     <property name="waypoints" value="76,74,62,75"/>
    </properties>
   </object>

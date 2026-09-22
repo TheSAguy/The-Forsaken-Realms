@@ -232,7 +232,7 @@
    <object id="198" template="../../../../common/maps/obj/enemy.tx" x="347.898" y="545.832">
    <properties>
     <property name="enemy" value="Fire Dragon"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

@@ -58,7 +58,7 @@
   <object id="58" template="../../../../common/maps/obj/enemy.tx" x="240.648" y="313.313">
    <properties>
     <property name="enemy" value="Adept White Wizard"/>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="384.126" y="314.313">

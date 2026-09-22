@@ -184,7 +184,7 @@
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="155" y="65.5">
    <properties>
     <property name="enemy" value="Illusionist"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="89,88"/>
    </properties>
   </object>
@@ -300,7 +300,7 @@
    <object id="107" template="../../../../common/maps/obj/enemy.tx" x="440.5" y="16">
    <properties>
     <property name="enemy" value="Illusionist"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

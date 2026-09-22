@@ -88,7 +88,7 @@
   <object id="65" template="../../../../common/maps/obj/enemy.tx" x="288.333" y="69">
    <properties>
     <property name="enemy" value="Torturer"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="66" template="../../../../common/maps/obj/enemy.tx" x="63.3333" y="335.333">
@@ -96,14 +96,14 @@
     <property name="waypoints" value="89,90"/>
     <property name="enemy" value="Curselord"/>
     <property name="hidden" type="bool" value="false"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="458.333" y="90">
    <properties>
     <property name="waypoints" value="95,96"/>
     <property name="enemy" value="Walking Brain"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="466.333" y="198.333">

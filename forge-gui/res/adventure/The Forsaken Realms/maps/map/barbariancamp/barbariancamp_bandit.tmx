@@ -88,7 +88,7 @@
    <properties>
     <property name="waypoints" value="92,93"/>
     <property name="enemy" value="Bandit Archer"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/gold.tx" x="446.446" y="76.1664"/>

@@ -116,7 +116,7 @@
    <properties>
     <property name="waypoints" value="86,87"/>
     <property name="enemy" value="Kavu"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="65" template="../../../../common/maps/obj/scroll.tx" x="104.667" y="141">

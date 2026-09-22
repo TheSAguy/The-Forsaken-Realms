@@ -121,7 +121,7 @@
    <properties>
     <property name="enemy" value="Giant Panda"/>
     <property name="speedModifier" type="float" value="10"/>
-    <property name="threatRange" type="int" value="10"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="310" y="269"/>

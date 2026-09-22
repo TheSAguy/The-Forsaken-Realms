@@ -107,7 +107,7 @@
   <object id="113" template="../../../../common/maps/obj/enemy.tx" x="417" y="429.667">
    <properties>
     <property name="enemy" value="Rielle"/>
-    <property name="threatRange" type="int" value="0"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="117" template="../../../../common/maps/obj/enemy.tx" x="325" y="331">

@@ -158,7 +158,7 @@
     <property name="waypoints" value="162,163"/>
     <property name="enemy" value="Immersturm Demon"/>
     <property name="speedModifier" type="float" value="10"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="152" template="../../../../common/maps/obj/enemy.tx" x="719.626" y="870.87">

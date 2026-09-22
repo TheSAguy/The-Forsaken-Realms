@@ -41,7 +41,7 @@
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="249.96" y="79.2584">
    <properties>
     <property name="enemy" value="Crab"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="240.961" y="136.022">

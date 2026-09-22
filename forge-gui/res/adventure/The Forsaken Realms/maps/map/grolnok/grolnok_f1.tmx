@@ -312,19 +312,19 @@
    <object id="214" template="../../../../common/maps/obj/enemy.tx" x="308.266" y="856.594">
    <properties>
     <property name="enemy" value="Witch"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="215" template="../../../../common/maps/obj/enemy.tx" x="334.782" y="861.759">
    <properties>
     <property name="enemy" value="Witch"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="216" template="../../../../common/maps/obj/enemy.tx" x="50.6667" y="115.333">
    <properties>
     <property name="enemy" value="Witch"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

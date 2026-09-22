@@ -1218,7 +1218,7 @@
    <properties>
     <property name="waypoints" value="275,276"/>
     <property name="enemy" value="Pirate 3"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="25" template="../../../../common/maps/obj/enemy.tx" x="128" y="112">
@@ -1259,7 +1259,7 @@
   <object id="30" template="../../../../common/maps/obj/enemy.tx" x="368" y="544">
    <properties>
     <property name="enemy" value="Pirate 3"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="269,270"/>
    </properties>
   </object>

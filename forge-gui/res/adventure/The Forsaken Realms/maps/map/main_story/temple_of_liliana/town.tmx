@@ -887,7 +887,7 @@
   }
 ]
 </property>
-    <property name="threatRange" type="int" value="25"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="214" template="../../../../../common/maps/obj/enemy.tx" x="544" y="128">
@@ -1163,7 +1163,7 @@
   }
 ]
 </property>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="219" template="../../../../../common/maps/obj/enemy.tx" x="352" y="208">
@@ -2329,7 +2329,7 @@
    <object id="291" template="../../../../../common/maps/obj/enemy.tx" x="144" y="448">
    <properties>
     <property name="enemy" value="Necromancer"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

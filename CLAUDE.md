@@ -50,14 +50,37 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-22 (round 285; v1.12 "Reward Balancing" RELEASED, rounds 247-285 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-22 (round 286; v1.12 "Reward Balancing" RELEASED, rounds 247-286 after it, UNPUSHED; ENGINE = 09.18 daily since round 242) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 285, 2026-09-22).** v1.12 is out; rounds 247-285 are unreleased. In order:
+- **NEXT SESSION starts here (updated round 286, 2026-09-22).** v1.12 is out; rounds 247-286 are unreleased. In order:
 - **DO NOT `git push` until the user calls a release (their rule, 2026-09-20: "Let's not update the online repo
   until we are ready to release").** Every round still ends with a local commit carrying the three docs; the push
   and the tag happen together at release time. Local HEAD is ahead of `origin/master` from round 255 on.
 
-  1. **Round 285 - the Armory's buttons move to the bottom; 1.13 CONFIRMED RUNNING ON ANDROID.**
+  1. **Round 286 - stray patrols fixed where it is honest to, a log line that lied, and a real gap between
+     booster and chest guards.** **`dev-tools/fix_routes.py`**: 32 bad routes across 28 maps -> **21 across
+     20**, 25 waypoints moved in 14 maps, each by 1-2 tiles. It fixes ONLY "outside" strays (a legal tile the
+     entry flood-fill never reaches - the sealed band; nothing is meant to patrol there) and REPORTS the 31
+     "blocked" ones, because collision means terrain and terrain can be deliberate (a Magma Elemental on lava
+     reads identically to a Cleric in a wall). Move cap is **2 tiles**: every hand-reported case was one tile
+     out, while `nest_blue_1`'s Jellyfish wanted **9.9** - that is inventing a patrol, not repairing one. The
+     first draft would have moved 60; that was the warning, not the achievement. `--include-blocked` exists for
+     when someone decides. **`[TFR-Threat]`** no longer sums two different fills under "reacted to nothing":
+     `applyDefaultReactionRange()` returns REACTION_THREAT / REACTION_PURSUE / none and the line phrases them
+     separately (round 279's enemies DID react; they just could not sustain a chase). **Loot guards:** measuring
+     changed the job. Boosters did NOT need guarding - 260 of 261 already are, and 0 Apprentice booster guards
+     remain (round 279 did it); a survey of mine claiming "10 unguarded" was WRONG because it skipped the
+     reachability test. What was undifferentiated was AGGRESSION - booster and chest guards carried the same
+     threatRange spread. **`dev-tools/loot_guard_ranges.py`**: 141 booster guards raised to >=40, 109 chest
+     guards held to <=20, 167 maps; now every booster guard is 40+ and 162 chest guards sit at 20. It leaves
+     `-1` (authored "never react") and dialog carriers alone, and where one enemy guards BOTH, **the booster
+     wins** (hence 45 "chest" guards still at 40 - the point, not a miss). The absent case matters: no authored
+     threatRange means the runtime fills 32, ABOVE the chest cap, so blank would have made chest guards keener
+     than boosters - writing 20 is what makes the gap real. **STILL OPEN: 296 chests have no guard** (534 total,
+     238 guarded) - the other half of the user's ask, and a balance decision (296 enemies across 221 maps on a
+     Hard save at 12 life), left for them to size. Facings: the user accepted the art as it ships, so
+     `overrides_generic.json` is untouched and the 57 stay listed as unreviewed by agreement.
+  2. **Round 285 - the Armory's buttons move to the bottom; 1.13 CONFIRMED RUNNING ON ANDROID.**
      User: *"Armory still a little funky. The buttons are now just on top of the equipment, can we
      possibly put those at the bottom, like arena for Android?"* `placeModButton()`'s portrait branch
      anchored to `detailButton` and stacked UPWARD = y 138..264 on a 270x480 stage, i.e. the middle of
@@ -81,7 +104,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      LDPlayer rewrites the file on exit), and **Git Bash rewrites device paths** - `/sdcard/Download`
      became `C:/Program Files/Git/sdcard/Download` and 217 MB went nowhere while adb said "1 file
      pushed" (`MSYS_NO_PATHCONV=1`; trap 7, now confirmed for adb).
-  2. **Round 284 - a Basilica guard, and an APK that can be handed its own assets.** User: *"add a guard
+  3. **Round 284 - a Basilica guard, and an APK that can be handed its own assets.** User: *"add a guard
      to the Orthodoxy Basilica protecting those two chests on the top right"*. `phyrexian_w1.tmx`:
      `treasure 67` tile(19,2) and `treasure 78` tile(19,4) had no enemy within five tiles, so
      `assignLootGuards()` registered neither. New **Orthodoxy Angel at tile(19,3)** - one tile from EACH
@@ -102,7 +125,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      says where to put the file. Shippable, not a hack: a zip is accepted ONLY when its `res/build.txt`
      matches the APK's (the existing matched-pair rule), and the tester's file is COPIED first because
      `extract()` deletes the zip it is handed. Prompt skipped when a usable zip is found.
-  3. **Round 283 - nobody had ever validated a patrol ROUTE, and a capital W is protecting the game.**
+  4. **Round 283 - nobody had ever validated a patrol ROUTE, and a capital W is protecting the game.**
      User: *"The blue tower top mage still leaves the area and is too high, needs it's route edited."* Every
      placement audit called the map clean and was RIGHT - `stranded_enemies.py` checks where an enemy stands,
      and this one stands somewhere legal. **Routes had never been checked by anything.**
@@ -125,7 +148,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `templeofchandra`'s Magma Elemental route alone has ~23 blocked/outside legs. The typo is the only thing
      keeping 51 broken routes dormant - repair routes first, then flip the case, then play the story maps.
      NOT yet in the live folder (the user was playing; live carries round 282).
-  4. **Round 282 - the 1.13 APK offered itself a DOWNGRADE on every launch, and closing was stock doing
+  5. **Round 282 - the 1.13 APK offered itself a DOWNGRADE on every launch, and closing was stock doing
      as told.** Reported from the emulator with screenshots: *"it says an update is available. After I
      click on update, it just closes."* Stock's test is
      `!versionString.equals(version)` - DIFFERENT, not newer - so a 1.13 test APK against a newest
@@ -143,7 +166,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      210 MB re-push. Before this APK is installed the right answer is just "Update Later". Also corrected:
      the comment above the desktop early-out still claimed Android was not shipped (untrue since v1.03 /
      round 61, and this bug came from that very pipeline).
-  5. **Round 281 - the softlock watchdog was crying wolf; 1.13 is stamped for an emulator test.** Round 279's
+  6. **Round 281 - the softlock watchdog was crying wolf; 1.13 is stamped for an emulator test.** Round 279's
      safety net fired once in the user's own play-test log and the line was a **FALSE POSITIVE**. Round 253's
      behavior explains it: `activate()` loads EVERY passing entry and each `loadDialog()` overwrites the last, so
      dialog 100 was built three times back to back (180/209/259 chars); the first two labels were left off the
@@ -173,7 +196,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      reset step is only for in-place builds. A second cry-wolf case was caught before packaging and
      fixed: after the typing ENDS no new character ever arrives, so the 2s stall signal had to stand
      down on `hasEnded()` - a >20-option chooser's reveal stagger (0.09 + 0.10 x n) outlasts it.
-  6. **Round 280 - rob a guard and it hunts you.** User: *"If the Booster or Chest is taken, and the guard is
+  7. **Round 280 - rob a guard and it hunts you.** User: *"If the Booster or Chest is taken, and the guard is
      still alive, to have the guard chase the player?"* One hook: `MapStage`'s player-collision loop has exactly
      one place a reward is ever collected (both the inline pickups and the reward-screen path go through it), so
      `onRewardTaken(id)` sits there before the actor is removed. Every reward now registers a guard, **chests
@@ -187,7 +210,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `RoamingGuards.speedFor()` pattern), **default 1.1 = 44 vs 40**; in `settings.json`, retune or 0 it with no
      rebuild. NOT YET SEEN IN A GAME - built while the user was play-testing round 279, so the live folder still
      had the previous jar; package once their game closes.
-  7. **Round 279 - 85.6% of the plane's enemies could notice the player and never chase, and round 271 caused
+  8. **Round 279 - 85.6% of the plane's enemies could notice the player and never chase, and round 271 caused
      part of it.** `EnemySprite` drops aggro the moment `len > pursueRange`, so **a threatRange with no
      pursueRange cannot chase at all** - it notices at one or two tiles and gives up a pixel later.
      `applyDefaultReactionRange()`'s pursue fill sat behind an early return on "threatRange already set", so it
@@ -208,7 +231,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `Biome*`/`Identity*` put a *Market Trader* on a booster; on creature tags it gives
      `Minotaur -> Minotaur Warcaller`, `Poisonous Snake -> Hidden Snake`. New tools:
      `dev-tools/booster_guards.py` (audit), `add_booster_guards.py`, `upgrade_booster_guards.py`.
-  8. **Round 279 - the reported "grey window" is a `MapDialog` with its buttons still invisible.** A player
+  9. **Round 279 - the reported "grey window" is a `MapDialog` with its buttons still invisible.** A player
      reported a grey window over the spawn dungeon during the intro that "doesn't allow me to do anything";
      fullscreen was their only non-default setting and nobody else can reproduce it. Every option button is
      created `setVisible(false)` and the ONLY thing that reveals them is `TypingLabel`'s `end()` callback, which
@@ -228,12 +251,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      for him, that is a different, input-level problem; and ask his **Windows display scaling** (HP OmniBook X
      Flip convertible, 1920x1200 panel, typically 150-200%, launcher uses `HdpiMode.Logical` while exclusive
      fullscreen reports the PHYSICAL mode).
-  9. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
+  10. **Round 279 - `validate_plane_data.py` had been crying wolf for eighteen rounds.** It reported round 261's
      `enemySpriteFrameCap` as an unknown key although the field exists in `TuningData.java` and in
      `settings.json`, because its class field lists are hardcoded. They are READ from the Java source now (the
      hardcoded set kept as a floor), which revealed how stale they were: **DialogData was missing 41 fields**,
      SpawnTierWeightData 10, ArmoryRarityData 6 - a typo in any of those would never have been reported.
-  10. **Round 278 - fifteen dungeons could never be cleared, and round 275's "leave them alone" was wrong.**
+  11. **Round 278 - fifteen dungeons could never be cleared, and round 275's "leave them alone" was wrong.**
      The user's own example found it: "Blue Tower" is several `magetower_*` dungeons, and
      `magetower_11_dreamhalls.tmx` has ONE entry, no doors, only 32% of its legal player positions reachable,
      and its two Jellyfish in the sealed band between the room and the outer wall - walled off, not swimming.
@@ -251,7 +274,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `pixel_collision_qa.ACCEPTED_UNREACHABLE` so the three tools that flag it report it as ACCEPTED instead of
      re-raising it - **do not "fix" it without asking again.** Still open: one Knight in `skep_outer.tmx` with no
      reachable tile within 8 tiles. NOT verified in a game.
-  11. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
+  12. **Round 277 - a player standing inside a POI footprint could not path anywhere.** Found by soaking: after
      a death respawn onto Shimmering Crossing, `goto`, `explore` AND `wait` all answered "no path" to
      everything, for twenty-five minutes - no bridge command could move the player at all. Round 175's
      exemption reopens only the **3x3 around the player** when standing on a footprint, which is enough for a
@@ -277,7 +300,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      real freedom of movement - for a target in a nook the line runs into a building and the walk dies after
      four replans. Not fixed (agent-only, and the static test already answers "is this placement reachable").
      **Do not read a walker give-up as evidence about a map.**
-  12. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
+  13. **Round 276 - the agent bridge left a zombie process, and `back` during a duel quit the game.** Both found
      by soaking, both fixed. `jcmd Thread.print` on what looked like a frozen game showed NO main thread, a
      parked `DestroyJavaVM` and a runnable non-daemon `"HTTP-Dispatcher"`: the game had EXITED and the JVM could
      not follow, because `HttpServer.start()` spawns its own dispatcher thread (not the daemon executor the
@@ -297,7 +320,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `F:\FORGE\TFR-Agent` / `F:\FORGE\C--Users-vicwaver-MTG-Forge`; both are on C: now. And the agent's
      `forge.log` genuinely CANNOT be read while the game runs - Forge byte-range-locks the whole file, so even
      `Get-Content -Tail` fails; use `/state`'s `agent.log`, which carries the `[TFR-Agent]` walk lines.
-  13. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
+  14. **Round 275 - reachability exists, and round 269's audit was reading a mirror.** THE COLLISION QUESTION IS
      SETTLED, from `MapStage.loadCollision()`: collision does NOT come from the layer named "Collision" - that
      method walks EVERY tile layer and reads the rectangles authored on each TILE in its tileset, the boxes are
      SUB-TILE (one fort map: 240 full-tile, 330 partial), and the player is a **10 x 6.4 box at the sprite's
@@ -318,10 +341,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      `phyrexian_black1.tmx` has 75,489 legal player positions but only 28,653 in its largest region, and its one
      entry reaches none of its five enemies - the Blue Tower "stranded outside the wall" case at map scale.
      NOT YET SEEN IN A GAME.
-  14. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
+  15. **Round 274 - `innTournamentQuestGiven` is seeded at load** from `statistic.completedEventCount() > 0` when
      the flag is absent, so a pre-259 save stops re-issuing the nudge on its next NG+. A no-op after a New Game+
      (count 0, flag carried), and it only sets what `addQuest()` would set on the same evidence.
-  15. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
+  16. **Round 273 - the importer no longer assumes the art faces right.** The PORTRAIT half is fixed outright and
      validated: with no painted portrait the avatar is cut at the creature's HEAD end (the end it faces) instead of
      the middle of its body, and that reproduces all five of round 245's hand repairs EXACTLY (delta 0.0). The
      FACING half cannot be automated - `facing_detect.py`'s four cues reach 81% on the 16 labelled sheets and are
@@ -339,7 +362,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      pictures. Still NOT guessed on the user's behalf. Also spotted there: **`#200 gen_parasitic_zombie_2`'s frame
      holds what looks like two creatures back to back**, possibly a merge that slipped under the importer's
      1.8x-median width guard.
-  16. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
+  17. **Round 272 - the claim-path index-space trace, and round 266's assumption was half wrong.** `terrainMap`
      holds an index into *some* biome's tables and nothing records which; four writers produce a dual-bit tile and
      they disagree. The missing case: world-gen's Pass A claims biomes with `|=`, so a tile inside both the
      wasteland's disc and a colour's carries BOTH bits from birth, and Pass B writes it with the COLOUR's own
@@ -357,15 +380,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
      structure and its collision bit. Fixed. **One residual, stated:** a tile expansion claims inside a colour's own
      keep (43 such holes inside white's, ~3% of the disc) reads as colour space when it is waste space; the exact
      cure is recording the space in `terrainMap` bit 29, offered not done. NOT YET SEEN IN A GAME.
-  17. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
+  18. **Round 271 - all 251 rangeless enemies now react.** `threatRange=20` written into the maps (not left to
      round 252's runtime default). 23 `dialog` NPCs and the explicit `0`s deliberately untouched. **PACKAGED.**
-  18. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
+  19. **Round 270 - castles show the unvisited magnifier.** `MapSprite`'s rule listed the two GENERATED types
      plus round 113's side-bosses; `castle` was never added, so all 13 of them went unmarked. Built, **NOT
      packaged** - the user was playing. Capitals/towns deliberately excluded.
-  19. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see the round 275 item): all
+  20. **Round 269 - ten of round 258's guards stood outside the room.** CLOSED by round 275 (see the round 275 item): all
      ten are back on booster duty and verified reachable. Its `oob_audit.py` was reading a mirrored y and should
      not be reused - `pixel_collision_qa.py --enemies` replaces it.
-  20. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
+  21. **DONE in round 272 - the trace that was queued here.** Round 266's assumption was half wrong and round
      268's own evidence was a red herring: the `[TFR-Terrain]` lines fire only for "player land" because
      `drawableTerrainIndex()` runs while a ground CHUNK is built and chunks are only built near the player, who was
      standing in their own territory - nothing to do with index spaces. `structureSwapCache` does translate, but

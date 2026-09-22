@@ -70,7 +70,7 @@
   <object id="188" template="../../../../common/maps/obj/manashards.tx" x="534.233" y="208.667"/>
   <object id="243" template="../../obj/stone.tx" x="527.233" y="237.667"/>
   <object id="189" template="../../../../common/maps/obj/waypoint.tx" x="531.114" y="135.498"/>
-  <object id="191" template="../../../../common/maps/obj/waypoint.tx" x="173.909" y="220.488"/>
+  <object id="191" template="../../../../common/maps/obj/waypoint.tx" x="173.909" y="236.488"/>
   <object id="194" template="../../../../common/maps/obj/collision.tx" x="-3.9079" y="521.105" width="704" height="16"/>
   <object id="195" template="../../../../common/maps/obj/collision.tx" x="702.342" y="-7.9362" width="16" height="538.083"/>
   <object id="196" template="../../../../common/maps/obj/collision.tx" x="-17.6579" y="-8.9362" width="16" height="547.083"/>
@@ -90,7 +90,7 @@
   </object>
   <object id="206" template="../../../../common/maps/obj/enemy.tx" x="479.231" y="246.814">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="enemy" value="Fire Dragon"/>
    </properties>
   </object>

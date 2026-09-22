@@ -258,7 +258,7 @@
   </object>
   <object id="120" template="../../../../common/maps/obj/enemy.tx" name="Greater Sandwurm" x="432" y="752">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="enemy" value="Greater Sandwurm"/>
    </properties>
   </object>

@@ -1135,25 +1135,42 @@ public class MapStage extends GameStage {
         }
     }
 
-    private boolean applyDefaultReactionRange(EnemySprite mob) {
+    /** Nothing was filled. */
+    private static final int REACTION_NONE = 0;
+    /** The enemy had no reaction at all and was given a threatRange (round 252's case). */
+    private static final int REACTION_THREAT = 1;
+    /** The enemy already noticed the player but could not sustain a chase; only pursueRange was
+     *  filled (round 279's case - 85.6% of the plane). */
+    private static final int REACTION_PURSUE = 2;
+
+    /**
+     * Round 286: returns WHICH default was filled rather than a bare boolean.
+     * <p>
+     * The two cases are different bugs and the log used to call both "reacted to nothing", which was
+     * true of round 252's enemies and false of round 279's - those DID react, they just gave up a
+     * pixel later. Reading a real play-test log, that line claimed eight enemies in a mage tower had
+     * no reaction when most of them had an authored `threatRange` and were only missing a pursue
+     * range. A diagnostic that misdescribes what it found costs more than it saves.
+     */
+    private int applyDefaultReactionRange(EnemySprite mob) {
         // Round 253: never an NPC. EnemySprite.dialog "Overrides standard battle" - contact opens a conversation
         // instead of a duel - and 43 of the 378 rangeless enemies round 252 found are exactly that: the Warden,
         // the mages who hand out quests, the five castle bosses' heralds, the whole Skep village. Giving them a
         // reaction radius would have them walk up to the player and fire their dialog unasked.
         if (mob.dialog != null)
-            return false;
+            return REACTION_NONE;
         if (mob.threatRange < 0) {
             mob.threatRange = 0;
-            return false;
+            return REACTION_NONE;
         }
         forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
         float threat = tuning == null ? 0f : tuning.mapEnemyDefaultThreatRange;
-        boolean applied = false;
+        int filled = REACTION_NONE;
         if (mob.threatRange <= 0 && mob.fleeRange <= 0) {
             if (threat <= 0)
-                return false;
+                return REACTION_NONE;
             mob.threatRange = threat;
-            applied = true;
+            filled = REACTION_THREAT;
         }
         // Round 279: the pursueRange fill used to sit BEHIND an early return on "threatRange already set", so it
         // only ever reached the enemies that had no threatRange at all. Measured across the plane: 2,021 of
@@ -1169,14 +1186,18 @@ public class MapStage extends GameStage {
         // own (`mapEnemyDefaultPursueRange`, 64 px), which the user has already accepted for the 378.
         if (mob.threatRange > 0 && mob.pursueRange <= 0 && tuning != null) {
             mob.pursueRange = Math.max(mob.threatRange, tuning.mapEnemyDefaultPursueRange);
-            applied = true;
+            // An enemy that just had its threatRange filled gets its pursueRange in the same breath;
+            // it is still round 252's case, not a separate finding, so REACTION_THREAT wins.
+            if (filled == REACTION_NONE)
+                filled = REACTION_PURSUE;
         }
-        return applied;
+        return filled;
     }
 
     private void loadObjects(MapLayer layer, String sourceMap, String currentMap) {
         player.setMoveModifier(2);
-        int reactionDefaults = 0; // round 252
+        int reactionThreat = 0; // round 252 - no reaction at all
+        int reactionPursue = 0; // round 279 - reacted, but could not sustain a chase
         Array<String> shopsAlreadyPresent = new Array<>();
         for (MapObject obj : layer.getObjects()) {
             MapProperties prop = obj.getProperties();
@@ -1406,8 +1427,11 @@ public class MapStage extends GameStage {
                             {
                                 mob.fleeRange = Float.parseFloat(prop.get("fleeRange").toString());
                             }
-                            if (applyDefaultReactionRange(mob)) // round 252
-                                reactionDefaults++;
+                            switch (applyDefaultReactionRange(mob)) { // rounds 252 / 279
+                                case REACTION_THREAT -> reactionThreat++;
+                                case REACTION_PURSUE -> reactionPursue++;
+                                default -> { }
+                            }
                             if (prop.containsKey("speed")) //Check for flee range.
                             {
                                 mob.getData().speed = Float.parseFloat(prop.get("speed").toString());
@@ -1827,11 +1851,22 @@ public class MapStage extends GameStage {
                 }
             }
         }
-        if (reactionDefaults > 0) // round 252
-            System.out.println("[TFR-Threat] " + currentMap + ": " + reactionDefaults
-                    + " enemy(s) reacted to nothing - given the plane's default radius "
-                    + Config.instance().getTuningData().mapEnemyDefaultThreatRange + " px (pursue "
-                    + Config.instance().getTuningData().mapEnemyDefaultPursueRange + " px)");
+        if (reactionThreat > 0 || reactionPursue > 0) { // rounds 252 / 279
+            StringBuilder sb = new StringBuilder("[TFR-Threat] ").append(currentMap).append(": ");
+            if (reactionThreat > 0)
+                sb.append(reactionThreat).append(" enemy(s) reacted to nothing - given the plane's ")
+                        .append("default radius ")
+                        .append(Config.instance().getTuningData().mapEnemyDefaultThreatRange)
+                        .append(" px");
+            if (reactionThreat > 0 && reactionPursue > 0)
+                sb.append("; ");
+            if (reactionPursue > 0)
+                sb.append(reactionPursue).append(" already had a threatRange but could not sustain a ")
+                        .append("chase - given pursue ")
+                        .append(Config.instance().getTuningData().mapEnemyDefaultPursueRange)
+                        .append(" px");
+            System.out.println(sb);
+        }
     }
 
     //We could track MapObject IDs more generally but for now this is the only one we might need.

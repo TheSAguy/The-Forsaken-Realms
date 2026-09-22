@@ -163,6 +163,6 @@
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="352" y="16"/>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="336" y="32"/>
   <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="64" y="224"/>
-  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="48" y="240"/>
+  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="48" y="224"/>
  </objectgroup>
 </map>

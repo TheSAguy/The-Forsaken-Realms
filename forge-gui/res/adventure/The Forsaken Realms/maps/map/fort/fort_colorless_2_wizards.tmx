@@ -84,7 +84,7 @@
    }
 ]</property>
     <property name="enemy" value="Adept White Wizard"/>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="128" y="96" width="16" height="20">
@@ -98,7 +98,7 @@
    }
 ]</property>
     <property name="enemy" value="Adept Red Wizard"/>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="57" template="../../../../common/maps/obj/enemy.tx" x="338.333" y="379.667" width="16" height="20">

@@ -270,11 +270,11 @@
     <property name="waypoints" value="79,78,80"/>
    </properties>
   </object>
-  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="129.667" y="89.6667"/>
+  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="129.667" y="73.6667"/>
   <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="332.667" y="217.333"/>
-  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="43.3333" y="63.6667"/>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="59.3333" y="63.6667"/>
   <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="313.333" y="107.333"/>
-  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="33.3333" y="240.333"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="33.3333" y="224.333"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="45.6667" y="113"/>
   <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="105.333" y="65.3333"/>
   <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="45" y="209.333"/>

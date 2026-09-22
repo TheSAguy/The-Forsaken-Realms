@@ -121,7 +121,7 @@
     <property name="waypoints" value="119,120"/>
     <property name="enemy" value="Demon"/>
     <property name="inactive" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="5000"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="219.333" y="212.667">
@@ -137,7 +137,7 @@
     <property name="waypoints" value="125,126"/>
     <property name="enemy" value="Demon"/>
     <property name="inactive" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="5000"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="658" y="303.333">

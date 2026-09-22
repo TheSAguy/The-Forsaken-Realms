@@ -96,7 +96,7 @@
    <properties>
     <property name="waypoints" value="124,125"/>
     <property name="enemy" value="Dwarf Demolisher"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="70" template="../../../../common/maps/obj/gold.tx" x="538.696" y="356.285"/>

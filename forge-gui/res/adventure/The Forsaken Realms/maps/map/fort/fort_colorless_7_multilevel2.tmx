@@ -73,7 +73,7 @@
    <properties>
     <property name="enemy" value="High Cultist"/>
     <property name="spawn.Easy" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="82" template="../../../../common/maps/obj/enemy.tx" x="369.333" y="395.667">

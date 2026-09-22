@@ -65,7 +65,7 @@
     <property name="enemy" value="Greater Sandwurm"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="speedModifier" type="float" value="30"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="459.28" y="273.299"/>

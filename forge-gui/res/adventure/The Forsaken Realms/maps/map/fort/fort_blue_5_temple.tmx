@@ -53,7 +53,7 @@
 }</property>
     <property name="enemy" value="Merfolk Elite"/>
     <property name="speedModifier" type="float" value="4"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/booster.tx" x="381.883" y="147.478">

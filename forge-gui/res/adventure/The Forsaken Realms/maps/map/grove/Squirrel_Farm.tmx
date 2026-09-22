@@ -421,13 +421,13 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
    <object id="169" template="../../../../common/maps/obj/enemy.tx" x="13" y="364.833">
    <properties>
     <property name="enemy" value="Chatterfang"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="170" template="../../../../common/maps/obj/enemy.tx" x="400.5" y="63.5">
    <properties>
     <property name="enemy" value="Chatterfang"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="171" template="../../../../common/maps/obj/enemy.tx" x="29" y="379.5">
@@ -439,13 +439,13 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
   <object id="172" template="../../../../common/maps/obj/enemy.tx" x="480.5" y="322">
    <properties>
     <property name="enemy" value="Chatterfang"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="173" template="../../../../common/maps/obj/enemy.tx" x="472.333" y="207">
    <properties>
     <property name="enemy" value="Chatterfang"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

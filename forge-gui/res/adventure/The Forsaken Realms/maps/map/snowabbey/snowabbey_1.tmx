@@ -88,7 +88,7 @@
    <properties>
     <property name="waypoints" value="94,95"/>
     <property name="enemy" value="Yeti"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="63" template="../../../../common/maps/obj/waypoint.tx" x="311.333" y="221.333"/>
@@ -188,7 +188,7 @@
    <object id="96" template="../../../../common/maps/obj/enemy.tx" x="197" y="544.333">
    <properties>
     <property name="enemy" value="Giant Cyclops"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

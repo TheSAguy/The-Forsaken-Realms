@@ -82,7 +82,7 @@
    <properties>
     <property name="waypoints" value="133,134"/>
     <property name="enemy" value="Pirate"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="74" template="../../../../common/maps/obj/gold.tx" x="129.667" y="592"/>
@@ -183,7 +183,7 @@
   <object id="113" template="../../../../common/maps/obj/enemy.tx" x="417" y="429.667">
    <properties>
     <property name="enemy" value="Pirate"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="114" template="../../../../common/maps/obj/gold.tx" x="527.333" y="480.667"/>

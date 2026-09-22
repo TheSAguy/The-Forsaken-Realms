@@ -50,7 +50,7 @@
     <property name="displayNameOverride" value="Colossal Dreadmaw"/>
     <property name="enemy" value="Dinosaur Elite"/>
     <property name="speedModifier" type="float" value="5"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="987.242" y="280.756">
@@ -166,7 +166,7 @@
     <property name="waypoints" value="131,132"/>
     <property name="displayNameOverride" value="Colossal Dreadmaw"/>
     <property name="enemy" value="Dinosaur Elite"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="723.333" y="568"/>

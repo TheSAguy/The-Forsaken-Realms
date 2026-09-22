@@ -66,7 +66,7 @@
    <properties>
     <property name="waypoints" value="69,70"/>
     <property name="enemy" value="Master Blue Wizard"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="438.5" y="150"/>

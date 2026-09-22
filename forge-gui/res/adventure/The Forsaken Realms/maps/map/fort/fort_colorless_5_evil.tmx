@@ -72,7 +72,7 @@
   <object id="62" template="../../../../common/maps/obj/waypoint.tx" x="324.117" y="128.506"/>
   <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="261.376" y="274.226"/>
   <object id="66" template="../../../../common/maps/obj/waypoint.tx" x="53.9813" y="255.436"/>
-  <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="411.612" y="135.255"/>
+  <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="427.612" y="135.255"/>
   <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="358.033" y="289.427"/>
   <object id="70" template="../../../../common/maps/obj/booster.tx" x="207.333" y="90.3333">
    <properties>
@@ -133,7 +133,7 @@
    <properties>
     <property name="waypoints" value="83,84"/>
     <property name="enemy" value="Cyclops"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="80" template="../../obj/wood.tx" x="290.961" y="130.344">

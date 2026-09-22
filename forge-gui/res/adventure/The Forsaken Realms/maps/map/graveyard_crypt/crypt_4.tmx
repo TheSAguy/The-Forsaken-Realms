@@ -61,7 +61,7 @@
   <object id="63" template="../../../../common/maps/obj/enemy.tx" x="509.75" y="161.5">
    <properties>
     <property name="enemy" value="Master Black Wizard"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="179.5" y="156.75">
@@ -155,7 +155,7 @@
   <object id="81" template="../../../../common/maps/obj/enemy.tx" x="64.5" y="214.5">
    <properties>
     <property name="enemy" value="Hidden Snake"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="82" template="../../../../common/maps/obj/enemy.tx" x="237" y="199">

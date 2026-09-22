@@ -33,7 +33,7 @@
  <objectgroup id="4" name="Objects">
   <object id="68" template="../../../../common/maps/obj/enemy.tx" x="254.667" y="60.3333">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="enemy" value="Mimic"/>
    </properties>
   </object>

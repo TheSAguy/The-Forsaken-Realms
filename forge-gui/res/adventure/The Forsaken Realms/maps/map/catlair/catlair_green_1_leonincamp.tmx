@@ -54,7 +54,7 @@
     <property name="enemy" value="Leonin Weaponmaster"/>
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/enemy.tx" x="164.48" y="205.18" visible="1">
@@ -127,7 +127,7 @@
     <property name="enemy" value="Tiger"/>
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="88,89"/>
    </properties>
   </object>

@@ -52,7 +52,7 @@
    <properties>
     <property name="waypoints" value="152,153"/>
     <property name="enemy" value="Swamp Troll"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="261" y="63.167">
@@ -81,14 +81,14 @@
     <property name="waypoints" value="150,151"/>
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Exquisite Blood&quot; ] }"/>
     <property name="enemy" value="Fallen Angel"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="91" y="50.333">
    <properties>
     <property name="waypoints" value="154,155"/>
     <property name="enemy" value="Fungus"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="61" template="../../../../common/maps/obj/door_right.tx" x="0.333333" y="352" width="16" height="48"/>

@@ -154,7 +154,7 @@
    <object id="79" template="../../../../common/maps/obj/enemy.tx" x="278.308" y="269.487">
    <properties>
     <property name="enemy" value="Gyome"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

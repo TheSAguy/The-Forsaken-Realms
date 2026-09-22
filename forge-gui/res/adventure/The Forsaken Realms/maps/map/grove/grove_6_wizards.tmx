@@ -132,7 +132,7 @@
    <properties>
     <property name="enemy" value="Green Golem"/>
     <property name="speedModifier" type="float" value="2"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="77,95,91,81,73,81,92,93,94,"/>
    </properties>
   </object>

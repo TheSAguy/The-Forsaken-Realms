@@ -144,7 +144,7 @@
   <object id="90" template="../../../../common/maps/obj/enemy.tx" x="79.5" y="133">
    <properties>
     <property name="enemy" value="Clay Golem"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="92,91"/>
    </properties>
   </object>

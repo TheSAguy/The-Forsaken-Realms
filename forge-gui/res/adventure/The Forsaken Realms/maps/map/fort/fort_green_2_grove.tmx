@@ -64,7 +64,7 @@
    <properties>
     <property name="waypoints" value="78,79"/>
     <property name="enemy" value="Satyr Grove Guardian"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="332" y="92.6667"/>

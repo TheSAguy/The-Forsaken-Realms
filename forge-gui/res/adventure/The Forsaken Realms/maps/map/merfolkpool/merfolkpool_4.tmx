@@ -35,7 +35,7 @@
     <property name="effect">{ &quot;startBattleWithCard&quot;: [ &quot;Sky Diamond&quot;]
 }</property>
     <property name="enemy" value="Storm Titan"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/gold.tx" x="242.75" y="25"/>

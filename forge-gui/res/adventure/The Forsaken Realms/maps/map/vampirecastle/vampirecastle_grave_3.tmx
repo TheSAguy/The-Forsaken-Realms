@@ -298,7 +298,7 @@
    <object id="84" template="../../../../common/maps/obj/enemy.tx" x="198.509" y="40.5984">
    <properties>
     <property name="enemy" value="High Vampire"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

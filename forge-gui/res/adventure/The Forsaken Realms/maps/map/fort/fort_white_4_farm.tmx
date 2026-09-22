@@ -211,7 +211,7 @@
     <property name="displayNameOverride" value="Baron Levilain"/>
     <property name="effect" value="{ &quot;startBattleWithCard&quot;: [ &quot;Imposing Sovereign&quot; ] }"/>
     <property name="enemy" value="Human elite"/>
-    <property name="threatRange" type="int" value="40"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="85" template="../../../../common/maps/obj/manashards.tx" x="490.667" y="220"/>

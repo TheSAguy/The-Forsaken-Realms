@@ -139,7 +139,7 @@
     <property name="enemy" value="Unholy Knight"/>
     <property name="hidden" type="bool" value="false"/>
     <property name="pursueRange" type="float" value="60"/>
-    <property name="threatRange" type="float" value="30"/>
+    <property name="threatRange" type="float" value="20"/>
    </properties>
   </object>
   <object id="83" template="../../../../../common/maps/obj/gate.tx" x="207.878" y="136.693">

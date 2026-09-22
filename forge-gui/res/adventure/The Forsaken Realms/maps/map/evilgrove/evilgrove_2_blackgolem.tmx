@@ -35,7 +35,7 @@
   <object id="91" template="../../obj/wood.tx" x="67.3552" y="39.4747"/>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="144" y="48">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="enemy" value="Adept Black Wizard"/>
    </properties>
   </object>
@@ -74,7 +74,7 @@
   <object id="64" template="../../../../common/maps/obj/enemy.tx" x="432" y="179.667">
    <properties>
     <property name="enemy" value="Crocodile"/>
-    <property name="threatRange" type="int" value="60"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="147.333" y="194">

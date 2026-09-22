@@ -84,7 +84,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/enemy.tx" x="96" y="352">
    <properties>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="effect">{
  &quot;lifeModifier&quot;: 10,
  &quot;startBattleWithCard&quot;: [ &quot;Hesitation&quot; ]
@@ -95,7 +95,7 @@
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="320" y="352">
    <properties>
     <property name="enemy" value="Djinn"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="87,85,87,97"/>
    </properties>
   </object>
@@ -116,7 +116,7 @@
   <object id="80" template="../../../../common/maps/obj/enemy.tx" x="304" y="304">
    <properties>
     <property name="enemy" value="Master Blue Wizard"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="90,91,88"/>
    </properties>
   </object>

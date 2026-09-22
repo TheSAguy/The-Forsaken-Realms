@@ -111,7 +111,7 @@
    <properties>
     <property name="enemy" value="Bandit Archer"/>
     <property name="spawn.Normal" type="bool" value="true"/>
-    <property name="threatRange" type="int" value="50"/>
+    <property name="threatRange" type="int" value="20"/>
     <property name="waypoints" value="30,31"/>
    </properties>
   </object>

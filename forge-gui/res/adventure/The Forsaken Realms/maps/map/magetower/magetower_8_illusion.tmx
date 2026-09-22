@@ -93,7 +93,7 @@
   <object id="86" template="../../../../common/maps/obj/enemy.tx" x="96" y="144">
    <properties>
     <property name="enemy" value="Illusionist"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="96,98,102,92,102,98"/>
    </properties>
   </object>
@@ -107,7 +107,7 @@
   <object id="88" template="../../../../common/maps/obj/enemy.tx" x="209.119" y="63.0256">
    <properties>
     <property name="enemy" value="Djinn"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="89" template="../../../../common/maps/obj/booster.tx" x="108.019" y="174.228">
@@ -150,7 +150,7 @@
   }
 ]
 </property>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
     <property name="waypoints" value="99,100,101,100"/>
    </properties>
   </object>

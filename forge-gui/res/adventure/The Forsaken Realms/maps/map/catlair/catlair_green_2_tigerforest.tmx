@@ -41,7 +41,7 @@
     <property name="enemy" value="Leonin Warrior"/>
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="62" template="../../../../common/maps/obj/enemy.tx" x="68.1467" y="167.513" visible="1">
@@ -113,7 +113,7 @@
     <property name="enemy" value="Tiger"/>
     <property name="fleeRange" value="30"/>
     <property name="pursueRange" type="int" value="30"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="81" template="../../../../common/maps/obj/collision.tx" x="-15.5" y="0.028" width="16" height="273.444"/>

@@ -45,7 +45,7 @@
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="192.235" y="47.7421">
    <properties>
     <property name="enemy" value="Gitaxian Scientist"/>
-    <property name="threatRange" value="20"/>
+    <property name="threatRange" value="40"/>
     <property name="waypoints" value="68,69,70"/>
    </properties>
   </object>
@@ -132,7 +132,7 @@
 }]</property>
    </properties>
   </object>
-  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="128" y="16"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="160" y="16"/>
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="112" y="16"/>
   <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="240" y="48"/>
   <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="256" y="64"/>

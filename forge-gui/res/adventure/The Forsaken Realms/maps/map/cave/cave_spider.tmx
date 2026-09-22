@@ -80,7 +80,7 @@
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="199.504" y="63.9914">
    <properties>
     <property name="enemy" value="Cave Spider"/>
-    <property name="threatRange" type="int" value="20"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="55" template="../../../../common/maps/obj/enemy.tx" x="395.893" y="125.396">

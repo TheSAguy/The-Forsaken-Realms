@@ -81,7 +81,7 @@
    <properties>
     <property name="enemy" value="Turtle"/>
     <property name="speedModifier" type="float" value="60"/>
-    <property name="threatRange" type="int" value="30"/>
+    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="527.043" y="415.557">
