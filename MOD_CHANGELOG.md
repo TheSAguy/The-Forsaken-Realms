@@ -17767,7 +17767,41 @@ until the new owner's town grows over it - claimWastelandRing() takes an owned t
 the stronger, which beside its own town it is. The comment over the AI path that said such a ring "could never be
 reclaimed" dated from before the pull contest and is replaced. Logic only; not seen in play yet.
 
-Also this round, no code yet: the user's new mountain art (`World_Mountains.png`, 384x576, 48 px tiles, clean
+### Part 2: the barrier's mountains at full resolution
+
+The user's new mountain art - `World_Mountains.png`, 384x576, 48 px per tile (three times ours), clean alpha, a sheet
+of mountain GROUPS rather than an autotile - previewed on a real stretch of the barrier three ways (today's 16 px
+autotile, the art shrunk to 16 px, the art at its own 48 px). The first packing drew *"The mountains look a little
+sparce. It should be more solid too many 'gaps'"*; the packing below answered it (*"That looks good!"*). The user
+chose *"full Resolution"* and credited the art: **Sythian Bard** (standalone-packaging/CREDITS.md, a new "World art"
+section).
+
+`forge.adventure.world.BarrierMountains` (new):
+- **The sheet** is the plane's `world/structures/barrier_mountains.png`. Every separate group of opaque pixels is a
+  piece (specks under 800 pixels dropped), cut alone - no neighbour's pixels inside its rectangle - and shelf-packed
+  into one texture at the first draw; its size in tiles is its size in pixels / 48, rounded up. So a group can be
+  redrawn, added or removed on the sheet with nothing else to change. The shipped sheet gives 16 pieces: 2 one-tile
+  (the carpet), 2 of 1x2, 12 of four tiles or more.
+- **The packing**, deterministic from the world's seed (`World.getSeed()`, new), computed at the first draw - nothing
+  saved: a carpet of the one-tile groups on every barrier tile, a second carpet half a tile across and down, a third
+  half a tile across (70%), then the big groups - two layers, only where the whole piece sits on barrier, at most 40%
+  under the layer already placed - and a pass of the middle ones; each chunk's pieces sorted by bottom edge, north
+  first, and the loaded 3x3 merged and re-sorted when the player changes chunk, so peaks overlap correctly across
+  chunk borders. Seen: 132,379 pieces over 40,598 barrier tiles in 47 ms.
+- **The drawing**, from WorldBackground.draw() right after the terrain chunks - over the ground, under every actor -
+  culled to the camera, per fog tile: nothing on unexplored ground, remembered ground at 45% (the same 55% black
+  World.hazeTile() lays on the terrain), the batch colour restored after. A piece whose tiles share one fog state is
+  one draw. Linear filtering, so zooming out does not shimmer.
+- **Under it**: a barrier tile draws its ground, darkened to the art's shadow tone (half its average colour, 85%)
+  where barrier surrounds it on all sides, so whatever shows between peaks reads as valley and the range's edge keeps
+  the peaks' own outline. The minimap shows barrier in the art's average colour. Without the sheet the round-294
+  autotile (barrier_structures) is the fallback. Collision is the barrier's own, untouched.
+
+Seen in the agent game (the pentagon world): the range beside open wasteland at the default zoom, exactly as
+previewed; with fog on and the map reset, the wall 8 tiles away stayed hidden, appeared tile by tile as the player
+walked up (and the wall stopped the walk), and stayed dimmed once the player walked away.
+
+The preview notes, for the record: the user's new mountain art (`World_Mountains.png`, 384x576, 48 px tiles, clean
 alpha - a sheet of mountain groups, not an autotile). Previewed on a real stretch of the barrier three ways - today's
 16 px autotile, the art shrunk to 16 px, and the art at its own 48 px (three times our detail) packed solid (a carpet
 of the small peak groups on every barrier tile plus two offset carpets, the big mountains and ranges on top, all drawn

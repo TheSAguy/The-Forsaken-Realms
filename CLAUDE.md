@@ -86,8 +86,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (world/points_of_interest.json): every castle exactly 259 tiles from the Capitol (was 241-322). Walls now uniform.
   Live + agent folders packaged.
 - **Round 296 part 1 (local commit, NOT pushed): every capture flips RECOLOR_RADIUS** (`captureFlipRadius()`); the
-  captured town regrows from there. Packaged. PENDING the user's go-ahead: the new mountain art at full 48 px as an
-  overlay on the barrier (previewed, packed solid) - see MOD_CHANGELOG round 296.
+  captured town regrows from there. Packaged.
+- **Round 296 part 2 (local commit, NOT pushed): the barrier's mountains at full resolution** - Sythian Bard's art,
+  `world/structures/barrier_mountains.png` (48 px per tile; every separate group on the sheet is a piece, so the user
+  can redraw/add groups freely), packed solid from the world seed, drawn by `BarrierMountains` from
+  WorldBackground.draw() over the terrain and under the actors, per-tile fog. SEEN in the agent game incl. fog. Packaged.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

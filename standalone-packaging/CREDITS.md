@@ -71,6 +71,10 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   among them); many are GameDeveloperStudio (Robert Brooks) creature designs. Authors to be
   confirmed per sheet.
 
+## World art
+
+- **World mountains** (the mountain ranges of the barrier between the realms) - **Sythian Bard**.
+
 ## License
 
 This game is free software under the **GNU General Public License v3**

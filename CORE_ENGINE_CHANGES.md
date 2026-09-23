@@ -137,6 +137,14 @@ Neither round updated this file at the time, against the standing rule. Both tou
 - **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — `captureFlipRadius()` takes no arguments
   and returns RECOLOR_RADIUS; onMageArrived() uses it without reading the old radius.
 - **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the player capture likewise.
+- **`forge-gui-mobile/src/forge/adventure/world/BarrierMountains.java`** (new) — the barrier's mountains from
+  `world/structures/barrier_mountains.png` at 48 px per tile: pieces cut from the sheet, packed from the seed,
+  drawn per fog tile.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldBackground.java`** — draw() calls BarrierMountains.draw() after
+  the terrain chunks. **Merge note:** keep that call after the chunk loop if upstream touches draw().
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `getSeed()`; generateBiomeSprite() and
+  drawMinimapTile() draw a barrier tile as ground (darkened inside the range) / the art's colour when the sheet is
+  present, the round-294 autotile otherwise.
 
 ### Round 295: the colors on a regular pentagon
 

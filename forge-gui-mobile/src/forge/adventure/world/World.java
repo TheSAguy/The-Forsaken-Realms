@@ -1128,7 +1128,8 @@ public class World implements Disposable, SaveFileContent {
         int biomeTerrain = getTerrainIndex(x, y);
         // Round 294: a barrier tile draws its layers as plain ground and the barrier's own sheet on top (end of this
         // method) - the user: "I want to change the 'Mountain' images, can you separate that in it's own sheet".
-        boolean barrier = barrierTextures.length > 0 && isBarrierTile(x, y);
+        boolean highResBarrier = BarrierMountains.isAvailable(); // round 296
+        boolean barrier = (barrierTextures.length > 0 || highResBarrier) && isBarrierTile(x, y);
         if (barrier)
             biomeTerrain = 0;
         // Round 289: a FRESH pixmap per call, not upstream's shared `globalTileDrawing`.
@@ -1215,7 +1216,20 @@ public class World implements Disposable, SaveFileContent {
                     bitIndex--;
                 }
             }
-            barrierTextures[barrierVariant(x, y)].drawPixmapOn(0, barrierNeighbors, drawingPixmap);
+            if (highResBarrier) {
+                // Round 296: the mountains themselves are drawn over the terrain at the art's own resolution
+                // (BarrierMountains, from WorldBackground). The tile keeps its ground - darkened to the art's shadow
+                // tone where barrier surrounds it, so whatever shows between the peaks reads as valley, while the
+                // range's edge stays on ordinary ground and keeps the peaks' own outline.
+                if (barrierNeighbors == 0b111_111_111) {
+                    com.badlogic.gdx.graphics.Color floor = new com.badlogic.gdx.graphics.Color();
+                    com.badlogic.gdx.graphics.Color.rgba8888ToColor(floor, BarrierMountains.floorColor());
+                    drawingPixmap.setColor(floor.r, floor.g, floor.b, 0.85f);
+                    drawingPixmap.fillRectangle(0, 0, drawingPixmap.getWidth(), drawingPixmap.getHeight());
+                }
+            } else {
+                barrierTextures[barrierVariant(x, y)].drawPixmapOn(0, barrierNeighbors, drawingPixmap);
+            }
         }
 
         return drawingPixmap;
@@ -3389,6 +3403,14 @@ public class World implements Disposable, SaveFileContent {
      */
     private void drawMinimapTile(Pixmap target, int x, int rawY) {
         int mm = data.miniMapTileSize;
+        if (BarrierMountains.isAvailable() && isBarrierRaw(x, rawY)) {
+            // Round 296: the full-resolution mountains' average colour.
+            com.badlogic.gdx.graphics.Color art = new com.badlogic.gdx.graphics.Color();
+            com.badlogic.gdx.graphics.Color.rgba8888ToColor(art, BarrierMountains.minimapColor());
+            target.setColor(art);
+            target.fillRectangle(x * mm, rawY * mm, mm, mm);
+            return;
+        }
         if (barrierTextures.length > 0 && isBarrierRaw(x, rawY) && wasteBiome() != null) {
             // Round 294: ground, then the barrier sheet's own minimap pixels - the top-left of its "barrier" region,
             // the same corner every structure's minimap pixel comes from.
@@ -5565,6 +5587,11 @@ public class World implements Disposable, SaveFileContent {
         // Round 289: globalTileDrawing is deliberately absent - this plane does not use upstream's shared tile
         // pixmap (see generateBiomeSprite). globalTexture is upstream's marker sheet and still belongs here.
         Forge.safeDispose(biomeImage, fogOfWarPixmap, fogTilePixmap, globalTexture);
+    }
+
+    /** Round 296: the world's generation seed (BarrierMountains lays its pieces out from it). */
+    public long getSeed() {
+        return seed;
     }
 
     public void setSeed(long seedOffset) {

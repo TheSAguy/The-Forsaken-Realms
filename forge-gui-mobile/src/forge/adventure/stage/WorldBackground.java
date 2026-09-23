@@ -270,6 +270,8 @@ public class WorldBackground extends Actor {
                 batch.draw(getChunkTexture(targetX, targetY), transChunkToWorld(targetX), transChunkToWorld(targetY));
             }
         }
+        // Round 296: the barrier's mountains at full resolution, over the terrain and under every actor.
+        forge.adventure.world.BarrierMountains.draw(batch, world, px, py, getStage().getCamera());
     }
 
     public void loadChunk(int x, int y) {
