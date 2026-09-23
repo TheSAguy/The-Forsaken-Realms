@@ -23,7 +23,13 @@
     "height":  0.7,
     "color":  "10a2e0",
     "spriteNames":  [
-                        "Shell"
+                        "BlueCoral",
+                        "BlueSeaweed",
+                        "BlueGrass",
+                        "BlueFlower",
+                        "BlueRock",
+                        "BlueShell",
+                        "BlueMushroom"
                     ],
     "enemies":  [
                     "Sirena, Tide-Singer",
@@ -688,7 +694,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/blue_structures.atlas",
+                           "structureAtlasPath":  "world/structures/blue_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/blue.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.1,
@@ -742,7 +748,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/blue_structures.atlas",
+                           "structureAtlasPath":  "world/structures/blue_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/beach.png",
                            "maskPath":  "world/structures/masks/ring.png",
                            "height":  0.5,

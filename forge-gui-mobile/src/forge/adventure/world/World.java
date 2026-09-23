@@ -355,6 +355,9 @@ public class World implements Disposable, SaveFileContent {
      *  "poiId|item|itemName" -> the day that place paid it (-1 = paid before this round, found on a later visit). A
      *  key here is never paid again, however the enemy that carries it comes back. */
     private final java.util.Map<String, Integer> oncePaidRewards = new java.util.HashMap<>();
+    // Round 303: the doodad set a world's doodads were placed from - see rescatterDoodads(). 0 = a save from before.
+    public static final int DOODAD_SET = 303;
+    private int doodadSet = DOODAD_SET;
 
     public java.util.Map<String, Integer> getPoiLootHeldDay() {
         return poiLootHeldDay;
@@ -976,6 +979,8 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             oncePaidRewards.putAll((java.util.Map<String, Integer>) saveFileData.readObject("oncePaidRewards"));
         }
+        // Round 303: an older save's doodads are placed again on the first chunk drawn - see rescatterDoodads().
+        doodadSet = saveFileData.containsKey("doodadSet") ? saveFileData.readInt("doodadSet") : 0;
         arenaWinWeek.clear();
         if (saveFileData.containsKey("arenaWinWeek")) {
             //noinspection unchecked
@@ -1088,6 +1093,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("lairClearCount", lairClearCount); // round 299
         data.storeObject("lairBossDownDay", lairBossDownDay); // round 299
         data.storeObject("oncePaidRewards", oncePaidRewards); // round 299
+        data.store("doodadSet", doodadSet); // round 303
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
@@ -2047,6 +2053,7 @@ public class World implements Disposable, SaveFileContent {
             lairClearCount.clear(); // round 299 - a new world's lairs are all first visits
             lairBossDownDay.clear();
             oncePaidRewards.clear();
+            doodadSet = DOODAD_SET; // round 303 - a new world's doodads come from the current lists
             arenaWinWeek.clear(); // round 135
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
@@ -2840,35 +2847,10 @@ public class World implements Disposable, SaveFileContent {
 ///////// distribute small rocks and trees across the map
 //////////////////
             mapObjectIds = new SpritesDataMap(getChunkSize(), data.tileSize, data.width / getChunkSize());
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    int invertedHeight = height - y - 1;
-                    int currentBiome = highestBiome(biomeMap[x][invertedHeight]);
-                    if (currentBiome >= data.GetBiomes().size())
-                        continue;//roads
-                    if (isStructure(x, y))
-                        continue;
-                    BiomeData biome = data.GetBiomes().get(currentBiome);
-                    for (String name : biome.spriteNames) {
-                        BiomeSpriteData sprite = data.GetBiomeSprites().getSpriteData(name);
-                        double spriteNoise = (noise.eval(x / (double) width * noiseZoom * sprite.resolution, y / (double) invertedHeight * noiseZoom * sprite.resolution) + 1) / 2;
-                        if (spriteNoise >= sprite.startArea && spriteNoise <= sprite.endArea) {
-                            if (random.nextFloat() <= sprite.density) {
-                                String spriteKey = sprite.key();
-                                int key;
-                                if (!mapObjectIds.containsKey(spriteKey)) {
-
-                                    key = mapObjectIds.put(sprite.key(), sprite, data.GetBiomeSprites());
-                                } else {
-                                    key = mapObjectIds.intKey(spriteKey);
-                                }
-                                mapObjectIds.putPosition(key, new Vector2((((float) x) + .25f + random.nextFloat() / 2) * data.tileSize, (((float) y + .25f) - random.nextFloat() / 2) * data.tileSize));
-                                break;//only on sprite per point
-                            }
-                        }
-                    }
-                }
-            }
+            // Round 303: the loop that stood here, moved to placeAllDoodads() (the one-time re-scatter runs it too).
+            // Plain ground draws from `random` exactly as it did; water doodads from their own stream.
+            placeAllDoodads(mapObjectIds, noise, noiseZoom, random, new Random(seed ^ STRUCTURE_DOODAD_SALT));
+            doodadSet = DOODAD_SET;
             mapMarkerPixmap.dispose();
             Pixmap previousBiomeImage = biomeImage; // round 123 review S2-1: a second game in one session leaked the first world's 31 MB image
             biomeImage = pix;
@@ -4912,27 +4894,162 @@ public class World implements Disposable, SaveFileContent {
                     continue;
                 int dy = wy - centerWorldY;
                 int distSq = dx * dx + dy * dy;
-                if (distSq > outerRadiusSq || distSq < innerRadiusSq || isStructure(wx, wy))
+                if (distSq > outerRadiusSq || distSq < innerRadiusSq)
                     continue;
                 if (claimedTiles != null && !claimedTiles.contains(packTile(wx, wy)))
                     continue;
                 if ((biomeMap[wx][height - wy - 1] & roadBit) != 0)
                     continue;
-                for (String name : biome.spriteNames) {
-                    BiomeSpriteData sprite = data.GetBiomeSprites().getSpriteData(name);
-                    if (sprite == null || random.nextFloat() > Math.min(1f, sprite.density * DOODAD_DENSITY_MULTIPLIER))
-                        continue;
-                    String spriteKey = sprite.key();
-                    int key = mapObjectIds.containsKey(spriteKey)
-                            ? mapObjectIds.intKey(spriteKey)
-                            : mapObjectIds.put(spriteKey, sprite, data.GetBiomeSprites());
-                    mapObjectIds.putPosition(key, new Vector2(
-                            (wx + .25f + random.nextFloat() / 2) * tileSize,
-                            (wy + .25f - random.nextFloat() / 2) * tileSize));
-                    break; // one doodad per tile, same as original world-gen placement
-                }
+                // Round 303: pickDoodad() - ground doodads on plain tiles (as here before), water doodads on water.
+                BiomeSpriteData sprite = pickDoodad(wx, wy, biome, null, 0f, random, DOODAD_DENSITY_MULTIPLIER);
+                if (sprite == null)
+                    continue;
+                String spriteKey = sprite.key();
+                int key = mapObjectIds.containsKey(spriteKey)
+                        ? mapObjectIds.intKey(spriteKey)
+                        : mapObjectIds.put(spriteKey, sprite, data.GetBiomeSprites());
+                mapObjectIds.putPosition(key, new Vector2(
+                        (wx + .25f + random.nextFloat() / 2) * tileSize,
+                        (wy + .25f - random.nextFloat() / 2) * tileSize));
             }
         }
+    }
+
+    /**
+     * Round 303: the doodad for tile (x, y) of `biome`, or null - the one placement rule every doodad pass uses. A plain
+     * tile takes the biome's ground doodads; a structure tile takes only a doodad whose onStructures names the
+     * structure the tile is drawn as (lily pads on "water"); a ground patch (terrain[], no structure name) takes none,
+     * as before. noise null = no noise band (the repaint paths never had one); densityFactor = their boost. The first
+     * doodad in the list that passes wins, as world generation always did.
+     */
+    private BiomeSpriteData pickDoodad(int x, int y, BiomeData biome, OpenSimplexNoise noise, float noiseZoom, Random rng,
+                                       float densityFactor) {
+        if (biome.spriteNames == null)
+            return null;
+        String structure = null;
+        if (isStructure(x, y)) {
+            structure = structureNameAtTile(x, y);
+            if (structure == null)
+                return null;
+        }
+        int invertedHeight = height - y - 1;
+        for (String name : biome.spriteNames) {
+            BiomeSpriteData sprite = data.GetBiomeSprites().getSpriteData(name);
+            if (sprite == null)
+                continue;
+            boolean structureDoodad = sprite.onStructures != null && sprite.onStructures.length > 0;
+            if (structure == null ? structureDoodad
+                    : !(structureDoodad && Arrays.asList(sprite.onStructures).contains(structure)))
+                continue;
+            if (noise != null) {
+                // world generation's own formula, y / invertedHeight included
+                double spriteNoise = (noise.eval(x / (double) width * noiseZoom * sprite.resolution,
+                        y / (double) invertedHeight * noiseZoom * sprite.resolution) + 1) / 2;
+                if (spriteNoise < sprite.startArea || spriteNoise > sprite.endArea)
+                    continue;
+            }
+            if (rng.nextFloat() > Math.min(1f, sprite.density * densityFactor))
+                continue;
+            return sprite;
+        }
+        return null;
+    }
+
+    /**
+     * Round 303: the name of the structure at tile (x, y) ("water", "hole"...), or null - by the renderer's own rule:
+     * a tile holding wasteland numbering (holdsWasteSpaceValue(), castle keeps included) is named in the wasteland's
+     * set, which drawableTerrainIndex() then maps by name (a wasteland "hole" on the player's land is the player's
+     * lake). The castle anchors that rule needs exist before any doodad pass: generateNew() places the points of
+     * interest before its territory placement and its doodads, and a loaded world has them. (A first version read
+     * every waste-bit tile as wasteland, and missed each lake near a castle - colour land there carries the bit.)
+     */
+    private String structureNameAtTile(int x, int y) {
+        int index = getTerrainIndex(x, y);
+        long tileBiomes = biomeMap[x][height - y - 1];
+        int layer = highestBiome(tileBiomes);
+        List<BiomeData> biomes = data.GetBiomes();
+        if (index <= 0 || layer < 0 || layer >= biomes.size())
+            return null;
+        if (holdsWasteSpaceValue(layer, x, y, tileBiomes)) {
+            BiomeData waste = wasteBiome();
+            return waste == null ? null : structureNameAt(waste, index);
+        }
+        return structureNameAt(biomes.get(layer), index);
+    }
+
+    // Round 303: water doodads draw from their own random stream, so world generation's `random` sequence - which
+    // everything after the doodad pass also draws from - is exactly what it was for plain ground.
+    private static final long STRUCTURE_DOODAD_SALT = 0x5712C7L;
+
+    /** Round 303: world generation's doodad pass (moved here from generateNew()), shared with rescatterDoodads(). */
+    private int[] placeAllDoodads(SpritesDataMap into, OpenSimplexNoise noise, float noiseZoom, Random groundRng,
+                                  Random structureRng) {
+        return placeAllDoodads(into, noise, noiseZoom, groundRng, structureRng, null, null);
+    }
+
+    /** openTiles / onStructures, if given, count each biome's plain tiles (the ground doodads' candidates) and the
+     *  doodads placed on structures (the water ones, per kind) for the log. */
+    private int[] placeAllDoodads(SpritesDataMap into, OpenSimplexNoise noise, float noiseZoom, Random groundRng,
+                                  Random structureRng, int[] openTiles, Map<String, Integer> onStructures) {
+        List<BiomeData> biomes = data.GetBiomes();
+        int[] placed = new int[biomes.size()];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int currentBiome = highestBiome(biomeMap[x][height - y - 1]);
+                if (currentBiome < 0 || currentBiome >= biomes.size())
+                    continue; // roads
+                boolean structure = isStructure(x, y);
+                if (openTiles != null && !structure)
+                    openTiles[currentBiome]++;
+                Random rng = structure ? structureRng : groundRng;
+                BiomeSpriteData sprite = pickDoodad(x, y, biomes.get(currentBiome), noise, noiseZoom, rng, 1f);
+                if (sprite == null)
+                    continue;
+                String spriteKey = sprite.key();
+                int key = into.containsKey(spriteKey) ? into.intKey(spriteKey) : into.put(spriteKey, sprite, data.GetBiomeSprites());
+                into.putPosition(key, new Vector2((((float) x) + .25f + rng.nextFloat() / 2) * data.tileSize,
+                        (((float) y + .25f) - rng.nextFloat() / 2) * data.tileSize));
+                placed[currentBiome]++;
+                if (structure && onStructures != null)
+                    onStructures.merge(sprite.name, 1, Integer::sum);
+            }
+        }
+        return placed;
+    }
+
+    /**
+     * Round 303 (user: "update the Doodads for ALL colors"): doodads are placed once, at world generation, and a save
+     * keeps them by name - one from before this round holds only the old kinds (blue land had nothing but shells, and
+     * no water had any). The first time such a world draws a chunk, every doodad is placed again from the biomes'
+     * current lists, the way generateNew() places them (the world seed's noise bands), on the land as it is NOW,
+     * claimed territory included. Decoration only - doodads collide with nothing and nothing refers to them.
+     */
+    private void rescatterDoodads() {
+        long t0 = System.currentTimeMillis();
+        int before = 0;
+        for (int cx = 0; cx < getWidthInChunks(); cx++)
+            for (int cy = 0; cy < getHeightInChunks(); cy++)
+                before += mapObjectIds.positions(cx, cy).size();
+        int oldSet = doodadSet;
+        SpritesDataMap fresh = new SpritesDataMap(getChunkSize(), data.tileSize, data.width / getChunkSize());
+        int[] open = new int[data.GetBiomes().size()];
+        Map<String, Integer> onStructures = new TreeMap<>();
+        int[] placed = placeAllDoodads(fresh, new OpenSimplexNoise(seed), data.noiseZoomBiome,
+                new Random(seed ^ 0x303L), new Random(seed ^ STRUCTURE_DOODAD_SALT), open, onStructures);
+        mapObjectIds = fresh;
+        doodadSet = DOODAD_SET;
+        int total = 0;
+        StringBuilder per = new StringBuilder();
+        List<BiomeData> biomes = data.GetBiomes();
+        for (int i = 0; i < placed.length; i++) {
+            total += placed[i];
+            per.append(per.length() == 0 ? "" : ", ").append(biomes.get(i).name).append(" ").append(placed[i])
+                    .append("/").append(open[i]).append(open[i] > 0
+                            ? String.format(" (%.1f%%)", 100f * placed[i] / open[i]) : "");
+        }
+        System.out.println("[TFR-Doodads] a save from doodad set " + oldSet + ": its " + before + " doodads placed again"
+                + " from the current lists -> " + total + " (" + per + ") in " + (System.currentTimeMillis() - t0) + " ms;"
+                + " on structures " + onStructures);
     }
 
     // Companion to neutralizeTerritoryOutsideRadius() - that method never touches mapObjectIds
@@ -4979,23 +5096,20 @@ public class World implements Disposable, SaveFileContent {
         long roadBit = 1L << biomes.size();
         for (int wx = 0; wx < width; wx++) {
             for (int wy = 0; wy < height; wy++) {
-                if (highestBiome(getBiome(wx, wy)) != biomeIndex || isStructure(wx, wy))
+                if (highestBiome(getBiome(wx, wy)) != biomeIndex)
                     continue;
                 if ((biomeMap[wx][height - wy - 1] & roadBit) != 0)
                     continue;
-                for (String name : biome.spriteNames) {
-                    BiomeSpriteData sprite = data.GetBiomeSprites().getSpriteData(name);
-                    if (sprite == null || random.nextFloat() > sprite.density)
-                        continue;
-                    String spriteKey = sprite.key();
-                    int key = mapObjectIds.containsKey(spriteKey)
-                            ? mapObjectIds.intKey(spriteKey)
-                            : mapObjectIds.put(spriteKey, sprite, data.GetBiomeSprites());
-                    mapObjectIds.putPosition(key, new Vector2(
-                            (wx + .25f + random.nextFloat() / 2) * tileSize,
-                            (wy + .25f - random.nextFloat() / 2) * tileSize));
-                    break;
-                }
+                BiomeSpriteData sprite = pickDoodad(wx, wy, biome, null, 0f, random, 1f); // round 303
+                if (sprite == null)
+                    continue;
+                String spriteKey = sprite.key();
+                int key = mapObjectIds.containsKey(spriteKey)
+                        ? mapObjectIds.intKey(spriteKey)
+                        : mapObjectIds.put(spriteKey, sprite, data.GetBiomeSprites());
+                mapObjectIds.putPosition(key, new Vector2(
+                        (wx + .25f + random.nextFloat() / 2) * tileSize,
+                        (wy + .25f - random.nextFloat() / 2) * tileSize));
             }
         }
     }
@@ -5678,6 +5792,8 @@ public class World implements Disposable, SaveFileContent {
     }
 
     public List<Pair<Vector2, Integer>> GetMapObjects(int chunkX, int chunkY) {
+        if (doodadSet < DOODAD_SET)
+            rescatterDoodads(); // round 303: once, for a save from before the current doodad set
         return mapObjectIds.positions(chunkX, chunkY);
     }
 

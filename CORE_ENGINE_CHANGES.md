@@ -132,6 +132,16 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 303: HD doodads, water doodads, the doodad re-scatter
+
+- **`data/BiomeSpriteData.java`** - `scale` and `onStructures` (catalog-only fields, never saved).
+- **`stage/MapSprite.java`** - `getMapSprites()` takes a doodad's layer and scale from the catalog; `setRegionScale()`
+  and its draw path.
+- **`world/World.java`** - `pickDoodad()`, `structureNameAtTile()`, `placeAllDoodads()` (world generation's doodad
+  loop, moved), `rescatterDoodads()` + the saved `doodadSet`, run from `GetMapObjects()`; the two repaint loops use
+  `pickDoodad()`. Merge watch: upstream changes to generateNew()'s "distribute small rocks and trees" loop now land in
+  `placeAllDoodads()`.
+
 ### Round 302: +Life once per game
 
 - **`stage/WorldStage.java`** - `setWinner()`: an overworld win's loot goes through

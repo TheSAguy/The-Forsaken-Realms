@@ -24,6 +24,14 @@ public class BiomeSpriteData implements SaveFileContent {
     // always re-reads the master catalog entry via BiomeSprites.getSpriteData(name), never the
     // save-restored copy, so this field only ever needs to exist on the JSON-loaded catalog.
     public String atlas;
+    // Round 303 (user: "update the Doodads for ALL colors", then "can we add some, very few, doodads to water?"). Both
+    // catalog-only like `atlas`: read from map_sprites.json, never stored with a placed doodad.
+    // scale - the doodad is drawn at scale x its region (0.5 puts a 32 px picture on one 16-unit tile, the 2x terrain's
+    //         texel size).
+    // onStructures - set, the doodad goes ONLY on tiles drawn as one of these structures (lily pads on "water", coral
+    //         in the sea) and never on plain ground; unset, only on plain ground, as doodads always were.
+    public float scale = 1f;
+    public String[] onStructures;
 
     public String key() {
         return "BiomeSprite&" + name;

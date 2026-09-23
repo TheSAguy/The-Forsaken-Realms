@@ -89,13 +89,21 @@ public class MapSprite extends Actor {
                 actorGroup.add(sprite);
             }
         }
+        forge.adventure.world.BiomeSprites catalog = WorldSave.getCurrentSave().getWorld().getData().GetBiomeSprites();
         for (Pair<Vector2, Integer> entry : objects) {
             BiomeSpriteData data = WorldSave.getCurrentSave().getWorld().getObject(entry.getValue());
-            if (data.layer != layer)
+            // Round 303: the layer and the draw size come from the catalog (map_sprites.json) when it lists the doodad.
+            // A save keeps each placed doodad's layer from when it was placed, and PlayerBush was placed on layer 1,
+            // which is never drawn - the user's bushes never showed.
+            BiomeSpriteData current = catalog.getSpriteData(data.name);
+            int spriteLayer = current != null ? current.layer : data.layer;
+            if (spriteLayer != layer)
                 continue;
-            Sprite biomeSprite = WorldSave.getCurrentSave().getWorld().getData().GetBiomeSprites().getSprite(data.name, (int) entry.getKey().x + (int) entry.getKey().y * 11483);
+            Sprite biomeSprite = catalog.getSprite(data.name, (int) entry.getKey().x + (int) entry.getKey().y * 11483);
             if (biomeSprite != null) { //null means invalid and will cause blackscreen, investigate why this would happen...
-                Actor sprite = new MapSprite(entry.getKey(), biomeSprite, null);
+                MapSprite sprite = new MapSprite(entry.getKey(), biomeSprite, null);
+                if (current != null && current.scale > 0f && current.scale != 1f)
+                    sprite.setRegionScale(current.scale);
                 actorGroup.add(sprite);
             }
         }
@@ -120,6 +128,16 @@ public class MapSprite extends Actor {
         return !world.isExploredWorld(centerTileX, centerTileY);
     }
 
+    // Round 303: a doodad drawn at a fraction of its region (BiomeSpriteData.scale) - an HD doodad is a 32 px picture
+    // of one 16-unit tile. Anchored at the bottom-left, like the native draw.
+    private float regionScale = 1f;
+
+    public void setRegionScale(float regionScale) {
+        this.regionScale = regionScale;
+        setWidth(texture.getRegionWidth() * regionScale);
+        setHeight(texture.getRegionHeight() * regionScale);
+    }
+
     // Overridable draw-size multiplier, native size when 1f (the default for every non-town
     // MapSprite). PointOfInterestMapSprite overrides this for ruined/player-restored towns.
     protected float getDrawScale() {
@@ -135,7 +153,10 @@ public class MapSprite extends Actor {
             return;
         float scale = getDrawScale();
         if (scale == 1f) {
-            batch.draw(texture, getX(), getY());
+            if (regionScale == 1f)
+                batch.draw(texture, getX(), getY());
+            else
+                batch.draw(texture, getX(), getY(), getWidth(), getHeight());
         } else {
             // Grown symmetrically around the icon's own center (not just from its bottom-left
             // corner) so a scaled-up sprite doesn't visually drift off its actual tile.

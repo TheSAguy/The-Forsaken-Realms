@@ -23,13 +23,13 @@
     "height":  0.7,
     "color":  "110903",
     "spriteNames":  [
-                        "DarkGras",
-                        "Skull",
-                        "DarkWood",
-                        "Reed",
-                        "Waterlily",
-                        "Shroom",
-                        "Shroom2"
+                        "BlackLily",
+                        "BlackBones",
+                        "BlackFern",
+                        "BlackShroom",
+                        "BlackReed",
+                        "BlackBranch",
+                        "BlackRafflesia"
                     ],
     "enemies":  [
                     "Cutpurse",
@@ -704,7 +704,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/black_structures.atlas",
+                           "structureAtlasPath":  "world/structures/black_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/black.png",
                            "maskPath":  "world/structures/masks/ring.png",
                            "height":  0.5,
@@ -752,7 +752,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/black_structures.atlas",
+                           "structureAtlasPath":  "world/structures/black_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/black.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.20000002,

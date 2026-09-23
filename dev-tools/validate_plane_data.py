@@ -166,7 +166,7 @@ F["RaceShopData"] = set("race shops".split())
 F["BiomeStructureData"] = set("""name color collision N x y randomPosition structureAtlasPath sourcePath maskPath periodicInput height width ground
  symmetry periodicOutput mappingInfo""".split())
 F["BiomeTerrainData"] = set("spriteName min max resolution".split())
-F["BiomeSpriteData"] = set("name startArea endArea density resolution layer atlas".split())
+F["BiomeSpriteData"] = set("name startArea endArea density resolution layer atlas scale onStructures".split())
 if len(sys.argv) > 3 and os.path.exists(sys.argv[3]):
     F["AdventureQuestStage"] = set(open(sys.argv[3]).read().split())
 

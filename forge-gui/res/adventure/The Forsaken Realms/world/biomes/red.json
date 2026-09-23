@@ -23,7 +23,12 @@
     "height":  0.7,
     "color":  "b63729",
     "spriteNames":  [
-                        "Gravel"
+                        "RedBones",
+                        "RedStump",
+                        "RedFern",
+                        "RedGravel",
+                        "RedFlower",
+                        "RedLeaves"
                     ],
     "enemies":  [
                     "Goblin Shieldbearer",
@@ -718,7 +723,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/red_structures.atlas",
+                           "structureAtlasPath":  "world/structures/red_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/red.png",
                            "maskPath":  "world/structures/masks/ring.png",
                            "height":  0.5,
@@ -760,7 +765,7 @@
                        {
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/red_structures.atlas",
+                           "structureAtlasPath":  "world/structures/red_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/volcano.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.2,

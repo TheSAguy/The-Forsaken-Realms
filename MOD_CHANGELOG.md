@@ -17757,6 +17757,85 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 303: new structures and doodads for every land, doodads in the water (2026-09-23)
+
+User: *"I want to improve the Doodads and Structures for all colors, Player and AI. There is a lot of art here:
+C:\\Users\\User\\Pictures\\Screenshots\\Terrain\\ ... update the Doodads for ALL colors. You can shade/resize,
+rotate/tweak as needed. Try to stay in theme/feel for each color."* After the previews: *"go ahead and build it"*, and
+*"can we add some, very few, doodads to water?"* Local commit.
+
+**Structures** (the forests, rocks, mountains, water and the rest - autotile areas with collision) are new for all seven
+lands, at 32 px per tile for round 300's 2x renderer: `world/structures/<color>_structures_hd.png/.atlas`, each biome's
+`structureAtlasPath` pointed at them. The stock sheets in `common/` are untouched, and so is the user's own
+`player_structures.png`. Names and order are unchanged, so every save's structure indices still mean the same thing.
+- Most areas are real world-map autotiles: the MV World A2 sheet (`6a2a0a2dc...image8.png`, 48 px, 2x3 VX blocks)
+  and its A1 quadrant (water, lava, poison swamp) in `PC _ Computer - RPG Maker MV - Tilesets - World.png`. Each
+  block was cut, area-averaged 48 -> 32 px and converted VX -> XP with round 300's minitile map. Forests are now
+  forests and mountain ranges are ranges, instead of rows of one small object per tile. The rip had two traps: an
+  orange guide frame (253, 93, 10) around some blocks, which turned into lines along every blob edge until stripped;
+  and the A1 blocks were ripped over sand, keyed out so a lake's rim sits on the land around it.
+- Tints keep each land's feel. White: autumn-orange and golden forests, palms, sandstone mesas and mounds, rock
+  spires, three cactus fields. Blue: palms, ice-blue rocks, grey peaks, pale dunes. Black: dark teal forest, thorny
+  dead forest, swamp pines, a teal lake, the purple bog. Red: pines, a fire-orange forest, volcanoes, the lava field,
+  charred dead forest. Green: forests, pines, green hills, a stone-rimmed lake, vines, bushes, flowering shrubs. The
+  wasteland: grey dead forest, grey peaks, spires, craters. The player's land: spring forest, pines, green hills,
+  blossom shrubs, a lake.
+- Kinds with no area art (cactus, vine, bush, plant) are one sprite per tile, the same in every tile of the sheet, so
+  any quarter-tile assembly draws whole objects.
+
+**Doodads** (the scattered decorations) - 50 kinds, 218 pictures in `world/sprites/doodads_hd.png/.atlas`, from the
+`cyanide-tilemix-11-nature-2.png` and `rDcmulG.png` sheets, per land: dry tufts, pampas grass, small cacti, white
+lilies, pebbles and bleached bones on white; flowers, grass, rocks and blue mushrooms on blue; reeds, mushrooms, ferns,
+branches, rafflesia and bones on black; autumn ferns, fire lilies, gravel, dead leaves, charred stumps and dragon bones
+on red; flowers, ferns, stones, moss, stumps, logs, mushrooms and fairy rings on green; stones, dead branches, roots,
+dead bushes and bones on the wasteland; flowers, bushes, stones, pebbles, stumps, fairy rings and ferns on the player's
+land (the user's own five kinds re-skinned in place).
+- **Density.** World generation's noise sits mostly between 0.3 and 0.7, so each land has a common filler there (grass,
+  tufts, ferns), themed clusters in the tails and rare finds (bones, stumps) anywhere; the first kind in the list that
+  passes wins a tile, so the rare ones come first. 11-15% of the colored lands' open tiles carry a doodad, 7.5% of the
+  wasteland's. The first pass put the flowers and ferns in the tails and left green and the player's land bare (5,068
+  doodads map-wide against the old save's 10,039) - the previews had shown far more.
+- **Water doodads** (`BiomeSpriteData.onStructures`, new): lily pads and lotus on green, black and the player's lakes (the
+  player's lake is the `hole` structure), coral and seaweed in blue's sea - about one in 25 water tiles.
+- rDcmulG hides art in fully transparent pixels (crystals, lava spires, more bones): a viewer that ignores alpha shows
+  them, the game never would. Only the visible sprites were cut (`segment.py`, SEG_THR=200).
+- Unused, told to the user: the snow art (no snowy land), the painted trees in `Doodads.png` (a different style; its
+  flowers are rDcmulG's, taken from there with clean alpha), and blue's pineapple (no art - a golden flower stands in).
+
+**Engine**
+- `BiomeSpriteData.scale` (new, catalog-only): a doodad drawn at scale x its region - the HD doodads are 32 px pictures at
+  0.5, one 16-unit tile, the terrain's texel size. `MapSprite.setRegionScale()`.
+- `MapSprite.getMapSprites()` takes a doodad's layer (and scale) from the catalog when it lists the name. A save keeps
+  each placed doodad's layer from when it was placed, and `PlayerBush` was placed on layer 1, which is never drawn - the
+  user's bushes never showed.
+- `World.pickDoodad()` (new): the one placement rule of every doodad pass - world generation (moved into
+  `placeAllDoodads()`), the town/territory repaints (`regenerateDoodadsInRadius()`, `regenerateDoodadsForBiome()`) and
+  the re-scatter. Ground doodads go on plain tiles as before; a structure tile takes only a doodad whose `onStructures`
+  names the structure it is drawn as (`structureNameAtTile()`, the renderer's own rule - `holdsWasteSpaceValue()`,
+  castle keeps included; generateNew() places the castles before any doodad pass). The first version read every
+  waste-bit tile as wasteland and missed each lake near a castle. Water doodads draw from their own random stream in
+  world generation, so everything after it sees the same `random` sequence as before.
+- **A one-time re-scatter** (`World.rescatterDoodads()`, saved marker `doodadSet` = 303): doodads are placed once, at
+  world generation, and saved by name, so a save from before this round held only the old kinds (blue land had only
+  shells) and no water had any. The first time such a world draws a chunk, every doodad is placed again from the
+  current lists, the way generation places them (the world seed's noise bands), on the land as it is now. Decoration
+  only - doodads collide with nothing. `[TFR-Doodads]` logs it.
+- `dev-tools/validate_plane_data.py` knows `scale` and `onStructures`.
+
+**Seen** in the agent game on a copy of the user's save (day 10, a pre-303 save), screenshots of all seven lands:
+- The one-time re-scatter on the first chunk drawn: "[TFR-Doodads] a save from doodad set 0: its 10039 doodads placed
+  again from the current lists -> 15688 (waste 13713/184029 (7.5%), white 322/2221 (14.5%), blue 249/1729 (14.4%),
+  black 216/1978 (10.9%), red 288/2463 (11.7%), green 310/1974 (15.7%), player 590/4122 (14.3%)) in 183 ms; on
+  structures {BlackLily=6, BlueCoral=10, BlueSeaweed=8, GreenLily=10, PlayerLily=9}". The colored lands are still
+  small on day 10; the wasteland is most of the map.
+- On screen: white's sand with cacti, dry tufts, pampas and golden/autumn forest clumps; blue's palms, ice rocks,
+  dunes, flowers and mushrooms; black's grey peaks, purple bog, teal lakes and dead forest; red's volcanoes, spires,
+  pines, ferns and gravel; green's stone-rimmed lakes, hills, pines, flower meadows, fairy rings and mushrooms; the
+  wasteland's craters, grey peaks, spires, roots and bones; the player's Capitol with flowers, bushes, stones and ferns
+  between the roads. The HD doodads draw crisp at one tile each.
+- First pass: the doodads were placed as designed but left green and the player's land bare (tail-only bands), and
+  the lakes near the castles got no lily pads (the shortcut decoding) - both fixed and re-checked.
+
 ## Round 302: a legend's +Life once per game, and a terrain log line that cried wolf (2026-09-23)
 
 User, of round 299's note that the ~29 +Life legends fought outside places were not covered: *"Make these a one time

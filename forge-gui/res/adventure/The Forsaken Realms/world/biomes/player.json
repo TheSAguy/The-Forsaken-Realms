@@ -31,11 +31,15 @@
     "height":  0,
     "color":  "d4af37",
     "spriteNames":  [
-                        "PlayerStone",
-                        "PlayerGravel",
+                        "PlayerLily",
                         "PlayerStump",
+                        "PlayerFairyRing",
+                        "PlayerGrass",
+                        "PlayerStone",
                         "PlayerBush",
-                        "PlayerFlower"
+                        "PlayerFern",
+                        "PlayerFlower",
+                        "PlayerGravel"
                     ],
     "pointsOfInterest":  [
 
@@ -155,7 +159,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/player_structures.atlas",
+                           "structureAtlasPath":  "world/structures/player_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/player.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.25,
@@ -203,7 +207,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/player_structures.atlas",
+                           "structureAtlasPath":  "world/structures/player_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/player.png",
                            "maskPath":  "world/structures/masks/ring.png",
                            "height":  0.5,

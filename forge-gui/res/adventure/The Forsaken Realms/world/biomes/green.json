@@ -23,11 +23,16 @@
     "height":  0.7,
     "color":  "59a650",
     "spriteNames":  [
-                        "Stump",
-                        "Moss",
-                        "Stone",
-                        "Flower",
-                        "Wood"
+                        "GreenLily",
+                        "GreenStump",
+                        "GreenLog",
+                        "GreenFairyRing",
+                        "GreenGrass",
+                        "GreenStone",
+                        "GreenFern",
+                        "GreenMushroom",
+                        "GreenFlower",
+                        "GreenMoss"
                     ],
     "enemies":  [
                     "Kapre of the Old Balete",
@@ -706,7 +711,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/green_structures.atlas",
+                           "structureAtlasPath":  "world/structures/green_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/green.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.5,

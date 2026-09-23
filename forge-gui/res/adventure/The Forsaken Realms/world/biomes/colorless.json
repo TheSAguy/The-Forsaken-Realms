@@ -23,7 +23,11 @@
     "height":  0.85,
     "color":  "aeaeae",
     "spriteNames":  [
-                        "Stone"
+                        "WasteBones",
+                        "WasteStone",
+                        "WasteBush",
+                        "WasteRoots",
+                        "WasteBranch"
                     ],
     "enemies":  [
                     "Forge Blacksmith",
@@ -476,7 +480,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/colorless_structures.atlas",
+                           "structureAtlasPath":  "world/structures/colorless_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/colorless.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.25,
@@ -524,7 +528,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/colorless_structures.atlas",
+                           "structureAtlasPath":  "world/structures/colorless_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/colorless.png",
                            "maskPath":  "world/structures/masks/ring.png",
                            "height":  0.5,

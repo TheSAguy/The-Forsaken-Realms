@@ -23,7 +23,12 @@
     "height":  0.7,
     "color":  "efe697",
     "spriteNames":  [
-                        "DarkGras"
+                        "WhiteBones",
+                        "WhiteTuft",
+                        "WhiteCactus",
+                        "WhitePampas",
+                        "WhiteFlower",
+                        "WhitePebble"
                     ],
     "enemies":  [
                     "Forge Blacksmith",
@@ -687,7 +692,7 @@
                            "N":  2,
                            "x":  0.5,
                            "y":  0.5,
-                           "structureAtlasPath":  "world/structures/white_structures.atlas",
+                           "structureAtlasPath":  "world/structures/white_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/white.png",
                            "maskPath":  "world/structures/masks/circle.png",
                            "height":  0.20000002,
@@ -716,7 +721,7 @@
                            "x":  0.5,
                            "y":  0.5,
                            "symmetry":  8,
-                           "structureAtlasPath":  "world/structures/white_structures.atlas",
+                           "structureAtlasPath":  "world/structures/white_structures_hd.atlas",
                            "sourcePath":  "world/structures/models/desert.png",
                            "maskPath":  "world/structures/masks/ring.png",
                            "height":  0.5,

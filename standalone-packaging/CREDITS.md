@@ -75,6 +75,10 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 
 - **World mountains** (the mountain ranges of the barrier between the realms) - **Sythian Bard**.
 - **Dungeon entrances** (the stone and sandstone towers and temples on the overworld) - **Sythian Bard**.
+- **Forests, hills, mountains, water, lava and swamp** (the overworld's structure areas) - RPG Maker MV runtime world
+  tiles, © KADOKAWA / Gotcha Gotcha Games.
+- **Doodads** (the flowers, ferns, mushrooms, cacti, rocks, logs, stumps, lily pads and bones scattered over the lands) -
+  **Cyanide** ("Tilemix 11 - Nature 2"), and a VX-style nature sheet whose author is not named in the file.
 
 ## License
 
