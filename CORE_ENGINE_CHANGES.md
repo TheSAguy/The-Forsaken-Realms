@@ -132,6 +132,20 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 304: AI-piloted best-of-3 duels keep their result
+
+- **`forge-gui-mobile/src/forge/screens/match/MatchController.java`** - `afterGameEnd()`: in adventure mode, between the
+  games of a match with no local seat (`!hasLocalPlayers()` and the finished game's view not `isMatchOver()`), it does
+  not call `Forge.back(true)`; the old match screen stays and the next game's `openView()` opens on top of it. Every
+  other case (a human seat, classic mode, a finished match) keeps the stock `Forge.back(true)`. `[TFR-NextGame]` lines
+  for both branches; new private helpers `gamesOverLabel()` / `currentSceneName()`.
+- **Merge watch (stock, unchanged): a human's best-of-3 depends on a DOUBLE `openView()`.** `HostedMatch.startGame()`
+  opens a match screen for the human's gui and `DuelScene.enter()` opens a second, so "Next Game" -> `continueMatch()`
+  -> `endCurrentGame()` -> `afterGameEnd()` -> `Forge.back(true)` closes the top one and lands on the older one. With
+  one screen, `back()` reaches `Forge.setCurrentScreen(null)`, which in adventure mode calls `switchToLast()` and pops
+  the scene history mid-match. If a daily drops either `openView()` (or changes `setCurrentScreen(null)`), check a
+  human best-of-3: `[TFR-NextGame] ..., local seat: back() -> screen none, scene GameScene` is the broken case.
+
 ### Round 303: HD doodads, water doodads, the doodad re-scatter
 
 - **`data/BiomeSpriteData.java`** - `scale` and `onStructures` (catalog-only fields, never saved).

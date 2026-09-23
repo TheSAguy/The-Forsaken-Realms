@@ -129,13 +129,23 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   and guard wins, which never pay +Life), so a legend beaten before this round pays once more. The "[TFR-Terrain]
   player land: ... stays invisible" lines were false (same-index matches) and are gone. Agent: settle() now waits for
   a won duel's rewards (`GameStage.hasPendingResultTask()`); an AI-PILOTED best-of-3 duel still loses its result (a
-  mid-match `switchToLast()`, then the title screen) - agent only, so +Life tests use Nahiri (single game).
+  mid-match `switchToLast()`, then the title screen) - agent only, so +Life tests use Nahiri (single game). **Fixed in
+  round 304.**
 - **Round 303 (local commit, NOT pushed): new structures and doodads for all seven lands + water doodads** -
   `world/structures/<color>_structures_hd.*` (32 px autotiles from the MV World A1/A2 sheets, tinted per land; stock
   and the user's own sheets untouched), `world/sprites/doodads_hd.*` (50 kinds, `scale` 0.5), `onStructures` doodads on
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 304 (local commit, NOT pushed): AI-piloted best-of-3 duels keep their result** (agent only; round 302's
+  finding). Between the games of a match no local seat plays, `MatchController.afterGameEnd()` no longer calls
+  `Forge.back(true)`: the spectator's screen was the only one, so back() reached `setCurrentScreen(null)` ->
+  `switchToLast()` mid-match and the real end landed on the title screen without `setWinner()`. A human seat is
+  unchanged - DuelScene.enter() opens it a SECOND match screen and back() lands on that one (upstream-fragile;
+  `[TFR-NextGame] ..., local seat: back() -> screen ...` logs the screen it reached, "none" = broken). SEEN in the
+  agent game: Krenko best-of-3 won 2-0 by the AI seat, DuelScene throughout (0.5 s polling), then GameScene ->
+  RewardScene, +1 max life once, Krenko gone from the map. No [TFR-CardBudget]/[TFR-ResourcePurse] lines - Krenko is
+  spawnRate 0 (exempt, dedicated list), like all 173 best-of-3 enemies. Live + agent folders packaged.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

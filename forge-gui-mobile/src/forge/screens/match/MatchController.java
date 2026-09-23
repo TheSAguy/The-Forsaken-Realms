@@ -591,10 +591,42 @@ public class MatchController extends NetworkGuiGame {
     @Override
     public void afterGameEnd() {
         super.afterGameEnd();
-        Forge.back(true);
+        // TFR round 304: between the games of an adventure match that no local seat plays (the agent bridge's
+        // auto-battle; a watched guard fight or the Deck Tester's AI-vs-AI mode would be the same, but both are
+        // best-of-1), HostedMatch starts the next game by itself and calls this for its spectator first. back()
+        // would close the only match screen, and in adventure mode no screen means "return to the last scene"
+        // (Forge.setCurrentScreen(null) -> switchToLast()): the DuelScene was popped while the match played on, the
+        // real end popped once more - to the title screen - and setWinner() never ran, so the win paid nothing.
+        // Keep the screen: the next game's openView() opens on top of it and DuelScene's exit clears the stack.
+        // A human seat keeps the stock path - DuelScene.enter() opens a second match screen for it, so its back()
+        // lands on that one and never reaches the null branch (the [TFR-NextGame] line shows which screen it got).
+        boolean betweenGames = Forge.isMobileAdventureMode && getGameView() != null && !getGameView().isMatchOver();
+        if (betweenGames && !hasLocalPlayers()) {
+            System.out.println("[TFR-NextGame] " + gamesOverLabel() + ", no local seat: the match screen stays, scene "
+                    + currentSceneName());
+        } else {
+            Forge.back(true);
+            if (betweenGames) {
+                forge.screens.FScreen screen = Forge.getCurrentScreen();
+                System.out.println("[TFR-NextGame] " + gamesOverLabel() + ", local seat: back() -> screen "
+                        + (screen == null ? "none" : screen.getClass().getSimpleName()) + ", scene " + currentSceneName());
+            }
+        }
         if (Forge.disposeTextures)
             ImageCache.getInstance().disposeTextures();
         //view = null;
+    }
+
+    /** Round 304: "game 1 of up to 3 over" for the [TFR-NextGame] lines. */
+    private static String gamesOverLabel() {
+        HostedMatch hosted = getHostedMatch();
+        forge.game.Match match = hosted == null ? null : hosted.getMatch();
+        return match == null ? "a game over" : "game " + match.getOutcomes().size() + " of up to "
+                + match.getRules().getGamesPerMatch() + " over";
+    }
+
+    private static String currentSceneName() {
+        return Forge.getCurrentScene() == null ? "none" : Forge.getCurrentScene().getClass().getSimpleName();
     }
 
     public void resetPlayerPanels() {

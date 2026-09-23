@@ -17757,6 +17757,61 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 304: AI-piloted best-of-3 duels keep their result (2026-09-23)
+
+The task (round 302's finding, passed on by the user): when the agent bridge's auto-battle pilots the player's seat in a
+best-of-3 duel (`EnemyData.gamesPerMatch` 3 - Krenko, most legends and bosses), the result is lost. The adventure scene
+history is popped mid-match (DuelScene -> GameScene while game 2 is played), the real end lands on the title screen, and
+`setWinner()` never runs - no rewards, the enemy stays on the map. Make it end like a human's; keep real play
+unchanged. Local commit.
+
+**Why only a seat with no human broke.** Between games HostedMatch's `continueMatch()` -> `endCurrentGame()` calls the
+gui's `afterGameEnd()`, and MatchController answers with `Forge.back(true)`: close the current match screen and show
+the one under it. In adventure mode NO screen under it means "return to the last adventure scene"
+(`Forge.setCurrentScreen(null)` -> `switchToLast()`).
+- A human seat has TWO match screens on the stack: `HostedMatch.startGame()` opens one for the human's gui and
+  `DuelScene.enter()` opens a second. "Next Game" closes the top one and lands on the older one - the scene stays
+  DuelScene. That is why the user's own best-of-3 wins pay (the Ooze Boss in their 09-23 12:09 log, +1 max life
+  included).
+- A match no local seat plays - the agent's auto-battle, and in the same shape a watched guard fight or the Deck
+  Tester's AI-vs-AI mode - has only the spectator's screen. HostedMatch starts the next game by itself
+  (`addNextGameDecision(null, CONTINUE)`), its `back()` emptied the stack, and `switchToLast()` popped DuelScene ->
+  GameScene while game 2 was played. At the real end DuelScene's exit popped once more, to StartScene, which is not an
+  `IAfterMatch`, so `setWinner()` never ran.
+- The other proposed route - have the bridge answer the between-games step the way a human's "Next Game" click does -
+  has nothing to answer: a match with no local seat shows no win/lose view between games and continues on its own.
+  "Next Game" leads to the same `continueMatch()`; the only difference was the screen stack.
+
+**The fix** (`MatchController.afterGameEnd()`, stock file): in adventure mode, between the games of a match with no
+local seat (`!hasLocalPlayers()`, the finished game's view not `isMatchOver()`), the old match screen stays up instead
+of `back()`. The next game's `openView()` opens on top of it, and DuelScene's exit clears the stack as it always did. A
+human seat, classic mode and a finished match keep the stock `back(true)`. In real play the new branch cannot run
+today: a watched guard fight clones the attacking mage (every mage is best-of-1) and the Deck Tester fights a
+Doppelganger clone (best-of-1), so it is the agent's path only. All a human's play gains is a log line.
+- `[TFR-NextGame]`, one line per game that ends before its match does: `game 1 of up to 3 over, no local seat: the
+  match screen stays, scene DuelScene`, or for a human's "Next Game" `..., local seat: back() -> screen MatchScreen,
+  scene DuelScene`. The human path rests on the second `openView()` above; if an upstream change ever removed it, a
+  human's best-of-3 would break the same way and this line would read `screen none, scene GameScene`
+  (CORE_ENGINE_CHANGES carries the merge note).
+
+**Seen** in the agent game (slot 9: Victor, day 10, Insane, 321 max life), overworld, `spawn enemy Krenko` on open
+ground 17 tiles from any place, the state polled every 0.5 s:
+- DuelScene from 7.4 s until the match ended - never GameScene between the games (the round-302 run was on GameScene
+  at ~74 s). The log between the two games' ante picks: `[TFR-NextGame] game 1 of up to 3 over, no local seat: the
+  match screen stays, scene DuelScene`; then `[TFR-AnteResult] winner=true won=2 lost=0`.
+- 129 s "Back to Adventure", two won-ante "OK" prompts, 134 s GameScene, 136 s RewardScene with Krenko's list as
+  written: 12 cards (Krenko, Tin Street Kingpin x2, Krenko, Baron of Tin Street, Imperial Recruiter, Fable of the
+  Mirror-Breaker, Cavern of Souls, Strip Mine...), 5,892 gold, Battle Cry Boots, +1 max life. Done -> the map at 140
+  s. `[TFR-PlaceRewards] overworld, Krenko: +1 max life paid (once per game)`, max life 321 -> 322, gold 11,311 ->
+  17,203, shards 384 -> 431, and Krenko is gone from the map.
+- **No `[TFR-CardBudget]` / `[TFR-ResourcePurse]` line, and none was due.** Krenko has spawnRate 0 -
+  `SpawnTierWeighting.isExempt()`, logged as `[TFR-LootEditions] enemy=Krenko colors=R -> EXEMPT boss=false
+  spawnRate=0.0` - and both systems leave an exempt enemy's dedicated list alone without a line. So is every one of the
+  173 best-of-3 enemies (all bosses or spawnRate 0); the one budgeted best-of-3 is the Capitol-defense duel (a mage
+  cloned to `gamesPerMatch` 3), which the player fights.
+- Not seen: a human's "Next Game" with the new line (the user's next legend or boss fight prints it), a best-of-3
+  inside a place (the same path, ending on its TileMapScene), an AI-piloted best-of-3 LOSS.
+
 ## Round 303: new structures and doodads for every land, doodads in the water (2026-09-23)
 
 User: *"I want to improve the Doodads and Structures for all colors, Player and AI. There is a lot of art here:
