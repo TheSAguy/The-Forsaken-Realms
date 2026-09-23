@@ -1,6 +1,6 @@
 {
     "startPointX":  0.5,
-    "startPointY":  0.22,
+    "startPointY":  0.2,
     "noiseWeight":  0.5,
     "distWeight":  1.5,
     "name":  "white",

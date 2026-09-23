@@ -132,6 +132,12 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 295: the colors on a regular pentagon
+
+- Plane data only: `world/biomes/{white,blue,black,red,green}.json` startPointX/Y on a circle of 0.30 at the
+  pentagon's angles; `world/points_of_interest.json` the five castles' offsetX/offsetY radial (0.1 outward) and
+  radiusFactor 0. No code change.
+
 ### Round 294: the barrier; AI capitals grow
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — the barrier: `barrierMap`/`barrierTileCount`/

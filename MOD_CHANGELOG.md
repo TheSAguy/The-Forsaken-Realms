@@ -17757,6 +17757,30 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 295: the five colors on a regular pentagon - every castle the same distance from the Capitol (2026-09-23)
+
+User, looking at the minimap of round 294's test world: *"it looks like the player is much 'closer' to white. I think
+this is based on the distance from each AI Castle to the Player Capitol. Would there be a way to try and get the
+distance to each and the center the same for all? (or as close as)"* Local commit; data only; new worlds only.
+
+**Measured first.** The colors' start points sat 196 (white), 202 (green), 209 (blue), 237 (red) and 241 (black)
+tiles from the center, and each castle is placed 0.1 of its biome box (49 tiles) along a DIAGONAL offset plus up to
++/-17 tiles of random wobble (radiusFactor 0.01) - in round 294's test world the castles were 241, 268, 278, 301 and
+322 tiles from Orazca: an 81-tile spread, white nearest.
+
+**Now:** the five start points on a regular pentagon of radius 0.30 (210 tiles) around the center, at the pentagon's
+own angles (white straight up, then clockwise blue, black, red, green - each where it was, roughly): white (0.5, 0.2),
+blue (0.7853, 0.4073), black (0.6763, 0.7427), red (0.3237, 0.7427), green (0.2147, 0.4073). Each castle's offset
+points straight OUTWARD (0.1 along its start point's direction from the center) and its radiusFactor is 0, so every
+castle is exactly 259 tiles from the Capitol. White moved 14 tiles out, blue and green barely moved, black and red
+came about 30 tiles in. Side effect: the barrier's five walls are now alike - neighboring circles sit the same 247
+tiles apart, so every wall is about 18 tiles at its narrowest (they ranged 16-44). Trade-off: white's petal, the
+pentagon's top point, now reaches the map's top edge in places (R = 0.29 would give it back a little sea).
+
+**Seen** (agent game, fresh world): all five castles 259.0 tiles from Orazca (spread 0.0); the map renders a
+symmetric five-petal flower; with expansion sped up in the agent's copy of the settings, the day-6 minimap shows the
+five colors evenly around the player's center.
+
 ## Round 294: the barrier - mountains where the barren wedges were; AI capitals grow (2026-09-23)
 
 Local commit only. Two asks, both from the user's answers to round 293's questions.
