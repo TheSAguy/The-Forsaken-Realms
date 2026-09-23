@@ -511,6 +511,7 @@ public class AdventureQuestController implements Serializable {
         boolean allEnemiesCleared = true;
         if (enemies != null) {
             //battle was won in a dungeon, check for "clear" objectives
+            int ambushersNeverSprung = 0;
             for (EnemySprite enemy : enemies) {
                 if (enemy.getStage() != null && !enemy.equals(defeated)) {
                     //actor is an enemy that is present on the map. Check to see if there's a valid reason.
@@ -518,9 +519,22 @@ public class AdventureQuestController implements Serializable {
                         //This enemy cannot be removed from the map by defeating it, ignore it for "cleared" purposes
                         continue;
                     }
+                    // Round 301: nor an ambusher that never sprang - the player cannot see it. MapStage.
+                    // countsAsEnemyLeft() is the one rule every clear test shares: a Clear quest completes, and a
+                    // dungeon clears, on the last enemy in sight.
+                    if (!MapStage.countsAsEnemyLeft(enemy)) {
+                        ambushersNeverSprung++;
+                        continue;
+                    }
                     allEnemiesCleared = false;
                     break;
                 }
+            }
+            if (allEnemiesCleared && ambushersNeverSprung > 0) {
+                PointOfInterest here = TileMapScene.instance().rootPoint;
+                System.out.println("[TFR-Ambush] " + (here == null ? "this map" : here.getDisplayName())
+                        + ": the last enemy in sight is down - " + ambushersNeverSprung
+                        + " ambusher(s) that never sprang do not hold the clear");
             }
             // Dungeon-clear despawn (2026-08-18 user request: "Silly to have an empty dungeon
             // on the map... we should have it de-spawn, to make room for new dungeons").

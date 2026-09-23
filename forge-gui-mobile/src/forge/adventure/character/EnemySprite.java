@@ -413,7 +413,36 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         if(!steerOutput.linear.isZero()) {
             Vector2 force = steerOutput.linear.scl(delta);
             force.setLength(Math.min(speed() * delta, force.len()));
-            moveBy(force.x, force.y);
+            // Round 301: WITH the frame's delta. The two-argument moveBy() passes 0, and that is what
+            // CharacterSprite.moveBy() advances a waking ambusher's Wake animation by - so every hidden
+            // placement whose art has Wake frames (69 of the plane's 95: the zombies, skeleton soldiers and
+            // geonids) sprang, froze on the first frame of its rise and never took a step. Seen in the agent
+            // game: a graveyard's Skeleton Soldier lay as a pile of bones 25 px from the player for good.
+            moveBy(force.x, force.y, delta);
+        }
+    }
+
+    /**
+     * Round 301: a hidden placement (TMX {@code hidden=true}, a burrowed ambusher) springs the first time it
+     * moves - CharacterSprite.moveBy() clears {@code hidden} and, when the art has Wake frames, plays them
+     * before the first step. It moves once the player comes within its threat range (or when it hunts the
+     * player over stolen loot), whatever creature the placement holds: the Wake test in moveBy() always
+     * passes, because load() registers every animation type even when the atlas has no frames for it, so
+     * art without Wake frames simply appears. One line per ambush sprung.
+     */
+    @Override
+    public void moveBy(float x, float y, float delta) {
+        boolean wasHidden = hidden;
+        super.moveBy(x, y, delta);
+        if (wasHidden && !hidden) {
+            float rise = getActionAnimationDuration(AnimationTypes.Wake, 0f);
+            String where = "";
+            MapStage stage = MapStage.getInstance();
+            if (stage.isInMap() && stage.getPlayerSprite() != null)
+                where = ", " + Math.round(stage.getPlayerSprite().pos().dst(pos())) + " px from the player";
+            System.out.println("[TFR-Ambush] " + getName() + " #" + getId() + " sprang its ambush" + where
+                    + (rise > 0f ? " - it rises (Wake animation, " + String.format("%.1f", rise) + " s), then gives chase"
+                            : " - no Wake frames in its art, it appears at once"));
         }
     }
 

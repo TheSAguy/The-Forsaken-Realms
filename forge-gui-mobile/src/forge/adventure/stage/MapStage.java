@@ -987,6 +987,12 @@ public class MapStage extends GameStage {
                     continue;
                 if (!canSpawn(prop))
                     continue;
+                // Round 301: never a hidden placement (TMX hidden=true, or an object hidden in Tiled - a burrowed
+                // ambusher). The champion is the cave's named fight; hidden, it would show itself only to a player
+                // who happened to walk past it, and since an ambusher that never springs holds no clear
+                // (countsAsEnemyLeft), the cave could rotate away with its champion never met.
+                if (!obj.isVisible() || Boolean.parseBoolean(String.valueOf(prop.get("hidden"))))
+                    continue;
                 Object enemy = prop.get("enemy");
                 if (enemy == null || enemy.toString().isEmpty())
                     continue;
@@ -1961,8 +1967,9 @@ public class MapStage extends GameStage {
         for (EnemySprite enemy : enemies) {
             // Same "still actually on the map" test updateQuestsWin() uses, and the same
             // defeatDialog exemption: an enemy that can't be removed by defeating it must not
-            // hold the dungeon open forever.
-            if (enemy != null && enemy.getStage() != null && enemy.defeatDialog == null) {
+            // hold the dungeon open forever. Round 301: nor an ambusher that never sprang -
+            // countsAsEnemyLeft() is the shared rule.
+            if (countsAsEnemyLeft(enemy)) {
                 enemiesLeft = true;
                 break;
             }
@@ -1976,10 +1983,11 @@ public class MapStage extends GameStage {
         }
         // Round 299: a boss lair leaves the map on this walk-out when its boss is down and nothing is left. The
         // rotatable-dungeon rules below self-gate on isRotatable and do nothing for a lair. The names go to the log's
-        // "stays" line - "enemies are still inside" alone did not say which. An ambusher that is still HIDDEN does not
-        // count for a lair: CharacterSprite only wakes one that has a Wake animation, and a hidden placement re-themed
-        // into a creature without one (Teferi's Hideout's sandwurms, in the agent test) is invisible and still for
-        // good - it would hold a lair, which has no lifespan timer, on the map forever.
+        // "stays" line - "enemies are still inside" alone did not say which. An ambusher that is still HIDDEN is not
+        // counted, here or anywhere (round 301, countsAsEnemyLeft()). Round 299 said such an ambusher could never
+        // wake without Wake frames in its art; that was wrong - its agent test never walked near Teferi's Hideout's
+        // four, and round 301 found and fought all of them (CharacterSprite.load() registers every animation type,
+        // so the Wake test always passes and art without Wake frames simply appears).
         StringBuilder remaining = new StringBuilder();
         int listed = 0, stillHidden = 0;
         for (EnemySprite enemy : enemies) {
@@ -1994,10 +2002,10 @@ public class MapStage extends GameStage {
         }
         if (listed > 5)
             remaining.append(" and ").append(listed - 5).append(" more");
-        if (stillHidden > 0 && TileMapScene.instance().rootPoint != null
-                && DungeonRotation.isVanishingLair(TileMapScene.instance().rootPoint.getData()))
-            System.out.println("[TFR-Lair] " + stillHidden + " ambusher(s) never woke in " + root.getDisplayName()
-                    + " - not counted as enemies left");
+        if (stillHidden > 0)
+            System.out.println("[TFR-Ambush] " + root.getDisplayName() + ": " + stillHidden + " ambusher(s) never sprang"
+                    + " - not counted as enemies left"
+                    + (listed > 0 ? " (" + listed + " other enemy(ies) still inside)" : " (nothing else is left)"));
         DungeonRotation.onLairExit(root, listed > 0 ? remaining.toString() : null, lootLeft);
         if (lootLeft) {
             // Round 257 (user: "Don't de-spawn till all loot is cleared. but let's apply the same rule as when all
@@ -2293,11 +2301,23 @@ public class MapStage extends GameStage {
     public int getRemainingEnemyCount() {
         int count = 0;
         for (EnemySprite enemy : enemies) {
-            if (enemy.getStage() != null && enemy.defeatDialog == null) {
+            if (countsAsEnemyLeft(enemy)) { // round 301: an ambusher that never sprang is not on the counter
                 count++;
             }
         }
         return count;
+    }
+
+    /**
+     * Round 301: the one test for "an enemy is left on this level" - the dungeon exit rules, the win-time clear
+     * (Clear quests and dungeon rotation, AdventureQuestController.updateQuestsWin()) and the HUD's remaining-enemy
+     * counter all ask it. Still on the map, removable by beating it (a defeatDialog enemy is not), and not a hidden
+     * ambusher that never sprang: one shows itself only when the player comes within its threat range, so an
+     * ambusher the player never walked near is invisible to them and must not hold a clear. Round 299 made that
+     * call for boss lairs; it holds everywhere now.
+     */
+    public static boolean countsAsEnemyLeft(EnemySprite enemy) {
+        return enemy != null && enemy.getStage() != null && enemy.defeatDialog == null && !enemy.hidden;
     }
 
     public Actor getByID(int id) { //Search actor by ID.

@@ -114,6 +114,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - **Round 300 part 2 (local commit): the new terrain is the PLAYER's, not green's** (user's call after the test) -
   `world/tilesets/player_terrain_hd.*` + `player.json` (overlay Player_3, resolution 5); green back on terrain.atlas.
   The user's own player_terrain.png is untouched. Data only.
+- **Round 301 (local commit, NOT pushed): hidden ambushers.** Round 299's "an ambusher re-themed into a creature
+  without Wake art never wakes" was WRONG: `CharacterSprite.load()` registers every animation type, so the Wake test
+  always passes and every hidden placement springs once the player is within its threat range (Teferi's four found and
+  fought, before and after the change). The real bug (stock): ambushers WITH Wake art froze on the first frame of their
+  rise (`EnemySprite.applySteering()` moved with delta 0) - they now rise (1.6 s) and chase. `MapStage.
+  countsAsEnemyLeft()`: a never-sprung ambusher holds no clear anywhere (exit rules, the win-time clear = Clear quests
+  and rotation, the HUD counter); a cave champion never takes a hidden placement; `[TFR-Ambush]` lines. Live + agent
+  folders packaged. Noticed, NOT changed: a crash after a lost duel reached through ten console map-to-map teleports
+  (NPE `WorldStage.setWinner`, console-only path), and the re-theme firing from day one (`home=<color>, now=waste`).
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

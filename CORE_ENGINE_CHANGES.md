@@ -132,6 +132,22 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 301: hidden ambushers
+
+- **`character/EnemySprite.java`** - `applySteering()` moves with the frame's delta (`moveBy(x, y, delta)`); the
+  two-argument form passes 0, which is what `CharacterSprite.moveBy()` advances a Wake animation by, so a waking
+  ambusher with Wake frames froze on its first frame. New `moveBy(x, y, delta)` override logs `[TFR-Ambush]` when a
+  hidden placement springs.
+- **`stage/MapStage.java`** - `countsAsEnemyLeft()` (new, static: on the stage, no defeatDialog, not still hidden),
+  used by `applyDungeonExitRules()` and `getRemainingEnemyCount()`; round 299's lair-only "never woke" line is now
+  `[TFR-Ambush]` for any place; `prepareCaveChampion()` skips hidden placements.
+- **`util/AdventureQuestController.java`** - `updateQuestsWin()`: a still-hidden ambusher does not hold
+  `allEnemiesCleared` (Clear quests and the win-time dungeon clear).
+- **Merge watch (stock, unchanged):** `CharacterSprite.moveBy()` wakes a hidden sprite `if (animations.containsKey(
+  AnimationTypes.Wake))`, which is ALWAYS true because `load()` puts every type into the map. Every hidden placement
+  without Wake frames depends on that. If upstream ever makes it test for real frames, those ambushers (26 of the
+  plane's 95 authored, plus every re-themed one without Wake art) would never wake again - they must appear instead.
+
 ### Round 300 part 2: the new terrain on the player's land
 
 - No engine change: `player.json` / `green.json` and the renamed sheet; `dev-tools/validate_plane_data.py` knows the

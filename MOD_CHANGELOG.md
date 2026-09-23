@@ -17757,6 +17757,78 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 301: hidden ambushers - they always woke; the ones that rise now finish rising, and an unseen one holds no clear (2026-09-23)
+
+The task (my own round-299 note, passed on by the user): *map enemies placed `hidden=true` (burrowed ambushers, e.g.
+Teferi's Hideout objects 114-117) and re-themed into a creature whose sprite has no Wake animation are invisible and
+immobile forever - never seen, never fought, and counted as enemies left, so a rotatable dungeon never despawns on
+clear. Make such placements behave, keep ambushes working where the art supports them, log an un-hide, and verify in
+the agent game that Teferi's four can be found and fought.* Local commit.
+
+**The premise was wrong - they always woke.** `CharacterSprite.moveBy()` wakes a hidden sprite only
+`if (animations.containsKey(AnimationTypes.Wake))`, but `load()` puts an entry into `animations` for EVERY animation
+type, empty or not, so the test always passes: every hidden placement springs the first time it moves - when the
+player comes within its threat range, or when it hunts the player over stolen loot - and art without Wake frames simply
+appears. Round 299's agent test never walked near Teferi's four (the agent's observer lists no hidden enemy, and the
+lair was cleared by console), which read as "never woke". On the unchanged round-299 build all four sprang and were
+fought: #117 (authored Drake, re-themed to Ochre Jelly), #116 (Scorpion -> Bristleback Boar), #114 (Greater Sandwurm ->
+Pointed Demonspawn), #115 (Greater Sandwurm -> Golden Dwende). The AUTHORED creatures have no Wake frames either - only
+10 atlases in the game do - so neither proposed fix was needed, and "spawn a creature without Wake art visible" would
+have removed 25 authored ambushes and every re-themed one.
+
+**What was really broken (stock): the ambushers that DO have Wake frames froze.** `EnemySprite.applySteering()` moved
+with the two-argument `moveBy()`, which passes delta 0, and `CharacterSprite.moveBy()` advances a waking sprite's Wake
+animation by that delta - so the rise never finished: the ambusher sprang, showed the first frame of its rise and never
+took a step while the player stayed in range. 69 of the plane's 95 hidden placements carry Wake art (zombies, greater
+zombies, skeleton soldiers and champions, geonid death-caps, the Mighty Djinn). Seen before the fix: Graveyard2's
+Skeleton Soldier #89 lay as a pile of bones beside its grave, 25 px from the player, for 10 s (walking into it still
+started a duel). Fix: `moveBy(x, y, delta)`.
+
+**One rule for "an enemy is left": an ambusher that never sprang does not count** (`MapStage.countsAsEnemyLeft()`):
+the dungeon exit rules (round 299 exempted still-hidden ambushers for boss lairs only), the win-time clear in
+`AdventureQuestController.updateQuestsWin()` - which is both the Clear-quest event and the rotation's clear - and the
+HUD's remaining-enemy counter shown during a Clear quest. A player cannot see an ambusher they never walked near, so it
+must not hold a clear: 15 Clear stages (Teferi's Fall and Spores of Death on lairs with ambushers, the town quests 10-16
+on hostile places, several of which have them) and every rotatable place among the 22 maps could be held open by one.
+An ambusher that has sprung counts like any enemy. The stock "draw chevrons to hidden enemies in clear quest" option
+still points at hidden ones while visible enemies remain.
+
+**The roster paths** that put a creature on a hidden placement: the territory re-theme
+(`TerritoryControl.reThemedEnemyFor`), the fixed roster (round 201: the first visit's pick returns) and the cave
+champion (round 139). None of them stops an ambush now. The champion alone changed: it never takes a hidden placement -
+it is a cave's named fight, and hidden it could be walked past and, with the rule above, rotate away unmet.
+
+**The survey** (scratchpad `survey_hidden.py`): 95 hidden enemy placements in 22 reachable maps; every one has a threat
+range, none a dialog, none is inactive, so every one can spring - the five graveyards and their crypts, two evil groves,
+Zombie Town, the Temple of Liliana (story), Teferi's Hideout and Slimefoot's Lair, the Pharaoh fort, a merfolk pool,
+Camel Cave, the rat cave, the Dark Forest and the forgotten lodge, a djinn palace.
+
+**Logs:** `[TFR-Ambush] <name> #<id> sprang its ambush, N px from the player - it rises (Wake animation, 1.6 s), then
+gives chase` or `- no Wake frames in its art, it appears at once`; on the way out `[TFR-Ambush] <place>: N ambusher(s)
+never sprang - not counted as enemies left (...)` (replaces round 299's lair-only `[TFR-Lair] ... never woke`); on a
+win `[TFR-Ambush] <place>: the last enemy in sight is down - N ambusher(s) that never sprang do not hold the clear`.
+
+**Seen** in the agent game (slot 9, the packaged build): Skeleton Soldier #89 rose and fought; Zombie #58 held its spot
+for 1.7 s (its rise is 1.6 s), then walked 33 -> 16 px to the standing player and the duel began; two zombies woken by
+stolen loot (`[TFR-BoosterGuard] ... saw its loot taken`) sprang 376-393 px away and hunted the player across the map;
+Graveyard2 with three Skeleton Soldiers still hidden cleared on the last visible win (`... do not hold the clear`,
+`Graveyard despawned until day 30`) and on the walk out (`nothing else is left`, `[TFR-DungeonClear]`); Teferi's
+Hideout's four sprang and were fought again (Longbow Yeoman, Shambling Corpse, Goblin Archer - an AI loss - and Kor
+Aeronaut). No exception. Not seen live: a Clear quest completing (the same flag as the rotation clear above) and a
+cave champion roll. Plane validator clean.
+
+**Noticed, not changed:**
+- The agent game crashed once in the BEFORE test: an NPE in `WorldStage.setWinner()` (`currentMob` null) after a LOST
+  duel in a map reached through ten console `teleport to poi` hops from map to map - the scene under the duel was the
+  world map. Losses after a single teleport did not crash (twice). Players cannot hop map to map (the Teleporter
+  building exits the map first), so it looks like a console-only path; not reproduced or fixed.
+- The territory re-theme swaps most hostile places' creatures from day one: its lines read `home=black, now=waste`
+  (the user's own logs: black 120, red 68, white 18, green 5) - a color's place standing on wasteland is treated as
+  land that changed hands. Of the eight places visited only Graveyard2 kept its authored undead. The user's call
+  whether that is intended.
+- A Clear stage still completes only on a WIN: a level entered with nothing but never-sprung ambushers left shows 0
+  remaining and completes on the next win there (it used to need every ambusher found).
+
 ## Round 300 part 2: the new terrain on the player's land, green back as it was (2026-09-23)
 
 User, after round 300: *"Let's make green as it was before, and switch the new terrain for the player's terrain. Show
