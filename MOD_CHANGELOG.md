@@ -17757,6 +17757,39 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 298: every dungeon its own entrance, and smaller towers (2026-09-23)
+
+User, after round 297: *"I think the scale of the towers are a little big. The old towers were already big (The one
+with the blue roof). Let's scale these down."* and *"Also, let's not get ride of any of the Dungeon entrances. If
+possible, try to have each dungeon have it's own unique entrance."* Local commit; data only.
+
+**Smaller towers**: Sythian Bard's eight towers are now cut at half the art's size instead of two thirds - the tall
+ones 24x48 (the blue-roof tower is 26x50), the short ones 22x24. The palaces, halls and temples stay 32x32.
+
+**One icon per dungeon**: the 110 dungeons shared 56 icons - seven Barbarian Camps drew one hut, six Forts one
+structure, five Graveyards and four Autonomous Factories drew from one random pool, and the Bandit Cave and Cidryl
+Shard Mines drew the same pixels under two names. Now each has its own:
+- every icon a dungeon used before round 297 stays on one member of its group, including the four round 297 had
+  retired: the pagoda White Tower, Mages' Fort's blue-roof tower, the Mercenary Barracks' old Fort, and the Sea
+  Temple's ruined temple;
+- the Graveyard and Factory variant sets are split into their own names (Graveyard_A-D, Factory_A-C, in
+  `maps/tileset/dungeon_entrances.atlas`), so each graveyard and factory keeps one look instead of a random one;
+- the others take all 16 new icons plus art already in the plane's atlases that no place used, picked to fit the
+  name or the map: the Leonin Sphinx a sphinx, Cidryl Shard Mines a cave of blue crystal shards, the ninja-rat Black
+  Tower a burrow, the church White Tower a chapel, the Lion's Den the lion den, the kobold/orc/goblin/bandit Barbarian
+  Camps tents, a horned hall, a camp in the trees, a totem and a rock gate, the Leonin Camp tents and a campfire,
+  Djinn's Palace the sandstone palace, Pharaoh's Fort the sandstone temple (as in round 297), the second Lava Forge
+  the plane's own lava tower. Replacements stay near the size of the icon they replace (no 64 px buildings).
+
+Checked by pixels, not names: 110 dungeons, 110 different images; every image a dungeon showed before round 297 is
+still shown; every icon in the new atlas is used; the plane validator is clean. Nine dungeons share art with a town,
+castle or side boss, all as before (e.g. Vampire Castle and its side-boss twin, the quest dungeons dressed as towns).
+Existing worlds show the new icons (a place's sprite is looked up by name at load); a place keeps its old entry box
+from the save, a difference of a few pixels.
+
+**Seen** in the agent game on an existing save (the player's case): 32 of the changed dungeons, each drawn at its
+size with its marker; the atlas found, no error in the log.
+
 ## Round 297: new dungeon entrances - Sythian Bard's towers and temples (2026-09-23)
 
 User, with a sheet of 16 buildings from the same artist as the barrier's mountains: *"Look at this sheet. It should

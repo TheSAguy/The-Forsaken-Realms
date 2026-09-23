@@ -95,6 +95,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `maps/tileset/dungeon_entrances.atlas`; 10 used (White Towers, Mages' Fort, Necromancer's Study, the six Forts, Sea
   Temple, Pharaoh's Fort); palaces/halls/two temples spare; colorful icons (Djinn's Palace, Monastery, Snow Abbey,
   Esper Manufactory, Dueling Club) kept on purpose. Data only. Packaged.
+- **Round 298 (local commit, NOT pushed; packaging waits - the user was playing): every dungeon its own entrance** -
+  110 dungeons, 110 different icons (checked by PIXELS: two names can be one image); every icon a dungeon used before
+  round 297 still used (pagoda White Tower, blue-roof Mages' Fort, old Fort, ruined Sea Temple back on one each); all
+  16 Sythian Bard icons used, towers halved (24x48 / 22x24); Graveyard_A-D and Factory_A-C split into the atlas.
+  Data only. Seen in the agent game. Scratchpad tool r297b_unique.py re-verifies all of it.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

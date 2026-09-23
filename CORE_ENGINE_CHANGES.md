@@ -132,6 +132,12 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 298: dungeon entrances, part 2
+
+- Plane data only: `maps/tileset/dungeon_entrances.atlas` + `.png` rebuilt (the 16 at the new tower scale, plus
+  Graveyard_A-D and Factory_A-C split from common `buildings.atlas`); `world/points_of_interest.json` re-points 61
+  dungeon entries. No code change.
+
 ### Round 297: dungeon entrances
 
 - Plane data only: `maps/tileset/dungeon_entrances.atlas` + `.png` (new); `world/points_of_interest.json` points 14

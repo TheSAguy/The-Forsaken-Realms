@@ -1,117 +1,166 @@
 dungeon_entrances.png
-size: 256,128
+size: 256,116
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-SandTowerTall
+Factory_A
   rotate: false
-  xy: 0, 0
-  size: 32, 64
-  orig: 32, 64
-  offset: 0, 0
-  index: -1
-SandTowerTallRuined
-  rotate: false
-  xy: 32, 0
-  size: 32, 64
-  orig: 32, 64
-  offset: 0, 0
-  index: -1
-SandTower
-  rotate: false
-  xy: 64, 0
+  xy: 104, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SandTowerRuined
+Factory_B
   rotate: false
-  xy: 96, 0
+  xy: 102, 84
+  size: 32, 30
+  orig: 32, 30
+  offset: 0, 0
+  index: -1
+Factory_C
+  rotate: false
+  xy: 138, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-GreyTowerTall
+Graveyard_A
   rotate: false
-  xy: 128, 0
-  size: 32, 64
-  orig: 32, 64
+  xy: 172, 0
+  size: 48, 32
+  orig: 48, 32
   offset: 0, 0
   index: -1
-GreyTowerTallRuined
+Graveyard_B
   rotate: false
-  xy: 160, 0
-  size: 32, 64
-  orig: 32, 64
-  offset: 0, 0
-  index: -1
-GreyTower
-  rotate: false
-  xy: 192, 0
+  xy: 222, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-GreyTowerRuined
+Graveyard_C
   rotate: false
-  xy: 224, 0
+  xy: 0, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-GreyPalace
+Graveyard_D
   rotate: false
-  xy: 0, 64
+  xy: 34, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GreyHall
   rotate: false
-  xy: 32, 64
+  xy: 68, 50
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GreyPalace
+  rotate: false
+  xy: 102, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GreyTemple
   rotate: false
-  xy: 64, 64
+  xy: 136, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GreyTemplePillared
   rotate: false
-  xy: 96, 64
+  xy: 170, 50
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GreyTower
+  rotate: false
+  xy: 136, 84
+  size: 22, 26
+  orig: 22, 26
+  offset: 0, 0
+  index: -1
+GreyTowerRuined
+  rotate: false
+  xy: 160, 84
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+GreyTowerTall
+  rotate: false
+  xy: 0, 0
+  size: 24, 48
+  orig: 24, 48
+  offset: 0, 0
+  index: -1
+GreyTowerTallRuined
+  rotate: false
+  xy: 26, 0
+  size: 24, 48
+  orig: 24, 48
+  offset: 0, 0
+  index: -1
+SandHall
+  rotate: false
+  xy: 204, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 SandPalace
   rotate: false
-  xy: 128, 64
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-SandHall
-  rotate: false
-  xy: 160, 64
+  xy: 0, 84
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 SandTemple
   rotate: false
-  xy: 192, 64
+  xy: 34, 84
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 SandTemplePillared
   rotate: false
-  xy: 224, 64
+  xy: 68, 84
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+SandTower
+  rotate: false
+  xy: 184, 84
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+SandTowerRuined
+  rotate: false
+  xy: 208, 84
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+SandTowerTall
+  rotate: false
+  xy: 52, 0
+  size: 24, 48
+  orig: 24, 48
+  offset: 0, 0
+  index: -1
+SandTowerTallRuined
+  rotate: false
+  xy: 78, 0
+  size: 24, 48
+  orig: 24, 48
   offset: 0, 0
   index: -1
