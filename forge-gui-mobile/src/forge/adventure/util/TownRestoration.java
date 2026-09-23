@@ -454,8 +454,7 @@ public class TownRestoration {
         }
         String shownName = target.getDisplayName();
         boolean wasCapital = "capital".equals(target.getData().type); // round 100: a taken capital cripples its color
-        Integer oldRadius = world.getTownTerritoryRadius(target.getID());
-        int repaintRadius = TerritoryControl.captureFlipRadius(target.getData(), oldRadius); // round 294: a capital flips 10
+        int repaintRadius = TerritoryControl.captureFlipRadius(); // round 296: every capture flips 10 tiles
         String preCaptureId = target.getID();
         target.transformInto(wasteData, world.getRandom(), true); // ownership changes, the town keeps its name
         // Round 140 (S2-4, user decision 2026-09-07): "if the player captures it back, it's like a

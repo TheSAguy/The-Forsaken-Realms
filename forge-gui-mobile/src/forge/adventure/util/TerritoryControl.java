@@ -242,16 +242,14 @@ public class TerritoryControl {
     }
 
     /**
-     * Round 294: how much ground a capture flips - read BEFORE transformInto(), from the town as it stood. A town
-     * flips everything it held (its grown radius, so no ring of the old owner is stranded around it). A world-gen
-     * AI capital flips RECOLOR_RADIUS only (user: "once captured, they become regular towns, so can we cap the
-     * flip to 10 tiles?") - capitals grow to twice a town's reach, and taking one should not hand over that whole
-     * disc. The rest of its ground stays its color's, which is where a capital's ground mostly lies anyway.
+     * How much ground a capture flips, on both capture paths (the player's in TownRestoration, the AI's in
+     * onMageArrived()). Round 294 capped a former AI capital at RECOLOR_RADIUS (user: "once captured, they become
+     * regular towns, so can we cap the flip to 10 tiles?"); round 296 caps every town the same way (user: "yes, let's
+     * also give them a 10 tile cap, and they they will slowly expand into the rest of the terrain"). The captured town
+     * continues at RECOLOR_RADIUS and grows like any town, taking the old owner's ground beyond as it goes.
      */
-    public static int captureFlipRadius(PointOfInterestData dataBeforeCapture, Integer heldRadius) {
-        if (isAiCapital(dataBeforeCapture))
-            return RECOLOR_RADIUS;
-        return Math.max(RECOLOR_RADIUS, heldRadius != null ? heldRadius : RECOLOR_RADIUS);
+    public static int captureFlipRadius() {
+        return RECOLOR_RADIUS;
     }
 
     /** The growth cap for one town: a color's capital reaches further than its ordinary towns. */
@@ -2761,14 +2759,12 @@ public class TerritoryControl {
                         + (isSacked ? "sacked" : "captured") + ") - townRestored flag cleared");
             }
         }
-        // The town's territory may have GROWN past RECOLOR_RADIUS (town expansion, up to
-        // TOWN_MAX_TERRITORY_RADIUS) - read its radius under the OLD id, before transformInto()
-        // changes it, and repaint the FULL held radius. Repainting only RECOLOR_RADIUS would
-        // strand the grown annulus in the previous owner's color forever (verified: expansion only
-        // ever claims wasteland, and a player-bit tile is never wasteland, so nothing could ever
-        // reclaim it - an orphaned ring around an enemy town, found by the pre-commit review).
-        Integer oldRadius = world.getTownTerritoryRadius(target.getID());
-        int repaintRadius = captureFlipRadius(target.getData(), oldRadius); // round 294: a capital flips RECOLOR_RADIUS
+        // Round 296: a capture flips RECOLOR_RADIUS whatever the town had grown to (captureFlipRadius()). The ring
+        // beyond stays the old owner's until the new owner's town grows over it: claimWastelandRing() takes an owned
+        // tile wherever the new owner's pull is the stronger, which beside its own town it is. (The comment that
+        // stood here said such a ring could never be reclaimed - true while expansion only took wasteland, not since
+        // the pull contest.)
+        int repaintRadius = captureFlipRadius();
         String preCaptureId = target.getID();
         target.transformInto(newData, world.getRandom(), true); // ownership changes, the town keeps its name
         // Round 140 (code review S2-4, user decision 2026-09-07: "Any player town that is captured

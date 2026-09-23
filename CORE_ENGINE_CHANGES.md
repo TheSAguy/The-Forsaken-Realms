@@ -132,6 +132,12 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 296: every capture flips 10 tiles
+
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — `captureFlipRadius()` takes no arguments
+  and returns RECOLOR_RADIUS; onMageArrived() uses it without reading the old radius.
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the player capture likewise.
+
 ### Round 295: the colors on a regular pentagon
 
 - Plane data only: `world/biomes/{white,blue,black,red,green}.json` startPointX/Y on a circle of 0.30 at the

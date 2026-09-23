@@ -85,6 +85,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   at radius 0.30 around the center (world/biomes/<color>.json), castle offsets radial with radiusFactor 0
   (world/points_of_interest.json): every castle exactly 259 tiles from the Capitol (was 241-322). Walls now uniform.
   Live + agent folders packaged.
+- **Round 296 part 1 (local commit, NOT pushed): every capture flips RECOLOR_RADIUS** (`captureFlipRadius()`); the
+  captured town regrows from there. Packaged. PENDING the user's go-ahead: the new mountain art at full 48 px as an
+  overlay on the barrier (previewed, packed solid) - see MOD_CHANGELOG round 296.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

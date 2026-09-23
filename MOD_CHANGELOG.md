@@ -17757,6 +17757,23 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 296: every capture flips 10 tiles (2026-09-23)
+
+User, answering round 294's question: *"For your question on Regular towns, yes, let's also give them a 10 tile cap,
+and they they will slowly expand into the rest of the terrain."* `TerritoryControl.captureFlipRadius()` now returns
+RECOLOR_RADIUS for every capture, on both paths (the player's in TownRestoration, the AI's in onMageArrived); the
+captured town continues at that radius and grows like any town. The ring it had grown beyond stays the old owner's
+until the new owner's town grows over it - claimWastelandRing() takes an owned tile wherever the new owner's pull is
+the stronger, which beside its own town it is. The comment over the AI path that said such a ring "could never be
+reclaimed" dated from before the pull contest and is replaced. Logic only; not seen in play yet.
+
+Also this round, no code yet: the user's new mountain art (`World_Mountains.png`, 384x576, 48 px tiles, clean
+alpha - a sheet of mountain groups, not an autotile). Previewed on a real stretch of the barrier three ways - today's
+16 px autotile, the art shrunk to 16 px, and the art at its own 48 px (three times our detail) packed solid (a carpet
+of the small peak groups on every barrier tile plus two offset carpets, the big mountains and ranges on top, all drawn
+south-last; a dark floor in the art's shadow tone under interior tiles). The user's feedback on the first packing:
+*"The mountains look a little sparce. It should be more solid too many 'gaps'"* - the carpet answered it.
+
 ## Round 295: the five colors on a regular pentagon - every castle the same distance from the Capitol (2026-09-23)
 
 User, looking at the minimap of round 294's test world: *"it looks like the player is much 'closer' to white. I think
