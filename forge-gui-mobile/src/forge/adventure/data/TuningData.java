@@ -297,6 +297,14 @@ public class TuningData {
     public int dungeonLifespanMaxDays = 40;
     public int dungeonSpotRestMinDays = 10;
     public int dungeonSpotRestMaxDays = 30;
+    // Round 299 (user: "Any +Life should only be handed out once. Can't farm. All other rewards should be cut by 50%.
+    // That goes for gold and number of cards."). A boss lair that was cleared comes back after the spot rest above;
+    // on every visit after that, gold / shards / wood / stone are multiplied by lairReturnRewardFactor (rounded up),
+    // the NUMBER of cards and packs too (the fraction a coin flip - a lone card drops half the time), and each item
+    // that is not the boss's own signature item drops with lairReturnItemChance. +Life and signature items are once
+    // per place - see PlaceRewards.
+    public float lairReturnRewardFactor = 0.5f;
+    public float lairReturnItemChance = 0.5f;
 
     public float torchPulseMultiplier = 3f;
     public float torchPulseSeconds = 2f;

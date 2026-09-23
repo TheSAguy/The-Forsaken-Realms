@@ -344,9 +344,32 @@ public class World implements Disposable, SaveFileContent {
      *  on the floor, and the day they did. DungeonRotation's day tick refuses to despawn one of these; taking the
      *  last reward releases it. Persisted like poiLootedDay so a hold survives a save. */
     private final java.util.Map<String, Integer> poiLootHeldDay = new java.util.HashMap<>();
+    /** Round 299 (user: "Can you check on that" - an emptied boss lair stayed on the map): boss-lair POI id -> how many
+     *  times it has been cleared and has vanished. 1+ means every visit since is a RETURN visit, which pays half (see
+     *  PlaceRewards). Absent on older saves: "never cleared". */
+    private final java.util.Map<String, Integer> lairClearCount = new java.util.HashMap<>();
+    /** Round 299: boss-lair POI id -> the day its boss fell in the lair's current incarnation. A lair vanishes only
+     *  once this is set AND the player walks out with nothing left - an empty entrance level alone is not a clear. */
+    private final java.util.Map<String, Integer> lairBossDownDay = new java.util.HashMap<>();
+    /** Round 299 (user: "Any +Life should only be handed out once. Can't farm."): "poiId|life|source" and (boss lairs)
+     *  "poiId|item|itemName" -> the day that place paid it (-1 = paid before this round, found on a later visit). A
+     *  key here is never paid again, however the enemy that carries it comes back. */
+    private final java.util.Map<String, Integer> oncePaidRewards = new java.util.HashMap<>();
 
     public java.util.Map<String, Integer> getPoiLootHeldDay() {
         return poiLootHeldDay;
+    }
+
+    public java.util.Map<String, Integer> getLairClearCount() {
+        return lairClearCount;
+    }
+
+    public java.util.Map<String, Integer> getLairBossDownDay() {
+        return lairBossDownDay;
+    }
+
+    public java.util.Map<String, Integer> getOncePaidRewards() {
+        return oncePaidRewards;
     }
     // Round 135 (user spec 2026-09-07: "The player can only win 1 arena tournament per week...
     // each of the 5 AI's is its own location and level 1 and level 2 player arenas are their own
@@ -938,6 +961,21 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             poiLootHeldDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("poiLootHeldDay"));
         }
+        lairClearCount.clear(); // round 299
+        if (saveFileData.containsKey("lairClearCount")) {
+            //noinspection unchecked
+            lairClearCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("lairClearCount"));
+        }
+        lairBossDownDay.clear(); // round 299
+        if (saveFileData.containsKey("lairBossDownDay")) {
+            //noinspection unchecked
+            lairBossDownDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("lairBossDownDay"));
+        }
+        oncePaidRewards.clear(); // round 299
+        if (saveFileData.containsKey("oncePaidRewards")) {
+            //noinspection unchecked
+            oncePaidRewards.putAll((java.util.Map<String, Integer>) saveFileData.readObject("oncePaidRewards"));
+        }
         arenaWinWeek.clear();
         if (saveFileData.containsKey("arenaWinWeek")) {
             //noinspection unchecked
@@ -1047,6 +1085,9 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
         data.storeObject("poiLootedDay", poiLootedDay);
         data.storeObject("poiLootHeldDay", poiLootHeldDay); // round 257
+        data.storeObject("lairClearCount", lairClearCount); // round 299
+        data.storeObject("lairBossDownDay", lairBossDownDay); // round 299
+        data.storeObject("oncePaidRewards", oncePaidRewards); // round 299
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
@@ -1958,6 +1999,9 @@ public class World implements Disposable, SaveFileContent {
             poiFailedAttempts.clear();
             poiLootedDay.clear();
             poiLootHeldDay.clear(); // round 257
+            lairClearCount.clear(); // round 299 - a new world's lairs are all first visits
+            lairBossDownDay.clear();
+            oncePaidRewards.clear();
             arenaWinWeek.clear(); // round 135
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be

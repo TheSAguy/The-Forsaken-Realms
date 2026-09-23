@@ -1255,8 +1255,13 @@ public class MapStage extends GameStage {
             String type = prop.get("type", String.class);
             if (type != null) {
                 int id = prop.get("id", int.class);
-                if (changes.isObjectDeleted(id))
+                if (changes.isObjectDeleted(id)) {
+                    // Round 299: an enemy beaten before the once-per-place rules existed - mark what it paid, and a
+                    // lair's boss as down (PlaceRewards.noteEarlierDefeat()).
+                    if ("enemy".equals(type))
+                        PlaceRewards.noteEarlierDefeat(prop.get("enemy"));
                     continue;
+                }
 
                 boolean hidden = !obj.isVisible(); //Check if the object is invisible.
 
@@ -1969,6 +1974,31 @@ public class MapStage extends GameStage {
                 break;
             }
         }
+        // Round 299: a boss lair leaves the map on this walk-out when its boss is down and nothing is left. The
+        // rotatable-dungeon rules below self-gate on isRotatable and do nothing for a lair. The names go to the log's
+        // "stays" line - "enemies are still inside" alone did not say which. An ambusher that is still HIDDEN does not
+        // count for a lair: CharacterSprite only wakes one that has a Wake animation, and a hidden placement re-themed
+        // into a creature without one (Teferi's Hideout's sandwurms, in the agent test) is invisible and still for
+        // good - it would hold a lair, which has no lifespan timer, on the map forever.
+        StringBuilder remaining = new StringBuilder();
+        int listed = 0, stillHidden = 0;
+        for (EnemySprite enemy : enemies) {
+            if (enemy == null || enemy.getStage() == null || enemy.defeatDialog != null)
+                continue;
+            if (enemy.hidden) {
+                stillHidden++;
+                continue;
+            }
+            if (listed++ < 5)
+                remaining.append(remaining.length() == 0 ? "" : ", ").append(enemy.getName()).append(" #").append(enemy.getId());
+        }
+        if (listed > 5)
+            remaining.append(" and ").append(listed - 5).append(" more");
+        if (stillHidden > 0 && TileMapScene.instance().rootPoint != null
+                && DungeonRotation.isVanishingLair(TileMapScene.instance().rootPoint.getData()))
+            System.out.println("[TFR-Lair] " + stillHidden + " ambusher(s) never woke in " + root.getDisplayName()
+                    + " - not counted as enemies left");
+        DungeonRotation.onLairExit(root, listed > 0 ? remaining.toString() : null, lootLeft);
         if (lootLeft) {
             // Round 257 (user: "Don't de-spawn till all loot is cleared. but let's apply the same rule as when all
             // enemies are dead, cut time de-spawn by 75%"): the place keeps what is on its floor until the player
@@ -2281,6 +2311,11 @@ public class MapStage extends GameStage {
     protected void getReward() {
         isLoadingMatch = false;
         Array<Reward> loot = currentMob.getRewards();
+        // Round 299: +Life once per place, a lair boss's signature item once per lair, half on a lair's return visits -
+        // and a boss down in a lair is what lets the walk-out count as a clear (DungeonRotation.onLairExit()).
+        PlaceRewards.filterDuelPayout(loot, currentMob.getData());
+        if (currentMob.getData() != null && currentMob.getData().boss)
+            DungeonRotation.onLairBossDefeated(TileMapScene.instance().rootPoint, currentMob.getData().getName(), false);
         // Bronze Coin ransom reclaim as a visible loot tile (user request 2026-09-01) - the
         // dungeon/town twin of WorldStage.setWinner's call. See
         // AdventurePlayer.appendCoinRansomReward.
@@ -2304,6 +2339,33 @@ public class MapStage extends GameStage {
             player.setAnimation(CharacterSprite.AnimationTypes.Idle);
             currentMob.setAnimation(CharacterSprite.AnimationTypes.Idle);
         }
+    }
+
+    /**
+     * Round 299 (test cheat, console "take loot all"): every reward pickup on this level, granted as if walked into -
+     * through RewardSprite.getRewards(), so a place's reward rules (PlaceRewards) apply exactly as on a real pickup.
+     * Built for testing boss lairs, whose exit rule needs the floor empty, where the agent's walker cannot reach
+     * every pickup.
+     */
+    public String takeAllLoot() {
+        int pickups = 0;
+        StringBuilder got = new StringBuilder();
+        for (MapActor actor : new Array<>(actors)) {
+            if (!(actor instanceof RewardSprite) || actor.getStage() == null)
+                continue;
+            RewardSprite rs = (RewardSprite) actor;
+            for (Reward reward : rs.getRewards()) {
+                Current.player().addReward(reward);
+                got.append(got.length() == 0 ? "" : ", ").append(reward.getType().name())
+                        .append(reward.getCount() > 1 ? " " + reward.getCount() : "");
+            }
+            onRewardTaken(rs.getId());
+            rs.remove();
+            actors.removeValue(rs, true);
+            changes.deleteObject(rs.getId());
+            pickups++;
+        }
+        return "Took " + pickups + " pickup(s): " + got;
     }
 
     public void removeAllEnemies() {
@@ -2440,7 +2502,11 @@ public class MapStage extends GameStage {
                     RewardSprite RS = (RewardSprite) actor;
                     Array<Reward> rewards = RS.getRewards();
 
-                    if (rewards.size == 1) {
+                    if (rewards.size == 0) {
+                        // Round 299: everything in it was withheld (a once-per-place +Life, a lost return-visit coin
+                        // flip) - nothing to show; the pickup is still taken below.
+                        System.out.println("[TFR-PlaceRewards] pickup " + RS.getId() + " is empty after the place's reward rules");
+                    } else if (rewards.size == 1) {
                         Reward reward = rewards.get(0);
                         final String rewardTypeName = reward.getType().name();
 

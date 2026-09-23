@@ -507,6 +507,11 @@ public class PointOfInterestChanges implements SaveFileContent  {
         // reset map when assigning as a quest target that needs enemies
         deletedObjects.clear();
     }
+
+    /** Round 299: how many map objects (defeated enemies, taken rewards) this map remembers as gone - for the restock log. */
+    public int getDeletedObjectCount() {
+        return deletedObjects.size();
+    }
     public boolean isVisited() {
         if (isVisited ==null)
             return false;

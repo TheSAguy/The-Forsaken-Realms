@@ -132,6 +132,24 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 299: boss lairs clear, come back, and pay once
+
+- **`util/DungeonRotation.java`** - `lairStaysReason()` / `isVanishingLair()`, `onLairBossDefeated()`, `onLairExit()`,
+  `returnClearedLairs()` (from `processDaysPassed()`), `restock()` (called from `activateFromReserve()`, the
+  force-spawn in `onQuestTargetBound()` and the lair return); `onDungeonDefeat()`'s stays reason for a lair.
+- **`util/PlaceRewards.java`** (new, mod-owned) - once-per-place +Life and signature items, the return-visit cut,
+  `noteEarlierDefeat()`.
+- **`stage/MapStage.java`** - `getReward()` filters the payout and records a lair boss down; `applyDungeonExitRules()`
+  calls `onLairExit()` (names what is left, skips still-hidden ambushers); the map load calls `noteEarlierDefeat()`
+  for a deleted enemy; an emptied pickup shows no reward screen; `takeAllLoot()`.
+- **`character/RewardSprite.java`** - `PlaceRewards.filterPickup()` inside the one-time fill.
+- **`world/World.java`** - `lairClearCount`, `lairBossDownDay`, `oncePaidRewards` (saved, loaded with containsKey
+  guards, cleared for a new world).
+- **`world/WorldSave.java`** - `getPointOfInterestChangesTree()`.
+- **`pointofintrest/PointOfInterestChanges.java`** - `getDeletedObjectCount()`.
+- **`data/TuningData.java`** - `lairReturnRewardFactor`, `lairReturnItemChance` (plane `settings.json` too).
+- **`stage/ConsoleCommandInterpreter.java`** - `take loot all`.
+
 ### Round 298: dungeon entrances, part 2
 
 - Plane data only: `maps/tileset/dungeon_entrances.atlas` + `.png` rebuilt (the 16 at the new tower scale, plus

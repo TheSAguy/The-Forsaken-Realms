@@ -131,6 +131,153 @@ public class DungeonRotation {
                 + " - it stays on the map: " + reason);
     }
 
+    /**
+     * Round 299 (user, after emptying Slime Hive: "I emptied the dungeon, but it remained. Can you check on that" - then:
+     * lairs come back, "Any +Life should only be handed out once", every other reward "cut by 50%"). The 18 side-boss
+     * lairs sat outside rotation by type (notRotatableReason() above), and rotation is also what takes an emptied place
+     * off the map, so a lair stayed forever once emptied. A VANISHING lair - a sideboss* type tagged Hostile, minus
+     * story / quest / NoRotate - now leaves when its boss is down and the player walks out with nothing left
+     * (onLairExit), and comes back to the same spot after the spot rest, restocked (returnClearedLairs). Not tagged
+     * Hostile, so staying for good: Skep (five shops inside) and the Unhallowed Abbey.
+     * <p>
+     * null when the place is a vanishing lair, otherwise why not - the log's answer, like notRotatableReason().
+     */
+    public static String lairStaysReason(PointOfInterestData data) {
+        if (data == null)
+            return "it has no POI data";
+        if (!isLairType(data))
+            return "type '" + data.type + "' is not a boss lair";
+        if (data.name == null || data.name.startsWith("Quest_"))
+            return "'" + data.name + "' is a quest map";
+        boolean hostile = false;
+        if (data.questTags != null) {
+            for (String tag : data.questTags) {
+                if (tag == null)
+                    continue;
+                if ("Story".equals(tag) || tag.startsWith("Quest_"))
+                    return "it is tagged " + tag + " - story and quest maps never vanish";
+                if ("NoRotate".equals(tag))
+                    return "it is tagged NoRotate";
+                if ("Hostile".equals(tag))
+                    hostile = true;
+            }
+        }
+        return hostile ? null : "it is not tagged Hostile";
+    }
+
+    public static boolean isVanishingLair(PointOfInterestData data) {
+        return lairStaysReason(data) == null;
+    }
+
+    private static boolean isLairType(PointOfInterestData data) {
+        return data != null && data.type != null && data.type.toLowerCase().startsWith("sideboss");
+    }
+
+    /**
+     * Round 299: a boss fell inside this place - MapStage.getReward() on the win, and PlaceRewards.noteEarlierDefeat()
+     * at map load for a boss killed before this round (the user's Slime Hive). Recorded for vanishing lairs only: it
+     * is what lets onLairExit() count the walk-out as a clear. An empty entrance level alone is not one - Tibalt's
+     * Fortress and the Strange Desert keep their bosses deeper down.
+     */
+    public static void onLairBossDefeated(PointOfInterest root, String bossName, boolean earlierVisit) {
+        if (!isEnabled() || root == null || !isVanishingLair(root.getData()))
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (world.getLairBossDownDay().containsKey(root.getID()))
+            return;
+        world.getLairBossDownDay().put(root.getID(), world.getCurrentDay());
+        System.out.println("[TFR-Lair] " + root.getDisplayName() + ": its boss " + bossName + " is down"
+                + (earlierVisit ? " (beaten on an earlier visit)" : "")
+                + " - it leaves the map once you walk out with nothing left");
+    }
+
+    /**
+     * Round 299: MapStage's exit rules for boss lairs (the rotatable-dungeon rules beside it no-op for them). Called on
+     * every walk-out of a sideboss* place; the lair vanishes when its boss is down and nothing is left on the level the
+     * player leaves from - the same "no enemies, no loot" test dungeons use - unless an active STORY quest points at it.
+     * enemiesLeft: null when none are left, otherwise the names MapStage found (for the log).
+     */
+    public static void onLairExit(PointOfInterest poi, String enemiesLeft, boolean lootLeft) {
+        if (!isEnabled() || poi == null || !isLairType(poi.getData()))
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        String id = poi.getID();
+        String reason = lairStaysReason(poi.getData());
+        if (reason == null && activeQuestStatus(poi) == QUEST_STORY)
+            reason = "an active story quest targets it";
+        if (reason == null && !world.getLairBossDownDay().containsKey(id))
+            reason = "its boss has not been beaten";
+        if (reason == null && enemiesLeft != null)
+            reason = "enemies are still inside (" + enemiesLeft + ")";
+        if (reason == null && lootLeft)
+            reason = "loot is still on the floor";
+        if (reason != null) {
+            System.out.println("[TFR-Lair] walked out of " + poi.getDisplayName() + " - it stays on the map: " + reason);
+            return;
+        }
+        int currentDay = world.getCurrentDay();
+        int clears = world.getLairClearCount().getOrDefault(id, 0) + 1;
+        world.getLairClearCount().put(id, clears);
+        world.getLairBossDownDay().remove(id);
+        poi.setActive(false);
+        forge.adventure.pointofintrest.PointOfInterestChanges poiChanges =
+                WorldSave.getCurrentSave().peekPointOfInterestChanges(id);
+        if (poiChanges != null)
+            poiChanges.clearFixedRoster(); // a fresh roster when it returns, like a rotated dungeon (round 201)
+        int backDay = currentDay + rollDays(world, respawnMinDays(), respawnMaxDays());
+        world.getPoiRespawnDay().put(id, backDay);
+        System.out.println("[TFR-Lair] " + poi.getDisplayName() + " cleared (clear #" + clears + ") - gone until day "
+                + backDay + ", then back restocked on return-visit rewards");
+        AdventureQuestController.instance().updateDungeonCleared(poi); // "clear N dungeons" counts an emptied lair too
+        world.refreshWorldMapMarkers();
+    }
+
+    /**
+     * Round 299: bring cleared boss lairs back to their own spot once the rest is over - restocked, and every visit
+     * from now on is a return visit (PlaceRewards pays half). Unlike a dungeon a lair has no lifespan: it stays until
+     * it is cleared again. Only lairs this class hid (a clear count) - anything hidden for another reason is left.
+     */
+    private static boolean returnClearedLairs(World world, int currentDay) {
+        boolean changed = false;
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if (poi.getActive() || !isVanishingLair(poi.getData()))
+                continue;
+            String id = poi.getID();
+            Integer clears = world.getLairClearCount().get(id);
+            if (clears == null)
+                continue;
+            Integer backDay = world.getPoiRespawnDay().get(id);
+            if (backDay != null && currentDay < backDay)
+                continue;
+            poi.setActive(true);
+            world.getPoiRespawnDay().remove(id);
+            world.getLairBossDownDay().remove(id);
+            int restocked = restock(poi);
+            System.out.println("[TFR-Lair] " + poi.getDisplayName() + " is back on the map (day " + currentDay
+                    + ", after clear #" + clears + "): " + restocked + " enemies/rewards restocked - return visits pay"
+                    + " half, no +Life, no signature item");
+            changed = true;
+        }
+        return changed;
+    }
+
+    /**
+     * Round 299, found while building the lair return: a place that came back from rotation came back EMPTY. The save
+     * remembers every enemy defeated and every reward taken in it (PointOfInterestChanges.deletedObjects, one set per
+     * level) and nothing forgot that on the way back, so a reused reserve spot loaded without whatever the player had
+     * already taken there. Forgets it for the place and every level below it; returns how many objects came back.
+     * Callers: the lair return above, activateFromReserve() and a quest force-spawn.
+     */
+    static int restock(PointOfInterest poi) {
+        int objects = 0;
+        for (forge.adventure.pointofintrest.PointOfInterestChanges changes
+                : WorldSave.getCurrentSave().getPointOfInterestChangesTree(poi.getID())) {
+            objects += changes.getDeletedObjectCount();
+            changes.clearDeletedObjects();
+        }
+        return objects;
+    }
+
     static boolean isRotatable(PointOfInterest poi) {
         return poi != null && isRotatableData(poi.getData());
     }
@@ -208,6 +355,7 @@ public class DungeonRotation {
         String id = poi.getID();
         if (!poi.getActive()) {
             poi.setActive(true);
+            restock(poi); // round 299: a spot the player emptied before comes back full
             world.getPoiRespawnDay().remove(id);
             world.getPoiFailedAttempts().remove(id);
             world.getPoiLootedDay().remove(id); // round 128
@@ -232,7 +380,7 @@ public class DungeonRotation {
         if (!isEnabled())
             return;
         World world = WorldSave.getCurrentSave().getWorld();
-        boolean changed = false;
+        boolean changed = returnClearedLairs(world, newDayCount); // round 299
         java.util.List<PointOfInterest> activeRotatable = new java.util.ArrayList<>();
         for (PointOfInterest poi : world.getAllPointOfInterest()) {
             if (isRotatable(poi) && poi.getActive())
@@ -343,6 +491,10 @@ public class DungeonRotation {
         while (activeCount < target && !eligibleReserve.isEmpty()) {
             PointOfInterest pick = eligibleReserve.remove(world.getRandom().nextInt(eligibleReserve.size()));
             pick.setActive(true);
+            int restocked = restock(pick); // round 299: a spot the player emptied before comes back full
+            if (restocked > 0)
+                System.out.println("[DungeonRotation] " + pick.getDisplayName() + " restocked: " + restocked
+                        + " enemies/rewards from an earlier visit are back");
             world.getPoiRespawnDay().remove(pick.getID());
             world.getPoiFailedAttempts().remove(pick.getID());
             world.getPoiLootedDay().remove(pick.getID()); // round 128
@@ -366,7 +518,9 @@ public class DungeonRotation {
         if (!isRotatable(poi)) {
             // Round 229: losses are rare, so every one of them says so - a castle, a boss lair and a
             // NoRotate cave all get their line, and "why is it still here" is answered by the log.
-            logStays("defeat", poi, poi == null ? "the map has no root POI" : notRotatableReason(poi.getData()));
+            logStays("defeat", poi, poi == null ? "the map has no root POI"
+                    : isLairType(poi.getData()) ? "a boss lair leaves the map only when it is cleared (round 299)"
+                    : notRotatableReason(poi.getData()));
             return;
         }
         World world = WorldSave.getCurrentSave().getWorld();

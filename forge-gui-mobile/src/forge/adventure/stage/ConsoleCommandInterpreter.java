@@ -654,6 +654,12 @@ public class ConsoleCommandInterpreter {
             }
             return "Removed all enemies";
         });
+        // Round 299: collect every pickup on the current map level through the normal reward path (testing aid).
+        registerCommand(new String[]{"take", "loot", "all"}, s -> {
+            if (!MapStage.getInstance().isInMap())
+                return "Only inside a map";
+            return MapStage.getInstance().takeAllLoot();
+        });
 
         registerCommand(new String[]{"hide"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: Amount";

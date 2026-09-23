@@ -228,6 +228,12 @@
     "dungeonLifespanMaxDays": 40,
     "dungeonSpotRestMinDays": 10,
     "dungeonSpotRestMaxDays": 30,
+    // Round 299: a cleared boss lair comes back after the spot rest above; every visit after that pays gold /
+    // shards / wood / stone x this (rounded up) and the NUMBER of cards x this (a lone card drops half the
+    // time), and each non-signature item drops with the chance below. +Life and a boss's own signature item
+    // are paid once per place, never again.
+    "lairReturnRewardFactor": 0.5,
+    "lairReturnItemChance": 0.5,
 
     // Enemy size by tier (round 178, user decision: one size per rank, so the size tells you the rank).
     // Every non-boss enemy's "scale" in world/enemies.json draws its BODY at the hero's body size

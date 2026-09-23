@@ -81,6 +81,9 @@ public class RewardSprite extends CharacterSprite {
                         rewardCollection.addAll(rdata.generate(false, true));
                     }
                 }
+                // Round 299: +Life once per place, half on a boss lair's return visits - inside the one-time fill, so
+                // a pickup is judged exactly once.
+                forge.adventure.util.PlaceRewards.filterPickup(rewardCollection, id);
             }
         }
         return rewardCollection;

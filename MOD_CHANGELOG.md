@@ -17757,6 +17757,58 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 299: boss lairs clear, come back, and pay once (2026-09-23)
+
+User, after the Ooze quest ("Slimy Business"): *"I finished the quest, kill Ooze. I emptied the dungeon, but it
+remained. Can you check on that."* Then, on the recommendation to make an emptied lair vanish for good: *"I agree with
+all your recommendations, except for the rewards part. Any +Life should only be handed out one. Can't farm. Al other
+rewards should be cut by 50%. That goes for gold and number of cards. Not exactly sure how to handle items, your
+thoughts?"* - and they took the item proposal: a boss's signature item once, every other item a coin flip. Local commit.
+
+**Why Slime Hive stayed**: the user's log said `[DungeonRotation] defeat at Slime Hive - it stays on the map: type
+'sidebosseasy' never rotates (only dungeons and caves do)`. The 18 side-boss lairs sat outside dungeon rotation by
+type since rotation was built (2026-08-08), and rotation is also what takes an emptied place off the map - so a lair
+stayed forever once emptied. By design, not a regression; the design changes here.
+
+**Now** (`DungeonRotation`, new `PlaceRewards`, `World`):
+- A lair - a sideboss* type tagged Hostile, 16 of the 18 (Skep keeps its five shops; the Unhallowed Abbey is not
+  Hostile) - leaves the map when its boss has been beaten and the player walks out with no enemies and no loot left
+  on that level. An empty entrance alone is not a clear: Tibalt's Fortress and the Strange Desert keep their bosses
+  deeper down. An active story quest keeps it; a cleared lair counts toward "clear N dungeons".
+- It comes back to its own spot after the spot rest (10-30 days), restocked, and stays until cleared again - no
+  lifespan, unlike a dungeon.
+- **+Life is paid once per place and source, everywhere** (an enemy by name, a pickup by object) and a lair boss's
+  **signature item** (a fixed itemName on its own reward list, e.g. Slime-Covered Boots, Teferi's Staff) once per
+  lair. Recorded in `World.oncePaidRewards`, so no route brings either back - a lair's return, a restocked dungeon.
+- **Return visits** to a cleared lair: gold, shards, wood and stone x0.5 (rounded up); the number of cards and packs
+  x0.5 with the fraction a coin flip, so a lone card drops half the time (rounding up, the first version, let the
+  lairs' 63 single-card entries of 189 through uncut - the agent test's log showed it); every other item drops half
+  the time. Settings: `lairReturnRewardFactor`, `lairReturnItemChance`.
+- **Existing saves**: a boss already beaten is found gone from its map on the next visit - its +Life and signature
+  item are recorded as paid and the lair's boss as down. The user's Slime Hive leaves on the next walk in and out and
+  comes back on half rewards, without +Life or Slime-Covered Boots.
+
+**Found while building, fixed too - returning dungeons came back EMPTY.** The save remembers every enemy defeated and
+every reward taken, per level, and nothing forgot it when a place came back, so a reused reserve spot loaded without
+whatever the player had already taken there. `DungeonRotation.restock()` clears that for the place and all its levels
+when a dungeon or cave returns from the reserve, is force-spawned for a quest, or a lair returns.
+
+**Also**: a still-hidden ambusher does not count as "enemies left" for a lair. A hidden placement re-themed into a
+creature without a Wake animation never wakes - invisible and still for good (Teferi's Hideout has four) - and would
+hold a lair, which has no timer, on the map forever. The exit's "stays" line now names the enemies still inside. New
+test cheat: console `take loot all`.
+
+**Seen** in the agent game (the spot rest set to 1 day in the agent's copy, restored after): Slime Hive, Xira's Hive
+and Teferi's Hideout stay while the boss is up or loot remains; the earlier-visit records (+1 max life, Slime-Covered
+Boots, Xira's Fancy Hat, Teferi's Staff); clear #1 -> gone -> back two days later with 20-25 enemies and rewards
+restocked; return-visit pickups halved (cards 14->7 and 7->4, gold 85->43, shards 6->3, wood 19->10); a real duel on
+a return visit (Kor Duelist): gold 131->66, cards 3->1. Not seen live: a won boss duel - the agent's walker could not
+reach a lair boss - so the withholding was exercised through the earlier-visit path. Plane validator clean.
+
+**Corrections to what the user was told**: quests do NOT reset a lair's enemies (`AdventureQuestData` resets only
+cave and dungeon targets); Demon's Bargain does not give +Life - the demon takes 2 max life for a pile of cards.
+**Not covered**: +Life from the ~29 legends fought outside places (arena champions, event bosses).
+
 ## Round 298: every dungeon its own entrance, and smaller towers (2026-09-23)
 
 User, after round 297: *"I think the scale of the towers are a little big. The old towers were already big (The one

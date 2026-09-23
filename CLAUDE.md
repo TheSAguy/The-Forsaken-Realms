@@ -99,7 +99,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   110 dungeons, 110 different icons (checked by PIXELS: two names can be one image); every icon a dungeon used before
   round 297 still used (pagoda White Tower, blue-roof Mages' Fort, old Fort, ruined Sea Temple back on one each); all
   16 Sythian Bard icons used, towers halved (24x48 / 22x24); Graveyard_A-D and Factory_A-C split into the atlas.
-  Data only. Seen in the agent game. Scratchpad tool r297b_unique.py re-verifies all of it.
+  Data only. Seen in the agent game. Scratchpad tool r297b_unique.py re-verifies all of it. (Packaged since.)
+- **Round 299 (local commit, NOT pushed): boss lairs clear, return, pay once** - side-boss lairs tagged Hostile (not
+  Skep / Unhallowed Abbey) vanish when the boss is down and the player walks out with nothing left, and return after
+  10-30 days restocked; +Life once per place everywhere, a lair boss's signature item once; return visits half (card
+  COUNT coin-flipped); returning dungeons are restocked now (they came back empty); still-hidden ambushers do not hold
+  a lair; console `take loot all`. Seen in the agent game except a won boss duel.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

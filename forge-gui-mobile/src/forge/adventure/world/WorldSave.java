@@ -110,6 +110,18 @@ public class WorldSave {
         return pointOfInterestChanges.values();
     }
 
+    /** Round 299: every saved-changes entry of one place - its own map (keyed by the POI id) and each level below it
+     *  (TileMapScene keys those "poiId + map path"), so a place can be restocked as a whole. Existing entries only. */
+    public java.util.List<PointOfInterestChanges> getPointOfInterestChangesTree(String poiId) {
+        java.util.List<PointOfInterestChanges> tree = new java.util.ArrayList<>();
+        if (poiId == null)
+            return tree;
+        for (java.util.Map.Entry<String, PointOfInterestChanges> entry : pointOfInterestChanges.entrySet())
+            if (entry.getKey() != null && entry.getKey().startsWith(poiId))
+                tree.add(entry.getValue());
+        return tree;
+    }
+
     /** Round 183: true once a game exists in this session (a load or a new game succeeded) - only then is
      *  there a running game worth snapshotting before a load. */
     private static boolean liveGame = false;
