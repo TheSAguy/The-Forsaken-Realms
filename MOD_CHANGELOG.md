@@ -17757,6 +17757,23 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 300 part 2: the new terrain on the player's land, green back as it was (2026-09-23)
+
+User, after round 300: *"Let's make green as it was before, and switch the new terrain for the player's terrain. Show
+me a before and after like you did for green please."* Local commit; data only.
+
+- The 32 px sheet is now `world/tilesets/player_terrain_hd.png` (+ `.atlas`, regions Player / Player_1 / Player_2 /
+  Player_3 = the user's tiles 1-4); `player.json` points at it, with tile 4 as the player's overlay patch at the
+  player biome's own patch scale (resolution 5). The user's own `player_terrain.png` (and its `_original` backup) is
+  untouched, one line in `player.json` away.
+- `green.json` is back on `terrain.atlas`, no overlay; `green_terrain.*` is gone (the sheet was renamed).
+- `dev-tools/validate_plane_data.py` knows `BiomeData.overlays`, `ConfigData.terrainScale` and round 299's
+  `lairReturnRewardFactor` / `lairReturnItemChance`.
+
+**Seen** in the agent game on a copy of the user's latest save (day 10, 6,392 tiles of player land): around the
+Capitol and at the edge where the player's land meets the wasteland, before and after - the new grass and its three
+patch kinds, the same outline, roads and decorations unchanged.
+
 ## Round 300: a 2x terrain renderer, and the new green terrain (2026-09-23)
 
 User, with a sheet of four new green terrain tiles (a screenshot, `Screenshots\NEW GREEN.png`): *"Please generate the

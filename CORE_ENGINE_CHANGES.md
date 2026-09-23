@@ -132,6 +132,11 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 300 part 2: the new terrain on the player's land
+
+- No engine change: `player.json` / `green.json` and the renamed sheet; `dev-tools/validate_plane_data.py` knows the
+  new data fields.
+
 ### Round 300: a 2x terrain renderer
 
 - **`data/ConfigData.java`** - `terrainScale` (default 1).

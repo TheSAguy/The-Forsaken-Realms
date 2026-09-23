@@ -4,7 +4,7 @@
     "noiseWeight":  0.3,
     "distWeight":  1,
     "name":  "player",
-    "tilesetAtlas":  "world/tilesets/player_terrain.atlas",
+    "tilesetAtlas":  "world/tilesets/player_terrain_hd.atlas",
     "tilesetName":  "Player",
     "terrain":  [
                     {
@@ -14,6 +14,14 @@
                     },
                     {
                         "spriteName":  "Player_2",
+                        "min":  0.8,
+                        "max":  1,
+                        "resolution":  5
+                    }
+                ],
+    "overlays":  [
+                    {
+                        "spriteName":  "Player_3",
                         "min":  0.8,
                         "max":  1,
                         "resolution":  5

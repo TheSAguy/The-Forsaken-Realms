@@ -111,6 +111,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   converted VX -> XP at 32 px (`world/tilesets/green_terrain.*`); tile 4 is a draw-time overlay patch
   (`BiomeData.overlays`, never saved - a terrain[] entry would renumber green structures in saves). A peer session
   holds round 301 (hidden ambushers); the legends' once-per-game +Life is round 302.
+- **Round 300 part 2 (local commit): the new terrain is the PLAYER's, not green's** (user's call after the test) -
+  `world/tilesets/player_terrain_hd.*` + `player.json` (overlay Player_3, resolution 5); green back on terrain.atlas.
+  The user's own player_terrain.png is untouched. Data only.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.
