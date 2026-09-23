@@ -132,6 +132,18 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 293: town territory anchored on the town's center
+
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — the town growth ring, the Capitol's ring and
+  the town/Capitol pull sources use `PointOfInterest.getCenter()`; the AI castles keep `getPosition()` (world-gen
+  anchors their circles there). New `recenterTownTerritories()`, the one-time save repair, called at the top of
+  `processTerritoryExpansion()`. `[TFR-TownGrowth]` with `TOWN_GROWTH_BLOCK_REPORTED`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `townTerritoryAnchor` (saved key
+  `townTerritoryAnchor`, `TOWN_TERRITORY_ANCHOR = 1`, reset in generateNew), `townTerritoriesNeedRecenter()`,
+  `markTownTerritoriesRecentered()`, `isTerritoryPatternReady()`; `prewarmTerritoryControlCaches()` includes "player".
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the player capture and restoration reveals
+  use `getCenter()`.
+
 ### Round 292: map labels, the inventory description, overworld zoom
 
 - **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** — zoomIn()/zoomOut() no longer transform the

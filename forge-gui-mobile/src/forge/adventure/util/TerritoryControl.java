@@ -20,10 +20,14 @@ import forge.adventure.world.WorldSave;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Dynamic Territory Control (MOD_SCOPE.md #7), first slice: independently for each of the 5 AI
@@ -467,6 +471,8 @@ public class TerritoryControl {
     // Written by processTerritoryExpansion(), read by processDaysPassed() so the whole pass reports
     // as one line. Single-threaded: this runs only on the day rollover in WorldStage.act().
     private static long expCastles, expPlayerTowns, expSources1, expTownGrowth, expSources2, expColorClaim;
+    /** Round 293: towns whose current growth block [TFR-TownGrowth] already reported - see the town loop. */
+    private static final Set<String> TOWN_GROWTH_BLOCK_REPORTED = new HashSet<>();
     private static int expPoiScanned;
 
     /** Called from WorldStage.onActing() whenever the in-game day counter advances. */
@@ -658,7 +664,10 @@ public class TerritoryControl {
                 Integer radius = world.getTownTerritoryRadius(poi.getID());
                 int protect = Math.max(1, Math.min(radius != null ? radius : RECOLOR_RADIUS, townProtectedRadiusCap()) / 2);
                 boolean isCapital = poi.getData().name != null && poi.getData().name.endsWith("Capital");
-                list.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
+                // Round 293: a town pulls from its CENTER, where its disc is painted and grows - not its corner.
+                // The castles above stay on getPosition(): world generation kept each castle circle there.
+                Vector2 center = poi.getCenter();
+                list.add(new float[]{center.x / tileSize, center.y / tileSize,
                         (isCapital ? CAPITAL_PULL_WEIGHT : TOWN_PULL_WEIGHT) / ringPullDivisor(poi), protect});
             }
             sources.put(color, list);
@@ -668,14 +677,15 @@ public class TerritoryControl {
             // The Capitol is the player's castle: castle-grade pull and a full inviolable keep,
             // exactly like the five AI castles (2026-08-08 late, "his terrain should also
             // spread, just like the AI's").
+            Vector2 center = poi.getCenter(); // round 293: the center, as above
             if (TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name)) {
-                playerList.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
+                playerList.add(new float[]{center.x / tileSize, center.y / tileSize,
                         CASTLE_PULL_WEIGHT, CASTLE_KEEP_RADIUS_TILES});
                 continue;
             }
             Integer radius = world.getTownTerritoryRadius(poi.getID());
             int protect = Math.max(1, Math.min(radius != null ? radius : RECOLOR_RADIUS, townProtectedRadiusCap()) / 2);
-            playerList.add(new float[]{poi.getPosition().x / tileSize, poi.getPosition().y / tileSize,
+            playerList.add(new float[]{center.x / tileSize, center.y / tileSize,
                     PLAYER_TOWN_PULL_WEIGHT / ringPullDivisor(poi), protect});
         }
         sources.put("player", playerList);
@@ -728,6 +738,10 @@ public class TerritoryControl {
         if (!playerTowns.isEmpty())
             System.out.println("[TerritoryControl] daily expansion: " + playerTowns.size() + " player-owned town(s) projecting pull");
         Map<String, List<float[]>> pullSources = buildPullSources(world, castlePositions, playerTowns);
+        // Round 293: a save whose towns grew from their corner gets the gaps that left filled, once - BEFORE today's
+        // growth, so the repair works from each town's radius as it stood. See recenterTownTerritories().
+        if (world.townTerritoriesNeedRecenter() && recenterTownTerritories(world, pullSources, playerTowns))
+            world.markTownTerritoriesRecentered();
         expSources1 = System.nanoTime() - tPhase;
         tPhase = System.nanoTime();
         // Captured towns grow their own small territory, RECOLOR_RADIUS -> TOWN_MAX_TERRITORY_RADIUS
@@ -789,10 +803,25 @@ public class TerritoryControl {
             world.setTownTerritoryRadius(poi.getID(), newTownRadius);
             if (playerOwned)
                 world.rebuildPlayerTownVision();
-            int claimed = world.claimWastelandRing(ownerColor, poi.getPosition(), pullSources,
+            // Round 293: the ring grows around the town's CENTER, the point its disc was painted around
+            // (repaintBiomeAroundTown, round 255). It used getPosition() - the bottom-left corner - and a ring
+            // around the corner skips a crescent on the town's lower-left: the user's "gap".
+            long heldBefore = World.claimTilesAlreadyMine;
+            int claimed = world.claimWastelandRing(ownerColor, poi.getCenter(), pullSources,
                     townRadius, newTownRadius,
                     WorldStage.getInstance()::refreshBackgroundTile,
                     WorldStage.getInstance()::reloadBackgroundChunkObjects);
+            long alreadyHeld = World.claimTilesAlreadyMine - heldBefore;
+            // A blocked town retries every day, so its block is reported once, when it starts. The first run of
+            // this line found the five world-gen AI capitals "blocked" daily by their OWN color's land: the ring
+            // is already theirs, nothing is new, the radius reverts - round 197's capital growth never advances.
+            if (claimed > 0)
+                TOWN_GROWTH_BLOCK_REPORTED.remove(poi.getID());
+            if (claimed > 0 || TOWN_GROWTH_BLOCK_REPORTED.add(poi.getID()))
+                System.out.println("[TFR-TownGrowth] " + poi.getDisplayName() + " (" + ownerColor + "): territory radius "
+                        + townRadius + " -> " + newTownRadius + " around its center, " + claimed + " tile(s) claimed, "
+                        + alreadyHeld + " of the ring already " + ownerColor + "'s"
+                        + (claimed > 0 ? "" : " - radius held (reported once until it grows)"));
             if (claimed > 0) {
                 // Only spend the earned week(s) on an actual successful claim - a blocked attempt
                 // (below) keeps its earned tile(s) banked and retries next tick, same spirit as
@@ -934,7 +963,7 @@ public class TerritoryControl {
             }
             if (innerRadius >= 0) {
                 java.util.Set<Long> claimedTiles = new java.util.HashSet<>();
-                int claimed = world.claimWastelandRing("player", capitol.getPosition(), pullSources,
+                int claimed = world.claimWastelandRing("player", capitol.getCenter(), pullSources, // round 293: center
                         innerRadius, newRadius,
                         WorldStage.getInstance()::refreshBackgroundTile,
                         WorldStage.getInstance()::reloadBackgroundChunkObjects,
@@ -975,6 +1004,88 @@ public class TerritoryControl {
         }
         // Covers both claim loops - the five AI castles above and the Capitol block just now.
         expColorClaim = System.nanoTime() - tPhase;
+    }
+
+    /**
+     * Round 293 (user, with four screenshots of a player town: "The bottom left is creating a 'gap' in the terrain").
+     * Round 255 moved the capture paint to the town's CENTER but left every daily growth ring on getPosition(), the
+     * town's bottom-left corner - two tiles down and left of the center for a 64x64 town. The first ring around the
+     * corner skipped the crescent between itself and the centered paint, and every later ring left it behind: the
+     * gap. Growth runs from the center now; this fills what the corner left, ONCE per save
+     * (World.townTerritoriesNeedRecenter()). Every town disc is claimed again around its center, and a town that
+     * grew from its corner (radius past RECOLOR_RADIUS) also has its old footprint, radius - 1 around the corner,
+     * claimed - the gap lies inside it, and nothing outside it is added. Ordinary claims: the same pull contest
+     * decides every tile, so ground a rival holds by right stays theirs.
+     * <p>
+     * Left out: the Capitol, whose full re-contest on the first day of every session re-claims its disc from its
+     * center anyway, and the five world-gen capitals, which were never painted around their center and so have no
+     * gap. A town that grew from its corner keeps its old outline on the lower-left - up to three tiles past its
+     * radius - until the centered growth passes it.
+     * <p>
+     * Returns false, and the repair waits a day, while an owner's terrain pattern is still building - claiming now
+     * would lay the filled ground bare.
+     */
+    private static boolean recenterTownTerritories(World world, Map<String, List<float[]>> pullSources,
+                                                   List<PointOfInterest> playerTowns) {
+        List<PointOfInterest> towns = new ArrayList<>();
+        List<String> owners = new ArrayList<>();
+        for (PointOfInterest poi : world.getAllPointOfInterest()) {
+            if (TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name) || isAiCapital(poi.getData()))
+                continue;
+            if (world.getTownTerritoryRadius(poi.getID()) == null)
+                continue;
+            String owner = playerTowns.contains(poi) ? "player" : null;
+            if (owner == null) {
+                for (String color : COLORS) {
+                    if (isColorTownOrCapital(poi.getData(), color)) {
+                        owner = color;
+                        break;
+                    }
+                }
+            }
+            if (owner == null || (!"player".equals(owner) && world.isColorDefeated(owner)))
+                continue;
+            towns.add(poi);
+            owners.add(owner);
+        }
+        Set<String> waiting = new TreeSet<>();
+        for (String owner : owners)
+            if (!world.isTerritoryPatternReady(owner))
+                waiting.add(owner);
+        if (!waiting.isEmpty()) {
+            System.out.println("[TFR-TownRecenter] the terrain pattern of " + waiting
+                    + " is still building - the one-time repair of town territories waits for tomorrow");
+            return false;
+        }
+        Map<String, Integer> filledByOwner = new TreeMap<>();
+        int filled = 0;
+        for (int i = 0; i < towns.size(); i++) {
+            PointOfInterest poi = towns.get(i);
+            String owner = owners.get(i);
+            int radius = world.getTownTerritoryRadius(poi.getID());
+            Set<Long> claimedTiles = new HashSet<>();
+            int claimed = world.claimWastelandRing(owner, poi.getCenter(), pullSources, 0, radius,
+                    WorldStage.getInstance()::refreshBackgroundTile,
+                    WorldStage.getInstance()::reloadBackgroundChunkObjects, claimedTiles);
+            if (radius > RECOLOR_RADIUS)
+                claimed += world.claimWastelandRing(owner, poi.getPosition(), pullSources, 0, radius - 1,
+                        WorldStage.getInstance()::refreshBackgroundTile,
+                        WorldStage.getInstance()::reloadBackgroundChunkObjects, claimedTiles);
+            if ("player".equals(owner)) {
+                // The same reveal the Capitol gives the ground it claims - no-op for a tile already explored.
+                for (long packed : claimedTiles)
+                    world.revealArea((int) (packed >> 32), (int) packed, 1, WorldStage.getInstance()::refreshBackgroundTile);
+            }
+            if (claimed > 0) {
+                filled += claimed;
+                filledByOwner.merge(owner, claimed, Integer::sum);
+                System.out.println("[TFR-TownRecenter] " + poi.getDisplayName() + " (" + owner + ", radius " + radius
+                        + "): " + claimed + " tile(s) filled");
+            }
+        }
+        System.out.println("[TFR-TownRecenter] one-time repair done: " + towns.size()
+                + " town territories re-claimed around their centers, " + filled + " tile(s) filled " + filledByOwner);
+        return true;
     }
 
     // Dispatched-mage tier variety (2026-08-14 user spec): was hardcoded to always "Adept

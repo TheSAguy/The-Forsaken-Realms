@@ -78,6 +78,12 @@ public class World implements Disposable, SaveFileContent {
     // (every save before round 249, which has no key); 1 = centered on the POI (PointOfInterest.getCenter()).
     public static final int MAP_ICON_LAYOUT = 1;
     private int mapIconLayout = MAP_ICON_LAYOUT;
+    // Round 293 (user: "The bottom left is creating a 'gap' in the terrain"): the point town territory grew from.
+    // 0 = the town's bottom-left corner (every save before round 293, which has no key) - its growth rings left a gap
+    // on the lower-left of the centered capture paint, which TerritoryControl.recenterTownTerritories() fills ONCE;
+    // 1 = the town's center (PointOfInterest.getCenter()).
+    public static final int TOWN_TERRITORY_ANCHOR = 1;
+    private int townTerritoryAnchor = TOWN_TERRITORY_ANCHOR;
 
     // Day/night cycle: dayProgress is the fraction of the current day elapsed, in [0,1), where
     // 0 = midnight. It only advances via advanceTime(), which WorldStage calls once per frame
@@ -819,6 +825,7 @@ public class World implements Disposable, SaveFileContent {
         dayCount = saveFileData.containsKey("dayCount") ? saveFileData.readInt("dayCount") : 1;
         fogOfWarStage2Revealed = saveFileData.containsKey("fogOfWarStage2Revealed") && saveFileData.readBool("fogOfWarStage2Revealed");
         mapIconLayout = saveFileData.containsKey("mapIconLayout") ? saveFileData.readInt("mapIconLayout") : 0; // round 249
+        townTerritoryAnchor = saveFileData.containsKey("townTerritoryAnchor") ? saveFileData.readInt("townTerritoryAnchor") : 0; // round 293
 
         colorNextAttackDay.clear();
         if (saveFileData.containsKey("colorNextAttackDay")) {
@@ -1010,6 +1017,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("dayCount", dayCount);
         data.store("fogOfWarStage2Revealed", fogOfWarStage2Revealed);
         data.store("mapIconLayout", mapIconLayout); // round 249
+        data.store("townTerritoryAnchor", townTerritoryAnchor); // round 293
         data.storeObject("colorTerritoryRadius", colorTerritoryRadius);
         data.storeObject("defeatedColors", defeatedColors);
         data.storeObject("forcedPlayerTargetPending", forcedPlayerTargetPending);
@@ -1604,6 +1612,7 @@ public class World implements Disposable, SaveFileContent {
             // or New Game+ started from a finished run, so the reveal could never fire again.
             fogOfWarStage2Revealed = false;
             mapIconLayout = MAP_ICON_LAYOUT; // round 249: the post-sweep redrawAllPoiMarkers() bakes this world's icons centered
+            townTerritoryAnchor = TOWN_TERRITORY_ANCHOR; // round 293: a new world's towns only ever grow from their center
             ResourceSpawns.forceResync();
             poiDespawnDay.clear();
             poiRespawnDay.clear();
@@ -2904,6 +2913,15 @@ public class World implements Disposable, SaveFileContent {
         mapIconLayout = MAP_ICON_LAYOUT;
     }
 
+    /** Round 293: does this save still carry the gaps its towns' corner-anchored growth left? */
+    public boolean townTerritoriesNeedRecenter() {
+        return townTerritoryAnchor < TOWN_TERRITORY_ANCHOR && isTerritoryControlEnabled();
+    }
+
+    public void markTownTerritoriesRecentered() {
+        townTerritoryAnchor = TOWN_TERRITORY_ANCHOR;
+    }
+
     private void rebakeMinimapAfterTerritoryControl() {
         Pixmap pix = new Pixmap(width * data.miniMapTileSize, height * data.miniMapTileSize, Pixmap.Format.RGBA8888);
         pix.setColor(1, 0, 0, 1);
@@ -3479,6 +3497,18 @@ public class World implements Disposable, SaveFileContent {
             return;
         for (String color : TerritoryControl.COLORS)
             getColorlessRedirectStructuresIfReady(color);
+        // Round 293: the player's too. It was left out, so the first day after every launch claimed the player's new
+        // ground bare - "player: redirect structure pattern still building" and "0 with a structure" in the log,
+        // 157 tiles of the Capitol's re-contest in the user's session - and claimed ground is never re-derived.
+        getColorlessRedirectStructuresIfReady("player");
+    }
+
+    /**
+     * Round 293: is this owner's claim pattern built? False starts the build in the background (if it is not
+     * already running) - the same non-blocking lookup claimWastelandRing() makes.
+     */
+    public boolean isTerritoryPatternReady(String owner) {
+        return getColorlessRedirectStructuresIfReady(owner) != null;
     }
 
     /**

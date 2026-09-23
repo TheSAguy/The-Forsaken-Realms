@@ -17757,6 +17757,82 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 293: town territory grows from the town's center - the lower-left gap, repaired (2026-09-23)
+
+User, with four screenshots of a player town's green disc: *"There seems to be an issue with town terrain expansion.
+I saw this at the player, did not check AI. The bottom left is creating a 'gap' in the terrain. See images. Check
+log."* Local commit only.
+
+### The cause
+
+Round 255 centered the capture paint (`repaintBiomeAroundTown`), the vision circle and the reveals on
+`PointOfInterest.getCenter()` - but the daily growth ring (`claimWastelandRing`, from the town loop and from the
+Capitol block) and every town's pull source kept `getPosition()`, the town's BOTTOM-LEFT CORNER: two tiles down and
+left of the center after tile rounding, for 48x48 and 64x64 towns alike. A ring grown around the corner skips the
+crescent between itself and the centered disc, and every later ring leaves it behind. The log said so without a
+screenshot: a player town's first ring claimed 26-48 tiles where a full ring from radius 10 to 11 is about 60 - the
+rest lay on the side where the centered paint already was. A read-only dump of the user's own day-10 save
+(`OwnerDump`, scratchpad) found it: Tyrant's Crossing, the one player town that had grown (radius 11), held a
+53-tile crescent of wasteland enclosed by its own land, on its lower-left.
+
+### The fix
+
+Town growth, the Capitol's growth and the town/Capitol pull sources (their hard-protection cores with them) use the
+center now. The five AI castles stay on `getPosition()`: world generation kept each castle circle there, and moving
+their growth off it would open the same crescent around every castle. The two corner-based reveals left (player
+capture, player restoration) moved to the center too.
+
+**Saves get a one-time repair.** `World.townTerritoryAnchor` (saved; an absent key = 0 = the corner) triggers
+`TerritoryControl.recenterTownTerritories()` once, on the first daily tick after loading and before that day's growth.
+Every town disc with a radius - player and AI-captured - is claimed again around its center, and a town that grew
+past RECOLOR_RADIUS also has its old corner footprint (radius - 1) claimed: the crescent lies inside it and nothing
+outside it is added. Ordinary claims, so the pull contest still decides every tile. Left out: the Capitol (its full
+re-contest on the first day of every session already runs from its center) and the five world-gen AI capitals (never
+painted around their center, so no crescent). A town that grew from its corner keeps its old outline on the
+lower-left, up to three tiles past its radius, until the centered growth passes it. The repair waits a day while a
+terrain pattern is still building. `[TFR-TownRecenter]` per town filled and a summary; new worlds start at 1.
+
+**The player's terrain pattern was never pre-built.** `prewarmTerritoryControlCaches()` built the five colors' claim
+patterns at load but not the player's, so the first day after every launch claimed the player's new ground bare -
+`player: redirect structure pattern still building` and `0 with a structure` in the user's log, 157 tiles of the
+Capitol's first re-contest among them - and claimed ground is never re-derived. It pre-builds "player" too.
+
+### Seen
+
+In the agent game, on a copy of the user's day-10 save with the new classes, eight days: `[TFR-TownRecenter]
+Tyrant's Crossing (player, radius 11): 82 tile(s) filled` on the first tick, and the same dump at day 18 finds its
+crescent gone (before/after picture sent to the user). Player towns that grew afterwards took full rings - Celestine
+Shrine 60 tiles, Andor's Hold 50, Greyrock 56. The Capitol's first re-contest took 205 tiles against 157 in the
+user's run: the top-right sliver of the centered disc. The map view shows solid ground around Tyrant's Crossing.
+What the dump still finds are 1-to-15-tile cracks where three circles just miss each other (Benalia, Chambery and
+the Capitol at (357,385)) - plain circle geometry, the same wasteland tiles at day 10, closed as the Capitol grows a
+tile a day.
+
+### Found by the new log line, not changed
+
+`[TFR-TownGrowth]` - one line per town growth, a blocked town reported once until it grows - showed the five
+world-gen AI capitals blocked every day: their next ring is already their own color's land, so nothing is new, and
+the town loop reverts the radius of a ring that claims nothing. Round 197's capital growth ("twice a town's reach",
+up to 50) has never advanced past 10. Letting "already theirs" count as growth would also let a captured capital
+repaint up to 50 tiles at once - the user's call, reported.
+
+### The log (the user's 06:36-07:19 session on the round-292 build)
+
+No exceptions. Day 10 -> 27 (15 AI town captures, the first days' player rings claimed bare - see above), a rollback to
+the day-10 save (`[TFR-Load] rollback snapshot taken`), then day 10 -> 18 with 15 player towns. All three saves on disk
+are that day-10 state.
+
+### Also discussed (no code): the barrier
+
+The user's idea for the barren wedges: a barrier layer on all land, erased by the central wasteland circle and the
+five color circles. Recommended, as the way to define the footprint (water is excluded by construction, and the erase
+radius becomes the wall-thickness setting - neighboring color circles nearly touch today, so erase about 8 tiles
+smaller). Enlarging the color circles instead fills the wedges with walkable decoration and grows the land into the
+sea. Needed beyond the stamping: barrier tiles marked (spare terrainMap bit 29) so claims and captures keep them,
+roads that route around, the flight-landing loophole closed; war mages walk straight through terrain already. Two
+decisions pending: places inside the wedges (recommended: move them at world gen) and roads (recommended: never
+cross).
+
 ## Round 292: map labels that stay on their places, an inventory text that wraps, a wider overworld view (2026-09-22)
 
 The first round after v1.13, four asks in one go. User: *"Can anything be done about the text not staying in place on

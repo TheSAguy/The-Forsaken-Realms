@@ -66,6 +66,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   re-wraps on `setText()`/`setSize()` - `setDescription()` wraps at the pane's width. Zoom 2.0 is the most the 3x3
   chunk loader supports. All SEEN in the agent game except the overworld zoom (no wheel command in the bridge).
   Live + agent folders packaged with it.
+- **Round 293 (local commit, NOT pushed): town territory grows from the town's CENTER; old saves get the lower-left
+  gap filled once; the player's claim pattern is pre-built at load.** Round 255 centered the capture paint but not the
+  growth ring or the pull sources (`getPosition()` = the bottom-left corner). `World.townTerritoryAnchor` +
+  `TerritoryControl.recenterTownTerritories()` (`[TFR-TownRecenter]`); `[TFR-TownGrowth]` per growth. SEEN on a copy
+  of the user's day-10 save (Tyrant's Crossing, 53-tile crescent -> filled). Live + agent folders packaged. OPEN, the
+  user's call: the five AI capitals never grow (their next ring is already their color's - letting that count would
+  let a captured capital repaint up to 50 tiles); the barrier layer for the barren wedges (recommended as "land minus
+  the six circles"; pending: places inside the wedges, roads).
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

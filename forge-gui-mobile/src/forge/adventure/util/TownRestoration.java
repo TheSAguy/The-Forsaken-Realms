@@ -473,8 +473,8 @@ public class TownRestoration {
                 WorldStage.getInstance()::reloadBackgroundChunkObjects);
         System.out.println("[TFR-Perf] player capture repaint of " + shownName + " (radius " + repaintRadius + ") took "
                 + (System.nanoTime() - perfRepaint) / 1_000_000 + " ms");
-        world.revealArea((int) (target.getPosition().x / world.getTileSize()),
-                (int) (target.getPosition().y / world.getTileSize()),
+        world.revealArea((int) (target.getCenter().x / world.getTileSize()), // round 293: the painted disc's center
+                (int) (target.getCenter().y / world.getTileSize()),
                 repaintRadius, WorldStage.getInstance()::refreshBackgroundTile);
         TerritoryControl.connectCapturedTownByRoad(world, target, "player");
         updateTownLifeBonus(true);
@@ -517,8 +517,8 @@ public class TownRestoration {
         world.repaintBiomeAroundTown(point, TEST_RECOLOR_BIOME, RECOLOR_RADIUS,
                 WorldStage.getInstance()::refreshBackgroundTile,
                 WorldStage.getInstance()::reloadBackgroundChunkObjects);
-        world.revealArea((int) (point.getPosition().x / world.getTileSize()),
-                (int) (point.getPosition().y / world.getTileSize()),
+        world.revealArea((int) (point.getCenter().x / world.getTileSize()), // round 293: the painted disc's center
+                (int) (point.getCenter().y / world.getTileSize()),
                 TerritoryControl.RECOLOR_RADIUS, WorldStage.getInstance()::refreshBackgroundTile);
         // Every 5th owned town is +1 max life (user spec 2026-08-09), and the new holding gets a
         // road to the player's nearest other town, routed through any towns between.
