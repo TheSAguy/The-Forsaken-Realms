@@ -132,6 +132,18 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 300: a 2x terrain renderer
+
+- **`data/ConfigData.java`** - `terrainScale` (default 1).
+- **`world/World.java`** - `getTerrainTileSize()`; the biome, road and barrier `BiomeTexture`s, the tile canvas, the
+  off-map tile and the fog tile use it; draw-time overlay patches (`overlayAt()`, `getOverlayNoise()`, drawn in
+  `generateBiomeSprite()`).
+- **`world/BiomeTexture.java`** - cuts pieces from `atTileSize()` (a region enlarged to the texture's tile size,
+  nearest; size-less entries read as 48 x 64); loads `BiomeData.overlays` regions after everything a save can index.
+- **`data/BiomeData.java`** - `overlays`.
+- **`stage/WorldBackground.java`** - `texelSize`; chunks composed on one pixmap and uploaded once, drawn at world size,
+  patched at texel coordinates; at most 32 chunk textures kept (least recently shown released).
+
 ### Round 299: boss lairs clear, come back, and pay once
 
 - **`util/DungeonRotation.java`** - `lairStaysReason()` / `isVanishingLair()`, `onLairBossDefeated()`, `onLairExit()`,

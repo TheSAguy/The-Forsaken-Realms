@@ -1,0 +1,33 @@
+green_terrain.png
+size: 384,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Green
+  rotate: false
+  xy: 0, 0
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+Green_1
+  rotate: false
+  xy: 96, 0
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+Green_2
+  rotate: false
+  xy: 192, 0
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+Green_3
+  rotate: false
+  xy: 288, 0
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1

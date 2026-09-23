@@ -27,6 +27,8 @@ public class BiomeTexture implements Serializable {
     ArrayList<ArrayList<Pixmap>> images = new ArrayList<>();
     ArrayList<ArrayList<Pixmap>> smallImages = new ArrayList<>();
     ArrayList<IntMap<Pixmap>> edgeImages = new ArrayList<>();
+    /** Round 300: the image index of each BiomeData.overlays entry (-1 where its region is missing). */
+    private final ArrayList<Integer> overlayImages = new ArrayList<>();
 
     public BiomeTexture(BiomeData data, int tileSize) {
         this.data = data;
@@ -117,27 +119,41 @@ public class BiomeTexture implements Serializable {
                 }
             }
 
+            // Round 300: overlay patches come after everything a save can index (ground, terrain[], structures), so
+            // their images never collide with a stored terrain index.
+            overlayImages.clear();
+            if (data.overlays != null) {
+                for (BiomeTerrainData overlay : data.overlays) {
+                    TextureAtlas.AtlasRegion region = Config.instance().getAtlas(data.tilesetAtlas).findRegion(overlay.spriteName);
+                    if (region == null) {
+                        System.err.println("[TFR-Terrain] overlay " + overlay.spriteName + " not found in " + data.tilesetAtlas);
+                        overlayImages.add(-1);
+                        continue;
+                    }
+                    overlayImages.add(regions.size());
+                    regions.add(region);
+                    source.add(Config.instance().getAtlas(data.tilesetAtlas));
+                }
+            }
             for (TextureAtlas.AtlasRegion region : regions) {
                 ArrayList<Pixmap> pics = new ArrayList<>();
                 ArrayList<Pixmap> spics = new ArrayList<>();
                 if(!region.getTexture().getTextureData().isPrepared())
                     region.getTexture().getTextureData().prepare();
                 Pixmap completePicture = region.getTexture().getTextureData().consumePixmap();
+                // Round 300: cut from the region at THIS texture's tile size - see atTileSize().
+                Pixmap sheet = atTileSize(completePicture, region);
                 for (int y = 0; y < 4; y++) {
                     for (int x = 0; x < 3; x++) {
-                        int px = region.getRegionX() + (x * tileSize);
-                        int py = region.getRegionY() + (y * tileSize);
                         Pixmap subPixmap = new Pixmap(tileSize, tileSize, Pixmap.Format.RGBA8888);
-                        subPixmap.drawPixmap(completePicture, 0, 0, px, py, tileSize, tileSize);
+                        subPixmap.drawPixmap(sheet, 0, 0, x * tileSize, y * tileSize, tileSize, tileSize);
                         pics.add(subPixmap);
                     }
                 }
                 for (int y = 0; y < 8; y++) {
                     for (int x = 0; x < 6; x++) {
-                        int px = region.getRegionX() + (x * tileSize / 2);
-                        int py = region.getRegionY() + (y * tileSize / 2);
                         Pixmap subPixmap = new Pixmap(tileSize / 2, tileSize / 2, Pixmap.Format.RGBA8888);
-                        subPixmap.drawPixmap(completePicture, 0, 0, px, py, tileSize / 2, tileSize / 2);
+                        subPixmap.drawPixmap(sheet, 0, 0, x * tileSize / 2, y * tileSize / 2, tileSize / 2, tileSize / 2);
                         spics.add(subPixmap);
                     }
                 }
@@ -145,9 +161,37 @@ public class BiomeTexture implements Serializable {
                 smallImages.add(spics);
                 edgeImages.add(new IntMap<>());
 
+                sheet.dispose();
                 completePicture.dispose();
             }
         });
+    }
+
+    /**
+     * Round 300 (user: "do the 2x renderer"): the region as its own pixmap of 3 x 4 tiles at this texture's tileSize.
+     * An autotile region is 3 tiles wide, so a sheet's own tile size is its width / 3 - a 16 px sheet under a 2x
+     * terrain is enlarged pixel-exact (nearest neighbor) and looks exactly as it did; a 32 px sheet is copied as is.
+     */
+    private Pixmap atTileSize(Pixmap page, TextureAtlas.AtlasRegion region) {
+        Pixmap out = new Pixmap(3 * tileSize, 4 * tileSize, Pixmap.Format.RGBA8888);
+        out.setBlending(Pixmap.Blending.None);
+        out.setFilter(Pixmap.Filter.NearestNeighbour);
+        int srcW = region.getRegionWidth();
+        int srcH = region.getRegionHeight();
+        if (srcW <= 0 || srcH <= 0) {
+            // An entry with a position but no size line (common blue_structures.atlas "dune2"): the old cutter read
+            // tiles by position only, so it still drew - read it as the stock 16 px autotile, 48 x 64, like it did.
+            srcW = 48;
+            srcH = 64;
+        }
+        out.drawPixmap(page, region.getRegionX(), region.getRegionY(), srcW, srcH, 0, 0, 3 * tileSize, 4 * tileSize);
+        out.setBlending(Pixmap.Blending.SourceOver);
+        return out;
+    }
+
+    /** Round 300: the image index to draw BiomeData.overlays[k] with, or -1. */
+    public int overlayImage(int k) {
+        return k >= 0 && k < overlayImages.size() ? overlayImages.get(k) : -1;
     }
 
     public Pixmap getPixmap(int biomeSubIndex) {

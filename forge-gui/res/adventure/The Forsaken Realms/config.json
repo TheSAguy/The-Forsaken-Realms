@@ -260,6 +260,9 @@
       "(All)"
     ],
     "fogOfWarEnabled": true,
+    // Round 300: the overworld ground is baked at 2x (32 texels per 16 px tile), so 32 px tile sets show at full
+    // detail; 16 px sheets are enlarged pixel-exact and look as before.
+    "terrainScale": 2,
     "warTownAssaultEnabled": true,
     // Round 101: the player starts with nothing - the five Ring Cities hand over the difficulty's starting gold/shards/wood/stone/items.
     "ringGiftStart": true,

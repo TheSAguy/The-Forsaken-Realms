@@ -22,6 +22,17 @@ public class WorldBackground extends Actor {
 
     int chunkSize;
     int tileSize;
+    // Round 300 (user: "do the 2x renderer"): texels per tile on the chunk textures - World.getTerrainTileSize(), which
+    // is tileSize x config.json's terrainScale. tileSize stays the WORLD unit: chunks are drawn at chunkSize x tileSize
+    // world units whatever their texel size.
+    int texelSize;
+    // Round 300: chunk textures by recency, newest last. At 2x a chunk is 4x the memory (30 x 32 = 960 px square, ~3.7 MB),
+    // and the cache used to keep every chunk ever built - a long trip across the map could hold gigabytes. Beyond
+    // MAX_CHUNK_TEXTURES the least recently shown one is released (never one of the 3x3 around the player);
+    // getChunkTexture() rebuilds it if the player comes back, the same lazy path a never-visited chunk takes.
+    private static final int MAX_CHUNK_TEXTURES = 32;
+    private final java.util.LinkedHashSet<Long> chunkRecency = new java.util.LinkedHashSet<>();
+    private int chunkBuildsLogged;
     int playerX;
     int playerY;
 
@@ -219,6 +230,9 @@ public class WorldBackground extends Actor {
 
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
+                    if (px + x >= 0 && py + y >= 0 && px + x < chunks.length && py + y < chunks[0].length
+                            && chunks[px + x][py + y] != null)
+                        touchChunk(px + x, py + y); // round 300: the new 3x3 is the most recently shown
                     GridPoint2 pt = gridPointPool[poolIndex++];
                     pt.set(px + x, py + y);
                     chunkPointsList.add(pt);
@@ -267,7 +281,9 @@ public class WorldBackground extends Actor {
                 if (targetY < 0 || targetX < 0 || targetY >= chunks[0].length || targetX >= chunks.length)
                     continue;
 
-                batch.draw(getChunkTexture(targetX, targetY), transChunkToWorld(targetX), transChunkToWorld(targetY));
+                // Round 300: drawn at its WORLD size - a 2x chunk texture has twice the texels per tile.
+                batch.draw(getChunkTexture(targetX, targetY), transChunkToWorld(targetX), transChunkToWorld(targetY),
+                        chunkSize * tileSize, chunkSize * tileSize);
             }
         }
         // Round 296: the barrier's mountains at full resolution, over the terrain and under every actor.
@@ -306,21 +322,63 @@ public class WorldBackground extends Actor {
     public Texture getChunkTexture(int x, int y) {
         Texture tex = chunks[x][y];
         if (tex == null) {
-            Texture newChunk = new Texture(chunkSize * tileSize, chunkSize * tileSize, Pixmap.Format.RGBA8888);
+            // Round 300: composed on one pixmap and uploaded ONCE - it was one GPU upload per tile (900 per chunk),
+            // and at 2x each of those carries four times the texels.
+            long started = System.nanoTime();
+            int side = chunkSize * texelSize;
+            Pixmap composed = new Pixmap(side, side, Pixmap.Format.RGBA8888);
+            composed.setBlending(Pixmap.Blending.None);
             for (int cx = 0; cx < chunkSize; cx++) {
                 for (int cy = 0; cy < chunkSize; cy++) {
                     Pixmap tile = WorldSave.getCurrentSave().getWorld().getBiomeSprite(cx + chunkSize * x, cy + chunkSize * y); // round 123 review S2-2: caller-owned, dispose after drawing
-                    newChunk.draw(tile, cx * tileSize, (chunkSize * tileSize) - (cy + 1) * tileSize);
+                    composed.drawPixmap(tile, cx * texelSize, side - (cy + 1) * texelSize);
                     tile.dispose();
                 }
             }
+            Texture newChunk = new Texture(side, side, Pixmap.Format.RGBA8888);
+            newChunk.draw(composed, 0, 0);
+            composed.dispose();
             chunks[x][y] = newChunk;
+            long ms = (System.nanoTime() - started) / 1_000_000;
+            if (chunkBuildsLogged < 3 || ms > 150) {
+                chunkBuildsLogged++;
+                System.out.println("[TFR-Terrain] chunk (" + x + "," + y + ") built in " + ms + " ms at " + texelSize
+                        + " texels per tile (" + side + " px square)");
+            }
+            touchChunk(x, y);
+            evictOldChunks();
         }
         return chunks[x][y];
     }
 
+    /** Round 300: mark a chunk texture as just used. */
+    private void touchChunk(int x, int y) {
+        long key = ((long) x << 32) | (y & 0xffffffffL);
+        chunkRecency.remove(key);
+        chunkRecency.add(key);
+    }
+
+    /** Round 300: release the least recently shown chunk textures beyond MAX_CHUNK_TEXTURES, never the 3x3 in view. */
+    private void evictOldChunks() {
+        java.util.Iterator<Long> it = chunkRecency.iterator();
+        while (chunkRecency.size() > MAX_CHUNK_TEXTURES && it.hasNext()) {
+            long key = it.next();
+            int cx = (int) (key >> 32);
+            int cy = (int) key;
+            if (Math.abs(cx - currentChunkX) <= 1 && Math.abs(cy - currentChunkY) <= 1)
+                continue;
+            it.remove();
+            if (chunks != null && cx >= 0 && cy >= 0 && cx < chunks.length && cy < chunks[0].length && chunks[cx][cy] != null) {
+                chunks[cx][cy].dispose();
+                chunks[cx][cy] = null;
+            }
+        }
+    }
+
     public void initialize() {
         tileSize = WorldSave.getCurrentSave().getWorld().getTileSize();
+        texelSize = WorldSave.getCurrentSave().getWorld().getTerrainTileSize(); // round 300
+        chunkRecency.clear();
         chunkSize = WorldSave.getCurrentSave().getWorld().getChunkSize();
         if (chunks != null) {
             stage.getSpriteGroup().clear();
@@ -409,6 +467,7 @@ public class WorldBackground extends Actor {
         if (tex != null) {
             tex.dispose();
             chunks[chunkX][chunkY] = null;
+            chunkRecency.remove(((long) chunkX << 32) | (chunkY & 0xffffffffL)); // round 300
         }
     }
 
@@ -462,12 +521,13 @@ public class WorldBackground extends Actor {
         if (Math.abs(chunkX - currentChunkX) > 1 || Math.abs(chunkY - currentChunkY) > 1) {
             tex.dispose();
             chunks[chunkX][chunkY] = null;
+            chunkRecency.remove(((long) chunkX << 32) | (chunkY & 0xffffffffL)); // round 300
             return;
         }
         int localX = Math.floorMod(worldTileX, chunkSize);
         int localY = Math.floorMod(worldTileY, chunkSize);
         Pixmap tile = WorldSave.getCurrentSave().getWorld().getBiomeSprite(worldTileX, worldTileY);
-        tex.draw(tile, localX * tileSize, (chunkSize * tileSize) - (localY + 1) * tileSize);
+        tex.draw(tile, localX * texelSize, (chunkSize * texelSize) - (localY + 1) * texelSize); // round 300: texel coordinates
         tile.dispose(); // round 123 review S2-2: getBiomeSprite() hands out caller-owned pixmaps
     }
 

@@ -105,6 +105,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   10-30 days restocked; +Life once per place everywhere, a lair boss's signature item once; return visits half (card
   COUNT coin-flipped); returning dungeons are restocked now (they came back empty); still-hidden ambushers do not hold
   a lair; console `take loot all`. Seen in the agent game except a won boss duel.
+- **Round 300 (local commit, NOT pushed): 2x terrain renderer + new green terrain** - config.json `terrainScale` 2:
+  ground baked at 32 texels per tile (World.getTerrainTileSize()), 16 px sheets enlarged pixel-exact, chunk textures
+  drawn at world size, one upload per chunk, max 32 cached. The user's four green tiles cleaned from a screenshot and
+  converted VX -> XP at 32 px (`world/tilesets/green_terrain.*`); tile 4 is a draw-time overlay patch
+  (`BiomeData.overlays`, never saved - a terrain[] entry would renumber green structures in saves). A peer session
+  holds round 301 (hidden ambushers); the legends' once-per-game +Life is round 302.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

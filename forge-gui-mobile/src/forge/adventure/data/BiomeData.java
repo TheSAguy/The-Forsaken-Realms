@@ -34,6 +34,10 @@ public class BiomeData implements Serializable {
     public String tilesetAtlas;
     public String tilesetName;
     public BiomeTerrainData[] terrain;
+    // Round 300 (user: tile 4 of the new green art "as a third patch"): patches DRAWN on the biome's plain ground, placed
+    // by their own noise (spriteName/min/max/resolution, like terrain[]) and never written to the save's terrain map -
+    // a new terrain[] entry would renumber every structure an existing save holds for the biome. See World.overlayAt().
+    public BiomeTerrainData[] overlays;
     public float width;
     public float height;
     public String color;

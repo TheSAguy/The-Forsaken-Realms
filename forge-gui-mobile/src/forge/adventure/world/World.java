@@ -794,10 +794,10 @@ public class World implements Disposable, SaveFileContent {
         int biomeIndex = 0;
         for (BiomeData biome : data.GetBiomes()) {
 
-            biomeTexture[biomeIndex] = new BiomeTexture(biome, data.tileSize);
+            biomeTexture[biomeIndex] = new BiomeTexture(biome, getTerrainTileSize()); // round 300: 2x terrain
             biomeIndex++;
         }
-        biomeTexture[biomeIndex] = new BiomeTexture(data.roadTileset, data.tileSize);
+        biomeTexture[biomeIndex] = new BiomeTexture(data.roadTileset, getTerrainTileSize());
         barrierTextures = loadBarrierTextures(); // round 294
         worldDataLoaded = true;
     }
@@ -1139,7 +1139,7 @@ public class World implements Disposable, SaveFileContent {
      */
     public Pixmap getBiomeSprite(int x, int y) {
         if (x < 0 || y <= 0 || x >= width || y > height) {
-            return new Pixmap(data.tileSize, data.tileSize, Pixmap.Format.RGBA8888);
+            return new Pixmap(getTerrainTileSize(), getTerrainTileSize(), Pixmap.Format.RGBA8888);
         }
         if (!isExploredWorld(x, y))
             return copyTile(getFogTile());
@@ -1182,7 +1182,7 @@ public class World implements Disposable, SaveFileContent {
         // the chunk build and the per-tile fog repatch. Under upstream's contract every one of those
         // would dispose the one shared pixmap and take the whole terrain down with it. The reusable
         // DrawingInformation list IS taken (see below): it never escapes this method, so it is free.
-        Pixmap drawingPixmap = new Pixmap(data.tileSize, data.tileSize, Pixmap.Format.RGBA8888);
+        Pixmap drawingPixmap = new Pixmap(getTerrainTileSize(), getTerrainTileSize(), Pixmap.Format.RGBA8888); // round 300
 
         drawingInfoCache.clear();
 
@@ -1228,6 +1228,27 @@ public class World implements Disposable, SaveFileContent {
             // Round 289: the list is upstream's reused `drawingInfoCache` rather than a fresh ArrayList per
             // call - safe to take, since it is cleared on entry and never escapes this method.
             drawingInfoCache.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y)));
+            // Round 300: this biome's draw-time overlay patches, over its plain ground - see overlayAt().
+            if (biomeTerrain == 0 && !barrier && i < data.GetBiomes().size()) {
+                BiomeTerrainData[] overlays = data.GetBiomes().get(i).overlays;
+                if (overlays != null) {
+                    for (int k = 0; k < overlays.length; k++) {
+                        int image = regions.overlayImage(k);
+                        if (image < 0 || !overlayAt(i, k, overlays[k], x, y))
+                            continue;
+                        int overlayNeighbors = 0;
+                        int bit = 8;
+                        for (int ny = 1; ny > -2; ny--) {
+                            for (int nx = -1; nx < 2; nx++) {
+                                if (overlayAt(i, k, overlays[k], x + nx, y + ny))
+                                    overlayNeighbors |= 1 << bit;
+                                bit--;
+                            }
+                        }
+                        drawingInfoCache.add(new DrawingInformation(overlayNeighbors, regions, image));
+                    }
+                }
+            }
         }
 
         int lastFullNeighbour = -1;
@@ -1591,7 +1612,7 @@ public class World implements Disposable, SaveFileContent {
                     BiomeData art = new BiomeData();
                     art.tilesetAtlas = BARRIER_ATLAS;
                     art.tilesetName = region;
-                    variants.add(new BiomeTexture(art, data.tileSize));
+                    variants.add(new BiomeTexture(art, getTerrainTileSize())); // round 300
                 }
             }
         } catch (Exception e) {
@@ -3590,6 +3611,18 @@ public class World implements Disposable, SaveFileContent {
         return data.tileSize;
     }
 
+    /**
+     * Round 300 (user: "do the 2x renderer"): texels per tile on every terrain pixmap - the biome sheets, the tile canvas
+     * generateBiomeSprite() composes on, the fog tile and WorldBackground's chunk textures - which is getTileSize() x
+     * config.json's terrainScale (ConfigData.terrainScale, 1..4). Positions, collision and everything else stay in
+     * getTileSize() units; only the ground's texel density changes.
+     */
+    public int getTerrainTileSize() {
+        forge.adventure.data.ConfigData config = Config.instance().getConfigData();
+        int scale = config == null ? 1 : Math.max(1, Math.min(4, config.terrainScale));
+        return data.tileSize * scale;
+    }
+
     public Pixmap getBiomeImage() {
         if (!isFogOfWarEnabled())
             return biomeImage;
@@ -3818,6 +3851,31 @@ public class World implements Disposable, SaveFileContent {
     // session rather than constructed fresh per call, matching how the rest of this codebase always
     // treats noise as one shared instance for the whole map, never per-tile or per-call.
     private OpenSimplexNoise territoryNoise;
+
+    // Round 300: the noise BiomeData.overlays are placed by - its own seed, so overlay patches fall independently of
+    // the generation-time terrain[] patches.
+    private OpenSimplexNoise overlayNoise;
+
+    private OpenSimplexNoise getOverlayNoise() {
+        if (overlayNoise == null)
+            overlayNoise = new OpenSimplexNoise(seed ^ 0x0e71a4c3L);
+        return overlayNoise;
+    }
+
+    /**
+     * Round 300 (user: tile 4 of the new green art "as a third patch"): whether overlay k of biome layer `layer` covers
+     * world tile (x, y) - that biome's plain ground only (terrain index 0, not barrier) where the overlay's own noise
+     * falls inside its band. Worked out at draw time and never stored; see BiomeData.overlays for why.
+     */
+    private boolean overlayAt(int layer, int k, BiomeTerrainData overlay, int x, int y) {
+        if (x < 0 || y < 0 || x >= width || y >= height)
+            return false;
+        if ((getBiome(x, y) & (1L << layer)) == 0 || getTerrainIndex(x, y) != 0 || isBarrierTile(x, y))
+            return false;
+        float zoom = data.noiseZoomBiome * (overlay.resolution > 0 ? overlay.resolution : 1f);
+        float n = ((float) getOverlayNoise().eval(x / (float) width * zoom + k * 31.7f, y / (float) height * zoom) + 1) / 2;
+        return n >= overlay.min && n <= overlay.max;
+    }
 
     private OpenSimplexNoise getTerritoryNoise() {
         if (territoryNoise == null)
@@ -5492,7 +5550,7 @@ public class World implements Disposable, SaveFileContent {
 
     private Pixmap getFogTile() {
         if (fogTilePixmap == null) {
-            fogTilePixmap = new Pixmap(data.tileSize, data.tileSize, Pixmap.Format.RGBA8888);
+            fogTilePixmap = new Pixmap(getTerrainTileSize(), getTerrainTileSize(), Pixmap.Format.RGBA8888); // round 300
             fogTilePixmap.setColor(0, 0, 0, 1);
             fogTilePixmap.fill();
         }

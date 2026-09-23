@@ -17757,6 +17757,41 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 300: a 2x terrain renderer, and the new green terrain (2026-09-23)
+
+User, with a sheet of four new green terrain tiles (a screenshot, `Screenshots\NEW GREEN.png`): *"Please generate the
+new pallet, matching the terrain numbers. I think the new terrain is slightly bigger, so in theory we should be able to
+get better res?"*, then *"You will need to clean up the new stuff I provided"*, and, shown the same land drawn at
+16 px and at 32 px: *"do the 2x renderer, tile 4 as a third patch"*. Local commit.
+
+**The renderer** (`config.json` `"terrainScale": 2`, `ConfigData.terrainScale`, default 1 = stock): the overworld
+ground is composed and baked at 32 texels per 16 px tile - `World.getTerrainTileSize()` sizes every terrain pixmap
+(the biome sheets, the tile canvas, the fog tile) and `WorldBackground`'s chunk textures, which are drawn at their
+WORLD size. `BiomeTexture` reads each autotile region's own tile size (a region is 3 tiles wide) and enlarges a 16 px
+sheet pixel-exact (nearest neighbor), so every existing sheet looks exactly as before; a 32 px sheet is used as is.
+An atlas entry with a position but no size (common `blue_structures.atlas` "dune2") is read as the stock 48 x 64, as
+the old cutter effectively did. Chunks are composed on one pixmap and uploaded once (it was one upload per tile, 900
+per chunk), and at most 32 chunk textures are kept, least recently shown released first (never the 3x3 in view): a
+2x chunk is 960 px square, ~3.7 MB, and the cache used to keep every chunk ever built.
+
+**The green terrain**: the four tiles cut from the screenshot, their backgrounds removed (yellow-green meadow, white,
+and sand whose darker halo became a see-through shadow), window-frame bits dropped, a pale spot in tile 2 painted over
+(it would have repeated in every centre piece), converted from the 2 x 3 RPG Maker VX layout to the game's 3 x 4 XP
+layout at 32 px: `world/tilesets/green_terrain.png` (+ `.atlas`), Green / Green_1 / Green_2 / Green_3 = the user's
+tiles 1-4. `green.json` points at it. The screenshot was a 1.5x enlargement, so the 32 px art is rebuilt from that.
+
+**Tile 4 as a third patch**: `BiomeData.overlays` - patches DRAWN on a biome's plain ground where their own noise
+falls in the band (`green.json`: Green_3, 0.8-1, resolution 10), never written to the save. A new `terrain[]` entry
+would have renumbered every green structure an existing save holds (index 3 is green's water), so existing worlds
+get the new patches at once with nothing renumbered.
+
+**Seen**: the agent game, slot 1, four spots, once at scale 1 and once at scale 2 with the new green data: the wasteland and
+white land are PIXEL-IDENTICAL at both scales (0 of 3.9 million screen pixels differ - the enlargement changes
+nothing), green land shows the new art with all three patch kinds (tile 4's light patches on plain ground), trees,
+water and decorations unchanged. Chunk builds: 6-7 ms at 16 texels per tile, 11-20 ms at 32 (the first of a session
+51-64 ms). Fog on (the agent profile's setting flipped for the run and restored): unexplored black, the vision circle
+bright, seen land hazed, and the tiles patched one at a time as the player walked line up at 32 px. No errors in the log.
+
 ## Round 299: boss lairs clear, come back, and pay once (2026-09-23)
 
 User, after the Ooze quest ("Slimy Business"): *"I finished the quest, kill Ooze. I emptied the dungeon, but it

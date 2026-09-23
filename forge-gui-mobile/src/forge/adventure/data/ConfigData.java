@@ -59,6 +59,10 @@ public class ConfigData {
     public String chaosDeckFormat;
     public boolean usePriceListPrices = true;
     public boolean fogOfWarEnabled = false;
+    // Round 300 (user: "do the 2x renderer"): texels per world tile for the overworld GROUND. World positions stay in
+    // world.json's tileSize; the terrain is composed and baked at tileSize x this, so a tile set drawn at 32 px per
+    // tile shows at full detail. 16 px sheets are enlarged pixel-exact at load and look exactly as before. 1 = stock.
+    public int terrainScale = 1;
     // MOD_SCOPE #87 (2026-09-03): at War, entering an AI town offers Attack (a random roamer from
     // that color's pool, starting with its basic land tapped) instead of only being barred.
     public boolean warTownAssaultEnabled = false;
