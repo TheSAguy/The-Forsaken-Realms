@@ -83,6 +83,29 @@ public class InventoryScene extends UIScene {
         if (border != null) border.remove();
     }
 
+    /**
+     * Round 292 (user, with a screenshot of the Rally rune's description running off the box: "Can we make the
+     * box bigger or wrap it differently"). setWrap(true) in the constructor never took effect here: TextraLabel
+     * 0.8.2's setText() re-parses the markup at the layout's existing target width, and its layout() re-wraps
+     * only when the label's WIDTH changes - and this label keeps one width while its text changes with every
+     * selection. So every description stayed one line and the box clipped it; the Rally rune's is the longest.
+     * The wrap width is the BOX's - the scroll pane's - not the label's: measured in the agent game, the label
+     * was still 714.75 wide from before any wrapping while the box is about 305, and when the pane later sizes
+     * the label to itself, TextraLabel.setSize() only stores the new target width, it does not re-wrap. (A table
+     * cell sizes a label through setBounds(), which does re-wrap - why the wraps elsewhere work.) A description
+     * taller than the box scrolls up and down.
+     */
+    private void setDescription(String text) {
+        itemDescription.setText(text);
+        float wrapWidth = descriptionPane != null ? descriptionPane.getWidth() : itemDescription.getWidth();
+        itemDescription.layout.setTargetWidth(wrapWidth);
+        itemDescription.getFont().regenerateLayout(itemDescription.layout);
+        itemDescription.invalidateHierarchy();
+    }
+
+    /** Round 292: the box the description scrolls in - its width is what the text wraps to. */
+    private ScrollPane descriptionPane;
+
     public InventoryScene() {
         super(Forge.isLandscapeMode() ? "ui/inventory.json" : "ui/inventory_portrait.json");
         equipOverlay = Forge.getAssets().getTexture(Config.instance().getFile(Paths.ITEMS_EQUIP));
@@ -116,6 +139,9 @@ public class InventoryScene extends UIScene {
         itemDescription.setWrap(true);
         ScrollPane pane = new ScrollPane(itemDescription);
         pane.setBounds(itemDescription.getX(), itemDescription.getY(), itemDescription.getWidth() - 5, itemDescription.getHeight() - 8);
+        // Round 292: never lay the description out wider than the box - see setDescription().
+        pane.setScrollingDisabled(true, false);
+        descriptionPane = pane;
         ui.addActor(pane);
 
         Array<Actor> children = ui.getChildren();
@@ -413,7 +439,7 @@ public class InventoryScene extends UIScene {
     }
 
     public void clearItemDescription() {
-        itemDescription.setText("");
+        setDescription("");
     }
     private void setSelected(Button actor) {
         selected = actor;
@@ -478,7 +504,7 @@ public class InventoryScene extends UIScene {
             // it in the button's own visual state. Same 0.4x-of-item-cost formula repair() uses.
             repairButton.setDisabled(Current.player().getGold() < (int) (data.cost * 0.4f));
             String status = data.isCracked ? " (" + Forge.getLocalizer().getMessage("lblCracked") + ")" : "";
-            itemDescription.setText(data.name + status + "\n[%98]" + data.getDescription());
+            setDescription(data.name + status + "\n[%98]" + data.getDescription());
         }
         else if (deckLocation.containsKey(actor)){
             Deck data = (deckLocation.get(actor));
@@ -494,7 +520,7 @@ public class InventoryScene extends UIScene {
             if (sellButton != null) sellButton.setDisabled(true);
             repairButton.setVisible(false);
 
-            itemDescription.setText(data.getName() + "\n[%98]" + (data.getComment() == null?"":data.getComment()+" - ") + data.getAllCardsInASinglePool(true, true).countAll() + " cards");
+            setDescription(data.getName() + "\n[%98]" + (data.getComment() == null?"":data.getComment()+" - ") + data.getAllCardsInASinglePool(true, true).countAll() + " cards");
         }
 
 

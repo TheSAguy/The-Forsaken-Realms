@@ -79,7 +79,14 @@ public abstract class GameStage extends Stage {
     private float touchY = -1;
     private final float timer = 0;
     private float animationTimeout = 0;
-    public static float maximumScrollDistance = 1.5f;
+    // Round 292 (user: "Can we increase how far one can Zoom out on the Main / Overworld map?"): 1.5 -> 2.0.
+    // 2.0 is the ceiling the overworld can honor as it stands. WorldBackground keeps the 3x3 block of chunks
+    // around the player loaded, and a chunk is max(screen w, h) / tile = 30 tiles, so the loaded ground
+    // reaches at least 30 tiles past the player's own chunk in every direction. At zoom z the view's half-width
+    // is 15z tiles (480 px / 16 / 2), so past 2.0 a player standing at a chunk's edge would see unloaded black
+    // at the screen's side. Going further means loading a wider ring of chunks - upstream's pooled chunk list
+    // is sized for 3x3 (18 points) - which is a bigger change, not a number.
+    public static float maximumScrollDistance = 2.0f;
     public static float minimumScrollDistance = 0.3f;
     private final Vector2 keyboardInput = new Vector2();
     private final Vector2 controllerInput = new Vector2();

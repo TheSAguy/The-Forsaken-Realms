@@ -17757,6 +17757,71 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 292: map labels that stay on their places, an inventory text that wraps, a wider overworld view (2026-09-22)
+
+The first round after v1.13, four asks in one go. User: *"Can anything be done about the text not staying in place on
+the mini-map when zooming in and out? 'When zooming out on the map, the numbers indicating reputation don't stay
+aligned correctly.'"* (two screenshots of the Reputation view: their Capitol's "6" sitting on the town below it once
+zoomed out) - *"The rally Rune text is cut off. Can we make the box bigger or wrap it differently."* - *"Can we
+increase how far one can Zoom out on the Main / Overworld map?"* - *"Please review latest log."* Local commit only.
+
+### The map labels (MapViewScene)
+
+Reproduced before touching anything, on the agent's copy of the user's day-80 save: at zoom 1 every number sat on its
+town; ten steps out the Capitol's "Normal Arena: ready" sat ~200 px below the Capitol and "Challenging Arena" was gone.
+Five causes, and the reputation numbers inherited the first three because they step aside for the other labels:
+
+1. **enter() placed the quest and bookmark labels ("pins") before they had a size** - a TypingLabel reads 0x0 until
+   `pack()` (the round-158 note) - so the pin's CORNER sat on the place and the pin hung up and to the right. The
+   user's star did exactly that over their Capitol.
+2. **Every zoom step moved each pin's corner as if it were a point of the map.** A label does not scale, so it drifted
+   a twentieth of its size per step, and `resolveLabelOverlaps()` then pushed crowded pins DOWN on every step.
+3. **A centred bookmark star pushed its own place's number a line down** - and a line is a fixed distance on screen,
+   so zoomed out it is the next town: the user's "6".
+4. **Any label shifted by a collision sits a fixed screen distance from its place**, which zoomed out reads as another
+   place's.
+5. `layoutDetails()`'s loop never tested the position after its last allowed shift (round 183 fixed the same bug in
+   `placeDetailLabel()` only), so it hid labels that would have fit.
+
+Fixes: pins and the mage/guard/legend dots are laid out from their WORLD anchors at every zoom (`layoutPins()`,
+`layoutMarkers()`, `markerAnchors`), exactly like the overlay labels; `resolveLabelOverlaps()` is gone. A bookmark
+star is a BADGE, its bottom edge half a text line (measured once, `detailLineHeight()`) above the place, so the
+place's number keeps the centre. Build time and every zoom step now share ONE placement function, `placeDetail()`,
+which tests every shift and adds the rule the zoomed-out map needed: **a label pushed aside by ANOTHER place's label is
+hidden when its top edge sits closer to another place (active, explored) than to its own**; it returns on zoom-in. A
+label stacked under its own place's other labels (a capital's arena lines) is exempt. `placeDetailLabel()` no longer
+removes a label that finds no room - it hides it, so zooming in can bring it back. Its build-time formula scaled the
+label's half-size with the map; fixed to the formula the zoom steps use.
+
+SEEN (agent game, same save, same clicks): zoom 1 unchanged; ten steps out every "1" and the Capitol's "3" sit on their
+towns and the misplaced arena line is hidden instead; with the Capitol bookmarked the star sits above it and the "3"
+keeps the centre at zoom 1 and eight steps out.
+
+### The inventory description (InventoryScene)
+
+`setWrap(true)` had never taken effect. A debug build measured why: the label was **714.75** wide (its width from
+before wrapping) inside a box ~305 wide. TextraLabel 0.8.2's `setText()` re-parses at the layout's existing target
+width; `setSize()` - the path a ScrollPane uses - stores a new target width WITHOUT re-wrapping; and `layout()`
+re-wraps only when the width differs from that target. (A table cell sizes a label through `setBounds()`, which does
+re-wrap - why every other wrap in the game works.) `setDescription()` now re-wraps at the PANE's width after each
+text change, and the pane never lays the label out wider than itself. SEEN: the Rally rune in three lines with Slot
+and cost below; the Torch, the next-longest, is six lines, a little taller than the box, and scrolls.
+
+### The overworld zoom (GameStage)
+
+`maximumScrollDistance` 1.5 -> **2.0**, and 2.0 is the ceiling as the overworld stands: `WorldBackground` keeps the
+3x3 chunks around the player loaded, a chunk is max(screen w, h)/tile = 30 tiles, and at zoom z the view's half-width
+is 15z tiles - past 2.0 a player at a chunk's edge would see unloaded black at the side. Further means loading a wider
+ring (upstream's pooled chunk list is sized for 3x3). Roaming spawns land 3-11 tiles out, inside the view already, so
+zooming out shows no new pop-in. NOT tested in the agent game: the bridge has no mouse-wheel command.
+
+### The log (the user's 16:20-17:57 session on v1.13)
+
+No exceptions. Day 7 -> 395: real play first (15 duels won, three arena wins, nine robbed-guard chases, the Traxos
+legend sighting, research thresholds), then a long fast-forward during which the Ring Cities and two towns fell, and
+the run ended in the designed defeat on day 395 (`[TFR-GameLost] red holds 3 Center Towns`). Memory held 426-718 MB
+with no creep; the slowest day tick was 495 ms.
+
 ## Round 291: v1.13 "Heart of the Realm" - release stamps and notes (2026-09-22)
 
 User, in round 290's message: *"If all is okay, proceed with the Full release. PC, Android and Update online Repo.

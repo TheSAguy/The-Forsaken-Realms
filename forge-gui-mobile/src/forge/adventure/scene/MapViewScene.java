@@ -53,6 +53,20 @@ public class MapViewScene extends UIScene {
     /** WORLD position each entry of {@code details} is anchored to, index-aligned with it - so a zoom
      *  step can lay the labels out again from scratch instead of nudging them (round 162). */
     private final List<float[]> detailAnchors = Lists.newArrayList();
+    /** Round 292: the quest and bookmark labels ("pins") and their WORLD anchors, index-aligned - laid out
+     *  from the anchor at every zoom step by layoutPins(), exactly like the overlay labels. */
+    private final List<TypingLabel> pins = Lists.newArrayList();
+    private final List<float[]> pinAnchors = Lists.newArrayList();
+    /** Round 292: index-aligned with pins - true for a bookmark star, which sits as a badge ABOVE its place so the
+     *  place's own number keeps the centre (see layoutPins()); quest labels sit on the place. */
+    private final List<Boolean> pinAbove = Lists.newArrayList();
+    /** Round 292: the centre of every place drawn on the map (active and explored), rebuilt on enter() - what a
+     *  shifted label is measured against in closerToAnotherPlace(). */
+    private final List<float[]> places = Lists.newArrayList();
+    /** Round 292: the height of one line of overlay text, measured once - see detailLineHeight(). */
+    private float detailLineHeight = -1f;
+    /** Round 292: the WORLD position of each entry of mageMarkers (mage, guard and legend dots), index-aligned. */
+    private final List<float[]> markerAnchors = Lists.newArrayList();
     private final float maxZoom = 1.2f;
     // Round 152 (user request: "Is it possible to have the over-world map zoom out further?").
     // 0.25 -> 0.12 is about seven more 0.9x steps, roughly halving the smallest scale again.
@@ -196,11 +210,16 @@ public class MapViewScene extends UIScene {
         positions.clear();
         details.clear();
         detailAnchors.clear();
+        pins.clear(); // round 292
+        pinAnchors.clear();
+        pinAbove.clear();
+        places.clear();
         // The TypingLabel sweep above doesn't catch the mage marker Images - remove them
         // explicitly (they're rebuilt from live state on every enter() anyway).
         for (Image marker : mageMarkers)
             marker.remove();
         mageMarkers.clear();
+        markerAnchors.clear(); // round 292
         clearAttacks();
         miniMapPlayer.setScale(1);
         img.setScale(1);
@@ -406,33 +425,132 @@ public class MapViewScene extends UIScene {
         // "shift down until clear" loop never fires no matter how many labels share a position.
         // pack() sizes the label from its own preferred size without touching position.
         label.pack();
-        float x = img.getScaleX() * (getMapX(worldX) - label.getWidth() / 2) + img.getX();
-        float y = img.getScaleY() * (getMapY(worldY) - label.getHeight() / 2) + img.getY();
-        Rectangle rect = new Rectangle(x, y, label.getWidth(), label.getHeight());
-        // ROUND 158 BUG FIX (user playtest: "there are Roaming Guard labels on black towns... Not
-        // sure why"). The data was right - the LABELS had walked. This loop shifts a label down one
-        // height at a time until it clears every other label, with no limit, so on a crowded map a
-        // garrison label slid far enough from its own town to come to rest over somebody else's,
-        // which reads as a flat lie about who holds that town. Bounded to four steps now; a label
-        // that still cannot find room is dropped rather than parked somewhere untrue.
-        // Round 183 (code review S10): every position up to MAX_LABEL_SHIFTS is TESTED - the old loop stopped after
-        // the 4th shift without checking it, so the effective cap was 3.
+        label.skipToTheEnd();
+        // Round 292: placed by placeDetail(), the SAME code every zoom step runs, against the pins and the labels
+        // already placed - so a view built while zoomed out lands exactly where the next zoom step would put it.
+        // `placedLabelRects` is no longer consulted: every caller filled it from the labels on the map, which is
+        // what placedPins() plus the loop below read directly. A label that finds no room is now HIDDEN, not
+        // removed, so it comes back when the map is zoomed in (round 158's "better absent than misplaced" holds).
+        List<Placed> placed = placedPins();
+        for (int i = 0; i < details.size() - 1 && i < detailAnchors.size(); i++) {
+            TypingLabel other = details.get(i);
+            if (other.isVisible())
+                placed.add(new Placed(new Rectangle(other.getX(), other.getY(), other.getWidth(), other.getHeight()),
+                        detailAnchors.get(i)));
+        }
+        placeDetail(details.size() - 1, placed);
+    }
+
+    /** Round 292: one label placed on the map, with the place it belongs to. */
+    private static final class Placed {
+        final Rectangle rect;
+        final float[] anchor;
+
+        Placed(Rectangle rect, float[] anchor) {
+            this.rect = rect;
+            this.anchor = anchor;
+        }
+    }
+
+    /** Round 292: the pins as they stand now, for the overlay labels to step around. */
+    private List<Placed> placedPins() {
+        List<Placed> placed = Lists.newArrayList();
+        for (int i = 0; i < pins.size() && i < pinAnchors.size(); i++) {
+            TypingLabel pin = pins.get(i);
+            if (pin.isVisible())
+                placed.add(new Placed(new Rectangle(pin.getX(), pin.getY(), pin.getWidth(), pin.getHeight()),
+                        pinAnchors.get(i)));
+        }
+        return placed;
+    }
+
+    /**
+     * Places overlay label {@code i} at the current zoom and returns whether it is shown. Centred on its place,
+     * then shifted down one line at a time past anything in the way - round 158's bounded rule, every position
+     * up to MAX_LABEL_SHIFTS tested (round 183 S10; layoutDetails()'s own copy of the loop never tested the last
+     * one, so it hid labels that would have fit).
+     * <p>
+     * Round 292, the second half of the user's report: a shift is a fixed distance ON SCREEN, so the further out
+     * the map is zoomed, the further a shifted label sits from its own place on the MAP - and on a zoomed-out
+     * map one line down is the next town, which is exactly how a reputation number came to read as some other
+     * town's. So a label pushed aside by ANOTHER place's label is hidden when it would sit closer to another
+     * place than to its own; it comes back as the map is zoomed in. A label stacked under its own place's other
+     * labels (a capital's arena lines under its number) is exempt - it hangs from its own stack.
+     */
+    private boolean placeDetail(int i, List<Placed> placed) {
+        TypingLabel label = details.get(i);
+        float[] anchor = detailAnchors.get(i);
+        float ax = img.getScaleX() * getMapX(anchor[0]) + img.getX();
+        float ay = img.getScaleY() * getMapY(anchor[1]) + img.getY();
+        Rectangle rect = new Rectangle(ax - label.getWidth() / 2, ay - label.getHeight() / 2,
+                label.getWidth(), label.getHeight());
         int shifts = 0;
-        boolean blocked = overlapsAny(rect, placedLabelRects);
-        while (blocked && shifts < MAX_LABEL_SHIFTS) {
+        boolean pushedByAnotherPlace = false;
+        Placed hit = firstOverlap(rect, placed);
+        while (hit != null && shifts < MAX_LABEL_SHIFTS) {
+            if (!samePlace(hit.anchor, anchor))
+                pushedByAnotherPlace = true;
             rect.y -= label.getHeight();
             shifts++;
-            blocked = overlapsAny(rect, placedLabelRects);
+            hit = firstOverlap(rect, placed);
         }
-        if (blocked) { // still colliding after the cap - better absent than misplaced
-            table.removeActor(label);
-            details.remove(label);
-            detailAnchors.remove(detailAnchors.size() - 1);
-            return;
+        boolean show = hit == null && !(pushedByAnotherPlace && closerToAnotherPlace(rect, anchor, ax, ay));
+        label.setVisible(show);
+        if (show) {
+            label.setPosition(rect.x, rect.y);
+            placed.add(new Placed(rect, anchor));
         }
-        placedLabelRects.add(rect);
-        label.setPosition(rect.x, rect.y);
-        label.skipToTheEnd();
+        return show;
+    }
+
+    private static Placed firstOverlap(Rectangle rect, List<Placed> placed) {
+        for (Placed p : placed) {
+            if (rect.overlaps(p.rect))
+                return p;
+        }
+        return null;
+    }
+
+    private static boolean samePlace(float[] a, float[] b) {
+        return Math.abs(a[0] - b[0]) < 0.5f && Math.abs(a[1] - b[1]) < 0.5f;
+    }
+
+    /** Round 292: would a reader take this shifted label for another place's? Measured from the label's TOP edge,
+     *  the edge it hangs from, against every place drawn on the map. */
+    private boolean closerToAnotherPlace(Rectangle rect, float[] anchor, float ax, float ay) {
+        float px = rect.x + rect.width / 2, py = rect.y + rect.height;
+        float own = Vector2.dst2(px, py, ax, ay);
+        for (float[] place : places) {
+            if (samePlace(place, anchor))
+                continue;
+            float ox = img.getScaleX() * getMapX(place[0]) + img.getX();
+            float oy = img.getScaleY() * getMapY(place[1]) + img.getY();
+            if (Vector2.dst2(px, py, ox, oy) < own)
+                return true;
+        }
+        return false;
+    }
+
+    /** Round 292: the places a reader can see on the map - active, with an explored centre tile. */
+    private void rebuildPlaces() {
+        places.clear();
+        forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+        for (PointOfInterest poi : activePointsOfInterest()) {
+            Vector2 c = poi.getCenter();
+            if (world.isExploredWorld((int) (c.x / world.getTileSize()), (int) (c.y / world.getTileSize())))
+                places.add(new float[]{c.x, c.y});
+        }
+    }
+
+    /** Round 292: the height of one line of overlay text - where a bookmark badge's bottom edge goes so it clears
+     *  the number centred on the same place. Measured once from a sample label, not guessed. */
+    private float detailLineHeight() {
+        if (detailLineHeight <= 0f) {
+            TypingLabel probe = Controls.newTypingLabel("[%?BLACKEN] 0");
+            probe.pack();
+            detailLineHeight = probe.getHeight();
+        }
+        return detailLineHeight;
     }
 
     public void events() {
@@ -708,6 +826,56 @@ public class MapViewScene extends UIScene {
     }
 
     /**
+     * Round 292 (user, with two screenshots: "When zooming out on the map, the numbers indicating reputation
+     * don't stay aligned correctly"). The quest ([+GPS]) and bookmark ([+Star]) labels - "pins" - are laid out
+     * from their WORLD anchors at the current zoom, as layoutDetails() has done for the overlay labels since
+     * round 162. Three things were wrong with them, and the reputation numbers inherited all three because
+     * they step aside for the pins: (1) enter() placed each pin before it had a size (a TypingLabel reads 0x0
+     * until pack()), so its CORNER sat on the place and the pin hung up and to the right of it; (2) every zoom
+     * step moved that corner as if it were a point of the map, but a label does not scale, so the pin drifted
+     * by a twentieth of its size per step; (3) resolveLabelOverlaps() then pushed crowded pins DOWN on every
+     * step and never back up. A pure function of anchor and zoom cannot drift.
+     * <p>
+     * Pins keep the bounded shift-down among themselves, but are never hidden: a bookmark or a quest target
+     * that cannot find room stays on its own place, overlapping, rather than wandering off it.
+     * <p>
+     * A bookmark star is a BADGE: it sits just above its place, its bottom edge half a text line over the
+     * centre, so the place's own number keeps the centre. Centred, the star pushed that number a line down -
+     * which zoomed out is the next town: the user's screenshot, their Capitol's "6" reading as the town below.
+     */
+    private void layoutPins() {
+        List<Rectangle> placed = Lists.newArrayList();
+        for (int i = 0; i < pins.size() && i < pinAnchors.size(); i++) {
+            TypingLabel pin = pins.get(i);
+            float[] anchor = pinAnchors.get(i);
+            boolean above = i < pinAbove.size() && pinAbove.get(i);
+            float x = img.getScaleX() * getMapX(anchor[0]) + img.getX() - pin.getWidth() / 2;
+            float ay = img.getScaleY() * getMapY(anchor[1]) + img.getY();
+            float y = above ? ay + detailLineHeight() / 2 : ay - pin.getHeight() / 2;
+            Rectangle rect = new Rectangle(x, y, pin.getWidth(), pin.getHeight());
+            int shifts = 0;
+            while (overlapsAny(rect, placed) && shifts < MAX_LABEL_SHIFTS) {
+                rect.y -= pin.getHeight();
+                shifts++;
+            }
+            if (overlapsAny(rect, placed))
+                rect.y = y;
+            placed.add(rect);
+            pin.setPosition(rect.x, rect.y);
+        }
+    }
+
+    /** Round 292: the mage, guard and legend dots, from their world anchors - the same reason as layoutPins(). */
+    private void layoutMarkers() {
+        for (int i = 0; i < mageMarkers.size() && i < markerAnchors.size(); i++) {
+            Image marker = mageMarkers.get(i);
+            float[] anchor = markerAnchors.get(i);
+            marker.setPosition(img.getScaleX() * getMapX(anchor[0]) + img.getX() - marker.getWidth() / 2,
+                    img.getScaleY() * getMapY(anchor[1]) + img.getY() - marker.getHeight() / 2);
+        }
+    }
+
+    /**
      * Round 162 (user screenshot: "Under Attack" and Guards text "floating / not on a specific
      * town"). Lays every overlay label out again from its WORLD anchor at the current zoom, in
      * build order, with the same bounded shift-down rule placeDetailLabel() applies when the view
@@ -718,36 +886,10 @@ public class MapViewScene extends UIScene {
      * somewhere untrue, and comes back when the map is zoomed in.
      */
     private void layoutDetails() {
-        List<Rectangle> placed = Lists.newArrayList();
-        for (Actor existing : table.getChildren()) {
-            if (existing instanceof TypingLabel && existing.isVisible() && !details.contains(existing))
-                placed.add(new Rectangle(existing.getX(), existing.getY(), existing.getWidth(), existing.getHeight()));
-        }
-        for (int i = 0; i < details.size() && i < detailAnchors.size(); i++) {
-            TypingLabel label = details.get(i);
-            float[] anchor = detailAnchors.get(i);
-            float x = img.getScaleX() * getMapX(anchor[0]) + img.getX() - label.getWidth() / 2;
-            float y = img.getScaleY() * getMapY(anchor[1]) + img.getY() - label.getHeight() / 2;
-            Rectangle rect = new Rectangle(x, y, label.getWidth(), label.getHeight());
-            boolean moved = true;
-            int shifts = 0;
-            while (moved && shifts < MAX_LABEL_SHIFTS) {
-                moved = false;
-                for (Rectangle other : placed) {
-                    if (rect.overlaps(other)) {
-                        rect.y -= label.getHeight();
-                        moved = true;
-                        shifts++;
-                        break;
-                    }
-                }
-            }
-            label.setVisible(!moved);
-            if (moved)
-                continue;
-            placed.add(rect);
-            label.setPosition(rect.x, rect.y);
-        }
+        // Round 292: one placement rule for build time and every zoom step - see placeDetail().
+        List<Placed> placed = placedPins();
+        for (int i = 0; i < details.size() && i < detailAnchors.size(); i++)
+            placeDetail(i, placed);
     }
 
     private void clearAttacks() {
@@ -790,14 +932,12 @@ public class MapViewScene extends UIScene {
             img.setScale(img.getScaleX() * 0.9f);
             miniMapPlayer.setPosition((scroll.getScrollX() + scroll.getWidth()/2) * 0.1f + 0.9f * miniMapPlayer.getX(), (scroll.getMaxY() - scroll.getScrollY() + scroll.getHeight()/2) * 0.1f + 0.9f * miniMapPlayer.getY());
             miniMapPlayer.setScale(miniMapPlayer.getScaleX() * 0.9f);
-            for (Actor actor : table.getChildren()) {
-                // Mage markers ride the same transform as the player marker/labels, or they'd
-                // visibly detach from the map the first time the view is zoomed.
-                if (actor instanceof TypingLabel || mageMarkers.contains(actor)) {
-                    actor.setPosition((scroll.getScrollX() + scroll.getWidth()/2) * 0.1f + 0.9f * actor.getX(), (scroll.getMaxY() - scroll.getScrollY() + scroll.getHeight()/2) * 0.1f + 0.9f * actor.getY());
-                }
-            }
-            resolveLabelOverlaps();
+            // Round 292: everything drawn ON the map is laid out again from its world anchor at the new zoom -
+            // see layoutPins(). The old loop moved each label's bottom-left corner as if it were a point of the
+            // map, which drifts anything that does not scale, and resolveLabelOverlaps() then pushed the quest
+            // and bookmark labels further down on every step.
+            layoutPins();
+            layoutMarkers();
             layoutDetails();
             layoutAttacks();
         }
@@ -808,55 +948,19 @@ public class MapViewScene extends UIScene {
             img.setScale(img.getScaleX() * 1.1f);
             miniMapPlayer.setPosition(-(scroll.getScrollX() + scroll.getWidth()/2) * 0.1f + 1.1f * miniMapPlayer.getX(), -(scroll.getMaxY() - scroll.getScrollY() + scroll.getHeight()/2) * 0.1f + 1.1f * miniMapPlayer.getY());
             miniMapPlayer.setScale(miniMapPlayer.getScaleX() * 1.1f);
-            for (Actor actor : table.getChildren()) {
-                // Same reasoning as zoomOut()'s marker handling above.
-                if (actor instanceof TypingLabel || mageMarkers.contains(actor)) {
-                    actor.setPosition(-(scroll.getScrollX() + scroll.getWidth()/2) * 0.1f + 1.1f * actor.getX(), -(scroll.getMaxY() - scroll.getScrollY() + scroll.getHeight()/2) * 0.1f + 1.1f * actor.getY());
-                }
-            }
-            resolveLabelOverlaps();
+            // Round 292: everything drawn ON the map is laid out again from its world anchor at the new zoom -
+            // see layoutPins(). The old loop moved each label's bottom-left corner as if it were a point of the
+            // map, which drifts anything that does not scale, and resolveLabelOverlaps() then pushed the quest
+            // and bookmark labels further down on every step.
+            layoutPins();
+            layoutMarkers();
             layoutDetails();
             layoutAttacks();
         }
     }
 
-    /** Re-establishes the label collision-avoidance placeDetailLabel() enforces at BUILD time,
-     *  after a zoom step's uniform scale+translate transform has moved every label (2026-08-16
-     *  user report: garbled overlapping map labels, reproducible by zooming out). Root cause:
-     *  the zoom transform shrinks the pixel GAP between two labels' anchors by the same factor
-     *  it moves them, but each label's own on-screen SIZE never changes - so a pair that
-     *  placeDetailLabel() positioned edge-to-edge (its minimum possible clearance, zero margin)
-     *  collapses into an overlap the moment the view zooms out. Re-runs the identical shift-down-
-     *  until-clear algorithm placeDetailLabel() uses, but against the labels' ALREADY-transformed
-     *  positions instead of a fresh candidate - so it fixes up whatever the zoom step just broke
-     *  rather than rebuilding from world coordinates (which would restart every label's typing
-     *  animation and is unnecessary just to re-separate them). Operates on every TypingLabel
-     *  currently on the table, so it covers all 3 overlay modes that can show labels
-     *  (details/events/reputation), not just the one placeDetailLabel() originally targeted.
-     *  Round 162: the overlay labels themselves are now re-laid from their world anchors by
-     *  layoutDetails() - this pass can only ever push a label DOWN, and it ran on every zoom step,
-     *  so the labels walked away from their towns - and this covers only the quest/bookmark labels. */
-    private void resolveLabelOverlaps() {
-        List<Rectangle> placedLabelRects = Lists.newArrayList();
-        for (Actor actor : table.getChildren()) {
-            if (!(actor instanceof TypingLabel) || details.contains(actor))
-                continue; // round 162: overlay labels are re-laid from their anchors by layoutDetails()
-            Rectangle rect = new Rectangle(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
-            boolean moved = true;
-            while (moved) {
-                moved = false;
-                for (Rectangle placed : placedLabelRects) {
-                    if (rect.overlaps(placed)) {
-                        rect.y -= actor.getHeight();
-                        moved = true;
-                        break;
-                    }
-                }
-            }
-            actor.setPosition(rect.x, rect.y);
-            placedLabelRects.add(rect);
-        }
-    }
+    // Round 292: resolveLabelOverlaps() lived here. It could only push a quest or bookmark label DOWN, ran on
+    // every zoom step, and so walked them away from their places; layoutPins() replaced it.
 
     // Extracted so the fog-of-war debug toggle (GameHUD) can force an immediate refresh here too,
     // instead of only updating on the next time this scene is entered.
@@ -891,23 +995,36 @@ public class MapViewScene extends UIScene {
                 TypingLabel label = Controls.newTypingLabel("[+GPS][%?BLACKEN] " + adq.name);
                 labels.add(label);
                 table.addActor(label);
-                label.setPosition(getMapX(poi.getCenter().x) - label.getWidth() / 2, getMapY(poi.getCenter().y) - label.getHeight() / 2);
+                // Round 292: sized BEFORE it is placed (a TypingLabel reads 0x0 until pack() - see
+                // placeDetailLabel()), then placed from its world anchor by layoutPins() below.
+                label.pack();
                 label.skipToTheEnd();
+                pins.add(label);
+                pinAnchors.add(new float[]{poi.getCenter().x, poi.getCenter().y});
+                pinAbove.add(false);
                 positions.add(poi.getCenter());
             }
         }
         for (PointOfInterest poi : bookmark) {
             TypingLabel label = Controls.newTypingLabel("[%75][+Star] ");
             table.addActor(label);
-            label.setPosition(getMapX(poi.getCenter().x) - label.getWidth() / 2, getMapY(poi.getCenter().y) - label.getHeight() / 2);
+            label.pack();
             label.skipToTheEnd();
+            // Round 292: bookmarks go FIRST, so the star sits exactly on its place and a quest label on the
+            // same place is the one that makes room.
+            pins.add(0, label);
+            pinAnchors.add(0, new float[]{poi.getCenter().x, poi.getCenter().y});
+            pinAbove.add(0, true);
         }
+        rebuildPlaces();
+        layoutPins();
 
         // Clear-then-rebuild rather than diffing: re-entering without a done() in between (or
         // after a mage arrived/died) must never stack or strand stale dots.
         for (Image marker : mageMarkers)
             marker.remove();
         mageMarkers.clear();
+        markerAnchors.clear(); // round 292
         for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
             // Same fog-of-war gate as the corner minimap's dots (GameHUD.updateMageMinimapMarkers):
             // only mages inside REVEALED territory - player vision or a player-owned town's own
@@ -921,6 +1038,7 @@ public class MapViewScene extends UIScene {
             table.addActor(marker);
             marker.setPosition(getMapX(mage.getX()) - marker.getWidth() / 2, getMapY(mage.getY()) - marker.getHeight() / 2);
             mageMarkers.add(marker);
+            markerAnchors.add(new float[]{mage.getX(), mage.getY()}); // round 292
         }
 
         // Roaming guard dots (round 152, user request: "can we add a dot on the mini-map for our
@@ -937,6 +1055,7 @@ public class MapViewScene extends UIScene {
             table.addActor(marker);
             marker.setPosition(getMapX(guard.x) - marker.getWidth() / 2, getMapY(guard.y) - marker.getHeight() / 2);
             mageMarkers.add(marker);
+            markerAnchors.add(new float[]{guard.x, guard.y}); // round 292
         }
 
         // Round 239: sighted legends, in gold. In mageMarkers for the same reason the guard dots are - that
@@ -948,8 +1067,10 @@ public class MapViewScene extends UIScene {
             table.addActor(marker);
             marker.setPosition(getMapX(legend.getX()) - marker.getWidth() / 2, getMapY(legend.getY()) - marker.getHeight() / 2);
             mageMarkers.add(marker);
+            markerAnchors.add(new float[]{legend.getX(), legend.getY()}); // round 292
             legendDots++;
         }
+        layoutMarkers(); // round 292: the same placement every zoom step uses
         if (legendDots > 0)
             System.out.println("[TFR-MapView] " + legendDots + " sighted legend(s) marked in gold");
 

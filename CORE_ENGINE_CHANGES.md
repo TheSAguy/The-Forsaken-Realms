@@ -132,6 +132,21 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 292: map labels, the inventory description, overworld zoom
+
+- **`forge-gui-mobile/src/forge/adventure/scene/MapViewScene.java`** — zoomIn()/zoomOut() no longer transform the
+  labels and dots; everything on the map is re-laid from WORLD anchors (`layoutPins()`, `layoutMarkers()`,
+  `layoutDetails()`, `layoutAttacks()`). `resolveLabelOverlaps()` is deleted. Quest/bookmark labels are packed before
+  placement and tracked in `pins`/`pinAnchors`/`pinAbove`; the bookmark star is a badge above its place. Overlay
+  labels go through ONE placement function, `placeDetail()`, at build time and on every zoom step (with the
+  "closer to another place" rule, `places` rebuilt on enter()). **Merge note:** upstream's zoom loop moved every
+  TypingLabel by the view-centre formula - if a daily touches zoomIn/zoomOut, keep ours.
+- **`forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java`** — `setDescription()` replaces the three
+  `itemDescription.setText()` calls and re-wraps at the scroll pane's width (TextraLabel 0.8.2 never re-wraps on
+  setText()/setSize()); the pane has horizontal scrolling disabled.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameStage.java`** — `maximumScrollDistance` 1.5 -> 2.0, the most the
+  3x3 chunk loader covers; see the comment before raising it.
+
 ### World generation & the overworld map
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — round 280 added one call,
   `onRewardTaken(RS.getId())`, immediately before stock's `RS.remove(); actors.removeValue(RS, true);

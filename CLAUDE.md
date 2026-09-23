@@ -59,6 +59,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   next is the user's play-test feedback on 1.13. Still open from before, the user's call: 296 chests have no guard
   (round 286). Not yet seen in play: the ledger fix, the loot-hold fix (both round 290, logic only). The next
   release's version is 1.14 / manifestVersionCode 11400.
+- **Round 292 (after the release; local commit, NOT pushed): map labels that stay on their places, an inventory text
+  that wraps, overworld zoom-out 1.5 -> 2.0.** Map view: pins and dots laid out from world anchors every zoom step,
+  the bookmark star a badge ABOVE its place, one placement function for build and zoom, and a label pushed aside by
+  another place's label hides when it would read as that place's (`placeDetail()`). Inventory: TextraLabel 0.8.2 never
+  re-wraps on `setText()`/`setSize()` - `setDescription()` wraps at the pane's width. Zoom 2.0 is the most the 3x3
+  chunk loader supports. All SEEN in the agent game except the overworld zoom (no wheel command in the bridge).
+  Live + agent folders packaged with it.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.
