@@ -132,6 +132,11 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 297: dungeon entrances
+
+- Plane data only: `maps/tileset/dungeon_entrances.atlas` + `.png` (new); `world/points_of_interest.json` points 14
+  dungeon entries at it. No code change.
+
 ### Round 296: every capture flips 10 tiles
 
 - **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — `captureFlipRadius()` takes no arguments

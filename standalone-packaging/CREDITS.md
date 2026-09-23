@@ -74,6 +74,7 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 ## World art
 
 - **World mountains** (the mountain ranges of the barrier between the realms) - **Sythian Bard**.
+- **Dungeon entrances** (the stone and sandstone towers and temples on the overworld) - **Sythian Bard**.
 
 ## License
 

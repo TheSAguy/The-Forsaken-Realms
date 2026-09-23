@@ -91,6 +91,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `world/structures/barrier_mountains.png` (48 px per tile; every separate group on the sheet is a piece, so the user
   can redraw/add groups freely), packed solid from the world seed, drawn by `BarrierMountains` from
   WorldBackground.draw() over the terrain and under the actors, per-tile fog. SEEN in the agent game incl. fog. Packaged.
+- **Round 297 (local commit, NOT pushed): Sythian Bard's dungeon entrances** - 16 icons shrunk to our 32 px scale in
+  `maps/tileset/dungeon_entrances.atlas`; 10 used (White Towers, Mages' Fort, Necromancer's Study, the six Forts, Sea
+  Temple, Pharaoh's Fort); palaces/halls/two temples spare; colorful icons (Djinn's Palace, Monastery, Snow Abbey,
+  Esper Manufactory, Dueling Club) kept on purpose. Data only. Packaged.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

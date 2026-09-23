@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 297: new dungeon entrances - Sythian Bard's towers and temples (2026-09-23)
+
+User, with a sheet of 16 buildings from the same artist as the barrier's mountains: *"Look at this sheet. It should
+have 16 new dungeon entrances we could use. Can you format and use these."* Local commit; data only.
+
+**The sheet**: a tall tower and a short tower, each intact and ruined (overgrown), in sandstone and in gray stone;
+a palace, a hall, a flat-roofed temple and a pillared temple, in gray and in sandstone - drawn at 48 px per tile.
+Our place icons are 32 px (2x2 tiles), and a place's hit box, entry box, markers and guard/teleporter badges all
+size themselves from its image, so the art is SHRUNK once (2/3, LANCZOS) rather than drawn smaller: buildings and
+short towers 32x32, tall towers 32x64, bottom-centered like every icon. Touching pairs on the sheet were split at
+their emptiest column. All 16 are in `maps/tileset/dungeon_entrances.atlas` (+ .png) under readable names
+(SandTowerTall, GreyTowerRuined, SandPalace, GreyTemplePillared...).
+
+**Used where they clearly improve the icon** (previewed current-vs-new first): the four White Towers (a tiny 16x32
+pagoda before) alternate the sandstone tall tower, intact and ruined; Mages' Fort the gray tall tower, Necromancer's
+Study the gray ruined one; the six "Forts" (Tundra Fort, Mercenary Barracks, The Frozen Ruins, Putrid Fort,
+Cultists' Outpost, Mind Slaver's Encampment - all drawn as a sci-fi structure before) the four short towers; the Sea
+Temple the gray pillared temple; Pharaoh's Fort the sandstone flat temple. **Kept on purpose**: Djinn's Palace (pink
+crystal), the Monastery (red church), the Snow Abbey (snow), the Esper Manufactory and the Dueling Club - their
+colorful icons carry flavor the muted stone art would lose. The palaces, halls and two temples wait in the atlas.
+Existing worlds show the new icons too (a place's sprite is looked up by name at load).
+
+**Seen** in the agent game: the sandstone White Tower beside its road and the gray Tundra Fort among the wasteland's
+rocks and trees, both drawn crisply; the atlas loads with no error; the plane validator is clean. Credit: a
+"Dungeon entrances" line under World art in standalone-packaging/CREDITS.md.
+
 ## Round 296: every capture flips 10 tiles (2026-09-23)
 
 User, answering round 294's question: *"For your question on Regular towns, yes, let's also give them a 10 tile cap,
