@@ -17757,6 +17757,99 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 294: the barrier - mountains where the barren wedges were; AI capitals grow (2026-09-23)
+
+Local commit only. Two asks, both from the user's answers to round 293's questions.
+
+### AI capitals grow; a captured one flips 10 tiles
+
+User: *"For the Capitol Grow. I would like them to grow. But once captured, they become regular towns, so can we cap
+the flip to 10 tiles?"* Round 293's new `[TFR-TownGrowth]` line had shown the five world-gen AI capitals "blocked"
+every day: their next ring is already their own color's land, nothing is new to claim, and the town loop reverts a
+ring that claims nothing - round 197's capital growth never passed RECOLOR_RADIUS. For a CAPITAL, a ring it already
+holds now counts as grown (`holdsRing`); a regular town in the same spot still waits, so what capturing it flips does
+not change. `TerritoryControl.captureFlipRadius()` is the one rule for both capture paths (player: TownRestoration,
+AI: onMageArrived): a former AI capital flips RECOLOR_RADIUS and continues as a regular town; a town flips its held
+radius as before. **Correction to round 293's report:** it said a captured capital could flip "up to 50" - that is
+the Java default; the plane's settings.json sets townMaxTerritoryRadius to 450, so the capital cap clamps to
+maxTerritoryRadius (450). The 10-tile cap covers it either way.
+
+### The barrier
+
+User (the map-gen thread): *"Would it be possible to fill these Barren areas full of Mountains/Obstacles, to make it
+impassable."* - *"Unless you can fly."* Then their own definition, taken as-is: *"create a 'Barrier' Layer that will
+fill all land, then have the 'Wasteland' circle and the 5 AI Pentagon area, erase the Barrier layer where it
+overlaps. This will then leave the Barrier, where the current Barren area is on the map."* Their answers: 1 it stays
+through territory expansion (then, seeing it in play: *"The Player and AI should not 'convert' the barrier, it should
+remain as it is on world gen"*), 2 no roads through it, 3 the flight-landing loophole closed, 4 *"Let's not have any
+POI in the Barriers"*, 5 *"When calculating the closest town to attack, Is it possible to take the distance to the
+town going around a barrier, vs. Straight line?"*, 6 new worlds only. And: *"I want to change the 'Mountain' images,
+can you separate that in it's own sheet so I can tweak?"*
+
+**Preview first.** A fresh world generated on the round-293 build, dumped with a read-only save tool (`WorldDump`,
+scratchpad) and the footprint drawn in Python before any Java: 15.8% of the land, the five wedges between neighboring
+colors plus the coastal fringes, genuinely barren (under 5% of its tiles carried a structure), and 127 active places
+(55 towns) plus ~250 rotation-reserve dungeons inside it. The user: *"This looks perfect though! That's what I want it
+to create."*
+
+**Where it goes** (`World.computeBarrier()`, right after the biome claims): all LAND (anything above the base/water
+layer) outside every decorated circle - each biome's structure boxes, centered and sized exactly as Pass B places
+them (the wasteland 149 tiles around the map's center, each color 123 around its start point) - each circle shrunk by
+`worldBarrierMarginTiles` (new setting, 8; about twice that where two circles nearly touch - green and white touch
+outright) with its edge jittered +/-4 tiles by the world's own noise. Water is never walled. Territory Control planes
+only. Kept as its own saved layer (`barrierMap`, a bitset under the key `barrierMap`), not a terrainMap bit, so no
+terrain decoder has to know about it.
+
+**What it is** (`stampBarrier()`, after Pass B): the wasteland's own mountain (index 9, wasteland space) with the
+collision bit forced on. It is DRAWN from its own sheet, `world/structures/barrier_structures.atlas` + `.png` in the
+plane folder: region `barrier`, a 48x64 autotile laid out like every structure's (3 x 4 tiles of 16), created as a
+copy of the wasteland mountain so nothing changes until it is redrawn; `barrier_2` .. `barrier_9` variants are mixed
+tile by tile when present. The world map draws a barrier tile's layers as plain ground and the sheet on top
+(`generateBiomeSprite()`); nothing else's autotile joins it; the minimap takes the region's top-left 4x4 pixels, the
+same corner every structure's minimap pixel comes from. `[TFR-Barrier] sheet ...: N variant(s)` at load.
+
+**Nobody converts it.** `claimWastelandRing()` and `repaintBiomeAroundTown()` treat a barrier tile like water -
+untouchable - so daily expansion, the Capitol, town growth, captures and round 293's repair all pass over it.
+
+**No places in it.** World-gen placement turns away any spot whose 4x4 footprint comes within 5 tiles of it
+(`barrierNearPlace()`, counted in the `[TFR-PoiPlacement]` summary), and so does `addPointOfInterestNear()`. The
+obstacle sweep and the placement clear never touch it.
+
+**No roads through it.** A world-gen town link (nearest-neighbor, rescue, the star) whose line would cross it is passed
+over - the town links to its next-nearest instead (`[TFR-Barrier] world-gen roads: N candidate link(s) passed
+over`); the cleared path every other place gets to its nearest town skips towns across it and never clears a barrier
+tile; `connectCapturedTownByRoad()` routes around it (an edge that crosses is no edge) and `buildRoad()` refuses a
+crossing segment. `roadLineCrossesBarrier()` asks exactly the tiles a road would be drawn on (the road pass's
+height - y row).
+
+**Flying.** `WorldStage.setDownOffBarrier()`, every overworld frame: a player on the barrier without the Fly effect -
+a flight that ended over it, a save reloaded mid-flight, a teleport - is set down on the nearest open ground
+(`[TFR-Barrier] the player stood on the barrier without flying - set down ...`). adjustMovement()'s "already
+colliding may walk out" rule stays for everything else.
+
+**Mage targeting.** `BarrierPaths`: on a world with a barrier, the "nearest attackable town" ranking - and the
+Capitol surge's "closest to the Capitol" - uses walking distance: the straight line when it is clear of the barrier,
+otherwise the shortest walk around it on a 4x4-tile grid (8-way, no corner cutting, water open because the mage
+crosses it). The mage itself still walks its straight line. `[TFR-BarrierPath]` per dispatch: the five nearest by
+walking distance, how many attackable towns lie behind the barrier, and what the straight line would have picked
+when that differs. A world without a barrier ranks exactly as before.
+
+### Seen (agent game, isolated profile)
+
+- Fresh world, final code: `[TFR-Barrier] 43763 of 287369 land tile(s) walled off (15.2%)`; every barrier tile the
+  colliding mountain; 0 road tiles on it; 0 of 2362 places within 5 tiles (`attempts turned away by the barrier=782`,
+  no failed placements, no restarts); `73 candidate link(s) passed over`.
+- Screenshots: the wall's edge on day 1 (a ridge beside wasteland ground, a town and a road) and on day 6 with red's
+  territory up to it and the wall unchanged. The in-game map shows the five colors with gray walls between them.
+- Teleported onto the wall: set down 18-19 tiles away at the nearest edge. `fly 6` then onto the wall: stayed while
+  flying, set down when the flight ended.
+- Persistence, with `aiCastleExpansionTilesPerDay` raised to 40 in the AGENT's copy of settings.json only: by day 6
+  the colors owned 227,465 tiles; all 44,451 barrier tiles still wasteland-only and still the mountain. (An earlier
+  build that let owners claim the barrier had every barrier tile colored by day 6 - which is what the user then
+  ruled out.)
+- `[TFR-BarrierPath]` on day-1 dispatches: each color's five nearest are on its own side; ~40% of attackable towns lie
+  behind a wall.
+
 ## Round 293: town territory grows from the town's center - the lower-left gap, repaired (2026-09-23)
 
 User, with four screenshots of a player town's green disc: *"There seems to be an issue with town terrain expansion.

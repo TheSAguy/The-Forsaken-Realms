@@ -36,6 +36,11 @@
     // ceiling exactly what it is today (20/2=10) even as the outer territory disc now reaches to 25.
     "townProtectedRadiusCap": 20,
 
+    // Round 294 (the barrier): how far inside each decorated circle - the wasteland's and the five colors' - the
+    // barrier's mountains begin. Where two circles nearly touch, the wall between them is about twice this thick.
+    // New worlds only: a world keeps the barrier it was generated with. -1 = no barrier on new worlds.
+    "worldBarrierMarginTiles": 8,
+
     // Game speed when the HUD "Speed-Up" toggle is on (multiplier over normal time).
     "speedUpMultiplier": 50.0,
 

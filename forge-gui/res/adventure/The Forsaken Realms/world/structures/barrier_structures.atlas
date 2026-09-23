@@ -1,0 +1,8 @@
+barrier_structures.png
+size: 48,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+barrier
+    xy: 0, 0
+    size: 48, 64

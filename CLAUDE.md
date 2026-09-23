@@ -74,6 +74,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   user's call: the five AI capitals never grow (their next ring is already their color's - letting that count would
   let a captured capital repaint up to 50 tiles); the barrier layer for the barren wedges (recommended as "land minus
   the six circles"; pending: places inside the wedges, roads).
+- **Round 294 (local commit, NOT pushed): the barrier + AI capitals grow.** Capitals count a ring they already hold as
+  grown; a captured capital flips RECOLOR_RADIUS (`captureFlipRadius()`). The barrier (new worlds only): land outside
+  the six decorated circles shrunk by `worldBarrierMarginTiles` (8), its own saved layer `barrierMap`, stamped as the
+  colliding wasteland mountain, DRAWN from `world/structures/barrier_structures.atlas` (the user's sheet to redraw;
+  `barrier_2`.. variants), untouchable by every claim and capture, no places within 5 tiles, no roads across,
+  `setDownOffBarrier()` for flights, `BarrierPaths` walking distance for mage targeting. All SEEN in the agent game.
+  Live + agent folders packaged. Round 293's "up to 50" was wrong: settings.json's townMaxTerritoryRadius is 450.
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

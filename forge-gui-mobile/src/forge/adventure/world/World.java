@@ -713,6 +713,12 @@ public class World implements Disposable, SaveFileContent {
     /** Round 256: has this save had its settlements swept of obstacles? Worlds generated before round 256 get
      *  the sweep once, at load. */
     private boolean obstaclesSwept = false;
+    /** Round 294 (the barrier): the tiles world generation walled off - the land outside the six decorated circles.
+     *  Its own layer, [x][rawY] like terrainMap, rather than a spare terrainMap bit, so nothing that decodes a
+     *  terrain value has to know about it. Null for a world made before round 294. See computeBarrier(). */
+    private boolean[][] barrierMap;
+    private int barrierTileCount;
+    private int barrierVersion;
 
     public List<int[]> getResourceSpawns() {
         return resourceSpawns;
@@ -769,6 +775,7 @@ public class World implements Disposable, SaveFileContent {
             biomeIndex++;
         }
         biomeTexture[biomeIndex] = new BiomeTexture(data.roadTileset, data.tileSize);
+        barrierTextures = loadBarrierTextures(); // round 294
         worldDataLoaded = true;
     }
 
@@ -807,6 +814,7 @@ public class World implements Disposable, SaveFileContent {
         mapPoiIds = new PointOfInterestMap(getChunkSize(), this.data.tileSize, this.data.width / getChunkSize(), this.data.height / getChunkSize());
         mapPoiIds.load(saveFileData.readSubData("mapPoiIds"));
         seed = saveFileData.readLong("seed");
+        loadBarrier(saveFileData); // round 294
 
         Object exploredObj = saveFileData.readObject("explored");
         if (exploredObj instanceof boolean[][] && ((boolean[][]) exploredObj).length == width) {
@@ -1033,6 +1041,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("resourceSpawns", new ArrayList<>(resourceSpawns));
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
         data.store("obstaclesSwept", obstaclesSwept ? 1 : 0);
+        saveBarrier(data); // round 294
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
         data.storeObject("poiFailedAttempts", poiFailedAttempts);
@@ -1117,6 +1126,11 @@ public class World implements Disposable, SaveFileContent {
     private Pixmap generateBiomeSprite(int x, int y) {
         long biomeIndex = getBiome(x, y);
         int biomeTerrain = getTerrainIndex(x, y);
+        // Round 294: a barrier tile draws its layers as plain ground and the barrier's own sheet on top (end of this
+        // method) - the user: "I want to change the 'Mountain' images, can you separate that in it's own sheet".
+        boolean barrier = barrierTextures.length > 0 && isBarrierTile(x, y);
+        if (barrier)
+            biomeTerrain = 0;
         // Round 289: a FRESH pixmap per call, not upstream's shared `globalTileDrawing`.
         //
         // The 09.22 refactor made this method composite into one reused static pixmap and return it. That
@@ -1147,7 +1161,8 @@ public class World implements Disposable, SaveFileContent {
             int bitIndex = 8;
             for (int ny = 1; ny > -2; ny--) {
                 for (int nx = -1; nx < 2; nx++) {
-                    if ((getBiome(x + nx, y + ny) & 1L << i) != 0 && (biomeTerrain == getTerrainIndex(x + nx, y + ny) || biomeTerrain == 0))
+                    if ((getBiome(x + nx, y + ny) & 1L << i) != 0 && ((biomeTerrain == getTerrainIndex(x + nx, y + ny)
+                            && !isBarrierTile(x + nx, y + ny)) || biomeTerrain == 0)) // round 294: nothing joins the barrier
                         neighbors |= (1 << bitIndex);
                     bitIndex--;
                 }
@@ -1189,6 +1204,18 @@ public class World implements Disposable, SaveFileContent {
                 continue;
             }
             info.draw(drawingPixmap);
+        }
+        if (barrier) {
+            int barrierNeighbors = 0;
+            int bitIndex = 8;
+            for (int ny = 1; ny > -2; ny--) {
+                for (int nx = -1; nx < 2; nx++) {
+                    if (isBarrierTile(x + nx, y + ny))
+                        barrierNeighbors |= 1 << bitIndex;
+                    bitIndex--;
+                }
+            }
+            barrierTextures[barrierVariant(x, y)].drawPixmapOn(0, barrierNeighbors, drawingPixmap);
         }
 
         return drawingPixmap;
@@ -1476,6 +1503,302 @@ public class World implements Disposable, SaveFileContent {
      * site's CENTRE tile (a town's art is 48x48 or 64x64, so its position corner is up to two tiles off centre),
      * and reports the lot in one line.
      */
+    // ------------------------------------------------------------------------------------------------------------
+    // Round 294: THE BARRIER. User: "Would it be possible to fill these Barren areas full of Mountains/Obstacles, to
+    // make it impassable." - "Unless you can fly." Then their own definition, taken as-is: "create a 'Barrier' Layer
+    // that will fill all land, then have the 'Wasteland' circle and the 5 AI Pentagon area, erase the Barrier layer
+    // where it overlaps. This will then leave the Barrier, where the current Barren area is on the map." Their answers
+    // to the questions it raised: it stays through territory expansion, no roads through it, the flight-landing
+    // loophole is closed (WorldStage.setDownOffBarrier()), no places in it, a mage's target distance goes around it
+    // (BarrierPaths), new worlds only.
+
+    /** Round 294: the barrier's own sheet (plane folder first, then common) - see loadBarrierTextures(). */
+    private static final String BARRIER_ATLAS = "world/structures/barrier_structures.atlas";
+    private BiomeTexture[] barrierTextures = new BiomeTexture[0];
+
+    /**
+     * The barrier's art, from its own sheet so it can be redrawn without touching the wasteland's mountains (user:
+     * "I want to change the 'Mountain' images, can you separate that in it's own sheet so I can tweak?"). Region
+     * "barrier" is a 48x64 autotile laid out like every structure's (3 x 4 tiles of 16: the two top-left tiles and
+     * the inner-corner tile, then the 3x3 of edges around the center); "barrier_2" to "barrier_9", where present, are
+     * variants mixed tile by tile. No sheet: the barrier draws as the wasteland mountain it is stamped as.
+     */
+    private BiomeTexture[] loadBarrierTextures() {
+        List<BiomeTexture> variants = new ArrayList<>();
+        try {
+            FileHandle sheet = Config.instance().getFile(BARRIER_ATLAS);
+            if (sheet != null && sheet.exists()) {
+                TextureAtlas atlas = Config.instance().getAtlas(BARRIER_ATLAS);
+                for (int v = 1; v <= 9; v++) {
+                    String region = v == 1 ? "barrier" : "barrier_" + v;
+                    if (atlas.findRegion(region) == null)
+                        continue;
+                    BiomeData art = new BiomeData();
+                    art.tilesetAtlas = BARRIER_ATLAS;
+                    art.tilesetName = region;
+                    variants.add(new BiomeTexture(art, data.tileSize));
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("[TFR-Barrier] could not load " + BARRIER_ATLAS + ": " + e);
+        }
+        System.out.println("[TFR-Barrier] sheet " + BARRIER_ATLAS + ": " + variants.size() + " variant(s)");
+        return variants.toArray(new BiomeTexture[0]);
+    }
+
+    /** Which variant a barrier tile draws - fixed per tile, so the map never reshuffles. */
+    private int barrierVariant(int x, int y) {
+        if (barrierTextures.length <= 1)
+            return 0;
+        return Math.floorMod(x * 73856093 ^ y * 19349663, barrierTextures.length);
+    }
+
+    /** How far the barrier's edge wanders in and out of each circle, in tiles - a ridge, not a compass arc. */
+    private static final float BARRIER_EDGE_JITTER = 4f;
+    /** No place's footprint comes closer to the barrier than this: room for its cleared ground and its road. */
+    private static final int BARRIER_PLACE_CLEARANCE = 5;
+
+    public boolean hasBarrier() {
+        return barrierTileCount > 0;
+    }
+
+    /** Bumped whenever the barrier layer is replaced (a load, a new world) - BarrierPaths caches against it. */
+    public int getBarrierVersion() {
+        return barrierVersion;
+    }
+
+    /** World tile coordinates, y up - the same convention as isColliding(x, y). */
+    public boolean isBarrierTile(int x, int y) {
+        return isBarrierRaw(x, height - y - 1);
+    }
+
+    private boolean isBarrierRaw(int x, int rawY) {
+        return barrierMap != null && x >= 0 && rawY >= 0 && x < width && rawY < height && barrierMap[x][rawY];
+    }
+
+    /** Does a world-pixel rectangle touch the barrier? Its four corners - the same test collidingTile() makes. */
+    public boolean rectOnBarrier(Rectangle rect) {
+        if (barrierMap == null)
+            return false;
+        int ts = getTileSize();
+        int xLeft = (int) rect.getX() / ts;
+        int yTop = (int) rect.getY() / ts;
+        int xRight = (int) ((rect.getX() + rect.getWidth()) / ts);
+        int yBottom = (int) ((rect.getY() + rect.getHeight()) / ts);
+        return isBarrierTile(xLeft, yTop) || isBarrierTile(xLeft, yBottom) || isBarrierTile(xRight, yBottom)
+                || isBarrierTile(xRight, yTop);
+    }
+
+    /** A straight line between two world tiles (y up), both ends included, stepping one axis at a time like the road
+     *  pass does (so it cannot slip diagonally between two barrier tiles): does it touch the barrier? */
+    public boolean barrierBetween(int x0, int y0, int x1, int y1) {
+        if (barrierMap == null)
+            return false;
+        int dx = Math.abs(x1 - x0);
+        int dy = Math.abs(y1 - y0);
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx - dy;
+        for (int step = 0; step <= dx + dy + 1; step++) {
+            if (isBarrierTile(x0, y0))
+                return true;
+            if (x0 == x1 && y0 == y1)
+                return false;
+            int e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            } else if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+        }
+        return false;
+    }
+
+    /** The road pass's own line between two places - the same end points (getTilePosition()) and the same raw row
+     *  (height - y: one row below the tile the end points name) - so "would this road cross the barrier" is asked
+     *  of exactly the tiles the road would be drawn on. */
+    public boolean roadLineCrossesBarrier(PointOfInterest a, PointOfInterest b) {
+        if (barrierMap == null)
+            return false;
+        Vector2 pa = a.getTilePosition(data.tileSize);
+        Vector2 pb = b.getTilePosition(data.tileSize);
+        return barrierBetween((int) pa.x, (int) pa.y - 1, (int) pb.x, (int) pb.y - 1);
+    }
+
+    /** Would a place whose bottom-left tile is (x, y) - world tiles, y up, a footprint of up to 4x4 - come within
+     *  BARRIER_PLACE_CLEARANCE tiles of the barrier? */
+    private boolean barrierNearPlace(int x, int y) {
+        if (barrierMap == null)
+            return false;
+        for (int tx = x - BARRIER_PLACE_CLEARANCE; tx <= x + 3 + BARRIER_PLACE_CLEARANCE; tx++)
+            for (int ty = y - BARRIER_PLACE_CLEARANCE; ty <= y + 3 + BARRIER_PLACE_CLEARANCE; ty++)
+                if (isBarrierTile(tx, ty))
+                    return true;
+        return false;
+    }
+
+    /**
+     * World generation, right after the biome claims: the barrier is all LAND (anything above the base/water layer)
+     * outside every decorated circle - each biome's structure boxes, centered and sized exactly as Pass B places them
+     * (the wasteland's at the map's center, the five colors' at their start points) - each circle shrunk by
+     * TuningData.worldBarrierMarginTiles so two circles that nearly touch still leave a wall about twice that thick,
+     * and its edge jittered by the world's own noise. Water is never walled. Territory Control planes only.
+     */
+    private void computeBarrier(OpenSimplexNoise noise) {
+        barrierMap = null;
+        barrierTileCount = 0;
+        barrierVersion++;
+        int margin = Config.instance().getTuningData().worldBarrierMarginTiles;
+        if (margin < 0 || !isTerritoryControlEnabled())
+            return;
+        List<BiomeData> biomes = data.GetBiomes();
+        int baseIndex = 0;
+        for (int i = 0; i < biomes.size(); i++)
+            if ("base".equalsIgnoreCase(biomes.get(i).name)) {
+                baseIndex = i;
+                break;
+            }
+        List<float[]> circles = new ArrayList<>();
+        StringBuilder circleNames = new StringBuilder();
+        for (BiomeData biome : biomes) {
+            if (biome.structures == null || biome.width <= 0 || biome.height <= 0
+                    || "base".equalsIgnoreCase(biome.name) || "player".equalsIgnoreCase(biome.name))
+                continue;
+            int biomeWidth = (int) Math.round(biome.width * (double) width);
+            int biomeHeight = (int) Math.round(biome.height * (double) height);
+            int biomeXStart = (int) Math.round(biome.startPointX * (double) width);
+            int biomeYStart = (int) Math.round(biome.startPointY * (double) height);
+            float widest = 0f;
+            for (BiomeStructureData structure : biome.structures) {
+                float cx = biomeXStart - biomeWidth / 2f + structure.x * biomeWidth;
+                float cy = biomeYStart - biomeHeight / 2f + structure.y * biomeHeight;
+                float r = Math.min(structure.width * biomeWidth, structure.height * biomeHeight) / 2f;
+                widest = Math.max(widest, r);
+                if (r - margin > 0)
+                    circles.add(new float[]{cx, cy, r - margin});
+            }
+            circleNames.append(circleNames.length() > 0 ? ", " : "").append(biome.name).append(' ')
+                    .append(Math.round(widest));
+        }
+        if (circles.isEmpty())
+            return;
+        long baseBit = 1L << baseIndex;
+        boolean[][] map = new boolean[width][height];
+        int land = 0;
+        int walled = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if ((biomeMap[x][y] & ~baseBit) == 0L)
+                    continue; // water - the base layer alone - is never walled
+                land++;
+                float jitter = (float) noise.eval(x * 0.07, y * 0.07) * BARRIER_EDGE_JITTER;
+                boolean inside = false;
+                for (float[] circle : circles) {
+                    float r = circle[2] + jitter;
+                    float ddx = x - circle[0];
+                    float ddy = y - circle[1];
+                    if (r > 0 && ddx * ddx + ddy * ddy <= r * r) {
+                        inside = true;
+                        break;
+                    }
+                }
+                if (!inside) {
+                    map[x][y] = true;
+                    walled++;
+                }
+            }
+        }
+        barrierMap = map;
+        barrierTileCount = walled;
+        System.out.println("[TFR-Barrier] " + walled + " of " + land + " land tile(s) walled off ("
+                + Math.round(1000.0 * walled / Math.max(1, land)) / 10.0 + "%) - land outside the decorated circles ("
+                + circleNames + " tiles), each shrunk " + margin + " tile(s), edge +/-" + (int) BARRIER_EDGE_JITTER);
+    }
+
+    /** After Pass B: every barrier tile becomes the wasteland's own mountain - in wasteland index space, which is how
+     *  a claimed tile is read (holdsWasteSpaceValue()), so it stays a mountain whoever comes to own it - and always
+     *  collides, whatever the model says about mountains. */
+    private void stampBarrier() {
+        if (barrierTileCount == 0)
+            return;
+        int mountain = barrierTerrainValue();
+        if (mountain < 0) {
+            System.err.println("[TFR-Barrier] the wasteland has no 'mountain' structure - no barrier for this world");
+            barrierMap = null;
+            barrierTileCount = 0;
+            barrierVersion++;
+            return;
+        }
+        int value = mountain | collisionBit | isStructureBit;
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                if (barrierMap[x][y])
+                    terrainMap[x][y] = value;
+        System.out.println("[TFR-Barrier] " + barrierTileCount + " tile(s) stamped as the wasteland's mountain (index "
+                + mountain + ", always colliding)");
+    }
+
+    /** The wasteland's "mountain" in its own index space: 1 + its terrain count, then each structure's objects in
+     *  order - the numbering Pass B writes. -1 if the plane's wasteland has none. */
+    private int barrierTerrainValue() {
+        BiomeData waste = null;
+        for (BiomeData biome : data.GetBiomes())
+            if ("waste".equalsIgnoreCase(biome.name)) {
+                waste = biome;
+                break;
+            }
+        if (waste == null || waste.structures == null)
+            return -1;
+        int index = 1 + (waste.terrain == null ? 0 : waste.terrain.length);
+        for (BiomeStructureData structure : waste.structures) {
+            if (structure.mappingInfo == null)
+                continue;
+            for (int i = 0; i < structure.mappingInfo.length; i++)
+                if ("mountain".equals(structure.mappingInfo[i].name))
+                    return index + i;
+            index += structure.mappingInfo.length;
+        }
+        return -1;
+    }
+
+    private void loadBarrier(SaveFileData saveFileData) {
+        barrierMap = null;
+        barrierTileCount = 0;
+        barrierVersion++;
+        if (!saveFileData.containsKey("barrierMap"))
+            return; // a world made before round 294, or without a barrier
+        long[] bits = (long[]) saveFileData.readObject("barrierMap");
+        if (bits == null)
+            return;
+        java.util.BitSet set = java.util.BitSet.valueOf(bits);
+        boolean[][] map = new boolean[width][height];
+        int count = 0;
+        for (int i = set.nextSetBit(0); i >= 0; i = set.nextSetBit(i + 1)) {
+            int x = i / height;
+            if (x >= width)
+                break;
+            map[x][i % height] = true;
+            count++;
+        }
+        if (count > 0) {
+            barrierMap = map;
+            barrierTileCount = count;
+        }
+    }
+
+    private void saveBarrier(SaveFileData saveData) {
+        if (barrierMap == null || barrierTileCount == 0)
+            return;
+        java.util.BitSet set = new java.util.BitSet(width * height);
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                if (barrierMap[x][y])
+                    set.set(x * height + y);
+        saveData.storeObject("barrierMap", set.toLongArray());
+    }
+
     private void clearObstaclesAroundSettlements() {
         if (mapPoiIds == null)
             return;
@@ -1516,7 +1839,8 @@ public class World implements Disposable, SaveFileContent {
             for (int dy = -tiles; dy <= tiles; dy++) {
                 try {
                     int rawY = height - 1 - (y + dy);
-                    if ((terrainMap[x + dx][rawY] & (collisionBit | isStructureBit)) != 0) {
+                    if ((terrainMap[x + dx][rawY] & (collisionBit | isStructureBit)) != 0
+                            && !isBarrierRaw(x + dx, rawY)) { // round 294: the barrier is not an obstacle to sweep
                         terrainMap[x + dx][rawY] = 0;
                         removed++;
                     }
@@ -1537,7 +1861,8 @@ public class World implements Disposable, SaveFileContent {
         for (int xclear = -size; xclear < size; xclear++)
             for (int yclear = -size; yclear < size; yclear++) {
                 try {
-                    terrainMap[x + xclear][height - 1 - (y + yclear)] = 0;
+                    if (!isBarrierRaw(x + xclear, height - 1 - (y + yclear))) // round 294
+                        terrainMap[x + xclear][height - 1 - (y + yclear)] = 0;
                 } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
     }
@@ -1736,6 +2061,8 @@ public class World implements Disposable, SaveFileContent {
                 }
             }
             currentTime[0] = measureGenerationTime("biome claims", currentTime[0]);
+            // Round 294: where the barrier goes is known now, before any place is put down - see computeBarrier().
+            computeBarrier(noise);
 
 //////////////////
 ///////// set poi placement
@@ -1768,6 +2095,7 @@ public class World implements Disposable, SaveFileContent {
             final int[] highAttemptPlacements = {0};
             final int[] totalPlacements = {0};
             final int HIGH_ATTEMPT_THRESHOLD = 50;
+            final int[] barrierRejected = {0}; // round 294: attempts the barrier turned away
             // Round 253: does this plane put Orazca at the centre of the star? (See the "Spawn" case below.)
             final boolean orazcaHoldsTheCentre =
                     PointOfInterestData.getPointOfInterest(TownRestoration.ORAZCA_POI_NAME) != null;
@@ -1820,6 +2148,12 @@ public class World implements Disposable, SaveFileContent {
                                 x += (poi.offsetX * (biome.width * width));
 
                                 if ((int) x < 0 || (int) y <= 0 || (int) y >= height || (int) x >= width || biomeIndex2 != highestBiome(getBiome((int) x, (int) y))) {
+                                    continue;
+                                }
+                                // Round 294 (user: "Let's not have any POI in the Barriers"): nor close enough that
+                                // its footprint, its cleared ground or its road would reach in.
+                                if (barrierNearPlace((int) x, (int) y)) {
+                                    barrierRejected[0]++;
                                     continue;
                                 }
                                 // Center Towns (MOD_SCOPE #102, user spec 2026-09-03): no other town inside the star's disc
@@ -1976,7 +2310,8 @@ public class World implements Disposable, SaveFileContent {
             // rather than needing to count individual failure/rerun lines by hand.
             System.out.println("[TFR-PoiPlacement] summary: " + totalPlacements[0] + " POI(s) placed, max attempts used="
                     + maxAttemptsSeen[0] + "/500, placements needing >" + HIGH_ATTEMPT_THRESHOLD + " attempts="
-                    + highAttemptPlacements[0] + ", full-pass restarts=" + totalRegenRestarts[0]);
+                    + highAttemptPlacements[0] + ", full-pass restarts=" + totalRegenRestarts[0]
+                    + (hasBarrier() ? ", attempts turned away by the barrier=" + barrierRejected[0] : ""));
             currentTime[0] = measureGenerationTime("poi placement", currentTime[0]);
 
             // Hide the reserve 4/5 of the rotation pool BEFORE anything bakes markers or picks
@@ -2114,6 +2449,8 @@ public class World implements Disposable, SaveFileContent {
                             + ", " + (scannedTiles - redirectedTiles) + "/" + scannedTiles + " claimed tiles kept real content");
             }
             currentTime[0] = measureGenerationTime("territory control placement", currentTime[0]);
+            stampBarrier(); // round 294: after Pass B, which would otherwise write its content over the barrier
+            int barrierRoadLinksDropped = 0; // round 294: world-gen road links the barrier stopped
 
 //////////////////
 ///////// sort towns and build roads in between
@@ -2152,6 +2489,10 @@ public class World implements Disposable, SaveFileContent {
                     float dist = current.getPosition().dst(towns.get(j).getPosition());
                     if (dist > data.maxRoadDistance)
                         continue;
+                    if (roadLineCrossesBarrier(current, towns.get(j))) { // round 294: no road through the barrier
+                        barrierRoadLinksDropped++;
+                        continue;
+                    }
                     if (dist < smallestDistance) {
                         smallestDistance = dist;
                         secondSmallestIndex = smallestIndex;
@@ -2185,6 +2526,10 @@ public class World implements Disposable, SaveFileContent {
                     if (i == j || roadLinkFull(towns, roadDegree, j, maxLinks))
                         continue;
                     float dist = towns.get(i).getPosition().dst(towns.get(j).getPosition());
+                    if (dist < nearestDist && roadLineCrossesBarrier(towns.get(i), towns.get(j))) { // round 294
+                        barrierRoadLinksDropped++;
+                        continue;
+                    }
                     if (dist < nearestDist) {
                         nearestDist = dist;
                         nearest = j;
@@ -2218,16 +2563,29 @@ public class World implements Disposable, SaveFileContent {
             if (hub == null)
                 hub = campfire;
             if (hub != null)
-                for (PointOfInterest st : starTowns)
+                for (PointOfInterest st : starTowns) {
+                    if (roadLineCrossesBarrier(hub, st)) { // round 294 - the star sits in the central circle, so never
+                        barrierRoadLinksDropped++;
+                        continue;
+                    }
                     allSortedTowns.add(Pair.of(hub, st));
+                }
             // ... and the star's rim: every Center Town joined to every other (user spec 2026-09-03),
             // ten edges for five towns - explicit pairs bypass maxRoadDistance like the spokes do.
             for (int a = 0; a < starTowns.size(); a++)
-                for (int b = a + 1; b < starTowns.size(); b++)
+                for (int b = a + 1; b < starTowns.size(); b++) {
+                    if (roadLineCrossesBarrier(starTowns.get(a), starTowns.get(b))) { // round 294
+                        barrierRoadLinksDropped++;
+                        continue;
+                    }
                     allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
+                }
             System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
                     + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + "), "
                     + rescuedTowns + " unlinked town(s) rescued, max " + maxLinks + " links per town");
+            if (hasBarrier())
+                System.out.println("[TFR-Barrier] world-gen roads: " + barrierRoadLinksDropped
+                        + " candidate link(s) passed over - each would have crossed the barrier");
             List<Pair<PointOfInterest, PointOfInterest>> allPOIPathsToNextTown = new ArrayList<>();
             for (int i = 0; i < notTowns.size() - 1; i++) {
 
@@ -2237,6 +2595,8 @@ public class World implements Disposable, SaveFileContent {
                 for (int j = 0; j < towns.size(); j++) {
 
                     float dist = poi.getPosition().dst(towns.get(j).getPosition());
+                    if (dist < smallestDistance && roadLineCrossesBarrier(poi, towns.get(j)))
+                        continue; // round 294: its cleared path would cut through the barrier - the next town then
                     if (dist < smallestDistance) {
                         smallestDistance = dist;
                         smallestIndex = j;
@@ -2264,7 +2624,8 @@ public class World implements Disposable, SaveFileContent {
                     int e2;
                     for (int i = 0; i < 1000; i++) {
                         if (startX < 0 || startY <= 0 || startX >= width || startY > height) continue;
-                        if ((terrainMap[startX][height - startY] & collisionBit) != 0)//clear terrain if it has collision
+                        if ((terrainMap[startX][height - startY] & collisionBit) != 0//clear terrain if it has collision
+                                && !isBarrierRaw(startX, height - startY)) // round 294: never through the barrier
                             terrainMap[startX][height - startY] = 0;
 
                         if (startX == x1 && startY == y1)
@@ -2774,6 +3135,8 @@ public class World implements Disposable, SaveFileContent {
                 continue;
             if (wx < 2 || wy < 2 || wx >= width - 2 || wy >= height - 2)
                 continue;
+            if (barrierNearPlace(wx, wy))
+                continue; // round 294
             boolean tooClose = false;
             for (PointOfInterest other : getAllPointOfInterest()) {
                 int px = (int) (other.getPosition().x / data.tileSize);
@@ -3026,6 +3389,13 @@ public class World implements Disposable, SaveFileContent {
      */
     private void drawMinimapTile(Pixmap target, int x, int rawY) {
         int mm = data.miniMapTileSize;
+        if (barrierTextures.length > 0 && isBarrierRaw(x, rawY) && wasteBiome() != null) {
+            // Round 294: ground, then the barrier sheet's own minimap pixels - the top-left of its "barrier" region,
+            // the same corner every structure's minimap pixel comes from.
+            target.drawPixmap(createSmallPixmap(wasteBiome().tilesetAtlas, wasteBiome().tilesetName, 0), x * mm, rawY * mm);
+            target.drawPixmap(createSmallPixmap(BARRIER_ATLAS, "barrier", 0), x * mm, rawY * mm);
+            return;
+        }
         if (highestBiome(biomeMap[x][rawY]) >= data.GetBiomes().size()) {
             target.drawPixmap(createSmallPixmap(data.roadTileset.tilesetAtlas, data.roadTileset.tilesetName, 0), x * mm, rawY * mm);
             return;
@@ -3551,6 +3921,13 @@ public class World implements Disposable, SaveFileContent {
         long roadBit = 1L << data.GetBiomes().size();
         java.util.HashSet<Long> touched = new java.util.HashSet<>();
         for (int seg = 0; seg + 1 < waypoints.size(); seg++) {
+            if (roadLineCrossesBarrier(waypoints.get(seg), waypoints.get(seg + 1))) {
+                // Round 294: no road through the barrier. connectCapturedTownByRoad() already routes around it; this
+                // catches any other caller.
+                System.out.println("[TFR-Barrier] road " + waypoints.get(seg).getDisplayName() + " -> "
+                        + waypoints.get(seg + 1).getDisplayName() + " not built: it would cross the barrier");
+                continue;
+            }
             int startX = (int) waypoints.get(seg).getTilePosition(data.tileSize).x;
             int startY = (int) waypoints.get(seg).getTilePosition(data.tileSize).y;
             int x1 = (int) waypoints.get(seg + 1).getTilePosition(data.tileSize).x;
@@ -3683,6 +4060,8 @@ public class World implements Disposable, SaveFileContent {
                 int oldBiomeIndex = highestBiome(biomeMap[wx][rawY]); // read before overwriting below
                 if ((biomeMap[wx][rawY] & ~roadBit) == 0L || oldBiomeIndex == oceanIdx)
                     continue; // round 98: water stays water
+                if (isBarrierRaw(wx, rawY))
+                    continue; // round 294: the barrier stays as world generation made it - a capture never converts it
                 // Round 272, found by the claim-path trace: the SOURCE space is not always the owner's.
                 // A tile daily expansion claimed carries the colour's bit over the wasteland's while its
                 // value stays in WASTELAND numbering, so translating it out of the owner's tables read a
@@ -4054,6 +4433,12 @@ public class World implements Disposable, SaveFileContent {
                 // the claim write (isRoadTile branch below), so rendering and the road-vs-offroad
                 // speed logic still see a road.
                 claimTilesVisited++;
+                if (isBarrierRaw(wx, height - wy - 1)) {
+                    // Round 294 (user: "The Player and AI should not 'convert' the barrier, it should remain as it is
+                    // on world gen"): untouchable, like water - nobody's ground, whoever's circle passes over it.
+                    claimTilesUntouchable++;
+                    continue;
+                }
                 long rawBiomeBits = getBiome(wx, wy);
                 boolean isRoadTile = (rawBiomeBits & roadBit) != 0;
                 int ownerIndex = highestBiome(rawBiomeBits & ~roadBit);

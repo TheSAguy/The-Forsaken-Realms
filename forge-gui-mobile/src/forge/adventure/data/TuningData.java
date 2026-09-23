@@ -51,6 +51,10 @@ public class TuningData {
     // townMaxTerritoryRadius (20) so the protected core's ceiling (20/2=10) stays exactly what it
     // is today, even though the outer territory disc now reaches further.
     public int townProtectedRadiusCap = 20;
+    // Round 294 (the barrier): how far inside each decorated circle - the wasteland's and the five colors' - the
+    // barrier's mountains begin. Where two circles nearly touch, the wall between them is about twice this thick.
+    // Negative: newly generated worlds get no barrier. A world keeps the barrier it was generated with.
+    public int worldBarrierMarginTiles = 8;
 
     // WorldStage.java's FAST_TIME_MULTIPLIER, backing the "Speed-Up" HUD checkbox (renamed
     // 2026-08-14 from "100x Speed" - see en-US.properties lblFastTimeToggle). User: "Current

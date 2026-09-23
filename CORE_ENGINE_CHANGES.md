@@ -132,6 +132,26 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 294: the barrier; AI capitals grow
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — the barrier: `barrierMap`/`barrierTileCount`/
+  `barrierVersion` (saved as a bitset, key `barrierMap`); `computeBarrier()` after the biome claims,
+  `stampBarrier()` after Pass B; placement check `barrierNearPlace()` (also in `addPointOfInterestNear()`); road
+  filters via `roadLineCrossesBarrier()` in the nearest-neighbor, rescue, star and path-clearing loops and in
+  `buildRoad()`; `claimWastelandRing()`/`repaintBiomeAroundTown()` skip barrier tiles; `clearObstacles()`/
+  `clearTerrain()` never clear them; `generateBiomeSprite()` and `drawMinimapTile()` draw them from
+  `barrier_structures.atlas` (`loadBarrierTextures()` in loadWorldData). **Merge note:** upstream's
+  generateBiomeSprite() neighbor test gained `&& !isBarrierTile(...)` - keep it.
+- **`forge-gui-mobile/src/forge/adventure/util/BarrierPaths.java`** (new) — walking distances around the barrier for
+  target selection.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `setDownOffBarrier()` at the top of onActing().
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — dispatch() ranks by `reach`
+  (BarrierPaths when the world has a barrier), `logWalkRanking()`; connectCapturedTownByRoad() drops barrier-crossing
+  edges; `captureFlipRadius()`; capitals' `holdsRing` in the town loop.
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the player capture uses `captureFlipRadius()`.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** — `worldBarrierMarginTiles = 8`.
+- Plane data: `world/structures/barrier_structures.atlas` + `.png` (new), settings.json `worldBarrierMarginTiles`.
+
 ### Round 293: town territory anchored on the town's center
 
 - **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — the town growth ring, the Capitol's ring and

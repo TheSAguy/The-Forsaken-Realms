@@ -343,6 +343,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     protected void onActing(float delta) {
         if (isPaused() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
             return;
+        setDownOffBarrier(); // round 294
         drawNavigationArrow();
         if (player.isMoving())
             waitingForTime = false; // moving cancels an active wait
@@ -1427,6 +1428,54 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (currentModifications.containsKey(PlayerModification.Fly))
             return false;
         return WorldSave.getCurrentSave().getWorld().collidingTile(boundingRect);
+    }
+
+    /**
+     * Round 294 (the barrier - user: "impassable. Unless you can fly"). Nobody stands on it without flying: a flight
+     * that ends over it, a save reloaded mid-flight, a teleport onto it - the player is set down on the nearest open
+     * ground instead. Without this, adjustMovement() below lets a player already inside collision walk freely,
+     * which over the barrier is walking straight through it.
+     */
+    private void setDownOffBarrier() {
+        if (currentModifications.containsKey(PlayerModification.Fly))
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (!world.hasBarrier() || !world.rectOnBarrier(player.boundingRect()))
+            return;
+        int tile = world.getTileSize();
+        float w = player.getWidth();
+        float h = player.getHeight();
+        int cx = (int) ((player.getX() + w / 2f) / tile);
+        int cy = (int) ((player.getY() + h / 2f) / tile);
+        Rectangle probe = new Rectangle();
+        for (int ring = 1; ring <= 96; ring++) {
+            float bestX = 0f, bestY = 0f;
+            int bestD = Integer.MAX_VALUE;
+            for (int dx = -ring; dx <= ring; dx++) {
+                for (int dy = -ring; dy <= ring; dy++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dy)) != ring)
+                        continue; // this ring's tiles only
+                    float x = (cx + dx) * tile + (tile - w) / 2f;
+                    float y = (cy + dy) * tile;
+                    probe.set(x, y, w, h);
+                    if (world.collidingTile(probe) || world.rectOnBarrier(probe))
+                        continue;
+                    int d = dx * dx + dy * dy;
+                    if (d < bestD) {
+                        bestD = d;
+                        bestX = x;
+                        bestY = y;
+                    }
+                }
+            }
+            if (bestD != Integer.MAX_VALUE) {
+                player.setPosition(bestX, bestY);
+                System.out.println("[TFR-Barrier] the player stood on the barrier without flying - set down on open"
+                        + " ground " + ring + " tile(s) away, at tile (" + (int) (bestX / tile) + "," + (int) (bestY / tile) + ")");
+                return;
+            }
+        }
+        System.err.println("[TFR-Barrier] the player stands on the barrier and no open ground lies within 96 tiles");
     }
 
     @Override

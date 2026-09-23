@@ -241,6 +241,19 @@ public class TerritoryControl {
         return false;
     }
 
+    /**
+     * Round 294: how much ground a capture flips - read BEFORE transformInto(), from the town as it stood. A town
+     * flips everything it held (its grown radius, so no ring of the old owner is stranded around it). A world-gen
+     * AI capital flips RECOLOR_RADIUS only (user: "once captured, they become regular towns, so can we cap the
+     * flip to 10 tiles?") - capitals grow to twice a town's reach, and taking one should not hand over that whole
+     * disc. The rest of its ground stays its color's, which is where a capital's ground mostly lies anyway.
+     */
+    public static int captureFlipRadius(PointOfInterestData dataBeforeCapture, Integer heldRadius) {
+        if (isAiCapital(dataBeforeCapture))
+            return RECOLOR_RADIUS;
+        return Math.max(RECOLOR_RADIUS, heldRadius != null ? heldRadius : RECOLOR_RADIUS);
+    }
+
     /** The growth cap for one town: a color's capital reaches further than its ordinary towns. */
     public static int townMaxTerritoryRadiusFor(PointOfInterestData data) {
         if (!isAiCapital(data))
@@ -812,17 +825,22 @@ public class TerritoryControl {
                     WorldStage.getInstance()::refreshBackgroundTile,
                     WorldStage.getInstance()::reloadBackgroundChunkObjects);
             long alreadyHeld = World.claimTilesAlreadyMine - heldBefore;
-            // A blocked town retries every day, so its block is reported once, when it starts. The first run of
-            // this line found the five world-gen AI capitals "blocked" daily by their OWN color's land: the ring
-            // is already theirs, nothing is new, the radius reverts - round 197's capital growth never advances.
-            if (claimed > 0)
+            // Round 294 (user: "For the Capitol Grow. I would like them to grow"): a world-gen AI capital sits
+            // inside its own color's land, so its next ring is usually ALREADY that color's - nothing new to claim,
+            // and round 197's capital growth reverted every day and never passed RECOLOR_RADIUS. For a capital, a
+            // ring it already holds counts as grown. Only capitals: a regular town in the same spot still waits,
+            // so what capturing it flips does not change (and a captured capital flips RECOLOR_RADIUS only - see
+            // captureFlipRadius()).
+            boolean holdsRing = claimed > 0 || (alreadyHeld > 0 && isAiCapital(poi.getData()));
+            // A blocked town retries every day, so its block is reported once, when it starts.
+            if (holdsRing)
                 TOWN_GROWTH_BLOCK_REPORTED.remove(poi.getID());
-            if (claimed > 0 || TOWN_GROWTH_BLOCK_REPORTED.add(poi.getID()))
+            if (holdsRing || TOWN_GROWTH_BLOCK_REPORTED.add(poi.getID()))
                 System.out.println("[TFR-TownGrowth] " + poi.getDisplayName() + " (" + ownerColor + "): territory radius "
                         + townRadius + " -> " + newTownRadius + " around its center, " + claimed + " tile(s) claimed, "
                         + alreadyHeld + " of the ring already " + ownerColor + "'s"
-                        + (claimed > 0 ? "" : " - radius held (reported once until it grows)"));
-            if (claimed > 0) {
+                        + (holdsRing ? "" : " - radius held (reported once until it grows)"));
+            if (holdsRing) {
                 // Only spend the earned week(s) on an actual successful claim - a blocked attempt
                 // (below) keeps its earned tile(s) banked and retries next tick, same spirit as
                 // the per-day mechanism never permanently losing progress to a temporary block.
@@ -1626,18 +1644,33 @@ public class TerritoryControl {
         // is taken: the one nearest the player's seat, so the blow lands on the side of the player's territory
         // facing that colour. The Capitol itself is excluded; the point is the approach, not a direct assault.
         // Distances are squared pixels (dst2), rooted only for the log.
+        // Round 294 (user: "When calculating the closest town to attack, Is it possible to take the distance to the
+        // town going around a barrier, vs. Straight line? That way, it's okay if the attacking mage crosses the
+        // barrier, but towns on the other side of the barrier will be considered further"). On a world with a
+        // barrier, "nearest" is the walk around it (BarrierPaths); the mage still walks straight. A world without
+        // one ranks exactly as before. Distances stay squared pixels; cached, since a sort asks for each many times.
+        final BarrierPaths.Field walk = world.hasBarrier() ? BarrierPaths.from(world, positionsOf(ownedSources)) : null;
+        final Map<PointOfInterest, Double> reachCache = new HashMap<>();
+        java.util.function.ToDoubleFunction<PointOfInterest> reach = t -> reachCache.computeIfAbsent(t,
+                k -> walk != null ? walk.dist2(k.getPosition()) : distToNearestSource(k, ownedSources));
         if (towardCapitol && target == null) {
             PointOfInterest capitol = TownRestoration.findCapitol();
             if (capitol != null) {
                 List<PointOfInterest> pool = new ArrayList<>(attackable);
-                pool.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
+                pool.sort(Comparator.comparingDouble(reach));
+                if (walk != null)
+                    logWalkRanking(color, pool, walk, ownedSources);
                 pool = new ArrayList<>(pool.subList(0, Math.min(NEAREST_CANDIDATES, pool.size())));
+                // Round 294: "closest to the Capitol" goes around the barrier too.
+                BarrierPaths.Field toCapitol = walk != null
+                        ? BarrierPaths.from(world, java.util.Collections.singletonList(capitol.getCenter())) : null;
                 PointOfInterest nearest = null;
                 double bestDistance = Double.MAX_VALUE;
                 for (PointOfInterest candidate : pool) {
                     if (inFlightTargetIds.contains(candidate.getID()) || candidate == capitol)
                         continue;
-                    double distance = candidate.getCenter().dst2(capitol.getCenter());
+                    double distance = toCapitol != null ? toCapitol.dist2(candidate.getCenter())
+                            : candidate.getCenter().dst2(capitol.getCenter());
                     if (distance < bestDistance) {
                         bestDistance = distance;
                         nearest = candidate;
@@ -1648,13 +1681,15 @@ public class TerritoryControl {
                     System.out.println("[TFR-CapitolSurge] " + color + " marches on " + nearest.getDisplayName()
                             + " - the one of its " + pool.size() + " nearest targets closest to the Capitol ("
                             + Math.round(Math.sqrt(bestDistance) / 16d) + " tiles from the Capitol, "
-                            + Math.round(Math.sqrt(distToNearestSource(nearest, ownedSources)) / 16d)
+                            + Math.round(Math.sqrt(reach.applyAsDouble(nearest)) / 16d)
                             + " from its own holdings)");
                 }
             }
         }
         if (target == null) {
-            attackable.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
+            attackable.sort(Comparator.comparingDouble(reach));
+            if (walk != null)
+                logWalkRanking(color, attackable, walk, ownedSources);
             int candidateCount = Math.min(NEAREST_CANDIDATES, attackable.size());
             // Color reputation (MOD_SCOPE.md #1) consequence, the user's chosen meaning of "less/
             // more likely to be attacked": among the nearest candidates, a PLAYER-OWNED town's odds
@@ -1875,6 +1910,48 @@ public class TerritoryControl {
             lastMageCapLine = line;
         }
         return cap;
+    }
+
+    private static List<Vector2> positionsOf(List<PointOfInterest> places) {
+        List<Vector2> positions = new ArrayList<>(places.size());
+        for (PointOfInterest place : places)
+            positions.add(place.getPosition());
+        return positions;
+    }
+
+    /** Round 294: [TFR-BarrierPath] - the nearest attackable towns by walking distance, and how many sit behind the
+     *  barrier (every straight line from the color's holdings runs into it), so the log shows what the barrier did
+     *  to the pick. */
+    private static void logWalkRanking(String color, List<PointOfInterest> ranked, BarrierPaths.Field walk,
+                                       List<PointOfInterest> ownedSources) {
+        int behind = 0;
+        for (PointOfInterest town : ranked)
+            if (walk.behindBarrier(town.getPosition()))
+                behind++;
+        StringBuilder nearest = new StringBuilder();
+        for (int i = 0; i < Math.min(NEAREST_CANDIDATES, ranked.size()); i++) {
+            PointOfInterest town = ranked.get(i);
+            if (nearest.length() > 0)
+                nearest.append("; ");
+            nearest.append(town.getDisplayName()).append(' ')
+                    .append(Math.round(Math.sqrt(walk.dist2(town.getPosition())) / 16d));
+            if (walk.behindBarrier(town.getPosition()))
+                nearest.append(" (straight ").append(Math.round(Math.sqrt(distToNearestSource(town, ownedSources)) / 16d))
+                        .append(", around the barrier)");
+        }
+        // What the straight line would have picked, when it differs - the barrier changing a choice, visibly.
+        List<PointOfInterest> straight = new ArrayList<>(ranked);
+        straight.sort(Comparator.comparingDouble(t -> distToNearestSource(t, ownedSources)));
+        int shown = Math.min(NEAREST_CANDIDATES, ranked.size());
+        String straightPick = "";
+        if (!new java.util.HashSet<>(straight.subList(0, shown)).equals(new java.util.HashSet<>(ranked.subList(0, shown)))) {
+            StringBuilder names = new StringBuilder();
+            for (PointOfInterest town : straight.subList(0, shown))
+                names.append(names.length() > 0 ? ", " : "").append(town.getDisplayName());
+            straightPick = " | the straight line would have picked: " + names;
+        }
+        System.out.println("[TFR-BarrierPath] " + color + ": nearest by walking distance, in tiles - " + nearest
+                + " | " + behind + " of " + ranked.size() + " attackable town(s) lie behind the barrier" + straightPick);
     }
 
     private static double distToNearestSource(PointOfInterest town, List<PointOfInterest> sources) {
@@ -2392,6 +2469,8 @@ public class TerritoryControl {
             for (int v = 0; v < n; v++) {
                 if (done[v])
                     continue;
+                if (world.roadLineCrossesBarrier(nodes.get(u), nodes.get(v)))
+                    continue; // round 294 (user: "No roads through Barrier") - the route goes around, or not at all
                 double cost = best[u] + nodes.get(u).getPosition().dst2(nodes.get(v).getPosition());
                 if (cost < best[v]) {
                     best[v] = cost;
@@ -2689,7 +2768,7 @@ public class TerritoryControl {
         // ever claims wasteland, and a player-bit tile is never wasteland, so nothing could ever
         // reclaim it - an orphaned ring around an enemy town, found by the pre-commit review).
         Integer oldRadius = world.getTownTerritoryRadius(target.getID());
-        int repaintRadius = Math.max(RECOLOR_RADIUS, oldRadius != null ? oldRadius : RECOLOR_RADIUS);
+        int repaintRadius = captureFlipRadius(target.getData(), oldRadius); // round 294: a capital flips RECOLOR_RADIUS
         String preCaptureId = target.getID();
         target.transformInto(newData, world.getRandom(), true); // ownership changes, the town keeps its name
         // Round 140 (code review S2-4, user decision 2026-09-07: "Any player town that is captured
