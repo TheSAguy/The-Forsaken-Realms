@@ -132,6 +132,18 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 302: +Life once per game
+
+- **`stage/WorldStage.java`** - `setWinner()`: an overworld win's loot goes through
+  `PlaceRewards.filterWorldPayout()` before the reward screen.
+- **`stage/MapStage.java`** - `getReward()` passes the sprite (not its data) to `PlaceRewards.filterDuelPayout()`.
+- **`world/World.java`** - `drawableTerrainIndex()` logs only a real remap or a real miss; `structureNameAt()` (new).
+  Log text only.
+- **`stage/GameStage.java`** - `hasPendingResultTask()` (new): a match result still waiting behind its Timer task.
+- **`agent/AgentObserver.java`** (mod-owned) - `isIdle()` is false while that task is pending.
+- Mod-owned: `util/PlaceRewards.java` (`filterWorldPayout()`, `payLifeOnce()`; `noteEarlierDefeat()` sets the
+  per-game key).
+
 ### Round 301: hidden ambushers
 
 - **`character/EnemySprite.java`** - `applySteering()` moves with the frame's delta (`moveBy(x, y, delta)`); the

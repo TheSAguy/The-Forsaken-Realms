@@ -17757,6 +17757,47 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 302: a legend's +Life once per game, and a terrain log line that cried wolf (2026-09-23)
+
+User, of round 299's note that the ~29 +Life legends fought outside places were not covered: *"Make these a one time
+only also."* Local commit.
+
+- **+Life once per game per enemy, in every duel payout.** `PlaceRewards.payLifeOnce()` keeps the key
+  `enemy|life|<enemy name>` in `World.getOncePaidRewards()` beside round 299's per-place key.
+  `WorldStage.setWinner()` now filters an overworld win's loot (`PlaceRewards.filterWorldPayout()`, +Life only). That
+  covers the frontier legends, the Shandalar wizards, Arzakon, Urza Planeswalker, Gaea, a "Dangerous Enemy" chest
+  duel and the stock mirror enemy's +1. `MapStage.getReward()` passes the sprite, so a duel inside a place checks the
+  same key, and a place's paid key closes the per-game one. The 23 +Life enemies placed in maps each stand in one
+  place (Emrakul's second is DEBUGZONE), so the per-game key takes away nothing the per-place one paid.
+- **A legend beaten before this round pays once more**, then never again. The player's win record looked like the
+  evidence of an earlier payout, and the first draft read it. It is wrong evidence: it also counts Arena bracket and
+  Coin Challenge wins (the Capitol arena's pool holds 29 of the 52 +Life enemies) and roaming-guard fights, none of
+  which pay an enemy's rewards. Reading it would have withheld a +Life that was never paid. Round 299's
+  `noteEarlierDefeat()` also sets the per-game key for an enemy found gone from its map.
+- **The terrain log's false alarms.** `World.drawableTerrainIndex()` logged every claimed-wasteland index it decoded.
+  A match at the SAME index (`player.json`'s two structure sets are laid out exactly like the wasteland's) or a
+  wasteland ground patch printed "nothing to draw it as, it stays invisible". The user's day-11 log held 40 of these,
+  and a peer session read them as invisible walls on the player's land after round 300 part 2. They drew fine, and the
+  line is in the user's logs from 2026-09-22, before round 300. Now only a real remap (a different picture) or a real
+  miss is logged; the mapping is unchanged. New helper `structureNameAt()`.
+
+- **The agent bridge's idle test** (`AgentObserver.isIdle()`) now waits for a match result parked behind its Timer
+  task (`GameStage.hasPendingResultTask()`, new). `settle()` used to return during a won duel's attack animation,
+  before the reward screen, and a test that saved and loaded right then lost the win's rewards (`clearCache()`
+  cancels the pending action).
+- **Found, NOT changed (agent only):** an AI-piloted best-of-3 duel loses its result. With the agent piloting the
+  player's seat there is no local player, so no win/lose view between games. The match screen is cleared, and
+  `Forge.setCurrentScreen(null)` in adventure mode calls `switchToLast()` - mid-match. The real end then pops once
+  more, to the TITLE screen, and `setWinner()` never runs (no rewards, the enemy stays). The user's own best-of-3 wins
+  pay normally: the Ooze Boss in their 09-23 12:09 log, +1 max life included. Agent tests of +Life use Nahiri, the one
+  single-game +Life enemy.
+
+**Seen** in the agent game on a copy of the user's save, all overworld duels:
+- Nahiri's first win: "+1 max life paid (once per game)", max life 320 -> 321.
+- Saved, loaded, beaten again: "+1 max life withheld (Nahiri paid it on day 10 - once per game)", max life stays
+  321, and the other rewards (cards, gold) were still paid.
+- Loading the save logged no "[TFR-Terrain] ... stays invisible" line (the user's day-11 log had 40).
+
 ## Round 301: hidden ambushers - they always woke; the ones that rise now finish rising, and an unseen one holds no clear (2026-09-23)
 
 The task (my own round-299 note, passed on by the user): *map enemies placed `hidden=true` (burrowed ambushers, e.g.

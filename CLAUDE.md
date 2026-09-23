@@ -123,6 +123,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   and rotation, the HUD counter); a cave champion never takes a hidden placement; `[TFR-Ambush]` lines. Live + agent
   folders packaged. Noticed, NOT changed: a crash after a lost duel reached through ten console map-to-map teleports
   (NPE `WorldStage.setWinner`, console-only path), and the re-theme firing from day one (`home=<color>, now=waste`).
+- **Round 302 (local commit, NOT pushed): +Life once per GAME per enemy** (user: "Make these a one time only
+  also") - key `enemy|life|<name>`; overworld wins filtered in `WorldStage.setWinner()` (`PlaceRewards.
+  filterWorldPayout()`), duels in places check it too. NOT the win record as evidence (it counts arena, Coin Challenge
+  and guard wins, which never pay +Life), so a legend beaten before this round pays once more. The "[TFR-Terrain]
+  player land: ... stays invisible" lines were false (same-index matches) and are gone. Agent: settle() now waits for
+  a won duel's rewards (`GameStage.hasPendingResultTask()`); an AI-PILOTED best-of-3 duel still loses its result (a
+  mid-match `switchToLast()`, then the title screen) - agent only, so +Life tests use Nahiri (single game).
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.

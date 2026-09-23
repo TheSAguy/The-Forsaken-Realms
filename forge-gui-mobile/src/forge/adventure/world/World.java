@@ -1351,6 +1351,7 @@ public class World implements Disposable, SaveFileContent {
         if (cached != null)
             return cached;
         int drawn = terrainIndex;
+        String drawnName = null;
         String wasteName = null;
         BiomeData waste = null;
         for (BiomeData b : biomes) {
@@ -1359,29 +1360,37 @@ public class World implements Disposable, SaveFileContent {
                 break;
             }
         }
-        if (waste != null && waste != layerBiome && waste.structures != null) {
-            int counter = 1 + (waste.terrain != null ? waste.terrain.length : 0);
-            for (BiomeStructureData structure : waste.structures) {
-                int offset = terrainIndex - counter;
-                if (offset >= 0 && offset < structure.mappingInfo.length)
-                    wasteName = structure.mappingInfo[offset].name;
-                counter += structure.mappingInfo.length;
-            }
-        }
+        if (waste != null && waste != layerBiome)
+            wasteName = structureNameAt(waste, terrainIndex);
         if (wasteName != null) {
             List<Pair<Integer, BiomeStructureData.BiomeStructureDataMapping>> pool = candidatesByName(layerBiome, wasteName);
             if (pool.isEmpty() && STRUCTURE_CATEGORY.get(wasteName) != null)
                 pool = candidatesForCategory(layerBiome, STRUCTURE_CATEGORY.get(wasteName));
             if (pool.isEmpty())
                 pool = candidatesForCategory(layerBiome, UNIVERSAL_FALLBACK_CATEGORY);
-            if (!pool.isEmpty())
+            if (!pool.isEmpty()) {
                 drawn = pool.get(0).getLeft();
+                drawnName = pool.get(0).getRight().name;
+            }
         }
         drawableTerrainIndexCache.put(key, drawn);
-        System.out.println("[TFR-Terrain] " + layerBiome.name + " land: wasteland structure " + terrainIndex
-                + (wasteName != null ? " (" + wasteName + ")" : "") + " has no picture in this biome's set (1.."
-                + highestOwnTerrainIndex(layerBiome) + ") - " + (drawn != terrainIndex
-                ? "drawing it as this biome's index " + drawn : "nothing to draw it as, it stays invisible"));
+        // Round 302: this line used to go out for every index decoded here, and read "nothing to draw it as, it
+        // stays invisible" whenever the index came back unchanged - which is also what a match at the SAME index
+        // does (player.json's two structure sets are laid out exactly like the wasteland's) and what a wasteland
+        // ground patch does (1..terrain.length has no structure name; it draws as this biome's own patch). The
+        // user's day-11 log held 40 of those, read as invisible walls on the player's land. Now only a real remap
+        // (a different picture) or a real miss is reported.
+        int highest = highestOwnTerrainIndex(layerBiome);
+        if (drawnName != null) {
+            if (!drawnName.equals(structureNameAt(layerBiome, terrainIndex)))
+                System.out.println("[TFR-Terrain] " + layerBiome.name + " land: wasteland structure " + terrainIndex
+                        + " (" + wasteName + ") is drawn as this biome's index " + drawn + " (" + drawnName + ")");
+        } else if (wasteName != null || terrainIndex > highest) {
+            System.out.println("[TFR-Terrain] " + layerBiome.name + " land: wasteland index " + terrainIndex
+                    + (wasteName != null ? " (" + wasteName + ")" : "") + " has no match in this biome's set (1.."
+                    + highest + ") - " + (terrainIndex <= highest ? "drawn as this biome's own index " + terrainIndex
+                    : "nothing to draw it as, it stays invisible"));
+        }
         return drawn;
     }
 
@@ -1496,6 +1505,21 @@ public class World implements Disposable, SaveFileContent {
             for (BiomeStructureData structure : biome.structures)
                 highest += structure.mappingInfo.length;
         return highest;
+    }
+
+    /** Round 302: the structure name at `index` in a biome's own numbering, or null for ground (0), a ground patch
+     *  (1..terrain.length) or an index past its sets. */
+    private static String structureNameAt(BiomeData biome, int index) {
+        if (biome.structures == null)
+            return null;
+        int counter = 1 + (biome.terrain != null ? biome.terrain.length : 0);
+        for (BiomeStructureData structure : biome.structures) {
+            int offset = index - counter;
+            if (offset >= 0 && offset < structure.mappingInfo.length)
+                return structure.mappingInfo[offset].name;
+            counter += structure.mappingInfo.length;
+        }
+        return null;
     }
 
     public int getTerrainIndex(int x, int y) {

@@ -115,8 +115,8 @@ final class AgentObserver {
             return false;
         if (scene instanceof HudScene && hasGame()) {
             GameStage stage = Current.player().getCurrentGameStage();
-            if (stage != null && stage.isPaused())
-                return false;
+            if (stage != null && (stage.isPaused() || stage.hasPendingResultTask()))
+                return false; // round 302: a won duel's rewards wait behind the attack animation's Timer task
         }
         return true;
     }

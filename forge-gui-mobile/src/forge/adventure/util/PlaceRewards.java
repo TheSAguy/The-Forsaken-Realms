@@ -1,6 +1,7 @@
 package forge.adventure.util;
 
 import com.badlogic.gdx.utils.Array;
+import forge.adventure.character.EnemySprite;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.RewardData;
 import forge.adventure.data.TuningData;
@@ -27,6 +28,10 @@ import forge.util.MyRandom;
  * </ul>
  * Keys live in World.getOncePaidRewards(): "poiId|life|source" and "poiId|item|itemName", value = the day paid (-1 =
  * paid before this round, found gone from the map on a later visit - see noteEarlierDefeat()).
+ * <p>
+ * Round 302 (user: "Make these a one time only also", of the +Life legends fought outside places): an enemy's +Life is
+ * paid once per GAME as well - key "enemy|life|enemyName", checked by every duel payout, the overworld's included
+ * (filterWorldPayout()). See payLifeOnce().
  */
 public final class PlaceRewards {
     private PlaceRewards() {
@@ -38,8 +43,9 @@ public final class PlaceRewards {
     }
 
     /** MapStage.getReward(): the payout of a duel won inside a place, filtered in place before the reward screen. */
-    public static void filterDuelPayout(Array<Reward> loot, EnemyData enemy) {
+    public static void filterDuelPayout(Array<Reward> loot, EnemySprite sprite) {
         PointOfInterest place = currentPlace();
+        EnemyData enemy = sprite == null ? null : sprite.getData();
         if (loot == null || enemy == null || place == null || place.getData() == null)
             return;
         World world = WorldSave.getCurrentSave().getWorld();
@@ -49,7 +55,7 @@ public final class PlaceRewards {
         for (int i = loot.size - 1; i >= 0; i--) {
             Reward reward = loot.get(i);
             if (reward.getType() == Reward.Type.Life && reward.getCount() > 0) {
-                if (!payOnce(world, id + "|life|" + enemy.getName(), "+" + reward.getCount() + " max life", notes))
+                if (!payLifeOnce(world, id + "|life|" + enemy.getName(), sprite, reward.getCount(), notes))
                     loot.removeIndex(i);
             } else if (lair && reward.getType() == Reward.Type.Item && reward.getItem() != null
                     && isSignatureItem(enemy, reward.getItem().name)) {
@@ -61,6 +67,53 @@ public final class PlaceRewards {
         if (clears > 0)
             applyReturnVisit(loot, lair ? enemy : null, notes);
         log(place, clears, enemy.getName(), notes);
+    }
+
+    /**
+     * Round 302 (user: "Make these a one time only also" - the legends fought outside places, arena champions and
+     * event bosses among them): WorldStage.setWinner(), a duel won on the overworld. Only the once-per-game +Life
+     * rule applies out here.
+     */
+    public static void filterWorldPayout(Array<Reward> loot, EnemySprite sprite) {
+        if (loot == null || sprite == null || sprite.getData() == null)
+            return;
+        World world = WorldSave.getCurrentSave().getWorld();
+        StringBuilder notes = new StringBuilder();
+        for (int i = loot.size - 1; i >= 0; i--) {
+            Reward reward = loot.get(i);
+            if (reward.getType() == Reward.Type.Life && reward.getCount() > 0
+                    && !payLifeOnce(world, null, sprite, reward.getCount(), notes))
+                loot.removeIndex(i);
+        }
+        if (notes.length() > 0)
+            System.out.println("[TFR-PlaceRewards] overworld, " + sprite.getName() + ": " + notes);
+    }
+
+    /**
+     * Round 302: +Life once per GAME per enemy (key "enemy|life|<data name>"), and - inside a place - once per place as
+     * round 299 had it; a place's paid key also closes the per-game one. A legend beaten before this rule has no key
+     * and pays once more. The player's win record is NOT evidence of an earlier payout: it also counts Arena bracket
+     * and Coin Challenge wins (the Capitol arena's pool holds 29 of the 52 +Life enemies) and roaming-guard fights,
+     * none of which pay an enemy's rewards - reading it would withhold a +Life that was never paid.
+     */
+    private static boolean payLifeOnce(World world, String placeKey, EnemySprite sprite, int count, StringBuilder notes) {
+        String label = "+" + count + " max life";
+        String globalKey = "enemy|life|" + sprite.getData().getName();
+        if (placeKey != null && world.getOncePaidRewards().containsKey(placeKey)) {
+            world.getOncePaidRewards().putIfAbsent(globalKey, world.getOncePaidRewards().get(placeKey));
+            return payOnce(world, placeKey, label, notes); // withheld - already paid in this place
+        }
+        Integer paid = world.getOncePaidRewards().get(globalKey);
+        if (paid != null) {
+            note(notes, label + " withheld (" + sprite.getData().getName() + " paid it "
+                    + (paid >= 0 ? "on day " + paid : "before") + " - once per game)");
+            return false;
+        }
+        world.getOncePaidRewards().put(globalKey, world.getCurrentDay());
+        if (placeKey != null)
+            return payOnce(world, placeKey, label, notes);
+        note(notes, label + " paid (once per game)");
+        return true;
     }
 
     /** RewardSprite.getRewards(): a pickup inside a place (chest, gold pile...), filtered once when it is first read. */
@@ -103,8 +156,10 @@ public final class PlaceRewards {
             for (RewardData data : enemy.rewards) {
                 if (data == null || data.type == null)
                     continue;
-                if ("life".equalsIgnoreCase(data.type) && data.count > 0)
+                if ("life".equalsIgnoreCase(data.type) && data.count > 0) {
                     markPaidEarlier(world, place, id + "|life|" + enemy.getName(), "+" + data.count + " max life from " + enemy.getName());
+                    world.getOncePaidRewards().putIfAbsent("enemy|life|" + enemy.getName(), -1); // round 302: once per game
+                }
                 else if (lair && enemy.boss && "item".equalsIgnoreCase(data.type) && data.itemName != null && !data.itemName.isEmpty())
                     markPaidEarlier(world, place, id + "|item|" + data.itemName, data.itemName);
             }

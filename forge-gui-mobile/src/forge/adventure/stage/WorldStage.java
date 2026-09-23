@@ -586,6 +586,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     float deathDuration = currentMob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 0.3f);
                     startPause(deathDuration, () -> {
                         Array<Reward> loot = currentMob.getRewards();
+                        // Round 302: an enemy's +Life is paid once per game, out here as well (PlaceRewards).
+                        forge.adventure.util.PlaceRewards.filterWorldPayout(loot, currentMob);
                         if (assaultPoi != null) // town assault won: the town changes hands (user spec 2026-09-03)
                             TownRestoration.captureTownForPlayer(Current.world(), assaultPoi, assaultColor);
                         // Bronze Coin ransom reclaim as a visible loot tile (user request

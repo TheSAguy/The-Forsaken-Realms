@@ -383,6 +383,12 @@ public abstract class GameStage extends Stage {
         Timer.schedule(task, delaySeconds);
     }
 
+    /** Round 302: a match result still waiting behind its Timer task. The agent bridge's idle test reads it - its
+     *  settle() returned inside this window, and the test's save/load then dropped the win's rewards (clearCache()). */
+    public boolean hasPendingResultTask() {
+        return pendingResultTask != null && pendingResultTask.isScheduled();
+    }
+
     // Round 129 (user report 2026-09-06: "I pick up some resources in a dungeon. Then the next
     // time I enter a town, I see the little '+2 Shards' text on the screen, as if I just picked up
     // those resources from before in the town... I think it's text only"). Exactly right, on both

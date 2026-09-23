@@ -2331,9 +2331,10 @@ public class MapStage extends GameStage {
     protected void getReward() {
         isLoadingMatch = false;
         Array<Reward> loot = currentMob.getRewards();
-        // Round 299: +Life once per place, a lair boss's signature item once per lair, half on a lair's return visits -
-        // and a boss down in a lair is what lets the walk-out count as a clear (DungeonRotation.onLairExit()).
-        PlaceRewards.filterDuelPayout(loot, currentMob.getData());
+        // Round 299: +Life once per place (round 302: and once per game), a lair boss's signature item once per lair,
+        // half on a lair's return visits - and a boss down in a lair is what lets the walk-out count as a clear
+        // (DungeonRotation.onLairExit()).
+        PlaceRewards.filterDuelPayout(loot, currentMob);
         if (currentMob.getData() != null && currentMob.getData().boss)
             DungeonRotation.onLairBossDefeated(TileMapScene.instance().rootPoint, currentMob.getData().getName(), false);
         // Bronze Coin ransom reclaim as a visible loot tile (user request 2026-09-01) - the
