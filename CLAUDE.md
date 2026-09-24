@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-23 (round 315; **v1.13 "Heart of the Realm" RELEASED** - tag `tfr-v1.13` @ `e2a3eb5b89c`, PC + Android, pushed; rounds 292-315 are LOCAL commits on top of it, NOT pushed; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (round 320; **v1.14 "Realm Reforged" READY TO PUBLISH** - stamps, notes and artifacts built, NOT tagged or pushed; v1.13 is the last published release (tag `tfr-v1.13` @ `e2a3eb5b89c`); rounds 292-320 local; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (updated after round 315, 2026-09-23 evening).** The repo is clean (leave the untracked
   `barrier_structures_original.png` alone) and 28 commits ahead of origin, none pushed. The live folder (packaged
@@ -145,6 +145,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 320 (local commit, NOT pushed): v1.14 "Realm Reforged" stamps and notes** (modVersion 1.14 / 09.24,
+  tfr.version 1.14, manifestVersionCode 11400; `RELEASE_NOTES_v1.14.md`). Release artifacts built from this commit
+  (see NEXT SESSION). Nothing tagged or pushed.
 - **Round 319 (local commit, NOT pushed): chest patrols and crowded enemies** - the "296 unguarded chests" was stale
   (534 chests, 9 unguarded today: 1 patrol, 1 guard moved to reachable floor, 5 already covered, 2 accepted); 66
   clusters of enemies within 2 tiles -> 19 with 33 patrols, 9 removals, 12 small moves in 46 maps

@@ -128,6 +128,8 @@ Neither round updated this file at the time, against the standing rule. Both tou
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — javadoc and one log string only.
 - **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** — comment only.
 - Round 291 (the v1.13 release) changed no engine code: `modVersionDate` in the plane's `config.json` only.
+- Round 320 (the v1.14 release) changed no engine code: `modVersion`/`modVersionDate` in the plane's `config.json`,
+  `tfr.version`/`manifestVersionCode` in `forge-gui-android/pom.xml`.
 - Mod-owned (listed for completeness, no upstream counterpart): `util/ResourceLedger.java` (`onDaysPassed()` rolls
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).

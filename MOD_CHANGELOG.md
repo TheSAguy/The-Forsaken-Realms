@@ -17757,6 +17757,22 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 320: v1.14 "Realm Reforged" - release stamps and notes (2026-09-24)
+
+User: *"We will do a 1.14 release tomorrow ... Get everything ready for a 1.14 release. Create the release notes."*
+Local commit; nothing tagged or pushed - the user publishes.
+
+- **Stamps:** `config.json` `modVersion` 1.13 -> **1.14**, `modVersionDate` 09.22 -> **09.24**
+  (`engineBuildVersion` 09.23 since round 316); `forge-gui-android/pom.xml` `tfr.version` **1.14**,
+  `manifestVersionCode` 11300 -> **11400**.
+- **`RELEASE_NOTES_v1.14.md`** - the four races, the 43 creatures, the redrawn lands, the barrier (new worlds), the
+  dungeon entrances, the crowding and chest-guard pass, boss lairs, arena champions, territory, research, New Game+
+  bank, and the fixes (the new-world crash that v1.13 also had, the deck editor, the long dialog lists, the hidden
+  ambushers). The name is mine, as v1.13's was.
+- It carries rounds 292-320 on the 09.23 engine. The pre-release checks: the user's own save (slot 1, day 11) loaded in
+  the agent game on the release build - race, gold, shards, decks intact, the doodads re-scattered once - and a soak
+  on it (see the round 320 STATE line for its result).
+
 ## Round 319: the unguarded chests, and enemies standing on top of each other (2026-09-24)
 
 User: *"296 chests have no guard. - See if you can move existing enemies to patrol around these. Also, it seems that
