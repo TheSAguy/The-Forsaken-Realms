@@ -800,7 +800,7 @@ public class GameHUD extends Stage {
                 if (data.shardsNeeded > Current.player().getShards())
                     return;
                 Current.player().addShards(-data.shardsNeeded);
-                ConsoleCommandInterpreter.getInstance().command(data.commandOnUse);
+                ConsoleCommandInterpreter.getInstance().useItem(data); // round 331: a no-op use refunds the shards
                 AdventureQuestController.instance().updateItemUsed(data);
             }, "menu");
             abilityButtonMap.add(button);

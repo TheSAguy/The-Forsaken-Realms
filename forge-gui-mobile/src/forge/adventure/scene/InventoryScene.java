@@ -380,7 +380,7 @@ public class InventoryScene extends UIScene {
         Current.player().addShards(-data.shardsNeeded);
         done();
         if (data.commandOnUse != null && !data.commandOnUse.isEmpty())
-            ConsoleCommandInterpreter.getInstance().command(data.commandOnUse);
+            ConsoleCommandInterpreter.getInstance().useItem(data); // round 331: a no-op use refunds the shards
         if (data.dialogOnUse != null && data.dialogOnUse.text != null && !data.dialogOnUse.text.isEmpty()) {
             MapDialog dialog = new MapDialog(data.dialogOnUse, MapStage.getInstance(),0,null);
             MapStage.getInstance().showDialog();

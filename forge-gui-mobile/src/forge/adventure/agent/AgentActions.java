@@ -325,7 +325,7 @@ final class AgentActions {
         if (it.shardsNeeded > Current.player().getShards()) return now(false, "not enough shards (" + it.shardsNeeded + " needed)");
         if (Forge.advFreezePlayerControls) return now(false, "controls are frozen right now");
         Current.player().addShards(-it.shardsNeeded);
-        String out = ConsoleCommandInterpreter.getInstance().command(it.commandOnUse);
+        String out = ConsoleCommandInterpreter.getInstance().useItem(it); // round 331: a no-op use refunds the shards
         AdventureQuestController.instance().updateItemUsed(it);
         return now(true, "used " + it.name + ": " + out);
     }

@@ -60,6 +60,12 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — a dead local removed.
 - **`forge-gui-mobile/src/forge/adventure/data/BiomeStructureData.java`** — `BiomeStructureDataMapping.outline`
   (Boolean; null = follow `collision`), copied by the copy constructor.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — `useItem(ItemData)` (runs an
+  item's commandOnUse remembering the item), `refundItemInUse()` / `missingTargetMessage()`; `teleport to poi` refunds
+  the item and banners when the place is not on the map; cheat `defeat color`.
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — `colorOfCapitalName()`.
+- **`GameHUD.setAbilityButton()`, `InventoryScene.triggerUse()`, `ArmoryScene.triggerUse()`, `AgentActions.use()`**
+  — call `ConsoleCommandInterpreter.useItem(data)` instead of `command(data.commandOnUse)`.
 
 ### The 09.22 engine merge (round 289) — where our code now sits on top of upstream's refactor
 

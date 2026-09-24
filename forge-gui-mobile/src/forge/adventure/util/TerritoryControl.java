@@ -3083,6 +3083,17 @@ public class TerritoryControl {
         return data.name.equals(noun + " Capital") || data.name.startsWith(noun + " Town");
     }
 
+    /** Round 331: the color whose capital a POI data name is ("Mountain Capital" -> "red"), or null - the color
+     *  runes' teleport targets, for the console's "that capital fell with its color" answer. */
+    public static String colorOfCapitalName(String poiName) {
+        if (poiName == null)
+            return null;
+        for (Map.Entry<String, String> entry : COLOR_TOWN_NOUN.entrySet())
+            if (poiName.equals(entry.getValue() + " Capital"))
+                return entry.getKey();
+        return null;
+    }
+
     // Inverse of matchingTownData(): "Forest Town Identity" -> "Waste Town Identity". "Forest
     // Capital" has no direct Waste Town equivalent (colorless has no "capital" POI type at all) -
     // falls back to "Waste Town Generic" rather than being left as a color's own capital sitting

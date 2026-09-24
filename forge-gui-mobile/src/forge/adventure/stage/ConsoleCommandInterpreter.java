@@ -119,6 +119,49 @@ public class ConsoleCommandInterpreter {
         return currentCommand.function.apply(parameters);
     }
 
+    /** Round 331: the item whose commandOnUse is running - see useItem(). Null for a typed or scripted command. */
+    private ItemData itemInUse;
+
+    /**
+     * Round 331: runs an item's commandOnUse knowing which item paid for it, so a command that finds nothing to do
+     * (a rune whose place is gone) can hand the item's shards back - refundItemInUse(). The four item-use paths come
+     * through here: the HUD ability button, the inventory and armory Use buttons and the agent bridge; each charges
+     * the shards first, as they always have. Returns the command's own answer, "" for an item with no command.
+     */
+    public String useItem(ItemData item) {
+        if (item == null || item.commandOnUse == null || item.commandOnUse.isEmpty())
+            return "";
+        itemInUse = item;
+        try {
+            return command(item.commandOnUse);
+        } finally {
+            itemInUse = null;
+        }
+    }
+
+    /** Hands the running item's shards back (when an item is running the command at all), shows `message` on the
+     *  HUD, and returns a note for the command's own answer. A typed or scripted command refunds nothing. */
+    private String refundItemInUse(String message) {
+        ItemData item = itemInUse;
+        if (item == null)
+            return "";
+        if (item.shardsNeeded > 0)
+            Current.player().addShards(item.shardsNeeded);
+        GameHUD.getInstance().addNotification(message);
+        System.out.println("[TFR-Rune] " + item.name + " did nothing: " + message + " (" + item.shardsNeeded
+                + " shard(s) refunded)");
+        return " - " + item.name + ": " + item.shardsNeeded + " shard(s) refunded";
+    }
+
+    /** The banner for a teleport whose place is not on the map - a fallen color's capital says so. */
+    private String missingTargetMessage(String poiName) {
+        String what = itemInUse == null ? "the rune" : "the " + itemInUse.name;
+        String color = TerritoryControl.colorOfCapitalName(poiName);
+        if (color != null && Current.world() != null && Current.world().isColorDefeated(color))
+            return poiName + " fell with its color - " + what + " stays quiet. No shard spent.";
+        return poiName + " is not on the map - " + what + " stays quiet. No shard spent.";
+    }
+
     void registerCommand(String[] path, Function<String[], String> function) {
         if (path.length == 0) return;
         Command currentCommand = root;
@@ -162,8 +205,15 @@ public class ConsoleCommandInterpreter {
         registerCommand(new String[]{"teleport", "to", "poi"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: PoI name.";
             PointOfInterest poi = Current.world().findPointsOfInterest(s[0]);
-            if (poi == null)
-                return "PoI " + s[0] + " not found";
+            if (poi == null) {
+                // Round 331 (VeggieShark on Discord, v1.14: "When the red player was defeated and his cities
+                // disappeared, I was still able to use the red teleport token. It didn't teleport me, but used 1 shard
+                // nevertheless"; the user: "When an AI is defeated, rune does not work anymore"). A defeated color's
+                // capital is transformed into a neutral town (TerritoryControl.defeatColor()), so the rune's target is
+                // no longer on the map - and every item-use path charged the shards before this ran. The rune stays
+                // in the bag, does nothing, says so and costs nothing: the Rally rune's own no-target rule.
+                return "PoI " + s[0] + " not found" + refundItemInUse(missingTargetMessage(s[0]));
+            }
             // Round 310: a map is left properly first - its exit rules and its place in the scene history - as the
             // Teleporter (EconomyBuildings.travelTo()) and every portal do. Loading one map over another without
             // leaving it is how a chain of hops ended in a lost duel whose result reached the world stage (the NPE in
@@ -221,6 +271,16 @@ public class ConsoleCommandInterpreter {
             GameHUD.getInstance().addNotification("Rallied to " + target.getDisplayName()
                     + (underAttack.size() > 1 ? " - " + underAttack.size() + " of your towns are under attack" : ""));
             return "Teleported outside " + target.getDisplayName() + "(" + target.getPosition() + ")";
+        });
+        // Round 331 (testing aid): defeat a color as its last castle falling would - TerritoryControl.defeatColor() -
+        // so a fallen color's rune can be tried without a whole campaign.
+        registerCommand(new String[]{"defeat", "color"}, s -> {
+            if (s.length < 1) return "Command needs 1 parameter: white/blue/black/red/green.";
+            String color = s[0].toLowerCase();
+            if (!Arrays.asList(TerritoryControl.COLORS).contains(color)) return "No color " + s[0];
+            if (Current.world().isColorDefeated(color)) return color + " is already defeated";
+            TerritoryControl.defeatColor(Current.world(), color);
+            return "Defeated " + color;
         });
         registerCommand(new String[]{"spawn", "enemy"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: enemy name.";

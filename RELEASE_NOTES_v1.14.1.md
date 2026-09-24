@@ -11,6 +11,8 @@ A small fix release on top of v1.14. Your v1.14 save loads as it is; a new world
   drawing white on the parchment.
 - **Grown territory is no longer carpeted in bushes.** A town's newly grown ground was scattered with five times the
   land's own decoration density; it now matches the land around it, and existing saves are laid out again once.
+- **A defeated color's rune no longer eats a shard.** Once a color has fallen, its capital is gone; using its rune
+  now tells you so and costs nothing.
 - A +Life chest deeper inside a multi-level place is no longer mistaken for one already taken on another level.
 
 ## Engine

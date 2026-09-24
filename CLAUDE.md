@@ -58,7 +58,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Round 331 = the fix: a 1-px black border on EVERY colliding structure of every land, drawn by the engine around the
   stitched shape (`World.outlineStructures()`; `"outline": false` in a mappingInfo opts out), the three white banners
   black (VeggieShark's report), growth rings at the land's doodad density (was 5x; `DOODAD_SET` 331 re-scatters once),
-  and the code review's +Life pickup key per level. Stamps 1.14.1 / 11401, `RELEASE_NOTES_v1.14.1.md` written. SEEN in
+  a fallen color's rune quiet and free (VeggieShark again; `ConsoleCommandInterpreter.useItem()` - every item use goes
+  through it now, a no-op teleport refunds; cheat `defeat color <c>`), and the code review's +Life pickup key per
+  level. Stamps 1.14.1 / 11401, `RELEASE_NOTES_v1.14.1.md` written. SEEN in
   the agent game (all six lands, the black legend banner). **Where it stands:** committed locally; the live + agent
   folders packaged with it (check PACKAGE_OK). **To release:** the user play-tests, then `git push origin main:master`,
   tag `tfr-v1.14.1`, desktop zip `build_standalone.py --out C:/TFR/release/v1.14.1/stage --zip`, Android per
@@ -180,8 +182,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   a rebuild.
 - **Round 331 (local commit, NOT pushed; the v1.14.1 hotfix): every colliding structure bordered in black by the engine
   (`World.outlineStructures()`, around the stitched shape, cached per frame), the white banners black, growth rings at
-  1x doodad density (`DOODAD_SET` 331), the +Life pickup key per level; v1.14 drafted again on GitHub.** Seen in the
-  agent game in all six lands. tree4's baked outline (round 328) taken back out.
+  1x doodad density (`DOODAD_SET` 331), a fallen color's rune quiet and free (`useItem()`), the +Life pickup key per
+  level; v1.14 drafted again on GitHub.** Seen in the agent game in all six lands. tree4's baked outline (round 328)
+  taken back out.
 - **Round 330 (local commit, NOT pushed): 365 patrollers in 214 maps no longer park beside loot another enemy guards**
   (round 258's chest routes; converging 338 -> 16 on Hard; `dev-tools/guard_patrols/round330/`). Seen: the lodge's
   Wolfkin paces the west half of its room.

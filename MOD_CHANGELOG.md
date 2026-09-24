@@ -14323,6 +14323,18 @@ tfr.version 1.14.1, manifestVersionCode 11401; `RELEASE_NOTES_v1.14.1.md`.
   still matches), the banner guard's tag test (fixed with it), `PointOfInterestMapSprite.pickArt()` allocating per
   frame (left: the lookups it makes were per frame before round 329 too, and a hotfix is no place for a caching
   scheme), and a dead `actorCount` in `MapStage` (removed).
+- **A fallen color's rune stays quiet and costs nothing.** VeggieShark (Discord, v1.14): *"When the red player was
+  defeated and his cities disappeared, I was still able to use the red teleport token. It didn't teleport me, but
+  used 1 shard nevertheless."* The user: *"When an AI is defeated, rune does not work anymore."* A defeated color's
+  capital is transformed into a neutral town (`TerritoryControl.defeatColor()`), so the rune's `teleport to poi
+  "<Noun> Capital"` found nothing - and all four item-use paths (the HUD ability button, the inventory and armory Use
+  buttons, the agent bridge) charge the shards BEFORE the command runs. They go through
+  `ConsoleCommandInterpreter.useItem(item)` now, which remembers the item for the command's duration; a teleport whose
+  place is not on the map refunds that item's shards, banners "Mountain Capital fell with its color - the Red rune
+  stays quiet. No shard spent." (`TerritoryControl.colorOfCapitalName()`; a place missing for any other reason says
+  "is not on the map"), logs `[TFR-Rune]` - the Rally rune's own no-target rule. A typed or scripted teleport refunds
+  nothing. New cheat `defeat color <color>` (TerritoryControl.defeatColor) for testing; SEEN in the agent game: red
+  defeated, the Red rune used - shards unchanged, the banner shown.
 - **Two agent saves refused to load** ("Vic 1", "r320 soak goblin": "Could not load that save", no reason, no
   exception in the log) while the auto save and the day-1 saves load fine. Not chased in the hotfix - the user's own
   saves load; noted for the next session.
