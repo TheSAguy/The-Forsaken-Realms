@@ -85,7 +85,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;'Dealing with the Magically Impaired' describes the difficulties in Shandalar communities of allowing people without magical talent to feel as though they are fully contributing members of society.&quot;,
+   &quot;text&quot;: &quot;'Dealing with the Magically Impaired' describes the difficulties in the realm's communities of allowing people without magical talent to feel as though they are fully contributing members of society.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
@@ -125,7 +125,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;You find a book on the biology of Elves. One page is marked with a folded corner and describes a type of Elf that you've seen nowhere on Shandalar.&quot;,
+   &quot;text&quot;: &quot;You find a book on the biology of Elves. One page is marked with a folded corner and describes a type of Elf that you've seen nowhere in the realm.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, 
       &quot;action&quot;: [{

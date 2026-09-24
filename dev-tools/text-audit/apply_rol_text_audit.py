@@ -110,6 +110,7 @@ SHANDALAR = {
    ("an army large enough to conquer the whole of Shandalar.", "an army large enough to conquer the whole realm."),
    ("hive queen of the slivers of Shandalar,", "hive queen of the slivers of the realm,"),
    ("The people of Shandalar shouldn't fear the Slivers", "The people of the realm shouldn't fear the Slivers"),
+   ("will never be a danger to the people of Shandalar.", "will never be a danger to the people of the realm."),
    ("raiding parties into the various towns of Shandalar.", "raiding parties into the various towns of the realm."),
    ("Outside of the thanks of the people of Shandalar for dealing", "Outside of the thanks of the people of the realm for dealing")],
 }
@@ -207,6 +208,8 @@ for rel, pairs in sorted(work.items()):
     new = text
     for old, rep in pairs:
         n = new.count(esc(old))
+        if n == 0 and esc(rep) in new:
+            continue  # already applied (re-run on a patched tree)
         if n != 1:
             problems.append(f"{rel}: expected 1 match, found {n}: {old[:70]!r}")
             continue
@@ -226,6 +229,8 @@ if "rol" in chosen:
     new = text
     for oid, prop, content in HALL_PROPS:
         new = replace_property(new, oid, prop, content)
+    if "\r\n" in text:  # keep the file's own line endings inside the inserted blocks
+        new = new.replace("\r\n", "\n").replace("\n", "\r\n")
     if not args.check:
         open(path, "w", encoding="utf-8", newline="").write(new)
         after = dialog_failures(path)
@@ -240,6 +245,8 @@ if "shandalar" in chosen:
         new = text
         for old, rep in pairs:
             n = new.count(old)
+            if n == 0 and rep in new:
+                continue  # already applied
             if n != 1:
                 problems.append(f"{rel}: expected 1 match, found {n}: {old[:70]!r}")
                 continue

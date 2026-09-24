@@ -39,7 +39,7 @@
    <properties>
     <property name="dialog">[
   {
-    &quot;text&quot;: &quot;Before you stands an ancient crystalline formation, pulsing with primordial mana. The diamonds here are remnants of Shandalar's earliest age, and can be exchanged for spells from the dawn of magic itself.&quot;,
+    &quot;text&quot;: &quot;Before you stands an ancient crystalline formation, pulsing with primordial mana. The diamonds here are remnants of the realm's earliest age, and can be exchanged for spells from the dawn of magic itself.&quot;,
     &quot;options&quot;: [
       {
         &quot;name&quot;: &quot;Trade 10,000 [+Gold] for Beta Pack&quot;,

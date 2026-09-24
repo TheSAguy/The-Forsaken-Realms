@@ -5541,7 +5541,7 @@
     },
     {
         "name":  "Landscape Sketchbook",
-        "description":  "A leather bound notebook containing sketches of various landscapes across Shandalar",
+        "description":  "A leather bound notebook containing sketches of various landscapes across the realm",
         "iconName":  "LandscapeSketchbook",
         "questItem":  true,
         "usableInPoi":  true,
