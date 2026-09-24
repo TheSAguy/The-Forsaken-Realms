@@ -444,7 +444,7 @@ public abstract class GameStage extends Stage {
     }
 
     public GameStage() {
-        super(new ScalingViewport(Scaling.stretch, Scene.getIntendedWidth(), Scene.getIntendedHeight(), new OrthographicCamera()));
+        super(new ScalingViewport(Scaling.stretch, Scene.getIntendedWidth(), Scene.getIntendedHeight(), new OrthographicCamera()), Forge.getGraphics().getBatch());
         WorldSave.getCurrentSave().onLoad(() -> {
             // Real, reported bug: currentModifications (fly/sprint/hide debug timers) is a
             // runtime-only field, never part of a save - but this singleton wasn't told the timer

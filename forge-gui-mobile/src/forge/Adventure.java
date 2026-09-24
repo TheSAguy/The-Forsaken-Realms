@@ -2,29 +2,17 @@ package forge;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Disposable;
 import forge.adventure.scene.HudScene;
-import forge.util.ScreenUtil;
+//import forge.util.ScreenUtil;
 
-public class Adventure implements Disposable {
+public class Adventure {
     public static Adventure instance;
-    private float transitionTimeout;
+    //private float transitionTimeout;
     boolean sceneWasSwapped;
-    private SpriteBatch transitionBatch, uiBatch;
     public boolean renderTransitionScreen = true;
-    private boolean isDisposed = false;
 
     private Adventure() {
         sceneWasSwapped = false;
-        transitionBatch = new SpriteBatch(Forge.LOW_SPRITES_CAP);
-        // adventureBatch is used on UIScene so every scene passed will use this shared batch
-        // instead of creating new SpriteBatch each with default 1000 capacity (14 scenes currently)
-        uiBatch = new SpriteBatch(Forge.HIGH_SPRITES_CAP);
-    }
-
-    public SpriteBatch getUiBatch() {
-        return uiBatch;
     }
 
     public static Adventure getInstance() {
@@ -33,7 +21,9 @@ public class Adventure implements Disposable {
 
     void render(float delta) {
         try {
-            if (renderTransitionScreen) {
+            // TODO: Use better transistion. Fixes Android slow screen updates on switching scenes.
+            /*if (renderTransitionScreen) {
+                Forge.getGraphics().getBatch().setProjectionMatrix(Forge.camera.combined);
                 // Transition Overlay
                 float transitionTime = 0.12f;
                 if (sceneWasSwapped) {
@@ -44,14 +34,14 @@ public class Adventure implements Disposable {
                 }
                 if (transitionTimeout >= 0) {
                     clearScreen();
-                    transitionBatch.begin();
+                    Forge.getGraphics().getBatch().begin();
                     transitionTimeout -= delta;
-                    transitionBatch.setColor(1, 1, 1, 1);
-                    transitionBatch.draw(ScreenUtil.getInstance().getLastScreenTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-                    transitionBatch.setColor(1, 1, 1, 1 - (1 / transitionTime) * transitionTimeout);
-                    transitionBatch.draw(Forge.getAssets().fallback_skins().get("transition"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-                    FrameRate.getInstance().sampleAdventure(transitionBatch, Forge.showFPS);
-                    transitionBatch.end();
+                    Forge.getGraphics().getBatch().setColor(1, 1, 1, 1);
+                    Forge.getGraphics().getBatch().draw(ScreenUtil.getInstance().getLastScreenTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                    Forge.getGraphics().getBatch().setColor(1, 1, 1, 1 - (1 / transitionTime) * transitionTimeout);
+                    Forge.getGraphics().getBatch().draw(Forge.getAssets().fallback_skins().get("transition"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                    FrameRate.getInstance().sampleAdventure(Forge.getGraphics().getBatch(), Forge.showFPS);
+                    Forge.getGraphics().getBatch().end();
                     if (transitionTimeout < 0) {
                         Forge.currentScene.render();
                         Forge.storeScreen();
@@ -62,17 +52,17 @@ public class Adventure implements Disposable {
                 }
                 if (transitionTimeout >= -transitionTime) {
                     clearScreen();
-                    transitionBatch.begin();
+                    Forge.getGraphics().getBatch().begin();
                     transitionTimeout -= delta;
-                    transitionBatch.setColor(1, 1, 1, 1);
-                    transitionBatch.draw(ScreenUtil.getInstance().getLastScreenTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-                    transitionBatch.setColor(1, 1, 1, (1 / transitionTime) * (transitionTimeout + transitionTime));
-                    transitionBatch.draw(Forge.getAssets().fallback_skins().get("transition"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-                    FrameRate.getInstance().sampleAdventure(transitionBatch, Forge.showFPS);
-                    transitionBatch.end();
+                    Forge.getGraphics().getBatch().setColor(1, 1, 1, 1);
+                    Forge.getGraphics().getBatch().draw(ScreenUtil.getInstance().getLastScreenTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                    Forge.getGraphics().getBatch().setColor(1, 1, 1, (1 / transitionTime) * (transitionTimeout + transitionTime));
+                    Forge.getGraphics().getBatch().draw(Forge.getAssets().fallback_skins().get("transition"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                    FrameRate.getInstance().sampleAdventure(Forge.getGraphics().getBatch(), Forge.showFPS);
+                    Forge.getGraphics().getBatch().end();
                     return;
                 }
-            }
+            }*/
             // Adventure UIScene
             Forge.currentScene.render();
             Forge.currentScene.act(delta);
@@ -88,6 +78,8 @@ public class Adventure implements Disposable {
             // Distinctness is the exception class plus its top stack frame, which is what
             // separates two different bugs while collapsing the same bug repeating - the message
             // alone is usually null on an NPE, and the whole trace is too noisy to key on.
+            // Round 316: upstream's 09.23 daily (#11888) added its own logOnce() here; ours is kept (it
+            // counts repeats and keys on the first frame in Forge's own code), with its scene name added.
             reportSilencedRenderException(ie);
         }
     }
@@ -113,7 +105,8 @@ public class Adventure implements Disposable {
                 + (site == null || site.equals(top) ? "" : " via " + site);
         int seen = silencedRenderExceptions.merge(key, 1, Integer::sum);
         if (seen == 1) {
-            System.err.println("[TFR-Render] swallowed exception (first occurrence): " + key);
+            System.err.println("[TFR-Render] swallowed exception (first occurrence) in scene "
+                    + (Forge.currentScene == null ? "null" : Forge.currentScene.getClass().getSimpleName()) + ": " + key);
             ie.printStackTrace();
         } else if (seen % SILENCED_REPORT_EVERY == 0) {
             System.err.println("[TFR-Render] still swallowing: " + key + " x" + seen);
@@ -123,13 +116,5 @@ public class Adventure implements Disposable {
     void clearScreen() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
-    @Override
-    public void dispose() {
-        if (isDisposed) {
-            return;
-        }
-        isDisposed = true;
-        Forge.safeDispose(transitionBatch, uiBatch);
     }
 }

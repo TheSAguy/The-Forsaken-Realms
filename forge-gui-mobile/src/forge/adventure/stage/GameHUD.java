@@ -148,7 +148,7 @@ public class GameHUD extends Stage {
     private final Vector2 touchDraggedDirection = new Vector2();
 
     private GameHUD(GameStage gameStage) {
-        super(new ScalingViewport(Scaling.stretch, Scene.getIntendedWidth(), Scene.getIntendedHeight()));
+        super(new ScalingViewport(Scaling.stretch, Scene.getIntendedWidth(), Scene.getIntendedHeight()), Forge.getGraphics().getBatch()); // round 316: upstream's shared batch (#12011)
         instance = this;
         this.gameStage = gameStage;
 
