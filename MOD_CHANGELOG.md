@@ -14340,6 +14340,11 @@ tfr.version 1.14.1, manifestVersionCode 11401; `RELEASE_NOTES_v1.14.1.md`.
   saves load; noted for the next session.
 - Docs: this entry, CLAUDE.md's STATE block and pointer, CORE_ENGINE_CHANGES (World, WorldBackground, WorldStage,
   GameHUD, TownRestoration, TileMapScene, PlaceRewards, MapStage, BiomeStructureData).
+- **RELEASED as v1.14.1 "Hotfix" the same afternoon** (the user: "Looks good from my end, After the above rune fix,
+  let's Push"): rounds 331 + 331b pushed `main:master`, tag `tfr-v1.14.1` @ c81b3dcf3ef, published 19:50:16 UTC as
+  Latest - `The-Forsaken-Realms-v1.14.1.zip` 267.9 MB, `forsaken-realms-1.14.1-signed-aligned.apk` 13.4 MB (11401 /
+  1.14.1, our signer), `assets.zip` 220.3 MB (build.txt pair 19:47:13), the Android pair from `C:\TFR-build` reset to
+  the commit via `R:` in 2:13. Artifacts kept in `C:\TFR\release\v1.14.1\`. The v1.14 release stays a draft.
 
 ## Round 330: patrols that parked beside guarded loot (2026-09-24)
 

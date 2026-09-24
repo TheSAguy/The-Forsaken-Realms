@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (round 331; **v1.14.1 HOTFIX built, NOT tagged/pushed/published**; v1.14 (tag `tfr-v1.14` @ `9664d624406`) was published and is a DRAFT again at the user's word - v1.13 shows as Latest; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (rounds 331 + 331b; **v1.14.1 "Hotfix" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest; v1.14 (tag `tfr-v1.14` @ `9664d624406`) is a DRAFT on GitHub at the user's word - its three assets still attached; ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
@@ -61,13 +61,17 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   a fallen color's rune quiet and free (VeggieShark again; `ConsoleCommandInterpreter.useItem()` - every item use goes
   through it now, a no-op teleport refunds; cheat `defeat color <c>`), and the code review's +Life pickup key per
   level. Stamps 1.14.1 / 11401, `RELEASE_NOTES_v1.14.1.md` written. SEEN in
-  the agent game (all six lands, the black legend banner). **Where it stands:** committed locally; the live + agent
-  folders packaged with it (check PACKAGE_OK). **To release:** the user play-tests, then `git push origin main:master`,
-  tag `tfr-v1.14.1`, desktop zip `build_standalone.py --out C:/TFR/release/v1.14.1/stage --zip`, Android per
-  ANDROID_RELEASE.md (APK + assets.zip from ONE mvn run; the tag must be `tfr-v1.14.1` or first-run asset download 404s),
-  publish - and then either publish v1.14 again or delete its draft (the user's call; 1.14.1 supersedes it). Open from
-  this round: two agent saves ("Vic 1", "r320 soak goblin") refuse to load with no logged reason (the auto save loads);
-  the user may still want the growth-ring doodads back at 5x (one constant). Older open items: the quest-place hiding
+  the agent game (all six lands, the black legend banner, the quiet Red rune). **RELEASED the same afternoon on the
+  user's word ("After the above rune fix, let's Push"):** commits 2b4c9e94747 (331) + c81b3dcf3ef (331b) pushed
+  `main:master`, tag `tfr-v1.14.1` @ c81b3dcf3ef, published 2026-09-24 19:50:16 UTC as Latest with
+  `The-Forsaken-Realms-v1.14.1.zip` (267.9 MB, `--out C:/TFR/release/v1.14.1/stage --zip`),
+  `forsaken-realms-1.14.1-signed-aligned.apk` (13.4 MB; versionCode 11401 / 1.14.1; signer ee603925...) and
+  `assets.zip` (220.3 MB; build.txt pair 2026-09-24 19:47:13) - the Android pair from `C:\TFR-build` reset to
+  c81b3dcf3ef via `R:` in 2:13, keystore md5 ab910316... = the backup's; all in `C:\TFR\release\v1.14.1\`. The live +
+  agent folders = the release (PACKAGE_OK). **The v1.14 release is still a DRAFT** with its assets - publish it again
+  or delete it, the user's call (1.14.1 supersedes it). Open from this round: two agent saves ("Vic 1", "r320 soak
+  goblin") refuse to load with no logged reason (the auto save loads); the user may still want the growth-ring doodads
+  back at 5x (one constant). Older open items: the quest-place hiding
   fix (round 322's research, `scratchpad/r322/questpoi/`); "Shandalar" in the lair dragons' NAMES; the promo page's
   "five times larger" reserve line (measured ~3.5x); portrait variants for Goblin/Merfolk/Vampire.
 - **v1.14 "Welcome to The Forsaken Realms!"** was published 2026-09-24 17:56:04 UTC (tag `tfr-v1.14` @ `9664d624406`
