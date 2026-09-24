@@ -174,7 +174,7 @@
 {
    &quot;text&quot;: &quot;The church ahead is distinctly unsettling, down to your very bones. Though superficially a place of worship and reassurance, elements of a decaying mansion creep into its design in odd ways, and a cluster of horrific characters wait ahead, eager to bring you to a gruesome end.
 
-Your manasight stone glows brightly, sensing a truly mighty legend in this place.&quot;,
+Your spark stirs, sensing something truly mighty in this place.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

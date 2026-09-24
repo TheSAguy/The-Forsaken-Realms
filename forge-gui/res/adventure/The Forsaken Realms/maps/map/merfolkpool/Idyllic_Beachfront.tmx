@@ -42,7 +42,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;Sounds of laughing and playing can be heard ahead over the gentle crash of waves on the seashore. A group of merfolk and other beachgoers gather about, relaxing for a brief moment before the curse of violence grips them once more.&quot;,
+   &quot;text&quot;: &quot;Sounds of laughing and playing can be heard ahead over the gentle crash of waves on the seashore. A group of merfolk and other beachgoers gather about, relaxing while they can. The Forsaken Realms do not let anyone rest for long.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

@@ -213,7 +213,7 @@
 {
    &quot;text&quot;: &quot;A grove of trees parts, revealing a clearing with green grass and soft sunlight shining overhead. Unicorns, corgis, pegasi, and peaceful folk gather ahead, relaxing and laying about, free from worry.
 
-Despite the calm attitude of the place, there is a lingering sense of danger behind it all, as you can tell the curse of violence still clings, even in a place like this, driving the beings ahead to fight if you confront them.&quot;,
+Despite the calm of the place, there is a lingering sense of danger behind it all. Even here, the realm's old hunger for battle clings to everyone in it, and the beings ahead will fight if you confront them.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

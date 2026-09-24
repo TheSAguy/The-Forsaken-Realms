@@ -32,16 +32,28 @@
    <properties>
     <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
-	{
-	   &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the ground. 'Excellent... Well done {var=player_name}. I am truly sorry for all the trouble...' With that he collapses, dead despite his immortality.&quot;,
-	   &quot;options&quot;: [{
-		  &quot;name&quot;: &quot;(Continue)&quot;,
-&quot;text&quot;: &quot;Congratulations on completing The Forsaken Realms! You can now continue exploring this world if you wish - the Mirror Gallery you can now access contains difficult post-game challenges. You can also use new game plus to experience the adventure again. You'll keep your cards and non-key items, but lose all life upgrades and all enemies will respawn. You can also choose a new difficulty. More content may be added in the future, but just dungeons here and there; this is the only planned 'main story'.&quot;,
-   &quot;options&quot;: [{
-      &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]}
-   ] }
+  {
+    &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the stone. 'Excellent... well done, {var=player_name}. The door is yours now. Keep it better than I did.' With that he collapses, dead despite his immortality.&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;(Continue)&quot;,
+        &quot;text&quot;: &quot;The Hall falls silent. Beyond the mirror, nothing stirs - for now.
 
-	]</property>
+[RED]Developer's note:[] You have beaten the hardest fight in the Forsaken Realms. The realm fights on - territory, research, restoration and the Five continue - and New Game+ waits on the Load Game screen whenever you want to carry your collection into a fresh run.&quot;,
+        &quot;options&quot;: [
+          {
+            &quot;name&quot;: &quot;(Continue)&quot;,
+            &quot;action&quot;: [
+              {
+                &quot;deleteMapObject&quot;: -1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]</property>
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Command Tower|CM1&quot;, &quot;Command Beacon|C15&quot;, &quot;Plaza of Heroes|DMU&quot;, &quot;Helm of the Host|DOM&quot;, &quot;Platinum Angel|MRD&quot;, &quot;Jodah's Codex|DMU&quot;]}"/>
     <property name="enemy" value="Jodah"/>
     <property name="spawn.Easy" type="bool" value="false"/>
@@ -63,83 +75,64 @@
   <object id="144" template="../../../../common/maps/obj/dialog.tx" x="182.068" y="184.69" width="83.1977" height="10.1913" visible="1">
    <properties>
     <property name="dialog">[
-    {
-        &quot;text&quot;: &quot;The mysterious mage who you've seen many times before stands before you. He lowers his hood as he addresses you. 
+  {
+    &quot;text&quot;: &quot;The mysterious mage stands before you - the same hooded figure who has sold you spells in the realm's far corners. He lowers his hood.
 
-'Look familiar, {var=player_name}? This hall is what I modeled the library where you arrived after. It felt fitting to have new entrants to this world begin somewhere that was so similar to its exit. I imagine you have a lot of questions, like why I was helping you, and what I'm doing here.'&quot;,
+'You know my face, Guardian, even if you never asked my name. I have been watching you since the Ring cracked your prison. I imagine you have questions - why I helped you, and what I am doing at the bottom of your realm.'&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;So, care to explain?&quot;,
+        &quot;text&quot;: &quot;'I am Jodah, once called the Unifier. I am not of this realm. I came here long before your Night of Chains, chasing a rumor of doors beneath the world that were never meant to open - and I found them. This prison is one of them. I have kept its wards fed for longer than your wardens kept your vigil.'&quot;,
         &quot;options&quot;: [
           {
-                &quot;name&quot;: &quot;So, care to explain?&quot;,
-                &quot;text&quot;: &quot;Well, I am Jodah the Unifier, the accidental architect of this realm of legends. It was a foolish idea, in truth - to weave a spell to bring about multiversal peace using the mana of an entire plane to fuel it. I thought my thousands of years of magical study would be enough to weave such a complex enchantment but alas, I've never been able to shake my hubris even after all these milennia.&quot;,
+            &quot;name&quot;: &quot;(Continue)&quot;,
+            &quot;text&quot;: &quot;'The titans you fought were never the worst of it. They are what the door lets you see. Its locks are older than your Seals, and when the Five came to bind you they had learned their craft from somewhere. Draw your own conclusions. I drew mine long ago.'&quot;,
+            &quot;options&quot;: [
+              {
+                &quot;name&quot;: &quot;(Continue)&quot;,
+                &quot;text&quot;: &quot;'I hid the keys to this hall behind the mightiest of the realm's stranded legends because I needed an answer: is the one who wakes strong enough to hold this door, or only strong enough to open it? Every fight you have won down here was a question. This is the last of them.'&quot;,
                 &quot;options&quot;: [
-                    {
+                  {
+                    &quot;name&quot;: &quot;(Continue)&quot;,
+                    &quot;text&quot;: &quot;'There are a few final gifts here, the last of my rare spells. A small token - you have earned far more, but it is all I have left to give.'&quot;,
+                    &quot;options&quot;: [
+                      {
                         &quot;name&quot;: &quot;(Continue)&quot;,
-                        &quot;text&quot;: &quot;The spell I cast essentially had the opposite of its intended effect, driving all of time and space's most powerful figures into violent madness. Its why you've met so many eager to fight to the death at a moment's notice. I managed to trap all the affected legends here so that the consequences of my mistake would be confined to a single plane. That, at least, worked well.&quot;,
+                        &quot;text&quot;: &quot;'And here is my confession. A door works on its keeper as surely as the keeper works on the door. What waits behind it whispers, and I have listened for far too long. I have been holding back the urge to crush you since you walked in, and I can feel that restraint slipping.'&quot;,
                         &quot;options&quot;: [
-                            {
-                                &quot;name&quot;: &quot;(Continue)&quot;,
-                                &quot;text&quot;: &quot;I knew I wouldn't be able to contain the greatest of the legends I trapped here forever. So I decided to call on planeswalkers like you to try and rid this world of the beings most likely to be able to break free of this world. Hence why I hid the keys to this exit behind the task of slaying the most powerful legends.&quot;,
+                          {
+                            &quot;name&quot;: &quot;(Continue)&quot;,
+                            &quot;text&quot;: &quot;'So, Guardian. Before you go any further, you go through me. Call it the last lock.'&quot;,
+                            &quot;options&quot;: [
+                              {
+                                &quot;name&quot;: &quot;It's a duel.&quot;,
+                                &quot;text&quot;: &quot;'Good. I am rooting for you, though it may not seem like it. Win, and the door is yours - to keep shut, or to open. Choose better than I did.'&quot;,
                                 &quot;options&quot;: [
-                                    {
-                                        &quot;name&quot;: &quot;(Continue)&quot;,
-                                        &quot;text&quot;: &quot;The problem was, none were up to the task. I was simply leading more and more lambs to the slaughter. Until you, {var=player_name}. I decided to take a heavier hand with you, giving you both power and guidance, chiefly your ability to respawn after death, but also the various gifts I hid about the world for you to find.&quot;,
-                                        &quot;options&quot;: [
-                                            {
-                                                &quot;name&quot;: &quot;(Continue)&quot;,
-                                                &quot;text&quot;: &quot;There are a few final gifts here, the last of my rare spells. A small token of appreciation - you deserve far more, certainly, but its all I have left to give.&quot;,
-                                                &quot;options&quot;: [
-                                                    {
-                                                        &quot;name&quot;: &quot;(Continue)&quot;,
-                                                        &quot;text&quot;: &quot;So now, only one last task remains before you can leave this accursed plane behind - killing me.&quot;,
-                                                        &quot;options&quot;: [
-                                                            {
-                                                                &quot;name&quot;: &quot;(Continue)&quot;,
-                                                                &quot;text&quot;: &quot;You see, I too am affected by the curse of violence I wrought. Being its architect, even if unwittingly, I am much more able to resist it than most, but still, it eats away at me, slowly but surely. There were others able to resist too but... most were slaughtered in the early days.&quot;,
-                                                                &quot;options&quot;: [
-                                                                    {
-                                                                        &quot;name&quot;: &quot;(Continue)&quot;,
-                                                                        &quot;text&quot;: &quot;In any case, aside from the danger I pose, I certainly deserve death for the pain and destruction I have wrought. Shandalar is a plane in ruins because of me, and who knows what chaos I've caused by whisking away so many hundreds of legendary heroes from their home planes?&quot;,
-                                                                        &quot;options&quot;: [
-                                                                            {
-                                                                                &quot;name&quot;: &quot;(Continue)&quot;,
-                                                                                &quot;text&quot;: &quot;I am afraid however that the nature of the curse prevents me from truly holding back. Well, I have actually been holding back the urge to crush you since you arrived, but I can feel my restraint finally slipping. But that's just as well, because I'm confident you now possess the power to defeat me, once and for all.&quot;,
-                                                                                &quot;options&quot;: [
-                                                                                    {
-                                                                                        &quot;name&quot;: &quot;(Continue)&quot;,
-                                                                                        &quot;text&quot;: &quot;So, {var=player_name}, slayer of legends, savior of what remains of Shandalar... shall we duel?&quot;
-                                                                                        &quot;options&quot;: [
-                                                                                            {
-                                                                                                &quot;name&quot;: &quot;It's a duel.&quot;,
-                                                                                                &quot;text&quot;: &quot;Good luck. I am rooting for you, though it may not seem like it. After all you've been through, you deserve to go home, and I certainly deserve the death you shall give to me.&quot;
-                                                                                                   &quot;options&quot;: [{
-      &quot;name&quot;: &quot;You ready yourself for the final battle&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
-                                                                                                       
-                                                                                                                                                                              }
-                                                                                                                    ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
+                                  {
+                                    &quot;name&quot;: &quot;You ready yourself for the final battle&quot;,
+                                    &quot;action&quot;: [
+                                      {
+                                        &quot;deleteMapObject&quot;: -1
+                                      }
+                                    ]
+                                  }
                                 ]
-                            }
+                              }
+                            ]
+                          }
                         ]
-                    }
+                      }
+                    ]
+                  }
                 ]
-           }
-          ]
-        }
+              }
+            ]
+          }
+        ]
+      }
     ]
-}
-]
-}
-]
-}
-]
-        
-</property>
+  }
+]</property>
    </properties>
   </object>
   <object id="146" template="../../../../common/maps/obj/treasure.tx" x="192.25" y="224">
@@ -156,11 +149,19 @@
   <object id="148" template="../../../../common/maps/obj/dialog.tx" x="189.5" y="278.917" width="70.0001" height="10.5" rotation="0" visible="1">
    <properties>
     <property name="dialog">[
-{
-   &quot;text&quot;: &quot;The mirror ahead ripples and shimmers, as if it was a portal.&quot;,
-   &quot;options&quot;: [{
-      &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
-}
+  {
+    &quot;text&quot;: &quot;The mirror ahead ripples and shimmers. Whatever it once opened onto, it now shows only the way back out.&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;(Continue)&quot;,
+        &quot;action&quot;: [
+          {
+            &quot;deleteMapObject&quot;: -1
+          }
+        ]
+      }
+    ]
+  }
 ]</property>
    </properties>
   </object>
@@ -187,16 +188,28 @@
    <properties>
     <property name="threatRange" type="int" value="20"/>
     <property name="defeatDialog">[
-	{
-	   &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the ground. 'Excellent... Well done {var=player_name}. I am truly sorry for all the trouble...' With that he collapses, dead despite his immortality.&quot;,
-	   &quot;options&quot;: [{
-		  &quot;name&quot;: &quot;(Continue)&quot;,
-&quot;text&quot;: &quot;Congratulations on completing The Forsaken Realms! You can now continue exploring this world if you wish - the Mirror Gallery you can now access contains difficult post-game challenges. You can also use new game plus to experience the adventure again. You'll keep your cards and non-key items, but lose all life upgrades and all enemies will respawn. You can also choose a new difficulty. More content may be added in the future, but just dungeons here and there; this is the only planned 'main story'.&quot;,
-   &quot;options&quot;: [{
-      &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]}
-   ] }
+  {
+    &quot;text&quot;: &quot;After a battle of unrivaled intensity, Jodah finally falls. A smile crosses his face as his blood pools on the stone. 'Excellent... well done, {var=player_name}. The door is yours now. Keep it better than I did.' With that he collapses, dead despite his immortality.&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;(Continue)&quot;,
+        &quot;text&quot;: &quot;The Hall falls silent. Beyond the mirror, nothing stirs - for now.
 
-	]</property>
+[RED]Developer's note:[] You have beaten the hardest fight in the Forsaken Realms. The realm fights on - territory, research, restoration and the Five continue - and New Game+ waits on the Load Game screen whenever you want to carry your collection into a fresh run.&quot;,
+        &quot;options&quot;: [
+          {
+            &quot;name&quot;: &quot;(Continue)&quot;,
+            &quot;action&quot;: [
+              {
+                &quot;deleteMapObject&quot;: -1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]</property>
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Command Tower|CM1&quot;, &quot;Plaza of Heroes|DMU&quot;, &quot;Platinum Angel|MRD&quot;, &quot;Jodah's Codex|DMU&quot;]}"/>
     <property name="enemy" value="Jodah"/>
     <property name="spawn.Hard" type="bool" value="false"/>

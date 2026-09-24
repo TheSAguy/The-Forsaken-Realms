@@ -270,7 +270,7 @@
 {
    &quot;text&quot;: &quot;Fetid rot fills your nose as a chorus of croaks and squelches can be heard through the foggy bog ahead. Crackles of black and green mana bubble up in the bayou ahead, making it clear the dangers here are no mere animals.
 
-Your manasight stone glows brightly, sensing a truly mighty legend in this place.&quot;,
+Your spark stirs, sensing something truly mighty in this place.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

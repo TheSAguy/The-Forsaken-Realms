@@ -208,7 +208,7 @@
 {
    &quot;text&quot;: &quot;The first thing that you notice upon entering this place is miserable heat, stemming both from dry, desert-like air and a large pool of lava in the distance.
 
-Your manasight stone glows brightly, sensing a truly mighty legend in this place.&quot;,
+Your spark stirs, sensing something truly mighty in this place.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

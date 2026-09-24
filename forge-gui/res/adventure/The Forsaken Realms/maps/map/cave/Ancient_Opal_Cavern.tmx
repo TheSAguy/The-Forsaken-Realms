@@ -93,9 +93,9 @@
 {
    &quot;text&quot;: &quot;The cavern ahead glitters with the brilliant rainbow light of opaline geodes. There is a sense of ancient dread that fills it. You're sure whatever slumbers within is ancient beyond words. 
 
-The threat here is not necessary for your quest, but guards a powerful spell not available elsewhere.
+Whatever sleeps here has no part in your war with the Five - but it guards a spell found nowhere else in the realm.
 
-Your manasight stone blazes with power, near-blindingly bright.&quot;,
+Your spark blazes in answer, brighter than it has since you woke.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

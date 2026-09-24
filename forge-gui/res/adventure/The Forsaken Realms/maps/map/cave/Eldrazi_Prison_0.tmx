@@ -66,7 +66,7 @@
 {
    &quot;text&quot;: &quot;A massive chamber, bigger than any building you've been in before looms before you. Huge tendrils emerging from the spaces between reality itself wiggle and writhe about all over, and while the place seems otherwise empty, these give indication of the horrific aberrations imprisoned herein.
 
-Your manasight stone blazes with power, near-blindingly bright.&quot;,
+Your spark blazes in answer, brighter than it has since you woke.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
@@ -79,7 +79,7 @@ Your manasight stone blazes with power, near-blindingly bright.&quot;,
 {
    &quot;text&quot;: &quot;Within the colossal chamber, a much smaller building stands, a swirling portal visible through the bars of its magically secured gate. Of the many heavily warded gates you've seen so far, this one seems the most well-protected of them all.
 
-You are confident that this portal is the one you've been looking for throughout your entire quest - a way to leave this realm and return to your home.&quot;,
+Nothing about it was built to keep anyone out. It was built to keep something in, and its wards are older than the Night of Chains - older than anything you remember. Whatever waits beyond has been waiting far longer than you slept.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

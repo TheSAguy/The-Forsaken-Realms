@@ -114,9 +114,9 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;A strange realm stretches out ahead, enveloped in a twilight aurora. An eclipse hangs in the sky overhead and the muttering of elves, faeries, and many other stranger creatures besides can be heard in the distance.
+   &quot;text&quot;: &quot;A strange country stretches out ahead, enveloped in a twilight aurora. An eclipse hangs in the sky overhead and the muttering of elves, faeries, and many other stranger creatures besides can be heard in the distance.
 
-Your manasight stone glows, sensing the power of the legends here.&quot;,
+Your spark stirs, sensing the power gathered here.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
