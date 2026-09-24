@@ -17757,6 +17757,28 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 313: the research list's "Hide partial" and its new order; a long dialog fits its window (2026-09-23)
+
+User: *"When you research, there are 3 states... We can hide the last set. I want to add a button to hide the second
+group. The sets you found cards for, but not enough to research. Please give it a name and add it next to the other
+check box... when sorting the sets. Sort as, Currently Researching (Lest days remaining on top, if tied,
+alphabetically.) Then Sets you can research, alphabetically. Then sets you have found cards for, alphabetically. Then
+the sets you have not found cards for, alphabetically."* And a player's request, passed on: *"would it be possible to
+scale the shop selection window whilst playing in windowed mode? i have to drag the screen the see what else is above
+and can't select them"*. Local commit.
+
+- **Research** (`ResearchScene`): a **"Hide partial"** checkbox beside "Hide unfound" (side by side; stacked in
+  portrait) hides the sets with some cards found but not enough to research. The list's order: researching now
+  (fewest days left first, ties alphabetical), then ready to research, then partial, then unfound - each alphabetical
+  (it was cards owned, high to low). The "Researching:" lines at the top follow the same order; the researched view is
+  alphabetical.
+- **Long dialogs** (`MapDialog`): a scrolled option list was capped at 45% of the HUD, but the dialog's text above it
+  and the pinned Back below came on top - a long text or a short window pushed the dialog past the screen's edges.
+  `fitScrolledList()` measures the whole dialog before it shows and gives the list only what the HUD has left (never
+  under 60, and it still scrolls); `[TFR-Dialog] dialog N was X tall on a Y HUD - its list shrinks from A to B` when it
+  does. Not reproduced here (the agent's 1280x720 window fits; its Capitol's ruined shops were unreachable by the
+  walker) - the line will say whether the player's window was the case.
+
 ## Round 310: a console teleport leaves the map first; a lost place's duel no longer crashes the world (2026-09-23)
 
 The task a peer session handed over (its user's request): the agent game crashed at 14:08 on a NullPointerException in

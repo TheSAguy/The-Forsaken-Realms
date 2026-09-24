@@ -471,7 +471,8 @@ public class MapDialog {
                 // Round 106: the dialog is laid out on the HUD stage, not the map stage - the map's height made the pane taller than the screen
                 float maxHeight = Math.max(80f, forge.adventure.stage.GameHUD.getInstance().getHeight() * 0.45f);
                 optionScroller.setScrollY(0f);
-                D.getButtonTable().add(optionScroller).width(WIDTH).height(maxHeight);
+                scrollCell = D.getButtonTable().add(optionScroller).width(WIDTH).height(maxHeight);
+                scrollCellHeight = maxHeight;
                 D.getButtonTable().row();
                 // The pinned escape hatch goes BELOW the scroll box, always on screen.
                 if (pinned != null) {
@@ -513,6 +514,7 @@ public class MapDialog {
                 System.out.println("[TFR-Dialog] dialog " + parentID + " shown: "
                         + (text == null ? 0 : text.length()) + " chars, " + buttons.size
                         + " option(s) hidden until the typing ends (deadline " + deadline + "s)");
+                fitScrolledList(D);
                 stage.showDialog();
                 return true;
             }
@@ -520,6 +522,32 @@ public class MapDialog {
             stage.hideDialog();
             return false;
         }
+    }
+
+    // Round 313 (a player: "would it be possible to scale the shop selection window whilst playing in windowed mode? i
+    // have to drag the screen the see what else is above and can't select them"): the scrolled option list's cell and
+    // height, so fitScrolledList() can shrink it. Null when this dialog's options are not scrolled.
+    private com.badlogic.gdx.scenes.scene2d.ui.Cell<?> scrollCell;
+    private float scrollCellHeight;
+
+    /** Round 313: the list was capped at 45% of the HUD, but the text above it and the pinned Back below come on top,
+     *  so a long text or a short window pushed the dialog past the screen's edges. Measure the whole dialog and give
+     *  the list only what the HUD has left - never less than 60 (about two buttons, it still scrolls). */
+    private void fitScrolledList(com.badlogic.gdx.scenes.scene2d.ui.Dialog D) {
+        if (scrollCell == null)
+            return;
+        float hud = forge.adventure.stage.GameHUD.getInstance().getHeight();
+        D.pack();
+        float over = D.getPrefHeight() - (hud - 12f);
+        if (over > 0f) {
+            float fitted = Math.max(60f, scrollCellHeight - over);
+            scrollCell.height(fitted);
+            D.invalidateHierarchy();
+            D.pack();
+            System.out.println("[TFR-Dialog] dialog " + parentID + " was " + (int) (over + hud - 12f) + " tall on a "
+                    + (int) hud + " HUD - its list shrinks from " + (int) scrollCellHeight + " to " + (int) fitted);
+        }
+        scrollCell = null;
     }
 
     protected List<ChangeListener> dialogCompleteList = new ArrayList<>();

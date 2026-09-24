@@ -139,6 +139,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   hunting for MORE doodad art - adding kinds/variants is now data only.
 - **Round 310 (local commit, NOT pushed): console `teleport to poi` leaves a map first; `WorldStage.setWinner`
   survives a result with no world enemy** (the peer-handed crash; exact trigger unconfirmed - a lair-boss win first).
+- **Round 313 (local commit, NOT pushed): research "Hide partial" + the list ordered researching / ready / partial /
+  unfound; a scrolled map dialog shrinks its list to fit the HUD** (a player's windowed-mode report).
 - **Round 312 (local commit, NOT pushed): the deck editor opens on the selected deck again** (a player's v1.13
   report; upstream #11945 cached the editor around one deck). Candidate for a 1.13.1 if the user wants it out.
 - **Round 311 (local commit, NOT pushed): arena champions pay one Rare from their deck, only the ones beaten (the

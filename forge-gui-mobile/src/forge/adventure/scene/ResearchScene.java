@@ -69,6 +69,9 @@ public class ResearchScene extends UIScene {
     private final Window scrollWindow;
     private final Table root;
     private final CheckBox hideUnfoundCheckBox;
+    // Round 313 (user: "add a button to hide the second group. The sets you found cards for, but not enough to
+    // research"): "Hide partial", beside "Hide unfound". Starts unchecked - both keep their state for the session.
+    private final CheckBox hidePartialCheckBox;
     // Not final - its own click handler below needs to reference it (to update its label text)
     // from inside the same lambda passed to its own constructor call.
     private TextraButton showResearchedButton;
@@ -91,12 +94,27 @@ public class ResearchScene extends UIScene {
                 buildList();
             }
         });
+        hidePartialCheckBox = Controls.newCheckBox("Hide partial");
+        hidePartialCheckBox.setChecked(false);
+        hidePartialCheckBox.getLabel().setColor(Color.BLACK);
+        hidePartialCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                buildList();
+            }
+        });
         showResearchedButton = Controls.newTextButton("Show Researched", () -> {
             showResearched = !showResearched;
             showResearchedButton.setText(showResearched ? "Hide Researched" : "Show Researched");
             buildList();
         });
-        root.add(hideUnfoundCheckBox).align(Align.left);
+        // Round 313: the two filters share the left cell - side by side, or stacked in the narrow portrait pane.
+        Table filters = new Table();
+        filters.add(hideUnfoundCheckBox).align(Align.left).padRight(12);
+        if (!Forge.isLandscapeMode())
+            filters.row();
+        filters.add(hidePartialCheckBox).align(Align.left);
+        root.add(filters).align(Align.left);
         root.add(showResearchedButton).align(Align.right);
         root.row().padTop(4);
 
@@ -185,6 +203,7 @@ public class ResearchScene extends UIScene {
         // selectable elements, so clearing here drops nothing but our own rows.
         clearSelectable();
         addToSelectable(hideUnfoundCheckBox);
+        addToSelectable(hidePartialCheckBox); // round 313
         addToSelectable(showResearchedButton);
         scrollContainer.clear();
         AdventurePlayer player = AdventurePlayer.current();
@@ -192,7 +211,13 @@ public class ResearchScene extends UIScene {
         java.util.Map<String, Integer> inProgressAll = player.getResearchInProgress();
         boolean anyInProgress = !inProgressAll.isEmpty();
 
-        for (String inProgress : inProgressAll.keySet()) {
+        // Round 313: fewest days left first, ties alphabetical - the same order the list below opens with.
+        List<String> running = new ArrayList<>(inProgressAll.keySet());
+        running.sort((a, b) -> {
+            int byDays = Integer.compare(player.getResearchDaysLeft(a, currentDay), player.getResearchDaysLeft(b, currentDay));
+            return byDays != 0 ? byDays : editionDisplayName(a).compareToIgnoreCase(editionDisplayName(b));
+        });
+        for (String inProgress : running) {
             int daysLeft = player.getResearchDaysLeft(inProgress, currentDay);
             TypingLabel header = Controls.newTypingLabel("Researching: " + editionDisplayName(inProgress)
                     + " - " + daysLeft + (daysLeft == 1 ? " day" : " days") + " remaining");
@@ -215,6 +240,7 @@ public class ResearchScene extends UIScene {
             totalByEdition.merge(pc.getEdition(), 1, Integer::sum);
 
         boolean hideUnfound = hideUnfoundCheckBox.isChecked();
+        boolean hidePartial = hidePartialCheckBox.isChecked(); // round 313
         List<CardEdition> candidates = new ArrayList<>();
         if (showResearched) {
             // Researched-only view (user spec 2026-08-12: the toggle "should ONLY show those").
@@ -234,13 +260,31 @@ public class ResearchScene extends UIScene {
                     continue; // researched already - lives in the toggle's own view now
                 if (hideUnfound && ownedByEdition.getOrDefault(ed.getCode(), 0) <= 0)
                     continue; // not discovered yet, and the hide-unfound checkbox is on
+                if (hidePartial && groupOf(ed.getCode(), ownedByEdition, totalByEdition, player) == 2)
+                    continue; // round 313: some found, not enough to research, and hide-partial is on
                 candidates.add(ed);
             }
         }
-        // Sort by cards owned, high to low (user spec 2026-08-12) - one coherent order for the
-        // whole list, researched entries included, rather than a separate sort per group.
-        candidates.sort((a, b) -> Integer.compare(
-                ownedByEdition.getOrDefault(b.getCode(), 0), ownedByEdition.getOrDefault(a.getCode(), 0)));
+        // Round 313 (user: "Sort as, Currently Researching (Lest days remaining on top, if tied, alphabetically.) Then
+        // Sets you can research, alphabetically. Then sets you have found cards for, alphabetically. Then the sets you
+        // have not found cards for, alphabetically."), replacing round 2026-08-12's cards-owned order. The researched
+        // view is alphabetical.
+        final boolean researchedView = showResearched;
+        candidates.sort((a, b) -> {
+            if (!researchedView) {
+                int ga = groupOf(a.getCode(), ownedByEdition, totalByEdition, player);
+                int gb = groupOf(b.getCode(), ownedByEdition, totalByEdition, player);
+                if (ga != gb)
+                    return Integer.compare(ga, gb);
+                if (ga == 0) {
+                    int byDays = Integer.compare(player.getResearchDaysLeft(a.getCode(), currentDay),
+                            player.getResearchDaysLeft(b.getCode(), currentDay));
+                    if (byDays != 0)
+                        return byDays;
+                }
+            }
+            return a.getName().compareToIgnoreCase(b.getName());
+        });
 
         int cost = EconomyBuildings.scaledCost(AdventurePlayer.researchShardCost());
         for (CardEdition ed : candidates) {
@@ -300,6 +344,18 @@ public class ResearchScene extends UIScene {
             empty.setColor(Color.DARK_GRAY);
             scrollContainer.add(empty).colspan(2).align(Align.left).expandX().width(Forge.isLandscapeMode() ? 340 : 236);
         }
+    }
+
+    /** Round 313: an unresearched edition's group - 0 researching now, 1 ready to research, 2 some cards found but
+     *  not enough (partial), 3 none found (unfound). */
+    private static int groupOf(String code, Map<String, Integer> ownedByEdition, Map<String, Integer> totalByEdition,
+                               AdventurePlayer player) {
+        if (player.isResearching(code))
+            return 0;
+        int owned = ownedByEdition.getOrDefault(code, 0);
+        if (owned <= 0)
+            return 3;
+        return owned >= thresholdFor(totalByEdition.getOrDefault(code, 0)) ? 1 : 2;
     }
 
     private static String editionDisplayName(String code) {
