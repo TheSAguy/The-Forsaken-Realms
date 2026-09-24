@@ -1,95 +1,49 @@
-## The Forsaken Realms — v1.14 — Realm Reforged
+## The Forsaken Realms — v1.14 — Welcome to The Forsaken Realms!
 
-Every land has been redrawn, four new peoples can take up the fight, and the barren wedges between the colors are
-now walled with mountains. **Your v1.13 save carries straight over** — its ground, patches and doodads are redrawn
-the first time it loads. The barrier and the new map layout arrive with your next new world.
+**Start a new game.** The new map layout, the barrier and most of the dungeon changes only appear in a new world.
+Your v1.13 save still loads, but it will not have them.
 
-## The big ones
+## New
 
-- **Four new races: Goblin, Angel, Merfolk and Vampire.** Each has its own hero, four card sets that it starts
-  with and that fill its starting deck, and two starting shops:
-  - **Goblin** — Onslaught, Legions, Scourge, Tenth Edition; Goblin and Shaman shops.
-  - **Angel** — Avacyn Restored, Streets of New Capenna, Foundations, Kaldheim; Angel and Spirit shops.
-  - **Merfolk** — Lorwyn, Shadowmoor, Eventide, Lorwyn Eclipsed; Merfolk and Wizard shops.
-  - **Vampire** — Crimson Vow, Ixalan, Rivals of Ixalan, The Lost Caverns of Ixalan; Vampire and Nobles shops. A
-    vampire takes bat form while it travels.
-- **The race list is alphabetical**, and every character can now get their one Jumpstart tournament at an Inn -
-  before, most races' Inns showed no event at all when they rolled Jumpstart.
-- **43 new creatures** roam the lands: whelps, dragonets and wyverns, werewolves, kirin, fanged bats, stone golems,
-  winged eye horrors, reapers, zombie beasts, automatons — and four behemoths carrying a mountain on their backs,
-  resting where they stand. Jugan, Yosei, Ryusei and Keiga finally look like the dragon spirits they are.
-- **A new look for every land.** The overworld is drawn at twice the detail: new ground for all five colors, the
-  wasteland and your own land, bigger ground patches, new forests, rocks, mountains and water, and two to three times
-  as many kinds of doodads — skulls and cacti in the white, starfish and tide pools in the blue, graves and tar pits
-  in the black, lava mounds in the red, berries and mossy boulders in the green, lotus on the lakes, whirlpools at sea.
-- **The barrier.** The barren wedges between the colors are now mountain ranges you cannot cross (unless you fly). No
-  road runs through them, and a color picks its targets by the walk around them. The five colors sit on a regular
-  pentagon, every castle the same distance from your Capitol. *(New worlds.)*
-- **Dungeons get their own entrances.** Eighteen new towers, palaces, halls and temples; nearly every dungeon now has
-  an icon of its own instead of borrowing a town's.
-
-## Also new
-
-- **Dungeons breathe easier.** Enemies no longer stand on top of each other: where two or more crowded together, one
-  now patrols nearby, steps aside, or — in busy dungeons — is gone. A chest guard that stood where you could not
-  reach it now stands beside its chest. Chest guards are Apprentice-level (a new Eldrazi Scion guards the Eldrazi
-  prisons), and guards no longer wear the names of the legends who rule their dungeons - the real ones are still
-  there. *(New worlds, and dungeons you have not entered yet.)*
-- **Boss lairs clear.** Empty a boss lair and it leaves the map, then comes back later restocked. +Life is paid once
-  per game for each enemy and place, and a return visit pays half.
-- **Arena champions** now pay one Rare card from the deck they played — only the ones you beat. The 25 arena-only
-  champions also roam their colors' lands, announced like other legends when sighted.
-- **Territory:** AI capitals grow; every captured town flips 10 tiles around it and grows from there; a town's land
-  grows from its center (the gap at its lower left is gone).
-- **Research:** a "Hide partial" filter beside "Hide unfound", and the list is ordered: researching now (fewest days
-  first), ready to research, some cards found, none found.
-- **New Game+** carries the gold in your bank into the new run.
-- The map's labels stay on their places when you zoom, the overworld zooms out further, rune texts wrap, and the
-  World Standings town chart ends at today's counts.
-- **The dungeons that came from the Realm of Legends now tell this realm's story.** No more "manasight stone" at
-  their doors; the Eldrazi Prison and the Hall of the Unifier speak of the Guardian, the Seals and the older doors
-  beneath the realm, and the last mentions of Shandalar are gone. The five castles, the two Temples and the Warden no
-  longer speak of the base game's captured wizards either: it is the Seals you take back.
-- Sliver Queen and Karona have a proper portrait.
-- The Wasteland's thin grey saplings - trees you cannot walk through - have a dark outline, so they no longer
-  vanish against the ground.
+- **Four new races: Goblin, Angel, Merfolk and Vampire**, each with its own hero, four starting card sets, a starting
+  deck built from them and two starting shops. The race list is now alphabetical.
+- **43 new creatures**, from whelps and wyverns to werewolves, golems and four mountain-backed behemoths.
+- **Every land redrawn** at twice the detail: new ground, forests, rocks, water and far more doodads.
+- **The barrier:** the barren wedges between the colors are now mountain ranges. The five colors sit on a regular
+  pentagon.
+- **Dungeon entrances:** nearly every dungeon now has its own icon.
+- **Calmer dungeons:** enemies no longer stack on top of each other or park beside a chest that already has a guard,
+  and chest guards are Apprentice-level.
+- **Boss lairs** leave the map once cleared and come back restocked. **Arena champions** pay one Rare from their
+  deck, and the arena-only champions now roam the lands.
+- The dungeons brought over from the Realm of Legends now tell this realm's story.
+- Every race can get its Jumpstart tournament at an Inn, New Game+ keeps your bank's gold, and research has a
+  "Hide partial" filter.
 
 ## Fixed
 
-- Starting a new game could crash while the world was being built (also in v1.13).
-- The deck editor kept showing the deck you loaded with, not the one you picked (v1.13).
-- "Explore the Crystal Mines" could not be finished when the mines' land had changed hands - the mine captain
-  turned into another creature. It stays a pirate now, and if yours was already beaten, the quest completes
-  the next time you enter the mines.
-- A long list in a town dialog could run off a small window; it now fits and scrolls.
-- A duel that pays nothing no longer opens an empty reward screen.
-- A restored Orazca now sits in the middle of the land it claims - it stood a tile down and to the left (so did
-  its ruin).
-- Quest and news banners no longer slide in behind the minimap and the portrait (Android, portrait mode), and you
-  can tap through them.
-- A guard can no longer be handed a deck that shares the cards your own deck needs. The hand-over takes those
-  cards from every deck, so your deck came up short and was filled with Wastes.
-- Hidden ambushers that rise from the ground finish rising, and one you never met no longer keeps a dungeon from
-  clearing.
+- A crash that could hit while a new world was being built (also in v1.13).
+- The deck editor showing the deck you loaded with instead of the one you picked (v1.13).
+- "Explore the Crystal Mines" could not be finished once the mines changed hands.
+- Quest banners hid behind the minimap and portrait on Android.
+- A restored Orazca sat off-center in its own land.
+- Some duels opened an empty reward screen.
+- Giving a guard a deck that shared cards with yours left your deck full of Wastes. That hand-over is now blocked.
 
 ## Engine
 
-Forge's 2026-09-23 daily, up from the 09.22 daily of v1.13. Scene changes no longer fade (upstream's fix for slow
-screen updates on Android).
+Forge's 2026-09-23 daily.
 
 ## 📱 Android
 
-Everything above, on the same engine. Scene changes are quicker without the fade.
-
 **Install:**
 1. On your Android device (Android 8.0+), download `forsaken-realms-1.14-signed-aligned.apk` from the assets below.
-2. Tap the downloaded file and allow your browser/file manager to install unknown apps when prompted (the game is
+2. Tap the downloaded file and allow your browser or file manager to install unknown apps when prompted (the game is
    signed by us, not the Play Store).
-3. Grant the storage permission the app asks for — it stores the game data it downloads.
-4. On first launch, tap **Download** when offered the resource files (~210 MB — use Wi-Fi). The app restarts itself
+3. Grant the storage permission the app asks for; it stores the game data it downloads.
+4. On first launch, tap **Download** when offered the resource files (~210 MB, use Wi-Fi). The app restarts itself
    when finished. After that it plays offline.
-5. Works alongside the official Forge app — different app, different data. Updating over any earlier version keeps
-   your saves.
+5. It works alongside the official Forge app. Updating over an earlier version keeps your saves.
 
-`assets.zip` in the file list is downloaded by the app automatically — you don't need to grab it yourself. Problems
-or cut-off layouts: Discord (https://discord.gg/TTRPKc9HYJ) with your device model.
+`assets.zip` in the file list is downloaded by the app automatically; you don't need it yourself. Problems or
+cut-off layouts: Discord (https://discord.gg/TTRPKc9HYJ) with your device model.
