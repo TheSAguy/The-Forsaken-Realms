@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 332: the sphinx pays once, dialog gold is announced, the duel purse halved (2026-09-24)
+
+User, asking where their 10,000 gold came from (*"was there any big payout?"*): it was the Sphinx's Sanctum -
+`maps/map/lair/riddles_lair.tmx`, object 50, six riddles answered right pay `addGold` 8000, `addShards` 250 and a
+2ED booster (which held the Black Lotus now in their collection). Found by comparing the pre-session save (504
+gold) with the current one (10,621) through `Inspect` + `Ledger` ("everything else" income +8,000 exactly) and the
+log's ante-time shard counts (99 -> 360 around a six-page dialog 50). Then: *"Gate it on the flag, keep the amount.
+Also, cut the purse in half. Also, It gave me a booster, never showed me the Gold or Shards"* - the purse being the
+DUEL purse, confirmed when asked. Local commit, NOT pushed (post-1.14.1). Data + one Java line group.
+
+- **The riddles pay once.** The dialog advanced `riddlesLairComplete` but never checked it, and the sanctum is a
+  rotatable cave that came back on day 24 - another 8,000 + 250 + a pack every rotation. `MapDialog.activate()`
+  loads EVERY root whose condition passes (the last one wins), so the fix is two roots: a new first root gated on
+  `checkQuestFlag riddlesLairComplete` ("You have already proven your knowledge... My riddles hold no further prize",
+  one `Leave` option - a root with no option closes itself unshown, `i == 0` in `loadDialog()`), and the riddle root
+  gated on the same flag with `"not": true`. Amounts unchanged. SEEN in the agent game: the riddles paid 8,000 / 250
+  once; with the flag set the sphinx says its line, Leave closes it, the game runs on. A running game caches a map's
+  dialogs - the first two tests failed on stale data until the agent was restarted.
+- **A dialog's gold and shards are announced.** `MapDialog.setEffects()` handed `addGold` / `addShards` straight to
+  the purse while `grantRewards` opened a reward screen for the pack, so the pack looked like the whole prize. A
+  banner now says "Received [+Gold] 8000 and [+Shards] 250." and `[TFR-DialogGrant]` logs it (seen in the agent log).
+- **The duel purse halved** (`config tables/settings.json`): resourcePurseCommon 60 -> 30, Uncommon 90 -> 45, Rare 130
+  -> 65, Mythic 160 -> 80. A first win at Insane now pays roughly 14-20 gold plus one bonus resource instead of 28-40.
+- **The user's 326-day soak log** (`Pictures/Screenshots/LOG/forge.log`, v1.14.1): no exception; every land's
+  borders logged; the run ended by design (`[TFR-GameLost] white holds 3 Center Towns`). Two things noted, not
+  changed: the daily territory tick reached 683-727 ms around days 205-240 (all of it `townGrowth`) and neutral towns
+  with a working Armory repelled 1 of 23 mage attacks against an expected 4.4 (`[TFR-CaptureOdds]`, 20% each) -
+  low but within luck for 23 draws.
+- An earlier agent run ended with a clean "[Controllers] removed manager" right after the sphinx's gate line with
+  no exception - not reproduced on two later runs; noted.
+
 ## Round 331: v1.14.1 hotfix - every obstacle bordered, black banners, calmer growth rings (2026-09-24)
 
 User, the morning after v1.14: *"add a black 1pix border around all collision objects on the main map. It's hard to

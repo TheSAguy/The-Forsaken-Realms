@@ -38,6 +38,11 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 332 — dialog gold announced
+
+- **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — `setEffects()` posts a HUD banner and a
+  `[TFR-DialogGrant]` line when an action hands over gold or shards.
+
 ### Round 331 (v1.14.1 hotfix) — the structure border, black banners, growth-ring doodads
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `generateBiomeSprite()`'s layer walk is now

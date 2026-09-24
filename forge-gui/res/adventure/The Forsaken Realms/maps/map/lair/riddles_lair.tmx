@@ -39,6 +39,25 @@
    <properties>
     <property name="dialog">[
   {
+    &quot;condition&quot;: [
+      {
+        &quot;checkQuestFlag&quot;: &quot;riddlesLairComplete&quot;
+      }
+    ],
+    &quot;text&quot;: &quot;The spectral sphinx regards you with something like fondness. 'You have already proven your knowledge of the ancient powers, seeker. My riddles hold no further prize for you - go well.'&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;Leave&quot;
+      }
+    ]
+  },
+  {
+    &quot;condition&quot;: [
+      {
+        &quot;checkQuestFlag&quot;: &quot;riddlesLairComplete&quot;,
+        &quot;not&quot;: true
+      }
+    ],
     &quot;text&quot;: &quot;A spectral sphinx materializes before you, its eyes gleaming with ancient knowledge.\n\n'Seeker of wisdom, answer my riddles six, and great power shall be yours. Fail, and you must return another day.'\n\n'At the dawn of magic, in the Alpha times, one creature had more power than the rest. What was its name?'&quot;,
     &quot;options&quot;: [
       {
@@ -104,7 +123,13 @@
                                 &quot;addGold&quot;: 8000,
                                 &quot;addShards&quot;: 250,
                                 &quot;grantRewards&quot;: [
-                                  { &quot;type&quot;: &quot;cardPackShop&quot;, &quot;count&quot;: 1, &quot;editions&quot;: [&quot;2ED&quot;] }
+                                  {
+                                    &quot;type&quot;: &quot;cardPackShop&quot;,
+                                    &quot;count&quot;: 1,
+                                    &quot;editions&quot;: [
+                                      &quot;2ED&quot;
+                                    ]
+                                  }
                                 ]
                               }
                             ]

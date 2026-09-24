@@ -622,6 +622,18 @@ public class MapDialog {
                 if (E.addShards > 0) Current.player().addShards(E.addShards);
                 else Current.player().takeShards(-E.addShards);
             }
+            // Round 332 (the user, after the sphinx's riddles paid 8,000 gold and 250 shards beside a booster: "It gave
+            // me a booster, never showed me the Gold or Shards"): a dialog's gold and shards went straight into the
+            // purse with no word, while its grantRewards opened a reward screen - so the pack looked like the whole
+            // prize. Say what was handed over.
+            if (E.addGold > 0 || E.addShards > 0) {
+                String got = (E.addGold > 0 ? "[+Gold] " + E.addGold : "")
+                        + (E.addGold > 0 && E.addShards > 0 ? " and " : "")
+                        + (E.addShards > 0 ? "[+Shards] " + E.addShards : "");
+                forge.adventure.stage.GameHUD.getInstance().addNotification("Received " + got + ".");
+                System.out.println("[TFR-DialogGrant] dialog " + parentID + " handed over " + got.replace("[+Gold]", "gold")
+                        .replace("[+Shards]", "shards"));
+            }
             if (E.addWood != 0) { //Gives (positive or negative) wood to the player. (mod: multi-resource costs)
                 if (E.addWood > 0) Current.player().addWood(E.addWood);
                 else Current.player().takeWood(-E.addWood);
