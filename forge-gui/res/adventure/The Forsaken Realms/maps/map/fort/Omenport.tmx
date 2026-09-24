@@ -485,7 +485,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;A huge manor stis on the corner hill overlooking the town below. A vampire in a fine white suit stands near it. 
+   &quot;text&quot;: &quot;A huge manor sits on the corner hill overlooking the town below. A vampire in a fine white suit stands near it. 
 
 'Mighty bold of 'ya to come into my town and cause a ruckus like you've been doin'. I'm the mayor 'round these parts, but I'm also in charge 'a the local law enforcement. And under that authority, I'm skipping the arrest, and we're gonna string ya up right here.'&quot;,
    &quot;options&quot;: [{

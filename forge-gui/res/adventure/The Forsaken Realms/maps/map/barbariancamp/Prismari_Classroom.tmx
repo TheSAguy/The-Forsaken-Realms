@@ -110,7 +110,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;The classrom ahead of you smells strongly of smoke and incense, odd artistic flourishes visible all over it. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
+   &quot;text&quot;: &quot;The classroom ahead of you smells strongly of smoke and incense, odd artistic flourishes visible all over it. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
 
 'Prismari isn't accepting new students at the moment. Leave now, or you'll become the subject of our latest artistic expression of destruction.'&quot;,
    &quot;options&quot;: [{

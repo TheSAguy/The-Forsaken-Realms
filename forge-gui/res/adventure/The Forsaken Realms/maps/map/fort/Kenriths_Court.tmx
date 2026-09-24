@@ -180,7 +180,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;A mighty castle stands proudly before you. The architecture is remniscent of the plane of Eldraine. Knights and nobles can be seen from high on the ramparts, looking down upon you as you approach.
+   &quot;text&quot;: &quot;A mighty castle stands proudly before you. The architecture is reminiscent of the plane of Eldraine. Knights and nobles can be seen from high on the ramparts, looking down upon you as you approach.
 
 Your spark stirs, sensing something truly mighty in this place.&quot;,
    &quot;options&quot;: [{

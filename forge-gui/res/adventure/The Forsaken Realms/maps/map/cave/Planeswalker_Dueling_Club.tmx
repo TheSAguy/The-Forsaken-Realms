@@ -105,7 +105,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;Three pairs of powerful mages clash in the halls ahead. Though their battles look fiercely lethal at first glance, furhter observation reveals that they are merely sparring. However, while not trying to kill each other, they are not treating each other lightly either, each seeming to be bitter rivals. As you head inside, it seems they may put aside their current grudges to try new opponents...
+   &quot;text&quot;: &quot;Three pairs of powerful mages clash in the halls ahead. Though their battles look fiercely lethal at first glance, further observation reveals that they are merely sparring. However, while not trying to kill each other, they are not treating each other lightly either, each seeming to be bitter rivals. As you head inside, it seems they may put aside their current grudges to try new opponents...
 
 Your spark stirs, sensing the power gathered here.&quot;,
    &quot;options&quot;: [{

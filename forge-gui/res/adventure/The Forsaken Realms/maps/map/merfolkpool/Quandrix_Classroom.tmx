@@ -113,9 +113,9 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;The classrom ahead of you whirls with dizzying fractals of energy. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
+   &quot;text&quot;: &quot;The classroom ahead of you whirls with dizzying fractals of energy. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
 
-'Quandrix isn't accepting new students at the moment. Leave now, or you'll learn what it feels like to be divided  by zero.'&quot;,
+'Quandrix isn't accepting new students at the moment. Leave now, or you'll learn what it feels like to be divided by zero.'&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

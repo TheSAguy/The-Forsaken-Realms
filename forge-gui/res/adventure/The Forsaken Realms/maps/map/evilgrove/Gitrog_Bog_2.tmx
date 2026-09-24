@@ -71,7 +71,7 @@
   <object id="168" template="../../../../common/maps/obj/gate.tx" gid="3221229597" x="287.943" y="843.397" width="14.0077" height="18.6486" rotation="90.4687" visible="1">
    <properties>
     <property name="dialog">[{
-    &quot;text&quot;:&quot;This gate has a single magical lock afixed to it.&quot;,
+    &quot;text&quot;:&quot;This gate has a single magical lock affixed to it.&quot;,
     &quot;options&quot;:[
     { &quot;name&quot;:&quot;Leave&quot; },
     {      

@@ -306,7 +306,7 @@ Your spark stirs, sensing something truly mighty in this place.&quot;,
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;The chorus of croaks grows louder, but interestingly, it also seems to gain coherence - it sounds distinctly like a language, though not one you understand, rather than the simplistic communication of animals. In the distance, you're pretty sure you spy several frog wearing clothes. How odd.&quot;,
+   &quot;text&quot;: &quot;The chorus of croaks grows louder, but interestingly, it also seems to gain coherence - it sounds distinctly like a language, though not one you understand, rather than the simplistic communication of animals. In the distance, you're pretty sure you spy several frogs wearing clothes. How odd.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
