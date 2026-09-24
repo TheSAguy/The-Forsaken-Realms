@@ -819,6 +819,49 @@ public class RewardScene extends UIScene {
         loadRewards(rewards, type, shopActor);
     }
 
+    /**
+     * VeggieShark report (v1.13 thread: "got no additional card rewards despite being shown an empty reward screen").
+     * MapStage.getReward() and WorldStage.setWinner() opened this scene for whatever a duel paid, so a payout with
+     * nothing in it showed the bare chest and its OK button. Such a payout is still reachable: the six story NPCs
+     * with {@code "rewards": []} (Adriana, Ashiok, Gwafa Hazid, Mysterious Mage, Vadmir, Zo-Zu the Punisher), an
+     * exempt enemy whose own list rolled nothing, a payout PlaceRewards emptied (a +Life paid once per game, a lair's
+     * return-visit cuts) - and, before round 203, any roamer whose deck had no card in its color's sets, which is
+     * what the report's log shows. A pickup has skipped an empty screen since round 299; this is the duel side.
+     * <p>
+     * Always one [TFR-Payout] line, the line the report could not be answered without: [TFR-DeckLoot],
+     * [TFR-CardBudget] and [TFR-ResourcePurse] each describe a step, and an exempt enemy prints none of them.
+     *
+     * @return true when there is something to show - the caller loads this scene and switches to it
+     */
+    public static boolean announceDuelPayout(Array<Reward> loot, String enemyName) {
+        if (loot == null || loot.isEmpty()) {
+            System.out.println("[TFR-Payout] " + enemyName + ": nothing to pay - no reward screen");
+            GameHUD.getInstance().addNotification(enemyName + " had nothing of value.");
+            return false;
+        }
+        int cards = 0, gold = 0, shards = 0, wood = 0, stone = 0, life = 0;
+        List<String> other = new ArrayList<>();
+        for (Reward reward : new Array.ArrayIterator<>(loot)) {
+            if (reward == null)
+                continue;
+            switch (reward.getType()) {
+                case Card -> cards++;
+                case Gold -> gold += reward.getCount();
+                case Shards -> shards += reward.getCount();
+                case Wood -> wood += reward.getCount();
+                case Stone -> stone += reward.getCount();
+                case Life -> life += reward.getCount();
+                case Item -> other.add(reward.getItem() != null ? reward.getItem().name : "item");
+                default -> other.add(reward.getType().name());
+            }
+        }
+        System.out.println("[TFR-Payout] " + enemyName + ": " + cards + " card(s)" + (gold > 0 ? ", " + gold + " gold" : "")
+                + (shards > 0 ? ", " + shards + " shards" : "") + (wood > 0 ? ", " + wood + " wood" : "")
+                + (stone > 0 ? ", " + stone + " stone" : "") + (life > 0 ? ", +" + life + " life" : "")
+                + (other.isEmpty() ? "" : ", " + other));
+        return true;
+    }
+
     public void loadSelectableRewards(Array<Reward> choices, Type type, int countToSelect, float priceMultiplier) {
         if (type != Type.RewardChoice)
             return;

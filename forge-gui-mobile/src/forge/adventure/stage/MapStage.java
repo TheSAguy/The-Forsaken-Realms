@@ -2365,8 +2365,13 @@ public class MapStage extends GameStage {
         // dungeon/town twin of WorldStage.setWinner's call. See
         // AdventurePlayer.appendCoinRansomReward.
         Current.player().appendCoinRansomReward(loot, currentMob.getName());
-        RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
-        Forge.switchScene(RewardScene.instance());
+        // VeggieShark report (v1.13 thread): an empty payout opened a bare loot screen - the chest and its OK button,
+        // nothing else. It now logs one [TFR-Payout] line and only opens the screen when there is something on it;
+        // everything below (champion bookkeeping, removal, the defeat dialog) runs either way.
+        if (RewardScene.announceDuelPayout(loot, currentMob.getName())) {
+            RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
+            Forge.switchScene(RewardScene.instance());
+        }
         // Round 166 (user: "How do we prevent this?" - the round-160 review found a cave champion could
         // be farmed): once it falls, this cave's roll is spent. The killed placement used to drop out of
         // prepareCaveChampion()'s candidate list on the next visit, which moved the hash onto a

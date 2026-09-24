@@ -17757,6 +17757,39 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 325: no bare loot screen after a duel; [TFR-Payout] and [TFR-Build] (2026-09-24)
+
+A player's report on v1.13 ("VeggieShark"), passed on by the user: *"I've defeated an enemy in a dungeon after
+updating from 1.10 to 1.13, and got no additional card rewards despite being shown an empty reward screen. This was
+an enemy with enchantment deck."* - with a log that ends at `[TFR-LootEditions] enemy=Human Looter colors=GW -> green
+restriction(34)=[...]`. Local commit.
+
+- **The cards: by design.** Human Looter pays cards only from its own deck (`common/decks/standard/peasantrole.dck`,
+  mostly Wilds of Eldraine enchantments), and a green enemy's loot is limited to the sets the world gave green - the
+  34 in the log. None of the deck's 22 cards is printed in any of them (a random green slice misses all 15 of the
+  deck's booster sets 3.3% of the time; this world is one). Research never changes it: monster loot follows the
+  world's color slice, fixed at world generation, not the player's unlocked sets.
+- **The empty screen: most likely an OLD PROGRAM.** v1.13 pays that win in gold (50 per card it cannot give, the
+  card budget's top-up, the resource purse - ~571 gold on a Normal first win, a resource tile 65% of the time) and
+  prints `[TFR-DeckLoot]`, `[TFR-CardBudget]` and `[TFR-ResourcePurse]` after the LootEditions line. Only the program
+  from before round 203 (v1.10) stops the log there and opens an empty screen (70% of such wins); the title's "TFR
+  v1.13" comes from config.json - data - so an old jar under new data reads as 1.13. The player was asked for the
+  folder they launch from and the whole forge.log (reply text in the round's report).
+- **Guarded anyway:** `MapStage.getReward()` and `WorldStage.setWinner()` opened the loot screen for whatever a duel
+  paid; six story characters have `"rewards": []` (Adriana, Ashiok, Gwafa Hazid, Mysterious Mage, Vadmir, Zo-Zu the
+  Punisher) and an exempt enemy's own list can roll nothing. `RewardScene.announceDuelPayout()` now logs one
+  `[TFR-Payout] <enemy>: N card(s), G gold, ...` line for every duel and, when nothing was paid, a HUD notice
+  ("... had nothing of value.") instead of the bare chest. Rewards are unchanged (no card fallback - rounds 202/203/237
+  pay gold for what a deck cannot give).
+- **`[TFR-Build] data TFR v1.14 - 09.24 | program built 2026-09-24 14:43`** at the start screen: the data version beside
+  the jar's own build time, so a pasted log shows an old program under new data.
+- Noticed, not changed: reward entries that can never pay (Goblin/Goblin Artificer/Goblin King `cardTypes ["land"]`
+  in lowercase, Mountain Ogre `["Ogre"]`, Cephalid/Viashino subtypes renamed upstream, Flying Witch `Witch`, two
+  `cardText` phrases no card has, Ancient Vampire's black Vampire Land); `dev-tools/deckcard_*` read only plane decks,
+  skipping the 445 enemies whose decks live in `common/`.
+- **Seen** in the agent game: `[TFR-Build] data TFR v1.14 - 09.24 | program built 2026-09-24 14:43`; an Eldrazi Scion
+  won on the world map -> `[TFR-Payout] Eldrazi Scion: 1 card(s), 307 gold` and its reward screen.
+
 ## Round 324: chest guards at Apprentice, legend copies renamed; an Eldrazi Scion (2026-09-24)
 
 User, on round 319's two open findings: *"Swap the chest guards to Apprentice and rename the legend guards. Make sure

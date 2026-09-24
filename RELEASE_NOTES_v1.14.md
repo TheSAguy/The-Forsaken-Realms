@@ -56,6 +56,7 @@ the first time it loads. The barrier and the new map layout arrive with your nex
   turned into another creature. It stays a pirate now, and if yours was already beaten, the quest completes
   the next time you enter the mines.
 - A long list in a town dialog could run off a small window; it now fits and scrolls.
+- A duel that pays nothing no longer opens an empty reward screen.
 - Hidden ambushers that rise from the ground finish rising, and one you never met no longer keeps a dungeon from
   clearing.
 

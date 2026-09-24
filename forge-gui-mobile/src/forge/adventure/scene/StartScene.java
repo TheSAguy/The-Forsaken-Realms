@@ -67,6 +67,12 @@ public class StartScene extends UIScene {
             String dateSuffix = configData.modVersionDate != null && !configData.modVersionDate.isEmpty()
                     ? " - " + configData.modVersionDate : "";
             version.setText("{GRADIENT}[%80]v" + engineBuild + " | TFR v" + modVersion + dateSuffix + "{ENDGRADIENT}");
+            // VeggieShark report: this title line is read from config.json - the DATA. The PROGRAM is the jar, and its
+            // build time is in the jar's own build.txt. A log from an old program under new data (an update unzipped
+            // over a running game, an old shortcut) read exactly like the new one; this line tells them apart.
+            java.util.Date built = forge.util.BuildInfo.getTimestamp();
+            System.out.println("[TFR-Build] data TFR v" + modVersion + dateSuffix + " | program built "
+                    + (built == null ? "(unknown)" : new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(built)));
         }
         version.setHeight(5);
         version.skipToTheEnd();

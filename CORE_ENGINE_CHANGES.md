@@ -134,6 +134,15 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 325: the duel payout guard, the build line
+
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** - `announceDuelPayout()` ([TFR-Payout]; false for
+  an empty payout, with a HUD notice).
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** / **`WorldStage.java`** - the duel payout opens the
+  loot screen only when `announceDuelPayout()` says there is something on it.
+- **`forge-gui-mobile/src/forge/adventure/scene/StartScene.java`** - `[TFR-Build]`: config.json's version beside the
+  jar's build.txt time.
+
 ### Round 323: quest targets load as authored
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - a placement is kept `asAuthored` when it is a

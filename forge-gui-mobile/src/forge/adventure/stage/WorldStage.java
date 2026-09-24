@@ -603,11 +603,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         // 2026-09-01) - see AdventurePlayer.appendCoinRansomReward. Keyed on the
                         // RAW name, matching what DuelScene stamped the mark with.
                         Current.player().appendCoinRansomReward(loot, currentMob.getName());
-                        RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
+                        // The overworld twin of MapStage.getReward(): no bare loot screen for an empty payout.
+                        boolean showLoot = RewardScene.announceDuelPayout(loot, currentMob.getName());
+                        if (showLoot)
+                            RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
                         WorldStage.this.removeEnemy(currentMob);
                         AdventureQuestController.instance().updateQuestsWin(currentMob);
                         AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
-                        Forge.switchScene(RewardScene.instance());
+                        if (showLoot)
+                            Forge.switchScene(RewardScene.instance());
                         currentMob = null;
                     });
                 }
