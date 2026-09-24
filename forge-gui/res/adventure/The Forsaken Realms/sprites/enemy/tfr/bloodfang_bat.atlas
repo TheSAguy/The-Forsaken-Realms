@@ -1,0 +1,104 @@
+bloodfang_bat.png
+size: 144,228
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 36, 36
+IdleDown
+  xy: 0, 36
+  size: 48, 48
+IdleDown
+  xy: 48, 36
+  size: 48, 48
+IdleDown
+  xy: 96, 36
+  size: 48, 48
+IdleDown
+  xy: 48, 36
+  size: 48, 48
+IdleLeft
+  xy: 0, 84
+  size: 48, 48
+IdleLeft
+  xy: 48, 84
+  size: 48, 48
+IdleLeft
+  xy: 96, 84
+  size: 48, 48
+IdleLeft
+  xy: 48, 84
+  size: 48, 48
+IdleRight
+  xy: 0, 132
+  size: 48, 48
+IdleRight
+  xy: 48, 132
+  size: 48, 48
+IdleRight
+  xy: 96, 132
+  size: 48, 48
+IdleRight
+  xy: 48, 132
+  size: 48, 48
+IdleUp
+  xy: 0, 180
+  size: 48, 48
+IdleUp
+  xy: 48, 180
+  size: 48, 48
+IdleUp
+  xy: 96, 180
+  size: 48, 48
+IdleUp
+  xy: 48, 180
+  size: 48, 48
+WalkDown
+  xy: 0, 36
+  size: 48, 48
+WalkDown
+  xy: 48, 36
+  size: 48, 48
+WalkDown
+  xy: 96, 36
+  size: 48, 48
+WalkDown
+  xy: 48, 36
+  size: 48, 48
+WalkLeft
+  xy: 0, 84
+  size: 48, 48
+WalkLeft
+  xy: 48, 84
+  size: 48, 48
+WalkLeft
+  xy: 96, 84
+  size: 48, 48
+WalkLeft
+  xy: 48, 84
+  size: 48, 48
+WalkRight
+  xy: 0, 132
+  size: 48, 48
+WalkRight
+  xy: 48, 132
+  size: 48, 48
+WalkRight
+  xy: 96, 132
+  size: 48, 48
+WalkRight
+  xy: 48, 132
+  size: 48, 48
+WalkUp
+  xy: 0, 180
+  size: 48, 48
+WalkUp
+  xy: 48, 180
+  size: 48, 48
+WalkUp
+  xy: 96, 180
+  size: 48, 48
+WalkUp
+  xy: 48, 180
+  size: 48, 48

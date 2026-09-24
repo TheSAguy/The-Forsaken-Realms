@@ -1,0 +1,68 @@
+moonsilver_werewolf.png
+size: 144,249
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 41
+IdleDown
+  xy: 48, 41
+  size: 48, 52
+IdleLeft
+  xy: 48, 93
+  size: 48, 52
+IdleRight
+  xy: 48, 145
+  size: 48, 52
+IdleUp
+  xy: 48, 197
+  size: 48, 52
+WalkDown
+  xy: 0, 41
+  size: 48, 52
+WalkDown
+  xy: 48, 41
+  size: 48, 52
+WalkDown
+  xy: 96, 41
+  size: 48, 52
+WalkDown
+  xy: 48, 41
+  size: 48, 52
+WalkLeft
+  xy: 0, 93
+  size: 48, 52
+WalkLeft
+  xy: 48, 93
+  size: 48, 52
+WalkLeft
+  xy: 96, 93
+  size: 48, 52
+WalkLeft
+  xy: 48, 93
+  size: 48, 52
+WalkRight
+  xy: 0, 145
+  size: 48, 52
+WalkRight
+  xy: 48, 145
+  size: 48, 52
+WalkRight
+  xy: 96, 145
+  size: 48, 52
+WalkRight
+  xy: 48, 145
+  size: 48, 52
+WalkUp
+  xy: 0, 197
+  size: 48, 52
+WalkUp
+  xy: 48, 197
+  size: 48, 52
+WalkUp
+  xy: 96, 197
+  size: 48, 52
+WalkUp
+  xy: 48, 197
+  size: 48, 52

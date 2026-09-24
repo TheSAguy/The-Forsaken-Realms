@@ -1,0 +1,104 @@
+cinderwing_whelp.png
+size: 144,232
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 40, 40
+IdleDown
+  xy: 0, 40
+  size: 48, 48
+IdleDown
+  xy: 48, 40
+  size: 48, 48
+IdleDown
+  xy: 96, 40
+  size: 48, 48
+IdleDown
+  xy: 48, 40
+  size: 48, 48
+IdleLeft
+  xy: 0, 88
+  size: 48, 48
+IdleLeft
+  xy: 48, 88
+  size: 48, 48
+IdleLeft
+  xy: 96, 88
+  size: 48, 48
+IdleLeft
+  xy: 48, 88
+  size: 48, 48
+IdleRight
+  xy: 0, 136
+  size: 48, 48
+IdleRight
+  xy: 48, 136
+  size: 48, 48
+IdleRight
+  xy: 96, 136
+  size: 48, 48
+IdleRight
+  xy: 48, 136
+  size: 48, 48
+IdleUp
+  xy: 0, 184
+  size: 48, 48
+IdleUp
+  xy: 48, 184
+  size: 48, 48
+IdleUp
+  xy: 96, 184
+  size: 48, 48
+IdleUp
+  xy: 48, 184
+  size: 48, 48
+WalkDown
+  xy: 0, 40
+  size: 48, 48
+WalkDown
+  xy: 48, 40
+  size: 48, 48
+WalkDown
+  xy: 96, 40
+  size: 48, 48
+WalkDown
+  xy: 48, 40
+  size: 48, 48
+WalkLeft
+  xy: 0, 88
+  size: 48, 48
+WalkLeft
+  xy: 48, 88
+  size: 48, 48
+WalkLeft
+  xy: 96, 88
+  size: 48, 48
+WalkLeft
+  xy: 48, 88
+  size: 48, 48
+WalkRight
+  xy: 0, 136
+  size: 48, 48
+WalkRight
+  xy: 48, 136
+  size: 48, 48
+WalkRight
+  xy: 96, 136
+  size: 48, 48
+WalkRight
+  xy: 48, 136
+  size: 48, 48
+WalkUp
+  xy: 0, 184
+  size: 48, 48
+WalkUp
+  xy: 48, 184
+  size: 48, 48
+WalkUp
+  xy: 96, 184
+  size: 48, 48
+WalkUp
+  xy: 48, 184
+  size: 48, 48

@@ -1,0 +1,104 @@
+bloodgaze_horror.png
+size: 144,221
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 29, 29
+IdleDown
+  xy: 0, 29
+  size: 48, 48
+IdleDown
+  xy: 48, 29
+  size: 48, 48
+IdleDown
+  xy: 96, 29
+  size: 48, 48
+IdleDown
+  xy: 48, 29
+  size: 48, 48
+IdleLeft
+  xy: 0, 77
+  size: 48, 48
+IdleLeft
+  xy: 48, 77
+  size: 48, 48
+IdleLeft
+  xy: 96, 77
+  size: 48, 48
+IdleLeft
+  xy: 48, 77
+  size: 48, 48
+IdleRight
+  xy: 0, 125
+  size: 48, 48
+IdleRight
+  xy: 48, 125
+  size: 48, 48
+IdleRight
+  xy: 96, 125
+  size: 48, 48
+IdleRight
+  xy: 48, 125
+  size: 48, 48
+IdleUp
+  xy: 0, 173
+  size: 48, 48
+IdleUp
+  xy: 48, 173
+  size: 48, 48
+IdleUp
+  xy: 96, 173
+  size: 48, 48
+IdleUp
+  xy: 48, 173
+  size: 48, 48
+WalkDown
+  xy: 0, 29
+  size: 48, 48
+WalkDown
+  xy: 48, 29
+  size: 48, 48
+WalkDown
+  xy: 96, 29
+  size: 48, 48
+WalkDown
+  xy: 48, 29
+  size: 48, 48
+WalkLeft
+  xy: 0, 77
+  size: 48, 48
+WalkLeft
+  xy: 48, 77
+  size: 48, 48
+WalkLeft
+  xy: 96, 77
+  size: 48, 48
+WalkLeft
+  xy: 48, 77
+  size: 48, 48
+WalkRight
+  xy: 0, 125
+  size: 48, 48
+WalkRight
+  xy: 48, 125
+  size: 48, 48
+WalkRight
+  xy: 96, 125
+  size: 48, 48
+WalkRight
+  xy: 48, 125
+  size: 48, 48
+WalkUp
+  xy: 0, 173
+  size: 48, 48
+WalkUp
+  xy: 48, 173
+  size: 48, 48
+WalkUp
+  xy: 96, 173
+  size: 48, 48
+WalkUp
+  xy: 48, 173
+  size: 48, 48

@@ -1,0 +1,181 @@
+ROUND 316 - NEW ENEMY ART: a tested import, ready to run
+=========================================================
+Folder: C:\Users\User\AppData\Local\Temp\claude\C--Users-User-Claude-Code-Bannerloard\f2a3c273-86a8-4ad2-85e8-509b7ed3ccd6\scratchpad\r316\enemy_import
+Tested against a copy of C:\TFR\repo taken at HEAD d9722d96ab2 (round 317), 2026-09-23 23:52. Nothing in C:\TFR\repo
+was written. No Maven run, no game launch.
+
+
+1. WHAT IS HERE
+---------------
+atlases\          47 .atlas/.png pairs: the 43 new enemies plus jugan / yosei / ryusei / keiga (the re-skins). Named
+                  like round 179 (the enemy name in snake_case), destined for sprites/enemy/tfr/.
+                  - walk  (dragonets, werewolves, kirin, golems, zombie beasts, automatons): Idle<Dir> = the neutral
+                    frame, Walk<Dir> = 0,1,2,1, Dir = Down/Left/Right/Up
+                  - fly   (whelps, wyverns, bats, horrors): Idle<Dir> and Walk<Dir> both 0,1,2,1 (wings never stop)
+                  - front (behemoths, reapers, coiled dragons): un-suffixed Idle and Walk 0,1,2,1
+                  Every atlas has an Avatar and Nearest filtering. Each atlas uses one cell size, cropped to the union
+                  of all its frames and symmetric about the centre. The lowest pixel (feet, or a flier's shadow) sits
+                  on the cell's bottom row. The crop matters for the behemoths: 96x132 -> about 74x113. Uncropped, the
+                  round-261 frame cap would have drawn them below Archmage size.
+                  Bats and horrors: the sheets' opaque gray (127) shadow is keyed to (0,0,0,127), per --key-shadow.
+                  Avatars are close-ups with no floor shadow: the face; or the head end of the Right view (dragonets,
+                  wyverns, bear, whose front views show a tail curl or a hump); or, for the behemoths, the face at
+                  the bottom of the frame.
+decks\            43 themed .dck files (40 cards for Apprentice, 60 from Adept up), built with the round-179 generator.
+roster316.py      THE ROSTER (name, rank, colors, theme, tags) + how each atlas is cut + the 4 re-skins.
+build_atlases.py  sheet -> atlas (from the survey's rpgm_to_atlas.py prototype, plus trimming and shadow-free avatars).
+deckgen316.py     deckgen179.py copied by tools\make_deckgen316.py, with 3 listed changes: new themes, colorless
+                  decks, roster316. deck_audit316.py: the same approach for deck_audit.py.
+import316.py      THE IMPORTER - python import316.py <repo root> [--dry] [--src <dir>]
+test_import316.py the whole test (below); tools\test_refusals.py tests the importer's refusals.
+preview.png       all 47 at in-game size next to a 16-px hero (x4, nearest); preview.py draws it.
+qa\               every report and picture named below. qa\src_*.png = each source sheet with its variants
+                  labeled; qa\regions_*.png = every region of every atlas, in the order the engine plays it;
+                  qa\avatars.png.
+fakeroot\         the tested copy (170 MB), left in its post-import + enemy_scale state. Can be deleted;
+                  test_import316.py rebuilds it.
+carddb.json       card cache built from the current repo's card scripts.
+
+Visual check: all 47 picks were checked by eye against labeled grids, and every color matches its name. The survey's
+variant and row numbers were right; none are off by one. Emberscale Dragonet is the gold/orange v8 because the
+sheet has no red dragonet (all 8 checked). The coiled sheet: row 1 green = Jugan, 2 white = Yosei, 3 gold = Ryusei,
+4 blue = Keiga. Kokusho is untouched.
+
+
+2. HOW TO APPLY IT TO THE REAL REPO
+-----------------------------------
+    cd /d C:\TFR\repo
+    python "C:\Users\User\AppData\Local\Temp\claude\C--Users-User-Claude-Code-Bannerloard\f2a3c273-86a8-4ad2-85e8-509b7ed3ccd6\scratchpad\r316\enemy_import\import316.py" C:\TFR\repo --dry
+    python "...\enemy_import\import316.py" C:\TFR\repo
+    python dev-tools\enemy_scale.py --write
+    python dev-tools\validate_plane_data.py "forge-gui/res/adventure/The Forsaken Realms" report.txt dev-tools/validate_plane_data_stage_fields.txt
+    DO NOT run dev-tools\gen_caves.py (section 5a).
+This is a data-only change (no Java); the normal build or packaging picks it up.
+import316.py needs its repo root (no default). It reads every file live and edits in place. Each step skips what is
+already there, so a second run prints "nothing to do". Before writing anything, it REFUSES on a half-done state:
+some but not all of the 43 names present; a target sprite or deck that exists with different content; an
+enemies.json that no longer round-trips; a missing re-skin target. Tested: each of those 4 refusals leaves every
+file byte-identical, and --src works (qa\test_refusals.txt, 5/5).
+
+
+3. WHAT import316.py CHANGES (measured on the copy)
+---------------------------------------------------
+New files (137): sprites/enemy/tfr/ 94 (47 .atlas + 47 .png), decks/standard/tfr/ 43.
+Changed (14 in the plane + 1 outside it):
+  world/enemies.json    +43 entries in round 179's field set and order (name, sprite, deck, ai, [flying],
+                        spawnRate 1, difficulty, speed, life, rewards, colors, questTags, tier)
+                        - by rank: 10 Apprentice / 18 Adept / 10 Master / 5 Archmage
+                        - by color: mono W 6, U 6, B 8, R 6, G 6; two-color 9; colorless 2
+                        - 16 flying (whelps, wyverns, bats, horrors, reapers); the 4 behemoths have speed 0
+                        - stats: round 179's per-rank table (12/20/0.1, 20/26/1, 24/35/2, 46/45/3) with its
+                          name-seeded spread; Small -1 life/+1 speed; Large/Huge +2 life/-2 speed
+                        RE-SKINS: only the "sprite" line changes, for Jugan, Yosei, Ryusei and Keiga (one entry each;
+                        their names also appear in the biome rosters, war_champions.json (Ryusei) and enemies.csv,
+                        none of which hold a sprite). enemy_scale.py then rescales them (1.08/0.93/1.0 -> 0.2).
+  world/biomes/*.json   "enemies" appended, layout untouched: white +6, blue +10, black +14, red +10, green +10,
+                        colorless (the Wasteland) +14
+  arenas (enemyPool)    plains_capital +2, island_capital +4, swamp_capital +5, mountain_capital +4,
+                        forest_capital +4, player_capital +15 (round 179's picks; names in qa\test_import.txt)
+  config tables/enemies.csv  +43 rows (1,984 -> 2,027); every other byte unchanged
+  standalone-packaging/CREDITS.md  4 lines under "Enemy art packs": RPG Maker MV/MZ creature sheets, supplied by the
+                        user; pack author not recorded.
+Text-level diffs checked: names appended in place, no reformatting. In enemies.json the only removed lines are the 4
+re-skin sprites and the scales enemy_scale.py rewrites.
+
+
+4. VALIDATION RESULTS (qa\test_run.txt; each report in qa\)
+----------------------------------------------------------
+Atlases     tools\qa_atlases.py: 47/47 OK. Structure, one cell size, bottom alignment, animation set: all OK. frame_qa
+            tests on direction-suffixed regions too: 0 flags. Frame cap: none over. The coiled dragons land exactly
+            on the 22.4-px ceiling.
+            atlas_align_qa.py: 0 of 47 on a wrong grid.
+            enemy_scale.py --check, one line per atlas: test_enemy_scale_check.txt.
+            The stock frame_qa.py prints "no Idle/Walk" for the 37 direction atlases because it only reads
+            un-suffixed names. That is a limit of the tool, not a defect.
+Decks       deck_audit316: 43 decks, 0 flags. Median on-theme creatures by rank are 12/21/20/19.
+            tools\check_decks.py (the house deck_legality_audit rules): 43/43 legal, every card is in Forge's
+            scripts, sizes are right. The two colorless decks hold only colorless cards with no colored mana
+            symbols, plus 24 Wastes.
+Importer    no root -> refuses; --dry; real run; second run is a no-op; refusal tests 5/5.
+enemy_scale untouched copy: 12 changes already pending (see 5b). --write: 59 changed (43 new + 4 re-skins + those 12).
+            A dry run afterwards: 0.
+Validator   validate_plane_data.py findings are IDENTICAL before and after: the 18 informational "enum" notes and 30
+            "starter-bucket-type-mix" notes, all pre-existing. Counts: enemies 1,984 -> 2,027, atlases parsed
+            1,005 -> 1,052, deck refs 2,074 -> 2,117. No ref-atlas, ref-deck, unknown-key or duplicate issues.
+Arenas      arena_champion_audit.py: unchanged (the same 25 arena-only roaming champions).
+Loot        deckcard_loot_coverage.py (all 1,553 decks): the new decks match round 179's by rank. Median expected
+            survivors under the color-shard gate: new A 3.9 / D 2.4 / M 0.6 / X 0.8; round 179's 4.1 / 2.5 / 0.6 /
+            0.4. This is how the generator's decks behave under the gate, not a regression; deckCardFallbackGold
+            covers a pool that comes up empty.
+Sprites     sprite_artifact_audit.py lists the six keyed shadows (the 3 bats and 3 horrors) as "LIKELY ARTIFACT".
+            They are the intended drop shadows (dark, alpha 127, directly under the body). Never run it with --fix
+            over tfr/ without excluding those six sheets.
+Caves       see 5a.
+
+
+5. WHAT YOU MUST DO OR DECIDE BY HAND
+-------------------------------------
+a) Do NOT run gen_caves.py --no-register (round 179's last step). Tested on the copy: even on an UNTOUCHED plane it
+   rewrites all 78 caves. It regenerates every cave from scratch, so it would delete the booster and chest guards
+   (with their own waypoints) that rounds 257-258 placed inside the caves, undo round 286's patrol repairs, and
+   switch the line endings. After the import it would also re-roll 74 of the 78 caves' roamer lists just to place
+   11 new-enemy spots (qa\test_gen_caves_hazard.txt, test_gen_caves_control.txt).
+   Result: the new enemies are NOT cave roamers this round; overworld spawns and arenas only.
+   If you want them in caves, I recommend a small targeted script over teaching gen_caves the guard logic. It would
+   swap the enemy name on a few existing roamer objects (same rank, same color) and change nothing else, and keep
+   the behemoths out: gen_caves gives cave roamers speedModifier +4, which would make a speed-0 behemoth crawl.
+   Not written; say the word.
+b) enemy_scale.py --write also resizes 12 EXISTING enemies. Round 218 erased stray pixels from their sheets and
+   never re-measured them, so today they draw at 58-96% of their rank size (Tiburones, an Adept, at 58%). Every
+   change is a growth (x1.04 to x1.71), and I recommend letting it run:
+     Tiburones 0.5417->0.9286, Ekek 0.5417->0.8667, Barnyard Hen 0.619->0.9286, Kapre of the Old Balete and Busaw
+     0.5652->0.8125, Buwaya 0.7647->0.8667, Santelmo 0.9286->1.0, Amomongo / Bungisngis / Kolyog / Hex Witch
+     0.8125->0.8667, Manananggal 0.5417->0.5652.
+   To keep them as they are, restore those 12 "scale" values after the run (the tool has no per-name switch).
+c) Check in the game: these are the first ENEMIES with full Down/Left/Right/Up regions (before this, only the
+   geistmage had Up variants). In the agent game, watch one walker and one flier turn in all four directions, a
+   behemoth standing still, and a duel portrait.
+d) Optional housekeeping: README "1,900+ enemies" -> "2,000+ enemies" (2,027 after this); the MOD_CHANGELOG entry;
+   moving this toolchain into dev-tools/art-import/ (plus a README row). If you move it, keep atlases\ and decks\
+   outside the repo, as round 179 did with C:\TFR\art-staging, and pass --src to import316.py.
+e) avatar_crop_qa.py (audit mode) flags 3 of the 4 behemoth portraits as "cut". They are the intended close-ups
+   (the tool skips the 37 direction atlases entirely). Round 286d has you pick refits one by one, so leave them
+   unless you prefer a small full-body portrait.
+
+
+6. ENGINE ASSUMPTIONS - CHECKED; NO CODE CHANGE NEEDED
+------------------------------------------------------
+- 4-direction regions: CharacterSprite.load() reads <Anim><Dir> for every sprite. The player's 8-direction hero goes
+  through the same code. Diagonals use Left/Right, and "None" and the spawn facing use Right. EnemySprite,
+  WorldStage and MapStage never override facing.
+- No Attack/Hit/Death animations: setAnimation() returns early when the animation is missing, and
+  getActionAnimationDuration() uses its fallback, the same as the 71 of the repo's 958 enemy atlases that already
+  lack them (counted).
+- Speed 0 (the behemoths): nothing divides by speed. forge-gui-mobile and forge-gui were searched; speed() is
+  max(speed + modifier, 0).
+  - The overworld chase does setLength(0), and moveBy(0,0) returns early (no NaN, the animation stays Idle).
+  - Map steering clamps to speed() x delta; getMaxLinearSpeed is a fixed 500.
+  - The 6 existing speed-0 entries all have spawnRate 0, so the behemoths are the first roaming ones. They spawn 1/6
+    to 4/6 of a screen height from the player (on or near screen), stand still, and fade after the normal 20-s roamer
+    lifetime unless fought.
+  - If they should stay longer, set EnemyData "lifetime" (seconds) per enemy.
+  - Two things would make one move: a cave placement's speedModifier, or a robbed loot guard's chase speed. Neither
+    applies.
+- Round-261 frame cap: the cropped cells keep every sprite under enemySpriteFrameCap (numbers in
+  qa\test_qa_atlases.txt).
+- The duel mirrors the enemy portrait to face the player, which assumes right-facing art. The head-end avatars are
+  cut from the Right view, so they end up facing the player.
+
+
+7. JUDGMENT CALLS I MADE (each one is a line in roster316.py / import316.py)
+---------------------------------------------------------------------------
+- New deck themes: whelp, faerie_dragon, behemoth, werewolf, werewolf_white (dogs, cathars and silver: Brutal
+  Cathar, Silver Bolt), kirin (Kirin + Spirit), bat_fire, bat_frost. Existing themes used: drake, dragon, bat,
+  construct (golems and automatons), horror, wraith (reapers), zombie.
+- Wasteland: round 179's rule taken literally ("undead / horror / construct below Archmage", plus the colorless):
+  all 5 golems, the 3 horrors, Soulreaver Specter, the 3 zombie beasts and both automatons. The survey had only the
+  Obsidian Warden among the golems, and also listed the Bloodfang Bat; the rule excludes the bat and includes all
+  five golems. Harvester of Last Breaths (Archmage) stays out, as the rule says.
+- Quest tags: round 179's vocabulary. Minion comes automatically for the zombie beasts; Leader for Moonless Ravager;
+  Flying for the 16 fliers.
+- Noticed, not changed: Yosei has no "legend": true, while Jugan, Keiga, Kokusho and Ryusei do (pre-existing data).

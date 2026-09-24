@@ -1,0 +1,68 @@
+carrion_steed.png
+size: 144,215
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 23, 23
+IdleDown
+  xy: 48, 23
+  size: 48, 48
+IdleLeft
+  xy: 48, 71
+  size: 48, 48
+IdleRight
+  xy: 48, 119
+  size: 48, 48
+IdleUp
+  xy: 48, 167
+  size: 48, 48
+WalkDown
+  xy: 0, 23
+  size: 48, 48
+WalkDown
+  xy: 48, 23
+  size: 48, 48
+WalkDown
+  xy: 96, 23
+  size: 48, 48
+WalkDown
+  xy: 48, 23
+  size: 48, 48
+WalkLeft
+  xy: 0, 71
+  size: 48, 48
+WalkLeft
+  xy: 48, 71
+  size: 48, 48
+WalkLeft
+  xy: 96, 71
+  size: 48, 48
+WalkLeft
+  xy: 48, 71
+  size: 48, 48
+WalkRight
+  xy: 0, 119
+  size: 48, 48
+WalkRight
+  xy: 48, 119
+  size: 48, 48
+WalkRight
+  xy: 96, 119
+  size: 48, 48
+WalkRight
+  xy: 48, 119
+  size: 48, 48
+WalkUp
+  xy: 0, 167
+  size: 48, 48
+WalkUp
+  xy: 48, 167
+  size: 48, 48
+WalkUp
+  xy: 96, 167
+  size: 48, 48
+WalkUp
+  xy: 48, 167
+  size: 48, 48

@@ -17757,6 +17757,41 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 318: 43 new creatures, and four Kamigawa dragons in their own skins (2026-09-24)
+
+User: *"See if there are any sprites here we can add as monsters. Only use thematic / good ones
+(C:\Users\User\Desktop\New Enemy Art)"*. The picks were sent as a sheet first. Local commit; data only.
+
+- **The folder:** 187 RPG Maker MV/MZ character sheets (22 of them copies) - three walk frames in four facings, a
+  top-down 3/4 view, no attack, hit or death rows. Taken: 43 creatures. Left out: the farm, zoo and pet animals, the
+  critters and species the roster already has, the cute or joke sheets, and the big sheets flattened onto white.
+- **The 43** (rank, colors): six **whelps** - Tidewing U, Duskwing B, Cinderwing R, Leafwing G, Pixiewing UG, Sunwing W
+  (Apprentice, flying); five **dragonets** - Dawnscale W, Rimescale U, Gravescale B, Emberscale R, Fernscale G (Adept);
+  two **wyverns** - Thornback RG, Gloamwing UB (Master, flying); four **behemoths** carrying a mountain on their backs
+  - Dunebacked W, Glacierbacked U, Ashpeak BR, Grovebacked G (Archmage, they stand still); four **werewolves** -
+  Cinderpelt R, Thicketmaw G, Moonsilver W (Adept), Moonless Ravager RG (Master); four **kirin** - Dawnmane W,
+  Cloudmane U, Flamemane R, Mossantler G (Adept); three **bats** - Bloodfang B, Pyrefang R, Frostfang U (Apprentice,
+  flying); five **golems** - Marblehewn W, Rimeglass U, Obsidian Warden B, Kilnfired R, Jadestone G (Master); three
+  **eye horrors** - Dreadgaze B, Veilgaze UB, Bloodgaze BR (Adept, flying); two **reapers** - Soulreaver Specter UB
+  (Master), Harvester of Last Breaths B (Archmage); three **zombie beasts** - Rotfang Hound B (Apprentice), Gravemoss
+  Bear BG, Carrion Steed B (Adept); two **automatons** - Bronzecrest (Adept), Ironcrest Sentinel (Master), colorless.
+- **Re-skins:** Jugan, Yosei, Ryusei and Keiga, the Kamigawa dragon spirits, sat on stand-in sprites (a big snake, a
+  sand wurm, a fire dragon, a silver dragon); they now wear the folder's coiled eastern dragons in their own colors.
+  Kokusho keeps his (the sheet has no black one).
+- **How they are built:** the first enemies with full four-direction art (`IdleDown`, `WalkLeft`...; the engine
+  already read those regions for heroes); fliers keep beating their wings standing still; a missing attack or death
+  animation is skipped as it already is for 71 older atlases. One trimmed cell size per atlas, feet on the bottom
+  row. The bats' and horrors' flat gray shadows were made translucent. Decks: the round-179 generator with new themes
+  (kirin, behemoth, werewolf and more), 40 cards at Apprentice, 60 from Adept up; the automatons play artifacts.
+- **Where they live:** their colors' lands (multicolored ones in each), the golems, horrors, reapers, zombie beasts
+  and automatons also in the Wasteland (round 179's rule), and the Capitol arenas (+34 across six arenas). Not in the
+  caves this round - `gen_caves.py` would rewrite all 78 caves and wipe their chest guards.
+- **Sizes:** `enemy_scale.py --write` sized the new ones and also re-measured 12 older enemies whose sheets round 218
+  cleaned but never re-measured (Tiburones had drawn at 58% of its rank size).
+- Importer, slicer and deck generator: `dev-tools/art-import/round318/`. CREDITS line added.
+- **Seen** in the agent game: six of them spawned on the world map at their sizes; a duel with Mossantler Kirin (its
+  portrait, a green Spirit deck) won and paid (`[TFR-CardBudget]`, `[TFR-ResourcePurse]`); no exception.
+
 ## Round 317: four new races - Goblin, Angel, Merfolk and Vampire; a new world no longer crashes (2026-09-23)
 
 User: *"Let's go with Goblin, Angel, Merfolk and Vampire. Remember to do all their starting conditions like sets,

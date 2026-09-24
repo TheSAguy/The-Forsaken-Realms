@@ -70,6 +70,10 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   dinosaurs, ogres and monsters, renamed) - collected from free sprite-sheet sites (thegamingpot.com
   among them); many are GameDeveloperStudio (Robert Brooks) creature designs. Authors to be
   confirmed per sheet.
+- **RPG Maker MV/MZ creature sheets** (43 enemies - the whelps, dragonets and wyverns, the land-backed
+  behemoths, werewolves, kirin, fanged bats, stone golems and automatons, winged-eye horrors, reapers and
+  zombie beasts - and the coiled eastern dragons Jugan, Yosei, Ryusei and Keiga wear) - supplied by the
+  user; pack author not recorded.
 
 ## World art
 

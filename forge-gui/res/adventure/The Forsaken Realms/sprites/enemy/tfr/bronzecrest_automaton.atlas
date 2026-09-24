@@ -1,0 +1,68 @@
+bronzecrest_automaton.png
+size: 108,226
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 34, 34
+IdleDown
+  xy: 36, 34
+  size: 36, 48
+IdleLeft
+  xy: 36, 82
+  size: 36, 48
+IdleRight
+  xy: 36, 130
+  size: 36, 48
+IdleUp
+  xy: 36, 178
+  size: 36, 48
+WalkDown
+  xy: 0, 34
+  size: 36, 48
+WalkDown
+  xy: 36, 34
+  size: 36, 48
+WalkDown
+  xy: 72, 34
+  size: 36, 48
+WalkDown
+  xy: 36, 34
+  size: 36, 48
+WalkLeft
+  xy: 0, 82
+  size: 36, 48
+WalkLeft
+  xy: 36, 82
+  size: 36, 48
+WalkLeft
+  xy: 72, 82
+  size: 36, 48
+WalkLeft
+  xy: 36, 82
+  size: 36, 48
+WalkRight
+  xy: 0, 130
+  size: 36, 48
+WalkRight
+  xy: 36, 130
+  size: 36, 48
+WalkRight
+  xy: 72, 130
+  size: 36, 48
+WalkRight
+  xy: 36, 130
+  size: 36, 48
+WalkUp
+  xy: 0, 178
+  size: 36, 48
+WalkUp
+  xy: 36, 178
+  size: 36, 48
+WalkUp
+  xy: 72, 178
+  size: 36, 48
+WalkUp
+  xy: 36, 178
+  size: 36, 48

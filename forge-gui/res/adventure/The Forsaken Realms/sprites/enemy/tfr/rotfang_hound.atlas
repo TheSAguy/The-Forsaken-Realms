@@ -1,0 +1,68 @@
+rotfang_hound.png
+size: 144,201
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 21, 21
+IdleDown
+  xy: 48, 21
+  size: 48, 45
+IdleLeft
+  xy: 48, 66
+  size: 48, 45
+IdleRight
+  xy: 48, 111
+  size: 48, 45
+IdleUp
+  xy: 48, 156
+  size: 48, 45
+WalkDown
+  xy: 0, 21
+  size: 48, 45
+WalkDown
+  xy: 48, 21
+  size: 48, 45
+WalkDown
+  xy: 96, 21
+  size: 48, 45
+WalkDown
+  xy: 48, 21
+  size: 48, 45
+WalkLeft
+  xy: 0, 66
+  size: 48, 45
+WalkLeft
+  xy: 48, 66
+  size: 48, 45
+WalkLeft
+  xy: 96, 66
+  size: 48, 45
+WalkLeft
+  xy: 48, 66
+  size: 48, 45
+WalkRight
+  xy: 0, 111
+  size: 48, 45
+WalkRight
+  xy: 48, 111
+  size: 48, 45
+WalkRight
+  xy: 96, 111
+  size: 48, 45
+WalkRight
+  xy: 48, 111
+  size: 48, 45
+WalkUp
+  xy: 0, 156
+  size: 48, 45
+WalkUp
+  xy: 48, 156
+  size: 48, 45
+WalkUp
+  xy: 96, 156
+  size: 48, 45
+WalkUp
+  xy: 48, 156
+  size: 48, 45

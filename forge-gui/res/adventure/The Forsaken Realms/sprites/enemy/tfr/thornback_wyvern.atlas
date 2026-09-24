@@ -1,0 +1,104 @@
+thornback_wyvern.png
+size: 288,301
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 45, 45
+IdleDown
+  xy: 0, 45
+  size: 96, 64
+IdleDown
+  xy: 96, 45
+  size: 96, 64
+IdleDown
+  xy: 192, 45
+  size: 96, 64
+IdleDown
+  xy: 96, 45
+  size: 96, 64
+IdleLeft
+  xy: 0, 109
+  size: 96, 64
+IdleLeft
+  xy: 96, 109
+  size: 96, 64
+IdleLeft
+  xy: 192, 109
+  size: 96, 64
+IdleLeft
+  xy: 96, 109
+  size: 96, 64
+IdleRight
+  xy: 0, 173
+  size: 96, 64
+IdleRight
+  xy: 96, 173
+  size: 96, 64
+IdleRight
+  xy: 192, 173
+  size: 96, 64
+IdleRight
+  xy: 96, 173
+  size: 96, 64
+IdleUp
+  xy: 0, 237
+  size: 96, 64
+IdleUp
+  xy: 96, 237
+  size: 96, 64
+IdleUp
+  xy: 192, 237
+  size: 96, 64
+IdleUp
+  xy: 96, 237
+  size: 96, 64
+WalkDown
+  xy: 0, 45
+  size: 96, 64
+WalkDown
+  xy: 96, 45
+  size: 96, 64
+WalkDown
+  xy: 192, 45
+  size: 96, 64
+WalkDown
+  xy: 96, 45
+  size: 96, 64
+WalkLeft
+  xy: 0, 109
+  size: 96, 64
+WalkLeft
+  xy: 96, 109
+  size: 96, 64
+WalkLeft
+  xy: 192, 109
+  size: 96, 64
+WalkLeft
+  xy: 96, 109
+  size: 96, 64
+WalkRight
+  xy: 0, 173
+  size: 96, 64
+WalkRight
+  xy: 96, 173
+  size: 96, 64
+WalkRight
+  xy: 192, 173
+  size: 96, 64
+WalkRight
+  xy: 96, 173
+  size: 96, 64
+WalkUp
+  xy: 0, 237
+  size: 96, 64
+WalkUp
+  xy: 96, 237
+  size: 96, 64
+WalkUp
+  xy: 192, 237
+  size: 96, 64
+WalkUp
+  xy: 96, 237
+  size: 96, 64

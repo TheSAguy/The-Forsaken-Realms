@@ -1,0 +1,68 @@
+fernscale_dragonet.png
+size: 144,220
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 36, 36
+IdleDown
+  xy: 48, 36
+  size: 48, 46
+IdleLeft
+  xy: 48, 82
+  size: 48, 46
+IdleRight
+  xy: 48, 128
+  size: 48, 46
+IdleUp
+  xy: 48, 174
+  size: 48, 46
+WalkDown
+  xy: 0, 36
+  size: 48, 46
+WalkDown
+  xy: 48, 36
+  size: 48, 46
+WalkDown
+  xy: 96, 36
+  size: 48, 46
+WalkDown
+  xy: 48, 36
+  size: 48, 46
+WalkLeft
+  xy: 0, 82
+  size: 48, 46
+WalkLeft
+  xy: 48, 82
+  size: 48, 46
+WalkLeft
+  xy: 96, 82
+  size: 48, 46
+WalkLeft
+  xy: 48, 82
+  size: 48, 46
+WalkRight
+  xy: 0, 128
+  size: 48, 46
+WalkRight
+  xy: 48, 128
+  size: 48, 46
+WalkRight
+  xy: 96, 128
+  size: 48, 46
+WalkRight
+  xy: 48, 128
+  size: 48, 46
+WalkUp
+  xy: 0, 174
+  size: 48, 46
+WalkUp
+  xy: 48, 174
+  size: 48, 46
+WalkUp
+  xy: 96, 174
+  size: 48, 46
+WalkUp
+  xy: 48, 174
+  size: 48, 46

@@ -1,0 +1,32 @@
+harvester_of_last_breaths.png
+size: 288,187
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 91, 91
+Idle
+  xy: 0, 91
+  size: 96, 96
+Idle
+  xy: 96, 91
+  size: 96, 96
+Idle
+  xy: 192, 91
+  size: 96, 96
+Idle
+  xy: 96, 91
+  size: 96, 96
+Walk
+  xy: 0, 91
+  size: 96, 96
+Walk
+  xy: 96, 91
+  size: 96, 96
+Walk
+  xy: 192, 91
+  size: 96, 96
+Walk
+  xy: 96, 91
+  size: 96, 96

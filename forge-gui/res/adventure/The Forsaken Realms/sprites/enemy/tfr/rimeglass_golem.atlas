@@ -1,0 +1,68 @@
+rimeglass_golem.png
+size: 126,229
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 41, 41
+IdleDown
+  xy: 42, 41
+  size: 42, 47
+IdleLeft
+  xy: 42, 88
+  size: 42, 47
+IdleRight
+  xy: 42, 135
+  size: 42, 47
+IdleUp
+  xy: 42, 182
+  size: 42, 47
+WalkDown
+  xy: 0, 41
+  size: 42, 47
+WalkDown
+  xy: 42, 41
+  size: 42, 47
+WalkDown
+  xy: 84, 41
+  size: 42, 47
+WalkDown
+  xy: 42, 41
+  size: 42, 47
+WalkLeft
+  xy: 0, 88
+  size: 42, 47
+WalkLeft
+  xy: 42, 88
+  size: 42, 47
+WalkLeft
+  xy: 84, 88
+  size: 42, 47
+WalkLeft
+  xy: 42, 88
+  size: 42, 47
+WalkRight
+  xy: 0, 135
+  size: 42, 47
+WalkRight
+  xy: 42, 135
+  size: 42, 47
+WalkRight
+  xy: 84, 135
+  size: 42, 47
+WalkRight
+  xy: 42, 135
+  size: 42, 47
+WalkUp
+  xy: 0, 182
+  size: 42, 47
+WalkUp
+  xy: 42, 182
+  size: 42, 47
+WalkUp
+  xy: 84, 182
+  size: 42, 47
+WalkUp
+  xy: 42, 182
+  size: 42, 47

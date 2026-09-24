@@ -145,6 +145,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 318 (local commit, NOT pushed): 43 new creatures from the user's RPG Maker sheets** (whelps, dragonets,
+  wyverns, stationary behemoths, werewolves, kirin, bats, golems, eye horrors, reapers, zombie beasts, automatons; the
+  first 4-direction enemy atlases) **+ Jugan/Yosei/Ryusei/Keiga re-skinned**; rosters, arenas, csv; not in caves
+  (gen_caves.py would wipe the cave guards); `dev-tools/art-import/round318/`.
 - **Round 317 (local commit, NOT pushed): four new races - Goblin, Angel, Merfolk, Vampire** (plane `world/heroes.json`
   + `sprites/heroes/*`, raceEditions/raceShops; recolored heroes; `dev-tools/races/`; agent `newgame race= gender=`)
   **and the new-world crash** (Config.langFilePath's shared StringBuilder under parallel structure generation - in

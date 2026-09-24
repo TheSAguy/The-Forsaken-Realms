@@ -1,0 +1,68 @@
+mossantler_kirin.png
+size: 138,219
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 27, 27
+IdleDown
+  xy: 46, 27
+  size: 46, 48
+IdleLeft
+  xy: 46, 75
+  size: 46, 48
+IdleRight
+  xy: 46, 123
+  size: 46, 48
+IdleUp
+  xy: 46, 171
+  size: 46, 48
+WalkDown
+  xy: 0, 27
+  size: 46, 48
+WalkDown
+  xy: 46, 27
+  size: 46, 48
+WalkDown
+  xy: 92, 27
+  size: 46, 48
+WalkDown
+  xy: 46, 27
+  size: 46, 48
+WalkLeft
+  xy: 0, 75
+  size: 46, 48
+WalkLeft
+  xy: 46, 75
+  size: 46, 48
+WalkLeft
+  xy: 92, 75
+  size: 46, 48
+WalkLeft
+  xy: 46, 75
+  size: 46, 48
+WalkRight
+  xy: 0, 123
+  size: 46, 48
+WalkRight
+  xy: 46, 123
+  size: 46, 48
+WalkRight
+  xy: 92, 123
+  size: 46, 48
+WalkRight
+  xy: 46, 123
+  size: 46, 48
+WalkUp
+  xy: 0, 171
+  size: 46, 48
+WalkUp
+  xy: 46, 171
+  size: 46, 48
+WalkUp
+  xy: 92, 171
+  size: 46, 48
+WalkUp
+  xy: 46, 171
+  size: 46, 48

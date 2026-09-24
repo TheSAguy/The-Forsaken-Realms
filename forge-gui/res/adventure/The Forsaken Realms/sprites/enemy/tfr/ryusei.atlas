@@ -1,0 +1,32 @@
+ryusei.png
+size: 210,176
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 70, 112
+Idle
+  xy: 70, 64
+  size: 70, 112
+Idle
+  xy: 140, 64
+  size: 70, 112
+Idle
+  xy: 70, 64
+  size: 70, 112
+Walk
+  xy: 0, 64
+  size: 70, 112
+Walk
+  xy: 70, 64
+  size: 70, 112
+Walk
+  xy: 140, 64
+  size: 70, 112
+Walk
+  xy: 70, 64
+  size: 70, 112

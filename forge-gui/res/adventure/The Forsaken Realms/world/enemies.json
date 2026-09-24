@@ -53945,14 +53945,14 @@
     },
     {
         "name": "Jugan",
-        "sprite": "sprites/enemy/beast/reptile/big_snake.atlas",
+        "sprite": "sprites/enemy/tfr/jugan.atlas",
         "deck": [
             "decks/legends/jugan.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 39,
-        "scale": 1.0833,
+        "scale": 0.2,
         "life": 28,
         "rewards": [
             {
@@ -54015,14 +54015,14 @@
     },
     {
         "name": "Keiga",
-        "sprite": "sprites/enemy/dragon/ancientsilverdragon.atlas",
+        "sprite": "sprites/enemy/tfr/keiga.atlas",
         "deck": [
             "decks/legends/keiga.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 43,
-        "scale": 0.9286,
+        "scale": 0.2,
         "life": 30,
         "rewards": [
             {
@@ -54155,14 +54155,14 @@
     },
     {
         "name": "Ryusei",
-        "sprite": "sprites/enemy/dragon/firedragon.atlas",
+        "sprite": "sprites/enemy/tfr/ryusei.atlas",
         "deck": [
             "decks/legends/ryusei.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 50,
-        "scale": 1.0,
+        "scale": 0.2,
         "life": 55,
         "rewards": [
             {
@@ -54225,14 +54225,14 @@
     },
     {
         "name": "Yosei",
-        "sprite": "sprites/enemy/monstrosity/sandwurm2.atlas",
+        "sprite": "sprites/enemy/tfr/yosei.atlas",
         "deck": [
             "decks/legends/yosei.dck"
         ],
         "ai": "",
         "flying": true,
         "speed": 29,
-        "scale": 1.0833,
+        "scale": 0.2,
         "life": 18,
         "rewards": [
             {
@@ -137628,7 +137628,7 @@
             "BiomeColorless"
         ],
         "tier": "Mythic",
-        "scale": 0.5652
+        "scale": 0.8125
     },
     {
         "name": "Troll Warlord",
@@ -140273,7 +140273,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8125
+        "scale": 0.8667
     },
     {
         "name": "Wild Boar",
@@ -140462,7 +140462,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8125
+        "scale": 0.8667
     },
     {
         "name": "Busaw",
@@ -140525,7 +140525,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.5652
+        "scale": 0.8125
     },
     {
         "name": "Buwaya",
@@ -140588,7 +140588,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.7647
+        "scale": 0.8667
     },
     {
         "name": "Barnyard Hen",
@@ -140651,7 +140651,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.619
+        "scale": 0.9286
     },
     {
         "name": "Blue Dwende",
@@ -141029,7 +141029,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.5417
+        "scale": 0.8667
     },
     {
         "name": "Kolyog",
@@ -141092,7 +141092,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.8125
+        "scale": 0.8667
     },
     {
         "name": "Malakat",
@@ -141218,7 +141218,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.5417
+        "scale": 0.5652
     },
     {
         "name": "Nuno sa Punso",
@@ -141407,7 +141407,7 @@
             "BiomeColorless"
         ],
         "tier": "Rare",
-        "scale": 0.9286
+        "scale": 1.0
     },
     {
         "name": "Sigbin",
@@ -141722,7 +141722,7 @@
             "BiomeColorless"
         ],
         "tier": "Uncommon",
-        "scale": 0.5417
+        "scale": 0.9286
     },
     {
         "name": "Tiyanak",
@@ -141848,7 +141848,7 @@
             "BiomeColorless"
         ],
         "tier": "Common",
-        "scale": 0.8125
+        "scale": 0.8667
     },
     {
         "name": "Katipunero Scout",
@@ -158529,5 +158529,3439 @@
         ],
         "tier": "Rare",
         "scale": 0.1327
+    },
+    {
+        "name": "Tidewing Whelp",
+        "sprite": "sprites/enemy/tfr/tidewing_whelp.atlas",
+        "deck": [
+            "decks/standard/tfr/tidewing_whelp.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Drake",
+                    "Wyvern"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Dragon",
+            "Small",
+            "Flying",
+            "IdentityBlue",
+            "BiomeBlue"
+        ],
+        "tier": "Common",
+        "scale": 0.4194
+    },
+    {
+        "name": "Duskwing Whelp",
+        "sprite": "sprites/enemy/tfr/duskwing_whelp.atlas",
+        "deck": [
+            "decks/standard/tfr/duskwing_whelp.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 23,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Dragon",
+                    "Drake",
+                    "Wyvern"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Dragon",
+            "Small",
+            "Flying",
+            "IdentityBlack",
+            "BiomeBlack"
+        ],
+        "tier": "Common",
+        "scale": 0.4194
+    },
+    {
+        "name": "Cinderwing Whelp",
+        "sprite": "sprites/enemy/tfr/cinderwing_whelp.atlas",
+        "deck": [
+            "decks/standard/tfr/cinderwing_whelp.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Small",
+            "Flying",
+            "Fire",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Common",
+        "scale": 0.4194
+    },
+    {
+        "name": "Leafwing Whelp",
+        "sprite": "sprites/enemy/tfr/leafwing_whelp.atlas",
+        "deck": [
+            "decks/standard/tfr/leafwing_whelp.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Dragon",
+                    "Drake",
+                    "Wyvern"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Dragon",
+            "Small",
+            "Flying",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Common",
+        "scale": 0.4194
+    },
+    {
+        "name": "Pixiewing Whelp",
+        "sprite": "sprites/enemy/tfr/pixiewing_whelp.atlas",
+        "deck": [
+            "decks/standard/tfr/pixiewing_whelp.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 23,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Faerie",
+                    "Dragon",
+                    "Drake"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "UG",
+        "questTags": [
+            "Faerie",
+            "Dragon",
+            "Small",
+            "Flying",
+            "IdentityBlue",
+            "IdentityGreen",
+            "IdentitySimic",
+            "BiomeBlue",
+            "BiomeGreen"
+        ],
+        "tier": "Common",
+        "scale": 0.4194
+    },
+    {
+        "name": "Sunwing Whelp",
+        "sprite": "sprites/enemy/tfr/sunwing_whelp.atlas",
+        "deck": [
+            "decks/standard/tfr/sunwing_whelp.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 12,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Faerie",
+                    "Dragon",
+                    "Drake"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Faerie",
+            "Dragon",
+            "Small",
+            "Flying",
+            "IdentityWhite",
+            "BiomeWhite"
+        ],
+        "tier": "Common",
+        "scale": 0.4194
+    },
+    {
+        "name": "Dawnscale Dragonet",
+        "sprite": "sprites/enemy/tfr/dawnscale_dragonet.atlas",
+        "deck": [
+            "decks/standard/tfr/dawnscale_dragonet.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Small",
+            "IdentityWhite",
+            "BiomeWhite"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4062
+    },
+    {
+        "name": "Rimescale Dragonet",
+        "sprite": "sprites/enemy/tfr/rimescale_dragonet.atlas",
+        "deck": [
+            "decks/standard/tfr/rimescale_dragonet.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 19,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Small",
+            "Snow",
+            "IdentityBlue",
+            "BiomeBlue"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4062
+    },
+    {
+        "name": "Gravescale Dragonet",
+        "sprite": "sprites/enemy/tfr/gravescale_dragonet.atlas",
+        "deck": [
+            "decks/standard/tfr/gravescale_dragonet.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 19,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Small",
+            "IdentityBlack",
+            "BiomeBlack"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4062
+    },
+    {
+        "name": "Emberscale Dragonet",
+        "sprite": "sprites/enemy/tfr/emberscale_dragonet.atlas",
+        "deck": [
+            "decks/standard/tfr/emberscale_dragonet.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 19,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Small",
+            "Fire",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4062
+    },
+    {
+        "name": "Fernscale Dragonet",
+        "sprite": "sprites/enemy/tfr/fernscale_dragonet.atlas",
+        "deck": [
+            "decks/standard/tfr/fernscale_dragonet.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 18,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Small",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4062
+    },
+    {
+        "name": "Thornback Wyvern",
+        "sprite": "sprites/enemy/tfr/thornback_wyvern.atlas",
+        "deck": [
+            "decks/standard/tfr/thornback_wyvern.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 34,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Dragon"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "RG",
+        "questTags": [
+            "Dragon",
+            "Mythical",
+            "Wyvern",
+            "Flying",
+            "IdentityRed",
+            "IdentityGreen",
+            "IdentityGruul",
+            "BiomeRed",
+            "BiomeGreen"
+        ],
+        "tier": "Rare",
+        "scale": 0.2257
+    },
+    {
+        "name": "Gloamwing Wyvern",
+        "sprite": "sprites/enemy/tfr/gloamwing_wyvern.atlas",
+        "deck": [
+            "decks/standard/tfr/gloamwing_wyvern.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 33,
+        "life": 23,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Drake",
+                    "Wyvern"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "UB",
+        "questTags": [
+            "Dragon",
+            "Wyvern",
+            "Flying",
+            "IdentityBlue",
+            "IdentityBlack",
+            "IdentityDimir",
+            "BiomeBlue",
+            "BiomeBlack"
+        ],
+        "tier": "Rare",
+        "scale": 0.2257
+    },
+    {
+        "name": "Dunebacked Behemoth",
+        "sprite": "sprites/enemy/tfr/dunebacked_behemoth.atlas",
+        "deck": [
+            "decks/standard/tfr/dunebacked_behemoth.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 0,
+        "life": 47,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 3,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 60,
+                "addMaxCount": 140
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.75,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Beast",
+                    "Elemental"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Beast",
+            "Monster",
+            "Huge",
+            "IdentityWhite",
+            "BiomeWhite"
+        ],
+        "tier": "Mythic",
+        "scale": 0.1711
+    },
+    {
+        "name": "Ashpeak Behemoth",
+        "sprite": "sprites/enemy/tfr/ashpeak_behemoth.atlas",
+        "deck": [
+            "decks/standard/tfr/ashpeak_behemoth.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 0,
+        "life": 50,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 3,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 60,
+                "addMaxCount": 140
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.75,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Beast",
+                    "Elemental"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            }
+        ],
+        "colors": "BR",
+        "questTags": [
+            "Beast",
+            "Monster",
+            "Huge",
+            "Fire",
+            "IdentityBlack",
+            "IdentityRed",
+            "IdentityRakdos",
+            "BiomeBlack",
+            "BiomeRed"
+        ],
+        "tier": "Mythic",
+        "scale": 0.1757
+    },
+    {
+        "name": "Grovebacked Behemoth",
+        "sprite": "sprites/enemy/tfr/grovebacked_behemoth.atlas",
+        "deck": [
+            "decks/standard/tfr/grovebacked_behemoth.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 0,
+        "life": 49,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 3,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 60,
+                "addMaxCount": 140
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.75,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Beast",
+                    "Elemental"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Beast",
+            "Monster",
+            "Huge",
+            "Nature",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Mythic",
+        "scale": 0.1757
+    },
+    {
+        "name": "Glacierbacked Behemoth",
+        "sprite": "sprites/enemy/tfr/glacierbacked_behemoth.atlas",
+        "deck": [
+            "decks/standard/tfr/glacierbacked_behemoth.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 0,
+        "life": 50,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 3,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 60,
+                "addMaxCount": 140
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.75,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Beast",
+                    "Elemental"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Beast",
+            "Monster",
+            "Huge",
+            "Snow",
+            "IdentityBlue",
+            "BiomeBlue"
+        ],
+        "tier": "Mythic",
+        "scale": 0.1757
+    },
+    {
+        "name": "Cinderpelt Werewolf",
+        "sprite": "sprites/enemy/tfr/cinderpelt_werewolf.atlas",
+        "deck": [
+            "decks/standard/tfr/cinderpelt_werewolf.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Werewolf",
+                    "Wolf"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Werewolf",
+            "Beast",
+            "Predator",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3421
+    },
+    {
+        "name": "Thicketmaw Werewolf",
+        "sprite": "sprites/enemy/tfr/thicketmaw_werewolf.atlas",
+        "deck": [
+            "decks/standard/tfr/thicketmaw_werewolf.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 21,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Werewolf",
+                    "Wolf"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Werewolf",
+            "Beast",
+            "Predator",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3421
+    },
+    {
+        "name": "Moonless Ravager",
+        "sprite": "sprites/enemy/tfr/moonless_ravager.atlas",
+        "deck": [
+            "decks/standard/tfr/moonless_ravager.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 37,
+        "life": 23,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Werewolf",
+                    "Wolf"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "RG",
+        "questTags": [
+            "Werewolf",
+            "Beast",
+            "Predator",
+            "Leader",
+            "IdentityRed",
+            "IdentityGreen",
+            "IdentityGruul",
+            "BiomeRed",
+            "BiomeGreen"
+        ],
+        "tier": "Rare",
+        "scale": 0.3421
+    },
+    {
+        "name": "Moonsilver Werewolf",
+        "sprite": "sprites/enemy/tfr/moonsilver_werewolf.atlas",
+        "deck": [
+            "decks/standard/tfr/moonsilver_werewolf.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 27,
+        "life": 21,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Werewolf",
+                    "Wolf",
+                    "Dog"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Werewolf",
+            "Beast",
+            "Predator",
+            "IdentityWhite",
+            "BiomeWhite"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3421
+    },
+    {
+        "name": "Dawnmane Kirin",
+        "sprite": "sprites/enemy/tfr/dawnmane_kirin.atlas",
+        "deck": [
+            "decks/standard/tfr/dawnmane_kirin.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 22,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Kirin",
+                    "Spirit"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Spirit",
+            "Mythical",
+            "Kirin",
+            "IdentityWhite",
+            "BiomeWhite"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4194
+    },
+    {
+        "name": "Cloudmane Kirin",
+        "sprite": "sprites/enemy/tfr/cloudmane_kirin.atlas",
+        "deck": [
+            "decks/standard/tfr/cloudmane_kirin.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 24,
+        "life": 21,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Kirin",
+                    "Spirit"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Spirit",
+            "Mythical",
+            "Kirin",
+            "IdentityBlue",
+            "BiomeBlue"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.4194
+    },
+    {
+        "name": "Flamemane Kirin",
+        "sprite": "sprites/enemy/tfr/flamemane_kirin.atlas",
+        "deck": [
+            "decks/standard/tfr/flamemane_kirin.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 22,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Kirin",
+                    "Spirit"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Spirit",
+            "Mythical",
+            "Kirin",
+            "Fire",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3736
+    },
+    {
+        "name": "Mossantler Kirin",
+        "sprite": "sprites/enemy/tfr/mossantler_kirin.atlas",
+        "deck": [
+            "decks/standard/tfr/mossantler_kirin.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 26,
+        "life": 21,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Kirin",
+                    "Spirit"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Spirit",
+            "Mythical",
+            "Kirin",
+            "Nature",
+            "IdentityGreen",
+            "BiomeGreen"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3736
+    },
+    {
+        "name": "Bloodfang Bat",
+        "sprite": "sprites/enemy/tfr/bloodfang_bat.atlas",
+        "deck": [
+            "decks/standard/tfr/bloodfang_bat.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 21,
+        "life": 11,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Bat"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Animal",
+            "Nocturnal",
+            "Small",
+            "Flying",
+            "IdentityBlack",
+            "BiomeBlack"
+        ],
+        "tier": "Common",
+        "scale": 0.3714
+    },
+    {
+        "name": "Pyrefang Bat",
+        "sprite": "sprites/enemy/tfr/pyrefang_bat.atlas",
+        "deck": [
+            "decks/standard/tfr/pyrefang_bat.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 19,
+        "life": 12,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Bat",
+                    "Phoenix",
+                    "Dragon",
+                    "Bird"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Animal",
+            "Nocturnal",
+            "Small",
+            "Flying",
+            "Fire",
+            "IdentityRed",
+            "BiomeRed"
+        ],
+        "tier": "Common",
+        "scale": 0.3714
+    },
+    {
+        "name": "Frostfang Bat",
+        "sprite": "sprites/enemy/tfr/frostfang_bat.atlas",
+        "deck": [
+            "decks/standard/tfr/frostfang_bat.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 23,
+        "life": 12,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Bat",
+                    "Bird",
+                    "Drake",
+                    "Faerie"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Animal",
+            "Nocturnal",
+            "Small",
+            "Flying",
+            "Snow",
+            "IdentityBlue",
+            "BiomeBlue"
+        ],
+        "tier": "Common",
+        "scale": 0.3714
+    },
+    {
+        "name": "Marblehewn Golem",
+        "sprite": "sprites/enemy/tfr/marblehewn_golem.atlas",
+        "deck": [
+            "decks/standard/tfr/marblehewn_golem.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 33,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "W",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Golem",
+            "Stone",
+            "Large",
+            "IdentityWhite",
+            "BiomeWhite",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.3714
+    },
+    {
+        "name": "Rimeglass Golem",
+        "sprite": "sprites/enemy/tfr/rimeglass_golem.atlas",
+        "deck": [
+            "decks/standard/tfr/rimeglass_golem.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 32,
+        "life": 28,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "U",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Golem",
+            "Snow",
+            "Large",
+            "IdentityBlue",
+            "BiomeBlue",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.3714
+    },
+    {
+        "name": "Obsidian Warden",
+        "sprite": "sprites/enemy/tfr/obsidian_warden.atlas",
+        "deck": [
+            "decks/standard/tfr/obsidian_warden.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 35,
+        "life": 27,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Golem",
+            "Stone",
+            "Large",
+            "IdentityBlack",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.3714
+    },
+    {
+        "name": "Kilnfired Golem",
+        "sprite": "sprites/enemy/tfr/kilnfired_golem.atlas",
+        "deck": [
+            "decks/standard/tfr/kilnfired_golem.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 32,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "R",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Golem",
+            "Fire",
+            "Large",
+            "IdentityRed",
+            "BiomeRed",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.3714
+    },
+    {
+        "name": "Jadestone Golem",
+        "sprite": "sprites/enemy/tfr/jadestone_golem.atlas",
+        "deck": [
+            "decks/standard/tfr/jadestone_golem.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 34,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "G",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Golem",
+            "Stone",
+            "Large",
+            "IdentityGreen",
+            "BiomeGreen",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.3714
+    },
+    {
+        "name": "Dreadgaze Horror",
+        "sprite": "sprites/enemy/tfr/dreadgaze_horror.atlas",
+        "deck": [
+            "decks/standard/tfr/dreadgaze_horror.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 24,
+        "life": 19,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Horror",
+                    "Nightmare",
+                    "Eldrazi"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Horror",
+            "Monster",
+            "Aberration",
+            "Eye",
+            "Flying",
+            "IdentityBlack",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3714
+    },
+    {
+        "name": "Veilgaze Horror",
+        "sprite": "sprites/enemy/tfr/veilgaze_horror.atlas",
+        "deck": [
+            "decks/standard/tfr/veilgaze_horror.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 28,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Horror",
+                    "Nightmare",
+                    "Eldrazi"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "UB",
+        "questTags": [
+            "Horror",
+            "Monster",
+            "Aberration",
+            "Eye",
+            "Flying",
+            "IdentityBlue",
+            "IdentityBlack",
+            "IdentityDimir",
+            "BiomeBlue",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3714
+    },
+    {
+        "name": "Bloodgaze Horror",
+        "sprite": "sprites/enemy/tfr/bloodgaze_horror.atlas",
+        "deck": [
+            "decks/standard/tfr/bloodgaze_horror.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 25,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Horror",
+                    "Nightmare",
+                    "Eldrazi"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "BR",
+        "questTags": [
+            "Horror",
+            "Monster",
+            "Aberration",
+            "Eye",
+            "Flying",
+            "IdentityBlack",
+            "IdentityRed",
+            "IdentityRakdos",
+            "BiomeBlack",
+            "BiomeRed",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3714
+    },
+    {
+        "name": "Soulreaver Specter",
+        "sprite": "sprites/enemy/tfr/soulreaver_specter.atlas",
+        "deck": [
+            "decks/standard/tfr/soulreaver_specter.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 34,
+        "life": 25,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Spirit",
+                    "Wraith",
+                    "Specter",
+                    "Shade"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "UB",
+        "questTags": [
+            "Spirit",
+            "Undead",
+            "Specter",
+            "Flying",
+            "IdentityBlue",
+            "IdentityBlack",
+            "IdentityDimir",
+            "BiomeBlue",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.1757
+    },
+    {
+        "name": "Harvester of Last Breaths",
+        "sprite": "sprites/enemy/tfr/harvester_of_last_breaths.atlas",
+        "deck": [
+            "decks/standard/tfr/harvester_of_last_breaths.dck"
+        ],
+        "ai": "",
+        "flying": true,
+        "spawnRate": 1,
+        "difficulty": 3,
+        "speed": 45,
+        "life": 45,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 3,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 60,
+                "addMaxCount": 140
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.75,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ],
+                "subTypes": [
+                    "Spirit",
+                    "Wraith",
+                    "Specter",
+                    "Shade"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Spirit",
+            "Undead",
+            "Specter",
+            "Flying",
+            "IdentityBlack",
+            "BiomeBlack"
+        ],
+        "tier": "Mythic",
+        "scale": 0.1757
+    },
+    {
+        "name": "Rotfang Hound",
+        "sprite": "sprites/enemy/tfr/rotfang_hound.atlas",
+        "deck": [
+            "decks/standard/tfr/rotfang_hound.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 0.1,
+        "speed": 22,
+        "life": 13,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 20,
+                "addMaxCount": 60
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.4,
+                "count": 1,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ],
+                "subTypes": [
+                    "Zombie"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.3,
+                "count": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Zombie",
+            "Undead",
+            "Unholy",
+            "Animal",
+            "Minion",
+            "IdentityBlack",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Common",
+        "scale": 0.3824
+    },
+    {
+        "name": "Gravemoss Bear",
+        "sprite": "sprites/enemy/tfr/gravemoss_bear.atlas",
+        "deck": [
+            "decks/standard/tfr/gravemoss_bear.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 25,
+        "life": 19,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Zombie"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "BG",
+        "questTags": [
+            "Zombie",
+            "Undead",
+            "Unholy",
+            "Animal",
+            "Minion",
+            "IdentityBlack",
+            "IdentityGreen",
+            "IdentityGolgari",
+            "BiomeBlack",
+            "BiomeGreen",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3714
+    },
+    {
+        "name": "Carrion Steed",
+        "sprite": "sprites/enemy/tfr/carrion_steed.atlas",
+        "deck": [
+            "decks/standard/tfr/carrion_steed.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 24,
+        "life": 20,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Zombie"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "B",
+        "questTags": [
+            "Zombie",
+            "Undead",
+            "Unholy",
+            "Animal",
+            "Minion",
+            "IdentityBlack",
+            "BiomeBlack",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3611
+    },
+    {
+        "name": "Bronzecrest Automaton",
+        "sprite": "sprites/enemy/tfr/bronzecrest_automaton.atlas",
+        "deck": [
+            "decks/standard/tfr/bronzecrest_automaton.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 1,
+        "speed": 25,
+        "life": 22,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 4,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 30,
+                "addMaxCount": 80
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.5,
+                "count": 1,
+                "rarity": [
+                    "Uncommon",
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.5,
+                "count": 1,
+                "addMaxCount": 1,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.4,
+                "count": 1,
+                "addMaxCount": 2
+            }
+        ],
+        "colors": "C",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Robot",
+            "IdentityColorless",
+            "BiomeColorless"
+        ],
+        "tier": "Uncommon",
+        "scale": 0.3824
+    },
+    {
+        "name": "Ironcrest Sentinel",
+        "sprite": "sprites/enemy/tfr/ironcrest_sentinel.atlas",
+        "deck": [
+            "decks/standard/tfr/ironcrest_sentinel.dck"
+        ],
+        "ai": "",
+        "spawnRate": 1,
+        "difficulty": 2,
+        "speed": 36,
+        "life": 24,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 5,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 1,
+                "count": 40,
+                "addMaxCount": 100
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 2,
+                "addMaxCount": 3,
+                "rarity": [
+                    "Common",
+                    "Uncommon"
+                ]
+            },
+            {
+                "type": "card",
+                "probability": 0.6,
+                "count": 1,
+                "rarity": [
+                    "Rare"
+                ],
+                "subTypes": [
+                    "Construct",
+                    "Golem",
+                    "Thopter",
+                    "Myr"
+                ]
+            },
+            {
+                "type": "deckCard",
+                "probability": 0.7,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "Rare",
+                    "Mythic Rare"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.6,
+                "count": 1,
+                "addMaxCount": 3
+            }
+        ],
+        "colors": "C",
+        "questTags": [
+            "Construct",
+            "Artifact",
+            "Robot",
+            "Guard",
+            "IdentityColorless",
+            "BiomeColorless"
+        ],
+        "tier": "Rare",
+        "scale": 0.3824
     }
 ]

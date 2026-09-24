@@ -1,0 +1,68 @@
+gravemoss_bear.png
+size: 144,221
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 33, 33
+IdleDown
+  xy: 48, 33
+  size: 48, 47
+IdleLeft
+  xy: 48, 80
+  size: 48, 47
+IdleRight
+  xy: 48, 127
+  size: 48, 47
+IdleUp
+  xy: 48, 174
+  size: 48, 47
+WalkDown
+  xy: 0, 33
+  size: 48, 47
+WalkDown
+  xy: 48, 33
+  size: 48, 47
+WalkDown
+  xy: 96, 33
+  size: 48, 47
+WalkDown
+  xy: 48, 33
+  size: 48, 47
+WalkLeft
+  xy: 0, 80
+  size: 48, 47
+WalkLeft
+  xy: 48, 80
+  size: 48, 47
+WalkLeft
+  xy: 96, 80
+  size: 48, 47
+WalkLeft
+  xy: 48, 80
+  size: 48, 47
+WalkRight
+  xy: 0, 127
+  size: 48, 47
+WalkRight
+  xy: 48, 127
+  size: 48, 47
+WalkRight
+  xy: 96, 127
+  size: 48, 47
+WalkRight
+  xy: 48, 127
+  size: 48, 47
+WalkUp
+  xy: 0, 174
+  size: 48, 47
+WalkUp
+  xy: 48, 174
+  size: 48, 47
+WalkUp
+  xy: 96, 174
+  size: 48, 47
+WalkUp
+  xy: 48, 174
+  size: 48, 47

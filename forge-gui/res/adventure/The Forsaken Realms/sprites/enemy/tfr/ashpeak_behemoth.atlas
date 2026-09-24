@@ -1,0 +1,32 @@
+ashpeak_behemoth.png
+size: 234,187
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 76, 76
+Idle
+  xy: 0, 76
+  size: 78, 111
+Idle
+  xy: 78, 76
+  size: 78, 111
+Idle
+  xy: 156, 76
+  size: 78, 111
+Idle
+  xy: 78, 76
+  size: 78, 111
+Walk
+  xy: 0, 76
+  size: 78, 111
+Walk
+  xy: 78, 76
+  size: 78, 111
+Walk
+  xy: 156, 76
+  size: 78, 111
+Walk
+  xy: 78, 76
+  size: 78, 111

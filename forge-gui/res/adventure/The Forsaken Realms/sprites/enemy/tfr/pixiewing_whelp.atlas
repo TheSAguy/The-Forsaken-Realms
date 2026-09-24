@@ -1,0 +1,104 @@
+pixiewing_whelp.png
+size: 138,220
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 40, 40
+IdleDown
+  xy: 0, 40
+  size: 46, 45
+IdleDown
+  xy: 46, 40
+  size: 46, 45
+IdleDown
+  xy: 92, 40
+  size: 46, 45
+IdleDown
+  xy: 46, 40
+  size: 46, 45
+IdleLeft
+  xy: 0, 85
+  size: 46, 45
+IdleLeft
+  xy: 46, 85
+  size: 46, 45
+IdleLeft
+  xy: 92, 85
+  size: 46, 45
+IdleLeft
+  xy: 46, 85
+  size: 46, 45
+IdleRight
+  xy: 0, 130
+  size: 46, 45
+IdleRight
+  xy: 46, 130
+  size: 46, 45
+IdleRight
+  xy: 92, 130
+  size: 46, 45
+IdleRight
+  xy: 46, 130
+  size: 46, 45
+IdleUp
+  xy: 0, 175
+  size: 46, 45
+IdleUp
+  xy: 46, 175
+  size: 46, 45
+IdleUp
+  xy: 92, 175
+  size: 46, 45
+IdleUp
+  xy: 46, 175
+  size: 46, 45
+WalkDown
+  xy: 0, 40
+  size: 46, 45
+WalkDown
+  xy: 46, 40
+  size: 46, 45
+WalkDown
+  xy: 92, 40
+  size: 46, 45
+WalkDown
+  xy: 46, 40
+  size: 46, 45
+WalkLeft
+  xy: 0, 85
+  size: 46, 45
+WalkLeft
+  xy: 46, 85
+  size: 46, 45
+WalkLeft
+  xy: 92, 85
+  size: 46, 45
+WalkLeft
+  xy: 46, 85
+  size: 46, 45
+WalkRight
+  xy: 0, 130
+  size: 46, 45
+WalkRight
+  xy: 46, 130
+  size: 46, 45
+WalkRight
+  xy: 92, 130
+  size: 46, 45
+WalkRight
+  xy: 46, 130
+  size: 46, 45
+WalkUp
+  xy: 0, 175
+  size: 46, 45
+WalkUp
+  xy: 46, 175
+  size: 46, 45
+WalkUp
+  xy: 92, 175
+  size: 46, 45
+WalkUp
+  xy: 46, 175
+  size: 46, 45
