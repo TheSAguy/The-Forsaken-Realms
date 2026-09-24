@@ -52,23 +52,26 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-09-24 (round 320; **v1.14 "Realm Reforged" READY TO PUBLISH** - stamps, notes and artifacts built, NOT tagged or pushed; v1.13 is the last published release (tag `tfr-v1.13` @ `e2a3eb5b89c`); rounds 292-320 local; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 321, 2026-09-24 ~01:50).** **v1.14 "Realm Reforged" is READY TO
-  PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-321, engine =
-  the 09.23 daily. The artifacts are from round 321 part 2 (`b4c434c63ff`); HEAD is that or a docs commit on it; nothing tagged, nothing pushed (origin is
+- **NEXT SESSION starts here (updated round 326, 2026-09-24 ~08:10).** **v1.14 "Realm Reforged" is READY TO
+  PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-326, engine =
+  the 09.23 daily. The artifacts are from round 326 (`3dadc40609a`); HEAD is that or a docs commit on it; nothing tagged, nothing pushed (origin is
   still at v1.13's close-out). **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
   `The-Forsaken-Realms-v1.14.zip` (267.8 MB, from `build_standalone.py --zip`, modVersion 1.14 / 09.24, build.txt
   2026-09-23 18:26:42 = the stock daily), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; aapt: package
   com.thesaguy.forsakenrealms, versionCode 11400, versionName 1.14; apksigner: CN=The Forsaken Realms, SHA-256
   ee603925...), `assets.zip` (220.3 MB; res/adventure = common + The Forsaken Realms; res/build.txt and the APK's
-  build.txt both 2026-09-24 08:44:41), `RELEASE_NOTES_v1.14.md`. The APK/assets pair came from `C:\TFR-build` reset to
-  `b4c434c63ff`. **Remaining publish steps (the user's call):** `git tag -a tfr-v1.14 -m "v1.14 Realm Reforged"`
+  build.txt both 2026-09-24 15:07:10), `RELEASE_NOTES_v1.14.md`. The APK/assets pair came from `C:\TFR-build` reset to
+  `3dadc40609a`. **Remaining publish steps (the user's call):** `git tag -a tfr-v1.14 -m "v1.14 Realm Reforged"`
   on the release commit; push main and the tag to origin; `gh release create tfr-v1.14 -R TheSAguy/The-Forsaken-Realms
   --draft --title "v1.14 - Realm Reforged" --notes-file RELEASE_NOTES_v1.14.md`; upload the zip, the APK and
   `assets.zip` from `C:\TFR\release\v1.14\` (ALWAYS `-R TheSAguy/The-Forsaken-Realms`); `gh release edit tfr-v1.14 -R
   ... --draft=false --latest`. If ANY code or data changes before publishing, rebuild all three artifacts (the APK and
   assets.zip are a matched pair). The keystore backup at `C:\TFR\live\forsaken-realms-android.keystore` was missing and
   was restored (md5 ab910316...; F:\FORGE\TFR-Standalone and TFR-Agent hold identical copies). Open for the user,
-  noticed in round 319: 75 above-Apprentice chest guards from round 286b, and unique characters' names on many guards.
+  next release (round 322's research, `scratchpad/r322/questpoi/`): hide quest-only places until their quest calls them
+  - the data already gates ten of them (`questFlagsToActivate`), but `PointOfInterest.load()` never reads the gate
+  back, so they appear after the first load; the recommended fix (a `questHidden` flag + reveal on the targeting
+  stage, via the rotation's active switch) touches world gen, quest activation and every save - after v1.14.
   v1.13 was published 2026-09-22 22:31:46 UTC (rounds 247-290 on the 09.22 engine).
 - **Round 292 (after the release; local commit, NOT pushed): map labels that stay on their places, an inventory text
   that wraps, overworld zoom-out 1.5 -> 2.0.** Map view: pins and dots laid out from world anchors every zoom step,
