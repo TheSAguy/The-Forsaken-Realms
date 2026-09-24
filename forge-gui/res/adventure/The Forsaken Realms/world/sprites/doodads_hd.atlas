@@ -1,5 +1,5 @@
 doodads_hd.png
-size: 512,448
+size: 512,496
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -1527,5 +1527,12 @@ PlayerGravel
   xy: 288, 416
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 0, 448
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1

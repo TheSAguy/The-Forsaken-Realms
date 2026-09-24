@@ -132,6 +132,12 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 305: minimap swatches, whirlpools
+
+- **`world/World.java`** - `MAP_ICON_LAYOUT` 2 (a one-time map re-bake), `DOODAD_SET` 305 (a one-time re-scatter),
+  `structureNameAtTile()` names a collision biome's own ground after the biome (the ocean), the re-scatter log lists the
+  rare doodads' tiles.
+
 ### Round 304: AI-piloted best-of-3 duels keep their result
 
 - **`forge-gui-mobile/src/forge/screens/match/MatchController.java`** - `afterGameEnd()`: in adventure mode, between the

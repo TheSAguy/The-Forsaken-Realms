@@ -137,6 +137,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 305 (local commit, NOT pushed): minimap swatches (the player's land was RED: round 300's sheet had no
+  top-left 4x4 colour), the player's green toned half way back, blue's snow hills -> boulders, dimmer wasteland
+  craters, ~20 whirlpools on the ocean** (plane `world/biomes/base.json` + `"onStructures": ["ocean"]`). One-time
+  re-bake (MAP_ICON_LAYOUT 2) and re-scatter (DOODAD_SET 305). Ground options per color were previewed (scratchpad
+  `r303\terrain_options.py`, sheets bhUpd0H / ZCrOljM / deser_a2 / World_A2 - the GDPkqrj, xfr6holm and lava sheets
+  are solid fills, blocky as patches); the user is picking.
 - **Round 304 (local commit, NOT pushed): AI-piloted best-of-3 duels keep their result** (agent only; round 302's
   finding). Between the games of a match no local seat plays, `MatchController.afterGameEnd()` no longer calls
   `Forge.back(true)`: the spectator's screen was the only one, so back() reached `setCurrentScreen(null)` ->

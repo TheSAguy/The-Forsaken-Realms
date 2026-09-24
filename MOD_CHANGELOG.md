@@ -17757,6 +17757,39 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 305: the player's land green again on the minimap, a softer player green, whirlpools (2026-09-23)
+
+User, after round 303: *"The player's main color, the green it a little too vibrant, can we tone it down, somewhere
+between where it is now and what it was before. Currently the player is showing red on the minimap. Remove the
+Snow/white hills from Blue. See - 'Neutral Color.png' The green circles I like, The Red, is too bright vs. current
+background. Can we add, just a few, Wirlpools to the Ocean around the border of the world. Maybe 20 in total."* Local
+commit. (The same message asked for ground options per color - previews sent, waiting for the user's picks.)
+
+- **The red minimap was round 300's.** The minimap takes each tile's colour from the top-left 4x4 of its sheet region
+  (`World.createSmallPixmap()`) over a pixmap primed with red. Those XP tiles are never drawn in the world (BiomeTexture's
+  Empty pieces), and round 300's converter left them transparent - so the player's whole land showed the red primer, and
+  round 303's structure sheets vanished from the minimap the same way. Every HD sheet now carries a swatch there (the
+  art's mean colour: `player_terrain_hd.png`, every `*_structures_hd.png`). `World.MAP_ICON_LAYOUT` 1 -> 2 re-bakes a
+  save's map image once (`migrateMapIconLayout()`, the round-249 path), so the user's current save is fixed on load.
+- **The player's ground toned down** (`player_terrain_hd.png`): each region's colour moved half way to the user's old
+  16 px ground by a per-channel gain, so the new texture keeps its detail - the centre tile went (115,182,54) -> (84,145,27).
+- **Blue's rock** is a grid of grey coastal boulders instead of the MV ice-rock mounds (the "snow/white hills").
+- **The wasteland's craters** take the dim rim of its holes (value 0.68 / 0.62 instead of the bright 0.95) - the ones the
+  user circled green; the bright ones read as too bright against the slate ground.
+- **Whirlpools** on the ocean: `world/biomes/base.json` is now a plane copy of common's ocean with `spriteNames`
+  ["Whirlpool"] (common stays untouched); the picture is the MV A1 whirlpool from the user's `Wirlpool.png`, recoloured
+  into the ocean's palette (its water (21,99,151) against the ocean's (48,175,218)) and faded in a circle, drawn two tiles
+  wide (`scale` 0.6667). `World.structureNameAtTile()` names a collision biome's own ground after the biome, so the
+  whirlpool asks for `"onStructures": ["ocean"]`. Density 0.0001 over ~200k tiles of open sea - 0.0003 gave 63.
+- `World.DOODAD_SET` 303 -> 305: every save scatters its doodads once more (whirlpools, blue's rocks, the rebalanced water
+  doodads). The re-scatter log also lists where the rare doodads went.
+
+**Seen** in the agent game on a copy of the user's save: "[TFR-MapIcons] map image re-baked ... (layout 1 -> 2, 208 ms)";
+"[TFR-Doodads] ... -> 15715 ... on structures {BlackLily=13, BlueCoral=11, BlueSeaweed=6, GreenLily=11, PlayerLily=5,
+Whirlpool=24}" with the whirlpools at the map's rim ((10,420), (28,9), (165,689), (538,0), (614,606)...); the map view
+shows the player's land green around the Capitol's pentagon; screenshots of the toned ground, blue's boulders, the
+dimmer craters and two whirlpools.
+
 ## Round 304: AI-piloted best-of-3 duels keep their result (2026-09-23)
 
 The task (round 302's finding, passed on by the user): when the agent bridge's auto-battle pilots the player's seat in a

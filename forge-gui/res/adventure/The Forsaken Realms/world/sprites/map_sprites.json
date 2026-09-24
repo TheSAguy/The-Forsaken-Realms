@@ -673,6 +673,16 @@
 "resolution":10,
 "density":0.1,
 "scale":0.5
+},{
+"name":"Whirlpool",
+"atlas":"world/sprites/doodads_hd.atlas",
+"startArea":0.0,
+"endArea":1.0,
+"layer":-1,
+"resolution":1,
+"density":0.0001,
+"scale":0.6667,
+"onStructures":["ocean"]
 }
 ]
 }

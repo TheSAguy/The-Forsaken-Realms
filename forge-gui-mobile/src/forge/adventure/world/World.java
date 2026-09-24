@@ -76,7 +76,10 @@ public class World implements Disposable, SaveFileContent {
     // with its icons in it, so moving them means repainting the ground under the old ones - migrateMapIconLayout()
     // does that ONCE for a save below MAP_ICON_LAYOUT. 0 = stock, each icon centered on its POI's bottom-left corner
     // (every save before round 249, which has no key); 1 = centered on the POI (PointOfInterest.getCenter()).
-    public static final int MAP_ICON_LAYOUT = 1;
+    // Round 305: 2 - the same centered layout, re-baked once more because the round-303/305 sheets now carry their
+    // minimap swatches (the top-left 4x4 World.createSmallPixmap() reads); round 300's 32 px player ground had none,
+    // and the red the minimap is primed with showed through on the player's whole land.
+    public static final int MAP_ICON_LAYOUT = 2;
     private int mapIconLayout = MAP_ICON_LAYOUT;
     // Round 293 (user: "The bottom left is creating a 'gap' in the terrain"): the point town territory grew from.
     // 0 = the town's bottom-left corner (every save before round 293, which has no key) - its growth rings left a gap
@@ -356,7 +359,8 @@ public class World implements Disposable, SaveFileContent {
      *  key here is never paid again, however the enemy that carries it comes back. */
     private final java.util.Map<String, Integer> oncePaidRewards = new java.util.HashMap<>();
     // Round 303: the doodad set a world's doodads were placed from - see rescatterDoodads(). 0 = a save from before.
-    public static final int DOODAD_SET = 303;
+    // Round 305: 305 - the whirlpools, blue's new rocks and the rebalanced water doodads (a 303 save scatters once more).
+    public static final int DOODAD_SET = 305;
     private int doodadSet = DOODAD_SET;
 
     public java.util.Map<String, Integer> getPoiLootHeldDay() {
@@ -4968,8 +4972,14 @@ public class World implements Disposable, SaveFileContent {
         long tileBiomes = biomeMap[x][height - y - 1];
         int layer = highestBiome(tileBiomes);
         List<BiomeData> biomes = data.GetBiomes();
-        if (index <= 0 || layer < 0 || layer >= biomes.size())
+        if (layer < 0 || layer >= biomes.size())
             return null;
+        if (index <= 0) {
+            // Round 305 (user: "add, just a few, Wirlpools to the Ocean around the border of the world"): a collision
+            // biome's own ground - the ocean, whose every tile is blocked - is named after the biome, so a doodad can
+            // ask for it ("onStructures": ["ocean"]). Any other plain tile has no structure at all.
+            return biomes.get(layer).collision ? biomes.get(layer).name : null;
+        }
         if (holdsWasteSpaceValue(layer, x, y, tileBiomes)) {
             BiomeData waste = wasteBiome();
             return waste == null ? null : structureNameAt(waste, index);
@@ -4989,8 +4999,11 @@ public class World implements Disposable, SaveFileContent {
 
     /** openTiles / onStructures, if given, count each biome's plain tiles (the ground doodads' candidates) and the
      *  doodads placed on structures (the water ones, per kind) for the log. */
+    private final StringBuilder rareSpots = new StringBuilder();
+
     private int[] placeAllDoodads(SpritesDataMap into, OpenSimplexNoise noise, float noiseZoom, Random groundRng,
                                   Random structureRng, int[] openTiles, Map<String, Integer> onStructures) {
+        rareSpots.setLength(0);
         List<BiomeData> biomes = data.GetBiomes();
         int[] placed = new int[biomes.size()];
         for (int x = 0; x < width; x++) {
@@ -5010,8 +5023,12 @@ public class World implements Disposable, SaveFileContent {
                 into.putPosition(key, new Vector2((((float) x) + .25f + rng.nextFloat() / 2) * data.tileSize,
                         (((float) y + .25f) - rng.nextFloat() / 2) * data.tileSize));
                 placed[currentBiome]++;
-                if (structure && onStructures != null)
+                if (structure && onStructures != null) {
                     onStructures.merge(sprite.name, 1, Integer::sum);
+                    if (sprite.density < 0.001 && rareSpots.length() < 400) // round 305: where the whirlpools went
+                        rareSpots.append(rareSpots.length() == 0 ? "" : ", ").append(sprite.name).append(" (")
+                                .append(x).append(",").append(y).append(")");
+                }
             }
         }
         return placed;
@@ -5050,6 +5067,8 @@ public class World implements Disposable, SaveFileContent {
         System.out.println("[TFR-Doodads] a save from doodad set " + oldSet + ": its " + before + " doodads placed again"
                 + " from the current lists -> " + total + " (" + per + ") in " + (System.currentTimeMillis() - t0) + " ms;"
                 + " on structures " + onStructures);
+        if (rareSpots.length() > 0)
+            System.out.println("[TFR-Doodads] rare ones at (tiles): " + rareSpots);
     }
 
     // Companion to neutralizeTerritoryOutsideRadius() - that method never touches mapObjectIds
