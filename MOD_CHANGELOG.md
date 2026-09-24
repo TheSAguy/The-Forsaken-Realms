@@ -17757,6 +17757,17 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 314: New Game+ carries the bank's gold (2026-09-23)
+
+User: *"When doing a NG+, be sure to add the gold the player has in his bank to the new game also."* Local commit.
+
+- The bank's balance lives on the Capitol's `PointOfInterestChanges`, and the New Game+ path wipes every place's
+  changes (`WorldSave.clearChanges()`) before generating the new world - so the balance was lost. `SaveLoadScene`'s
+  New Game+ branch now totals every bank balance before the wipe and pays it into the purse after
+  `resetForNewGamePlus()`, as a ledger transfer (IGNORED - not income): `[TFR-NewGamePlus] the bank's N gold carried
+  into the new run - purse now M`. Not run in the agent game (its save has no bank) - the line shows on the user's
+  next New Game+.
+
 ## Round 313: the research list's "Hide partial" and its new order; a long dialog fits its window (2026-09-23)
 
 User: *"When you research, there are 3 states... We can hide the last set. I want to add a button to hide the second

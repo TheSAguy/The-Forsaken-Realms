@@ -323,6 +323,14 @@ public class SaveLoadScene extends UIScene {
                     Forge.setTransitionScreen(new TransitionScreen(() -> {
                         loaded = false;
                         if (WorldSave.load(currentSlot)) {
+                            // Round 314 (user: "When doing a NG+, be sure to add the gold the player has in his bank to the
+                            // new game also"): the bank's balance lives on the Capitol's PointOfInterestChanges, which
+                            // clearChanges() wipes with the rest of the old world - counted first, paid into the purse
+                            // after the reset below.
+                            int banked = 0;
+                            for (forge.adventure.pointofintrest.PointOfInterestChanges c : WorldSave.getCurrentSave().getAllPointOfInterestChanges())
+                                banked += Math.max(0, c.getBankBalance());
+                            final int bankedGold = banked;
                             WorldSave.getCurrentSave().clearChanges();
                             // Round 241: world-gen thins the wasteland towns by difficulty, and the new
                             // difficulty is only applied to the player below - so the World is told first.
@@ -348,6 +356,12 @@ public class SaveLoadScene extends UIScene {
                                 // set, and before addQuest("28"), which needs the cleared quest
                                 // list and the newGamePlus flag already in place.
                                 Current.player().resetForNewGamePlus();
+                                if (bankedGold > 0) { // round 314: a transfer, not income - the ledger's IGNORED bucket
+                                    forge.adventure.util.ResourceLedger.run(forge.adventure.util.ResourceLedger.Bucket.IGNORED,
+                                            () -> Current.player().giveGold(bankedGold));
+                                    System.out.println("[TFR-NewGamePlus] the bank's " + bankedGold
+                                            + " gold carried into the new run - purse now " + Current.player().getGold());
+                                }
                                 // Mirrors WorldSave's own New Game ordering: the color shards only
                                 // exist after generateNew() has re-seeded them, and the player's
                                 // own editions must be carved out of the AI colors' pools again -

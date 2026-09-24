@@ -132,6 +132,10 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 314: New Game+ keeps the bank's gold
+
+- **`scene/SaveLoadScene.java`** - the New Game+ branch pays the old world's bank balances into the purse.
+
 ### Round 313: research filter and order, dialog fit
 
 - **`scene/ResearchScene.java`** - "Hide partial" checkbox; groups (researching / ready / partial / unfound) sorted.
