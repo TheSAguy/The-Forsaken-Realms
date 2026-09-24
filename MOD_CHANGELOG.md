@@ -17757,6 +17757,19 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 315: two temple entrances - the Monastery and the Elven Encampment (2026-09-23)
+
+User, with a sheet of a blue-roofed temple, clean and overgrown: *"Two more dungeons you can add."* Local commit; data
+only.
+
+- Cut at the sheet's empty column, shrunk to 32x32 (LANCZOS, a light unsharp mask, crisp alpha) and bottom-centred like
+  every place icon; the overgrown one's greenery was strengthened first so the vines survive a tenth of the size.
+  `maps/tileset/dungeon_entrances.png/.atlas` gain `BlueTemple` and `BlueTempleOvergrown` (a new row).
+- **Who gets them**: the dungeons that still borrowed another place's icon - the Monastery (the Unhallowed Abbey side
+  boss drew the same one; it keeps it) takes the clean temple, and ElfTown, the Secluded Elven Encampment (the forest
+  towns' icon), the overgrown one. Seven dungeons still share art with a town or castle (Zombie Town, Djinn Palace,
+  Fort3, Vampire Castle, Castle3 and two quest dungeons).
+
 ## Round 309: two to three times the doodads' variety on every land (2026-09-23)
 
 User: *"Also, were you able to find more doodads? I want to double or triple them. The the number on the map, but the

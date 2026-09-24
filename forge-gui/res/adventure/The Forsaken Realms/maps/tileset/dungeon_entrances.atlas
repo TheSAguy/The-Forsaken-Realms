@@ -1,5 +1,5 @@
 dungeon_entrances.png
-size: 256,116
+size: 256,148
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -162,5 +162,19 @@ SandTowerTallRuined
   xy: 78, 0
   size: 24, 48
   orig: 24, 48
+  offset: 0, 0
+  index: -1
+BlueTemple
+  rotate: false
+  xy: 0, 116
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BlueTempleOvergrown
+  rotate: false
+  xy: 32, 116
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1

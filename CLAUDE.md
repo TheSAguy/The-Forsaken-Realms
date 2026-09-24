@@ -141,6 +141,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   survives a result with no world enemy** (the peer-handed crash; exact trigger unconfirmed - a lair-boss win first).
 - **Round 309 (local commit, NOT pushed): doodad variety x2-3 on every land, the same coverage** (104 kinds, 630
   pictures; DOODAD_SET 309 re-scatter; design in `dev-tools/world-art/spec.py`).
+- **Round 315 (local commit, NOT pushed): the user's two temples as dungeon entrances** (BlueTemple -> Monastery,
+  BlueTempleOvergrown -> ElfTown; `maps/tileset/dungeon_entrances.*`).
 - **Round 314 (local commit, NOT pushed): New Game+ carries the bank's gold into the new run.**
 - **Round 313 (local commit, NOT pushed): research "Hide partial" + the list ordered researching / ready / partial /
   unfound; a scrolled map dialog shrinks its list to fit the HUD** (a player's windowed-mode report).

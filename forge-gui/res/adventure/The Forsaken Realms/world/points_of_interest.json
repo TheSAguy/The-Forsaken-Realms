@@ -1715,8 +1715,8 @@
 		"displayName": "Secluded Elven Encampment",
 		"type": "dungeon",
 		"count": 2,
-		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
-		"sprite": "ForestTown",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "BlueTempleOvergrown",
 		"map": "../The Forsaken Realms/maps/map/hostiletown/elftown.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3159,8 +3159,8 @@
 		"displayName": "Monastery",
 		"type": "dungeon",
 		"count": 3,
-		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
-		"sprite": "Monastery",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+		"sprite": "BlueTemple",
 		"map": "../The Forsaken Realms/maps/map/monastery/monastery_1.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
