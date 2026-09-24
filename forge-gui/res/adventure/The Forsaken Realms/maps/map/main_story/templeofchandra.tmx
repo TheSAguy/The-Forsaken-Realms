@@ -1605,7 +1605,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="194" template="../../../../common/maps/obj/enemy.tx" x="720" y="546">
+  <object id="194" template="../../../../common/maps/obj/enemy.tx" x="756" y="525.5">
    <properties>
     <property name="enemy" value="Skeleton"/>
     <property name="threatRange" type="int" value="20"/>

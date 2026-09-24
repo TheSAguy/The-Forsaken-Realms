@@ -273,7 +273,7 @@
 ]</property>
    </properties>
   </object>
-   <object id="138" template="../../../../common/maps/obj/enemy.tx" x="394.5" y="386">
+   <object id="138" template="../../../../common/maps/obj/enemy.tx" x="372.5" y="387">
    <properties>
     <property name="enemy" value="Griffin"/>
     <property name="threatRange" type="int" value="40"/>
@@ -285,7 +285,7 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="140" template="../../../../common/maps/obj/enemy.tx" x="415.5" y="419.5">
+  <object id="140" template="../../../../common/maps/obj/enemy.tx" x="447.5" y="403.5">
    <properties>
     <property name="enemy" value="Griffin"/>
     <property name="threatRange" type="int" value="40"/>

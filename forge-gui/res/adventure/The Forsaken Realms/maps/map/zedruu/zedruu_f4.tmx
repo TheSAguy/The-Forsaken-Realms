@@ -134,12 +134,6 @@
     <property name="waypoints" value="234,175"/>
    </properties>
   </object>
-  <object id="226" template="../../../../common/maps/obj/enemy.tx" x="536.841" y="90.5883">
-   <properties>
-    <property name="enemy" value="Camel"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
   <object id="227" template="../../../../common/maps/obj/enemy.tx" x="194.666" y="420.426">
    <properties>
     <property name="enemy" value="Bull"/>

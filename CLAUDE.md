@@ -145,6 +145,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 319 (local commit, NOT pushed): chest patrols and crowded enemies** - the "296 unguarded chests" was stale
+  (534 chests, 9 unguarded today: 1 patrol, 1 guard moved to reachable floor, 5 already covered, 2 accepted); 66
+  clusters of enemies within 2 tiles -> 19 with 33 patrols, 9 removals, 12 small moves in 46 maps
+  (`dev-tools/guard_patrols/`). Open for the user: 75 above-Apprentice chest guards from round 286b; unique names on
+  guards.
 - **Round 318 (local commit, NOT pushed): 43 new creatures from the user's RPG Maker sheets** (whelps, dragonets,
   wyverns, stationary behemoths, werewolves, kirin, bats, golems, eye horrors, reapers, zombie beasts, automatons; the
   first 4-direction enemy atlases) **+ Jugan/Yosei/Ryusei/Keiga re-skinned**; rosters, arenas, csv; not in caves

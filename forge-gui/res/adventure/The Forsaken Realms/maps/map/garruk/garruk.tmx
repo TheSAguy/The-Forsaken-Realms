@@ -110,7 +110,7 @@
 ]</property>
    </properties>
   </object>
-   <object id="99" template="../../../../common/maps/obj/enemy.tx" x="522.915" y="399.179">
+   <object id="99" template="../../../../common/maps/obj/enemy.tx" x="522.915" y="367.179">
    <properties>
     <property name="enemy" value="Viper"/>
     <property name="threatRange" type="int" value="20"/>

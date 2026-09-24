@@ -88,12 +88,6 @@
     <property name="waypoints" value="111,110"/>
    </properties>
   </object>
-  <object id="68" template="../../../../common/maps/obj/enemy.tx" x="238" y="307.5">
-   <properties>
-    <property name="threatRange" type="int" value="20"/>
-    <property name="enemy" value="Chicken"/>
-   </properties>
-  </object>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="78.5" y="364.75">
    <properties>
     <property name="enemy" value="Scarecrow"/>

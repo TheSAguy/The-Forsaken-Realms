@@ -17757,6 +17757,43 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 319: the unguarded chests, and enemies standing on top of each other (2026-09-24)
+
+User: *"296 chests have no guard. - See if you can move existing enemies to patrol around these. Also, it seems that
+some dungeons now have two enemies standing right next to each other or very close to each other. Do an audit and
+where there are 2 (or more) close to each other, remove one or give one patrol orders if there are not a lot of
+enemies in the dungeon."* Local commit; data only (46 maps).
+
+- **The 296 was stale.** It was round 286's count; rounds 286b and 287 then placed 363 chest guards. Round 286's own
+  audit (`booster_guards.audit(loot="treasure")`) over all 428 maps today: **534 chests, 9 unguarded.** One gets a
+  patrol (the Kavu Lair: the cave's own Kavu now walks past it); five are already covered - an enemy stands within 1.5
+  tiles or an existing patrol passes, but four of those maps have no entry object for the audit's reachability walk,
+  so it always counts them unguarded; two are in `phyrexian_black1`, which the user accepted as designed; and Garruk
+  Forest's chest 48 had a guard (a Viper, round 286b) standing on a tile the player cannot reach - it now stands on
+  the open tile beside the chest.
+- **Crowding: 66 clusters, 142 standing enemies within 2 tiles of another** (centre to centre: touching, diagonal,
+  or one empty tile between). 61 of the 78 pairs involve a guard added by rounds 279-287 next to an enemy that already
+  stood by the same loot. "A lot of enemies" = 8+ fighters on Hard (the median map has 6).
+  - **33 patrols** (1 for the chest, 32 to split clusters): two new waypoints each, back and forth over walkable
+    floor near the enemy's post, written as the maps already write routes (`waypoint.tx` objects + `waypoints`).
+  - **9 removals**, only in maps with 8+ fighters, only a guard-tool placement or an exact duplicate, and never one
+    whose removal leaves a booster or chest without its guard.
+  - **12 small moves** (1-3 tiles): a booster's guard is pinned to its post and cannot patrol, so where it stood on
+    another enemy it steps aside, still beside its booster.
+  - Left as they are: 14 clusters (mostly two booster guards side by side - either removal leaves a booster
+    unguarded) and three hand-authored set pieces (the guardians on the carpet to Chandra among them). 66 -> 19.
+- Never touched: bosses, legends, story or scripted (spawnRate 0) placements, dialog NPCs, hidden ambushers, enemies
+  that already had a route. A patroller keeps its registered post, so the chest's thief-chasing guard (assigned from
+  placements) is unchanged - the patrol is presence.
+- **Checked:** `waypoint_routes_qa.py` - 1348 -> 1381 routes, no new finding (the same 22 maps as before);
+  `validate_plane_data.py` unchanged but for the route count; booster guards 260 of 261 as before; only the planned
+  objects changed, line endings kept. **Seen** in the agent game: the Kavu Lair's patroller walking between its two
+  new waypoints beside the chest; no exception.
+- **Noticed, not changed (the user's call):** 75 of round 286b's chest guards are above Apprentice (5 Archmage, 38
+  Master, 32 Adept - Emrakul, Kozilek and Ulamog copies in the Eldrazi prisons among them), and the guard tools gave
+  unique characters' names to many guards (8x Joven and Chandler, 5x Chatterfang, 4x Agatha, 3x The Gitrog Monster).
+- Tools: `dev-tools/guard_patrols/` (provenance, audit, plan, apply; README).
+
 ## Round 318: 43 new creatures, and four Kamigawa dragons in their own skins (2026-09-24)
 
 User: *"See if there are any sprites here we can add as monsters. Only use thematic / good ones

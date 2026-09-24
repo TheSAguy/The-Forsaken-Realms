@@ -315,7 +315,7 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="215" template="../../../../common/maps/obj/enemy.tx" x="334.782" y="861.759">
+  <object id="215" template="../../../../common/maps/obj/enemy.tx" x="334.782" y="829.759">
    <properties>
     <property name="enemy" value="Witch"/>
     <property name="threatRange" type="int" value="40"/>
@@ -331,12 +331,6 @@
    <properties>
     <property name="enemy" value="Witch"/>
     <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
-  <object id="218" template="../../../../common/maps/obj/enemy.tx" x="308.807" y="883.623">
-   <properties>
-    <property name="enemy" value="Wild Rat"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

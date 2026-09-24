@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="78">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="80">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -117,7 +117,10 @@
    <properties>
     <property name="enemy" value="Water Elemental"/>
     <property name="threatRange" type="int" value="20"/>
+    <property name="waypoints" value="78,79"/>
    </properties>
   </object>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="241.994" y="61.6658"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="257.994" y="29.6658"/>
 </objectgroup>
 </map>

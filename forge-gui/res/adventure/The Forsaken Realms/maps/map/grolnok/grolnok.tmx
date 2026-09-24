@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="65" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="260">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="65" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="262">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -279,6 +279,7 @@
     <property name="enemy" value="Shade"/>
     <property name="fleeRange" value="30"/>
     <property name="threatRange" type="int" value="60"/>
+    <property name="waypoints" value="260,261"/>
    </properties>
   </object>
   <object id="150" template="../../../../common/maps/obj/gold.tx" x="1026.5" y="416.5"/>
@@ -724,5 +725,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
+  <object id="260" template="../../../../common/maps/obj/waypoint.tx" x="49.5" y="890.664"/>
+  <object id="261" template="../../../../common/maps/obj/waypoint.tx" x="49.5" y="922.664"/>
 </objectgroup>
 </map>

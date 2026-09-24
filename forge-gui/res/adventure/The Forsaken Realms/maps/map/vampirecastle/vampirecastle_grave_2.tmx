@@ -727,7 +727,7 @@
   <object id="109" template="../../../../common/maps/obj/waypoint.tx" x="176" y="32"/>
   <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
   <object id="112" template="../../../../common/maps/obj/waypoint.tx" x="208" y="32"/>
-   <object id="113" template="../../../../common/maps/obj/enemy.tx" x="191.279" y="30.5574">
+   <object id="113" template="../../../../common/maps/obj/enemy.tx" x="228.164" y="57.3361">
    <properties>
     <property name="enemy" value="Naked Mole Rat"/>
     <property name="threatRange" type="int" value="40"/>

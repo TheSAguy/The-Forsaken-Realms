@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="100">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="29" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="102">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -174,7 +174,10 @@
    <properties>
     <property name="enemy" value="Skeleton"/>
     <property name="threatRange" type="int" value="20"/>
+    <property name="waypoints" value="100,101"/>
    </properties>
   </object>
+  <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="162" y="112.273"/>
+  <object id="101" template="../../../../common/maps/obj/waypoint.tx" x="210" y="144.273"/>
 </objectgroup>
 </map>

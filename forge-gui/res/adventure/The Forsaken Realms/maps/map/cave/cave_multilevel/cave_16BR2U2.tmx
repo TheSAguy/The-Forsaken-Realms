@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="87">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="89">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -72,6 +72,7 @@
    <properties>
     <property name="enemy" value="Devil"/>
     <property name="threatRange" type="int" value="20"/>
+    <property name="waypoints" value="87,88"/>
    </properties>
   </object>
   <object id="86" template="../../../../../common/maps/obj/enemy.tx" x="231.246" y="41.5709">
@@ -80,5 +81,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
+  <object id="87" template="../../../../../common/maps/obj/waypoint.tx" x="215.246" y="25.5709"/>
+  <object id="88" template="../../../../../common/maps/obj/waypoint.tx" x="183.246" y="41.5709"/>
 </objectgroup>
 </map>
