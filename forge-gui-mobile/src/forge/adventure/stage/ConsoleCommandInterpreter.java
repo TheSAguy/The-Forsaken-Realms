@@ -223,6 +223,42 @@ public class ConsoleCommandInterpreter {
                 return "Spawn " + s[0];
             return "Can not find enemy " + s[0];
         });
+        // Round 311: roll a land's spawn picker n times (default 2000) at the player's rank and report how often the
+        // roaming champions came up, by name, and the frontier legends - the share check. Nothing is spawned.
+        registerCommand(new String[]{"spawnroll"}, s -> {
+            if (s.length < 1)
+                return "Command needs a biome name (white/blue/black/red/green/waste/player) and optionally a roll count.";
+            int n = 2000;
+            if (s.length > 1) {
+                try {
+                    n = Integer.parseInt(s[1]);
+                } catch (Exception e) {
+                    return "Can not convert " + s[1] + " to number";
+                }
+            }
+            BiomeData biome = null;
+            for (BiomeData b : WorldSave.getCurrentSave().getWorld().getData().GetBiomes())
+                if (b.name.equalsIgnoreCase(s[0]))
+                    biome = b;
+            if (biome == null)
+                return "No biome " + s[0];
+            float rank = Current.player().getStatistic().rank();
+            Map<String, Integer> champions = new TreeMap<>();
+            int roaming = 0, frontier = 0;
+            for (int i = 0; i < n; i++) {
+                EnemyData e = biome.getEnemy(rank);
+                if (forge.adventure.util.RoamingChampions.isChampion(e)) {
+                    roaming++;
+                    champions.merge(e.getName(), 1, Integer::sum);
+                } else if (forge.adventure.util.FrontierSpawns.isCandidate(e))
+                    frontier++;
+            }
+            String line = "[TFR-RoamingChampion] spawnroll " + biome.name + " x" + n + " at rank " + rank + ": champions "
+                    + roaming + " (" + String.format("%.1f%%", 100f * roaming / n) + ") " + champions
+                    + ", frontier legends " + frontier;
+            System.out.println(line);
+            return line;
+        });
         registerCommand(new String[]{"give", "gold"}, s -> {
             if (s.length < 1) return "Command needs 1 parameter: Amount.";
             int amount;

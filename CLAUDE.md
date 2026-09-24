@@ -137,6 +137,13 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 311 (local commit, NOT pushed): arena champions pay one Rare from their deck, only the ones beaten (the
+  full champion bounty is gone); 25 arena-only champions roam their colours' land** (`RoamingChampions`,
+  `config tables/roaming_champions.json`, 5% share, rank-gated, legend sighting, whole reward list out here; console
+  `spawnroll <land>`); Sliver Queen's portrait fixed (plane copy of the sheet, Karona (Boss) shares it). PENDING:
+  round 309 doodads (previews sent, awaiting the user); round 310 = the console-teleport crash handed over by a peer
+  (a best-of-1 loss in a map landed on the world stage - NPE in WorldStage.setWinner; the teleport chain alone did NOT
+  reproduce it in the agent game, the original run also won a lair boss first - see scratchpad r310).
 - **Round 308 (local commit, NOT pushed): the World Standings town chart ends at the live counts ("Now")** - its
   weekly snapshots lagged a week of captures (the user: 15 towns, the chart said 5).
 - **Round 307 (local commit, NOT pushed): wasteland E (A "ash grey" with option B's brown patch - A's purple one

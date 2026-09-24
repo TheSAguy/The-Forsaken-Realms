@@ -1022,7 +1022,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
         // Round 239 (user: "double or possibly triple how long a legend is active before it fades out"). A
         // sighting is only worth announcing if the player can still get there: the legends of the frontier
         // pool stay legendLifetimeFactor times as long as an ordinary roamer.
-        if (forge.adventure.util.FrontierSpawns.isCandidate(data)) {
+        if (forge.adventure.util.RoamingChampions.isLegend(data)) { // round 311: the roaming champions too
             float factor = Config.instance().getTuningData().legendLifetimeFactor;
             if (factor > 1f)
                 return base * factor;

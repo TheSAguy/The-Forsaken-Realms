@@ -527,7 +527,7 @@ public class GameHUD extends Stage {
             EnemySprite mob = pair.getValue();
             // Round 239: a sighted legend gets a dot too - gold, and with no fog gate (see below): the
             // sighting was announced, so where it is is exactly what the player has been told.
-            boolean legend = mob.territoryTarget == null && forge.adventure.util.FrontierSpawns.isCandidate(mob.getData());
+            boolean legend = mob.territoryTarget == null && forge.adventure.util.RoamingChampions.isLegend(mob.getData());
             if (mob.territoryTarget == null && !legend)
                 continue;
             stillActive.add(mob);

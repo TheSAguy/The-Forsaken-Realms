@@ -132,6 +132,17 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 311: arena champion drops, roaming champions
+
+- **`scene/ArenaScene.java`** - the champion bounty is gone; a beaten champion's deck is recorded and pays one Rare
+  (`BeatenChampion`); `bracketChampions` removed.
+- **`util/RoamingChampions.java`, `data/RoamingChampionData.java`** (new) - "config tables/roaming_champions.json".
+- **`data/BiomeData.java`** - `getEnemy()` appends the roaming champions last and grants their share.
+- **`util/Config.java`** - loads the table. **`util/SpawnTierWeighting.java`** - `registerKill()` counts roaming
+  champions. **`stage/WorldStage.java`, `stage/GameHUD.java`, `character/EnemySprite.java`** - legend sighting, gold
+  dot and lifetime for them too (`RoamingChampions.isLegend()`). **`stage/ConsoleCommandInterpreter.java`** -
+  `spawnroll`.
+
 ### Round 308: the town chart's live point
 
 - **`scene/WorldStandingsScene.java`** - `refreshChart()` ends each line at the live town counts ("Now"); the y-axis

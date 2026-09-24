@@ -17757,6 +17757,44 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 311: arena champions pay one Rare from their deck; the arena-only champions roam; Sliver Queen's portrait (2026-09-23)
+
+User, after an arena payout of ~45 cards and 7,172 gold: *"It seems a little extreme. can you tell me why I got so
+much?"* then *"Use B for the portrait. For the Arena, Beating a 'Champion' there, should not trigger the Champion
+reward payout. Just a Rare card from their deck. And only the ones you defeat. Add all 'arena-only enemy' enemies as
+spawn able roaming champions on the overworld."* Local commit.
+
+- **Why the payout was huge.** Winning a whole bracket paid the champion bounty: EVERY arena-only enemy in it
+  (`spawnRate` 0 with its own rewards) paid its complete reward list, the ones the simulation knocked out before the
+  player met them included. The user's level-2 bracket held three - Twister of Time (~11 cards, 3,000 gold, 80
+  shards) and Elf Queen Guay (~12 cards), never fought, and Sliver Queen (5 cards, 2,500 gold, an item, +1 Life).
+  The bounty's +Life also skipped the once-per-game rule, so it could repeat every week. First-time wins play no part
+  in an arena payout.
+- **The arena now** (`ArenaScene`): each champion the player beats records the deck it played; the payout hands over
+  one Rare from each such deck (a Mythic when the deck holds no Rare, else its rarest card; basic lands and
+  restricted editions never - the overworld payout's pool), whether or not the bracket is won. Champions the player
+  never faced pay nothing; the full bounty is gone. `[TFR-ArenaChampion] <name> beaten: one Rare from its deck - <card>`.
+- **Roaming champions** (`util/RoamingChampions`, `config tables/roaming_champions.json`): the 25 arena champions no
+  other route reaches (`dev-tools/arena_champion_audit.py` derives them - of the pools' 39 champions, 14 are castle or
+  map bosses or cave champions) roam their own colours' land at any reputation, never the player's own: a WUG one in
+  white, blue and green. Between them they take 5% of a land's ordinary spawn rolls (`share`, hand-editable), respect
+  the player's rank like the frontier legends, and arrive as a legend sighting - announced, a gold dot on both maps,
+  the long legend lifetime. Beating one out here pays its whole reward list (its +Life once per game, round 302's
+  rule). Within the group each champion's part halves every time the player beats it out here
+  (`SpawnTierWeighting.registerKill()` now counts them), so the ones not yet met come round first. Matched on the
+  catalog name: "Karona (Boss)" displays as "Karona, False God", which first kept it out of the legend treatment.
+  (Most of the 25 were also TerritoryControl's hand-listed war-tier bosses - very rare, and only at war.)
+- `spawnroll <land> [n]` (console, cheats): rolls a land's spawn picker n times and counts the champions by name -
+  the share check.
+- **Sliver Queen's portrait**: the stock sheet's `Avatar` is a 16x16 corner holding only a claw tip. A plane copy of
+  the sheet (`sprites/enemy/aberration/sliver_queen.*`) points it at her first idle frame, 64x64 (the user's pick B).
+  Karona (Boss) is drawn with the same sheet, so its portrait changes too.
+
+**Seen** in the agent game (slot 9, rank 10): `spawnroll` x4000 per land - white 4.9% champions (11 of its 12, all
+white; Karona uncounted before the name fix), blue 4.4%, black 3.8%, red 4.5%, green 4.6% (a little under 5% where
+frontier legends are also drawing, the two shares diluting each other as with the war champions), the wasteland and
+the player's land 0. Not seen yet: a champion's arena drop, a roaming champion fought, the new portrait on screen.
+
 ## Round 308: the town chart ends at the live counts (2026-09-23)
 
 User, play-testing: *"The Town count graph does not look correct. I have 15 towns, but looks like I have 6, same as

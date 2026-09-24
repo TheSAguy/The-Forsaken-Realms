@@ -939,6 +939,10 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             // remembered for the Challenge Arena's last-defeated-foe card drop in done().
             lastDefeatedEnemyData = enemies.get(enemies.size - 1).getData();
             defeatedThisBracket.add(lastDefeatedEnemyData); // round 133: one themed card per round won
+            // Round 311: a beaten champion's deck, as it just played - done() pays one Rare from it.
+            if (lastDefeatedEnemyData.spawnRate <= 0 && lastDefeatedEnemyData.rewards != null
+                    && lastDefeatedEnemyData.rewards.length > 0)
+                beatenChampions.add(new BeatenChampion(lastDefeatedEnemyData.getName(), Current.latestDeck()));
             // Bronze Coin ransom (user request 2026-09-01): note the foe now, pay the coin out in
             // done() with the rest of the bracket's loot. Only recorded - owesCoinRansom() is
             // re-checked at payout time, so a name noted here that somehow stops being owed
@@ -1284,6 +1288,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                         + " Come back after the week turns.");
                 coinRansomFoesBeaten.clear();
                 defeatedThisBracket.clear();
+                beatenChampions.clear(); // round 311
                 return true;
             }
             world.getArenaWinWeek().put(weeklyKey, week);
@@ -1297,17 +1302,20 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                     data.addAll(arenaData.rewards[i][j].generate(false, null, true));
                 }
             }
-            // Champion bounty (user decision 2026-08-12): arena-EXCLUSIVE enemies (spawnRate 0 -
-            // they exist nowhere but this pool, so their EnemyData rewards would otherwise never
-            // pay out; enemy rewards only flow through the overworld/dungeon post-duel handlers,
-            // which arena duels never reach) pay their own reward list ON TOP of the round tables
-            // when the player wins the ENTIRE bracket that included them. Ordinary pool enemies
-            // (roaming bosses etc.) are unaffected - they keep paying their rewards in the wild.
-            if (roundsWon == arenaData.rounds) {
-                for (EnemyData champion : new Array.ArrayIterator<>(bracketChampions)) {
-                    for (RewardData rewardData : champion.rewards)
-                        data.addAll(rewardData.generate(false, null, true));
-                }
+            // Round 311 (user: "Beating a 'Champion' there, should not trigger the Champion reward payout. Just a
+            // Rare card from their deck. And only the ones you defeat."): the champion bounty that stood here paid
+            // EVERY arena-only enemy in a won bracket its whole reward list - the ones the simulation knocked out
+            // before the player met them included (the user's level-2 run: Twister of Time and Elf Queen Guay, never
+            // fought, ~23 cards and 3,000 gold between them). Now each champion the player actually beats hands over
+            // one Rare from the deck it played, whether or not the bracket is won; their own lists pay out where they
+            // roam instead (RoamingChampions).
+            for (BeatenChampion champion : beatenChampions) {
+                Reward rare = champion.rareFromDeck();
+                if (rare != null)
+                    data.add(rare);
+                System.out.println("[TFR-ArenaChampion] " + champion.name + " beaten: "
+                        + (rare != null ? "one " + rare.getCard().getRarity() + " from its deck - " + rare.getCard().getName()
+                                : "its deck held nothing to give (" + champion.deck.size() + " card(s))"));
             }
             // Last-defeated-foe drop (user spec 2026-08-12, Challenge only): "you get 1 card
             // (rare+) from the last duel you win... + regular rewards" - a Rare-or-Mythic card
@@ -1435,9 +1443,59 @@ public class ArenaScene extends UIScene implements IAfterMatch {
 
     Array<EnemySprite> enemies = new Array<>();
     Array<ArenaRecord> fighters = new Array<>();
-    // Arena-exclusive (spawnRate 0) enemies present in the CURRENT bracket - see done()'s
-    // champion-bounty block. Rebuilt on every loadArenaData().
-    Array<EnemyData> bracketChampions = new Array<>();
+    /** Round 311: the champions (spawnRate 0, carrying rewards) the player has beaten in the running bracket, each
+     *  with the deck it played - done() pays one Rare from every one of them. */
+    private final java.util.List<BeatenChampion> beatenChampions = new java.util.ArrayList<>();
+
+    private static final class BeatenChampion {
+        final String name;
+        final java.util.List<forge.item.PaperCard> deck = new java.util.ArrayList<>();
+
+        /** The deck's cards, as an overworld payout's pool: no basic lands, no restricted editions. */
+        BeatenChampion(String name, Deck played) {
+            this.name = name;
+            if (played == null || played.getMain() == null)
+                return;
+            String[] editions = Config.instance().getConfigData().restrictedEditions;
+            java.util.function.Predicate<forge.item.PaperCard> restricted = editions == null ? card -> false
+                    : forge.item.PaperCardPredicates.onlyPrintedInEditions(editions);
+            for (forge.item.PaperCard card : played.getMain().toFlatList()) {
+                if (card == null || card.getRules().getType().isBasicLand() || restricted.test(card))
+                    continue;
+                deck.add(card);
+            }
+        }
+
+        /** One Rare from the deck - a Mythic when it holds no Rare, else its rarest card; null for an empty deck. */
+        Reward rareFromDeck() {
+            java.util.List<forge.item.PaperCard> best = new java.util.ArrayList<>();
+            int bestRank = -1;
+            for (forge.item.PaperCard card : deck) {
+                int rank = rankOf(card.getRarity());
+                if (rank > bestRank) {
+                    best.clear();
+                    bestRank = rank;
+                }
+                if (rank == bestRank)
+                    best.add(card);
+            }
+            if (best.isEmpty())
+                return null;
+            return new Reward(best.get(forge.util.MyRandom.getRandom().nextInt(best.size())), true);
+        }
+
+        private static int rankOf(forge.card.CardRarity rarity) {
+            if (rarity == forge.card.CardRarity.Rare)
+                return 4;
+            if (rarity == forge.card.CardRarity.MythicRare)
+                return 3;
+            if (rarity == forge.card.CardRarity.Uncommon)
+                return 2;
+            if (rarity == forge.card.CardRarity.Common)
+                return 1;
+            return 0;
+        }
+    }
     // The opponent beaten in the player's most recent round win - drives the Challenge Arena's
     // "1 rare+ card from the last duel you win" drop (user spec 2026-08-12).
     EnemyData lastDefeatedEnemyData = null;
@@ -1486,7 +1544,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
         enemies.clear();
         fighters.clear();
         arenaPlane.clear();
-        bracketChampions.clear();
+        beatenChampions.clear(); // round 311
         lastDefeatedEnemyData = null;
         defeatedThisBracket.clear(); // round 133
         roundsWon = 0;
@@ -1557,10 +1615,6 @@ public class ArenaScene extends UIScene implements IAfterMatch {
             arenaEnemyData.noAnte = true;
             if (isChallenge)
                 arenaEnemyData.gamesPerMatch = 1;
-            // Arena-exclusive champions carry a bounty - see done(). Recorded from the ORIGINAL
-            // EnemyData (the clone above is display/match-rules only, rewards identical).
-            if (enemyData.spawnRate <= 0 && enemyData.rewards != null && enemyData.rewards.length > 0)
-                bracketChampions.add(enemyData);
             EnemySprite enemy = new EnemySprite(arenaEnemyData);
             enemies.add(enemy);
             fighters.add(new ArenaRecord(new Image(enemy.getAvatar()), enemyData.getName()));

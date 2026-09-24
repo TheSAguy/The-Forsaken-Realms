@@ -292,7 +292,9 @@ public class SpawnTierWeighting {
      * javadoc), never suppressed by this.
      */
     public static void registerKill(EnemyData data) {
-        if (data == null || !isEnabled() || isExempt(data))
+        // Round 311: a roaming champion is exempt from the tier weighting but still counts its defeats -
+        // RoamingChampions.partsOf() halves its part of the group per win, so the unmet ones come round first.
+        if (data == null || !isEnabled() || (isExempt(data) && !RoamingChampions.isChampion(data)))
             return;
         String enemyName = data.getName();
         World world = WorldSave.getCurrentSave().getWorld();

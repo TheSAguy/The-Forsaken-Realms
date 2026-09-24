@@ -46,6 +46,7 @@ public class Config {
     private forge.adventure.data.ArmoryRarityData armoryRarityData;
     private forge.adventure.data.WarChampionData warChampionData;
     private forge.adventure.data.FrontierSpawnData frontierSpawnData;
+    private forge.adventure.data.RoamingChampionData roamingChampionData; // round 311
     private forge.adventure.data.RoamingGuardConfig roamingGuardConfig;
     /** Round 140 (S2-6): set when a plane data file that EXISTS failed to parse, so the menu can
      *  say so instead of the game running with every feature silently defaulted off. */
@@ -290,6 +291,20 @@ public class Config {
             }
         }
 
+        // Roaming champions (round 311) - same plane-local / fallback-to-common pattern. Absent leaves
+        // roamingChampionData null, which RoamingChampions reads as "off".
+        FileHandle roamingChampionFile = new FileHandle(prefix + "config tables/roaming_champions.json");
+        if (!roamingChampionFile.exists())
+            roamingChampionFile = new FileHandle(commonPrefix + "config tables/roaming_champions.json");
+        if (roamingChampionFile.exists()) {
+            try {
+                roamingChampionData = new Json().fromJson(forge.adventure.data.RoamingChampionData.class, roamingChampionFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-RoamingChampion] roaming_champions.json failed to load, feature will no-op: " + e);
+                roamingChampionData = null;
+            }
+        }
+
         // Roaming guards (MOD_SCOPE #116, round 145) - same plane-local / fallback-to-common
         // pattern. Absent leaves roamingGuardConfig null, which RoamingGuards reads as "off", so
         // no plane without this file gains the feature.
@@ -350,6 +365,10 @@ public class Config {
 
     public forge.adventure.data.FrontierSpawnData getFrontierSpawnData() {
         return frontierSpawnData;
+    }
+
+    public forge.adventure.data.RoamingChampionData getRoamingChampionData() {
+        return roamingChampionData;
     }
 
     public forge.adventure.data.RoamingGuardConfig getRoamingGuardConfig() {

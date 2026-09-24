@@ -1680,6 +1680,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 if (forge.adventure.util.FrontierSpawns.isCandidate(enemyData))
                     System.out.println("[TFR-Frontier] " + enemyData.getName() + " (tier=" + enemyData.tier
                             + ", colors=" + enemyData.colors + ") roams " + data.name + " territory");
+                else if (forge.adventure.util.RoamingChampions.isChampion(enemyData)) // round 311
+                    System.out.println("[TFR-RoamingChampion] " + enemyData.getName() + " (tier=" + enemyData.tier
+                            + ", colors=" + enemyData.colors + ", beaten out here "
+                            + forge.adventure.util.SpawnTierWeighting.getPermanentKillCount(enemyData.getName())
+                            + "x) roams " + data.name + " territory");
                 else if (forge.adventure.util.WarChampions.isBiomeAtWar(data.name)
                         && forge.adventure.util.WarChampions.championNames(data.name).contains(enemyData.getName()))
                     System.out.println("[TFR-WarChampion] " + enemyData.getName() + " rides with the war in "
@@ -1836,8 +1841,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             return false;
         EnemySprite sprite = new EnemySprite(enemyData);
         boolean spawned = spawn(sprite);
-        if (spawned && forge.adventure.util.FrontierSpawns.isCandidate(enemyData))
-            announceLegendSighting(sprite); // round 239
+        if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData))
+            announceLegendSighting(sprite); // round 239; round 311: the roaming champions too
         return spawned;
 
     }
@@ -1870,7 +1875,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         List<EnemySprite> legends = new ArrayList<>();
         for (Pair<Float, EnemySprite> pair : enemies) {
             EnemySprite mob = pair.getValue();
-            if (mob != null && mob.territoryTarget == null && forge.adventure.util.FrontierSpawns.isCandidate(mob.getData()))
+            if (mob != null && mob.territoryTarget == null && forge.adventure.util.RoamingChampions.isLegend(mob.getData()))
                 legends.add(mob);
         }
         return legends;

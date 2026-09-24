@@ -194,6 +194,18 @@ public class BiomeData implements Serializable {
         List<EnemyData> frontierSpawns = withInjectedSpawns
                 ? forge.adventure.util.FrontierSpawns.injectFor(name, filteredEnemies, difficultyFactor)
                 : new ArrayList<>();
+        // Roaming champions (round 311, user: "Add all 'arena-only enemy' enemies as spawn able roaming champions on
+        // the overworld"): appended LAST, in their own colours' land at any reputation, respecting the rank like the
+        // frontier legends - see RoamingChampions. Disjoint from the two groups above.
+        List<EnemyData> roamingChampions = new ArrayList<>();
+        if (withInjectedSpawns) {
+            java.util.Set<String> taken = new java.util.HashSet<>();
+            for (EnemyData e : warChampions)
+                taken.add(e.name);
+            for (EnemyData e : frontierSpawns)
+                taken.add(e.name);
+            roamingChampions = forge.adventure.util.RoamingChampions.injectFor(name, filteredEnemies, taken, difficultyFactor);
+        }
 
         float[] effectiveWeights = new float[filteredEnemies.size()];
         float totalDistribution = 0.0f;
@@ -257,6 +269,17 @@ public class BiomeData implements Serializable {
         // about 17% and 13% of the whole - which is the intended reading of "share of the pool".
         float ordinaryTotal = totalDistribution;
         int injectedTail = filteredEnemies.size();
+        if (!roamingChampions.isEmpty()) { // round 311: the last group appended, so the very tail
+            float roamingTotal = forge.adventure.util.RoamingChampions.shareWeight(ordinaryTotal);
+            if (roamingTotal > 0f) {
+                float[] parts = forge.adventure.util.RoamingChampions.partsOf(roamingChampions);
+                int first = injectedTail - roamingChampions.size();
+                for (int k = 0; k < roamingChampions.size(); k++)
+                    effectiveWeights[first + k] = roamingTotal * parts[k];
+                totalDistribution += roamingTotal;
+            }
+            injectedTail -= roamingChampions.size();
+        }
         if (!frontierSpawns.isEmpty()) {
             float frontierTotal = forge.adventure.util.FrontierSpawns.shareWeight(ordinaryTotal, name);
             if (frontierTotal > 0f) {

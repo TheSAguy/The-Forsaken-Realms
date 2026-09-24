@@ -1,0 +1,25 @@
+{
+  // Roaming champions (round 311, user: "Add all 'arena-only enemy' enemies as spawn able roaming champions on the
+  // overworld") - hand-editable, no code change needed to re-cast or retune. See RoamingChampions.java for the rules
+  // and BiomeData.getEnemy() for where the share is applied.
+  //
+  // These are the arena pools' champions (spawnRate 0, carrying their own reward lists) that no other route reaches:
+  // not placed on a map, not a cave champion, not a frontier legend, not in the Chest's pools, not a war champion.
+  // dev-tools/arena_champion_audit.py derives the list from the arena maps and enemies.json - rerun it after adding
+  // an arena champion. They roam their own colours' land in every reputation state (a WUG champion in white, blue
+  // and green), never the player's own; they arrive as a legend sighting (announced, a gold dot on the maps, the
+  // long legend lifetime), and beating one out here pays its whole reward list - the arena pays one Rare from its
+  // deck instead (round 311).
+  //
+  // share: the fraction of a colour land's ordinary spawn rolls the champions take between them. Within that, each
+  // champion's part halves every time the player beats it out here, so the ones not yet met come round first.
+  // Set it to 0 to switch the feature off.
+  "share": 0.05,
+  "names": [
+    "Arcades Sabboth", "Baron Levilain", "Baron Von Gant", "Bazaar Keeper", "Chromium (Boss)",
+    "Elf Queen Guay", "Gaea, the Worldsoul", "Goblin King Phil", "Karona (Boss)", "King Kane Ferguson",
+    "Nicol Bolas (Boss)", "Palladia-Mors (Boss)", "Recaller of Ancestry", "Serra the Benevolent", "Sorceress Queen Kaja",
+    "The Astral Visionary", "The Dragon Lord", "The Great Druid", "The Lichlord of Azar", "The Sainted One",
+    "Time Walker", "Twister of Time", "Urza Planeswalker", "Vaevictis Asmadi", "Valyx the Tormentor"
+  ]
+}
