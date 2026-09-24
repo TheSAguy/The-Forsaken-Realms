@@ -14517,6 +14517,7 @@
 		"id": 86,
 		"isTemplate": true,
 		"storyQuest": false,
+		"questSourceTags": ["relic_trail_chain"],
 		"name": "Word to the Courier",
 		"description": "The mines are a dead end. Use The Courier's amulet to report what you found, then find a town so his people can reach you.",
 		"offerDialog": {},

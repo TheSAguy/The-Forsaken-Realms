@@ -17757,6 +17757,19 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 326: "Word to the Courier" stays off the quest boards (2026-09-24)
+
+Found while researching the user's quest-place question. Local commit; data only.
+
+- Quest 86 "Word to the Courier" - the relic trail's step after "Explore the Crystal Mines", issued by that quest's
+  epilogue (and by round 323's save repair) - had no `questSourceTags` and an empty offer dialog. A quest with no
+  source tags matches EVERY quest board (`AdventureQuestController`: `tagMatch = questSourceTags.length == 0`), so any
+  town board could offer it as a blank quest, from day one. It now carries `["relic_trail_chain"]` like its siblings
+  45 and 47, which no board uses: the chain still hands it out through its own dialog action (round 323's test saw
+  it arrive that way). Quest 44 "Find the Caravan" keeps no tags on purpose - it is the chain's board starter, with
+  its own offer text.
+- Noticed, not changed: quests 29, 32 and 33 are dead (nothing issues 29, and 29 is the only thing that issues 32).
+
 ## Round 325: no bare loot screen after a duel; [TFR-Payout] and [TFR-Build] (2026-09-24)
 
 A player's report on v1.13 ("VeggieShark"), passed on by the user: *"I've defeated an enemy in a dungeon after

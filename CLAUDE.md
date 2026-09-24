@@ -148,6 +148,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 326 (local commit, NOT pushed): quest 86 "Word to the Courier" tagged `relic_trail_chain`** - with no source
+  tags it matched every quest board as a blank offer.
 - **Round 325 (local commit, NOT pushed): no bare loot screen after a duel ([TFR-Payout] every duel), [TFR-Build] at
   start.** The v1.13 "empty reward screen" report: the cards are by design (Human Looter's deck has nothing in that
   world's green slice); the empty screen matches the pre-v1.10 program - the player was asked for their folder + log.
