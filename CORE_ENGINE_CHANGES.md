@@ -132,6 +132,25 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 316: the 09.23 engine merge
+
+- **`forge-gui-mobile/src/forge/Adventure.java`** - upstream's `logOnce()` (#11888) replaced by our
+  `reportSilencedRenderException()` again (round 143/183), which now names the scene. Upstream removed the transition
+  batch, the UI batch (`getUiBatch()`) and `Disposable`; the fade is commented out upstream.
+- **`forge-gui-mobile/src/forge/adventure/scene/DeckEditScene.java`** - kept round 312's cached editor that rebuilds
+  when the event or the selected deck changes, NOT upstream's `37fd27933f7` (a new editor per `getScreen()` call).
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - **contract conflict: the minimap is the WHOLE world.**
+  Upstream's #12011 radar (a 150x150 `miniMapRegion` scrolled around the player in `act()`, the player dot pinned to
+  the minimap's center, `Assets.getNewMiniMapTexture()`) is not adopted: every TFR overlay on the minimap (territory,
+  mage/legend dots, attack lines, labels) is placed as a fraction of the whole map. Kept our `refreshMiniMap()`, the
+  tooltip pixmap and our `dispose()`; took only the shared batch in the constructor. A future daily that touches the
+  minimap will conflict here again.
+- **Shared SpriteBatch (#12011)** - every Stage now draws with `Forge.getGraphics().getBatch()`, so a batch color or
+  projection set by one stage carries into the next (upstream's `PointOfInterestMapRenderer.updateCamera()` resets
+  the color to WHITE for that reason). Draw code of ours that sets a batch color must put it back.
+  `Forge.LOW_SPRITES_CAP` and `Assets.getAssetGraphics()` are gone (nothing of ours used them); `FBufferedImage`
+  now ends and restarts the shared batch around its frame buffer.
+
 ### Round 309: doodad variety
 
 - **`world/World.java`** - `DOODAD_SET` 309 (a one-time re-scatter). Data otherwise.
@@ -1993,6 +2012,13 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-09-23 - merged upstream `master` @ `3a1b16089da` (Forge 2.0.15-SNAPSHOT, 09.23 daily; 12 first-parent
+  commits / 27 in all since `6eb449b787d`; round 316).** Three conflicts (`Adventure.java`, `DeckEditScene.java`,
+  `GameHUD.java`) - see "Round 316: the 09.23 engine merge" above. Base install `E:\GAMES\Forge_2`:
+  `.installationinformation` `2.0.15-SNAPSHOT-09.23`, `build.txt` `2026-09-23 18:26:42`; probes: HAS `56c6e67fb7d`
+  (`emperor_apatzec_intli_iv.txt`) and `3a1b16089da` (`isMacroActive` in `PlayerControllerHuman.class`), LACKS
+  `ac48090d4f3` (`MagicFest 2027.txt`, PF27). The three commits after it (`ac48090d4f3`, `b16b077ce1f`,
+  `ed0333fecb1`) are the next merge's first items. Nothing under `res/adventure` or Android changed upstream.
 - **2026-09-10 - merged upstream `master` @ `06a3c05731c` (Forge 2.0.15-SNAPSHOT, 09.09 daily; 35 commits,
   162 files, 122 `.java` since the previous merge point `6155ef58a50`).** **One conflict** - `UIScene.enter()`:
   upstream `b09a3d3f009` replaced the last-screenshot backdrop body with a pixelating-shader `BaseDrawable` on the

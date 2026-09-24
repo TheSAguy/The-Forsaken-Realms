@@ -145,6 +145,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 316 (local commit, NOT pushed): engine = the 09.23 daily** (upstream `3a1b16089da`; conflicts kept OURS in
+  `Adventure.java` render-failure logging, `DeckEditScene.java` (round 312's fix over upstream's rebuild-every-call)
+  and `GameHUD.java` (the whole-world minimap over upstream's radar); the shared SpriteBatch taken; live + agent
+  packaged with the full stock copy; smoke-tested in the agent game).
 - **Round 315 (local commit, NOT pushed): the user's two temples as dungeon entrances** (BlueTemple -> Monastery,
   BlueTempleOvergrown -> ElfTown; `maps/tileset/dungeon_entrances.*`).
 - **Round 314 (local commit, NOT pushed): New Game+ carries the bank's gold into the new run.**

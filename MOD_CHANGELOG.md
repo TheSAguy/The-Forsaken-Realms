@@ -17757,6 +17757,35 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 316: engine = the 09.23 daily (2026-09-23)
+
+User: *"Update to the latest version of Forge E:\GAMES\Forge_2"* - the 09.23 daily was installed there at 22:31, after
+round 315's package. Merge commit `ac7e60b0507`; local, NOT pushed.
+
+- **Which commit.** Merged `6eb449b787d..3a1b16089da` (12 first-parent commits, 27 in all), the commit the installed
+  daily was built from, pinned by content: `emperor_apatzec_intli_iv.txt` from `56c6e67fb7d` and the `isMacroActive`
+  change of `3a1b16089da` are in it, the PF27 edition update of `ac48090d4f3` (19:20 UTC, after the 18:26 build) is not.
+  Upstream's tip is three commits past it (that edition update and test isolation) - the next merge's first items.
+  `engineBuildVersion` 09.22 -> **09.23**.
+- **Three conflicts, each a call:**
+  - `Adventure.java` - upstream's #11888 now logs render-loop failures once (`logOnce()`). Ours since round 143/183
+    counts repeats and keys on the first frame in Forge's own code, so it stays; it now names the scene too
+    (`[TFR-Render] swallowed exception (first occurrence) in scene X`).
+  - `DeckEditScene.java` - upstream fixed the same stale-editor bug round 312 fixed (`37fd27933f7` "Fix DeckEditScene"),
+    by building a NEW editor on every `getScreen()` call. `ForgeScene.enter()` and `buildTouchListeners()` both call
+    it, so a visit would build several and route touches to one never shown. Round 312's version stays (rebuild only
+    when the event or the selected deck changes).
+  - `GameHUD.java` - upstream's #12011 turned the corner minimap into a 150x150 "radar" window that follows the
+    player. This game's minimap is the whole world - territory colors, the mage and legend dots, the attack lines and
+    labels are all placed as fractions of the whole map - so the radar is NOT adopted and the minimap is unchanged.
+- **Taken from upstream:** one shared SpriteBatch for every stage (#12011: UI scenes, the world and map stages, the
+  HUD, card and reward renders, buffered images); the scene-change fade is switched off upstream (a scene now cuts
+  straight over); online play reconnects after a dropped connection; macro replay and the floating hand reveal fixed;
+  card script fixes.
+- **Seen** in the agent game on the new build: the world map, the whole-world minimap, the deck list and deck editor,
+  a won duel (Fox), its ante card and its reward screen (card backs, then the faces and the gold drawn right), a town
+  (Orazca) and a dungeon (Xira's Hive); no exception in the log.
+
 ## Round 315: two temple entrances - the Monastery and the Elven Encampment (2026-09-23)
 
 User, with a sheet of a blue-roofed temple, clean and overgrown: *"Two more dungeons you can add."* Local commit; data
