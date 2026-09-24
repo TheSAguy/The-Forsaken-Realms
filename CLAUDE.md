@@ -50,15 +50,23 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-22 (round 291; **v1.13 "Heart of the Realm" RELEASED** - tag `tfr-v1.13` @ `e2a3eb5b89c`, PC + Android, pushed; NOTHING is unreleased; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-23 (round 315; **v1.13 "Heart of the Realm" RELEASED** - tag `tfr-v1.13` @ `e2a3eb5b89c`, PC + Android, pushed; rounds 292-315 are LOCAL commits on top of it, NOT pushed; ENGINE = 09.22 daily since round 289) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 291 close-out, 2026-09-22).** **v1.13 is PUBLISHED** (2026-09-22
-  22:31:46 UTC, Latest): `The-Forsaken-Realms-v1.13.zip` 265.5 MB, `forsaken-realms-1.13-signed-aligned.apk`
-  13.3 MB (versionCode 11300), `assets.zip` 218.0 MB, build.txt pair 2026-09-22 22:28:36. It carries rounds 247-290
-  on the 09.22 engine; the live folder and the agent folder ARE v1.13. Nothing is pending on the code; what comes
-  next is the user's play-test feedback on 1.13. Still open from before, the user's call: 296 chests have no guard
-  (round 286). Not yet seen in play: the ledger fix, the loot-hold fix (both round 290, logic only). The next
-  release's version is 1.14 / manifestVersionCode 11400.
+- **NEXT SESSION starts here (updated after round 315, 2026-09-23 evening).** The repo is clean (leave the untracked
+  `barrier_structures_original.png` alone) and 28 commits ahead of origin, none pushed. The live folder (packaged
+  2026-09-23 22:00) and the agent folder both carry round 315 (jar 21:38). Nothing is in flight. **Waiting on the
+  user:** (1) the new starting races - they asked for Ooze, Goblin, Rat and Angel; I recommended adding Vampire and
+  Merfolk; open: which ones, and whether side-view (left/right only) hero sheets are fine; Rat has no humanoid sheet
+  (needs the user's art). Each race = heroes.json female/male atlases, four raceEditions and two raceShops in the
+  plane's config.json. (2) The release call - round 312's deck-editor fix is the one a v1.13 player is waiting on
+  (it touches only `DeckEditScene.java`, which nothing else since the tag changed: a clean 1.13.1 cherry-pick), or
+  everything as 1.14. Not yet seen in play: the arena champion's one Rare and a roaming champion fought (311), Sliver
+  Queen's portrait (311), research "Hide partial" and its order (313), the dialog fit (313, the player's windowed
+  window), the New Game+ bank (314), the doodads and temples (309, 315), the ledger and loot-hold fixes (290). Still
+  open from before, the user's call: 296 chests have no guard (round 286). v1.13 was published 2026-09-22 22:31:46 UTC:
+  `The-Forsaken-Realms-v1.13.zip` 265.5 MB, `forsaken-realms-1.13-signed-aligned.apk` 13.3 MB (versionCode 11300),
+  `assets.zip` 218.0 MB, rounds 247-290 on the 09.22 engine. The next release's version is 1.14 / manifestVersionCode
+  11400.
 - **Round 292 (after the release; local commit, NOT pushed): map labels that stay on their places, an inventory text
   that wraps, overworld zoom-out 1.5 -> 2.0.** Map view: pins and dots laid out from world anchors every zoom step,
   the bookmark star a badge ABOVE its place, one placement function for build and zoom, and a label pushed aside by
@@ -137,10 +145,6 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
-- **Round 310 (local commit, NOT pushed): console `teleport to poi` leaves a map first; `WorldStage.setWinner`
-  survives a result with no world enemy** (the peer-handed crash; exact trigger unconfirmed - a lair-boss win first).
-- **Round 309 (local commit, NOT pushed): doodad variety x2-3 on every land, the same coverage** (104 kinds, 630
-  pictures; DOODAD_SET 309 re-scatter; design in `dev-tools/world-art/spec.py`).
 - **Round 315 (local commit, NOT pushed): the user's two temples as dungeon entrances** (BlueTemple -> Monastery,
   BlueTempleOvergrown -> ElfTown; `maps/tileset/dungeon_entrances.*`).
 - **Round 314 (local commit, NOT pushed): New Game+ carries the bank's gold into the new run.**
@@ -151,10 +155,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - **Round 311 (local commit, NOT pushed): arena champions pay one Rare from their deck, only the ones beaten (the
   full champion bounty is gone); 25 arena-only champions roam their colours' land** (`RoamingChampions`,
   `config tables/roaming_champions.json`, 5% share, rank-gated, legend sighting, whole reward list out here; console
-  `spawnroll <land>`); Sliver Queen's portrait fixed (plane copy of the sheet, Karona (Boss) shares it). PENDING:
-  round 309 doodads (previews sent, awaiting the user); round 310 = the console-teleport crash handed over by a peer
-  (a best-of-1 loss in a map landed on the world stage - NPE in WorldStage.setWinner; the teleport chain alone did NOT
-  reproduce it in the agent game, the original run also won a lair boss first - see scratchpad r310).
+  `spawnroll <land>`); Sliver Queen's portrait fixed (plane copy of the sheet, Karona (Boss) shares it).
+- **Round 310 (local commit, NOT pushed): console `teleport to poi` leaves a map first; `WorldStage.setWinner`
+  survives a result with no world enemy** (the peer-handed crash; exact trigger unconfirmed - a lair-boss win first).
+- **Round 309 (local commit, NOT pushed): doodad variety x2-3 on every land, the same coverage** (104 kinds, 630
+  pictures; DOODAD_SET 309 re-scatter; design in `dev-tools/world-art/spec.py`).
 - **Round 308 (local commit, NOT pushed): the World Standings town chart ends at the live counts ("Now")** - its
   weekly snapshots lagged a week of captures (the user: 15 towns, the chart said 5).
 - **Round 307 (local commit, NOT pushed): wasteland E (A "ash grey" with option B's brown patch - A's purple one
