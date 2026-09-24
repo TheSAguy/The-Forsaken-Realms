@@ -52,16 +52,16 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-09-24 (round 320; **v1.14 "Realm Reforged" READY TO PUBLISH** - stamps, notes and artifacts built, NOT tagged or pushed; v1.13 is the last published release (tag `tfr-v1.13` @ `e2a3eb5b89c`); rounds 292-320 local; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 320, 2026-09-24 ~01:10).** **v1.14 "Realm Reforged" is READY TO
-  PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-320, engine =
-  the 09.23 daily. HEAD is round 320's stamp commit or a docs commit on it; nothing tagged, nothing pushed (origin is
+- **NEXT SESSION starts here (updated round 321, 2026-09-24 ~01:50).** **v1.14 "Realm Reforged" is READY TO
+  PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-321, engine =
+  the 09.23 daily. The artifacts are from round 321 part 2 (`b4c434c63ff`); HEAD is that or a docs commit on it; nothing tagged, nothing pushed (origin is
   still at v1.13's close-out). **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
   `The-Forsaken-Realms-v1.14.zip` (267.8 MB, from `build_standalone.py --zip`, modVersion 1.14 / 09.24, build.txt
   2026-09-23 18:26:42 = the stock daily), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; aapt: package
   com.thesaguy.forsakenrealms, versionCode 11400, versionName 1.14; apksigner: CN=The Forsaken Realms, SHA-256
   ee603925...), `assets.zip` (220.3 MB; res/adventure = common + The Forsaken Realms; res/build.txt and the APK's
-  build.txt both 2026-09-24 07:51:05), `RELEASE_NOTES_v1.14.md`. The APK/assets pair came from `C:\TFR-build` reset to
-  round 320's commit. **Remaining publish steps (the user's call):** `git tag -a tfr-v1.14 -m "v1.14 Realm Reforged"`
+  build.txt both 2026-09-24 08:44:41), `RELEASE_NOTES_v1.14.md`. The APK/assets pair came from `C:\TFR-build` reset to
+  `b4c434c63ff`. **Remaining publish steps (the user's call):** `git tag -a tfr-v1.14 -m "v1.14 Realm Reforged"`
   on the release commit; push main and the tag to origin; `gh release create tfr-v1.14 -R TheSAguy/The-Forsaken-Realms
   --draft --title "v1.14 - Realm Reforged" --notes-file RELEASE_NOTES_v1.14.md`; upload the zip, the APK and
   `assets.zip` from `C:\TFR\release\v1.14\` (ALWAYS `-R TheSAguy/The-Forsaken-Realms`); `gh release edit tfr-v1.14 -R
