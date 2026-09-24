@@ -361,7 +361,8 @@ public class World implements Disposable, SaveFileContent {
     private final java.util.Map<String, Integer> oncePaidRewards = new java.util.HashMap<>();
     // Round 303: the doodad set a world's doodads were placed from - see rescatterDoodads(). 0 = a save from before.
     // Round 305: 305 - the whirlpools, blue's new rocks and the rebalanced water doodads (a 303 save scatters once more).
-    public static final int DOODAD_SET = 305;
+    // Round 309: 309 - twice to three times the kinds and pictures on every land, the same coverage (a save scatters again).
+    public static final int DOODAD_SET = 309;
     private int doodadSet = DOODAD_SET;
     // Round 307 (user: "make the patches larger"): what a world's ground was last laid out and baked from - every
     // biome's patch bands (groundPatchSignature()) and the art its map image is drawn with (groundArtSignature()).

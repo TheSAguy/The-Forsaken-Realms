@@ -32,14 +32,24 @@
     "color":  "d4af37",
     "spriteNames":  [
                         "PlayerLily",
+                        "PlayerLotus",
                         "PlayerStump",
+                        "PlayerSign",
+                        "PlayerTracks",
                         "PlayerFairyRing",
                         "PlayerGrass",
+                        "PlayerClover",
+                        "PlayerMeadow",
                         "PlayerStone",
+                        "PlayerRock",
                         "PlayerBush",
+                        "PlayerFlowerBush",
                         "PlayerFern",
+                        "PlayerBerry",
+                        "PlayerTulip",
                         "PlayerFlower",
-                        "PlayerGravel"
+                        "PlayerGravel",
+                        "PlayerMushroom"
                     ],
     "pointsOfInterest":  [
 

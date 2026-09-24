@@ -24,11 +24,18 @@
     "color":  "efe697",
     "spriteNames":  [
                         "WhiteBones",
+                        "WhiteSkull",
                         "WhiteTuft",
+                        "WhiteDryGrass",
+                        "WhiteSucculent",
                         "WhiteCactus",
+                        "WhiteBarrel",
                         "WhitePampas",
+                        "WhiteTumbleweed",
+                        "WhiteSpire",
                         "WhiteFlower",
-                        "WhitePebble"
+                        "WhitePebble",
+                        "WhiteDune"
                     ],
     "enemies":  [
                     "Forge Blacksmith",

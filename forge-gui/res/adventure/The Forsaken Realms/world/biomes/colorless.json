@@ -24,10 +24,17 @@
     "color":  "aeaeae",
     "spriteNames":  [
                         "WasteBones",
+                        "WasteSkull",
+                        "WasteGrave",
+                        "WastePot",
                         "WasteStone",
+                        "WasteRubble",
                         "WasteBush",
+                        "WasteSpire",
                         "WasteRoots",
-                        "WasteBranch"
+                        "WasteDeadTree",
+                        "WasteBranch",
+                        "WasteCrack"
                     ],
     "enemies":  [
                     "Forge Blacksmith",

@@ -132,6 +132,10 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 309: doodad variety
+
+- **`world/World.java`** - `DOODAD_SET` 309 (a one-time re-scatter). Data otherwise.
+
 ### Round 314: New Game+ keeps the bank's gold
 
 - **`scene/SaveLoadScene.java`** - the New Game+ branch pays the old world's bank balances into the purse.

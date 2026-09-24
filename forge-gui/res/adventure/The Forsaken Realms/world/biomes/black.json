@@ -25,11 +25,18 @@
     "spriteNames":  [
                         "BlackLily",
                         "BlackBones",
+                        "BlackSkeleton",
                         "BlackFern",
+                        "BlackMoss",
+                        "BlackThorn",
                         "BlackShroom",
+                        "BlackGrave",
                         "BlackReed",
+                        "BlackStalagmite",
                         "BlackBranch",
-                        "BlackRafflesia"
+                        "BlackTar",
+                        "BlackRafflesia",
+                        "BlackCrystal"
                     ],
     "enemies":  [
                     "Cutpurse",

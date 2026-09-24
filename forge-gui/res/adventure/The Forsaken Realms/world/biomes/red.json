@@ -24,11 +24,20 @@
     "color":  "b63729",
     "spriteNames":  [
                         "RedBones",
+                        "RedSkull",
+                        "RedPot",
                         "RedStump",
+                        "RedMagma",
                         "RedFern",
+                        "RedTumbleweed",
+                        "RedCactus",
                         "RedGravel",
+                        "RedDune",
+                        "RedRock",
                         "RedFlower",
-                        "RedLeaves"
+                        "RedSpire",
+                        "RedLeaves",
+                        "RedCrack"
                     ],
     "enemies":  [
                     "Goblin Shieldbearer",

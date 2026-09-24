@@ -17757,6 +17757,32 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 309: two to three times the doodads' variety on every land (2026-09-23)
+
+User: *"Also, were you able to find more doodads? I want to double or triple them. The the number on the map, but the
+variety of them."* - then, from the preview sheets: *"The doodads look good, go ahead and build them."* Local commit.
+
+- **Six more of the user's sheets** feed the doodads now - Outside_B, World_C, foresta 3, BCDE_Moderno_18, ZRPGBeach,
+  deserttiles2 (plus two pieces of 73nunEG and CaveUploadB), picked by grid cell, object in a cell or pixel box
+  (`dev-tools/world-art/sources.py` SHEETS; `cellcat.py` catalogs a sheet). Tinted per land as before.
+- **Per land** (kinds / pictures, round 303's in brackets): white 13 / 86 (6 / 22), blue 13 / 85 (7 / 27), black 14 / 72
+  (7 / 28), red 15 / 70 (6 / 21), green 17 / 141 (10 / 57), wasteland 12 / 74 (5 / 20), the player 19 / 101 (9 / 43).
+  New kinds include white's skulls, barrel cacti, tumbleweeds and sandstone spires; blue's starfish and crabs, driftwood,
+  tide pools, crystals, palms and lotus on the water; black's graves, skeletons, purple moss, thorns, stalagmites, tar
+  pits and amethyst; red's pots, a rare lava mound, cacti, dunes, rocks, spires and ground cracks; green's lotus, animal
+  tracks, clover, berries, mossy boulders, flowering bushes and saplings; the wasteland's skulls, graves, broken urns,
+  rubble, spires, dead trees and cracks; the player's lotus, signposts, tracks, clover, meadows, rocks, flowering and
+  berry bushes, tulips and mushrooms.
+- **The same number on the map**: each new kind takes a slice of an older kind's noise band at the same resolution and
+  density (World.pickDoodad(): the first kind whose band holds the tile and whose roll passes), and new rare kinds share
+  the old rare kind's density. `World.DOODAD_SET` 305 -> 309 scatters a save's doodads once more.
+- The pipeline moved into the repo first (`dev-tools/world-art/`, previous commit), proven byte-identical on round
+  303's design.
+
+**Seen** in the agent game on an old save (slot 7, doodad set 0): `[TFR-Doodads] ... 10039 doodads placed again from the
+current lists -> 13648 (waste 7.5%, white 13.2%, blue 14.7%, black 13.8%, red 11.0%, green 14.1%, player 13.7%)`, the
+lotus on the lakes, 24 whirlpools; screenshots of all seven lands.
+
 ## Round 314: New Game+ carries the bank's gold (2026-09-23)
 
 User: *"When doing a NG+, be sure to add the gold the player has in his bank to the new game also."* Local commit.

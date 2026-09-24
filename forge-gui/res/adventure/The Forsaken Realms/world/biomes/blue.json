@@ -25,11 +25,17 @@
     "spriteNames":  [
                         "BlueCoral",
                         "BlueSeaweed",
+                        "BlueLotus",
                         "BlueGrass",
+                        "BlueDriftwood",
+                        "BlueTidePool",
                         "BlueFlower",
                         "BlueRock",
+                        "BlueCrystal",
                         "BlueShell",
-                        "BlueMushroom"
+                        "BlueStarfish",
+                        "BlueMushroom",
+                        "BluePalm"
                     ],
     "enemies":  [
                     "Sirena, Tide-Singer",

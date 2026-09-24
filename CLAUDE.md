@@ -139,6 +139,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   hunting for MORE doodad art - adding kinds/variants is now data only.
 - **Round 310 (local commit, NOT pushed): console `teleport to poi` leaves a map first; `WorldStage.setWinner`
   survives a result with no world enemy** (the peer-handed crash; exact trigger unconfirmed - a lair-boss win first).
+- **Round 309 (local commit, NOT pushed): doodad variety x2-3 on every land, the same coverage** (104 kinds, 630
+  pictures; DOODAD_SET 309 re-scatter; design in `dev-tools/world-art/spec.py`).
 - **Round 314 (local commit, NOT pushed): New Game+ carries the bank's gold into the new run.**
 - **Round 313 (local commit, NOT pushed): research "Hide partial" + the list ordered researching / ready / partial /
   unfound; a scrolled map dialog shrinks its list to fit the HUD** (a player's windowed-mode report).
