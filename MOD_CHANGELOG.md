@@ -17769,6 +17769,11 @@ Found by the pre-release soak (not reported; it never shipped - v1.13 has no sha
 - **The fix** (`FBufferedImage`): the batch is ended and restarted only when it was drawing, and its projection
   matrix is put back afterwards - so a frame buffer built mid-pass no longer leaves the rest of that pass drawn with
   its small orthographic matrix.
+- **The same trap in `RewardActor.renderPlaceholder()`** (found by reading every shared-`Graphics` caller): #12011 moved
+  it from its own asset Graphics to the shared one, whose `begin()` throws while the shared batch is drawing - and
+  `drawFrontSide()` calls it from `draw()` when a card's set image failed to load. A throw there would have left the
+  batch drawing and every later frame failing (a frozen screen). The shared batch is closed around the render and
+  reopened with its projection now. The other callers (setup, input events, image callbacks) run outside a draw pass.
 - **Seen** in the agent game: a world-map defeat at 4 life -> "Modum, You Died!!!" with the DEFEAT badge, no exception
   in the log (the soak before the fix logged the exception at the same place).
 - The v1.14 artifacts were rebuilt from this commit.

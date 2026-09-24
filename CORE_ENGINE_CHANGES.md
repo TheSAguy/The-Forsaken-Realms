@@ -140,6 +140,9 @@ Neither round updated this file at the time, against the standing rule. Both tou
   if `batch.isDrawing()`, and restores the batch's projection matrix after rendering into the frame buffer. Upstream's
   #12011 version assumed a draw pass; `GameStage.showImageDialog()` (the defeat badge, from a Timer task) is not one.
   Keep the guard if a daily rewrites this method.
+- **`forge-gui-mobile/src/forge/adventure/util/RewardActor.java`** - `renderPlaceholder()` closes a drawing shared batch
+  around the frame-buffer render (`renderPlaceholderUnguarded()`) and reopens it with its projection: `drawFrontSide()`
+  reaches it from `draw()`. Any NEW caller of `Forge.getGraphics().begin()` must know whether it runs inside a draw pass.
 
 ### Round 317: thread-safe file lookups; the agent's newgame race
 

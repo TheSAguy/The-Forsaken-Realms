@@ -800,6 +800,27 @@ public class RewardActor extends Actor implements Disposable, ImageFetcher.Callb
     }
 
     private Texture renderPlaceholder(PaperCard card, boolean alternate, boolean displayArt) { //Use CardImageRenderer to output a Texture.
+        // Round 321: upstream's #12011 moved this from its own asset Graphics to the SHARED one, whose begin() throws
+        // "SpriteBatch.end must be called before begin" while the shared batch is drawing - and drawFrontSide() calls
+        // this from draw() when a card's set image failed to load. A throw there left the batch drawing and every later
+        // frame failing. The shared batch is closed around the render and reopened with its projection, as in
+        // FBufferedImage.checkFrameBuffer().
+        Batch shared = Forge.getGraphics().getBatch();
+        boolean wasDrawing = shared.isDrawing();
+        Matrix4 previousProjection = new Matrix4(shared.getProjectionMatrix());
+        if (wasDrawing)
+            shared.end();
+        try {
+            return renderPlaceholderUnguarded(card, alternate, displayArt);
+        } finally {
+            if (wasDrawing) {
+                Forge.getGraphics().setProjectionMatrix(previousProjection);
+                shared.begin();
+            }
+        }
+    }
+
+    private Texture renderPlaceholderUnguarded(PaperCard card, boolean alternate, boolean displayArt) {
         if (renderedCount < 1) {
             renderedCount++;
             //The first time we find a card that has no art, render one out of view to fully initialize CardImageRenderer.
