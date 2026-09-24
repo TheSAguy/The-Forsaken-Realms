@@ -17771,9 +17771,9 @@ Local commit; nothing tagged or pushed - the user publishes.
   ambushers). The name is mine, as v1.13's was.
 - It carries rounds 292-320 on the 09.23 engine. The pre-release checks: the user's own save (slot 1, day 11) loaded in
   the agent game on the release build - race, gold, shards, decks intact, the doodads re-scattered once - and soaks.
-- **Artifacts** (`C:\TFRelease1.14\`): the PC zip from `build_standalone.py --zip`; the APK and `assets.zip` from
+- **Artifacts** (`C:\TFR\release\v1.14\`): the PC zip from `build_standalone.py --zip`; the APK and `assets.zip` from
   `C:\TFR-build` at this commit - aapt (versionCode 11400, versionName 1.14), apksigner (our key), the assets layout and
-  the matched build.txt pair verified. The keystore backup `C:\TFR\liveorsaken-realms-android.keystore` that
+  the matched build.txt pair verified. The keystore backup `C:\TFR\live\forsaken-realms-android.keystore` that
   `ANDROID_RELEASE.md` names was missing (the move to C: left it on F:); restored, same md5 as the build's.
 - **`dev-tools/agent/soak.py`**: a map dialog comes as `{"text", "options"}`, and `choose()` iterated the dict's keys -
   every map dialog `settle()` left open read as "cannot be answered" (the Planeswalker Dueling Club's warning, 388
