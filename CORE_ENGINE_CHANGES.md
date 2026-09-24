@@ -134,6 +134,18 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 323: quest targets load as authored
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - a placement is kept `asAuthored` when it is a
+  scripted placement OR `AdventureQuestController.isQuestTargetPlacement()`: skipped by the content filter, the
+  re-theme and the fixed-roster record, and by the cave champion candidate list; `beatenPlacements` (the authored
+  enemy of every already-beaten placement on the level) feeds `creditBeatenQuestTargets()` after the layer loop.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** - `matchesTargetEnemyData()` (the fixed
+  target / tag test, moved out of `checkIfTargetEnemy()` unchanged), `isPlaceBoundEnemyTarget()`,
+  `retroCompleteIfTargetAlreadyBeaten()`.
+- **`forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java`** - `isQuestTargetPlacement()` over the
+  quest templates' place-bound Defeat stages (`[TFR-QuestTarget]`), `creditBeatenQuestTargets()`.
+
 ### Round 322: alphabetical races, the Jumpstart fallback
 
 - **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** - the race selector's text list is sorted by

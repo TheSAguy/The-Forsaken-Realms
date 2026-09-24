@@ -161,6 +161,73 @@ public class AdventureQuestController implements Serializable {
         return boostedSpawns;
     }
 
+    /**
+     * Round 322 (player report on v1.13: "I wasn't able to finish the 'Explore the Crystal Mines' quest ... FYI the
+     * leader of the cave was not a pirate"). True when a quest stage sends the player to THIS place to beat an enemy it
+     * names by tags, and the enemy the map authored here carries them - quest 45's "Defeat the mine captain" (enemyTags
+     * Captain, POITags Quest_ShardMines) is the only one today, and anything shaped like it later is covered too.
+     * <p>
+     * MapStage keeps such a placement exactly as authored. The dungeon re-theme had exempted "boss and quest-tagged
+     * encounters" since it was written (MOD_SCOPE #7); round 181 narrowed the exemption to Boss / Story / Legendary /
+     * Challenger, and from then on a mine whose land had changed hands put a creature from the new owner's roster in the
+     * captain's place - no roster holds a Captain-tagged enemy, so the stage's tag test could never pass.
+     * <p>
+     * Read from the quest TEMPLATES, not from the player's quests: the fixed roster (round 201) records a place's first
+     * visit, and a visit made before the quest is taken must not record a stand-in either.
+     */
+    public boolean isQuestTargetPlacement(EnemyData authored, PointOfInterest poi) {
+        if (authored == null || poi == null || poi.getData() == null || poi.getData().questTags == null)
+            return false;
+        List<String> placeTags = Arrays.asList(poi.getData().questTags);
+        for (PlaceBoundTarget target : placeBoundTargets()) {
+            if (placeTags.containsAll(target.placeTags) && target.stage.matchesTargetEnemyData(authored))
+                return true;
+        }
+        return false;
+    }
+
+    /** Round 322: one template stage isQuestTargetPlacement() consults, with the POI tags that pick its place. */
+    private static final class PlaceBoundTarget {
+        final List<String> placeTags;
+        final AdventureQuestStage stage;
+
+        PlaceBoundTarget(List<String> placeTags, AdventureQuestStage stage) {
+            this.placeTags = placeTags;
+            this.stage = stage;
+        }
+    }
+
+    private transient List<PlaceBoundTarget> placeBoundTargets;
+
+    /** Round 322: every template stage that names its enemy and counts only in the place its POITags pick (a POIToken
+     *  stage borrows the tags of the stage it points at). Built once per controller - the templates never change. */
+    private List<PlaceBoundTarget> placeBoundTargets() {
+        if (placeBoundTargets != null)
+            return placeBoundTargets;
+        List<PlaceBoundTarget> found = new ArrayList<>();
+        for (AdventureQuestData quest : allQuests) {
+            for (AdventureQuestStage stage : quest.stages) {
+                if (stage == null || !stage.isPlaceBoundEnemyTarget())
+                    continue;
+                List<String> tags = stage.POITags;
+                if (stage.POIToken != null && !stage.POIToken.isEmpty()) {
+                    for (AdventureQuestStage other : quest.stages) {
+                        if (other != null && stage.POIToken.equals("$(poi_" + other.id + ")"))
+                            tags = other.POITags;
+                    }
+                }
+                if (tags == null || tags.isEmpty())
+                    continue; // no place of its own - nothing on a map to keep
+                found.add(new PlaceBoundTarget(tags, stage));
+                System.out.println("[TFR-QuestTarget] \"" + quest.getName() + "\" / \"" + stage.name + "\": an enemy tagged "
+                        + stage.enemyTags + " placed in a place tagged " + tags + " always loads as the map authored it");
+            }
+        }
+        if (allQuests.size > 0)
+            placeBoundTargets = found; // never cache the answer of a controller whose templates are not loaded yet
+        return found;
+    }
+
     public enum ObjectiveTypes{
         None,
         Arena,
@@ -591,6 +658,32 @@ public class AdventureQuestController implements Serializable {
             currentQuest.updateStages(event);
         }
         activateNextStages();
+    }
+
+    /**
+     * Round 322: the save repair for a player already stuck on "Defeat the mine captain". MapStage.loadMap() hands over
+     * what the MAP authored at every enemy placement already beaten on the level just loaded; an active stage that
+     * those satisfy (AdventureQuestStage.retroCompleteIfTargetAlreadyBeaten()) completes on this visit. For the stuck
+     * v1.10-v1.14 saves that is the captain's placement - beaten while another creature stood in it, gone for good,
+     * with the stage still open. Runs before TileMapScene's ENTERPOI event, so the next stage ("Exit the mines") and
+     * its dialog follow on the same entry.
+     */
+    public void creditBeatenQuestTargets(PointOfInterest poi, List<EnemyData> beatenAsAuthored) {
+        if (poi == null || beatenAsAuthored == null || beatenAsAuthored.isEmpty())
+            return;
+        boolean credited = false;
+        for (AdventureQuestData quest : Current.player().getQuests()) {
+            for (AdventureQuestStage stage : quest.stages) {
+                if (stage != null && stage.retroCompleteIfTargetAlreadyBeaten(poi, beatenAsAuthored)) {
+                    credited = true;
+                    System.out.println("[TFR-QuestTarget] \"" + quest.getName() + "\": stage \"" + stage.name
+                            + "\" completed on entering " + poi.getDisplayName() + " - the placement the map gives its"
+                            + " target was beaten on an earlier visit");
+                }
+            }
+        }
+        if (credited)
+            activateNextStages();
     }
 
     public void updateDespawn(EnemySprite despawned){

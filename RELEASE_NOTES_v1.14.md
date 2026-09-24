@@ -50,6 +50,9 @@ the first time it loads. The barrier and the new map layout arrive with your nex
 
 - Starting a new game could crash while the world was being built (also in v1.13).
 - The deck editor kept showing the deck you loaded with, not the one you picked (v1.13).
+- "Explore the Crystal Mines" could not be finished when the mines' land had changed hands - the mine captain
+  turned into another creature. It stays a pirate now, and if yours was already beaten, the quest completes
+  the next time you enter the mines.
 - A long list in a town dialog could run off a small window; it now fits and scrolls.
 - Hidden ambushers that rise from the ground finish rising, and one you never met no longer keeps a dungeon from
   clearing.

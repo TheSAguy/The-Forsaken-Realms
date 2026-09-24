@@ -782,6 +782,7 @@ public class MapStage extends GameStage {
         sourceMapMatch.clear();
         enemies.clear();
         lootPositions.clear(); // round 279 - per map, like everything else here
+        beatenPlacements.clear(); // round 322
         localInnID = -1;
         prepareCaveChampion(map);
         for (MapLayer layer : map.getLayers()) {
@@ -794,6 +795,9 @@ public class MapStage extends GameStage {
                 loadObjects(layer, sourceMap, targetMap);
             }
         }
+        // Round 322: a quest target beaten here on an earlier visit, while the re-theme stood another creature in its
+        // placement (v1.10-v1.14), completes its stage now - see AdventureQuestController.creditBeatenQuestTargets().
+        AdventureQuestController.instance().creditBeatenQuestTargets(AdventureQuestController.instance().mostRecentPOI, beatenPlacements);
         // Blueprint tier-fallback drift check (#92, 2026-09-01). AFTER the layer loop, so
         // shopTierPools holds the whole map: FLAT_TOWN_SHOP_TIERS is a union over an entire file
         // resolved lowest-tier-first, so a per-slot comparison would report drift that the next
@@ -997,9 +1001,10 @@ public class MapStage extends GameStage {
                 if (enemy == null || enemy.toString().isEmpty())
                     continue;
                 EnemyData existing = WorldData.getEnemy(enemy.toString());
-                // Never displace a boss or a scripted placement - the same "ordinary encounter" test the
+                // Never displace a boss, a scripted placement or a quest's target (round 322) - the same test the
                 // territory re-theme in loadObjects() applies before swapping an enemy out.
-                if (existing == null || isScriptedPlacement(existing))
+                if (existing == null || isScriptedPlacement(existing)
+                        || AdventureQuestController.instance().isQuestTargetPlacement(existing, poi))
                     continue;
                 candidates.add(objectId);
             }
@@ -1046,6 +1051,10 @@ public class MapStage extends GameStage {
     }
 
     private final Array<GuardedLoot> lootPositions = new Array<>();
+    /** Round 322: what the MAP authored at each enemy placement already beaten on the level being loaded - whatever
+     *  stood there when it was beaten. Consumed by AdventureQuestController.creditBeatenQuestTargets() after the
+     *  layer loop. Cleared per load. */
+    private final ArrayList<EnemyData> beatenPlacements = new ArrayList<>();
     /** Round 280: the current map's diagonal in pixels - how far a robbed guard will hunt. Set in loadMap(). */
     private float lootHuntRange;
 
@@ -1264,8 +1273,13 @@ public class MapStage extends GameStage {
                 if (changes.isObjectDeleted(id)) {
                     // Round 299: an enemy beaten before the once-per-place rules existed - mark what it paid, and a
                     // lair's boss as down (PlaceRewards.noteEarlierDefeat()).
-                    if ("enemy".equals(type))
+                    if ("enemy".equals(type)) {
                         PlaceRewards.noteEarlierDefeat(prop.get("enemy"));
+                        Object authored = prop.get("enemy"); // round 322: see beatenPlacements
+                        EnemyData authoredData = authored == null ? null : WorldData.getEnemy(authored.toString());
+                        if (authoredData != null)
+                            beatenPlacements.add(authoredData);
+                    }
                     continue;
                 }
 
@@ -1377,13 +1391,20 @@ public class MapStage extends GameStage {
                         Object enemy = prop.get("enemy");
                         if (enemy != null && !enemy.toString().isEmpty()) {
                             EnemyData EN = WorldData.getEnemy(enemy.toString());
+                            // Round 322: a placement that loads exactly as the map authored it - a boss or story
+                            // fighter (isScriptedPlacement), or the enemy a quest stage sends the player here to beat
+                            // (the Cidryl Shard Mines' Pirate Captain for "Defeat the mine captain"). Neither the
+                            // content filter, the re-theme nor a recorded roster pick below may replace it.
+                            boolean asAuthored = EN != null && (isScriptedPlacement(EN)
+                                    || AdventureQuestController.instance().isQuestTargetPlacement(EN,
+                                            AdventureQuestController.instance().mostRecentPOI));
                             if (EN == null) {
                                 System.err.printf("Enemy \"%s\" not found, choosing a random one for current biome\n", enemy);
                                 forge.adventure.world.World world = Current.world();
                                 Vector2 poiPos = AdventureQuestController.instance().mostRecentPOI.getPosition();
                                 int currentBiome = forge.adventure.world.World.highestBiome(world.getBiome((int) poiPos.x / world.getTileSize(), (int) poiPos.y / world.getTileSize()));
                                 EN = world.getData().GetBiomes().get(currentBiome).getEnemy(Current.player().getStatistic().rank());
-                            } else if (!isScriptedPlacement(EN)) {
+                            } else if (!asAuthored) {
                                 // Content filter tables (user spec 2026-08-12): an Include=N
                                 // enemy is skipped from ordinary dungeon population. Same
                                 // ordinary-encounter test the re-theme below already uses -
@@ -1410,7 +1431,10 @@ public class MapStage extends GameStage {
                             // so a second visit is the same dungeon. A stored name that no longer
                             // resolves (an enemy renamed or filtered out between builds) falls
                             // through to the live roll rather than emptying the placement.
-                            if (changes != null && changes.hasFixedRoster()) {
+                            // Round 322: never for a placement kept as authored - a v1.11-v1.14 save can hold the
+                            // re-themed stand-in recorded for the mine captain, and it would return on every visit.
+                            // The record is rewritten with the authored name at the end of this case.
+                            if (!asAuthored && changes != null && changes.hasFixedRoster()) {
                                 String fixed = changes.getFixedEnemy(id);
                                 if (fixed != null) {
                                     EnemyData stored = WorldData.getEnemy(fixed);

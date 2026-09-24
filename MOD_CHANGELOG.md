@@ -17757,6 +17757,41 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 323: "Explore the Crystal Mines" - the mine captain stays a pirate (2026-09-24)
+
+A player's report on v1.13, passed on by the user: *"I wasn't able to finish the 'Explore the Crystal Mines' quest.
+I've defeated the leader of the cave/dungeon, as well as all other monsters just in case. The quest just doesn't
+progress. FYI the leader of the cave was not a pirate."* The user: *"I actually did that quest some time ago and it
+was a Pirate as the last boss. Did something change to switch out some enemies that could be causing this."*
+Local commit.
+
+- **Why.** "Defeat the mine captain" (quest 45, quests.json) accepts only an enemy tagged `Captain` beaten in the
+  place tagged `Quest_ShardMines` - the Cidryl Shard Mines' Pirate Captain (object #25, `shard_mines.tmx`). When the
+  mines' land is no longer red, the dungeon re-theme swaps the map's ordinary enemies for the new owner's creatures,
+  and since round 181 (v1.10) its exemption (`MapStage.isScriptedPlacement()`) covers bosses, spawnRate-0 enemies and
+  the Boss/Story/Legendary/Challenger tags - no longer quest targets, as it did when it was written. So the captain
+  became some other creature (it kept the crown and the pirate card effect, so the player took it for the leader),
+  and no land's roster holds a Captain-tagged enemy: the stage could never complete. Round 201's fixed roster then
+  brought the same stand-in back on every visit, and beating it deleted the captain's placement for good (quest maps
+  never rotate or restock). The owner's pirate: a world where the mines' land stayed red, or a pre-v1.10 build.
+- **The fix.** An enemy a quest stage sends the player to one place to beat loads exactly as the map authored it -
+  the re-theme, cave champions, the content filter and the recorded first-visit roll leave it alone
+  (`AdventureQuestController.isQuestTargetPlacement()`, read from the quest TEMPLATES, so no list to keep and a visit
+  before the quest is taken records nothing either). Today that is only this stage; anything shaped like it later is
+  covered. `[TFR-QuestTarget] "Explore the Crystal Mines" / "Defeat the mine captain": an enemy tagged [Captain]
+  placed in a place tagged [Quest_ShardMines] always loads as the map authored it`.
+- **Players already stuck:** on their next entry into the mines, an active stage whose target placement was already
+  beaten (as the map authored it) completes - `AdventureQuestStage.retroCompleteIfTargetAlreadyBeaten()` via
+  `creditBeatenQuestTargets()` in `MapStage.loadMap()`; walking out finishes the quest and issues quest 86. No
+  re-fight. A v1.13 console stop-gap: `set questflag Quest_ShardMines_Epilogue 1`, `give quest 86`, then abandon the
+  old quest.
+- **Audit:** the only quest stage in the game bound to one specific map enemy; the others count kills anywhere,
+  colors, attack mages, their own spawned targets or "clear the place".
+- **Seen** in the agent game: quest 45 given, teleported into the Cidryl Shard Mines on a world where its land had
+  changed hands - every ordinary enemy re-themed, #25 a Pirate Captain (Master) as authored. The walker could not
+  route to the captain in that map, so the stage completion was verified by the investigation's offline test program
+  (8/8 on the real HEAD and v1.13 data), not in play.
+
 ## Round 322: the angels swapped, blue-eyed; the races in alphabetical order; every player's Jumpstart (2026-09-24)
 
 User, play-testing the release build: *"For the Angel Portrait. Switch the Male and Female pics ... Add a blue and a

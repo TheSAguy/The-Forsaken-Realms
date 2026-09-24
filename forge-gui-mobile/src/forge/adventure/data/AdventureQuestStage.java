@@ -224,23 +224,45 @@ public class AdventureQuestStage implements Serializable {
             String colors = enemy.getData().colors;
             return colors != null && colors.contains(enemyColorLetter);
         }
-        if (targetEnemyData != null) {
-            return (enemy.getData().match(targetEnemyData));
-        }
-        else if (targetSprite == null) {
-            ArrayList<String> candidateTags = new ArrayList<>(Arrays.asList(enemy.getData().questTags));
-            int tagCount = candidateTags.size();
+        if (targetEnemyData != null || targetSprite == null)
+            return matchesTargetEnemyData(enemy.getData());
+        return targetSprite.equals(enemy);
+    }
 
-            candidateTags.removeAll(enemyExcludeTags);
-            if (candidateTags.size() != tagCount) {
-                return false;
-            }
+    /**
+     * Round 322: the identity half of checkIfTargetEnemy() for a bare EnemyData - the enemy a MAP authored at a
+     * placement, which is all that is left of it once it has been beaten. The fixed-target test and the tag test,
+     * moved here from checkIfTargetEnemy() unchanged; the color and attack-mage filters never bind a stage to a
+     * place, so they are not asked. Also what AdventureQuestController.isQuestTargetPlacement() asks of a template.
+     */
+    public boolean matchesTargetEnemyData(EnemyData data) {
+        if (data == null)
+            return false;
+        if (targetEnemyData != null)
+            return data.match(targetEnemyData);
+        ArrayList<String> candidateTags = new ArrayList<>(Arrays.asList(data.questTags));
+        int tagCount = candidateTags.size();
 
-            candidateTags.removeAll(enemyTags);
-            return candidateTags.size() == tagCount - enemyTags.size();
-        } else  {
-            return targetSprite.equals(enemy);
+        candidateTags.removeAll(enemyExcludeTags);
+        if (candidateTags.size() != tagCount) {
+            return false;
         }
+
+        candidateTags.removeAll(enemyTags);
+        return candidateTags.size() == tagCount - enemyTags.size();
+    }
+
+    /** Round 322: true when this stage sends the player to one place to beat an enemy it names by tags or by a fixed
+     *  target - the shape of quest 45's "Defeat the mine captain". A worldMapOK stage also takes world-map kills and
+     *  the color / attack-mage stages match on something else, so no single map placement is ever their only way. */
+    public boolean isPlaceBoundEnemyTarget() {
+        if (objective != Defeat || worldMapOK)
+            return false;
+        if (enemyColorLetter != null && !enemyColorLetter.isEmpty())
+            return false;
+        if (territoryMageColor != null && !territoryMageColor.isEmpty())
+            return false;
+        return targetEnemyData != null || (enemyTags != null && !enemyTags.isEmpty());
     }
 
     public AdventureQuestStage() {
@@ -732,6 +754,39 @@ public class AdventureQuestStage implements Serializable {
                     + " before this stage was issued)");
         }
         return satisfied;
+    }
+
+    /**
+     * Round 322 (player report on v1.13: "I've defeated the leader of the cave/dungeon, as well as all other monsters
+     * just in case. The quest just doesn't progress"). The save repair behind
+     * AdventureQuestController.creditBeatenQuestTargets(): this Defeat stage completes when {@code poi} is its place and
+     * at least count3 placements already beaten there were, AS THE MAP AUTHORED THEM, its target.
+     * <p>
+     * From v1.10 (round 181) the dungeon re-theme could stand another creature in the target's placement. Beating it
+     * removed the placement for good - the Cidryl Shard Mines are a Quest_ map, which never rotates or restocks - while
+     * the stage, whose tag test the stand-in could not pass, stayed open with nothing left to fight. Only placements
+     * beaten since the quest was issued can be in that list for a dungeon or cave target, because
+     * AdventureQuestData.initializeStage() empties the target's deleted objects when the quest is issued.
+     * <p>
+     * A check of STATE, like the other retro-completions above: it asks for count3 beaten at once and never adds to
+     * progress, so running it on every visit cannot count one placement twice.
+     */
+    public boolean retroCompleteIfTargetAlreadyBeaten(PointOfInterest poi, Iterable<EnemyData> beatenAsAuthored) {
+        if (status != ACTIVE || poi == null || beatenAsAuthored == null || targetSprite != null || !isPlaceBoundEnemyTarget())
+            return false;
+        if (!checkIfTargetLocation(poi))
+            return false;
+        int needed = Math.max(1, count3);
+        int beaten = 0;
+        for (EnemyData data : beatenAsAuthored) {
+            if (matchesTargetEnemyData(data))
+                beaten++;
+        }
+        if (beaten < needed)
+            return false;
+        progress3 = Math.max(progress3, needed);
+        status = COMPLETE;
+        return true;
     }
 
     public boolean hasRequiredFetchItems() {

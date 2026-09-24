@@ -148,6 +148,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 323 (local commit, NOT pushed): "Explore the Crystal Mines" completes again** - quest-target placements
+  load as authored (re-theme/champions/filter/fixed roster skip them; round 181 had dropped the quest exemption);
+  stuck saves complete the stage on their next entry. Verified the captain stays a pirate in a re-themed mine.
 - **Round 322 (local commit, NOT pushed): angels swapped (angel_1 male, angel_2 female) with blue eyes
   (`make_race_heroes.py --eyes`); the race selector alphabetical (index mapping - heroes.json unchanged); every
   player's Jumpstart (all products on offer when none qualifies).** The v1.14 artifacts must be REBUILT after this.
