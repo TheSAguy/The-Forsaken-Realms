@@ -92,6 +92,10 @@ SPENDS = ("gold", "shard", "coin", "buy", "use ", "pay", "purchase", "spend")
 
 def choose(options):
     """-> (id, text) for the option to take, or None. options are [id, text, ...] rows."""
+    # Round 320: a map dialog arrives as {"text": ..., "options": [...]} - iterating that dict gave its KEYS, so every
+    # map dialog settle() left open read as "cannot be answered" (the Planeswalker Dueling Club's warning, 388 times).
+    if isinstance(options, dict):
+        options = options.get("options")
     rows = []
     for o in options or []:
         if isinstance(o, dict):
@@ -261,9 +265,11 @@ def main():
             if after.get("forgeUi") or after.get("dialog"):
                 pick = choose(after.get("forgeUi") or after.get("dialog"))
                 if pick and pick[0]:
+                    shown = after.get("forgeUi") or after.get("dialog")
+                    if isinstance(shown, dict):
+                        shown = shown.get("options") or []
                     j.say("choice", "%r from %s" % (pick[1], [str(o[1] if isinstance(o, (list, tuple)) else
-                                                              o.get("text")) for o in
-                                                             (after.get("forgeUi") or after.get("dialog"))][:6]))
+                                                              o.get("text")) for o in shown][:6]))
                     cmd("click", id=pick[0])
                 else:
                     j.problem("a prompt is up that cannot be answered: %s"

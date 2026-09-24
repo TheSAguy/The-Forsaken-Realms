@@ -52,21 +52,24 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-09-24 (round 320; **v1.14 "Realm Reforged" READY TO PUBLISH** - stamps, notes and artifacts built, NOT tagged or pushed; v1.13 is the last published release (tag `tfr-v1.13` @ `e2a3eb5b89c`); rounds 292-320 local; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated after round 315, 2026-09-23 evening).** The repo is clean (leave the untracked
-  `barrier_structures_original.png` alone) and 28 commits ahead of origin, none pushed. The live folder (packaged
-  2026-09-23 22:00) and the agent folder both carry round 315 (jar 21:38). Nothing is in flight. **Waiting on the
-  user:** (1) the new starting races - they asked for Ooze, Goblin, Rat and Angel; I recommended adding Vampire and
-  Merfolk; open: which ones, and whether side-view (left/right only) hero sheets are fine; Rat has no humanoid sheet
-  (needs the user's art). Each race = heroes.json female/male atlases, four raceEditions and two raceShops in the
-  plane's config.json. (2) The release call - round 312's deck-editor fix is the one a v1.13 player is waiting on
-  (it touches only `DeckEditScene.java`, which nothing else since the tag changed: a clean 1.13.1 cherry-pick), or
-  everything as 1.14. Not yet seen in play: the arena champion's one Rare and a roaming champion fought (311), Sliver
-  Queen's portrait (311), research "Hide partial" and its order (313), the dialog fit (313, the player's windowed
-  window), the New Game+ bank (314), the doodads and temples (309, 315), the ledger and loot-hold fixes (290). Still
-  open from before, the user's call: 296 chests have no guard (round 286). v1.13 was published 2026-09-22 22:31:46 UTC:
-  `The-Forsaken-Realms-v1.13.zip` 265.5 MB, `forsaken-realms-1.13-signed-aligned.apk` 13.3 MB (versionCode 11300),
-  `assets.zip` 218.0 MB, rounds 247-290 on the 09.22 engine. The next release's version is 1.14 / manifestVersionCode
-  11400.
+- **NEXT SESSION starts here (updated round 320, 2026-09-24 ~01:10).** **v1.14 "Realm Reforged" is READY TO
+  PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-320, engine =
+  the 09.23 daily. HEAD is round 320's stamp commit or a docs commit on it; nothing tagged, nothing pushed (origin is
+  still at v1.13's close-out). **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
+  `The-Forsaken-Realms-v1.14.zip` (267.8 MB, from `build_standalone.py --zip`, modVersion 1.14 / 09.24, build.txt
+  2026-09-23 18:26:42 = the stock daily), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; aapt: package
+  com.thesaguy.forsakenrealms, versionCode 11400, versionName 1.14; apksigner: CN=The Forsaken Realms, SHA-256
+  ee603925...), `assets.zip` (220.3 MB; res/adventure = common + The Forsaken Realms; res/build.txt and the APK's
+  build.txt both 2026-09-24 07:51:05), `RELEASE_NOTES_v1.14.md`. The APK/assets pair came from `C:\TFR-build` reset to
+  round 320's commit. **Remaining publish steps (the user's call):** `git tag -a tfr-v1.14 -m "v1.14 Realm Reforged"`
+  on the release commit; push main and the tag to origin; `gh release create tfr-v1.14 -R TheSAguy/The-Forsaken-Realms
+  --draft --title "v1.14 - Realm Reforged" --notes-file RELEASE_NOTES_v1.14.md`; upload the zip, the APK and
+  `assets.zip` from `C:\TFR\release\v1.14\` (ALWAYS `-R TheSAguy/The-Forsaken-Realms`); `gh release edit tfr-v1.14 -R
+  ... --draft=false --latest`. If ANY code or data changes before publishing, rebuild all three artifacts (the APK and
+  assets.zip are a matched pair). The keystore backup at `C:\TFR\live\forsaken-realms-android.keystore` was missing and
+  was restored (md5 ab910316...; F:\FORGE\TFR-Standalone and TFR-Agent hold identical copies). Open for the user,
+  noticed in round 319: 75 above-Apprentice chest guards from round 286b, and unique characters' names on many guards.
+  v1.13 was published 2026-09-22 22:31:46 UTC (rounds 247-290 on the 09.22 engine).
 - **Round 292 (after the release; local commit, NOT pushed): map labels that stay on their places, an inventory text
   that wraps, overworld zoom-out 1.5 -> 2.0.** Map view: pins and dots laid out from world anchors every zoom step,
   the bookmark star a badge ABOVE its place, one placement function for build and zoom, and a label pushed aside by
