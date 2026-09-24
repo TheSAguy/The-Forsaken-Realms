@@ -64,7 +64,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   leftover - never push to it. The live and agent folders = the release. Nothing is unreleased. Open for the user:
   the quest-place hiding fix (round 322's research, `scratchpad/r322/questpoi/`); "Shandalar" left in enemy NAMES
   (the lair dragons, "Dracur of Shandalar" etc. - not dialog); the promo page's reserve line ("five times larger";
-  measured ~3.5x); portrait variants for Goblin/Merfolk/Vampire (offered).
+  measured ~3.5x); portrait variants for Goblin/Merfolk/Vampire (offered). **Next up (the user, after the release):**
+  a 1-px black border on the Wasteland's HILLS - the colorless `rock` area structure (pale cone clusters). Preview:
+  `dev-tools/world-art/outline_preview.py <repo root> colorless rock <out.png>` (the border drawn AFTER stitching).
+  An area autotile cannot carry a baked border (round 328: stray dashes at the quarter-tile seams), so it needs the
+  engine to outline the stitched structure layer where chunk textures are baked, for the structures a biome lists.
+  Also: the user asked for a border on the "smaller tree" - it is the WasteDeadTree DOODAD `wc:7,2` (the pair beside
+  it is `wc:7,6`/`wc:7,7`), walkable decoration with no border; round 328's only bordered tree is `tree4` (rdx:48, the
+  dark cypress, blocking). Round 328's rule: border = blocked - ask before bordering walkable doodads.
 - **Round 292 (after the release; local commit, NOT pushed): map labels that stay on their places, an inventory text
   that wraps, overworld zoom-out 1.5 -> 2.0.** Map view: pins and dots laid out from world anchors every zoom step,
   the bookmark star a badge ABOVE its place, one placement function for build and zoom, and a label pushed aside by
