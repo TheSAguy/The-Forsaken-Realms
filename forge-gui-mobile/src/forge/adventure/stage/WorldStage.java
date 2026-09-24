@@ -559,6 +559,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
             currentMob = null;
             return;
         }
+        // Round 310: a duel fought inside a map whose result reached the WORLD instead - the scene history had lost the
+        // map's entry, so DuelScene's switchToLast() landed on GameScene - found no world enemy here and crashed on
+        // currentMob (forge.r301-crash.log, a best-of-1 loss after chained console teleports). Logged and set aside.
+        if (currentMob == null) {
+            System.out.println("[TFR-SceneStack] a duel result reached the world map with no world enemy (in a map: "
+                    + MapStage.getInstance().isInMap() + ", winner=" + playerIsWinner + ") - the scene history had lost"
+                    + " the place it was fought in; the result is set aside instead of crashing");
+            return;
+        }
         boolean isCapitolDefense = currentMobIsCapitolDefense;
         currentMobIsCapitolDefense = false;
         final PointOfInterest assaultPoi = currentMobIsTownAssault ? townAssaultPoi : null;

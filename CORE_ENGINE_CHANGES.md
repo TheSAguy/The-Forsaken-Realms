@@ -132,6 +132,11 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 310: console teleport, world duel result guard
+
+- **`stage/ConsoleCommandInterpreter.java`** - `teleport to poi` leaves a map first (`exitDungeon`).
+- **`stage/WorldStage.java`** - `setWinner()` sets aside a result with no world enemy (`[TFR-SceneStack]`).
+
 ### Round 312: the deck editor's deck
 
 - **`scene/DeckEditScene.java`** - `enter()` rebuilds the editor when the selected deck is not the one it was built

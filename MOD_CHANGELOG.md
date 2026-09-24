@@ -17757,6 +17757,24 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 310: a console teleport leaves the map first; a lost place's duel no longer crashes the world (2026-09-23)
+
+The task a peer session handed over (its user's request): the agent game crashed at 14:08 on a NullPointerException in
+`WorldStage.setWinner` (`currentMob` null) after a chain of console `teleport to poi` hops from map to map ended in a
+LOST best-of-1 duel inside a map - the duel's result reached the world stage. Local commit.
+
+- **What the hops did.** `teleport to poi` loaded the next map over the current one without leaving it; the scene
+  history then held the map scene both as the current scene and on top of the history (`[StartScene, GameScene,
+  TileMapScene]`, current TileMapScene - seen with a scene-history probe in the agent game). Plain duels after that
+  still landed right (switchScene truncates at the current scene), and the teleport chain plus a lost map duel did NOT
+  reproduce the crash on its own; the crashed run had also won a lair boss (Slimefoot) first, whose reward screen and
+  defeat dialog are the likeliest second pop. An agent retry lost that boss fight, so the exact trigger is unconfirmed.
+- **The fixes, cheapest and safe:** `teleport to poi` now leaves a map properly first (`MapStage.exitDungeon()`, as
+  the Teleporter's `EconomyBuildings.travelTo()` and every portal do) - the chain now keeps a clean history
+  (`[StartScene, GameScene]` under each map, seen); and `WorldStage.setWinner()` sets aside a result that arrives with
+  no world enemy, with `[TFR-SceneStack] a duel result reached the world map with no world enemy (in a map: ...)`,
+  instead of crashing.
+
 ## Round 312: the deck editor opens on the selected deck again (2026-09-23)
 
 A player's report on v1.13, passed on by the user (who could not reproduce it): *"After updating from 1.12 to 1.13,

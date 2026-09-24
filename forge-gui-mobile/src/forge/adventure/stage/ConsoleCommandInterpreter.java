@@ -164,6 +164,12 @@ public class ConsoleCommandInterpreter {
             PointOfInterest poi = Current.world().findPointsOfInterest(s[0]);
             if (poi == null)
                 return "PoI " + s[0] + " not found";
+            // Round 310: a map is left properly first - its exit rules and its place in the scene history - as the
+            // Teleporter (EconomyBuildings.travelTo()) and every portal do. Loading one map over another without
+            // leaving it is how a chain of hops ended in a lost duel whose result reached the world stage (the NPE in
+            // WorldStage.setWinner, agent log forge.r301-crash.log).
+            if (MapStage.getInstance().isInMap())
+                MapStage.getInstance().exitDungeon(false, false);
 
             Forge.advFreezePlayerControls = true;
             FThreads.invokeInEdtNowOrLater(() -> Forge.setTransitionScreen(new CoverScreen(() -> {
