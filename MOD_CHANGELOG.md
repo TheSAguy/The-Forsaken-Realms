@@ -17757,6 +17757,40 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 307: the wasteland's new ground, bigger ground patches, every ground option kept (2026-09-23)
+
+User: *"Wasteland A, and make the patches larger. Also, don't get ride of any of the other options. I might want to
+switch some out."* Then, from the patch-size preview: *"Let's go with Patch Size B."* Local commit.
+
+- **Wasteland A "ash grey"**: `world/tilesets/colorless_terrain_hd.png/.atlas` (`bhUpd0H.png` 14,2 base, 12,2 dark
+  purple and 16,2 white "salt flat" patches); `colorless.json` points there. It also colors the barrier's floor on the
+  minimap.
+- **Patch size B on every land** (the five colors, the wasteland, the player): resolution 3 with bands [0, 0.25] and
+  [0.75, 1] - were resolution 10 for the colors and 5 for the wasteland and the player, bands [0, 0.2] and [0.8, 1].
+  The player's overlay patch (`Player_3`) is at 3 too. Measured with the game's own `OpenSimplexNoise` and
+  generateNew()'s formula over a 700x700 world: the colors' patches went from 2.5 tiles on average (median 2 - the
+  "little round blobs") to 30 (median 18, the largest 264), each patch type covering 13% of the ground instead of
+  7.6%. Every land shares the bands now, so a patch runs on across a territory border and a capture recolors it
+  without reshaping it.
+- **A save follows the ground in the data** - `World.migrateGround()`, called by `WorldSave.load()` just before
+  `migrateMapIconLayout()`. A save remembers the patch bands it was laid out with (`groundPatches`) and a checksum of
+  the ground art its map image was baked from (`groundArt`: every biome's tileset and structure atlases and the
+  pictures they name, its tile names and overlay bands). New bands: `repatchGround()` lays the patches out again with
+  generateNew()'s own formula (the world seed's noise, the last band that holds a tile wins) over plain ground only -
+  structures, the ocean, roads and the barrier keep their tiles, and a tile holding wasteland numbering takes the
+  wasteland's bands (`holdsWasteSpaceValue()`). New bands or new art: the map image is re-baked (the ground, then every
+  icon - which leaves `migrateMapIconLayout()` nothing to do). A save from before this round has neither, so it is laid
+  out once with B. From now on a ground or patch-size switch needs no code change and no version bump.
+- **Every ground option kept**: `dev-tools/world-art/ground_options/` - each land's options A-D as 32 px strips
+  (`<land>.png`; the rows in use are pixel-identical to the plane's sheets), the untoned player ground, the preview
+  sheets the user picked from, the patch-size preview, a README table (names, source blocks, which is in use) and
+  `set_ground.py <repo root> <land> <A-D|old>` / `player <tone>` / `patches <A|B|C|old>`, which wrote this round's
+  wasteland and bands.
+
+**Checked**: the build (MVN EXIT 0) and the live package; the user's save slots were backed up as `*.pre-r307.bak`
+before their first load. The in-game check (the `[TFR-Ground]` line, screenshots) waited for the agent game, which a
+peer session held - the user play-tests first.
+
 ## Round 306: new grounds for the five colors, the player's green at 35% (2026-09-23)
 
 User, picking from round 305's ground previews: *"White A, Blue A, Black C, Red B, Green B. Player 35%. I did not see an

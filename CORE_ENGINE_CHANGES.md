@@ -132,6 +132,13 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 307: the ground follows the data
+
+- **`world/World.java`** - `migrateGround()`: a save's patches laid out again when the biomes' patch bands change
+  (`repatchGround()`, generateNew()'s formula over plain ground only), its map image re-baked when they or the ground
+  art change; `groundPatchSignature()` / `groundArtSignature()`; the saved `groundPatches` / `groundArt`.
+- **`world/WorldSave.java`** - `load()` calls `migrateGround()` just before `migrateMapIconLayout()`.
+
 ### Round 306: new grounds
 
 - **`world/World.java`** - `MAP_ICON_LAYOUT` 3 (one more map re-bake for the new ground colours). Data otherwise.

@@ -363,6 +363,11 @@ public class World implements Disposable, SaveFileContent {
     // Round 305: 305 - the whirlpools, blue's new rocks and the rebalanced water doodads (a 303 save scatters once more).
     public static final int DOODAD_SET = 305;
     private int doodadSet = DOODAD_SET;
+    // Round 307 (user: "make the patches larger"): what a world's ground was last laid out and baked from - every
+    // biome's patch bands (groundPatchSignature()) and the art its map image is drawn with (groundArtSignature()).
+    // migrateGround() compares them with the plane's current data on load. "" = a save from before round 307.
+    private String groundPatches = "";
+    private String groundArt = "";
 
     public java.util.Map<String, Integer> getPoiLootHeldDay() {
         return poiLootHeldDay;
@@ -986,6 +991,10 @@ public class World implements Disposable, SaveFileContent {
         }
         // Round 303: an older save's doodads are placed again on the first chunk drawn - see rescatterDoodads().
         doodadSet = saveFileData.containsKey("doodadSet") ? saveFileData.readInt("doodadSet") : 0;
+        // Round 307: the patch bands and ground art this save was laid out and baked from - see migrateGround().
+        String savedPatches = saveFileData.readString("groundPatches"), savedArt = saveFileData.readString("groundArt");
+        groundPatches = savedPatches != null ? savedPatches : "";
+        groundArt = savedArt != null ? savedArt : "";
         arenaWinWeek.clear();
         if (saveFileData.containsKey("arenaWinWeek")) {
             //noinspection unchecked
@@ -1099,6 +1108,8 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("lairBossDownDay", lairBossDownDay); // round 299
         data.storeObject("oncePaidRewards", oncePaidRewards); // round 299
         data.store("doodadSet", doodadSet); // round 303
+        data.store("groundPatches", groundPatches); // round 307
+        data.store("groundArt", groundArt);
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
@@ -2059,6 +2070,8 @@ public class World implements Disposable, SaveFileContent {
             lairBossDownDay.clear();
             oncePaidRewards.clear();
             doodadSet = DOODAD_SET; // round 303 - a new world's doodads come from the current lists
+            groundPatches = groundPatchSignature(); // round 307 - and its ground from the current bands and art
+            groundArt = groundArtSignature();
             arenaWinWeek.clear(); // round 135
             caveChampion.clear(); // round 139 - a new world's caves must roll their own champions
             // Weighted spawn tier system, Layer 3 (2026-08-23, redesigned 2026-08-25) - must be
@@ -3364,6 +3377,125 @@ public class World implements Disposable, SaveFileContent {
         System.out.println("[TFR-MapIcons] map image re-baked with every icon centered on its point of interest (layout "
                 + mapIconLayout + " -> " + MAP_ICON_LAYOUT + ", " + (System.nanoTime() - started) / 1_000_000 + " ms)");
         mapIconLayout = MAP_ICON_LAYOUT;
+    }
+
+    /**
+     * Round 307: the ground can change in the plane's data alone - a biome's patch bands (the user: "make the patches
+     * larger") or a land's ground art (dev-tools/world-art/ground_options/set_ground.py; the user: "I might want to
+     * switch some out") - and every save follows on its next load. Called by WorldSave.load() just before
+     * migrateMapIconLayout(). New bands lay the patches out again (repatchGround()); new bands or new art re-bake the
+     * map image, the ground from biomeMap/terrainMap and then every icon - everything migrateMapIconLayout() would
+     * bake, so it has nothing left to do. Territory Control planes only, like it.
+     */
+    public void migrateGround() {
+        if (!isTerritoryControlEnabled() || biomeMap == null || terrainMap == null)
+            return;
+        String patches = groundPatchSignature(), art = groundArtSignature();
+        if (patches.equals(groundPatches) && art.equals(groundArt))
+            return;
+        long started = System.nanoTime();
+        String why = groundPatches.isEmpty() ? "a save from before round 307" : "the plane's ground changed";
+        String laid = patches.equals(groundPatches) ? "patches as they were"
+                : repatchGround() + " tile(s) laid out again with the current patch bands";
+        if (biomeImage != null) {
+            rebakeMinimapAfterTerritoryControl();
+            redrawAllPoiMarkers();
+            mapIconLayout = MAP_ICON_LAYOUT; // that bake drew every icon the current way
+        }
+        groundPatches = patches;
+        groundArt = art;
+        System.out.println("[TFR-Ground] " + why + ": " + laid + ", " + (biomeImage != null ? "map image re-baked"
+                : "no map image to re-bake") + " (" + (System.nanoTime() - started) / 1_000_000 + " ms)");
+    }
+
+    /**
+     * Round 307: lays the ground patches out again - generateNew()'s own formula (the world seed's noise, each band of
+     * terrain[], the last band that holds the tile wins) over plain ground only. A structure, the ocean, a road and the
+     * barrier keep what they have, and so does a value past its biome's patches. A tile holding wasteland numbering
+     * (holdsWasteSpaceValue()) takes the wasteland's bands, the way it was written. Returns the tiles that changed.
+     */
+    private int repatchGround() {
+        List<BiomeData> biomes = data.GetBiomes();
+        long roadBit = 1L << biomes.size();
+        BiomeData waste = wasteBiome();
+        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
+        float noiseZoom = data.noiseZoomBiome;
+        int changed = 0;
+        for (int x = 0; x < width; x++) {
+            for (int rawY = 0; rawY < height; rawY++) {
+                long bits = biomeMap[x][rawY];
+                int value = terrainMap[x][rawY];
+                if (bits == 0 || (bits & roadBit) != 0 || (value & terrainMask) != 0 || isBarrierRaw(x, rawY))
+                    continue;
+                int layer = highestBiome(bits);
+                BiomeData biome = biomes.get(layer);
+                BiomeTerrainData[] bands = waste != null && holdsWasteSpaceValue(layer, x, height - rawY - 1, bits)
+                        ? waste.terrain : biome.terrain;
+                if (biome.collision || bands == null || value > bands.length)
+                    continue;
+                int fresh = 0, counter = 1;
+                for (BiomeTerrainData band : bands) {
+                    float n = ((float) noise.eval(x / (float) width * (noiseZoom * band.resolution),
+                            rawY / (float) height * (noiseZoom * band.resolution)) + 1) / 2;
+                    if (n >= band.min && n <= band.max)
+                        fresh = counter;
+                    counter++;
+                }
+                if (fresh != value) {
+                    terrainMap[x][rawY] = fresh;
+                    changed++;
+                }
+            }
+        }
+        return changed;
+    }
+
+    /** Round 307: every biome's patch bands, in order - what repatchGround() lays out. */
+    private String groundPatchSignature() {
+        StringBuilder sig = new StringBuilder();
+        for (BiomeData biome : data.GetBiomes()) {
+            sig.append(biome.name).append(':');
+            if (biome.terrain != null)
+                for (BiomeTerrainData band : biome.terrain)
+                    sig.append(band.min).append(',').append(band.max).append(',').append(band.resolution).append(';');
+            sig.append(' ');
+        }
+        return sig.toString();
+    }
+
+    /** Round 307: a checksum of what the map image is drawn from - each biome's tileset and structure sheets (the
+     *  .atlas files and the pictures they name), its tile names and its overlay bands. */
+    private String groundArtSignature() {
+        java.util.zip.CRC32 crc = new java.util.zip.CRC32();
+        Set<String> atlases = new LinkedHashSet<>();
+        for (BiomeData biome : data.GetBiomes()) {
+            atlases.add(biome.tilesetAtlas);
+            StringBuilder names = new StringBuilder().append(biome.tilesetName).append(';');
+            if (biome.terrain != null)
+                for (BiomeTerrainData band : biome.terrain)
+                    names.append(band.spriteName).append(';');
+            if (biome.overlays != null)
+                for (BiomeTerrainData band : biome.overlays)
+                    names.append(band.spriteName).append(',').append(band.min).append(',').append(band.max)
+                            .append(',').append(band.resolution).append(';');
+            if (biome.structures != null)
+                for (BiomeStructureData structure : biome.structures)
+                    atlases.add(structure.structureAtlasPath);
+            crc.update(names.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        }
+        for (String path : atlases) {
+            FileHandle atlas = path == null ? null : Config.instance().getFile(path);
+            if (atlas == null || !atlas.exists())
+                continue;
+            byte[] text = atlas.readBytes();
+            crc.update(text);
+            for (String line : new String(text, java.nio.charset.StandardCharsets.UTF_8).split("\n")) {
+                String page = line.trim();
+                if (page.endsWith(".png") && atlas.sibling(page).exists())
+                    crc.update(atlas.sibling(page).readBytes());
+            }
+        }
+        return Long.toHexString(crc.getValue());
     }
 
     /** Round 293: does this save still carry the gaps its towns' corner-anchored growth left? */

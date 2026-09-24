@@ -4,19 +4,19 @@
     "noiseWeight":  0.3,
     "distWeight":  1,
     "name":  "waste",
-    "tilesetAtlas":  "world/tilesets/terrain.atlas",
+    "tilesetAtlas":  "world/tilesets/colorless_terrain_hd.atlas",
     "tilesetName":  "Colorless",
     "terrain":  [
                     {
                         "spriteName":  "Colorless_1",
-                        "max":  0.2,
-                        "resolution":  5
+                        "max":  0.25,
+                        "resolution":  3
                     },
                     {
                         "spriteName":  "Colorless_2",
-                        "min":  0.8,
+                        "min":  0.75,
                         "max":  1,
-                        "resolution":  5
+                        "resolution":  3
                     }
                 ],
     "width":  0.85,

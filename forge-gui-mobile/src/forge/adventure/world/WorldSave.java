@@ -274,6 +274,9 @@ public class WorldSave {
                     // Round 249: a save baked before map icons were centered on their POI gets its one re-bake
                     // here - after pointOfInterestChanges (each town's icon follows its ruined/restored state) and
                     // before the fog overlay below copies the image.
+                    // Round 307: a save laid out or baked from other ground (patch bands, ground art) follows the
+                    // plane's current one - its own re-bake leaves the icon re-bake below nothing to do.
+                    currentSave.world.migrateGround();
                     currentSave.world.migrateMapIconLayout();
                     // Re-derive the minimap fog overlay now that the vision cache is real -
                     // World.load()'s own rebuild ran before pointOfInterestChanges loaded, so its

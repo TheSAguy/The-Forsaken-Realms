@@ -9,14 +9,14 @@
     "terrain":  [
                     {
                         "spriteName":  "White_1",
-                        "max":  0.2,
-                        "resolution":  10
+                        "max":  0.25,
+                        "resolution":  3
                     },
                     {
                         "spriteName":  "White_2",
-                        "min":  0.8,
+                        "min":  0.75,
                         "max":  1,
-                        "resolution":  10
+                        "resolution":  3
                     }
                 ],
     "width":  0.7,
