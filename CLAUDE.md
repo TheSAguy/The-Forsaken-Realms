@@ -148,6 +148,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 321 (local commit, NOT pushed): the defeat badge** - upstream's shared-batch `FBufferedImage` ended a batch
+  that was not drawing (the world-map defeat dialog, from a Timer task): guarded + projection restored; verified in the
+  agent game. The v1.14 artifacts were rebuilt from this commit.
 - **Round 320 (local commit, NOT pushed): v1.14 "Realm Reforged" stamps and notes** (modVersion 1.14 / 09.24,
   tfr.version 1.14, manifestVersionCode 11400; `RELEASE_NOTES_v1.14.md`). Release artifacts built from this commit
   (see NEXT SESSION). Nothing tagged or pushed.

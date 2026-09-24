@@ -134,6 +134,13 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 321: FBufferedImage and the shared batch
+
+- **`forge-gui-mobile/src/forge/assets/FBufferedImage.java`** - `checkFrameBuffer()` ends/restarts the shared batch only
+  if `batch.isDrawing()`, and restores the batch's projection matrix after rendering into the frame buffer. Upstream's
+  #12011 version assumed a draw pass; `GameStage.showImageDialog()` (the defeat badge, from a Timer task) is not one.
+  Keep the guard if a daily rewrites this method.
+
 ### Round 317: thread-safe file lookups; the agent's newgame race
 
 - **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - upstream's #11945 shared static `stringBuilder` is

@@ -17757,6 +17757,22 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 321: the defeat badge - the shared batch ended outside a draw pass (2026-09-24)
+
+Found by the pre-release soak (not reported; it never shipped - v1.13 has no shared batch). Local commit.
+
+- **What broke.** Round 316 took upstream's shared SpriteBatch (#12011), whose `FBufferedImage.checkFrameBuffer()`
+  ends the shared batch, renders into its frame buffer and begins it again - assuming it is only ever called while
+  something is drawing. The world-map defeat dialog (`GameStage.showImageDialog()`, run from a `Timer` task after the
+  death animation) builds its DEFEAT badge outside any draw pass: `end()` threw "SpriteBatch.begin must be called
+  before end", the badge was lost (the dialog showed without it) and the scissor test was left off.
+- **The fix** (`FBufferedImage`): the batch is ended and restarted only when it was drawing, and its projection
+  matrix is put back afterwards - so a frame buffer built mid-pass no longer leaves the rest of that pass drawn with
+  its small orthographic matrix.
+- **Seen** in the agent game: a world-map defeat at 4 life -> "Modum, You Died!!!" with the DEFEAT badge, no exception
+  in the log (the soak before the fix logged the exception at the same place).
+- The v1.14 artifacts were rebuilt from this commit.
+
 ## Round 320: v1.14 "Realm Reforged" - release stamps and notes (2026-09-24)
 
 User: *"We will do a 1.14 release tomorrow ... Get everything ready for a 1.14 release. Create the release notes."*

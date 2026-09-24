@@ -69,8 +69,17 @@ public abstract class FBufferedImage extends FImageComplex {
     public FrameBuffer checkFrameBuffer() {
         try {
             if (frameBuffer == null) {
+                // Round 320: upstream's shared batch (#12011, the 09.23 daily) is ended and restarted around the frame
+                // buffer - but getTexture() is also called OUTSIDE any draw pass (GameStage.showImageDialog from a
+                // Timer task: the world-map defeat dialog), where end() threw "SpriteBatch.begin must be called before
+                // end", the badge image was lost and the scissor test stayed off. Only a drawing batch is ended and
+                // restarted now, and its projection is put back so the rest of a draw pass is not drawn with ours.
+                com.badlogic.gdx.graphics.g2d.Batch batch = Forge.getGraphics().getBatch();
+                boolean wasDrawing = batch.isDrawing();
+                Matrix4 previousProjection = new Matrix4(batch.getProjectionMatrix());
                 Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST); //prevent buffered image being clipped
-                Forge.getGraphics().getBatch().end();
+                if (wasDrawing)
+                    batch.end();
                 //render texture to frame buffer if needed
                 frameBuffer = new FrameBuffer(Format.RGBA8888, (int) width, (int) height, false);
                 frameBuffer.begin();
@@ -84,7 +93,9 @@ public abstract class FBufferedImage extends FImageComplex {
                 Forge.getGraphics().end();
                 frameBuffer.end();
                 Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
-                Forge.getGraphics().getBatch().begin();
+                Forge.getGraphics().setProjectionMatrix(previousProjection);
+                if (wasDrawing)
+                    batch.begin();
             }
         } catch (Exception e) {
             e.printStackTrace();
