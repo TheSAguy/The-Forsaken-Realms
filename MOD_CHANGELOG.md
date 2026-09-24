@@ -17788,9 +17788,12 @@ Local commit.
 - **Audit:** the only quest stage in the game bound to one specific map enemy; the others count kills anywhere,
   colors, attack mages, their own spawned targets or "clear the place".
 - **Seen** in the agent game: quest 45 given, teleported into the Cidryl Shard Mines on a world where its land had
-  changed hands - every ordinary enemy re-themed, #25 a Pirate Captain (Master) as authored. The walker could not
-  route to the captain in that map, so the stage completion was verified by the investigation's offline test program
-  (8/8 on the real HEAD and v1.13 data), not in play.
+  changed hands - every ordinary enemy re-themed, #25 a Pirate Captain (Master) as authored. **The stuck player's
+  path, in play:** quest 45 given, the mines entered, the captain's placement deleted without a fight (console
+  `remove enemy 25` - exactly the state a beaten stand-in leaves), out, saved, the save RELOADED, back in: the stage
+  completed on entry (`[TFR-QuestTarget] "Explore the Crystal Mines": stage "Defeat the mine captain" completed on
+  entering Cidryl Shard Mines - the placement the map gives its target was beaten on an earlier visit`), the logbook
+  dialog played, and walking out finished the quest and issued "Word to the Courier". No exception.
 
 ## Round 322: the angels swapped, blue-eyed; the races in alphabetical order; every player's Jumpstart (2026-09-24)
 
