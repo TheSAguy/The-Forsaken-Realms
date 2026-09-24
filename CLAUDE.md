@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (rounds 331 + 331b; **v1.14.1 "Hotfix" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest; v1.14 (tag `tfr-v1.14` @ `9664d624406`) is a DRAFT on GitHub at the user's word - its three assets still attached; ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
@@ -68,8 +68,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `forsaken-realms-1.14.1-signed-aligned.apk` (13.4 MB; versionCode 11401 / 1.14.1; signer ee603925...) and
   `assets.zip` (220.3 MB; build.txt pair 2026-09-24 19:47:13) - the Android pair from `C:\TFR-build` reset to
   c81b3dcf3ef via `R:` in 2:13, keystore md5 ab910316... = the backup's; all in `C:\TFR\release\v1.14.1\`. The live +
-  agent folders = the release (PACKAGE_OK). **The v1.14 release is still a DRAFT** with its assets - publish it again
-  or delete it, the user's call (1.14.1 supersedes it). Open from this round: two agent saves ("Vic 1", "r320 soak
+  agent folders = the release (PACKAGE_OK). **Then the user had v1.14 removed altogether** (`gh release delete
+  tfr-v1.14 --cleanup-tag`: release, assets and the remote + local tag gone; commit 9664d624406 stays in history) and
+  the 1.14.1 notes rewritten to carry v1.14's New/Fixed lists ("Welcome to The Forsaken Realms!" is 1.14.1's title
+  now; `RELEASE_NOTES_v1.14.md` kept in the repo for the record). Open from this round: two agent saves ("Vic 1", "r320 soak
   goblin") refuse to load with no logged reason (the auto save loads); the user may still want the growth-ring doodads
   back at 5x (one constant). Older open items: the quest-place hiding
   fix (round 322's research, `scratchpad/r322/questpoi/`); "Shandalar" in the lair dragons' NAMES; the promo page's
