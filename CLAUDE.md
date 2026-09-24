@@ -253,7 +253,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `[TFR-NextGame] ..., local seat: back() -> screen ...` logs the screen it reached, "none" = broken). SEEN in the
   agent game: Krenko best-of-3 won 2-0 by the AI seat, DuelScene throughout (0.5 s polling), then GameScene ->
   RewardScene, +1 max life once, Krenko gone from the map. No [TFR-CardBudget]/[TFR-ResourcePurse] lines - Krenko is
-  spawnRate 0 (exempt, dedicated list), like all 173 best-of-3 enemies. Live + agent folders packaged.
+  spawnRate 0 (exempt, dedicated list), like all 173 best-of-3 enemies. Live + agent folders packaged. LAIR TEST (the
+  user's follow-up, same evening): Slobad in Slobad's Factory, best-of-3, LOST 0-2 by the agent - the end came back to
+  the lair's TileMapScene, then the ordinary map defeat (to the world map, 321 -> 224 life), no exception. A WON lair
+  boss is still unseen (round 299's gap too): the agent's in-map walker could not reach Garruk (the forest's collision
+  lives in the tileset; the planner drew a straight line into the trees) or Teferi (stuck at tile 41,32). Round 301's
+  crash was NOT this bug (a best-of-1 Skeleton Soldier; round 310 fixed it).
 - **The push rule still stands for every round after the release (the user, 2026-09-20: "Let's not update the
   online repo until we are ready to release").** Every round ends with a local commit carrying the three docs; the
   push and the tag happen together at release time.
