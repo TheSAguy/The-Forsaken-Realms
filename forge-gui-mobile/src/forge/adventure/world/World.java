@@ -79,7 +79,8 @@ public class World implements Disposable, SaveFileContent {
     // Round 305: 2 - the same centered layout, re-baked once more because the round-303/305 sheets now carry their
     // minimap swatches (the top-left 4x4 World.createSmallPixmap() reads); round 300's 32 px player ground had none,
     // and the red the minimap is primed with showed through on the player's whole land.
-    public static final int MAP_ICON_LAYOUT = 2;
+    // Round 306: 3 - the five colours' new 32 px grounds (the user's picks) bring new minimap swatches.
+    public static final int MAP_ICON_LAYOUT = 3;
     private int mapIconLayout = MAP_ICON_LAYOUT;
     // Round 293 (user: "The bottom left is creating a 'gap' in the terrain"): the point town territory grew from.
     // 0 = the town's bottom-left corner (every save before round 293, which has no key) - its growth rings left a gap

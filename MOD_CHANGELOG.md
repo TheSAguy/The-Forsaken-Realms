@@ -17757,6 +17757,28 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 306: new grounds for the five colors, the player's green at 35% (2026-09-23)
+
+User, picking from round 305's ground previews: *"White A, Blue A, Black C, Red B, Green B. Player 35%. I did not see an
+Option for Wasteland."* Local commit.
+
+- Each colour's ground (the base and its two patches) is a 32 px sheet built from the user's new A2 art:
+  `world/tilesets/<color>_terrain_hd.png/.atlas`, regions named as the biome already names them (`White`, `White_1`,
+  `White_2`...), so each biome only changes its `tilesetAtlas`. Stock `terrain.atlas` is untouched.
+  - White A "savanna": olive grass (`deser_a2.png` 4,0), pale sand (`World_A2.png` 3,1) and yellow-olive grass (4,1).
+  - Blue A "beach": pale sand (`World_A2.png` 3,1) with blue and cream blobs (`ZCrOljM.png` 5,3 / 0,3).
+  - Black C "rotting purple": `bhUpd0H.png` 12,2 with purple (7,2) and dark olive-brown (11,0).
+  - Red B "canyon": `bhUpd0H.png` 3,0 with brown (2,0) and pale sand (`World_A2.png` 3,1).
+  - Green B "deep forest": `bhUpd0H.png` 0,0 with green-teal (10,0) and green leaf litter (`ZCrOljM.png` 3,0).
+  Only sheets whose blocks have real rounded edges were offered (`GDPkqrj`, `xfr6holm` and the lava sheet are solid
+  fills - hard square patches); each region carries its minimap swatch (round 305).
+- The player's ground re-toned at 35% toward the old 16 px green (round 305 had 50%), from the untoned 32 px source.
+- `World.MAP_ICON_LAYOUT` 2 -> 3: a save's map image is re-baked once more for the new ground colours.
+- The wasteland was not in the first previews; four options (ash grey, dead earth, cold slate, charcoal) went to the user.
+
+**Seen** in the agent game on a copy of the user's save: "[TFR-MapIcons] map image re-baked ... (layout 1 -> 3, 212 ms)";
+screenshots of all five lands on their new grounds and the player's land at 35%.
+
 ## Round 305: the player's land green again on the minimap, a softer player green, whirlpools (2026-09-23)
 
 User, after round 303: *"The player's main color, the green it a little too vibrant, can we tone it down, somewhere

@@ -137,6 +137,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 306 (local commit, NOT pushed): the five colours' new 32 px grounds** (the user's picks White A savanna,
+  Blue A beach, Black C rotting purple, Red B canyon, Green B deep forest) in `world/tilesets/<color>_terrain_hd.*`,
+  the player's green at 35%, MAP_ICON_LAYOUT 3. The wasteland's options are with the user.
 - **Round 305 (local commit, NOT pushed): minimap swatches (the player's land was RED: round 300's sheet had no
   top-left 4x4 colour), the player's green toned half way back, blue's snow hills -> boulders, dimmer wasteland
   craters, ~20 whirlpools on the ocean** (plane `world/biomes/base.json` + `"onStructures": ["ocean"]`). One-time

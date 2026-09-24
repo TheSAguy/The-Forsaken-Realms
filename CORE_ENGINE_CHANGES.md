@@ -132,6 +132,10 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 306: new grounds
+
+- **`world/World.java`** - `MAP_ICON_LAYOUT` 3 (one more map re-bake for the new ground colours). Data otherwise.
+
 ### Round 305: minimap swatches, whirlpools
 
 - **`world/World.java`** - `MAP_ICON_LAYOUT` 2 (a one-time map re-bake), `DOODAD_SET` 305 (a one-time re-scatter),

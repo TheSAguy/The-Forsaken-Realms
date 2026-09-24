@@ -4,7 +4,7 @@
     "noiseWeight":  0.5,
     "distWeight":  1.5,
     "name":  "red",
-    "tilesetAtlas":  "world/tilesets/terrain.atlas",
+    "tilesetAtlas":  "world/tilesets/red_terrain_hd.atlas",
     "tilesetName":  "Red",
     "terrain":  [
                     {
