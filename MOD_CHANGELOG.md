@@ -17757,6 +17757,24 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 312: the deck editor opens on the selected deck again (2026-09-23)
+
+A player's report on v1.13, passed on by the user (who could not reproduce it): *"After updating from 1.12 to 1.13,
+the edit deck feature doesn't work anymore. All decks show the exact same deck as the one I had selected when loading
+the save. However if I select deck 2, it will use deck 2 in combat despite it showing as a clone of deck 1 in the
+editor."* Local commit.
+
+- **Upstream's.** Forge's 09.21 refactor (#11945, in the 09.22 daily round 289 merged for v1.13) changed
+  `DeckEditScene.enter()` from rebuilding the editor on every visit to keeping it unless the event changes - and the
+  editor is built around ONE deck, the one selected when it was made. Open the editor, go back, pick another slot, open
+  it again: it still showed, and would have edited, the first deck. Combat always read the selected slot. Opening the
+  editor only once per session never shows it, which is likely why the user's test did not.
+- `DeckEditScene` remembers the deck its editor was built for and rebuilds whenever the selected deck is another one;
+  `[TFR-DeckEditor] editing "<deck>" (slot N)`, with "- rebuilt, the editor was open on another deck" when it did.
+
+**Seen** in the agent game: slot 3 "Golgari Toxic" (61 cards), then slot 1 "Green" (43) and slot 2 "Black Green" (43)
+in the same session, each editor showing its own deck, and the three log lines.
+
 ## Round 311: arena champions pay one Rare from their deck; the arena-only champions roam; Sliver Queen's portrait (2026-09-23)
 
 User, after an arena payout of ~45 cards and 7,172 gold: *"It seems a little extreme. can you tell me why I got so

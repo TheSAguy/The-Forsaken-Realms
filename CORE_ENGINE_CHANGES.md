@@ -132,6 +132,12 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 312: the deck editor's deck
+
+- **`scene/DeckEditScene.java`** - `enter()` rebuilds the editor when the selected deck is not the one it was built
+  for (upstream's #11945 kept it between visits); `[TFR-DeckEditor]` log line. Merge note: keep this over upstream's
+  version until upstream fixes it.
+
 ### Round 311: arena champion drops, roaming champions
 
 - **`scene/ArenaScene.java`** - the champion bounty is gone; a beaten champion's deck is recorded and pays one Rare
