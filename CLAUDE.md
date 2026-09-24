@@ -52,29 +52,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 
 ## STATE 2026-09-24 (round 320; **v1.14 "Realm Reforged" READY TO PUBLISH** - stamps, notes and artifacts built, NOT tagged or pushed; v1.13 is the last published release (tag `tfr-v1.13` @ `e2a3eb5b89c`); rounds 292-320 local; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated round 326, 2026-09-24 ~08:10).** **v1.14 "Realm Reforged" is READY TO
-  PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-326, engine =
-  the 09.23 daily. The artifacts are from round 326 (`3dadc40609a`); HEAD is that or a docs commit on it; nothing tagged, nothing pushed (origin is
-  still at v1.13's close-out). **Rounds 326b and 327b (the second session's text audits - Realm of Legends, then the base game's story; data only)
-  landed AFTER these artifacts were built - rebuild all three and repackage `C:\TFR\live` before publishing.**
-  **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
-  `The-Forsaken-Realms-v1.14.zip` (267.8 MB, from `build_standalone.py --zip`, modVersion 1.14 / 09.24, build.txt
-  2026-09-23 18:26:42 = the stock daily), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; aapt: package
-  com.thesaguy.forsakenrealms, versionCode 11400, versionName 1.14; apksigner: CN=The Forsaken Realms, SHA-256
-  ee603925...), `assets.zip` (220.3 MB; res/adventure = common + The Forsaken Realms; res/build.txt and the APK's
-  build.txt both 2026-09-24 15:07:10), `RELEASE_NOTES_v1.14.md`. The APK/assets pair came from `C:\TFR-build` reset to
-  `3dadc40609a`. **Remaining publish steps (the user's call):** `git tag -a tfr-v1.14 -m "v1.14 Realm Reforged"`
-  on the release commit; push main and the tag to origin; `gh release create tfr-v1.14 -R TheSAguy/The-Forsaken-Realms
-  --draft --title "v1.14 - Realm Reforged" --notes-file RELEASE_NOTES_v1.14.md`; upload the zip, the APK and
-  `assets.zip` from `C:\TFR\release\v1.14\` (ALWAYS `-R TheSAguy/The-Forsaken-Realms`); `gh release edit tfr-v1.14 -R
-  ... --draft=false --latest`. If ANY code or data changes before publishing, rebuild all three artifacts (the APK and
-  assets.zip are a matched pair). The keystore backup at `C:\TFR\live\forsaken-realms-android.keystore` was missing and
-  was restored (md5 ab910316...; F:\FORGE\TFR-Standalone and TFR-Agent hold identical copies). Open for the user,
-  next release (round 322's research, `scratchpad/r322/questpoi/`): hide quest-only places until their quest calls them
-  - the data already gates ten of them (`questFlagsToActivate`), but `PointOfInterest.load()` never reads the gate
-  back, so they appear after the first load; the recommended fix (a `questHidden` flag + reveal on the targeting
-  stage, via the rotation's active switch) touches world gen, quest activation and every save - after v1.14.
-  v1.13 was published 2026-09-22 22:31:46 UTC (rounds 247-290 on the 09.22 engine).
+- **NEXT SESSION starts here (updated after the v1.14 release, 2026-09-24).** **v1.14 "Welcome to The Forsaken
+  Realms!" is RELEASED** (published 2026-09-24 17:56:04 UTC, Latest): tag `tfr-v1.14` @ `9664d624406` on origin/master; rounds
+  292-330 on the 09.23 engine. The user named it (they first wrote "Forgotten Realms" - the game's OLD name, the repo
+  was renamed from it and GitHub still redirects; they picked Forsaken when asked). Assets, all from the tag:
+  `The-Forsaken-Realms-v1.14.zip` (267.9 MB, `build_standalone.py --out C:/TFR/release/v1.14/stage --zip` while the user
+  played), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; versionCode 11400 / 1.14; signer SHA-256 ee603925...),
+  `assets.zip` (220.3 MB; build.txt pair 2026-09-24 17:52:00) - in `C:\TFR\release\v1.14\` (`old_r326\` = the
+  superseded round-326 build, `stage\` = the zip's staging folder; both safe to delete). **Release branch = `master`**:
+  local `main` tracks `origin/master` (`git push origin main:master`); GitHub's `main` branch is a stale round-159
+  leftover - never push to it. The live and agent folders = the release. Nothing is unreleased. Open for the user:
+  the quest-place hiding fix (round 322's research, `scratchpad/r322/questpoi/`); "Shandalar" left in enemy NAMES
+  (the lair dragons, "Dracur of Shandalar" etc. - not dialog); the promo page's reserve line ("five times larger";
+  measured ~3.5x); portrait variants for Goblin/Merfolk/Vampire (offered).
 - **Round 292 (after the release; local commit, NOT pushed): map labels that stay on their places, an inventory text
   that wraps, overworld zoom-out 1.5 -> 2.0.** Map view: pins and dots laid out from world anchors every zoom step,
   the bookmark star a badge ABOVE its place, one placement function for build and zoom, and a label pushed aside by
