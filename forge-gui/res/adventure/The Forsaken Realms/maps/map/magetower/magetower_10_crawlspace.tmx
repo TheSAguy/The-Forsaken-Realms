@@ -114,8 +114,8 @@
    </properties>
   </object>
   <object id="58" template="../../../../common/maps/obj/manashards.tx" x="105" y="91.6667"/>
-  <object id="60" template="../../../../common/maps/obj/waypoint.tx" x="336" y="160"/>
-  <object id="61" template="../../../../common/maps/obj/waypoint.tx" x="352" y="160"/>
+  <object id="60" template="../../../../common/maps/obj/waypoint.tx" x="288.527" y="172.914"/>
+  <object id="61" template="../../../../common/maps/obj/waypoint.tx" x="240.527" y="172.914"/>
    <object id="62" template="../../../../common/maps/obj/enemy.tx" x="337.421" y="174.395">
    <properties>
     <property name="enemy" value="Apprentice Scribe"/>

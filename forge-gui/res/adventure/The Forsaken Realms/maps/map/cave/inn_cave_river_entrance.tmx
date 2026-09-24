@@ -625,7 +625,7 @@
   <object id="44" template="../../../../common/maps/obj/waypoint.tx" x="273.75" y="484.25"/>
   <object id="45" template="../../../../common/maps/obj/waypoint.tx" x="250.25" y="568.5"/>
   <object id="46" template="../../../../common/maps/obj/waypoint.tx" x="8.5" y="365.25"/>
-  <object id="47" template="../../../../common/maps/obj/waypoint.tx" x="86.25" y="429.75"/>
+  <object id="47" template="../../../../common/maps/obj/waypoint.tx" x="70.25" y="397.75"/>
   <object id="48" template="../../../../common/maps/obj/entry_down.tx" x="223" y="228" width="37" height="11.75">
    <properties>
     <property name="teleport" value=""/>

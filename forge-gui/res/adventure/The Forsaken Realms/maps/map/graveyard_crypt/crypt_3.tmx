@@ -305,7 +305,7 @@
     <property name="waypoints" value="124,140"/>
    </properties>
   </object>
-  <object id="142" template="../../../../common/maps/obj/waypoint.tx" x="167.333" y="46.3333"/>
+  <object id="142" template="../../../../common/maps/obj/waypoint.tx" x="183.333" y="78.3333"/>
   <object id="143" template="../../../../common/maps/obj/waypoint.tx" x="149.333" y="293"/>
   <object id="144" template="../../../../common/maps/obj/waypoint.tx" x="250" y="49.3333"/>
   <object id="145" template="../../../../common/maps/obj/enemy.tx" x="150.333" y="269.333">

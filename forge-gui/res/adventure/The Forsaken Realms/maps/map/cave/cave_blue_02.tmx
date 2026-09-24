@@ -124,7 +124,7 @@
   </object>
   <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="264" y="200"/>
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="440" y="184"/>
-  <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="88" y="184"/>
+  <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="88" y="200"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="328" y="216"/>
   <object id="6" template="../../../../common/maps/obj/enemy.tx" x="352" y="128">
    <properties>
@@ -157,8 +157,8 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/gold.tx" x="176" y="192"/>
   <object id="11" template="../../obj/stone.tx" x="224" y="208"/>
-  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="80" y="144"/>
-  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="64" y="160"/>
+  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="80" y="224"/>
+  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="144" y="208"/>
    <object id="14" template="../../../../common/maps/obj/enemy.tx" x="64" y="160">
    <properties>
     <property name="enemy" value="Geist"/>

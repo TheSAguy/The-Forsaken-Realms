@@ -65,7 +65,6 @@
    <properties>
     <property name="enemy" value="Earth Elemental"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="68,61,62,61,68,69,70,69"/>
    </properties>
   </object>
   <object id="56" template="../../../../common/maps/obj/enemy.tx" x="160" y="48">
@@ -208,10 +207,10 @@
 ]</property>
    </properties>
   </object>
-  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
-  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="224" y="64"/>
-  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="80" y="128"/>
-  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="112" y="128"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="351" y="72"/>
+  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="351" y="120"/>
+  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="59.333" y="140.167"/>
+  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="43.333" y="204.167"/>
    <object id="99" template="../../../../common/maps/obj/enemy.tx" x="209.5" y="61">
    <properties>
     <property name="enemy" value="Earth Elemental"/>

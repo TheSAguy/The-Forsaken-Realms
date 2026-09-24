@@ -101,7 +101,7 @@
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="347" y="30.6667"/>
   <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="304.667" y="27.6667"/>
   <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="304.667" y="147.333"/>
-  <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="357" y="164"/>
+  <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="325" y="148"/>
   <object id="85" template="../../../../common/maps/obj/enemy.tx" x="306.333" y="108">
    <properties>
     <property name="enemy" value="Cyclops"/>
@@ -137,8 +137,8 @@
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="18" y="157.667"/>
   <object id="88" template="../../obj/stone.tx" x="81.2234" y="78.3974"/>
   <object id="89" template="../../obj/stone.tx" x="351.922" y="74.562"/>
-  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="64" y="208"/>
-  <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="80" y="208"/>
+  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="13" y="190.666"/>
+  <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="13" y="254.666"/>
    <object id="93" template="../../../../common/maps/obj/enemy.tx" x="343.333" y="170.667">
    <properties>
     <property name="enemy" value="Minotaur"/>

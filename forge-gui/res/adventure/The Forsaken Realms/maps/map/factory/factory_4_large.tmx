@@ -207,8 +207,8 @@
    </properties>
   </object>
   <object id="117" template="../../obj/stone.tx" x="109.975" y="380.255"/>
-  <object id="118" template="../../../../common/maps/obj/waypoint.tx" x="272" y="48"/>
-  <object id="119" template="../../../../common/maps/obj/waypoint.tx" x="256" y="48"/>
+  <object id="118" template="../../../../common/maps/obj/waypoint.tx" x="392.5" y="437.5"/>
+  <object id="119" template="../../../../common/maps/obj/waypoint.tx" x="392.5" y="501.5"/>
    <object id="120" template="../../../../common/maps/obj/enemy.tx" x="263.333" y="45.3333">
    <properties>
     <property name="enemy" value="Construct"/>

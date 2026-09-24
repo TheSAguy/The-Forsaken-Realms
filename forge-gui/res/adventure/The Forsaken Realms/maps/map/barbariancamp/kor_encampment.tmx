@@ -161,10 +161,10 @@
   </object>
   <object id="109" template="../../obj/stone.tx" x="352.847" y="46.7922"/>
   <object id="110" template="../../obj/stone.tx" x="148.028" y="312.926"/>
-  <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="80" y="352"/>
-  <object id="112" template="../../../../common/maps/obj/waypoint.tx" x="64" y="368"/>
-  <object id="113" template="../../../../common/maps/obj/waypoint.tx" x="176" y="32"/>
-  <object id="114" template="../../../../common/maps/obj/waypoint.tx" x="160" y="48"/>
+  <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="177" y="171"/>
+  <object id="112" template="../../../../common/maps/obj/waypoint.tx" x="113" y="171"/>
+  <object id="113" template="../../../../common/maps/obj/waypoint.tx" x="176" y="107.5"/>
+  <object id="114" template="../../../../common/maps/obj/waypoint.tx" x="112" y="107.5"/>
    <object id="115" template="../../../../common/maps/obj/enemy.tx" x="71.0316" y="382.236">
    <properties>
     <property name="enemy" value="Kor Duelist"/>

@@ -153,8 +153,8 @@
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
-  <object id="63" template="../../../../common/maps/obj/waypoint.tx" x="192" y="128"/>
-  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="192" y="144"/>
+  <object id="63" template="../../../../common/maps/obj/waypoint.tx" x="180.844" y="193.563"/>
+  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="212.844" y="241.563"/>
    <object id="65" template="../../../../common/maps/obj/enemy.tx" x="183.202" y="126.24">
    <properties>
     <property name="enemy" value="Skeleton"/>

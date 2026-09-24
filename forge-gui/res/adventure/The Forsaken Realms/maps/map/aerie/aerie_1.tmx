@@ -63,7 +63,7 @@
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="129.834" y="149.06"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="214.427" y="78.368"/>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="269.739" y="115.933"/>
-  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="271.513" y="189.285"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="271.513" y="173.285"/>
   <object id="96" template="../../../../common/maps/obj/treasure.tx" x="106.171" y="94.9317">
    <properties>
     <property name="reward">[

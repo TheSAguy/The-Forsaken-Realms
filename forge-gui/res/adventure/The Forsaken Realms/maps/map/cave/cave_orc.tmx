@@ -104,8 +104,8 @@
   <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="173.567" y="159.009"/>
   <object id="68" template="../../../../common/maps/obj/manashards.tx" x="177.801" y="57.1099"/>
   <object id="69" template="../../obj/stone.tx" x="200.91" y="62.1818"/>
-  <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="208" y="48"/>
-  <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="224" y="64"/>
+  <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="223.459" y="143.23"/>
+  <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="143.459" y="111.23"/>
    <object id="72" template="../../../../common/maps/obj/enemy.tx" x="209.25" y="49.75">
    <properties>
     <property name="enemy" value="Grimtusk Bowman"/>

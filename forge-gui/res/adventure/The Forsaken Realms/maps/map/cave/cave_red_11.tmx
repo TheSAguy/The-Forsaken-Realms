@@ -213,8 +213,8 @@
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="288" y="160"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="336" y="272"/>
   <object id="19" template="../../../../common/maps/obj/booster.tx" x="144" y="176"/>
-  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="560" y="176"/>
-  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="544" y="192"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="496" y="224"/>
+  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="432" y="224"/>
    <object id="22" template="../../../../common/maps/obj/enemy.tx" x="544" y="192">
    <properties>
     <property name="enemy" value="Deepvein Bonedigger"/>

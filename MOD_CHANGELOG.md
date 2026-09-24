@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 330: patrols that parked beside guarded loot (2026-09-24)
+
+User, play-testing two dungeons (the Hunting Lodge and a sandy cave): *"The two enemies I highlighted, have patrol
+paths, but when they get to the chest, they stop/guard, even though there is already a guard there. ... this is
+probably widespread."* Local commit; data only (214 maps). Tools, plan and QA: `dev-tools/guard_patrols/round330/`.
+
+- **Why.** Round 258 ("put a patrol route near Chests") gave ~320 enemies a two-waypoint route whose BOTH waypoints sit
+  on the chest's neighboring tiles (176 new routes, 144 hand-authored ones overwritten). `EnemySprite` walks post ->
+  w1 -> w2 -> w1 ... and never returns to its post, so each of them lived at its chest; rounds 286b/287 then put a
+  standing guard beside most of those chests. The lodge: Wolfkin Outcast #95, route 107,108 at 2.1 and 0.9 tiles from
+  chest 93, waypoint 108 on the post of round 286b's Wolfkin Outcast #109. The sandy cave: most likely
+  `main_story_explore/bandit_cave.tmx`, Bandit Archer #24 walking to chest 17 where round 287's Skeleton #34 stands.
+- **Audit (Hard, the user's difficulty):** 1,359 routes in 316 maps, 1,283 that run. CONVERGING 338 -> 16, STUCK
+  FREEZE 28 -> 2, ON-LOOT 73 -> 4, IN-WALL 7 -> 4, BESIDE-ENEMY 280 -> 26, SHARED-LOOT 4 -> 0. What is left: bosses, a
+  Challenger and dialog NPCs (untouchable), the debug map, phyrexian_black1 (accepted by the user), five of round
+  319's cluster splits in rooms too cramped for another route, and long hand-authored circuits that only brush past a
+  standing enemy at a corner - all listed in the plan.
+- **Fix: 365 patrollers in 214 maps** - 242 re-routed to a 2-waypoint back-and-forth from their post, 3-6 tiles long,
+  away from guarded loot; 64 single-waypoint nudges (+44 fixed by the same shared-waypoint move); 9 waypoints dropped
+  from one route; 6 routes dropped (never ran, or nothing fit). 556 waypoint objects moved, 4 added, 11 route values
+  rewritten. No enemy is moved, added or removed. Each leg is checked against a replay of the game's own
+  `NavigationMap` (enemies are not stopped by walls - a walker freezes only when the pathfinder finds no path).
+- **Checked:** `validate_plane_data.py` exit 0 (enemy-routes 1360 -> 1354, the 6 dropped); `waypoint_routes_qa.py`
+  22 -> 19 maps with findings, none new; `booster_guards.py` 260 of 261 as before; chests guarded 528 of 534 as before;
+  loot with an enemy near it 749 before and after; byte check - only the planned lines changed, line endings kept.
+- **Seen** in the agent game: the Hunting Lodge's #95 pacing x 99-155 in the west half of the room, #109 standing at
+  its chest (x 262).
+- Existing saves get the new routes too: `MapStage.loadObjects()` reads each enemy's `waypoints` from the map on every
+  visit (round 201's fixed roster records names, not routes).
+
+## Round 329b: the HUD leaves the shared batch white - round 329's black world (2026-09-24)
+
+The user, minutes after round 329 reached the live folder: *"I just loaded my game and the screen was black, no
+terrain"* - the HUD, the player and the cave magnifiers drawn, nothing else. Local commit; never released.
+
+- **Why.** The HUD shares one SpriteBatch with the world since round 316 (upstream #12011), and scene2d leaves the
+  batch color wherever the last actor drawn set it. Round 329's `keepBannerOnTop()` made the notification pane the
+  HUD's last actor, and an idle banner is alpha 0 - so the next frame drew the terrain and every place's icon fully
+  transparent (the magnifier and the player are Sprites with their own colors). The agent game showed the same black
+  world during round 329's test and it was misread as a fresh world's fog - the log had no error.
+- **Fix:** `GameHUD.draw()` sets the batch color back to white after the HUD draws. The world renders again (agent
+  game: the black share of a world screenshot 0.77 -> 0.01); the banner still draws over the minimap and portrait.
+
 ## Round 329: Orazca sits in the middle of its land; banners over the HUD; a guard deck may not gut yours (2026-09-24)
 
 Three reports. The user, play-testing: *"I just restored the ruin to Orazca. I don't like how the town icon is not in

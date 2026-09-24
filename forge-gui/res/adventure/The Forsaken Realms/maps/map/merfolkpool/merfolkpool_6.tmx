@@ -146,10 +146,10 @@
    </properties>
   </object>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="813.333" y="892"/>
-  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="384" y="784"/>
-  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="368" y="800"/>
-  <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="768" y="480"/>
-  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="752" y="496"/>
+  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="423.56" y="805.915"/>
+  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="487.56" y="789.915"/>
+  <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="652" y="598.667"/>
+  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="588" y="598.667"/>
    <object id="92" template="../../../../common/maps/obj/enemy.tx" x="758" y="496">
    <properties>
     <property name="enemy" value="Homarid"/>

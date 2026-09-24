@@ -49,7 +49,7 @@
   <object id="82" template="../../../obj/stone.tx" x="209.492" y="128.824"/>
   <object id="76" template="../../../../../common/maps/obj/gold.tx" x="249" y="153"/>
   <object id="77" template="../../../../../common/maps/obj/gold.tx" x="236.667" y="40.3333"/>
-  <object id="78" template="../../../../../common/maps/obj/waypoint.tx" x="205.749" y="51.0678"/>
+  <object id="78" template="../../../../../common/maps/obj/waypoint.tx" x="205.749" y="67.0678"/>
   <object id="79" template="../../../../../common/maps/obj/waypoint.tx" x="209.148" y="168.353"/>
   <object id="80" template="../../../../../common/maps/obj/manashards.tx" x="178.127" y="56.5921"/>
    <object id="83" template="../../../../../common/maps/obj/enemy.tx" x="211" y="27.5">

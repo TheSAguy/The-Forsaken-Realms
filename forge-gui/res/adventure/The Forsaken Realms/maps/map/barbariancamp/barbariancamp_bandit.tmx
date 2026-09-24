@@ -177,8 +177,8 @@
   <object id="90" template="../../obj/stone.tx" x="363.413" y="209.212"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="320" y="240"/>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="352" y="240"/>
-  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="32" y="80"/>
-  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="16" y="96"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="96.6149" y="49.3271"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="112.6149" y="97.3271"/>
    <object id="96" template="../../../../common/maps/obj/enemy.tx" x="17.4087" y="65.4599">
    <properties>
     <property name="enemy" value="Cutpurse"/>

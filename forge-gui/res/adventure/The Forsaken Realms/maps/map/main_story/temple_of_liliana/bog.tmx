@@ -617,7 +617,7 @@
  </objectgroup>
  <objectgroup id="7" name="Waypoints">
   <object id="243" template="../../../../../common/maps/obj/waypoint.tx" x="0" y="304"/>
-  <object id="244" template="../../../../../common/maps/obj/waypoint.tx" x="0" y="400"/>
+  <object id="244" template="../../../../../common/maps/obj/waypoint.tx" x="0" y="384"/>
   <object id="246" template="../../../../../common/maps/obj/waypoint.tx" x="48" y="576"/>
   <object id="247" template="../../../../../common/maps/obj/waypoint.tx" x="112" y="432"/>
   <object id="248" template="../../../../../common/maps/obj/waypoint.tx" x="112" y="112"/>

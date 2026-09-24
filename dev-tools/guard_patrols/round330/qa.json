@@ -1,0 +1,36 @@
+{
+ "summary": "`apply.py` wrote all 214 maps on a scratch copy of the plane with no failure, and a second run refused every map (SHA-1 changed). Byte check (`tools/check_bytes.py`): only the planned lines changed - 556 moved-waypoint lines (x/y only), 11 route values, 6 route lines removed, 4 added waypoint lines, 2 `nextobjectid`s - with every line ending kept, and the other 214 maps byte-identical. `waypoint_routes_qa.py`: 22 -> 19 maps with findings, nothing new (the 3 that went are routes this plan changed for other reasons). `validate_plane_data.py`: exit 0, report identical except `enemy-routes` 1360 -> 1354 (the 6 dropped routes); no ref-waypoint finding. `booster_guards.py`: identical, 260 of 261 boosters guarded; chests by round 286's definition: 528 of 534 guarded, unchanged (no enemy post moved). Loot with an enemy present (standing within 3 tiles or a patrol stop within 2): 749 before, 749 after - the one chest that loses its patroller (crypt.tmx chest 54) never had it in play: that wizard's route froze at its post. Every running route whose first waypoint is its post (178) has a path from that waypoint's own vertex (`tools/verify_post_start.py`) - the check that caught one bad candidate (zedruu #212) before it shipped.",
+ "waypoint_routes_qa": {
+  "before": {
+   "maps_with_findings": 22,
+   "routes": 1381,
+   "legs": 5540
+  },
+  "after": {
+   "maps_with_findings": 19,
+   "routes": 1375,
+   "legs": 5509
+  }
+ },
+ "validate_plane_data": {
+  "before_enemy_routes": 1360,
+  "after_enemy_routes": 1354,
+  "other_differences": 0
+ },
+ "booster_guards": {
+  "before": "260/261",
+  "after": "260/261"
+ },
+ "chest_guards_r286": {
+  "before": "528/534",
+  "after": "528/534"
+ },
+ "presence": {
+  "before": 749,
+  "after": 749
+ },
+ "post_start": {
+  "routes": 178,
+  "without_path": 0
+ }
+}

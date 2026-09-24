@@ -142,8 +142,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="143" template="../../../../common/maps/obj/waypoint.tx" x="336" y="224"/>
-  <object id="144" template="../../../../common/maps/obj/waypoint.tx" x="352" y="240"/>
+  <object id="143" template="../../../../common/maps/obj/waypoint.tx" x="348.102" y="286.3"/>
+  <object id="144" template="../../../../common/maps/obj/waypoint.tx" x="348.102" y="350.3"/>
    <object id="145" template="../../../../common/maps/obj/enemy.tx" x="350.334" y="232.083">
    <properties>
     <property name="enemy" value="Skeleton"/>

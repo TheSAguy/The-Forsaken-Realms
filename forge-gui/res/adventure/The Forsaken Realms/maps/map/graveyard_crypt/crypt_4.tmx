@@ -83,7 +83,6 @@
    <properties>
     <property name="enemy" value="Adept Black Wizard"/>
     <property name="threatRange" type="int" value="30"/>
-    <property name="waypoints" value="87,88,87,84,83"/>
    </properties>
   </object>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="142" y="71.75">
@@ -193,8 +192,8 @@
   <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="304" y="64"/>
   <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="64" y="208"/>
   <object id="103" template="../../../../common/maps/obj/waypoint.tx" x="96" y="208"/>
-  <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="336" y="192"/>
-  <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="336" y="176"/>
+  <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="367.75" y="94"/>
+  <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="303.75" y="126"/>
    <object id="106" template="../../../../common/maps/obj/enemy.tx" x="303.833" y="17.3333">
    <properties>
     <property name="enemy" value="Devil"/>

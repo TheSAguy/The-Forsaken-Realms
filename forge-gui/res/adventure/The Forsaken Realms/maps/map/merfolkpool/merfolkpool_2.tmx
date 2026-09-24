@@ -112,8 +112,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="240" y="48"/>
-  <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="224" y="64"/>
+  <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="240.961" y="136.022"/>
+  <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="240.961" y="200.022"/>
    <object id="71" template="../../../../common/maps/obj/enemy.tx" x="224.729" y="64.3787">
    <properties>
     <property name="enemy" value="Water Elemental"/>
@@ -121,7 +121,7 @@
     <property name="waypoints" value="72,73"/>
    </properties>
   </object>
-  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="224.729" y="48.3787"/>
-  <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="208.729" y="80.3787"/>
+  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="208.729" y="80.3787"/>
+  <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="144.729" y="64.3787"/>
 </objectgroup>
 </map>

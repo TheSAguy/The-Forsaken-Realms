@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="38" nextobjectid="249">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="44" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="38" nextobjectid="251">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -154,7 +154,7 @@
    <properties>
     <property name="enemy" value="Fire Giant"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="191,189"/>
+    <property name="waypoints" value="249,250"/>
    </properties>
   </object>
   <object id="239" template="../../../../common/maps/obj/door_up.tx" x="227.922" y="152.857" width="19.6114" height="29.1114">
@@ -264,5 +264,7 @@
 ]</property>
    </properties>
   </object>
+  <object id="249" template="../../../../common/maps/obj/waypoint.tx" x="285.567" y="285.374"/>
+  <object id="250" template="../../../../common/maps/obj/waypoint.tx" x="285.567" y="221.374"/>
  </objectgroup>
 </map>

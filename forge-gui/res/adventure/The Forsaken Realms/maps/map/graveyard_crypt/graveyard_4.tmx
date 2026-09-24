@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="99">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="34" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="101">
  <editorsettings>
   <export target="wastetown..tmx" format="tmx"/>
  </editorsettings>
@@ -121,7 +121,7 @@
     <property name="enemy" value="Death Knight"/>
     <property name="pursueRange" type="float" value="60"/>
     <property name="threatRange" type="float" value="30"/>
-    <property name="waypoints" value="71,72"/>
+    <property name="waypoints" value="99,100"/>
    </properties>
   </object>
   <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="256" y="352"/>
@@ -212,7 +212,9 @@
 ]</property>
    </properties>
   </object>
-  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="160" y="176"/>
-  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="160" y="160"/>
+  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="202.5" y="223"/>
+  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="266.5" y="223"/>
+  <object id="99" template="../../../../common/maps/obj/waypoint.tx" x="256.5" y="273"/>
+  <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="240.5" y="337"/>
  </objectgroup>
 </map>

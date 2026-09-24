@@ -77,10 +77,10 @@
    </properties>
   </object>
   <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="208.94" y="114.578"/>
-  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="125.967" y="174.472"/>
+  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="141.967" y="190.472"/>
   <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="149.642" y="73.4195"/>
-  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="297.468" y="165.491"/>
-  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="272.638" y="60.7158"/>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="329.468" y="181.491"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="272.638" y="76.7158"/>
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="209.119" y="173.317"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="148.487" y="233.371"/>
   <object id="82" template="../../../../common/maps/obj/gold.tx" x="109.798" y="107.489"/>
@@ -185,12 +185,12 @@
 ]</property>
    </properties>
   </object>
-  <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="208" y="16"/>
-  <object id="106" template="../../../../common/maps/obj/waypoint.tx" x="192" y="16"/>
+  <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="144.033" y="159.933"/>
+  <object id="106" template="../../../../common/maps/obj/waypoint.tx" x="144.033" y="223.933"/>
   <object id="108" template="../../../../common/maps/obj/waypoint.tx" x="288" y="144"/>
   <object id="109" template="../../../../common/maps/obj/waypoint.tx" x="288" y="96"/>
-  <object id="110" template="../../../../common/maps/obj/waypoint.tx" x="112" y="144"/>
-  <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="96" y="160"/>
+  <object id="110" template="../../../../common/maps/obj/waypoint.tx" x="166.965" y="95.3624"/>
+  <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="230.965" y="111.3624"/>
    <object id="112" template="../../../../common/maps/obj/enemy.tx" x="287.242" y="143.534">
    <properties>
     <property name="enemy" value="Eye"/>

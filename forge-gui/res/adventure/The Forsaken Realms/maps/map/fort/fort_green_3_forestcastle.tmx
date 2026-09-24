@@ -147,8 +147,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="288" y="288"/>
-  <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="272" y="304"/>
+  <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="350.769" y="330.187"/>
+  <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="366.769" y="266.187"/>
   <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="336" y="96"/>
   <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="320" y="112"/>
    <object id="76" template="../../../../common/maps/obj/enemy.tx" x="279.083" y="317.416">

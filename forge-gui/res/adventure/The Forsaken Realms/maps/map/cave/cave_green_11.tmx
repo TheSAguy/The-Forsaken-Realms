@@ -153,7 +153,7 @@
    </properties>
   </object>
   <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="376" y="216"/>
-  <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="152" y="200"/>
+  <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="152" y="216"/>
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="600" y="232"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="424" y="264"/>
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="424" y="184"/>
@@ -213,8 +213,8 @@
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="464" y="272"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="288" y="192"/>
   <object id="19" template="../../../../common/maps/obj/booster.tx" x="80" y="208"/>
-  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="160" y="160"/>
-  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="144" y="176"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="240" y="192"/>
+  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="240" y="256"/>
    <object id="22" template="../../../../common/maps/obj/enemy.tx" x="144" y="176">
    <properties>
     <property name="enemy" value="Elf Renegade"/>

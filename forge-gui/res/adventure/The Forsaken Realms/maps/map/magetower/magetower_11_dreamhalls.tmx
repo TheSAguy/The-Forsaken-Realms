@@ -162,7 +162,6 @@
    <properties>
     <property name="enemy" value="Jellyfish"/>
     <property name="threatRange" type="int" value="40"/>
-    <property name="waypoints" value="73,74"/>
    </properties>
   </object>
   <object id="58" template="../../../../common/maps/obj/waypoint.tx" x="106.667" y="162"/>

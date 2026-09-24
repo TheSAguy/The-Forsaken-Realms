@@ -289,10 +289,10 @@
 ]</property>
    </properties>
   </object>
-  <object id="115" template="../../../../common/maps/obj/waypoint.tx" x="224" y="304"/>
-  <object id="116" template="../../../../common/maps/obj/waypoint.tx" x="208" y="320"/>
-  <object id="117" template="../../../../common/maps/obj/waypoint.tx" x="48" y="144"/>
-  <object id="118" template="../../../../common/maps/obj/waypoint.tx" x="32" y="160"/>
+  <object id="115" template="../../../../common/maps/obj/waypoint.tx" x="278.333" y="343.667"/>
+  <object id="116" template="../../../../common/maps/obj/waypoint.tx" x="262.333" y="279.667"/>
+  <object id="117" template="../../../../common/maps/obj/waypoint.tx" x="106.591" y="85.4096"/>
+  <object id="118" template="../../../../common/maps/obj/waypoint.tx" x="154.591" y="53.4096"/>
    <object id="119" template="../../../../common/maps/obj/enemy.tx" x="42.9997" y="173">
    <properties>
     <property name="enemy" value="Kobold Shaman"/>

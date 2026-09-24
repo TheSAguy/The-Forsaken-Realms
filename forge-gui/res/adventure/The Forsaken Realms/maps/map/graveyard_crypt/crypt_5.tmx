@@ -318,10 +318,10 @@
   </object>
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="432" y="224"/>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="448" y="240"/>
-  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="160" y="368"/>
-  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="160" y="352"/>
-  <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="288" y="48"/>
-  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="304" y="48"/>
+  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="210.667" y="378"/>
+  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="274.667" y="378"/>
+  <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="401.666" y="379.333"/>
+  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="321.666" y="379.333"/>
    <object id="92" template="../../../../common/maps/obj/enemy.tx" x="422.333" y="663.667">
    <properties>
     <property name="enemy" value="Master Black Wizard"/>

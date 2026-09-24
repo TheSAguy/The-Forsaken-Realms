@@ -95,7 +95,7 @@
   <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="242.769" y="35.5957"/>
   <object id="77" template="../../../../common/maps/obj/waypoint.tx" x="456.276" y="23.6721"/>
   <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="552.41" y="26.2804"/>
-  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="556.509" y="163.029"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="556.509" y="147.029"/>
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="116.453" y="97.8221"/>
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="59.0703" y="165.265"/>
   <object id="82" template="../../../../common/maps/obj/gold.tx" x="466.336" y="215.94"/>

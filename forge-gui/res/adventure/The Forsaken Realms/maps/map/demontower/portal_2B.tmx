@@ -203,8 +203,8 @@
   </object>
   <object id="162" template="../../../../common/maps/obj/waypoint.tx" x="432" y="304"/>
   <object id="163" template="../../../../common/maps/obj/waypoint.tx" x="416" y="320"/>
-  <object id="164" template="../../../../common/maps/obj/waypoint.tx" x="96" y="32"/>
-  <object id="165" template="../../../../common/maps/obj/waypoint.tx" x="128" y="32"/>
+  <object id="164" template="../../../../common/maps/obj/waypoint.tx" x="145.758" y="146.875"/>
+  <object id="165" template="../../../../common/maps/obj/waypoint.tx" x="81.758" y="146.875"/>
    <object id="166" template="../../../../common/maps/obj/enemy.tx" x="106.351" y="46.7903">
    <properties>
     <property name="enemy" value="Immersturm Demon"/>

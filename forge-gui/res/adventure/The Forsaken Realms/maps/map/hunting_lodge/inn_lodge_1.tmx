@@ -100,8 +100,8 @@
   <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="228.772" y="123.86"/>
   <object id="104" template="../../../../common/maps/obj/waypoint.tx" x="152.25" y="128"/>
   <object id="105" template="../../../../common/maps/obj/waypoint.tx" x="153.25" y="179.75"/>
-  <object id="107" template="../../../../common/maps/obj/waypoint.tx" x="240" y="112"/>
-  <object id="108" template="../../../../common/maps/obj/waypoint.tx" x="256" y="128"/>
+  <object id="107" template="../../../../common/maps/obj/waypoint.tx" x="153.684" y="135.789"/>
+  <object id="108" template="../../../../common/maps/obj/waypoint.tx" x="89.684" y="135.789"/>
    <object id="109" template="../../../../common/maps/obj/enemy.tx" x="254.526" y="125.614">
    <properties>
     <property name="enemy" value="Wolfkin Outcast"/>

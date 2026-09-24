@@ -126,10 +126,10 @@
 ]</property>
    </properties>
   </object>
-  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="96" y="32"/>
-  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="80" y="48"/>
-  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="432" y="144"/>
-  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="416" y="160"/>
+  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="252" y="45.6667"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="316" y="29.6667"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="352.667" y="193"/>
+  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="304.667" y="225"/>
    <object id="97" template="../../../../common/maps/obj/enemy.tx" x="428.667" y="161">
    <properties>
     <property name="enemy" value="Golem"/>
@@ -143,7 +143,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="99" template="../../../../common/maps/obj/waypoint.tx" x="428.667" y="161"/>
-  <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="412.667" y="129"/>
+  <object id="99" template="../../../../common/maps/obj/waypoint.tx" x="412.667" y="145"/>
+  <object id="100" template="../../../../common/maps/obj/waypoint.tx" x="412.667" y="81"/>
 </objectgroup>
 </map>

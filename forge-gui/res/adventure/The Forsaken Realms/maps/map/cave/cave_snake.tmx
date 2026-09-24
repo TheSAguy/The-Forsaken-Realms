@@ -159,8 +159,8 @@
   <object id="79" template="../../obj/stone.tx" x="101.723" y="98.5121"/>
   <object id="80" template="../../obj/stone.tx" x="375.764" y="289.056"/>
   <object id="81" template="../../obj/stone.tx" x="231.053" y="62.6512"/>
-  <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="64" y="48"/>
-  <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="48" y="64"/>
+  <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="124.369" y="26.7066"/>
+  <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="172.369" y="74.7066"/>
    <object id="84" template="../../../../common/maps/obj/enemy.tx" x="54.4356" y="65.1836">
    <properties>
     <property name="enemy" value="Poisonous Snake"/>

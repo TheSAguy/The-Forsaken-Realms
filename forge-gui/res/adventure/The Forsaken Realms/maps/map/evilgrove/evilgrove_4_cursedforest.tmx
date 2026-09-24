@@ -308,8 +308,8 @@
   <object id="153" template="../../../../common/maps/obj/waypoint.tx" x="544" y="144"/>
   <object id="154" template="../../../../common/maps/obj/waypoint.tx" x="96" y="16"/>
   <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="128" y="16"/>
-  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="400" y="784"/>
-  <object id="157" template="../../../../common/maps/obj/waypoint.tx" x="400" y="736"/>
+  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="766.319" y="672.03"/>
+  <object id="157" template="../../../../common/maps/obj/waypoint.tx" x="782.319" y="736.03"/>
    <object id="158" template="../../../../common/maps/obj/enemy.tx" x="402" y="799.333">
    <properties>
     <property name="enemy" value="Bat"/>

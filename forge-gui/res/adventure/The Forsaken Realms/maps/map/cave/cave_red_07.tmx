@@ -144,7 +144,7 @@
   </object>
   <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="376" y="168"/>
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="520" y="136"/>
-  <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="88" y="232"/>
+  <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="88" y="248"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="344" y="184"/>
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="312" y="168"/>
   <object id="7" template="../../../../common/maps/obj/enemy.tx" x="528" y="112">
@@ -188,8 +188,8 @@
   <object id="13" template="../../obj/stone.tx" x="400" y="192"/>
   <object id="14" template="../../obj/wood.tx" x="576" y="128"/>
   <object id="15" template="../../../../common/maps/obj/manashards.tx" x="480" y="208"/>
-  <object id="16" template="../../../../common/maps/obj/waypoint.tx" x="80" y="192"/>
-  <object id="17" template="../../../../common/maps/obj/waypoint.tx" x="64" y="208"/>
+  <object id="16" template="../../../../common/maps/obj/waypoint.tx" x="32" y="240"/>
+  <object id="17" template="../../../../common/maps/obj/waypoint.tx" x="80" y="272"/>
    <object id="18" template="../../../../common/maps/obj/enemy.tx" x="64" y="208">
    <properties>
     <property name="enemy" value="Goblin Archer"/>

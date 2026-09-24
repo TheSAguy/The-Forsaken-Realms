@@ -95,7 +95,7 @@
     <property name="enemy" value="Spider"/>
     <property name="pursueRange" type="float" value="60"/>
     <property name="threatRange" type="float" value="30"/>
-    <property name="waypoints" value="72,74,70,69,70,72"/>
+    <property name="waypoints" value="72,70,69,70,72"/>
    </properties>
   </object>
   <object id="66" template="../../../../common/maps/obj/waypoint.tx" x="206.5" y="71"/>
@@ -107,7 +107,7 @@
   <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="60" y="199"/>
   <object id="73" template="../../../../common/maps/obj/waypoint.tx" x="595" y="73.5"/>
   <object id="74" template="../../../../common/maps/obj/waypoint.tx" x="592.5" y="202"/>
-  <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="68" y="72.5"/>
+  <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="68" y="88.5"/>
   <object id="76" template="../../../../common/maps/obj/enemy.tx" x="64" y="48" visible="1">
    <properties>
     <property name="enemy" value="Spider"/>

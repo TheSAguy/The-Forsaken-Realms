@@ -163,8 +163,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="288" y="32"/>
-  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="272" y="32"/>
+  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="440" y="96.6667"/>
+  <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="392" y="48.6667"/>
    <object id="99" template="../../../../common/maps/obj/enemy.tx" x="282" y="29.3333">
    <properties>
     <property name="enemy" value="Golem"/>

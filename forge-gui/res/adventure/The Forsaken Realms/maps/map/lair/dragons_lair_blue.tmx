@@ -36,7 +36,6 @@
   </object>
   <object id="51" template="../../../../common/maps/obj/enemy.tx" type="enemy" x="171.342" y="136.464" width="16" height="16">
    <properties>
-    <property name="waypoints" value="66,67"/>
     <property name="enemy" value="Whim of Shandalar"/>
     <property name="threatRange" type="int" value="0"/>
    </properties>

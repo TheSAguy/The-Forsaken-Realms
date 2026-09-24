@@ -122,8 +122,8 @@
   <object id="87" template="../../../../common/maps/obj/collision.tx" x="-15.2727" y="-13.7677" width="16" height="590.717"/>
   <object id="88" template="../../../../common/maps/obj/collision.tx" x="576.545" y="-10.3585" width="16" height="590.717"/>
   <object id="90" template="../../obj/wood.tx" x="396.639" y="331.697"/>
-  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="144" y="48"/>
-  <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="128" y="64"/>
+  <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="297.499" y="239.542"/>
+  <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="249.499" y="287.542"/>
   <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="480" y="240"/>
   <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="496" y="208"/>
    <object id="96" template="../../../../common/maps/obj/enemy.tx" x="504.727" y="271.636">

@@ -136,10 +136,10 @@
 ]</property>
    </properties>
   </object>
-  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="192" y="48"/>
-  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="224" y="48"/>
-  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="336" y="256"/>
-  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="320" y="272"/>
+  <object id="78" template="../../../../common/maps/obj/waypoint.tx" x="168" y="150.333"/>
+  <object id="79" template="../../../../common/maps/obj/waypoint.tx" x="232" y="166.333"/>
+  <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="270.5" y="276.834"/>
+  <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="270.5" y="340.834"/>
    <object id="82" template="../../../../common/maps/obj/enemy.tx" x="199.333" y="52.6667">
    <properties>
     <property name="enemy" value="Elf"/>

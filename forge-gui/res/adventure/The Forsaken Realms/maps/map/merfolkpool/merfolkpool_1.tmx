@@ -104,8 +104,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="192" y="16"/>
-  <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="208" y="32"/>
+  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="219.432" y="140.105"/>
+  <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="155.432" y="140.105"/>
    <object id="66" template="../../../../common/maps/obj/enemy.tx" x="192.396" y="50.3787">
    <properties>
     <property name="enemy" value="Merfolk Soldier"/>

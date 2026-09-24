@@ -188,8 +188,8 @@
   <object id="13" template="../../obj/stone.tx" x="464" y="176"/>
   <object id="14" template="../../obj/wood.tx" x="160" y="176"/>
   <object id="15" template="../../../../common/maps/obj/manashards.tx" x="368" y="144"/>
-  <object id="16" template="../../../../common/maps/obj/waypoint.tx" x="608" y="176"/>
-  <object id="17" template="../../../../common/maps/obj/waypoint.tx" x="592" y="192"/>
+  <object id="16" template="../../../../common/maps/obj/waypoint.tx" x="416" y="176"/>
+  <object id="17" template="../../../../common/maps/obj/waypoint.tx" x="352" y="176"/>
    <object id="18" template="../../../../common/maps/obj/enemy.tx" x="592" y="192">
    <properties>
     <property name="enemy" value="Treefolk Guardian"/>

@@ -203,8 +203,8 @@
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="240" y="240"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="496" y="224"/>
   <object id="19" template="../../../../common/maps/obj/booster.tx" x="80" y="224"/>
-  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="624" y="96"/>
-  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="608" y="112"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="640" y="160"/>
+  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="576" y="160"/>
    <object id="22" template="../../../../common/maps/obj/enemy.tx" x="608" y="112">
    <properties>
     <property name="enemy" value="Nutcache Scrapper"/>

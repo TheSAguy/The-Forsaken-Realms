@@ -319,7 +319,7 @@
     <property name="waypoints" value="109,110"/>
    </properties>
   </object>
-  <object id="109" template="../../../../common/maps/obj/waypoint.tx" x="123" y="336"/>
-  <object id="110" template="../../../../common/maps/obj/waypoint.tx" x="123" y="384"/>
+  <object id="109" template="../../../../common/maps/obj/waypoint.tx" x="123" y="304"/>
+  <object id="110" template="../../../../common/maps/obj/waypoint.tx" x="187" y="304"/>
 </objectgroup>
 </map>

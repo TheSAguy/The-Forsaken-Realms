@@ -60,8 +60,8 @@
   </object>
   <object id="83" template="../../../obj/stone.tx" x="187.326" y="148.487"/>
   <object id="82" template="../../../../../common/maps/obj/manashards.tx" x="336.208" y="234.22"/>
-  <object id="84" template="../../../../../common/maps/obj/waypoint.tx" x="368" y="192"/>
-  <object id="85" template="../../../../../common/maps/obj/waypoint.tx" x="352" y="208"/>
+  <object id="84" template="../../../../../common/maps/obj/waypoint.tx" x="314.961" y="166.653"/>
+  <object id="85" template="../../../../../common/maps/obj/waypoint.tx" x="314.961" y="102.653"/>
    <object id="86" template="../../../../../common/maps/obj/enemy.tx" x="359.728" y="217.222">
    <properties>
     <property name="enemy" value="Zombie"/>

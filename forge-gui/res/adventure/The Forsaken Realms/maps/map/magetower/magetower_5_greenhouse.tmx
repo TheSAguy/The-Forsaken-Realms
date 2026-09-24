@@ -152,8 +152,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="48" y="112"/>
-  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="32" y="128"/>
+  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="50.4141" y="176.255"/>
+  <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="98.4141" y="224.255"/>
    <object id="98" template="../../../../common/maps/obj/enemy.tx" x="38.144" y="139.941">
    <properties>
     <property name="enemy" value="Wandering Treefolk"/>

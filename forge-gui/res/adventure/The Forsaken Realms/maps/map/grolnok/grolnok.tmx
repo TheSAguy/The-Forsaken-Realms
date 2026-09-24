@@ -270,7 +270,7 @@
   <object id="140" template="../../../../common/maps/obj/waypoint.tx" x="160.167" y="541.834"/>
   <object id="141" template="../../../../common/maps/obj/waypoint.tx" x="161" y="620"/>
   <object id="142" template="../../../../common/maps/obj/waypoint.tx" x="224" y="625.5"/>
-  <object id="143" template="../../../../common/maps/obj/waypoint.tx" x="225" y="846"/>
+  <object id="143" template="../../../../common/maps/obj/waypoint.tx" x="225" y="798"/>
   <object id="145" template="../../../../common/maps/obj/manashards.tx" x="17.3333" y="28.1667"/>
   <object id="146" template="../../../../common/maps/obj/manashards.tx" x="716.5" y="418.5"/>
   <object id="147" template="../../../../common/maps/obj/gold.tx" x="406.833" y="567.833"/>

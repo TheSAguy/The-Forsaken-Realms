@@ -92,10 +92,10 @@
 ]</property>
    </properties>
   </object>
-  <object id="97" template="../../../../../common/maps/obj/waypoint.tx" x="192" y="48"/>
-  <object id="98" template="../../../../../common/maps/obj/waypoint.tx" x="208" y="48"/>
-  <object id="99" template="../../../../../common/maps/obj/waypoint.tx" x="208" y="256"/>
-  <object id="100" template="../../../../../common/maps/obj/waypoint.tx" x="208" y="240"/>
+  <object id="97" template="../../../../../common/maps/obj/waypoint.tx" x="172.586" y="141.581"/>
+  <object id="98" template="../../../../../common/maps/obj/waypoint.tx" x="236.586" y="141.581"/>
+  <object id="99" template="../../../../../common/maps/obj/waypoint.tx" x="205.17" y="200.527"/>
+  <object id="100" template="../../../../../common/maps/obj/waypoint.tx" x="189.17" y="136.527"/>
    <object id="101" template="../../../../../common/maps/obj/enemy.tx" x="191.5" y="268">
    <properties>
     <property name="enemy" value="Skeleton Soldier"/>

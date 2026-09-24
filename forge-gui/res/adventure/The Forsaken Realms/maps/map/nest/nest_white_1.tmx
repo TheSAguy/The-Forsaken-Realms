@@ -296,8 +296,8 @@
   <object id="153" template="../../obj/wood.tx" x="595.5" y="607.25"/>
   <object id="154" template="../../obj/wood.tx" x="135.25" y="350"/>
   <object id="155" template="../../../../common/maps/obj/waypoint.tx" x="371.5" y="630"/>
-  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="448" y="448"/>
-  <object id="157" template="../../../../common/maps/obj/waypoint.tx" x="432" y="464"/>
+  <object id="156" template="../../../../common/maps/obj/waypoint.tx" x="468.333" y="340.667"/>
+  <object id="157" template="../../../../common/maps/obj/waypoint.tx" x="388.333" y="340.667"/>
    <object id="158" template="../../../../common/maps/obj/enemy.tx" x="443" y="479">
    <properties>
     <property name="enemy" value="Scorpion"/>

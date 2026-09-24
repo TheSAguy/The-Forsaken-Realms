@@ -167,8 +167,8 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/gold.tx" x="448" y="224"/>
   <object id="11" template="../../obj/stone.tx" x="224" y="224"/>
-  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="576" y="96"/>
-  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="560" y="112"/>
+  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="480" y="144"/>
+  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="416" y="144"/>
    <object id="14" template="../../../../common/maps/obj/enemy.tx" x="560" y="112">
    <properties>
     <property name="enemy" value="Hooded Skulk"/>

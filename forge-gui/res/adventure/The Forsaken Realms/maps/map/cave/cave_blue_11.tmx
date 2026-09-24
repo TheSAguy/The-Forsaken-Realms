@@ -153,7 +153,7 @@
    </properties>
   </object>
   <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="392" y="248"/>
-  <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="696" y="200"/>
+  <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="696" y="216"/>
   <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="184" y="216"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="360" y="248"/>
   <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="408" y="200"/>
@@ -212,8 +212,8 @@
   <object id="16" template="../../obj/wood.tx" x="224" y="208"/>
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="576" y="192"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="144" y="208"/>
-  <object id="19" template="../../../../common/maps/obj/waypoint.tx" x="688" y="160"/>
-  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="672" y="176"/>
+  <object id="19" template="../../../../common/maps/obj/waypoint.tx" x="640" y="192"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="576" y="176"/>
    <object id="21" template="../../../../common/maps/obj/enemy.tx" x="672" y="176">
    <properties>
     <property name="enemy" value="Mossback Tortoise"/>

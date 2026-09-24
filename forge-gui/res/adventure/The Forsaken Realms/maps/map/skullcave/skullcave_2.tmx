@@ -71,8 +71,8 @@
   <object id="62" template="../../../../common/maps/obj/manashards.tx" x="173.75" y="46"/>
   <object id="64" template="../../../../common/maps/obj/gold.tx" x="208.5" y="57"/>
   <object id="66" template="../../obj/stone.tx" x="242.306" y="64.3826"/>
-  <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="48" y="112"/>
-  <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="64" y="112"/>
+  <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="96" y="104"/>
+  <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="160" y="120"/>
    <object id="69" template="../../../../common/maps/obj/enemy.tx" x="275.25" y="59.5833">
    <properties>
     <property name="enemy" value="Cloaker"/>

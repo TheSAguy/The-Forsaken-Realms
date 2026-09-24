@@ -134,6 +134,11 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 329b: the HUD resets the shared batch color
+
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `draw()` ends with `getBatch().setColor(Color.WHITE)`
+  so the last HUD actor's color (an idle alpha-0 banner since round 329) does not carry into the world's next frame.
+
 ### Round 329: swapped art centred on its land, banners over the HUD, the guard-deck rule
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** - `artShiftX()`/`artShiftY()` (0 here), added to the

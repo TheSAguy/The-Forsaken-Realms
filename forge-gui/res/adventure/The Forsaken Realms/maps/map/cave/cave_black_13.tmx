@@ -154,9 +154,9 @@
   </object>
   <object id="2" template="../../../../common/maps/obj/waypoint.tx" x="440" y="248"/>
   <object id="3" template="../../../../common/maps/obj/waypoint.tx" x="184" y="184"/>
-  <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="680" y="120"/>
+  <object id="4" template="../../../../common/maps/obj/waypoint.tx" x="664" y="120"/>
   <object id="5" template="../../../../common/maps/obj/waypoint.tx" x="408" y="232"/>
-  <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="712" y="136"/>
+  <object id="6" template="../../../../common/maps/obj/waypoint.tx" x="712" y="152"/>
   <object id="7" template="../../../../common/maps/obj/waypoint.tx" x="232" y="168"/>
   <object id="8" template="../../../../common/maps/obj/enemy.tx" x="528" y="240">
    <properties>
@@ -212,8 +212,8 @@
   <object id="16" template="../../obj/wood.tx" x="288" y="272"/>
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="176" y="224"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="624" y="96"/>
-  <object id="19" template="../../../../common/maps/obj/waypoint.tx" x="704" y="96"/>
-  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="688" y="112"/>
+  <object id="19" template="../../../../common/maps/obj/waypoint.tx" x="608" y="224"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="544" y="224"/>
    <object id="21" template="../../../../common/maps/obj/enemy.tx" x="688" y="112">
    <properties>
     <property name="enemy" value="Eye"/>

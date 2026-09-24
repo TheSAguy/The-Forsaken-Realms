@@ -116,7 +116,7 @@
   <object id="72" template="../../obj/stone.tx" x="76.3787" y="37.4192"/>
   <object id="73" template="../../obj/stone.tx" x="239.08" y="102.217"/>
   <object id="74" template="../../obj/stone.tx" x="163.583" y="108.071"/>
-  <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="32" y="128"/>
-  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="32" y="112"/>
+  <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="116.672" y="28.1806"/>
+  <object id="76" template="../../../../common/maps/obj/waypoint.tx" x="52.672" y="28.1806"/>
  </objectgroup>
 </map>

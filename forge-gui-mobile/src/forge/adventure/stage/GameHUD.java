@@ -503,6 +503,12 @@ public class GameHUD extends Stage {
         act(Gdx.graphics.getDeltaTime()); //act the Hud
         updateHiddenEnemyChevrons();
         super.draw(); //draw the Hud
+        // Round 329 (the user, right after this round's banner change: "I just loaded my game and the screen was black,
+        // no terrain"). The HUD shares one SpriteBatch with the world (round 316, upstream #12011), and scene2d leaves
+        // the batch color wherever the last actor drawn set it. keepBannerOnTop() made the idle banner - alpha 0 - that
+        // last actor, so the next frame drew the terrain and every place's icon fully transparent. White again for
+        // whatever draws next.
+        getBatch().setColor(Color.WHITE);
         int xPosMini = (int) (((float) xPos / (float) WorldSave.getCurrentSave().getWorld().getTileSize() / (float) WorldSave.getCurrentSave().getWorld().getWidthInTiles()) * miniMap.getWidth());
         int yPosMini = (int) (((float) yPos / (float) WorldSave.getCurrentSave().getWorld().getTileSize() / (float) WorldSave.getCurrentSave().getWorld().getHeightInTiles()) * miniMap.getHeight());
         miniMapPlayer.setPosition(miniMap.getX() + xPosMini - miniMapPlayer.getWidth() / 2, miniMap.getY() + yPosMini - miniMapPlayer.getHeight() / 2);

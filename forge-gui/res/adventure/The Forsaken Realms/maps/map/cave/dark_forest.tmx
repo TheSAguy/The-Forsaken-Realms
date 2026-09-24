@@ -340,8 +340,8 @@
    </properties>
   </object>
   <object id="29" template="../../../../common/maps/obj/gold.tx" x="296" y="192.667"/>
-  <object id="30" template="../../../../common/maps/obj/waypoint.tx" x="99.6667" y="305.667"/>
-  <object id="31" template="../../../../common/maps/obj/waypoint.tx" x="224" y="294"/>
+  <object id="30" template="../../../../common/maps/obj/waypoint.tx" x="187.636" y="334.364"/>
+  <object id="31" template="../../../../common/maps/obj/waypoint.tx" x="251.636" y="318.364"/>
   <object id="32" template="../../../../common/maps/obj/waypoint.tx" x="71.6667" y="171"/>
   <object id="33" template="../../../../common/maps/obj/waypoint.tx" x="89.3333" y="56"/>
   <object id="34" template="../../../../common/maps/obj/waypoint.tx" x="65.6667" y="93"/>

@@ -232,10 +232,10 @@
 ]</property>
    </properties>
   </object>
-  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="272" y="32"/>
-  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="304" y="16"/>
-  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="144" y="16"/>
-  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="128" y="16"/>
+  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="47.8847" y="236.881"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="127.8847" y="268.881"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="170.724" y="373.282"/>
+  <object id="96" template="../../../../common/maps/obj/waypoint.tx" x="234.724" y="373.282"/>
    <object id="97" template="../../../../common/maps/obj/enemy.tx" x="256.275" y="29.7137">
    <properties>
     <property name="enemy" value="Archer"/>

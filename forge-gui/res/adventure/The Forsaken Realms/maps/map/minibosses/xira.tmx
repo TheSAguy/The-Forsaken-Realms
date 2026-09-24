@@ -132,7 +132,7 @@
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="424.5" y="293"/>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="336" y="307.5"/>
   <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="597" y="154"/>
-  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="599.5" y="54.5"/>
+  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="583.5" y="70.5"/>
   <object id="90" template="../../../../common/maps/obj/waypoint.tx" x="422" y="90.5"/>
   <object id="91" template="../../../../common/maps/obj/waypoint.tx" x="242.5" y="163.5"/>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="109.5" y="119"/>

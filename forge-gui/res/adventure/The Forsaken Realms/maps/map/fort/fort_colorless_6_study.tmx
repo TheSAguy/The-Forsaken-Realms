@@ -86,9 +86,9 @@
   <object id="61" template="../../../../common/maps/obj/waypoint.tx" x="176.5" y="150.25"/>
   <object id="62" template="../../../../common/maps/obj/waypoint.tx" x="176.25" y="110"/>
   <object id="63" template="../../../../common/maps/obj/waypoint.tx" x="269.75" y="111.25"/>
-  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="120.75" y="111.75"/>
+  <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="168.75" y="143.75"/>
   <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="113" y="217"/>
-  <object id="66" template="../../../../common/maps/obj/waypoint.tx" x="362.25" y="217.25"/>
+  <object id="66" template="../../../../common/maps/obj/waypoint.tx" x="362.25" y="201.25"/>
   <object id="67" template="../../../../common/maps/obj/waypoint.tx" x="360" y="282.5"/>
   <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="108.5" y="282.5"/>
   <object id="69" template="../../../../common/maps/obj/enemy.tx" x="135.5" y="216.25">

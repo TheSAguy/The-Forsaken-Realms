@@ -99,7 +99,7 @@
 ]</property>
    </properties>
   </object>
-  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="240" y="352"/>
-  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="240" y="336"/>
+  <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="369.333" y="395.667"/>
+  <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="401.333" y="443.667"/>
  </objectgroup>
 </map>

@@ -213,8 +213,8 @@
   <object id="17" template="../../../../common/maps/obj/manashards.tx" x="368" y="160"/>
   <object id="18" template="../../../../common/maps/obj/gold.tx" x="176" y="256"/>
   <object id="19" template="../../../../common/maps/obj/booster.tx" x="624" y="224"/>
-  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="112" y="192"/>
-  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="96" y="208"/>
+  <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="240" y="256"/>
+  <object id="21" template="../../../../common/maps/obj/waypoint.tx" x="304" y="256"/>
    <object id="22" template="../../../../common/maps/obj/enemy.tx" x="96" y="208">
    <properties>
     <property name="enemy" value="Village Volunteer"/>

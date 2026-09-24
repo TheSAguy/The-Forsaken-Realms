@@ -107,8 +107,8 @@
   <object id="91" template="../../obj/stone.tx" x="797.333" y="178.167"/>
   <object id="92" template="../../obj/stone.tx" x="136.75" y="49.75"/>
   <object id="93" template="../../obj/stone.tx" x="130.167" y="494.583"/>
-  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="112" y="64"/>
-  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="128" y="64"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="623.665" y="105.589"/>
+  <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="671.665" y="57.589"/>
    <object id="96" template="../../../../common/maps/obj/enemy.tx" x="104.5" y="34.5">
    <properties>
     <property name="enemy" value="Kobold Shaman"/>

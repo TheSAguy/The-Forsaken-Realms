@@ -93,11 +93,11 @@
   </object>
   <object id="63" template="../../../../common/maps/obj/waypoint.tx" x="311.333" y="221.333"/>
   <object id="64" template="../../../../common/maps/obj/waypoint.tx" x="258" y="159.333"/>
-  <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="316.333" y="159.667"/>
+  <object id="65" template="../../../../common/maps/obj/waypoint.tx" x="300.333" y="159.667"/>
   <object id="66" template="../../../../common/maps/obj/gold.tx" x="655.667" y="286.333"/>
   <object id="67" template="../../../../common/maps/obj/gold.tx" x="90.3333" y="373"/>
-  <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="417.333" y="478"/>
-  <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="377.333" y="494"/>
+  <object id="68" template="../../../../common/maps/obj/waypoint.tx" x="433.333" y="430"/>
+  <object id="69" template="../../../../common/maps/obj/waypoint.tx" x="393.333" y="494"/>
   <object id="70" template="../../../../common/maps/obj/waypoint.tx" x="466" y="304"/>
   <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="576" y="330.667"/>
   <object id="72" template="../../../../common/maps/obj/waypoint.tx" x="459" y="257"/>

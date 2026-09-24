@@ -167,8 +167,8 @@
   </object>
   <object id="10" template="../../../../common/maps/obj/gold.tx" x="272" y="176"/>
   <object id="11" template="../../obj/stone.tx" x="352" y="192"/>
-  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="64" y="160"/>
-  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="48" y="176"/>
+  <object id="12" template="../../../../common/maps/obj/waypoint.tx" x="240" y="160"/>
+  <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="304" y="160"/>
    <object id="14" template="../../../../common/maps/obj/enemy.tx" x="48" y="176">
    <properties>
     <property name="enemy" value="Blinded Grimlock"/>

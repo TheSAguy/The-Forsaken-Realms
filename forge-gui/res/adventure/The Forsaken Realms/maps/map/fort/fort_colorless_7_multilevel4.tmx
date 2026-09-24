@@ -102,8 +102,8 @@
 ]</property>
    </properties>
   </object>
-  <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="512" y="320"/>
-  <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="496" y="336"/>
+  <object id="85" template="../../../../common/maps/obj/waypoint.tx" x="391.751" y="324.417"/>
+  <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="327.751" y="324.417"/>
   <object id="88" template="../../../../common/maps/obj/waypoint.tx" x="496" y="320"/>
   <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="512" y="336"/>
    <object id="90" template="../../../../common/maps/obj/enemy.tx" x="488.333" y="282.667">
@@ -125,7 +125,7 @@
     <property name="waypoints" value="93,94"/>
    </properties>
   </object>
-  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="505.333" y="312"/>
-  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="473.333" y="312"/>
+  <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="489.333" y="312"/>
+  <object id="94" template="../../../../common/maps/obj/waypoint.tx" x="425.333" y="328"/>
 </objectgroup>
 </map>
