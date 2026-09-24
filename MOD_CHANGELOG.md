@@ -17757,6 +17757,31 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 322: the angels swapped, blue-eyed; the races in alphabetical order; every player's Jumpstart (2026-09-24)
+
+User, play-testing the release build: *"For the Angel Portrait. Switch the Male and Female pics ... Add a blue and a
+green eyes version"* (then, from the preview: *"blue eyes for both angels"*), *"Make the Race selection
+Alphabetical."*, and, asked whether every starting character can reach the Jumpstart Inn tournament: *"Yes to the
+Jumpstart fallback"*. Local commit.
+
+- **Angels:** angel_1 (brown hair) is now the male hero and angel_2 (white hood) the female - portrait AND sheet, so
+  each face matches its body on the map. Both keep the gold recolor; their irises - the two pixels (8,7) and (13,7)
+  of the 16x16 portrait, tinted gold by the robe's recolor - are the original art's blue again.
+  `dev-tools/races/make_race_heroes.py` gained `--eyes angel_m=blue,angel_f=blue` (gold / blue / green); round 322 ran
+  it with `--recolor "A,angel_m=B" --eyes "angel_m=blue,angel_f=blue"`.
+- **Race selection is alphabetical** (`NewGameScene`): the selector lists the races by the name it shows; a
+  `raceOrder` table maps the shown position back to the heroes.json INDEX, which a save stores and which never moves
+  (heroes.json stays append-only). Every former read of the selector's position goes through `selectedRaceIndex()`.
+  The Mod Details race page is alphabetical too.
+- **Jumpstart for everyone** (`AdventureEventData.pickJumpstartCardBlock()`): an Inn rolls Jumpstart 30% of the time
+  (until 25 wins, and once per player), but the event also needed a Jumpstart product whose land SET is in the Inn's
+  pool - the player's unlocked sets plus the world's neutral slice. JMP, J22 and J25 are never in it (no Draft
+  booster, so not in the edition split), and DMU/BRO/ONE/MOM/LTR only for a Human, Dwarf or Phyrexian start (their
+  race sets go to neutral) or by luck (~28% of worlds) or research. Everyone else's Inn showed NO event that week when
+  it rolled Jumpstart - and the intro quest's three Bronze Coins spend only there. When nothing qualifies, every
+  Jumpstart product is on offer: `[TFR-InnEditions] format=Jumpstart: no Jumpstart product's set is in the Inn pool -
+  all N Jumpstart products are on offer (round 322)`.
+
 ## Round 321: the defeat badge - the shared batch ended outside a draw pass (2026-09-24)
 
 Found by the pre-release soak (not reported; it never shipped - v1.13 has no shared batch). Local commit.

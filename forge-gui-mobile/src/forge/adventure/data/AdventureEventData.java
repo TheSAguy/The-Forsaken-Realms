@@ -447,6 +447,18 @@ public class AdventureEventData implements Serializable {
             fellBack = true;
             loggedPool = wide;
         }
+        // Round 322 (user: "Yes to the Jumpstart fallback"): the Jumpstart tournament is every player's ONE free event
+        // (the intro quest's Bronze Coins spend only there), but the pools above hold a Jumpstart product only when its
+        // land SET is unlocked or in the world's neutral slice - JMP/J22/J25 never are, and DMU/BRO/ONE/MOM/LTR only by
+        // race (Human, Dwarf, Phyrexian) or luck. An Inn that rolled Jumpstart then had no event at all that week.
+        // When nothing qualifies, every Jumpstart product is on offer.
+        if (legalBlocks.isEmpty() && !beforeNarrowing.isEmpty()) {
+            System.out.println("[TFR-InnEditions] format=Jumpstart: no Jumpstart product's set is in the "
+                    + (playerTown ? "player-town" : "Inn") + " pool - all " + beforeNarrowing.size()
+                    + " Jumpstart products are on offer (round 322)");
+            legalBlocks = beforeNarrowing;
+            fellBack = true;
+        }
         CardBlock picked = legalBlocks.isEmpty() ? null : Aggregates.random(legalBlocks);
         if (loggedPool != null)
             logInnEditions("Jumpstart", loggedPool, picked, playerTown, fellBack);

@@ -134,6 +134,15 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 322: alphabetical races, the Jumpstart fallback
+
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** - the race selector's text list is sorted by
+  shown name; `raceOrder` + `selectedRaceIndex()` map back to the heroes.json index (5 former
+  `race.getCurrentIndex()` reads: raceEditionCodes, the two player inits, the avatar, the race help).
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** - `pickJumpstartCardBlock()`: when no
+  Jumpstart block survives the edition-pool narrowing (and the player-town fallback), all of them are legal.
+- `WorldStandingsScene.java` (mod-only) - the Mod Details race page sorted by race name.
+
 ### Round 321: FBufferedImage and the shared batch
 
 - **`forge-gui-mobile/src/forge/assets/FBufferedImage.java`** - `checkFrameBuffer()` ends/restarts the shared batch only

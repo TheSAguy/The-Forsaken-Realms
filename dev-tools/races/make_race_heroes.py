@@ -45,6 +45,19 @@ if "--preview" in sys.argv:
 WALK_FROM_IDLE = set()
 if "--walk-from-idle" in sys.argv:
     WALK_FROM_IDLE = {k.strip() for k in sys.argv[sys.argv.index("--walk-from-idle") + 1].split(",") if k.strip()}
+# Round 322: "--eyes angel_m=blue,angel_f=green" repaints a PORTRAIT's irises after the recolor (the recolor tints them
+# with the robe - gold under the gold looks). Iris pixels are known per source sheet; colors: gold (keep), blue (the
+# original art's), green.
+EYE_COLORS = {"gold": None, "blue": (40, 92, 196), "green": (46, 150, 70)}
+IRIS_PIXELS = {"angel_m": [(8, 7), (13, 7)], "angel_f": [(8, 7), (13, 7)]}
+EYES = {}
+if "--eyes" in sys.argv:
+    for part in sys.argv[sys.argv.index("--eyes") + 1].split(","):
+        if "=" in part:
+            k, v = (s.strip() for s in part.split("=", 1))
+            if k not in IRIS_PIXELS or v not in EYE_COLORS:
+                raise SystemExit("--eyes: unknown hero %r or color %r (heroes %s, colors %s)" % (k, v, sorted(IRIS_PIXELS), sorted(EYE_COLORS)))
+            EYES[k] = v
 if not os.path.isdir(os.path.join(ADV, "common", "sprites", "enemy")):
     raise SystemExit("not an adventure res root: " + ADV)
 if not os.path.isfile(os.path.join(TARGET, "config.json")):
@@ -55,8 +68,10 @@ E = "common/sprites/enemy/"
 HEROES = [
     ("Goblin", "m", "goblin_m", E + "humanoid/goblin/goblin.atlas"),
     ("Goblin", "f", "goblin_f", E + "humanoid/goblin/goblin_2.atlas"),
-    ("Angel", "m", "angel_m", E + "celestial/angel_2.atlas"),
-    ("Angel", "f", "angel_f", E + "celestial/angel_1.atlas"),
+    # Round 322 (user: "For the Angel Portrait. Switch the Male and Female pics."): angel_1 (brown hair) is the male,
+    # angel_2 (white hood) the female - portrait AND sheet, so each hero's face matches its body.
+    ("Angel", "m", "angel_m", E + "celestial/angel_1.atlas"),
+    ("Angel", "f", "angel_f", E + "celestial/angel_2.atlas"),
     ("Merfolk", "m", "merfolk_m", E + "humanoid/merfolk/merfolk_lord.atlas"),
     ("Merfolk", "f", "merfolk_f", E + "humanoid/merfolk/mermaid.atlas"),
     ("Vampire", "m", "vampire_m", E + "undead/vampire_3.atlas"),
@@ -71,8 +86,8 @@ RECOLOR = {
         "goblin_m": [(80, 115, 0.3, 110)],             # green skin -> blue-grey ("frost goblin"; orange/red come out
                                                        # brown at this sheet's low value and read as goblin_4/goblin_2)
         "goblin_f": [(330, 360, 0.3, 250), (0, 20, 0.35, 250)],   # pink/red skin -> violet
-        "angel_m": [(205, 240, 0.35, -90)],            # blue robe -> emerald (the eyes share the robe's blue and follow it)
-        "angel_f": [(205, 240, 0.35, -165)],           # blue dress -> gold
+        "angel_m": [(205, 240, 0.35, -90)],            # blue dress -> emerald (the eyes share the blue and follow it)
+        "angel_f": [(205, 240, 0.35, -165)],           # blue robe -> gold
         "merfolk_m": [(150, 185, 0.25, 45)],           # teal body -> deep blue
         "merfolk_f": [(150, 185, 0.25, 95), (330, 350, 0.1, -60)],  # cyan body -> violet, pink tail -> coral
         "vampire_m": [(330, 360, 0.5, -130, 0.5)],     # dark red cape -> midnight blue; bright red eyes stay
@@ -81,8 +96,8 @@ RECOLOR = {
     "B": {
         "goblin_m": [(80, 115, 0.3, 176)],             # green skin -> plum
         "goblin_f": [(330, 360, 0.3, 200), (0, 20, 0.35, 200)],   # pink skin -> slate blue
-        "angel_m": [(205, 240, 0.35, -165)],           # blue robe -> gold
-        "angel_f": [(205, 240, 0.35, 70)],             # blue dress -> violet
+        "angel_m": [(205, 240, 0.35, -165)],           # blue dress -> gold
+        "angel_f": [(205, 240, 0.35, 70)],             # blue robe -> violet
         "merfolk_m": [(150, 185, 0.25, -60)],          # teal body -> green
         "merfolk_f": [(150, 185, 0.25, 140), (330, 350, 0.1, -140)],
         "vampire_m": [(330, 360, 0.5, 150, 0.5)],      # dark red cape -> emerald; bright red eyes stay
@@ -192,7 +207,11 @@ for race, sex, key, rel in HEROES:
         atlas_text(key + ".png", 64, 80, regions))
     if "Avatar" not in anims:
         raise SystemExit(rel + ": no Avatar region for the portrait")
-    avatars["%s_%s" % (race, sex)] = recolor(frame(anims["Avatar"][0]), bands_for.get(key))
+    avatar = recolor(frame(anims["Avatar"][0]), bands_for.get(key))
+    if EYE_COLORS.get(EYES.get(key)):
+        for xy in IRIS_PIXELS[key]:
+            avatar.putpixel(xy, EYE_COLORS[EYES[key]] + (255,))
+    avatars["%s_%s" % (race, sex)] = avatar
     built[key] = sheet
     print("hero   %-10s <- %s%s" % (key, rel, "  recolor " + _per.get(key, _default) if bands_for.get(key) else ""))
 

@@ -44,6 +44,8 @@ public class NewGameScene extends MenuScene {
     private final Image avatarImage;
     private int avatarIndex = 0;
     private final Selector race;
+    /** Round 322: the race selector's (alphabetical) position -> the heroes.json index - see the constructor. */
+    private int[] raceOrder;
     private final Selector colorId;
     private final Selector gender;
     private final Selector mode;
@@ -218,7 +220,21 @@ public class NewGameScene extends MenuScene {
                     NewGameScene.this.updateStarterEditionListForRace();
             }
         });
-        race.setTextList(HeroListData.instance().getRaces());
+        // Round 322 (user: "Make the Race selection Alphabetical."): the selector lists the races alphabetically by
+        // the name it shows, while everything downstream keeps the heroes.json INDEX - a save stores that index and
+        // the list is append-only, so heroes.json itself is never reordered. selectedRaceIndex() maps back.
+        Array<String> heroRaceNames = HeroListData.instance().getRaces();
+        Integer[] byName = new Integer[heroRaceNames.size];
+        for (int r = 0; r < byName.length; r++)
+            byName[r] = r;
+        java.util.Arrays.sort(byName, (a, b) -> heroRaceNames.get(a).compareToIgnoreCase(heroRaceNames.get(b)));
+        raceOrder = new int[byName.length];
+        Array<String> sortedRaceNames = new Array<>(byName.length);
+        for (int r = 0; r < byName.length; r++) {
+            raceOrder[r] = byName[r];
+            sortedRaceNames.add(heroRaceNames.get(byName[r]));
+        }
+        race.setTextList(sortedRaceNames);
         raceHelp = ui.findActor("raceHelp");
         difficulty = ui.findActor("difficulty");
         difficultyHelp = ui.findActor("difficultyHelp");
@@ -365,7 +381,7 @@ public class NewGameScene extends MenuScene {
         if (race == null || starterEdition == null)
             return;
         java.util.List<String> codes =
-                forge.adventure.util.EditionProgression.raceEditionCodes(race.getCurrentIndex());
+                forge.adventure.util.EditionProgression.raceEditionCodes(selectedRaceIndex());
         if (codes == null || codes.isEmpty()) {
             raceEditionIds = null;
             starterEdition.setTextList(originalEditionNames);
@@ -395,6 +411,12 @@ public class NewGameScene extends MenuScene {
                 return editionIds[idx < editionIds.length ? idx : 0];
         }
         return editionIds.length > 0 ? editionIds[0] : null;
+    }
+
+    /** Round 322: the heroes.json index of the race the (alphabetical) selector shows. */
+    private int selectedRaceIndex() {
+        int shown = race.getCurrentIndex();
+        return raceOrder == null || shown < 0 || shown >= raceOrder.length ? shown : raceOrder[shown];
     }
 
     /** Round 317: the agent bridge's {@code newgame race=...} - selects the race by its listed name (setCurrentIndex
@@ -430,7 +452,7 @@ public class NewGameScene extends MenuScene {
             //FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
             WorldSave.generateNewWorld(selectedName.getText(),
                     gender.getCurrentIndex() == 0,
-                    race.getCurrentIndex(),
+                    selectedRaceIndex(),
                     avatarIndex,
                     getStartingColor(),
                     Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()],
@@ -466,7 +488,7 @@ public class NewGameScene extends MenuScene {
     }
 
     private boolean updateAvatar() {
-        avatarImage.setDrawable(new TextureRegionDrawable(HeroListData.instance().getAvatar(race.getCurrentIndex(), gender.getCurrentIndex() != 0, avatarIndex)));
+        avatarImage.setDrawable(new TextureRegionDrawable(HeroListData.instance().getAvatar(selectedRaceIndex(), gender.getCurrentIndex() != 0, avatarIndex)));
         return false;
     }
 
@@ -478,7 +500,7 @@ public class NewGameScene extends MenuScene {
             FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
             WorldSave.generateNewWorld(selectedName.getText(),
                     gender.getCurrentIndex() == 0,
-                    race.getCurrentIndex(),
+                    selectedRaceIndex(),
                     avatarIndex,
                     getStartingColor(),
                     Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()],
@@ -511,7 +533,7 @@ public class NewGameScene extends MenuScene {
             raceSummary.text = "Progressive Set Unlocks aren't enabled for this world - every "
                     + "card set is available from the start, regardless of race.";
         } else {
-            String rawRaceName = HeroListData.getRawRaceName(race.getCurrentIndex());
+            String rawRaceName = HeroListData.getRawRaceName(selectedRaceIndex());
             String[] pool = null;
             RaceEditionData[] raceEditions = Config.instance().getConfigData().raceEditions;
             if (rawRaceName != null && raceEditions != null) {

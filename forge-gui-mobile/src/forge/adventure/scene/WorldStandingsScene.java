@@ -138,10 +138,16 @@ public class WorldStandingsScene extends UIScene {
         forge.adventure.data.RaceEditionData[] table = Config.instance().getConfigData().raceEditions;
         StringBuilder sb = new StringBuilder("Each of the ").append(table == null ? 0 : table.length)
                 .append(" races is tied to its own 4 lore-themed sets:");
-        if (table != null)
+        if (table != null) {
+            // Round 322: alphabetical, like the New Game screen's race selector.
+            java.util.List<forge.adventure.data.RaceEditionData> rows = new java.util.ArrayList<>();
             for (forge.adventure.data.RaceEditionData r : table)
                 if (r != null && r.race != null && r.editions != null)
-                    sb.append('\n').append(r.race).append(": ").append(String.join(", ", r.editions));
+                    rows.add(r);
+            rows.sort((a, b) -> a.race.compareToIgnoreCase(b.race));
+            for (forge.adventure.data.RaceEditionData r : rows)
+                sb.append('\n').append(r.race).append(": ").append(String.join(", ", r.editions));
+        }
         return sb.toString();
     }
 

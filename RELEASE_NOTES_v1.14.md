@@ -13,6 +13,8 @@ the first time it loads. The barrier and the new map layout arrive with your nex
   - **Merfolk** — Lorwyn, Shadowmoor, Eventide, Lorwyn Eclipsed; Merfolk and Wizard shops.
   - **Vampire** — Crimson Vow, Ixalan, Rivals of Ixalan, The Lost Caverns of Ixalan; Vampire and Nobles shops. A
     vampire takes bat form while it travels.
+- **The race list is alphabetical**, and every character can now get their one Jumpstart tournament at an Inn -
+  before, most races' Inns showed no event at all when they rolled Jumpstart.
 - **43 new creatures** roam the lands: whelps, dragonets and wyverns, werewolves, kirin, fanged bats, stone golems,
   winged eye horrors, reapers, zombie beasts, automatons — and four behemoths carrying a mountain on their backs,
   resting where they stand. Jugan, Yosei, Ryusei and Keiga finally look like the dragon spirits they are.
