@@ -17757,6 +17757,19 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 327: the Angel portraits - blue, gold and green eyes, all selectable (2026-09-24)
+
+User, after round 322's blue eyes: *"For the Angel Portraits, I only see blue eye now, can't select between Gold,
+Blue Green."* Local commit; data + tool.
+
+- Each Angel hero now has three portraits - blue (the default, round 322's pick), gold, green - that the New Game
+  screen's portrait arrows cycle, exactly like the stock races' ten: three regions of the same name (`Angel_m`,
+  `Angel_f`) side by side in `sprites/heroes/avatar_tfr` (row y400 / y416, x 0/16/32), which the game's
+  `HeroListData.getAvatar()` wraps through. A save keeps the portrait index it was made with (0 = blue).
+- `dev-tools/races/make_race_heroes.py`: `--eyes angel_m=blue+gold+green` makes one portrait per listed color, in
+  order; the current run is `--recolor "A,angel_m=B" --eyes "angel_m=blue+gold+green,angel_f=blue+gold+green"`.
+  Only the portrait atlas changed (the hero sheets are byte-identical); `race_checks.py` OK.
+
 ## Round 326b: the Realm of Legends dialog audit (second session, 2026-09-24)
 
 The user's ask, from the Planeswalker Dueling Club's door text ("Your manasight stone glows, sensing the power of

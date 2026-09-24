@@ -47,7 +47,8 @@ if "--walk-from-idle" in sys.argv:
     WALK_FROM_IDLE = {k.strip() for k in sys.argv[sys.argv.index("--walk-from-idle") + 1].split(",") if k.strip()}
 # Round 322: "--eyes angel_m=blue,angel_f=green" repaints a PORTRAIT's irises after the recolor (the recolor tints them
 # with the robe - gold under the gold looks). Iris pixels are known per source sheet; colors: gold (keep), blue (the
-# original art's), green.
+# original art's), green. Round 327: "angel_m=blue+gold+green" makes one portrait PER color, in that order - the
+# New Game screen's portrait arrows cycle them (like the stock races' ten), the first is the default.
 EYE_COLORS = {"gold": None, "blue": (40, 92, 196), "green": (46, 150, 70)}
 IRIS_PIXELS = {"angel_m": [(8, 7), (13, 7)], "angel_f": [(8, 7), (13, 7)]}
 EYES = {}
@@ -55,9 +56,10 @@ if "--eyes" in sys.argv:
     for part in sys.argv[sys.argv.index("--eyes") + 1].split(","):
         if "=" in part:
             k, v = (s.strip() for s in part.split("=", 1))
-            if k not in IRIS_PIXELS or v not in EYE_COLORS:
+            colors = [c.strip() for c in v.split("+") if c.strip()]
+            if k not in IRIS_PIXELS or not colors or any(c not in EYE_COLORS for c in colors):
                 raise SystemExit("--eyes: unknown hero %r or color %r (heroes %s, colors %s)" % (k, v, sorted(IRIS_PIXELS), sorted(EYE_COLORS)))
-            EYES[k] = v
+            EYES[k] = colors
 if not os.path.isdir(os.path.join(ADV, "common", "sprites", "enemy")):
     raise SystemExit("not an adventure res root: " + ADV)
 if not os.path.isfile(os.path.join(TARGET, "config.json")):
@@ -208,10 +210,14 @@ for race, sex, key, rel in HEROES:
     if "Avatar" not in anims:
         raise SystemExit(rel + ": no Avatar region for the portrait")
     avatar = recolor(frame(anims["Avatar"][0]), bands_for.get(key))
-    if EYE_COLORS.get(EYES.get(key)):
-        for xy in IRIS_PIXELS[key]:
-            avatar.putpixel(xy, EYE_COLORS[EYES[key]] + (255,))
-    avatars["%s_%s" % (race, sex)] = avatar
+    variants = []
+    for color in EYES.get(key) or ["gold"]:
+        v = avatar.copy()
+        if EYE_COLORS.get(color):
+            for xy in IRIS_PIXELS[key]:
+                v.putpixel(xy, EYE_COLORS[color] + (255,))
+        variants.append(v)
+    avatars["%s_%s" % (race, sex)] = variants
     built[key] = sheet
     print("hero   %-10s <- %s%s" % (key, rel, "  recolor " + _per.get(key, _default) if bands_for.get(key) else ""))
 
@@ -231,8 +237,9 @@ region_lines = [ln.rstrip() for ln in body[head_end:] if ln.strip()]
 new_lines = []
 for i, name in enumerate(order):
     y = base.size[1] + 16 * i
-    av.paste(avatars[name], (0, y))
-    new_lines += [name, "  xy: 0, %d" % y, "  size: 16, 16"]
+    for j, portrait in enumerate(avatars[name]):  # round 327: one region per portrait, same name, cycled in order
+        av.paste(portrait, (16 * j, y))
+        new_lines += [name, "  xy: %d, %d" % (16 * j, y), "  size: 16, 16"]
 av.save(os.path.join(out_heroes, "avatar_tfr.png"))
 header = ["avatar_tfr.png", "size: %d,%d" % av.size, "format: RGBA8888", "filter: Nearest,Nearest", "repeat: none"]
 open(os.path.join(out_heroes, "avatar_tfr.atlas"), "w", encoding="utf-8", newline="\n").write(
@@ -281,7 +288,7 @@ if PREVIEW:
         y = 30 + i * (16 * S + 14)
         d.text((8, y + 30), "%s %s\n%s" % (race, "male" if sex == "m" else "female", os.path.basename(rel)), fill=(0, 0, 0), font=F)
         sh = built[key]
-        cells = [avatars["%s_%s" % (race, sex)], sh.crop((0, 0, 16, 16)), sh.crop((16, 16, 32, 32)), sh.crop((48, 16, 64, 32)),
+        cells = [avatars["%s_%s" % (race, sex)][0], sh.crop((0, 0, 16, 16)), sh.crop((16, 16, 32, 32)), sh.crop((48, 16, 64, 32)),
                  sh.crop((48, 32, 64, 48)), sh.crop((48, 64, 64, 80)), sh.crop((16, 16, 32, 32)).transpose(Image.FLIP_LEFT_RIGHT)]
         for c, fr in enumerate(cells):
             b = fr.resize((16 * S, 16 * S), Image.NEAREST)

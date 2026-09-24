@@ -687,8 +687,20 @@ Goblin_f
 Angel_m
   xy: 0, 400
   size: 16, 16
+Angel_m
+  xy: 16, 400
+  size: 16, 16
+Angel_m
+  xy: 32, 400
+  size: 16, 16
 Angel_f
   xy: 0, 416
+  size: 16, 16
+Angel_f
+  xy: 16, 416
+  size: 16, 16
+Angel_f
+  xy: 32, 416
   size: 16, 16
 Merfolk_m
   xy: 0, 432
