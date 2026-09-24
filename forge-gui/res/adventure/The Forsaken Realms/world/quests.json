@@ -11173,8 +11173,8 @@
 			},
 			{
 				"id": 6,
-				"name": "Rescue the Black Captive",
-				"description": "Free the wizard being held captive inside the Black Castle.",
+				"name": "Take the Jet Seal",
+				"description": "Storm the Black Castle and take the jet Seal from its throne.",
 				"mapFlag": "Ch1BlackCastleComplete",
 				"mapFlagValue": 1,
 				"POITags": [
@@ -11191,8 +11191,8 @@
 			},
 			{
 				"id": 7,
-				"name": "Rescue the Blue Captive",
-				"description": "Free the wizard being held captive inside the Blue Castle.",
+				"name": "Take the Sapphire Seal",
+				"description": "Storm the Blue Castle and take the sapphire Seal from its throne.",
 				"mapFlag": "Ch1BlueCastleComplete",
 				"mapFlagValue": 1,
 				"POITags": [
@@ -11209,8 +11209,8 @@
 			},
 			{
 				"id": 8,
-				"name": "Rescue the Green Captive",
-				"description": "Free the wizard being held captive inside the Green Castle.",
+				"name": "Take the Emerald Seal",
+				"description": "Storm the Green Castle and take the emerald Seal from its throne.",
 				"mapFlag": "Ch1GreenCastleComplete",
 				"mapFlagValue": 1,
 				"POITags": [
@@ -11227,8 +11227,8 @@
 			},
 			{
 				"id": 9,
-				"name": "Rescue the Red Captive",
-				"description": "Free the wizard being held captive inside the Red Castle.",
+				"name": "Take the Ruby Seal",
+				"description": "Storm the Red Castle and take the ruby Seal from its throne.",
 				"mapFlag": "Ch1RedCastleComplete",
 				"mapFlagValue": 1,
 				"POITags": [
@@ -11245,8 +11245,8 @@
 			},
 			{
 				"id": 10,
-				"name": "Rescue the White Captive",
-				"description": "Free the wizard being held captive inside the White Castle.",
+				"name": "Take the Pearl Seal",
+				"description": "Storm the White Castle and take the pearl Seal from its throne.",
 				"mapFlag": "Ch1WhiteCastleComplete",
 				"mapFlagValue": 1,
 				"POITags": [

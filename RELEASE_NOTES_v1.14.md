@@ -48,7 +48,8 @@ the first time it loads. The barrier and the new map layout arrive with your nex
   World Standings town chart ends at today's counts.
 - **The dungeons that came from the Realm of Legends now tell this realm's story.** No more "manasight stone" at
   their doors; the Eldrazi Prison and the Hall of the Unifier speak of the Guardian, the Seals and the older doors
-  beneath the realm, and the last mentions of Shandalar are gone.
+  beneath the realm, and the last mentions of Shandalar are gone. The five castles, the two Temples and the Warden no
+  longer speak of the base game's captured wizards either: it is the Seals you take back.
 - Sliver Queen and Karona have a proper portrait.
 
 ## Fixed

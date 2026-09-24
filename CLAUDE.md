@@ -55,7 +55,7 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - **NEXT SESSION starts here (updated round 326, 2026-09-24 ~08:10).** **v1.14 "Realm Reforged" is READY TO
   PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-326, engine =
   the 09.23 daily. The artifacts are from round 326 (`3dadc40609a`); HEAD is that or a docs commit on it; nothing tagged, nothing pushed (origin is
-  still at v1.13's close-out). **Round 326b (the second session's Realm of Legends dialog audit, data only, ~08:35)
+  still at v1.13's close-out). **Rounds 326b and 327b (the second session's text audits - Realm of Legends, then the base game's story; data only)
   landed AFTER these artifacts were built - rebuild all three and repackage `C:\TFR\live` before publishing.**
   **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
   `The-Forsaken-Realms-v1.14.zip` (267.8 MB, from `build_standalone.py --zip`, modVersion 1.14 / 09.24, build.txt
@@ -153,6 +153,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 327b (second session; local commit, NOT pushed): the stock-story audit** - the other planes contributed no text
+  (Innistrad: four dialog-free layouts; Shandalar / Amonkhet / Crystal_Kingdoms: nothing), so this pass scrubbed the BASE
+  GAME's captured-planeswalkers premise from our reframed story: quest 52's "Rescue the X Captive" stages -> "Take the X
+  Seal", the castle bosses' "does not hold any prisoners", the two Temples' ALL-CAPS mage (now the Warden), the Warden's
+  "Guardians' spell" line, the plains town's "I am a big gate" debug greeter, the plains capital's placeholder. 12 files +
+  `dev-tools/text-audit/apply_stock_text_audit.py`. NOT seen in a running game; needs the same rebuild as 326b.
 - **Round 326b (second session; local commit, NOT pushed): the Realm of Legends dialog audit** - the 25 imported
   maps' text refit to our story (the Guardian's spark instead of the "manasight stone", stranded legends, the
   Eldrazi Prison as an old locked door and Jodah as its keeper, no more "completing The Forsaken Realms" or Mirror

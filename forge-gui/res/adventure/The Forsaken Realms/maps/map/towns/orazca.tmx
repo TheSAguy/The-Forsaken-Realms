@@ -173,7 +173,7 @@
         }
       }
     ],
-    &quot;text&quot;: &quot;\&quot;{var=player_name}! I feel the Guardians' spell growing weaker! Defeat them all and you may save us yet.\&quot;&quot;,
+    &quot;text&quot;: &quot;\&quot;{var=player_name}! I feel the Seals stirring - every throne you break gives a piece of you back. Break them all, Guardian.\&quot;&quot;,
     &quot;options&quot;: [
       {
         &quot;name&quot;: &quot;\&quot;Goodbye.\&quot;&quot;

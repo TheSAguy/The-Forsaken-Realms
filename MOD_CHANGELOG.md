@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 327b: the stock-story audit - the base game's "captured planeswalkers" premise (second session, 2026-09-24)
+
+The follow-up to 326b: the same audit for the other planes in `forge-gui/res/adventure`. Provenance of all 428 maps by
+name and content: Shandalar, Amonkhet and Crystal_Kingdoms contributed no maps at all; Innistrad four dialog-free
+layouts (`dark_forest`, `inn_cave_river_entrance`, two hunting lodges); everything else is stock `common` / Shandalar
+Old Border (297 + 281 same-named maps, every one modified by us) or Realm of Legends (326b). Non-map text (items,
+shops, places, heroes, config, GUIDE.md) names no other world except card sets (Landscape Sketchbooks, land arts) and
+the Realm of Legends credit. So the leftovers are the BASE GAME's own story, which TFR reframed around the Guardian,
+the Warden, the Five and the Seals but never finished scrubbing. Data only, 12 files;
+`python dev-tools/text-audit/apply_stock_text_audit.py <repo_root> [--sets stock,quests]` (exact-match, idempotent,
+re-parses every edited dialog, quests.json kept strict JSON).
+
+- **Quest 52 "The Enemy of My Enemy..."**: its five castle stages still read "Rescue the Black Captive" / "Free the
+  wizard being held captive inside the Black Castle" in the quest log while the prologue talks of Seals. Now "Take the
+  Jet Seal" / "Storm the Black Castle and take the jet Seal from its throne" (pearl / sapphire / jet / ruby / emerald,
+  the Ring quest's gems).
+- **The five castle bosses' defeat lines**: "you feel a significant pulse of mana" gained "- the jet Seal, answering its
+  Guardian at last"; the blue and white castles' stock "the locked room at the north end of the chamber does not hold
+  any prisoners" is gone (the red castle's two Lathliss objects both edited).
+- **The two Temples** (Chandra, Liliana; `Story`/`Boss` dungeons that open at mainQuest 2): the stock ALL-CAPS mage
+  ("HELLO AGAIN PLANESWALKER ... YOU HAVE FREED THE LEGENDARY PLANESWALKER CHANDRA FROM CAPTIVITY... BUT HER MIND IS
+  STILL IMPRISONED") is now the Warden, ahead of you again: the Five chained her mind as they chained your power; beat
+  her down to where the binding shows and he can cut it; she may stand with you after. Liliana's portal hint kept in
+  his voice. Structure, conditions (the `intro` map flag) and actions untouched - only texts and option names. New
+  lore, small and flagged: that the Five bound other walkers too.
+- **The Warden's stock line** in `orazca.tmx` and `player_capital.tmx` while the castles fall ("I feel the Guardians'
+  spell growing weaker! Defeat them all and you may save us yet." - the base game's castle guardians) -> "I feel the
+  Seals stirring - every throne you break gives a piece of you back. Break them all, Guardian."
+- **A debug greeter in every white town**: the Apprentice White Wizard in `plains_town.tmx` said "I am a big gate.
+  Greetings." (copied from `debug_map.tmx`). Now a warning about the Five's wizards on the roads; its `gate` map-flag
+  action kept.
+- **The plains capital's placeholder** "Hello. There is nothing for you to do here... For now." -> a steward barring
+  the inner door.
+- **Left alone**: `naktamun.tmx` (the stock Shandalar intro with its Guybrush Threepwood options - a `capital` POI no
+  biome places); the castle gate and greeter lines ("Griselbrand has been waiting eagerly", "I've done as you asked"),
+  which read fine either way; quests 35/36 (Kiora, Teferi) are already ours; enemy names.
+- **Noticed, not a bug**: Akroma's White Key uses `itemNames` (a pool field), the other four keys `itemName` - both
+  real `RewardData` fields.
+- **Verified**: every target matched its expected count; every edited dialog still parses as before; quests.json still
+  strict JSON; `validate_plane_data.py`'s report identical to main's. **NOT seen in a running game** (the user was
+  playing). Live folder and the v1.14 artifacts need the rebuild 326b already called for.
+
 ## Round 63: Inn tournament tutorial nudge, save-compat fix (2026-08-29)
 
 Local-repo-only round. Two parts:

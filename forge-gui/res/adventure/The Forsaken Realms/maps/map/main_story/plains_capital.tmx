@@ -138,7 +138,7 @@
   <object id="64" name="IntroChar" type="dialog" gid="7627" x="159.75" y="114.667" width="16" height="16">
    <properties>
     <property name="dialog">[{
-  &quot;text&quot;:&quot;Hello. There is nothing for you to do here...\nFor now.&quot;,
+  &quot;text&quot;:&quot;A steward bars the inner door. 'The Lord's court is closed to outsiders. The market is not - spend, then go.'&quot;,
   &quot;options&quot;:[ 
     { &quot;name&quot;:&quot;Leave&quot; }
   ]

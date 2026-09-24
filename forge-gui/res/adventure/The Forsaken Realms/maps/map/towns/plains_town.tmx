@@ -82,7 +82,7 @@
   <object id="54" template="../../../../common/maps/obj/enemy.tx" x="16" y="240">
    <properties>
     <property name="dialog">[{
-  &quot;text&quot;:&quot;I am a big gate. Greetings.&quot;,
+  &quot;text&quot;:&quot;Welcome, traveler. Keep to the roads out there - the Five's wizards walk them now.&quot;,
   &quot;options&quot;:[ { &quot;name&quot;:&quot;Okay...&quot; } ],
   &quot;action&quot;: [ { &quot;setMapFlag&quot;: {&quot;key&quot;: &quot;gate&quot;, &quot;val&quot;: 1} } ]
 }]</property>

@@ -1240,34 +1240,34 @@
   <object id="170" template="../../../../common/maps/obj/enemy.tx" gid="2147495067" x="16.75" y="937.25">
    <properties>
     <property name="dialog">[ {
-  &quot;text&quot;:&quot;HELLO AGAIN PLANESWALKER {var=player_name}&quot;, 
+  &quot;text&quot;:&quot;The Warden stands just inside the temple, far from his fire at Orazca. \&quot;You made good time, Guardian.\&quot;&quot;, 
    &quot;options&quot;:[
     { 
-		&quot;name&quot;:&quot;Yeah, yeah, defeat Chandra. Got it.&quot;,
+		&quot;name&quot;:&quot;\&quot;I remember. Chandra. Let's finish it.\&quot;&quot;,
 		&quot;condition&quot;:[ { &quot;checkMapFlag&quot;: &quot;intro&quot; }] 
 	},
 	{
-	  &quot;name&quot;:&quot;Why am I here?&quot;,
-	  &quot;text&quot;:&quot;YOU HAVE FREED THE LEGENDARY PLANESWALKER CHANDRA FROM CAPTIVITY...&quot;,
+	  &quot;name&quot;:&quot;\&quot;Why are you here, Warden?\&quot;&quot;,
+	  &quot;text&quot;:&quot;\&quot;Because the Five did not stop at you. Chandra came to this realm long before the Night of Chains, a walker of fire, and they chained her mind as they chained your power. What waits below wears her face and none of her will.\&quot;&quot;,
 	  &quot;options&quot;:[
 		{ 
-			&quot;name&quot;:&quot;Okay, yeah, I remember this now.&quot;,
+			&quot;name&quot;:&quot;\&quot;You told me. Let's finish it.\&quot;&quot;,
 			&quot;condition&quot;:[ { &quot;checkMapFlag&quot;: &quot;intro&quot; }] 
 		},   
 		{      
-			&quot;name&quot;:&quot;I did, just like you asked.&quot;,
-			&quot;text&quot;:&quot;...BUT HER MIND IS STILL IMPRISONED.&quot;
+			&quot;name&quot;:&quot;\&quot;Then she is not my enemy.\&quot;&quot;,
+			&quot;text&quot;:&quot;\&quot;She is not - but the chain holds until it is cut, and nothing gentler than a defeat reaches her. Beat her down to where the binding shows, and I can do the rest.\&quot;&quot;
 			&quot;options&quot;:[
 			{ 	
-				&quot;name&quot;:&quot;Okay, yeah, I remember this now.&quot;,
+				&quot;name&quot;:&quot;\&quot;You told me. Let's finish it.\&quot;&quot;,
 				&quot;condition&quot;:[ { &quot;checkMapFlag&quot;: &quot;intro&quot; }] 
 			},
 			{      
-				&quot;name&quot;:&quot;So... what now?&quot;,
-				&quot;text&quot;:&quot;DEFEAT CHANDRA AND I CAN HELP HER RECOVER, SO THAT SHE MAY AID YOU IN BATTLES YET TO COME. TAKE HEED, {var=player_name}, THIS WILL BE A DIFFICULT TASK.&quot;,
+				&quot;name&quot;:&quot;\&quot;And after?\&quot;&quot;,
+				&quot;text&quot;:&quot;\&quot;Defeat her and I can bring her back to herself. A walker who owes you her mind may stand with you in battles yet to come. Take heed, {var=player_name} - she will not go down easily.\&quot;&quot;,
 				&quot;options&quot;:[
 				{
-					&quot;name&quot;:&quot;Thank you for the warning.&quot;,
+					&quot;name&quot;:&quot;\&quot;Understood.\&quot;&quot;,
 					&quot;action&quot;:[{&quot;advanceMapFlag&quot;:&quot;intro&quot;}]
 				}]
 			}]

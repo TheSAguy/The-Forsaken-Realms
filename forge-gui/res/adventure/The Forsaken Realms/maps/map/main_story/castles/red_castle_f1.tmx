@@ -43,7 +43,7 @@
    <properties>
     <property name="defeatDialog">[{
    &quot;condition&quot;: [{&quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;, &quot;not&quot;:true}],
-   &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel a significant pulse of mana.&quot;,
+   &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel a significant pulse of mana - the ruby Seal, answering its Guardian at last.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, 
       &quot;action&quot;: [{&quot;setQuestFlag&quot;: {&quot;key&quot;:&quot;Ch1RedCastleComplete&quot;, &quot;val&quot;: 1} }, {&quot;deleteMapObject&quot;: -1}, {&quot;advanceQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;}]
@@ -51,7 +51,7 @@
 },
 {
    &quot;condition&quot;: [{&quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;}],
-   &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel another pulse of mana.&quot;,
+   &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel another pulse of mana - the ruby Seal, answering its Guardian at last.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, 
       &quot;action&quot;: [{&quot;setQuestFlag&quot;: {&quot;key&quot;:&quot;Ch1RedCastleComplete&quot;, &quot;val&quot;: 1} }, {&quot;deleteMapObject&quot;: -1}, {&quot;advanceQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;}]
@@ -97,7 +97,7 @@
    <properties>
     <property name="defeatDialog">[{
      &quot;condition&quot;: [{&quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;, &quot;not&quot;:true}],
-     &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel a significant pulse of mana.&quot;,
+     &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel a significant pulse of mana - the ruby Seal, answering its Guardian at last.&quot;,
      &quot;options&quot;: [{
         &quot;name&quot;: &quot;(Continue)&quot;,
         &quot;action&quot;: [{&quot;setQuestFlag&quot;: {&quot;key&quot;:&quot;Ch1RedCastleComplete&quot;, &quot;val&quot;: 1} }, {&quot;deleteMapObject&quot;: -1}, {&quot;advanceQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;}]
@@ -105,7 +105,7 @@
   },
   {
      &quot;condition&quot;: [{&quot;checkQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;}],
-     &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel another pulse of mana.&quot;,
+     &quot;text&quot;: &quot;As you land your final blow against Lathliss, you feel another pulse of mana - the ruby Seal, answering its Guardian at last.&quot;,
      &quot;options&quot;: [{
         &quot;name&quot;: &quot;(Continue)&quot;,
         &quot;action&quot;: [{&quot;setQuestFlag&quot;: {&quot;key&quot;:&quot;Ch1RedCastleComplete&quot;, &quot;val&quot;: 1} }, {&quot;deleteMapObject&quot;: -1}, {&quot;advanceQuestFlag&quot;: &quot;Ch1CastlesComplete&quot;}]
