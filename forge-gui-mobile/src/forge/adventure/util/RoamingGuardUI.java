@@ -210,10 +210,16 @@ public class RoamingGuardUI {
             // Round 183 (code review G15): the deck you duel with is not on offer - handing it over emptied the
             // active slot, and the next duel was padded to 40 Wastes.
             boolean active = slot == player.getSelectedDeckIndex();
-            String suffix = !playable || active ? " [RED]X" : impact.isEmpty() ? "" : " [RED]!";
+            // Round 329 (a player's report: a second deck for a guard, then "loaded into a battle with this deck and
+            // it's all wastes"): nor a deck whose hand-over would take cards the duel deck needs below the minimum.
+            Deck duelDeck = player.getDeck(player.getSelectedDeckIndex());
+            int duelLoss = active ? 0 : RoamingGuards.duelDeckLoss(slot);
+            int duelLeft = duelDeck == null ? 0 : duelDeck.getMain().countAll() - duelLoss;
+            boolean guts = duelLoss > 0 && duelLeft < minimum;
+            String suffix = !playable || active || guts ? " [RED]X" : impact.isEmpty() ? "" : " [RED]!";
             String count = deliverable == size ? String.valueOf(size) : deliverable + " of " + size;
             EconomyBuildings.addHalfButton(dialog, column,
-                    ArmoryStorageUI.fit(deck.getName() + " (" + count + ")") + suffix, playable && !active, () -> { // round 164: long deck names
+                    ArmoryStorageUI.fit(deck.getName() + " (" + count + ")") + suffix, playable && !active && !guts, () -> { // round 164: long deck names
                 RoamingGuards.giveDeck(guard, slot);
                 scene.removeDialog();
                 openManageGuard(scene, changes, poiName, objectId, guard);
@@ -221,6 +227,11 @@ public class RoamingGuardUI {
             if (active)
                 EconomyBuildings.addContentRow(dialog, "[RED]X " + deck.getName() + "[] is the deck you duel with -"
                         + " select another deck first to hand this one over.");
+            else if (guts)
+                EconomyBuildings.addContentRow(dialog, "[RED]X " + deck.getName() + "[] shares " + duelLoss + " card"
+                        + (duelLoss == 1 ? "" : "s") + " with " + duelDeck.getName() + ", the deck you duel with - it"
+                        + " would drop to " + duelLeft + " of " + minimum + " and play with Wastes. Build the guard's"
+                        + " deck from other cards, or select another deck first.");
             else if (!playable)
                 EconomyBuildings.addContentRow(dialog, "[RED]X " + deck.getName() + "[] can only supply "
                         + deliverable + " of the " + minimum + " cards a legal deck needs"

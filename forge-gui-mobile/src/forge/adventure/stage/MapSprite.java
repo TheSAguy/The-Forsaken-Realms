@@ -144,6 +144,16 @@ public class MapSprite extends Actor {
         return 1f;
     }
 
+    // Round 329: how far the art is drawn from the actor's position - 0 for every sprite but a town whose swapped-in
+    // art is not the size of its footprint (PointOfInterestMapSprite).
+    protected float artShiftX() {
+        return 0f;
+    }
+
+    protected float artShiftY() {
+        return 0f;
+    }
+
     //BitmapFont font;
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -151,29 +161,30 @@ public class MapSprite extends Actor {
             return;
         if (isHiddenByFog())
             return;
+        float x = getX() + artShiftX(), y = getY() + artShiftY(); // round 329
         float scale = getDrawScale();
         if (scale == 1f) {
             if (regionScale == 1f)
-                batch.draw(texture, getX(), getY());
+                batch.draw(texture, x, y);
             else
-                batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+                batch.draw(texture, x, y, getWidth(), getHeight());
         } else {
             // Grown symmetrically around the icon's own center (not just from its bottom-left
             // corner) so a scaled-up sprite doesn't visually drift off its actual tile.
             float w = texture.getRegionWidth() * scale;
             float h = texture.getRegionHeight() * scale;
-            batch.draw(texture, getX() - (w - texture.getRegionWidth()) / 2f,
-                    getY() - (h - texture.getRegionHeight()) / 2f, w, h);
+            batch.draw(texture, x - (w - texture.getRegionWidth()) / 2f,
+                    y - (h - texture.getRegionHeight()) / 2f, w, h);
         }
         // Round 289: this field is `spriteMagnifier` since upstream's 09.22 rename of `magnifier`.
         if (isCaveDungeon && !isOldorVisited && spriteMagnifier != null) {
             spriteMagnifier.setScale(0.7f, 0.7f);
-            spriteMagnifier.setPosition(getX() - 7, getY() + 2);
+            spriteMagnifier.setPosition(x - 7, y + 2);
             spriteMagnifier.draw(batch, parentAlpha);
         }
         if (isBookmarked && spriteStar != null) {
             spriteStar.setScale(0.7f, 0.7f);
-            spriteStar.setPosition(getRight() - 8, getY() + getHeight() / 1.5f);
+            spriteStar.setPosition(x + getWidth() - 8, y + getHeight() / 1.5f);
             spriteStar.draw(batch, parentAlpha);
         }
     }

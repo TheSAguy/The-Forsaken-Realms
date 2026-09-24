@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 329: Orazca sits in the middle of its land; banners over the HUD; a guard deck may not gut yours (2026-09-24)
+
+Three reports. The user, play-testing: *"I just restored the ruin to Orazca. I don't like how the town icon is not in
+the center of the newly created Player territory...It's totally off center."* And a player's Android report (Galon88),
+passed on by the user with *"Not exactly sure what the issue is on this bug report"*: *"Tried to build second deck for
+a guard and it moves to the tab. But the number says 0 loaded into a battle with this deck and it's all wastes. The
+deck button is red on world map. What am I missing. Also the news banners for quest completion are behind the portrait
+and map windows."* Local commit.
+
+- **Orazca, one tile down and left.** A town's land, its roads and its reveal are centred on the tile under the middle
+  of its footprint - the POI's own sprite (`World.repaintBiomeAroundTown()`, round 255) - and `MapSprite` draws from
+  the footprint's bottom-left corner. That holds while the art IS the footprint. Orazca (and the five star towns)
+  stand on a 64x64 `CenterTownNeutral`, and the ruin's broken art and the restored town's art are 48x48: the town
+  sat exactly one tile (16 px) below and left of the land it had just painted. `PointOfInterestMapSprite.pickArt()`
+  now draws art that is not its footprint's size centred on that tile, and moves the entry box, the guard shields and
+  the teleporter icon with it. Every POI whose art is its footprint's size - all ordinary towns (48 on 48), dungeons,
+  castles, the Capitol (64 on 64) - is untouched. Existing saves are fixed on load: nothing is stored.
+  `[TFR-MapIcon] Orazca: 48x48 art on a 64x64 footprint - drawn centred on its land's centre tile (352,352), shifted
+  16.0,16.0 px with its entry box (round 329)`, once per town per session.
+- **The banners.** The notification pane was added to the HUD before the minimap, the HUD panel, the menu and the
+  portrait - and `GameHUD.enter()` re-fronts the portrait - so every banner slid in UNDER them. In landscape it rises
+  at the bottom left, clear of them; in portrait mode it drops in at the top left, right where they sit. It is brought
+  to the front whenever one shows and on every `enter()`, the Android touchpad above it (upstream's own comment: the
+  player must be able to move under a banner), and it is tap-through now (`Touchable.disabled`; it is sized to its
+  text and never scrolls), so a banner over the minimap or the portrait does not block them.
+- **The guard deck - by design, with a trap.** Handing a guard a deck takes its cards out of the collection, strips
+  them from every other deck that listed them (round 146) and empties the slot - which is renamed "Empty Deck" (the
+  title in the player's screenshot, Main 0, with the 48 cards the collection had left). A second deck built from a
+  small collection is mostly the first deck's cards, so the hand-over gutted the deck the player duels with, and every
+  duel was padded to 40 with Wastes; the deck button turns red under 30. Round 183 already kept the duel deck itself
+  off the offer list. Now a deck whose hand-over would take the duel deck below the minimum is off it too
+  (`RoamingGuards.duelDeckLoss()`, the shortfall arithmetic of `sharedCardImpact()` for that one deck), with the reason
+  on its row: "shares N cards with <deck>, the deck you duel with - it would drop to M of 40 and play with Wastes.
+  Build the guard's deck from other cards, or select another deck first." v1.13 also had round 312's deck-editor bug,
+  which may have added to the confusion. The player's way back: take the deck back from the guard (the cards return to
+  the collection), then re-add the stripped cards to the first deck.
+- **Seen** in the agent game: the `[TFR-MapIcon]` line above for Orazca's ruin, and the walker's log showing Orazca's
+  entry box at [5624,5624 32x32] - centred on 5640, the middle of tile 352 - where it was [5616,5616]. The restored
+  town takes the same path (48x48 art on the same footprint); the walker could not reopen the restore dialog, so it
+  was not seen restored. The banner order (portrait mode is Android-only) and the deck rule are compile-checked.
+
 ## Round 328: the Wasteland's thin saplings get a black outline (2026-09-24)
 
 User, with a screenshot of two faint grey saplings on a light Wasteland patch: *"On the Wasteland terrain, it's a

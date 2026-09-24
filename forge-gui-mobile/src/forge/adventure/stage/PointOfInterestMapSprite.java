@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.pointofintrest.PointOfInterestChanges;
 import forge.adventure.util.EconomyBuildings;
@@ -43,6 +44,69 @@ public class PointOfInterestMapSprite extends MapSprite {
         float entryH = Math.min(texture.getRegionHeight(), ENTRY_BOX_MAX);
         boundingRect = new Rectangle(getX() + (texture.getRegionWidth() - entryW) / 2f,
                 getY() + (texture.getRegionHeight() - entryH) / 2f, entryW, entryH);
+        footprintEntryCenter = boundingRect.getCenter(new Vector2());
+        pickArt(); // round 329
+    }
+
+    // Round 329: see pickArt().
+    private float shiftX, shiftY;
+    private Vector2 footprintEntryCenter;
+    private static final java.util.Set<String> ART_SHIFT_LOGGED_FOR = new java.util.HashSet<>();
+
+    /**
+     * Round 329 (user, after restoring Orazca: "I don't like how the town icon is not in the center of the newly
+     * created Player territory...It's totally off center"). The texture this town is drawn with right now, and where.
+     * A town's territory, its roads and its reveal are centred on the tile under the middle of its footprint - the
+     * POI's own sprite (World.repaintBiomeAroundTown(), round 255) - and MapSprite draws from the footprint's
+     * bottom-left corner, which only holds while the art IS the footprint. Orazca and the five star towns stand on a
+     * 64x64 CenterTownNeutral, their ruin and restored-town art is 48x48, and the town sat a tile below and left of
+     * its own land. Art that is not the footprint's size is centred on that tile now, and the entry box, the guard
+     * shields and the teleporter icon go with it. Art the size of its footprint - every other POI - is untouched.
+     */
+    private void pickArt() {
+        // Read the POI's own current sprite fresh rather than caching it, since Territory
+        // Control (MOD_SCOPE.md #7) can change it after this actor was constructed
+        // (PointOfInterest.transformInto() when a captured town becomes a different POI).
+        TextureRegion brokenTexture = TownRestoration.getBrokenTownSprite(pointOfInterest);
+        if (brokenTexture != null) {
+            texture = brokenTexture;
+            drawEnlarged = true;
+        } else {
+            // Player-restored wasteland town (2026-08-25) - dedicated art distinct from the
+            // shared "WasteTown" look every functioning-neutral town still uses.
+            TextureRegion playerTownTexture = TownRestoration.getPlayerTownSprite(pointOfInterest);
+            texture = playerTownTexture != null ? playerTownTexture : pointOfInterest.getSprite();
+            drawEnlarged = playerTownTexture != null;
+        }
+        TextureRegion footprint = pointOfInterest.getSprite();
+        if (texture == null || footprint == null || (texture.getRegionWidth() == footprint.getRegionWidth()
+                && texture.getRegionHeight() == footprint.getRegionHeight())) {
+            shiftX = shiftY = 0f;
+            boundingRect.setCenter(footprintEntryCenter);
+            return;
+        }
+        float tile = WorldSave.getCurrentSave().getWorld().getTileSize();
+        Vector2 center = pointOfInterest.getCenter();
+        int tileX = (int) (center.x / tile), tileY = (int) (center.y / tile);
+        float artCenterX = (tileX + 0.5f) * tile, artCenterY = (tileY + 0.5f) * tile;
+        shiftX = artCenterX - (getX() + texture.getRegionWidth() / 2f);
+        shiftY = artCenterY - (getY() + texture.getRegionHeight() / 2f);
+        boundingRect.setCenter(artCenterX, artCenterY);
+        if (ART_SHIFT_LOGGED_FOR.add(pointOfInterest.getID()))
+            System.out.println("[TFR-MapIcon] " + pointOfInterest.getDisplayName() + ": " + texture.getRegionWidth() + "x"
+                    + texture.getRegionHeight() + " art on a " + footprint.getRegionWidth() + "x" + footprint.getRegionHeight()
+                    + " footprint - drawn centred on its land's centre tile (" + tileX + "," + tileY + "), shifted "
+                    + shiftX + "," + shiftY + " px with its entry box (round 329)");
+    }
+
+    @Override
+    protected float artShiftX() {
+        return shiftX;
+    }
+
+    @Override
+    protected float artShiftY() {
+        return shiftY;
     }
 
     public PointOfInterest getPointOfInterest() {
@@ -72,36 +136,25 @@ public class PointOfInterestMapSprite extends MapSprite {
         return (nativeSize * getDrawScale() - nativeSize) / 2f;
     }
 
+    // Round 329: plus the shift pickArt() gives art that is not its footprint's size.
     private float drawnLeft() {
-        return getX() - (texture == null ? 0f : drawnGrowth(texture.getRegionWidth()));
+        return getX() + shiftX - (texture == null ? 0f : drawnGrowth(texture.getRegionWidth()));
     }
 
     private float drawnRight() {
-        return texture == null ? getX() : getX() + texture.getRegionWidth() + drawnGrowth(texture.getRegionWidth());
+        return texture == null ? getX() + shiftX
+                : getX() + shiftX + texture.getRegionWidth() + drawnGrowth(texture.getRegionWidth());
     }
 
     private float drawnBottom() {
-        return getY() - (texture == null ? 0f : drawnGrowth(texture.getRegionHeight()));
+        return getY() + shiftY - (texture == null ? 0f : drawnGrowth(texture.getRegionHeight()));
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // Round 289 keeps upstream's 09.22 null guard on top of this block.
         if (pointOfInterest != null && pointOfInterest.getActive()) {
-            // Read the POI's own current sprite fresh rather than caching it, since Territory
-            // Control (MOD_SCOPE.md #7) can change it after this actor was constructed
-            // (PointOfInterest.transformInto() when a captured town becomes a different POI).
-            TextureRegion brokenTexture = TownRestoration.getBrokenTownSprite(pointOfInterest);
-            if (brokenTexture != null) {
-                texture = brokenTexture;
-                drawEnlarged = true;
-            } else {
-                // Player-restored wasteland town (2026-08-25) - dedicated art distinct from the
-                // shared "WasteTown" look every functioning-neutral town still uses.
-                TextureRegion playerTownTexture = TownRestoration.getPlayerTownSprite(pointOfInterest);
-                texture = playerTownTexture != null ? playerTownTexture : pointOfInterest.getSprite();
-                drawEnlarged = playerTownTexture != null;
-            }
+            pickArt(); // round 329: the texture choice moved there, with where to draw it
             super.draw(batch, parentAlpha);
             // Round 290 (user, with a screenshot of a lone guard shield in black fog): super.draw() skips a
             // town that is still under fog, and these two used to draw regardless - an AI town's guard dots

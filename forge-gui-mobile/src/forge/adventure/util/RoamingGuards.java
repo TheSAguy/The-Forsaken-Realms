@@ -371,6 +371,32 @@ public class RoamingGuards {
         return impact;
     }
 
+    /**
+     * Round 329 (a player's report: they built a second deck for a guard, handed it over, and then "loaded into a
+     * battle with this deck and it's all wastes. The deck button is red"). How many cards the deck the player duels
+     * with would lose if this slot went to a guard - sharedCardImpact()'s arithmetic, for that one deck. A second deck
+     * built from a small collection is mostly the first deck's cards, and the hand-over strips them from it (round
+     * 146), so the duel deck fell short and every duel was padded with Wastes.
+     */
+    public static int duelDeckLoss(int deckIndex) {
+        AdventurePlayer player = AdventurePlayer.current();
+        int duelIndex = player.getSelectedDeckIndex();
+        Deck source = player.getDeck(deckIndex);
+        Deck duel = player.getDeck(duelIndex);
+        if (source == null || duel == null || duelIndex == deckIndex)
+            return 0;
+        int loss = 0;
+        for (java.util.Map.Entry<PaperCard, Integer> entry : source.getMain()) {
+            int have = duel.getMain().count(entry.getKey());
+            if (have <= 0)
+                continue;
+            int owned = player.getCards().count(entry.getKey());
+            int leaving = Math.min(entry.getValue(), owned);
+            loss += Math.min(have, Math.max(0, have - (owned - leaving)));
+        }
+        return loss;
+    }
+
     /** Puts the guard's cards back in the collection. The deck itself is rebuilt by the caller into
      *  whichever slot the player chooses (see returnDeckToSlot). */
     public static void returnDeck(RoamingGuardData guard) {

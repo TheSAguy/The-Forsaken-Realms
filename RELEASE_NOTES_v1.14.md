@@ -63,6 +63,12 @@ the first time it loads. The barrier and the new map layout arrive with your nex
   the next time you enter the mines.
 - A long list in a town dialog could run off a small window; it now fits and scrolls.
 - A duel that pays nothing no longer opens an empty reward screen.
+- A restored Orazca now sits in the middle of the land it claims - it stood a tile down and to the left (so did
+  its ruin).
+- Quest and news banners no longer slide in behind the minimap and the portrait (Android, portrait mode), and you
+  can tap through them.
+- A guard can no longer be handed a deck that shares the cards your own deck needs. The hand-over takes those
+  cards from every deck, so your deck came up short and was filled with Wastes.
 - Hidden ambushers that rise from the ground finish rising, and one you never met no longer keeps a dungeon from
   clearing.
 

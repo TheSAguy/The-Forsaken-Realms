@@ -165,6 +165,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
   `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
   a rebuild.
+- **Round 329 (local commit, NOT pushed): a restored Orazca is centred on its land (48 px art on a 64 px footprint was
+  drawn a tile down-left; entry box moves with it), HUD banners draw over the minimap/portrait and are tap-through,
+  and the guard deck picker refuses a deck whose hand-over would take the duel deck under 40** (Galon88's "all
+  wastes" - by design, the shared cards left with the guard).
 - **Round 328 (local commit, NOT pushed): the Wasteland's thin saplings (`tree4`) outlined in black** - grid
   structures only (area autotiles break at quarter-tile seams); `spec.OUTLINED_STRUCTURES`, `export.outline()`.
 - **Round 327 (local commit, NOT pushed): three selectable Angel portraits each (blue default, gold, green)** -

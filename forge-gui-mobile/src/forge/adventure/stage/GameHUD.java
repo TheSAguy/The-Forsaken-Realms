@@ -329,7 +329,9 @@ public class GameHUD extends Stage {
         eventTouchUp.setType(InputEvent.Type.touchUp);
 
         notificationPane = new ScrollPane(notificationText);
-        notificationPane.setTouchable(Touchable.childrenOnly);
+        // Round 329: taps go through - the banner now draws over the minimap and the portrait (keepBannerOnTop()) and
+        // must not block them while it shows. It is sized to its text, so it never needs to scroll.
+        notificationPane.setTouchable(Touchable.disabled);
         notificationPane.setBounds(5, GuiBase.isAndroid() ? getHeight() : -notificationText.getPrefHeight(), getWidth() * 0.4f, 25);
         notificationPane.setStyle(Controls.getSkin().get("paper", ScrollPane.ScrollPaneStyle.class));
         notificationPane.getColor().a = 0f;
@@ -642,6 +644,7 @@ public class GameHUD extends Stage {
             updateBookmarkActor(MapStage.getInstance().getChanges().isBookmarked());
         updateEnemyCounter();
         avatarGroup.setZIndex(ui.getChildren().size);
+        keepBannerOnTop(); // round 329
     }
 
     void updateKeys() {
@@ -1350,6 +1353,7 @@ public class GameHUD extends Stage {
         Action preconfigureNotification = new Action() {
             @Override
             public boolean act(float delta) {
+                keepBannerOnTop(); // round 329
                 notificationText.setWrap(false);
                 // Deliberately the plain tint-BLACK approach: a [BLACK]-markup-prefix + WHITE-tint
                 // variant was tried (to let inline color tags like [RED] through - black tint
@@ -1393,6 +1397,19 @@ public class GameHUD extends Stage {
         }
 
         notificationPane.addAction(newNotification);
+    }
+
+    /**
+     * Round 329 (a player's report, Android: "the news banners for quest completion are behind the portrait and map
+     * windows"). The banner pane was added to the HUD before the map, the HUD panel, the menu and the portrait - and
+     * enter() re-fronts the portrait - so it slid in UNDER them; in portrait mode it drops in at the top-left, right
+     * where they sit (upstream's own miniMapPlayer check in draw() already assumed the banner covers the minimap).
+     * It draws above them now, tap-through; the touchpad stays above the banner so the player can move under one.
+     */
+    private void keepBannerOnTop() {
+        notificationPane.toFront();
+        if (GuiBase.isAndroid())
+            touchpad.toFront();
     }
 
     public void clearNotifications() {

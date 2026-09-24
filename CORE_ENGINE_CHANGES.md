@@ -134,6 +134,18 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 329: swapped art centred on its land, banners over the HUD, the guard-deck rule
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** - `artShiftX()`/`artShiftY()` (0 here), added to the
+  draw position of the texture, the magnifier and the bookmark star.
+- **`forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java`** - the texture choice moved from
+  `draw()` into `pickArt()` (also run by the constructor): art of another size than the POI's own sprite is centred on
+  the tile under the footprint's centre, with the entry box (`boundingRect`) and the corner icons; `[TFR-MapIcon]`.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** - `keepBannerOnTop()` (in `addNotification()`'s
+  preconfigure action and at the end of `enter()`); the notification pane is `Touchable.disabled`.
+- **`forge-gui-mobile/src/forge/adventure/util/RoamingGuards.java`** / **`RoamingGuardUI.java`** - `duelDeckLoss()`;
+  the Give a Deck picker disables a deck whose hand-over would take the duel deck below the minimum.
+
 ### Round 325: the duel payout guard, the build line
 
 - **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** - `announceDuelPayout()` ([TFR-Payout]; false for
