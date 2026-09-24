@@ -67,7 +67,7 @@
   <object id="88" template="../../../../../common/maps/obj/waypoint.tx" x="80" y="64"/>
    <object id="89" template="../../../../../common/maps/obj/enemy.tx" x="70" y="44">
    <properties>
-    <property name="enemy" value="Cave Spider"/>
+    <property name="enemy" value="Giant Spider"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

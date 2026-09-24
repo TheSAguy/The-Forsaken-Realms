@@ -17757,6 +17757,38 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 324: chest guards at Apprentice, legend copies renamed; an Eldrazi Scion (2026-09-24)
+
+User, on round 319's two open findings: *"Swap the chest guards to Apprentice and rename the legend guards. Make sure
+the Legends are not suppose to be in those dungeons before removing them."* Then, for the Eldrazi prisons: the new
+Apprentice Eldrazi Scion (over the Adept Eldrazi or an Eye). Local commit; data only (79 maps, enemies.json +1).
+
+- **81 chest guards to Apprentice** (42 Master, 34 Adept, 5 Archmage) - every enemy round 286b placed as a chest's
+  guard above the Apprentice rule (round 287: chests Apprentice, boosters Adept+). Tier as the game computes it
+  (`EnemyData.tier`: Uncommon = Adept, Rare = Master, Mythic = Archmage). No booster guard is touched.
+- **50 legend-named guards renamed** (11 also in the list above) - 8 Joven and Chandler, 5 Chatterfang, 4 Agatha,
+  3 The Gitrog Monster, the six Eldrazi titan copies, Tibalt, the Sliver Queen, the Torturer. **Every legend does
+  belong in its dungeon - as the map's author placed it:** all 41 hand-placed legends in 28 maps are untouched; each
+  renamed guard was a guard tool's COPY with nothing of its own (no crown, dialog, reward, defeat script, map-script
+  reference; quests pick targets by tag, never by name). New names keep the creature: Chatterfang -> Squirrel,
+  Gyome -> Swamp Troll, Joven and Chandler -> Bandit Slingshot, Tibalt -> Devil of Tibalt, wizards -> the Apprentice
+  of their color; the Cidryl Shard Mines' pirate guards -> Brinebone Buccaneer (NOT a Captain-tagged pirate, which
+  would complete round 323's "Defeat the mine captain").
+- **What the copies had broken:** a boss copy counted as the boss - beating the Tibalt copy marked Tibalt's lair
+  cleared while the real Tibalt lived; and five copies (three Mysterious Mages, Zo-Zu, Gwafa Hazid) were dialog NPCs
+  with 1 life, 0 speed and 99 Wastes (the tools only read one-line dialogs).
+- **Eldrazi Scion** (new, Apprentice): the small Eldrazi sprite, 12 life, colors BG, a 40-card Blisterpod / Nest
+  Invader / Carrier Thrall / Catacomb Sifter / Brood Monitor deck (`decks/standard/tfr/eldrazi_scion.dck`, BFZ/ROE
+  commons and uncommons), rewards scaled from the Eldrazi's; guards the seven Eldrazi prisons' and the Eldrazi cave's
+  chests (9). Ancient Opal Cavern's Nephilim copy -> Eye.
+- **Checked:** `validate_plane_data.py` as before (enemies 2028); `booster_guards.py` 260 of 261 as before;
+  `waypoint_routes_qa.py` 1381 routes, the same 22 maps; the planner's own checks (every new name exists with a deck,
+  is not a boss or legend; every changed chest guard Apprentice; round 286's chest check unchanged at 528 of 534).
+- **Existing saves:** a dungeon already entered keeps its first visit's names (round 201's fixed roster); the legend
+  dungeons are story places that never rotate, so a current save keeps the copies. New worlds get the fix.
+- Tools and the full plan: `dev-tools/guard_patrols/round324/` (plan.md lists every change and the belongs-here
+  evidence).
+
 ## Round 323: "Explore the Crystal Mines" - the mine captain stays a pirate (2026-09-24)
 
 A player's report on v1.13, passed on by the user: *"I wasn't able to finish the 'Explore the Crystal Mines' quest.

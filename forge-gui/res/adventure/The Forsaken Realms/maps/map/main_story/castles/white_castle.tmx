@@ -558,13 +558,13 @@
   </object>
    <object id="88" template="../../../../../common/maps/obj/enemy.tx" x="410.453" y="471.329">
    <properties>
-    <property name="enemy" value="Master White Wizard"/>
+    <property name="enemy" value="Avacynian Preacher"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="89" template="../../../../../common/maps/obj/enemy.tx" x="293.385" y="471.329">
    <properties>
-    <property name="enemy" value="Master White Wizard"/>
+    <property name="enemy" value="Avacynian Preacher"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -167,13 +167,13 @@
   <object id="114" template="../../../../common/maps/obj/waypoint.tx" x="160" y="48"/>
    <object id="115" template="../../../../common/maps/obj/enemy.tx" x="71.0316" y="382.236">
    <properties>
-    <property name="enemy" value="Kor Warrior"/>
+    <property name="enemy" value="Kor Duelist"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="116" template="../../../../common/maps/obj/enemy.tx" x="160.166" y="54.6663">
    <properties>
-    <property name="enemy" value="Kor Warrior"/>
+    <property name="enemy" value="Kor Duelist"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

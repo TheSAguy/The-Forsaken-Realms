@@ -64,7 +64,7 @@
   <object id="85" template="../../../../../common/maps/obj/waypoint.tx" x="352" y="208"/>
    <object id="86" template="../../../../../common/maps/obj/enemy.tx" x="359.728" y="217.222">
    <properties>
-    <property name="enemy" value="Undead Goblin"/>
+    <property name="enemy" value="Zombie"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

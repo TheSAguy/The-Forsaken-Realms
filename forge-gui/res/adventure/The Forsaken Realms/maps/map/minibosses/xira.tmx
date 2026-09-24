@@ -201,7 +201,7 @@
   </object>
   <object id="109" template="../../../../common/maps/obj/enemy.tx" x="477" y="76.5">
    <properties>
-    <property name="enemy" value="Wasp"/>
+    <property name="enemy" value="Pilfer Beetle"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

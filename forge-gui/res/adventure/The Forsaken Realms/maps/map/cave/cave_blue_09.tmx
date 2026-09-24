@@ -183,7 +183,7 @@
   <object id="18" template="../../../../common/maps/obj/waypoint.tx" x="64" y="144"/>
    <object id="19" template="../../../../common/maps/obj/enemy.tx" x="64" y="144">
    <properties>
-    <property name="enemy" value="Umbral Dragon"/>
+    <property name="enemy" value="Duskwing Whelp"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

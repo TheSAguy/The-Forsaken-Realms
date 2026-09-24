@@ -108,13 +108,13 @@
   <object id="71" template="../../../../common/maps/obj/waypoint.tx" x="224" y="64"/>
    <object id="72" template="../../../../common/maps/obj/enemy.tx" x="209.25" y="49.75">
    <properties>
-    <property name="enemy" value="Orc Warrior"/>
+    <property name="enemy" value="Grimtusk Bowman"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="73" template="../../../../common/maps/obj/enemy.tx" x="72.75" y="185">
    <properties>
-    <property name="enemy" value="Orc Warrior"/>
+    <property name="enemy" value="Grimtusk Bowman"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -1429,13 +1429,13 @@
   <object id="276" template="../../../../common/maps/obj/waypoint.tx" x="128" y="608"/>
    <object id="277" template="../../../../common/maps/obj/enemy.tx" x="320" y="1136">
    <properties>
-    <property name="enemy" value="Pirate 3"/>
+    <property name="enemy" value="Brinebone Buccaneer"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="278" template="../../../../common/maps/obj/enemy.tx" x="400" y="128">
    <properties>
-    <property name="enemy" value="Pirate 3"/>
+    <property name="enemy" value="Brinebone Buccaneer"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

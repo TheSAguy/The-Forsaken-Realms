@@ -536,13 +536,13 @@
   </object>
    <object id="90" template="../../../../../common/maps/obj/enemy.tx" x="410.955" y="462.554">
    <properties>
-    <property name="enemy" value="Demon"/>
+    <property name="enemy" value="Pointed Demonspawn"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="91" template="../../../../../common/maps/obj/enemy.tx" x="293.155" y="469.027">
    <properties>
-    <property name="enemy" value="Demon"/>
+    <property name="enemy" value="Pointed Demonspawn"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

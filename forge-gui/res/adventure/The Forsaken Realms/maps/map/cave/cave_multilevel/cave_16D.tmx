@@ -54,7 +54,7 @@
   <object id="80" template="../../../../../common/maps/obj/manashards.tx" x="178.127" y="56.5921"/>
    <object id="83" template="../../../../../common/maps/obj/enemy.tx" x="211" y="27.5">
    <properties>
-    <property name="enemy" value="Snake"/>
+    <property name="enemy" value="Viper"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

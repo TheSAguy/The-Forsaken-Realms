@@ -240,7 +240,7 @@ ALL SUMMERS MUST BE VEILED&quot;,
   </object>
    <object id="115" template="../../../../common/maps/obj/enemy.tx" x="33.3333" y="463.333">
    <properties>
-    <property name="enemy" value="Grandmother Goby"/>
+    <property name="enemy" value="Merfolk Soldier"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

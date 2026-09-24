@@ -32,7 +32,9 @@ the first time it loads. The barrier and the new map layout arrive with your nex
 
 - **Dungeons breathe easier.** Enemies no longer stand on top of each other: where two or more crowded together, one
   now patrols nearby, steps aside, or — in busy dungeons — is gone. A chest guard that stood where you could not
-  reach it now stands beside its chest.
+  reach it now stands beside its chest. Chest guards are Apprentice-level (a new Eldrazi Scion guards the Eldrazi
+  prisons), and guards no longer wear the names of the legends who rule their dungeons - the real ones are still
+  there. *(New worlds, and dungeons you have not entered yet.)*
 - **Boss lairs clear.** Empty a boss lair and it leaves the map, then comes back later restocked. +Life is paid once
   per game for each enemy and place, and a return visit pays half.
 - **Arena champions** now pay one Rare card from the deck they played — only the ones you beat. The 25 arena-only

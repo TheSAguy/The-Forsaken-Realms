@@ -206,7 +206,7 @@
   <object id="20" template="../../../../common/maps/obj/waypoint.tx" x="128" y="112"/>
    <object id="21" template="../../../../common/maps/obj/enemy.tx" x="128" y="112">
    <properties>
-    <property name="enemy" value="Adept Red Wizard"/>
+    <property name="enemy" value="Pyromancer"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

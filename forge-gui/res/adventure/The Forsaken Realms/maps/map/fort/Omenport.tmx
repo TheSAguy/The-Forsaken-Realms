@@ -592,13 +592,13 @@
   </object>
    <object id="352" template="../../../../common/maps/obj/enemy.tx" x="109.842" y="326.772">
    <properties>
-    <property name="enemy" value="Baron Bertram"/>
+    <property name="enemy" value="Vampire Lord"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="353" template="../../../../common/maps/obj/enemy.tx" x="478.842" y="216.105">
    <properties>
-    <property name="enemy" value="Baron Bertram"/>
+    <property name="enemy" value="Vampire Lord"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>

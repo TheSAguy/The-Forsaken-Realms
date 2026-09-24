@@ -143,7 +143,7 @@
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
    <object id="82" template="../../../../common/maps/obj/enemy.tx" x="249.063" y="29.7116">
    <properties>
-    <property name="enemy" value="Pirate"/>
+    <property name="enemy" value="Brinebone Buccaneer"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

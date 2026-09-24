@@ -10128,6 +10128,65 @@
         "scale": 1.0833
     },
     {
+        "name": "Eldrazi Scion",
+        "sprite": "sprites/enemy/aberration/eldrazi/eldrazi.atlas",
+        "deck": [
+            "decks/standard/tfr/eldrazi_scion.dck"
+        ],
+        "ai": "",
+        "spawnRate": 0.5,
+        "difficulty": 0.1,
+        "speed": 20,
+        "life": 12,
+        "rewards": [
+            {
+                "type": "deckCard",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 2,
+                "rarity": [
+                    "common",
+                    "uncommon"
+                ]
+            },
+            {
+                "type": "gold",
+                "probability": 0.3,
+                "count": 10,
+                "addMaxCount": 40
+            },
+            {
+                "type": "card",
+                "probability": 1,
+                "count": 1,
+                "addMaxCount": 1,
+                "subTypes": [
+                    "Eldrazi"
+                ],
+                "cardTypes": [
+                    "Creature"
+                ]
+            },
+            {
+                "type": "shards",
+                "probability": 0.5,
+                "count": 5,
+                "addMaxCount": 5
+            }
+        ],
+        "colors": "BG",
+        "questTags": [
+            "Aberration",
+            "Eldrazi",
+            "IdentityBlack",
+            "IdentityGreen",
+            "IdentityGolgari",
+            "BiomeColorless"
+        ],
+        "tier": "Common",
+        "scale": 1.0833
+    },
+    {
         "name": "Eldrazi Devastator",
         "sprite": "sprites/enemy/aberration/eldrazi/eldrazi_large.atlas",
         "deck": [

@@ -420,37 +420,37 @@ Your manasight stone glows brightly, sensing a truly mighty legend in this place
   </object>
    <object id="169" template="../../../../common/maps/obj/enemy.tx" x="13" y="364.833">
    <properties>
-    <property name="enemy" value="Chatterfang"/>
+    <property name="enemy" value="Squirrel"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="170" template="../../../../common/maps/obj/enemy.tx" x="400.5" y="63.5">
    <properties>
-    <property name="enemy" value="Chatterfang"/>
+    <property name="enemy" value="Squirrel"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="171" template="../../../../common/maps/obj/enemy.tx" x="45" y="379.5">
    <properties>
-    <property name="enemy" value="Chatterfang"/>
+    <property name="enemy" value="Squirrel"/>
     <property name="threatRange" type="int" value="30"/>
    </properties>
   </object>
   <object id="172" template="../../../../common/maps/obj/enemy.tx" x="480.5" y="322">
    <properties>
-    <property name="enemy" value="Chatterfang"/>
+    <property name="enemy" value="Squirrel"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="173" template="../../../../common/maps/obj/enemy.tx" x="472.333" y="207">
    <properties>
-    <property name="enemy" value="Chatterfang"/>
+    <property name="enemy" value="Squirrel"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="174" template="../../../../common/maps/obj/enemy.tx" x="447.956" y="72.4352">
    <properties>
-    <property name="enemy" value="Mysterious Mage"/>
+    <property name="enemy" value="Nutcache Scrapper"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

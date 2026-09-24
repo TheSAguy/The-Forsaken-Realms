@@ -158,7 +158,7 @@
   <object id="62" template="../../../../common/maps/obj/waypoint.tx" x="304" y="64"/>
    <object id="63" template="../../../../common/maps/obj/enemy.tx" x="324.421" y="74.8947">
    <properties>
-    <property name="enemy" value="Lich"/>
+    <property name="enemy" value="Apprentice Black Wizard"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

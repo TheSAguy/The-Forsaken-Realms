@@ -81,7 +81,7 @@
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="192" y="32"/>
    <object id="94" template="../../../../common/maps/obj/enemy.tx" x="199.434" y="26.5027">
    <properties>
-    <property name="enemy" value="Eldrazi"/>
+    <property name="enemy" value="Eldrazi Scion"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

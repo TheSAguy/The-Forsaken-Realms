@@ -252,49 +252,49 @@
   <object id="79" template="../../../../common/maps/obj/collision.tx" x="239.825" y="83.1592" width="14.3507" height="30.3483"/>
    <object id="81" template="../../../../common/maps/obj/enemy.tx" x="201.699" y="56.1005">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="82" template="../../../../common/maps/obj/enemy.tx" x="201.321" y="36.527">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="83" template="../../../../common/maps/obj/enemy.tx" x="238.364" y="20.3636">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="84" template="../../../../common/maps/obj/enemy.tx" x="238.545" y="71.2727">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="85" template="../../../../common/maps/obj/enemy.tx" x="166.182" y="19.4545">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="86" template="../../../../common/maps/obj/enemy.tx" x="181.636" y="71.4545">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="87" template="../../../../common/maps/obj/enemy.tx" x="145.818" y="35.8182">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="88" template="../../../../common/maps/obj/enemy.tx" x="146.364" y="54.9091">
    <properties>
-    <property name="enemy" value="Joven and Chandler"/>
+    <property name="enemy" value="Bandit Slingshot"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>

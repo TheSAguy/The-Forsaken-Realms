@@ -156,7 +156,7 @@
   <object id="97" template="../../../../common/maps/obj/waypoint.tx" x="32" y="128"/>
    <object id="98" template="../../../../common/maps/obj/enemy.tx" x="38.144" y="139.941">
    <properties>
-    <property name="enemy" value="Plant"/>
+    <property name="enemy" value="Wandering Treefolk"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

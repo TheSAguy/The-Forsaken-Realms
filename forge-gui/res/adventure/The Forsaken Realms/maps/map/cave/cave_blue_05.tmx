@@ -171,7 +171,7 @@
   <object id="13" template="../../../../common/maps/obj/waypoint.tx" x="64" y="128"/>
    <object id="14" template="../../../../common/maps/obj/enemy.tx" x="64" y="128">
    <properties>
-    <property name="enemy" value="Angel Overseer"/>
+    <property name="enemy" value="Geist"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

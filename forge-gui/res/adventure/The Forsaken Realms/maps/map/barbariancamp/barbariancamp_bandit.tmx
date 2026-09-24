@@ -181,7 +181,7 @@
   <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="16" y="96"/>
    <object id="96" template="../../../../common/maps/obj/enemy.tx" x="17.4087" y="65.4599">
    <properties>
-    <property name="enemy" value="Bandit Scoundrel"/>
+    <property name="enemy" value="Cutpurse"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -114,7 +114,7 @@
   </object>
   <object id="91" template="../../../../common/maps/obj/enemy.tx" x="505.917" y="349.416">
    <properties>
-    <property name="enemy" value="Eldrazi Devastator"/>
+    <property name="enemy" value="Eldrazi Scion"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -222,7 +222,7 @@
   <object id="102" template="../../../../common/maps/obj/waypoint.tx" x="160" y="272"/>
    <object id="103" template="../../../../common/maps/obj/enemy.tx" x="85.333" y="69.3333">
    <properties>
-    <property name="enemy" value="Goblin Stalker"/>
+    <property name="enemy" value="Goblin Skulker"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

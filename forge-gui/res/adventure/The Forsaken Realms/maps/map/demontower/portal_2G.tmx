@@ -78,13 +78,13 @@
   <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="288" y="144"/>
    <object id="76" template="../../../../common/maps/obj/enemy.tx" x="314.5" y="123">
    <properties>
-    <property name="enemy" value="Torturer"/>
+    <property name="enemy" value="Immersturm Demon"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="77" template="../../../../common/maps/obj/enemy.tx" x="315.609" y="170.45">
    <properties>
-    <property name="enemy" value="Torturer"/>
+    <property name="enemy" value="Immersturm Demon"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

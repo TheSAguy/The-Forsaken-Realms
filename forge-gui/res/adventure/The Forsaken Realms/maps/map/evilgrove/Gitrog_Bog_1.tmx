@@ -638,25 +638,25 @@ NORTH: DOMAIN OF THE THREE WITCHES&quot;,
   </object>
    <object id="291" template="../../../../common/maps/obj/enemy.tx" x="6.135" y="868.221">
    <properties>
-    <property name="enemy" value="Agatha"/>
+    <property name="enemy" value="Witch"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="292" template="../../../../common/maps/obj/enemy.tx" x="562" y="798">
    <properties>
-    <property name="enemy" value="Agatha"/>
+    <property name="enemy" value="Witch"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="293" template="../../../../common/maps/obj/enemy.tx" x="24.8333" y="339.5">
    <properties>
-    <property name="enemy" value="Agatha"/>
+    <property name="enemy" value="Witch"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="294" template="../../../../common/maps/obj/enemy.tx" x="858.5" y="139.5">
    <properties>
-    <property name="enemy" value="Agatha"/>
+    <property name="enemy" value="Witch"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>

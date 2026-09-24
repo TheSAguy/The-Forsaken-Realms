@@ -128,7 +128,7 @@
   <object id="95" template="../../../../common/maps/obj/waypoint.tx" x="496" y="208"/>
    <object id="96" template="../../../../common/maps/obj/enemy.tx" x="504.727" y="271.636">
    <properties>
-    <property name="enemy" value="Gorilla"/>
+    <property name="enemy" value="Bristlehide Boar"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

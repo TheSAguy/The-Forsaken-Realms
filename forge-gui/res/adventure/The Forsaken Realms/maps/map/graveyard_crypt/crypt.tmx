@@ -188,13 +188,13 @@
   <object id="98" template="../../../../common/maps/obj/waypoint.tx" x="64" y="352"/>
    <object id="99" template="../../../../common/maps/obj/enemy.tx" x="63.6667" y="112.667">
    <properties>
-    <property name="enemy" value="Adept Black Wizard"/>
+    <property name="enemy" value="Apprentice Black Wizard"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="100" template="../../../../common/maps/obj/enemy.tx" x="79.3333" y="127.667">
    <properties>
-    <property name="enemy" value="Adept Black Wizard"/>
+    <property name="enemy" value="Apprentice Black Wizard"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

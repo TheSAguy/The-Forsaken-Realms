@@ -1589,7 +1589,7 @@
   <object id="187" template="../../../../common/maps/obj/waypoint.tx" x="224" y="576"/>
    <object id="191" template="../../../../common/maps/obj/enemy.tx" x="5" y="258">
    <properties>
-    <property name="enemy" value="Phoenix"/>
+    <property name="enemy" value="Fire Elemental"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -315,13 +315,13 @@ LAWMEN STAY OUT.&quot;,
   <object id="126" template="../../obj/stone.tx" x="421" y="559.667"/>
    <object id="127" template="../../../../common/maps/obj/enemy.tx" x="32.6667" y="156.667">
    <properties>
-    <property name="enemy" value="Mysterious Mage"/>
+    <property name="enemy" value="Cutpurse"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="128" template="../../../../common/maps/obj/enemy.tx" x="221.083" y="370.25">
    <properties>
-    <property name="enemy" value="Mysterious Mage"/>
+    <property name="enemy" value="Cutpurse"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

@@ -79,7 +79,7 @@
   </object>
    <object id="74" template="../../../../common/maps/obj/enemy.tx" x="247" y="290.091">
    <properties>
-    <property name="enemy" value="Emrakul, the Aeons Torn"/>
+    <property name="enemy" value="Eldrazi Scion"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

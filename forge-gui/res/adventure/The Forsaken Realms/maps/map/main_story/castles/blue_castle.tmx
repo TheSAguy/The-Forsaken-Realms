@@ -533,13 +533,13 @@
   </object>
    <object id="91" template="../../../../../common/maps/obj/enemy.tx" x="297" y="467">
    <properties>
-    <property name="enemy" value="Master Blue Wizard"/>
+    <property name="enemy" value="Apprentice Blue Wizard"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="92" template="../../../../../common/maps/obj/enemy.tx" x="408.5" y="461.5">
    <properties>
-    <property name="enemy" value="Master Blue Wizard"/>
+    <property name="enemy" value="Apprentice Blue Wizard"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

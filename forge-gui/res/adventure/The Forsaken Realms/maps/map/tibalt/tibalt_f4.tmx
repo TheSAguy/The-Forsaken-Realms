@@ -174,7 +174,7 @@
   </object>
    <object id="179" template="../../../../common/maps/obj/enemy.tx" x="226.398" y="116.332">
    <properties>
-    <property name="enemy" value="Tibalt"/>
+    <property name="enemy" value="Devil of Tibalt"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>

@@ -237,19 +237,19 @@
   </object>
   <object id="199" template="../../../../common/maps/obj/enemy.tx" x="231.342" y="222.438">
    <properties>
-    <property name="enemy" value="Fire Dragon"/>
+    <property name="enemy" value="Cinderwing Whelp"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="200" template="../../../../common/maps/obj/enemy.tx" x="179.509" y="222.772">
    <properties>
-    <property name="enemy" value="Fire Dragon"/>
+    <property name="enemy" value="Cinderwing Whelp"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="201" template="../../../../common/maps/obj/enemy.tx" x="298.175" y="296.105">
    <properties>
-    <property name="enemy" value="Fire Dragon"/>
+    <property name="enemy" value="Cinderwing Whelp"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

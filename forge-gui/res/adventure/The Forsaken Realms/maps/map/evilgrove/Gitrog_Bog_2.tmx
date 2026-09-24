@@ -272,19 +272,19 @@
   </object>
    <object id="224" template="../../../../common/maps/obj/enemy.tx" x="316.766" y="832.094">
    <properties>
-    <property name="enemy" value="The Gitrog Monster"/>
+    <property name="enemy" value="Froghemoth"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="225" template="../../../../common/maps/obj/enemy.tx" x="316" y="854">
    <properties>
-    <property name="enemy" value="The Gitrog Monster"/>
+    <property name="enemy" value="Froghemoth"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
   <object id="226" template="../../../../common/maps/obj/enemy.tx" x="315" y="872">
    <properties>
-    <property name="enemy" value="The Gitrog Monster"/>
+    <property name="enemy" value="Froghemoth"/>
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>

@@ -166,13 +166,13 @@
   <object id="89" template="../../../../common/maps/obj/waypoint.tx" x="48" y="224"/>
    <object id="90" template="../../../../common/maps/obj/enemy.tx" x="367.443" y="59.949">
    <properties>
-    <property name="enemy" value="Necrogoyf"/>
+    <property name="enemy" value="Gazestalk Ooze"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="91" template="../../../../common/maps/obj/enemy.tx" x="76.0151" y="233.169">
    <properties>
-    <property name="enemy" value="Necrogoyf"/>
+    <property name="enemy" value="Gazestalk Ooze"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

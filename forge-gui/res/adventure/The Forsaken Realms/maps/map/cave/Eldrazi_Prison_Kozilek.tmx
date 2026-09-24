@@ -79,7 +79,7 @@
   </object>
    <object id="74" template="../../../../common/maps/obj/enemy.tx" x="247.934" y="291.536">
    <properties>
-    <property name="enemy" value="Kozilek, Butcher of Truth"/>
+    <property name="enemy" value="Eldrazi Scion"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>

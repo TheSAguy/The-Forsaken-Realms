@@ -108,13 +108,13 @@
   <object id="101" template="../../../../../common/maps/obj/waypoint.tx" x="96" y="368"/>
    <object id="102" template="../../../../../common/maps/obj/enemy.tx" x="134.833" y="44.3333">
    <properties>
-    <property name="enemy" value="Troll"/>
+    <property name="enemy" value="Brawny Ogre"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="103" template="../../../../../common/maps/obj/enemy.tx" x="87.417" y="347.25">
    <properties>
-    <property name="enemy" value="Troll"/>
+    <property name="enemy" value="Brawny Ogre"/>
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
