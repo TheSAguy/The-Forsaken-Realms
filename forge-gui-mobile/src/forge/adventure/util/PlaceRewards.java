@@ -123,11 +123,16 @@ public final class PlaceRewards {
             return;
         World world = WorldSave.getCurrentSave().getWorld();
         String id = place.getID();
+        // Round 331 (code review): object ids are per TMX level, so the key names the LEVEL the pickup is on - the
+        // place's own id for its first map (every key written before this round), the level's changes key below it.
+        String levelKey = TileMapScene.instance().currentLevelKey();
+        if (levelKey == null)
+            levelKey = id;
         StringBuilder notes = new StringBuilder();
         for (int i = rewards.size - 1; i >= 0; i--) {
             Reward reward = rewards.get(i);
             if (reward.getType() == Reward.Type.Life && reward.getCount() > 0
-                    && !payOnce(world, id + "|life|pickup#" + objectId, "+" + reward.getCount() + " max life", notes))
+                    && !payOnce(world, levelKey + "|life|pickup#" + objectId, "+" + reward.getCount() + " max life", notes))
                 rewards.removeIndex(i);
         }
         int clears = DungeonRotation.isVanishingLair(place.getData()) ? world.getLairClearCount().getOrDefault(id, 0) : 0;

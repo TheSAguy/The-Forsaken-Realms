@@ -50,11 +50,27 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (round 320; **v1.14 "Realm Reforged" READY TO PUBLISH** - stamps, notes and artifacts built, NOT tagged or pushed; v1.13 is the last published release (tag `tfr-v1.13` @ `e2a3eb5b89c`); rounds 292-320 local; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (round 331; **v1.14.1 HOTFIX built, NOT tagged/pushed/published**; v1.14 (tag `tfr-v1.14` @ `9664d624406`) was published and is a DRAFT again at the user's word - v1.13 shows as Latest; ENGINE = 09.23 daily since round 316) - READ THIS FIRST, DO NOT REPEAT WORK
 
-- **NEXT SESSION starts here (updated after the v1.14 release, 2026-09-24).** **v1.14 "Welcome to The Forsaken
-  Realms!" is RELEASED** (published 2026-09-24 17:56:04 UTC, Latest): tag `tfr-v1.14` @ `9664d624406` on origin/master; rounds
-  292-330 on the 09.23 engine. The user named it (they first wrote "Forgotten Realms" - the game's OLD name, the repo
+- **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
+  morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
+  a DRAFT again (`gh release edit tfr-v1.14 --draft`; its three assets are still attached; v1.13 shows as Latest).
+  Round 331 = the fix: a 1-px black border on EVERY colliding structure of every land, drawn by the engine around the
+  stitched shape (`World.outlineStructures()`; `"outline": false` in a mappingInfo opts out), the three white banners
+  black (VeggieShark's report), growth rings at the land's doodad density (was 5x; `DOODAD_SET` 331 re-scatters once),
+  and the code review's +Life pickup key per level. Stamps 1.14.1 / 11401, `RELEASE_NOTES_v1.14.1.md` written. SEEN in
+  the agent game (all six lands, the black legend banner). **Where it stands:** committed locally; the live + agent
+  folders packaged with it (check PACKAGE_OK). **To release:** the user play-tests, then `git push origin main:master`,
+  tag `tfr-v1.14.1`, desktop zip `build_standalone.py --out C:/TFR/release/v1.14.1/stage --zip`, Android per
+  ANDROID_RELEASE.md (APK + assets.zip from ONE mvn run; the tag must be `tfr-v1.14.1` or first-run asset download 404s),
+  publish - and then either publish v1.14 again or delete its draft (the user's call; 1.14.1 supersedes it). Open from
+  this round: two agent saves ("Vic 1", "r320 soak goblin") refuse to load with no logged reason (the auto save loads);
+  the user may still want the growth-ring doodads back at 5x (one constant). Older open items: the quest-place hiding
+  fix (round 322's research, `scratchpad/r322/questpoi/`); "Shandalar" in the lair dragons' NAMES; the promo page's
+  "five times larger" reserve line (measured ~3.5x); portrait variants for Goblin/Merfolk/Vampire.
+- **v1.14 "Welcome to The Forsaken Realms!"** was published 2026-09-24 17:56:04 UTC (tag `tfr-v1.14` @ `9664d624406`
+  on origin/master; rounds 292-330 on the 09.23 engine) and drafted again the same day - see above. The user named it
+  (they first wrote "Forgotten Realms" - the game's OLD name, the repo
   was renamed from it and GitHub still redirects; they picked Forsaken when asked). Assets, all from the tag:
   `The-Forsaken-Realms-v1.14.zip` (267.9 MB, `build_standalone.py --out C:/TFR/release/v1.14/stage --zip` while the user
   played), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; versionCode 11400 / 1.14; signer SHA-256 ee603925...),
@@ -162,6 +178,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
   `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
   a rebuild.
+- **Round 331 (local commit, NOT pushed; the v1.14.1 hotfix): every colliding structure bordered in black by the engine
+  (`World.outlineStructures()`, around the stitched shape, cached per frame), the white banners black, growth rings at
+  1x doodad density (`DOODAD_SET` 331), the +Life pickup key per level; v1.14 drafted again on GitHub.** Seen in the
+  agent game in all six lands. tree4's baked outline (round 328) taken back out.
 - **Round 330 (local commit, NOT pushed): 365 patrollers in 214 maps no longer park beside loot another enemy guards**
   (round 258's chest routes; converging 338 -> 16 on Hard; `dev-tools/guard_patrols/round330/`). Seen: the lodge's
   Wolfkin paces the west half of its room.

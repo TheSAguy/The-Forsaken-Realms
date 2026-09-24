@@ -38,6 +38,29 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 331 (v1.14.1 hotfix) — the structure border, black banners, growth-ring doodads
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `generateBiomeSprite()`'s layer walk is now
+  `collectDrawingInfo()` (same entries, order and skip rule; `DrawingInformation` carries `layer` + `tileTerrain`), and
+  the tile gets `outlineStructures()` after its layers: the 1-px black border around every colliding structure, read
+  from the tile's and its four neighbors' structure masks (`outlinedMask()` / `buildOutlinedMask()`, cached per frame
+  between `beginTileBatch()` / `endTileBatch()`). `mappingAt()` beside `structureNameAt()`. `DOODAD_DENSITY_MULTIPLIER`
+  5 -> 1, `DOODAD_SET` 331. If a daily rewrites `generateBiomeSprite()`, the border call and the batch must survive.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldBackground.java`** — `draw()` wraps its tile work in the world's
+  tile batch (`beginTileBatch()` at the top, `endTileBatch()` after the chunk draws).
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `refreshBackgroundTile()` redraws the four
+  neighbors too (their border pixels depend on this tile); the legend-sighting and "no defenders" banners take the
+  black tint.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** — `addNotification(text, true)` opens an untagged text
+  with `[BLACK]`.
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the capture banner takes the black tint.
+- **`forge-gui-mobile/src/forge/adventure/scene/TileMapScene.java`** — `currentLevelKey()` (the level's saved-changes
+  key), for `PlaceRewards.filterPickup()`'s +Life pickup key.
+- **`forge-gui-mobile/src/forge/adventure/util/PlaceRewards.java`** — the pickup key names the level.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — a dead local removed.
+- **`forge-gui-mobile/src/forge/adventure/data/BiomeStructureData.java`** — `BiomeStructureDataMapping.outline`
+  (Boolean; null = follow `collision`), copied by the copy constructor.
+
 ### The 09.22 engine merge (round 289) — where our code now sits on top of upstream's refactor
 
 Upstream `09ec07abed8` "Refactor Adventure Stages, Scenes, Sprites (#11945)" is an allocation-reduction pass over 44

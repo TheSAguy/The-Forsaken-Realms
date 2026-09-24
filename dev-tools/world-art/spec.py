@@ -27,8 +27,10 @@ SPRING = dict(hue=-0.03, sat=1.1, val=1.12)
 # so an outlined picture reads as blocked beside the walkable doodads. Only GRID structures (one picture repeated
 # per tile) - an area autotile is stitched from quarter tiles in the world, and an outline drawn on its block breaks
 # at those seams (stray dashes, seen in the preview).
+# Round 331: EMPTY - the game draws the border itself, around the stitched shape of every colliding structure
+# (World.outlineStructures(), "outline" in a biome's mappingInfo), so nothing is baked any more; tree4's baked
+# outline was taken back out (an entry here would give it a double border).
 OUTLINED_STRUCTURES = {
-    "colorless": ["tree4"],   # the thin grey saplings - the ones the user kept walking into
 }
 
 STRUCTURES = {

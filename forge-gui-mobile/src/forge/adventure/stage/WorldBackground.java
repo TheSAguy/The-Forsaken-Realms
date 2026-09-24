@@ -131,6 +131,7 @@ public class WorldBackground extends Actor {
             initialize();
         }
         World world = WorldSave.getCurrentSave().getWorld();
+        world.beginTileBatch(); // round 331: every tile baked this frame shares its structure-border masks
         int playerTileX = playerX / tileSize;
         int playerTileY = playerY / tileSize;
         int visionRadius = world.getVisionRadius();
@@ -286,6 +287,7 @@ public class WorldBackground extends Actor {
                         chunkSize * tileSize, chunkSize * tileSize);
             }
         }
+        world.endTileBatch(); // round 331
         // Round 296: the barrier's mountains at full resolution, over the terrain and under every actor.
         forge.adventure.world.BarrierMountains.draw(batch, world, px, py, getStage().getCamera());
     }

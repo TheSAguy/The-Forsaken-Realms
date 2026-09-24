@@ -303,8 +303,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // revealArea's callback), but WorldStage and WorldBackground are the same package so this
     // can reach the package-private patch method directly.
     public void refreshBackgroundTile(int worldTileX, int worldTileY) {
-        if (background != null)
-            background.onTileRevealed(worldTileX, worldTileY);
+        if (background == null)
+            return;
+        background.onTileRevealed(worldTileX, worldTileY);
+        // Round 331: a tile's structure border (World.outlineStructures()) also lies on the four tiles beside it, where
+        // the shape reaches the edge - so a repaint that changes this tile's structure redraws them too, or a stale
+        // black edge would stay along the claim's boundary until its chunk is rebuilt. The fog reveals that come
+        // through here too (revealArea callbacks) pay a spare redraw of four tiles each; they fire only for tiles
+        // newly explored, and a tile outside the loaded chunks costs nothing (onTileRevealed evicts its chunk).
+        background.onTileRevealed(worldTileX - 1, worldTileY);
+        background.onTileRevealed(worldTileX + 1, worldTileY);
+        background.onTileRevealed(worldTileX, worldTileY - 1);
+        background.onTileRevealed(worldTileX, worldTileY + 1);
     }
 
     // Bridge for WorldSave's post-load sweep (see its own comment) - forces a chunk's cached
@@ -789,7 +799,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         EnemyData base = TerritoryControl.pickRandomRoamer(Current.world(), color, defenderTier);
         if (base == null) {
             System.out.println("[TFR-TownAssault] no eligible defender in the " + color + " pool for " + poi.getDisplayName());
-            GameHUD.getInstance().addNotification("No defenders answer the call at " + poi.getDisplayName() + ".", true);
+            GameHUD.getInstance().addNotification("No defenders answer the call at " + poi.getDisplayName() + "."); // round 331: black tint (was white text)
             return;
         }
         EnemyData duelData = new EnemyData(base);
@@ -1878,8 +1888,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         System.out.println("[TFR-Legend] sighting: " + name + " at (" + (int) legend.getX() + ", " + (int) legend.getY()
                 + "), " + direction + " of the player, " + (int) Math.sqrt(dx * dx + dy * dy) + " units away, stays "
                 + (int) legend.getLifetime() + "s of travel time");
+        // Round 331: the plain black tint - this took the white tint with no color tag and drew white on the paper
+        // (VeggieShark's v1.14 report).
         GameHUD.getInstance().addNotification("A legend has been sighted to the " + direction + ": " + name
-                + "! A gold dot marks it on the map.", true);
+                + "! A gold dot marks it on the map.");
     }
 
     /** Round 239: the frontier legends alive on the overworld right now, for the map view's gold dots - the

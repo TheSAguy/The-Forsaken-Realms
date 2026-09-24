@@ -14264,6 +14264,71 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 331: v1.14.1 hotfix - every obstacle bordered, black banners, calmer growth rings (2026-09-24)
+
+User, the morning after v1.14: *"add a black 1pix border around all collision objects on the main map. It's hard to
+see and I'm bumping into things"*, VeggieShark's Discord report (*"v1.14: the message font is white now, which is a
+bit unreadable"*), and *"take 1.14 down. Let's post the 1.14.1 fix once done"* - the v1.14 GitHub release is a DRAFT
+again (assets kept; `gh release edit tfr-v1.14 --draft`). Local commit; Java + data + docs. Stamps: modVersion 1.14.1,
+tfr.version 1.14.1, manifestVersionCode 11401; `RELEASE_NOTES_v1.14.1.md`.
+
+- **The border, drawn by the game.** Every structure a biome's `structures[].mappingInfo[]` marks `collision: true`
+  (which today is every structure of every land - trees, rocks, hills, water, lava, muck, craters, holes, cacti, mesas,
+  mountains) draws with a 1-px black border around its STITCHED shape; the walkable doodads have none, so a border means
+  "blocked" (round 328's rule, kept). Round 328 baked tree4's border into its picture, which only works for a grid
+  structure; an area structure is assembled from quarter tiles and a baked border broke at the seams. So
+  `World.outlineStructures()` runs once a tile's layers are composited (`generateBiomeSprite()`): every fully
+  transparent pixel of the tile's structure layer with an opaque (alpha >= 128) structure pixel beside it - in this tile
+  or across the edge in the next one - turns black. Exactly `dev-tools/world-art/outline_preview.py`'s rule
+  (`export.outline()`), whose picture the user approved for the hills. A mapping opts out or in with `"outline": false
+  / true` (`BiomeStructureDataMapping.outline`, null = follow `collision`).
+  - `collectDrawingInfo()` is the layer walk `generateBiomeSprite()` always ran inline, moved out so `outlinedMask()`
+    can ask what a NEIGHBOR tile draws (same entries, order and skip rule). `buildOutlinedMask()` draws only the
+    tile's bordered structure entries onto a transparent tile; `outlineStructures()` reads the tile's mask and its four
+    neighbors' through their pixel buffers and writes the black pixels straight into the tile's buffer.
+  - Cost: `WorldBackground.draw()` opens a tile batch (`World.beginTileBatch()` / `endTileBatch()`) so every mask a
+    frame builds is kept until the frame ends - a chunk build (900 tiles, each asking for its own mask and four
+    neighbors') builds each mask once. Chunk builds in the agent log: 95 / 49 / 41 ms at 32 texels per tile.
+  - `WorldStage.refreshBackgroundTile()` redraws the four neighbors as well: a repaint that changes a tile's structure
+    would otherwise leave a stale black edge on the tile beside it until its chunk was rebuilt (found by the round's
+    code review).
+  - tree4's baked outline is taken back out - `colorless_structures_hd.png` restored from before round 328
+    (33e2d85825d) and `spec.OUTLINED_STRUCTURES` emptied - or it would have carried a double border. The sheet change
+    re-bakes a save's map image once (`groundArtSignature()`).
+  - `[TFR-Outline]` logs each land's bordered structures on first use and the first bordered tile.
+  - SEEN in the agent game: the Wasteland (hills, boulders, craters, dead trees, saplings) and all five colors' land
+    beside their capitals (green lakes and trees, red volcanic rock and lava, black muck and dead trees, white cacti and
+    mesas, blue dunes and water). The walkable WasteDeadTree doodads (the user's "smaller tree", `wc:7,2`) stay plain -
+    their new rule (border = collision) settles round 328's open question.
+- **Black banners.** `GameHUD.addNotification(text, true)` (the WHITE tint that lets inline color tags through)
+  requires the text to open with a color tag; three callers did not - the legend sighting (`WorldStage.
+  announceLegendSighting()`, round 239), "No defenders answer the call" (`WorldStage`) and "X is yours!"
+  (`TownRestoration.captureTownForPlayer()`) - and drew white on the parchment. All three take the plain black tint
+  now, and `addNotification()` opens an untagged text with `[BLACK]` itself (a color tag is `[NAME]` or `[#hex]`; a
+  size, icon or style tag does not count), logging `[TFR-Banner]`. SEEN: "A legend has been sighted to the east:
+  Arcades Sabboth (Master)!" in black, in the agent game.
+- **Growth rings at the land's density.** User, at Green after the territory grew: *"there are a LOT of doodads on
+  the edge that grew, is that correct"*, then, with before/after screenshots, *"I'm not 100% the green Doodads is a
+  problem"*. It was 5x: `World.DOODAD_DENSITY_MULTIPLIER` boosted a repainted ring's doodad density, tuned for the
+  stock lists where a ring came out bare; rounds 303/309 re-tuned every density for the HD scatter (world generation
+  and the re-scatter both place at 1x), so a ring came out with a doodad on nearly every tile against ~20% on
+  generated land - and since every day's ring keeps its density, a town's grown annulus turns into a carpet over a
+  month. The multiplier is 1 now, and `DOODAD_SET` 331 re-scatters every save's doodads once so the bands already laid
+  go (the user's call to keep the 5x stands open; the constant is one line).
+- **The review of rounds 292-330 (`/code-review high tfr-v1.13`, the user: "review code we've done the last few
+  days")**: 7 findings - the three above, the neighbor-tile border (fixed), a +Life pickup key that ignored the map
+  level (`PlaceRewards.filterPickup()` keyed `poiId|life|pickup#objectId`, but object ids are per TMX level, so two
+  +Life chests on different levels of one place sharing an id collided; the key is the LEVEL's changes key now,
+  `TileMapScene.currentLevelKey()` - the place's own id for its first map, so every key written before this round
+  still matches), the banner guard's tag test (fixed with it), `PointOfInterestMapSprite.pickArt()` allocating per
+  frame (left: the lookups it makes were per frame before round 329 too, and a hotfix is no place for a caching
+  scheme), and a dead `actorCount` in `MapStage` (removed).
+- **Two agent saves refused to load** ("Vic 1", "r320 soak goblin": "Could not load that save", no reason, no
+  exception in the log) while the auto save and the day-1 saves load fine. Not chased in the hotfix - the user's own
+  saves load; noted for the next session.
+- Docs: this entry, CLAUDE.md's STATE block and pointer, CORE_ENGINE_CHANGES (World, WorldBackground, WorldStage,
+  GameHUD, TownRestoration, TileMapScene, PlaceRewards, MapStage, BiomeStructureData).
+
 ## Round 330: patrols that parked beside guarded loot (2026-09-24)
 
 User, play-testing two dungeons (the Hunting Lodge and a sandy cave): *"The two enemies I highlighted, have patrol

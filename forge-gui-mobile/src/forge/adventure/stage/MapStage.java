@@ -2529,8 +2529,6 @@ public class MapStage extends GameStage {
         if (positions.size() > 4)
             positions.remove();
 
-        int actorCount = actors.size;
-
         for (int i = actors.size - 1; i >= 0; i--) {
             MapActor actor = actors.get(i);
             if (actor == null) continue;

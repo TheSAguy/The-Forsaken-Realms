@@ -303,6 +303,16 @@ public class TileMapScene extends HudScene {
         return WorldSave.getCurrentSave().getPointOfInterestChanges(rootPoint.getID() + targetMap);
     }
 
+    /** Round 331: the saved-changes key of the level the player is on - the place's own id for its first map, the
+     *  id plus the level's map path below it (the keys getPointOfInterestChanges(String) reads). Null with no place. */
+    public String currentLevelKey() {
+        if (rootPoint == null)
+            return null;
+        if (oldMap == null || rootPoint.getID().endsWith(oldMap))
+            return rootPoint.getID();
+        return rootPoint.getID() + oldMap;
+    }
+
 
     @Override
     public boolean isInHudOnlyMode() {

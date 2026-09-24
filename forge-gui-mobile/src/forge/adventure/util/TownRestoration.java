@@ -494,7 +494,7 @@ public class TownRestoration {
         TerritoryControl.dispatchRetaliation(world, fromColor, shownName);
         System.out.println("[TFR-TownAssault] " + shownName + " captured from " + fromColor
                 + " -> player-owned restored town (radius " + repaintRadius + "), buildings start broken except the inn");
-        forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding.", true);
+        forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding."); // round 331: black tint (was white text)
     }
 
     public static void recolorTerrainForTesting() {

@@ -32,6 +32,7 @@ import forge.adventure.util.TownRestoration;
 import forge.gui.GuiBase;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -362,7 +363,9 @@ public class World implements Disposable, SaveFileContent {
     // Round 303: the doodad set a world's doodads were placed from - see rescatterDoodads(). 0 = a save from before.
     // Round 305: 305 - the whirlpools, blue's new rocks and the rebalanced water doodads (a 303 save scatters once more).
     // Round 309: 309 - twice to three times the kinds and pictures on every land, the same coverage (a save scatters again).
-    public static final int DOODAD_SET = 309;
+    // Round 331: 331 - the growth rings were scattered at 5x the land's density (DOODAD_DENSITY_MULTIPLIER); a save
+    // scatters again so its dense bands go.
+    public static final int DOODAD_SET = 331;
     private int doodadSet = DOODAD_SET;
     // Round 307 (user: "make the patches larger"): what a world's ground was last laid out and baked from - every
     // biome's patch bands (groundPatchSignature()) and the art its map image is drawn with (groundArtSignature()).
@@ -1140,12 +1143,22 @@ public class World implements Disposable, SaveFileContent {
         private int neighbors;
         private final BiomeTexture regions;
         private final int terrain;
+        // Round 331: the biome layer this entry belongs to, and whether it is that layer's picture for the tile's own
+        // terrain index (the one drawableTerrainIndex() chose) rather than ground under it or an overlay patch - the
+        // world outline (outlineStructures()) draws its border only around those.
+        private final int layer;
+        private final boolean tileTerrain;
 
         public DrawingInformation(int neighbors, BiomeTexture regions, int terrain) {
+            this(neighbors, regions, terrain, -1, false);
+        }
 
+        public DrawingInformation(int neighbors, BiomeTexture regions, int terrain, int layer, boolean tileTerrain) {
             this.neighbors = neighbors;
             this.regions = regions;
             this.terrain = terrain;
+            this.layer = layer;
+            this.tileTerrain = tileTerrain;
         }
 
         public void draw(Pixmap drawingPixmap) {
@@ -1207,20 +1220,66 @@ public class World implements Disposable, SaveFileContent {
         // DrawingInformation list IS taken (see below): it never escapes this method, so it is free.
         Pixmap drawingPixmap = new Pixmap(getTerrainTileSize(), getTerrainTileSize(), Pixmap.Format.RGBA8888); // round 300
 
+        if (x <= 0 || y <= 1 || x >= width - 1 || y >= height)//edge
+        {
+            for (int i = 0; i < biomeTexture.length; i++) {
+                if ((biomeIndex & 1L << i) == 0) continue;
+                // Round 123 review S2-2: draw the shared edge tile into the fresh pixmap allocated above (which
+                // was leaked here before) so every return of this method is caller-owned, like getBiomeSprite() says.
+                drawingPixmap.setBlending(Pixmap.Blending.None);
+                drawingPixmap.drawPixmap(biomeTexture[i].getPixmap(biomeTerrain), 0, 0);
+                drawingPixmap.setBlending(Pixmap.Blending.SourceOver);
+                return drawingPixmap;
+            }
+        }
+
+        // Round 331: the layer walk moved to collectDrawingInfo(), which the structure outline below runs for the
+        // neighboring tiles as well - see outlinedMask(). Same entries, same order, same skip rule as before.
+        int firstDrawn = collectDrawingInfo(x, y, biomeIndex, biomeTerrain, barrier);
+        for (int k = firstDrawn; k < drawingInfoCache.size(); k++)
+            drawingInfoCache.get(k).draw(drawingPixmap);
+        outlineStructures(x, y, drawingPixmap); // round 331: the 1-px border around listed structures
+        if (barrier) {
+            int barrierNeighbors = 0;
+            int bitIndex = 8;
+            for (int ny = 1; ny > -2; ny--) {
+                for (int nx = -1; nx < 2; nx++) {
+                    if (isBarrierTile(x + nx, y + ny))
+                        barrierNeighbors |= 1 << bitIndex;
+                    bitIndex--;
+                }
+            }
+            if (highResBarrier) {
+                // Round 296: the mountains themselves are drawn over the terrain at the art's own resolution
+                // (BarrierMountains, from WorldBackground). The tile keeps its ground - darkened to the art's shadow
+                // tone where barrier surrounds it, so whatever shows between the peaks reads as valley, while the
+                // range's edge stays on ordinary ground and keeps the peaks' own outline.
+                if (barrierNeighbors == 0b111_111_111) {
+                    com.badlogic.gdx.graphics.Color floor = new com.badlogic.gdx.graphics.Color();
+                    com.badlogic.gdx.graphics.Color.rgba8888ToColor(floor, BarrierMountains.floorColor());
+                    drawingPixmap.setColor(floor.r, floor.g, floor.b, 0.85f);
+                    drawingPixmap.fillRectangle(0, 0, drawingPixmap.getWidth(), drawingPixmap.getHeight());
+                }
+            } else {
+                barrierTextures[barrierVariant(x, y)].drawPixmapOn(0, barrierNeighbors, drawingPixmap);
+            }
+        }
+
+        return drawingPixmap;
+    }
+
+    /**
+     * Round 331: the entries tile (x, y) draws, in drawing order, into drawingInfoCache - the layer walk
+     * generateBiomeSprite() always ran inline, moved out so outlinedMask() can ask the same question about a
+     * neighboring tile. Returns the index of the first entry to draw: everything before the last entry with a full
+     * neighborhood is hidden under it, and a tile with no full entry draws its first entry as a full one.
+     */
+    private int collectDrawingInfo(int x, int y, long biomeIndex, int biomeTerrain, boolean barrier) {
         drawingInfoCache.clear();
 
         for (int i = 0; i < biomeTexture.length; i++) {
             if ((biomeIndex & 1L << i) == 0) continue;
             BiomeTexture regions = biomeTexture[i];
-            if (x <= 0 || y <= 1 || x >= width - 1 || y >= height)//edge
-            {
-                // Round 123 review S2-2: draw the shared edge tile into the fresh pixmap allocated above (which
-                // was leaked here before) so every return of this method is caller-owned, like getBiomeSprite() says.
-                drawingPixmap.setBlending(Pixmap.Blending.None);
-                drawingPixmap.drawPixmap(regions.getPixmap(biomeTerrain), 0, 0);
-                drawingPixmap.setBlending(Pixmap.Blending.SourceOver);
-                return drawingPixmap;
-            }
 
             int neighbors = 0b000_000_000;
             int bitIndex = 8;
@@ -1250,7 +1309,8 @@ public class World implements Disposable, SaveFileContent {
             //
             // Round 289: the list is upstream's reused `drawingInfoCache` rather than a fresh ArrayList per
             // call - safe to take, since it is cleared on entry and never escapes this method.
-            drawingInfoCache.add(new DrawingInformation(neighbors, regions, drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y)));
+            drawingInfoCache.add(new DrawingInformation(neighbors, regions,
+                    drawableTerrainIndex(i, biomeTerrain, biomeIndex, x, y), i, biomeTerrain != 0));
             // Round 300: this biome's draw-time overlay patches, over its plain ground - see overlayAt().
             if (biomeTerrain == 0 && !barrier && i < data.GetBiomes().size()) {
                 BiomeTerrainData[] overlays = data.GetBiomes().get(i).overlays;
@@ -1280,44 +1340,161 @@ public class World implements Disposable, SaveFileContent {
             if (info.neighbors == 0b111_111_111) lastFullNeighbour = counter;
             counter++;
         }
-        counter = 0;
         if (lastFullNeighbour < 0 && !drawingInfoCache.isEmpty()) {
             drawingInfoCache.get(0).neighbors = 0b111_111_111;
         }
-        for (DrawingInformation info : drawingInfoCache) {
-            if (counter < lastFullNeighbour) {
-                counter++;
-                continue;
-            }
-            info.draw(drawingPixmap);
-        }
-        if (barrier) {
-            int barrierNeighbors = 0;
-            int bitIndex = 8;
-            for (int ny = 1; ny > -2; ny--) {
-                for (int nx = -1; nx < 2; nx++) {
-                    if (isBarrierTile(x + nx, y + ny))
-                        barrierNeighbors |= 1 << bitIndex;
-                    bitIndex--;
-                }
-            }
-            if (highResBarrier) {
-                // Round 296: the mountains themselves are drawn over the terrain at the art's own resolution
-                // (BarrierMountains, from WorldBackground). The tile keeps its ground - darkened to the art's shadow
-                // tone where barrier surrounds it, so whatever shows between the peaks reads as valley, while the
-                // range's edge stays on ordinary ground and keeps the peaks' own outline.
-                if (barrierNeighbors == 0b111_111_111) {
-                    com.badlogic.gdx.graphics.Color floor = new com.badlogic.gdx.graphics.Color();
-                    com.badlogic.gdx.graphics.Color.rgba8888ToColor(floor, BarrierMountains.floorColor());
-                    drawingPixmap.setColor(floor.r, floor.g, floor.b, 0.85f);
-                    drawingPixmap.fillRectangle(0, 0, drawingPixmap.getWidth(), drawingPixmap.getHeight());
-                }
-            } else {
-                barrierTextures[barrierVariant(x, y)].drawPixmapOn(0, barrierNeighbors, drawingPixmap);
-            }
-        }
+        return Math.max(0, lastFullNeighbour);
+    }
 
-        return drawingPixmap;
+    // Round 331 (the user, after v1.14: "add a black 1pix border around all collision objects on the main map.
+    // It's hard to see and I'm bumping into things"): every structure a biome's structures[].mappingInfo[] marks
+    // "collision": true draws with a 1-px black border around its shape on the overworld - trees, rocks, water,
+    // mountains, craters, cacti, all of them - so a border means "blocked", beside the walkable doodads that have
+    // none (round 328's rule). Round 328 baked tree4's border into its picture, which only works for a grid
+    // structure (one picture per tile): an AREA structure is stitched from quarter tiles in the world, and a baked
+    // border breaks at the seams (stray dashes). So the border is drawn here, around the STITCHED shape, once the
+    // tile's layers are composited: every fully transparent pixel of the structure layer with an opaque (alpha >=
+    // 128) structure pixel beside it - in this tile, or across the edge in the next one - turns black. That is the
+    // rule of dev-tools/world-art/outline_preview.py (export.outline()), whose picture the user approved for the
+    // hills. A mapping opts out or in with "outline": false / true (BiomeStructureDataMapping.outline).
+    //
+    // Masks built while a tile batch is open (WorldBackground.draw() opens one per frame) are kept until it closes,
+    // so a chunk build - 900 tiles, each asking for its own mask and its four neighbors' - builds each mask once.
+    private boolean tileBatch;
+    private final Map<Long, Pixmap> batchMasks = new HashMap<>();
+    private final Set<Integer> outlineLoggedLayers = new HashSet<>();
+    private boolean outlineLogged;
+
+    /** Round 331: keep the structure-border masks of every tile baked until endTileBatch(). */
+    public void beginTileBatch() {
+        tileBatch = true;
+    }
+
+    public void endTileBatch() {
+        tileBatch = false;
+        for (Pixmap mask : batchMasks.values())
+            if (mask != null)
+                mask.dispose();
+        batchMasks.clear();
+    }
+
+    /** Round 331: does this layer draw a bordered structure at `drawnIndex` (its own numbering)? */
+    private boolean isOutlinedStructure(int layer, int drawnIndex) {
+        List<BiomeData> biomes = data.GetBiomes();
+        if (drawnIndex <= 0 || layer < 0 || layer >= biomes.size())
+            return false;
+        BiomeData biome = biomes.get(layer);
+        if (outlineLoggedLayers.add(layer))
+            logOutlineConfig(biome);
+        BiomeStructureData.BiomeStructureDataMapping mapping = mappingAt(biome, drawnIndex);
+        return mapping != null && isOutlined(mapping);
+    }
+
+    private static boolean isOutlined(BiomeStructureData.BiomeStructureDataMapping mapping) {
+        return mapping.outline != null ? mapping.outline : mapping.collision;
+    }
+
+    private static void logOutlineConfig(BiomeData biome) {
+        StringBuilder bordered = new StringBuilder();
+        StringBuilder plain = new StringBuilder();
+        if (biome.structures != null)
+            for (BiomeStructureData structure : biome.structures)
+                for (BiomeStructureData.BiomeStructureDataMapping mapping : structure.mappingInfo) {
+                    StringBuilder to = isOutlined(mapping) ? bordered : plain;
+                    to.append(to.length() == 0 ? "" : ", ").append(mapping.name);
+                }
+        System.out.println("[TFR-Outline] " + biome.name + " land: bordered structures [" + bordered + "]"
+                + (plain.length() == 0 ? "" : ", without a border [" + plain + "]"));
+    }
+
+    /** Round 331: the bordered structure picture(s) tile (x, y) draws, alone on a transparent tile - null when it
+     *  draws none (most tiles: one terrain-index read). Hand it back with releaseMask(). */
+    private Pixmap outlinedMask(int x, int y) {
+        if (!tileBatch)
+            return buildOutlinedMask(x, y);
+        long key = ((long) x << 32) | (y & 0xffffffffL);
+        if (batchMasks.containsKey(key))
+            return batchMasks.get(key);
+        Pixmap mask = buildOutlinedMask(x, y);
+        batchMasks.put(key, mask);
+        return mask;
+    }
+
+    private void releaseMask(Pixmap mask) {
+        if (mask != null && !tileBatch)
+            mask.dispose();
+    }
+
+    private Pixmap buildOutlinedMask(int x, int y) {
+        if (x <= 0 || y <= 1 || x >= width - 1 || y >= height)
+            return null; // an edge tile draws plain ground - generateBiomeSprite()
+        int biomeTerrain = getTerrainIndex(x, y);
+        if (biomeTerrain <= 0 || isBarrierTile(x, y))
+            return null; // plain ground, or the barrier (ground under its own sheet - rounds 294/296)
+        int first = collectDrawingInfo(x, y, getBiome(x, y), biomeTerrain, false);
+        Pixmap mask = null;
+        for (int k = first; k < drawingInfoCache.size(); k++) {
+            DrawingInformation info = drawingInfoCache.get(k);
+            if (!info.tileTerrain || !isOutlinedStructure(info.layer, info.terrain))
+                continue;
+            if (mask == null)
+                mask = new Pixmap(getTerrainTileSize(), getTerrainTileSize(), Pixmap.Format.RGBA8888);
+            info.draw(mask);
+        }
+        return mask;
+    }
+
+    /** Round 331: the 1-px black border on tile (x, y) - around its own bordered structures, and around the
+     *  neighbors' where their shapes reach this tile's edge. Nothing to do for most tiles. */
+    private void outlineStructures(int x, int y, Pixmap tile) {
+        Pixmap self = outlinedMask(x, y);
+        Pixmap left = outlinedMask(x - 1, y);
+        Pixmap right = outlinedMask(x + 1, y);
+        Pixmap above = outlinedMask(x, y + 1); // world y grows upward; row 0 of a tile's pixmap is its top
+        Pixmap below = outlinedMask(x, y - 1);
+        if (self != null || left != null || right != null || above != null || below != null) {
+            int size = tile.getWidth();
+            ByteBuffer out = tile.getPixels();
+            ByteBuffer s = self == null ? null : self.getPixels();
+            ByteBuffer l = left == null ? null : left.getPixels();
+            ByteBuffer r = right == null ? null : right.getPixels();
+            ByteBuffer a = above == null ? null : above.getPixels();
+            ByteBuffer b = below == null ? null : below.getPixels();
+            int drawn = 0;
+            for (int py = 0; py < size; py++) {
+                for (int px = 0; px < size; px++) {
+                    if (alphaAt(s, size, px, py) != 0)
+                        continue; // only a fully transparent pixel takes the border (export.outline())
+                    boolean beside = (px > 0 ? opaqueAt(s, size, px - 1, py) : opaqueAt(l, size, size - 1, py))
+                            || (px < size - 1 ? opaqueAt(s, size, px + 1, py) : opaqueAt(r, size, 0, py))
+                            || (py > 0 ? opaqueAt(s, size, px, py - 1) : opaqueAt(a, size, px, size - 1))
+                            || (py < size - 1 ? opaqueAt(s, size, px, py + 1) : opaqueAt(b, size, px, 0));
+                    if (!beside)
+                        continue;
+                    int o = (py * size + px) * 4;
+                    out.put(o, (byte) 0).put(o + 1, (byte) 0).put(o + 2, (byte) 0).put(o + 3, (byte) 0xff);
+                    drawn++;
+                }
+            }
+            if (drawn > 0 && !outlineLogged) {
+                outlineLogged = true;
+                System.out.println("[TFR-Outline] first bordered tile (" + x + "," + y + "): " + drawn + " px of "
+                        + size + "x" + size);
+            }
+        }
+        releaseMask(self);
+        releaseMask(left);
+        releaseMask(right);
+        releaseMask(above);
+        releaseMask(below);
+    }
+
+    private static int alphaAt(ByteBuffer pixels, int size, int px, int py) {
+        return pixels == null ? 0 : pixels.get((py * size + px) * 4 + 3) & 0xff;
+    }
+
+    private static boolean opaqueAt(ByteBuffer pixels, int size, int px, int py) {
+        return alphaAt(pixels, size, px, py) >= 128;
     }
 
     // Round 236 (user, standing on open grass in Green land: "There is something preventing me from moving
@@ -1533,13 +1710,20 @@ public class World implements Disposable, SaveFileContent {
     /** Round 302: the structure name at `index` in a biome's own numbering, or null for ground (0), a ground patch
      *  (1..terrain.length) or an index past its sets. */
     private static String structureNameAt(BiomeData biome, int index) {
+        BiomeStructureData.BiomeStructureDataMapping mapping = mappingAt(biome, index);
+        return mapping == null ? null : mapping.name;
+    }
+
+    /** Round 331: the mapping (name, color, collision, outline) at `index` in a biome's own numbering, or null -
+     *  structureNameAt()'s walk. */
+    private static BiomeStructureData.BiomeStructureDataMapping mappingAt(BiomeData biome, int index) {
         if (biome.structures == null)
             return null;
         int counter = 1 + (biome.terrain != null ? biome.terrain.length : 0);
         for (BiomeStructureData structure : biome.structures) {
             int offset = index - counter;
             if (offset >= 0 && offset < structure.mappingInfo.length)
-                return structure.mappingInfo[offset].name;
+                return structure.mappingInfo[offset];
             counter += structure.mappingInfo.length;
         }
         return null;
@@ -4969,7 +5153,13 @@ public class World implements Disposable, SaveFileContent {
      * this localized-repaint path so a recolored patch reads as visibly decorated, without
      * touching the shared density value world-gen itself still uses.
      */
-    private static final float DOODAD_DENSITY_MULTIPLIER = 5f;
+    // Round 331 (the user, at Green after the territory grew: "there are a LOT of doodads on the edge that grew, is
+    // that correct"): it was, and it was 5x. The boost was tuned for the stock lists, where a repainted ring came out
+    // bare; rounds 303/309 re-tuned every density for the HD scatter (world generation and the one-time re-scatter
+    // both place at 1x), so the same boost turned every growth ring into a dense band of bushes and flowers. A ring
+    // now takes the land's own density - a grown edge looks like the land around it. DOODAD_SET 331 re-scatters the
+    // saves that already have the bands.
+    private static final float DOODAD_DENSITY_MULTIPLIER = 1f;
 
     // Packs a world tile coordinate into one long key for a Set<Long> membership test - x/y are
     // always small, non-negative map indices here, well within 32 bits each.

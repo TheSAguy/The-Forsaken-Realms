@@ -12,6 +12,10 @@ public class BiomeStructureData {
         public String name;
         public String color;
         public boolean collision;
+        // Round 331: the world draws a 1-px black border around this structure's stitched shape (World.outlineStructures())
+        // when this is true - or, left out, when it collides: a border means "blocked" on the overworld. "outline": false
+        // opts a colliding structure out.
+        public Boolean outline;
 
          public BiomeStructureDataMapping() {
 
@@ -20,6 +24,7 @@ public class BiomeStructureData {
             this.name=biomeStructureDataMapping.name;
             this.color=biomeStructureDataMapping.color;
             this.collision=biomeStructureDataMapping.collision;
+            this.outline=biomeStructureDataMapping.outline;
         }
     }
     public int N = 3;

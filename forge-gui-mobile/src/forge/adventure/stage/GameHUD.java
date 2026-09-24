@@ -1355,7 +1355,17 @@ public class GameHUD extends Stage {
      * the safe black tint.
      */
     public void addNotification(String text, boolean authoredMarkup) {
-        forge.adventure.agent.AgentBridge.noteNotification(text); // round 161: the agent reads these too
+        // Round 331 (VeggieShark on Discord, v1.14: "the message font is white now, which is a bit unreadable. Black
+        // would seem better?" - the legend-sighting banner): three callers took the WHITE tint without opening with a
+        // color tag, so their whole text drew white on the paper (the contract above). The callers are fixed, and
+        // an untagged text under the white tint now opens black itself, so no future caller can repeat it.
+        // A color tag is [NAME] or [#hex]; a size ([%..]), icon ([+..]) or style tag opening the text is not one.
+        if (authoredMarkup && text != null && !text.matches("(?s)^\\[[#A-Za-z].*")) {
+            System.out.println("[TFR-Banner] untagged text under the white tint, opened [BLACK]: " + text);
+            text = "[BLACK]" + text;
+        }
+        final String shown = text;
+        forge.adventure.agent.AgentBridge.noteNotification(shown); // round 161: the agent reads these too
         Action preconfigureNotification = new Action() {
             @Override
             public boolean act(float delta) {
@@ -1369,7 +1379,7 @@ public class GameHUD extends Stage {
                 // text colors changed... from black to white"). Inline COLOR therefore cannot work
                 // in tint-BLACK notifications; fully-authored messages can opt in to WHITE tint
                 // via addNotification(text, true) - see that overload's comment.
-                notificationText.setText(text);
+                notificationText.setText(shown);
                 notificationText.setColor(authoredMarkup ? Color.WHITE : Color.BLACK);
                 notificationText.setWidth(Math.min(notificationText.getPrefWidth(), Forge.isLandscapeMode() ? getWidth() * 0.25f : getWidth() - 25));
                 notificationText.setWrap(true);
