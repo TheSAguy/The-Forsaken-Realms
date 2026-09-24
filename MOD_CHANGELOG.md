@@ -14264,6 +14264,24 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 328: the Wasteland's thin saplings get a black outline (2026-09-24)
+
+User, with a screenshot of two faint grey saplings on a light Wasteland patch: *"On the Wasteland terrain, it's a
+little hard to see some of the 'collision' tiles, so I keep running into them. Let's maybe add a 1 pixel black border
+to them?"* The preview was sent first. Local commit; data + pipeline.
+
+- The circled obstacles are `tree4` in `world/structures/colorless_structures_hd` - thin grey saplings, grey on grey.
+  They now carry a 1-px black outline (4-neighbour, on the transparent pixels beside the art); the walkable doodads -
+  some of them dead saplings too - stay unoutlined, so an outline reads as "blocked".
+- **Only grid structures.** `tree4` (like `tree2`) is one picture repeated per tile, so an outline drawn on its block
+  is seam-free. The area structures (craters, holes, the dense forests, rock fields, mountains) are stitched from
+  quarter tiles in the world, and an outline drawn on their blocks broke at those seams (stray black dashes, seen in
+  the preview) - outlining them needs an outline on the composed world art, left for after v1.14. `tree2` (bushy,
+  light, with its own dark shadow) is already easy to see and turned into a dark blob with an outline.
+- `dev-tools/world-art`: `spec.OUTLINED_STRUCTURES = {"colorless": ["tree4"]}`, `export.outline()` (applied after the
+  minimap swatch, which it leaves alone). The export changed only `colorless_structures_hd.png`. A save re-bakes its
+  map once (the structure art signature changed).
+
 ## Round 327b: the stock-story audit - the base game's "captured planeswalkers" premise (second session, 2026-09-24)
 
 The follow-up to 326b: the same audit for the other planes in `forge-gui/res/adventure`. Provenance of all 428 maps by

@@ -51,6 +51,8 @@ the first time it loads. The barrier and the new map layout arrive with your nex
   beneath the realm, and the last mentions of Shandalar are gone. The five castles, the two Temples and the Warden no
   longer speak of the base game's captured wizards either: it is the Seals you take back.
 - Sliver Queen and Karona have a proper portrait.
+- The Wasteland's thin grey saplings - trees you cannot walk through - have a dark outline, so they no longer
+  vanish against the ground.
 
 ## Fixed
 

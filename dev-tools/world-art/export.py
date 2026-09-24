@@ -61,6 +61,26 @@ def swatch(xp):
     return res
 
 
+def outline(img, skip=(0, 0, 4, 4)):
+    """Round 328: a 1-px black outline (4-neighbour) on the transparent pixels next to the art. The minimap swatch
+    square (see swatch()) is not art: it gets no outline and its colour is left as swatch() computed it."""
+    src = img.load()
+    out = img.copy()
+    o = out.load()
+    w, h = img.size
+    sx0, sy0, sx1, sy1 = skip
+    for y in range(h):
+        for x in range(w):
+            if src[x, y][3] != 0:
+                continue
+            for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                xx, yy = x + dx, y + dy
+                if 0 <= xx < w and 0 <= yy < h and src[xx, yy][3] >= 128 and not (sx0 <= xx < sx1 and sy0 <= yy < sy1):
+                    o[x, y] = (0, 0, 0, 255)
+                    break
+    return out
+
+
 def structures():
     for color in COLORS:
         sheets = build.new_structures(color)
@@ -71,7 +91,10 @@ def structures():
         regions = []
         for i, n in enumerate(names):
             x, y = (i % cols) * 96, (i // cols) * 128
-            page.alpha_composite(swatch(sheets[n]), (x, y))
+            block = swatch(sheets[n])
+            if n in spec.OUTLINED_STRUCTURES.get(color, ()):  # round 328
+                block = outline(block)
+            page.alpha_composite(block, (x, y))
             regions.append((n, (x, y, 96, 128)))
         base = "%s_structures_hd" % color
         write(os.path.join(PLANE, "world", "structures", base + ".png"), page, binary=True)

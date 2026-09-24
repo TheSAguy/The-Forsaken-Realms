@@ -22,6 +22,15 @@ BLUEGREY = dict(hue=0.55, sat=0.35, val=1.0)
 DRY = dict(hue=-0.07, sat=0.75, val=1.05)
 SPRING = dict(hue=-0.03, sat=1.1, val=1.12)
 
+# Round 328 (user: "On the Wasteland terrain, it's a little hard to see some of the 'collision' tiles, so I keep
+# running into them. Let's maybe add a 1 pixel black border to them?"): obstacles drawn with a 1-px black outline,
+# so an outlined picture reads as blocked beside the walkable doodads. Only GRID structures (one picture repeated
+# per tile) - an area autotile is stitched from quarter tiles in the world, and an outline drawn on its block breaks
+# at those seams (stray dashes, seen in the preview).
+OUTLINED_STRUCTURES = {
+    "colorless": ["tree4"],   # the thin grey saplings - the ones the user kept walking into
+}
+
 STRUCTURES = {
     "white": {
         "tree": ("a2:4_0", AUTUMN),

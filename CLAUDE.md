@@ -165,6 +165,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
   `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
   a rebuild.
+- **Round 328 (local commit, NOT pushed): the Wasteland's thin saplings (`tree4`) outlined in black** - grid
+  structures only (area autotiles break at quarter-tile seams); `spec.OUTLINED_STRUCTURES`, `export.outline()`.
 - **Round 327 (local commit, NOT pushed): three selectable Angel portraits each (blue default, gold, green)** -
   `make_race_heroes.py --eyes angel_m=blue+gold+green,...`. The v1.14 artifacts must be REBUILT after this.
 - **Round 326 (local commit, NOT pushed): quest 86 "Word to the Courier" tagged `relic_trail_chain`** - with no source
