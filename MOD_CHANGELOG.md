@@ -17765,6 +17765,12 @@ switch some out."* Then, from the patch-size preview: *"Let's go with Patch Size
 - **Wasteland A "ash grey"**: `world/tilesets/colorless_terrain_hd.png/.atlas` (`bhUpd0H.png` 14,2 base, 12,2 dark
   purple and 16,2 white "salt flat" patches); `colorless.json` points there. It also colors the barrier's floor on the
   minimap.
+- **Then the purple patch went brown** - the user, play-testing: *"I want to tweak the color of the Wasteland patched.
+  They are currently matching Black's main color. Can we change it to the color that was on option B. (Just the
+  patch.)"* (A's patch is `bhUpd0H.png` 12,2, black's own ground.) Wasteland option E = A with option B's dead-earth
+  patch (`bhUpd0H.png` 11,0 at saturation 0.3, value 0.9), added to the library as a fifth row, and
+  `set_ground.py <repo root> colorless E` - the first data-only switch: the user's save re-bakes its map image on its
+  next load through `groundArt`, no code change.
 - **Patch size B on every land** (the five colors, the wasteland, the player): resolution 3 with bands [0, 0.25] and
   [0.75, 1] - were resolution 10 for the colors and 5 for the wasteland and the player, bands [0, 0.2] and [0.8, 1].
   The player's overlay patch (`Player_3`) is at 3 too. Measured with the game's own `OpenSimplexNoise` and
@@ -17900,6 +17906,17 @@ ground 17 tiles from any place, the state polled every 0.5 s:
   cloned to `gamesPerMatch` 3), which the player fights.
 - Not seen: a human's "Next Game" with the new line (the user's next legend or boss fight prints it), a best-of-3
   inside a place (the same path, ending on its TileMapScene), an AI-piloted best-of-3 LOSS.
+
+**Seen later the same evening** (the user asked for a lair test): Slobad's Factory via `teleport to poi "Slobads
+Factory"`, its other five enemies removed by console, then Slobad, a best-of-3 boss with March of the Machines from the
+dungeon effect. The boss intro's OK, then `[TFR-NextGame] game 1 of up to 3 over, no local seat: the match screen
+stays, scene DuelScene`. The agent LOST 0-2 (`[TFR-AnteResult] winner=false won=0 lost=2 inMap=true event=false
+bossLoss=true`) and bought both ante cards back (Sword of War and Peace; Garruk, Apex Predator; 500 gold each). After
+the boss's insult OK, the game returned to the lair's own TileMapScene, then took the ordinary map defeat: out to the
+world map, `[TFR-Life] defeated(lifeLoss=0.3): 321/321 -> 224/321`, 200 gold, "you lost the last game. Torch
+Cracked!". No exception (the 14 TimeoutExceptions are the AI's think timer,
+`AiController.chooseSpellAbilityToPlayFromList`). A WON lair boss is still unseen (round 299's gap too): the agent
+walker could not reach Garruk or Teferi. The round-301 crash is a different bug (a best-of-1 Skeleton Soldier).
 
 ## Round 303: new structures and doodads for every land, doodads in the water (2026-09-23)
 

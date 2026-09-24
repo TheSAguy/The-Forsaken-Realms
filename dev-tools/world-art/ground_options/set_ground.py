@@ -1,7 +1,7 @@
 """Switch a land's ground, or every land's patch size, to another of the options kept here (round 307; the user:
 "don't get rid of any of the other options. I might want to switch some out").
 
-    python set_ground.py <repo root> <land> <A|B|C|D>   white / blue / black / red / green / colorless (the wasteland)
+    python set_ground.py <repo root> <land> <letter>   white / blue / black / red / green / colorless (the wasteland)
     python set_ground.py <repo root> <land> old         back to the stock 16 px ground (world/tilesets/terrain.atlas)
     python set_ground.py <repo root> player <tone>      the player's 32 px ground toned 0..1 toward its old 16 px one
     python set_ground.py <repo root> patches <A|B|C|old>   every land's patch size (see PATCHES)
@@ -19,7 +19,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LANDS = {"white": "White", "blue": "Blue", "black": "Black", "red": "Red", "green": "Green", "colorless": "Colorless"}
-LETTERS = "ABCD"
+LETTERS = "ABCDEFGH"   # a land has as many options as its sheet has rows
 # name: (resolution, patch 1's max, patch 2's min) - patch 1 covers noise [0, max], patch 2 [min, 1] (World.generateNew())
 PATCHES = {"A": (4, 0.2, 0.8),      # bigger, the same amount of patch as before
            "B": (3, 0.25, 0.75),    # bigger and a bit more - round 307's pick
@@ -172,7 +172,7 @@ def main():
         set_player(pl, float(pick))
     elif what in LANDS:
         if pick not in LETTERS and pick != "old":
-            raise SystemExit("%s: A, B, C, D or old" % what)
+            raise SystemExit("%s: a letter A-H or old" % what)
         set_land(pl, what, pick)
     else:
         raise SystemExit("unknown land " + what)

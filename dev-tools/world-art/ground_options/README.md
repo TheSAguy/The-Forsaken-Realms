@@ -6,7 +6,9 @@ in `C:\Users\User\Pictures\Screenshots\Terrain\` (RPG Maker MV/VX A2 autotile bl
 converted to the XP layout the game draws (96x128 at 32 px: area-average downscale, VX -> XP minitiles), and stamped
 with its minimap swatch in the top-left 4x4. Credits: `standalone-packaging/CREDITS.md`.
 
-- `<land>.png` - that land's options, one row each (A at the top): base | patch 1 | patch 2.
+- `<land>.png` - that land's options, one row each (A at the top): base | patch 1 | patch 2. The wasteland's E
+  (round 307, the user: A's purple patch read as Black's ground - "change it from Purple to kinda brown") is A with
+  B's dead-earth patch.
 - `player_source.png` - the player's 32 px ground before toning (round 300's art; in use at 35% toward the old green).
 - `previews/options_<land>.png` - the sheets the user picked from (each option with the land's structures and
   doodads); `previews/patch_sizes.jpg` - the patch sizes (round 307 picked B).
@@ -37,10 +39,11 @@ with its minimap swatch in the top-left 4x4. Credits: `standalone-packaging/CRED
 | green | B | deep forest  **(in use)** | bhUpd0H 0,0 | bhUpd0H 10,0 | ZCrOljM 3,0 |
 | green | C | spring | deser_a2 4,2 | bhUpd0H 1,2 | ZCrOljM 3,3 |
 | green | D | emerald | bhUpd0H 5,2 | bhUpd0H 0,0 | bhUpd0H 4,2 |
-| colorless | A | ash grey  **(in use)** | bhUpd0H 14,2 | bhUpd0H 12,2 | bhUpd0H 16,2 |
+| colorless | A | ash grey | bhUpd0H 14,2 | bhUpd0H 12,2 | bhUpd0H 16,2 |
 | colorless | B | dead earth | bhUpd0H 4,0 (tinted: saturation 0.3, value 0.9) | bhUpd0H 11,0 (tinted: saturation 0.3, value 0.9) | bhUpd0H 14,2 |
 | colorless | C | cold slate | bhUpd0H 14,0 | bhUpd0H 12,2 | bhUpd0H 14,2 |
 | colorless | D | charcoal | bhUpd0H 12,2 (tinted: saturation 0.5, value 0.75) | bhUpd0H 14,2 | ZCrOljM 5,0 (tinted: saturation 0.25, value 0.8) |
+| colorless | E | ash grey, dead-earth patch  **(in use)** | bhUpd0H 14,2 | bhUpd0H 11,0 (tinted: saturation 0.3, value 0.9) | bhUpd0H 16,2 |
 
 Patch sizes (`set_ground.py <repo root> patches <pick>`, every land at once; the player's overlay patch follows the
 resolution): **old** - the colors at resolution 10, the wasteland and the player at 5, bands 0.2 / 0.8 (tiny dots);

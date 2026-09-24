@@ -137,8 +137,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
-- **Round 307 (local commit, NOT pushed): wasteland A "ash grey", patch size B on every land (resolution 3, bands
-  0.25 / 0.75), `World.migrateGround()`** - a save lays its patches out again when the biomes' bands change and
+- **Round 307 (local commit, NOT pushed): wasteland E (A "ash grey" with option B's brown patch - A's purple one
+  read as black's ground), patch size B on every land (resolution 3, bands 0.25 / 0.75), `World.migrateGround()`** - a save lays its patches out again when the biomes' bands change and
   re-bakes its map image when the ground art changes (saved `groundPatches` / `groundArt`), so a ground or patch-size
   switch is data only. Every ground option is kept in `dev-tools/world-art/ground_options/` (`set_ground.py`, README).
   The user's saves were backed up as `*.pre-r307.bak`. NEXT: doodad variety x2-3 (the user: more kinds, not more on
