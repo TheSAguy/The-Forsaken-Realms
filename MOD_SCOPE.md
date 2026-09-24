@@ -347,6 +347,10 @@ never empty at start).
 | Blue Dragon | DTK, TDM, M21, MH1 | Tarkir, core set, Modern Horizons' elder things |
 | Green Dragon | DTK, TDM, IKO, KHM | Tarkir plus Ikoria/Kaldheim's primal beasts |
 | Black Dragon | DTK, TDM, AFR, VOW | Tarkir, D&D's shadow dragons, Innistrad's night terrors |
+| Goblin | ONS, LGN, SCG, 10E | The Onslaught block's Skirk Ridge goblins, and Tenth Edition's Goblin King |
+| Angel | AVR, SNC, FDN, KHM | Avacyn's host, New Capenna's founding archangels, Foundations' angels, Kaldheim's Valkyries |
+| Merfolk | LRW, SHM, EVE, ECL | The merrow of Lorwyn-Shadowmoor, from the Aurora through the Eclipse |
+| Vampire | VOW, XLN, RIX, LCI | Innistrad's bloodlines at the Crimson Vow, and Ixalan's Legion of Dusk |
 
 ### 4c. Inn Tournament Edition Lock — `Done (playtest-confirmed 2026-08-14)`
 Inn tournaments (Draft/Sealed/Jumpstart events) only build from expansions the player has

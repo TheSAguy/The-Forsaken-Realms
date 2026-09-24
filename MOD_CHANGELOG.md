@@ -17757,6 +17757,51 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 317: four new races - Goblin, Angel, Merfolk and Vampire; a new world no longer crashes (2026-09-23)
+
+User: *"Let's go with Goblin, Angel, Merfolk and Vampire. Remember to do all their starting conditions like sets,
+starting deck, etc. Side view is fine."* Local commit.
+
+- **What a race is here.** One entry in the plane's `world/heroes.json` (hero sheets and portraits) plus a
+  `raceEditions` row (its four sets) and a `raceShops` row (two starting shop blueprints) in `config.json`. The four
+  sets drive the random starting unlocks (Easy 4 .. Insane 1), every generated starting deck (Standard, Constructed
+  and Pile templates are per color and filled from the race's sets), the Standard set dropdown, the race `?` help,
+  the Encampment's hidden Rare and the Inn tournaments, and they are kept out of the AI colors' shards. Nothing else
+  keys on race.
+- **The four:**
+
+  | Race | Sets | Shops | Hero (cut from, recolored) |
+  |---|---|---|---|
+  | Goblin | ONS, LGN, SCG, 10E | Goblin, Shaman | goblin (teal) / goblin_2 (violet) |
+  | Angel | AVR, SNC, FDN, KHM | Angel, Spirit | angel_2 / angel_1 (gold) |
+  | Merfolk | LRW, SHM, EVE, ECL | Merfolk, Wizard | merfolk_lord (blue) / mermaid (lavender) |
+  | Vampire | VOW, XLN, RIX, LCI | Vampire, Nobles | vampire_3 (navy) / vampire_2 (green); walks as a bat |
+
+  A simulation of the starting-deck builder filled all 35 templates in all five colors from each list (tightest slack:
+  Goblin +8, Angel +13, Merfolk +16, Vampire +6).
+- **Heroes.** Side view, 16x16, rows Idle/Walk/Attack/Hit/Death with the Right direction only (the game mirrors Left
+  and reuses Right/Left for the rest), cut from the stock enemy sheets and recolored so the player and their guards
+  never look like the enemies wearing the same sheet (round 156). The plane now has its own `world/heroes.json` - the
+  16 stock races in stock order (a save stores the race's INDEX), then the four new ones - and
+  `sprites/heroes/avatar_tfr.*` (every stock portrait at the same place, plus the eight new ones).
+- **Mod Details** lists the races from `config.json` now (`WorldStandingsScene.raceSetsPage()`), not a hand-typed
+  table of sixteen.
+- **Tools:** `dev-tools/races/make_race_heroes.py` (builds the sheets, portraits and heroes.json) and
+  `dev-tools/races/race_checks.py` (heroes.json against raceEditions/raceShops, atlases, portraits, set codes, shops).
+  The agent bridge's `newgame` takes `race=` and `gender=`.
+- **A new world could crash the game (in v1.13 too).** Upstream's 09.22 refactor made `Config.langFilePath()` build
+  every file path in ONE shared StringBuilder, and world generation builds the biome structures on parallel threads,
+  each looking files up - two lookups wrote into the same buffer (`./res/adventure/common/./res/adventure/The
+  Forsaken Realms/l./res/.../volcano.png -en-US.png`), the path was invalid, the world failed to generate and the
+  game stopped at the first new game of this round's test. It is timing-dependent (it did not happen in round 295's
+  new worlds). Each lookup builds its own path now, and the two lookup caches are concurrent maps. The same race
+  applied to the six territory structure patterns built in the background after every load.
+- **Seen** in the agent game: a new game as a male Goblin, a female Vampire, a male Angel and a female Merfolk - the
+  hero and portrait on the map, `[TFR-StarterDeck] Constructed W from editions [ONS, LGN, SCG, 10E] -> 50 cards`
+  (and the same for [VOW, XLN, RIX, LCI], [AVR, SNC, FDN, KHM], [LRW, SHM, EVE, ECL]), `[TFR-Blueprint] starting
+  unlocks (color=W, race=Goblin): [Goblin, Shaman, White1, White3, White5]`, `[TFR-EditionShard] reserved for player`;
+  four new worlds generated without a failure.
+
 ## Round 316: engine = the 09.23 daily (2026-09-23)
 
 User: *"Update to the latest version of Forge E:\GAMES\Forge_2"* - the 09.23 daily was installed there at 22:31, after

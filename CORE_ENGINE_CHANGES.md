@@ -132,6 +132,19 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 317: thread-safe file lookups; the agent's newgame race
+
+- **`forge-gui-mobile/src/forge/adventure/util/Config.java`** - upstream's #11945 shared static `stringBuilder` is
+  gone (each `langFilePath()` call and the deck-path join build their own string), `langPathsMap` and `Cache` are
+  `ConcurrentHashMap`s, and `getFile(null)` returns null up front (the concurrent map takes no null key). World
+  generation looks files up from parallel futures; the shared buffer produced garbage paths and a failed world. If a
+  daily reintroduces a shared buffer here, do not take it.
+- **`forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java`** - `selectRaceForAgent()` / `selectGenderForAgent()`
+  for the agent bridge (`AgentSceneAccess.startNewGame(race, gender)`, `AgentActions` `newgame race= gender=`).
+- `WorldStandingsScene.java` (mod-only) - `raceSetsPage()` builds the Mod Details race list from `raceEditions`.
+- Plane: `world/heroes.json` is now a PLANE copy (stock order kept, append only) and `sprites/heroes/avatar_tfr.*`
+  replaces the stock avatar atlas for this plane - upstream changes to the stock hero list no longer reach it.
+
 ### Round 316: the 09.23 engine merge
 
 - **`forge-gui-mobile/src/forge/Adventure.java`** - upstream's `logOnce()` (#11888) replaced by our

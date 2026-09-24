@@ -38,9 +38,11 @@ the early game is meant to be a fight.
 
 ## Starting Out
 
-- **Race selection** sets your starting color identity and a small set of starting expansions
-  (extra cards available from the very beginning, scaled to your chosen difficulty). A `?` help
-  button on the race-selection screen explains what each race actually grants before you commit.
+- **Race selection** decides your hero's look, your starting expansions (four per race - how many
+  you start with depends on difficulty - and the cards your starting deck is built from) and two
+  starting shops. Your color comes from the Color picker. A `?` help button on the race-selection
+  screen explains what each race actually grants before you commit. Twenty races, including the
+  Goblin, Angel, Merfolk and Vampire.
 - **Difficulty** affects more than combat: enemy roaming-encounter tiers, AI shop pricing, and how
   many editions you start with unlocked are all difficulty-scaled.
 - Your starting deck is a real, playable toolkit — expect to reshape it as you loot and buy cards,

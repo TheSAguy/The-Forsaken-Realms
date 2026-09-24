@@ -397,6 +397,25 @@ public class NewGameScene extends MenuScene {
         return editionIds.length > 0 ? editionIds[0] : null;
     }
 
+    /** Round 317: the agent bridge's {@code newgame race=...} - selects the race by its listed name (setCurrentIndex
+     *  fires the selector's change listeners, so the avatar and the Standard set list follow). */
+    boolean selectRaceForAgent(String name) {
+        Array<String> names = race.getTextList();
+        for (int i = 0; i < names.size; i++) {
+            if (names.get(i).equalsIgnoreCase(name)) {
+                race.setCurrentIndex(i);
+                return true;
+            }
+        }
+        System.out.println("[TFR-Agent] newgame: no race named \"" + name + "\" in " + names);
+        return false;
+    }
+
+    /** Round 317: the agent bridge's {@code newgame gender=...} (index 0 = male, 1 = female, as the selector lists). */
+    void selectGenderForAgent(boolean female) {
+        gender.setCurrentIndex(female ? 1 : 0);
+    }
+
     boolean started = false;
 
     public boolean start() {

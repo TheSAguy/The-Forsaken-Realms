@@ -72,7 +72,8 @@ final class AgentActions {
                 case "buy": return buy(a.getInt("index", 0));
                 case "save": return save(a.getInt("slot", 4), a.getString("name", "agent"));
                 case "load": return load(a.getInt("slot", 1));
-                case "newgame": return now(AgentSceneAccess.startNewGame(), "new game requested from the New Game screen's current settings");
+                case "newgame": return now(AgentSceneAccess.startNewGame(a.getString("race", ""), a.getString("gender", "")),
+                        "new game requested from the New Game screen's settings (race/gender set first when given)");
                 case "autobattle": bridge.autoBattle = a.getBoolean("on", true); return now(true, "autoBattle=" + bridge.autoBattle);
                 case "console": return now(true, ConsoleCommandInterpreter.getInstance().command(a.getString("text", "")));
                 case "": return now(false, "no cmd given");

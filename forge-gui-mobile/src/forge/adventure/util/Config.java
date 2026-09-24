@@ -39,7 +39,9 @@ public class Config {
     private final String commonDirectoryName = "common";
     private final String prefix;
     private final String commonPrefix;
-    private final HashMap<String, FileHandle> Cache = new HashMap<>();
+    // Round 317: concurrent - world generation initializes the biome structures on parallel futures (World.generateNew),
+    // and every one of them looks files up through getFile(). A plain HashMap could be corrupted by those puts.
+    private final Map<String, FileHandle> Cache = new java.util.concurrent.ConcurrentHashMap<>();
     private ConfigData configData;
     private TuningData tuningData;
     private SpawnTierWeightData spawnTierWeightData;
@@ -61,8 +63,12 @@ public class Config {
 
     private final FolderDeckCatalog preconDeckCatalog = new FolderDeckCatalog("decks/starter/precon/");
     private final FolderDeckCatalog commanderPreconDeckCatalog = new FolderDeckCatalog("decks/starter/commanderprecon/");
-    private static final StringBuilder stringBuilder = new StringBuilder(256);
-    private static final HashMap<String, String> langPathsMap = new HashMap<>(512);
+    // Round 317: upstream's #11945 (09.22 daily) shared ONE static StringBuilder across every langFilePath() call. The
+    // parallel structure futures of World.generateNew call it at the same time, so two lookups wrote into the same
+    // buffer and produced paths like "./res/adventure/common/./res/adventure/The Forsaken Realms/l./res/...volcano.png
+    //   -en-US.png" - an InvalidPathException that failed world generation and crashed the new game (agent game,
+    // round 317). Each call builds its own string now, and the cache is concurrent.
+    private static final Map<String, String> langPathsMap = new java.util.concurrent.ConcurrentHashMap<>(512);
 
 
     static public Config instance() {
@@ -445,8 +451,7 @@ public class Config {
         if (fullPath == null || rootPrefix == null) return "";
 
         // return compiled path locations if available
-        stringBuilder.setLength(0);
-        String cacheKey = stringBuilder.append(rootPrefix).append("|").append(fullPath).toString();
+        String cacheKey = rootPrefix + "|" + fullPath;
 
         String cachedPath = langPathsMap.get(cacheKey);
         if (cachedPath != null) {
@@ -461,8 +466,7 @@ public class Config {
         String nameNoExt = lastDot != -1 ? baseName.substring(0, lastDot) : baseName;
         String ext = lastDot != -1 ? baseName.substring(lastDot) : "";
 
-        stringBuilder.setLength(0);
-        String compiledPath = stringBuilder.append(rootPrefix)
+        String compiledPath = new StringBuilder(rootPrefix.length() + fullPath.length() + 24).append(rootPrefix)
             .append("languages/")
             .append(nameNoExt)
             .append("-")
@@ -476,6 +480,7 @@ public class Config {
     }
 
     public FileHandle getFile(String path) {
+        if (path == null) return null; // round 317: the concurrent Cache takes no null key (a HashMap did)
         if (Cache.containsKey(path)) return Cache.get(path);
 
         //if (Cache.containsKey(commonPath)) return Cache.get(commonPath);
@@ -883,8 +888,7 @@ public class Config {
                 } else {
                     deckName = nameNoExt;
                 }
-                stringBuilder.setLength(0);
-                String deckValuePath = stringBuilder.append(folderPath).append(filename).toString();
+                String deckValuePath = folderPath + filename; // round 317: no shared StringBuilder (see langPathsMap)
                 setMap.computeIfAbsent(setDisplayName, k -> new ArrayList<>())
                     .add(new String[]{deckName, deckValuePath});
             }

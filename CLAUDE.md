@@ -145,6 +145,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 317 (local commit, NOT pushed): four new races - Goblin, Angel, Merfolk, Vampire** (plane `world/heroes.json`
+  + `sprites/heroes/*`, raceEditions/raceShops; recolored heroes; `dev-tools/races/`; agent `newgame race= gender=`)
+  **and the new-world crash** (Config.langFilePath's shared StringBuilder under parallel structure generation - in
+  v1.13 too). All four races started in the agent game.
 - **Round 316 (local commit, NOT pushed): engine = the 09.23 daily** (upstream `3a1b16089da`; conflicts kept OURS in
   `Adventure.java` render-failure logging, `DeckEditScene.java` (round 312's fix over upstream's rebuild-every-call)
   and `GameHUD.java` (the whole-world minimap over upstream's radar); the shared SpriteBatch taken; live + agent

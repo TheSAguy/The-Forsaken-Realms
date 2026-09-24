@@ -308,7 +308,11 @@
         { "race": "White Dragon", "editions": ["DTK", "TDM", "M20", "AFR"] },
         { "race": "Blue Dragon",  "editions": ["DTK", "TDM", "M21", "MH1"] },
         { "race": "Green Dragon", "editions": ["DTK", "TDM", "IKO", "KHM"] },
-        { "race": "Black Dragon", "editions": ["DTK", "TDM", "AFR", "VOW"] }
+        { "race": "Black Dragon", "editions": ["DTK", "TDM", "AFR", "VOW"] },
+        { "race": "Goblin",       "editions": ["ONS", "LGN", "SCG", "10E"] },
+        { "race": "Angel",        "editions": ["AVR", "SNC", "FDN", "KHM"] },
+        { "race": "Merfolk",      "editions": ["LRW", "SHM", "EVE", "ECL"] },
+        { "race": "Vampire",      "editions": ["VOW", "XLN", "RIX", "LCI"] }
     ],
 
     "shopBlueprintsEnabled": true,
@@ -335,7 +339,11 @@
         { "race": "White Dragon", "shops": ["Dragon", "Angel"] },
         { "race": "Blue Dragon", "shops": ["Dragon", "Sphinx"] },
         { "race": "Green Dragon", "shops": ["Dragon", "Hydra"] },
-        { "race": "Black Dragon", "shops": ["Dragon", "Vampire"] }
+        { "race": "Black Dragon", "shops": ["Dragon", "Vampire"] },
+        { "race": "Goblin",       "shops": ["Goblin", "Shaman"] },
+        { "race": "Angel",        "shops": ["Angel", "Spirit"] },
+        { "race": "Merfolk",      "shops": ["Merfolk", "Wizard"] },
+        { "race": "Vampire",      "shops": ["Vampire", "Nobles"] }
     ]
 }
 

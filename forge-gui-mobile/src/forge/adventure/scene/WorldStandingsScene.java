@@ -132,6 +132,19 @@ public class WorldStandingsScene extends UIScene {
     // here." Facts cross-checked against MOD_SCOPE.md's own feature entries (#4 Progressive Set
     // Unlocks, #4b Race-Based Starting Expansions, #17 Territory Effects, #29 bonus-mage scaling)
     // rather than recalled from memory, same standard as the wiki dialogs above.
+    /** Round 317 (the Goblin, Angel, Merfolk and Vampire races): the race -> sets page, built from config.json's
+     *  raceEditions. It was a hand-typed copy of the 16-race table and would have gone stale with every race added. */
+    private static String raceSetsPage() {
+        forge.adventure.data.RaceEditionData[] table = Config.instance().getConfigData().raceEditions;
+        StringBuilder sb = new StringBuilder("Each of the ").append(table == null ? 0 : table.length)
+                .append(" races is tied to its own 4 lore-themed sets:");
+        if (table != null)
+            for (forge.adventure.data.RaceEditionData r : table)
+                if (r != null && r.race != null && r.editions != null)
+                    sb.append('\n').append(r.race).append(": ").append(String.join(", ", r.editions));
+        return sb.toString();
+    }
+
     private void showModDetails() {
         InfoTextScene.show("Mod Details", Arrays.asList(
                 "Welcome to The Forsaken Realms - a custom world for Forge's Adventure mode. "
@@ -173,13 +186,7 @@ public class WorldStandingsScene extends UIScene {
                         + "Inn tournaments. Rival Capitols only ever sell from their own slice, difficulty "
                         + "permitting - so there's always a reason to go looking.",
 
-                "Each of the 16 races is tied to its own 4 lore-themed sets:\n"
-                        + "Devil: RNA, TOR, SOI, VOW\nKor: ZEN, BFZ, ZNR, ROE\nHuman: DOM, DMU, M20, M21\n"
-                        + "Elf: LRW, MOR, KHM, ELD\nMetathran: INV, PLS, APC, 8ED\nUndead: AKH, HOU, ISD, DKA\n"
-                        + "Viashino: GRN, ALA, ARB, DGM\nPhyrexian: SOM, MBS, NPH, ONE\nDwarf: KLD, AER, KHM, BRO\n"
-                        + "Werewolf: ISD, MID, EMN, DKA\nLeonin: MRD, DST, AKH, IKO\nRed Dragon: DTK, TDM, M19, IKO\n"
-                        + "White Dragon: DTK, TDM, M20, AFR\nBlue Dragon: DTK, TDM, M21, MH1\n"
-                        + "Green Dragon: DTK, TDM, IKO, KHM\nBlack Dragon: DTK, TDM, AFR, VOW",
+                raceSetsPage(), // round 317: built from config.json's raceEditions
 
                 "Difficulty (Easy/Normal/Hard/Insane) isn't just tougher monsters. It decides how "
                         + "many of your race's 4 sets you actually start with - Easy gives you all 4, Normal "

@@ -23,11 +23,17 @@ public final class AgentSceneAccess {
         return scene.type == null ? "unknown" : scene.type.name();
     }
 
-    /** Starts a new game from whatever the New Game screen currently shows (its defaults unless the agent clicked). */
-    public static boolean startNewGame() {
+    /** Starts a new game from whatever the New Game screen currently shows (its defaults unless the agent clicked).
+     *  Round 317: {@code race} (a race's name, as the selector lists it) and {@code gender} ("male"/"female") are set
+     *  first when given - the screen picks both at random, and testing a race needs that race. */
+    public static boolean startNewGame(String race, String gender) {
         NewGameScene scene = NewGameScene.instance();
         if (forge.Forge.getCurrentScene() != scene)
             forge.Forge.switchScene(scene);
+        if (race != null && !race.isEmpty() && !scene.selectRaceForAgent(race))
+            return false;
+        if (gender != null && !gender.isEmpty())
+            scene.selectGenderForAgent(gender.toLowerCase().startsWith("f"));
         return scene.start();
     }
 }

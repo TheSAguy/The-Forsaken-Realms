@@ -1,0 +1,65 @@
+merfolk_m.png
+size: 64,80
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+IdleRight
+  xy: 0, 0
+  size: 16, 16
+IdleRight
+  xy: 16, 0
+  size: 16, 16
+IdleRight
+  xy: 32, 0
+  size: 16, 16
+IdleRight
+  xy: 48, 0
+  size: 16, 16
+WalkRight
+  xy: 0, 16
+  size: 16, 16
+WalkRight
+  xy: 16, 16
+  size: 16, 16
+WalkRight
+  xy: 32, 16
+  size: 16, 16
+WalkRight
+  xy: 48, 16
+  size: 16, 16
+AttackRight
+  xy: 0, 32
+  size: 16, 16
+AttackRight
+  xy: 16, 32
+  size: 16, 16
+AttackRight
+  xy: 32, 32
+  size: 16, 16
+AttackRight
+  xy: 48, 32
+  size: 16, 16
+HitRight
+  xy: 0, 48
+  size: 16, 16
+HitRight
+  xy: 16, 48
+  size: 16, 16
+HitRight
+  xy: 32, 48
+  size: 16, 16
+HitRight
+  xy: 48, 48
+  size: 16, 16
+DeathRight
+  xy: 0, 64
+  size: 16, 16
+DeathRight
+  xy: 16, 64
+  size: 16, 16
+DeathRight
+  xy: 32, 64
+  size: 16, 16
+DeathRight
+  xy: 48, 64
+  size: 16, 16
