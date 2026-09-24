@@ -17757,6 +17757,20 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 308: the town chart ends at the live counts (2026-09-23)
+
+User, play-testing: *"The Town count graph does not look correct. I have 15 towns, but looks like I have 6, same as
+black."* Local commit.
+
+- The World Standings chart plots one snapshot per week, taken when the week begins
+  (`World.recordStandingsHistoryIfNewWeek()`). The user had taken ten towns since week 1's snapshot - 5 then, 15 now -
+  so the chart ended at 5 while the table said 15, and its y-axis top read the headroom (6 over a highest point of 5),
+  which looked like black's 6.
+- `WorldStandingsScene.refreshChart()` ends every line at the live counts (`TerritoryControl.getTownCounts()`, the
+  table's own numbers), labeled "Now"; the y-axis label names the highest real value, at its height.
+
+**Checked**: the build and the live package (20:12, with the wasteland's brown patch). Not seen on screen yet.
+
 ## Round 307: the wasteland's new ground, bigger ground patches, every ground option kept (2026-09-23)
 
 User: *"Wasteland A, and make the patches larger. Also, don't get ride of any of the other options. I might want to

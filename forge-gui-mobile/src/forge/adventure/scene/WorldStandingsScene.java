@@ -402,6 +402,12 @@ public class WorldStandingsScene extends UIScene {
             return;
         }
         Map<String, List<Integer>> history = world.getStandingsHistoryCounts();
+        // Round 308 (user: "The Town count graph does not look correct. I have 15 towns, but looks like I have 6, same
+        // as black"): the snapshots are taken when a week begins, so everything won since was missing - the player had
+        // taken ten towns that week. The chart now ends at the live counts, the table's own numbers ("Now"), and the
+        // y-axis names its highest real value (it showed the headroom top, 6 over a highest point of 5).
+        Map<String, Integer> live = TerritoryControl.getTownCounts(world);
+        int snapshots = weeks.size();
 
         float w = chartArea.getWidth();
         float h = chartArea.getHeight();
@@ -425,17 +431,18 @@ public class WorldStandingsScene extends UIScene {
             if (series != null)
                 for (int v : series)
                     maxValue = Math.max(maxValue, v);
+            maxValue = Math.max(maxValue, live.getOrDefault(row, 0));
         }
         int yMax = maxValue + Math.max(1, maxValue / 5); // headroom so the tallest point isn't glued to the top edge
 
-        int n = weeks.size();
-        float stepX = n > 1 ? plotW / (n - 1) : 0f;
+        int n = snapshots + 1; // the weeks, then Now
+        float stepX = plotW / (n - 1);
 
-        TypingLabel yTop = Controls.newTypingLabel("[%65]" + yMax);
+        TypingLabel yTop = Controls.newTypingLabel("[%65]" + maxValue);
         yTop.setColor(Color.BLACK);
         yTop.skipToTheEnd();
         yTop.setSize(CHART_Y_AXIS_WIDTH, 10f);
-        yTop.setPosition(0, plotTop - 8f);
+        yTop.setPosition(0, plotBottom + plotH * (maxValue / (float) yMax) - 5f);
         chartArea.addActor(yTop);
 
         TypingLabel yBottom = Controls.newTypingLabel("[%65]0");
@@ -453,7 +460,7 @@ public class WorldStandingsScene extends UIScene {
         chartArea.addActor(xFirst);
 
         if (n > 1) {
-            TypingLabel xLast = Controls.newTypingLabel("[%65]Wk" + weeks.get(n - 1));
+            TypingLabel xLast = Controls.newTypingLabel("[%65]Now");
             xLast.setColor(Color.BLACK);
             xLast.skipToTheEnd();
             xLast.setSize(30f, CHART_X_AXIS_HEIGHT);
@@ -464,14 +471,13 @@ public class WorldStandingsScene extends UIScene {
 
         for (String row : CHART_ROWS) {
             List<Integer> series = history.get(row);
-            if (series == null || series.isEmpty())
-                continue;
             Color color = chartColor(row);
             float prevX = -1, prevY = -1;
-            int points = Math.min(series.size(), n);
-            for (int i = 0; i < points; i++) {
-                float x = plotX + stepX * i;
-                float y = plotBottom + plotH * (series.get(i) / (float) yMax);
+            int points = series == null ? 0 : Math.min(series.size(), snapshots);
+            for (int i = 0; i <= points; i++) { // the last one is Now
+                int value = i < points ? series.get(i) : live.getOrDefault(row, 0);
+                float x = plotX + stepX * (i < points ? i : snapshots);
+                float y = plotBottom + plotH * (value / (float) yMax);
                 if (prevX >= 0)
                     addChartLine(prevX, prevY, x, y, color);
                 addChartPoint(x, y, color);

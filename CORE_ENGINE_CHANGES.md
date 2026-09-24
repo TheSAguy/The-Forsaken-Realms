@@ -132,6 +132,11 @@ Neither round updated this file at the time, against the standing rule. Both tou
   to `World.weekOf()`), `util/DungeonRotation.java` (the loot hold is cleared wherever `poiLootedDay` is),
   `util/EditionProgression.java` (never caches an empty pool).
 
+### Round 308: the town chart's live point
+
+- **`scene/WorldStandingsScene.java`** - `refreshChart()` ends each line at the live town counts ("Now"); the y-axis
+  label is the highest real value.
+
 ### Round 307: the ground follows the data
 
 - **`world/World.java`** - `migrateGround()`: a save's patches laid out again when the biomes' patch bands change
