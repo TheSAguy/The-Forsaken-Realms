@@ -195,9 +195,9 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;A farm spreads out before. The oddest thing about it is that at first it appears deserted, but upon closer inspection dozens and dozens of squirrels skitter about the trees, tending to the nuts growing off them.
+   &quot;text&quot;: &quot;A farm spreads out before you. The oddest thing about it is that at first it appears deserted, but upon closer inspection dozens and dozens of squirrels skitter about the trees, tending to the nuts growing off them.
 
-Your manasight stone glows brightly, sensing a truly mighty legend in this place.&quot;,
+Your spark stirs, sensing something truly mighty in this place.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

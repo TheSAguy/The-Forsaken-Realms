@@ -149,7 +149,7 @@
 {
    &quot;text&quot;: &quot;A wide coastline can be seen before you, with a cool coastal breeze blowing lazily in the palms. Wizards of all kinds walk about the area, flashes of magic going off all over. In the distance, a grand palace glowing with mana can be seen standing proud on a nearby island.
 
-Your manasight stone glows brightly, sensing a truly mighty legend in this place.&quot;,
+Your spark stirs, sensing something truly mighty in this place.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

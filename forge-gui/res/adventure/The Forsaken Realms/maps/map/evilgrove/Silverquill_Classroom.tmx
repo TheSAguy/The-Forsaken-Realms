@@ -112,7 +112,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;The inhabitants of the classrom ahead are embroiled in a heated debate as you approach. Instantly, the chatter falls to silence. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
+   &quot;text&quot;: &quot;The inhabitants of the classroom ahead are embroiled in a heated debate as you approach. Instantly, the chatter falls to silence. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
 
 'Silverquill isn't accepting new students at the moment. Leave now, or become an object lesson on how deadly words can be when applied with the right magical backing.'&quot;,
    &quot;options&quot;: [{

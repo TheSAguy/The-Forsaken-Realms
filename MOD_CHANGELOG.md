@@ -17757,6 +17757,50 @@ Two user reports from the live v1.05 game. Repo only - the live folder is being 
   #98 (1-vs-N content) marked Done - both shipped in v1.05; #97 Android status moved to the v1.05 APK.
 
 
+## Round 326b: the Realm of Legends dialog audit (second session, 2026-09-24)
+
+The user's ask, from the Planeswalker Dueling Club's door text ("Your manasight stone glows, sensing the power of
+the legends here"): the dungeons taken from the Realm of Legends plane still spoke that mod's story. A second Claude
+session audited every dialog in the plane (433 `dialog`/`defeatDialog` properties in 103 maps, dumped and read; each
+map's text traced to its source plane - all 25 imported maps were byte-identical to Realm of Legends) and all 92
+quests (none come from Realm of Legends: ids 28, 43, 45 and 53-92 are ours, the rest stock templates). Data only, 33
+files, built on branch `dialog-audit` in a sparse worktree and committed here as one round.
+`python dev-tools/text-audit/apply_rol_text_audit.py <repo_root> [--sets rol,typos,shandalar]` re-applies it: every
+replacement is an exact-substring edit checked to match once (idempotent on a patched tree), every edited dialog is
+re-parsed, and it lists the leftovers.
+
+- **The premise, corrected:** the Manasight Amulet and Manasight Stone exist as items and Easy lists the amulet as a
+  start item, but Normal and up start without it and the Ring-gift start skips start items anyway, so "your manasight
+  stone glows" was wrong for nearly every player. Eleven door texts now use the Guardian's own spark ("Your spark
+  stirs, sensing the power gathered here" / "...sensing something truly mighty in this place"; "Your spark blazes in
+  answer, brighter than it has since you woke" at the Ancient Opal Cavern and the Eldrazi Prison).
+- **Realm of Legends framing removed:** its "curse of violence" (Peaceful Clearing, Idyllic Beachfront, Ashiok in Three
+  Tree City), legends "dragged here" and looking for "a way home" (Adriana, Zo-Zu, the Prison hub), "a remnant of
+  Lorwyn/Shadowmoor" (Ashling's Domain). A light "stranded in this realm" motif replaces it.
+- **Eldrazi Prison and Hall of the Unifier:** the final portal is an old locked door ("its wards are older than the
+  Night of Chains"); Jodah - the Mysterious Mage who sells spells in Tarnation, the Gitrog Bog, the Squirrel Farm and
+  the Wizard Palace - is its keeper, testing whether the one who woke can hold it. This is the ONE place new lore was
+  added: it leans on MAIN_QUEST_PLAN's chapter-2 hook (the Seals were also locks; older doors) without committing to it
+  ("This prison is one of them"); his last two nodes stand alone if the door talk is unwanted. The defeat dialog no
+  longer says "Congratulations on completing The Forsaken Realms" nor points at the Mirror Gallery (a Realm of Legends
+  post-game area that does not exist here; the Hall's mirror portal has an empty target, which `PortalActor` treats as
+  `exitDungeon`); it closes with a `[RED]Developer's note:[]` in the capital's style naming New Game+ on the Load Game
+  screen.
+- **Typos** in the imported text: classrom (5), furhter, remniscent, afixed, stis, several "Its" for "It's", a missing
+  "you", a doubled space.
+- **Leftover "Shandalar"** as the world's name in stock-derived text: `aerie_0` (3), `ancient_diamond_mine`,
+  `library_of_varsil_2` (2) and `_3` (2), the `slime_hive` sign, `temple_of_liliana/town`, `skep_outer` (6) and the
+  Landscape Sketchbook item description - now "the realm". `config tables/items.csv` was not edited (the game
+  regenerates it).
+- **Deliberately untouched:** enemy NAMES ("Dracur of Shandalar", "The Hydra of Shandalaar", "Arzakon, Shandalar's
+  Doom" - biomes, decks and saves reference them); `naktamun.tmx`'s stock Shandalar intro (a `capital` POI that no
+  biome places); GUIDE.md's Realm of Legends credit; `debug_map.tmx`.
+- **Verified:** every target matched exactly once; every edited dialog still parses as the lenient JSON libGDX reads;
+  `validate_plane_data.py`'s report is identical to main's; the blobs normalize to LF. **NOT seen in a running game**
+  (the user's game ran the whole time and a second instance is not allowed): the spark line at any imported dungeon's
+  door and Jodah's chain are the two things to look at. `C:\TFR\live` and the v1.14 artifacts do NOT carry this yet -
+  repackage when the game is closed, rebuild the three artifacts before publishing.
+
 ## Round 326: "Word to the Courier" stays off the quest boards (2026-09-24)
 
 Found while researching the user's quest-place question. Local commit; data only.

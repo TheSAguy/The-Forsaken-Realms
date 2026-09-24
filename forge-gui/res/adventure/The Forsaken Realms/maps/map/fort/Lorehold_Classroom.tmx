@@ -111,7 +111,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;The classrom ahead of you feels unusually old and dusty for a place that clearly sees a lot of use. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
+   &quot;text&quot;: &quot;The classroom ahead of you feels unusually old and dusty for a place that clearly sees a lot of use. At the class's front, a dragon pauses its lecture and gives you a derisive glare.
 
 'Lorehold isn't accepting new students at the moment. Leave now, or you'll be nothing but another failure lost to history.'&quot;,
    &quot;options&quot;: [{

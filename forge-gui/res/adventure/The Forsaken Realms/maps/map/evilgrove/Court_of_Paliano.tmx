@@ -299,7 +299,7 @@
 				},
 				{
 					&quot;name&quot;: &quot;Who do you want dead? What's the pay?&quot;,
-					&quot;text&quot;: &quot;'Name's Adriana. Former guard captain of Paliano - until Marchesa took over. I was close to overthrowing her when we all got dragged here. And now I've been stuck under some frustrating pacifism enchantment, not able to do anything but watch like a caged bird as she plots to seize power in this world just like in our home. I need everyone else here dead. I've got a cache of gold with your name on it if you manage it.'&quot;,
+					&quot;text&quot;: &quot;'Name's Adriana. Former guard captain of Paliano - until Marchesa took over. I was close to overthrowing her when this realm swallowed the lot of us. And now I've been stuck under some frustrating pacifism enchantment, able to do nothing but watch like a caged bird while she plots to seize power here just as she did at home. I need everyone else here dead. I've got a cache of gold with your name on it if you manage it.'&quot;,
 					&quot;options&quot;: [ { &quot;name&quot;: &quot;(Continue)&quot; } ]
 				},
                 {

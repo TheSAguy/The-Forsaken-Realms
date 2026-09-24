@@ -46,6 +46,9 @@ the first time it loads. The barrier and the new map layout arrive with your nex
 - **New Game+** carries the gold in your bank into the new run.
 - The map's labels stay on their places when you zoom, the overworld zooms out further, rune texts wrap, and the
   World Standings town chart ends at today's counts.
+- **The dungeons that came from the Realm of Legends now tell this realm's story.** No more "manasight stone" at
+  their doors; the Eldrazi Prison and the Hall of the Unifier speak of the Guardian, the Seals and the older doors
+  beneath the realm, and the last mentions of Shandalar are gone.
 - Sliver Queen and Karona have a proper portrait.
 
 ## Fixed

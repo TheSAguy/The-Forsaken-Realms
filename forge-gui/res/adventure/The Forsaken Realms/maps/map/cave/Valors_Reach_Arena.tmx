@@ -392,7 +392,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;'{var=player_name} may have quite a few years on this contestant, but don't underestimate him! His imagination can be deadly, and he's got quite the active imagination! Its PIR AND TOOOOOOOTHY!!!!!'&quot;,
+   &quot;text&quot;: &quot;'{var=player_name} may have quite a few years on this contestant, but don't underestimate him! His imagination can be deadly, and he's got quite the active imagination! It's PIR AND TOOOOOOOTHY!!!!!'&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
@@ -403,7 +403,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;'Now I don't know how {var=player_name}'s love life is going, but this next opponent's is killer! Their forbidden romance won over the sensitive folks, and their forbidden magic won over our bloodthirsty viewers - they're bringing hell and heaven forbid you get in their way, its REGNA AND KRAV!!!!!'&quot;,
+   &quot;text&quot;: &quot;'Now I don't know how {var=player_name}'s love life is going, but this next opponent's is killer! Their forbidden romance won over the sensitive folks, and their forbidden magic won over our bloodthirsty viewers - they're bringing hell and heaven forbid you get in their way, it's REGNA AND KRAV!!!!!'&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
@@ -425,7 +425,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;'Uh oh, folks! Our challenger is up against the most decorated rookies of the arena! One's big and one's small, but their deadly venom brings down them all - its the two-fer with the lure, GORM AND VIRTUS!!!!!'&quot;,
+   &quot;text&quot;: &quot;'Uh oh, folks! Our challenger is up against the most decorated rookies of the arena! One's big and one's small, but their deadly venom brings down them all - it's the two-fer with the lure, GORM AND VIRTUS!!!!!'&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
@@ -436,7 +436,7 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;'Now every other opponent our challenger {var=player_name} is up against today is a classic arena duo. But special for our audience today, we have a monster match!!! It's eaten over a dozen contestants and at least two whole villages. The wurm from the wastes who wants blood it can taste, its GROOOOOTHAMAAAAAA!!!!&quot;,
+   &quot;text&quot;: &quot;'Now every other opponent our challenger {var=player_name} is up against today is a classic arena duo. But special for our audience today, we have a monster match!!! It's eaten over a dozen contestants and at least two whole villages. The wurm from the wastes who wants blood it can taste, it's GROOOOOTHAMAAAAAA!!!!&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }

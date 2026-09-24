@@ -105,9 +105,9 @@
    <properties>
     <property name="dialog">[
 {
-   &quot;text&quot;: &quot;Three pairs of powerful mages clash in the halls ahead. Though their battles look fiercely lethal at first glance, furhter observation reveals that they are merely sparring. However, while not trying to kill each other, they are not treating each other lightly either, each seeming to be bitter rivals. As you head inside, it seems they may put aside their current grudges to try new opponents...
+   &quot;text&quot;: &quot;Three pairs of powerful mages clash in the halls ahead. Though their battles look fiercely lethal at first glance, further observation reveals that they are merely sparring. However, while not trying to kill each other, they are not treating each other lightly either, each seeming to be bitter rivals. As you head inside, it seems they may put aside their current grudges to try new opponents...
 
-Your manasight stone glows, sensing the power of the legends here.&quot;,
+Your spark stirs, sensing the power gathered here.&quot;,
    &quot;options&quot;: [{
       &quot;name&quot;: &quot;(Continue)&quot;, &quot;action&quot;: [{&quot;deleteMapObject&quot;:-1}]}]
 }
@@ -146,7 +146,7 @@ Your manasight stone glows, sensing the power of the legends here.&quot;,
 				},
 				{
 					&quot;name&quot;: &quot;What's the deal with this place?&quot;,
-					&quot;text&quot;: &quot;'A group of planeswalkers have come here to hone their dueling skills with the hopes of escaping this forsaken realm. I'm not a planeswalker myself, I just like watching people fight! If you defeat them all, I've got a fine reward waiting for you!'&quot;,
+					&quot;text&quot;: &quot;'A group of planeswalkers, stranded here like the rest of us, hone their dueling skills in the hope of one day walking out of this forsaken realm. I'm not a planeswalker myself, I just like watching people fight! If you defeat them all, I've got a fine reward waiting for you!'&quot;,
 					&quot;options&quot;: [ { &quot;name&quot;: &quot;(Continue)&quot; } ]
 				},
                 {

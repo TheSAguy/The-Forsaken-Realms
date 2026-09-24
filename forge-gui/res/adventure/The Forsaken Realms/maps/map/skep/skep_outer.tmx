@@ -59,7 +59,7 @@
             &quot;options&quot;: [
               {
                 &quot;name&quot;: &quot;So I guess the Sliver Queen is causing the Slivers of the Skep to be this aggressive? &quot;,
-                &quot;text&quot;: &quot;Exactly, she's been assembling a mighty host of Slivers from all around the multiverse. Soon enough she will have an army large enough to conquer the whole of Shandalar.&quot;,
+                &quot;text&quot;: &quot;Exactly, she's been assembling a mighty host of Slivers from all around the multiverse. Soon enough she will have an army large enough to conquer the whole realm.&quot;,
                 &quot;options&quot;: [
                   {
                     &quot;name&quot;: &quot;Where is she located? I will take care of it.&quot;,
@@ -67,7 +67,7 @@
                     &quot;options&quot;: [
                       {
                         &quot;name&quot;: &quot;Consider it done.&quot;,
-                        &quot;text&quot;: &quot;Once you have dealt with the queen, return to me. Once I'm installed as the hive queen of the slivers of Shandalar, I will promise you to that the Slivers of the Skep will never be a danger to the people of Shandalar. Also, take this Hivestone, It will allow your creatures to become Slivers, causing confusion for the Sliver Queen.&quot;,
+                        &quot;text&quot;: &quot;Once you have dealt with the queen, return to me. Once I'm installed as the hive queen of the slivers of the realm, I will promise you to that the Slivers of the Skep will never be a danger to the people of the realm. Also, take this Hivestone, It will allow your creatures to become Slivers, causing confusion for the Sliver Queen.&quot;,
                         &quot;action&quot;: [
                           { &quot;addItem&quot;: &quot;Hivestone&quot; },
                           {
@@ -109,7 +109,7 @@
       { &quot;checkQuestFlag&quot;: &quot;SliverQueenDefeated&quot; }
     ],
     &quot;name&quot;: &quot;The Sliver Queen has been defeated!&quot;,
-    &quot;text&quot;: &quot;My ... my gratitude to you stranger. I feel my strength slowly returning. As promised, I'll take control of the Slivers again as their queen. The people of Shandalar shouldn't fear the Slivers of the Skep anymore. Though be warned, adventurer, my children will still defend against any intruder who goes into the Skep. Goodbye, adventurer!&quot;,
+    &quot;text&quot;: &quot;My ... my gratitude to you stranger. I feel my strength slowly returning. As promised, I'll take control of the Slivers again as their queen. The people of the realm shouldn't fear the Slivers of the Skep anymore. Though be warned, adventurer, my children will still defend against any intruder who goes into the Skep. Goodbye, adventurer!&quot;,
     &quot;options&quot;: [
       {
         &quot;name&quot;: &quot;(Continue)&quot;,
@@ -360,7 +360,7 @@
     &quot;options&quot;: [
       {
         &quot;name&quot;: &quot;What is happening around here?&quot;,
-        &quot;text&quot;: &quot;For unknown reasons, the Slivers of the Skep have become hostile and have been launching raiding parties into the various towns of Shandalar. General Jarkhald has summoned a large host to deal with this situation.&quot;,
+        &quot;text&quot;: &quot;For unknown reasons, the Slivers of the Skep have become hostile and have been launching raiding parties into the various towns of the realm. General Jarkhald has summoned a large host to deal with this situation.&quot;,
         &quot;options&quot;: [
           {
             &quot;name&quot;: &quot;So you intend to just storm the hive, and hope for the best?&quot;,
@@ -372,7 +372,7 @@
                 &quot;options&quot;: [
                   {
                     &quot;name&quot;: &quot;I'll can deal with the queen, but what's in it for me?&quot;,
-                    &quot;text&quot;: &quot; Outside of the thanks of the people of Shandalar for dealing with these horrific creatures, I will give you a fancy new piece of armor that will help you in your upcoming adventures. Deal with the queen and come back to me to receive your reward. I'll have my men open the gate to let you enter the hive. Good luck Adventurer!&quot;,
+                    &quot;text&quot;: &quot; Outside of the thanks of the people of the realm for dealing with these horrific creatures, I will give you a fancy new piece of armor that will help you in your upcoming adventures. Deal with the queen and come back to me to receive your reward. I'll have my men open the gate to let you enter the hive. Good luck Adventurer!&quot;,
                     &quot;options&quot;: [
                       {
                         &quot;name&quot;: &quot;End&quot;,

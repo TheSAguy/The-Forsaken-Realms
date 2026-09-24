@@ -55,7 +55,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - **NEXT SESSION starts here (updated round 326, 2026-09-24 ~08:10).** **v1.14 "Realm Reforged" is READY TO
   PUBLISH, waiting for the user's word** (they said "We will do a 1.14 release tomorrow"). Rounds 292-326, engine =
   the 09.23 daily. The artifacts are from round 326 (`3dadc40609a`); HEAD is that or a docs commit on it; nothing tagged, nothing pushed (origin is
-  still at v1.13's close-out). **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
+  still at v1.13's close-out). **Round 326b (the second session's Realm of Legends dialog audit, data only, ~08:35)
+  landed AFTER these artifacts were built - rebuild all three and repackage `C:\TFR\live` before publishing.**
+  **The artifacts are built and verified, all in `C:\TFR\release\v1.14\`:**
   `The-Forsaken-Realms-v1.14.zip` (267.8 MB, from `build_standalone.py --zip`, modVersion 1.14 / 09.24, build.txt
   2026-09-23 18:26:42 = the stock daily), `forsaken-realms-1.14-signed-aligned.apk` (13.4 MB; aapt: package
   com.thesaguy.forsakenrealms, versionCode 11400, versionName 1.14; apksigner: CN=The Forsaken Realms, SHA-256
@@ -151,6 +153,12 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   water, `World.pickDoodad()` for every doodad pass, and a one-time re-scatter for older saves (`doodadSet`). The art
   pipeline lives in the session scratchpad `r303\` (spec.py = the design, export.py writes the plane). The user is
   hunting for MORE doodad art - adding kinds/variants is now data only.
+- **Round 326b (second session; local commit, NOT pushed): the Realm of Legends dialog audit** - the 25 imported
+  maps' text refit to our story (the Guardian's spark instead of the "manasight stone", stranded legends, the
+  Eldrazi Prison as an old locked door and Jodah as its keeper, no more "completing The Forsaken Realms" or Mirror
+  Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
+  `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
+  a rebuild.
 - **Round 326 (local commit, NOT pushed): quest 86 "Word to the Courier" tagged `relic_trail_chain`** - with no source
   tags it matched every quest board as a blank offer.
 - **Round 325 (local commit, NOT pushed): no bare loot screen after a duel ([TFR-Payout] every duel), [TFR-Build] at
