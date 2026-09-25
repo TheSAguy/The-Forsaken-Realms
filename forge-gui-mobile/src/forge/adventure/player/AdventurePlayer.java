@@ -99,6 +99,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private final PlayerStatistic statistic = new PlayerStatistic();
     private final Map<String, Byte> questFlags = new HashMap<>();
     private final Map<String, Byte> characterFlags = new HashMap<>();
+    // Round 336: uses left per item with a `uses` count (the Bonfire kit), keyed by item name - see usesLeft().
+    private final Map<String, Integer> itemUses = new HashMap<>();
     private final Map<String, Byte> tutorialFlags = new HashMap<>();
 
     private final ArrayList<ItemData> inventoryItems = new ArrayList<>();
@@ -541,6 +543,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         equippedItems.clear();
         deckLoadouts.clear();
         characterFlags.clear();
+        itemUses.clear(); // round 336
         questFlags.clear();
         quests.clear();
         events.clear();
@@ -1344,6 +1347,11 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 characterFlags.put(keys[i], values[i]);
             }
         }
+        itemUses.clear(); // round 336
+        if (data.containsKey("itemUses")) {
+            //noinspection unchecked
+            itemUses.putAll((Map<String, Integer>) data.readObject("itemUses"));
+        }
 
         // Round 274 (user: "Seeding innTournamentQuestGiven at load for saves whose statistics already show a
         // finished tournament - offered, please implement"). Round 259 made the Inn-tournament nudge once per
@@ -1745,6 +1753,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         }
         data.storeObject("characterFlagsKey", characterFlagsKey.toArray(new String[0]));
         data.storeObject("characterFlagsValue", characterFlagsValue.toArray(new Byte[0]));
+        data.storeObject("itemUses", new HashMap<>(itemUses)); // round 336
 
         // Save quest flags.
         ArrayList<String> questFlagsKey = new ArrayList<>();
@@ -2897,6 +2906,27 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /** Owned anywhere - the pack or the Armory storage (round 170: a stored item is still yours, the way
      *  the deck editor's sketchbooks are). Quest items cannot be stored, so quest checks are unaffected. */
+    // Round 336: the Bonfire kit's fires left. -1 for an item without a `uses` count.
+    public int usesLeft(ItemData item) {
+        if (item == null || item.uses <= 0)
+            return -1;
+        Integer left = itemUses.get(item.name);
+        return left == null ? item.uses : Math.max(0, left);
+    }
+
+    public boolean spendUse(ItemData item) {
+        int left = usesLeft(item);
+        if (left <= 0)
+            return false;
+        itemUses.put(item.name, left - 1);
+        return true;
+    }
+
+    public void repairItem(ItemData item) {
+        if (item != null && item.uses > 0)
+            itemUses.put(item.name, item.uses);
+    }
+
     public boolean hasItem(String name) {
         return inventoryItems.stream().anyMatch(itemData -> name.equalsIgnoreCase(itemData.name))
                 || armoryStorage.stream().anyMatch(itemData -> itemData != null && name.equalsIgnoreCase(itemData.name));

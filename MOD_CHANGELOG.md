@@ -14264,6 +14264,51 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 336: the Bonfire, the Torch at 200, every place swept of obstacles, bosses capped at three tiles (2026-09-25)
+
+User: *"I want to add a new item. 'Bonfire'. Please use the camp fire icon that use to be where you exited the spawn
+dungeon. Functions like a torch when equipped. Same radius as level 1 torch. When used. 1-shard, you place it on the
+ground... it will lift the FoW for the same radius as a town. It should last for 10 days then fade out. Please put
+one in my starting inventory for testing."* Then: *"It should have 10 uses, then you need to re-pair it. Per use 1
+Shard. Repair 50 shards. Increase the torch cost to 200g"*, and on the fade: *"I like the dimming feature. Let's make
+the initial radius 15 and dims by 1 per day (-1 radius per day)"*. Plus two Discord reports the same morning -
+VeggieShark: *"rocks and trees can spawn under the locations on the world map... the hitbox of an obstacle prevents
+entering a town and is invisible"*; armadi: *"zhulodok is gigantic on the map, like 25 percent of the screen"* - the
+user: *"I actually thought both were addressed before... was zhulodok missed. Any others?"* Local commit, NOT pushed.
+
+- **The Bonfire** (`world/items.json`): Ability2 slot like the Torch, `visionRadiusMultiplier` 2.0 (a level-1 Torch's
+  sight), `usableOnWorldMap`, 1 shard a use (`shardsNeeded`), `commandOnUse` "bonfire place", and two new catalog
+  fields - `uses` 10 and `repairShards` 50 (`ItemData`; the count left lives on the player: `AdventurePlayer.usesLeft`
+  / `spendUse` / `repairItem`, saved as `itemUses`). The icon is the stock Spawn campfire (`common/maps/tileset/
+  buildings.atlas` "Spawn", 16x16 - the Secluded Encampment's own marker) cut into a fourth page of `sprites/items.atlas`
+  (`items_bonfire.png`). Cost 500, Rare. Every difficulty's `startItems` in `config.json` carries one for now (the
+  user: "put one in my starting inventory for testing" - new characters only; an existing save gets one with the
+  console's `give item Bonfire`).
+- **Building one** (`ConsoleCommandInterpreter` "bonfire place" -> `WorldStage.placeBonfire()`): on the world map with
+  fog on, a fire goes on the player's tile (`World.addBonfire`, `{tileX, tileY, dayBuilt}` saved as `bonfires`);
+  `isPersistentlyRevealed()` treats its disc like a restored town's, so the fog lifts `BONFIRE_RADIUS` = 15 tiles
+  around it at once and the disc is marked explored. `bonfireRadius()` = 15 minus the days since it was built, so the
+  light loses a tile a day and the fire is gone after 15; the day tick (`WorldStage.tickBonfires`) re-bakes each fire's
+  disc and drops the burnt-out ones (`[TFR-Bonfire]`). A `BonfireActor` per fire draws the campfire on the overworld,
+  dimmer as its light shrinks. Refusals hand the shard back (in a map, no fog, a fire already burning within 3 tiles).
+  A spent kit refunds the shard and opens the rebuild dialog (`WorldStage.showBonfireRepairDialog`: 50 shards for 10
+  fires again); the item text shows "Uses left: n/10". The agent's state lists `bonfires`.
+- **Torch cost 100 -> 200.**
+- **Every place swept of obstacles, and again after every growth ring** (`World.clearObstaclesAroundPlaces`, was
+  `clearObstaclesAroundSettlements`): round 256 swept only towns/capitals/castles, once per save (`obstaclesSwept`),
+  and `claimWastelandRing()` re-rolls the STRUCTURES of every tile it claims - so a growth ring after the sweep could
+  drop a colliding tree beside or under a place's icon, and caves, dungeons and lairs were never swept at all. Now
+  every place with a map is swept (settlements with round 256's margin of 2, the rest with 1), the sweep runs again
+  over the places a ring touched (the emptied tiles repainted and redrawn on the minimap with the ring), and
+  `obstaclesSwept` holds a set number (`OBSTACLE_SWEEP` = 336): a save below it sweeps again on load, so existing
+  worlds are cleaned once. `[TFR-ClearGround]` logs the count.
+- **Bosses capped at three tiles** (`dev-tools/enemy_scale.py` `BOSS_MAX` = 48 on the 16-px scale, next to round 178's
+  `BOSS_MIN` 30; `--write` applied): a boss or set piece drew as big as its hand-set scale times the tier cue made it -
+  Ulamog at 223, Kozilek (Butcher of Truth) 137, Emrakul (the Aeons Torn) 120, Azlask 112, Yargle and Multani 105,
+  Lorthos 105, Zhulodok 101, Akroma 100, Griselbrand 98, Emrakul 90, Ulalek 90, Eirdu 82, Lathliss 74, Kozilek 68,
+  Ghalta 66, Sliver Queen 57, Karona 57, Rikala 54, Ooze Boss 53, Muldrotha 53, Arzakon 52. All 21 now draw at 48
+  (an Archmage is 24). `world/enemies.json`, 21 scales.
+
 ## Round 335: one Jumpstart pool for every town, grown land takes the doodad bands (2026-09-24)
 
 User: *"I think it's not fair for certain races to get jump-start sets and other not... we have two options, remove

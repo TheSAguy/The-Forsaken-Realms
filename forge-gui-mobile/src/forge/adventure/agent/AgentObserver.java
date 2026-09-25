@@ -288,6 +288,10 @@ final class AgentObserver {
         int mx = (int) (me.x / ts), my = (int) (me.y / ts);
         m.put("size", new int[]{world.getWidthInTiles(), world.getHeightInTiles()});
         m.put("visionRadius", world.getVisionRadius());
+        java.util.List<String> fires = new java.util.ArrayList<>(); // round 336
+        for (int[] fire : world.getBonfires())
+            fires.add(fire[0] + "," + fire[1] + " r=" + world.bonfireRadius(fire));
+        m.put("bonfires", fires);
         m.put("fastTime", ws.isFastTimeEnabled());
         m.put("waitingForTime", ws.isWaitingForTime());
         List<Map<String, Object>> pois = new ArrayList<>();

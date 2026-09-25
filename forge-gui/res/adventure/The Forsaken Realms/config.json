@@ -88,7 +88,8 @@
       },
       "startItems": [
         "Manasight Amulet",
-        "Leather Boots"
+        "Leather Boots",
+        "Bonfire"
       ]
     },{
       "name": "Normal",
@@ -137,11 +138,13 @@
         "G":"decks/starter/pile_green_n.json"
       },
       "startItems": [
-        "Leather Boots"
+        "Leather Boots",
+        "Bonfire"
       ]
     },{
       "name": "Hard",
       "startingLife": 10,
+      "startItems": ["Bonfire"],
       "startingWood": 50,
       "startingStone": 50,
       "startingShards": 7,
@@ -187,6 +190,7 @@
     },{
       "name": "Insane",
       "startingLife": 5,
+      "startItems": ["Bonfire"],
       "startingWood": 25,
       "startingStone": 25,
       "startingShards": 5,

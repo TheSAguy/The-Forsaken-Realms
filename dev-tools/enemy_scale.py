@@ -43,6 +43,9 @@ POSE_CAP = 1.2
 CUE = {"Common": 13 / 16, "Uncommon": 1.0, "Rare": 20 / 16, "Mythic": 24 / 16}
 # bosses and set pieces: the body never draws under 30 on the 16-px scale - always bigger than an Archmage (24)
 BOSS_MIN = 30
+# round 336 (armadi on Discord: Zhulodok is gigantic on the map, like 25 percent of the screen): and never OVER 48 - three
+# tiles, twice an Archmage. A titan set piece drew at 145, a roaming legend at 82; a boss reads as a boss at 48.
+BOSS_MAX = 48
 _pages = {}
 
 
@@ -176,7 +179,7 @@ def main():
     data = json.loads(raw.decode("utf-8"))
     if json.dumps(data, indent=4, ensure_ascii=False).encode("utf-8") + b"\n" != raw:
         raise SystemExit("enemies.json does not round-trip through json.dumps(indent=4) - refusing to rewrite it")
-    cache, changed, unresolved, ratios, raised = {}, 0, [], [], []
+    cache, changed, unresolved, ratios, raised, lowered = {}, 0, [], [], [], []
     for e in data:
         if e.get("boss") or e.get("keepSize"):
             # user, 2026-09-11: "Boss enemies should remain larger than Archmage". A fixed-size entry keeps its
@@ -190,6 +193,11 @@ def main():
             if drawn < BOSS_MIN - 0.05:
                 new = round(base * BOSS_MIN / 16 / cue, 4)
                 raised.append("%s %.1f->%d" % (e["name"], drawn, BOSS_MIN))
+                e["scale"] = new
+                changed += 1
+            elif drawn > BOSS_MAX + 0.05:
+                new = round(base * BOSS_MAX / 16 / cue, 4)
+                lowered.append("%s %.1f->%d" % (e["name"], drawn, BOSS_MAX))
                 e["scale"] = new
                 changed += 1
             continue
@@ -207,6 +215,8 @@ def main():
         changed, BOSS_MIN, len(raised), len(unresolved), unresolved[:8]))
     if raised:
         print("raised:", raised[:12], "..." if len(raised) > 12 else "")
+    if lowered:
+        print("lowered to the %d ceiling (round 336):" % BOSS_MAX, lowered)
     ratios.sort()
     print("biggest shrinks:", ["%s %.2f->%.2f" % (nm, o, nw) for _, nm, o, nw in ratios[:8]])
     print("biggest growths:", ["%s %.2f->%.2f" % (nm, o, nw) for _, nm, o, nw in ratios[-8:]])

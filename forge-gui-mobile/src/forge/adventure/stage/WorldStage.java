@@ -275,6 +275,148 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
     }
 
+    // Round 336: the Bonfire item's fires. One actor per fire still burning, rebuilt from the world's list whenever it
+    // changes (World.getBonfireStamp). Drawn with the campfire icon, dimmer as the fire's light shrinks day by day.
+    private static class BonfireActor extends Actor {
+        private final Sprite sprite;
+        private final int[] fire;
+        private float time = MathUtils.random(10f);
+
+        BonfireActor(Sprite sprite, int[] fire) {
+            this.sprite = sprite;
+            this.fire = fire;
+        }
+
+        @Override
+        public void act(float delta) {
+            super.act(delta);
+            time += delta;
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            World world = Current.world();
+            int radius = world.bonfireRadius(fire);
+            if (radius <= 0)
+                return;
+            float strength = radius / (float) World.BONFIRE_RADIUS;
+            float flicker = 0.92f + 0.08f * MathUtils.sin(time * 11f);
+            float alpha = parentAlpha * (0.3f + 0.7f * strength) * flicker;
+            Color prev = batch.getColor();
+            float pr = prev.r, pg = prev.g, pb = prev.b, pa = prev.a;
+            batch.setColor(pr, pg, pb, alpha);
+            batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
+            batch.setColor(pr, pg, pb, pa);
+        }
+    }
+
+    private final List<Actor> bonfireActors = new ArrayList<>();
+    private int bonfireActorsStamp = -1;
+
+    private void syncBonfireActors(World world) {
+        if (world.getBonfireStamp() != bonfireActorsStamp)
+            refreshBonfireActors(world);
+    }
+
+    private void refreshBonfireActors(World world) {
+        for (Actor actor : bonfireActors)
+            foregroundSprites.removeActor(actor);
+        bonfireActors.clear();
+        bonfireActorsStamp = world.getBonfireStamp();
+        Sprite sprite = Config.instance().getItemSprite("Bonfire");
+        if (sprite == null) {
+            System.out.println("[TFR-Bonfire] no Bonfire region in the items atlas - fires are not drawn");
+            return;
+        }
+        int tileSize = world.getTileSize();
+        for (int[] fire : world.getBonfires()) {
+            if (world.bonfireRadius(fire) <= 0)
+                continue;
+            BonfireActor actor = new BonfireActor(sprite, fire);
+            actor.setSize(tileSize, tileSize);
+            actor.setPosition(fire[0] * tileSize, fire[1] * tileSize);
+            foregroundSprites.addActor(actor);
+            bonfireActors.add(actor);
+        }
+    }
+
+    public int playerTileX() {
+        return (int) ((player.getX() + player.getWidth() / 2f) / Current.world().getTileSize());
+    }
+
+    public int playerTileY() {
+        return (int) (player.getY() / Current.world().getTileSize());
+    }
+
+    /** Round 336: builds a fire on the player's tile - the fog lifts BONFIRE_RADIUS tiles around it at once. */
+    public int[] placeBonfire() {
+        World world = Current.world();
+        int tx = playerTileX(), ty = playerTileY();
+        int[] fire = world.addBonfire(tx, ty);
+        world.revealArea(tx, ty, World.BONFIRE_RADIUS, null);
+        rebakeArea(tx, ty, World.BONFIRE_RADIUS + 1);
+        refreshBonfireActors(world);
+        return fire;
+    }
+
+    /** Re-bakes every background tile within `radius` tiles of a tile - a fog lift that came or went (round 336). */
+    public void rebakeArea(int centerTileX, int centerTileY, int radius) {
+        if (background == null)
+            return;
+        for (int tx = centerTileX - radius; tx <= centerTileX + radius; tx++)
+            for (int ty = centerTileY - radius; ty <= centerTileY + radius; ty++)
+                background.onTileRevealed(tx, ty);
+    }
+
+    /** Round 336: the day tick - every fire's light shrinks by a tile, a burnt-out fire goes. */
+    private void tickBonfires(World world, int day) {
+        if (world.getBonfires().isEmpty())
+            return;
+        StringBuilder burning = new StringBuilder();
+        for (int[] fire : world.getBonfires()) {
+            rebakeArea(fire[0], fire[1], World.BONFIRE_RADIUS + 1);
+            int r = world.bonfireRadius(fire);
+            if (r > 0)
+                burning.append(burning.length() == 0 ? "" : ", ").append("(").append(fire[0]).append(",")
+                        .append(fire[1]).append(") r=").append(r);
+        }
+        for (int[] dead : world.removeDeadBonfires())
+            System.out.println("[TFR-Bonfire] day " + day + ": the fire at (" + dead[0] + "," + dead[1]
+                    + ") built on day " + dead[2] + " has burnt out");
+        refreshBonfireActors(world);
+        if (burning.length() > 0)
+            System.out.println("[TFR-Bonfire] day " + day + ": burning " + burning);
+    }
+
+    /** Round 336: a spent Bonfire kit offers its rebuild - `repairShards` for a fresh set of fires. */
+    public void showBonfireRepairDialog(forge.adventure.data.ItemData kit) {
+        Dialog dialog = getDialog();
+        dialog.getContentTable().clear();
+        dialog.getButtonTable().clear();
+        dialog.clearListeners();
+        final int cost = kit.repairShards;
+        TypingLabel label = Controls.newTypingLabel("The bonfire kit is spent - every fire it held has been built. Rebuild it for "
+                + cost + " [+Shards]? You have " + Current.player().getShards() + ".");
+        label.setWrap(true);
+        label.skipToTheEnd();
+        dialog.getContentTable().add(label).width(250f).row();
+        dialog.getButtonTable().add(Controls.newTextButton("Rebuild", () -> {
+            hideDialog();
+            if (Current.player().getShards() < cost) {
+                GameHUD.getInstance().addNotification("Not enough shards to rebuild the bonfire kit (" + cost + " [+Shards]).", true);
+                return;
+            }
+            Current.player().addShards(-cost);
+            Current.player().repairItem(kit);
+            GameHUD.getInstance().addNotification("The bonfire kit is rebuilt - " + kit.uses + " fires again.", true);
+            System.out.println("[TFR-Bonfire] kit rebuilt for " + cost + " shards");
+        })).width(120f);
+        dialog.getButtonTable().add(Controls.newTextButton("Not now", this::hideDialog)).width(120f).row();
+        dialog.setKeepWithinStage(true);
+        showDialog();
+        dialog.toFront();
+    }
+
     private final List<Actor> resourceSpawnActors = new ArrayList<>();
 
     // Clear-and-rebuild sync from World's persisted spawn list (<= ResourceSpawns.MAX_SPAWNS
@@ -382,6 +524,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 QuestExpiry.processDaysPassed(dayAfter);
                 long tQuests = System.nanoTime();
                 world.checkFogOfWarStage2(this::refreshBackgroundTile);
+                tickBonfires(world, dayAfter); // round 336
                 long tFog = System.nanoTime();
                 // World Standings line-chart history (2026-08-15) - checked on every real day
                 // advance, but recordStandingsHistoryIfNewWeek() itself no-ops unless the week
@@ -415,6 +558,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // Per frame while moving, not just on day change - pickups are walk-over, so the
             // collection check has to track the player's live position (cheap; see its comment).
             ResourceSpawns.tick(world, dayAfter);
+            syncBonfireActors(world); // round 336
             handleMonsterSpawn(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;

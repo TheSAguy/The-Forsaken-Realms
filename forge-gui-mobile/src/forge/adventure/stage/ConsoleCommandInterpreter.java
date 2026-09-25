@@ -919,6 +919,37 @@ public class ConsoleCommandInterpreter {
             }
             return "Torch pulse: vision flared to " + radius + " tiles";
         });
+        // Round 336: the Bonfire kit - "bonfire place" builds a fire on the player's tile (World.addBonfire) that keeps the
+        // fog lifted 15 tiles around, one tile less each day. Ten fires to a kit, one shard each (shardsNeeded); a spent
+        // kit offers its rebuild (WorldStage.showBonfireRepairDialog). Every refusal hands the shard back.
+        registerCommand(new String[]{"bonfire", "place"}, s -> {
+            boolean inMap = MapStage.getInstance().isInMap();
+            forge.adventure.world.World world = Current.world();
+            if (inMap || world == null || !world.isFogOfWarEnabled())
+                return "A bonfire needs the world map with fog of war on" + refundItemInUse(inMap
+                        ? "A bonfire is built under the open sky - not in here." : "There is no fog here for a bonfire to hold back.");
+            ItemData kit = itemInUse != null ? itemInUse : ItemListData.getItem("Bonfire");
+            forge.adventure.player.AdventurePlayer player = Current.player();
+            WorldStage stage = WorldStage.getInstance();
+            if (kit != null && kit.uses > 0 && player.usesLeft(kit) <= 0) {
+                String note = refundItemInUse("The bonfire kit is spent - rebuild it for " + kit.repairShards + " [+Shards].");
+                stage.showBonfireRepairDialog(kit);
+                return "Bonfire kit spent" + note;
+            }
+            int[] near = world.liveBonfireNear(stage.playerTileX(), stage.playerTileY(), 3);
+            if (near != null)
+                return "A fire already burns here" + refundItemInUse("A fire already burns here - move a few tiles on.");
+            if (kit != null)
+                player.spendUse(kit);
+            int[] fire = stage.placeBonfire();
+            stage.player.playEffect(Paths.EFFECT_SPARKS, 1f);
+            int left = kit == null ? -1 : player.usesLeft(kit);
+            GameHUD.getInstance().addNotification("You build a bonfire. The fog draws back " + forge.adventure.world.World.BONFIRE_RADIUS
+                    + " tiles around it, one tile less each day." + (left >= 0 ? " Fires left in the kit: " + left + "." : ""));
+            System.out.println("[TFR-Bonfire] built at (" + fire[0] + "," + fire[1] + ") on day " + fire[2] + ", radius "
+                    + forge.adventure.world.World.BONFIRE_RADIUS + ", kit fires left " + left);
+            return "Bonfire built at " + fire[0] + "," + fire[1] + (left >= 0 ? ", " + left + " fire(s) left in the kit" : "");
+        });
         registerCommand(new String[]{"fog", "reset"}, s ->
                 WorldSave.getCurrentSave().getWorld().resetFogOfWarToOwnership());
         // TESTING ONLY (user request 2026-08-14) - REMOVE once the Color Defeat mechanic

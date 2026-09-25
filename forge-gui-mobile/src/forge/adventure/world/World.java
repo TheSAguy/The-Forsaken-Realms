@@ -751,9 +751,61 @@ public class World implements Disposable, SaveFileContent {
     // tick tops the pool back up).
     private final List<int[]> resourceSpawns = new ArrayList<>();
     private boolean resourceSpawnsSeeded = false;
+    // Round 336: the Bonfire item's fires - {tileX, tileY, dayBuilt}. A fire keeps the fog lifted BONFIRE_RADIUS tiles
+    // around it on the day it is built and one tile less each day after, until nothing is left (isPersistentlyRevealed).
+    public static final int BONFIRE_RADIUS = 15;
+    private final List<int[]> bonfires = new ArrayList<>();
+    private int bonfireStamp = 0; // bumped on every change, so WorldStage rebuilds its fire actors
+
+    public List<int[]> getBonfires() {
+        return bonfires;
+    }
+
+    public int getBonfireStamp() {
+        return bonfireStamp;
+    }
+
+    /** Round 336: the tiles a fire still lights today - BONFIRE_RADIUS the day it was built, one less each day after. */
+    public int bonfireRadius(int[] fire) {
+        return Math.max(0, BONFIRE_RADIUS - (getCurrentDay() - fire[2]));
+    }
+
+    public int[] addBonfire(int tileX, int tileY) {
+        int[] fire = {tileX, tileY, getCurrentDay()};
+        bonfires.add(fire);
+        bonfireStamp++;
+        return fire;
+    }
+
+    /** A fire still burning within `within` tiles of the tile, or null. */
+    public int[] liveBonfireNear(int tileX, int tileY, int within) {
+        for (int[] fire : bonfires) {
+            int dx = fire[0] - tileX, dy = fire[1] - tileY;
+            if (bonfireRadius(fire) > 0 && dx * dx + dy * dy <= within * within)
+                return fire;
+        }
+        return null;
+    }
+
+    /** Drops the fires that have burnt out; returns them. */
+    public List<int[]> removeDeadBonfires() {
+        List<int[]> dead = new ArrayList<>();
+        for (int[] fire : bonfires)
+            if (bonfireRadius(fire) <= 0)
+                dead.add(fire);
+        if (!dead.isEmpty()) {
+            bonfires.removeAll(dead);
+            bonfireStamp++;
+        }
+        return dead;
+    }
     /** Round 256: has this save had its settlements swept of obstacles? Worlds generated before round 256 get
      *  the sweep once, at load. */
-    private boolean obstaclesSwept = false;
+    // Round 256: the one-time obstacle sweep around settlements. Round 336: an int - the sweep set this save has had;
+    // a save below OBSTACLE_SWEEP sweeps again on load (every place with a map now, and after every growth ring -
+    // see clearObstaclesAroundPlaces()). Older saves hold 1 (round 256's boolean) and so sweep once more.
+    public static final int OBSTACLE_SWEEP = 336;
+    private int obstacleSweep = 0;
     /** Round 294 (the barrier): the tiles world generation walled off - the land outside the six decorated circles.
      *  Its own layer, [x][rawY] like terrainMap, rather than a spare terrainMap bit, so nothing that decodes a
      *  terrain value has to know about it. Null for a world made before round 294. See computeBarrier(). */
@@ -951,7 +1003,13 @@ public class World implements Disposable, SaveFileContent {
             resourceSpawns.addAll((List<int[]>) saveFileData.readObject("resourceSpawns"));
         }
         resourceSpawnsSeeded = saveFileData.containsKey("resourceSpawnsSeeded") && saveFileData.readInt("resourceSpawnsSeeded") != 0;
-        obstaclesSwept = saveFileData.containsKey("obstaclesSwept") && saveFileData.readInt("obstaclesSwept") != 0;
+        bonfires.clear(); // round 336
+        if (saveFileData.containsKey("bonfires")) {
+            //noinspection unchecked
+            bonfires.addAll((List<int[]>) saveFileData.readObject("bonfires"));
+        }
+        bonfireStamp++;
+        obstacleSweep = saveFileData.containsKey("obstaclesSwept") ? saveFileData.readInt("obstaclesSwept") : 0;
         ResourceSpawns.forceResync(); // actors on WorldStage must rebuild from this loaded state
 
         poiDespawnDay.clear();
@@ -1063,9 +1121,9 @@ public class World implements Disposable, SaveFileContent {
         // Round 256: the obstacle sweep is a generation step, so a world made before it keeps whatever rocks and
         // dead trees landed inside a settlement's icon - which is what the user was looking at. Run it once here
         // and remember, the same shape as round 249's one-time map-icon re-bake. A swept world finds nothing.
-        if (!obstaclesSwept) {
-            obstaclesSwept = true;
-            clearObstaclesAroundSettlements();
+        if (obstacleSweep < OBSTACLE_SWEEP) {
+            obstacleSweep = OBSTACLE_SWEEP;
+            clearObstaclesAroundPlaces(null, null, true);
         }
     }
 
@@ -1101,8 +1159,9 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("standingsHistoryWeeks", new ArrayList<>(standingsHistoryWeeks));
         data.storeObject("standingsHistoryCounts", standingsHistoryCounts);
         data.storeObject("resourceSpawns", new ArrayList<>(resourceSpawns));
+        data.storeObject("bonfires", new ArrayList<>(bonfires)); // round 336
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
-        data.store("obstaclesSwept", obstaclesSwept ? 1 : 0);
+        data.store("obstaclesSwept", obstacleSweep);
         saveBarrier(data); // round 294
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
@@ -2107,25 +2166,46 @@ public class World implements Disposable, SaveFileContent {
         saveData.storeObject("barrierMap", set.toLongArray());
     }
 
-    private void clearObstaclesAroundSettlements() {
+    /** Round 256's sweep, widened in round 336 (VeggieShark on Discord, v1.14: "rocks and trees can spawn under the
+     *  locations on the world map... the hitbox of an obstacle prevents entering a town and is invisible"): every
+     *  place with a map is swept - towns, capitals and castles with round 256's margin, caves, dungeons and lairs with
+     *  one tile - and the sweep runs again after every growth ring, which re-rolls structures on the tiles it claims
+     *  (claimWastelandRing) where round 256's one-time pass never looked. onlyNear: sweep just the places whose square
+     *  touches one of these tiles; cleared: the tiles emptied, for the caller's repaint; log: say so even when nothing
+     *  was found. Returns the count removed. */
+    private int clearObstaclesAroundPlaces(Set<Long> onlyNear, Set<Long> cleared, boolean log) {
         if (mapPoiIds == null)
-            return;
+            return 0;
         int sites = 0;
         int removed = 0;
         for (PointOfInterest poi : getAllPointOfInterest()) {
             PointOfInterestData poiData = poi.getData();
             if (poiData == null || poiData.type == null)
                 continue;
-            if (!poiData.type.equals("town") && !poiData.type.equals("capital") && !poiData.type.equals("castle"))
+            boolean settlement = poiData.type.equals("town") || poiData.type.equals("capital") || poiData.type.equals("castle");
+            if (!settlement && (poiData.map == null || poiData.map.isEmpty()))
                 continue;
-            sites++;
             int tileX = (int) (poi.getCenter().x / data.tileSize);
             int tileY = (int) (poi.getCenter().y / data.tileSize);
-            removed += clearObstacles(tileX, tileY, clearTilesFor(poi, poiData));
+            int tiles = clearTilesFor(poi, poiData) - (settlement ? 0 : CLEAR_MARGIN_TILES - 1);
+            if (onlyNear != null && !squareTouches(tileX, tileY, tiles, onlyNear))
+                continue;
+            sites++;
+            removed += clearObstacles(tileX, tileY, tiles, cleared);
         }
-        System.out.println("[TFR-ClearGround] " + sites + " town/capital/castle site(s) swept (the icon's own tiles"
-                + " plus " + CLEAR_MARGIN_TILES + ", " + ORAZCA_CLEAR_TILES + " around Orazca) - "
-                + removed + " colliding obstacle(s) removed");
+        if (log || removed > 0)
+            System.out.println("[TFR-ClearGround] " + sites + " place(s) swept (a settlement's icon plus " + CLEAR_MARGIN_TILES
+                    + ", another place's plus 1, " + ORAZCA_CLEAR_TILES + " around Orazca) - " + removed
+                    + " colliding obstacle(s) removed" + (onlyNear != null ? " after a growth ring" : ""));
+        return removed;
+    }
+
+    private boolean squareTouches(int centerX, int centerY, int tiles, Set<Long> set) {
+        for (int dx = -tiles; dx <= tiles; dx++)
+            for (int dy = -tiles; dy <= tiles; dy++)
+                if (set.contains(packTile(centerX + dx, centerY + dy)))
+                    return true;
+        return false;
     }
 
     /** Round 256, the user's "just the stuff that basically falls within the town icon radius": half the POI's
@@ -2141,7 +2221,7 @@ public class World implements Disposable, SaveFileContent {
     /** Removes obstacles - and only obstacles - from a square of tiles: a cell is zeroed when it carries a
      *  collision or structure bit, which is the same test the road pass uses to cut a path through terrain.
      *  Plain ground, roads and the settlement's own tiles are left exactly as they are. Returns the count. */
-    private int clearObstacles(int x, int y, int tiles) {
+    private int clearObstacles(int x, int y, int tiles, Set<Long> cleared) {
         int removed = 0;
         for (int dx = -tiles; dx <= tiles; dx++) {
             for (int dy = -tiles; dy <= tiles; dy++) {
@@ -2151,6 +2231,8 @@ public class World implements Disposable, SaveFileContent {
                             && !isBarrierRaw(x + dx, rawY)) { // round 294: the barrier is not an obstacle to sweep
                         terrainMap[x + dx][rawY] = 0;
                         removed++;
+                        if (cleared != null)
+                            cleared.add(packTile(x + dx, y + dy));
                     }
                 } catch (ArrayIndexOutOfBoundsException ignored) {
                 }
@@ -3114,8 +3196,8 @@ public class World implements Disposable, SaveFileContent {
             // generateNew() stamps each biome's own structures and before the road pass - so every obstacle it
             // cleared was stamped straight back, and it honestly reported "0 colliding tile(s) removed" while a
             // boulder sat against Orazca's gate. Nothing writes terrainMap after this point.
-            clearObstaclesAroundSettlements();
-            obstaclesSwept = true; // round 256: generation did it, load need not repeat it
+            clearObstaclesAroundPlaces(null, null, true);
+            obstacleSweep = OBSTACLE_SWEEP; // round 256: generation did it, load need not repeat it
             System.out.println("Generating world took :\t\t" + ((System.currentTimeMillis() - startTime) / 1000f) + " s");
             WorldStage.getInstance().clearCache();
 
@@ -5089,9 +5171,19 @@ public class World implements Disposable, SaveFileContent {
         // neighborhood with final state, which is exactly why it self-healed). Each claimed tile
         // AND its 8 neighbors get patched (deduped) - border tiles just OUTSIDE the claim also
         // re-blend, since their neighborhoods changed too.
-        if (onTileRepainted != null && !claimedTiles.isEmpty()) {
+        // Round 336: the ring re-rolled structures on the tiles it claimed, and a tree can land under a place's icon -
+        // sweep the places the ring touched, and repaint what the sweep emptied along with the ring itself.
+        Set<Long> sweptClear = new HashSet<>();
+        if (!claimedTiles.isEmpty()) {
+            clearObstaclesAroundPlaces(claimedTiles, sweptClear, false);
+            for (long packed : sweptClear)
+                redrawMinimapTile((int) (packed >> 32), height - 1 - (int) packed);
+        }
+        if (onTileRepainted != null && (!claimedTiles.isEmpty() || !sweptClear.isEmpty())) {
             Set<Long> tilesToRepaint = new HashSet<>();
-            for (long packed : claimedTiles) {
+            Set<Long> touched = new HashSet<>(claimedTiles);
+            touched.addAll(sweptClear);
+            for (long packed : touched) {
                 int tx = (int) (packed >> 32);
                 int ty = (int) packed;
                 for (int nx = -1; nx <= 1; nx++)
@@ -5669,6 +5761,17 @@ public class World implements Disposable, SaveFileContent {
                         }
                     }
                 }
+                if (!keep) { // round 336: a bonfire's light stays known too
+                    for (int[] fire : bonfires) {
+                        int r = bonfireRadius(fire);
+                        int dx = x - fire[0];
+                        int dy = wy - fire[1];
+                        if (r > 0 && dx * dx + dy * dy <= r * r) {
+                            keep = true;
+                            break;
+                        }
+                    }
+                }
                 explored[x][rawY] = keep;
                 if (keep)
                     revealed++;
@@ -5920,6 +6023,15 @@ public class World implements Disposable, SaveFileContent {
             int tx = x - area[0];
             int ty = y - area[1];
             if (tx * tx + ty * ty <= area[2])
+                return true;
+        }
+        for (int[] fire : bonfires) { // round 336: a bonfire's light, shrinking a tile a day
+            int r = bonfireRadius(fire);
+            if (r <= 0)
+                continue;
+            int fx = x - fire[0];
+            int fy = y - fire[1];
+            if (fx * fx + fy * fy <= r * r)
                 return true;
         }
         return false;

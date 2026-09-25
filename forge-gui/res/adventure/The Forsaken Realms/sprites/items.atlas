@@ -1913,3 +1913,12 @@ SinistralGauntlet
 DextralGauntlet
   xy: 16, 0
   size: 16, 16
+
+items_bonfire.png
+size: 16,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Bonfire
+  xy: 0, 0
+  size: 16, 16

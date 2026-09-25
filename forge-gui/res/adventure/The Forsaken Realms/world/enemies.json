@@ -721,7 +721,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 2.0833,
+        "scale": 1.0,
         "life": 40,
         "rewards": [
             {
@@ -10773,7 +10773,7 @@
         "boss": true,
         "flying": true,
         "speed": 44,
-        "scale": 1.22,
+        "scale": 0.6499,
         "life": 100,
         "rewards": [
             {
@@ -13539,7 +13539,7 @@
         "ai": "",
         "boss": true,
         "speed": 10,
-        "scale": 2.04,
+        "scale": 1.4856,
         "life": 40,
         "rewards": [
             {
@@ -15940,7 +15940,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 2.44,
+        "scale": 1.2,
         "life": 40,
         "rewards": [
             {
@@ -19735,7 +19735,7 @@
         "ai": "",
         "spawnRate": 0.1,
         "boss": true,
-        "scale": 1,
+        "scale": 0.7092,
         "bossIntro": "Your 'truth' is a thin veil over a void that is hungry. I am the hand that pulls the thread.",
         "bossInsult": "Your reality is a structure of glass. I am the rock.",
         "difficulty": 0.5,
@@ -20008,7 +20008,7 @@
         "boss": true,
         "flying": true,
         "speed": 10,
-        "scale": 1.75,
+        "scale": 1.1304,
         "life": 40,
         "rewards": [
             {
@@ -20880,7 +20880,7 @@
         "ai": "",
         "boss": true,
         "speed": 10,
-        "scale": 2.84,
+        "scale": 1.3001,
         "life": 40,
         "rewards": [
             {
@@ -23918,7 +23918,7 @@
         ],
         "gamesPerMatch": 3,
         "tier": "Rare",
-        "scale": 0.992
+        "scale": 0.8914
     },
     {
         "name": "Orc Brute",
@@ -28024,7 +28024,7 @@
         "gamesPerMatch": 3,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.82
+        "scale": 0.6934
     },
     {
         "name": "Sliver_Black",
@@ -35999,7 +35999,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.62,
+        "scale": 0.6934,
         "life": 50,
         "rewards": [
             {
@@ -36076,7 +36076,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 4.88,
+        "scale": 2.5999,
         "life": 50,
         "rewards": [
             {
@@ -36153,7 +36153,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2.416,
+        "scale": 0.5201,
         "life": 70,
         "rewards": [
             {
@@ -36232,7 +36232,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 2.44,
+        "scale": 1.1556,
         "life": 50,
         "rewards": [
             {
@@ -59496,7 +59496,7 @@
         ],
         "ai": "",
         "speed": 50,
-        "scale": 2.461,
+        "scale": 2.2286,
         "life": 30,
         "rewards": [
             {
@@ -59840,7 +59840,7 @@
         ],
         "ai": "",
         "speed": 40,
-        "scale": 1.6256,
+        "scale": 0.7428,
         "life": 30,
         "rewards": [
             {
@@ -98846,7 +98846,7 @@
         "spawnRate": 0,
         "tier": "Rare",
         "difficulty": 2,
-        "scale": 0.82
+        "scale": 0.6934
     },
     {
         "name": "King Rohgahh",
@@ -116426,7 +116426,7 @@
         "spawnRate": 0.1,
         "difficulty": 1,
         "speed": 24,
-        "scale": 2,
+        "scale": 1.857,
         "life": 200,
         "rewards": [
             {
@@ -123272,7 +123272,7 @@
         "ai": "",
         "speed": 45,
         "flying": true,
-        "scale": 2.04,
+        "scale": 1.2,
         "life": 80,
         "rewards": [
             {
@@ -125568,7 +125568,7 @@
         ],
         "ai": "",
         "speed": 60,
-        "scale": 2,
+        "scale": 1.7727,
         "life": 60,
         "rewards": [
             {
@@ -125720,7 +125720,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.62,
+        "scale": 0.6499,
         "life": 70,
         "rewards": [
             {
@@ -125802,7 +125802,7 @@
         ],
         "ai": "",
         "speed": 45,
-        "scale": 1.616,
+        "scale": 0.5674,
         "life": 70,
         "rewards": [
             {

@@ -46,6 +46,10 @@ public class ItemData implements Serializable, Cloneable {
     public String commandOnUse;
     public int shardsNeeded;
     public DialogData dialogOnUse;
+    // Round 336: an item with a limited number of uses (the Bonfire kit): `uses` to a kit, `repairShards` to rebuild a
+    // spent one. The count left lives on the player (AdventurePlayer.usesLeft), not on this shared catalog entry.
+    public int uses;
+    public int repairShards;
 
 
     public ItemData()
@@ -68,6 +72,8 @@ public class ItemData implements Serializable, Cloneable {
         commandOnUse      = cpy.commandOnUse;
         shardsNeeded      = cpy.shardsNeeded;
         dialogOnUse       = cpy.dialogOnUse;
+        uses              = cpy.uses; // round 336
+        repairShards      = cpy.repairShards;
     }
 
     public Sprite sprite() {
@@ -84,6 +90,13 @@ public class ItemData implements Serializable, Cloneable {
             result += effect.getDescription();
         if(shardsNeeded != 0)
             result +=  shardsNeeded+" [+Shards]";
+        if (uses > 0) { // round 336: the kit's fires left, from the player
+            forge.adventure.player.AdventurePlayer player = forge.adventure.util.Current.player();
+            int left = player == null ? uses : player.usesLeft(this);
+            boolean lineOpen = !result.isEmpty() && result.charAt(result.length() - 1) != (char) 10;
+            result += (lineOpen ? " - " : "") + "Uses left: " + left + "/" + uses
+                    + (left <= 0 ? " (rebuild for " + repairShards + " [+Shards])" : "");
+        }
         return result;
     }
 

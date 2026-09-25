@@ -38,6 +38,22 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 336 — the Bonfire, the wider obstacle sweep
+
+- **`forge-gui-mobile/src/forge/adventure/data/ItemData.java`** — `uses` and `repairShards` (catalog fields, copied);
+  `getDescription()` adds "Uses left: n/N" from the player.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** — `itemUses` map (saved as `itemUses`, cleared
+  with a new character); `usesLeft()` / `spendUse()` / `repairItem()`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `bonfires` (saved), `BONFIRE_RADIUS`, `bonfireRadius()`,
+  `addBonfire()`, `liveBonfireNear()`, `removeDeadBonfires()`; `isPersistentlyRevealed()` and the fog reset count a
+  fire's disc. `clearObstaclesAroundSettlements()` -> `clearObstaclesAroundPlaces(onlyNear, cleared, log)` over every
+  place with a map, `obstaclesSwept` an int set number (`OBSTACLE_SWEEP`), and `claimWastelandRing()` sweeps the
+  places its ring touched and repaints what it emptied.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `BonfireActor`, `refreshBonfireActors()`,
+  `placeBonfire()`, `rebakeArea()`, `tickBonfires()` (day tick), `showBonfireRepairDialog()`, `playerTileX/Y()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — the "bonfire place" command.
+- **`forge-gui-mobile/src/forge/adventure/agent/AgentObserver.java`** — the state lists `bonfires`.
+
 ### Round 335 — one Jumpstart pool, doodad bands on grown land
 
 - **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** — `pickJumpstartCardBlock()` draws from every

@@ -7642,7 +7642,7 @@
                        "visionRadiusMultiplier":  2.0
                    },
         "description":  "Lights the way, doubling your visible range in the fog of war. Use it to flare the flame: for a moment your sight pulses out to three times its radius, and everything it touches stays on your map.",
-        "cost":  100,
+        "cost":  200,
         "iconName":  "Torch",
         "rarity":  "Common",
         "usableOnWorldMap":  true,
@@ -7676,6 +7676,22 @@
             ]
         },
         "rarity":  "Rare"
+    },
+    {
+        "name":  "Bonfire",
+        "equipmentSlot":  "Ability2",
+        "effect":  {
+                       "visionRadiusMultiplier":  2.0
+                   },
+        "description":  "A bundled campfire kit. Carried, it lights the way like a torch. Use it on the world map to build a bonfire where you stand: the fog lifts for 15 tiles around it, one tile less each day, until the fire dies out two weeks on. Ten fires to a kit; a spent kit is rebuilt for 50 shards.",
+        "cost":  500,
+        "iconName":  "Bonfire",
+        "rarity":  "Rare",
+        "usableOnWorldMap":  true,
+        "shardsNeeded":  1,
+        "commandOnUse":  "bonfire place",
+        "uses":  10,
+        "repairShards":  50
     },
     {
         "name":  "Chandler's Shoes",

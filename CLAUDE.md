@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (rounds 332-335 local + UNRELEASED - round 335 = one Jumpstart pool for every town and race, grown land takes the doodad noise bands (DOODAD_SET 335 re-scatters saves once); round 334 = map sprites dimmed under the fog, the sphinx at 4,000 once then its sanctum retired for good, the Jumpstart rescue (MSH dropped, stuck events refunded); untested in a running game because the agent refuses every save - see the round-334 line; rounds 332/333 = sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-25 (rounds 332-336 local + UNRELEASED - round 336 = the Bonfire item (a 15-tile fog lift that shrinks a tile a day, 10 uses a kit, 50-shard rebuild, one in every starting inventory FOR TESTING), Torch 200, every place swept of obstacles also after growth rings (OBSTACLE_SWEEP 336), 21 bosses capped at 48 px (BOSS_MAX in enemy_scale.py); round 335 = one Jumpstart pool for every town and race, grown land takes the doodad noise bands (DOODAD_SET 335 re-scatters saves once); round 334 = map sprites dimmed under the fog, the sphinx at 4,000 once then its sanctum retired for good, the Jumpstart rescue (MSH dropped, stuck events refunded); untested in a running game because the agent refuses every save - see the round-334 line; rounds 332/333 = sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
@@ -186,6 +186,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
   `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
   a rebuild.
+- **Round 336 (local, NOT pushed, 2026-09-25): the Bonfire item - Ability2 like the Torch (x2 sight), "bonfire place"
+  builds a fire on the player's tile for 1 shard that lifts the fog 15 tiles around, one tile less each day
+  (`World.bonfires` + `isPersistentlyRevealed()`, `WorldStage.tickBonfires` re-bakes, `BonfireActor` draws the stock
+  Spawn campfire from a new `items.atlas` page); 10 uses a kit (`ItemData.uses`, `AdventurePlayer.itemUses`), a spent
+  kit opens the 50-shard rebuild dialog; one in every difficulty's `startItems` FOR TESTING - take it out before a
+  release. Torch 100 -> 200. VeggieShark's obstacles-under-places: `World.clearObstaclesAroundPlaces()` sweeps every
+  place with a map, also after each growth ring (which re-rolls structures), and saves below `OBSTACLE_SWEEP` 336
+  sweep again on load. armadi's giant Zhulodok: `enemy_scale.py` `BOSS_MAX` 48 - 21 bosses lowered.** NOT seen in a
+  running game yet.
 - **Round 335 (local, NOT pushed): the Jumpstart tournament draws one product from the same pool in every town, for every
   race (`AdventureEventData.pickJumpstartCardBlock()` - no town narrowing, no round-322 fallbacks; only Human/Dwarf/
   Phyrexian ever had a Jumpstart companion set among their starting editions, and the user's two options - drop the
