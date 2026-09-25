@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 339: roaming enemies appear 3 to 13 tiles out (2026-09-25)
+
+User, after asking what "25% sooner" meant and how far the native and torch radii reach (native 3, Easy 4, Insane 2;
+Torch x2, Grand Torch x4): *"Let's tweak spawn spot: 3 to 13 tiles please"*. Local commit, NOT pushed.
+
+- **`WorldStage.spawnDistance()`**: a roaming enemy appears at a random distance of `spawnMinTiles`..`spawnMaxTiles`
+  (settings.json, 3 and 13) from the player, at a random angle. It was 1-4 sixths of the screen height - 2.8 to
+  11.25 tiles at the 270 px design height - in three places (the fog-zone judgement of round 338, `spawn()`'s own
+  draws, and `spawnQuestSprite()`), all on the helper now; quest sprites keep their own multiplier (2.5x) on top.
+
 ## Round 338: the fog zones - spawns, tiers and speed by the light (2026-09-25)
 
 User: *"For FoW, I'm notating 3 states: 1-Total Darkness 2-You see terrain, but nothing else. 3-Totally lifted, you

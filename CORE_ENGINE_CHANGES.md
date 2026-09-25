@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 339 — the spawn distance in tiles
+
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `spawnDistance()` replaces the screen-height sixths
+  in `handleMonsterSpawn()`, `spawn(EnemySprite, Vector2)` and `spawnQuestSprite()`.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** — `spawnMinTiles`, `spawnMaxTiles`.
+
 ### Round 338 — the fog zones
 
 - **`forge-gui-mobile/src/forge/adventure/data/BiomeData.java`** — `getEnemy(difficulty, injected, Boolean fogLit)`

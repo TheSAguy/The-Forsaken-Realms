@@ -210,6 +210,10 @@
     // unexplored. A lit roll goes ahead with fogLitSpawnChance; after a dark one the next roll comes fogDarkSpawnRate x
     // as fast; the tier row tilts per spawn_tier_weighting.json fogZoneFactors. An enemy standing in the dark moves
     // fogDarkEnemySpeed x as fast. Grep forge.log for "fog=" on [TFR-Spawn] and for [TFR-FogZone].
+    // Round 339 (user: "tweak spawn spot: 3 to 13 tiles"): how far from the player a roaming enemy appears, in tiles,
+    // at a random angle (was 2.8-11.25). Quest sprites take the same span times their own multiplier.
+    "spawnMinTiles": 3,
+    "spawnMaxTiles": 13,
     "fogLitSpawnChance": 0.75,
     "fogDarkSpawnRate": 1.25,
     "fogDarkEnemySpeed": 1.1,

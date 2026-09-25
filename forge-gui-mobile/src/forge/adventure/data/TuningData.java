@@ -315,6 +315,10 @@ public class TuningData {
     // a lit roll goes ahead with fogLitSpawnChance, a dark one makes the next roll come fogDarkSpawnRate x as fast; the
     // tier row tilts by spawn_tier_weighting.json fogZoneFactors. An enemy standing in the dark moves
     // fogDarkEnemySpeed x as fast (EnemySprite.fogSpeedFactor). The player's own speed is untouched.
+    // Round 339 (user: "tweak spawn spot: 3 to 13 tiles"): how far from the player a roaming enemy appears, in tiles,
+    // at a random angle. Was 1-4 sixths of the screen height (2.8-11.25 tiles at the 270 px design height).
+    public float spawnMinTiles = 3f;
+    public float spawnMaxTiles = 13f;
     public float fogLitSpawnChance = 0.75f;
     public float fogDarkSpawnRate = 1.25f;
     public float fogDarkEnemySpeed = 1.1f;

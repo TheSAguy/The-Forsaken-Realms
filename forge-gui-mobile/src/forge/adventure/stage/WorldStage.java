@@ -1754,9 +1754,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // roll goes ahead with fogLitSpawnChance and the tier row tilts to the easy end. Dark (dim or unexplored): the
         // next roll comes fogDarkSpawnRate x as fast and the row tilts to the hard end. Speed in the dark is
         // EnemySprite.fogSpeedFactor()'s business. Grep forge.log for "fog=" on [TFR-Spawn] and for [TFR-FogZone].
-        float spawnUnit = Scene.getIntendedHeight() / 6f;
         Vector2 spawnOffset = new Vector2(1, 1);
-        spawnOffset.setLength(spawnUnit + (spawnUnit * 3) * rand.nextFloat());
+        spawnOffset.setLength(spawnDistance()); // round 339: spawnMinTiles..spawnMaxTiles
         spawnOffset.setAngleDeg(360 * rand.nextFloat());
         int spotTileX = (int) ((player.getX() + spawnOffset.x) / world.getTileSize());
         int spotTileY = (int) ((player.getY() + spawnOffset.y) / world.getTileSize());
@@ -2000,13 +1999,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private boolean spawn(EnemySprite sprite, Vector2 preferred) {
         if (sprite == null)
             return false;
-        float unit = Scene.getIntendedHeight() / 6f;
         Vector2 spawnPos = new Vector2(1, 1);
         for (int j = 0; j < 10; j++) {
             if (j == 0 && preferred != null) {
                 spawnPos.set(preferred);
             } else {
-                spawnPos.setLength(unit + (unit * 3) * rand.nextFloat());
+                spawnPos.setLength(spawnDistance()); // round 339
                 spawnPos.setAngleDeg(360 * rand.nextFloat());
             }
             for (int i = 0; i < 10; i++) {
@@ -2087,13 +2085,22 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return legends;
     }
 
+    // Round 339 (user: "tweak spawn spot: 3 to 13 tiles"): how far from the player a roaming enemy appears - a random
+    // distance in settings.json spawnMinTiles..spawnMaxTiles, at a random angle. Was 1-4 sixths of the screen height,
+    // 2.8-11.25 tiles at the 270 px design height. Quest sprites take the same span times their own multiplier.
+    private float spawnDistance() {
+        TuningData tuning = Config.instance().getTuningData();
+        float min = tuning == null ? 3f : tuning.spawnMinTiles;
+        float max = tuning == null ? 13f : Math.max(min, tuning.spawnMaxTiles);
+        return Current.world().getTileSize() * (min + (max - min) * rand.nextFloat());
+    }
+
     private boolean spawnQuestSprite(EnemySprite sprite, float distanceMultiplier){
         if (sprite == null)
             return false;
-        float unit = Scene.getIntendedHeight() / 6f;
         Vector2 spawnPos = new Vector2(1, 1);
         for (int j = 0; j < 10; j++) {
-            spawnPos.setLength((unit + (unit * 3) * rand.nextFloat()) * distanceMultiplier);
+            spawnPos.setLength(spawnDistance() * distanceMultiplier); // round 339: the same span, times the quest's own factor
             spawnPos.setAngleDeg(360 * rand.nextFloat());
             for (int i = 0; i < 10; i++) {
                 boolean enemyXIsBigger = sprite.getX() > player.getX();
