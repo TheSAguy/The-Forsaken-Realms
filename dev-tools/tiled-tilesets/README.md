@@ -25,6 +25,8 @@ pipeline's rule.
 | `mv_outside_a1` | `Outside_A1.png` | the first frame of each animated autotile (columns 0 and 4 of every row); no animation |
 | `mv_outside_a4` | `Outside_A4.png` | roofs as blob sets, walls as 16-piece edge sets (`roof <band> c<col>`, `wall <band> c<col>`) |
 | `mv_outside_a5`, `mv_outside_b`, `mv_world_b`, `mv_world_c` | the plain sheets | plain tiles in sheet order |
+| `mv_walls` | `Walls.png` (round 342) | castles, houses, towers and city walls, plain tiles in sheet order |
+| `road` | `Road.png` block row 1 col 2 (round 342, the cobbles the user boxed) | one blob terrain set `road`, the sand keyed out (`key_out_sand`: pixels yellower than R-B 40 go clear), so it lies over any ground; no collision |
 
 Every MV tileset comes twice: `name.tsx` with no collision and `name-collide.tsx` where every tile has a full box -
 the same pairing as the stock `main.tsx` / `main-nocollide.tsx`. A map can hold both; use the `-collide` one for
@@ -48,6 +50,20 @@ Empty slots on a sheet (the user's Outside A2 rip fills 8 of 32 blocks, Outside 
    whole tile. For half-height fences or table tops, edit the shape in Tiled on that tileset.
 5. Test: package (`python standalone-packaging/build_standalone.py`) and enter the Capitol, or the agent
    (`dev-tools/agent`, `cmd goto poi="Player Capital"`, `shot`).
+
+## The templates (round 342)
+
+`make_templates.py` rebuilds `player_town.tmx` and `player_capital.tmx` from `maps/map/towns/` onto the player's
+ground and writes them to the user's `Player_Cap` folder (`--out`): the Background layer becomes the player land's
+base tile, its patch bands (Player_1 <= 0.25, Player_2 >= 0.75 of one value-noise field, the Player_3 overlay
+>= 0.8 of its own) go on the Ground layer where nothing sits, and in the Capitol the White Cap sand islands leave
+Ground and every visible road cell is repainted with the `road` set - courtyard roads stay on Walls (above the
+courtyard's brick in Ground2), the rest on Ground. Road and sand cells the old layout had buried under the
+courtyard's brick are dropped, not repainted. `--renders <folder>` writes before_/after_ PNGs at 2x. The templates
+reference their tilesets by absolute path (Tiled relativises them on save) and carry every tileset in this folder;
+when one comes back into `maps/map/towns/`, re-point the sources at `../../tileset/` and `../../../../common/...`
+and run Map > Remove Unused Tilesets. `tmx.py` (read/write/render a .tmx) and `paint.py` (terrain-set painting,
+value noise) are the helpers.
 
 ## Redoing the run
 

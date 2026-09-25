@@ -10,6 +10,9 @@ sprite is 16 units, so the tiles must be 16 px. This writes 16 px tilesets into 
                            structures (crater, tree, tree2, tree3, tree4, rock, mountain, hole), every one of the
                            47 blob shapes an autotile can take, with a Tiled TERRAIN SET per kind so the Terrain
                            Brush picks the right piece. Structures carry a full-tile collision box.
+  road.png/.tsx            round 342: the cobble road the user picked on Road.png (an A2 sheet, block row 1 col 2)
+                           with its sand keyed out, so it lies over any ground - a blob terrain set "road" of 47.
+  mv_walls  (.png + .tsx + -collide.tsx)   round 342: Walls.png, castles, houses and city walls, plain tiles.
   mv_outside_a1/a2/a4/a5/b, mv_world_a2/b/c  (.png + .tsx + -collide.tsx)
                            the RPG Maker MV sheets from the user's Terrain folder, 48 -> 16 px. A2 (and A1's first
                            frames) expand to blob terrain sets; A4's roofs to blob sets and its walls to 16-piece
@@ -362,6 +365,41 @@ def mv_plain(out_dir, art, sheet_name, ts_name):
     print("%s: %d plain tiles, %s" % (ts_name, len(ts.tiles), sheet.size))
 
 
+ROAD_BLOCK = (1, 2)  # Road.png block (row, col) - the cobbles on sand the user boxed in red
+
+
+def key_out_sand(block, yellow=40, fade=20):
+    """The road block's sand is yellow (R - B about 78), the cobbles grey (R - B within +-20): pixels yellower
+    than `yellow` go transparent, the band above it fades, so the road's edge keeps its stones and drops the sand."""
+    out = block.copy()
+    px = out.load()
+    for y in range(out.height):
+        for x in range(out.width):
+            r, g, b, a = px[x, y]
+            d = r - b
+            if d >= yellow + fade:
+                px[x, y] = (0, 0, 0, 0)
+            elif d > yellow:
+                px[x, y] = (r, g, b, a * (yellow + fade - d) // fade)
+    return out
+
+
+def road(out_dir, art, previews):
+    """One blob terrain set from the A2 block on Road.png the user picked, sand keyed out, 48 -> 16 px."""
+    src = Image.open(os.path.join(art, "Road.png")).convert("RGBA")
+    row, col = ROAD_BLOCK
+    raw = key_out_sand(src.crop((col * 96, row * 144, col * 96 + 96, row * 144 + 144)))
+    block = shrink(raw, 3)
+    xp = vx_to_xp(block, T)
+    ts = Tileset("road", 48)
+    ts.add_set("road", blob_tiles(xp, T), collide=False)
+    sheet = ts.write(out_dir)
+    print("road: %d tiles, %d terrain set, %s" % (len(ts.tiles), len(ts.wangsets), sheet.size))
+    if previews:
+        preview(out_dir, "road", [("road", xp)])
+    return xp
+
+
 # ---- previews -----------------------------------------------------------------------------------------------------
 DEMO = ["..###....",
         ".#####.#.",
@@ -401,7 +439,7 @@ def main():
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--art", default=DEFAULT_ART)
     ap.add_argument("--preview", action="store_true")
-    ap.add_argument("--only", default="", help="comma list: player,a1,a2,a4,a5,b,worlda2,worldb,worldc")
+    ap.add_argument("--only", default="", help="comma list: player,a1,a2,a4,a5,b,worlda2,worldb,worldc,walls,road")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     only = set(a.only.split(",")) if a.only else None
@@ -427,6 +465,10 @@ def main():
         mv_plain(a.out, a.art, "World_B.png", "mv_world_b")
     if want("worldc"):
         mv_plain(a.out, a.art, "World_C.png", "mv_world_c")
+    if want("walls"):
+        mv_plain(a.out, a.art, "Walls.png", "mv_walls")
+    if want("road"):
+        road(a.out, a.art, a.preview)
 
 
 if __name__ == "__main__":

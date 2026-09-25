@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 342: the Walls and road tilesets, the two templates on the player's ground (2026-09-25)
+
+User: *"Convert this one also, same folder 'Walls.png'. For the Roads, I want you to please create a road tile set
+using ...Road.png. I have highlighted the road texture I like. We will also be implementing this on the overworld at
+some point. ... player_town.tmx - Replace background with new player background. player_capital.tmx - Replace
+background with new player background. Replace roads with new Roads above. (Save the templates here ...Player_Cap)"*.
+Tooling and data, no engine change. Local commit, NOT pushed.
+
+- **`maps/tileset/mv_walls`** (.png, .tsx, -collide.tsx): Walls.png at 16 px, 256 plain tiles - castles, houses,
+  towers and city walls in a sand and a grey palette. (The user's own `Walls.tsx` in Player_Cap is the 48 px sheet
+  as Tiled read it; the 16 px one is what a place map needs.)
+- **`maps/tileset/road`**: the A2 block the user boxed on Road.png (row 1, col 2 - cobbles on sand) with the sand
+  keyed out (`make_tilesets.key_out_sand`: pixels yellower than R-B 40 go clear, a 20-wide fade), so the cobbles lie
+  over any ground: one blob terrain set `road` of 47 pieces, no collision. The overworld will want the same keyed
+  block as a 32 px XP autotile in a structure sheet - a later round.
+- **`dev-tools/tiled-tilesets/make_templates.py`** (+ `tmx.py`, a .tmx reader/writer/renderer, and `paint.py`,
+  terrain-set painting + value noise) rebuilt `player_town.tmx` and `player_capital.tmx` from `maps/map/towns/`
+  into the user's Player_Cap folder: Background = the player land's base tile everywhere; the patch bands on the
+  Ground layer where nothing sits (Player_1 <= 0.25 and Player_2 >= 0.75 of one value-noise field, the Player_3
+  overlay >= 0.8 of its own - player.json's bands); in the Capitol the White Cap sand islands leave Ground (535
+  cells) and every visible road cell is repainted with the road set - the courtyard's on Walls, where it was, above
+  the courtyard brick in Ground2, the rest on Ground (283 cells: 202 + 81). The old layout had 73 road cells and 129
+  brick cells buried under the courtyard brick, never seen; the first build repainted the buried road onto Walls as
+  a cobble blob across the courtyard - now buried cells are dropped, not repainted. Both templates reference their
+  tilesets by absolute path and carry every tileset in `maps/tileset/` (Tiled relativises on save; Remove Unused
+  Tilesets when the map comes back). SEEN in the 2x renders (sent to the user): the courtyard's road tree on the
+  brick, the right side's strips and the entrance road as cobbles running off the map edge, the town's plaza kept.
+- The plane's `player_town.tmx` / `player_capital.tmx` are UNCHANGED - the user paints in Tiled, then the map comes
+  back into `maps/map/towns/` with `../../tileset/` paths. The town's blue-grey gravel patches (Ground layer, the
+  old wasteland look) were not asked about and stay.
+
 ## Round 341: Tiled tilesets for the Player Capitol (2026-09-25)
 
 User: *"I want to redo the Player capitol. Currently just using a modified White Cap layout. In order for me to do
