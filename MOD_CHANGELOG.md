@@ -14300,8 +14300,9 @@ small tree as is"*). Local commit, NOT pushed. Live + agent folders packaged onc
   town's price modifier), marks the event Abandoned, logs `[TFR-Event] Jumpstart event on <block> voided - no packs
   to deal; entry returned: ...` and says so in a dialog ("No packs for this tournament"). `AdventureEventData` keeps
   its pinned serialVersionUID, so the two new fields read as 0 from older saves. Verified by reading only: the
-  filter and the dealer share one lookup, and MSH is the only product it excludes. The user's own save is the real
-  test.
+  filter and the dealer share one lookup, and MSH is the only product it excludes. SEEN in the user's game the same
+  evening: Select Deck on their stuck Marvel event brought up the dialog ("The Inn returns 5 [shards]") - the entry
+  they had paid in shards came back.
 - **GreenSapling back to scale 0.5** - round 333's 0.75 withdrawn before it was ever released.
 - **Open: the agent game refuses every save.** The user's copied auto save (as slot 10) and the agent's own Sep 23
   saves all end in "Could not load that save" with no `[TFR-Load]` line in the captured stderr
