@@ -14290,6 +14290,11 @@ player radius (if they had no torch or bonfire) would be stepping into Zone 3."*
   steps into the player's torch-light. Inside a place: no change. The player's speed is untouched.
 - Tunables in `settings.json` (`fogLitSpawnChance`, `fogDarkSpawnRate`, `fogDarkEnemySpeed`) and the table's
   `fogZoneFactors`.
+- SEEN in the agent (fresh world, fog on, the round-338 classes over the round-337 jar): two `[TFR-Spawn] ... fog=lit`
+  rolls (both Common) and one `[TFR-FogZone] lit spot (358,349) - this roll skipped`; no dark roll came up - the
+  bonfire's 15-tile light covered every spot the walks reached before a duel took over - so the dark delay and the
+  speed factor rest on the code. Same run: round 336's open item closed - `[TFR-Bonfire] day 2: burning (353,355)
+  r=14`, the fire's light one tile smaller on day 2. No exception.
 
 ## Round 337: the Rally rune answers for the Ring Cities (2026-09-25)
 
@@ -14298,8 +14303,8 @@ any of the 5 Ring Cities. If any of them are under attack, it will cycle through
 for the Homeward rune's icon to become the sixth icon of a rune sheet - pending the sheet file.) Local commit, NOT
 pushed. Also, the round 336 Bonfire seen in the agent game (fresh world, fog on): a fire built for 1 shard lifts 15
 tiles at once and the campfire draws at the player's feet, ten fires spend the kit, the eleventh refunds the shard
-and opens the rebuild dialog, Rebuild takes 50 shards and the kit builds again; the daily shrink and burn-out were
-NOT seen - every one-day wait near the spawn was cut short by a roaming duel. The widened obstacle sweep on that
+and opens the rebuild dialog, Rebuild takes 50 shards and the kit builds again; the daily shrink was seen in the
+round-338 run (r=14 on day 2), the burn-out at day 15 rests on the same arithmetic. The widened obstacle sweep on that
 fresh world: `[TFR-ClearGround] 2364 place(s) swept ... 12370 colliding obstacle(s) removed`, no exception.
 
 - **Rally targets** (`TerritoryControl.rallyTargets()`, replacing `playerTownsUnderAttack()` in the "teleport rally"

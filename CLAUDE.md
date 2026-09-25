@@ -190,7 +190,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   2 dim, 1 unexplored); `handleMonsterSpawn` judges the zone at the spot it will spawn on: lit rolls go ahead with
   `fogLitSpawnChance` 0.75 (`[TFR-FogZone]` skips) and tilt the tier row easy, dark rolls shorten the next delay by
   `fogDarkSpawnRate` 1.25 and tilt hard (`spawn_tier_weighting.json` `fogZoneFactors`, `BiomeData.getEnemy(..., fogLit)`);
-  `EnemySprite.fogSpeedFactor()` 1.1x in the dark on the world map. `[TFR-Spawn]` carries `fog=`.** Not seen in play.
+  `EnemySprite.fogSpeedFactor()` 1.1x in the dark on the world map. `[TFR-Spawn]` carries `fog=`.** Agent-seen: 2 lit
+  spawns + 1 skipped lit roll, no dark roll came up (the bonfire lit everything); the bonfire's day-2 shrink (r=14) seen.
 - **Round 337 (local, NOT pushed, 2026-09-25): the Rally rune rallies to a Ring City under attack too -
   `TerritoryControl.rallyTargets()` = own towns + Center Towns a mage targets, `isStarTown()` by the recorded tile;
   "teleport rally" uses it, banner + `[TFR-RallyRune]` say which.** Not seen in a running game. Round 336's Bonfire
