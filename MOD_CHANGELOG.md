@@ -14305,7 +14305,7 @@ small tree as is"*). Local commit, NOT pushed. Live + agent folders packaged onc
 - **GreenSapling back to scale 0.5** - round 333's 0.75 withdrawn before it was ever released.
 - **Open: the agent game refuses every save.** The user's copied auto save (as slot 10) and the agent's own Sep 23
   saves all end in "Could not load that save" with no `[TFR-Load]` line in the captured stderr
-  (`C:\TFRgentgent_launch_err2.cmd` writes stdout/stderr to `C:\TFRgent\out.txt` / `err.txt`, and err.txt does
+  (`C:\TFR\agent\agent_launch_err2.cmd` writes stdout/stderr to `C:\TFR\agent\out.txt` / `err.txt`, and err.txt does
   capture the card-loading warnings). `WorldSave.load()` has exactly one silent `return false`: the save file missing
   at `getSaveFile(slot)` - the lead for next time. The user's live game loads the same saves. Deferred at the user's
   word ("work on the load issue later").
