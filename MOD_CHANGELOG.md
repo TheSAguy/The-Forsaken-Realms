@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 344: five biome ruins as dungeon entrances (2026-09-25)
+
+User: *"Here are 5 more dungeon entrances. Looks like we could use 1 per biome"*, then, on the preview: *"I would
+switch the Red and Blue entrances."* Data only. Local commit, NOT pushed.
+
+- The five ruins (White/Water/Brown/Sand/Yellow_ruins1.png from the user's Dungeons folder, 80-112 px) shrunk to
+  32 px (LANCZOS, bottom-centred in 32x32 cells) on a new row of `maps/tileset/dungeon_entrances.atlas` (the page
+  now 256x184): RuinsWhite, RuinsSand, RuinsBrown, RuinsWater, RuinsYellow.
+- One dungeon per color biome takes its ruin - in each biome the dungeon whose icon was a generic building, picked
+  from a preview of every ruin on every biome's ground beside the candidates, the user switching Red and Blue:
+  white Castle1 "Fort" (was Building155) -> RuinsWhite; blue FortBlue2 "River Crossing" (Building134) -> RuinsSand;
+  black Graveyard4 "Graveyard" (Building3) -> RuinsBrown; red Maze3 "Maze" (StonePyramid) -> RuinsWater; green
+  Fort7 "Logging Camp" (Building16) -> RuinsYellow. Round 298's rule holds - every dungeon its own icon - and the
+  five old icons are free again. Existing worlds show the new icons (a place's sprite is looked up by name at load).
+- `dev-tools/validate_plane_data.py` learns round 338's `fogZoneFactors` (it had flagged the key as unknown); the
+  report is otherwise as before. CREDITS.md gets a "Dungeon ruins" line - the source is still to be named.
+- SEEN in the agent (a fresh world, console `teleport to poi`): River Crossing's sand ruin and the Graveyard's brown
+  ruin drawn at 32 px beside the player, crisp; the Fort, Maze and Logging Camp instances that world placed sat in
+  the dungeon rotation's reserve (hidden until they rotate in), so their icons could not be seen - same atlas, same
+  path. The atlas loads with no error in the log.
+
 ## Round 343: the Player Capitol and Player Town redone in Tiled, installed (2026-09-25)
 
 User: *"Okay, I've updated the two layouts here: ...Player_Cap. Review and if they look good, let's implement and see

@@ -156,7 +156,7 @@ F["AdventureQuestData"] = set("""isTemplate name description synopsis offerDialo
 F["AdventureQuestStage"] = None   # filled from argv[3] if given (long list); otherwise skipped
 F["ArmoryRarityData"] = set("venueBrackets".split())
 F["WeekBracket"] = set("weekMin weekMax common uncommon rare mythic".split())
-F["SpawnTierWeightData"] = set("weekBrackets territoryDeltas".split())
+F["SpawnTierWeightData"] = set("weekBrackets territoryDeltas fogZoneFactors".split())  # fogZoneFactors: round 338
 # The four *Scale multipliers landed in SpawnTierWeightData.TierDelta in round 183 but never here,
 # so every territory row of the shipped table reported as an unknown key.
 F["TierDelta"] = set("common uncommon rare mythic "
