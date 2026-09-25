@@ -256,20 +256,23 @@ public class ConsoleCommandInterpreter {
         // player lands on the overworld beside the town and can intercept the mage on the road
         // rather than being dropped inside the town.
         registerCommand(new String[]{"teleport", "rally"}, s -> {
-            List<PointOfInterest> underAttack = TerritoryControl.playerTownsUnderAttack();
+            List<PointOfInterest> underAttack = TerritoryControl.rallyTargets(); // round 337: the Ring Cities too
             PointOfInterest target = TerritoryControl.nextRallyTarget(Current.world(), underAttack);
             if (target == null) {
                 ItemData rune = ItemListData.getItem("Rally rune");
                 if (rune != null && rune.shardsNeeded > 0)
                     Current.player().addShards(rune.shardsNeeded);
-                GameHUD.getInstance().addNotification("None of your towns is under attack - the Rally rune stays quiet.");
-                System.out.println("[TFR-RallyRune] no player town under attack - nothing to rally to, shards refunded");
-                return "No player town is under attack";
+                GameHUD.getInstance().addNotification("None of your towns and no Ring City is under attack - the Rally rune stays quiet.");
+                System.out.println("[TFR-RallyRune] no player town or Ring City under attack - nothing to rally to, shards refunded");
+                return "No player town or Ring City is under attack";
             }
             WorldStage.getInstance().setPosition(new Vector2(target.getPosition().x - 16f, target.getPosition().y + 16f));
             WorldStage.getInstance().player.playEffect(Paths.EFFECT_TELEPORT, 10);
-            GameHUD.getInstance().addNotification("Rallied to " + target.getDisplayName()
-                    + (underAttack.size() > 1 ? " - " + underAttack.size() + " of your towns are under attack" : ""));
+            boolean ringCity = TerritoryControl.isRallyRingCity(Current.world(), target); // round 337
+            GameHUD.getInstance().addNotification("Rallied to " + target.getDisplayName() + (ringCity ? " - a Ring City under attack" : "")
+                    + (underAttack.size() > 1 ? " - " + underAttack.size() + " places are under attack" : ""));
+            System.out.println("[TFR-RallyRune] rallied to " + target.getDisplayName() + (ringCity ? " (Ring City)" : " (own town)")
+                    + ", " + underAttack.size() + " under attack");
             return "Teleported outside " + target.getDisplayName() + "(" + target.getPosition() + ")";
         });
         // Round 331 (testing aid): defeat a color as its last castle falling would - TerritoryControl.defeatColor() -

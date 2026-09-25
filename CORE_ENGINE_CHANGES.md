@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 337 — the Rally rune and the Ring Cities
+
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — `rallyTargets()`, `isStarTown()`,
+  `isRallyRingCity()` (mod helpers beside round 106's `playerTownsUnderAttack()`).
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — "teleport rally" draws on
+  `rallyTargets()` and names a Ring City in its banner.
+
 ### Round 336 — the Bonfire, the wider obstacle sweep
 
 - **`forge-gui-mobile/src/forge/adventure/data/ItemData.java`** — `uses` and `repairShards` (catalog fields, copied);

@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 337: the Rally rune answers for the Ring Cities (2026-09-25)
+
+User: *"for the Rally Rune, currently teleports you to a town you own that's under attack. Let's also add to that list
+any of the 5 Ring Cities. If any of them are under attack, it will cycle through them also."* (The same message asked
+for the Homeward rune's icon to become the sixth icon of a rune sheet - pending the sheet file.) Local commit, NOT
+pushed. Also, the round 336 Bonfire seen in the agent game (fresh world, fog on): a fire built for 1 shard lifts 15
+tiles at once and the campfire draws at the player's feet, ten fires spend the kit, the eleventh refunds the shard
+and opens the rebuild dialog, Rebuild takes 50 shards and the kit builds again; the daily shrink and burn-out were
+NOT seen - every one-day wait near the spawn was cut short by a roaming duel. The widened obstacle sweep on that
+fresh world: `[TFR-ClearGround] 2364 place(s) swept ... 12370 colliding obstacle(s) removed`, no exception.
+
+- **Rally targets** (`TerritoryControl.rallyTargets()`, replacing `playerTownsUnderAttack()` in the "teleport rally"
+  command): the player's towns a territory mage is flying at, as before, PLUS any of the five Center Towns (the
+  Ring Cities, `isStarTown()` by the tile World recorded at generation) under the same attack, whoever holds it -
+  the run is lost when one color holds three, so a Ring City under attack is the player's business. Same
+  de-duplication and stable id order, so the rune's cycle (`nextRallyTarget`) runs through them all. The banner
+  says "- a Ring City under attack" for one the player does not hold; the quiet case reads "None of your towns and
+  no Ring City is under attack". `[TFR-RallyRune] rallied to <place> (Ring City|own town), N under attack`. The
+  rune's item text says so (`world/items.json`).
+
 ## Round 336: the Bonfire, the Torch at 200, every place swept of obstacles, bosses capped at three tiles (2026-09-25)
 
 User: *"I want to add a new item. 'Bonfire'. Please use the camp fire icon that use to be where you exited the spawn

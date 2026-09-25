@@ -2859,6 +2859,38 @@ public class TerritoryControl {
         return new ArrayList<>(byId.values());
     }
 
+    /** Round 337 (user: "for the Rally Rune... add to that list any of the 5 Ring Cities. If any of them are under
+     *  attack, it will cycle through them also"): the player's towns under attack plus any Center Town a mage is flying
+     *  at, whoever holds it - the run is lost when one color holds three, so a Ring City under attack is the player's
+     *  business. Same de-duplication and stable order as playerTownsUnderAttack(). */
+    public static List<PointOfInterest> rallyTargets() {
+        java.util.TreeMap<String, PointOfInterest> byId = new java.util.TreeMap<>();
+        World world = Current.world();
+        for (EnemySprite mage : WorldStage.getInstance().getTerritoryMages()) {
+            PointOfInterest target = mage.territoryTarget;
+            if (target == null || !target.getActive())
+                continue;
+            if (isPlayerOwnedTown(target) || (world != null && isStarTown(world, target)))
+                byId.put(target.getID(), target);
+        }
+        return new ArrayList<>(byId.values());
+    }
+
+    /** One of the five Center Towns (the Ring Cities), by the tile World recorded at generation. */
+    public static boolean isStarTown(World world, PointOfInterest poi) {
+        int tx = (int) (poi.getPosition().x / world.getTileSize());
+        int ty = (int) (poi.getPosition().y / world.getTileSize());
+        for (int[] tile : world.getStarTownTiles())
+            if (tile[0] == tx && tile[1] == ty)
+                return true;
+        return false;
+    }
+
+    /** A Ring City the player does not hold - for the Rally rune's banner. */
+    public static boolean isRallyRingCity(World world, PointOfInterest poi) {
+        return world != null && isStarTown(world, poi) && !isPlayerOwnedTown(poi);
+    }
+
     private static boolean isPlayerOwnedTown(PointOfInterest poi) {
         if (poi.getData() == null)
             return false;
