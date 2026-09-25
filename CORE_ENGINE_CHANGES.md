@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 345 — kept-as-authored placements and the win flag
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `loadObjects()`: an enemy placement with
+  `keepAuthored` = true is `asAuthored` (no content filter, re-theme or recorded roster pick); `winQuestFlag` read
+  onto the sprite. `setWinner()`: the win path sets the sprite's `winQuestFlag` before the reward.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — `winQuestFlag`.
+
 ### Round 343 — the Capitol test cheat
 
 - **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — `debugRaiseCapitol(MapStage)`: the upgrade

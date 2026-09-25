@@ -1391,13 +1391,22 @@ public class MapStage extends GameStage {
                         Object enemy = prop.get("enemy");
                         if (enemy != null && !enemy.toString().isEmpty()) {
                             EnemyData EN = WorldData.getEnemy(enemy.toString());
+                            // Round 345 (the user, of the Demon's Bargain: its demon "was a random guy" - the
+                            // territory re-theme had swapped him): a placement the map marks keepAuthored loads as
+                            // authored, the way a boss or a quest target does.
+                            Object keepAuthored = prop.get("keepAuthored");
+                            boolean keptByMap = keepAuthored != null && Boolean.parseBoolean(keepAuthored.toString());
                             // Round 322: a placement that loads exactly as the map authored it - a boss or story
                             // fighter (isScriptedPlacement), or the enemy a quest stage sends the player here to beat
                             // (the Cidryl Shard Mines' Pirate Captain for "Defeat the mine captain"). Neither the
                             // content filter, the re-theme nor a recorded roster pick below may replace it.
-                            boolean asAuthored = EN != null && (isScriptedPlacement(EN)
+                            boolean asAuthored = EN != null && (keptByMap || isScriptedPlacement(EN)
                                     || AdventureQuestController.instance().isQuestTargetPlacement(EN,
                                             AdventureQuestController.instance().mostRecentPOI));
+                            if (keptByMap && EN != null)
+                                System.out.println("[TFR-Placement] " + (AdventureQuestController.instance().mostRecentPOI == null ? "?"
+                                        : AdventureQuestController.instance().mostRecentPOI.getDisplayName())
+                                        + ": #" + id + " kept as authored (" + EN.getName() + ")");
                             if (EN == null) {
                                 System.err.printf("Enemy \"%s\" not found, choosing a random one for current biome\n", enemy);
                                 forge.adventure.world.World world = Current.world();
@@ -1486,6 +1495,10 @@ public class MapStage extends GameStage {
                             dialogObject = prop.get("displayNameOverride"); //Check for name override.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {
                                 mob.nameOverride = dialogObject.toString();
+                            }
+                            dialogObject = prop.get("winQuestFlag"); // round 345: a flag the win sets (see setWinner)
+                            if (dialogObject != null && !dialogObject.toString().isEmpty()) {
+                                mob.winQuestFlag = dialogObject.toString();
                             }
                             dialogObject = prop.get("effect"); //Check for special effects.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {
@@ -2174,6 +2187,13 @@ public class MapStage extends GameStage {
                     currentMob.resetCollisionHeight();
                     float deathDuration = currentMob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 0.3f);
                     startPause(deathDuration, () -> {
+                        // Round 345: a placement's winQuestFlag (the Demon's Bargain: its POI retires on it - the
+                        // user: "if you accept the deal or defeat the guy, this dungeon should never re-appear").
+                        if (currentMob.winQuestFlag != null && !currentMob.winQuestFlag.isEmpty()) {
+                            Current.player().setQuestFlag(currentMob.winQuestFlag, 1);
+                            System.out.println("[TFR-Placement] " + currentMob.getName() + " beaten - quest flag "
+                                    + currentMob.winQuestFlag + " set");
+                        }
                         MapStage.this.getReward();
                         AdventureQuestController.instance().updateQuestsWin(currentMob,enemies);
                         AdventureQuestController.instance().showQuestDialogs(MapStage.this);

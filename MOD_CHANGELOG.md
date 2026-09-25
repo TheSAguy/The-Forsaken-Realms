@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 345: the Demon's Bargain keeps its demon and settles for good (2026-09-25)
+
+User: *"There is a Dungeon that you enter, that has a dialog. The guy asks you if you play for Ante. Usually the
+enemy is a Demon. But my last game he was a random guy. I'd like to hard code this guy to the original game guy, the
+Demon. Next, if you accept the deal or defeat the guy, this dungeon should never re-appear. If you lose, the dungeon
+should fade, but possible to re-appear on the map again."* Also: the user's one-cell Capitol tweak installed (the
+gate piece added to the Ground layer at 21,34 under the Overlay copy; their "Smaller Walls" tileset unused, dropped).
+Local commit, NOT pushed.
+
+- **The place**: `maps/map/lair/demons_bargain.tmx`, POI "DemonsBargain" (Demon's Bargain, a Hostile cave, one in the
+  world). Its object 50 "Demon" is authored as the Scourgemaster (a black demon, difficulty 2, 33 life) with the
+  ante dialog: accept the deal for ante cards or 20,000 gold at 2 life, or decline and fight.
+- **Why a random guy**: the Scourgemaster has an ordinary spawnRate and no story tag, so when the land the cave sits
+  on changed hands the territory re-theme (MOD_SCOPE #7) swapped him for the new owner's roster, as it does every
+  ordinary placement. **Now** a placement may say `keepAuthored` (a bool property on the object, round 345 in
+  `MapStage.loadObjects`) and it loads as authored - the same protection a boss, a story fighter or a quest target
+  gets: no content filter, no re-theme, no recorded roster pick. The Demon's Bargain's demon carries it; the log
+  says `[TFR-Placement] Demon's Bargain: #50 kept as authored (Scourgemaster)`.
+- **Settled for good**: the POI carries `retireOnQuestFlag: DemonsBargainSettled` (round 334's mechanism, the
+  Sphinx's Sanctum's). Both "Accept the deal" actions set the flag; beating the demon sets it too through a new
+  placement property `winQuestFlag` (`EnemySprite.winQuestFlag`, set in `MapStage.setWinner`'s win path before the
+  reward: `[TFR-Placement] Scourgemaster beaten - quest flag DemonsBargainSettled set`). The day tick then takes the
+  cave off the map and the reserve never brings it back; a new game gets it back, the flag being per game.
+- **A loss**: already the rotation's rule for a Hostile cave with no quest on it - `DungeonRotation.onDungeonDefeat`
+  hides it at once and a reserve place appears elsewhere; after its 10-30 day cooldown it can return to its own spot,
+  restocked, the demon back in it. No change needed; the flag is not set on a loss.
+- The same two properties work on any placement in any map: `keepAuthored` (true) and `winQuestFlag` (a flag name),
+  with `retireOnQuestFlag` on the POI to retire it.
+- **Scourgemaster in the arena** (the user, same hour: "add that Demon guy to one of the possible opponents in the Player's Level 2 arena"): appended to the Capitol's Challenging arena pool (player_capital.tmx object 61, `arenaChallenge.enemyPool`, 89 -> 90 names).
+- SEEN in the agent (fresh world, cheats): `[TFR-Placement] Demon's Bargain: #50 kept as authored (Scourgemaster)` on both entries; the fight lost (the Scourgemaster is a difficulty-2 demon against a starter deck) and the lair gone from the map, as the rotation's defeat rule does; back in through the console, "No, I don't use ante" -> "Accept the deal": 20,000 gold in, 2 life out, the demon gone from the map, the same action list that sets the flag. The retire tick itself was not reached - roaming duels near the spawn interrupted every day wait - so `retired for good` rests on round 334's proven path.
+
 ## Round 344: five biome ruins as dungeon entrances (2026-09-25)
 
 User: *"Here are 5 more dungeon entrances. Looks like we could use 1 per biome"*, then, on the preview: *"I would
