@@ -14321,7 +14321,9 @@ small tree as is"*). Local commit, NOT pushed. Live + agent folders packaged onc
   it) makes the day tick deactivate the lair for good (`[DungeonRotation] RiddlesLair retired for good - the player
   holds riddlesLairComplete`) and `activateFromReserve()` skip it. Existing saves included: a loaded place re-reads
   its data from the catalog by name (`PointOfInterest` line 27), so a save whose player already answered the riddles
-  loses the sanctum on its next day tick. NOT yet seen in a running game (the open item).
+  loses the sanctum on its next day tick. SEEN in the user's log the same evening: `[DungeonRotation] Sphinx's
+  Sanctum retired for good - the player holds riddlesLairComplete`. The voided Jumpstart Inn rolled a fresh Jumpstart
+  event right after (the player's flag is only set when an event starts) - from all 9 products.
 - **The Jumpstart rescue.** The stuck event was a Jumpstart tournament on *Marvel Super Heroes Jumpstart* (MSH):
   round 322's fallback offers every Jumpstart product when none is in the Inn's pool, and `blocks.txt` lists MSH,
   but `boosters-special.txt` holds no `MSH ...` pack templates (JMP/J22/J25 have 121 each, TLA 64,

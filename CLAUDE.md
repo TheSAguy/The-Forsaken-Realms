@@ -201,7 +201,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (`AdventureEventData.hasJumpstartPacks()` drops Marvel Super Heroes - the only product without `boosters-special.txt`
   templates - from the offer, `redealJumpstartPacks()`, and `EventScene.voidUndealableEvent()` refunds the entry of a
   pack-less event: the user's dead Select Deck button); GreenSapling back to 0.5.** The Jumpstart rescue SEEN in the
-  user's game (the dialog, 5 shards returned); the fog dimming and the sphinx retirement not yet seen in a running game:
+  user's game (the dialog, 5 shards returned) and the sphinx retirement in their log (`[DungeonRotation] ... retired for
+  good`); the fog dimming not yet seen in a running game:
   the agent game refuses every save ("Could not load that save", no `[TFR-Load]` line in captured stderr;
   `WorldSave.load()`'s only silent exit is the file-missing check - the next lead). Live + agent folders packaged.
 - **Round 332 (local commit, NOT pushed - after v1.14.1): the Sphinx's Sanctum riddles pay once (dialog roots gated on
