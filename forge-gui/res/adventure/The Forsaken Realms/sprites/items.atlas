@@ -1,5 +1,5 @@
 items.png
-size: 480,1072
+size: 480,1088
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none      
@@ -1170,6 +1170,18 @@ RixMaadiCloak
 Pilgrim'sCloak
   xy: 96, 16
   size: 16, 16
+Bonfire
+  xy: 0, 1072
+  size: 16, 16
+HomewardRune
+  xy: 16, 1072
+  size: 16, 16
+YinYangRune
+  xy: 32, 1072
+  size: 16, 16
+YinYangHalf
+  xy: 48, 1072
+  size: 16, 16
 items.png
 size: 480,1008
 format: RGBA8888
@@ -1911,35 +1923,5 @@ SinistralGauntlet
   xy: 0, 0
   size: 16, 16
 DextralGauntlet
-  xy: 16, 0
-  size: 16, 16
-
-items_bonfire.png
-size: 16,16
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-Bonfire
-  xy: 0, 0
-  size: 16, 16
-
-items_homeward.png
-size: 16,16
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-HomewardRune
-  xy: 0, 0
-  size: 16, 16
-
-items_yinyang.png
-size: 32,16
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-YinYangRune
-  xy: 0, 0
-  size: 16, 16
-YinYangHalf
   xy: 16, 0
   size: 16, 16

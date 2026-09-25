@@ -46,7 +46,8 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `yinYangAnchor` (saved), `yinYangLanding()`.
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `syncYinYangActor()`, `setYinYangHalf()`,
   `returnToYinYangHalf()`.
-- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — the "yinyang" command.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — the "yinyang" command; "glyph
+  test" (a banner of `[+name]` item glyphs, testing aid).
 
 ### Round 339 — the spawn distance in tiles
 

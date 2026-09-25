@@ -191,7 +191,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   four inventory/armory layouts); `visionRadiusMultiplier()` = max, not product. The Yin-Yang rune: "yinyang" sets the
   dark half on the player's tile (`World.yinYangAnchor`, drawn by `WorldStage.syncYinYangActor`), the next use lands
   the player there (`yinYangLanding()` finds a walkable tile within 2) and lifts it; world map only, refunds otherwise.
-  Rare 2000; Bonfire 500 -> 1200. Both runes in every `startItems` FOR TESTING.** Not seen in play.
+  Rare 2000; Bonfire 500 -> 1200. Both runes in every `startItems` FOR TESTING.** Agent-seen (340b): both worn, the HUD
+  and inventory right, drop/return cycles. TRAP (340b): the text font's `[+name]` glyphs break on small extra
+  `items.atlas` pages (every 0,0 region drew the campfire) - NEW ITEM ICONS GO ON THE MAIN items.png PAGE (grown to
+  480x1088, new row at y 1072), never on a page of their own; `glyph test <names>` shows a banner to check. The
+  per-frame actor sync lives at the top of `WorldStage.onActing` (a later block skips frames).
 - **Round 339 (local, NOT pushed, 2026-09-25): a roaming enemy appears `spawnMinTiles`..`spawnMaxTiles` (3..13) tiles from
   the player - `WorldStage.spawnDistance()`, used by the fog-zone judgement, `spawn()` and `spawnQuestSprite()` (x its own
   multiplier); was 2.8-11.25 tiles as sixths of the 270 px screen height.** Not seen in play.

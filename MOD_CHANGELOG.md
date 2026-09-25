@@ -14289,6 +14289,21 @@ thoughts on that."* Local commit, NOT pushed.
 - **Bonfire 500 -> 1200** (Rare): ten 15-tile lifts plus a Torch's sight sits above the Grand Torch (Rare, 1000),
   which only sees.
 - A Yin-Yang rune joins the Bonfire in every difficulty's `startItems` FOR TESTING - both come out before a release.
+- **Round 340b - two things the agent test caught.** (1) The HUD's ability button for the rune showed the campfire, and
+  the Homeward rune's would have too: the text font takes its `[+name]` item glyphs from `items.atlas` through
+  `Font.addAtlas`, and every region at 0,0 on one of the small extra pages (items_bonfire, items_homeward,
+  items_yinyang) drew the same picture - a `glyph test <names>` console command (kept, a testing aid) put it on a
+  banner: YinYangRune, HomewardRune and Bonfire all as the campfire, YinYangHalf at 16,0 right. The item sprites
+  (`Config.getItemSprite`) were fine, only the font's page handling. So the four new icons moved onto the main page:
+  `items.png` grew a 16 px row (480x1088, regions at y 1072), the three extra pages are gone. Rounds 336 and 337b's
+  own pages had the same flaw - the Bonfire only looked right because it was the one every 0,0 resolved to. (2) The
+  half on the ground never drew: the per-frame actor sync sat in a block of `onActing` that did not run after a
+  console use, so the anchor's actor was never built. The bonfire and rune syncs now run at the top of `onActing`
+  every frame, and the rune's two uses sync directly, like `placeBonfire()` always did; `[TFR-YinYang] half drawn
+  at (x,y)` logs it. SEEN in the agent after the fixes: the glyph banner right for all four, the HUD showing the
+  yin-yang beside the campfire with both worn, the third inventory box on the doll's top row, drop and return
+  cycles (353,355 and 353,368, two shards a cycle), the log's `half drawn` line. The first marker screenshot lay
+  under a castle icon by bad luck of the test spot; the half on open ground is in the round's screenshots.
 
 ## Round 339: roaming enemies appear 3 to 13 tiles out (2026-09-25)
 

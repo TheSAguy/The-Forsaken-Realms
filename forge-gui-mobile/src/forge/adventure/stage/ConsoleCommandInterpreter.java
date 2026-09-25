@@ -976,6 +976,15 @@ public class ConsoleCommandInterpreter {
             System.out.println("[TFR-YinYang] returned to (" + landing[0] + "," + landing[1] + "), the half taken up");
             return "Returned to the Yin-Yang half at " + landing[0] + "," + landing[1];
         });
+        // Round 340 (testing aid): shows the named item glyphs on a banner - which of the items atlas pages the HUD font
+        // can draw. "glyph test YinYangRune Bonfire" -> "[+YinYangRune] [+Bonfire]".
+        registerCommand(new String[]{"glyph", "test"}, s -> {
+            StringBuilder b = new StringBuilder("[BLACK]glyphs:");
+            for (String name : s)
+                b.append(" ").append(name).append("=[+").append(name).append("]");
+            GameHUD.getInstance().addNotification(b.toString(), true);
+            return "shown: " + b;
+        });
         registerCommand(new String[]{"fog", "reset"}, s ->
                 WorldSave.getCurrentSave().getWorld().resetFogOfWarToOwnership());
         // TESTING ONLY (user request 2026-08-14) - REMOVE once the Color Defeat mechanic

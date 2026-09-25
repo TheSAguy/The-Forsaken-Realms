@@ -430,8 +430,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         int[] anchor = world.getYinYangAnchor();
         Sprite sprite = anchor == null ? null : Config.instance().getItemSprite("YinYangHalf");
-        if (sprite == null)
+        if (sprite == null) {
+            if (anchor != null)
+                System.out.println("[TFR-YinYang] no YinYangHalf region in the items atlas - the half is not drawn");
             return;
+        }
+        System.out.println("[TFR-YinYang] half drawn at (" + anchor[0] + "," + anchor[1] + "), region " + sprite.getRegionWidth()
+                + "x" + sprite.getRegionHeight());
         int tileSize = world.getTileSize();
         yinYangActor = new Actor() {
             @Override
@@ -451,6 +456,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     public int[] setYinYangHalf() {
         int[] tile = {playerTileX(), playerTileY()};
         Current.world().setYinYangAnchor(tile);
+        syncYinYangActor(Current.world());
         return tile;
     }
 
@@ -463,6 +469,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         int ts = world.getTileSize();
         setPosition(new Vector2(landing[0] * ts, landing[1] * ts));
         world.setYinYangAnchor(null);
+        syncYinYangActor(world);
         return landing;
     }
 
@@ -542,6 +549,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     @Override
     protected void onActing(float delta) {
+        { // round 340: the fires and the rune's half follow the world's lists every frame, whatever else the frame does
+            World synced = Current.world();
+            if (synced != null) {
+                syncBonfireActors(synced);
+                syncYinYangActor(synced);
+            }
+        }
         if (isPaused() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
             return;
         setDownOffBarrier(); // round 294
@@ -607,8 +621,6 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // Per frame while moving, not just on day change - pickups are walk-over, so the
             // collection check has to track the player's live position (cheap; see its comment).
             ResourceSpawns.tick(world, dayAfter);
-            syncBonfireActors(world); // round 336
-            syncYinYangActor(world); // round 340
             handleMonsterSpawn(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;
