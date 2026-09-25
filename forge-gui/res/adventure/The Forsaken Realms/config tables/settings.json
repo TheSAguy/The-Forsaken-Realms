@@ -364,10 +364,10 @@
     "resourcePurseEnabled": true,
     // BASE PURSE PER RANK, in gold-equivalent value (Common = Apprentice, Uncommon = Adept, Rare = Master,
     // Mythic = Archmage). About what a win was worth before, so total income stays level.
-    "resourcePurseCommon": 30,
-    "resourcePurseUncommon": 45,
-    "resourcePurseRare": 65,
-    "resourcePurseMythic": 80,
+    "resourcePurseCommon": 60,
+    "resourcePurseUncommon": 90,
+    "resourcePurseRare": 130,
+    "resourcePurseMythic": 160,
     // This share of the purse is always paid as gold. The rest is ONE bonus resource, rolled on the enemy's color.
     "resourcePurseGoldShare": 0.35,
     // Gold value of one wood / stone / shard when the bonus is paid in them (the Exchange buys 5 for 80).

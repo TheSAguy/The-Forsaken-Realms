@@ -1008,7 +1008,7 @@
 "layer":0,
 "resolution":5,
 "density":0.15,
-"scale":0.5
+"scale":0.75
 },{
 "name":"WasteSkull",
 "atlas":"world/sprites/doodads_hd.atlas",

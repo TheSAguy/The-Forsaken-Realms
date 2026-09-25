@@ -14294,6 +14294,12 @@ DUEL purse, confirmed when asked. Local commit, NOT pushed (post-1.14.1). Data +
   low but within luck for 23 draws.
 - An earlier agent run ended with a clean "[Controllers] removed manager" right after the sphinx's gate line with
   no exception - not reproduced on two later runs; noted.
+- **Round 333 (same evening, the user: "Let's actually not Half the Duel Purse, lease that as is")** - settings.json's
+  resourcePurse* back to 60/90/130/160 (never packaged at 30/45/65/80). Also: **the Capitol's Level 2 tournament
+  (the Challenging Arena, `arenaChallenge` in `player_capital.tmx`) costs 500 gold to enter** (was 300; Level 1 stays
+  100), and **GreenSapling draws 50% bigger** (`map_sprites.json` scale 0.5 -> 0.75; the user circled the small round
+  tree on Green land - it is green's only such doodad, the other lands have their own kinds). Existing saves show the
+  new size at once: the scale is read from the catalog at draw time. Live + agent folders packaged.
 
 ## Round 331: v1.14.1 hotfix - every obstacle bordered, black banners, calmer growth rings (2026-09-24)
 

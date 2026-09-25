@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (round 332 local + UNRELEASED: sphinx riddles pay once, dialog gold banner, duel purse halved - see the round-332 line; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (rounds 332 + 333 local + UNRELEASED: sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
@@ -188,8 +188,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   a rebuild.
 - **Round 332 (local commit, NOT pushed - after v1.14.1): the Sphinx's Sanctum riddles pay once (dialog roots gated on
   `riddlesLairComplete`, the reward 8,000 / 250 / a 2ED pack kept - it was farmable every rotation), a dialog's gold and
-  shards get a banner (`MapDialog.setEffects()`, `[TFR-DialogGrant]`), the duel purse halved (settings.json
-  resourcePurse* 60/90/130/160 -> 30/45/65/80).** Seen in the agent game. The user's 326-day soak log was clean.
+  shards get a banner (`MapDialog.setEffects()`, `[TFR-DialogGrant]`).** Seen in the agent game. The user's 326-day
+  soak log was clean. **Round 333 (local, NOT pushed):** the duel-purse halving of round 332 REVERTED the same evening
+  (resourcePurse* stay 60/90/130/160); the Capitol's Level 2 (Challenging) arena entry fee 300 -> 500 gold;
+  GreenSapling doodad scale 0.5 -> 0.75. Live + agent folders packaged with 332 + 333.
 - **Round 331 (local commit, NOT pushed; the v1.14.1 hotfix): every colliding structure bordered in black by the engine
   (`World.outlineStructures()`, around the stitched shape, cached per frame), the white banners black, growth rings at
   1x doodad density (`DOODAD_SET` 331), a fallen color's rune quiet and free (`useItem()`), the +Life pickup key per
