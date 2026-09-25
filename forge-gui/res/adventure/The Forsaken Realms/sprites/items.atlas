@@ -1922,3 +1922,12 @@ repeat: none
 Bonfire
   xy: 0, 0
   size: 16, 16
+
+items_homeward.png
+size: 16,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+HomewardRune
+  xy: 0, 0
+  size: 16, 16

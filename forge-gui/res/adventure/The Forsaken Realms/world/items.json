@@ -521,7 +521,7 @@
         "equipmentSlot":  "Ability2",
         "description":  "Teleports you home - to just outside Orazca, or your Capitol once you've raised one",
         "commandOnUse":  "teleport home",
-        "iconName":  "ColorlessRune",
+        "iconName":  "HomewardRune",
         "questItem":  true,
         "shardsNeeded":  1,
         "cost": 1600,

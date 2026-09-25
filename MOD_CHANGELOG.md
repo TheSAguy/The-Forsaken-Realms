@@ -14315,6 +14315,13 @@ fresh world: `[TFR-ClearGround] 2364 place(s) swept ... 12370 colliding obstacle
   says "- a Ring City under attack" for one the player does not hold; the quiet case reads "None of your towns and
   no Ring City is under attack". `[TFR-RallyRune] rallied to <place> (Ring City|own town), N under attack`. The
   rune's item text says so (`world/items.json`).
+- **Round 337b - the Homeward rune's icon** (the user: *"The rune that takes you to your capitol. Old neutral rune. Can you
+  please replace that icon"*, then a 256 px painting of a cracked map-disc with the five mana gems: *"Can you possibly
+  scale it vs. me just shrinking it to 16x16"*): six downscales and three hand-drawn 16 px versions were shown at 8x
+  beside the current icons; the user chose the Lanczos downscale with contrast/saturation boost and an unsharp mask
+  ("C"), hard-edged alpha. A fifth page of `sprites/items.atlas` (`items_homeward.png`, region `HomewardRune`);
+  `iconName` ColorlessRune -> HomewardRune on the Homeward rune only (no other item used ColorlessRune, the region
+  stays). Data only - packaged without a build.
 
 ## Round 336: the Bonfire, the Torch at 200, every place swept of obstacles, bosses capped at three tiles (2026-09-25)
 
