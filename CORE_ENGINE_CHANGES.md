@@ -38,6 +38,13 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 343 — the Capitol test cheat
+
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — `debugRaiseCapitol(MapStage)`: the upgrade
+  from inside Orazca without the five-town gate, the cost still paid (a testing aid).
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — the "capitol raise" command
+  (cheats only).
+
 ### Round 340 — the third ability slot, the Yin-Yang rune
 
 - **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** — `slotCandidates()` adds Ability3 for every

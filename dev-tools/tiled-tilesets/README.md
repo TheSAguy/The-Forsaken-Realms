@@ -69,6 +69,19 @@ when one comes back into `maps/map/towns/`, re-point the sources at `../../tiles
 and run Map > Remove Unused Tilesets. `tmx.py` (read/write/render a .tmx) and `paint.py` (terrain-set painting,
 value noise) are the helpers.
 
+## Installing the finished maps (round 343)
+
+`install_templates.py` takes `player_town.tmx` / `player_capital.tmx` as Tiled saved them in the Player_Cap folder
+and writes them into `maps/map/towns/`: every reference (tilesets, the embedded main image, the `.tx` object
+templates) re-pointed at the plane's folders, unused tilesets dropped, a refusal while anything fails to resolve, and
+the six fixed land shops (Tiled object ids 55, 77-81) reported. The user's own 48 px `Walls.tsx` becomes
+`maps/tileset/walls_48.tsx` (+ `-nocollide`), a shipping copy with collision: each piece blocks its opaque extent,
+the gate piece 145 two side boxes with the middle open. A 48 px tile on the 16 px grid hangs from its cell's
+bottom-left corner in Tiled and in libgdx alike, and libgdx flips a tile's collision boxes by the tile's own height,
+so a full box blocks exactly the 3x3 cells the piece covers. To see the Capitol in play without restoring five
+towns: cheats on, stand in Orazca, `give gold 2000`, `give wood 200`, `give stone 200`, `give shards 100`, then
+`capitol raise`, leave, and `teleport to poi "Player Capitol"`.
+
 ## Redoing the run
 
 The generator is deterministic: rerunning overwrites the same files. If a sheet changes (a fuller Outside A2), rerun

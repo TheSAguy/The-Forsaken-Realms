@@ -612,6 +612,10 @@ public class ConsoleCommandInterpreter {
             currentSprite().playEffect(Paths.EFFECT_HEAL);
             return "Player fully healed. Health set to " + Current.player().getLife() + ".";
         });
+        // Round 343 (testing aid): raise the Capitol from inside Orazca without the five-town gate, cost still paid -
+        // the way to see player_capital.tmx in play after a layout change. Cheats only, like every command here.
+        registerCommand(new String[]{"capitol", "raise"}, s ->
+                forge.adventure.util.TownRestoration.debugRaiseCapitol(MapStage.getInstance()));
         registerCommand(new String[]{"listPOI"}, s -> {
             ArrayList<String> poiNames = new ArrayList<>();
             List<BiomeData> biomeData = WorldSave.getCurrentSave().getWorld().getData().GetBiomes();

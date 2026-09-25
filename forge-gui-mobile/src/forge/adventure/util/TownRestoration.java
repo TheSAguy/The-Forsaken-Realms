@@ -965,6 +965,26 @@ public class TownRestoration {
      * old tmx; re-entering loads the capital layout fresh - simplest correct swap, per
      * discussion with the user).
      */
+    /**
+     * Round 343 (a testing aid, the console's cheats-only "capitol raise"): the upgrade from inside Orazca without
+     * the five-town gate - the cost is still paid, so give the resources first. Lets a map tester see
+     * player_capital.tmx in play without restoring five towns.
+     */
+    public static String debugRaiseCapitol(MapStage stage) {
+        PointOfInterest point = TileMapScene.instance().rootPoint;
+        if (point == null || !stage.isInMap())
+            return "Stand inside Orazca first.";
+        if (!isOrazca(point.getData()))
+            return "This is " + point.getDisplayName() + ", not Orazca.";
+        if (capitolExists())
+            return "The Capitol already stands.";
+        if (!EconomyBuildings.canAffordCost(CAPITOL_COST_GOLD, CAPITOL_COST_WOOD, CAPITOL_COST_STONE, CAPITOL_COST_SHARDS))
+            return "Cannot afford the upgrade (" + EconomyBuildings.costLabel(CAPITOL_COST_GOLD, CAPITOL_COST_WOOD,
+                    CAPITOL_COST_STONE, CAPITOL_COST_SHARDS) + ") - give gold/wood/stone/shards first.";
+        upgradeToCapitol(stage);
+        return "The Capitol is raised - walk back in for its layout.";
+    }
+
     private static void upgradeToCapitol(MapStage stage) {
         PointOfInterest point = TileMapScene.instance().rootPoint;
         if (point == null)

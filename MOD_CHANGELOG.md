@@ -14264,6 +14264,45 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 343: the Player Capitol and Player Town redone in Tiled, installed (2026-09-25)
+
+User: *"Okay, I've updated the two layouts here: ...Player_Cap. Review and if they look good, let's implement and see
+how it looks. Why are there two 'Quest' objects in the Capitol?"* Map data, a shipping tileset, the installer, and one
+cheats-only console command for testing. Local commit, NOT pushed.
+
+- **`maps/map/towns/player_capital.tmx`** - the user's layout: the player land's ground and patches, the cobble road
+  set, the MV castle wall ringing the whole town (Walls.png at 48 px - corner towers, the south gate, a temple piece in
+  the courtyard, two shrines), trees from `mv_world_c`, the old inner wall kept round the courtyard; all 34 objects as
+  they were (the fixed land shops 55/77-81, the arena, the research lab, both quest givers, the Warden).
+  **`player_town.tmx`** - the player ground with trees, the plaza kept.
+- **`maps/tileset/walls_48.png/.tsx/-nocollide.tsx`** - the user built the wall from their own 48 px `Walls.tsx`
+  (Tiled's read of Walls.png), which has no collision and lives outside the plane. `install_templates.py` ships it as
+  walls_48 with collision from each piece's opaque extent (the vertical bands 160/162 are 24 px wide, the shrine sits
+  inside its tile) and the gate piece 145 with two side boxes, its middle third open for the road. A 48 px tile on the
+  16 px grid hangs from its cell's bottom-left corner (Tiled and libgdx alike) and libgdx flips a tile's boxes by the
+  tile's OWN height, so a full box blocks exactly the 3x3 cells the piece covers.
+- **`dev-tools/tiled-tilesets/install_templates.py`**: reads the Player_Cap maps as Tiled saved them (paths relative
+  to that folder; firstgids recomputed by Tiled, which counts a tileset's tiles from its image - 576 for player_land
+  where the .tsx says 565; harmless, libgdx counts the same way), re-points every reference (tilesets, the embedded
+  main image, the .tx object templates) at the plane's folders, drops the tilesets the map does not use (19 of 28 in
+  the Capitol), refuses to finish while any reference fails to resolve, and prints the six fixed land shops. `tmx.py`
+  now hangs oversized tiles from the cell's bottom-left, as the game draws them.
+- **The two Quest objects**: object 66 (`questtype` waste_town_generic) is the Job Board every town has, the "?"
+  sign; object 104 (`questtype` player_capital) is the Capitol's own pool - "Find the White/Blue/Black/Red/Green
+  Capital" and "Travel" in quests.json - the "!" sign beside it. Both were in the old layout; the second is what sends
+  the player after the five AI capitals.
+- **Console `capitol raise`** (cheats only; `TownRestoration.debugRaiseCapitol`): raises the Capitol from inside
+  Orazca without the five-town gate, the cost still paid - the way to see player_capital.tmx in play after a layout
+  change. Orazca itself keeps `orazca.tmx` after a restore; `player_town.tmx` is what OTHER restored towns render from.
+- SEEN in the agent (fresh world; `give` resources, the Job Board's Restore, `capitol raise`, `teleport to poi
+  "Player Capitol"`): the Capitol loads with all 34 objects; wall, towers, gate and roads draw as in Tiled; a walk west
+  stops at x 60 px against the wall band (its box ends at 56) and a walk into the wall is refused; the gate passes both
+  ways (column 22, row 36 in to row 10, and out again). TRAP: the walker's `goto tile` is y-up - Tiled row =
+  height - 1 - y. The Player Town layout is not seen in play (needs a second town restored); it is the ground and tree
+  edit over the plaza kept as it was.
+- Not mine, in the working tree: the user re-saved `orazca.tmx` in Tiled - no tile changes, but the Warden (object
+  100) moved from (112,224) to (131.8,209.8). Left uncommitted for the user's word.
+
 ## Round 342: the Walls and road tilesets, the two templates on the player's ground (2026-09-25)
 
 User: *"Convert this one also, same folder 'Walls.png'. For the Roads, I want you to please create a road tile set

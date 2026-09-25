@@ -181,7 +181,8 @@ class Map:
                         tile = tile.transpose(Image.FLIP_LEFT_RIGHT)
                     if gid & 0x40000000:
                         tile = tile.transpose(Image.FLIP_TOP_BOTTOM)
-                    img.alpha_composite(tile, (x * self.tw, y * self.th))
+                    # a tile larger than the grid hangs from the cell's bottom-left corner, as Tiled and libgdx draw it
+                    img.alpha_composite(tile, (x * self.tw, (y + 1) * self.th - tile.height))
         if scale != 1:
             img = img.resize((img.width * scale, img.height * scale), Image.NEAREST)
         return img
