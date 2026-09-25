@@ -196,7 +196,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   `../../tileset/` + `../../../../common/...` and Remove Unused Tilesets.** The overworld road (a 32 px XP sheet from
   the same keyed block) is still to do. 342b: the high band paints Player_3, not Player_2 (the gravel read as road
   bits outside the walls); `maps/tileset/mv_statues` = Statues.png's B sheet (the MV Dungeon composite, cut at
-  `STATUES_B` = (388, 726, 1156, 1494)), plain + -collide, attached to both templates.
+  `STATUES_B` = (388, 726, 1156, 1494)), plain + -collide, attached to both templates. 342c: the objects' `.tx`
+  templates (maps/obj) are absolutized too - Tiled had reported them missing - and the build checks every reference
+  resolves (`tmx.Map.missing()`).
 - **Round 341 (local, NOT pushed, 2026-09-25): `dev-tools/tiled-tilesets/make_tilesets.py` -> `maps/tileset/player_land`
   (the player land's HD ground + structures as 16 px Tiled terrain sets, 47 blob shapes each, structures collide) and
   `mv_outside_*` / `mv_world_*` (the user's MV sheets at 16 px, blob sets for A1/A2/A4, plain for A5/B/C, plain +

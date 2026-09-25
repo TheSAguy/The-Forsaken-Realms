@@ -62,7 +62,9 @@ where nothing sits, and in the Capitol the White Cap sand islands leave
 Ground and every visible road cell is repainted with the `road` set - courtyard roads stay on Walls (above the
 courtyard's brick in Ground2), the rest on Ground. Road and sand cells the old layout had buried under the
 courtyard's brick are dropped, not repainted. `--renders <folder>` writes before_/after_ PNGs at 2x. The templates
-reference their tilesets by absolute path (Tiled relativises them on save) and carry every tileset in this folder;
+reference their tilesets AND their object templates (the shops, NPCs and entries are `.tx` files in `maps/obj/`;
+Tiled reported them missing from the Player_Cap folder, round 342c) by absolute path (Tiled relativises them on
+save); the build refuses to finish while any reference fails to resolve. They carry every tileset in this folder;
 when one comes back into `maps/map/towns/`, re-point the sources at `../../tileset/` and `../../../../common/...`
 and run Map > Remove Unused Tilesets. `tmx.py` (read/write/render a .tmx) and `paint.py` (terrain-set painting,
 value noise) are the helpers.

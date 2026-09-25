@@ -14305,6 +14305,13 @@ Tooling and data, no engine change. Local commit, NOT pushed.
   (angels, knights, the gold idol, the dragon, pillars, ore piles, crystals, coffins), cut at x 388, y 726
   (`STATUES_B`) and downscaled to 256 plain tiles; the sheet keeps its transparency, nothing to key. Both
   templates attach it. Rebuilt into Player_Cap (the user had not saved over the 10:46 files - checked by mtime).
+- **Round 342c** (the user, opening the Capitol in Tiled: *"Some files could not be found"* - spellsmith.tx, shop.tx,
+  research_lab.tx, quest.tx, inn.tx, entry_up.tx looked for under C:/Users/common/maps/obj). The shops, NPCs and
+  entries in the Objects layer are Tiled object templates (`.tx` in common/maps/obj and the plane's maps/obj),
+  referenced relative to the map, and round 342 absolutized only the tilesets. `tmx.absolutize()` now rewrites the
+  objects' `template` (and any image layer) too, and `make_templates` refuses to finish while a reference fails to
+  resolve (`Map.missing()`): 61 references in the Capitol, 38 in the Town, all resolving. Rebuilt into Player_Cap;
+  the file the user had open was the earlier build - close the tab without saving and reopen.
 
 ## Round 341: Tiled tilesets for the Player Capitol (2026-09-25)
 

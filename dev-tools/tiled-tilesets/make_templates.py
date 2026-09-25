@@ -154,8 +154,13 @@ def build(name, out_dir, renders):
     out = os.path.join(out_dir, name + ".tmx")
     m.write(out)
     print("wrote", out)
+    written = tmx.Map(out)
+    missing = written.missing()
+    if missing:
+        raise SystemExit("%s: %d reference(s) do not resolve from %s: %s" % (name, len(missing), out_dir, missing))
+    print("%s: all %d file references resolve (tilesets, images, object templates)" % (name, len(written.references())))
     if renders:
-        tmx.Map(out).render(2).save(os.path.join(renders, "after_%s.png" % name))
+        written.render(2).save(os.path.join(renders, "after_%s.png" % name))
 
 
 def main():

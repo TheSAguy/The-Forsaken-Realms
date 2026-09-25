@@ -116,15 +116,51 @@ class Map:
         return firstgid
 
     def absolutize(self):
-        """Every tileset reference (and an embedded tileset's image) as an absolute path with forward slashes."""
+        """Every file reference - tileset sources, an embedded tileset's image, and the objects' templates (the
+        shops, NPCs and entries are .tx templates from maps/obj/) - as an absolute path with forward slashes."""
         base = os.path.dirname(os.path.abspath(self.path))
+
+        def absolute(rel):
+            return os.path.abspath(os.path.join(base, rel)).replace(os.sep, "/")
+
         for el in self.root.findall("tileset"):
             if el.get("source"):
-                el.set("source", os.path.abspath(os.path.join(base, el.get("source"))).replace(os.sep, "/"))
+                el.set("source", absolute(el.get("source")))
             else:
                 img = el.find("image")
                 if img is not None:
-                    img.set("source", os.path.abspath(os.path.join(base, img.get("source"))).replace(os.sep, "/"))
+                    img.set("source", absolute(img.get("source")))
+        for il in self.root.findall("imagelayer"):
+            img = il.find("image")
+            if img is not None and img.get("source"):
+                img.set("source", absolute(img.get("source")))
+        for obj in self.root.iter("object"):
+            if obj.get("template"):
+                obj.set("template", absolute(obj.get("template")))
+
+    def references(self):
+        """Every file the map refers to (tileset sources, images, object templates), as written."""
+        refs = []
+        for el in self.root.findall("tileset"):
+            refs.append(el.get("source") or el.find("image").get("source"))
+        for il in self.root.findall("imagelayer"):
+            img = il.find("image")
+            if img is not None and img.get("source"):
+                refs.append(img.get("source"))
+        for obj in self.root.iter("object"):
+            if obj.get("template"):
+                refs.append(obj.get("template"))
+        return refs
+
+    def missing(self):
+        """The references that do not resolve to a file, relative to the map's folder."""
+        base = os.path.dirname(os.path.abspath(self.path))
+        out = []
+        for ref in self.references():
+            path = ref if os.path.isabs(ref) else os.path.join(base, ref)
+            if not os.path.exists(path):
+                out.append(ref)
+        return sorted(set(out))
 
     def render(self, scale=1, only=None):
         img = Image.new("RGBA", (self.width * self.tw, self.height * self.th), (0, 0, 0, 255))
