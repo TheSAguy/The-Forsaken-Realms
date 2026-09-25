@@ -28,7 +28,6 @@ import forge.adventure.scene.DuelScene;
 import forge.adventure.scene.InfoTextScene;
 import forge.adventure.scene.GameScene;
 import forge.adventure.scene.RewardScene;
-import forge.adventure.scene.Scene;
 import forge.adventure.scene.StartScene;
 import forge.adventure.scene.TileMapScene;
 import forge.adventure.util.*;
