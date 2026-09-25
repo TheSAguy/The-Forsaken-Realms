@@ -292,7 +292,7 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
 
     public void moveTo(Actor other, float delta) {
         diffVec.set(other.getX(), other.getY()).sub(pos());
-        diffVec.setLength(data.speed * delta);
+        diffVec.setLength(data.speed * fogSpeedFactor() * delta); // round 338
         moveBy(diffVec.x, diffVec.y, delta);
     }
 
@@ -1012,7 +1012,25 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     }
 
     public float speed() {
-        return Float.max(data.speed + speedModifier, 0);
+        return Float.max(data.speed + speedModifier, 0) * fogSpeedFactor();
+    }
+
+    // Round 338 (user spec 2026-09-25): an enemy standing in the dark - its tile out of view on the world map with fog
+    // on - moves fogDarkEnemySpeed x as fast; one inside the light (the player's own torch-light included) moves at its
+    // own speed. Only on the world map: inside a place the tiles are the map's, not the world's.
+    private float fogSpeedFactor() {
+        if (!(getStage() instanceof forge.adventure.stage.WorldStage))
+            return 1f;
+        World world = Current.world();
+        if (world == null || !world.isFogOfWarEnabled())
+            return 1f;
+        TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null || tuning.fogDarkEnemySpeed <= 0f)
+            return 1f;
+        int tileSize = world.getTileSize();
+        int tx = (int) ((getX() + getWidth() / 2f) / tileSize);
+        int ty = (int) ((getY() + getHeight() / 2f) / tileSize);
+        return world.isCurrentlyVisible(tx, ty) ? 1f : tuning.fogDarkEnemySpeed;
     }
 
     public float getLifetime() {

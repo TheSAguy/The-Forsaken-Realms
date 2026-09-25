@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 338: the fog zones - spawns, tiers and speed by the light (2026-09-25)
+
+User: *"For FoW, I'm notating 3 states: 1-Total Darkness 2-You see terrain, but nothing else. 3-Totally lifted, you
+see everything. Spawn rates in Zone 3 of FoW should be less than Zones 1 & 2. Let's say 25% less and in Zones 1 & 2
+25% more. Also, the level of enemies that spawn should be weighed per Zone. Zone 3 should have more easy enemies and
+Zones 1&2 more higher level enemies. Lastly, the speed of enemies should be Normal in zone 3 but 10% faster in Zones 1
+& 2."* Then: *"Your own light does count as Zone 3. For enemies, Player is unaffected. So enemies stepping in the
+player radius (if they had no torch or bonfire) would be stepping into Zone 3."* Local commit, NOT pushed.
+
+- **The zone** (`World.fogZone(x, y)` / `isLitTile()`): 3 = in view right now - `isCurrentlyVisible`, so the player's
+  own light, their land, a restored town's lift and a bonfire's, and everything with fog off; 2 = explored but dim;
+  1 = unexplored. Zones 1 and 2 are treated alike by all three rules ("dark").
+- **How often** (`WorldStage.handleMonsterSpawn`): the roll draws its spawn offset first (the same 1-4 screen-units at
+  a random angle `spawn()` used to draw) and judges the zone at that tile; a lit roll goes ahead with
+  `fogLitSpawnChance` 0.75 (`[TFR-FogZone] lit spot (x,y) - this roll skipped`), a dark roll makes the next roll
+  come `fogDarkSpawnRate` 1.25x as fast (the 4-8 s delay divided). The offset is handed to `spawn()` so the enemy
+  lands on the judged spot (random spots only if it is blocked).
+- **What** (`BiomeData.getEnemy(difficulty, injected, fogLit)`): the week row's tier targets are multiplied by
+  `spawn_tier_weighting.json` `fogZoneFactors` - lit: common 1.25 / rare 0.75 / mythic 0.75; dark: common 0.75 /
+  rare 1.25 / mythic 1.25 (uncommon 1.0 both) - `SpawnTierWeighting.fogZoneScale()`. Bosses, quest spawns and the
+  injected champions are exempt as before. `[TFR-Spawn]` lines carry `fog=lit|dark`.
+- **How fast** (`EnemySprite.fogSpeedFactor()`): on the world map with fog on, an enemy whose own tile is out of view
+  moves `fogDarkEnemySpeed` 1.1x, one in the light at its own speed - per frame, so a chaser slows to normal as it
+  steps into the player's torch-light. Inside a place: no change. The player's speed is untouched.
+- Tunables in `settings.json` (`fogLitSpawnChance`, `fogDarkSpawnRate`, `fogDarkEnemySpeed`) and the table's
+  `fogZoneFactors`.
+
 ## Round 337: the Rally rune answers for the Ring Cities (2026-09-25)
 
 User: *"for the Rally Rune, currently teleports you to a town you own that's under attack. Let's also add to that list

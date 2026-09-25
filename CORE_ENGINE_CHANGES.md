@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 338 — the fog zones
+
+- **`forge-gui-mobile/src/forge/adventure/data/BiomeData.java`** — `getEnemy(difficulty, injected, Boolean fogLit)`
+  (the 2-arg form delegates with null); the tier targets take `SpawnTierWeighting.fogZoneScale()`.
+- **`forge-gui-mobile/src/forge/adventure/data/SpawnTierWeightData.java`** — `fogZoneFactors` ("lit" / "dark").
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** — `fogLitSpawnChance`, `fogDarkSpawnRate`,
+  `fogDarkEnemySpeed`.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `fogZone()`, `isLitTile()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `handleMonsterSpawn()` draws the spawn offset
+  first and judges its zone (skip / delay / `fog=` in the log); `pickNonClusteringEnemy(data, difficulty, fogLit)`;
+  `spawn(EnemySprite, Vector2 preferred)` and `spawn(EnemyData, Vector2)` try the judged spot first.
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — `speed()` and `moveTo()` take
+  `fogSpeedFactor()`.
+- **`forge-gui-mobile/src/forge/adventure/util/SpawnTierWeighting.java`** — `fogZoneScale()` (mod helper).
+
 ### Round 337 — the Rally rune and the Ring Cities
 
 - **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** — `rallyTargets()`, `isStarTown()`,

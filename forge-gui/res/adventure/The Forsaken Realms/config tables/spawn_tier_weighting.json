@@ -66,5 +66,12 @@
     "NEUTRAL":      { "commonScale": 0.70, "uncommonScale": 1.00, "rareScale": 1.05, "mythicScale": 1.05 },
     "UNHAPPY":      { "commonScale": 0.60, "uncommonScale": 1.00, "rareScale": 1.40, "mythicScale": 1.70 },
     "WAR":          { "commonScale": 0.17, "uncommonScale": 1.00, "rareScale": 2.35, "mythicScale": 3.70 }
+  },
+  // Round 338 (user spec 2026-09-25): the fog zone at the SPAWN TILE tilts the row too - "lit" = in view right now
+  // (the player's own light, their land, a town's or a bonfire's lift), "dark" = explored-but-dim or unexplored.
+  // Multipliers on the week row's targets (the pick is relative, so no renormalizing); deltas untouched.
+  "fogZoneFactors": {
+    "lit":  { "commonScale": 1.25, "uncommonScale": 1.00, "rareScale": 0.75, "mythicScale": 0.75 },
+    "dark": { "commonScale": 0.75, "uncommonScale": 1.00, "rareScale": 1.25, "mythicScale": 1.25 }
   }
 }

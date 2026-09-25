@@ -130,6 +130,12 @@ public class BiomeData implements Serializable {
      * ceiling, re-rolled on every visit.
      */
     public EnemyData getEnemy(float difficultyFactor, boolean withInjectedSpawns) {
+        return getEnemy(difficultyFactor, withInjectedSpawns, null);
+    }
+
+    /** fogLit (round 338): the fog zone at the spawn spot - true tilts the tier row to the easy end, false to the hard
+     *  end (SpawnTierWeighting.fogZoneScale); null leaves the row as the week and territory set it. */
+    public EnemyData getEnemy(float difficultyFactor, boolean withInjectedSpawns, Boolean fogLit) {
         // Round 184 (user crash report: "I went into a cave and the game got stuck. It said Autosaving and I
         // could not move from the entrance"). enemyList is built LAZILY by getEnemyList(); this method read the
         // field directly, which was safe only because every roaming-spawn caller happens to call the builder
@@ -234,7 +240,8 @@ public class BiomeData implements Serializable {
             }
             Map<String, Float> targetByTier = new HashMap<>();
             for (String tier : SpawnTierWeighting.tiers())
-                targetByTier.put(tier, SpawnTierWeighting.targetTierWeight(tier, week, name));
+                targetByTier.put(tier, SpawnTierWeighting.targetTierWeight(tier, week, name)
+                        * (fogLit == null ? 1f : SpawnTierWeighting.fogZoneScale(tier, fogLit))); // round 338
             for (int i = 0; i < filteredEnemies.size(); i++) {
                 EnemyData data = filteredEnemies.get(i);
                 float weight;

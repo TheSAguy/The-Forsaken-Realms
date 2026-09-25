@@ -205,6 +205,15 @@
     "torchPulseSeconds": 2.0,
     "torchPulseMaxRadiusTiles": 24,
 
+    // Fog zones (round 338, user spec 2026-09-25): where a roaming enemy SPAWNS decides how often and what. Lit = the
+    // tile is in view right now (your own light, your land, a town's or a bonfire's lift); dark = explored-but-dim or
+    // unexplored. A lit roll goes ahead with fogLitSpawnChance; after a dark one the next roll comes fogDarkSpawnRate x
+    // as fast; the tier row tilts per spawn_tier_weighting.json fogZoneFactors. An enemy standing in the dark moves
+    // fogDarkEnemySpeed x as fast. Grep forge.log for "fog=" on [TFR-Spawn] and for [TFR-FogZone].
+    "fogLitSpawnChance": 0.75,
+    "fogDarkSpawnRate": 1.25,
+    "fogDarkEnemySpeed": 1.1,
+
     // Looted-dungeon timer (round 128, user request): a rotatable dungeon/cave the player walks out of
     // having taken every reward pickup, while live enemies are still inside, keeps this fraction of the
     // days remaining on its despawn timer - 0.5 = cut in half. Applied once per visible lifetime, and

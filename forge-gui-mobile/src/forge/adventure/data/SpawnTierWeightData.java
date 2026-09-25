@@ -51,4 +51,6 @@ public class SpawnTierWeightData {
 
     public WeekBracket[] weekBrackets;
     public ObjectMap<String, TierDelta> territoryDeltas;
+    // Round 338: "lit" / "dark" - the fog zone at the spawn tile; the *Scale fields multiply the week row's targets.
+    public ObjectMap<String, TierDelta> fogZoneFactors;
 }

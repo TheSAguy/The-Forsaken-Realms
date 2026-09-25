@@ -1748,6 +1748,28 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (spawnDelay >= 0) return;
         spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
 
+        // Round 338 (user spec 2026-09-25, "adjust the spawn rates of enemies in areas with lifted FoW"): the fog zone at
+        // the SPOT this roll would spawn on - drawn now the way spawn() draws it, and handed to spawn() so the enemy lands
+        // there - decides the roll. Lit (in view: the player's own light, their land, a town's or a bonfire's lift): the
+        // roll goes ahead with fogLitSpawnChance and the tier row tilts to the easy end. Dark (dim or unexplored): the
+        // next roll comes fogDarkSpawnRate x as fast and the row tilts to the hard end. Speed in the dark is
+        // EnemySprite.fogSpeedFactor()'s business. Grep forge.log for "fog=" on [TFR-Spawn] and for [TFR-FogZone].
+        float spawnUnit = Scene.getIntendedHeight() / 6f;
+        Vector2 spawnOffset = new Vector2(1, 1);
+        spawnOffset.setLength(spawnUnit + (spawnUnit * 3) * rand.nextFloat());
+        spawnOffset.setAngleDeg(360 * rand.nextFloat());
+        int spotTileX = (int) ((player.getX() + spawnOffset.x) / world.getTileSize());
+        int spotTileY = (int) ((player.getY() + spawnOffset.y) / world.getTileSize());
+        boolean lit = world.isLitTile(spotTileX, spotTileY);
+        TuningData fogTuning = Config.instance().getTuningData();
+        if (lit && fogTuning != null && rand.nextFloat() >= fogTuning.fogLitSpawnChance) {
+            System.out.println("[TFR-FogZone] lit spot (" + spotTileX + "," + spotTileY + ") - this roll skipped (chance "
+                    + fogTuning.fogLitSpawnChance + ")");
+            return;
+        }
+        if (!lit && fogTuning != null && fogTuning.fogDarkSpawnRate > 0f)
+            spawnDelay /= fogTuning.fogDarkSpawnRate;
+
         // Roaming-spawn intrusion (MOD_SCOPE.md #7 follow-up, user request 2026-08-10): a nearby
         // foreign-color town/capital/castle can bleed its color's monsters into this spawn roll,
         // scaled by reputation with that color (War-tier borders are actively hostile; Partner-tier
@@ -1820,7 +1842,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }
         }
         if (enemyData == null) {
-            enemyData = pickNonClusteringEnemy(data, difficultyFactor);
+            enemyData = pickNonClusteringEnemy(data, difficultyFactor, lit);
             if (enemyData != null) {
                 // Diagnostic-only (user request 2026-08-10) - the bulk of the log; see
                 // MOD_CHANGELOG.md's "Playtest logging" entry for how to summarize this instead of
@@ -1840,7 +1862,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 System.out.println("[TFR-Spawn] " + enemyData.getName() + " (tier=" + enemyData.tier
                         + shownInfo
                         + ", colors=" + enemyData.colors + ", speed=" + enemyData.speed
-                        + ", life=" + enemyData.life + ") in " + data.name + " territory (rank=" + difficultyFactor
+                        + ", life=" + enemyData.life + ", fog=" + (lit ? "lit" : "dark") + ") in " + data.name
+                        + " territory (rank=" + difficultyFactor
                         + spawnTierInfo + ")");
                 // Round 173 (review S1): the two groups BiomeData appends to the roll say so when they
                 // land - frontier spawns sat dead for thirty rounds partly because nothing logged one.
@@ -1881,7 +1904,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }
 
         }
-        else spawn(enemyData);
+        else spawn(enemyData, spawnOffset); // round 338: on the spot the fog zone was judged for
     }
 
     /**
@@ -1905,8 +1928,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
      *
      * @return the chosen enemy, or null if the biome list itself yields nothing
      */
-    private EnemyData pickNonClusteringEnemy(BiomeData data, float difficultyFactor) {
-        EnemyData pick = data.getEnemy(difficultyFactor);
+    private EnemyData pickNonClusteringEnemy(BiomeData data, float difficultyFactor, boolean fogLit) {
+        EnemyData pick = data.getEnemy(difficultyFactor, true, fogLit); // round 338: the zone tilts the tier row
         ConfigData config = Config.instance().getConfigData();
         if (pick == null || config == null || !config.spawnDuplicateLimitEnabled)
             return pick;
@@ -1920,7 +1943,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             int nearby = countSameEnemyNearby(pick.getName(), radius);
             if (nearby < limit)
                 return pick;
-            EnemyData retry = data.getEnemy(difficultyFactor);
+            EnemyData retry = data.getEnemy(difficultyFactor, true, fogLit);
             // A null retry means the list stopped yielding - keep what we already had rather than
             // losing the spawn entirely.
             if (retry == null)
@@ -1968,14 +1991,24 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return null;
     }
 
-    private boolean spawn(EnemySprite sprite){
+    private boolean spawn(EnemySprite sprite) {
+        return spawn(sprite, null);
+    }
+
+    /** preferred (round 338): the offset from the player that handleMonsterSpawn() judged for its fog zone - tried
+     *  first, then the usual random ones when it is blocked. */
+    private boolean spawn(EnemySprite sprite, Vector2 preferred) {
         if (sprite == null)
             return false;
         float unit = Scene.getIntendedHeight() / 6f;
         Vector2 spawnPos = new Vector2(1, 1);
         for (int j = 0; j < 10; j++) {
-            spawnPos.setLength(unit + (unit * 3) * rand.nextFloat());
-            spawnPos.setAngleDeg(360 * rand.nextFloat());
+            if (j == 0 && preferred != null) {
+                spawnPos.set(preferred);
+            } else {
+                spawnPos.setLength(unit + (unit * 3) * rand.nextFloat());
+                spawnPos.setAngleDeg(360 * rand.nextFloat());
+            }
             for (int i = 0; i < 10; i++) {
                 boolean enemyXIsBigger = sprite.getX() > player.getX();
                 boolean enemyYIsBigger = sprite.getY() > player.getY();
@@ -2004,10 +2037,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
     }
 
     private boolean spawn(EnemyData enemyData) {
+        return spawn(enemyData, null);
+    }
+
+    private boolean spawn(EnemyData enemyData, Vector2 preferred) {
         if (enemyData == null)
             return false;
         EnemySprite sprite = new EnemySprite(enemyData);
-        boolean spawned = spawn(sprite);
+        boolean spawned = spawn(sprite, preferred);
         if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData))
             announceLegendSighting(sprite); // round 239; round 311: the roaming champions too
         return spawned;

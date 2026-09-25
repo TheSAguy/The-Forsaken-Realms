@@ -310,6 +310,15 @@ public class TuningData {
     public float torchPulseSeconds = 2f;
     public int torchPulseMaxRadiusTiles = 24;
 
+    // Round 338 (user spec 2026-09-25): the fog zone where a roaming enemy SPAWNS - lit (the tile in view: the player's
+    // own light, their land, a town's or a bonfire's lift) or dark (explored-but-dim or unexplored) - decides how often:
+    // a lit roll goes ahead with fogLitSpawnChance, a dark one makes the next roll come fogDarkSpawnRate x as fast; the
+    // tier row tilts by spawn_tier_weighting.json fogZoneFactors. An enemy standing in the dark moves
+    // fogDarkEnemySpeed x as fast (EnemySprite.fogSpeedFactor). The player's own speed is untouched.
+    public float fogLitSpawnChance = 0.75f;
+    public float fogDarkSpawnRate = 1.25f;
+    public float fogDarkEnemySpeed = 1.1f;
+
     // Round 159, user request: "make an Apprentice slightly smaller and an Archmage slightly
     // bigger". A rendered enemy is atlasRegionSize x EnemyData.scale (CharacterSprite.draw), and
     // overloading that one field would be a mistake - it already carries the ARTIST's intent about

@@ -6037,6 +6037,18 @@ public class World implements Disposable, SaveFileContent {
         return false;
     }
 
+    /** Round 338: the fog zone at a tile, for the spawn rules - 3 in view right now (the player's own light, their land,
+     *  a town's or a bonfire's lift; fog off = everything), 2 explored but dim, 1 unexplored. */
+    public int fogZone(int x, int y) {
+        if (!isFogOfWarEnabled() || isCurrentlyVisible(x, y))
+            return 3;
+        return isExploredWorld(x, y) ? 2 : 1;
+    }
+
+    public boolean isLitTile(int x, int y) {
+        return fogZone(x, y) == 3;
+    }
+
     public boolean isCurrentlyVisible(int x, int y) {
         if (!isFogOfWarEnabled())
             return true;

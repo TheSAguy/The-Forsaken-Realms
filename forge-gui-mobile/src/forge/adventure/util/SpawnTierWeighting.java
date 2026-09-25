@@ -305,6 +305,24 @@ public class SpawnTierWeighting {
 
     /** All four tier names, in a stable order - used by BiomeData.getEnemy() to precompute each
      *  eligible tier's target weight once per roll rather than once per candidate enemy. */
+    /** Round 338: the fog zone at the spawn tile tilts the tier row - spawn_tier_weighting.json fogZoneFactors "lit" /
+     *  "dark", the *Scale fields as multipliers (1 when the table or the key is missing). */
+    public static float fogZoneScale(String tier, boolean lit) {
+        SpawnTierWeightData data = Config.instance().getSpawnTierWeightData();
+        if (data == null || data.fogZoneFactors == null)
+            return 1f;
+        SpawnTierWeightData.TierDelta f = data.fogZoneFactors.get(lit ? "lit" : "dark");
+        if (f == null)
+            return 1f;
+        switch (tier == null ? "" : tier) {
+            case "Common": return f.commonScale;
+            case "Uncommon": return f.uncommonScale;
+            case "Rare": return f.rareScale;
+            case "Mythic": return f.mythicScale;
+            default: return 1f;
+        }
+    }
+
     public static String[] tiers() {
         return TIERS;
     }
