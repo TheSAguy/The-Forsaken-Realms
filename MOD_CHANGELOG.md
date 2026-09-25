@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 341: Tiled tilesets for the Player Capitol (2026-09-25)
+
+User: *"I want to redo the Player capitol. Currently just using a modified White Cap layout. In order for me to do
+this, I need the player territory as Tiled. I'm not exactly sure how to do that. Also, I want to use some of the stuff
+in files 'PC _ Computer - RPG Maker MV - Tilesets - Outside.png' and '...World.png'"*. Tooling and data, no engine
+change. Local commit, NOT pushed.
+
+- **`dev-tools/tiled-tilesets/make_tilesets.py`** (README beside it) writes 16 px Tiled tilesets into
+  `maps/tileset/`: `player_land` - the player's overworld ground (Player, Player_1..3) and its eight structures from
+  the HD sheets, every autotile expanded into its 47 blob shapes through `world-art/render.py` (BiomeTexture's own
+  rule) with a Tiled terrain set per kind, so the Terrain Brush paints the way the overworld draws; and the MV sheets
+  from the user's Terrain folder at 48 -> 16 px - `mv_outside_a1/a2/a4/a5/b`, `mv_world_a2/b/c` - A2 blocks and A1's
+  first frames as blob sets, A4 roofs as blob sets and its walls as 16-piece edge sets, A5/B/C as plain tiles; each
+  MV tileset twice, plain and `-collide` (every tile a full box), the stock `main` / `main-nocollide` pairing.
+  Place maps are 16 px because MapStage sizes them width x tilewidth against a 16-unit player, so 32 px art cannot be
+  used as-is; the downscale is the world-art rule (area average, crisp alpha). The composite rips were not used - the
+  user's folder holds the standard sheets (Outside_A1/A2/A4/A5/B, World_A2/B/C), which have known layouts; their
+  Outside A2 fills 8 of 32 slots and A4 15 of 40, and empty slots are skipped.
+- Previews checked at 8x: the ground and structure blobs (trees, rocks, mountains, the lake with its shore) draw as
+  the overworld does; the World A2 grounds and the A4 roofs likewise.
+
 ## Round 340: a second utility slot, the Yin-Yang rune, the Bonfire at 1200 (2026-09-25)
 
 User: *"Can we add a second utility 2 spot, so you can equip two items at a time in that slot. i.e. torch and bonfire.
