@@ -756,6 +756,43 @@ public class World implements Disposable, SaveFileContent {
     public static final int BONFIRE_RADIUS = 15;
     private final List<int[]> bonfires = new ArrayList<>();
     private int bonfireStamp = 0; // bumped on every change, so WorldStage rebuilds its fire actors
+    // Round 340: the Yin-Yang rune's other half - the tile it lies on, or null. Set by one use, the next use brings
+    // the player here and picks it up (ConsoleCommandInterpreter "yinyang"). Saved as yinYangAnchor.
+    private int[] yinYangAnchor;
+    private int yinYangStamp = 0;
+
+    public int[] getYinYangAnchor() {
+        return yinYangAnchor;
+    }
+
+    public int getYinYangStamp() {
+        return yinYangStamp;
+    }
+
+    public void setYinYangAnchor(int[] tile) {
+        yinYangAnchor = tile;
+        yinYangStamp++;
+    }
+
+    /** A walkable tile at or next to the anchor - the anchor itself, else the nearest free neighbor within 2 tiles,
+     *  else null (a growth ring can have grown a tree over the half since it was set down). */
+    public int[] yinYangLanding() {
+        if (yinYangAnchor == null)
+            return null;
+        int ts = getTileSize();
+        for (int ring = 0; ring <= 2; ring++)
+            for (int dx = -ring; dx <= ring; dx++)
+                for (int dy = -ring; dy <= ring; dy++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dy)) != ring)
+                        continue;
+                    int tx = yinYangAnchor[0] + dx, ty = yinYangAnchor[1] + dy;
+                    if (tx < 0 || ty < 0 || tx >= width || ty >= height)
+                        continue;
+                    if (!collidingTile(new Rectangle(tx * ts + 2, ty * ts + 2, ts - 4, ts - 4)))
+                        return new int[]{tx, ty};
+                }
+        return null;
+    }
 
     public List<int[]> getBonfires() {
         return bonfires;
@@ -1003,6 +1040,8 @@ public class World implements Disposable, SaveFileContent {
             resourceSpawns.addAll((List<int[]>) saveFileData.readObject("resourceSpawns"));
         }
         resourceSpawnsSeeded = saveFileData.containsKey("resourceSpawnsSeeded") && saveFileData.readInt("resourceSpawnsSeeded") != 0;
+        yinYangAnchor = saveFileData.containsKey("yinYangAnchor") ? (int[]) saveFileData.readObject("yinYangAnchor") : null; // round 340
+        yinYangStamp++;
         bonfires.clear(); // round 336
         if (saveFileData.containsKey("bonfires")) {
             //noinspection unchecked
@@ -1160,6 +1199,8 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("standingsHistoryCounts", standingsHistoryCounts);
         data.storeObject("resourceSpawns", new ArrayList<>(resourceSpawns));
         data.storeObject("bonfires", new ArrayList<>(bonfires)); // round 336
+        if (yinYangAnchor != null) // round 340
+            data.storeObject("yinYangAnchor", yinYangAnchor);
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
         data.store("obstaclesSwept", obstacleSweep);
         saveBarrier(data); // round 294

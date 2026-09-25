@@ -7684,7 +7684,7 @@
                        "visionRadiusMultiplier":  2.0
                    },
         "description":  "A bundled campfire kit. Carried, it lights the way like a torch. Use it on the world map to build a bonfire where you stand: the fog lifts for 15 tiles around it, one tile less each day, until the fire dies out two weeks on. Ten fires to a kit; a spent kit is rebuilt for 50 shards.",
-        "cost":  500,
+        "cost":  1200,
         "iconName":  "Bonfire",
         "rarity":  "Rare",
         "usableOnWorldMap":  true,
@@ -7692,6 +7692,17 @@
         "commandOnUse":  "bonfire place",
         "uses":  10,
         "repairShards":  50
+    },
+    {
+        "name":  "Yin-Yang rune",
+        "equipmentSlot":  "Ability2",
+        "description":  "Two halves of one stone. Use it on the world map to set the dark half down where you stand; use it again, from anywhere under the open sky, to return to that spot and take the half up. One shard a use.",
+        "cost":  2000,
+        "iconName":  "YinYangRune",
+        "rarity":  "Rare",
+        "usableOnWorldMap":  true,
+        "shardsNeeded":  1,
+        "commandOnUse":  "yinyang"
     },
     {
         "name":  "Chandler's Shoes",

@@ -38,6 +38,16 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 340 — the third ability slot, the Yin-Yang rune
+
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** — `slotCandidates()` adds Ability3 for every
+  Ability2 item; `getEquippedAbilities()`; `visionRadiusMultiplier()` takes the max.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** — `updateAbility()` builds a button per worn ability.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `yinYangAnchor` (saved), `yinYangLanding()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `syncYinYangActor()`, `setYinYangHalf()`,
+  `returnToYinYangHalf()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — the "yinyang" command.
+
 ### Round 339 — the spawn distance in tiles
 
 - **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `spawnDistance()` replaces the screen-height sixths

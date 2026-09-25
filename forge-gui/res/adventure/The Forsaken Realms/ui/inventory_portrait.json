@@ -37,6 +37,15 @@
     },
     {
       "type": "ImageButton",
+      "name": "Equipment_Ability3",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 62,
+      "y": 124
+    },
+    {
+      "type": "ImageButton",
       "name": "Equipment_Neck",
       "style": "item_frame_static",
       "width": 20,

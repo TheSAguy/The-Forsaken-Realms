@@ -416,6 +416,56 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.toFront();
     }
 
+    // Round 340: the Yin-Yang rune's other half on the ground - one actor while an anchor is set (World.getYinYangStamp).
+    private Actor yinYangActor;
+    private int yinYangActorStamp = -1;
+
+    private void syncYinYangActor(World world) {
+        if (world.getYinYangStamp() == yinYangActorStamp)
+            return;
+        yinYangActorStamp = world.getYinYangStamp();
+        if (yinYangActor != null) {
+            foregroundSprites.removeActor(yinYangActor);
+            yinYangActor = null;
+        }
+        int[] anchor = world.getYinYangAnchor();
+        Sprite sprite = anchor == null ? null : Config.instance().getItemSprite("YinYangHalf");
+        if (sprite == null)
+            return;
+        int tileSize = world.getTileSize();
+        yinYangActor = new Actor() {
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                World w = Current.world();
+                if (!w.isExploredWorld((int) (getX() / w.getTileSize()), (int) (getY() / w.getTileSize())))
+                    return;
+                batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
+            }
+        };
+        yinYangActor.setSize(tileSize, tileSize);
+        yinYangActor.setPosition(anchor[0] * tileSize, anchor[1] * tileSize);
+        foregroundSprites.addActor(yinYangActor);
+    }
+
+    /** Round 340: the Yin-Yang rune's first use - the dark half goes down on the player's tile. */
+    public int[] setYinYangHalf() {
+        int[] tile = {playerTileX(), playerTileY()};
+        Current.world().setYinYangAnchor(tile);
+        return tile;
+    }
+
+    /** The second use - the player lands at (or beside) the half and takes it up again. Null when nothing is walkable there. */
+    public int[] returnToYinYangHalf() {
+        World world = Current.world();
+        int[] landing = world.yinYangLanding();
+        if (landing == null)
+            return null;
+        int ts = world.getTileSize();
+        setPosition(new Vector2(landing[0] * ts, landing[1] * ts));
+        world.setYinYangAnchor(null);
+        return landing;
+    }
+
     private final List<Actor> resourceSpawnActors = new ArrayList<>();
 
     // Clear-and-rebuild sync from World's persisted spawn list (<= ResourceSpawns.MAX_SPAWNS
@@ -558,6 +608,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // collection check has to track the player's live position (cheap; see its comment).
             ResourceSpawns.tick(world, dayAfter);
             syncBonfireActors(world); // round 336
+            syncYinYangActor(world); // round 340
             handleMonsterSpawn(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;

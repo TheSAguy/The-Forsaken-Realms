@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 340: a second utility slot, the Yin-Yang rune, the Bonfire at 1200 (2026-09-25)
+
+User: *"Can we add a second utility 2 spot, so you can equip two items at a time in that slot. i.e. torch and bonfire.
+(They won't stack, the effects). Can you create me a yin/yan rune. when equipped/used this is how it will work. When
+you 'use' it, 1 shard. half the rune will drop on the ground. then when you use it again, you will teleport to the
+spot you dropped it. Should work on overworld only. Not sure the rarity cost yet. Same for bonfire. let me know your
+thoughts on that."* Local commit, NOT pushed.
+
+- **Ability3** (`AdventurePlayer.slotCandidates`): every Ability2 item may also sit in a third slot that is always
+  there - the same twin-slot machinery round 137 built for the Armory's Left2/Right2, without the grant. Equipping
+  fills the first free of the two, a third utility displaces the one in Ability2. The inventory and armory layouts
+  (`ui/inventory*.json`, `ui/armory*.json`) draw the box between the two old ones on the bottom row; the HUD stacks
+  one ability button per worn ability (`getEquippedAbilities()`, `GameHUD.updateAbility`). Effects do not stack:
+  `visionRadiusMultiplier()` takes the strongest light worn, not the product (Torch + Bonfire = x2, Grand Torch +
+  either = x4). Saves: a third key in the same `equippedSlots` map, nothing to migrate.
+- **The Yin-Yang rune** (`world/items.json`, icon `YinYangRune` + the ground marker `YinYangHalf` on a new
+  `items.atlas` page cut from the user's picture): Ability2, world map only, 1 shard a use, `commandOnUse`
+  "yinyang". First use sets the dark half down on the player's tile (`World.yinYangAnchor`, saved; `WorldStage`
+  draws the half there once the tile is explored); second use, from anywhere on the world map, lands the player on
+  it - or the nearest walkable tile within 2, since a growth ring can have grown a tree over it - and takes the half
+  up (`[TFR-YinYang]`). Inside a place, or with nowhere to land, the shard comes back. Rare, 2000 gold - the proposal:
+  the color runes are Common at 1600 for a one-way ride to a fixed capital; a two-way anchor you choose is worth more.
+- **Bonfire 500 -> 1200** (Rare): ten 15-tile lifts plus a Torch's sight sits above the Grand Torch (Rare, 1000),
+  which only sees.
+- A Yin-Yang rune joins the Bonfire in every difficulty's `startItems` FOR TESTING - both come out before a release.
+
 ## Round 339: roaming enemies appear 3 to 13 tiles out (2026-09-25)
 
 User, after asking what "25% sooner" meant and how far the native and torch radii reach (native 3, Easy 4, Insane 2;

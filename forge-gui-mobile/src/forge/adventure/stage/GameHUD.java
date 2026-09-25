@@ -767,8 +767,8 @@ public class GameHUD extends Stage {
 
     void updateAbility() {
         clearAbility();
-        setAbilityButton(AdventurePlayer.current().getEquippedAbility1());
-        setAbilityButton(AdventurePlayer.current().getEquippedAbility2());
+        for (ItemData worn : AdventurePlayer.current().getEquippedAbilities()) // round 340: Ability1, 2 and 3
+            setAbilityButton(worn);
         float x = Forge.isLandscapeMode() ? 426f : 216f;
         float y = Forge.isLandscapeMode() ? 10f : 60f;
         float w = 45f;

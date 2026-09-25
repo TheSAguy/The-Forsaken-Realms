@@ -89,7 +89,8 @@
       "startItems": [
         "Manasight Amulet",
         "Leather Boots",
-        "Bonfire"
+        "Bonfire",
+        "Yin-Yang rune"
       ]
     },{
       "name": "Normal",
@@ -139,12 +140,13 @@
       },
       "startItems": [
         "Leather Boots",
-        "Bonfire"
+        "Bonfire",
+        "Yin-Yang rune"
       ]
     },{
       "name": "Hard",
       "startingLife": 10,
-      "startItems": ["Bonfire"],
+      "startItems": ["Bonfire", "Yin-Yang rune"],
       "startingWood": 50,
       "startingStone": 50,
       "startingShards": 7,
@@ -190,7 +192,7 @@
     },{
       "name": "Insane",
       "startingLife": 5,
-      "startItems": ["Bonfire"],
+      "startItems": ["Bonfire", "Yin-Yang rune"],
       "startingWood": 25,
       "startingStone": 25,
       "startingShards": 5,

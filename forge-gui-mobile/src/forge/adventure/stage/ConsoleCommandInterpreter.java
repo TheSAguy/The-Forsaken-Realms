@@ -953,6 +953,29 @@ public class ConsoleCommandInterpreter {
                     + forge.adventure.world.World.BONFIRE_RADIUS + ", kit fires left " + left);
             return "Bonfire built at " + fire[0] + "," + fire[1] + (left >= 0 ? ", " + left + " fire(s) left in the kit" : "");
         });
+        // Round 340 (user: "yin/yan rune... When you use it, 1 shard. half the rune will drop on the ground. then when you
+        // use it again, you will teleport to the spot you dropped it. Should work on overworld only."): the first use sets
+        // the dark half down on the player's tile (World.yinYangAnchor, drawn by WorldStage), the second brings the player
+        // back to it and picks it up. Inside a place, or with nowhere walkable left at the half, the shard comes back.
+        registerCommand(new String[]{"yinyang"}, s -> {
+            if (MapStage.getInstance().isInMap() || Current.world() == null)
+                return "The Yin-Yang rune works on the world map only" + refundItemInUse("The rune answers only under the open sky.");
+            WorldStage stage = WorldStage.getInstance();
+            if (Current.world().getYinYangAnchor() == null) {
+                int[] tile = stage.setYinYangHalf();
+                stage.player.playEffect(Paths.EFFECT_SPARKS, 1f);
+                GameHUD.getInstance().addNotification("You set the dark half of the rune down here. Use the rune again to return to it.");
+                System.out.println("[TFR-YinYang] half set down at (" + tile[0] + "," + tile[1] + ")");
+                return "Yin-Yang half set down at " + tile[0] + "," + tile[1];
+            }
+            int[] landing = stage.returnToYinYangHalf();
+            if (landing == null)
+                return "Nowhere to land at the half" + refundItemInUse("Something has grown over the rune's other half - it cannot draw you there.");
+            stage.player.playEffect(Paths.EFFECT_TELEPORT, 10);
+            GameHUD.getInstance().addNotification("The halves rejoin - you stand where you left the other.");
+            System.out.println("[TFR-YinYang] returned to (" + landing[0] + "," + landing[1] + "), the half taken up");
+            return "Returned to the Yin-Yang half at " + landing[0] + "," + landing[1];
+        });
         registerCommand(new String[]{"fog", "reset"}, s ->
                 WorldSave.getCurrentSave().getWorld().resetFogOfWarToOwnership());
         // TESTING ONLY (user request 2026-08-14) - REMOVE once the Color Defeat mechanic

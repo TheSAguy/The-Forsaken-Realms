@@ -2569,6 +2569,18 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return null;
     }
 
+    /** Round 340: every worn ability, in slot order - Ability1, Ability2, Ability3 - for the HUD's buttons. */
+    public java.util.List<ItemData> getEquippedAbilities() {
+        java.util.List<ItemData> worn = new java.util.ArrayList<>();
+        for (String slot : new String[]{"Ability1", "Ability2", "Ability3"}) {
+            Long id = equippedItems.get(slot);
+            ItemData data = id == null ? null : getEquippedItem(id);
+            if (data != null)
+                worn.add(data);
+        }
+        return worn;
+    }
+
     public ItemData getEquippedAbility2() {
         for (Long id : equippedItems.values()) {
             ItemData data = getEquippedItem(id);
@@ -2789,6 +2801,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         String twin = item.equipmentSlot + "2";
         if (grantedEquipmentSlots().contains(twin))
             candidates.add(twin);
+        // Round 340 (user: "add a second utility 2 spot, so you can equip two items at a time in that slot. i.e. torch
+        // and bonfire"): every Ability2 item may also sit in Ability3, a slot that is always there (no grant needed).
+        if ("Ability2".equalsIgnoreCase(item.equipmentSlot))
+            candidates.add("Ability3");
         return candidates;
     }
 
@@ -2876,11 +2892,13 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     // setPlayerTilePosition() while the player moves, so equip/unequip takes effect immediately -
     // no separate cache-invalidation call needed.
     public float visionRadiusMultiplier() {
+        // Round 340 (user, on the second utility slot: "They won't stack, the effects"): the strongest light carried
+        // counts, not the product - a Torch beside a Bonfire is x2, a Grand Torch beside either is x4.
         float factor = 1.0f;
         for (Long id : equippedItems.values()) {
             ItemData data = getEquippedItem(id);
             if (data != null && data.effect != null && data.effect.visionRadiusMultiplier > 0.0)
-                factor *= data.effect.visionRadiusMultiplier;
+                factor = Math.max(factor, data.effect.visionRadiusMultiplier);
         }
         return factor;
     }
