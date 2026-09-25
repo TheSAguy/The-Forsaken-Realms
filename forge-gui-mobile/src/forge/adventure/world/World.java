@@ -365,7 +365,8 @@ public class World implements Disposable, SaveFileContent {
     // Round 309: 309 - twice to three times the kinds and pictures on every land, the same coverage (a save scatters again).
     // Round 331: 331 - the growth rings were scattered at 5x the land's density (DOODAD_DENSITY_MULTIPLIER); a save
     // scatters again so its dense bands go.
-    public static final int DOODAD_SET = 331;
+    // Round 335: 335 - the growth rings were scattered without the noise bands (~85% of tiles); a save re-scatters once.
+    public static final int DOODAD_SET = 335;
     private int doodadSet = DOODAD_SET;
     // Round 307 (user: "make the patches larger"): what a world's ground was last laid out and baked from - every
     // biome's patch bands (groundPatchSignature()) and the art its map image is drawn with (groundArtSignature()).
@@ -5212,6 +5213,14 @@ public class World implements Disposable, SaveFileContent {
         // Same road-preservation logic as repaintBiomeAroundTown()'s ground loop - a tile that
         // was skipped there (still the old biome/terrain because it's a road) shouldn't get a
         // fresh doodad placed on top of it either.
+        // Round 335 (the user, with two screenshots of their grown land: "how many doodads the player terrain is getting.
+        // It seems high"): world generation places each kind of doodad only inside its own noise band
+        // (startArea..endArea), so a natural green tile gets one 18% of the time ([TFR-Doodads]); this path passed no
+        // noise, so every kind was eligible on every tile and a grown tile got one ~85% of the time - the dense band
+        // round 331 removed with the 5x multiplier, back through another door. A ring now takes the world's own bands
+        // (the same seed and zoom as generateNew() and rescatterDoodads()), so it is as busy as the land around it.
+        OpenSimplexNoise bandNoise = new OpenSimplexNoise(seed);
+        float bandZoom = data.noiseZoomBiome;
         long roadBit = 1L << data.GetBiomes().size();
         for (int wx = centerWorldX - outerRadiusTiles; wx <= centerWorldX + outerRadiusTiles; wx++) {
             if (wx < 0 || wx >= width)
@@ -5229,7 +5238,7 @@ public class World implements Disposable, SaveFileContent {
                 if ((biomeMap[wx][height - wy - 1] & roadBit) != 0)
                     continue;
                 // Round 303: pickDoodad() - ground doodads on plain tiles (as here before), water doodads on water.
-                BiomeSpriteData sprite = pickDoodad(wx, wy, biome, null, 0f, random, DOODAD_DENSITY_MULTIPLIER);
+                BiomeSpriteData sprite = pickDoodad(wx, wy, biome, bandNoise, bandZoom, random, DOODAD_DENSITY_MULTIPLIER);
                 if (sprite == null)
                     continue;
                 String spriteKey = sprite.key();
@@ -5247,7 +5256,7 @@ public class World implements Disposable, SaveFileContent {
      * Round 303: the doodad for tile (x, y) of `biome`, or null - the one placement rule every doodad pass uses. A plain
      * tile takes the biome's ground doodads; a structure tile takes only a doodad whose onStructures names the
      * structure the tile is drawn as (lily pads on "water"); a ground patch (terrain[], no structure name) takes none,
-     * as before. noise null = no noise band (the repaint paths never had one); densityFactor = their boost. The first
+     * as before. noise null = no noise band (the repaint paths had none until round 335); densityFactor = their boost. The first
      * doodad in the list that passes wins, as world generation always did.
      */
     private BiomeSpriteData pickDoodad(int x, int y, BiomeData biome, OpenSimplexNoise noise, float noiseZoom, Random rng,

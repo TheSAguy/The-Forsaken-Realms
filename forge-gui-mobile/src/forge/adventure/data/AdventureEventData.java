@@ -470,41 +470,17 @@ public class AdventureEventData implements Serializable {
                         + " for its land set - not offered");
             }
         }
-        // Progressive Set Unlocks (user spec 2026-08-12): same restriction as pickWeightedCardBlock,
-        // via each jumpstart block's land-set CODE (this path is otherwise name-keyed - the
-        // allowedEditions/restrictedEditions checks above compare block NAMES against set codes,
-        // an effective no-op; the land set is what getJumpstartBoosters actually deals from).
-        final java.util.Set<String> narrowPool = eventPool(playerTown);
-        java.util.Set<String> loggedPool = narrowPool;
-        List<CardBlock> beforeNarrowing = new ArrayList<>(legalBlocks);
-        if (narrowPool != null)
-            legalBlocks.removeIf(q -> q.getLandSet() == null || !narrowPool.contains(q.getLandSet().getCode()));
-        // Same player-town fallback as the draft path above - never leave the player's own Inn
-        // with nothing on offer just because their race pool is still narrow.
-        boolean fellBack = false;
-        if (playerTown && legalBlocks.isEmpty()) {
-            final java.util.Set<String> wide = forge.adventure.util.EditionProgression.eventAllowedEditionCodes();
-            legalBlocks = beforeNarrowing;
-            if (wide != null)
-                legalBlocks.removeIf(q -> q.getLandSet() == null || !wide.contains(q.getLandSet().getCode()));
-            fellBack = true;
-            loggedPool = wide;
-        }
-        // Round 322 (user: "Yes to the Jumpstart fallback"): the Jumpstart tournament is every player's ONE free event
-        // (the intro quest's Bronze Coins spend only there), but the pools above hold a Jumpstart product only when its
-        // land SET is unlocked or in the world's neutral slice - JMP/J22/J25 never are, and DMU/BRO/ONE/MOM/LTR only by
-        // race (Human, Dwarf, Phyrexian) or luck. An Inn that rolled Jumpstart then had no event at all that week.
-        // When nothing qualifies, every Jumpstart product is on offer.
-        if (legalBlocks.isEmpty() && !beforeNarrowing.isEmpty()) {
-            System.out.println("[TFR-InnEditions] format=Jumpstart: no Jumpstart product's set is in the "
-                    + (playerTown ? "player-town" : "Inn") + " pool - all " + beforeNarrowing.size()
-                    + " Jumpstart products are on offer (round 322)");
-            legalBlocks = beforeNarrowing;
-            fellBack = true;
-        }
+        // Round 335 (the user: "it's not fair for certain races to get jump-start sets and other not"): the draft
+        // path's pool narrowing used to apply here too - a player town narrowed to race + unlocked sets, any other Inn
+        // to unlocked + the neutral shard - and round 322 fell back to every product when nothing qualified. Only
+        // Human (DMU), Dwarf (BRO) and Phyrexian (ONE) start with a set that has a Jumpstart companion, so their own
+        // Inn was pinned to that 10-theme product while the other 17 races drew from the whole pool. The Jumpstart
+        // tournament is one event per player, ever: it now draws one product from the same pool in every town, for
+        // every race. allowedJumpstart in config.json still curates that pool.
         CardBlock picked = legalBlocks.isEmpty() ? null : Aggregates.random(legalBlocks);
-        if (loggedPool != null)
-            logInnEditions("Jumpstart", loggedPool, picked, playerTown, fellBack);
+        System.out.println("[TFR-InnEditions] format=Jumpstart town=" + (playerTown ? "PLAYER" : "ai/neutral")
+                + ": " + legalBlocks.size() + " product(s) on offer, every town alike (round 335) - picked "
+                + (picked == null ? "nothing" : picked.getName()));
         return picked;
     }
 

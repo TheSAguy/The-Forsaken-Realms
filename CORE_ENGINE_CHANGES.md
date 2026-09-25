@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 335 — one Jumpstart pool, doodad bands on grown land
+
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** — `pickJumpstartCardBlock()` draws from every
+  dealable Jumpstart product in every town (the pool narrowing and round 322's fallbacks removed); `allowedJumpstart`
+  still applies.
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `regenerateDoodadsInRadius()` hands `pickDoodad()` the
+  world's noise (`new OpenSimplexNoise(seed)`, `data.noiseZoomBiome`) so a grown ring keeps world generation's doodad
+  bands; `DOODAD_SET` 335.
+- **`forge-gui-mobile/src/forge/adventure/scene/EventScene.java`** — the entry dialog's options carry the player's shards,
+  gold or coin count in brackets.
+
 ### Round 334 — fog-dimmed sprites, retired lairs, the Jumpstart rescue
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** — `draw()` multiplies the batch color by `FOG_HAZE`

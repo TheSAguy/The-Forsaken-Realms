@@ -78,9 +78,13 @@ public class EventScene extends MenuScene implements IAfterMatch {
         DialogData enterWithCoin = new DialogData();
 
         DialogData enterWithShards = new DialogData();
-        enterWithShards.name = String.format("Spend %d [+shards]", Math.round(currentEvent.eventRules.shardsToEnter * townPriceModifier));
+        // Round 335 (the user, with a mock-up: "add in brackets next to the entry fee how much of each you have"): every
+        // option ends with the balance it draws on. An option the player cannot pay stays hidden, as before.
+        enterWithShards.name = String.format("Spend %d [+shards] (%d)",
+                Math.round(currentEvent.eventRules.shardsToEnter * townPriceModifier), Current.player().getShards());
         DialogData enterWithGold = new DialogData();
-        enterWithGold.name = String.format("Spend %d [+gold]", Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier));
+        enterWithGold.name = String.format("Spend %d [+gold] (%d)",
+                Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier), Current.player().getGold());
 
         DialogData.ConditionData hasGold = new DialogData.ConditionData();
         hasGold.hasGold = Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier);
@@ -96,7 +100,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
         final String[] coinItemBox = new String[1];
 
         if (currentEvent.eventRules.acceptsChallengeCoin) {
-            enterWithCoin.name = localizer.getMessage("advRedeemChallengeCoin");
+            enterWithCoin.name = localizer.getMessage("advRedeemChallengeCoin") + " (" + Current.player().countItem("Challenge Coin") + ")";
 
             DialogData.ConditionData hasCoin = new DialogData.ConditionData();
             hasCoin.item = "Challenge Coin";
@@ -107,7 +111,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
             enterWithCoin.action = new DialogData.ActionData[]{giveCoin};
             coinItemBox[0] = hasCoin.item;
         } else if (currentEvent.eventRules.acceptsSilverChallengeCoin) {
-            enterWithCoin.name = localizer.getMessage("advRedeemSilverChallengeCoin");
+            enterWithCoin.name = localizer.getMessage("advRedeemSilverChallengeCoin") + " (" + Current.player().countItem("Silver Challenge Coin") + ")";
             DialogData.ConditionData hasCoin = new DialogData.ConditionData();
             hasCoin.item = "Silver Challenge Coin";
             enterWithCoin.condition = new DialogData.ConditionData[]{hasCoin};
@@ -117,7 +121,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
             enterWithCoin.action = new DialogData.ActionData[]{giveCoin};
             coinItemBox[0] = hasCoin.item;
         } else if (currentEvent.eventRules.acceptsBronzeChallengeCoin) {
-            enterWithCoin.name = localizer.getMessage("advRedeemBronzeChallengeCoin");
+            enterWithCoin.name = localizer.getMessage("advRedeemBronzeChallengeCoin") + " (" + Current.player().countItem("Bronze Challenge Coin") + ")";
             DialogData.ConditionData hasCoin = new DialogData.ConditionData();
             hasCoin.item = "Bronze Challenge Coin";
             enterWithCoin.condition = new DialogData.ConditionData[]{hasCoin};

@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (rounds 332-334 local + UNRELEASED - round 334 = map sprites dimmed under the fog, the sphinx at 4,000 once then its sanctum retired for good, the Jumpstart rescue (MSH dropped, stuck events refunded); untested in a running game because the agent refuses every save - see the round-334 line; rounds 332/333 = sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (rounds 332-335 local + UNRELEASED - round 335 = one Jumpstart pool for every town and race, grown land takes the doodad noise bands (DOODAD_SET 335 re-scatters saves once); round 334 = map sprites dimmed under the fog, the sphinx at 4,000 once then its sanctum retired for good, the Jumpstart rescue (MSH dropped, stuck events refunded); untested in a running game because the agent refuses every save - see the round-334 line; rounds 332/333 = sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
@@ -186,6 +186,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
   `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
   a rebuild.
+- **Round 335 (local, NOT pushed): the Jumpstart tournament draws one product from the same pool in every town, for every
+  race (`AdventureEventData.pickJumpstartCardBlock()` - no town narrowing, no round-322 fallbacks; only Human/Dwarf/
+  Phyrexian ever had a Jumpstart companion set among their starting editions, and the user's two options - drop the
+  format, or neutral towns only - were argued down: the intro coins need the event, and neutral towns get absorbed);
+  grown land takes the doodad noise bands (`regenerateDoodadsInRadius()` builds `new OpenSimplexNoise(seed)` for
+  `pickDoodad()` - it passed none, so a grown tile held a doodad ~85% of the time against 18% on natural green land;
+  `DOODAD_SET` 335 re-scatters existing saves once); the "Enter this event?" options end with the player's balance in
+  brackets (`EventScene`).** NOT seen in a running game yet.
 - **Round 334 (local, NOT pushed): map sprites dim under the fog like the ground (`MapSprite.isHazedByFog()`, batch color
   x0.45 while the center tile is explored but not in view); the sphinx pays 4,000 (was 8,000) once per game and the
   sanctum retires for good (`PointOfInterestData.retireOnQuestFlag` on RiddlesLair + `DungeonRotation.isRetired()` in the

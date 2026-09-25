@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 335: one Jumpstart pool for every town, grown land takes the doodad bands (2026-09-24)
+
+User: *"I think it's not fair for certain races to get jump-start sets and other not... we have two options, remove
+Jumpstart all together, or isolate the Jumpstart sets and have them only in the neutral towns. What's your thoughts?"*
+Neither. No race is GIVEN a Jumpstart set: Human (DMU), Dwarf (BRO) and Phyrexian (ONE) start with an ordinary set
+that happens to have a Jumpstart companion product, so their own Inn was pinned to that 10-theme product while the
+other 17 races - nothing qualifying, round 322's fallback - drew from the whole pool. Removing the format would gut
+the intro quest's 3 Bronze Challenge Coins (Jumpstart is their only event); neutral-only would strand the coins once
+the colors absorb the neutral towns (the 326-day soak ended with none). The follow-up, *"Should we first Remove the
+Jumpstart from those 3 races. Don't give them those starting sets?"* - no: those are the races' real starting card
+pools (shops, boosters, drafts, research) and their most thematic ones, and research would put a set back into the
+pool anyway. *"Okay, proceed your recommendation."* Then, with two screenshots of their grown land: *"The screenshots
+show how many doodads the player terrain is getting. It seems high."* Local commit, NOT pushed.
+
+- **One Jumpstart pool for every town and race.** `AdventureEventData.pickJumpstartCardBlock()` no longer narrows to
+  the town's pool (race + unlocked sets for a player town, unlocked + the neutral shard elsewhere) and no longer needs
+  round 322's two fallbacks: one product is drawn at random from every dealable Jumpstart product (9 after round 334:
+  JMP, J22 and J25 at 121 themes each, TLA 64, DMU/BRO/ONE/MOM/LTR 10 each). `allowedJumpstart` in `config.json` still
+  curates the list (unused today). Log: `[TFR-InnEditions] format=Jumpstart town=PLAYER: 9 product(s) on offer, every
+  town alike (round 335) - picked <name>`. Not taken: trimming the 10-theme products through `allowedJumpstart` -
+  offered, the user's call.
+- **Grown land takes the doodad bands.** World generation places each kind of doodad only inside its own noise band
+  (`startArea..endArea` in `map_sprites.json`), so a natural green tile holds a doodad 18% of the time (`[TFR-Doodads]`
+  in the agent log: green 136/750, red 11.8%, white 13.0%, waste 7.5%). `regenerateDoodadsInRadius()` - the growth
+  rings and a captured town's repaint - passed `pickDoodad()` no noise, so every kind was eligible on every tile: a
+  grown player tile got one about 85% of the time (1 - the product of (1 - density) over the 17 ground kinds). Round
+  331 removed the 5x multiplier but not this, so the dense band came back through the other door. The ring now builds
+  the world's own noise (`new OpenSimplexNoise(seed)`, `data.noiseZoomBiome` - the formula `generateNew()` and
+  `rescatterDoodads()` use), so a grown edge is as busy as the land around it. `DOODAD_SET` 331 -> 335: a save
+  re-scatters every doodad once on its first drawn chunk (the round-303 mechanism), which thins the rings the user
+  already has. NOT seen in a running game yet.
+- **The entry screen shows what you hold** (the user, with a mock-up: *"add in brackets next to the entry fee how much of
+  each you have"*): every option of the "Enter this event?" dialog ends with the balance it draws on - "Spend 50
+  [+shards] (340)", "Spend 3000 [+gold] (8030)", "Redeem a Challenge Coin [coin] (1)" (`EventScene`, from
+  `Current.player().getShards()` / `getGold()` / `countItem()`). An option the player cannot pay stays hidden, as before.
+
 ## Round 334: doodads dim under the fog, the sphinx retires, the Jumpstart rescue (2026-09-24)
 
 User, later the same evening: *"I just teleported to green, and it appears all the doodads are visible in the FOG,
