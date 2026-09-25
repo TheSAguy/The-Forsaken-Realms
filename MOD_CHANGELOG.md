@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 334: doodads dim under the fog, the sphinx retires, the Jumpstart rescue (2026-09-24)
+
+User, later the same evening: *"I just teleported to green, and it appears all the doodads are visible in the FOG,
+they seem bright i.e. visible. For the sphinx Let's have it pay 4,000 and only pay once a game, after it pays, the
+dungeon should not ever re-appear."* Then: *"I tried to join a Jumpstart tournament, and I can't select any decks.
+When I click on the select deck button, nothing happens."* And round 333's bigger sapling withdrawn (*"leave the
+small tree as is"*). Local commit, NOT pushed. Live + agent folders packaged once the user's game was closed.
+
+- **Sprites dim under the fog like the ground.** `World.hazeTile()` lays 55% black over a remembered tile, but every
+  `MapSprite` on it (doodads, place icons) drew at full brightness, so a remembered forest edge glowed through the
+  fog. `MapSprite.draw()` now asks `isHazedByFog()` (fog on, and the sprite's center tile explored but not
+  `isCurrentlyVisible`) and multiplies the batch color by `FOG_HAZE = 0.45f` around the art - the same dimming as
+  the ground, restored afterwards. The barrier's mountains already did this (`BarrierMountains.HAZE`). Hidden tiles
+  stay hidden as before. NOT seen in a running game: the agent profile plays with fog off, and see the open item.
+- **The sphinx pays 4,000, once per game, and the sanctum never comes back.** `riddles_lair.tmx` object 50:
+  `addGold` 8000 -> 4000 (the round-332 gate on `riddlesLairComplete` stays; 250 shards and the 2ED pack unchanged).
+  New data field `PointOfInterestData.retireOnQuestFlag` - `"retireOnQuestFlag": "riddlesLairComplete"` on
+  `RiddlesLair` in `points_of_interest.json`. `DungeonRotation.isRetired(poi)` (a flag named, and the player holds
+  it) makes the day tick deactivate the lair for good (`[DungeonRotation] RiddlesLair retired for good - the player
+  holds riddlesLairComplete`) and `activateFromReserve()` skip it. Existing saves included: a loaded place re-reads
+  its data from the catalog by name (`PointOfInterest` line 27), so a save whose player already answered the riddles
+  loses the sanctum on its next day tick. NOT yet seen in a running game (the open item).
+- **The Jumpstart rescue.** The stuck event was a Jumpstart tournament on *Marvel Super Heroes Jumpstart* (MSH):
+  round 322's fallback offers every Jumpstart product when none is in the Inn's pool, and `blocks.txt` lists MSH,
+  but `boosters-special.txt` holds no `MSH ...` pack templates (JMP/J22/J25 have 121 each, TLA 64,
+  DMU/BRO/ONE/MOM/LTR 10 each, MSH 0), so `getJumpstartBoosters()` dealt nothing, `jumpstartBoosters` stayed empty
+  and Select Deck's `loadMetaDraft()` had nothing to show - a dead button after the entry fee was paid. Three parts:
+  (1) `AdventureEventData.hasJumpstartPacks(block)` - the same `template.getEdition().contains(landSetCode)` test the
+  dealer uses - drops a template-less product from `pickJumpstartCardBlock()` (`[TFR-InnEditions] format=Jumpstart:
+  <block> has no packs in boosters-special.txt for its land set - not offered`); (2) an event that reaches Select
+  Deck with no packs tries `redealJumpstartPacks()` first (a product with packs whose deal was lost); (3) when that
+  fails too, `EventScene.voidUndealableEvent()` gives the entry back - the coin item, the shards or the gold
+  (recorded at entry in the new `entryPaidGold` / `entryPaidShards`; older saves fall back to `goldToEnter` x the
+  town's price modifier), marks the event Abandoned, logs `[TFR-Event] Jumpstart event on <block> voided - no packs
+  to deal; entry returned: ...` and says so in a dialog ("No packs for this tournament"). `AdventureEventData` keeps
+  its pinned serialVersionUID, so the two new fields read as 0 from older saves. Verified by reading only: the
+  filter and the dealer share one lookup, and MSH is the only product it excludes. The user's own save is the real
+  test.
+- **GreenSapling back to scale 0.5** - round 333's 0.75 withdrawn before it was ever released.
+- **Open: the agent game refuses every save.** The user's copied auto save (as slot 10) and the agent's own Sep 23
+  saves all end in "Could not load that save" with no `[TFR-Load]` line in the captured stderr
+  (`C:\TFRgentgent_launch_err2.cmd` writes stdout/stderr to `C:\TFRgent\out.txt` / `err.txt`, and err.txt does
+  capture the card-loading warnings). `WorldSave.load()` has exactly one silent `return false`: the save file missing
+  at `getSaveFile(slot)` - the lead for next time. The user's live game loads the same saves. Deferred at the user's
+  word ("work on the load issue later").
+
 ## Round 332: the sphinx pays once, dialog gold is announced, the duel purse halved (2026-09-24)
 
 User, asking where their 10,000 gold came from (*"was there any big payout?"*): it was the Sphinx's Sanctum -

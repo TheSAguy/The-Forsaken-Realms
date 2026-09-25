@@ -50,7 +50,7 @@ Read in this order, and stop when you have what you need:
 
 Then run `git log --oneline -15` and `git status` — those two tell you the rest.
 
-## STATE 2026-09-24 (rounds 332 + 333 local + UNRELEASED: sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
+## STATE 2026-09-24 (rounds 332-334 local + UNRELEASED - round 334 = map sprites dimmed under the fog, the sphinx at 4,000 once then its sanctum retired for good, the Jumpstart rescue (MSH dropped, stuck events refunded); untested in a running game because the agent refuses every save - see the round-334 line; rounds 332/333 = sphinx riddles pay once, dialog gold banner, Level 2 arena fee 500, bigger green sapling; the purse halving was reverted - see the round-332/333 lines; rounds 331 + 331b; **v1.14.1 "Welcome to The Forsaken Realms!" RELEASED** - tag `tfr-v1.14.1` @ `c81b3dcf3ef`, published 19:50:16 UTC, Latest, its notes carrying v1.14's; **the v1.14 release, its assets AND its tag were DELETED from GitHub** at the user's word (the commit 9664d624406 remains; local copies in `C:\TFR\release\v1.14\`); ENGINE = 09.23 daily since round 316; nothing is unreleased) - READ THIS FIRST, DO NOT REPEAT WORK
 
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
@@ -186,6 +186,15 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   Gallery), their typos, and the leftover "Shandalar" in stock maps + the Landscape Sketchbook. Data only, 33 files,
   `dev-tools/text-audit/apply_rol_text_audit.py`. NOT seen in a running game; live folder and v1.14 artifacts need
   a rebuild.
+- **Round 334 (local, NOT pushed): map sprites dim under the fog like the ground (`MapSprite.isHazedByFog()`, batch color
+  x0.45 while the center tile is explored but not in view); the sphinx pays 4,000 (was 8,000) once per game and the
+  sanctum retires for good (`PointOfInterestData.retireOnQuestFlag` on RiddlesLair + `DungeonRotation.isRetired()` in the
+  day tick and the reserve; a loaded place re-reads its data by name, so existing saves count); the Jumpstart rescue
+  (`AdventureEventData.hasJumpstartPacks()` drops Marvel Super Heroes - the only product without `boosters-special.txt`
+  templates - from the offer, `redealJumpstartPacks()`, and `EventScene.voidUndealableEvent()` refunds the entry of a
+  pack-less event: the user's dead Select Deck button); GreenSapling back to 0.5.** None of it seen in a running game:
+  the agent game refuses every save ("Could not load that save", no `[TFR-Load]` line in captured stderr;
+  `WorldSave.load()`'s only silent exit is the file-missing check - the next lead). Live + agent folders packaged.
 - **Round 332 (local commit, NOT pushed - after v1.14.1): the Sphinx's Sanctum riddles pay once (dialog roots gated on
   `riddlesLairComplete`, the reward 8,000 / 250 / a 2ED pack kept - it was farmable every rotation), a dialog's gold and
   shards get a banner (`MapDialog.setEffects()`, `[TFR-DialogGrant]`).** Seen in the agent game. The user's 326-day

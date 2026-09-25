@@ -153,11 +153,15 @@ public class EventScene extends MenuScene implements IAfterMatch {
         };
         enterWithShards.callback = (result) -> {
             currentEvent.enteredWithCoinItem = null; // paid with shards, not a Coin - no refund-on-early-loss applies
+            currentEvent.entryPaidShards = -spendShards.addShards; // round 334
+            currentEvent.entryPaidGold = 0;
             currentEvent.eventStatus = AdventureEventController.EventStatus.Entered;
             refresh();
         };
         enterWithGold.callback = (result) -> {
             currentEvent.enteredWithCoinItem = null; // paid with gold, not a Coin - no refund-on-early-loss applies
+            currentEvent.entryPaidGold = -spendGold.addGold; // round 334
+            currentEvent.entryPaidShards = 0;
             currentEvent.eventStatus = AdventureEventController.EventStatus.Entered;
             refresh();
         };
@@ -525,6 +529,14 @@ public class EventScene extends MenuScene implements IAfterMatch {
                         editDeck();
                         break;
                     case Jumpstart:
+                        // Round 334: an event with no packs to pick from used to leave this button doing nothing
+                        // (the user, at a "Marvel Super Heroes Jumpstart" event: "When I click on the select deck
+                        // button, nothing happens"). Deal again; a product with no packs voids the event and returns
+                        // the entry fee.
+                        if (currentEvent.jumpstartBoosters.isEmpty() && !currentEvent.redealJumpstartPacks()) {
+                            voidUndealableEvent();
+                            break;
+                        }
                         loadMetaDraft();
                 }
                 break;
@@ -899,6 +911,39 @@ public class EventScene extends MenuScene implements IAfterMatch {
 
     public void finishEvent() {
         currentEvent.eventStatus = AdventureEventController.EventStatus.Completed;
+    }
+
+    /**
+     * Round 334: a Jumpstart event whose product this engine has no packs for (MSH in the 09.23 daily) cannot be
+     * played. The Inn hands the entry back - the Coin it took, or the shards or gold it charged; an event entered
+     * before those amounts were recorded is refunded the gold price - and the event ends as Abandoned, so the Inn
+     * rolls a fresh one at its next turn.
+     */
+    private void voidUndealableEvent() {
+        String refunded;
+        if (currentEvent.enteredWithCoinItem != null && !currentEvent.enteredWithCoinItem.isEmpty()) {
+            Current.player().addItem(currentEvent.enteredWithCoinItem);
+            refunded = "your " + currentEvent.enteredWithCoinItem;
+        } else if (currentEvent.entryPaidShards > 0) {
+            Current.player().addShards(currentEvent.entryPaidShards);
+            refunded = currentEvent.entryPaidShards + " [+Shards]";
+        } else {
+            int gold = currentEvent.entryPaidGold;
+            if (gold <= 0) {
+                float townPriceModifier = changes == null ? 1f : changes.getTownPriceModifier();
+                gold = Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier);
+            }
+            Current.player().giveGold(gold);
+            refunded = gold + " [+Gold]";
+        }
+        currentEvent.eventStatus = AdventureEventController.EventStatus.Abandoned;
+        System.out.println("[TFR-Event] Jumpstart event on " + currentEvent.cardBlockName + " voided - no packs to deal;"
+                + " entry returned: " + refunded);
+        showDialog(createGenericDialog("No packs for this tournament", "This version of the game has no Jumpstart"
+                + " packs for " + currentEvent.cardBlockName + ", so the tournament cannot be held. The Inn returns "
+                + refunded + " and will hold a different event next time.", Forge.getLocalizer().getMessage("lblOK"),
+                null, this::removeDialog, null));
+        refresh();
     }
 
     public void loadMetaDraft() {

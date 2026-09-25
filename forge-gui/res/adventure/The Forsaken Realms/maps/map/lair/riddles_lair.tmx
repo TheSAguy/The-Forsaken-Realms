@@ -120,7 +120,7 @@
                                 &quot;advanceQuestFlag&quot;: &quot;riddlesLairComplete&quot;,
                                 &quot;deleteMapObject&quot;: 50,
                                 &quot;triggerDungeonClear&quot;: true,
-                                &quot;addGold&quot;: 8000,
+                                &quot;addGold&quot;: 4000,
                                 &quot;addShards&quot;: 250,
                                 &quot;grantRewards&quot;: [
                                   {

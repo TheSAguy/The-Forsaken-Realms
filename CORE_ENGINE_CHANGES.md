@@ -38,6 +38,21 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 334 — fog-dimmed sprites, retired lairs, the Jumpstart rescue
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapSprite.java`** — `draw()` multiplies the batch color by `FOG_HAZE`
+  (0.45) while `isHazedByFog()` (fog on, the sprite's center tile explored but not currently visible), restored after;
+  the drawing itself moved to `drawArt()`.
+- **`forge-gui-mobile/src/forge/adventure/data/PointOfInterestData.java`** — new data field `retireOnQuestFlag`, read
+  by the mod's `DungeonRotation.isRetired()`: a rotatable lair the day tick deactivates for good once the player
+  holds the flag (RiddlesLair).
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java`** — `hasJumpstartPacks(block)` (the dealer's
+  own template lookup) filters `pickJumpstartCardBlock()`; `redealJumpstartPacks()`; `entryPaidGold` /
+  `entryPaidShards` (the serialVersionUID stays pinned, older saves read 0).
+- **`forge-gui-mobile/src/forge/adventure/scene/EventScene.java`** — the entry callbacks record what was paid; the
+  Jumpstart `advance()` case re-deals empty packs or calls `voidUndealableEvent()` (refund, Abandoned, a dialog,
+  `[TFR-Event]`).
+
 ### Round 332 — dialog gold announced
 
 - **`forge-gui-mobile/src/forge/adventure/util/MapDialog.java`** — `setEffects()` posts a HUD banner and a

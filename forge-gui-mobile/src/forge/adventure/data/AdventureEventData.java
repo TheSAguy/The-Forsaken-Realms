@@ -75,6 +75,10 @@ public class AdventureEventData implements Serializable {
     // an actually-spent Coin (never gold/shards, which are lost regardless of outcome). Set in
     // EventScene's entry dialog callback, read in setWinner()'s loss branch.
     public String enteredWithCoinItem;
+    /** Round 334: what the entry cost in gold or shards (0 = not that, or entered before this field existed), so an
+     *  event that turns out undealable can hand exactly that back - see EventScene.voidUndealableEvent(). */
+    public int entryPaidGold;
+    public int entryPaidShards;
     private Deck[] rewardPacks;
 
     public AdventureEventData(AdventureEventData other) {
@@ -98,6 +102,8 @@ public class AdventureEventData implements Serializable {
         matchesWon = other.matchesWon;
         matchesLost = other.matchesLost;
         enteredWithCoinItem = other.enteredWithCoinItem;
+        entryPaidGold = other.entryPaidGold; // round 334
+        entryPaidShards = other.entryPaidShards;
     }
 
     public Deck[] getRewardPacks(int count) {
@@ -394,6 +400,32 @@ public class AdventureEventData implements Serializable {
         return pickJumpstartCardBlock(false);
     }
 
+    /** Round 334: does this engine hold Jumpstart pack templates for the block's land set (the packs
+     *  AdventureEventController.getJumpstartBoosters() deals from)? */
+    public static boolean hasJumpstartPacks(CardBlock block) {
+        if (block == null || block.getLandSet() == null)
+            return false;
+        String code = block.getLandSet().getCode();
+        for (SealedTemplate template : forge.StaticData.instance().getSpecialBoosters())
+            if (template.getEdition().contains(code))
+                return true;
+        return false;
+    }
+
+    /** Round 334: deal this Jumpstart event's packs again (a save whose event was made on a product with no packs,
+     *  or whose packs did not survive). True when at least one pack could be dealt. */
+    public boolean redealJumpstartPacks() {
+        if (format != AdventureEventController.EventFormat.Jumpstart)
+            return false;
+        if (cardBlock == null && cardBlockName != null)
+            cardBlock = AdventureOverrides.instance().getBlock(cardBlockName);
+        if (cardBlock == null || !hasJumpstartPacks(cardBlock))
+            return false;
+        jumpstartBoosters = AdventureEventController.instance().getJumpstartBoosters(cardBlock, JUMPSTART_TO_PICK_FROM);
+        System.out.println("[TFR-Event] Jumpstart packs dealt again for " + cardBlockName + ": " + jumpstartBoosters.size());
+        return !jumpstartBoosters.isEmpty();
+    }
+
     private static CardBlock pickJumpstartCardBlock(boolean playerTown) {
         Iterable<CardBlock> src = AdventureOverrides.instance().allBlocks(); //all blocks
         List<CardBlock> legalBlocks = new ArrayList<>();
@@ -425,6 +457,17 @@ public class AdventureEventData implements Serializable {
                 for (String restricted : configData.restrictedEditions) {
                     legalBlocks.removeIf(q -> q.getName().equals(restricted));
                 }
+            }
+        }
+        // Round 334 (the user: "I tried to join a Jumpstart tournament, and I can't select any decks"): blocks.txt lists
+        // "Marvel Super Heroes Jumpstart" (MSH) but boosters-special.txt holds no MSH packs, so an event on it dealt
+        // nothing and its Select Deck did nothing - round 322's "every product on offer" fallback reached it. A product
+        // this engine cannot deal packs for is never offered, on any path.
+        for (CardBlock b : new ArrayList<>(legalBlocks)) {
+            if (!hasJumpstartPacks(b)) {
+                legalBlocks.remove(b);
+                System.out.println("[TFR-InnEditions] format=Jumpstart: " + b.getName() + " has no packs in boosters-special.txt"
+                        + " for its land set - not offered");
             }
         }
         // Progressive Set Unlocks (user spec 2026-08-12): same restriction as pickWeightedCardBlock,

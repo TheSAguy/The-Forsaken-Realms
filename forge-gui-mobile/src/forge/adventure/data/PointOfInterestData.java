@@ -28,6 +28,9 @@ public class PointOfInterestData implements Serializable {
     public float offsetY=0f;
     public boolean active = true;
     public String[] questTags = new String[0];
+    /** Round 334: a quest flag that retires this place for good - once the player holds it, the place leaves the map
+     *  on the next day and never rotates back (the Sphinx's Sanctum after its riddles are answered). */
+    public String retireOnQuestFlag;
     public DialogData.ActionData.QuestFlag[] questFlagsToActivate = new DialogData.ActionData.QuestFlag[0];
     public String displayName;
 

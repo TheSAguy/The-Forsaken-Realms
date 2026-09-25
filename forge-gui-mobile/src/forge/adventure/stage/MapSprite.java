@@ -1,5 +1,6 @@
 package forge.adventure.stage;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -161,6 +162,38 @@ public class MapSprite extends Actor {
             return;
         if (isHiddenByFog())
             return;
+        // Round 334 (the user, on Green land: "all the doodads are visible in the FOG, they seem bright"): the ground
+        // of a remembered tile is dimmed (World.hazeTile(), 55% black) but every sprite on it drew at full brightness,
+        // so a remembered forest edge glowed. Sprites take the same dimming as the ground under them while their tile
+        // is not in view - the barrier's mountains already do (BarrierMountains.HAZE).
+        boolean hazed = isHazedByFog();
+        Color tint = batch.getColor();
+        float tr = tint.r, tg = tint.g, tb = tint.b, ta = tint.a;
+        if (hazed)
+            batch.setColor(tr * FOG_HAZE, tg * FOG_HAZE, tb * FOG_HAZE, ta);
+        try {
+            drawArt(batch, parentAlpha);
+        } finally {
+            if (hazed)
+                batch.setColor(tr, tg, tb, ta);
+        }
+    }
+
+    /** Round 334: World.hazeTile() lays 55% black over a remembered tile; the same, as a tint. */
+    private static final float FOG_HAZE = 0.45f;
+
+    /** Round 334: explored but not in view right now - drawn dimmed, like the ground under it. */
+    protected boolean isHazedByFog() {
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (!world.isFogOfWarEnabled())
+            return false;
+        int tileSize = world.getTileSize();
+        int centerTileX = (int) ((getX() + getWidth() / 2f) / tileSize);
+        int centerTileY = (int) ((getY() + getHeight() / 2f) / tileSize);
+        return !world.isCurrentlyVisible(centerTileX, centerTileY);
+    }
+
+    private void drawArt(Batch batch, float parentAlpha) {
         float x = getX() + artShiftX(), y = getY() + artShiftY(); // round 329
         float scale = getDrawScale();
         if (scale == 1f) {

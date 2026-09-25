@@ -393,6 +393,14 @@ public class DungeonRotation {
             world.setPoiActiveTarget(activeRotatable.size());
         for (PointOfInterest poi : activeRotatable) {
             String id = poi.getID();
+            if (isRetired(poi)) { // round 334: its prize is paid - off the map for good
+                poi.setActive(false);
+                world.getPoiDespawnDay().remove(id);
+                changed = true;
+                System.out.println("[DungeonRotation] " + poi.getDisplayName() + " retired for good - the player holds "
+                        + poi.getData().retireOnQuestFlag);
+                continue;
+            }
             Integer despawnDay = world.getPoiDespawnDay().get(id);
             if (despawnDay == null) {
                 // First sight of this POI (fresh world, newly activated, or a save predating the
@@ -471,6 +479,14 @@ public class DungeonRotation {
     // target - a despawned dungeon is thereby replaced by one appearing somewhere ELSE on the
     // map (user redesign 2026-08-08), not by the same spot returning later. A just-hidden
     // location's cooldown (poiRespawnDay) keeps it out of the draw for 10-30 days so despawns
+    /** Round 334 (the user, of the Sphinx's Sanctum: "after it pays, the dungeon should not ever re-appear"): a place
+     *  whose PointOfInterestData.retireOnQuestFlag the player holds. The day tick deactivates it and the reserve never
+     *  activates it again; the flag is per game, so a new game gets the place back. */
+    public static boolean isRetired(PointOfInterest poi) {
+        String flag = poi == null || poi.getData() == null ? null : poi.getData().retireOnQuestFlag;
+        return flag != null && !flag.isEmpty() && Current.player() != null && Current.player().checkQuestFlag(flag);
+    }
+
     // don't bounce straight back.
     private static boolean activateFromReserve(World world, int currentDay) {
         int activeCount = 0;
@@ -482,6 +498,8 @@ public class DungeonRotation {
                 activeCount++;
                 continue;
             }
+            if (isRetired(poi))
+                continue; // round 334: never comes back
             Integer cooldownUntil = world.getPoiRespawnDay().get(poi.getID());
             if (cooldownUntil == null || currentDay >= cooldownUntil)
                 eligibleReserve.add(poi);
