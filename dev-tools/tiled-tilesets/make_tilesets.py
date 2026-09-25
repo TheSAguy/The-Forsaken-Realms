@@ -13,6 +13,8 @@ sprite is 16 units, so the tiles must be 16 px. This writes 16 px tilesets into 
   road.png/.tsx            round 342: the cobble road the user picked on Road.png (an A2 sheet, block row 1 col 2)
                            with its sand keyed out, so it lies over any ground - a blob terrain set "road" of 47.
   mv_walls  (.png + .tsx + -collide.tsx)   round 342: Walls.png, castles, houses and city walls, plain tiles.
+  mv_statues  (.png + .tsx + -collide.tsx) round 342b: the B sheet of the Dungeon composite the user saved as
+                           Statues.png - statues, pillars, ore piles, crystals - plain tiles.
   mv_outside_a1/a2/a4/a5/b, mv_world_a2/b/c  (.png + .tsx + -collide.tsx)
                            the RPG Maker MV sheets from the user's Terrain folder, 48 -> 16 px. A2 (and A1's first
                            frames) expand to blob terrain sets; A4's roofs to blob sets and its walls to 16-piece
@@ -354,8 +356,11 @@ def mv_a4(out_dir, art, previews):
         preview(out_dir, "mv_outside_a4", kinds)
 
 
-def mv_plain(out_dir, art, sheet_name, ts_name):
+def mv_plain(out_dir, art, sheet_name, ts_name, box=None):
+    """A plain sheet (B/C/A5) as 16 px tiles in sheet order; box = the sheet inside a composite rip."""
     src = Image.open(os.path.join(art, sheet_name)).convert("RGBA")
+    if box:
+        src = src.crop(box)
     cols, rows = src.width // 48, src.height // 48
     ts = Tileset(ts_name, cols)
     for r in range(rows):
@@ -366,6 +371,9 @@ def mv_plain(out_dir, art, sheet_name, ts_name):
 
 
 ROAD_BLOCK = (1, 2)  # Road.png block (row, col) - the cobbles on sand the user boxed in red
+# Statues.png (round 342b) is the MV Dungeon composite rip (five sheets on teal, 2 px gaps): its B sheet, the one
+# with the statues, sits at x 388, y 726 (A5 at x 2, C at x 1158).
+STATUES_B = (388, 726, 1156, 1494)
 
 
 def key_out_sand(block, yellow=40, fade=20):
@@ -439,7 +447,7 @@ def main():
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--art", default=DEFAULT_ART)
     ap.add_argument("--preview", action="store_true")
-    ap.add_argument("--only", default="", help="comma list: player,a1,a2,a4,a5,b,worlda2,worldb,worldc,walls,road")
+    ap.add_argument("--only", default="", help="comma list: player,a1,a2,a4,a5,b,worlda2,worldb,worldc,walls,road,statues")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     only = set(a.only.split(",")) if a.only else None
@@ -467,6 +475,8 @@ def main():
         mv_plain(a.out, a.art, "World_C.png", "mv_world_c")
     if want("walls"):
         mv_plain(a.out, a.art, "Walls.png", "mv_walls")
+    if want("statues"):
+        mv_plain(a.out, a.art, "Statues.png", "mv_statues", box=STATUES_B)
     if want("road"):
         road(a.out, a.art, a.preview)
 

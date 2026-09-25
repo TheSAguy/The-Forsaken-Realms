@@ -14294,6 +14294,17 @@ Tooling and data, no engine change. Local commit, NOT pushed.
 - The plane's `player_town.tmx` / `player_capital.tmx` are UNCHANGED - the user paints in Tiled, then the map comes
   back into `maps/map/towns/` with `../../tileset/` paths. The town's blue-grey gravel patches (Ground layer, the
   old wasteland look) were not asked about and stay.
+- **Round 342b** (the user, on the Capitol render: *"Remove the bits of road outside the cap walls. (Not the road
+  leading in, the other). Make those 'patches' from the player terrain. Create a tileset of ...Statues.png"*).
+  The bits were not road: they were the player land's own Player_2 band - the gravel patch the overworld lays at
+  noise >= 0.75 - which next to the new cobbles reads as road. The templates' high band now takes the light green
+  Player_3 art instead (one field, two bands: Player_1 <= 0.25, Player_3 >= 0.75; the separate overlay field is
+  gone), in both templates; the entrance road is untouched. **`maps/tileset/mv_statues`** (.png, .tsx,
+  -collide.tsx): Statues.png is the MV Dungeon composite rip (five sheets on teal with 2 px gaps - the same bytes
+  as the user's "PC _ Computer - RPG Maker MV - Tilesets - Dungeon.png"); its B sheet, the one with the statues
+  (angels, knights, the gold idol, the dragon, pillars, ore piles, crystals, coffins), cut at x 388, y 726
+  (`STATUES_B`) and downscaled to 256 plain tiles; the sheet keeps its transparency, nothing to key. Both
+  templates attach it. Rebuilt into Player_Cap (the user had not saved over the 10:46 files - checked by mtime).
 
 ## Round 341: Tiled tilesets for the Player Capitol (2026-09-25)
 

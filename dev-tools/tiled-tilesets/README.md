@@ -26,6 +26,7 @@ pipeline's rule.
 | `mv_outside_a4` | `Outside_A4.png` | roofs as blob sets, walls as 16-piece edge sets (`roof <band> c<col>`, `wall <band> c<col>`) |
 | `mv_outside_a5`, `mv_outside_b`, `mv_world_b`, `mv_world_c` | the plain sheets | plain tiles in sheet order |
 | `mv_walls` | `Walls.png` (round 342) | castles, houses, towers and city walls, plain tiles in sheet order |
+| `mv_statues` | `Statues.png` (round 342b) - the MV Dungeon composite rip; its B sheet is cut at `STATUES_B` (x 388, y 726) | statues, pillars, ore piles, crystals, coffins, plain tiles; the sheet keeps its transparency |
 | `road` | `Road.png` block row 1 col 2 (round 342, the cobbles the user boxed) | one blob terrain set `road`, the sand keyed out (`key_out_sand`: pixels yellower than R-B 40 go clear), so it lies over any ground; no collision |
 
 Every MV tileset comes twice: `name.tsx` with no collision and `name-collide.tsx` where every tile has a full box -
@@ -55,8 +56,9 @@ Empty slots on a sheet (the user's Outside A2 rip fills 8 of 32 blocks, Outside 
 
 `make_templates.py` rebuilds `player_town.tmx` and `player_capital.tmx` from `maps/map/towns/` onto the player's
 ground and writes them to the user's `Player_Cap` folder (`--out`): the Background layer becomes the player land's
-base tile, its patch bands (Player_1 <= 0.25, Player_2 >= 0.75 of one value-noise field, the Player_3 overlay
->= 0.8 of its own) go on the Ground layer where nothing sits, and in the Capitol the White Cap sand islands leave
+base tile, two patch bands of one value-noise field (Player_1 at <= 0.25, the light Player_3 art at >= 0.75 - not
+the overworld's Player_2 gravel, which read as bits of road next to the cobbles, round 342b) go on the Ground layer
+where nothing sits, and in the Capitol the White Cap sand islands leave
 Ground and every visible road cell is repainted with the `road` set - courtyard roads stay on Walls (above the
 courtyard's brick in Ground2), the rest on Ground. Road and sand cells the old layout had buried under the
 courtyard's brick are dropped, not repainted. `--renders <folder>` writes before_/after_ PNGs at 2x. The templates

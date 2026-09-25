@@ -6,9 +6,10 @@ The user: "player_town.tmx - Replace background with new player background. play
 with new player background. Replace roads with new Roads above. (Save the templates here ...Player_Cap)".
 
 From the plane's maps/map/towns/*.tmx it writes, into --out (the user's Player_Cap folder by default):
-  player_town.tmx     Background = the player land's base ground; its patch bands (Player_1, Player_2, the Player_3
-                      overlay) laid on the Ground layer where nothing sits, the way the overworld lays them (bands of
-                      one smooth noise field: <= 0.25 and >= 0.75; the overlay from its own field, >= 0.8).
+  player_town.tmx     Background = the player land's base ground; two patch bands laid on the Ground layer where
+                      nothing sits, the way the overworld lays them (bands of one smooth noise field: Player_1 at
+                      <= 0.25, and at >= 0.75 the light Player_3 art rather than the overworld's Player_2 gravel,
+                      which read as bits of road - round 342b).
   player_capital.tmx  the same ground; the old sand islands in Ground gone (they were the White Cap ground); every
                       road cell - the blue-grey strips in Walls (the courtyard) and Ground (the right side), and the
                       sand-hatched road in Ground (the entrance) - repainted with the road terrain set, each cell in
@@ -40,6 +41,7 @@ ROAD_SAND = {2286, 2287, 2288, 2289, 2290, 2291, 2444, 2445, 2446, 2447, 2449, 2
 COURTYARD_BRICK = 2945
 
 EXTRA_TILESETS = ["player_land.tsx", "road.tsx", "mv_walls.tsx", "mv_walls-collide.tsx",
+                  "mv_statues.tsx", "mv_statues-collide.tsx",
                   "mv_outside_a1.tsx", "mv_outside_a1-collide.tsx", "mv_outside_a2.tsx", "mv_outside_a2-collide.tsx",
                   "mv_outside_a4.tsx", "mv_outside_a4-collide.tsx", "mv_outside_a5.tsx", "mv_outside_a5-collide.tsx",
                   "mv_outside_b.tsx", "mv_outside_b-collide.tsx", "mv_world_a2.tsx", "mv_world_a2-collide.tsx",
@@ -75,7 +77,6 @@ def lay_ground(m, land_gid, sets, label):
     ground = m.layers["Ground"]
     ground2 = m.layers.get("Ground2")
     field = paint.value_noise(w, h, 6, SEED)
-    field3 = paint.value_noise(w, h, 5, SEED + 1)
     patched = set()
 
     def skip(x, y):
@@ -91,10 +92,11 @@ def lay_ground(m, land_gid, sets, label):
                     patched.add((x, y))
         return n
 
+    # Round 342b (the user: the Player_2 gravel patches outside the walls read as bits of road - "make those patches
+    # from the player terrain"): the high band takes the light green overlay art instead of the gravel.
     n1 = band("ground Player_1", lambda x, y: field[y][x] <= 0.25)
-    n2 = band("ground Player_2", lambda x, y: field[y][x] >= 0.75)
-    n3 = band("ground Player_3", lambda x, y: field3[y][x] >= 0.8)
-    print("%s: base on %d cells; patches Player_1 %d, Player_2 %d, Player_3 %d" % (label, w * h, n1, n2, n3))
+    n3 = band("ground Player_3", lambda x, y: field[y][x] >= 0.75)
+    print("%s: base on %d cells; patches Player_1 %d, Player_3 %d" % (label, w * h, n1, n3))
 
 
 def clean_capital(m):
