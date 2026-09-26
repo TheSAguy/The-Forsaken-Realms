@@ -14264,6 +14264,100 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 351: one set of road rules, ruins keep the wasteland look, Orazca restored with the Warden (2026-09-26)
+
+The user, playing rounds 342-350 live: *"The Ruined towns should not use the new layout. That should be used when the
+player restores a town. When you restore the center town, before the cap, so from ruin to town, that should also use
+the new layout. (But with warden inside)"* - *"The bonfire does not work when FoW is off. Is that correct?"* - *"There
+is a tree on the new player town layout that should have no collision."* - *"In the new capitol, please remove
+collision from these two items."* - *"It looks like there are some double roads in the center."* - *"I also got a
+double road after restoring a ruin town."* - *"Review log"*. And as they played on: *"After building cap, still seeing a
+lot of old roads under new road."* - *"The road pathing logic seems wrong here. Red is longer than the alternative
+green. The green circle road should have been upgraded and the red should not be there."* - *"Just another case of road
+logic than needs adjusting."* - *"Old and new road on same area"*.
+
+**Roads - `util/RoadNetwork` (new).** Every road on the world map is the road pass's 4-connected staircase from one
+town's anchor (`getTilePosition`) to another's. Read off the user's own save (a read-only extractor for a save's
+`biomeMap` and places, `ExtractRoads.java` in the session scratchpad; an offline prototype of the rules on the same grid,
+previewed to the user before the build) the doubles had four causes, one rule each:
+1. **The walk from A to B is a different staircase from the walk from B to A.** 40 of the save's 237 road-joined town
+   pairs were drawn both ways - the star's spokes repeated pairs the nearest-neighbor pass had, a capture's route
+   crossed pairs world-gen drew from the other end - 8 of them on the player network (Orazca-Tolaria, Orazca-Shiv,
+   Tinkers' Bazaar-Benalia, Andor's Village-Shiv ... the user's "Old and new road on same area"). Every walk now starts
+   at the same end (`RoadNetwork.canonicalFirst`, in `World.layRoad()` and in world-gen) and world-gen draws each pair
+   once (`uniqueCanonicalPairs`, logged "pair(s) named twice drawn once").
+2. **The star is a wheel** (rounds 347-348) but the save had all five pentagram diagonals again plus the campfire's
+   links to three Ring Cities: the nearest-neighbor pass linked star towns to each other and AI captures routed across
+   the middle. No road now joins two star towns off the wheel, nor reaches Orazca or the campfire from outside
+   (`Star.allowsHop`) - world-gen's nearest-neighbor and rescue passes (`worldGenLinkAllowed`), the capture router
+   (`TerritoryControl.connectCapturedTownByRoad`) and the player network all keep to it; world-gen lays the campfire's
+   one road, to Orazca.
+3. **The Capitol's network** (round 346) was routed per town, from the Capitol, over every town by distance squared,
+   blind to the roads already there - its lines ran beside the old roads, and a town got its own long route even when
+   a road to the last one was a step away (the user's red and green: Andor's Village -> Minstrel's Crossing laid new
+   while the old road Tinkers' Shrine -> Minstrel's Crossing sat unused). It now grows from the Capitol one town at a
+   time, the town cheapest to reach from anything already on it first, and a hop along an existing road costs
+   `EXISTING_ROAD_DISCOUNT` (0.35) of a new one - the network upgrades the roads it finds. Every old road between two of
+   the player's own places joins it too (none in the user's save once former player hops and lines through a town are
+   left out). Captures' old roads route with the same discount.
+4. **Round 346 paved only the tiles exactly under the new road** ("Old roads the new road does not cover stay"). An
+   upgraded pair's other staircase is now lifted, and old road squeezed against a player road - a tile filling a 2x2
+   block of road with it whose neighbors stay joined without it - goes.
+Hidden places (the campfire beside Orazca goes inactive) are no road ends and no waypoints - the old network routed
+every road "Orazca -> Secluded Encampment -> ...".
+
+A save laid before this round is normalized once on load (`World.roadsNormalized`, `RoadNetwork.migrateOnLoad`): the
+star's clutter and the doubled pairs go, and a standing Capitol's network is laid again - its player road first turned
+back to old road so the new network can upgrade it, and a hop of the old network the new one no longer uses is lifted
+when the new network joins its ends within 1.6x the direct distance (the user's red; logged per hop), otherwise it stays
+as an old road (the Orazca-Llanowar spoke the old network had paved). A town's own 3x3 road square is never lifted: the
+first build guarded 5x5 and kept the pieces of lifted lines that ran through it - loose bits of sand beside the
+Capitol's north road, seen in the agent game and fixed. `PlayerRoads` delegates (`NETWORK_VERSION` 3); its old router
+is gone.
+
+**Town layouts.** Round 343 painted the player's town over `maps/map/towns/player_town.tmx` - the one file every
+wasteland town loads, ruins and functioning neutral towns included (the user's log: `enteredRuinedTown ... Mardrake
+Village` then `player_town.tmx`). `TileMapScene.resolveMapPath()` (the Ring Cities' chooser) now picks:
+- `wasteland_town.tmx` (new - `player_town.tmx` as of `0b1aeadfe0a`, the last version before 343, with round 350's ten
+  Common types on its eight chooser slots) for a wasteland town the player does not hold;
+- `orazca_restored.tmx` (new - `player_town.tmx` plus `orazca.tmx`'s Warden, object 100, dialog and all) for Orazca
+  restored, before the Capitol; ruined Orazca keeps `orazca.tmx`.
+The POI data keeps its map (the POI id carries it); object ids are the same in all of them. A restore sends the player
+out to the world map with *"<town> is restored! Step back in to see it rebuilt."* (`TownRestoration.showRebuiltLayout`),
+as the Capitol's upgrade does - the next visit loads the new layout. `validate_plane_data.py` knows both maps as
+code-picked roots.
+
+**Collision.** The tree in `player_town.tmx` (12,15) - `main:105` on Ground, and every tile layer adds collision - is
+`main-nocollide:105`; the Capitol's two shrines (`walls_48:82` on Ground2 at (4,28) and (14,28)) are
+`walls_48-nocollide:82` (tileset added, firstgid 37361). `orazca_restored.tmx` has the tree fix too.
+
+**The Bonfire with Fog of War off** works as designed: it only lifts fog, so the use is refused, the shard refunded and
+the fire kept - the user's log has four *"[TFR-Rune] Bonfire did nothing: There is no fog here for a bonfire to hold
+back. (1 shard(s) refunded)"*. Its description now ends *"Needs Fog of War on."*
+
+**Also:** the Mod Details text said "a Capitol 25" - the Capitol has 24 building slots (round 350b), now "24". The user's
+log (`Pictures\Screenshots\LOG\forge.log` = `forge.20260926-093704.log`): no exceptions; ruined towns loading
+`player_town.tmx`; the Bonfire refusals; the Capitol raise laying its roads through the hidden campfire.
+
+**Seen in the agent game** (the user's 10:03 save, copied into the agent's own profile): the migration's log matching the
+offline prototype tile for tile; at Orazca the north and south cobble roads with no sand beside them once the guard was
+narrowed; Crookedbrook (not held) in the wasteland layout; Andor's Village (held) in the player's layout with the tree
+drawn from the no-collision sheet; the Capitol's shrine drawn likewise. The migration logged: 296 towns on the map, the hidden Secluded Encampment
+left out; the wheel - 5 lines off it lifted (151 tiles) + 19 stray tiles inside the rim; 38 pairs drawn from both ends
+down to one staircase (114 tiles); the Capitol's network 13 hops (322 tiles laid, 318 old tiles paved over), lifting
+4 beside the upgrades, 53 of the old network (the red Andor's Village - Minstrel's Crossing among them) and 56
+squeezed against it - 140 ms in all. A new world: the rim's 5 neighbor edges, *"0 pair(s) named twice drawn once"*,
+single roads out of Orazca; restoring Orazca at its Job Board (200 gold + 5 wood) sent the agent out -
+`[TFR-TownLayout] Orazca restored - out to the world map, the next visit loads .../orazca_restored.tmx` - and the next
+visit loaded the player town's layout with the Warden (actor 100) in it. **NOT seen:** walking through
+the tree and the shrines (the bridge walks between actors only - the two tiles simply have no collision box now).
+
+Files: `forge-gui-mobile/src/forge/adventure/util/RoadNetwork.java` (new), `util/PlayerRoads.java`,
+`util/TerritoryControl.java`, `util/TownRestoration.java`, `world/World.java`, `scene/TileMapScene.java`,
+`scene/WorldStandingsScene.java`, `character/QuestActor.java`; `maps/map/towns/wasteland_town.tmx` (new),
+`maps/map/towns/orazca_restored.tmx` (new), `maps/map/towns/player_town.tmx`, `maps/map/towns/player_capital.tmx`;
+`world/items.json`; `dev-tools/validate_plane_data.py`.
+
 ## Round 350b: the player FAQ ships in the game folder, the Capitol's Booster slot gets its five boosters back (2026-09-26)
 
 The user: *"This is my current FAQ in Discord. Can you please give me a more comprehensive one: Include - How Research

@@ -666,7 +666,7 @@ def tmx_props(elem):
 
 tmx_count = 0
 TMX_OBJ_TYPES = Counter()
-# roots: every POI map, plus the Ring City per-color layouts TileMapScene.resolveMapPath() synthesizes
+# roots: every POI map, plus the layouts TileMapScene.resolveMapPath() picks in code
 roots = []
 for p in pois or []:
     if p.get("map"):
@@ -676,6 +676,11 @@ for color in ("white", "blue", "black", "red", "green"):
     for pre in ("", "player_"):
         f = resolve_file("../The Forsaken Realms/maps/map/towns/ring_city_%s%s.tmx" % (pre, color))
         if f: roots.append(f)
+# round 351: TileMapScene.resolveMapPath() also picks the wasteland layout for towns the player does not hold and
+# Orazca's restored layout
+for name in ("wasteland_town", "orazca_restored"):
+    f = resolve_file("../The Forsaken Realms/maps/map/towns/%s.tmx" % name)
+    if f: roots.append(f)
 reachable, queue = set(), list(dict.fromkeys(roots))
 parsed = {}
 while queue:

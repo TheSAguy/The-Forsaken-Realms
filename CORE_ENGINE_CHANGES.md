@@ -38,6 +38,25 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 351 — one set of road rules, the wasteland and restored-Orazca layouts
+
+- **`forge-gui-mobile/src/forge/adventure/util/RoadNetwork.java`** (mod, new) — the road rules: canonical walks,
+  the star's wheel (`Star`), edge detection over the road grid, the player network's growth, the old-road
+  normalization and the once-per-save migration, the capture router's hop costs (`HopCosts`).
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `roadsNormalized` (saved); `ROAD_NONE/OLD/PLAYER`,
+  `roadKindRaw()`, `setRoadKindRaw()`, `repaintRoadTiles()`; `layRoad()` walks a pair from its canonical end;
+  world-gen: `RoadNetwork.worldGenLinkAllowed()` in the nearest-neighbor and rescue passes, the campfire's road to
+  Orazca, `uniqueCanonicalPairs()`, `roadsNormalized = VERSION`.
+- **`forge-gui-mobile/src/forge/adventure/util/PlayerRoads.java`** (mod) — delegates to RoadNetwork;
+  `NETWORK_VERSION` 3; the round-346 router removed.
+- **`forge-gui-mobile/src/forge/adventure/util/TerritoryControl.java`** (mod) — `connectCapturedTownByRoad()` takes
+  `RoadNetwork.HopCosts` (the wheel and the existing-road discount).
+- **`forge-gui-mobile/src/forge/adventure/scene/TileMapScene.java`** — `resolveMapPath()`: `WASTELAND_TOWN_MAP` for a
+  wasteland town the player does not hold, `ORAZCA_RESTORED_MAP` for Orazca restored.
+- **`forge-gui-mobile/src/forge/adventure/character/QuestActor.java`** — after a restore,
+  `TownRestoration.showRebuiltLayout()`; **`util/TownRestoration.java`** (mod) — `showRebuiltLayout()`.
+- **`forge-gui-mobile/src/forge/adventure/scene/WorldStandingsScene.java`** — "a Capitol 24".
+
 ### Round 350 — legends on a day clock, the quest log's legend rows, the Mythic shop tier
 
 - **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — `legendExpiryDay`.

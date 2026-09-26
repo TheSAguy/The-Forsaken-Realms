@@ -7683,7 +7683,7 @@
         "effect":  {
                        "visionRadiusMultiplier":  2.0
                    },
-        "description":  "A bundled campfire kit. Carried, it lights the way like a torch. Use it on the world map to build a bonfire where you stand: the fog lifts for 15 tiles around it, one tile less each day, until the fire dies out two weeks on. Ten fires to a kit; a spent kit is rebuilt for 50 shards.",
+        "description":  "A bundled campfire kit. Carried, it lights the way like a torch. Use it on the world map to build a bonfire where you stand: the fog lifts for 15 tiles around it, one tile less each day, until the fire dies out two weeks on. Ten fires to a kit; a spent kit is rebuilt for 50 shards. Needs Fog of War on.",
         "cost":  1200,
         "iconName":  "Bonfire",
         "rarity":  "Rare",

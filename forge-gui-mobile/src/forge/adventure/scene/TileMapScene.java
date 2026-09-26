@@ -178,8 +178,25 @@ public class TileMapScene extends HudScene {
                 return "../The Forsaken Realms/maps/map/towns/ring_city_" + (playerHeld ? "player_" : "") + colors[arm] + ".tmx";
             }
         }
-        return point.getData().map;
+        // Round 351 (the user: "The Ruined towns should not use the new layout. That should be used when the player
+        // restores a town. When you restore the center town, before the cap, so from ruin to town, that should also use
+        // the new layout. (But with warden inside)"). Round 343 painted the player's town over the one file every
+        // wasteland town loads, ruins and functioning neutral towns included. A wasteland town the player does not
+        // hold loads the wasteland layout again; Orazca, once restored, loads the player town's layout with the Warden.
+        // The POI data keeps its map - the POI id carries it. Same object ids in all of them.
+        String map = point.getData().map;
+        boolean held = TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(point.getID()));
+        if (TownRestoration.ORAZCA_POI_NAME.equals(point.getData().name))
+            return held ? ORAZCA_RESTORED_MAP : map;
+        if (map != null && map.endsWith("/towns/player_town.tmx") && !held)
+            return WASTELAND_TOWN_MAP;
+        return map;
     }
+
+    /** Round 351: a wasteland town the player does not hold - a ruin or a functioning neutral town. */
+    public static final String WASTELAND_TOWN_MAP = "../The Forsaken Realms/maps/map/towns/wasteland_town.tmx";
+    /** Round 351: Orazca restored, before the Capitol - the player town's layout with the Warden. */
+    public static final String ORAZCA_RESTORED_MAP = "../The Forsaken Realms/maps/map/towns/orazca_restored.tmx";
     public void load(PointOfInterest point) {
         AdventureQuestController.instance().mostRecentPOI = point;
         if (rootPoint != point) {

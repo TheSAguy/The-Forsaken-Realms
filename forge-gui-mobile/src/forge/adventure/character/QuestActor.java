@@ -55,8 +55,10 @@ public class QuestActor extends DialogActor {
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     // Fires whether the player picked "Restore town" or "Not now" - check
                     // whether the flag actually got set rather than assuming success.
-                    if (TownRestoration.isTownRestored(stage))
+                    if (TownRestoration.isTownRestored(stage)) {
                         TownRestoration.recolorTerrainForTesting();
+                        TownRestoration.showRebuiltLayout(stage); // round 351
+                    }
                 }
             });
             if (restoreDialog.activate())

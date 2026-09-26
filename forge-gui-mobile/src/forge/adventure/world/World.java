@@ -770,6 +770,17 @@ public class World implements Disposable, SaveFileContent {
     public void setPlayerRoadsBuilt(int version) {
         playerRoadsBuilt = version;
     }
+    // Round 351: RoadNetwork.VERSION this world's roads follow (saved as roadsNormalized); 0 = laid before the rules,
+    // and RoadNetwork.migrateOnLoad() normalizes such a save once.
+    private int roadsNormalized;
+
+    public int getRoadsNormalized() {
+        return roadsNormalized;
+    }
+
+    public void setRoadsNormalized(int version) {
+        roadsNormalized = version;
+    }
     private int yinYangStamp = 0;
 
     public int[] getYinYangAnchor() {
@@ -1066,6 +1077,7 @@ public class World implements Disposable, SaveFileContent {
         bonfireStamp++;
         obstacleSweep = saveFileData.containsKey("obstaclesSwept") ? saveFileData.readInt("obstaclesSwept") : 0;
         playerRoadsBuilt = saveFileData.containsKey("playerRoadsBuilt") ? saveFileData.readInt("playerRoadsBuilt") : 0; // round 346
+        roadsNormalized = saveFileData.containsKey("roadsNormalized") ? saveFileData.readInt("roadsNormalized") : 0; // round 351
         ResourceSpawns.forceResync(); // actors on WorldStage must rebuild from this loaded state
 
         poiDespawnDay.clear();
@@ -1221,6 +1233,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
         data.store("obstaclesSwept", obstacleSweep);
         data.store("playerRoadsBuilt", playerRoadsBuilt); // round 346
+        data.store("roadsNormalized", roadsNormalized); // round 351
         saveBarrier(data); // round 294
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
@@ -2965,6 +2978,8 @@ public class World implements Disposable, SaveFileContent {
 
                     if (i == j || usedEdges.contains((long) i | ((long) j << 32)) || roadLinkFull(towns, roadDegree, j, maxLinks))
                         continue;
+                    if (!forge.adventure.util.RoadNetwork.worldGenLinkAllowed(current, towns.get(j)))
+                        continue; // round 351: the star's own pass lays its roads - the wheel and nothing else
                     float dist = current.getPosition().dst(towns.get(j).getPosition());
                     if (dist > data.maxRoadDistance)
                         continue;
@@ -3004,6 +3019,8 @@ public class World implements Disposable, SaveFileContent {
                 for (int j = 0; j < towns.size(); j++) {
                     if (i == j || roadLinkFull(towns, roadDegree, j, maxLinks))
                         continue;
+                    if (!forge.adventure.util.RoadNetwork.worldGenLinkAllowed(towns.get(i), towns.get(j)))
+                        continue; // round 351: never into the wheel's middle
                     float dist = towns.get(i).getPosition().dst(towns.get(j).getPosition());
                     if (dist < nearestDist && roadLineCrossesBarrier(towns.get(i), towns.get(j))) { // round 294
                         barrierRoadLinksDropped++;
@@ -3049,6 +3066,10 @@ public class World implements Disposable, SaveFileContent {
                     }
                     allSortedTowns.add(Pair.of(hub, st));
                 }
+            // Round 351: the campfire beside Orazca gets one road, to Orazca. The nearest-neighbor pass used to link it to
+            // the Ring Cities as well - a second set of spokes a few tiles off the first.
+            if (hub != null && campfire != null && hub != campfire && !roadLineCrossesBarrier(hub, campfire))
+                allSortedTowns.add(Pair.of(hub, campfire));
             // ... and the rim. Round 347 (user: "Connect them in a ring. Green to Red and White, etc. Then to
             // the center city. So it will look like a wheel with spokes vs. Star"): NEIGHBOURS only.
             //
@@ -3099,6 +3120,16 @@ public class World implements Disposable, SaveFileContent {
                         allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
                     }
             }
+            // Round 351: each pair of towns once, walked from the same end (RoadNetwork.canonicalFirst). The spokes named
+            // pairs the nearest-neighbor pass already had, and the walk from A to B is a different staircase from the walk
+            // from B to A - two of them side by side read as a doubled road.
+            int repeatedRoadLinks = allSortedTowns.size();
+            List<Pair<PointOfInterest, PointOfInterest>> uniqueRoadLinks =
+                    forge.adventure.util.RoadNetwork.uniqueCanonicalPairs(allSortedTowns, data.tileSize);
+            allSortedTowns.clear();
+            allSortedTowns.addAll(uniqueRoadLinks);
+            repeatedRoadLinks -= allSortedTowns.size();
+            System.out.println("[TFR-Roads] world-gen town roads: " + repeatedRoadLinks + " pair(s) named twice drawn once");
             System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
                     + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + "), "
                     + rescuedTowns + " unlinked town(s) rescued, max " + maxLinks + " links per town");
@@ -3212,6 +3243,7 @@ public class World implements Disposable, SaveFileContent {
             CompletableFuture.allOf(futuresArray).join();
             futures.clear();
             currentTime[0] = measureGenerationTime("roads", currentTime[0]);
+            roadsNormalized = forge.adventure.util.RoadNetwork.VERSION; // round 351: laid by the current rules
 
 //////////////////
 ///////// draw mini map
@@ -4609,6 +4641,51 @@ public class World implements Disposable, SaveFileContent {
         return layRoad(waypoints, onTileRepainted, true);
     }
 
+    // Round 351: RoadNetwork works tile by tile on the two road layers, in the road pass's raw index (rawY = height -
+    // tileY - see layRoad()).
+    public static final int ROAD_NONE = 0, ROAD_OLD = 1, ROAD_PLAYER = 2;
+
+    /** The road on a tile - ROAD_NONE, ROAD_OLD or ROAD_PLAYER (a player road wins) - or -1 off the map. */
+    public int roadKindRaw(int x, int rawY) {
+        if (biomeMap == null || x < 0 || rawY < 0 || x >= width || rawY >= height)
+            return -1;
+        long bits = biomeMap[x][rawY];
+        if ((bits & playerRoadBit()) != 0)
+            return ROAD_PLAYER;
+        return (bits & roadBit()) != 0 ? ROAD_OLD : ROAD_NONE;
+    }
+
+    /**
+     * Round 351: one kind of road on a tile, or none - the per-tile write layRoad() makes (a road clears the tile's
+     * terrain structure; lifting one leaves the ground as it is). Returns whether the tile changed; a changed tile joins
+     * `touched` for repaintRoadTiles().
+     */
+    public boolean setRoadKindRaw(int x, int rawY, int kind, java.util.Set<Long> touched) {
+        if (roadKindRaw(x, rawY) < 0 || terrainMap == null)
+            return false;
+        long bits = biomeMap[x][rawY];
+        long next = bits & ~roadMask();
+        if (kind == ROAD_OLD)
+            next |= roadBit();
+        else if (kind == ROAD_PLAYER)
+            next |= playerRoadBit();
+        if (next == bits && (kind == ROAD_NONE || terrainMap[x][rawY] == 0))
+            return false;
+        biomeMap[x][rawY] = next;
+        if (kind != ROAD_NONE)
+            terrainMap[x][rawY] = 0;
+        redrawMinimapTile(x, rawY);
+        updateFogOfWarPixmap(x, rawY);
+        if (touched != null)
+            touched.add((long) x << 32 | (rawY & 0xffffffffL));
+        return true;
+    }
+
+    /** Round 351: the chunk-texture patches for the tiles setRoadKindRaw() changed, and the 2-tile ring around each. */
+    public void repaintRoadTiles(java.util.Set<Long> touched, BiConsumer<Integer, Integer> onTileRepainted) {
+        repaintAroundRoadTiles(touched, onTileRepainted);
+    }
+
     private int lastRoadPavedOver;
 
     /** The old road tiles the last buildPlayerRoad() paved over. */
@@ -4702,6 +4779,15 @@ public class World implements Disposable, SaveFileContent {
             int startY = (int) waypoints.get(seg).getTilePosition(data.tileSize).y;
             int x1 = (int) waypoints.get(seg + 1).getTilePosition(data.tileSize).x;
             int y1 = (int) waypoints.get(seg + 1).getTilePosition(data.tileSize).y;
+            if (!forge.adventure.util.RoadNetwork.canonicalFirst(startX, startY, x1, y1)) {
+                // Round 351: a pair is always walked from the same end - world-gen's and every later road's staircase
+                // between two towns are then the same tiles, never two side by side.
+                int swapX = startX, swapY = startY;
+                startX = x1;
+                startY = y1;
+                x1 = swapX;
+                y1 = swapY;
+            }
             int dx = Math.abs(x1 - startX);
             int dy = Math.abs(y1 - startY);
             int sx = startX < x1 ? 1 : -1;

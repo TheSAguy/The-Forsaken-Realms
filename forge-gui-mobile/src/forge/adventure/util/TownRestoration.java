@@ -498,6 +498,29 @@ public class TownRestoration {
         forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding."); // round 331: black tint (was white text)
     }
 
+    /**
+     * Round 351: a restored town loads the player town's layout (TileMapScene.resolveMapPath) - back out to the world
+     * map, as the Capitol's upgrade does, and the next visit shows it rebuilt. Only when the layout does change.
+     */
+    public static void showRebuiltLayout(MapStage stage) {
+        PointOfInterest point = TileMapScene.instance().rootPoint;
+        if (point == null || stage == null)
+            return;
+        // Every restore that goes through here swaps the layout: a wasteland town (its data map is player_town.tmx,
+        // wasteland_town.tmx until restored) or Orazca (orazca.tmx -> orazca_restored.tmx). A Ring City is captured.
+        String map = point.getData().map;
+        boolean swaps = ORAZCA_POI_NAME.equals(point.getData().name)
+                || (map != null && map.endsWith("/towns/player_town.tmx") && !TerritoryControl.isRingTown(point));
+        if (!swaps)
+            return;
+        String now = TileMapScene.resolveMapPath(point);
+        forge.adventure.stage.GameHUD.getInstance().addNotification(point.getDisplayName()
+                + " is restored! Step back in to see it rebuilt.");
+        System.out.println("[TFR-TownLayout] " + point.getDisplayName() + " restored - out to the world map, the next visit"
+                + " loads " + now);
+        stage.exitDungeon(false, false);
+    }
+
     public static void recolorTerrainForTesting() {
         PointOfInterest point = TileMapScene.instance().rootPoint;
         if (point == null)

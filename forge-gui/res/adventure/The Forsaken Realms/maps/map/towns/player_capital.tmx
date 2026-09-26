@@ -17739,6 +17739,7 @@
  <tileset firstgid="34545" source="../../tileset/mv_world_c.tsx"/>
  <tileset firstgid="34801" source="../../tileset/walls_48.tsx"/>
  <tileset firstgid="35057" source="../../tileset/walls_16.tsx"/>
+ <tileset firstgid="37361" source="../../tileset/walls_48-nocollide.tsx"/>
  <layer id="1" name="Background" width="40" height="40">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMA6CFf6BFXI+jYC+pqqqqqqrqowPs4YVq
@@ -17751,7 +17752,7 @@
  </layer>
  <layer id="6" name="Ground2" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+750MzB8BeJv3aS5r8AAt11eUHf7keB+XHap9DAwqAKxWg/l8dtuzMDQYUy8m4hx30jMHx1Y4n6dHX3dB0t/CfGkhRO93IcPeJKRrwcy/aUTEca0il8QWKzDwLBEh3R309J9pABvIuJ7IN1HDBh136j7Rt036r5R91HHffjaz8TUF7R2H7WBPA8DgwIQc3FCaBiWyYXQcrkIORCNzkYWIwQSqdQmdEjEz6cW8KJiP49cQE6aQwfOHdRVRwqgZl+ZUuAxiNwy1MFoWI6CUTAKRgEmAACzyQlq
+   eNpjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+750MzB8BeJv3aS5r8AAt11eUHf7GVHuPpUeBgZVIFbroTx+240ZGDqMR/MHpe7rwBL36+zo6z5Y+kuIH3rh52k0tNJfejz93YdcvizWYWBYojN06zdvo9HyZdR9o+4bdd+o+0bdR7j97G00/MJPnoeBQQGIuTghNAzL5EJouVyEHIhGZyOLEQKJVGoTOiTi51MLeBkxDDjwpoIbnCdRVx0pwGcQhCEMeAwitwx1MBqWo2AUjIJRgAkARvQJfg==
   </data>
  </layer>
  <layer id="3" name="Walls" width="40" height="40">

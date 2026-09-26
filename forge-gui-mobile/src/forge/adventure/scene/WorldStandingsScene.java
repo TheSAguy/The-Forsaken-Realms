@@ -213,7 +213,7 @@ public class WorldStandingsScene extends UIScene {
 
                 "Town Reputation - separate from your standing with the 5 colors above - caps how "
                         + "fast any one of your towns can rebuild. Every point of reputation with a town "
-                        + "unlocks 3 more of its building slots (a town has 9, a Capitol 25), and you "
+                        + "unlocks 3 more of its building slots (a town has 9, a Capitol 24), and you "
                         + "earn it by restoring the town in the first place, upgrading it to your Capitol, "
                         + "and defending it by defeating attacking mages there. Losing a point never tears "
                         + "down what's already built - it only pauses new construction until your standing "

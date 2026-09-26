@@ -2382,6 +2382,10 @@ public class TerritoryControl {
      * Re-drawing over segments the world-gen road network already built is nearly free -
      * World.buildRoad() skips already-road tiles. Owner is an AI color name, or "player" (owned =
      * restored towns, same isTownRestored() rule as everywhere else).
+     * <p>
+     * Round 351 (RoadNetwork): a hop along a road already there costs RoadNetwork.EXISTING_ROAD_DISCOUNT of a new one,
+     * so a capture's road follows the roads it meets instead of cutting a line beside them, and no hop leaves the star's
+     * wheel (the Ring Cities cut across the middle to each other, and the pentagram came back).
      */
     public static void connectCapturedTownByRoad(World world, PointOfInterest newTown, String owner) {
         if (!isEnabled() || newTown == null || owner == null)
@@ -2448,6 +2452,7 @@ public class TerritoryControl {
         java.util.Arrays.fill(prev, -1);
         best[source] = 0;
         int reached = -1;
+        RoadNetwork.HopCosts hopCosts = new RoadNetwork.HopCosts(world, nodes); // round 351
         for (int iter = 0; iter < n; iter++) {
             int u = -1;
             double uBest = Double.MAX_VALUE;
@@ -2467,9 +2472,11 @@ public class TerritoryControl {
             for (int v = 0; v < n; v++) {
                 if (done[v])
                     continue;
+                if (!hopCosts.allows(u, v))
+                    continue; // round 351: the star's roads are the wheel's
                 if (world.roadLineCrossesBarrier(nodes.get(u), nodes.get(v)))
                     continue; // round 294 (user: "No roads through Barrier") - the route goes around, or not at all
-                double cost = best[u] + nodes.get(u).getPosition().dst2(nodes.get(v).getPosition());
+                double cost = best[u] + hopCosts.cost(u, v);
                 if (cost < best[v]) {
                     best[v] = cost;
                     prev[v] = u;

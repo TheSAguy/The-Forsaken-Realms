@@ -1,0 +1,923 @@
+package forge.adventure.util;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.badlogic.gdx.math.Vector2;
+
+import forge.adventure.data.PointOfInterestData;
+import forge.adventure.data.TuningData;
+import forge.adventure.pointofintrest.PointOfInterest;
+import forge.adventure.stage.WorldStage;
+import forge.adventure.world.World;
+
+/**
+ * Round 351 - one set of rules for every road on the world map. The user, 2026-09-26: "It looks like there are some
+ * double roads in the center." - "I also got a double road after restoring a ruin town." - "After building cap, still
+ * seeing a lot of old roads under new road." - "The road pathing logic seems wrong here. Red is longer than the
+ * alternative green. The green circle road should have been upgraded and the red should not be there."
+ * <p>
+ * Every road is the road pass's staircase from one town's anchor (PointOfInterest.getTilePosition) to another's. What
+ * went wrong, and the rule for each:
+ * <ul>
+ * <li>The walk from A to B is a different staircase from the walk from B to A. The star's spokes named pairs the
+ *     nearest-neighbor pass already had, and captures linked pairs world-gen had drawn from the other end - two
+ *     staircases side by side. Every walk now starts at the same end ({@link #canonicalFirst}), and world-gen draws a
+ *     pair once ({@link #uniqueCanonicalPairs}).</li>
+ * <li>The star - Orazca (the Capitol once raised), the campfire beside it and the five Ring Cities - is a wheel: the
+ *     hub, its spokes, the rim and the campfire's road to the hub (rounds 347-348). The nearest-neighbor pass also
+ *     linked the campfire and the Ring Cities to each other, and captures routed across the middle, so the pentagram
+ *     round 348 had taken out came back. No road joins two star towns off the wheel, and nothing reaches the hub or
+ *     the campfire from outside ({@link Star#allowsHop}).</li>
+ * <li>The Capitol's roads were routed per town, from the Capitol, over every town with cost = distance squared and
+ *     blind to the roads already there: they ran beside old roads instead of on them, and each town got its own route
+ *     even when a road to the last one was a step away. Now the network grows from the Capitol one town at a time,
+ *     the cheapest to reach from anything already on it first, and a hop along an existing road costs
+ *     {@link #EXISTING_ROAD_DISCOUNT} of a new one - the network upgrades the roads that are there. Captures' old roads
+ *     route with the same discount.</li>
+ * <li>An upgraded pair's other staircase, and old road squeezed against a player road, is lifted; an old road between
+ *     two of the player's own places is upgraded too.</li>
+ * </ul>
+ * A save from before this round is normalized once on load ({@link #migrateOnLoad}): the star's clutter and every
+ * doubled pair go, and a standing Capitol's network is laid again - its player road turned back to old road first so
+ * the new network can upgrade it, and a hop of the old network the new one no longer uses is lifted when the new
+ * network already joins its ends about as directly (the user's "the red should not be there"); otherwise it stays as
+ * an old road. Grep forge.log for [TFR-Roads].
+ */
+public final class RoadNetwork {
+    /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
+    public static final int VERSION = 1;
+    /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
+    public static final double EXISTING_ROAD_DISCOUNT = 0.35;
+    /** A pair of towns is joined by road when this share of either staircase between them is road. */
+    static final float EDGE_COVERAGE = 0.95f;
+    /** Pairs farther apart than this (tiles) are never looked at as a road - world-gen links reach about 62. */
+    static final int MAX_EDGE_TILES = 90;
+    /** An abandoned hop of an older player network goes when the new network joins its ends within this detour. */
+    static final double ABANDONED_DETOUR = 1.6;
+
+    static final int HUB = 1, CAMP = 2, RING = 3;
+
+    private RoadNetwork() {
+    }
+
+    // ------------------------------------------------------------------ places
+
+    public static boolean isTownOrCapital(PointOfInterest poi) {
+        String type = poi == null || poi.getData() == null ? null : poi.getData().type;
+        return "town".equals(type) || "capital".equals(type);
+    }
+
+    /**
+     * The towns and capitals roads run between - hidden ones left out (the campfire beside Orazca goes inactive after
+     * the start; a road may not end at a place the player cannot see, nor route through one).
+     */
+    public static List<PointOfInterest> towns(World world) {
+        List<PointOfInterest> out = new ArrayList<>();
+        for (PointOfInterest poi : world.getAllPointOfInterest())
+            if (isTownOrCapital(poi) && poi.getActive())
+                out.add(poi);
+        return out;
+    }
+
+    /** A town's part in the star by its data name - HUB, CAMP, RING - or 0. */
+    static int starRole(PointOfInterest poi) {
+        PointOfInterestData d = poi == null ? null : poi.getData();
+        if (d == null || d.name == null)
+            return 0;
+        if (TownRestoration.ORAZCA_POI_NAME.equals(d.name) || TownRestoration.CAPITOL_POI_NAME.equals(d.name))
+            return HUB;
+        if ("Spawn".equals(d.name))
+            return CAMP;
+        return d.name.contains(" Town Center") ? RING : 0;
+    }
+
+    /**
+     * World-gen's nearest-neighbor and rescue passes: may these two towns be linked? Not two star towns - the star's own
+     * pass lays the wheel - and nothing from outside into the hub or the campfire.
+     */
+    public static boolean worldGenLinkAllowed(PointOfInterest a, PointOfInterest b) {
+        int ra = starRole(a), rb = starRole(b);
+        if (ra != 0 && rb != 0)
+            return false;
+        int r = ra != 0 ? ra : rb;
+        return r == 0 || r == RING;
+    }
+
+    /** The star as it stands: the hub (or the campfire when a plane has no Orazca), the campfire, the rim in order. */
+    public static final class Star {
+        final PointOfInterest hub, camp;
+        final List<PointOfInterest> rim = new ArrayList<>();
+
+        public Star(Collection<PointOfInterest> towns) {
+            PointOfInterest h = null, c = null;
+            for (PointOfInterest t : towns) {
+                int role = starRole(t);
+                if (role == HUB && h == null)
+                    h = t;
+                else if (role == CAMP && c == null)
+                    c = t;
+                else if (role == RING)
+                    rim.add(t);
+            }
+            hub = h != null ? h : c;
+            camp = c;
+            if (hub != null) {
+                final float hx = hub.getPosition().x, hy = hub.getPosition().y;
+                rim.sort(java.util.Comparator.comparingDouble(t -> Math.atan2(t.getPosition().y - hy, t.getPosition().x - hx)));
+            }
+        }
+
+        int role(PointOfInterest p) {
+            if (p == null)
+                return 0;
+            if (p == hub)
+                return HUB;
+            if (p == camp)
+                return CAMP;
+            return starRole(p) == RING ? RING : 0;
+        }
+
+        /**
+         * May a road run straight between these two towns? Off the star, always; into it only to a Ring City; between
+         * two star towns only along the wheel - the hub to a Ring City or the campfire, a Ring City to its rim
+         * neighbors.
+         */
+        public boolean allowsHop(PointOfInterest a, PointOfInterest b) {
+            int ra = role(a), rb = role(b);
+            if (ra == 0 && rb == 0)
+                return true;
+            if (ra == 0 || rb == 0)
+                return (ra == 0 ? rb : ra) == RING;
+            if (ra == HUB || rb == HUB)
+                return (ra == HUB ? rb : ra) != HUB;
+            if (ra == RING && rb == RING)
+                return rimNeighbors(a, b);
+            return false;
+        }
+
+        boolean rimNeighbors(PointOfInterest a, PointOfInterest b) {
+            int i = rim.indexOf(a), j = rim.indexOf(b), n = rim.size();
+            if (i < 0 || j < 0)
+                return false;
+            return n < 3 || (i + 1) % n == j || (j + 1) % n == i;
+        }
+    }
+
+    // ------------------------------------------------------------------ geometry
+
+    static long key(int x, int rawY) {
+        return (long) x << 32 | (rawY & 0xffffffffL);
+    }
+
+    static int keyX(long key) {
+        return (int) (key >> 32);
+    }
+
+    static int keyY(long key) {
+        return (int) key;
+    }
+
+    static int[] anchor(World world, PointOfInterest poi) {
+        Vector2 t = poi.getTilePosition(world.getTileSize());
+        return new int[]{(int) t.x, (int) t.y};
+    }
+
+    /** Is (ax, ay) the end a road between the two starts from? The smaller x, then the smaller y. */
+    public static boolean canonicalFirst(int ax, int ay, int bx, int by) {
+        return ax < bx || (ax == bx && ay <= by);
+    }
+
+    /** World-gen's town links, each pair once, each walked from its canonical end - first-named order kept. */
+    public static List<Pair<PointOfInterest, PointOfInterest>> uniqueCanonicalPairs(
+            List<Pair<PointOfInterest, PointOfInterest>> pairs, int tileSize) {
+        Map<String, Pair<PointOfInterest, PointOfInterest>> out = new LinkedHashMap<>();
+        for (Pair<PointOfInterest, PointOfInterest> p : pairs) {
+            PointOfInterest a = p.getKey(), b = p.getValue();
+            if (a == null || b == null || a == b)
+                continue;
+            Vector2 ta = a.getTilePosition(tileSize), tb = b.getTilePosition(tileSize);
+            if (!canonicalFirst((int) ta.x, (int) ta.y, (int) tb.x, (int) tb.y)) {
+                PointOfInterest swap = a;
+                a = b;
+                b = swap;
+            }
+            out.putIfAbsent(System.identityHashCode(a) + "|" + System.identityHashCode(b) + "|" + a.getID() + "|" + b.getID(),
+                    Pair.of(a, b));
+        }
+        return new ArrayList<>(out.values());
+    }
+
+    /** layRoad()'s walk from (x0, y0) to (x1, y1) in world tiles, as raw keys; tiles off the map skipped as it skips. */
+    static long[] walk(World world, int x0, int y0, int x1, int y1) {
+        int width = world.getWidthInTiles(), height = world.getHeightInTiles();
+        int dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+        int err = dx - dy;
+        long[] out = new long[Math.min(dx + dy + 1, 1000)];
+        int n = 0;
+        for (int i = 0; i < 1000; i++) {
+            if (!(x0 < 0 || y0 <= 0 || x0 >= width || y0 > height))
+                out[n++] = key(x0, height - y0);
+            if (x0 == x1 && y0 == y1)
+                break;
+            int e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            } else if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+        }
+        return Arrays.copyOf(out, n);
+    }
+
+    /** The staircase a road between the two lays now (from the canonical end), or the other one. */
+    static long[] walkBetween(World world, PointOfInterest a, PointOfInterest b, boolean canonical) {
+        int[] pa = anchor(world, a), pb = anchor(world, b);
+        boolean aFirst = canonicalFirst(pa[0], pa[1], pb[0], pb[1]) == canonical;
+        return aFirst ? walk(world, pa[0], pa[1], pb[0], pb[1]) : walk(world, pb[0], pb[1], pa[0], pa[1]);
+    }
+
+    static float coverage(World world, long[] cells) {
+        if (cells.length == 0)
+            return 0f;
+        int hit = 0;
+        for (long c : cells)
+            if (world.roadKindRaw(keyX(c), keyY(c)) > 0)
+                hit++;
+        return hit / (float) cells.length;
+    }
+
+    static double tileDistance(World world, PointOfInterest a, PointOfInterest b) {
+        int[] pa = anchor(world, a), pb = anchor(world, b);
+        return Math.hypot(pa[0] - pb[0], pa[1] - pb[1]);
+    }
+
+    /** Does a road already run between these two towns - either staircase at least EDGE_COVERAGE road? */
+    public static boolean roadJoins(World world, PointOfInterest a, PointOfInterest b) {
+        if (a == null || b == null || a == b || tileDistance(world, a, b) > MAX_EDGE_TILES)
+            return false;
+        return coverage(world, walkBetween(world, a, b, true)) >= EDGE_COVERAGE
+                || coverage(world, walkBetween(world, a, b, false)) >= EDGE_COVERAGE;
+    }
+
+    /** The cost of one hop for the routers (distance squared), cheaper along a road already there. */
+    public static double hopCost(World world, PointOfInterest a, PointOfInterest b, boolean joined) {
+        return a.getPosition().dst2(b.getPosition()) * (joined ? EXISTING_ROAD_DISCOUNT : 1.0);
+    }
+
+    // ------------------------------------------------------------------ the roads as pairs of towns
+
+    static final class Edge {
+        final PointOfInterest a, b;
+        final long[] canon, reverse, drawn;
+        final float kc, kr;
+        float formerShare;
+
+        Edge(PointOfInterest a, PointOfInterest b, long[] canon, long[] reverse, float kc, float kr) {
+            this.a = a;
+            this.b = b;
+            this.canon = canon;
+            this.reverse = reverse;
+            this.kc = kc;
+            this.kr = kr;
+            this.drawn = kc >= EDGE_COVERAGE ? canon : reverse;
+        }
+
+        boolean both() {
+            return kc >= EDGE_COVERAGE && kr >= EDGE_COVERAGE;
+        }
+
+        boolean joins(PointOfInterest p, PointOfInterest q) {
+            return (a == p && b == q) || (a == q && b == p);
+        }
+    }
+
+    /** Every pair of towns within MAX_EDGE_TILES that a road joins; formerShare = the share of its tiles in `former`. */
+    static List<Edge> detectEdges(World world, List<PointOfInterest> towns, Set<Long> former) {
+        List<Edge> out = new ArrayList<>();
+        int n = towns.size();
+        int[][] anchors = new int[n][];
+        for (int i = 0; i < n; i++)
+            anchors[i] = anchor(world, towns.get(i));
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (Math.hypot(anchors[i][0] - anchors[j][0], anchors[i][1] - anchors[j][1]) > MAX_EDGE_TILES)
+                    continue;
+                PointOfInterest a = towns.get(i), b = towns.get(j);
+                long[] canon = walkBetween(world, a, b, true), reverse = walkBetween(world, a, b, false);
+                float kc = coverage(world, canon), kr = coverage(world, reverse);
+                if (Math.max(kc, kr) < EDGE_COVERAGE)
+                    continue;
+                Edge e = new Edge(a, b, canon, reverse, kc, kr);
+                if (former != null && e.drawn.length > 0) {
+                    int f = 0;
+                    for (long c : e.drawn)
+                        if (former.contains(c))
+                            f++;
+                    e.formerShare = f / (float) e.drawn.length;
+                }
+                out.add(e);
+            }
+        }
+        return out;
+    }
+
+    static Edge findEdge(List<Edge> edges, PointOfInterest p, PointOfInterest q) {
+        for (Edge e : edges)
+            if (e.joins(p, q))
+                return e;
+        return null;
+    }
+
+    static Set<Long> drawnTiles(Collection<Edge> edges) {
+        Set<Long> out = new HashSet<>();
+        for (Edge e : edges)
+            for (long c : e.drawn)
+                out.add(c);
+        return out;
+    }
+
+    /**
+     * Old road never lifted: each town's own square - the 3x3 world-gen stamps at a road's first town (raw rows
+     * height - y - 2 .. height - y, one row above the walk's). A wider guard kept the pieces of lifted lines that ran
+     * through it, and they showed as loose bits of road beside the Capitol.
+     */
+    static Set<Long> protectedTiles(World world, List<PointOfInterest> towns) {
+        Set<Long> out = new HashSet<>();
+        int h = world.getHeightInTiles();
+        for (PointOfInterest t : towns) {
+            int[] a = anchor(world, t);
+            for (int dx = -1; dx <= 1; dx++)
+                for (int rawY = h - a[1] - 2; rawY <= h - a[1]; rawY++)
+                    out.add(key(a[0] + dx, rawY));
+        }
+        return out;
+    }
+
+    /** Each town's anchor tile, where its roads end - all the squeeze rule leaves alone. */
+    static Set<Long> anchorTiles(World world, List<PointOfInterest> towns) {
+        Set<Long> out = new HashSet<>();
+        int h = world.getHeightInTiles();
+        for (PointOfInterest t : towns) {
+            int[] a = anchor(world, t);
+            out.add(key(a[0], h - a[1]));
+        }
+        return out;
+    }
+
+    /** Lifts one old road tile - never a player road, a protected tile or a kept one. Returns 1 when it went. */
+    static int liftOld(World world, long c, Set<Long> prot, Set<Long> keep, Set<Long> touched) {
+        if (prot.contains(c) || (keep != null && keep.contains(c)))
+            return 0;
+        if (world.roadKindRaw(keyX(c), keyY(c)) != World.ROAD_OLD)
+            return 0;
+        return world.setRoadKindRaw(keyX(c), keyY(c), World.ROAD_NONE, touched) ? 1 : 0;
+    }
+
+    /** Does the edge run past another town (a chain through it, not a road of its own)? */
+    static boolean throughTown(World world, Edge e, List<PointOfInterest> towns) {
+        int h = world.getHeightInTiles();
+        Set<Long> anchors = new HashSet<>();
+        for (PointOfInterest t : towns) {
+            if (t == e.a || t == e.b)
+                continue;
+            int[] a = anchor(world, t);
+            anchors.add(key(a[0], h - a[1]));
+        }
+        for (long c : e.drawn)
+            for (int dx = -1; dx <= 1; dx++)
+                for (int dy = -1; dy <= 1; dy++)
+                    if (anchors.contains(key(keyX(c) + dx, keyY(c) + dy)))
+                        return true;
+        return false;
+    }
+
+    // ------------------------------------------------------------------ old roads
+
+    /** The star down to its wheel and every pair drawn from both ends down to one staircase. Old road only. */
+    static void normalizeOldRoads(World world, List<PointOfInterest> towns, Star star, Set<Long> prot, Set<Long> touched) {
+        List<Edge> edges = detectEdges(world, towns, null);
+        List<Edge> clutter = new ArrayList<>();
+        for (Edge e : edges)
+            if (star.role(e.a) != 0 && star.role(e.b) != 0 && !star.allowsHop(e.a, e.b))
+                clutter.add(e);
+        edges.removeAll(clutter);
+        Set<Long> kept = drawnTiles(edges);
+        int clutterTiles = 0;
+        for (Edge e : clutter) {
+            for (long c : e.canon)
+                clutterTiles += liftOld(world, c, prot, kept, touched);
+            for (long c : e.reverse)
+                clutterTiles += liftOld(world, c, prot, kept, touched);
+        }
+        int inner = sweepWheel(world, star, prot, kept, touched);
+        int doubledPairs = 0, doubledTiles = 0;
+        for (Edge e : edges) {
+            if (!e.both())
+                continue;
+            doubledPairs++;
+            Set<Long> canon = new HashSet<>();
+            for (long c : e.canon)
+                canon.add(c);
+            for (long c : e.reverse)
+                if (!canon.contains(c))
+                    doubledTiles += liftOld(world, c, prot, kept, touched);
+        }
+        int campLink = 0;
+        if (star.hub != null && star.camp != null && star.hub != star.camp && findEdge(edges, star.hub, star.camp) == null
+                && !world.roadLineCrossesBarrier(star.hub, star.camp))
+            campLink = world.buildRoad(Arrays.asList(star.hub, star.camp), null);
+        System.out.println("[TFR-Roads] old roads: " + edges.size() + " town pair(s) joined; the wheel - " + clutter.size()
+                + " line(s) off it lifted (" + clutterTiles + " tile(s)) + " + inner + " stray tile(s) inside the rim"
+                + (campLink > 0 ? ", the campfire's road to the hub laid (" + campLink + " tile(s))" : "") + "; "
+                + doubledPairs + " pair(s) drawn from both ends down to one staircase (" + doubledTiles + " tile(s))");
+    }
+
+    /** Old road inside the rim that no kept line draws. */
+    static int sweepWheel(World world, Star star, Set<Long> prot, Set<Long> keep, Set<Long> touched) {
+        int n = star.rim.size();
+        if (n < 3)
+            return 0;
+        int h = world.getHeightInTiles();
+        double[] px = new double[n], py = new double[n];
+        int x0 = Integer.MAX_VALUE, x1 = Integer.MIN_VALUE, y0 = Integer.MAX_VALUE, y1 = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int[] a = anchor(world, star.rim.get(i));
+            px[i] = a[0];
+            py[i] = h - a[1];
+            x0 = Math.min(x0, a[0]);
+            x1 = Math.max(x1, a[0]);
+            y0 = Math.min(y0, h - a[1]);
+            y1 = Math.max(y1, h - a[1]);
+        }
+        int lifted = 0;
+        for (int x = x0; x <= x1; x++)
+            for (int y = y0; y <= y1; y++)
+                if (world.roadKindRaw(x, y) == World.ROAD_OLD && insidePolygon(px, py, x, y))
+                    lifted += liftOld(world, key(x, y), prot, keep, touched);
+        return lifted;
+    }
+
+    static boolean insidePolygon(double[] px, double[] py, double x, double y) {
+        boolean in = false;
+        for (int i = 0, j = px.length - 1; i < px.length; j = i++)
+            if ((py[i] > y) != (py[j] > y) && x < (px[j] - px[i]) * (y - py[i]) / (py[j] - py[i]) + px[i])
+                in = !in;
+        return in;
+    }
+
+    // ------------------------------------------------------------------ the player's network
+
+    /**
+     * Grows the network toward the targets - each time the target cheapest to reach from anything already on it -
+     * adding the hops it takes. Returns the targets it could not reach.
+     */
+    static List<PointOfInterest> grow(World world, List<PointOfInterest> towns, Star star, List<Edge> edges,
+                                      Set<PointOfInterest> network, Collection<PointOfInterest> targets,
+                                      List<PointOfInterest[]> hops, String why) {
+        int n = towns.size();
+        Map<PointOfInterest, Integer> index = new IdentityHashMap<>();
+        for (int i = 0; i < n; i++)
+            index.put(towns.get(i), i);
+        Set<Long> joined = new HashSet<>();
+        for (Edge e : edges) {
+            Integer i = index.get(e.a), j = index.get(e.b);
+            if (i != null && j != null)
+                joined.add(pairKey(i, j));
+        }
+        Set<PointOfInterest> remaining = new LinkedHashSet<>(targets);
+        remaining.removeAll(network);
+        while (!remaining.isEmpty()) {
+            double[] best = new double[n];
+            int[] prev = new int[n];
+            boolean[] done = new boolean[n];
+            Arrays.fill(best, Double.MAX_VALUE);
+            Arrays.fill(prev, -1);
+            for (PointOfInterest p : network) {
+                Integer i = index.get(p);
+                if (i != null)
+                    best[i] = 0;
+            }
+            int reached = -1;
+            for (int iter = 0; iter < n; iter++) {
+                int u = -1;
+                double uBest = Double.MAX_VALUE;
+                for (int i = 0; i < n; i++)
+                    if (!done[i] && best[i] < uBest) {
+                        uBest = best[i];
+                        u = i;
+                    }
+                if (u < 0)
+                    break;
+                done[u] = true;
+                if (remaining.contains(towns.get(u))) {
+                    reached = u;
+                    break;
+                }
+                PointOfInterest pu = towns.get(u);
+                for (int v = 0; v < n; v++) {
+                    if (done[v])
+                        continue;
+                    PointOfInterest pv = towns.get(v);
+                    if (!star.allowsHop(pu, pv) || world.roadLineCrossesBarrier(pu, pv))
+                        continue;
+                    double cost = best[u] + hopCost(world, pu, pv, joined.contains(pairKey(u, v)));
+                    if (cost < best[v]) {
+                        best[v] = cost;
+                        prev[v] = u;
+                    }
+                }
+            }
+            if (reached < 0) {
+                StringBuilder names = new StringBuilder();
+                for (PointOfInterest p : remaining)
+                    names.append(names.length() == 0 ? "" : ", ").append(p.getDisplayName());
+                System.out.println("[TFR-Roads] player road (" + why + "): no route to " + names
+                        + " (the barrier, or a town off the graph)");
+                return new ArrayList<>(remaining);
+            }
+            List<PointOfInterest> path = new ArrayList<>();
+            for (int i = reached; i >= 0; i = prev[i])
+                path.add(towns.get(i));
+            java.util.Collections.reverse(path);
+            StringBuilder route = new StringBuilder();
+            for (int i = 0; i < path.size(); i++) {
+                route.append(i == 0 ? "" : " -> ").append(path.get(i).getDisplayName());
+                if (i > 0)
+                    hops.add(new PointOfInterest[]{path.get(i - 1), path.get(i)});
+            }
+            network.addAll(path);
+            remaining.remove(towns.get(reached));
+            System.out.println("[TFR-Roads] player road (" + why + "): " + route);
+        }
+        return new ArrayList<>();
+    }
+
+    static long pairKey(int i, int j) {
+        return i < j ? (long) i << 32 | j : (long) j << 32 | i;
+    }
+
+    static boolean hasHop(List<PointOfInterest[]> hops, PointOfInterest a, PointOfInterest b) {
+        for (PointOfInterest[] h : hops)
+            if ((h[0] == a && h[1] == b) || (h[0] == b && h[1] == a))
+                return true;
+        return false;
+    }
+
+    /**
+     * Lays the hops as player road, each on its canonical staircase, then lifts what the upgrade leaves beside it: the
+     * pair's other staircase and the tiles its old road drew there, unless another road draws them. Returns
+     * {tiles laid, old tiles paved over, tiles lifted}.
+     */
+    static int[] layHops(World world, List<PointOfInterest[]> hops, List<Edge> edges, Set<Long> prot, Set<Long> touched) {
+        int laid = 0, paved = 0, lifted = 0;
+        Set<Long> playerDrawn = new HashSet<>();
+        for (PointOfInterest[] hop : hops) {
+            if (world.roadLineCrossesBarrier(hop[0], hop[1]))
+                continue;
+            for (long c : walkBetween(world, hop[0], hop[1], true)) {
+                playerDrawn.add(c);
+                int before = world.roadKindRaw(keyX(c), keyY(c));
+                if (world.setRoadKindRaw(keyX(c), keyY(c), World.ROAD_PLAYER, touched)) {
+                    laid++;
+                    if (before == World.ROAD_OLD)
+                        paved++;
+                }
+            }
+        }
+        for (PointOfInterest[] hop : hops) {
+            Edge own = findEdge(edges, hop[0], hop[1]);
+            List<Edge> others = new ArrayList<>();
+            for (Edge e : edges)
+                if (e != own && !hasHop(hops, e.a, e.b))
+                    others.add(e);
+            Set<Long> keep = drawnTiles(others);
+            keep.addAll(playerDrawn);
+            for (long c : walkBetween(world, hop[0], hop[1], false))
+                lifted += liftOld(world, c, prot, keep, touched);
+            if (own != null)
+                for (long c : own.drawn)
+                    lifted += liftOld(world, c, prot, keep, touched);
+        }
+        return new int[]{laid, paved, lifted};
+    }
+
+    /** The upgrade rule for the player's own places: every old road between two of them joins the network. */
+    static int addHeldPairs(World world, List<Edge> edges, Set<PointOfInterest> places, List<PointOfInterest> towns,
+                            List<PointOfInterest[]> hops, PointOfInterest onlyTouching) {
+        int added = 0;
+        for (Edge e : edges) {
+            if (!places.contains(e.a) || !places.contains(e.b) || e.formerShare > 0.5f || hasHop(hops, e.a, e.b))
+                continue;
+            if (onlyTouching != null && e.a != onlyTouching && e.b != onlyTouching)
+                continue;
+            if (throughTown(world, e, towns))
+                continue;
+            hops.add(new PointOfInterest[]{e.a, e.b});
+            added++;
+        }
+        return added;
+    }
+
+    /**
+     * Old road squeezed against a player road - a tile filling a 2x2 block of road with it - goes when its neighbors stay
+     * joined without it (a town's square beside the road included; `keep` is the towns' anchor tiles).
+     */
+    static int thinBesidePlayerRoad(World world, Set<Long> keep, Set<Long> touched) {
+        int w = world.getWidthInTiles(), h = world.getHeightInTiles();
+        int lifted = 0;
+        boolean changed = true;
+        for (int pass = 0; changed && pass < 16; pass++) {
+            changed = false;
+            for (int x = 1; x < w - 1; x++) {
+                for (int y = 1; y < h - 1; y++) {
+                    if (world.roadKindRaw(x, y) != World.ROAD_PLAYER)
+                        continue;
+                    for (int dx = -1; dx <= 1; dx++) {
+                        for (int dy = -1; dy <= 1; dy++) {
+                            int qx = x + dx, qy = y + dy;
+                            if (world.roadKindRaw(qx, qy) != World.ROAD_OLD || keep.contains(key(qx, qy)))
+                                continue;
+                            if (fillsBlock(world, qx, qy) && staysJoined(world, qx, qy)
+                                    && world.setRoadKindRaw(qx, qy, World.ROAD_NONE, touched)) {
+                                lifted++;
+                                changed = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return lifted;
+    }
+
+    static boolean road(World world, int x, int y) {
+        return world.roadKindRaw(x, y) > 0;
+    }
+
+    static boolean fillsBlock(World world, int x, int y) {
+        for (int dx = -1; dx <= 1; dx += 2)
+            for (int dy = -1; dy <= 1; dy += 2)
+                if (road(world, x + dx, y + dy) && road(world, x, y + dy) && road(world, x + dx, y))
+                    return true;
+        return false;
+    }
+
+    /** Without (x, y), are its road neighbors (4-way) still joined to each other inside its 3x3? */
+    static boolean staysJoined(World world, int x, int y) {
+        int[][] four = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        List<int[]> ends = new ArrayList<>();
+        for (int[] d : four)
+            if (road(world, x + d[0], y + d[1]))
+                ends.add(new int[]{x + d[0], y + d[1]});
+        if (ends.size() < 2)
+            return true;
+        Set<Long> seen = new HashSet<>();
+        List<int[]> stack = new ArrayList<>();
+        stack.add(ends.get(0));
+        seen.add(key(ends.get(0)[0], ends.get(0)[1]));
+        while (!stack.isEmpty()) {
+            int[] c = stack.remove(stack.size() - 1);
+            for (int[] d : four) {
+                int nx = c[0] + d[0], ny = c[1] + d[1];
+                if (Math.abs(nx - x) > 1 || Math.abs(ny - y) > 1 || (nx == x && ny == y) || !road(world, nx, ny))
+                    continue;
+                if (seen.add(key(nx, ny)))
+                    stack.add(new int[]{nx, ny});
+            }
+        }
+        for (int[] e : ends)
+            if (!seen.contains(key(e[0], e[1])))
+                return false;
+        return true;
+    }
+
+    /** Distance between two towns along the hops (tiles), or infinity. */
+    static double networkDistance(World world, List<PointOfInterest[]> hops, PointOfInterest from, PointOfInterest to) {
+        Map<PointOfInterest, Double> best = new IdentityHashMap<>();
+        best.put(from, 0.0);
+        List<PointOfInterest> open = new ArrayList<>();
+        open.add(from);
+        while (!open.isEmpty()) {
+            PointOfInterest u = open.get(0);
+            for (PointOfInterest p : open)
+                if (best.get(p) < best.get(u))
+                    u = p;
+            open.remove(u);
+            if (u == to)
+                return best.get(u);
+            for (PointOfInterest[] h : hops) {
+                PointOfInterest v = h[0] == u ? h[1] : h[1] == u ? h[0] : null;
+                if (v == null)
+                    continue;
+                double d = best.get(u) + tileDistance(world, u, v);
+                Double old = best.get(v);
+                if (old == null || d < old) {
+                    best.put(v, d);
+                    if (!open.contains(v))
+                        open.add(v);
+                }
+            }
+        }
+        return Double.POSITIVE_INFINITY;
+    }
+
+    /** A save migrating: the old network's hops the new one left - lifted when the new network joins their ends. */
+    static int liftAbandoned(World world, List<Edge> edges, List<PointOfInterest[]> hops, Set<PointOfInterest> network,
+                             Set<Long> former, Set<Long> prot, Set<Long> touched) {
+        List<Edge> original = new ArrayList<>();
+        for (Edge e : edges)
+            if (e.formerShare <= 0.5f)
+                original.add(e);
+        Set<Long> keep = drawnTiles(original);
+        int lifted = 0;
+        for (Edge e : edges) {
+            if (e.formerShare <= 0.5f || hasHop(hops, e.a, e.b))
+                continue;
+            double direct = tileDistance(world, e.a, e.b);
+            double via = network.contains(e.a) && network.contains(e.b) ? networkDistance(world, hops, e.a, e.b)
+                    : Double.POSITIVE_INFINITY;
+            boolean redundant = via <= ABANDONED_DETOUR * direct;
+            System.out.println("[TFR-Roads] the old network's " + e.a.getDisplayName() + " - " + e.b.getDisplayName()
+                    + ": " + (redundant ? String.format("lifted - the new network joins them in %.0f tile(s) vs %.0f", via, direct)
+                    : "kept as an old road"));
+            if (!redundant)
+                continue;
+            for (long c : e.drawn)
+                if (former.contains(c))
+                    lifted += liftOld(world, c, prot, keep, touched);
+        }
+        return lifted;
+    }
+
+    /** The towns the player road already reaches: the Capitol and each town with player road at its anchor. */
+    static Set<PointOfInterest> onNetwork(World world, List<PointOfInterest> towns, PointOfInterest capitol) {
+        Set<PointOfInterest> out = new LinkedHashSet<>();
+        out.add(capitol);
+        int h = world.getHeightInTiles();
+        for (PointOfInterest t : towns) {
+            int[] a = anchor(world, t);
+            search:
+            for (int dx = -1; dx <= 1; dx++)
+                for (int dy = -1; dy <= 1; dy++)
+                    if (world.roadKindRaw(a[0] + dx, h - a[1] + dy) == World.ROAD_PLAYER) {
+                        out.add(t);
+                        break search;
+                    }
+        }
+        return out;
+    }
+
+    /**
+     * The Capitol's network laid fresh - the Capitol raised, or a save migrating (`former` = the tiles that were
+     * player road before; null otherwise).
+     */
+    public static void rebuildPlayerNetwork(World world, BiConsumer<Integer, Integer> onTileRepainted, String why,
+                                            Set<Long> former) {
+        PointOfInterest capitol = TownRestoration.findCapitol();
+        if (world == null || capitol == null)
+            return;
+        long t0 = System.nanoTime();
+        List<PointOfInterest> towns = towns(world);
+        Star star = new Star(towns);
+        Set<Long> prot = protectedTiles(world, towns);
+        Set<Long> touched = new HashSet<>();
+        List<PointOfInterest> held = PlayerRoads.heldTowns(world, capitol);
+        List<Edge> edges = detectEdges(world, towns, former);
+        Set<PointOfInterest> network = new LinkedHashSet<>();
+        network.add(capitol);
+        List<PointOfInterest[]> hops = new ArrayList<>();
+        grow(world, towns, star, edges, network, held, hops, why);
+        Set<PointOfInterest> places = new HashSet<>(held);
+        places.add(capitol);
+        int heldPairs = addHeldPairs(world, edges, places, towns, hops, null);
+        int[] laid = layHops(world, hops, edges, prot, touched);
+        TuningData tuning = Config.instance().getTuningData();
+        int plaza = world.stampPlayerRoadPatch(capitol, tuning.playerRoadPlazaCapitol, onTileRepainted);
+        for (PointOfInterest town : held)
+            plaza += world.stampPlayerRoadPatch(town, tuning.playerRoadPlazaTown, onTileRepainted);
+        int abandoned = former == null ? 0 : liftAbandoned(world, edges, hops, network, former, prot, touched);
+        int thinned = thinBesidePlayerRoad(world, anchorTiles(world, towns), touched);
+        world.repaintRoadTiles(touched, onTileRepainted);
+        world.setPlayerRoadsBuilt(PlayerRoads.NETWORK_VERSION);
+        System.out.println("[TFR-Roads] player road network (" + why + "): " + held.size() + " held town(s) from "
+                + capitol.getDisplayName() + " - " + hops.size() + " hop(s) (" + heldPairs + " old road(s) between held places"
+                + " upgraded as well), " + laid[0] + " tile(s) laid, " + laid[1] + " old tile(s) paved over, " + plaza
+                + " plaza tile(s); lifted " + laid[2] + " beside the upgrades, " + abandoned + " of the old network, "
+                + thinned + " squeezed against it - " + (System.nanoTime() - t0) / 1_000_000 + " ms");
+    }
+
+    /** A town restored or captured while the Capitol stands: joined to the nearest part of the network. */
+    public static boolean connectPlayerTown(World world, PointOfInterest town, String why) {
+        PointOfInterest capitol = TownRestoration.findCapitol();
+        if (world == null || capitol == null || town == null)
+            return false;
+        if (town == capitol)
+            return true;
+        long t0 = System.nanoTime();
+        List<PointOfInterest> towns = towns(world);
+        Star star = new Star(towns);
+        Set<Long> prot = protectedTiles(world, towns);
+        Set<Long> touched = new HashSet<>();
+        List<Edge> edges = detectEdges(world, towns, null);
+        Set<PointOfInterest> network = onNetwork(world, towns, capitol);
+        List<PointOfInterest[]> hops = new ArrayList<>();
+        List<PointOfInterest> single = new ArrayList<>();
+        single.add(town);
+        grow(world, towns, star, edges, network, single, hops, why);
+        Set<PointOfInterest> places = new HashSet<>(PlayerRoads.heldTowns(world, capitol));
+        places.add(capitol);
+        places.add(town);
+        int heldPairs = addHeldPairs(world, edges, places, towns, hops, town);
+        int[] laid = layHops(world, hops, edges, prot, touched);
+        BiConsumer<Integer, Integer> repaint = liveRepaint();
+        int plaza = world.stampPlayerRoadPatch(town, Config.instance().getTuningData().playerRoadPlazaTown, repaint);
+        int thinned = thinBesidePlayerRoad(world, anchorTiles(world, towns), touched);
+        world.repaintRoadTiles(touched, repaint);
+        System.out.println("[TFR-Roads] player road (" + why + "): " + town.getDisplayName() + " joined - " + hops.size()
+                + " hop(s) (" + heldPairs + " old road(s) to held places upgraded as well), " + laid[0] + " tile(s) laid, "
+                + laid[1] + " old tile(s) paved over, " + plaza + " plaza tile(s); lifted " + laid[2] + " beside the"
+                + " upgrades, " + thinned + " squeezed against it - " + (System.nanoTime() - t0) / 1_000_000 + " ms");
+        return true;
+    }
+
+    static BiConsumer<Integer, Integer> liveRepaint() {
+        WorldStage stage = WorldStage.getInstance();
+        return stage == null ? null : stage::refreshBackgroundTile;
+    }
+
+    /** Once per save laid before these rules: the old roads normalized, a standing Capitol's network laid again. */
+    public static void migrateOnLoad(World world) {
+        if (world == null || world.getRoadsNormalized() >= VERSION)
+            return;
+        long t0 = System.nanoTime();
+        PointOfInterest capitol = TownRestoration.findCapitol();
+        Set<Long> former = null;
+        if (capitol != null) {
+            former = new HashSet<>();
+            int w = world.getWidthInTiles(), h = world.getHeightInTiles();
+            for (int x = 0; x < w; x++)
+                for (int y = 0; y < h; y++)
+                    if (world.roadKindRaw(x, y) == World.ROAD_PLAYER && world.setRoadKindRaw(x, y, World.ROAD_OLD, null))
+                        former.add(key(x, y));
+            System.out.println("[TFR-Roads] migrating: the old player network's " + former.size()
+                    + " tile(s) turned back to old road for the new network to upgrade");
+        }
+        List<PointOfInterest> towns = towns(world);
+        StringBuilder hidden = new StringBuilder();
+        for (PointOfInterest poi : world.getAllPointOfInterest())
+            if (isTownOrCapital(poi) && !poi.getActive())
+                hidden.append(hidden.length() == 0 ? "" : ", ").append(poi.getDisplayName());
+        System.out.println("[TFR-Roads] migrating: " + towns.size() + " town(s) on the map"
+                + (hidden.length() == 0 ? "" : "; hidden, so no road ends there: " + hidden));
+        normalizeOldRoads(world, towns, new Star(towns), protectedTiles(world, towns), new HashSet<>());
+        if (capitol != null)
+            rebuildPlayerNetwork(world, null, "a save from before round 351", former);
+        world.setRoadsNormalized(VERSION);
+        System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " in " + (System.nanoTime() - t0) / 1_000_000 + " ms");
+    }
+
+    /** The old-road router's hop rule for TerritoryControl: the wheel, the barrier, and the discount. */
+    public static final class HopCosts {
+        final World world;
+        final Star star;
+        final Map<Long, Boolean> joined = new HashMap<>();
+        final List<PointOfInterest> nodes;
+
+        public HopCosts(World world, List<PointOfInterest> nodes) {
+            this.world = world;
+            this.nodes = nodes;
+            this.star = new Star(nodes);
+        }
+
+        /** May a road run straight from node u to node v (the wheel)? */
+        public boolean allows(int u, int v) {
+            return star.allowsHop(nodes.get(u), nodes.get(v));
+        }
+
+        /** The cost of the hop from node u to node v - distance squared, cheaper along a road already there. */
+        public double cost(int u, int v) {
+            PointOfInterest a = nodes.get(u), b = nodes.get(v);
+            Boolean j = joined.get(pairKey(u, v));
+            if (j == null) {
+                j = roadJoins(world, a, b);
+                joined.put(pairKey(u, v), j);
+            }
+            return hopCost(world, a, b, j);
+        }
+    }
+}
