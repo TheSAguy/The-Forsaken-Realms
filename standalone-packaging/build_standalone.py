@@ -31,7 +31,7 @@ What it does, in order:
   6. Overlay the repo's non-adventure res edits (en-US.properties, skins art) -
      the list is DERIVED from git (diff vs the upstream merge base), so future
      rounds' res edits are picked up automatically.
-  7. Drop in README.md, CREDITS.md, GAME_GUIDE.md; mirror LICENSE.txt +
+  7. Drop in README.md, CREDITS.md, GAME_GUIDE.md, FAQ.md; mirror LICENSE.txt +
      CREDITS.md into the plane folder ("licensing in the mod folder").
   8. Verify: our GameLauncher title marker is inside the shipped jar, the
      update-check kill is present, res/adventure has exactly 2 entries.
@@ -513,6 +513,10 @@ def main():
         guide_pics = os.path.join(adv, PLANE, "guide")
         if os.path.isdir(guide_pics):
             shutil.copytree(guide_pics, os.path.join(game_dir, "guide"), dirs_exist_ok=True)
+    # round 350b: the player FAQ sits next to the guide in the plane folder and ships at the game root beside it
+    faq = os.path.join(adv, PLANE, "FAQ.md")
+    if os.path.exists(faq):
+        shutil.copy2(faq, os.path.join(game_dir, "FAQ.md"))
     shutil.copy2(os.path.join(BASE_INSTALL, "LICENSE.txt"), os.path.join(adv, PLANE))
     shutil.copy2(os.path.join(here, "CREDITS.md"), os.path.join(adv, PLANE))
 

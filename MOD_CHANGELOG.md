@@ -14264,6 +14264,48 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 350b: the player FAQ ships in the game folder, the Capitol's Booster slot gets its five boosters back (2026-09-26)
+
+The user: *"This is my current FAQ in Discord. Can you please give me a more comprehensive one: Include - How Research
+work / Let unlocks. How the Bronze Coin works. How you lose the game. How set distribution works. ... Race Impact. How
+Shops/Blueprints work. How Reputation works. - Make sure they understand the Net-0 mechanic."* - then *"Can you also
+save this into the game folder as a FAQ doc."* Docs, map data and packaging only - no Java. Local commit, NOT pushed.
+
+- **The Discord FAQ** - 12 messages, each under Discord's 2,000-character limit - was drafted by a subagent against the
+  RELEASED game (tag `tfr-v1.14.1`, a source table for every claim) and spot-checked here: the color wheel and its
+  -2/-1/+2 pattern, the status thresholds and price multipliers, research cost/days/threshold, the three loss rules,
+  the duel-loss costs, blueprint prices and gates, the tier build costs, the race table. Published as a private
+  claude.ai artifact with a copy button per message (https://claude.ai/artifact/XRwbV8Vit3XmHkjQ3aw62y); it describes
+  v1.14.1 and carries "next update" notes on messages 2, 6, 7 and 12 - rewrite those at the next release.
+- **`FAQ.md`** (new, in the plane folder beside `GUIDE.md`): the same answers as a Markdown document for the build it
+  ships with - the next-update notes folded in (Jumpstart 500 gold / 50 shards, the Mythic tier, the fog zones), a
+  legend's 3-day stay and its quest-log row, the engine named by the release notes instead of by date, the Discord
+  invite spelled out, tables instead of code blocks (the guide's style). `build_standalone.py` step 7 copies it to the
+  game root as `FAQ.md` beside `GAME_GUIDE.md`; the shipped README points to it. A copy went straight into the live
+  game root (a doc - the user's game was running).
+- **The Capitol has 24 building slots, not 25**: 16 open + 5 colored Land Shops + the Utility Land Shop + the Booster
+  Shop + the Armory - 24 `shop.tx` objects, at the v1.14.1 tag and now; the town 9 (8 + the Armory). The draft said
+  25 / 17 open after the in-game Mod Details text (`WorldStandingsScene`: "a town has 9, a Capitol 25"), which is off
+  by one - left for the next Java round. The artifact is corrected too.
+- **Round 350's slip, fixed**: its ten new Common types went into every multi-name slot of `player_capital.tmx` - the
+  Booster Shop slot (object 85) included, so the Capitol's booster slot offered the five colored booster shops and the
+  five Instant6 shops. Object 85's `commonShopList` is its five booster shops again, as in v1.14.1; the ten stay
+  buildable from the 16 open slots (`shop_blueprint_audit.py`: 255 of 255, OK). Live + agent carry the slip until the
+  next package (the user's game was running).
+- **Checked, reported to the user, not changed**: (1) a blueprint's tier is the tier of the SLOT the player stands at,
+  so 59 types sell below their build-menu tier somewhere (the five plain color shops as Common - 20 shards at Neutral,
+  around the Partner gate round 80 closed on two other routes; since round 350 the three-color and Phyrexian shops at
+  Rare, 100 shards, where the player's menu has them Mythic, 200) and 73 above it - recommended: one tier per type,
+  from the player templates, awaiting the user's call; (2) the Bronze Coin as a Mythic Armory item at 1,000 gold is
+  round 68's deliberate decision (the subagent had flagged it as a possible leak) - it is in the FAQ now; (3)
+  `GUIDE.md` disagrees with the code in 11 places (research runs in parallel, 38/63 shards not 37/62, the Ring City
+  loss rule missing, race sets sit in the neutral pool, enemy drops follow the enemy's color, the Capitol only at
+  Orazca, the Partner heal on entering towns, Neutral buys Common blueprints only, net-zero's exceptions, the blueprint
+  tier by slot, a stale footer date) - offered, not done.
+
+Files: `forge-gui/res/adventure/The Forsaken Realms/FAQ.md` (new), `maps/map/towns/player_capital.tmx`;
+`standalone-packaging/build_standalone.py`, `standalone-packaging/README.md`.
+
 ## Round 350: legends live whole days, the Capitol gets a Mythic shop tier (2026-09-26)
 
 Two threads, both in the live build (packaged 08:53 with rounds 342-350 once the user's game was closed).

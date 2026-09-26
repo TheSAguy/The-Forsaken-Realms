@@ -19428,7 +19428,7 @@
   </object>
   <object id="85" template="../../../../common/maps/obj/shop.tx" x="127.455" y="331.818">
    <properties>
-    <property name="commonShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop,WhiteBoosterPackShop,BlueBoosterPackShop,BlackBoosterPackShop,RedBoosterPackShop,GreenBoosterPackShop,Instant6White,Instant6Blue,Instant6Black,Instant6Red,Instant6Green"/>
+    <property name="commonShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop"/>
     <property name="mythicShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop"/>
     <property name="noMigrate" type="bool" value="true"/>
     <property name="rareShopList" value="BoosterPackShop,AlphaBoosterPackShop,BetaBoosterPackShop,GammaBoosterPackShop,DeltaBoosterPackShop"/>
