@@ -14306,6 +14306,13 @@ pushed. Also in this round: the Jumpstart entry fee.
   Unscaled like the others - the town price modifier applies on read; an event already rolled in a save keeps the fee
   it was made with.
 - The plane validator learns `playerRoadTileset` and `playerRoadSpeedBonus`.
+- **Round 346b - the user's Capitol tweaks** (edited in the repo file, as agreed): the top wall, the temple and the
+  gate sides redone with 16 px cuts of the same wall art (their "Smaller Walls" tileset - Walls.png on the map's own
+  grid, 48 columns), the shrines moved. The map pointed at that tileset in their Pictures folder through nine
+  parent hops, which resolves only on this machine, so it ships as `maps/tileset/walls_16.tsx` (+ `-nocollide`)
+  over walls_48.png with collision = each cell's opaque extent (`install_templates.py --only walls16`), and the map
+  points there - same grid, every tile id kept. All 34 objects and the six fixed land shops as they were. Staged
+  into the agent folder only, like the rest of the round.
 - SEEN in the agent (a fresh world, cheats; the live folder untouched): `[TFR-Roads] player road network (the Capitol raised): 0 held town(s)` right after `capitol raise` (only the Capitol held); restoring a far wasteland ruin (Apothecary's Forest, tile 50,422) laid `Orazca -> Secluded Encampment -> Benalia -> Scrappers' Hold -> ... -> Apothecary's Forest - 479 tile(s) laid, 223 old road tile(s) paved over` (19 waypoints - the star spoke and the old links under it paved over); the cobbles drawn on the world map from the town's gate, the old beige stub left where the new road did not cover it; standing on the road: `the player is on a player road - x1.725`. Llanowar, a Ring City, offered a quest instead of a restore - Ring Cities are captured, not restored, so the held test used a ruin. Screenshots in the round's scratch.
 
 ## Round 345: the Demon's Bargain keeps its demon and settles for good (2026-09-25)

@@ -73,12 +73,44 @@ def write_walls_48():
     print("walls_48: written (%d gate pieces with side boxes)" % len(GATE_BOXES))
 
 
+def write_walls_16():
+    """Round 346b: Walls.png cut at 16 px - the user's "Smaller Walls" (Tiled's read of the same art on the map's own
+    grid, 48 columns) - as walls_16.tsx (collision = each cell's opaque extent) and walls_16-nocollide.tsx, both over
+    the walls_48.png already in the plane. Same grid, so a map made with the user's tileset keeps every tile id."""
+    png = os.path.join(TILESETS, "walls_48.png")
+    art = Image.open(png).convert("RGBA")
+    cols, rows = art.width // 16, art.height // 16
+    for name, collide in (("walls_16", True), ("walls_16-nocollide", False)):
+        lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+                 '<tileset version="1.10" tiledversion="1.12.2" name="%s" tilewidth="16" tileheight="16" tilecount="%d" columns="%d">'
+                 % (name, cols * rows, cols),
+                 ' <image source="walls_48.png" width="%d" height="%d"/>' % art.size]
+        boxes = 0
+        if collide:
+            for tid in range(cols * rows):
+                c, r = tid % cols, tid // cols
+                alpha = art.crop((c * 16, r * 16, c * 16 + 16, r * 16 + 16)).getchannel("A")
+                bbox = alpha.point(lambda v: 255 if v > 0 else 0).getbbox()
+                if bbox is None:
+                    continue
+                boxes += 1
+                lines += [' <tile id="%d">' % tid, '  <objectgroup draworder="index" id="2">',
+                          '   <object id="1" x="%d" y="%d" width="%d" height="%d"/>' % (bbox[0], bbox[1], bbox[2] - bbox[0], bbox[3] - bbox[1]),
+                          '  </objectgroup>', ' </tile>']
+        lines.append('</tileset>')
+        with open(os.path.join(TILESETS, name + ".tsx"), "w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(lines) + "\n")
+        print("%s: %d tiles, %d with a box" % (name, cols * rows, boxes))
+
+
 def relocate(src_dir, ref):
     """A reference as Tiled saved it (relative to src_dir) -> the same file relative to maps/map/towns/."""
     target = norm(os.path.join(src_dir, ref))
     base = os.path.basename(target)
     if target == norm(os.path.join(src_dir, "Walls.tsx")):
         return "../../tileset/walls_48.tsx"
+    if target == norm(os.path.join(src_dir, "Smaller Walls.tsx")):
+        return "../../tileset/walls_16.tsx"
     if target == norm(os.path.join(src_dir, "..", "Terrain", "Walls.png")):
         return "../../tileset/walls_48.png"
     for folder, rel in ((TILESETS, "../../tileset/"), (COMMON_TILESETS, "../../../../common/maps/tileset/"),
@@ -137,6 +169,8 @@ def main():
     ap.add_argument("--only", default="town,capital")
     a = ap.parse_args()
     write_walls_48()
+    if "walls16" in a.only:
+        write_walls_16()
     if "town" in a.only:
         install("player_town", a.src, a.renders or None)
     if "capital" in a.only:
