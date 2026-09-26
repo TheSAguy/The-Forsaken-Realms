@@ -134,11 +134,10 @@ public final class PlayerRoads {
         }
         int laid = world.buildPlayerRoad(route, onTileRepainted);
         int pavedOver = world.lastRoadPavedOver();
-        // Round 346c: a plaza under each end - the Capitol and the held town - a tile or two out from the icon.
-        int margin = Config.instance().getTuningData().playerRoadTownPatch;
-        int plaza = world.stampPlayerRoadPatch(capitol, margin, onTileRepainted);
+        // Round 346c/346d: a plaza under each end - the Capitol's and the held town's own size, centred on the icon.
+        int plaza = world.stampPlayerRoadPatch(capitol, Config.instance().getTuningData().playerRoadPlazaCapitol, onTileRepainted);
         pavedOver += world.lastRoadPavedOver();
-        plaza += world.stampPlayerRoadPatch(town, margin, onTileRepainted);
+        plaza += world.stampPlayerRoadPatch(town, Config.instance().getTuningData().playerRoadPlazaTown, onTileRepainted);
         pavedOver += world.lastRoadPavedOver();
         System.out.println("[TFR-Roads] player road (" + why + "): " + routeText(route) + " - " + laid
                 + " tile(s) laid, " + plaza + " plaza tile(s), " + pavedOver + " old road tile(s) paved over");

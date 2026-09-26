@@ -220,8 +220,10 @@
     // Round 346: the player road (laid from the Capitol to the player's towns) moves the player this much faster
     // than the old road (old road = 1.5x, so 1.15 -> 1.725x). Grep forge.log for [TFR-Roads].
     "playerRoadSpeedBonus": 1.15,
-    // Round 346c: the cobble plaza under the Capitol and every held town, this many tiles beyond the icon on every side.
-    "playerRoadTownPatch": 1,
+    // Round 346c/346d: the cobble plaza under the Capitol and under every held town - a square this many tiles across,
+    // centred on the icon (the Capitol icon is 4 tiles, a wasteland town 3).
+    "playerRoadPlazaCapitol": 4,
+    "playerRoadPlazaTown": 2,
 
     // Looted-dungeon timer (round 128, user request): a rotatable dungeon/cave the player walks out of
     // having taken every reward pickup, while live enemies are still inside, keeps this fraction of the

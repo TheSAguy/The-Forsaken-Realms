@@ -325,8 +325,11 @@ public class TuningData {
     // Round 346 (user: "the new roads increase player movement by 15% more than the old roads"): the player road's
     // speed = the old road's 1.5x times this (WorldStage). PlayerRoads lays them from the Capitol.
     public float playerRoadSpeedBonus = 1.15f;
-    // Round 346c: the cobble plaza under the Capitol and every held town - this many tiles beyond the icon on every side.
-    public int playerRoadTownPatch = 1;
+    // Round 346c/346d: the cobble plaza under the Capitol and under every held town - a square this many tiles across,
+    // centred on the icon (the Capitol's icon is 4 tiles, a wasteland town's 3; the user: "2 tiles smaller for cap,
+    // 3 for towns" than the icon-plus-one the first cut laid).
+    public int playerRoadPlazaCapitol = 4;
+    public int playerRoadPlazaTown = 2;
 
     // Round 159, user request: "make an Apprentice slightly smaller and an Archmage slightly
     // bigger". A rendered enemy is atlasRegionSize x EnemyData.scale (CharacterSprite.draw), and

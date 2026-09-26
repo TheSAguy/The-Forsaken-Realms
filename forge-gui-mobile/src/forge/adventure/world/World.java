@@ -4558,18 +4558,21 @@ public class World implements Disposable, SaveFileContent {
     }
 
     /**
-     * Round 346c (the user: "make it so the town/cap sits on a patch, just a tile or two bigger than the town icon"):
-     * the player road under a place's icon and `margin` tiles beyond it on every side - a cobble plaza the road
-     * autotile draws with rounded corners. The same per-tile write as buildPlayerRoad() (an old road under it is
-     * paved over, terrain cleared); the barrier and water are left alone. Returns the tiles newly paved.
+     * Round 346c (the user: "make it so the town/cap sits on a patch, just a tile or two bigger than the town icon"),
+     * 346d ("a little too big, make it at least 2 tiles smaller for cap and probably 3 for towns"): a square of
+     * `sizeTiles` x `sizeTiles` player road centred on the place's icon - a cobble plaza the road autotile draws with
+     * rounded corners (the Capitol's icon is 64 px = 4 tiles, a wasteland town's 48 px = 3; settings.json
+     * playerRoadPlazaCapitol / playerRoadPlazaTown say how big). The same per-tile write as buildPlayerRoad() (an
+     * old road under it is paved over, terrain cleared); the barrier and water are left alone. Returns the tiles
+     * newly paved.
      */
-    public int stampPlayerRoadPatch(PointOfInterest place, int margin, BiConsumer<Integer, Integer> onTileRepainted) {
-        if (data == null || biomeMap == null || terrainMap == null || place == null || margin < 0)
+    public int stampPlayerRoadPatch(PointOfInterest place, int sizeTiles, BiConsumer<Integer, Integer> onTileRepainted) {
+        if (data == null || biomeMap == null || terrainMap == null || place == null || sizeTiles <= 0)
             return 0;
-        com.badlogic.gdx.math.Rectangle box = place.getBoundingRectangle();
+        com.badlogic.gdx.math.Vector2 center = place.getCenter();
         int ts = data.tileSize;
-        int tx0 = (int) Math.floor(box.x / ts) - margin, tx1 = (int) Math.floor((box.x + box.width - 1) / ts) + margin;
-        int ty0 = (int) Math.floor(box.y / ts) - margin, ty1 = (int) Math.floor((box.y + box.height - 1) / ts) + margin;
+        int tx0 = (int) Math.floor(center.x / ts - sizeTiles / 2.0 + 0.5), tx1 = tx0 + sizeTiles - 1;
+        int ty0 = (int) Math.floor(center.y / ts - sizeTiles / 2.0 + 0.5), ty1 = ty0 + sizeTiles - 1;
         long roadBit = roadBit(), playerRoadBit = playerRoadBit(), roadMask = roadMask();
         java.util.HashSet<Long> touched = new java.util.HashSet<>();
         int paved = 0, pavedOver = 0;
@@ -4626,7 +4629,7 @@ public class World implements Disposable, SaveFileContent {
         long roadBit = roadBit();
         long playerRoadBit = playerRoadBit();
         long roadMask = roadMask();
-        int pavedOver = 0;
+        int pavedOver = 0, keptPlayerRoad = 0;
         java.util.HashSet<Long> touched = new java.util.HashSet<>();
         for (int seg = 0; seg + 1 < waypoints.size(); seg++) {
             if (roadLineCrossesBarrier(waypoints.get(seg), waypoints.get(seg + 1))) {
@@ -4650,7 +4653,12 @@ public class World implements Disposable, SaveFileContent {
                 if (!(startX < 0 || startY <= 0 || startX >= width || startY > height)) {
                     int rawY = height - startY;
                     long bits = biomeMap[startX][rawY];
-                    // round 346: an old road never overwrites a player road; a player road paves the old one over
+                    // Round 346/346d (the user: "the AI also builds road, let's ensure their roads don't replace any
+                    // player roads"): an old road - an AI capture's, or the player's own before the Capitol - leaves a
+                    // player road tile exactly as it is, bits and terrain both; a player road paves the old one over.
+                    if (!playerRoad && (bits & playerRoadBit) != 0) {
+                        keptPlayerRoad++;
+                    } else {
                     boolean wanted = playerRoad ? (bits & playerRoadBit) == 0 : (bits & roadMask) == 0;
                     if (wanted || terrainMap[startX][rawY] != 0) {
                         if (playerRoad) {
@@ -4664,6 +4672,7 @@ public class World implements Disposable, SaveFileContent {
                         redrawMinimapTile(startX, rawY);
                         updateFogOfWarPixmap(startX, rawY);
                         touched.add((long) startX << 32 | (rawY & 0xffffffffL));
+                    }
                     }
                 }
                 if (startX == x1 && startY == y1)
@@ -4679,6 +4688,8 @@ public class World implements Disposable, SaveFileContent {
             }
         }
         lastRoadPavedOver = pavedOver; // round 346
+        if (keptPlayerRoad > 0)
+            System.out.println("[TFR-Roads] an old road crossed " + keptPlayerRoad + " player road tile(s) and left them as they were");
         // Chunk-texture patches for every changed tile plus a 2-tile ring around it - a road
         // tile's neighbors blend against it, same neighbor-staleness reasoning as
         // repaintBiomeAroundTown()'s post-loop repaint.

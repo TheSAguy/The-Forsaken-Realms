@@ -14320,6 +14320,16 @@ pushed. Also in this round: the Jumpstart entry fee.
   at both ends of every route (the Capitol and the held town) with `settings.json playerRoadTownPatch` (1 tile).
   `PlayerRoads.NETWORK_VERSION` 2, so a save that laid its network under version 1 lays it again on load - the
   road tiles already there are skipped, the plazas are new.
+- **Round 346d** (the user: *"The plaza is a little too big, make it at least 2 tiles smaller for cap and probably
+  3 for towns"* and *"The AI also builds road (the old/original kind), let's ensure their roads don't replace any
+  player roads"*). The plaza is now a fixed square centred on the icon instead of the icon plus a margin: the
+  Capitol's icon is 64 px (4 tiles) and a wasteland town's 48 px (3), so the first cut laid 6x6 and 5x5;
+  `settings.json playerRoadPlazaCapitol` 4 and `playerRoadPlazaTown` 2 replace `playerRoadTownPatch`. A plaza
+  already laid in a save stays (paving only adds). The old-road walk (`World.layRoad`, the AI's captures and the
+  player's own pre-Capitol links) now leaves a player road tile entirely alone - bits and terrain - where before
+  a structure on such a tile could have had the old bit added; it counts them:
+  `[TFR-Roads] an old road crossed N player road tile(s) and left them as they were`.
+  SEEN in the agent (a fresh world): the Capitol on a 4x4 under its icon, a restored ruin on a 2x2 tucked under its castle icon with the road leaving it (screenshots sent to the user).
   SEEN in the agent: the saved roads world reloaded under rule 2 - `0 tile(s) laid, 60 plaza tile(s), 25 old road tile(s) paved over` on the one route; the restored town on a 4x4 cobble square with the road running into it, the Capitol on a larger one sized to its icon (screenshots sent to the user).
 - SEEN in the agent (a fresh world, cheats; the live folder untouched): `[TFR-Roads] player road network (the Capitol raised): 0 held town(s)` right after `capitol raise` (only the Capitol held); restoring a far wasteland ruin (Apothecary's Forest, tile 50,422) laid `Orazca -> Secluded Encampment -> Benalia -> Scrappers' Hold -> ... -> Apothecary's Forest - 479 tile(s) laid, 223 old road tile(s) paved over` (19 waypoints - the star spoke and the old links under it paved over); the cobbles drawn on the world map from the town's gate, the old beige stub left where the new road did not cover it; standing on the road: `the player is on a player road - x1.725`. Llanowar, a Ring City, offered a quest instead of a restore - Ring Cities are captured, not restored, so the held test used a ruin. Screenshots in the round's scratch.
 

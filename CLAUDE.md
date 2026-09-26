@@ -198,7 +198,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   346b: the user's Capitol tweaks (16 px wall cuts) - their "Smaller Walls" became `maps/tileset/walls_16.tsx` with
   collision (`install_templates.py --only walls16`), the map re-pointed; a map must never reference a tileset outside
   the plane. 346c: a cobble plaza under the Capitol and every held town (`World.stampPlayerRoadPatch`, margin
-  `playerRoadTownPatch` = 1 tile beyond the icon), `PlayerRoads.NETWORK_VERSION` 2 re-lays on load.**
+  `playerRoadTownPatch` = 1 tile beyond the icon), `PlayerRoads.NETWORK_VERSION` 2 re-lays on load. 346d: the plaza
+  is a square centred on the icon - `playerRoadPlazaCapitol` 4, `playerRoadPlazaTown` 2 (the icons are 4 and 3 tiles);
+  an old road (AI or pre-Capitol) never touches a player road tile (`layRoad`, logged).**
 - **Round 345 (local, NOT pushed, 2026-09-25): `maps/map/lair/demons_bargain.tmx` object 50 = Scourgemaster with
   `keepAuthored` (a placement loads as authored - no re-theme/filter/roster pick; `MapStage.loadObjects`) and
   `winQuestFlag` DemonsBargainSettled (`EnemySprite.winQuestFlag`, set in `MapStage.setWinner` on a win); both Accept

@@ -44,7 +44,8 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
   `playerRoadIndex()`, `isPlayerRoadTile()`; a second road texture; `roadMask()` at every ownership mask and skip
   rule that read the old bit; `buildRoad()` and `buildPlayerRoad()` share `layRoad()` (the player kind paves the old
   bit over, `lastRoadPavedOver()`); the minimap's player-road pixel; `playerRoadsBuilt` saved and loaded;
-  `stampPlayerRoadPatch()` (346c, the plaza under a place) and `repaintAroundRoadTiles()`.
+  `stampPlayerRoadPatch()` (346c/346d, a square plaza centred on a place's icon) and `repaintAroundRoadTiles()`;
+  `layRoad()` leaves player road tiles alone on an old-road walk (346d).
 - **`forge-gui-mobile/src/forge/adventure/util/PlayerRoads.java`** — new: the network from the Capitol
   (`rebuildNetwork`, `connectTown`, `migrateOnLoad`, `routeThroughTowns`).
 - **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the raise lays the network; a restore or
