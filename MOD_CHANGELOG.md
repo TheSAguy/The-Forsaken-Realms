@@ -14264,6 +14264,86 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 348: the rim roads as a wheel, the minimap road's color, one of each legend (2026-09-26)
+
+Three user reports in one round, two of which turned out to be bugs rather than the taste changes they
+were filed as. Run in parallel with round 347 in a second session; that round's files were left alone
+and this one's four were staged by name.
+
+### The minimap road was never drawing itself
+
+User: *"For the new roads on the mini-map. Can we make it dark brown. Not red."*
+
+Round 346's `drawMinimapTile` branch took the player road's minimap pixel the way every other tile
+takes its swatch - `createSmallPixmap(playerRoadTileset, ..., 0)`, the top-left `miniMapTileSize`
+square of the atlas region. **All sixteen pixels of that 4x4 in `player_road.png` are `(0,0,0,0)`.**
+The `drawPixmap` therefore laid down nothing at all, and the branch `return`ed before any ground was
+drawn, so the tile kept whatever the pixmap already held - on a re-bake, the color of whatever had
+been there before. That is the red: a neighboring biome showing through a road that never painted
+itself. `World`'s own class note at the top of the file records the identical missing-swatch trap for
+round 300's 32 px player ground, so this is the second time the same shape has bitten.
+
+Now an explicit fill, `PLAYER_ROAD_MINIMAP_COLOR` = `0x5c3a1e`. Fixing the color and the hole in one
+move, and an explicit constant cannot silently drift if the road art is ever redrawn - which is
+exactly how this arrived.
+
+### The star is a wheel
+
+User: *"Connect them in a ring. Green to Red and White, etc. Then to the center city. So it will look
+like a wheel with spokes vs. Star."*
+
+The rim rule from 2026-09-03 joined every Center Town to every other - ten edges for five towns. Five
+of those ten are the pentagon; the other five are the long diagonals, and it is the diagonals cutting
+across the middle that drew a pentagram. Neighbors only now, so the five rim roads plus the five
+spokes already laid from Orazca (round 253's hub) read as hub, spokes, rim.
+
+Adjacency is by **bearing around the hub**, not list order: list order is placement order and says
+nothing about where a town sits, so an angle sort is what makes "Green to Red and White" mean the two
+cities actually beside it. Falls back to the star towns' own centroid on a plane with neither Orazca
+nor Spawn to be the hub, and keeps the old every-pair rule below three towns, where a ring is not a
+shape. World-gen only - an existing save's roads are already on the ground.
+
+### One of each legend at a time
+
+User: *"I think we need to tone down the 'Legend' encounters... I'm on day six and there are 2 by me"*,
+then *"it appears to be the same legend.... Should never be 2 of the same on the map at the same time."*
+
+The duplicate is the real defect and the reason it felt frequent. `BiomeData`'s weighted pick has no
+memory of what is already roaming, and a legend lives `legendLifetimeFactor` (3x) as long as an
+ordinary roamer, so the window for a second roll to land on the same entry is three times as wide as
+for anything else. `WorldStage.spawn` now refuses a legend whose catalog entry is already out there;
+a *different* legend is still free to appear, and a dispatched territory mage never blocks a sighting.
+Matched on `EnemyData.name`, the catalog key the two pools select on - not `getName()`, the display
+name, where the entry called `"Karona (Boss)"` shows as "Karona, False God" and would never have
+matched itself.
+
+On the rate itself, measured from the user's log rather than assumed: **2 of 17 spawns were legends,
+11.8%**, against a configured 2% for the wasteland they were standing in. The share maths is correct -
+`FrontierSpawns.shareWeight` solves `w / (w + rest) = share` for the GROUP and `BiomeData` splits that
+total evenly across the group - so this was a 1-in-23 run of luck, not an error. Cut anyway, per the
+user: `neutralColorlessShare` 0.02 -> 0.01 and the roaming champions' `share` 0.05 -> 0.03. The
+Unhappy (0.10) and War (0.15) shares are left alone - that is terrain the player has turned hostile,
+and the danger there is earned.
+
+### Raised, not built: the Legend quest-log entry
+
+The user also asked for a spotted legend to appear in the quest log with *"days remaining ... how long
+before the legend disappears"*. Traced and **not implemented**, because the unit does not exist:
+`EnemySprite.getLifetime()` is `globalTimer` seconds, and `globalTimer` only advances while the player
+is moving on the overworld (`WorldStage.onActing`). The log line is literal - "stays 60s of travel
+time", 20s base x the 3x legend factor - while the quest log renders `QuestExpiry.displaySuffix()` as
+`" (12 days left)"`. Showing a legend's countdown honestly would read in seconds of walking beside
+quests counted in days. Put to the user as a choice: show the real unit, give legends a day-based
+lifetime instead (which makes the feature work as pictured but pulls against "make them rarer"), or
+both with whichever expires first. Awaiting that decision.
+
+**Files touched**: `world/World.java`, `stage/WorldStage.java`; plane `config tables/frontier_spawns.json`,
+`config tables/roaming_champions.json`.
+
+**Not packaged**: the user's game was running for the whole round. The live folder is still round 345's
+jar (2026-09-25 16:20) - rounds 346 through 348 are all waiting on a closed game, and the jar is now
+older than these sources, so live needs a fresh Maven package build rather than a re-copy.
+
 ## Round 347: the one-off audit - the Vampire Dungeon's captive pays once, lair keys always drop, the Ghost Town empty (2026-09-26)
 
 User (the round-346e handoff): audit the dungeons for one-off places like the Sphinx's Sanctum (round 334) and the
