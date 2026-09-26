@@ -22,7 +22,14 @@ public class Reward {
         // unread. User report: "I got a blue-print, but was not very obvious. Might have missed the
         // pop-up... Let's show a card or something with a Scroll/Blue-print on it that you need to
         // click (Like when you get a card)".
-        Blueprint
+        Blueprint;
+        private final String labelKey = "lbl" + this.name();
+        /**
+         * @return The pre-cached localizer key name (e.g., "lblLife", "lblShards", "lblGold").
+         */
+        public String getLabelKey() {
+            return this.labelKey;
+        }
     }
 
     Type type;

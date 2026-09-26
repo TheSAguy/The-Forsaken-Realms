@@ -308,9 +308,6 @@ public class MatchController extends NetworkGuiGame {
             }
         }
 
-        if(GuiBase.isNetPlay(this))
-            view.getStack().checkEmptyStack();
-
         if (ph != null && saveState && ph.isMain()) {
             phaseGameState = new GameState();
             try {
