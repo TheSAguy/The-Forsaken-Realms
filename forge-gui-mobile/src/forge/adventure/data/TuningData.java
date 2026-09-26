@@ -328,8 +328,8 @@ public class TuningData {
     // Round 346c/346d: the cobble plaza under the Capitol and under every held town - a square this many tiles across,
     // centred on the icon (the Capitol's icon is 4 tiles, a wasteland town's 3; the user: "2 tiles smaller for cap,
     // 3 for towns" than the icon-plus-one the first cut laid).
-    public int playerRoadPlazaCapitol = 4;
-    public int playerRoadPlazaTown = 2;
+    public int playerRoadPlazaCapitol = 3; // 346e: the user took both down one more
+    public int playerRoadPlazaTown = 1;
 
     // Round 159, user request: "make an Apprentice slightly smaller and an Archmage slightly
     // bigger". A rendered enemy is atlasRegionSize x EnemyData.scale (CharacterSprite.draw), and

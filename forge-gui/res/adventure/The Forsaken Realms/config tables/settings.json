@@ -222,8 +222,8 @@
     "playerRoadSpeedBonus": 1.15,
     // Round 346c/346d: the cobble plaza under the Capitol and under every held town - a square this many tiles across,
     // centred on the icon (the Capitol icon is 4 tiles, a wasteland town 3).
-    "playerRoadPlazaCapitol": 4,
-    "playerRoadPlazaTown": 2,
+    "playerRoadPlazaCapitol": 3,
+    "playerRoadPlazaTown": 1,
 
     // Looted-dungeon timer (round 128, user request): a rotatable dungeon/cave the player walks out of
     // having taken every reward pickup, while live enemies are still inside, keeps this fraction of the
