@@ -14313,6 +14313,14 @@ pushed. Also in this round: the Jumpstart entry fee.
   over walls_48.png with collision = each cell's opaque extent (`install_templates.py --only walls16`), and the map
   points there - same grid, every tile id kept. All 34 objects and the six fixed land shops as they were. Staged
   into the agent folder only, like the rest of the round.
+- **Round 346c - the plaza** (the user, on a screenshot of a town on the new road: *"any way to make it so the
+  town/cap sits on a 'patch', just a tile or two bigger than the town icon"*): `World.stampPlayerRoadPatch(place,
+  margin)` paves the player road under a place's icon (its bounding rectangle in tiles) and `margin` tiles beyond it
+  on every side - the road autotile draws it as a plaza with rounded corners; water and the barrier are left. Laid
+  at both ends of every route (the Capitol and the held town) with `settings.json playerRoadTownPatch` (1 tile).
+  `PlayerRoads.NETWORK_VERSION` 2, so a save that laid its network under version 1 lays it again on load - the
+  road tiles already there are skipped, the plazas are new.
+  SEEN in the agent: the saved roads world reloaded under rule 2 - `0 tile(s) laid, 60 plaza tile(s), 25 old road tile(s) paved over` on the one route; the restored town on a 4x4 cobble square with the road running into it, the Capitol on a larger one sized to its icon (screenshots sent to the user).
 - SEEN in the agent (a fresh world, cheats; the live folder untouched): `[TFR-Roads] player road network (the Capitol raised): 0 held town(s)` right after `capitol raise` (only the Capitol held); restoring a far wasteland ruin (Apothecary's Forest, tile 50,422) laid `Orazca -> Secluded Encampment -> Benalia -> Scrappers' Hold -> ... -> Apothecary's Forest - 479 tile(s) laid, 223 old road tile(s) paved over` (19 waypoints - the star spoke and the old links under it paved over); the cobbles drawn on the world map from the town's gate, the old beige stub left where the new road did not cover it; standing on the road: `the player is on a player road - x1.725`. Llanowar, a Ring City, offered a quest instead of a restore - Ring Cities are captured, not restored, so the held test used a ruin. Screenshots in the round's scratch.
 
 ## Round 345: the Demon's Bargain keeps its demon and settles for good (2026-09-25)

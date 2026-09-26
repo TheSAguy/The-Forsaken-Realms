@@ -4557,6 +4557,69 @@ public class World implements Disposable, SaveFileContent {
         return lastRoadPavedOver;
     }
 
+    /**
+     * Round 346c (the user: "make it so the town/cap sits on a patch, just a tile or two bigger than the town icon"):
+     * the player road under a place's icon and `margin` tiles beyond it on every side - a cobble plaza the road
+     * autotile draws with rounded corners. The same per-tile write as buildPlayerRoad() (an old road under it is
+     * paved over, terrain cleared); the barrier and water are left alone. Returns the tiles newly paved.
+     */
+    public int stampPlayerRoadPatch(PointOfInterest place, int margin, BiConsumer<Integer, Integer> onTileRepainted) {
+        if (data == null || biomeMap == null || terrainMap == null || place == null || margin < 0)
+            return 0;
+        com.badlogic.gdx.math.Rectangle box = place.getBoundingRectangle();
+        int ts = data.tileSize;
+        int tx0 = (int) Math.floor(box.x / ts) - margin, tx1 = (int) Math.floor((box.x + box.width - 1) / ts) + margin;
+        int ty0 = (int) Math.floor(box.y / ts) - margin, ty1 = (int) Math.floor((box.y + box.height - 1) / ts) + margin;
+        long roadBit = roadBit(), playerRoadBit = playerRoadBit(), roadMask = roadMask();
+        java.util.HashSet<Long> touched = new java.util.HashSet<>();
+        int paved = 0, pavedOver = 0;
+        for (int tx = tx0; tx <= tx1; tx++) {
+            for (int ty = ty0; ty <= ty1; ty++) {
+                if (tx < 0 || ty <= 0 || tx >= width || ty > height)
+                    continue;
+                int rawY = height - ty; // buildRoad()'s own raw-index convention, so the plaza meets the road tile for tile
+                long bits = biomeMap[tx][rawY];
+                if ((bits & ~roadMask) == 0L || isBarrierRaw(tx, rawY))
+                    continue; // water and the barrier stay
+                if ((bits & playerRoadBit) != 0 && terrainMap[tx][rawY] == 0)
+                    continue;
+                if ((bits & roadBit) != 0)
+                    pavedOver++;
+                biomeMap[tx][rawY] = (bits & ~roadBit) | playerRoadBit;
+                terrainMap[tx][rawY] = 0;
+                redrawMinimapTile(tx, rawY);
+                updateFogOfWarPixmap(tx, rawY);
+                touched.add((long) tx << 32 | (rawY & 0xffffffffL));
+                paved++;
+            }
+        }
+        lastRoadPavedOver = pavedOver;
+        repaintAroundRoadTiles(touched, onTileRepainted);
+        return paved;
+    }
+
+    /** The chunk-texture patches for a set of changed road tiles and the 2-tile ring around each. */
+    private void repaintAroundRoadTiles(java.util.Set<Long> touched, BiConsumer<Integer, Integer> onTileRepainted) {
+        if (onTileRepainted == null || touched.isEmpty())
+            return;
+        java.util.HashSet<Long> refreshed = new java.util.HashSet<>();
+        for (long key : touched) {
+            int tx = (int) (key >> 32);
+            int rawY = (int) (key & 0xffffffffL);
+            int wy = height - rawY - 1;
+            for (int nx = tx - 2; nx <= tx + 2; nx++) {
+                if (nx < 0 || nx >= width)
+                    continue;
+                for (int ny = wy - 2; ny <= wy + 2; ny++) {
+                    if (ny < 0 || ny >= height)
+                        continue;
+                    if (refreshed.add((long) nx << 32 | (ny & 0xffffffffL)))
+                        onTileRepainted.accept(nx, ny);
+                }
+            }
+        }
+    }
+
     private int layRoad(List<PointOfInterest> waypoints, BiConsumer<Integer, Integer> onTileRepainted, boolean playerRoad) {
         if (data == null || biomeMap == null || terrainMap == null || waypoints == null || waypoints.size() < 2)
             return 0;

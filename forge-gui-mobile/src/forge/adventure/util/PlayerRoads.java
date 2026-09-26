@@ -35,7 +35,7 @@ import forge.adventure.world.WorldSave;
  */
 public final class PlayerRoads {
     /** Bumped when the network rule changes and every save should lay it again. */
-    public static final int NETWORK_VERSION = 1;
+    public static final int NETWORK_VERSION = 2; // 2: the plazas (round 346c)
 
     private PlayerRoads() {
     }
@@ -133,9 +133,16 @@ public final class PlayerRoads {
             return 0;
         }
         int laid = world.buildPlayerRoad(route, onTileRepainted);
+        int pavedOver = world.lastRoadPavedOver();
+        // Round 346c: a plaza under each end - the Capitol and the held town - a tile or two out from the icon.
+        int margin = Config.instance().getTuningData().playerRoadTownPatch;
+        int plaza = world.stampPlayerRoadPatch(capitol, margin, onTileRepainted);
+        pavedOver += world.lastRoadPavedOver();
+        plaza += world.stampPlayerRoadPatch(town, margin, onTileRepainted);
+        pavedOver += world.lastRoadPavedOver();
         System.out.println("[TFR-Roads] player road (" + why + "): " + routeText(route) + " - " + laid
-                + " tile(s) laid, " + world.lastRoadPavedOver() + " old road tile(s) paved over");
-        return laid;
+                + " tile(s) laid, " + plaza + " plaza tile(s), " + pavedOver + " old road tile(s) paved over");
+        return laid + plaza;
     }
 
     private static BiConsumer<Integer, Integer> liveRepaint() {
@@ -176,6 +183,7 @@ public final class PlayerRoads {
             return;
         if (TownRestoration.findCapitol() == null)
             return; // laid when the Capitol is raised
-        rebuildNetwork(world, null, "a save from before the player roads");
+        rebuildNetwork(world, null, world.getPlayerRoadsBuilt() == 0 ? "a save from before the player roads"
+                : "a save laid under network rule " + world.getPlayerRoadsBuilt() + ", now " + NETWORK_VERSION);
     }
 }

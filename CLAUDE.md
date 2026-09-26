@@ -197,7 +197,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   --out C:\TFR\agent` (the packager writes only its own game folder there; no agent_sync, which would mirror live).
   346b: the user's Capitol tweaks (16 px wall cuts) - their "Smaller Walls" became `maps/tileset/walls_16.tsx` with
   collision (`install_templates.py --only walls16`), the map re-pointed; a map must never reference a tileset outside
-  the plane.**
+  the plane. 346c: a cobble plaza under the Capitol and every held town (`World.stampPlayerRoadPatch`, margin
+  `playerRoadTownPatch` = 1 tile beyond the icon), `PlayerRoads.NETWORK_VERSION` 2 re-lays on load.**
 - **Round 345 (local, NOT pushed, 2026-09-25): `maps/map/lair/demons_bargain.tmx` object 50 = Scourgemaster with
   `keepAuthored` (a placement loads as authored - no re-theme/filter/roster pick; `MapStage.loadObjects`) and
   `winQuestFlag` DemonsBargainSettled (`EnemySprite.winQuestFlag`, set in `MapStage.setWinner` on a win); both Accept

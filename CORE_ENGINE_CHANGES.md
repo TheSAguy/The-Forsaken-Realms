@@ -43,7 +43,8 @@ Grouped by subsystem. Each entry: what changed, why (one line — full reasoning
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `roadBit()`, `playerRoadBit()`, `roadMask()`,
   `playerRoadIndex()`, `isPlayerRoadTile()`; a second road texture; `roadMask()` at every ownership mask and skip
   rule that read the old bit; `buildRoad()` and `buildPlayerRoad()` share `layRoad()` (the player kind paves the old
-  bit over, `lastRoadPavedOver()`); the minimap's player-road pixel; `playerRoadsBuilt` saved and loaded.
+  bit over, `lastRoadPavedOver()`); the minimap's player-road pixel; `playerRoadsBuilt` saved and loaded;
+  `stampPlayerRoadPatch()` (346c, the plaza under a place) and `repaintAroundRoadTiles()`.
 - **`forge-gui-mobile/src/forge/adventure/util/PlayerRoads.java`** — new: the network from the Capitol
   (`rebuildNetwork`, `connectTown`, `migrateOnLoad`, `routeThroughTowns`).
 - **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the raise lays the network; a restore or
