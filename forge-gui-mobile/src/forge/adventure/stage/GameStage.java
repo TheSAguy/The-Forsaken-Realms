@@ -583,6 +583,8 @@ public abstract class GameStage extends Stage {
         // runs until the player returns to one of these two - the natural "next safe point".
         if (!isDialogOnlyInput() && !Forge.advFreezePlayerControls)
             TerritoryControl.checkPendingCapitolDefense();
+        else
+            TerritoryControl.notePendingCapitolDefenseWaiting(); // round 356: one log line per held-back duel
 
         onActing(delta);
     }

@@ -1152,6 +1152,44 @@ public class TerritoryControl {
         }
     }
 
+    /** Round 355: the Capitol's extra pick chance, in points, while the dispatching color stands at Unhappy / War. */
+    private static float capitolNearestTargetBonus(String color) {
+        if (!ColorReputation.isEnabled() || color == null)
+            return 0f;
+        TuningData tuning = Config.instance().getTuningData();
+        switch (ColorReputation.getStatus(color)) {
+            case UNHAPPY: return Math.max(0f, tuning.capitolNearestTargetBonusUnhappy);
+            case WAR:     return Math.max(0f, tuning.capitolNearestTargetBonusWar);
+            default:      return 0f;
+        }
+    }
+
+    /** Round 355: a mage bound for the Capitol from a color at Unhappy / War steps up one tier with the tuned chance -
+     *  Apprentice to Adept, Adept to Master, Master to Archmage - still under the week's tier cap. Logged whenever the
+     *  chance applies, so a run of strong Capitol attackers can be read against the rolls. */
+    private static String capitolAttackerTierUp(World world, String color, String tier) {
+        if (!ColorReputation.isEnabled() || color == null)
+            return tier;
+        TuningData tuning = Config.instance().getTuningData();
+        float chance;
+        switch (ColorReputation.getStatus(color)) {
+            case UNHAPPY: chance = tuning.capitolAttackerTierUpChanceUnhappy; break;
+            case WAR:     chance = tuning.capitolAttackerTierUpChanceWar; break;
+            default:      return tier;
+        }
+        int idx = java.util.Arrays.asList(DISPATCH_TIERS).indexOf(tier);
+        if (chance <= 0f || idx < 0 || idx >= DISPATCH_TIERS.length - 1)
+            return tier;
+        boolean up = world.getRandom().nextFloat() < chance;
+        String result = up ? clampDispatchTierToWeek(DISPATCH_TIERS[idx + 1], world) : tier;
+        System.out.println("[TFR-CapitolTarget] " + color + " at " + ColorReputation.getStatus(color).label
+                + ": the mage bound for the Capitol " + (result.equals(tier)
+                        ? "keeps its tier (" + EnemyData.tierDisplayName(tier) + ")"
+                        : "steps up a tier - " + EnemyData.tierDisplayName(tier) + " -> " + EnemyData.tierDisplayName(result))
+                + " (chance " + chance + ")");
+        return result;
+    }
+
     private static float[] dispatchTierCumulative(World world, String color) {
         int defeats = world == null ? 0 : world.getDefeatedColorCount();
         float masterScale = dispatchMasterScale(color);
@@ -1745,6 +1783,29 @@ public class TerritoryControl {
                 }
                 totalWeight += bonus;
             }
+            // Round 355 (the user, 2026-09-26: "if at Unhappy and player capitol is one of the 5 closest targeted, it
+            // should be 5% more likely to be targeted than currently and if at War 10% more likely to be targeted").
+            // Only when the Capitol made the five nearest on its own - not the War share's sixth slot above: its chance
+            // of being picked rises by that many points on top of everything above, solved exactly from
+            // (w + b) / (T + b) = w / T + p.
+            if (capitol != null) {
+                int nearIndex = candidates.indexOf(capitol);
+                float points = capitolNearestTargetBonus(color);
+                if (nearIndex >= 0 && nearIndex < candidateCount && points > 0f && totalWeight > 0f) {
+                    float w = weights.get(nearIndex);
+                    float before = w / totalWeight;
+                    float room = totalWeight - w - points * totalWeight;
+                    if (room > 0f) {
+                        float bonus = points * totalWeight * totalWeight / room;
+                        weights.set(nearIndex, w + bonus);
+                        totalWeight += bonus;
+                    }
+                    System.out.println("[TFR-CapitolTarget] " + color + " at " + ColorReputation.getStatus(color).label
+                            + ": the Capitol is among its " + candidateCount + " nearest - pick chance "
+                            + Math.round(before * 1000f) / 10f + "% -> "
+                            + Math.round(weights.get(nearIndex) / totalWeight * 1000f) / 10f + "%");
+                }
+            }
             originalRoll = world.getRandom().nextFloat() * totalWeight;
             float roll = originalRoll;
             int pick = candidates.size() - 1;
@@ -1762,6 +1823,11 @@ public class TerritoryControl {
         // pickGrandmasterMage() draws from this color's named Archmages (there is no "Archmage <Color> Wizard"
         // catalog entry for any color, which is why the tier goes through that picker).
         String dispatchTier = forceArchmage ? "Mythic" : rollDispatchMageTier(world.getRandom(), world, color);
+        // Round 355 (the same request: "the attacking mage should have a 5% and 10% chance of being a higher level
+        // (Unhappy +5% War 10%)"): a mage bound for the Capitol from a color at Unhappy / War may step up one tier.
+        // The Capitol surge's Archmage is already the top one.
+        if (!forceArchmage && target != null && TownRestoration.CAPITOL_POI_NAME.equals(target.getData().name))
+            dispatchTier = capitolAttackerTierUp(world, color, dispatchTier);
         EnemyData enemyData;
         String enemyName;
         if ("Mythic".equals(dispatchTier)) {
@@ -2516,6 +2582,20 @@ public class TerritoryControl {
      *  one run could start its forced duel in the next save loaded in the same session. */
     public static void clearPendingCapitolDefense() {
         pendingCapitolDefenseMage = null;
+        pendingCapitolDefenseWaitLogged = false;
+    }
+
+    // Round 356: a queued Capitol duel held back by a dialog is logged once, not every frame it waits.
+    private static boolean pendingCapitolDefenseWaitLogged;
+
+    /** Round 356: GameStage.act() calls this while a dialog (or a scene change) holds the Capitol duel back. */
+    public static void notePendingCapitolDefenseWaiting() {
+        if (pendingCapitolDefenseMage == null || pendingCapitolDefenseWaitLogged)
+            return;
+        pendingCapitolDefenseWaitLogged = true;
+        System.out.println("[TFR-CapitolDefense] " + pendingCapitolDefenseMage.territoryColor + "'s "
+                + pendingCapitolDefenseMage.getData().getName() + " waits at the Capitol - the forced duel starts once the"
+                + " dialog on screen closes");
     }
 
     /** Called every frame (GameStage.act(), both WorldStage and MapStage) once it's safe to
@@ -2526,6 +2606,8 @@ public class TerritoryControl {
             return;
         EnemySprite mage = pendingCapitolDefenseMage;
         pendingCapitolDefenseMage = null;
+        pendingCapitolDefenseWaitLogged = false;
+        System.out.println("[TFR-CapitolDefense] the forced duel starts: " + mage.territoryColor + "'s " + mage.getData().getName());
         WorldStage.getInstance().startForcedCapitolDuel(mage);
     }
 
@@ -2579,7 +2661,22 @@ public class TerritoryControl {
                         + capitalize(mage.territoryColor) + "'s mage!", true);
                 return;
             }
+            // Round 356: one duel waits at a time - when a second mage arrives before it is fought, the stronger keeps it
+            // (it used to be simply the later one: the user's log had an Apprentice replace a Mythic that broke both guards).
+            if (pendingCapitolDefenseMage != null && tierPower(pendingCapitolDefenseMage.getData().tier) > tierPower(mage.getData().tier)) {
+                System.out.println("[TFR-CapitolDefense] " + mage.territoryColor + "'s " + mage.getData().getName()
+                        + " also reached the Capitol - " + pendingCapitolDefenseMage.territoryColor + "'s stronger "
+                        + pendingCapitolDefenseMage.getData().getName() + " keeps the waiting duel");
+                return;
+            }
+            if (pendingCapitolDefenseMage != null)
+                System.out.println("[TFR-CapitolDefense] " + mage.territoryColor + "'s " + mage.getData().getName()
+                        + " takes the waiting duel from " + pendingCapitolDefenseMage.territoryColor + "'s "
+                        + pendingCapitolDefenseMage.getData().getName());
             pendingCapitolDefenseMage = mage;
+            pendingCapitolDefenseWaitLogged = false;
+            System.out.println("[TFR-CapitolDefense] " + mage.territoryColor + "'s " + mage.getData().getName()
+                    + " reached the Capitol - the forced duel is queued");
             GameHUD.getInstance().addNotification("[RED]" + capitalize(mage.territoryColor) + "'s mage has reached your Capitol!", true);
             return;
         }
@@ -3250,15 +3347,33 @@ public class TerritoryControl {
             // whether it's an original world-gen town or one captured from a rival color earlier
             // in this game.
             int converted = 0;
+            int ringsFreed = 0;
             for (PointOfInterest poi : new ArrayList<>(world.getAllPointOfInterest())) {
                 if (!isColorTownOrCapital(poi.getData(), color))
                     continue;
                 PointOfInterestData wasteData = matchingWasteData(poi.getData(), color);
                 if (wasteData == null)
                     continue;
+                String heldId = poi.getID();
                 poi.transformInto(wasteData, world.getRandom(), true); // keep the town's given name
+                // Round 354 (the user: "Rest of his towns become ruin towns, center city should probably revert back to
+                // starting Neutral working city"). The fallen color's stored town state goes with it, as on every
+                // change of hands (round 140). A Ring City comes back as the working neutral city it started as: its
+                // neutralSeeded flag lived in the record the color's capture wiped, and this sweep - older than the
+                // Ring Cities - never put it back, so the city came back a ruin, every shop rubble and its Job Board
+                // selling "Restore town" at a ruin's price: a player-held Ring City without the 1v2.
+                forgetTownState(world, heldId, poi.getID(), poi.getDisplayName(), "freed by " + color + "'s fall");
+                if (isRingTown(poi)) {
+                    WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).getMapFlags()
+                            .put(TownRestoration.NEUTRAL_SEEDED_FLAG, (byte) 1);
+                    ringsFreed++;
+                    System.out.println("[TFR-ColorDefeat] " + poi.getDisplayName() + " (a Ring City) is a working neutral city again");
+                }
                 converted++;
             }
+            if (ringsFreed > 0)
+                TownRestoration.updateRingLifeBonus(true); // a visited Ring City lends +1 max life again once no color holds it
+            world.refreshWorldMapMarkers(); // a rare, player-made moment - the minimap shows the ruins and the freed city now
             world.setColorTerritoryRadius(color, 0);
             // Deliberately NOT calling world.regenerateDoodadsForBiome("waste") here (adversarial
             // review 2026-08-14 caught a real bug in an earlier version that did): unlike
@@ -3282,10 +3397,15 @@ public class TerritoryControl {
             // wasteland's crater, and so on). Left alone deliberately: the cure is a translate pass
             // over the keep disc at defeat time, and whether a fallen color's ground should reskin at
             // all is the user's call, not a silent fix. See MOD_CHANGELOG round 272.
-            System.out.println("[TFR-ColorDefeat] " + color + ": terrain swept to neutral, " + converted + " town/capital POI(s) reverted");
+            System.out.println("[TFR-ColorDefeat] " + color + ": terrain swept to neutral, " + converted + " town/capital POI(s) reverted, "
+                    + ringsFreed + " of them Ring Cities (working neutral again)");
         }
 
         world.setColorDefeated(color);
+        // Round 354 (the user's choice): the last Lord's fall opens every Ring City not yet the player's - no color is
+        // left to take a neutral one from, so the win would otherwise stay out of reach (TownRestoration.openRingGatesToPlayer).
+        if (world.getDefeatedColorCount() >= COLOR_TOWN_NOUN.size())
+            TownRestoration.openRingGatesToPlayer(world);
         checkPlayerVictory(world); // round 102: the last castle may fall after the Ring is already held
         // Discoverability (2026-08-15 review finding): WorldStandingsScene reads this to tag the
         // defeated color's row instead of showing a bare, indistinguishable-from-"hasn't expanded

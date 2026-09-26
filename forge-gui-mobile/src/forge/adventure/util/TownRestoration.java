@@ -461,23 +461,7 @@ public class TownRestoration {
         // fresh start". Same destroy the AI's own capture does - so a town the player retakes
         // cannot arrive still carrying whatever it held the last time they owned it, and cannot
         // inherit the AI's guards either.
-        TerritoryControl.forgetTownState(world, preCaptureId, target.getID(), shownName, "retaken by the player");
-        PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID());
-        changes.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);
-        world.setTownTerritoryRadius(target.getID(), repaintRadius);
-        world.rebuildPlayerTownVision();
-        long perfRepaint = System.nanoTime();
-        world.repaintBiomeAroundTown(target, TEST_RECOLOR_BIOME, repaintRadius,
-                WorldStage.getInstance()::refreshBackgroundTile,
-                WorldStage.getInstance()::reloadBackgroundChunkObjects);
-        System.out.println("[TFR-Perf] player capture repaint of " + shownName + " (radius " + repaintRadius + ") took "
-                + (System.nanoTime() - perfRepaint) / 1_000_000 + " ms");
-        world.revealArea((int) (target.getCenter().x / world.getTileSize()), // round 293: the painted disc's center
-                (int) (target.getCenter().y / world.getTileSize()),
-                repaintRadius, WorldStage.getInstance()::refreshBackgroundTile);
-        if (!PlayerRoads.connectTown(world, target, "a captured town")) // round 346: the Capitol's network, once it stands
-            TerritoryControl.connectCapturedTownByRoad(world, target, "player");
-        updateTownLifeBonus(true);
+        settleAsPlayerTown(world, target, preCaptureId, shownName, "retaken by the player", repaintRadius);
         if (wasCapital) {
             world.markCapitolLost(fromColor);
             System.out.println("[TFR-MageCap] " + fromColor + " capital " + shownName + " taken by the player - this color's active-mage cap is halved from now on");
@@ -496,6 +480,65 @@ public class TownRestoration {
         System.out.println("[TFR-TownAssault] " + shownName + " captured from " + fromColor
                 + " -> player-owned restored town (radius " + repaintRadius + "), buildings start broken except the inn");
         forge.adventure.stage.GameHUD.getInstance().addNotification(shownName + " is yours! Its people welcome you - the buildings will need rebuilding."); // round 331: black tint (was white text)
+    }
+
+    /**
+     * Round 354: what makes a town the player's once it is in their hands, shared by a won assault (captureTownForPlayer)
+     * and a Ring City opening its gates when the last Lord falls (openRingGatesToPlayer) so the two cannot drift apart -
+     * a fresh start (round 140), the TOWN_RESTORED flag, territory, vision, the terrain repaint, the reveal, the road and
+     * the town life bonus. The town already has its new data.
+     */
+    private static void settleAsPlayerTown(forge.adventure.world.World world, PointOfInterest target, String preCaptureId,
+                                           String shownName, String reason, int repaintRadius) {
+        TerritoryControl.forgetTownState(world, preCaptureId, target.getID(), shownName, reason);
+        PointOfInterestChanges changes = WorldSave.getCurrentSave().getPointOfInterestChanges(target.getID());
+        changes.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);
+        world.setTownTerritoryRadius(target.getID(), repaintRadius);
+        world.rebuildPlayerTownVision();
+        long perfRepaint = System.nanoTime();
+        world.repaintBiomeAroundTown(target, TEST_RECOLOR_BIOME, repaintRadius,
+                WorldStage.getInstance()::refreshBackgroundTile,
+                WorldStage.getInstance()::reloadBackgroundChunkObjects);
+        System.out.println("[TFR-Perf] player capture repaint of " + shownName + " (radius " + repaintRadius + ") took "
+                + (System.nanoTime() - perfRepaint) / 1_000_000 + " ms");
+        world.revealArea((int) (target.getCenter().x / world.getTileSize()), // round 293: the painted disc's center
+                (int) (target.getCenter().y / world.getTileSize()),
+                repaintRadius, WorldStage.getInstance()::refreshBackgroundTile);
+        if (!PlayerRoads.connectTown(world, target, "a captured town")) // round 346: the Capitol's network, once it stands
+            TerritoryControl.connectCapturedTownByRoad(world, target, "player");
+        updateTownLifeBonus(true);
+    }
+
+    /**
+     * Round 354 (the user's choice, 2026-09-26): when the LAST Lord falls, every Ring City not yet the player's opens its
+     * gates to them. A neutral Ring City cannot be attacked, only taken from a color that took it first; with no color
+     * left, a Ring City the last Lord held (freed to neutral by TerritoryControl.defeatColor) - or one no color ever took -
+     * kept the win out of reach for good. Each joins as a won Ring City assault leaves it (buildings broken but the Inn)
+     * without the assault's reputation cost, retaliation or quest step: nobody was fought. The caller runs the victory
+     * check right after. Returns how many opened.
+     */
+    public static int openRingGatesToPlayer(forge.adventure.world.World world) {
+        java.util.List<String> opened = new java.util.ArrayList<>();
+        for (PointOfInterest poi : new java.util.ArrayList<>(world.getAllPointOfInterest())) {
+            if (!TerritoryControl.isRingTown(poi))
+                continue;
+            if (isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID())))
+                continue;
+            if (ColorReputation.colorOfTown(poi.getData()) != null)
+                continue; // a living color's - cannot happen once every Lord has fallen
+            settleAsPlayerTown(world, poi, poi.getID(), poi.getDisplayName(), "opened its gates to the player",
+                    TerritoryControl.captureFlipRadius());
+            opened.add(poi.getDisplayName());
+        }
+        if (opened.isEmpty())
+            return 0;
+        updateRingLifeBonus(true);
+        world.refreshWorldMapMarkers();
+        System.out.println("[TFR-Victory] the last Lord has fallen - " + opened.size()
+                + " Ring City(ies) open their gates to the player: " + opened);
+        forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]With no Lord left to fear, "
+                + String.join(", ", opened) + (opened.size() == 1 ? " opens its" : " open their") + " gates to you!", true);
+        return opened.size();
     }
 
     /**

@@ -217,6 +217,16 @@ public class TuningData {
     public int ringTownTargetCooldownDays = 7;
     // ...and once a Ring Town is among a color's five nearest candidates its pick weight is x(1 + bonus).
     public float ringTownTargetWeightBonus = 0.25f;
+    // Round 355 (the user, 2026-09-26: "if at Unhappy and player capitol is one of the 5 closest targeted, it should be
+    // 5% more likely to be targeted than currently and if at War 10% more likely to be targeted. Also the attacking mage
+    // should have a 5% and 10% chance of being a higher level"). While the dispatching color stands at Unhappy / War
+    // and the Capitol is among its five nearest candidates, the Capitol's chance of being picked rises by this many
+    // points (0.05 = +5 points, on top of the War share)...
+    public float capitolNearestTargetBonusUnhappy = 0.05f;
+    public float capitolNearestTargetBonusWar = 0.10f;
+    // ...and a mage that color sends at the Capitol steps up one tier with this chance (under the week's tier cap).
+    public float capitolAttackerTierUpChanceUnhappy = 0.05f;
+    public float capitolAttackerTierUpChanceWar = 0.10f;
     // AI-vs-AI assaults: the defending AI town's guard dot fights first, like a hired player guard.
     // Level 4 (Archmage with two lands) defends at Mythic power x aiGuardTwoLandPowerFactor.
     public boolean aiTownGuardDefenseEnabled = true;

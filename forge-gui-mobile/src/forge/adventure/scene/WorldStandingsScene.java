@@ -203,7 +203,7 @@ public class WorldStandingsScene extends UIScene {
                         + "differently from Easy, not just harder.",
 
                 "Town buildings and Ante, retuned: Mines and the Lumber Mill now pay out once a "
-                        + "week (the same day 7/14/21 schedule Guards and Bank interest already run "
+                        + "week (the same day 8/15/22 schedule Guards and Bank interest already run "
                         + "on) instead of daily - a Gold Mine, Lumber Mill, Stone Mine, or Shard Mine "
                         + "built mid-week still makes its first payout on the next weekly boundary, "
                         + "not 7 days after construction. If you play with Ante on, two options are "

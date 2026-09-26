@@ -144,6 +144,13 @@
     "ringTownTargetCooldownDays": 7,
     // Once a Ring Town is among a color's five nearest candidates, its pick weight is multiplied by 1 + this.
     "ringTownTargetWeightBonus": 0.25,
+    // Round 355: while a color stands at Unhappy / War with you and your Capitol is among its five nearest targets,
+    // the Capitol's chance of being picked rises by this many points (0.05 = +5 points; at War on top of the War share).
+    "capitolNearestTargetBonusUnhappy": 0.05,
+    "capitolNearestTargetBonusWar": 0.10,
+    // ...and a mage that color sends at your Capitol steps up one tier with this chance (still under the week's cap).
+    "capitolAttackerTierUpChanceUnhappy": 0.05,
+    "capitolAttackerTierUpChanceWar": 0.10,
     // AI-vs-AI assaults: the defending AI town's guard dot fights first (table in MOD_CHANGELOG round 99).
     "aiTownGuardDefenseEnabled": true,
     // An Archmage with two lands (guard level 4) defends at Mythic power x this factor.

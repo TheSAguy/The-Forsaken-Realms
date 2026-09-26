@@ -127,7 +127,7 @@
    <properties>
     <property name="dialog">[
   {
-    &quot;text&quot;: &quot;The Warden sits among Orazca's fallen stones, a map of the realm across his knees. \&quot;It stood here once,\&quot; he says. \&quot;It will stand again - and it is you who will raise it, Guardian.\&quot;&quot;,
+    &quot;text&quot;: &quot;The Warden stands among Orazca's new roofs, the old map under his arm. \&quot;A town again,\&quot; he says. \&quot;Not yet the heart of the realm - stone and coin will make it that, when you have enough of both.\&quot;&quot;,
     &quot;options&quot;: [
       {
         &quot;name&quot;: &quot;(Leave)&quot;
@@ -148,7 +148,7 @@
         &quot;not&quot;: true
       }
     ],
-    &quot;text&quot;: &quot;\&quot;You found it, then.\&quot; The Warden sets a hand on a fallen pillar. \&quot;Orazca. Your seat, before the Night of Chains - and the first thing you will put back. Stone and coin will raise it, and you have neither yet.\&quot;&quot;,
+    &quot;text&quot;: &quot;\&quot;You found it, then - and put roofs back on it before I could tell you how.\&quot; The Warden sets a hand on a new doorpost. \&quot;Orazca. Your seat, before the Night of Chains. The rest will not come back as easily.\&quot;&quot;,
     &quot;options&quot;: [
       {
         &quot;name&quot;: &quot;\&quot;Where do I start?\&quot;&quot;,

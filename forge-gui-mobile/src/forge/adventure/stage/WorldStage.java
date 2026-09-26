@@ -576,7 +576,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 syncYinYangActor(synced);
             }
         }
-        if (isPaused() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
+        // Round 356: this stage's OWN dialogs stop the world too. Upstream checked only MapStage's flag (which the HUD's
+        // dialogs also set): its world map has no popups of its own, and its clock only runs while the player walks.
+        // Ours has both - the Quest Failed, Ring warning, toll and barred-entry popups, and the Wait toggle - so with
+        // Wait on the clock ran under a "blocking" popup. The user's log: a Quest Failed popup on day 24 stayed up
+        // while they waited to day 304, towns fell under it, and the Capitol duel a Mythic mage earned on day 255 (it
+        // waits for dialogs to close) never came, overwritten on day 304 by an Apprentice's.
+        if (isPaused() || isDialogOnlyInput() || MapStage.getInstance().isDialogOnlyInput() || Forge.advFreezePlayerControls)
             return;
         setDownOffBarrier(); // round 294
         drawNavigationArrow();

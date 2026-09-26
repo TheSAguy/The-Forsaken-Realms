@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Rounds 354-356
+
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** - onActing also returns while the stage's own
+  dialog is up (upstream checks only MapStage's flag). **Merge watch.**
+- **`forge-gui-mobile/src/forge/adventure/stage/GameStage.java`** - act() logs a held-back Capitol duel.
+- Mod: TerritoryControl (defeatColor, Capitol targeting, pending duel), TownRestoration (settleAsPlayerTown,
+  openRingGatesToPlayer), TuningData, WorldStandingsScene.
+
 ### Round 353: the 09.26 engine merge
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - the Armory Level-2 block kept; the reward status

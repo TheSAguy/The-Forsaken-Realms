@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## v1.15 "Cobblestone & Crown" released (2026-09-26, rounds 332-356)
+
+Stamps modVersion 1.15 / modVersionDate 09.26 / tfr.version 1.15 / manifestVersionCode 11500; notes RELEASE_NOTES_v1.15.md.
+
+## Round 356: world-map popups stop the clock; the Warden in a rebuilt Orazca (2026-09-26)
+
+The user's day 8-304 soak log: a Quest Failed popup (a WorldStage dialog) on day 24 stayed up while Wait + Speed-Up ran;
+WorldStage.onActing froze only on MapStage's flag (upstream's check - upstream has no world-map popups and no Wait), so
+the clock ran under it and GameStage.act held the Capitol duel back behind the dialog: a white Mythic broke both Capitol
+guards on day 255 and its duel never came, then blue's Apprentice overwrote the single pending slot on day 304. Now
+onActing also freezes on the stage's own dialog; a second mage reaching the Capitol keeps the stronger one queued;
+[TFR-CapitolDefense] queue/wait/start lines. The Warden's ruin greeting ("you have neither yet") re-worded in
+orazca_restored.tmx (entries 0 + 1) and player_capital.tmx (entry 1) - QA found it in a Capitol when the intro was skipped.
+
+## Round 355: hostile colors go for the Capitol (2026-09-26)
+
+The user: at Unhappy / War, when the Capitol is among a color's 5 nearest targets, +5 / +10 points on its pick chance
+(on top of the War share; solved exactly), and a mage sent at the Capitol steps up one tier with 5% / 10% (under the
+week's cap). TuningData + settings.json capitolNearestTargetBonusUnhappy/War, capitolAttackerTierUpChanceUnhappy/War.
+Agent-seen: `red at Unhappy ... 21.0% -> 26.0%`, `black at War ... 28.5% -> 38.5%`.
+
+## Round 354: a fallen Lord's Ring Cities work again; the last Lord's fall opens the Ring (2026-09-26)
+
+defeatColor (older than the Ring Cities) left a freed Ring City without its neutralSeeded flag - a ruin with rubble shops
+and a "Restore town" at a ruin's price (a player Ring City without the 1v2). Now: every town the color held has its
+state forgotten (round 140), a Ring City is flagged working neutral again, the ring life bonus and minimap refresh at
+once. The user chose: when the LAST Lord falls, TownRestoration.openRingGatesToPlayer makes every Ring City not yet the
+player's theirs (settleAsPlayerTown, shared with captureTownForPlayer) and the victory fires - a neutral Ring City cannot
+be attacked, so the win was unreachable otherwise. Mod Details payday days 8/15/22. Agent-seen on a copy of the user's
+day-304 save: Llanowar's shops open and its board offers quests; all five Lords down -> "Urborg, Shiv, Llanowar,
+Benalia, Tolaria open their gates" -> "The Ring is whole!".
+
 ## Round 353: engine = the 09.26 daily (2026-09-26)
 
 The user: *"Update to the latest game Forge Engine: E:\\GAMES\\Forge_2"* - they had installed Forge's 2026-09-26 daily
