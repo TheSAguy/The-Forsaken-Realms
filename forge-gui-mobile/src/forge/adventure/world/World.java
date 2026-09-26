@@ -3088,7 +3088,7 @@ public class World implements Disposable, SaveFileContent {
                     allSortedTowns.add(Pair.of(from, to));
                 }
                 System.out.println("[TFR-Roads] the star's rim: " + rim.size()
-                        + " neighbour edge(s) (a wheel - was every pair, which drew a pentagram)");
+                        + " neighbor edge(s) (a wheel - was every pair, which drew a pentagram)");
             } else {
                 for (int a = 0; a < starTowns.size(); a++)
                     for (int b = a + 1; b < starTowns.size(); b++) {
@@ -3971,7 +3971,7 @@ public class World implements Disposable, SaveFileContent {
     // biomeMap/terrainMap directly, so callers must update those first, then call this.
     /** Round 347: the player road's minimap pixel - a dark brown, so the Capitol's network reads as a road
      *  against every biome's ground. Explicit rather than sampled from the art: player_road.png's top-left
-     *  swatch is transparent, which is what drew the wrong colour before (see drawMinimapTile). */
+     *  swatch is transparent, which is what drew the wrong color before (see drawMinimapTile). */
     private static final com.badlogic.gdx.graphics.Color PLAYER_ROAD_MINIMAP_COLOR =
             new com.badlogic.gdx.graphics.Color(0x5c3a1eff);
 
@@ -4030,12 +4030,12 @@ public class World implements Disposable, SaveFileContent {
             // other tile here takes its minimap swatch. That square is FULLY TRANSPARENT in
             // player_road.png - all sixteen pixels of the 4x4 are (0,0,0,0) - so the drawPixmap laid down
             // nothing at all and this branch returned before any ground was drawn. The tile therefore kept
-            // whatever the pixmap already held: on a re-bake, the colour of whatever was there before. That
-            // is the "red" - a neighbouring biome's pixel showing through a road that never painted itself.
+            // whatever the pixmap already held: on a re-bake, the color of whatever was there before. That
+            // is the "red" - a neighboring biome's pixel showing through a road that never painted itself.
             // (World.java's own note at the top of this class records the same missing-swatch trap for
             // round 300's 32 px player ground.)
             //
-            // An explicit fill fixes the colour and the hole at once, and cannot drift if the art is redrawn.
+            // An explicit fill fixes the color and the hole at once, and cannot drift if the art is redrawn.
             target.setColor(PLAYER_ROAD_MINIMAP_COLOR);
             target.fillRectangle(x * mm, rawY * mm, mm, mm);
             return;
