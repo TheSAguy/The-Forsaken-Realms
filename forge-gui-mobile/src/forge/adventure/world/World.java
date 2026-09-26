@@ -3049,16 +3049,56 @@ public class World implements Disposable, SaveFileContent {
                     }
                     allSortedTowns.add(Pair.of(hub, st));
                 }
-            // ... and the star's rim: every Center Town joined to every other (user spec 2026-09-03),
-            // ten edges for five towns - explicit pairs bypass maxRoadDistance like the spokes do.
-            for (int a = 0; a < starTowns.size(); a++)
-                for (int b = a + 1; b < starTowns.size(); b++) {
-                    if (roadLineCrossesBarrier(starTowns.get(a), starTowns.get(b))) { // round 294
+            // ... and the rim. Round 347 (user: "Connect them in a ring. Green to Red and White, etc. Then to
+            // the center city. So it will look like a wheel with spokes vs. Star"): NEIGHBOURS only.
+            //
+            // The original rule joined every Center Town to every other - ten edges for five towns. Five of
+            // those ten are the pentagon; the other five are the long diagonals, and it is the diagonals
+            // cutting across the middle that drew a pentagram. Dropping them leaves a rim of five, which with
+            // the five spokes laid just above reads as a wheel: hub, spokes, rim.
+            //
+            // "Adjacent" has to mean adjacent ON THE MAP, so the towns are ordered by bearing around the hub
+            // before they are joined - list order is placement order and says nothing about where they sit.
+            // Falls back to the towns' own centroid when a plane has no Orazca and no Spawn to be the hub.
+            if (starTowns.size() > 2) {
+                float cx, cy;
+                if (hub != null) {
+                    cx = hub.getPosition().x;
+                    cy = hub.getPosition().y;
+                } else {
+                    cx = 0f;
+                    cy = 0f;
+                    for (PointOfInterest st : starTowns) {
+                        cx += st.getPosition().x;
+                        cy += st.getPosition().y;
+                    }
+                    cx /= starTowns.size();
+                    cy /= starTowns.size();
+                }
+                final float hx = cx, hy = cy;
+                List<PointOfInterest> rim = new ArrayList<>(starTowns);
+                rim.sort(java.util.Comparator.comparingDouble(
+                        t -> Math.atan2(t.getPosition().y - hy, t.getPosition().x - hx)));
+                for (int a = 0; a < rim.size(); a++) {
+                    PointOfInterest from = rim.get(a), to = rim.get((a + 1) % rim.size());
+                    if (roadLineCrossesBarrier(from, to)) { // round 294
                         barrierRoadLinksDropped++;
                         continue;
                     }
-                    allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
+                    allSortedTowns.add(Pair.of(from, to));
                 }
+                System.out.println("[TFR-Roads] the star's rim: " + rim.size()
+                        + " neighbour edge(s) (a wheel - was every pair, which drew a pentagram)");
+            } else {
+                for (int a = 0; a < starTowns.size(); a++)
+                    for (int b = a + 1; b < starTowns.size(); b++) {
+                        if (roadLineCrossesBarrier(starTowns.get(a), starTowns.get(b))) { // round 294
+                            barrierRoadLinksDropped++;
+                            continue;
+                        }
+                        allSortedTowns.add(Pair.of(starTowns.get(a), starTowns.get(b)));
+                    }
+            }
             System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
                     + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + "), "
                     + rescuedTowns + " unlinked town(s) rescued, max " + maxLinks + " links per town");
@@ -3929,6 +3969,12 @@ public class World implements Disposable, SaveFileContent {
     // post-sweep rebake already fixed this for world-gen time; this fixes it for every live
     // repaint since, by drawing the tile's REAL current content instead of a flat stamp. Reads
     // biomeMap/terrainMap directly, so callers must update those first, then call this.
+    /** Round 347: the player road's minimap pixel - a dark brown, so the Capitol's network reads as a road
+     *  against every biome's ground. Explicit rather than sampled from the art: player_road.png's top-left
+     *  swatch is transparent, which is what drew the wrong colour before (see drawMinimapTile). */
+    private static final com.badlogic.gdx.graphics.Color PLAYER_ROAD_MINIMAP_COLOR =
+            new com.badlogic.gdx.graphics.Color(0x5c3a1eff);
+
     private void redrawMinimapTile(int x, int rawY) {
         if (biomeImage == null)
             return;
@@ -3978,7 +4024,20 @@ public class World implements Disposable, SaveFileContent {
             return;
         }
         if ((biomeMap[x][rawY] & playerRoadBit()) != 0 && data.playerRoadTileset != null) { // round 346
-            target.drawPixmap(createSmallPixmap(data.playerRoadTileset.tilesetAtlas, data.playerRoadTileset.tilesetName, 0), x * mm, rawY * mm);
+            // Round 347 (user: "For the new roads on the mini-map, can we make it dark brown, not red").
+            //
+            // This used to read the top-left miniMapTileSize square of the player-road atlas, the way every
+            // other tile here takes its minimap swatch. That square is FULLY TRANSPARENT in
+            // player_road.png - all sixteen pixels of the 4x4 are (0,0,0,0) - so the drawPixmap laid down
+            // nothing at all and this branch returned before any ground was drawn. The tile therefore kept
+            // whatever the pixmap already held: on a re-bake, the colour of whatever was there before. That
+            // is the "red" - a neighbouring biome's pixel showing through a road that never painted itself.
+            // (World.java's own note at the top of this class records the same missing-swatch trap for
+            // round 300's 32 px player ground.)
+            //
+            // An explicit fill fixes the colour and the hole at once, and cannot drift if the art is redrawn.
+            target.setColor(PLAYER_ROAD_MINIMAP_COLOR);
+            target.fillRectangle(x * mm, rawY * mm, mm, mm);
             return;
         }
         if (highestBiome(biomeMap[x][rawY]) >= data.GetBiomes().size()) {

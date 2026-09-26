@@ -22,7 +22,7 @@
   // Set any share to 0 to switch off that state; set them all to 0 to disable the feature.
   "unhappyShare": 0.10,
   "warShare": 0.15,
-  "neutralColorlessShare": 0.02,
+  "neutralColorlessShare": 0.01,
 
   // Life ceiling for a candidate. 60 admits every genuinely unreachable enemy (the largest is 50)
   // while keeping the hand-placed Eldrazi titans - Emrakul, Ulamog, Kozilek, all 70 life - out of

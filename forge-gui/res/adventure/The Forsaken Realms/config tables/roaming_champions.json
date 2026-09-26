@@ -14,7 +14,7 @@
   // share: the fraction of a colour land's ordinary spawn rolls the champions take between them. Within that, each
   // champion's part halves every time the player beats it out here, so the ones not yet met come round first.
   // Set it to 0 to switch the feature off.
-  "share": 0.05,
+  "share": 0.03,
   "names": [
     "Arcades Sabboth", "Baron Levilain", "Baron Von Gant", "Bazaar Keeper", "Chromium (Boss)",
     "Elf Queen Guay", "Gaea, the Worldsoul", "Goblin King Phil", "Karona (Boss)", "King Kane Ferguson",

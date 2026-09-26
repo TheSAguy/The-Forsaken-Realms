@@ -2118,6 +2118,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private boolean spawn(EnemyData enemyData, Vector2 preferred) {
         if (enemyData == null)
             return false;
+        // Round 347 (user: "it appears to be the same legend... Should never be 2 of the same on the map at
+        // the same time"). Two Traxos were out at once on their day six - the weighted pick has no memory of
+        // what is already roaming, and a legend lives legendLifetimeFactor times as long as an ordinary
+        // roamer, so the window for a second roll to land on the same one is three times as wide. One of a
+        // given legend at a time; a DIFFERENT legend is still free to appear.
+        if (forge.adventure.util.RoamingChampions.isLegend(enemyData) && isLegendAlive(enemyData.name)) {
+            System.out.println("[TFR-Legend] " + enemyData.name + " is already roaming - second sighting skipped");
+            return false;
+        }
         EnemySprite sprite = new EnemySprite(enemyData);
         boolean spawned = spawn(sprite, preferred);
         if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData))
@@ -2148,6 +2157,23 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // (VeggieShark's v1.14 report).
         GameHUD.getInstance().addNotification("A legend has been sighted to the " + direction + ": " + name
                 + "! A gold dot marks it on the map.");
+    }
+
+    /** Round 347: is this exact catalog entry already roaming as a legend? Matched on EnemyData.name, the
+     *  catalog key RoamingChampions/FrontierSpawns select on - not getName(), which is the display name and
+     *  would read "Karona, False God" for the entry called "Karona (Boss)". Territory mages are skipped: a
+     *  dispatched attack mage is not a sighting and never blocks one. */
+    private boolean isLegendAlive(String catalogName) {
+        if (catalogName == null)
+            return false;
+        for (Pair<Float, EnemySprite> pair : enemies) {
+            EnemySprite mob = pair.getValue();
+            if (mob == null || mob.getData() == null || mob.territoryTarget != null)
+                continue;
+            if (catalogName.equals(mob.getData().name) && forge.adventure.util.RoamingChampions.isLegend(mob.getData()))
+                return true;
+        }
+        return false;
     }
 
     /** Round 239: the frontier legends alive on the overworld right now, for the map view's gold dots - the
