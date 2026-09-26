@@ -1362,6 +1362,8 @@ public class EconomyBuildings {
     // Common deliberately equals buildCostFor(NONE)'s existing {100, 5, 0, 0} so an ordinary
     // rebuild costs exactly what it did before this feature.
     private static int[] shopTierCost(String tier) {
+        if (MapStage.TIER_MYTHIC.equals(tier))
+            return new int[]{300, 0, 0, 100}; // round 350: a step above Rare (the tier is the user's pick, the numbers the proposal)
         if (MapStage.TIER_RARE.equals(tier))
             return new int[]{200, 0, 0, 50};
         if (MapStage.TIER_UNCOMMON.equals(tier))
@@ -1382,7 +1384,7 @@ public class EconomyBuildings {
     private static String tierOfShopName(Map<String, Array<String>> pools, String shopName) {
         if (pools == null || shopName == null)
             return null;
-        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE, MapStage.TIER_MYTHIC}) {
             Array<String> names = pools.get(tier);
             if (names != null && names.contains(shopName, false))
                 return tier;
@@ -1527,6 +1529,18 @@ public class EconomyBuildings {
                 "WhiteBoosterPackShop", "BlueBoosterPackShop", "BlackBoosterPackShop",
                 "RedBoosterPackShop", "GreenBoosterPackShop"})
             tiers.put(name, MapStage.TIER_COMMON);
+        // Round 350 (the Domain of Dominaria report): every type a rival town sells a blueprint for is buildable now,
+        // at the tier the player templates list it - the capitals' Instant6 shops Common, and the 29 types the
+        // templates only ever listed as mythic (five-color, three-color, Phyrexian, Planeswalker, Legend) in the
+        // Capitol's new Mythic tier.
+        for (String name : new String[]{"Instant6White", "Instant6Blue", "Instant6Black", "Instant6Red", "Instant6Green"})
+            tiers.put(name, MapStage.TIER_COMMON);
+        for (String name : new String[]{"WUBRG", "Planeswalker", "Planeswalker4White", "Planeswalker4Blue",
+                "Planeswalker4Black", "Planeswalker4Red", "Planeswalker4Green", "Legend", "Legend4White", "Legend4Blue",
+                "Legend4Black", "Legend4Red", "Legend4Green", "PhyrexianColorless", "PhyrexianWhite", "PhyrexianBlue",
+                "PhyrexianBlack", "PhyrexianRed", "PhyrexianGreen", "GWB", "RGB", "RGU", "RUB", "RWB", "RWG", "RWU",
+                "UGB", "UWB", "UWG"})
+            tiers.put(name, MapStage.TIER_MYTHIC);
         return tiers;
     }
 
@@ -1555,7 +1569,7 @@ public class EconomyBuildings {
             return;
         // Tier OUTER, slots INNER - that is what makes lowest-tier-win across the whole file.
         Map<String, String> live = new java.util.HashMap<>();
-        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE, MapStage.TIER_MYTHIC}) {
             for (Map<String, Array<String>> pools : allPools) {
                 Array<String> names = pools == null ? null : pools.get(tier);
                 if (names == null)
@@ -1582,7 +1596,7 @@ public class EconomyBuildings {
     public static void registerShopTiers(Map<String, Array<String>> pools) {
         if (pools == null)
             return;
-        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE, MapStage.TIER_MYTHIC}) {
             Array<String> names = pools.get(tier);
             if (names == null)
                 continue;
@@ -1663,8 +1677,8 @@ public class EconomyBuildings {
         if (status.ordinal() > ColorReputation.Status.NEUTRAL.ordinal())
             return who + " will not sell you blueprints while you are " + status.label
                     + ".\nYou need to be at least Neutral with them.";
-        if (MapStage.TIER_RARE.equals(tier) && status != ColorReputation.Status.PARTNER)
-            return "A Rare blueprint is only sold to a Partner.\nYou are " + status.label + " with " + who + ".";
+        if ((MapStage.TIER_RARE.equals(tier) || MapStage.TIER_MYTHIC.equals(tier)) && status != ColorReputation.Status.PARTNER)
+            return "A " + tier + " blueprint is only sold to a Partner.\nYou are " + status.label + " with " + who + ".";
         if (MapStage.TIER_UNCOMMON.equals(tier) && status.ordinal() > ColorReputation.Status.HAPPY.ordinal())
             return "An Uncommon blueprint needs " + who + " to be Happy with you.\nYou are "
                     + status.label + ".";
@@ -1688,6 +1702,8 @@ public class EconomyBuildings {
         ConfigData config = Config.instance().getConfigData();
         if (config == null)
             return 20;
+        if (MapStage.TIER_MYTHIC.equals(tier))
+            return config.blueprintShardCostMythic; // round 350
         if (MapStage.TIER_RARE.equals(tier))
             return config.blueprintShardCostRare;
         if (MapStage.TIER_UNCOMMON.equals(tier))
@@ -1865,10 +1881,12 @@ public class EconomyBuildings {
     private static final java.util.Set<String> COLOR_NOUNS = new java.util.HashSet<>(Arrays.asList(
             "white", "blue", "black", "red", "green", "colorless", "colourless", "multicolor",
             "gold", "azorius", "boros", "dimir", "golgari", "gruul", "izzet", "orzhov", "rakdos",
-            "selesnya", "simic"));
+            "selesnya", "simic",
+            // round 350: the five-color and three-color shops, buildable now - "Tribal" by default otherwise
+            "wubrg", "gwb", "rgb", "rgu", "rub", "rwb", "rwg", "rwu", "ugb", "uwb", "uwg"));
     private static final java.util.Set<String> CARD_TYPE_NOUNS = new java.util.HashSet<>(Arrays.asList(
             "artifact", "creature", "enchantment", "instant", "sorcery", "land", "battle", "saga",
-            "vehicle", "equip", "equipment", "wand", "card", "planeswalker", "aura", "token"));
+            "vehicle", "equip", "equipment", "wand", "card", "planeswalker", "aura", "token", "legend"));
     private static final java.util.Set<String> SPECIAL_NOUNS = new java.util.HashSet<>(Arrays.asList(
             "booster", "boosterpack", "flipshop", "flip", "attractionshop", "attraction",
             "contraptionshop", "contraption", "rotating"));
@@ -1937,14 +1955,14 @@ public class EconomyBuildings {
         List<DialogData> tierOptions = new ArrayList<>();
         List<DialogData> categoryBacks = new ArrayList<>();
         List<DialogData> tierBacks = new ArrayList<>();
-        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE}) {
+        for (String tier : new String[]{MapStage.TIER_COMMON, MapStage.TIER_UNCOMMON, MapStage.TIER_RARE, MapStage.TIER_MYTHIC}) {
             Array<String> names = pools.get(tier);
             if (names == null || names.size == 0)
                 continue;
             // Rare is Capitol-only (user spec 2026-08-30). Hidden rather than shown-disabled, the
             // same treatment the Bank's Capitol restriction already gets in this menu.
-            if (MapStage.TIER_RARE.equals(tier) && !isCapitol)
-                continue;
+            if ((MapStage.TIER_RARE.equals(tier) || MapStage.TIER_MYTHIC.equals(tier)) && !isCapitol)
+                continue; // round 350: Mythic is Capitol-only as well
 
             int[] cost = shopTierCost(tier);
             int goldDue = Math.max(0, cost[0] - refund);

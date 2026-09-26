@@ -159,6 +159,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     // keeps traveling) - this just blocks re-engaging the same mage again the same day, checked in
     // WorldStage.onActing()'s collision loop. -1 = never engaged. Irrelevant for ordinary enemies.
     public int lastDuelDay = -1;
+    // Round 350 (the user: "give legends a day-based lifetime"): the world day a sighted legend moves on - set at the
+    // sighting (WorldStage.spawn), saved with the roaming list. -1 = the travel-time clock (getLifetime()).
+    public int legendExpiryDay = -1;
 
     private final Vector2 spriteToPlayerVec = new Vector2();
     private final Vector2 candidateToPlayerVec = new Vector2();

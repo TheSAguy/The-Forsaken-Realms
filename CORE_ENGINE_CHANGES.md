@@ -38,6 +38,20 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 350 — legends on a day clock, the quest log's legend rows, the Mythic shop tier
+
+- **`forge-gui-mobile/src/forge/adventure/character/EnemySprite.java`** — `legendExpiryDay`.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `spawn()` sets a legend's expiry day; the despawn
+  check uses one clock per sprite; `announceLegendSighting()` gives the days; `legendExpiryDayFromNow()`,
+  `legendDaysLeft()`, `compassDirection()`, `directionFromPlayer()`; save/load `legendExpiryDays`.
+- **`forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java`** — `buildList()` appends a row per live legend.
+- **`forge-gui-mobile/src/forge/adventure/data/TuningData.java`** — `legendLifetimeDays`;
+  **`data/ConfigData.java`** — `blueprintShardCostMythic`.
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `TIER_MYTHIC`; `mythicShopList` read into the tier
+  pools; `dropLowerTierDuplicates()`.
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** (mod) — the Mythic tier in costs, refunds, the
+  tier loops, the Capitol-only rule, the standing gate, the blueprint price, the flat tier table and the categories.
+
 ### Round 349 — layer noCollision, map noShopTileHiding, the Yin-Yang's split icon, a livelier Bonfire
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `loadMap()`: map property `noShopTileHiding` (the

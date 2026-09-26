@@ -145,6 +145,7 @@ public class MapStage extends GameStage {
     public static final String TIER_COMMON = "Common";
     public static final String TIER_UNCOMMON = "Uncommon";
     public static final String TIER_RARE = "Rare";
+    public static final String TIER_MYTHIC = "Mythic"; // round 350: Capitol-only, above Rare
 
     /** tier -> shop names for this slot, or null if this object has no chooser-eligible pools. */
     public Map<String, Array<String>> getShopTierPools(int objectId) {
@@ -160,6 +161,22 @@ public class MapStage extends GameStage {
     /** Reads one tier's comma-list off a shop object's TMX properties, de-duplicated (the raw
      *  lists repeat names - player_town.tmx's commonShopList has "Colorless" twice, and a chooser
      *  must not show the same entry twice) and order-preserving. */
+    /** Round 350: drops from {@code tier} every name a lower tier of the same slot already lists (the pools are a
+     *  LinkedHashMap filled Common first), and the tier itself when nothing is left. */
+    private static void dropLowerTierDuplicates(Map<String, Array<String>> pools, String tier) {
+        Array<String> names = pools.get(tier);
+        if (names == null)
+            return;
+        for (Map.Entry<String, Array<String>> entry : pools.entrySet()) {
+            if (entry.getKey().equals(tier))
+                break;
+            for (String lower : new Array.ArrayIterator<>(entry.getValue()))
+                names.removeValue(lower, false);
+        }
+        if (names.size == 0)
+            pools.remove(tier);
+    }
+
     private static void addTierPool(Map<String, Array<String>> into, String tier,
                                     MapProperties prop, String propertyName) {
         if (!prop.containsKey(propertyName))
@@ -1821,14 +1838,21 @@ public class MapStage extends GameStage {
                         // Card Shop Type chooser (2026-08-30) - capture ALL tier lists, not just
                         // the one the rarity roll above happened to land on, so the chooser can
                         // offer (and price) across tiers. Read straight off the same TMX
-                        // properties that roll consulted; deliberately does NOT include
-                        // mythicShopList (no price tier was specified for it, and it is not part
-                        // of the requested Common/Uncommon/Rare ladder).
+                        // properties that roll consulted. Round 350 added mythicShopList: rival
+                        // towns sold blueprints for their mythic shops (Domain of Dominaria,
+                        // Planeswalker - a player's bug report) that no player town could ever
+                        // build, and the user chose a Capitol-only Mythic tier. It had been left
+                        // out on 2026-08-30 for want of a price.
                         if (!isRotatingShop) {
                             Map<String, Array<String>> tierPools = new java.util.LinkedHashMap<>();
                             addTierPool(tierPools, TIER_COMMON, prop, "commonShopList");
                             addTierPool(tierPools, TIER_UNCOMMON, prop, "uncommonShopList");
                             addTierPool(tierPools, TIER_RARE, prop, "rareShopList");
+                            addTierPool(tierPools, TIER_MYTHIC, prop, "mythicShopList");
+                            // Round 350: a mythic name the slot also lists lower down stays at the lower tier (lowest
+                            // wins, as tierOfShopName() prices it) - the Capitol's booster slot lists the same five
+                            // boosters in all four tiers, and a Mythic copy of each would only be a dearer duplicate.
+                            dropLowerTierDuplicates(tierPools, TIER_MYTHIC);
                             if (!tierPools.isEmpty()) {
                                 shopTierPools.put(id, tierPools);
                                 // Feed the process-wide name -> tier map too (2026-08-31): the AI

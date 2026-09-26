@@ -153,6 +153,9 @@ public class TuningData {
     // legend stays on the overworld. Tripled, the top of the range asked for: the sighting is announced with a
     // direction, and it has to still be there when the player arrives. 1 = no change.
     public float legendLifetimeFactor = 3f;
+    // Round 350 (the user: "give legends a day-based lifetime"): a sighted legend stays this many whole days, counted
+    // down in the quest log. It replaces legendLifetimeFactor for every legend the game sights now.
+    public int legendLifetimeDays = 3;
 
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an

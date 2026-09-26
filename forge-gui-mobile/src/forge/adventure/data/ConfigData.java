@@ -123,6 +123,7 @@ public class ConfigData {
     public int blueprintShardCostCommon = 20;
     public int blueprintShardCostUncommon = 40;
     public int blueprintShardCostRare = 100;
+    public int blueprintShardCostMythic = 200; // round 350: the Capitol's Mythic tier
     // Standalone-game identity (MOD_SCOPE.md #89): the plane's own version string, appended to
     // the engine version on the start menu when set; and a one-time welcome popup shown on the
     // first map entry of a save (a new game starts inside the spawn dungeon, so new players see

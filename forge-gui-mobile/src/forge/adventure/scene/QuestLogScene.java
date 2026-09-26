@@ -12,7 +12,9 @@ import forge.Adventure;
 import forge.Forge;
 import forge.adventure.data.AdventureQuestData;
 import forge.adventure.data.AdventureQuestStage;
+import forge.adventure.character.EnemySprite;
 import forge.adventure.stage.MapStage;
+import forge.adventure.stage.WorldStage;
 import forge.adventure.util.AdventureQuestController;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
@@ -121,6 +123,22 @@ public class QuestLogScene extends UIScene {
             scrollContainer.add(details).align(Align.center).padRight(10);
             scrollContainer.row().padTop(5);
             addToSelectable(details);
+        }
+        // Round 350 (the user: "give legends a day-based lifetime"): every legend roaming right now, one row each - the
+        // way to it from here and the days it has left. Derived from WorldStage's live list each time the log is built,
+        // never a quest of its own: nothing to save, nothing to clean up when it is beaten or moves on. The map's gold
+        // dots mark the same legends.
+        for (EnemySprite legend : WorldStage.getInstance().getLegendSightings()) {
+            int daysLeft = WorldStage.legendDaysLeft(legend);
+            String when = daysLeft < 0 ? "" : daysLeft == 0 ? " [%75](moving on)"
+                    : " [%75](" + daysLeft + " day" + (daysLeft == 1 ? "" : "s") + " left)";
+            TypingLabel legendLabel = Controls.newTypingLabel("[BLACK]Legend: " + legend.getData().getTieredDisplayName()
+                    + " - " + WorldStage.getInstance().directionFromPlayer(legend) + when);
+            legendLabel.skipToTheEnd();
+            legendLabel.setWrap(true);
+            scrollContainer.add(legendLabel).align(Align.left).expandX();
+            scrollContainer.add(); // no Details - a sighting has no quest behind it
+            scrollContainer.row().padTop(5);
         }
         performTouch(scrollPaneOfActor(scrollContainer)); //can use mouse wheel if available to scroll
     }

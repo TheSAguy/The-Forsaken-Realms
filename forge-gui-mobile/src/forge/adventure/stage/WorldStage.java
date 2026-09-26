@@ -659,7 +659,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 // walk, so the two removals in the mage-arrival branch below read
                 // `enemies.remove(i); i--;` instead of it.remove(). The separate iterator further
                 // down this file (removeEnemy) is a different method and still uses its own.
-                if (pair.getValue().territoryTarget == null && globalTimer >= pair.getKey() + pair.getValue().getLifetime()) {
+                // Round 350: a sighted legend lives whole DAYS (EnemySprite.legendExpiryDay); every other roamer keeps the
+                // travel-time clock. One clock per sprite, never both - the shorter would silently win.
+                EnemySprite roamer = pair.getValue();
+                boolean expired = roamer.legendExpiryDay >= 0
+                        ? Current.world().getCurrentDay() >= roamer.legendExpiryDay
+                        : globalTimer >= pair.getKey() + roamer.getLifetime();
+                if (roamer.territoryTarget == null && expired) {
+                    if (roamer.legendExpiryDay >= 0)
+                        System.out.println("[TFR-Legend] " + roamer.getData().getTieredDisplayName()
+                                + " moves on - its days are over (day " + Current.world().getCurrentDay() + ")");
                     AdventureQuestController.instance().updateDespawn(pair.getValue());
                     AdventureQuestController.instance().showQuestDialogs(MapStage.getInstance());
                     foregroundSprites.removeActor(pair.getValue());
@@ -2149,8 +2158,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         EnemySprite sprite = new EnemySprite(enemyData);
         boolean spawned = spawn(sprite, preferred);
-        if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData))
+        if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData)) {
+            sprite.legendExpiryDay = legendExpiryDayFromNow(); // round 350: whole days, not travel-seconds
             announceLegendSighting(sprite); // round 239; round 311: the roaming champions too
+        }
         return spawned;
 
     }
@@ -2166,17 +2177,46 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private void announceLegendSighting(EnemySprite legend) {
         float dx = legend.getX() - player.getX();
         float dy = legend.getY() - player.getY();
-        String[] compass = {"east", "north-east", "north", "north-west", "west", "south-west", "south", "south-east"};
-        float degrees = (com.badlogic.gdx.math.MathUtils.atan2(dy, dx) * com.badlogic.gdx.math.MathUtils.radiansToDegrees + 360f) % 360f;
-        String direction = compass[Math.round(degrees / 45f) % 8];
+        String direction = compassDirection(dx, dy);
         String name = legend.getData().getTieredDisplayName();
+        int days = legendDaysLeft(legend);
         System.out.println("[TFR-Legend] sighting: " + name + " at (" + (int) legend.getX() + ", " + (int) legend.getY()
                 + "), " + direction + " of the player, " + (int) Math.sqrt(dx * dx + dy * dy) + " units away, stays "
-                + (int) legend.getLifetime() + "s of travel time");
+                + days + " day(s) - until day " + legend.legendExpiryDay);
         // Round 331: the plain black tint - this took the white tint with no color tag and drew white on the paper
-        // (VeggieShark's v1.14 report).
+        // (VeggieShark's v1.14 report). Round 350: the days it stays, counted down in the quest log.
         GameHUD.getInstance().addNotification("A legend has been sighted to the " + direction + ": " + name
-                + "! A gold dot marks it on the map.");
+                + "! It moves on in " + days + " day" + (days == 1 ? "" : "s") + " - a gold dot marks it on the map.");
+    }
+
+    /** Round 350 (the user: "give legends a day-based lifetime"): the day a legend sighted now moves on -
+     *  TuningData.legendLifetimeDays whole days from today, at least one. */
+    private static int legendExpiryDayFromNow() {
+        TuningData tuning = Config.instance().getTuningData();
+        int days = tuning == null ? 3 : Math.max(1, tuning.legendLifetimeDays);
+        return Current.world().getCurrentDay() + days;
+    }
+
+    /** Round 350: whole days until this legend moves on - 0 on its last (it leaves with the next step), -1 for a
+     *  sprite on the travel-time clock. The quest log's legend rows read it. */
+    public static int legendDaysLeft(EnemySprite legend) {
+        if (legend == null || legend.legendExpiryDay < 0 || Current.world() == null)
+            return -1;
+        return Math.max(0, legend.legendExpiryDay - Current.world().getCurrentDay());
+    }
+
+    /** Round 239's compass, shared since round 350 by the sighting message and the quest log. */
+    private static String compassDirection(float dx, float dy) {
+        String[] compass = {"east", "north-east", "north", "north-west", "west", "south-west", "south", "south-east"};
+        float degrees = (com.badlogic.gdx.math.MathUtils.atan2(dy, dx) * com.badlogic.gdx.math.MathUtils.radiansToDegrees + 360f) % 360f;
+        return compass[Math.round(degrees / 45f) % 8];
+    }
+
+    /** Round 350: which way this legend lies from the player right now - live, where the sighting's was a snapshot. */
+    public String directionFromPlayer(EnemySprite legend) {
+        if (legend == null || player == null)
+            return "";
+        return compassDirection(legend.getX() - player.getX(), legend.getY() - player.getY());
     }
 
     /** Round 347: is this exact catalog entry already roaming as a legend? Matched on EnemyData.name, the
@@ -2352,6 +2392,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // Absent on a save predating the mage-persists-on-loss change - defaults to "never
             // engaged" (-1), same as a freshly-dispatched mage.
             List<Integer> lastDuelDays = data.containsKey("lastDuelDays") ? (List<Integer>) data.readObject("lastDuelDays") : null;
+            // Round 350: a legend's expiry DAY - absent on older saves, where a legend in flight starts a fresh day lifetime.
+            List<Integer> legendExpiryDays = data.containsKey("legendExpiryDays") ? (List<Integer>) data.readObject("legendExpiryDays") : null;
             for (int i = 0; i < timeouts.size(); i++) {
                 // Null-guard (2026-08-13, Challenger-rename companion): an unresolvable saved name
                 // previously hit `new EnemySprite(null)` -> NPE swallowed by this method's empty
@@ -2384,6 +2426,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     AdventureQuestController.instance().rematchQuestSprite(sprite);
                 if (lastDuelDays != null && i < lastDuelDays.size() && lastDuelDays.get(i) != null)
                     sprite.lastDuelDay = lastDuelDays.get(i);
+                if (legendExpiryDays != null && i < legendExpiryDays.size() && legendExpiryDays.get(i) != null)
+                    sprite.legendExpiryDay = legendExpiryDays.get(i);
+                else if (forge.adventure.util.RoamingChampions.isLegend(resolved))
+                    sprite.legendExpiryDay = legendExpiryDayFromNow(); // round 350: a legend saved before the day clock
                 if (territoryTargetIds != null && i < territoryTargetIds.size() && territoryTargetIds.get(i) != null) {
                     // WorldSave.load() loads World (and its POIs) before this method runs, so the
                     // id resolves against the same world state the save captured. If it somehow
@@ -2490,6 +2536,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         List<String> territoryTargetIds = new ArrayList<>();
         // Per-mage cooldown (MOD_SCOPE.md #7 mage-persistence change) - see EnemySprite.lastDuelDay.
         List<Integer> lastDuelDays = new ArrayList<>();
+        // Round 350: a legend's day clock (EnemySprite.legendExpiryDay) - without it every legend in flight would
+        // start its days over on each load.
+        List<Integer> legendExpiryDays = new ArrayList<>();
         for (Pair<Float, EnemySprite> enemy : enemies) {
             timeouts.add(enemy.getKey());
             // Raw name field, NOT getName() (2026-08-13 holistic review, pre-existing bug): the 3
@@ -2507,6 +2556,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             territoryColors.add(enemy.getValue().territoryColor);
             territoryTargetIds.add(enemy.getValue().territoryTarget == null ? null : enemy.getValue().territoryTarget.getID());
             lastDuelDays.add(enemy.getValue().lastDuelDay);
+            legendExpiryDays.add(enemy.getValue().legendExpiryDay);
         }
         // Round 173 (code review G6, user: "should lose the fight"): the mage a roaming guard is fighting
         // right now was pulled off `enemies` at the gate, so a save taken mid-fight - the watched fight's
@@ -2529,6 +2579,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 territoryColors.add(duelling.territoryColor);
                 territoryTargetIds.add(duelling.territoryTarget == null ? null : duelling.territoryTarget.getID());
                 lastDuelDays.add(duelling.lastDuelDay);
+                legendExpiryDays.add(duelling.legendExpiryDay);
             }
         }
         data.storeObject("timeouts", timeouts);
@@ -2538,6 +2589,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         data.storeObject("questStageIDs", questStageIDs);
         data.storeObject("territoryColors", territoryColors);
         data.storeObject("lastDuelDays", lastDuelDays);
+        data.storeObject("legendExpiryDays", legendExpiryDays);
         data.storeObject("territoryTargetIds", territoryTargetIds);
         data.store("globalTimer", globalTimer);
         return data;

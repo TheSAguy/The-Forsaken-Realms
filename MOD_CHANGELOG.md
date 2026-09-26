@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 350: legends live whole days, the Capitol gets a Mythic shop tier (2026-09-26)
+
+Two threads, both in the live build (packaged 08:53 with rounds 342-350 once the user's game was closed).
+
+**Legends on a day clock.** The user, answering the question round 348's session had put to them (a countdown in the
+quest log cannot say "days" while legends live on travel time): *"give legends a day-based lifetime"*. A legend lived
+`legendLifetimeFactor` (3) x max(its own lifetime, 20) seconds of travel time - the clock advances only while the player
+moves or waits - so usually 60 seconds, about a fifth of a 270-second day. Now:
+- `EnemySprite.legendExpiryDay`: set at the sighting (`WorldStage.spawn` for a `RoamingChampions.isLegend` enemy) to
+  today + `TuningData.legendLifetimeDays` (settings.json, 3). The despawn check picks ONE clock per sprite: the day for a
+  legend with an expiry day, travel time for everything else - both live would let the shorter win silently.
+- Saved and restored with the roaming list (`legendExpiryDays`, beside `lastDuelDays`); a legend loaded from an older
+  save starts a fresh day lifetime. Without this every legend would start its days over on each load.
+- The sighting says *"It moves on in 3 days - a gold dot marks it on the map."* and logs `stays 3 day(s) - until day N`;
+  its departure logs `moves on - its days are over`.
+- The quest log lists every legend roaming right now: *"Legend: Cromat (Master) - west (3 days left)"* - a row derived
+  from `WorldStage.getLegendSightings()` each time the log is built, never a quest of its own (nothing to save, nothing
+  to clean up when it is beaten or moves on), no Details button, the direction live from where the player stands (the
+  compass is shared with the sighting message: `compassDirection`, `directionFromPlayer`, `legendDaysLeft`). The design
+  and the persistence trap came from round 348's session, which handed the thread over.
+
+**The Mythic shop tier** - a player's report (armadi, Discord): *"I bought the blueprints for domain of dominaria but
+it's not showing up as an option to build as a card shop"*. The chooser read only the common/uncommon/rare lists of a
+shop slot. The player templates list 29 types ONLY on `mythicShopList` - Domain of Dominaria (WUBRG), the ten
+three-color shops, the six Phyrexian, the six Planeswalker and six Legend shops - so none could ever be built, while
+rival towns sold their blueprints (priced as Common, 20 shards, because no tier was known for them). Ten more types
+(the five colored booster shops, the capitals' five Instant6 shops) were missing from the templates altogether. The
+user chose a new tier over folding them into Rare:
+- `MapStage.TIER_MYTHIC`; `mythicShopList` is read into a slot's tier pools. A mythic name the slot already lists lower
+  down stays at the lower tier (`dropLowerTierDuplicates` - the Capitol's booster slot lists the same five boosters in
+  all four tiers).
+- The Mythic tier through `EconomyBuildings`: Capitol-only like Rare, build cost 300 gold + 100 shards, blueprint 200
+  shards (`config.json` `blueprintShardCostMythic`), sold only to a Partner, the re-type refund, the flat tier table
+  (Instant6 Common, the 29 Mythic), and the categories - the five- and three-color codes are Color and Legend is Card
+  Type (they had fallen to Tribal).
+- The ten missing Common types added to every chooser slot's `commonShopList` in both templates.
+- `dev-tools/shop_blueprint_audit.py` (new): exit 1 when any type a rival town sells a blueprint for is not buildable
+  in the player templates. Now: 255 of 255, 29 through the Mythic tier.
+The player's bought blueprint works after the update, in their Capitol's Mythic tier.
+
+**Seen in the agent game**: the sighting message and the quest-log row (3 days left, south-east, then west after a
+teleport home); a save, the agent's `legendLifetimeDays` raised to 7, a reload - still "3 days left" (the saved day came
+back, not a fresh seven); the Capitol's Card Shop menu listing "Mythic Shops (300 + 100)" with By Color 11 (Domain of
+Dominaria among them), By Card Type 12, Tribal 6, all locked (the agent knows no blueprints). **NOT seen:** a legend's
+count going down over a real day and its departure (every wait was cut short by roaming enemies), a mythic blueprint
+learned and built.
+
+Files: `character/EnemySprite.java`, `stage/WorldStage.java`, `scene/QuestLogScene.java`, `data/TuningData.java`,
+`data/ConfigData.java`, `stage/MapStage.java`, `util/EconomyBuildings.java`; `config tables/settings.json`,
+`config.json`, `maps/map/towns/player_capital.tmx`, `maps/map/towns/player_town.tmx`;
+`dev-tools/shop_blueprint_audit.py` (new).
+
 ## Round 349: the Capitol's outer gate opens, no shop eats a wall, the rune splits along its swirl (2026-09-26)
 
 The user, after playing rounds 342-348 live: *"Looks like when you updated my Capitol Changes, you made the 'Overlay'

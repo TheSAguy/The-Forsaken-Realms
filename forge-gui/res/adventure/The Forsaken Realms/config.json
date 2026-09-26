@@ -329,6 +329,7 @@
     "blueprintShardCostCommon": 20,
     "blueprintShardCostUncommon": 40,
     "blueprintShardCostRare": 100,
+    "blueprintShardCostMythic": 200,
     "raceShops": [
         { "race": "Devil",       "shops": ["Devil", "Demon"] },
         { "race": "Kor",         "shops": ["Angel", "Eldrazi"] },
