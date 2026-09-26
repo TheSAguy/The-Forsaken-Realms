@@ -203,7 +203,9 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   gate from the type's tier in the player's own build menu (`EconomyBuildings.playerTemplateTier`, read from the two
   player templates by `TownRestoration.readChooserTiers`), the same in every town; the Bonfire and the Yin-Yang Rune out
   of every `startItems` (the Armories' Rare roll already stocks them); the FAQ (Discord artifact + `FAQ.md`) as of
-  v1.15; GUIDE.md being updated for v1.15.**
+  v1.15; GUIDE.md brought up to v1.15 (8df10e2308c, by a subagent against the code; copied into the live and agent
+  folders as GAME_GUIDE.md). Open from it: the guide's three territory screenshots predate the barrier; the in-game
+  Mod Details text still says payday 'day 7/14/21' (weeks run 1-7, 8-14 - payday is day 8/15/22).**
 - **Round 351b (local, NOT pushed, 2026-09-26): a road never passes a town it should run through - the user's Shiv
   -> Kraag Steading straight past Amanaxis Bazaar. World-gen's link passes skipped towns at the links cap and so linked
   past them; they now take the nearest town a road reaches directly (`RoadNetwork.worldGenDirect`, the
