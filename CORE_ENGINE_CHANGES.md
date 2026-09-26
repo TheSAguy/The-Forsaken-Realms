@@ -38,6 +38,15 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 353: the 09.26 engine merge
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** - the Armory Level-2 block kept; the reward status
+  message's Stone/Wood cases now use upstream's `Reward.Type.getLabelKey()` (upstream removed `rewardLabelsMap`).
+- **`forge-gui-mobile/src/forge/adventure/util/Reward.java`** - `Type` = upstream's cached `labelKey` + our
+  `Stone`, `Wood`, `Blueprint`.
+- **`forge-gui-mobile/src/forge/assets/FBufferedImage.java`** - upstream's `checkFrameBuffer()` taken whole; round
+  320's change is gone (upstream fixed the same end()-outside-a-draw-pass problem, more thoroughly).
+
 ### Round 352 — one blueprint price per shop type
 
 - **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** (mod) — `shopTierOf()` asks
@@ -2311,6 +2320,13 @@ from the plane's `config tables/settings.json`).
   0.25 -> 0.12.
 
 ## Upstream merge log
+
+- **2026-09-26 - merged upstream `master` @ `95dc682bf92` (Forge 2.0.15-SNAPSHOT, 09.26 daily; 30 first-parent
+  commits / 43 in all since `3a1b16089da`; round 353).** Three conflicts (`MapStage.java`, `Reward.java`,
+  `FBufferedImage.java`) - see "Round 353: the 09.26 engine merge" above. Base install `E:\GAMES\Forge_2`:
+  `.installationinformation` `2.0.15-SNAPSHOT-09.26`, `build.txt` `2026-09-26 18:23:27`; probes: HAS `95dc682bf92`
+  (`forge/util/storage/StorageBase` in `CardCollections.class`) and `394f56f42a5` (`GameLog.markMatchStartIfNeeded`);
+  `95dc682bf92` was upstream's head at the fetch, so the next merge starts after it.
 
 - **2026-09-23 - merged upstream `master` @ `3a1b16089da` (Forge 2.0.15-SNAPSHOT, 09.23 daily; 12 first-parent
   commits / 27 in all since `6eb449b787d`; round 316).** Three conflicts (`Adventure.java`, `DeckEditScene.java`,

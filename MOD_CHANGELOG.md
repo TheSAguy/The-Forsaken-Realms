@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 353: engine = the 09.26 daily (2026-09-26)
+
+The user: *"Update to the latest game Forge Engine: E:\\GAMES\\Forge_2"* - they had installed Forge's 2026-09-26 daily
+there (`.installationinformation` 2.0.15-SNAPSHOT-09.26, `build.txt` 2026-09-26 18:23:27). Merged upstream `master` @
+`95dc682bf92` (*"Load Commander precons and genetic AI decks read-only (#12045)"*), 43 commits (30 first-parent) since
+round 316's `3a1b16089da`; the stock jar carries both 95dc682's `StorageBase` in `CardCollections` and 394f56f's
+`GameLog.markMatchStartIfNeeded`, and `95dc682bf92` is upstream's head, so nothing newer exists to leave out.
+
+Nine files both sides had touched; six merged by themselves (Player.java, Forge.java, MapDialog.java, RewardActor.java,
+MatchController.java, en-US.properties - only upstream's own small fixes, none of ours lost). Three conflicts:
+- **`MapStage`**: our Armory Level-2 block kept (upstream had only dropped a blank line beside it); the reward status
+  message keeps our Stone and Wood cases and takes upstream's `Reward.Type.getLabelKey()` - upstream removed the
+  `rewardLabelsMap` cache round 289 had taken from it.
+- **`Reward.Type`**: our Stone, Wood and Blueprint plus upstream's cached `labelKey`.
+- **`FBufferedImage.checkFrameBuffer()`**: upstream's own fix (it checks `isDrawing()`, saves and restores the
+  projection, bounds, visible bounds, region height and the scissor test, clears the frame buffer, try/finally)
+  supersedes round 320's narrower one - taken whole.
+`config.json` `engineBuildVersion` is 2.0.15-SNAPSHOT-09.26 (the packager's daily-stamp guard reads it against
+`build.txt`). Built at 11:53 (19 s - the engine modules had compiled in the check); **agent-tested on the new
+engine**: a fresh world loaded, a full duel played out, and round 352's gate seen in a white identity town - its slot
+lists Instant4White as Common, the build menu as Uncommon, so at Neutral the button now reads *"Buy Blueprint
+(standing too low)"* (it sold for 20 shards before); log: `[TFR-Blueprint] 255 shop type(s) priced and gated by their
+tier in the player's own build menu`. **Live + agent packaged 11:59** with the full stock-asset refresh (the base-install
+marker now 2026-09-26 18:23:27).
+
+**New standing rule** (the user, during this merge: *"If ever there is a real conflict when updating the latest Official
+game. Please make me aware of it and the impact when merging."*) - in CLAUDE.md near the top: every real conflict,
+what upstream changed, what we kept or took, and its impact, reported before packaging; a choice between upstream's
+behavior and ours is asked first. This merge's three were reported to the user.
+
 ## Round 352: one blueprint price per shop type, the test items leave the starting kit, the FAQ as of v1.15 (2026-09-26)
 
 The user, answering what was left open: *"Agree with your blueprint pricing. Update Game Guide. Okay with kicking you
