@@ -197,7 +197,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
 - **Round 353 (local, NOT pushed, 2026-09-26): engine = the 09.26 daily** (upstream `95dc682bf92`, 43 commits since
   `3a1b16089da`; the user installed it into `E:\GAMES\Forge_2`). Conflicts: `MapStage` (ours kept + upstream's
   `Reward.Type.getLabelKey()`), `Reward.Type` (combined), `FBufferedImage` (upstream's fix taken whole). `config.json`
-  `engineBuildVersion` 2.0.15-SNAPSHOT-09.26. See CORE_ENGINE_CHANGES "Round 353" and the merge log.
+  `engineBuildVersion` 2.0.15-SNAPSHOT-09.26. See CORE_ENGINE_CHANGES "Round 353" and the merge log. CREDITS: the
+  round-344 ruins art is free, no credit needed (the user) - its placeholder line removed.
 - **Round 352 (local, NOT pushed, 2026-09-26): the user's decisions before v1.15 - blueprint price and reputation
   gate from the type's tier in the player's own build menu (`EconomyBuildings.playerTemplateTier`, read from the two
   player templates by `TownRestoration.readChooserTiers`), the same in every town; the Bonfire and the Yin-Yang Rune out

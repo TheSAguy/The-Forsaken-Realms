@@ -14294,6 +14294,10 @@ game. Please make me aware of it and the impact when merging."*) - in CLAUDE.md 
 what upstream changed, what we kept or took, and its impact, reported before packaging; a choice between upstream's
 behavior and ours is asked first. This merge's three were reported to the user.
 
+**Credits** (the user, after: *"Those were free, no credit needed."*): the round-344 dungeon ruins art needs no
+attribution - its "source to be confirmed" line is gone from `standalone-packaging/CREDITS.md` (copied into the live
+and agent folders directly, a text file).
+
 ## Round 352: one blueprint price per shop type, the test items leave the starting kit, the FAQ as of v1.15 (2026-09-26)
 
 The user, answering what was left open: *"Agree with your blueprint pricing. Update Game Guide. Okay with kicking you
