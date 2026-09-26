@@ -38,6 +38,12 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 352 — one blueprint price per shop type
+
+- **`forge-gui-mobile/src/forge/adventure/util/EconomyBuildings.java`** (mod) — `shopTierOf()` asks
+  `playerTemplateTier()` first (the type's tier in the player's build menu).
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** (mod) — `readChooserTiers()`.
+
 ### Round 351b — world-gen links to the nearest direct town, saves lose roads past a chained town
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — the nearest-neighbor and rescue passes pick with

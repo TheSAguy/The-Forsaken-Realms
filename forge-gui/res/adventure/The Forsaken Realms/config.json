@@ -88,9 +88,7 @@
       },
       "startItems": [
         "Manasight Amulet",
-        "Leather Boots",
-        "Bonfire",
-        "Yin-Yang rune"
+        "Leather Boots"
       ]
     },{
       "name": "Normal",
@@ -139,14 +137,11 @@
         "G":"decks/starter/pile_green_n.json"
       },
       "startItems": [
-        "Leather Boots",
-        "Bonfire",
-        "Yin-Yang rune"
+        "Leather Boots"
       ]
     },{
       "name": "Hard",
       "startingLife": 10,
-      "startItems": ["Bonfire", "Yin-Yang rune"],
       "startingWood": 50,
       "startingStone": 50,
       "startingShards": 7,
@@ -192,7 +187,6 @@
     },{
       "name": "Insane",
       "startingLife": 5,
-      "startItems": ["Bonfire", "Yin-Yang rune"],
       "startingWood": 25,
       "startingStone": 25,
       "startingShards": 5,

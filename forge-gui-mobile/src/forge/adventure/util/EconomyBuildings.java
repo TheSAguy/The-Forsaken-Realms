@@ -1606,10 +1606,18 @@ public class EconomyBuildings {
     }
 
     /**
-     * Which tier a shop name counts as HERE, for blueprint pricing and the standing gate.
-     * Three sources, in this order:
+     * Which tier a shop name counts as, for blueprint pricing and the standing gate.
+     * <p>
+     * Round 352 (the user agreed to "one price per shop type, set by its tier in your own build
+     * menu"): first of all, the tier the type has in the PLAYER's own chooser - player_town.tmx and
+     * player_capital.tmx, lowest tier first ({@link #playerTemplateTier}) - in every town that sells
+     * it. A blueprint buys the right to build a type in your own towns, so that tier is its value
+     * (round 80's own reasoning for the flat-town table). The slot rule below let a town that lists a
+     * type lower sell it cheaper: the five plain color shops - Rare in the build menu, 100 shards and
+     * Partner - went for 20 shards at Neutral in some color towns, and 59 types sold below their
+     * build tier somewhere, 73 above it. The rest is the fallback for a type the templates lack:
      * <ol>
-     *   <li>the slot's own tmx tier pools - the map you are standing on is authored truth;</li>
+     *   <li>the slot's own tmx tier pools;</li>
      *   <li>{@link #FLAT_TOWN_SHOP_TIERS} - the static fallback for any slot with no tier pools of
      *       its own. In practice that is the five flat-`shopList` town templates; Rotating slots
      *       are the only other pool-less kind and isShopTypeRerollable() already keeps the Buy
@@ -1624,8 +1632,11 @@ public class EconomyBuildings {
      * identical in every save and every visit order.
      */
     public static String shopTierOf(MapStage stage, int objectId, String shopName) {
+        String tier = playerTemplateTier(shopName); // round 352: one price per type
+        if (tier != null)
+            return tier;
         Map<String, Array<String>> pools = stage == null ? null : stage.getShopTierPools(objectId);
-        String tier = pools == null ? null : tierOfShopName(pools, shopName);
+        tier = pools == null ? null : tierOfShopName(pools, shopName);
         if (tier != null)
             return tier;
         tier = FLAT_TOWN_SHOP_TIERS.get(shopName);
@@ -1637,6 +1648,26 @@ public class EconomyBuildings {
                     + " in no loaded map's tier pools and not in FLAT_TOWN_SHOP_TIERS, so it will"
                     + " price as Common and skip the standing gate. Add it to the table.");
         return tier;
+    }
+
+    /** Round 352: the player's own chooser templates - the build menu's tiers. */
+    private static final String[] PLAYER_TEMPLATE_MAPS = {
+            "../The Forsaken Realms/maps/map/towns/player_town.tmx",
+            "../The Forsaken Realms/maps/map/towns/player_capital.tmx"};
+    private static volatile Map<String, String> playerTemplateTiers;
+
+    /** Round 352: a shop type's tier in the player's own build menu, or null when the templates lack it. */
+    public static String playerTemplateTier(String shopName) {
+        if (shopName == null)
+            return null;
+        Map<String, String> tiers = playerTemplateTiers;
+        if (tiers == null) {
+            tiers = TownRestoration.readChooserTiers(PLAYER_TEMPLATE_MAPS);
+            playerTemplateTiers = tiers;
+            System.out.println("[TFR-Blueprint] " + tiers.size() + " shop type(s) priced and gated by their tier in the"
+                    + " player's own build menu, the same in every town (round 352)");
+        }
+        return tiers.get(shopName);
     }
 
     // ---- Blueprint standing gate (user spec 2026-08-31) ----------------------------------------

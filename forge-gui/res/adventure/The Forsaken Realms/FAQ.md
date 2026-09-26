@@ -1,6 +1,6 @@
 # The Forsaken Realms — FAQ
 
-Quick answers to the questions players ask most. The full walkthrough is the player guide, `GAME_GUIDE.md` in the
+Quick answers to the questions players ask most, as of v1.15. The full walkthrough is the player guide, `GAME_GUIDE.md` in the
 game folder. If your question isn't here, ask on the Discord: https://discord.gg/TTRPKc9HYJ
 
 ## Contents
@@ -217,7 +217,8 @@ A blueprint teaches you a card shop type (there are about 250) so you can build 
   its Rare shop are the ladder to climb. (A Chaos or Custom start has no color, so it only gets the race shops.)
 - **Buy the shop you're standing in:** almost any card shop whose type you don't know shows a **Buy Blueprint**
   button - in AI towns and capitals, neutral towns, even your own towns.
-- **Price, in Shards:** 20 Common, 40 Uncommon, 100 Rare, 200 Mythic, by the shop's tier.
+- **Price, in Shards:** 20 Common, 40 Uncommon, 100 Rare, 200 Mythic. The tier is the type's tier in your own build
+  menu, so a blueprint costs the same in every town that sells it.
 - **Reputation gate (the five colors' towns only):** you must be at least Neutral with that color to buy any
   blueprint, Happy for Uncommon, and Partner for Rare and Mythic. Happy takes 15% off the price, Partner 30%. Neutral
   towns have no gate.
@@ -319,6 +320,14 @@ map.
 
 The fog also changes what you meet. Where you can't see right now (dimmed or black), creatures show up more often,
 lean tougher and move a little faster. In bright areas they come less often and lean easier.
+
+A **Bonfire** (sold in Armories) clears the fog 15 tiles around the spot where you build it, a tile less each day; one
+kit makes ten fires, and a spent kit is rebuilt for 50 Shards. It needs Fog of War on.
+
+### What are the cobblestone roads?
+
+When you raise your Capitol, cobblestone roads join it to every town you hold, upgrading the roads already there. Towns
+you restore or capture later join the network. You travel faster on them than on the old sand roads.
 
 ---
 

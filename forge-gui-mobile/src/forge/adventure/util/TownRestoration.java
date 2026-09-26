@@ -1274,6 +1274,37 @@ public class TownRestoration {
     private static final java.util.Map<String, java.util.List<com.badlogic.gdx.utils.XmlReader.Element>> mapObjectsCache =
             new java.util.HashMap<>();
 
+    /**
+     * Round 352: shop type -> its tier in these maps' chooser slots (the multi-name tier lists; a name
+     * on several keeps its lowest tier, as the chooser resolves it). Empty when the maps can't be read.
+     */
+    static java.util.Map<String, String> readChooserTiers(String... mapPaths) {
+        String[][] tierLists = {{"commonShopList", MapStage.TIER_COMMON}, {"uncommonShopList", MapStage.TIER_UNCOMMON},
+                {"rareShopList", MapStage.TIER_RARE}, {"mythicShopList", MapStage.TIER_MYTHIC}};
+        java.util.Map<String, String> out = new java.util.HashMap<>();
+        for (String[] tierList : tierLists) {
+            for (String mapPath : mapPaths) {
+                for (com.badlogic.gdx.utils.XmlReader.Element object : readMapObjects(mapPath)) {
+                    com.badlogic.gdx.utils.XmlReader.Element props = object.getChildByName("properties");
+                    if (props == null)
+                        continue;
+                    for (com.badlogic.gdx.utils.XmlReader.Element prop : props.getChildrenByName("property")) {
+                        if (!tierList[0].equals(prop.getAttribute("name", null)))
+                            continue;
+                        String value = prop.getAttribute("value", prop.getText());
+                        String[] names = value == null ? new String[0] : value.split(",");
+                        if (names.length < 2)
+                            continue; // a single name is a fixed shop - land shops, the Armory - never chosen
+                        for (String name : names)
+                            if (!name.trim().isEmpty())
+                                out.putIfAbsent(name.trim(), tierList[1]);
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
     private static java.util.List<com.badlogic.gdx.utils.XmlReader.Element> readMapObjects(String mapPath) {
         java.util.List<com.badlogic.gdx.utils.XmlReader.Element> cached = mapObjectsCache.get(mapPath);
         if (cached != null)
