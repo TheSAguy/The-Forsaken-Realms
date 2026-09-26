@@ -3,6 +3,8 @@ package forge.adventure.util;
 import com.badlogic.gdx.utils.Array;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.EnemyData;
+import forge.adventure.data.ItemData;
+import forge.adventure.data.ItemListData;
 import forge.adventure.data.RewardData;
 import forge.adventure.data.TuningData;
 import forge.adventure.data.WorldData;
@@ -21,10 +23,11 @@ import forge.util.MyRandom;
  * <li><b>Once per place, everywhere:</b> a +Life from one enemy (by name) or one pickup in one place is paid a single
  * time, whatever brings that enemy back - a lair's return, a restocked dungeon, a quest reset.</li>
  * <li><b>Once per lair:</b> a vanishing boss lair's boss pays its signature item - a fixed itemName on its own reward
- * list, not a pick from an itemNames list - a single time.</li>
+ * list or (round 347) on the reward its map placement adds, not a pick from an itemNames list - a single time.</li>
  * <li><b>Return visits</b> to a lair cleared before (World.getLairClearCount()): gold, shards, wood and stone x
  * TuningData.lairReturnRewardFactor (rounded up), the NUMBER of cards and card packs x the same (the fraction a coin
- * flip, so a lone card drops half the time); every other item drops with TuningData.lairReturnItemChance.</li>
+ * flip, so a lone card drops half the time); every other item drops with TuningData.lairReturnItemChance - except a
+ * quest item (round 347), which always drops: those are the keys that open the lair's own gates.</li>
  * </ul>
  * Keys live in World.getOncePaidRewards(): "poiId|life|source" and "poiId|item|itemName", value = the day paid (-1 =
  * paid before this round, found gone from the map on a later visit - see noteEarlierDefeat()).
@@ -58,14 +61,14 @@ public final class PlaceRewards {
                 if (!payLifeOnce(world, id + "|life|" + enemy.getName(), sprite, reward.getCount(), notes))
                     loot.removeIndex(i);
             } else if (lair && reward.getType() == Reward.Type.Item && reward.getItem() != null
-                    && isSignatureItem(enemy, reward.getItem().name)) {
+                    && isSignatureItem(sprite, reward.getItem())) {
                 if (!payOnce(world, id + "|item|" + reward.getItem().name, reward.getItem().name, notes))
                     loot.removeIndex(i);
             }
         }
         int clears = lair ? world.getLairClearCount().getOrDefault(id, 0) : 0;
         if (clears > 0)
-            applyReturnVisit(loot, lair ? enemy : null, notes);
+            applyReturnVisit(loot, lair ? sprite : null, notes);
         log(place, clears, enemy.getName(), notes);
     }
 
@@ -145,9 +148,10 @@ public final class PlaceRewards {
      * MapStage's map load, for an enemy placement the save already lists as gone: the enemy was beaten before this
      * round's rules existed, so whatever once-per-place reward it carries was paid then. Marks those as paid and, for a
      * lair's boss, records the boss as down - that is what lets the user's already-emptied Slime Hive leave the map on
-     * the next walk-out. Idempotent: only a newly marked key is logged.
+     * the next walk-out. Idempotent: only a newly marked key is logged. Round 347: placementReward is the placement's
+     * own "reward" property - a boss's item given there (Sorin's Amulet) is its signature item as well.
      */
-    public static void noteEarlierDefeat(Object enemyName) {
+    public static void noteEarlierDefeat(Object enemyName, Object placementReward) {
         PointOfInterest place = currentPlace();
         if (enemyName == null || place == null || place.getData() == null)
             return;
@@ -165,22 +169,52 @@ public final class PlaceRewards {
                     markPaidEarlier(world, place, id + "|life|" + enemy.getName(), "+" + data.count + " max life from " + enemy.getName());
                     world.getOncePaidRewards().putIfAbsent("enemy|life|" + enemy.getName(), -1); // round 302: once per game
                 }
-                else if (lair && enemy.boss && "item".equalsIgnoreCase(data.type) && data.itemName != null && !data.itemName.isEmpty())
+                else if (lair && enemy.boss && isFixedItem(data) && !isQuestItem(data.itemName))
                     markPaidEarlier(world, place, id + "|item|" + data.itemName, data.itemName);
+            }
+        }
+        if (lair && enemy.boss && placementReward != null && !placementReward.toString().isEmpty()) {
+            RewardData[] placed = JSONStringLoader.parse(RewardData[].class, placementReward.toString(), "[]");
+            if (placed != null) {
+                for (RewardData data : placed) {
+                    if (isFixedItem(data) && !isQuestItem(data.itemName))
+                        markPaidEarlier(world, place, id + "|item|" + data.itemName, data.itemName);
+                }
             }
         }
         if (lair && enemy.boss)
             DungeonRotation.onLairBossDefeated(place, enemy.getName(), true);
     }
 
-    /** A boss's own item: a fixed itemName on its reward list. A pick from an itemNames list is ordinary loot. */
-    static boolean isSignatureItem(EnemyData enemy, String itemName) {
-        if (enemy == null || !enemy.boss || enemy.rewards == null || itemName == null)
+    /**
+     * A boss's own item: a fixed itemName on its reward list - enemies.json's, or (round 347) the reward its map
+     * placement adds, where Sorin's Amulet and Presence of the Hydra live. A pick from an itemNames list is ordinary
+     * loot, and a quest item never counts: the keys a lair's bosses carry open its own gates, so every visit needs one.
+     */
+    static boolean isSignatureItem(EnemySprite sprite, ItemData item) {
+        EnemyData enemy = sprite == null ? null : sprite.getData();
+        if (enemy == null || !enemy.boss || item == null || item.name == null || item.questItem)
             return false;
-        for (RewardData data : enemy.rewards)
-            if (data != null && "item".equalsIgnoreCase(data.type) && itemName.equals(data.itemName))
+        return namesFixedItem(enemy.rewards, item.name) || namesFixedItem(sprite.rewards, item.name);
+    }
+
+    private static boolean namesFixedItem(RewardData[] rewards, String itemName) {
+        if (rewards == null)
+            return false;
+        for (RewardData data : rewards)
+            if (isFixedItem(data) && itemName.equals(data.itemName))
                 return true;
         return false;
+    }
+
+    private static boolean isFixedItem(RewardData data) {
+        return data != null && "item".equalsIgnoreCase(data.type) && data.itemName != null && !data.itemName.isEmpty();
+    }
+
+    /** Round 347: items.json's questItem flag - the keys and shards a place's own gates take. */
+    private static boolean isQuestItem(String itemName) {
+        ItemData item = ItemListData.getItem(itemName);
+        return item != null && item.questItem;
     }
 
     private static boolean payOnce(World world, String key, String label, StringBuilder notes) {
@@ -204,9 +238,11 @@ public final class PlaceRewards {
 
     /**
      * The return-visit cut. Signature items are left to the once-per-lair rule above (they are always either withheld
-     * already or paid for the first time); every other item takes the coin flip.
+     * already or paid for the first time); every other item takes the coin flip - except a quest item (round 347: the
+     * keys to the lair's own gates dropped half the time, and Sorin's gate guards loot on the Vampire Dungeon's exit
+     * level, so a missed key left that lair on the map for good).
      */
-    private static void applyReturnVisit(Array<Reward> rewards, EnemyData boss, StringBuilder notes) {
+    private static void applyReturnVisit(Array<Reward> rewards, EnemySprite boss, StringBuilder notes) {
         TuningData tuning = Config.instance().getTuningData();
         float factor = clamp01(tuning.lairReturnRewardFactor, 0.5f);
         float itemChance = clamp01(tuning.lairReturnItemChance, 0.5f);
@@ -242,8 +278,13 @@ public final class PlaceRewards {
                         rewards.removeIndex(i--);
                     break;
                 case Item:
-                    if (reward.getItem() != null && !isSignatureItem(boss, reward.getItem().name)
-                            && MyRandom.getRandom().nextFloat() >= itemChance) {
+                    if (reward.getItem() == null || isSignatureItem(boss, reward.getItem()))
+                        break;
+                    if (reward.getItem().questItem) {
+                        note(notes, "item " + reward.getItem().name + " kept (a quest item - never coin-flipped)");
+                        break;
+                    }
+                    if (MyRandom.getRandom().nextFloat() >= itemChance) {
                         note(notes, "item " + reward.getItem().name + " did not drop (return-visit coin flip)");
                         rewards.removeIndex(i--);
                     }

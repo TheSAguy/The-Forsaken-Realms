@@ -87,6 +87,10 @@ def unmatched(tmx, radius):
     return need, None
 
 
+# Maps that must get no dedicated loot guards (round 347).
+NO_GUARDS = {'waste_town_abandoned.tmx'}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('maps', nargs='*')
@@ -96,6 +100,9 @@ def main():
     a = ap.parse_args()
 
     files = a.maps or sorted(glob.glob(os.path.join(PLANE, '**', '*.tmx'), recursive=True))
+    # Round 347 (user): the Ghost Town's only enemies are the swarm its fountain wakes - "the rest of the town should
+    # be empty". Its five round-287 guards were removed; never place them again.
+    files = [f for f in files if os.path.basename(f) not in NO_GUARDS]
     placed = {'booster': 0, 'treasure': 0}
     failed = skipped = maps_done = 0
     for tmx in files:

@@ -177,7 +177,9 @@ public class DungeonRotation {
      * Round 299: a boss fell inside this place - MapStage.getReward() on the win, and PlaceRewards.noteEarlierDefeat()
      * at map load for a boss killed before this round (the user's Slime Hive). Recorded for vanishing lairs only: it
      * is what lets onLairExit() count the walk-out as a clear. An empty entrance level alone is not one - Tibalt's
-     * Fortress and the Strange Desert keep their bosses deeper down.
+     * Fortress keeps its bosses deeper down. Round 347 corrected the other example this named: the Strange Desert has NO
+     * boss-flagged enemy in any of its 17 levels, so it never records one and never leaves the map - a permanent place
+     * in practice, left that way (its five-shard gate is a one-time puzzle).
      */
     public static void onLairBossDefeated(PointOfInterest root, String bossName, boolean earlierVisit) {
         if (!isEnabled() || root == null || !isVanishingLair(root.getData()))
@@ -350,6 +352,13 @@ public class DungeonRotation {
     public static void onQuestTargetBound(PointOfInterest poi) {
         if (!isEnabled() || !isRotatable(poi))
             return;
+        if (isRetired(poi)) {
+            // Round 347: AdventureQuestStage no longer offers a retired place at all; this guards any other caller. A
+            // place retired for good never comes back, not even for a quest - the Demon's Bargain would deal again.
+            System.out.println("[DungeonRotation] " + poi.getDisplayName() + " is retired for good ("
+                    + poi.getData().retireOnQuestFlag + ") - not spawned as a quest target");
+            return;
+        }
         World world = WorldSave.getCurrentSave().getWorld();
         int currentDay = world.getCurrentDay();
         String id = poi.getID();
@@ -481,7 +490,8 @@ public class DungeonRotation {
     // location's cooldown (poiRespawnDay) keeps it out of the draw for 10-30 days so despawns
     /** Round 334 (the user, of the Sphinx's Sanctum: "after it pays, the dungeon should not ever re-appear"): a place
      *  whose PointOfInterestData.retireOnQuestFlag the player holds. The day tick deactivates it and the reserve never
-     *  activates it again; the flag is per game, so a new game gets the place back. */
+     *  activates it again; round 347: nor does a quest (AdventureQuestStage drops it from every target pool,
+     *  onQuestTargetBound() refuses it). The flag is per game, so a new game gets the place back. */
     public static boolean isRetired(PointOfInterest poi) {
         String flag = poi == null || poi.getData() == null ? null : poi.getData().retireOnQuestFlag;
         return flag != null && !flag.isEmpty() && Current.player() != null && Current.player().checkQuestFlag(flag);

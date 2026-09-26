@@ -14264,6 +14264,83 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 347: the one-off audit - the Vampire Dungeon's captive pays once, lair keys always drop, the Ghost Town empty (2026-09-26)
+
+User (the round-346e handoff): audit the dungeons for one-off places like the Sphinx's Sanctum (round 334) and the
+Demon's Bargain (round 345) - completed once, never back from the rotation reserve - and propose the list before
+changing anything. After the proposal: *"Implement your proposals Local Repo and Agent game for now. Going to play live
+game."* Mid-round: *"On the Ghost town dungeon, we should remove the guards there. That's a special dungeon that
+triggers a swarm when you visit the fountain, the rest of the town should be empty."* Built into the agent folder only
+(`build_standalone.py --out C:/TFR/agent`) - the user was playing live. Local commit, NOT pushed.
+
+**The audit** (`dev-tools/place_payout_scan.py`, new). Every POI's map tree - following `entry` AND `portal`
+teleports (a first pass that followed portals only missed every sub-level behind an entry door) - and every dialog,
+read the way libgdx reads it (17 map dialogs rely on its lenient JSON: missing commas, raw tabs), joined with
+DungeonRotation's rules: 288 rotating dungeons/caves, 16 returning lairs. A place that returns comes back RESTOCKED
+(`restock()` forgets its deleted objects), so a dialog that pays and deletes its giver pays again on every return.
+- Only ONE more place was built like the sphinx: the **Vampire Dungeon** (VampireCastle3, a returning sidebosshard
+  lair). Its Captive (vampirecastle_4.tmx object 105, a Farmer) said "Sorin has been dealt with", handed over a
+  Challenge Coin and deleted itself - back on every lair return, and free on arrival (nothing checks Sorin, and the
+  captive is NOT behind Sorin's gate - the level rendered with its objects).
+- Left alone, with reasons: the Ancient Diamond Mine (a standing trade the user tuned in an earlier round); the Vampire
+  Castle coffins (25 gold each - loot that restocks like a chest, ACCEPTED in the scanner); the five Dragon's Lairs
+  (their Prism/Egg are 10% drops); Amulet of the Deceiver (Hidden Treasure-room) and Life Amulet (Blue Tower X) - 100%
+  pickups that restock with their dungeons, listed for reference; Omenport, Three Tree City, Court of Paliano, the
+  Dueling Club, the Temple of Liliana - one-time givers in places that never rotate and that no quest's POITags reach
+  (`AdventureQuestData` clears the deleted objects of ANY cave/dungeon quest target, the only other restock path).
+
+**Changes**
+1. **The captive pays once per game** (data only, the sphinx's round-332 pattern): its root is gated on
+   `checkQuestFlag VampireCaptiveFreed` + `not`, the coin sets the flag; a second root for later visits (*"Another
+   prisoner cowers before you - Sorin has taken a new captive."*) frees the captive with no coin. It has to stay
+   removable: the captive counts as an enemy left (`MapStage.countsAsEnemyLeft`), and one that could not be removed
+   would pin the lair to the map.
+2. **Bug (round 299, live since then): a lair's return visit coin-flipped its own gate keys.**
+   `PlaceRewards.applyReturnVisit` dropped every non-signature item with `lairReturnItemChance` (0.5) - including the
+   quest-item keys the lair's gates take: Sorin's, Tibalt's, Torturer's, Grolnok's, Rusty Old, Outer Gate and Basement
+   Key (all `questItem` in items.json). The Vampire Dungeon keeps loot (mana shards, wood) behind Sorin's gate on its
+   EXIT level, so a missed key left that level un-emptiable and the lair on the map for good; Zedruu City, Tibalt's
+   Fortress and Grolnok's Bog only lost their deeper part (any boss-flagged kill marks a lair's boss down). A quest item
+   is never coin-flipped now - `[TFR-PlaceRewards] ... item X kept (a quest item - never coin-flipped)`. The user's
+   rotated logs showed no lair return yet.
+3. **A boss's item given on its map placement is its signature item** (once per lair): Sorin's Amulet and Presence of
+   the Hydra live only on the placement's `reward`, and round 299's rule read enemies.json alone, so they re-dropped on
+   half of all return visits. `isSignatureItem(sprite, item)` reads both lists; a quest item is never a signature item
+   (a key must drop on every visit). `noteEarlierDefeat(enemy, placementReward)` - MapStage passes the placement's
+   reward - records a boss's placement item as paid when the boss was beaten before this round.
+4. **A place retired for good is never a quest target:** `AdventureQuestStage` drops `DungeonRotation.isRetired()`
+   places from the pool before its inactive fallback, and `onQuestTargetBound()` refuses one (it would force-spawn it
+   back - the Demon's Bargain would deal again). Latent today: the two retired places carry only `Hostile`, which every
+   quest pairs with `Sidequest`.
+5. **The Ghost Town is empty until its fountain** (Quest_APortalToNowhere, waste_town_abandoned.tmx): objects 133-137
+   removed - four Pointed Demonspawn and a Skeleton, the chest guards round 287's `add_loot_guards.py` placed 16 px
+   from their chests; nothing referenced them. The fifteen inactive Demons (the swarm object 95's dialog wakes) are
+   untouched, and `add_loot_guards.py` has a `NO_GUARDS` set so a re-run cannot put the guards back. NOT changed: the
+   dark hooded shapes with green in the user's screenshot are tile art - small vine-covered huts (main tileset tiles
+   3767/3768/3770 on the Walls layer), not enemies. The runtime matcher (`assignLootGuards`) still pairs 7 chests with
+   sleeping swarm Demons - as before, and harmless: an inactive enemy is not drawn and has no collision height, and a
+   robbed guard's `enrageOverStolenLoot()` never wakes it.
+6. **Correction:** round 299 wrote that the Strange Desert "keeps its boss deeper down". It has NO boss-flagged enemy
+   in any of its 17 levels, so it never records a boss down and never leaves the map - a permanent place in practice,
+   left that way (its five-shard gate is a one-time puzzle). The DungeonRotation comment says so now.
+
+**Seen in the agent game** (cheats, the agent's own profile): the Ghost Town lists and draws no enemy before the
+fountain; the captive's first visit paid a Challenge Coin (1 -> 2), and after `reset map` it came back with the second
+root and left with no coin (still 2); the Lake of the Hydra with its Hydra removed and re-entered logged `Presence of the
+Hydra was paid on an earlier visit - recorded` (the placement item - new), its boss down, `cleared (clear #1)`, back on
+day 2 restocked, and its pickups halved on the return visit (gold 82->41, cards 14->7, ...). No errors in the log.
+**NOT seen:** a boss duel WON on a return visit - the agent lost the Hydra duel on the Red Starter deck - so the
+`kept (a quest item)` and `Presence of the Hydra withheld` lines are unseen in play.
+
+**Not done:** the captive's first text still says "Sorin has been dealt with" before Sorin is beaten, and "Thank you
+sir" - both original. A player who freed the captive before this round gets one more coin on the next return (no flag
+yet), and a Sorin beaten before this round on a lair that already cycled pays his amulet once more.
+
+Files: `forge-gui-mobile/src/forge/adventure/util/PlaceRewards.java`, `util/DungeonRotation.java`,
+`stage/MapStage.java`, `data/AdventureQuestStage.java`; `maps/map/vampirecastle/vampirecastle_4.tmx`,
+`maps/map/main_story_defend/waste_town_abandoned.tmx`; `dev-tools/place_payout_scan.py` (new),
+`dev-tools/add_loot_guards.py`.
+
 ## Round 346: the player's roads on the world map (2026-09-25)
 
 User: *"Let's implement the new Roads on the World map. I only want these for the player towns. When you build your

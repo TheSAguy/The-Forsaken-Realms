@@ -1274,7 +1274,7 @@ public class MapStage extends GameStage {
                     // Round 299: an enemy beaten before the once-per-place rules existed - mark what it paid, and a
                     // lair's boss as down (PlaceRewards.noteEarlierDefeat()).
                     if ("enemy".equals(type)) {
-                        PlaceRewards.noteEarlierDefeat(prop.get("enemy"));
+                        PlaceRewards.noteEarlierDefeat(prop.get("enemy"), prop.get("reward")); // round 347: + its placement's items
                         Object authored = prop.get("enemy"); // round 322: see beatenPlacements
                         EnemyData authoredData = authored == null ? null : WorldData.getEnemy(authored.toString());
                         if (authoredData != null)

@@ -445,35 +445,5 @@
   <object id="130" template="../../../../common/maps/obj/waypoint.tx" x="80" y="144"/>
   <object id="131" template="../../../../common/maps/obj/waypoint.tx" x="160" y="176"/>
   <object id="132" template="../../../../common/maps/obj/waypoint.tx" x="144" y="192"/>
-   <object id="133" template="../../../../common/maps/obj/enemy.tx" x="448" y="432">
-   <properties>
-    <property name="enemy" value="Pointed Demonspawn"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="134" template="../../../../common/maps/obj/enemy.tx" x="273.5" y="227.25">
-   <properties>
-    <property name="enemy" value="Pointed Demonspawn"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="135" template="../../../../common/maps/obj/enemy.tx" x="80" y="144">
-   <properties>
-    <property name="enemy" value="Pointed Demonspawn"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="136" template="../../../../common/maps/obj/enemy.tx" x="146" y="195">
-   <properties>
-    <property name="enemy" value="Pointed Demonspawn"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="137" template="../../../../common/maps/obj/enemy.tx" x="416" y="304">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

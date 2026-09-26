@@ -265,6 +265,9 @@
    <properties>
     <property name="dialog">[
   {
+    &quot;condition&quot;: [
+      { &quot;checkQuestFlag&quot;: &quot;VampireCaptiveFreed&quot;, &quot;not&quot;: true }
+    ],
     &quot;text&quot;: &quot;The poor peasant cowers before you.&quot;,
     &quot;options&quot;: [
       {
@@ -272,17 +275,38 @@
         &quot;text&quot;: &quot;Thanks... Thank you sir, please take this item as a token of my gratitude.&quot;,
         &quot;options&quot;: [
           {
-              &quot;name&quot;: &quot;(Take the Challenge Coin)&quot;,            
-              &quot;action&quot;: [
+            &quot;name&quot;: &quot;(Take the Challenge Coin)&quot;,
+            &quot;action&quot;: [
               { &quot;deleteMapObject&quot;: -1 },
-              { &quot;addItem&quot;: &quot;Challenge Coin&quot; }
+              { &quot;addItem&quot;: &quot;Challenge Coin&quot; },
+              { &quot;setQuestFlag&quot;: { &quot;key&quot;: &quot;VampireCaptiveFreed&quot;, &quot;val&quot;: 1 } }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;condition&quot;: [
+      { &quot;checkQuestFlag&quot;: &quot;VampireCaptiveFreed&quot; }
+    ],
+    &quot;text&quot;: &quot;Another prisoner cowers before you - Sorin has taken a new captive.&quot;,
+    &quot;options&quot;: [
+      {
+        &quot;name&quot;: &quot;You are free to go.&quot;,
+        &quot;text&quot;: &quot;Bless you, traveler. I have nothing to give, but I will not forget this.&quot;,
+        &quot;options&quot;: [
+          {
+            &quot;name&quot;: &quot;(Continue)&quot;,
+            &quot;action&quot;: [
+              { &quot;deleteMapObject&quot;: -1 }
             ]
           }
         ]
       }
     ]
   }
-] </property>
+]</property>
     <property name="displayNameOverride" value="Captive"/>
     <property name="enemy" value="Farmer"/>
     <property name="speedModifier" type="float" value="30"/>

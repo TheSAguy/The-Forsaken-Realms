@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 347 — once-per-game payouts, lair keys, retired places off the quest pool
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `loadObjects()`: a deleted enemy placement passes
+  its own `reward` property to `PlaceRewards.noteEarlierDefeat()` as well.
+- **`forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java`** — `setTargetPOI(tokens, name)`: places
+  retired for good (`DungeonRotation.isRetired`) leave the pool after the tag filter, before the inactive fallback.
+- **`forge-gui-mobile/src/forge/adventure/util/PlaceRewards.java`** (mod) — quest items never coin-flipped on a return
+  visit; `isSignatureItem(EnemySprite, ItemData)` reads the placement's rewards too; `noteEarlierDefeat(enemy, reward)`.
+- **`forge-gui-mobile/src/forge/adventure/util/DungeonRotation.java`** (mod) — `onQuestTargetBound()` refuses a retired
+  place.
+
 ### Round 346 — the player roads
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `roadBit()`, `playerRoadBit()`, `roadMask()`,
