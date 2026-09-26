@@ -58,7 +58,7 @@ import forge.adventure.world.World;
  */
 public final class RoadNetwork {
     /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
-    public static final int VERSION = 1;
+    public static final int VERSION = 2; // 2: roads past a town chained on both sides lifted (round 351b)
     /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
     public static final double EXISTING_ROAD_DISCOUNT = 0.35;
     /** A pair of towns is joined by road when this share of either staircase between them is road. */
@@ -114,6 +114,23 @@ public final class RoadNetwork {
             return false;
         int r = ra != 0 ? ra : rb;
         return r == 0 || r == RING;
+    }
+
+    /**
+     * Round 351b (the user: "There were two roads, one leading from Shiv (Red Ring City) to two nearby towns. I think it
+     * should have been 1 to one town and from that town to the next"): is a road from a to b direct - no town it may also
+     * link to lies between them, nearer to both than they are to each other (the lune of a relative-neighborhood graph)?
+     * A road past such a town runs beside the chain through it. World-gen distances (positions, pixels).
+     */
+    public static boolean worldGenDirect(List<PointOfInterest> towns, PointOfInterest a, PointOfInterest b) {
+        float dab = a.getPosition().dst(b.getPosition());
+        for (PointOfInterest w : towns) {
+            if (w == a || w == b || !worldGenLinkAllowed(a, w) || !worldGenLinkAllowed(w, b))
+                continue;
+            if (Math.max(a.getPosition().dst(w.getPosition()), w.getPosition().dst(b.getPosition())) < dab)
+                return false;
+        }
+        return true;
     }
 
     /** The star as it stands: the hub (or the campfire when a plane has no Orazca), the campfire, the rim in order. */
@@ -416,13 +433,21 @@ public final class RoadNetwork {
             if (star.role(e.a) != 0 && star.role(e.b) != 0 && !star.allowsHop(e.a, e.b))
                 clutter.add(e);
         edges.removeAll(clutter);
+        List<Edge> shortcuts = shortcuts(world, towns, star, edges);
+        edges.removeAll(shortcuts);
         Set<Long> kept = drawnTiles(edges);
-        int clutterTiles = 0;
+        int clutterTiles = 0, shortcutTiles = 0;
         for (Edge e : clutter) {
             for (long c : e.canon)
                 clutterTiles += liftOld(world, c, prot, kept, touched);
             for (long c : e.reverse)
                 clutterTiles += liftOld(world, c, prot, kept, touched);
+        }
+        for (Edge e : shortcuts) {
+            for (long c : e.canon)
+                shortcutTiles += liftOld(world, c, prot, kept, touched);
+            for (long c : e.reverse)
+                shortcutTiles += liftOld(world, c, prot, kept, touched);
         }
         int inner = sweepWheel(world, star, prot, kept, touched);
         int doubledPairs = 0, doubledTiles = 0;
@@ -444,7 +469,49 @@ public final class RoadNetwork {
         System.out.println("[TFR-Roads] old roads: " + edges.size() + " town pair(s) joined; the wheel - " + clutter.size()
                 + " line(s) off it lifted (" + clutterTiles + " tile(s)) + " + inner + " stray tile(s) inside the rim"
                 + (campLink > 0 ? ", the campfire's road to the hub laid (" + campLink + " tile(s))" : "") + "; "
-                + doubledPairs + " pair(s) drawn from both ends down to one staircase (" + doubledTiles + " tile(s))");
+                + doubledPairs + " pair(s) drawn from both ends down to one staircase (" + doubledTiles + " tile(s)); "
+                + shortcuts.size() + " road(s) past a town already chained on both sides lifted (" + shortcutTiles + " tile(s))");
+    }
+
+    /**
+     * Round 351b (the user: "There were two roads, one leading from Shiv (Red Ring City) to two nearby towns. I think it
+     * should have been 1 to one town and from that town to the next. The road with the red arrow should not have
+     * existed."): the roads that pass a town w lying between their ends - nearer to both than they are to each other -
+     * while roads already join w to both ends. The chain through w carries them. Each lifted road's chain is shorter at
+     * every step, so nothing is cut off. The star's own pairs are the wheel's business.
+     */
+    static List<Edge> shortcuts(World world, List<PointOfInterest> towns, Star star, List<Edge> edges) {
+        Map<PointOfInterest, int[]> anchors = new IdentityHashMap<>();
+        for (PointOfInterest t : towns)
+            anchors.put(t, anchor(world, t));
+        Set<Long> joined = new HashSet<>();
+        Map<PointOfInterest, Integer> index = new IdentityHashMap<>();
+        for (int i = 0; i < towns.size(); i++)
+            index.put(towns.get(i), i);
+        for (Edge e : edges)
+            joined.add(pairKey(index.get(e.a), index.get(e.b)));
+        List<Edge> out = new ArrayList<>();
+        for (Edge e : edges) {
+            if (star.role(e.a) != 0 && star.role(e.b) != 0)
+                continue;
+            double d = dist(anchors.get(e.a), anchors.get(e.b));
+            int ia = index.get(e.a), ib = index.get(e.b);
+            for (int iw = 0; iw < towns.size(); iw++) {
+                if (iw == ia || iw == ib)
+                    continue;
+                int[] w = anchors.get(towns.get(iw));
+                if (Math.max(dist(anchors.get(e.a), w), dist(w, anchors.get(e.b))) < d
+                        && joined.contains(pairKey(ia, iw)) && joined.contains(pairKey(iw, ib))) {
+                    out.add(e);
+                    break;
+                }
+            }
+        }
+        return out;
+    }
+
+    static double dist(int[] a, int[] b) {
+        return Math.hypot(a[0] - b[0], a[1] - b[1]);
     }
 
     /** Old road inside the rim that no kept line draws. */

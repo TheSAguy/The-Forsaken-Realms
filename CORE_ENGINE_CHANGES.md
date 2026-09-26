@@ -38,6 +38,14 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 351b — world-gen links to the nearest direct town, saves lose roads past a chained town
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — the nearest-neighbor and rescue passes pick with
+  `RoadNetwork.worldGenDirect()` (direct with room, direct when full, then the old rule); the log counts the links that
+  changed.
+- **`forge-gui-mobile/src/forge/adventure/util/RoadNetwork.java`** (mod) — `worldGenDirect()`, `shortcuts()` in
+  `normalizeOldRoads()`, `VERSION` 2.
+
 ### Round 351 — one set of road rules, the wasteland and restored-Orazca layouts
 
 - **`forge-gui-mobile/src/forge/adventure/util/RoadNetwork.java`** (mod, new) — the road rules: canonical walks,

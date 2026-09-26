@@ -2956,6 +2956,7 @@ public class World implements Disposable, SaveFileContent {
             // capital (TerritoryControl.connectCapturedTownByRoad). The star's explicit edges never skip.
             float roadSkip = Config.instance().getTuningData().initialTownRoadSkipFraction;
             int skippedRoadSources = 0;
+            int worldGenChainedLinks = 0; // round 351b: links that went to a direct town instead of past one
             HashSet<Long> usedEdges = new HashSet<>();
             int[] roadDegree = new int[towns.size()]; // round 100: links per town; edges touching a Ring City or Spawn count for nobody
             boolean[] anyRoadLink = new boolean[towns.size()];
@@ -2971,29 +2972,48 @@ public class World implements Disposable, SaveFileContent {
                     skippedRoadSources++;
                     continue; // round 99: fewer world-gen roads
                 }
-                int smallestIndex = -1;
-                int secondSmallestIndex = -1;
-                float smallestDistance = Float.MAX_VALUE;
+                // Round 351b (the user: "There were two roads, one leading from Shiv (Red Ring City) to two nearby towns. I
+                // think it should have been 1 to one town and from that town to the next"): the nearest town a DIRECT road
+                // reaches (RoadNetwork.worldGenDirect - no town it may link to lies between them) that has room for a link;
+                // else the nearest direct one even when full - the links cap yields to the chain; else the nearest with
+                // room, the old rule. Skipping full towns used to send a road past a full neighbor to the town beyond it.
+                List<Integer> nearestFirst = new ArrayList<>();
                 for (int j = 0; j < towns.size(); j++) {
-
-                    if (i == j || usedEdges.contains((long) i | ((long) j << 32)) || roadLinkFull(towns, roadDegree, j, maxLinks))
+                    if (i == j || usedEdges.contains((long) i | ((long) j << 32)))
                         continue;
                     if (!forge.adventure.util.RoadNetwork.worldGenLinkAllowed(current, towns.get(j)))
                         continue; // round 351: the star's own pass lays its roads - the wheel and nothing else
-                    float dist = current.getPosition().dst(towns.get(j).getPosition());
-                    if (dist > data.maxRoadDistance)
+                    if (current.getPosition().dst(towns.get(j).getPosition()) > data.maxRoadDistance)
                         continue;
+                    nearestFirst.add(j);
+                }
+                nearestFirst.sort(java.util.Comparator.comparingDouble(j -> current.getPosition().dst(towns.get(j).getPosition())));
+                int directRoom = -1, directFull = -1, room = -1, room2 = -1;
+                for (int j : nearestFirst) {
                     if (roadLineCrossesBarrier(current, towns.get(j))) { // round 294: no road through the barrier
                         barrierRoadLinksDropped++;
                         continue;
                     }
-                    if (dist < smallestDistance) {
-                        smallestDistance = dist;
-                        secondSmallestIndex = smallestIndex;
-                        smallestIndex = j;
-
+                    boolean full = roadLinkFull(towns, roadDegree, j, maxLinks);
+                    if (!full) {
+                        if (room < 0)
+                            room = j;
+                        else if (room2 < 0)
+                            room2 = j;
                     }
+                    if (directRoom < 0 && forge.adventure.util.RoadNetwork.worldGenDirect(towns, current, towns.get(j))) {
+                        if (!full)
+                            directRoom = j;
+                        else if (directFull < 0)
+                            directFull = j;
+                    }
+                    if (directRoom >= 0 && room2 >= 0)
+                        break;
                 }
+                int smallestIndex = directRoom >= 0 ? directRoom : directFull >= 0 ? directFull : room;
+                int secondSmallestIndex = smallestIndex == room ? room2 : room;
+                if (smallestIndex >= 0 && smallestIndex != room)
+                    worldGenChainedLinks++;
                 if (smallestIndex < 0)
                     continue;
                 usedEdges.add((long) i | ((long) smallestIndex << 32));
@@ -3014,23 +3034,39 @@ public class World implements Disposable, SaveFileContent {
             for (int i = 0; i < towns.size(); i++) {
                 if (anyRoadLink[i] || isRingOrSpawnTown(towns.get(i)))
                     continue;
-                int nearest = -1;
-                float nearestDist = Float.MAX_VALUE;
+                // Round 351b: the same preference as the pass above - the nearest direct town with room, then the nearest
+                // direct one even when full, then the nearest with room.
+                PointOfInterest lone = towns.get(i);
+                List<Integer> nearestFirst = new ArrayList<>();
                 for (int j = 0; j < towns.size(); j++) {
-                    if (i == j || roadLinkFull(towns, roadDegree, j, maxLinks))
+                    if (i == j)
                         continue;
-                    if (!forge.adventure.util.RoadNetwork.worldGenLinkAllowed(towns.get(i), towns.get(j)))
+                    if (!forge.adventure.util.RoadNetwork.worldGenLinkAllowed(lone, towns.get(j)))
                         continue; // round 351: never into the wheel's middle
-                    float dist = towns.get(i).getPosition().dst(towns.get(j).getPosition());
-                    if (dist < nearestDist && roadLineCrossesBarrier(towns.get(i), towns.get(j))) { // round 294
+                    nearestFirst.add(j);
+                }
+                nearestFirst.sort(java.util.Comparator.comparingDouble(j -> lone.getPosition().dst(towns.get(j).getPosition())));
+                int directRoom = -1, directFull = -1, room = -1;
+                for (int j : nearestFirst) {
+                    if (roadLineCrossesBarrier(lone, towns.get(j))) { // round 294
                         barrierRoadLinksDropped++;
                         continue;
                     }
-                    if (dist < nearestDist) {
-                        nearestDist = dist;
-                        nearest = j;
+                    boolean full = roadLinkFull(towns, roadDegree, j, maxLinks);
+                    if (!full && room < 0)
+                        room = j;
+                    if (forge.adventure.util.RoadNetwork.worldGenDirect(towns, lone, towns.get(j))) {
+                        if (!full) {
+                            directRoom = j;
+                            break;
+                        }
+                        if (directFull < 0)
+                            directFull = j;
                     }
                 }
+                int nearest = directRoom >= 0 ? directRoom : directFull >= 0 ? directFull : room;
+                if (nearest >= 0 && nearest != room)
+                    worldGenChainedLinks++;
                 if (nearest < 0)
                     continue;
                 usedEdges.add((long) i | ((long) nearest << 32));
@@ -3132,7 +3168,8 @@ public class World implements Disposable, SaveFileContent {
             System.out.println("[TFR-Roads] world-gen town roads: " + repeatedRoadLinks + " pair(s) named twice drawn once");
             System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
                     + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + "), "
-                    + rescuedTowns + " unlinked town(s) rescued, max " + maxLinks + " links per town");
+                    + rescuedTowns + " unlinked town(s) rescued, max " + maxLinks + " links per town; " + worldGenChainedLinks
+                    + " link(s) went to the nearest direct town instead of past it (round 351b)");
             if (hasBarrier())
                 System.out.println("[TFR-Barrier] world-gen roads: " + barrierRoadLinksDropped
                         + " candidate link(s) passed over - each would have crossed the barrier");
