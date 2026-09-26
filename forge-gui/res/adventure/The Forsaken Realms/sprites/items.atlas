@@ -1182,6 +1182,9 @@ YinYangRune
 YinYangHalf
   xy: 48, 1072
   size: 16, 16
+YinYangRuneDark
+  xy: 64, 1072
+  size: 16, 16
 items.png
 size: 480,1008
 format: RGBA8888

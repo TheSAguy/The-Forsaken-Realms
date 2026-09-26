@@ -3,6 +3,9 @@
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
+ <properties>
+  <property name="noShopTileHiding" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" name="main" tilewidth="16" tileheight="16" tilecount="10112" columns="158">
   <image source="../../../../common/maps/tileset/main.png" width="2528" height="1024"/>
   <tile id="78">
@@ -17743,12 +17746,12 @@
  </layer>
  <layer id="2" name="Ground" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJzdmM1Kw0AQx/cRBMFLPdePXKpi/exjeBC8KdIHSSJ66FPoCygVETwVRCyFqvWDSvXuVR/ADNnBzXQ22aTZBPzD0CRNNr+d3dnJTvVIiLnAVC14Qix50Ws9V4hPN7wX7NmN/r/IPPO1KsYEbW8F1ogx0HFdiJP6+PM6dQOekWT8COyJ8M16/HOcgHGD2NaEfLblEL65NSHmA5tJ0e8smjJsXx13VevBecWzwzkd0+a5O37NUfiqMibQpys58wFbzQv7T/velmxXhNFh/NdgruUhHK9tJq5BEGdDN8qIfOp4NmQbeeveN7M7P9qnTRnP2Cdd/2wK1qp3uUb1A77vZSF+lsP/6DpVNBtV30++p0yZ8NH8VqSS+LgcWaT+w/iW6cMy/dfxk491fJjfaI7JU30NB3fc0XDSHJOnHpQ88ao5fpO/A8KHawrkQfotXKSS5p9NvjTzTze+NvnSzD+dH23yTTL/bPPBN+ij3E+hQSzeEAO/qec0Vm3x9QgbNXw38MHvTo3/Zi2LDw35VHsugA+/QdFg73y9r/ffpHyT5smuwsn5D1nK4lM5Rwyfzn+4DyiKD3TWjPLt1fR8psrCN63sFXdrf9d7zPzD86x86lprYl3D+wYJ42tL4BdHU5s4bUbnICiOz8b+CPl0+2tdPBfpP67OyXGqjLd+dr62G58rUQetkO+wla59jBuVD+u1JnskmrOGMZxZ4r3HjG+VqT9zrBewFhC+DzmHXgK7JIx58UGN1zQ+aE6NW9fz4oMabxpGUyXxcfVvjg/r0BWPt6x13zg+ZIP3gjDuuPXlF+DT9eQ=
+   eJzdmM1Kw0AQx/cRBMFLPbdqLlGxfvYxPAjeFPFBkoge+hT6AkpFBE+CiKVQv6VivXvVBzBDd3AznU02H5uAfxiapMnmt7M7O9mpHwjRCE3VrC/EvB+91vOE+PRG94I9e9H/55hnvpbEmKDt9dBaMQY6bApx1Bx/XqduyPMhGYehPRK+aZ9/jhMwrhJbz8lnWw7haywLMRPaVIp+Z9GEYfvquKtaCc9rvh3OyZg2T73xa47CV5cxgT5dLJgP2Fx/1H/a945kuyCMDuO/FnOtCOF4bTBxDYI4G3hRRuRTx7Ml2yhad4GZ3QbRPq3JeMY+6fpnU7BWvcs1qh/yfS8I8bMw+o+uU2WzUfWD5HuqlAkfzW9lKomPy5Fl6j+Mb5U+rNJ/10HysY4P8xvNMUWqr+Hgjq81nDTHFKl7JU+8ao7f5O8T4cM1BfIg/RYuU0nzzyZfmvmnG1+bfGnmn86PNvnyzD/bfPAN+iD3U2gQi1fEwG/qOY1VW3w9wkYN3w188Lvp8t+sVfGhIZ9qzyXw4TcoGuydL3f0/svLlzdPdhVOzn/IUhWfyvnB8On8h/uAsvhAJ/tRvm1Xz2eqLHyTyl5xy/273mPmH55n5VPXWhPrGt73JPmO9/PxpRX4xYmpTahzEBQ3vjb2R8in21/r4rlM/3F1To5TZbwJsvN1vPhcidptj/j22unax7hR+bBea7JHojlrEMOZJd57zPjWmfozx3oGawHhG8o59BLaOWEsig9qvKbxQXNq3LpeFB/UeNMwmiqJj6t/c3xYh675vGWt+8bxIRu8F4Rxx60vv4VW9IE=
   </data>
  </layer>
  <layer id="6" name="Ground2" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+750MzB8BeJv3aS5r8AAt11eUHf7keB+XHap9DAwqAKxWg/l8dtuzMDQYUy8m4hx30jMHx1Y4n6dHX3dB0t/CfGkhRO93IcPeJKRrwcy/aUTEca0il8QWKzDwLBEh3R309J9pABvIuJ7IN1HDBh136j7Rt036r5R91HHffjaz8TUF7R2H7WBPA8DgwIQc3FCaBiWyYXQcrkIORCNzkYWIwQSqdQmdEjEz6cW8KJiP49cQE6aQwfOHdRVN1SBB1pYUrMfP9IAeliOglEwCkbBKGBgAABnAQlq
+   eJxjYBgF1AJN3NTDw8F9PkYD7z5S3UCO+750MzB8BeJv3aS5r8AAt11eUHf7keB+XHap9DAwqAKxWg/l8dtuzMDQYUy8m4hx30jMHx1Y4n6dHX3dB0t/CfGkhRO93IcPeJKRrwcy/aUTEca0il8QWKzDwLBEh3R309J9pABvIuJ7IN1HDBh136j7Rt036r5R91HHffjaz8TUF7R2H7WBPA8DgwIQc3FCaBiWyYXQcrkIORCNzkYWIwQSqdQmdEjEz6cW8KJiP49cQE6aQwfOHdRVRwqgZl+ZUuAxiNwy1MFoWI6CUTAKRgEmAACzyQlq
   </data>
  </layer>
  <layer id="3" name="Walls" width="40" height="40">
@@ -17760,6 +17763,9 @@
   </data>
  </layer>
  <layer id="5" name="Overlay" width="40" height="40">
+  <properties>
+   <property name="noCollision" type="bool" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJztzzEOglAQRdGXKLRU2moNNiZoo2tTGyvCX4RrAbcABYtxEksjWBAGk3uSW/xq3peAeasKqbaehfcS/KMmk9rMewUAb5tU2qbeK7477aWz1e28lwAALol0tW6J95JPj0X/GwB+tQrScoQiK7bu5bsoDLcO0/wxtzsH6zjRPQDz9AJ5eSEW
   </data>
@@ -17767,7 +17773,7 @@
  <objectgroup id="4" name="Objects">
   <object id="47" template="../../../../common/maps/obj/inn.tx" x="536" y="144"/>
   <object id="53" template="../../../../common/maps/obj/spellsmith.tx" x="452" y="212"/>
-  <object id="55" template="../../../../common/maps/obj/shop.tx" x="464" y="514">
+  <object id="55" template="../../../../common/maps/obj/shop.tx" x="544" y="496.727">
    <properties>
     <property name="commonShopList" value="Plains"/>
     <property name="fixedShop" type="bool" value="true"/>

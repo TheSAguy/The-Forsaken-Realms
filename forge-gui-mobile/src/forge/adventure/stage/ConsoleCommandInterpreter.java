@@ -959,7 +959,8 @@ public class ConsoleCommandInterpreter {
         });
         // Round 340 (user: "yin/yan rune... When you use it, 1 shard. half the rune will drop on the ground. then when you
         // use it again, you will teleport to the spot you dropped it. Should work on overworld only."): the first use sets
-        // the dark half down on the player's tile (World.yinYangAnchor, drawn by WorldStage), the second brings the player
+        // the light half down on the player's tile (World.yinYangAnchor, drawn by WorldStage - round 349: "leave the white
+        // half on the ground", the rune's icon shows the dark half meanwhile), the second brings the player
         // back to it and picks it up. Inside a place, or with nowhere walkable left at the half, the shard comes back.
         registerCommand(new String[]{"yinyang"}, s -> {
             if (MapStage.getInstance().isInMap() || Current.world() == null)
@@ -968,7 +969,7 @@ public class ConsoleCommandInterpreter {
             if (Current.world().getYinYangAnchor() == null) {
                 int[] tile = stage.setYinYangHalf();
                 stage.player.playEffect(Paths.EFFECT_SPARKS, 1f);
-                GameHUD.getInstance().addNotification("You set the dark half of the rune down here. Use the rune again to return to it.");
+                GameHUD.getInstance().addNotification("You set the light half of the rune down here and keep the dark one. Use the rune again to return to it.");
                 System.out.println("[TFR-YinYang] half set down at (" + tile[0] + "," + tile[1] + ")");
                 return "Yin-Yang half set down at " + tile[0] + "," + tile[1];
             }

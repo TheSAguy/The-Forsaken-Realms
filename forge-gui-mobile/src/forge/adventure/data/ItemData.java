@@ -77,7 +77,29 @@ public class ItemData implements Serializable, Cloneable {
     }
 
     public Sprite sprite() {
-        return Config.instance().getItemSprite(iconName);
+        return Config.instance().getItemSprite(displayIconName());
+    }
+
+    /** Round 349 (the user: "When in half ... update the icon in your inv to just look like the black half"): the icon
+     *  this item shows right now. The player's own Yin-Yang rune shows its dark half (items.atlas YinYangRuneDark) while
+     *  the light half lies on the world map (World.getYinYangAnchor); a rune in a shop or on a reward keeps the stone. */
+    public String displayIconName() {
+        if (!"YinYangRune".equals(iconName))
+            return iconName;
+        try {
+            forge.adventure.world.WorldSave save = forge.adventure.world.WorldSave.getCurrentSave();
+            if (save == null || save.getWorld() == null || save.getWorld().getYinYangAnchor() == null || save.getPlayer() == null)
+                return iconName;
+            for (ItemData owned : save.getPlayer().getItems())
+                if (owned == this)
+                    return "YinYangRuneDark";
+            for (ItemData stored : save.getPlayer().getArmoryStorage())
+                if (stored == this)
+                    return "YinYangRuneDark";
+        } catch (RuntimeException ignored) {
+            // no game loaded yet - the whole stone
+        }
+        return iconName;
     }
 
     public String getDescription() {

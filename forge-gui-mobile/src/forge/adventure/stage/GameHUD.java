@@ -789,7 +789,8 @@ public class GameHUD extends Stage {
 
     void setAbilityButton(ItemData data) {
         if (data != null) {
-            TextraButton button = Controls.newTextButton("[%90][+" + data.iconName + "][+Shards][BLACK]" + data.shardsNeeded, () -> {
+            // Round 349: displayIconName - the Yin-Yang rune shows its dark half while the light half is out.
+            TextraButton button = Controls.newTextButton("[%90][+" + data.displayIconName() + "][+Shards][BLACK]" + data.shardsNeeded, () -> {
                 if (console.isVisible())
                     return;
                 if (Forge.advFreezePlayerControls)

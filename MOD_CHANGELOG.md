@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 349: the Capitol's outer gate opens, no shop eats a wall, the rune splits along its swirl (2026-09-26)
+
+The user, after playing rounds 342-348 live: *"Looks like when you updated my Capitol Changes, you made the 'Overlay'
+solid. Now I can't get into the town. All Overlay parts I added should not have collision ... The outer gate should work
+like the smaller inner gate."* - *"For the Capitol, I move two of the land shops, I think the one was causing a 'gap' in
+the wall. Please update accordingly."* - *"Move the second Aux2 spot to under the first."* - *"For the Bonfire, is there a
+way to speed up the animation on it?"* - *"For Yin/Yang, when you cut it in half. Cut it in the shape of the swirl. (Black
+or White.) ... When in half. leave the white half on the ground and update the icon in your inv to just look like the
+black half."* Built into the agent folder only - the user's live game was running. Local commit, NOT pushed.
+
+1. **The outer gate.** The Capitol's Overlay holds the user's wall tops - 38 walls_16 tiles - and round 346b's
+   `walls_16.tsx` gave every one of its tiles a collision box. `MapStage.loadCollision()` builds boxes from EVERY tile
+   layer, so the wall top over the outer gate (22,32) and its arch (22,33) closed the passage. New layer property
+   **`noCollision`**: MapStage skips `loadCollision()` for such a layer (`[TFR-Collision] <map>: layer Overlay is
+   noCollision`). Set on the Overlay of `player_capital.tmx` and of `player_town.tmx` (the Town's Overlay has no
+   colliding tile today - set for the next edit). The wall itself still blocks through the Walls layer's boxes.
+2. **The wall gaps.** `MapStage.findOverheadTiles()` is stock-town logic: a shop's building art sits on Walls/Overlay above
+   its doorstep and is hidden while the shop is rubble or an economy building. The player's Capitol and Town draw their
+   shops as the shops' own sprites and put the land huts on Ground2, so the search found no shop art and took the nearest
+   Walls/Overlay tile within three rows instead: the outer wall for land shops 55 and 77 (the two gaps in the user's
+   screenshot), courtyard road tiles for 85-93, the courtyard's east wall for 98, a neighbor's roof for 91 - and every
+   shop in a freshly raised Capitol is rubble, so all of them hid. The user's move of shop 55 (464,514 -> 544,497, with
+   its hut tile) would only have moved its gap to column 34. New map property **`noShopTileHiding`**: no tile near a
+   shop is ever hidden (`[TFR-ShopTiles]`). Set on both player maps (the Town's shops found nothing anyway). The user's
+   move is committed as they made it.
+3. **Ability3 under Ability2**: x 107, y 42 in `ui/inventory.json` and `ui/armory.json`, y 146 in the two portrait
+   layouts (the doll's stacked boxes step 22 px). The top-center box is gone.
+4. **The Bonfire's flicker** (`WorldStage.BonfireActor`): its only motion was an 8% brightness wave at under 2 Hz
+   (`0.92 + 0.08 sin 11t`). Now two faster waves beat against each other (19 and 31 rad/s, alpha 0.68-1.0) and the
+   flame leaps - the sprite up to 7% taller from its base on a rhythm of its own. Real animation frames would need art.
+5. **The Yin-Yang rune splits along its swirl**, cut from the approved icon's own pixels (`items.png` 32,1072): each
+   color flood-filled 8-way with the dot it encloses, the grey anti-alias pixels on both halves' edges. `YinYangHalf`
+   (48,1072) is now the WHITE half (it was the icon's left half, cut straight); new `YinYangRuneDark` (64,1072 - on the
+   main page, round 340b's glyph rule) is the black half. The half on the ground gets a dark outline in code (the sprite
+   four times, tinted black, one art pixel out) so it shows on snow. While the half is out, `ItemData.displayIconName()`
+   gives the PLAYER's own rune (inventory or armory, matched by identity - a shop's or a reward's rune keeps the whole
+   stone) `YinYangRuneDark`; `ItemData.sprite()` and the HUD's ability glyph use it, and `WorldStage` rebuilds the
+   ability buttons a frame after the half goes down or comes back. The description and the set-down message say the
+   light half now ("... and keep the dark one").
+
+Also answered: the Gitrog Bog did not vanish after a loss because it is `type: castle` tagged `Story` - only rotating
+dungeons and caves vanish on a loss (`DungeonRotation.notRotatableReason`).
+
+**Seen in the agent game** (cheats, its own profile): the Ability3 box under the Bonfire's; the rune's first use - the
+white half on the ground with its outline, the HUD button and the doll and inventory showing the black half, the
+corrected message; the second use - the whole stone back on the HUD; the Capitol (this save's, already raised):
+`layer Overlay is noCollision` and `noShopTileHiding` logged, a walk north through the outer gate arrived (360,147) and
+back out, the outer wall whole past the land shops, the courtyard's road stubs intact with every shop destroyed; a
+Bonfire built and drawn. **NOT seen:** the Bonfire's new flicker in motion (a still cannot show it).
+
+Files: `forge-gui-mobile/src/forge/adventure/stage/MapStage.java`, `stage/WorldStage.java`, `stage/GameHUD.java`,
+`stage/ConsoleCommandInterpreter.java`, `data/ItemData.java`; `maps/map/towns/player_capital.tmx` (+ the user's move of
+shop 55), `maps/map/towns/player_town.tmx`; `ui/inventory.json`, `ui/inventory_portrait.json`, `ui/armory.json`,
+`ui/armory_portrait.json`; `sprites/items.png`, `sprites/items.atlas`; `world/items.json`.
+
 ## Round 348: the rim roads as a wheel, the minimap road's color, one of each legend (2026-09-26)
 
 Three user reports in one round, two of which turned out to be bugs rather than the taste changes they

@@ -38,6 +38,18 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 349 — layer noCollision, map noShopTileHiding, the Yin-Yang's split icon, a livelier Bonfire
+
+- **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `loadMap()`: map property `noShopTileHiding` (the
+  shop overhead-tile search is skipped); the layer loop skips `loadCollision()` for a layer with `noCollision`;
+  `isTrueProperty()`.
+- **`forge-gui-mobile/src/forge/adventure/data/ItemData.java`** — `displayIconName()` (the player's Yin-Yang rune shows
+  `YinYangRuneDark` while its half is out); `sprite()` uses it. The serialVersionUID stays pinned.
+- **`forge-gui-mobile/src/forge/adventure/stage/GameHUD.java`** — `setAbilityButton()`'s glyph uses `displayIconName()`.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `BonfireActor.draw()`'s flicker and leap;
+  `syncYinYangActor()` rebuilds the ability buttons and outlines the half on the ground.
+- **`forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`** — the rune's set-down message.
+
 ### Round 348 — the minimap road's color, the rim roads as a wheel, one legend at a time
 
 - **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `drawMinimapTile()`: the player-road branch fills

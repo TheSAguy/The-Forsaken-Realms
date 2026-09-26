@@ -106,6 +106,10 @@ public class MapStage extends GameStage {
     // map tried), this locates the actual tile(s) per shop at map-load time and lets ShopActor
     // hide/restore them directly - see findOverheadTiles()/setShopOverheadTilesHidden().
     private final Map<Integer, List<OverheadTile>> shopOverheadTiles = new HashMap<>();
+    // Round 349: the map property noShopTileHiding. The player's Capitol and Town draw their shops as the shops' own
+    // sprites and huts, so the search below found no building of theirs - it found the outer wall (a land shop's "gap"
+    // in it), courtyard roads and a neighbor's roof, and hid those whenever a shop was rubble or an economy building.
+    private boolean noShopTileHiding;
 
     // Card Shop Type Re-Roll (2026-08-11, round 8, user spec: "add a re-roll card shop type for
     // 50 shards... randomly pick a new card shop type... change the little bulletin board").
@@ -696,6 +700,9 @@ public class MapStage extends GameStage {
         isInMap = true;
         GameHUD.getInstance().showHideMap(false);
         this.tiledMap = map;
+        noShopTileHiding = isTrueProperty(map.getProperties().get("noShopTileHiding"));
+        if (noShopTileHiding)
+            System.out.println("[TFR-ShopTiles] " + targetMap + ": noShopTileHiding - no tile near a shop is ever hidden");
         for (MapActor actor : new Array.ArrayIterator<>(actors)) {
             actor.remove();
             foregroundSprites.removeActor(actor);
@@ -790,7 +797,12 @@ public class MapStage extends GameStage {
                 spriteLayer = layer;
             }
             if (layer instanceof TiledMapTileLayer) {
-                loadCollision((TiledMapTileLayer) layer);
+                // Round 349 (the user, of the Capitol's outer gate): a layer marked noCollision - the Capitol's Overlay, the
+                // wall tops drawn over the player - blocks nothing, whatever its tiles' own collision boxes say.
+                if (isTrueProperty(layer.getProperties().get("noCollision")))
+                    System.out.println("[TFR-Collision] " + targetMap + ": layer " + layer.getName() + " is noCollision");
+                else
+                    loadCollision((TiledMapTileLayer) layer);
             } else {
                 loadObjects(layer, sourceMap, targetMap);
             }
@@ -884,6 +896,11 @@ public class MapStage extends GameStage {
         float ymi = r2.y;
         float yma = ymi + r2.height;
         return xmi >= r1.x && xmi <= r1.x + r1.width && xma >= r1.x && xma <= r1.x + r1.width && ymi >= r1.y && ymi <= r1.y + r1.height && yma >= r1.y && yma <= r1.y + r1.height;
+    }
+
+    /** Round 349: a Tiled bool property - libGDX hands it over as a Boolean, an untyped one as the string "true". */
+    private static boolean isTrueProperty(Object value) {
+        return value != null && Boolean.parseBoolean(value.toString());
     }
 
     private void loadCollision(TiledMapTileLayer layer) {
@@ -1908,7 +1925,7 @@ public class MapStage extends GameStage {
                         // plain (int) cast would round toward zero and land on the wrong row for.
                         int shopCol = Math.round(actor.getX() / actor.getWidth());
                         int shopRow = Math.round(actor.getY() / actor.getHeight());
-                        shopOverheadTiles.put(id, findOverheadTiles(shopCol, shopRow));
+                        shopOverheadTiles.put(id, noShopTileHiding ? new ArrayList<>() : findOverheadTiles(shopCol, shopRow));
                         // While a wasteland shop is still rubble, the sign would give away what it
                         // sells before the player has rebuilt it. Signs used to only be created at
                         // all when the shop was already rebuilt at map-load time, which meant a

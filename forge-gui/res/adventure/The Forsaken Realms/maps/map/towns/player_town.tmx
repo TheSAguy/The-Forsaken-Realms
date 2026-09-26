@@ -3,6 +3,9 @@
  <editorsettings>
   <export target="wastetown..tmx" format="tmx" />
  </editorsettings>
+ <properties>
+  <property name="noShopTileHiding" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" source="../../../../common/maps/tileset/main.tsx" />
  <tileset firstgid="10113" source="../../../../common/maps/tileset/buildings.tsx" />
  <tileset firstgid="11905" source="../../../../common/maps/tileset/buildings-nocollide.tsx" />
@@ -27,6 +30,9 @@
   </data>
  </layer>
  <layer id="5" name="Overlay" width="30" height="30">
+  <properties>
+   <property name="noCollision" type="bool" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eNrt0VENACAMxNA6gd+N+VczMZiAkJA+A03uQJJ0wkiY+a7f5Qe3rIAKd5Ak/WcDIJQCRQ==
   </data>

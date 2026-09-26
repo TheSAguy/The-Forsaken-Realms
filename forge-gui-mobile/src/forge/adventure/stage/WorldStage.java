@@ -299,12 +299,16 @@ public class WorldStage extends GameStage implements SaveFileContent {
             if (radius <= 0)
                 return;
             float strength = radius / (float) World.BONFIRE_RADIUS;
-            float flicker = 0.92f + 0.08f * MathUtils.sin(time * 11f);
+            // Round 349 (the user: "is there a way to speed up the animation on it?"): the fire's only motion was an 8%
+            // brightness wave at under 2 Hz. Now two faster waves beat against each other - an uneven flicker - and the
+            // flame leaps, the sprite stretching up to 7% taller from its base on a rhythm of its own.
+            float flicker = 0.84f + 0.10f * MathUtils.sin(time * 19f) + 0.06f * MathUtils.sin(time * 31f + 1.3f);
+            float leap = 1f + 0.07f * Math.max(0f, 0.6f * MathUtils.sin(time * 23f) + 0.4f * MathUtils.sin(time * 37f + 0.7f));
             float alpha = parentAlpha * (0.3f + 0.7f * strength) * flicker;
             Color prev = batch.getColor();
             float pr = prev.r, pg = prev.g, pb = prev.b, pa = prev.a;
             batch.setColor(pr, pg, pb, alpha);
-            batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
+            batch.draw(sprite, getX(), getY(), getWidth(), getHeight() * leap);
             batch.setColor(pr, pg, pb, pa);
         }
     }
@@ -424,6 +428,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (world.getYinYangStamp() == yinYangActorStamp)
             return;
         yinYangActorStamp = world.getYinYangStamp();
+        // Round 349: the rune's ability button shows only its dark half while the light half is out (ItemData.
+        // displayIconName) - rebuild the buttons whenever the half goes down or comes back, a frame later, since the
+        // change can come from one of those very buttons.
+        Gdx.app.postRunnable(() -> GameHUD.getInstance().updateAbility());
         if (yinYangActor != null) {
             foregroundSprites.removeActor(yinYangActor);
             yinYangActor = null;
@@ -444,6 +452,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 World w = Current.world();
                 if (!w.isExploredWorld((int) (getX() / w.getTileSize()), (int) (getY() / w.getTileSize())))
                     return;
+                // Round 349: the half on the ground is the rune's WHITE half, cut along its swirl - on snow it would all
+                // but vanish, so a dark outline goes round it first: the sprite four times, tinted black, one art pixel out.
+                float px = getWidth() / sprite.getRegionWidth();
+                Color prev = batch.getColor();
+                float pr = prev.r, pg = prev.g, pb = prev.b, pa = prev.a;
+                batch.setColor(0.08f, 0.08f, 0.1f, pa * parentAlpha);
+                batch.draw(sprite, getX() - px, getY(), getWidth(), getHeight());
+                batch.draw(sprite, getX() + px, getY(), getWidth(), getHeight());
+                batch.draw(sprite, getX(), getY() - px, getWidth(), getHeight());
+                batch.draw(sprite, getX(), getY() + px, getWidth(), getHeight());
+                batch.setColor(pr, pg, pb, pa);
                 batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
             }
         };
@@ -452,7 +471,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         foregroundSprites.addActor(yinYangActor);
     }
 
-    /** Round 340: the Yin-Yang rune's first use - the dark half goes down on the player's tile. */
+    /** Round 340: the Yin-Yang rune's first use - the light half goes down on the player's tile (round 349: the white
+     *  half, cut along the swirl; the player keeps the dark one). */
     public int[] setYinYangHalf() {
         int[] tile = {playerTileX(), playerTileY()};
         Current.world().setYinYangAnchor(tile);

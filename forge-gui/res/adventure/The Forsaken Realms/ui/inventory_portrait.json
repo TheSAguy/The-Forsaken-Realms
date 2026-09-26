@@ -41,8 +41,8 @@
       "style": "item_frame_static",
       "width": 20,
       "height": 20,
-      "x": 62,
-      "y": 124
+      "x": 107,
+      "y": 146
     },
     {
       "type": "ImageButton",
