@@ -11,6 +11,11 @@
 	"tilesetName": "Road",
 	"color": "ffffff"
 },
+"playerRoadTileset": {
+	"tilesetAtlas": "world/tilesets/player_road.atlas",
+	"tilesetName": "PlayerRoad",
+	"color": "d8d0c0"
+},
 "biomesSprites": "world/sprites/map_sprites.json",
 "maxRoadDistance": 1000,
 "biomesNames": [

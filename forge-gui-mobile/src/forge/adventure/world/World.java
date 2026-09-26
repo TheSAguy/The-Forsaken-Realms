@@ -650,7 +650,7 @@ public class World implements Disposable, SaveFileContent {
      */
     public java.util.Set<String> roadConnectedTownIds(int startTileX, int startTileY) {
         java.util.Set<String> reached = new java.util.HashSet<>();
-        long roadBit = 1L << data.GetBiomes().size();
+        long roadBit = roadMask(); // round 346: both road kinds connect
         int w = getWidthInTiles(), h = getHeightInTiles(), ts = getTileSize();
         java.util.Map<Long, PointOfInterest> townAt = new java.util.HashMap<>();
         for (PointOfInterest poi : getAllPointOfInterest()) {
@@ -759,6 +759,17 @@ public class World implements Disposable, SaveFileContent {
     // Round 340: the Yin-Yang rune's other half - the tile it lies on, or null. Set by one use, the next use brings
     // the player here and picks it up (ConsoleCommandInterpreter "yinyang"). Saved as yinYangAnchor.
     private int[] yinYangAnchor;
+    // Round 346: PlayerRoads.NETWORK_VERSION once the Capitol's road network was laid in this world (saved as
+    // playerRoadsBuilt); 0 = never, and a save with a Capitol lays it on load.
+    private int playerRoadsBuilt;
+
+    public int getPlayerRoadsBuilt() {
+        return playerRoadsBuilt;
+    }
+
+    public void setPlayerRoadsBuilt(int version) {
+        playerRoadsBuilt = version;
+    }
     private int yinYangStamp = 0;
 
     public int[] getYinYangAnchor() {
@@ -896,7 +907,7 @@ public class World implements Disposable, SaveFileContent {
         FileHandle handle = Config.instance().getFile(Paths.WORLD);
         String rawJson = handle.readString();
         this.data = (new Json()).fromJson(WorldData.class, rawJson);
-        biomeTexture = new BiomeTexture[data.GetBiomes().size() + 1];
+        biomeTexture = new BiomeTexture[data.GetBiomes().size() + 2]; // round 346: + the player road above the old road
 
         int biomeIndex = 0;
         for (BiomeData biome : data.GetBiomes()) {
@@ -905,6 +916,11 @@ public class World implements Disposable, SaveFileContent {
             biomeIndex++;
         }
         biomeTexture[biomeIndex] = new BiomeTexture(data.roadTileset, getTerrainTileSize());
+        // Round 346: the player road - the cobbles laid between the Capitol and the player's towns (PlayerRoads) - is
+        // its own layer one bit above the old road, drawn and joined up by the same rule; a plane without the tileset
+        // draws it as the old road.
+        biomeTexture[biomeIndex + 1] = new BiomeTexture(data.playerRoadTileset != null ? data.playerRoadTileset
+                : data.roadTileset, getTerrainTileSize());
         barrierTextures = loadBarrierTextures(); // round 294
         worldDataLoaded = true;
     }
@@ -1049,6 +1065,7 @@ public class World implements Disposable, SaveFileContent {
         }
         bonfireStamp++;
         obstacleSweep = saveFileData.containsKey("obstaclesSwept") ? saveFileData.readInt("obstaclesSwept") : 0;
+        playerRoadsBuilt = saveFileData.containsKey("playerRoadsBuilt") ? saveFileData.readInt("playerRoadsBuilt") : 0; // round 346
         ResourceSpawns.forceResync(); // actors on WorldStage must rebuild from this loaded state
 
         poiDespawnDay.clear();
@@ -1203,6 +1220,7 @@ public class World implements Disposable, SaveFileContent {
             data.storeObject("yinYangAnchor", yinYangAnchor);
         data.store("resourceSpawnsSeeded", resourceSpawnsSeeded ? 1 : 0);
         data.store("obstaclesSwept", obstacleSweep);
+        data.store("playerRoadsBuilt", playerRoadsBuilt); // round 346
         saveBarrier(data); // round 294
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
@@ -1838,9 +1856,33 @@ public class World implements Disposable, SaveFileContent {
         }
     }
 
+    // Round 346: two kinds of road share the tile map - the old road (the bit above every biome, laid by world-gen and
+    // by every color's captures) and the player road one bit above it (PlayerRoads). roadMask() is "any road" for
+    // every ownership mask and skip rule; the drawing loop needs nothing, biomeTexture has a picture per bit.
+    public long roadBit() {
+        return 1L << data.GetBiomes().size();
+    }
+
+    public long playerRoadBit() {
+        return 1L << (data.GetBiomes().size() + 1);
+    }
+
+    public long roadMask() {
+        return roadBit() | playerRoadBit();
+    }
+
+    /** The layer index a tile's highestBiome() answers on a player road. */
+    public int playerRoadIndex() {
+        return data.GetBiomes().size() + 1;
+    }
+
+    public boolean isPlayerRoadTile(int x, int y) {
+        return (getBiome(x, y) & playerRoadBit()) != 0;
+    }
+
     public long getBiomeMapXY(int x, int y) {
         try {
-            return biomeMap[x][height - y - 1] & (~(0b1 << data.GetBiomes().size()));
+            return biomeMap[x][height - y - 1] & ~roadMask(); // round 346: neither road kind is an owner
         } catch (ArrayIndexOutOfBoundsException e) {
             return biomeMap[biomeMap.length - 1][biomeMap[biomeMap.length - 1].length - 1];
         }
@@ -3725,7 +3767,7 @@ public class World implements Disposable, SaveFileContent {
      */
     private int repatchGround() {
         List<BiomeData> biomes = data.GetBiomes();
-        long roadBit = 1L << biomes.size();
+        long roadBit = roadMask(); // round 346: either road kind keeps its ground
         BiomeData waste = wasteBiome();
         OpenSimplexNoise noise = new OpenSimplexNoise(seed);
         float noiseZoom = data.noiseZoomBiome;
@@ -3933,6 +3975,10 @@ public class World implements Disposable, SaveFileContent {
             // the same corner every structure's minimap pixel comes from.
             target.drawPixmap(createSmallPixmap(wasteBiome().tilesetAtlas, wasteBiome().tilesetName, 0), x * mm, rawY * mm);
             target.drawPixmap(createSmallPixmap(BARRIER_ATLAS, "barrier", 0), x * mm, rawY * mm);
+            return;
+        }
+        if ((biomeMap[x][rawY] & playerRoadBit()) != 0 && data.playerRoadTileset != null) { // round 346
+            target.drawPixmap(createSmallPixmap(data.playerRoadTileset.tilesetAtlas, data.playerRoadTileset.tilesetName, 0), x * mm, rawY * mm);
             return;
         }
         if (highestBiome(biomeMap[x][rawY]) >= data.GetBiomes().size()) {
@@ -4492,9 +4538,32 @@ public class World implements Disposable, SaveFileContent {
      * Returns the number of tiles actually converted to road.
      */
     public int buildRoad(List<PointOfInterest> waypoints, BiConsumer<Integer, Integer> onTileRepainted) {
+        return layRoad(waypoints, onTileRepainted, false);
+    }
+
+    /**
+     * Round 346: the player road along the waypoints (PlayerRoads) - the same walk as buildRoad(), the tiles taking
+     * the player road bit; an old road under it is paved over (its bit cleared, counted in lastRoadPavedOver()). An
+     * old road laid later (buildRoad) leaves a player road tile alone.
+     */
+    public int buildPlayerRoad(List<PointOfInterest> waypoints, BiConsumer<Integer, Integer> onTileRepainted) {
+        return layRoad(waypoints, onTileRepainted, true);
+    }
+
+    private int lastRoadPavedOver;
+
+    /** The old road tiles the last buildPlayerRoad() paved over. */
+    public int lastRoadPavedOver() {
+        return lastRoadPavedOver;
+    }
+
+    private int layRoad(List<PointOfInterest> waypoints, BiConsumer<Integer, Integer> onTileRepainted, boolean playerRoad) {
         if (data == null || biomeMap == null || terrainMap == null || waypoints == null || waypoints.size() < 2)
             return 0;
-        long roadBit = 1L << data.GetBiomes().size();
+        long roadBit = roadBit();
+        long playerRoadBit = playerRoadBit();
+        long roadMask = roadMask();
+        int pavedOver = 0;
         java.util.HashSet<Long> touched = new java.util.HashSet<>();
         for (int seg = 0; seg + 1 < waypoints.size(); seg++) {
             if (roadLineCrossesBarrier(waypoints.get(seg), waypoints.get(seg + 1))) {
@@ -4517,8 +4586,17 @@ public class World implements Disposable, SaveFileContent {
             for (int i = 0; i < 1000; i++) {
                 if (!(startX < 0 || startY <= 0 || startX >= width || startY > height)) {
                     int rawY = height - startY;
-                    if ((biomeMap[startX][rawY] & roadBit) == 0 || terrainMap[startX][rawY] != 0) {
-                        biomeMap[startX][rawY] |= roadBit;
+                    long bits = biomeMap[startX][rawY];
+                    // round 346: an old road never overwrites a player road; a player road paves the old one over
+                    boolean wanted = playerRoad ? (bits & playerRoadBit) == 0 : (bits & roadMask) == 0;
+                    if (wanted || terrainMap[startX][rawY] != 0) {
+                        if (playerRoad) {
+                            if ((bits & roadBit) != 0)
+                                pavedOver++;
+                            biomeMap[startX][rawY] = (bits & ~roadBit) | playerRoadBit;
+                        } else {
+                            biomeMap[startX][rawY] |= roadBit;
+                        }
                         terrainMap[startX][rawY] = 0;
                         redrawMinimapTile(startX, rawY);
                         updateFogOfWarPixmap(startX, rawY);
@@ -4537,6 +4615,7 @@ public class World implements Disposable, SaveFileContent {
                 }
             }
         }
+        lastRoadPavedOver = pavedOver; // round 346
         // Chunk-texture patches for every changed tile plus a 2-tile ring around it - a road
         // tile's neighbors blend against it, same neighbor-staleness reasoning as
         // repaintBiomeAroundTown()'s post-loop repaint.
@@ -4596,7 +4675,7 @@ public class World implements Disposable, SaveFileContent {
         // by the road-drawing pass), so "draw the road texture" is road's only possible meaning at
         // that index - no shared-terrainMap misinterpretation risk the way ocean's multi-region
         // tileset had.
-        long roadBit = 1L << data.GetBiomes().size();
+        long roadBit = roadMask(); // round 346: either road kind is preserved, neither is an owner
         // The blue-border fix, extended to PLAYER town captures (reported: the border was gone at
         // every AI color's territory but still present around the player's own captured towns).
         // Mechanism, same as claimWastelandRing()'s dual-bit write: a single-bit repainted tile
@@ -4757,7 +4836,7 @@ public class World implements Disposable, SaveFileContent {
         int centerTileX = (int) (keepCenter.x / data.tileSize);
         int centerTileY = (int) (keepCenter.y / data.tileSize);
         int radiusSq = radiusTiles * radiusTiles;
-        long roadBit = 1L << biomes.size();
+        long roadBit = roadMask(); // round 346
         int mm = data.miniMapTileSize;
         int tilesReassigned = 0;
 
@@ -4929,7 +5008,7 @@ public class World implements Disposable, SaveFileContent {
         int centerTileY = (int) (center.y / data.tileSize);
         int innerRadiusSq = innerRadiusTiles * innerRadiusTiles;
         int outerRadiusSq = outerRadiusTiles * outerRadiusTiles;
-        long roadBit = 1L << biomes.size();
+        long roadBit = roadMask(); // round 346
         int mm = data.miniMapTileSize;
 
         // Flatten the rival sources once (skipping my own color's list - those are mySources).
@@ -5354,7 +5433,7 @@ public class World implements Disposable, SaveFileContent {
         // (the same seed and zoom as generateNew() and rescatterDoodads()), so it is as busy as the land around it.
         OpenSimplexNoise bandNoise = new OpenSimplexNoise(seed);
         float bandZoom = data.noiseZoomBiome;
-        long roadBit = 1L << data.GetBiomes().size();
+        long roadBit = roadMask(); // round 346
         for (int wx = centerWorldX - outerRadiusTiles; wx <= centerWorldX + outerRadiusTiles; wx++) {
             if (wx < 0 || wx >= width)
                 continue;
@@ -5578,7 +5657,7 @@ public class World implements Disposable, SaveFileContent {
             }
         }
 
-        long roadBit = 1L << biomes.size();
+        long roadBit = roadMask(); // round 346
         for (int wx = 0; wx < width; wx++) {
             for (int wy = 0; wy < height; wy++) {
                 if (highestBiome(getBiome(wx, wy)) != biomeIndex)

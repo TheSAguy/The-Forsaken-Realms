@@ -475,7 +475,8 @@ public class TownRestoration {
         world.revealArea((int) (target.getCenter().x / world.getTileSize()), // round 293: the painted disc's center
                 (int) (target.getCenter().y / world.getTileSize()),
                 repaintRadius, WorldStage.getInstance()::refreshBackgroundTile);
-        TerritoryControl.connectCapturedTownByRoad(world, target, "player");
+        if (!PlayerRoads.connectTown(world, target, "a captured town")) // round 346: the Capitol's network, once it stands
+            TerritoryControl.connectCapturedTownByRoad(world, target, "player");
         updateTownLifeBonus(true);
         if (wasCapital) {
             world.markCapitolLost(fromColor);
@@ -522,7 +523,8 @@ public class TownRestoration {
         // Every 5th owned town is +1 max life (user spec 2026-08-09), and the new holding gets a
         // road to the player's nearest other town, routed through any towns between.
         updateTownLifeBonus(true);
-        TerritoryControl.connectCapturedTownByRoad(world, point, "player");
+        if (!PlayerRoads.connectTown(world, point, "a restored town")) // round 346: the Capitol's network, once it stands
+            TerritoryControl.connectCapturedTownByRoad(world, point, "player");
         // Main-quest hook (2026-08-26, "Raise the Banner" rework): publish the live restored-town
         // count as a quest flag so quest stages can gate "restore N towns" on one numeric
         // comparison. setQuestFlag (NOT advanceQuestFlag) deliberately - only the set* variant
@@ -1050,6 +1052,9 @@ public class TownRestoration {
 
         EconomyBuildings.payCost(CAPITOL_COST_GOLD, CAPITOL_COST_WOOD, CAPITOL_COST_STONE, CAPITOL_COST_SHARDS);
         point.transformInto(capitolData, world.getRandom()); // template name -> displayName "Orazca"
+        // Round 346: the Capitol stands - the player road network is laid from it to every held town, the old roads
+        // under it paved over (PlayerRoads).
+        PlayerRoads.rebuildNetwork(world, WorldStage.getInstance()::refreshBackgroundTile, "the Capitol raised");
 
         PointOfInterestChanges newChanges = WorldSave.getCurrentSave().getPointOfInterestChanges(point.getID());
         newChanges.getMapFlags().put(TOWN_RESTORED_FLAG, (byte) 1);

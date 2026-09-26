@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 346: the player's roads on the world map (2026-09-25)
+
+User: *"Let's implement the new Roads on the World map. I only want these for the player towns. When you build your
+capitol, I want at that point to replace the existing roads with the new roads. It should only replace the roads
+between player towns and capitol. Any new player towns built will be connected to the road network using the new
+roads. Need to remove all old roads that the new roads pave over ... I want the new roads to increase player movement
+by 15% more than the old roads."* Owned Ring Cities count as player towns (the user, asked). Built into the repo and
+the agent folder only - the user is play-testing the live folder and asked that it stay as it is. Local commit, NOT
+pushed. Also in this round: the Jumpstart entry fee.
+
+- **A second road layer.** Roads are a bit on the world's tile map (`roadBit`, the bit above every biome, drawn by
+  `biomeTexture[biomes.size()]` from world.json's roadTileset). The player road is the next bit up
+  (`World.playerRoadBit()`, texture `biomes.size() + 1` from the new `playerRoadTileset` - a plane without one draws
+  it as the old road), so the per-tile layer walk draws it and joins it up by the same autotile rule, one layer above
+  the old road. `roadMask()` = both kinds, and every ownership mask and skip rule that read the old bit (the flood
+  fill of road-connected towns, the ground re-patch, the three capture repaints, the two doodad scatters,
+  `getBiomeMapXY`) now reads the mask, so a player road is preserved and never an owner, like the old one. The minimap
+  paints it with playerRoadTileset's own pixel.
+- **The art**: `world/tilesets/player_road.png/.atlas` (region PlayerRoad, 96x128 = an XP autotile at the 32 px HD
+  size) from the cobbles the user boxed on Road.png, sand keyed out, VX -> XP -> 2/3, by
+  `dev-tools/world-art/player_road.py` (the same block round 342 cut for the place maps).
+- **Laid from the Capitol** (`forge.adventure.util.PlayerRoads`): a route from the Capitol to a held town is Dijkstra
+  over every town and capital with cost = distance squared and no edge across the barrier - connectCapturedTownByRoad's
+  rule, so a chain of short hops through the towns roughly between beats one long line - and `World.buildPlayerRoad`
+  walks it like buildRoad, the tiles taking the player bit and an old road under them paved over (its bit cleared,
+  counted). Old roads the new road does not cover stay - a neutral town's other links, a world-gen link the route did
+  not follow. An old road laid later (an AI capture) never overwrites a player road tile.
+  - When the Capitol is raised (`TownRestoration.upgradeToCapitol`, and the console's `capitol raise`): a route to
+    every held town - the Capitol plus every town `isTownRestored` says is the player's, which is how a restored
+    town, a captured town and a captured Ring City are all recorded.
+  - A town restored or captured while the Capitol stands (the two TownRestoration sites) gets the Capitol route
+    instead of the old-road link; before the Capitol, the old link as ever.
+  - A save with a Capitol from before this round lays its network once on load (`World.playerRoadsBuilt`, saved;
+    `PlayerRoads.migrateOnLoad` from WorldSave after the ground migrations).
+- **Speed**: the old road's 1.5x times `settings.json playerRoadSpeedBonus` (1.15 -> 1.725x) for the player only
+  (`WorldStage`), logged as `[TFR-Roads] the player is on a player road - x1.725` when the kind underfoot changes.
+  Enemies keep their old-road speed.
+- **Jumpstart entry fee** (the user, same evening: *"change the entry fee for Jumpstart to 50 shards or 500g or the
+  bronze coin"*): `AdventureEventRules` Jumpstart 200 gold / 5 shards -> 500 / 50, the Bronze Coin accepted as before.
+  Unscaled like the others - the town price modifier applies on read; an event already rolled in a save keeps the fee
+  it was made with.
+- The plane validator learns `playerRoadTileset` and `playerRoadSpeedBonus`.
+- SEEN in the agent (a fresh world, cheats; the live folder untouched): `[TFR-Roads] player road network (the Capitol raised): 0 held town(s)` right after `capitol raise` (only the Capitol held); restoring a far wasteland ruin (Apothecary's Forest, tile 50,422) laid `Orazca -> Secluded Encampment -> Benalia -> Scrappers' Hold -> ... -> Apothecary's Forest - 479 tile(s) laid, 223 old road tile(s) paved over` (19 waypoints - the star spoke and the old links under it paved over); the cobbles drawn on the world map from the town's gate, the old beige stub left where the new road did not cover it; standing on the road: `the player is on a player road - x1.725`. Llanowar, a Ring City, offered a quest instead of a restore - Ring Cities are captured, not restored, so the held test used a ruin. Screenshots in the round's scratch.
+
 ## Round 345: the Demon's Bargain keeps its demon and settles for good (2026-09-25)
 
 User: *"There is a Dungeon that you enter, that has a dialog. The guy asks you if you play for Ante. Usually the

@@ -278,6 +278,7 @@ public class WorldSave {
                     // plane's current one - its own re-bake leaves the icon re-bake below nothing to do.
                     currentSave.world.migrateGround();
                     currentSave.world.migrateMapIconLayout();
+                    forge.adventure.util.PlayerRoads.migrateOnLoad(currentSave.world); // round 346: a Capitol from before
                     // Re-derive the minimap fog overlay now that the vision cache is real -
                     // World.load()'s own rebuild ran before pointOfInterestChanges loaded, so its
                     // Revealed tier (owned-town vision circles) was computed against an empty

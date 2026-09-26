@@ -1720,6 +1720,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         return spawn(WorldData.getEnemy(enemy));
     }
 
+    private boolean onPlayerRoad; // round 346: the last road kind logged
+
     // Territory Effects (MOD_SCOPE.md #17, user spec 2026-08-14 - the first concrete numbers ever
     // given for this item; before this round it was only a "candidate effect, none committed" in
     // the doc, confirmed via a direct code search that nothing implemented it yet). Multiplicative
@@ -1799,11 +1801,24 @@ public class WorldStage extends GameStage implements SaveFileContent {
         float sprintingMod = currentModifications.containsKey(PlayerModification.Sprint) ? 2 : 1;
         float runMod = isRunKeyHeld() ? RUN_KEY_SPEED_MULTIPLIER : 1f;
         if (biomeData.size() <= currentBiome) {// "if isOnRoad
-            player.setMoveModifier(1.5f * sprintingMod * runMod);
+            // Round 346 (the user: "the new roads increase player movement by 15% more than the old roads"): the
+            // player road (PlayerRoads), the layer above the old road, takes 1.5x times settings.json's
+            // playerRoadSpeedBonus. Logged when the kind underfoot changes, not every frame.
+            boolean playerRoad = currentBiome == world.playerRoadIndex();
+            float roadMod = 1.5f * (playerRoad ? Config.instance().getTuningData().playerRoadSpeedBonus : 1f);
+            if (playerRoad != onPlayerRoad) {
+                onPlayerRoad = playerRoad;
+                System.out.println("[TFR-Roads] the player is " + (playerRoad ? "on a player road - x" + roadMod : "off the player road"));
+            }
+            player.setMoveModifier(roadMod * sprintingMod * runMod);
             return;
         }
         BiomeData data = biomeData.get(currentBiome);
         if (data == null) return;
+        if (onPlayerRoad) { // round 346: off any road now - the log's other half
+            onPlayerRoad = false;
+            System.out.println("[TFR-Roads] the player is off the player road");
+        }
         player.setMoveModifier(1.0f * sprintingMod * territorySpeedModifier(data) * runMod);
 
         spawnDelay -= delta;

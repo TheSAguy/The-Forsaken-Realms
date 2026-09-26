@@ -322,6 +322,9 @@ public class TuningData {
     public float fogLitSpawnChance = 0.75f;
     public float fogDarkSpawnRate = 1.25f;
     public float fogDarkEnemySpeed = 1.1f;
+    // Round 346 (user: "the new roads increase player movement by 15% more than the old roads"): the player road's
+    // speed = the old road's 1.5x times this (WorldStage). PlayerRoads lays them from the Capitol.
+    public float playerRoadSpeedBonus = 1.15f;
 
     // Round 159, user request: "make an Apprentice slightly smaller and an Archmage slightly
     // bigger". A rendered enemy is atlasRegionSize x EnemyData.scale (CharacterSprite.draw), and

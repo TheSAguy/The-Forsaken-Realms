@@ -217,6 +217,9 @@
     "fogLitSpawnChance": 0.75,
     "fogDarkSpawnRate": 1.25,
     "fogDarkEnemySpeed": 1.1,
+    // Round 346: the player road (laid from the Capitol to the player's towns) moves the player this much faster
+    // than the old road (old road = 1.5x, so 1.15 -> 1.725x). Grep forge.log for [TFR-Roads].
+    "playerRoadSpeedBonus": 1.15,
 
     // Looted-dungeon timer (round 128, user request): a rotatable dungeon/cave the player walks out of
     // having taken every reward pickup, while live enemies are still inside, keeps this fraction of the

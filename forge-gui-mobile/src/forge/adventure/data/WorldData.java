@@ -31,6 +31,7 @@ public class WorldData implements Serializable {
     public int tileSize;
     public int miniMapTileSize;
     public BiomeData roadTileset;
+    public BiomeData playerRoadTileset; // round 346: the player road, drawn one layer above roadTileset (optional)
     public String biomesSprites;
     public float maxRoadDistance;
     public String[] biomesNames;

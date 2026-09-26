@@ -1267,8 +1267,10 @@ public class AdventureEventData implements Serializable {
                     acceptsChallengeCoin = false;
                     acceptsSilverChallengeCoin = false;
                     acceptsBronzeChallengeCoin = true;
-                    baseGoldEntry = 200;
-                    baseShardEntry = 5;
+                    // Round 346 (the user: "change the entry fee for Jumpstart to 50 shards or 500g or the bronze coin");
+                    // was 200 gold / 5 shards. Unscaled, like the others - the town price modifier applies on read.
+                    baseGoldEntry = 500;
+                    baseShardEntry = 50;
                     startingLife = 15;
                     allowsAddBasicLands = false;
                     break;

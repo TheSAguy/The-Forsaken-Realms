@@ -38,6 +38,22 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 346 — the player roads
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `roadBit()`, `playerRoadBit()`, `roadMask()`,
+  `playerRoadIndex()`, `isPlayerRoadTile()`; a second road texture; `roadMask()` at every ownership mask and skip
+  rule that read the old bit; `buildRoad()` and `buildPlayerRoad()` share `layRoad()` (the player kind paves the old
+  bit over, `lastRoadPavedOver()`); the minimap's player-road pixel; `playerRoadsBuilt` saved and loaded.
+- **`forge-gui-mobile/src/forge/adventure/util/PlayerRoads.java`** — new: the network from the Capitol
+  (`rebuildNetwork`, `connectTown`, `migrateOnLoad`, `routeThroughTowns`).
+- **`forge-gui-mobile/src/forge/adventure/util/TownRestoration.java`** — the raise lays the network; a restore or
+  capture asks PlayerRoads first, connectCapturedTownByRoad only without a Capitol.
+- **`forge-gui-mobile/src/forge/adventure/world/WorldSave.java`** — `PlayerRoads.migrateOnLoad` after the ground
+  migrations.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — the player-road speed and its log.
+- **`forge-gui-mobile/src/forge/adventure/data/WorldData.java`** — `playerRoadTileset`;
+  **`TuningData.java`** — `playerRoadSpeedBonus`; **`AdventureEventData.java`** — the Jumpstart fee.
+
 ### Round 345 — kept-as-authored placements and the win flag
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `loadObjects()`: an enemy placement with
