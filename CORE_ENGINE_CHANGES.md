@@ -38,6 +38,17 @@ md` already gets updated after every change.
 Grouped by subsystem. Each entry: what changed, why (one line — full reasoning is in
 `MOD_CHANGELOG.md`, search for the linked feature).
 
+### Round 348 — the minimap road's color, the rim roads as a wheel, one legend at a time
+
+- **`forge-gui-mobile/src/forge/adventure/world/World.java`** — `drawMinimapTile()`: the player-road branch fills
+  `PLAYER_ROAD_MINIMAP_COLOR` (new, `0x5c3a1e`) instead of blitting the atlas swatch round 346 read, whose top-left
+  4x4 is fully transparent — it drew nothing and returned before any ground, so the tile kept a stale pixel.
+  World-gen roads: the star's rim joins each Center Town to its two NEIGHBORS by bearing around the hub (a wheel),
+  not to every other town (ten edges, a pentagram); the every-pair rule is kept below three towns.
+- **`forge-gui-mobile/src/forge/adventure/stage/WorldStage.java`** — `spawn(EnemyData, Vector2)` refuses a legend
+  whose catalog entry is already roaming; new `isLegendAlive(String)` matches on `EnemyData.name`, not the display
+  name, and ignores dispatched territory mages.
+
 ### Round 347 — once-per-game payouts, lair keys, retired places off the quest pool
 
 - **`forge-gui-mobile/src/forge/adventure/stage/MapStage.java`** — `loadObjects()`: a deleted enemy placement passes
