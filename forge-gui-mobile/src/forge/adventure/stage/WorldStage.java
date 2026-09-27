@@ -1846,6 +1846,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 System.out.println("[TFR-Roads] the player is " + (playerRoad ? "on a player road - x" + roadMod : "off the player road"));
             }
             player.setMoveModifier(roadMod * sprintingMod * runMod);
+            // Round 357 (the user: "make sure the player terrain does not hinder Quest creature spawns"): a road
+            // used to stop the spawn clock outright, and the player roads now run all over the player's land. The
+            // clock keeps running on a road; ordinary monsters still stay off it, a Defeat quest's creatures don't.
+            spawnDelay -= delta;
+            if (spawnDelay < 0) {
+                spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
+                spawnQuestExtraOnly("on a road");
+            }
             return;
         }
         BiomeData data = biomeData.get(currentBiome);
@@ -1876,6 +1884,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (lit && fogTuning != null && rand.nextFloat() >= fogTuning.fogLitSpawnChance) {
             System.out.println("[TFR-FogZone] lit spot (" + spotTileX + "," + spotTileY + ") - this roll skipped (chance "
                     + fogTuning.fogLitSpawnChance + ")");
+            // Round 357: the player's land is always lit, so this skip thinned quest creatures there - they still come.
+            spawnQuestExtraOnly("on a lit spot");
             return;
         }
         if (!lit && fogTuning != null && fogTuning.fogDarkSpawnRate > 0f)
@@ -2016,6 +2026,23 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
         }
         else spawn(enemyData, spawnOffset); // round 338: on the spot the fog zone was judged for
+    }
+
+    /**
+     * Round 357: a spawn roll the terrain holds back from ordinary monsters (a road, a lit spot's skip) still sends out
+     * an active Defeat quest's creature, at the chance an ordinary roll would (the 50/30/20 split above lets it out 80%
+     * of the time). Nothing happens without such a quest. Grep forge.log for [TFR-QuestSpawn].
+     */
+    private void spawnQuestExtraOnly(String where) {
+        float difficultyFactor = Current.player().getStatistic().rank();
+        List<EnemyData> pool = AdventureQuestController.instance().getExtraQuestSpawns(difficultyFactor);
+        if (pool.isEmpty() || rand.nextFloat() <= 0.2f)
+            return;
+        EnemyData extra = pool.get(rand.nextInt(pool.size()));
+        boolean spawned = spawn(extra);
+        System.out.println("[TFR-QuestSpawn] " + extra.getName() + " (tier=" + extra.tier + ", shown=\""
+                + extra.getTieredDisplayName() + "\") " + where + (spawned ? "" : " - no free spot, not placed")
+                + " (pool " + pool.size() + ")");
     }
 
     /**

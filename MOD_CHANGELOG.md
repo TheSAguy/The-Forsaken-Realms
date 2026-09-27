@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 357: quest creatures come on roads and on the player's land (2026-09-27)
+
+The user (v1.15 live, week 3): "I got a quest to kill Soldiers, but they took forever to spawn. Please make sure the
+player terrain does not hinder Quest creature spawns." forge.log: 4 spawn rolls in ~5 minutes, each with its quest-extra,
+and the [TFR-Roads] on/off lines all through. Two things on the player's land held the quest-tag extras back:
+1. **Roads stopped the spawn clock outright** - WorldStage.handleMonsterSpawn returned in the road branch before the
+   spawnDelay tick (upstream: roads are safe). Round 346's player roads now run all over the player's land at 1.725x, so
+   the player spent much of the trip on a road with no rolls at all.
+2. **The player's land is always lit**, so round 338's fogLitSpawnChance (0.75) skipped a quarter of the rolls there -
+   the quest-extra with them.
+Now the clock runs on a road and each roll sends out ONLY a Defeat quest's creature (ordinary monsters still stay off
+roads); a lit-spot skip still sends out the quest creature. Both at the ordinary roll's rate (the 50/30/20 split lets the
+extra out 80% of rolls) via WorldStage.spawnQuestExtraOnly; no quest = nothing changes. [TFR-QuestSpawn] lines (where,
+pool size, "no free spot"). Not changed: the pool is the union of every active Defeat stage's tag matches (the log's
+extras were Soldier matches AND another quest's Human Archer/Dwarven Grunt/Fair Knight), and dark land's 1.25x roll
+rate. Applies to old roads too, not only player roads.
+
 ## v1.15 "Cobblestone & Crown" released (2026-09-26, rounds 332-356)
 
 Stamps modVersion 1.15 / modVersionDate 09.26 / tfr.version 1.15 / manifestVersionCode 11500; notes RELEASE_NOTES_v1.15.md.
