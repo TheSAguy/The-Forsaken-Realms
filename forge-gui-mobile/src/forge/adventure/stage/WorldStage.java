@@ -2002,14 +2002,19 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             + data.name + " territory");
             }
         }
-        EnemyData extraSpawnForQuests = data.getExtraSpawnEnemy(difficultyFactor);
+        // Round 358: the quest first, then its creature (AdventureQuestController.pickExtraQuestSpawn) - was
+        // data.getExtraSpawnEnemy(), one draw over every active quest's creatures pooled together.
+        AdventureQuestController.QuestSpawnPick questPick =
+                AdventureQuestController.instance().pickExtraQuestSpawn(difficultyFactor, rand);
+        EnemyData extraSpawnForQuests = questPick == null ? null : questPick.enemy;
         if (extraSpawnForQuests != null) {
             // This path (quest-tag extra spawns) bypasses the weighted tier system by design -
             // quest-authored enemies spawn as authored. Logged since 2026-08-27 (it was the one
             // completely silent world-map spawn path) so tier reports stay attributable.
             System.out.println("[TFR-Spawn] quest-extra " + extraSpawnForQuests.getName()
                     + " (tier=" + extraSpawnForQuests.tier + ", shown=\""
-                    + extraSpawnForQuests.getTieredDisplayName() + "\") in " + data.name + " territory");
+                    + extraSpawnForQuests.getTieredDisplayName() + "\") in " + data.name + " territory for \""
+                    + questPick.quest + "\" (1 of " + questPick.questCount + " quest(s))");
             float spawnPicker = rand.nextFloat();
 
             if (spawnPicker > 0.5f) //todo: make this difficulty dependent, more enemies on harder difficulty
@@ -2035,14 +2040,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
      */
     private void spawnQuestExtraOnly(String where) {
         float difficultyFactor = Current.player().getStatistic().rank();
-        List<EnemyData> pool = AdventureQuestController.instance().getExtraQuestSpawns(difficultyFactor);
-        if (pool.isEmpty() || rand.nextFloat() <= 0.2f)
+        AdventureQuestController.QuestSpawnPick pick = AdventureQuestController.instance().pickExtraQuestSpawn(difficultyFactor, rand);
+        if (pick == null || rand.nextFloat() <= 0.2f)
             return;
-        EnemyData extra = pool.get(rand.nextInt(pool.size()));
+        EnemyData extra = pick.enemy;
         boolean spawned = spawn(extra);
         System.out.println("[TFR-QuestSpawn] " + extra.getName() + " (tier=" + extra.tier + ", shown=\""
                 + extra.getTieredDisplayName() + "\") " + where + (spawned ? "" : " - no free spot, not placed")
-                + " (pool " + pool.size() + ")");
+                + " for \"" + pick.quest + "\" (1 of " + pick.questCount + " quest(s))");
     }
 
     /**

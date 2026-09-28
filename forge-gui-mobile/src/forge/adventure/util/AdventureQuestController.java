@@ -39,9 +39,52 @@ public class AdventureQuestController implements Serializable {
         }
     }
 
+    /** Round 358: one quest's share of a spawn roll - the quest's name (for the log) and the creature picked from it. */
+    public static final class QuestSpawnPick {
+        public final String quest;
+        public final EnemyData enemy;
+        public final int questCount;
+        QuestSpawnPick(String quest, EnemyData enemy, int questCount) {
+            this.quest = quest;
+            this.enemy = enemy;
+            this.questCount = questCount;
+        }
+    }
+
+    /**
+     * Round 358 (the user took round 357's recommendation): the QUEST first, then a creature from it. The flat list
+     * below is the union of every active Defeat stage's tag matches, so a quest with a wide tag (15 Soldiers) crowded
+     * out one with a narrow tag (5 Merfolk), and every extra quest slowed the others by its pool size. Now each quest
+     * with anything to send gets an equal share of the rolls. Null when no active quest has a creature to send.
+     */
+    public QuestSpawnPick pickExtraQuestSpawn(float difficultyFactor, Random rand) {
+        List<AdventureQuestData> quests = new ArrayList<>();
+        List<List<EnemyData>> pools = new ArrayList<>();
+        for (AdventureQuestData q : Current.player().getQuests()) {
+            List<EnemyData> pool = getExtraQuestSpawns(q, difficultyFactor);
+            if (!pool.isEmpty()) {
+                quests.add(q);
+                pools.add(pool);
+            }
+        }
+        if (pools.isEmpty())
+            return null;
+        int pick = rand.nextInt(pools.size());
+        List<EnemyData> pool = pools.get(pick);
+        return new QuestSpawnPick(quests.get(pick).getName(), pool.get(rand.nextInt(pool.size())), pools.size());
+    }
+
     public List<EnemyData> getExtraQuestSpawns(float difficultyFactor){
         List<EnemyData> extraSpawns = new ArrayList<>();
-        for (AdventureQuestData q : Current.player().getQuests()) {
+        for (AdventureQuestData q : Current.player().getQuests())
+            extraSpawns.addAll(getExtraQuestSpawns(q, difficultyFactor));
+        return extraSpawns;
+    }
+
+    /** One quest's creatures for the extra spawn - round 358 split this out of the all-quests loop above. */
+    private List<EnemyData> getExtraQuestSpawns(AdventureQuestData q, float difficultyFactor) {
+        List<EnemyData> extraSpawns = new ArrayList<>();
+        {
             for (AdventureQuestStage c : q.stages) {
                 if (c.getStatus().equals(ACTIVE) && c.objective.equals(ObjectiveTypes.Defeat)) {
                     if (c.getTargetEnemyData() != null) {

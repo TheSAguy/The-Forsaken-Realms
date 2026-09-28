@@ -96,3 +96,6 @@ the collection count is identical, and life/gold/resources are intact.
 - **2026-09-11 (round 177)** - three new decks into empty slots 5-7 of slot 1 (`cinder_tyrants.txt`,
   `lanternwind_host.txt`, `wildfire_wyrms.txt`), built from `card_table.py`'s views; backup `.prededit9.bak`; verified:
   slots 0-4 and the collection unchanged except 3 free Mountains.
+- **2026-09-28 (round 358)** - a new run in save 1 (day 16): `stormcrown_dragons.txt` (slot 1, Izzet) and
+  `dawnwood_vanguard.txt` (slot 2, Selesnya), 40 each; backup `.prededit23.bak`; verified: slot 0 and stats unchanged,
+  collection +6 free Forests.

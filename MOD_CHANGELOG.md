@@ -14264,6 +14264,20 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 358: the quest first, then its creature; two decks for save 1 (2026-09-28)
+
+The user took round 357's recommendation. The quest-extra pool was the UNION of every active Defeat stage's tag matches,
+drawn uniformly - a wide tag (15 Soldiers) crowded out a narrow one (5 Merfolk), and each extra quest slowed the others
+by its pool size. `AdventureQuestController.pickExtraQuestSpawn` now picks a quest with something to send (equal share),
+then a creature from it; `getExtraQuestSpawns` split per quest (the flat union kept for BiomeData.getExtraSpawnEnemy, now
+unused by TFR). Both world-map paths use it: the ordinary roll's `[TFR-Spawn] quest-extra ... for "<quest>" (1 of N
+quest(s))` and round 357's `[TFR-QuestSpawn]`. The user's log first: 357's lit-spot path fired twice (Human Horseman,
+pool 15; Merfolk Fighter, pool 5), no road roll yet (short road stretches), no exceptions; engine noise only (Reality
+Fracture "FRA" cards missing from the card DB - upstream's upcoming set).
+Save 1 (day 16, 1,424 names): slot 1 "Stormcrown Dragons" (Izzet flyers + burn, `stormcrown_dragons.txt`), slot 2
+"Dawnwood Vanguard" (Selesnya mana dorks, angels, Arrest/Winds of Abandon, Jitte + Sol Ring, `dawnwood_vanguard.txt`),
+40 each; backup `.prededit23.bak`; Inspect after: stats and slot 0 "Black" unchanged, collection +6 free Forest only.
+
 ## Round 357: quest creatures come on roads and on the player's land (2026-09-27)
 
 The user (v1.15 live, week 3): "I got a quest to kill Soldiers, but they took forever to spawn. Please make sure the
