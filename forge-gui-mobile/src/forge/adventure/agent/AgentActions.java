@@ -424,6 +424,10 @@ final class AgentActions {
 
     private CompletableFuture<Map<String, Object>> save(int slot, String name) {
         if (!needGame()) return now(false, "no game loaded");
+        // Round 364: on the world map the player's saved position is only written by storePos() (a scene leave, or
+        // the F5 quicksave, which calls it first) - a bridge save used to record wherever the player last LEFT from.
+        if (!forge.adventure.scene.TileMapScene.instance().currentMap().isInMap())
+            forge.adventure.stage.WorldStage.getInstance().getPlayerSprite().storePos();
         boolean ok = WorldSave.getCurrentSave().save(name, slot);
         return now(ok, ok ? "saved to slot " + slot : "save failed");
     }
