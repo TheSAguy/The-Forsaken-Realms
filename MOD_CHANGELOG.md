@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 366: the Inn tournament panel wraps; "Bronze Coin" fits its corner (2026-09-28)
+
+The user's 4K screenshots: "Competition Style: 8 players, ma", "Block: The Lord of the Rings: Tale", "Simulate AI vs AI
+matches (slow" cut at the panel's right edge, and "Use Bronze Coin" clipped at the screen edge. Neither is 4K-specific.
+(1) EventScene: the Simulate checkbox's one-line label (~290 units) sat in the 144-unit `blessingInfo` ScrollPane,
+which allowed sideways scrolling and so sized its table to the widest child - the wrapped TypingLabels wrapped at ~300
+and the pane showed 144. The label wraps now (growX, image cell top) and the pane never scrolls sideways
+(`setScrollingDisabled(true, false)`). SEEN in the agent at 3840x2130: "8 players, matches played as best of 3, single
+elimination" and "Innistrad: Crimson Vow (set)" whole, the checkbox text on three lines. (2) DuelScene's lost-ante
+prompt: the coin is the last button = VPrompt's bottom-right CORNER button, which breaks its text at the first space
+and has no right padding (FButton.draw) - "Use" over "Bronze Coin" ran into the screen edge. Label now "Bronze Coin"
+("Bronze" over "Coin"); no engine edit. FAQ.md says "Bronze Coin". Not seen on a lost duel yet.
+
+## Round 365: corner-only road joints joined (2026-09-28)
+
+QA: "an old road can stop one tile short of a restored town". Found in the user's day-16 save (ExtractRoads + a gap
+scan): no missing END tile - two road tiles touching only at a CORNER, which the road art (drawn by the four straight
+neighbours) shows as a break. Five in the whole world, each 2-6 tiles from a place: Silent Crossing (a restored town;
+raw (565,544)-(564,545), the road one step short of its square), Unbroken Bough x2, Manning's Mill, Shrouded Marsh.
+The probable source is a lift taking a staircase's corner (liftOld along a reverse walk) - not reproduced; layRoad
+itself is 4-connected. `RoadNetwork.joinCorners`: every corner-only joint gets one corner filled (old road; player road
+when both ends are), never on water or the barrier (`World.canJoinRoadRaw`); `[TFR-Roads] corner joint ...` per join.
+Runs after rebuildPlayerNetwork / connectPlayerTown, after world-gen's road pass, and once per save on load:
+RoadNetwork.VERSION 3, SPLIT so a rule-2 save runs ONLY this pass (the full rule-1/2 normalization would turn the
+player network back to old road and re-route it) - `normalizeAndRebuild` for saves below 2. Verified on a copy of the
+user's save in the agent: "roads normalized to rule 3 (5 corner joint(s) joined) in 54 ms", a road diff of exactly the
+five tiles, player road count unchanged (545), the gap scan 0. The research agent's alternative ("never lift a tile
+whose removal disconnects") was rejected: every tile of a line holds its neighbours together, so no lift could run.
+
+## Round 364b: bridge saves on the world map record where the player stands
+
+Found testing 364: a bridge `cmd save` on the world map stored the position the player last LEFT a place from - the
+world position is only written by storePos() (a scene leave, or F5's quicksave, which calls it first). AgentActions.save
+now calls storePos() on the world map. Verified: saved at 358,355, walked to 358,349, loaded back at 358,355 (364's
+load no longer lands at (0,0) either). Round 362 seen too: a skip-intro new game wears Leather Boots.
+
 ## Round 364: the bridge's world-map load keeps the saved spot (2026-09-28, test tool only)
 
 `cmd load` from the world map dropped the player at (0,0): AgentActions.load switched GameScene -> GameScene, so

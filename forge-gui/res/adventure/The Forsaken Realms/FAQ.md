@@ -57,7 +57,7 @@ Your starting kit includes 1 Gold, 1 Silver and 3 Bronze Challenge Coins.
 - **Bronze, use 1: free Jumpstart entry** instead of the 500 gold or 50 Shard entry fee. You only ever get ONE
   Jumpstart tournament per player (New Game+ included), so only one Bronze coin can go this way.
 - **Bronze, use 2: ante ransom.** Lose an ordinary duel while playing for ante, and the "Card Lost" screen offers
-  **Use Bronze Coin**. You get back every card you anted in that match (every game of a best-of-3) and you keep your
+  **Bronze Coin**. You get back every card you anted in that match (every game of a best-of-3) and you keep your
   gold. The life loss still applies.
 
 **Getting a Bronze coin back, or a new one:**

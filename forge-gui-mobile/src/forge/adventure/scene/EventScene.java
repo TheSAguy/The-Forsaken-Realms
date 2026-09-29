@@ -268,11 +268,21 @@ public class EventScene extends MenuScene implements IAfterMatch {
         blessingScrollBottom.setWidth(blessing.getWidth() - 5);
         blessingContainer.add(blessingScrollTop).growX().top();
         blessingContainer.row();
-        blessingContainer.add(simulateAiMatches).left().padTop(5).padBottom(10);
+        // Round 366 (the user's 4K screenshots: "8 players, ma", "The Lord of the Rings: Tale", "(slow" cut at the right
+        // edge - at every resolution, not only 4K). The checkbox's one-line label measured ~290 units against the
+        // 144-unit pane, and a pane that may scroll sideways sizes its table to the widest child - so the wrapped
+        // labels above wrapped at ~300 and the pane showed the first 144. The label wraps now, and the pane never
+        // scrolls sideways, so everything in it wraps at its width.
+        simulateAiMatches.getLabel().setWrap(true);
+        simulateAiMatches.getLabel().setAlignment(Align.left);
+        simulateAiMatches.getLabelCell().growX();
+        simulateAiMatches.getImageCell().top(); // the box beside the first line, not the middle of three
+        blessingContainer.add(simulateAiMatches).growX().left().padTop(5).padBottom(10);
         blessingContainer.row();
         if (!bottomDescription.isEmpty()) {
             blessingContainer.add(blessingScrollBottom).growX().top();
         }
+        blessing.setScrollingDisabled(true, false);
         blessing.setActor(blessingContainer);
         blessing.layout();
         window.add(root);

@@ -646,6 +646,10 @@ public class DuelScene extends ForgeScene {
                     + " hasCoin=" + Current.player().hasItem(AdventurePlayer.BRONZE_COIN_ITEM)
                     + " alreadyOwes=" + (enemy != null && Current.player().owesCoinRansom(enemy.getName())));
 
+        // Round 366 (the user's 4K report: "Use Bronze Coin" clipped at the right edge). The coin is the last button, i.e.
+        // the bottom-right corner button, which breaks its text at the first space and has no right padding - "Use" over
+        // "Bronze Coin" ran into the screen edge. "Bronze Coin" splits into two short lines.
+        final String COIN_BUTTON = "Bronze Coin";
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);
             buttons = sellPrice > 0
@@ -653,11 +657,11 @@ public class DuelScene extends ForgeScene {
                     : ImmutableList.of(localizer.getMessage("lblOK"));
         } else if (offerBuyBack && offerCoinRansom) {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"),
-                    "Buy Back (" + buyBackPrice + " gold)", "Use Bronze Coin");
+                    "Buy Back (" + buyBackPrice + " gold)", COIN_BUTTON);
         } else if (offerBuyBack) {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Buy Back (" + buyBackPrice + " gold)");
         } else if (offerCoinRansom) {
-            buttons = ImmutableList.of(localizer.getMessage("lblOK"), "Use Bronze Coin");
+            buttons = ImmutableList.of(localizer.getMessage("lblOK"), COIN_BUTTON);
         } else {
             buttons = ImmutableList.of(localizer.getMessage("lblOK"));
         }

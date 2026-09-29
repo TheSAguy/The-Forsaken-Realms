@@ -70,6 +70,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   with `defeatGoldLossMin*` (50/100/150/200, renamed from round 177's `defeatGoldLoss*`) as the minimum. **Round 360:**
   an Inn's cached, not-yet-entered tournament takes the current entry fee (`InnScene.refreshEntryFee`, `[TFR-InnFee]`) -
   a pre-346 Jumpstart still asked 200/5.
+  **Rounds 361-366 (2026-09-28):** 361 Gods -> Mythic, Angel/Demon/Dragon/Hydra/Nobles/Sphinx -> Rare in the player
+  templates (`dev-tools/shop_rarity_audit.py`); 362 the starting kit is worn (`wearStartItem`); 363 Wolf4Green's red
+  branch (Instant4White's mix is by design); 364/364b bridge load/save positions; 365 corner-only road joints joined
+  (RoadNetwork.VERSION 3 = that pass only on load; the QA "road a tile short" = Silent Crossing's corner joint); 366 the
+  Inn tournament panel wraps + "Bronze Coin" button label. Open: the 4K coin button not yet seen on a lost duel.
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text), an old road a tile short of a restored town,
   the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards, Leather Boots start unequipped.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the

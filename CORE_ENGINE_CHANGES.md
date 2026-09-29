@@ -3430,6 +3430,20 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
 
+## Round 366 (2026-09-28) - the Inn panel wraps; the coin button's label
+
+- **`scene/EventScene.java`** - the blessingInfo block: the Simulate checkbox label wraps (setWrap, growX, image cell
+  top) and `blessing.setScrollingDisabled(true, false)` before setActor. Mod-touched region (the checkbox is TFR's).
+- **`scene/DuelScene.java`** - the lost-ante prompt's coin button text is `COIN_BUTTON` = "Bronze Coin". TFR code.
+
+## Round 365 (2026-09-28) - corner-only road joints
+
+- **`world/World.java`** - world-gen's road pass: `RoadNetwork.joinCorners(this, null)` right before
+  `roadsNormalized = VERSION` (one line); new mod-added `canJoinRoadRaw()` beside repaintRoadTiles. On a merge keep the
+  call after the road futures join.
+- Mod-added, no merge burden: `util/RoadNetwork.java` (`joinCorners`, VERSION 3, `migrateOnLoad` split into the rule-3
+  pass + `normalizeAndRebuild`).
+
 ## Round 360 (2026-09-28) - an Inn's saved tournament takes the current fee
 
 - **`scene/InnScene.java`** - `initLocalEvent()`'s cached-event return calls the new mod-added `refreshEntryFee(data)`
