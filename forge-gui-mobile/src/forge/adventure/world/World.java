@@ -4782,6 +4782,13 @@ public class World implements Disposable, SaveFileContent {
     /** Round 370: the bottom-left world tile (x, y up) of `place`'s plaza of this size - the square centred as near its
      *  place's centre as whole tiles allow. PointOfInterestMapSprite draws the Capitol's and a restored town's art on
      *  this square's centre (PlayerRoads.plazaCenter), so the two always line up. */
+    /** Round 370b: settings.json playerRoadPlazaTopCut - rows left off the top of a plaza, never the whole square. */
+    public static int plazaTopCut(int sizeTiles) {
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        int cut = tuning == null ? 0 : tuning.playerRoadPlazaTopCut;
+        return Math.max(0, Math.min(cut, sizeTiles - 1));
+    }
+
     public int[] plazaOrigin(PointOfInterest place, int sizeTiles) {
         com.badlogic.gdx.math.Vector2 center = place.getCenter();
         int ts = data.tileSize;
@@ -4794,7 +4801,7 @@ public class World implements Disposable, SaveFileContent {
             return 0;
         int[] origin = plazaOrigin(place, sizeTiles);
         int tx0 = origin[0], tx1 = tx0 + sizeTiles - 1;
-        int ty0 = origin[1], ty1 = ty0 + sizeTiles - 1;
+        int ty0 = origin[1], ty1 = ty0 + sizeTiles - 1 - plazaTopCut(sizeTiles); // round 370b: rows off the top
         long roadBit = roadBit(), playerRoadBit = playerRoadBit(), roadMask = roadMask();
         java.util.HashSet<Long> touched = new java.util.HashSet<>();
         int paved = 0, pavedOver = 0;

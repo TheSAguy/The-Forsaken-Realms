@@ -14264,6 +14264,15 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 370b: the plaza's top row off (2026-09-29)
+
+The user, on round 370's preview: "the plaza one smaller at the top. So center row, minus one row at the top" - then
+"Go with the new, one row off". settings.json `playerRoadPlazaTopCut` 1 (TuningData, World.plazaTopCut - never the
+whole square): stampPlayerRoadPatch lays the square without its top row(s) and trimAroundPlaza keeps only the rows laid;
+the art stays centred on the FULL square (plazaCenter unchanged), so a castle's back meets the top edge and its gate
+keeps its forecourt - Capitol 6 x 5, towns 5 x 4. Agent, a copy of the user's save: "plazas re-laid centred (layout
+1): 80 stray plaza tile(s) lifted", no new tiles (the old row-low plazas covered exactly these rows). Validator key.
+
 ## Round 370: plazas centred on their places (2026-09-29)
 
 The user's plaza shots: "the plaza is always too big to about two sides ... try to center the icon a little better".

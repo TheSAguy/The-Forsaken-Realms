@@ -757,8 +757,9 @@ public final class RoadNetwork {
         int h = world.getHeightInTiles();
         int[] o = world.plazaOrigin(place, size);
         Set<Long> keep = new HashSet<>();
+        int rows = size - World.plazaTopCut(size); // round 370b: the rows the plaza actually has
         for (int tx = o[0]; tx < o[0] + size; tx++)
-            for (int ty = o[1]; ty < o[1] + size; ty++)
+            for (int ty = o[1]; ty < o[1] + rows; ty++)
                 keep.add(key(tx, h - ty - 1));
         int[] a = anchor(world, place);
         keep.add(key(a[0], h - a[1]));

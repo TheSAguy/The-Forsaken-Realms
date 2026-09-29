@@ -235,6 +235,8 @@
     // Capitol's 4-tile icon). Laid again on every load at these sizes, so a larger value reaches existing saves.
     "playerRoadPlazaCapitol": 6,
     "playerRoadPlazaTown": 5,
+    // Round 370b: rows left off the TOP of each plaza (the art stays centred on the full square).
+    "playerRoadPlazaTopCut": 1,
 
     // Looted-dungeon timer (round 128, user request): a rotatable dungeon/cave the player walks out of
     // having taken every reward pickup, while live enemies are still inside, keeps this fraction of the

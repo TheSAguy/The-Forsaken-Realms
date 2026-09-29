@@ -343,6 +343,9 @@ public class TuningData {
     // 3 for towns" than the icon-plus-one the first cut laid).
     public int playerRoadPlazaCapitol = 3; // 346e: the user took both down one more
     public int playerRoadPlazaTown = 1;
+    /** Round 370b (the user: "the plaza one smaller at the top"): rows left off the TOP of each plaza square - the art
+     *  stays centred on the full square, so the castle's back sits on the grass and its gate side keeps its forecourt. */
+    public int playerRoadPlazaTopCut = 0;
 
     // Round 159, user request: "make an Apprentice slightly smaller and an Archmage slightly
     // bigger". A rendered enemy is atlasRegionSize x EnemyData.scale (CharacterSprite.draw), and
