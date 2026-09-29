@@ -406,7 +406,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getButtonTable().add(Controls.newTextButton("Rebuild", () -> {
             hideDialog();
             if (Current.player().getShards() < cost) {
-                GameHUD.getInstance().addNotification("Not enough shards to rebuild the bonfire kit (" + cost + " [+Shards]).", true);
+                GameHUD.getInstance().addNotification("[BLACK]Not enough shards to rebuild the bonfire kit (" + cost + " [WHITE][+Shards][BLACK]).", true); // round 367: the icon in its own colors
                 return;
             }
             Current.player().addShards(-cost);

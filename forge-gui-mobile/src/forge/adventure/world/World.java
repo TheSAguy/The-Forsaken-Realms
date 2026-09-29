@@ -742,6 +742,15 @@ public class World implements Disposable, SaveFileContent {
         return questAcceptedDay;
     }
 
+    // Round 367 (the user: "cut the Quest time limit in half ... Only new quests"): each quest's own limit in days,
+    // recorded when its clock starts (same key). A quest with no entry started before this round and keeps the old
+    // limit (QuestExpiry.LEGACY_SIDE_QUEST_DAYS).
+    private final java.util.Map<String, Integer> questDayLimit = new java.util.HashMap<>();
+
+    public java.util.Map<String, Integer> getQuestDayLimit() {
+        return questDayLimit;
+    }
+
     // Random resource spawns (MOD_SCOPE.md, user request 2026-08-08): up to
     // ResourceSpawns.MAX_SPAWNS pickups scattered on the overworld, each an int[] of
     // {tileX, tileY, type, value, expiryDay} in world tile space. All spawn/expiry/pickup LOGIC
@@ -1175,6 +1184,11 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             questAcceptedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("questAcceptedDay"));
         }
+        questDayLimit.clear();
+        if (saveFileData.containsKey("questDayLimit")) { // round 367
+            //noinspection unchecked
+            questDayLimit.putAll((java.util.Map<String, Integer>) saveFileData.readObject("questDayLimit"));
+        }
         // rebuildPlayerTownVision() is deliberately NOT called here: WorldSave.load() loads this
         // World BEFORE pointOfInterestChanges, and the rebuild reads town-ownership flags from
         // pointOfInterestChanges - calling it now would cache the PREVIOUS session's ownership.
@@ -1261,6 +1275,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("capitolLostColors", String.join(";", capitolLostColors));
         data.store("ringVisitedTiles", String.join(";", ringVisitedTiles));
         data.storeObject("questAcceptedDay", questAcceptedDay);
+        data.storeObject("questDayLimit", questDayLimit); // round 367
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         return data;
     }
@@ -2450,6 +2465,7 @@ public class World implements Disposable, SaveFileContent {
             capitolLostColors.clear();
             ringVisitedTiles.clear();
             questAcceptedDay.clear();
+            questDayLimit.clear();
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {

@@ -133,7 +133,7 @@ Losing a duel never ends a run - it costs gold, life and your ante (see
 The Forsaken Realms runs on a living clock. Every in-game day the world ticks forward: territory
 spreads, mages march, shops restock on their weekly cycle, mines pay out and guards draw their
 wages on payday (the first day of each new week - days 8, 15, 22 and so on), quest timers count
-down (side quests fail after 20 days - story quests never expire), and dungeons age toward their
+down (side quests fail after 15 days - story quests never expire), and dungeons age toward their
 rotation. A HUD clock shows the time of day and a Day/Week tracker keeps the calendar visible; a
 **Speed-Up** toggle fast-forwards time when you're waiting on the world rather than exploring it.
 

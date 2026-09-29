@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 367: quests - return trips, 15-day limit, 10 at once; white Instant shop; icons in their colors (2026-09-28)
+
+- **"Return to town" stages wait for the arrival** (the user: "it says go back to town to get your rewards ... then
+  moments later it just resolves"). Round 208's `retroCompleteIfPoiAlreadyVisited` (written for first-visit stages
+  like quest 52's castles) ran on every newly active Travel stage, side quests included - and the 54 board-quest
+  "Return to town / collect the bounty" stages are `here` stages bound to the town that gave the quest, always already
+  visited, so the bounty paid wherever the previous stage ended (the user's logs: Armored Knight -> "Orazca was already
+  visited", Merfolk Lord -> Urborg, Blazing Peak ...). Now a `here` stage never retro-completes, and neither does an
+  anyPOI stage whose only tag is Town (quest 86 "Word to the Courier" stage 2). Upstream has no retro step at all.
+  Side effect, as upstream: a return stage that activates while the player stands in the town needs a leave + re-enter.
+- **Side-quest limit 15 days for NEW quests** (the user said 30 -> 15; settings.json was 20). `sideQuestDays` 15, and
+  each quest now records its own limit when its clock starts (`World.questDayLimit`, saved beside questAcceptedDay);
+  a quest with no entry keeps `QuestExpiry.LEGACY_SIDE_QUEST_DAYS` 20 - existing quests untouched. GUIDE.md 15.
+- **10 side quests at once** (the user; stock 5): `AdventureQuestController.MAX_SIDE_QUESTS` 10 decides
+  tooManyQuests(); the serialized maximumSideQuests field (5, copied back from every save) stays for compatibility.
+- **Instant4White sells only white** (the user): its first 4 slots got `colors: ["white"]` too (the rest of the
+  "N colored + any" family unchanged).
+- **Icons in notifications keep their colors** (the user's screenshot: "Received [coin] 500." drawn black): the
+  banner's black tint multiplies into glyphs. MapDialog's dialog-grant message and the bonfire rebuild message use
+  authored markup ([BLACK] text, [WHITE] icons); and GameHUD.addNotification turns any plain message whose ONLY markup
+  is icons into that form itself (no reset tags, so the white-tint regression round 331 describes cannot occur).
+
 ## Round 366: the Inn tournament panel wraps; "Bronze Coin" fits its corner (2026-09-28)
 
 The user's 4K screenshots: "Competition Style: 8 players, ma", "Block: The Lord of the Rings: Tale", "Simulate AI vs AI

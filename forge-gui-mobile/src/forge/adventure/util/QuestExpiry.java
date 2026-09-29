@@ -28,6 +28,15 @@ public class QuestExpiry {
         return Config.instance().getTuningData().sideQuestDays;
     }
 
+    /** Round 367: the limit every quest whose clock started before this round keeps (settings.json said 20 then). */
+    static final int LEGACY_SIDE_QUEST_DAYS = 20;
+
+    /** Round 367: this quest's own limit - recorded when its clock started, the legacy 20 for older quests. */
+    private static int limitFor(World world, String key) {
+        Integer limit = world.getQuestDayLimit().get(key);
+        return limit != null ? limit : LEGACY_SIDE_QUEST_DAYS;
+    }
+
     private QuestExpiry() {}
 
     private static boolean isEnabled() {
@@ -50,9 +59,10 @@ public class QuestExpiry {
             Integer accepted = world.getQuestAcceptedDay().get(key);
             if (accepted == null) {
                 world.getQuestAcceptedDay().put(key, newDayCount);
+                world.getQuestDayLimit().put(key, sideQuestDays()); // round 367: fixed for this quest's life
                 continue;
             }
-            if (newDayCount - accepted < sideQuestDays())
+            if (newDayCount - accepted < limitFor(world, key))
                 continue;
             // Out of time. fail() marks and untracks it; removing it from the log ourselves keeps
             // the outcome deterministic instead of waiting for the controller's next dialog sweep
@@ -60,6 +70,7 @@ public class QuestExpiry {
             quest.fail();
             Current.player().removeQuest(quest);
             world.getQuestAcceptedDay().remove(key);
+            world.getQuestDayLimit().remove(key);
             System.out.println("[QuestExpiry] Quest failed: " + quest.getName() + " - out of time");
             failedNames.add(quest.getName());
         }
@@ -96,7 +107,7 @@ public class QuestExpiry {
         Integer accepted = world.getQuestAcceptedDay().get(String.valueOf(quest.getID()));
         if (accepted == null)
             return null;
-        return Math.max(0, sideQuestDays() - (world.getCurrentDay() - accepted));
+        return Math.max(0, limitFor(world, String.valueOf(quest.getID())) - (world.getCurrentDay() - accepted));
     }
 
     /** Quest-log display suffix, e.g. " (12 days left)" - empty when no timer applies. */

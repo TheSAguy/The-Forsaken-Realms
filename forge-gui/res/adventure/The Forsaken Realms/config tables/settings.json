@@ -80,8 +80,9 @@
     "aiShopPriceMultiplier": 1.25,
     "playerShopPriceMultiplier": 0.75,
 
-    // Days before a side quest fails after accepting it (story quests never expire).
-    "sideQuestDays": 20,
+    // Days before a side quest fails after accepting it (story quests never expire). Round 367: 20 -> 15. Each quest
+    // keeps the limit it started with - a change here reaches NEW quests only; quests from before round 367 keep 20.
+    "sideQuestDays": 15,
 
     // How many attacking mages each AI color can field at once on Normal difficulty.
     // Easy uses one fewer, Hard one more, Insane two more (2 -> Easy 1 / Normal 2 /

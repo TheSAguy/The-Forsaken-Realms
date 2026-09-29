@@ -1355,7 +1355,16 @@ public class GameHUD extends Stage {
      * comment in the body) - per-message opt-in exists precisely so ordinary notifications keep
      * the safe black tint.
      */
-    public void addNotification(String text, boolean authoredMarkup) {
+    public void addNotification(String text, boolean authored) {
+        boolean authoredMarkup = authored;
+        // Round 367 (the user's screenshot: "Received [gold] 500." with the coin drawn solid black): the black tint below
+        // multiplies into icon glyphs too. A plain message whose ONLY markup is icons ([+Gold], [+Shards] ...) is safe to
+        // show as authored markup - black text, each icon [WHITE] - since it carries no reset tag to snap to white.
+        if (!authoredMarkup && text != null && text.contains("[+")
+                && !text.replaceAll("\\[\\+[A-Za-z0-9_]+\\]", "").contains("[")) {
+            text = "[BLACK]" + text.replaceAll("(\\[\\+[A-Za-z0-9_]+\\])", "[WHITE]$1[BLACK]");
+            authoredMarkup = true;
+        }
         // Round 331 (VeggieShark on Discord, v1.14: "the message font is white now, which is a bit unreadable. Black
         // would seem better?" - the legend-sighting banner): three callers took the WHITE tint without opening with a
         // color tag, so their whole text drew white on the paper (the contract above). The callers are fixed, and
@@ -1366,6 +1375,7 @@ public class GameHUD extends Stage {
             text = "[BLACK]" + text;
         }
         final String shown = text;
+        final boolean whiteTint = authoredMarkup;
         forge.adventure.agent.AgentBridge.noteNotification(shown); // round 161: the agent reads these too
         Action preconfigureNotification = new Action() {
             @Override
@@ -1381,7 +1391,7 @@ public class GameHUD extends Stage {
                 // in tint-BLACK notifications; fully-authored messages can opt in to WHITE tint
                 // via addNotification(text, true) - see that overload's comment.
                 notificationText.setText(shown);
-                notificationText.setColor(authoredMarkup ? Color.WHITE : Color.BLACK);
+                notificationText.setColor(whiteTint ? Color.WHITE : Color.BLACK);
                 notificationText.setWidth(Math.min(notificationText.getPrefWidth(), Forge.isLandscapeMode() ? getWidth() * 0.25f : getWidth() - 25));
                 notificationText.setWrap(true);
                 notificationText.layout();

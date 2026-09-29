@@ -631,7 +631,11 @@ public class MapDialog {
                 String got = (E.addGold > 0 ? "[+Gold] " + E.addGold : "")
                         + (E.addGold > 0 && E.addShards > 0 ? " and " : "")
                         + (E.addShards > 0 ? "[+Shards] " + E.addShards : "");
-                forge.adventure.stage.GameHUD.getInstance().addNotification("Received " + got + ".");
+                // Round 367 (the user's screenshot: the gold icon drawn solid black): the plain notification's black
+                // tint multiplies into its icons too. Authored markup, as the Ring's gift does - black text, each
+                // icon [WHITE] (its own colors) and back to [BLACK].
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]Received "
+                        + got.replace("[+Gold]", "[WHITE][+Gold][BLACK]").replace("[+Shards]", "[WHITE][+Shards][BLACK]") + ".", true);
                 System.out.println("[TFR-DialogGrant] dialog " + parentID + " handed over " + got.replace("[+Gold]", "gold")
                         .replace("[+Shards]", "shards"));
             }

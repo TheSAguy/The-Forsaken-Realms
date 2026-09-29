@@ -677,6 +677,17 @@ public class AdventureQuestStage implements Serializable {
         // spot. One past visit cannot stand in for several; those stages keep the live path.
         if (count3 > 1)
             return false;
+        // Round 367 (the user: "it says go back to town to get your rewards ... then moments later it just resolves").
+        // A "here" stage is bound to the town that GAVE the quest - the 54 "Return to town / collect the bounty" stages
+        // of the board quests - and the player has always visited that town, so this paid the bounty wherever the
+        // previous stage ended. A past visit proves nothing for a return trip; those stages wait for the real arrival,
+        // as upstream's do. The first-visit stages this was written for (quest 52's castles etc.) never set "here".
+        if (here)
+            return false;
+        // Round 367, the same reasoning: "go to any Town" (quest 86 "Word to the Courier", stage 2) is a trip, not a
+        // discovery - every character has been in a town, so it completed the moment it was issued.
+        if (anyPOI && POITags != null && POITags.size() == 1 && "Town".equals(POITags.get(0)))
+            return false;
         boolean satisfied = false;
         try {
             if (targetPOI != null) {

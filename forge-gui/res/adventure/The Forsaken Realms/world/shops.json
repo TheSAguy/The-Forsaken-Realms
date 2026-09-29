@@ -1307,6 +1307,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {

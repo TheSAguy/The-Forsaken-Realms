@@ -310,6 +310,8 @@ public class AdventureQuestController implements Serializable {
     }
     private Map<String, Long> nextQuestDate = new HashMap<>();
     private int maximumSideQuests = 5; //todo: move to configuration file
+    /** Round 367: the side quests a player may hold at once (stock 5). */
+    public static final int MAX_SIDE_QUESTS = 10;
     private transient MapDialog activeDialog = null;
     private transient Array<AdventureQuestData> allQuests = new Array<>();
     private final transient Array<AdventureQuestData> allSideQuests = new Array<>();
@@ -946,6 +948,8 @@ public class AdventureQuestController implements Serializable {
                 continue;
             sideQuests++;
         }
-        return (sideQuests >= maximumSideQuests);
+        // Round 367 (the user: "change it to 10 quests"): a fixed 10 - the saved maximumSideQuests field (5, copied
+        // back from every save by the copy constructor) stays for save compatibility but no longer decides.
+        return (sideQuests >= MAX_SIDE_QUESTS);
     }
 }
