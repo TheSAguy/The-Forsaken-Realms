@@ -3430,6 +3430,12 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
 
+## Round 360 (2026-09-28) - an Inn's saved tournament takes the current fee
+
+- **`scene/InnScene.java`** - `initLocalEvent()`'s cached-event return calls the new mod-added `refreshEntryFee(data)`
+  (Available events only: goldToEnter/shardsToEnter from a fresh `AdventureEventRules(format, pairingStyle)`). One added
+  line in the stock loop; keep it before `localEvent = data` on a merge.
+
 ## Round 359 (2026-09-28) - defeat gold = a percentage with a minimum
 
 - **`player/AdventurePlayer.java`** - `defeated()`'s gold `else` (round 177's region): the loss comes from

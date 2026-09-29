@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 360: an Inn's saved tournament takes the current entry fee (2026-09-28)
+
+The user's screenshot (Inn, Event Standings): a Jumpstart asking "Gold 200 / Mana Shards 5" - round 346 made it 500 / 50.
+The code was right (AdventureEventRules' Jumpstart case); the event was not: an Inn caches its tournament in the save
+(AdventurePlayer.getEvents) with its rules, fee included, and InnScene.initLocalEvent hands the cached one back until it
+is played - so a tournament rolled before round 346 kept the old price. `InnScene.refreshEntryFee`: an Available (not yet
+entered) event takes the format's current fee from a fresh AdventureEventRules; an entered one keeps what was paid.
+`[TFR-InnFee]` line when it corrects one. Covers every format and any later fee change. Same screenshot: "8 players,
+ma[tch]" clipped at 3840x2160 - the known 4K open item.
+
 ## Round 359: defeat gold = a percentage with a minimum (2026-09-28)
 
 The user: "New Gold Loss will be: Easy 2%, Normal 5%, Hard 10%, Insane 15% with a Minimum loss of: Easy 50, Normal 100,

@@ -253,6 +253,27 @@ public class InnScene extends UIScene {
         return TownRestoration.isCurrentTownPlayerOwned(changes);
     }
 
+    /**
+     * Round 360 (the user's Inn screenshot: a Jumpstart still asking 200 gold / 5 shards after round 346 set 500 / 50).
+     * The fee lives in the event's saved rules, and an Inn keeps its event until it is played, so a tournament rolled
+     * before a fee change kept the old price for good. An event not yet entered (Available) takes the format's
+     * current fee; an entered one keeps what was paid. Grep forge.log for [TFR-InnFee].
+     */
+    private static void refreshEntryFee(AdventureEventData data) {
+        if (data == null || data.eventRules == null || data.format == null
+                || data.eventStatus != AdventureEventController.EventStatus.Available)
+            return;
+        AdventureEventData.AdventureEventRules current =
+                new AdventureEventData.AdventureEventRules(data.format, data.eventRules.pairingStyle);
+        if (current.goldToEnter == data.eventRules.goldToEnter && current.shardsToEnter == data.eventRules.shardsToEnter)
+            return;
+        System.out.println("[TFR-InnFee] " + data.format + " at " + localPointOfInterestId + ": entry fee "
+                + data.eventRules.goldToEnter + " gold / " + data.eventRules.shardsToEnter + " shards -> "
+                + current.goldToEnter + " / " + current.shardsToEnter + " (saved before the fee changed)");
+        data.eventRules.goldToEnter = current.goldToEnter;
+        data.eventRules.shardsToEnter = current.shardsToEnter;
+    }
+
     private static void initLocalEvent() {
         localEvent = null;
         AdventureEventData replacingStaleEvent = null;
@@ -282,6 +303,7 @@ public class InnScene extends UIScene {
                     replacingStaleEvent = data;
                     break; // fall through to the create path below
                 }
+                refreshEntryFee(data);
                 localEvent = data;
                 return;
             }
