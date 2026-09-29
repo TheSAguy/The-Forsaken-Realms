@@ -75,6 +75,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   branch (Instant4White's mix is by design); 364/364b bridge load/save positions; 365 corner-only road joints joined
   (RoadNetwork.VERSION 3 = that pass only on load; the QA "road a tile short" = Silent Crossing's corner joint); 366 the
   Inn tournament panel wraps + "Bronze Coin" button label. Open: the 4K coin button not yet seen on a lost duel.
+  **367:** return-to-town stages wait for the arrival (`here` stages skip the retro-complete), new side quests 15 days
+  (each quest keeps its own limit, `World.questDayLimit`), 10 side quests, Instant4White white-only, notification icons
+  in color. **368:** plazas 6 / 5 stamped on every load, no doodads on roads/plazas (`World.GetMapObjects` filter),
+  Inn tournaments turn over each in-game week (`createdWeek`).
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text), an old road a tile short of a restored town,
   the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards, Leather Boots start unequipped.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the

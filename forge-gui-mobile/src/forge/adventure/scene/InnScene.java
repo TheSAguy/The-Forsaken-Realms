@@ -303,6 +303,24 @@ public class InnScene extends UIScene {
                     replacingStaleEvent = data;
                     break; // fall through to the create path below
                 }
+                // Round 368 (the user: "Inn Tournaments should automatically switch/cycle at the start of each week,
+                // so day 8, 15, 22"): a tournament dealt in an earlier in-game week makes way for a new one - unless
+                // the player is in it (Entered / Ready / Started) or its rewards are still due (Completed). An event
+                // from before this round carries week 0 and turns over on the first visit.
+                int week = forge.adventure.util.Current.world() == null ? 0
+                        : forge.adventure.util.SpawnTierWeighting.currentWeek(forge.adventure.util.Current.world());
+                AdventureEventController.EventStatus st = data.eventStatus;
+                boolean settled = st == AdventureEventController.EventStatus.Available
+                        || st == AdventureEventController.EventStatus.Awarded
+                        || st == AdventureEventController.EventStatus.Abandoned;
+                if (week > 0 && data.createdWeek != week && settled) {
+                    System.out.println("[TFR-InnWeek] " + localPointOfInterestId + ": a " + data.format + " tournament from week "
+                            + data.createdWeek + " (" + st + ") makes way for week " + week + "'s");
+                    AdventurePlayer.current().getEvents().remove(data);
+                    AdventureEventController.instance().clearNextEventDate(localPointOfInterestId);
+                    replacingStaleEvent = data;
+                    break; // the create path below; a failed deal puts this one back
+                }
                 refreshEntryFee(data);
                 localEvent = data;
                 return;
@@ -321,6 +339,8 @@ public class InnScene extends UIScene {
             System.out.println("[TFR-InnEditions] re-roll produced no event - restoring the "
                     + "previous tournament rather than leaving this Inn empty");
             replacingStaleEvent.playerTownPoolStamp = EditionProgression.playerTownPoolStamp();
+            if (forge.adventure.util.Current.world() != null) // round 368: nor the weekly turn-over on every visit
+                replacingStaleEvent.createdWeek = forge.adventure.util.SpawnTierWeighting.currentWeek(forge.adventure.util.Current.world());
             AdventurePlayer.current().getEvents().add(replacingStaleEvent);
             localEvent = replacingStaleEvent;
         }

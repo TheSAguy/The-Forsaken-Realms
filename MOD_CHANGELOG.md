@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 368: plazas you can see; no doodads on roads; Inn tournaments turn over weekly (2026-09-28)
+
+- **Plazas** (the user: "we said there should be a plaza ... I'm not seeing it"). They were there - round 346e's 3 / 1
+  put them wholly under the icons (Capitol icon 4 tiles, a town's 3; the user's save: a 3x3 under the Capitol, one
+  tile under each town). An odd size cannot center under the grid-aligned 4-tile Capitol icon (5 / 4 previewed: cobbles
+  on two sides only), so settings.json 6 / 5 - one tile all round, the user's pick from the preview. A plaza was laid
+  only when a place joined the network, so `PlayerRoads.stampPlazasOnLoad` stamps the Capitol's and every held town's
+  on each load at the current size (paving only adds - a no-op once laid). Agent, a copy of the user's save:
+  "plazas on load: 386 tile(s) paved under the Capitol and 19 held town(s) (sizes 6 / 5)".
+- **No doodads on roads or plazas** (the user). Placement only tested a doodad's anchor tile (the art reaches into the
+  next tiles), and roads / plazas laid after world-gen never removed any. `World.GetMapObjects` - the one door every
+  chunk's doodads pass through - drops any whose art touches a road tile (both kinds; `doodadOnRoad`, the middle half of
+  its one-tile footprint); the list is the saved one, so the save sheds them too. A road laid in play reloads the
+  chunks around it (`reloadDoodadChunks` from repaintAroundRoadTiles and layRoad). `[TFR-Doodads] chunk (x,y): N
+  doodad(s) off the road`. SEEN: the Capitol's and Kraag Forge's plazas clean.
+- **Inn tournaments turn over each in-game week** (the user: "at the start of each week, so day 8, 15, 22"). An event
+  records `createdWeek` (SpawnTierWeighting.currentWeek; AdventureEventData's serialVersionUID is pinned, an old event
+  reads 0) at initializeEvent; InnScene.initLocalEvent deals a fresh one when the week has turned and the old one is
+  Available / Awarded / Abandoned - never under a player who entered it or whose rewards are due. `[TFR-InnWeek]`.
+  SEEN: the Capitol Inn's week-0 Crimson Vow draft became an LCI draft; a second visit kept it.
+- Also SEEN: round 361's Gods shop under Mythic Shops in the rebuild menu (450 gold + 150 shards on Insane).
+
 ## Round 367: quests - return trips, 15-day limit, 10 at once; white Instant shop; icons in their colors (2026-09-28)
 
 - **"Return to town" stages wait for the arrival** (the user: "it says go back to town to get your rewards ... then

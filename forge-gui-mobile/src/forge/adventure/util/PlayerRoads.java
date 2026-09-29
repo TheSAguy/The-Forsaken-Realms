@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import forge.adventure.data.TuningData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
@@ -67,9 +68,33 @@ public final class PlayerRoads {
         if (world == null)
             return;
         RoadNetwork.migrateOnLoad(world);
-        if (world.getPlayerRoadsBuilt() >= NETWORK_VERSION || TownRestoration.findCapitol() == null)
+        if (world.getPlayerRoadsBuilt() < NETWORK_VERSION && TownRestoration.findCapitol() != null)
+            rebuildNetwork(world, null, world.getPlayerRoadsBuilt() == 0 ? "a save from before the player roads"
+                    : "a save laid under network rule " + world.getPlayerRoadsBuilt() + ", now " + NETWORK_VERSION);
+        stampPlazasOnLoad(world);
+    }
+
+    /**
+     * Round 367 (the user: "we said there should be a plaza at the towns/Capitol ... I'm not seeing it"). The plazas
+     * were laid only when a place joined the network, at the size of that day - and after round 346e's 3 / 1 they sat
+     * wholly under the icons (the Capitol's is 4 tiles, a town's 3). Every load now lays the Capitol's and each held
+     * town's plaza at settings.json's current size. Paving only adds and skips a tile that is already player road, so
+     * this is a no-op once a save has them, and a larger size reaches existing saves on their next load.
+     */
+    static void stampPlazasOnLoad(World world) {
+        PointOfInterest capitol = TownRestoration.findCapitol();
+        if (world == null || capitol == null)
             return;
-        rebuildNetwork(world, null, world.getPlayerRoadsBuilt() == 0 ? "a save from before the player roads"
-                : "a save laid under network rule " + world.getPlayerRoadsBuilt() + ", now " + NETWORK_VERSION);
+        TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null)
+            return;
+        int paved = world.stampPlayerRoadPatch(capitol, tuning.playerRoadPlazaCapitol, null);
+        List<PointOfInterest> held = heldTowns(world, capitol);
+        for (PointOfInterest town : held)
+            paved += world.stampPlayerRoadPatch(town, tuning.playerRoadPlazaTown, null);
+        if (paved > 0)
+            System.out.println("[TFR-Roads] plazas on load: " + paved + " tile(s) paved under the Capitol and "
+                    + held.size() + " held town(s) (sizes " + tuning.playerRoadPlazaCapitol + " / "
+                    + tuning.playerRoadPlazaTown + ")");
     }
 }

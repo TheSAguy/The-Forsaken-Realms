@@ -52,6 +52,10 @@ public class AdventureEventData implements Serializable {
     // a save written before this field existed deserializes it as 0, which reads as "legacy /
     // not a player-town event - leave alone". See EditionProgression.playerTownPoolStamp().
     public int playerTownPoolStamp = 0;
+    /** Round 368 (the user: "Inn Tournaments should automatically switch/cycle at the start of each week"): the
+     *  in-game week (SpawnTierWeighting.currentWeek - day 8 starts week 2) this event was dealt in; 0 = before this
+     *  round. InnScene.initLocalEvent deals a fresh one once the week has turned. */
+    public int createdWeek = 0;
     public AdventureEventReward[] rewards;
     public int eventOrigin;
     public String sourceID;

@@ -198,6 +198,8 @@ public class AdventureEventController implements Serializable {
         }
 
         e.eventRules = new AdventureEventData.AdventureEventRules(e.format, pairingStyle);
+        if (Current.world() != null)
+            e.createdWeek = SpawnTierWeighting.currentWeek(Current.world()); // round 368: the weekly cycle
 
         e.generateParticipants();
 

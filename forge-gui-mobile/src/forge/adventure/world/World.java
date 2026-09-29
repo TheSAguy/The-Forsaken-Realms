@@ -4819,6 +4819,7 @@ public class World implements Disposable, SaveFileContent {
                 }
             }
         }
+        reloadDoodadChunks(touched); // round 368
     }
 
     private int layRoad(List<PointOfInterest> waypoints, BiConsumer<Integer, Integer> onTileRepainted, boolean playerRoad) {
@@ -4917,6 +4918,7 @@ public class World implements Disposable, SaveFileContent {
                     }
                 }
             }
+            reloadDoodadChunks(touched); // round 368
         }
         return touched.size();
     }
@@ -6671,7 +6673,57 @@ public class World implements Disposable, SaveFileContent {
     public List<Pair<Vector2, Integer>> GetMapObjects(int chunkX, int chunkY) {
         if (doodadSet < DOODAD_SET)
             rescatterDoodads(); // round 303: once, for a save from before the current doodad set
-        return mapObjectIds.positions(chunkX, chunkY);
+        List<Pair<Vector2, Integer>> objects = mapObjectIds.positions(chunkX, chunkY);
+        // Round 368 (the user: "Is it possible to have no doodads on the plaza and roads"). Placement only ever checked
+        // the doodad's anchor tile (its art reaches into the next tiles), and roads and plazas laid after world
+        // generation never removed what was already there. Every chunk hands its doodads over through here - world
+        // generation's, a re-scatter's, the growth rings', and those of saves from before this round - so one test here
+        // covers them all. The list is the saved one: a doodad dropped here is gone from the save as well.
+        if (objects != null && !objects.isEmpty() && biomeMap != null && data != null) {
+            int before = objects.size();
+            objects.removeIf(e -> e != null && e.getLeft() != null && doodadOnRoad(e.getLeft().x, e.getLeft().y));
+            if (objects.size() != before)
+                System.out.println("[TFR-Doodads] chunk (" + chunkX + "," + chunkY + "): " + (before - objects.size())
+                        + " doodad(s) off the road");
+        }
+        return objects;
+    }
+
+    /** Round 368: does a doodad drawn from world pixel (px, py) - one tile of art from its bottom-left - touch a road
+     *  or a plaza? The middle half of its footprint, the tiles the renderer reads at height - y - 1. */
+    private boolean doodadOnRoad(float px, float py) {
+        int ts = data.tileSize;
+        long mask = roadMask();
+        for (float fx = 0.25f; fx < 1f; fx += 0.5f) {
+            for (float fy = 0.25f; fy < 1f; fy += 0.5f) {
+                int tx = (int) ((px + ts * fx) / ts), ty = (int) ((py + ts * fy) / ts);
+                if (tx < 0 || ty < 0 || tx >= width || ty >= height)
+                    continue;
+                if ((biomeMap[tx][height - ty - 1] & mask) != 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /** Round 368: a road laid while the player is on the map - the chunks around its tiles hand their doodads over
+     *  again, so those now on it go (GetMapObjects). */
+    private void reloadDoodadChunks(java.util.Set<Long> touched) {
+        forge.adventure.stage.WorldStage stage = forge.adventure.stage.WorldStage.getInstance();
+        if (stage == null || touched == null || touched.isEmpty())
+            return;
+        int cs = getChunkSize();
+        java.util.HashSet<Long> chunks = new java.util.HashSet<>();
+        for (long key : touched) {
+            int tx = (int) (key >> 32);
+            int wy = height - (int) (key & 0xffffffffL) - 1;
+            for (int nx = tx - 1; nx <= tx + 1; nx++)
+                for (int ny = wy - 1; ny <= wy + 1; ny++)
+                    if (nx >= 0 && ny >= 0 && nx < width && ny < height)
+                        chunks.add((long) (nx / cs) << 32 | ((ny / cs) & 0xffffffffL));
+        }
+        for (long c : chunks)
+            stage.reloadBackgroundChunkObjects((int) (c >> 32), (int) (c & 0xffffffffL));
     }
 
     public List<PointOfInterest> getPointsOfInterest(Actor player) {
