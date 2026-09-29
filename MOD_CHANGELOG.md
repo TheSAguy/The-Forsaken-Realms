@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 364: the bridge's world-map load keeps the saved spot (2026-09-28, test tool only)
+
+`cmd load` from the world map dropped the player at (0,0): AgentActions.load switched GameScene -> GameScene, so
+Forge.switchScene ran WorldStage.leave() -> getPlayerSprite().storePos() - and WorldSave.load's clearCache() had just
+dropped the sprite, so a fresh one at (0,0) was stored over the loaded position, which enter()'s LoadPos() then read.
+The menu paths (SaveLoadScene / StartScene) leave a different scene and never hit it - players are unaffected. Fix in
+the bridge only (no engine edit): LoadPos() onto the new sprite before the switch, + the background-track change the
+menu path makes. Not re-run in the agent game yet.
+
+## Round 363: Wolf4Green's red branch; Instant4White is by design (2026-09-28)
+
+QA's "Instant4White sold off-color cards": by design - its 8 slots are 4 Instant/Sorcery of ANY color + 4 mono-white
+(CardUtil colors = hasNoColorsExcept), the same "N colored + the rest any" shape as every Instant4/6, Creature, White1-6
+... sibling and as upstream's plane. Not changed. The same scan found a real copy-paste error: Wolf4Green ("Predator's
+Howl") second Union, the cardText "Wolf" branch had colors ["red"] between two green branches - a green wolf shop's
+colored half could sell red Wolf-text cards. Now green (shops.json ~6224). UnionTest (unreferenced test shop) left.
+
+## Round 362: the starting kit is worn (2026-09-28)
+
+QA: "Leather Boots start unequipped". Nothing ever equipped the kit: stock create() only adds startItems to the
+inventory (upstream too), and TFR's ringGiftStart hands them over later through the Ring gift - reward cards (the
+Llanowar "items" gift -> addReward case Item -> addItem) or the skip-intro "all" grant - all add-only.
+`AdventurePlayer.wearStartItem`: a kit item with an equipmentSlot goes on into an EMPTY slot only (New Game+ gear never
+displaced) - in create(), in the "all" grant, and for the "items" reward cards via a transient `startKitToWear` set
+checked in addReward. Easy's Manasight Amulet too. `[TFR-StartKit]` line. Existing characters untouched (unworn boots
+may be deliberate). Not seen in a new game yet.
+
+## Round 361: seven high-rarity shops out of the Common tier (2026-09-28)
+
+The user's screenshot: "Al's Dose of Apotheosis" (Gods) selling 300-500 gold Gods with a 20-shard blueprint. No shop
+filter names a rarity, so a shop's rarity is its reachable pool's; the tier lists were never sorted by it - Common,
+Uncommon and Rare average ~40% Rare+Mythic alike (`dev-tools/shop_rarity_audit.py`, new, read-only; `--all` for
+every type). Outliers moved in BOTH player templates (player_town.tmx + player_capital.tmx - the build menu and, via
+EconomyBuildings.playerTemplateTier, the blueprint price and reputation gate): Gods (83% R+M, 44% Mythic) -> Mythic;
+Hydra 83, Sphinx 71, Demon 70, Nobles 70, Angel 65, Dragon 63 -> Rare. Capitol-only to build from now on; shops
+already built stay. Rival towns' own lists untouched (what they stock). shop_blueprint_audit.py still passes; GUIDE.md
+tier paragraph updated. The 26 remaining flags are 50-56% color shops - normal for Magic's rarity mix, left.
+
 ## Round 360: an Inn's saved tournament takes the current entry fee (2026-09-28)
 
 The user's screenshot (Inn, Event Standings): a Jumpstart asking "Gold 200 / Mana Shards 5" - round 346 made it 500 / 50.

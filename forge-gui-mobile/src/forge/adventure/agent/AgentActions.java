@@ -433,8 +433,15 @@ final class AgentActions {
         CompletableFuture<Map<String, Object>> f = new CompletableFuture<>();
         Forge.setTransitionScreen(new TransitionScreen(() -> {
             boolean ok = WorldSave.load(slot);
-            if (ok)
+            if (ok) {
+                // Round 364: a load run from the world map switches GameScene -> GameScene, so the leave() in between
+                // is WorldStage's, and it stores the player sprite's position - but the load's clearCache() dropped
+                // that sprite, so a fresh one at (0,0) was stored over the saved spot. Put the saved spot on the new
+                // sprite first; the menu paths (SaveLoadScene, StartScene) leave a different scene and never hit it.
+                forge.adventure.stage.WorldStage.getInstance().getPlayerSprite().LoadPos();
+                forge.sound.SoundSystem.instance.changeBackgroundTrack();
                 Forge.switchScene(GameScene.instance());
+            }
             f.complete(WalkController.result(ok, ok ? "loaded slot " + slot : "load failed: " + slot));
         }, null, false, true, "Loading"));
         return f;
