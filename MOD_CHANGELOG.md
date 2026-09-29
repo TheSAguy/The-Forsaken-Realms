@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 369: map icons over the plazas; a tournament win raises local reputation (2026-09-29)
+
+- **Minimap icons** (the user's two map shots: brown squares over the town icons and the Capitol's). A road / plaza
+  tile repaints its pixel in the map image (redrawMinimapTile), and the places' icons are baked into that same image -
+  so round 368's plazas painted over them, and the image is saved that way. `World.redrawMapIcon(place)`
+  (redrawPoiMarkers on the place's own tile) runs after a plaza lays any tile, and PlayerRoads.stampPlazasOnLoad
+  redraws the Capitol's and every held town's icon on EVERY load - which also repairs a save whose image already has
+  them painted over. SEEN on a copy of the user's current save: every icon on top, the cobble square around it.
+- **Inn tournament win: local reputation +1** (the user). AdventureEventData.giveRewards - on the first award only
+  (it is also called for an already-Awarded event), when playerWon - adds 1 to the Inn's own place
+  (PointOfInterestChanges.addMapReputation, the "Reputation: N" shown on entering the town); a notification and
+  `[TFR-InnReputation]`. Not seen in play yet.
+
 ## Round 368: plazas you can see; no doodads on roads; Inn tournaments turn over weekly (2026-09-28)
 
 - **Plazas** (the user: "we said there should be a plaza ... I'm not seeing it"). They were there - round 346e's 3 / 1

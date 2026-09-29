@@ -92,6 +92,10 @@ public final class PlayerRoads {
         List<PointOfInterest> held = heldTowns(world, capitol);
         for (PointOfInterest town : held)
             paved += world.stampPlayerRoadPatch(town, tuning.playerRoadPlazaTown, null);
+        // Round 369: the icons back on top of their plazas - also for a save whose image already has them painted over
+        world.redrawMapIcon(capitol);
+        for (PointOfInterest town : held)
+            world.redrawMapIcon(town);
         if (paved > 0)
             System.out.println("[TFR-Roads] plazas on load: " + paved + " tile(s) paved under the Capitol and "
                     + held.size() + " held town(s) (sizes " + tuning.playerRoadPlazaCapitol + " / "

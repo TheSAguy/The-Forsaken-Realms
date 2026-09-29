@@ -929,6 +929,7 @@ public class AdventureEventData implements Serializable {
     }
 
     public void giveRewards() {
+        boolean firstAward = eventStatus != AdventureEventController.EventStatus.Awarded; // round 369
         int wins = matchesWon;
         Array<Reward> ret = new Array<>();
 
@@ -1049,6 +1050,18 @@ public class AdventureEventData implements Serializable {
             playerWon = false;
         }
 
+        // Round 369 (the user: "Winning an Inn Tournament should raise local reputation by 1"): the Inn's own place -
+        // its town's Reputation, the number shown on entering it. Once, on the first award only.
+        if (firstAward && playerWon && sourceID != null && forge.adventure.world.WorldSave.getCurrentSave() != null) {
+            PointOfInterestChanges changes = forge.adventure.world.WorldSave.getCurrentSave().getPointOfInterestChanges(sourceID);
+            if (changes != null) {
+                changes.addMapReputation(1);
+                System.out.println("[TFR-InnReputation] tournament won at " + sourceID + " - local reputation now "
+                        + changes.getMapReputation());
+                forge.adventure.stage.GameHUD.getInstance().addNotification("[BLACK]Tournament champion! Local reputation +1 (now "
+                        + changes.getMapReputation() + ").", true);
+            }
+        }
         eventStatus = AdventureEventController.EventStatus.Awarded;
     }
 

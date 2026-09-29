@@ -4796,7 +4796,20 @@ public class World implements Disposable, SaveFileContent {
         }
         lastRoadPavedOver = pavedOver;
         repaintAroundRoadTiles(touched, onTileRepainted);
+        if (paved > 0)
+            redrawMapIcon(place); // round 369: the plaza's minimap pixels had painted over the place's own icon
         return paved;
+    }
+
+    /** Round 369 (the user's minimap shots: "the new plazas are ... on top of the town icons"). A road or plaza tile
+     *  repaints its minimap pixel, and a place's icon is baked into the same image - so the icon goes back on top.
+     *  The image is saved with the icons baked in, so PlayerRoads calls this on every load too. */
+    public void redrawMapIcon(PointOfInterest place) {
+        if (biomeImage == null || place == null)
+            return;
+        Vector2 c = place.getCenter();
+        int tx = (int) (c.x / data.tileSize), ty = (int) (c.y / data.tileSize);
+        redrawPoiMarkers(tx, ty, tx, ty);
     }
 
     /** The chunk-texture patches for a set of changed road tiles and the 2-tile ring around each. */
