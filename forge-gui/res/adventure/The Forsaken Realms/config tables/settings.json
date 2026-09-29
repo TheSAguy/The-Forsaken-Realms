@@ -289,13 +289,19 @@
     // runs for the exit. Set 0 for a chase the player can always outrun.
     "robbedGuardSpeedFactor": 1.1,
 
-    // Round 177 (user request): losing a duel costs a FLAT amount of the gold you carry - or all of it when you
-    // have less. Replaces the difficulty's percentage (config.json "goldLoss", still the fallback when a value
-    // here is 0). A Bronze Coin handed over on the ante prompt still waives it. Applies to existing characters.
-    "defeatGoldLossEasy": 50,
-    "defeatGoldLossNormal": 100,
-    "defeatGoldLossHard": 150,
-    "defeatGoldLossInsane": 200,
+    // Round 359 (user spec): losing a duel costs defeatGoldLossPercent* PERCENT of the gold you carry (2 = 2%),
+    // but at least defeatGoldLossMin* gold - and never more than you carry (have less, lose it all). Gold in the
+    // bank is safe. Replaces the difficulty's percentage (config.json "goldLoss", still the fallback when both
+    // values here are 0). A Bronze Coin handed over on the ante prompt still waives it. Applies to existing
+    // characters. (Round 177 had the flat amounts alone.)
+    "defeatGoldLossPercentEasy": 2,
+    "defeatGoldLossPercentNormal": 5,
+    "defeatGoldLossPercentHard": 10,
+    "defeatGoldLossPercentInsane": 15,
+    "defeatGoldLossMinEasy": 50,
+    "defeatGoldLossMinNormal": 100,
+    "defeatGoldLossMinHard": 150,
+    "defeatGoldLossMinInsane": 200,
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". The

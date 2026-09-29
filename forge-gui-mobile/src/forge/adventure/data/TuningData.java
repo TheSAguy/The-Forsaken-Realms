@@ -391,10 +391,17 @@ public class TuningData {
     // reaches existing characters on their next defeat - the percentage (DifficultyData.goldLoss) is copied
     // into every save, a table here is not. 0 = no flat rule for that difficulty: the percentage applies,
     // which is also what a stock plane without these keys gets.
-    public int defeatGoldLossEasy = 0;
-    public int defeatGoldLossNormal = 0;
-    public int defeatGoldLossHard = 0;
-    public int defeatGoldLossInsane = 0;
+    // Round 359 (user: "Easy 2%, Normal 5%, Hard 10%, Insane 15% with a Minimum loss of: Easy 50, Normal 100, Hard
+    // 150, Insane 200"): the flat amounts became the MINIMUM (renamed defeatGoldLossMin*), and a lost duel takes
+    // defeatGoldLossPercent* percent (2 = 2%) of the gold carried when that is more. Still never more than you carry.
+    public int defeatGoldLossMinEasy = 0;
+    public int defeatGoldLossMinNormal = 0;
+    public int defeatGoldLossMinHard = 0;
+    public int defeatGoldLossMinInsane = 0;
+    public float defeatGoldLossPercentEasy = 0f;
+    public float defeatGoldLossPercentNormal = 0f;
+    public float defeatGoldLossPercentHard = 0f;
+    public float defeatGoldLossPercentInsane = 0f;
 
     // Round 216 (user spec): the Coin Challenge entry fee at the Capitol's Level 2 Arena - "For 50g
     // (Easy/Normal) 100g (Hard/Insane) you can duel this enemy to try and get your coin back". Same
@@ -566,17 +573,41 @@ public class TuningData {
     // reaching the duel rather than being waved off forever. 0 disables the floor and restores immunity.
     public float townMinCaptureChance = 0.05f;
 
-    /** The flat defeat gold loss for a difficulty name, or 0 when there is none (use the percentage). */
+    /** The minimum defeat gold loss for a difficulty name, or 0 when there is none. */
     public int defeatGoldLossFor(String difficultyName) {
         if (difficultyName == null)
             return 0;
         switch (difficultyName.trim().toLowerCase()) {
-            case "easy":   return Math.max(0, defeatGoldLossEasy);
-            case "normal": return Math.max(0, defeatGoldLossNormal);
-            case "hard":   return Math.max(0, defeatGoldLossHard);
-            case "insane": return Math.max(0, defeatGoldLossInsane);
+            case "easy":   return Math.max(0, defeatGoldLossMinEasy);
+            case "normal": return Math.max(0, defeatGoldLossMinNormal);
+            case "hard":   return Math.max(0, defeatGoldLossMinHard);
+            case "insane": return Math.max(0, defeatGoldLossMinInsane);
             default:       return 0;
         }
+    }
+
+    /** Round 359: the defeat gold loss in PERCENT of the gold carried (2 = 2%) for a difficulty name, 0 when none. */
+    public float defeatGoldLossPercentFor(String difficultyName) {
+        if (difficultyName == null)
+            return 0f;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0f, defeatGoldLossPercentEasy);
+            case "normal": return Math.max(0f, defeatGoldLossPercentNormal);
+            case "hard":   return Math.max(0f, defeatGoldLossPercentHard);
+            case "insane": return Math.max(0f, defeatGoldLossPercentInsane);
+            default:       return 0f;
+        }
+    }
+
+    /** Round 359: what a lost duel takes from {@code carried} gold on this difficulty - the percentage or the minimum,
+     *  whichever is more, never more than is carried. -1 when the plane sets neither (the stock goldLoss applies). */
+    public int defeatGoldLoss(String difficultyName, int carried) {
+        int min = defeatGoldLossFor(difficultyName);
+        float percent = defeatGoldLossPercentFor(difficultyName);
+        if (min <= 0 && percent <= 0f)
+            return -1;
+        int loss = Math.max(min, (int) (Math.max(0, carried) * percent / 100f));
+        return Math.min(Math.max(0, carried), loss);
     }
 
     /** Round 216: the Coin Challenge entry fee for a difficulty name. An unrecognised difficulty

@@ -66,7 +66,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (80%, as an ordinary roll would), ordinary monsters still off roads: `WorldStage.spawnQuestExtraOnly`, `[TFR-QuestSpawn]`.
   **Round 358 (2026-09-28):** quest extras pick the QUEST first, then its creature (`pickExtraQuestSpawn`, equal share
   per quest); save 1 slots 1-2 = "Stormcrown Dragons" (Izzet) + "Dawnwood Vanguard" (Selesnya), backup prededit23.
-  Live + agent packaged with 358.
+  Live + agent packaged with 358. **Round 359:** defeat gold = settings.json `defeatGoldLossPercent*` (2/5/10/15 %)
+  with `defeatGoldLossMin*` (50/100/150/200, renamed from round 177's `defeatGoldLoss*`) as the minimum.
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text), an old road a tile short of a restored town,
   the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards, Leather Boots start unequipped.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the

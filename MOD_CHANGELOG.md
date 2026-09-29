@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 359: defeat gold = a percentage with a minimum (2026-09-28)
+
+The user: "New Gold Loss will be: Easy 2%, Normal 5%, Hard 10%, Insane 15% with a Minimum loss of: Easy 50, Normal 100,
+Hard 150, Insane 200. Add the % to the config." settings.json `defeatGoldLossPercent*` (2 / 5 / 10 / 15, in percent) +
+`defeatGoldLossMin*` (round 177's flat 50 / 100 / 150 / 200, renamed from `defeatGoldLoss*`). A lost duel takes the
+larger of the two, never more than carried (`TuningData.defeatGoldLoss`); the Bronze Coin still waives it; the bank is
+untouched; stock `goldLoss` only when a plane sets neither. `[TFR-DefeatGold]` names the percent and minimum. The New
+Game Duels tab reads "15%, at least 200 [+Gold] (all of it if you carry less)"; FAQ.md updated; validator keys. Break-even
+where the percentage takes over: 2,500 gold on Easy, 2,000 Normal, 1,500 Hard, 1,334 Insane - below that it is round
+177's flat loss. The user's Insane run carrying 3,396 now loses 509 (was 200). Quest 7283's "a percentage of your gold"
+is true again.
+
 ## Round 358: the quest first, then its creature; two decks for save 1 (2026-09-28)
 
 The user took round 357's recommendation. The quest-extra pool was the UNION of every active Defeat stage's tag matches,

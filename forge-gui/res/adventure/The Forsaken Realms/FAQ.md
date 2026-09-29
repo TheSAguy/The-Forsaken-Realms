@@ -95,8 +95,8 @@ Losing duels does NOT end your run. Only three things do:
 
 A defeat screen then returns you to the main menu.
 
-**What a lost duel costs:** a flat 50 / 100 / 150 / 200 gold (Easy / Normal / Hard / Insane, or everything you carry
-if you have less), 10% / 20% / 30% / 30% of your max life, and your ante (see the Bronze coin). If your life hits 0
+**What a lost duel costs:** 2% / 5% / 10% / 15% of the gold you carry, but at least 50 / 100 / 150 / 200 gold
+(Easy / Normal / Hard / Insane; everything you carry if you have less; gold in the bank is safe), 10% / 20% / 30% / 30% of your max life, and your ante (see the Bronze coin). If your life hits 0
 you're carried home: to your Capitol, or to Orazca if you don't have one yet. Losing inside a rotating dungeon usually
 makes that dungeon vanish.
 

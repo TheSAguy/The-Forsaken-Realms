@@ -3430,6 +3430,16 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
 
+## Round 359 (2026-09-28) - defeat gold = a percentage with a minimum
+
+- **`player/AdventurePlayer.java`** - `defeated()`'s gold `else` (round 177's region): the loss comes from
+  `TuningData.defeatGoldLoss(difficultyData.name, gold)` - `defeatGoldLossPercent*` % of the gold carried, at least
+  `defeatGoldLossMin*`, never more than carried; -1 = neither set = the stock `gold - gold * goldLoss`. Same region,
+  same merge rule as round 177 (Bronze Coin branch first).
+- **`scene/NewGameScene.java`** - `goldLossText` reads "15%, at least 200 [+Gold] ...". Stock line, as round 177.
+- Mod-added, no merge burden: `data/TuningData.java` (`defeatGoldLoss*` ints renamed `defeatGoldLossMin*`, four
+  `defeatGoldLossPercent*` floats, `defeatGoldLossPercentFor()`, `defeatGoldLoss()`).
+
 ## Round 177 (2026-09-11) - flat defeat gold, the Wasteland mix-in
 
 - **`player/AdventurePlayer.java`** - `defeated()`'s gold branch (the non-Bronze-Coin `else`): a flat loss from

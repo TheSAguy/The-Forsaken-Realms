@@ -605,8 +605,17 @@ public class NewGameScene extends MenuScene {
         // Round 177: a plane with a flat defeat gold loss (settings.json) shows the flat amount instead of the percentage
         // (the resource glyph, as every other amount in the mod's UI; TypingLabel renders it).
         forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        // Round 359: the percentage with the flat amount as its minimum.
         int flatGoldLoss = tuning == null ? 0 : tuning.defeatGoldLossFor(selectedDifficulty.name);
-        String goldLossText = flatGoldLoss > 0 ? flatGoldLoss + " [+Gold] (all of it if you carry less)" : (int) (selectedDifficulty.goldLoss * 100) + "%";
+        float goldLossPercent = tuning == null ? 0f : tuning.defeatGoldLossPercentFor(selectedDifficulty.name);
+        String goldLossText;
+        if (flatGoldLoss <= 0 && goldLossPercent <= 0f)
+            goldLossText = (int) (selectedDifficulty.goldLoss * 100) + "%";
+        else if (goldLossPercent <= 0f)
+            goldLossText = flatGoldLoss + " [+Gold] (all of it if you carry less)";
+        else
+            goldLossText = new java.text.DecimalFormat("0.#").format(goldLossPercent) + "%"
+                    + (flatGoldLoss > 0 ? ", at least " + flatGoldLoss + " [+Gold] (all of it if you carry less)" : "");
         matchImpacts.text = String.format("Difficulty: %s\nStarting Life: %d\nEnemy Health: %d%%\nGold loss on defeat: %s\nLife loss on defeat: %d%%", selectedDifficulty.name, selectedDifficulty.startingLife, (int) (selectedDifficulty.enemyLifeFactor * 100), goldLossText, (int) (selectedDifficulty.lifeLoss * 100));
         matchImpacts.name = "Duels";
 
