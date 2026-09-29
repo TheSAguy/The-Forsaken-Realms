@@ -3280,6 +3280,7 @@ public class World implements Disposable, SaveFileContent {
             CompletableFuture.allOf(futuresArray).join();
             futures.clear();
             currentTime[0] = measureGenerationTime("roads", currentTime[0]);
+            forge.adventure.util.RoadNetwork.joinCorners(this, null); // round 365: two lines crossing at a corner
             roadsNormalized = forge.adventure.util.RoadNetwork.VERSION; // round 351: laid by the current rules
 
 //////////////////
@@ -4721,6 +4722,14 @@ public class World implements Disposable, SaveFileContent {
     /** Round 351: the chunk-texture patches for the tiles setRoadKindRaw() changed, and the 2-tile ring around each. */
     public void repaintRoadTiles(java.util.Set<Long> touched, BiConsumer<Integer, Integer> onTileRepainted) {
         repaintAroundRoadTiles(touched, onTileRepainted);
+    }
+
+    /** Round 365: can a road be laid on this raw tile - on the map, land (a biome bit besides the road bits), and not
+     *  the barrier? RoadNetwork.joinCorners() fills a corner only where this holds. */
+    public boolean canJoinRoadRaw(int x, int rawY) {
+        if (roadKindRaw(x, rawY) < 0)
+            return false;
+        return (biomeMap[x][rawY] & ~roadMask()) != 0 && !isBarrierRaw(x, rawY);
     }
 
     private int lastRoadPavedOver;

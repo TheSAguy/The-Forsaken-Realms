@@ -58,7 +58,7 @@ import forge.adventure.world.World;
  */
 public final class RoadNetwork {
     /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
-    public static final int VERSION = 2; // 2: roads past a town chained on both sides lifted (round 351b)
+    public static final int VERSION = 3; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365)
     /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
     public static final double EXISTING_ROAD_DISCOUNT = 0.35;
     /** A pair of towns is joined by road when this share of either staircase between them is road. */
@@ -879,6 +879,7 @@ public final class RoadNetwork {
             plaza += world.stampPlayerRoadPatch(town, tuning.playerRoadPlazaTown, onTileRepainted);
         int abandoned = former == null ? 0 : liftAbandoned(world, edges, hops, network, former, prot, touched);
         int thinned = thinBesidePlayerRoad(world, anchorTiles(world, towns), touched);
+        joinCorners(world, touched); // round 365
         world.repaintRoadTiles(touched, onTileRepainted);
         world.setPlayerRoadsBuilt(PlayerRoads.NETWORK_VERSION);
         System.out.println("[TFR-Roads] player road network (" + why + "): " + held.size() + " held town(s) from "
@@ -914,12 +915,55 @@ public final class RoadNetwork {
         BiConsumer<Integer, Integer> repaint = liveRepaint();
         int plaza = world.stampPlayerRoadPatch(town, Config.instance().getTuningData().playerRoadPlazaTown, repaint);
         int thinned = thinBesidePlayerRoad(world, anchorTiles(world, towns), touched);
+        joinCorners(world, touched); // round 365
         world.repaintRoadTiles(touched, repaint);
         System.out.println("[TFR-Roads] player road (" + why + "): " + town.getDisplayName() + " joined - " + hops.size()
                 + " hop(s) (" + heldPairs + " old road(s) to held places upgraded as well), " + laid[0] + " tile(s) laid, "
                 + laid[1] + " old tile(s) paved over, " + plaza + " plaza tile(s); lifted " + laid[2] + " beside the"
                 + " upgrades, " + thinned + " squeezed against it - " + (System.nanoTime() - t0) / 1_000_000 + " ms");
         return true;
+    }
+
+    /**
+     * Round 365 (QA: "an old road can stop one tile short of a restored town"). A road draws by its four straight
+     * neighbours, so two road tiles that touch only at a corner read as a break - the user's day-16 world had five,
+     * each 2-6 tiles from a place, Silent Crossing's road one step short of its square. A lift that took a staircase's
+     * corner tile (liftOld along a reverse walk crossing the road) leaves exactly that. Every such joint gets one corner
+     * filled - old road, or player road when both ends are player road - never on water or the barrier. Runs after each
+     * network change and on world generation; saves get it once on load (VERSION 3, this pass only).
+     */
+    public static int joinCorners(World world, Set<Long> touched) {
+        if (world == null)
+            return 0;
+        int w = world.getWidthInTiles(), h = world.getHeightInTiles();
+        int joined = 0;
+        for (int x = 0; x < w - 1; x++) {
+            for (int y = 0; y < h - 1; y++) {
+                joined += joinCorner(world, x, y, x + 1, y + 1, x + 1, y, x, y + 1, touched);
+                joined += joinCorner(world, x + 1, y, x, y + 1, x, y, x + 1, y + 1, touched);
+            }
+        }
+        return joined;
+    }
+
+    private static int joinCorner(World world, int ax, int ay, int bx, int by, int c1x, int c1y, int c2x, int c2y,
+                                  Set<Long> touched) {
+        int a = world.roadKindRaw(ax, ay), b = world.roadKindRaw(bx, by);
+        if (a <= 0 || b <= 0 || world.roadKindRaw(c1x, c1y) != World.ROAD_NONE || world.roadKindRaw(c2x, c2y) != World.ROAD_NONE)
+            return 0;
+        int kind = a == World.ROAD_PLAYER && b == World.ROAD_PLAYER ? World.ROAD_PLAYER : World.ROAD_OLD;
+        int cx = c1x, cy = c1y;
+        if (!world.canJoinRoadRaw(cx, cy)) {
+            cx = c2x;
+            cy = c2y;
+            if (!world.canJoinRoadRaw(cx, cy))
+                return 0;
+        }
+        if (!world.setRoadKindRaw(cx, cy, kind, touched))
+            return 0;
+        System.out.println("[TFR-Roads] corner joint at raw (" + ax + "," + ay + ")-(" + bx + "," + by + ") joined at ("
+                + cx + "," + cy + ")");
+        return 1;
     }
 
     static BiConsumer<Integer, Integer> liveRepaint() {
@@ -932,6 +976,18 @@ public final class RoadNetwork {
         if (world == null || world.getRoadsNormalized() >= VERSION)
             return;
         long t0 = System.nanoTime();
+        if (world.getRoadsNormalized() < 2)
+            normalizeAndRebuild(world);
+        // Round 365: rule 3 is the corner-joint pass alone - a rule-2 save must NOT rerun the normalization above,
+        // which would turn the player network back to old road and route it again against today's map.
+        int joined = joinCorners(world, new HashSet<>());
+        world.setRoadsNormalized(VERSION);
+        System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " (" + joined + " corner joint(s) joined) in "
+                + (System.nanoTime() - t0) / 1_000_000 + " ms");
+    }
+
+    /** Rules 1-2 (round 351/351b): the old roads normalized, a standing Capitol's network laid again. */
+    private static void normalizeAndRebuild(World world) {
         PointOfInterest capitol = TownRestoration.findCapitol();
         Set<Long> former = null;
         if (capitol != null) {
@@ -954,8 +1010,6 @@ public final class RoadNetwork {
         normalizeOldRoads(world, towns, new Star(towns), protectedTiles(world, towns), new HashSet<>());
         if (capitol != null)
             rebuildPlayerNetwork(world, null, "a save from before round 351", former);
-        world.setRoadsNormalized(VERSION);
-        System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " in " + (System.nanoTime() - t0) / 1_000_000 + " ms");
     }
 
     /** The old-road router's hop rule for TerritoryControl: the wheel, the barrier, and the discount. */
