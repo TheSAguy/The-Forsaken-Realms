@@ -700,6 +700,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             if (i == null)
                 continue;
             inventoryItems.add(i);
+            wearStartItem(i); // round 362
         }
 
         onGoldChangeList.emit();
@@ -1915,8 +1916,12 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 addGold(reward.getCount());
                 break;
             case Item:
-                if (reward.getItem() != null)
+                if (reward.getItem() != null) {
                     addItem(reward.getItem().name);
+                    // Round 362: a starting-kit item handed over by the Ring gift goes straight on, like create()'s.
+                    if (startKitToWear().remove(reward.getItem().name) && !inventoryItems.isEmpty())
+                        wearStartItem(inventoryItems.get(inventoryItems.size() - 1));
+                }
                 break;
             case CardPack:
                 if (reward.getDeck() != null) {
@@ -2266,6 +2271,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                     continue;
                 }
                 gifts.add(rewardOf("item", 1, s));
+                startKitToWear().add(s); // round 362: worn when its reward card is collected (addReward)
             }
             if (!everything) { // the "all" (skip-intro) path already hands these out itself
                 if (newGamePlus) {
@@ -2306,6 +2312,7 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
                 ItemData i = ItemListData.getItem(s);
                 if (i != null) {
                     inventoryItems.add(i);
+                    wearStartItem(i); // round 362
                     items++;
                 }
             }
@@ -2955,6 +2962,30 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     public int countItem(String name) {
         return (int) inventoryItems.stream().filter(Objects::nonNull).filter(i -> i.name.equals(name)).count()
                 + (int) armoryStorage.stream().filter(Objects::nonNull).filter(i -> i.name.equals(name)).count();
+    }
+
+    /**
+     * Round 362 (QA: "Leather Boots start unequipped"). Nothing ever put the starting kit on - stock Forge's create()
+     * only adds it to the inventory, and TFR's Ring gift (ringGiftStart) hands it over through reward cards or the
+     * skip-intro grant, which only add too. A kit item with an equipment slot is worn now, but only into an EMPTY
+     * slot, so a New Game+ character's own gear is never displaced. Existing characters are left alone: a pair of
+     * unworn boots may have been taken off on purpose.
+     */
+    private void wearStartItem(ItemData item) {
+        if (item == null || item.equipmentSlot == null || item.equipmentSlot.isEmpty()
+                || itemInSlot(item.equipmentSlot) != null)
+            return;
+        equip(item);
+        System.out.println("[TFR-StartKit] " + item.name + " worn in the " + item.equipmentSlot + " slot");
+    }
+
+    /** Round 362: the Ring gift's kit items waiting on their reward cards - wearStartItem() once collected. */
+    private transient java.util.Set<String> startKitToWear;
+
+    private java.util.Set<String> startKitToWear() {
+        if (startKitToWear == null) // transient: null after any Java deserialization
+            startKitToWear = new java.util.HashSet<>();
+        return startKitToWear;
     }
 
     public boolean addItem(String name) {
