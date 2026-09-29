@@ -572,9 +572,10 @@ you can see exactly what you're missing and decide what's worth hunting.
 - **Building a shop costs by tier** (Normal; 25% less on Easy, 25% more on Hard, 50% more on
   Insane): Common 100 gold + 5 Wood, Uncommon 150 gold + 10 Wood, Rare 200 gold + 50 Shards,
   Mythic 300 gold + 100 Shards. Rare and Mythic shops can only be built in your Capitol.
-- **The Mythic tier** holds the five-color Domain of Dominaria and the three-color, Phyrexian,
-  Planeswalker and Legend shops. (The five colored booster-pack shops and five Instant shops sit
-  in the Common tier.)
+- **The Mythic tier** holds the five-color Domain of Dominaria, the Gods shop and the three-color,
+  Phyrexian, Planeswalker and Legend shops. The Angel, Demon, Dragon, Hydra, Nobles and Sphinx shops
+  are Rare - their stock is mostly Rare and Mythic cards. (The five colored booster-pack shops and
+  five Instant shops sit in the Common tier.)
 - **Blueprint prices are in Shards, set by the type's tier in your own build menu**: 20 Common,
   40 Uncommon, 100 Rare, 200 Mythic — the same in every town that sells it.
 - **Reputation gates the five colors' towns**, by the same tier. At one of their towns — capital
