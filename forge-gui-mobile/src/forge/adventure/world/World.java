@@ -790,6 +790,18 @@ public class World implements Disposable, SaveFileContent {
     public void setRoadsNormalized(int version) {
         roadsNormalized = version;
     }
+
+    // Round 370: the plaza layout this world's plazas follow (saved as plazaLayout); below PlayerRoads.PLAZA_LAYOUT a
+    // save's plazas are laid again, centred, once on load. A new world lays them centred from the start.
+    private int plazaLayout = forge.adventure.util.PlayerRoads.PLAZA_LAYOUT;
+
+    public int getPlazaLayout() {
+        return plazaLayout;
+    }
+
+    public void setPlazaLayout(int layout) {
+        plazaLayout = layout;
+    }
     private int yinYangStamp = 0;
 
     public int[] getYinYangAnchor() {
@@ -1087,6 +1099,7 @@ public class World implements Disposable, SaveFileContent {
         obstacleSweep = saveFileData.containsKey("obstaclesSwept") ? saveFileData.readInt("obstaclesSwept") : 0;
         playerRoadsBuilt = saveFileData.containsKey("playerRoadsBuilt") ? saveFileData.readInt("playerRoadsBuilt") : 0; // round 346
         roadsNormalized = saveFileData.containsKey("roadsNormalized") ? saveFileData.readInt("roadsNormalized") : 0; // round 351
+        plazaLayout = saveFileData.containsKey("plazaLayout") ? saveFileData.readInt("plazaLayout") : 0; // round 370
         ResourceSpawns.forceResync(); // actors on WorldStage must rebuild from this loaded state
 
         poiDespawnDay.clear();
@@ -1248,6 +1261,7 @@ public class World implements Disposable, SaveFileContent {
         data.store("obstaclesSwept", obstacleSweep);
         data.store("playerRoadsBuilt", playerRoadsBuilt); // round 346
         data.store("roadsNormalized", roadsNormalized); // round 351
+        data.store("plazaLayout", plazaLayout); // round 370
         saveBarrier(data); // round 294
         data.storeObject("poiDespawnDay", poiDespawnDay);
         data.storeObject("poiRespawnDay", poiRespawnDay);
@@ -3298,6 +3312,7 @@ public class World implements Disposable, SaveFileContent {
             currentTime[0] = measureGenerationTime("roads", currentTime[0]);
             forge.adventure.util.RoadNetwork.joinCorners(this, null); // round 365: two lines crossing at a corner
             roadsNormalized = forge.adventure.util.RoadNetwork.VERSION; // round 351: laid by the current rules
+            plazaLayout = forge.adventure.util.PlayerRoads.PLAZA_LAYOUT; // round 370
 
 //////////////////
 ///////// draw mini map
@@ -4764,21 +4779,34 @@ public class World implements Disposable, SaveFileContent {
      * old road under it is paved over, terrain cleared); the barrier and water are left alone. Returns the tiles
      * newly paved.
      */
+    /** Round 370: the bottom-left world tile (x, y up) of `place`'s plaza of this size - the square centred as near its
+     *  place's centre as whole tiles allow. PointOfInterestMapSprite draws the Capitol's and a restored town's art on
+     *  this square's centre (PlayerRoads.plazaCenter), so the two always line up. */
+    public int[] plazaOrigin(PointOfInterest place, int sizeTiles) {
+        com.badlogic.gdx.math.Vector2 center = place.getCenter();
+        int ts = data.tileSize;
+        return new int[]{(int) Math.floor(center.x / ts - sizeTiles / 2.0 + 0.5),
+                (int) Math.floor(center.y / ts - sizeTiles / 2.0 + 0.5)};
+    }
+
     public int stampPlayerRoadPatch(PointOfInterest place, int sizeTiles, BiConsumer<Integer, Integer> onTileRepainted) {
         if (data == null || biomeMap == null || terrainMap == null || place == null || sizeTiles <= 0)
             return 0;
-        com.badlogic.gdx.math.Vector2 center = place.getCenter();
-        int ts = data.tileSize;
-        int tx0 = (int) Math.floor(center.x / ts - sizeTiles / 2.0 + 0.5), tx1 = tx0 + sizeTiles - 1;
-        int ty0 = (int) Math.floor(center.y / ts - sizeTiles / 2.0 + 0.5), ty1 = ty0 + sizeTiles - 1;
+        int[] origin = plazaOrigin(place, sizeTiles);
+        int tx0 = origin[0], tx1 = tx0 + sizeTiles - 1;
+        int ty0 = origin[1], ty1 = ty0 + sizeTiles - 1;
         long roadBit = roadBit(), playerRoadBit = playerRoadBit(), roadMask = roadMask();
         java.util.HashSet<Long> touched = new java.util.HashSet<>();
         int paved = 0, pavedOver = 0;
         for (int tx = tx0; tx <= tx1; tx++) {
             for (int ty = ty0; ty <= ty1; ty++) {
-                if (tx < 0 || ty <= 0 || tx >= width || ty > height)
+                if (tx < 0 || ty < 0 || tx >= width || ty >= height)
                     continue;
-                int rawY = height - ty; // buildRoad()'s own raw-index convention, so the plaza meets the road tile for tile
+                // Round 370 (the user's plaza shots: a thick bottom edge on every one, the spire over the top): the
+                // road pass's raw index (height - ty) draws a tile one row SOUTH of ty - the renderer reads
+                // height - ty - 1 - so every plaza sat a tile low. The plaza is a square around its place, not a
+                // line meeting a road end, so it takes the renderer's row.
+                int rawY = height - ty - 1;
                 long bits = biomeMap[tx][rawY];
                 if ((bits & ~roadMask) == 0L || isBarrierRaw(tx, rawY))
                     continue; // water and the barrier stay

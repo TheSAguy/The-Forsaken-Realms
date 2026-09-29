@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 370: plazas centred on their places (2026-09-29)
+
+The user's plaza shots: "the plaza is always too big to about two sides ... try to center the icon a little better".
+Two causes. (1) A row off: stampPlayerRoadPatch wrote the road pass's raw row (height - ty), which the renderer draws
+one tile SOUTH (it reads height - ty - 1) - every plaza sat a tile low: a thick bottom edge, the spire over the top.
+Now height - ty - 1. (2) Grid snap: a plaza is whole tiles, a place's art is not (a restored town draws at its own
+sub-tile position) - up to half a tile off, usually showing as extra on the right. `PlayerRoads.plazaCenter` + the
+art drawn on it (PointOfInterestMapSprite.pickArt, for the Capitol and every held town; the entry box moves with it,
+at most half a tile; `[TFR-MapIcon] ... art centred on its plaza`). `World.plazaOrigin` is the one square both use.
+Existing saves: `World.plazaLayout` (saved; 0 before this round, new worlds PLAZA_LAYOUT 1) - once on load
+`RoadNetwork.trimAroundPlaza` lifts the player-road tiles within 3 tiles of each corrected square that are not the
+square or the road anchor, one at a time while the road around each stays joined (a road running in keeps its tiles),
+then joinCorners. Agent, a copy of the user's current save: "plazas re-laid centred (layout 1): 82 stray plaza
+tile(s) lifted around the Capitol and 19 held town(s)" + 90 tiles laid; screenshots before / centred-5 / centred-4
+sent to the user.
+
 ## Round 369: map icons over the plazas; a tournament win raises local reputation (2026-09-29)
 
 - **Minimap icons** (the user's two map shots: brown squares over the town icons and the Capitol's). A road / plaza

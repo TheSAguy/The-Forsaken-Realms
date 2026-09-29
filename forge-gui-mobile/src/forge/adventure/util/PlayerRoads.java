@@ -34,6 +34,8 @@ import forge.adventure.world.WorldSave;
 public final class PlayerRoads {
     /** Bumped when the network rule changes and every save should lay it again. */
     public static final int NETWORK_VERSION = 3; // 2: the plazas (round 346c); 3: RoadNetwork's growth (round 351)
+    /** Round 370: the plaza layout (World.plazaLayout) - 1 = on the renderer's row, with the art centred on it. */
+    public static final int PLAZA_LAYOUT = 1;
 
     private PlayerRoads() {
     }
@@ -81,6 +83,34 @@ public final class PlayerRoads {
      * town's plaza at settings.json's current size. Paving only adds and skips a tile that is already player road, so
      * this is a no-op once a save has them, and a larger size reaches existing saves on their next load.
      */
+    /**
+     * Round 370 (the user: "the plaza is always too big to about two sides ... try to center the icon a little better").
+     * A plaza snaps to whole tiles, a place's art does not - so the art of the Capitol and of every town the player
+     * holds is drawn on its plaza's centre instead (PointOfInterestMapSprite.pickArt), at most half a tile from where
+     * it stood, with its entry box. Null for any other place.
+     */
+    public static com.badlogic.gdx.math.Vector2 plazaCenter(PointOfInterest place) {
+        if (place == null || place.getData() == null || WorldSave.getCurrentSave() == null)
+            return null;
+        World world = WorldSave.getCurrentSave().getWorld();
+        TuningData tuning = Config.instance().getTuningData();
+        if (world == null || tuning == null)
+            return null;
+        int size;
+        if (TownRestoration.CAPITOL_POI_NAME.equals(place.getData().name))
+            size = tuning.playerRoadPlazaCapitol;
+        else if (RoadNetwork.isTownOrCapital(place)
+                && TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(place.getID())))
+            size = tuning.playerRoadPlazaTown;
+        else
+            return null;
+        if (size <= 0)
+            return null;
+        int[] o = world.plazaOrigin(place, size);
+        float ts = world.getTileSize();
+        return new com.badlogic.gdx.math.Vector2((o[0] + size / 2f) * ts, (o[1] + size / 2f) * ts);
+    }
+
     static void stampPlazasOnLoad(World world) {
         PointOfInterest capitol = TownRestoration.findCapitol();
         if (world == null || capitol == null)
@@ -92,6 +122,19 @@ public final class PlayerRoads {
         List<PointOfInterest> held = heldTowns(world, capitol);
         for (PointOfInterest town : held)
             paved += world.stampPlayerRoadPatch(town, tuning.playerRoadPlazaTown, null);
+        // Round 370: a save whose plazas were laid a row low (and at earlier sizes) - the cobbles now outside each
+        // corrected square come up, except what a road running in still needs.
+        if (world.getPlazaLayout() < PLAZA_LAYOUT) {
+            java.util.Set<Long> touched = new java.util.HashSet<>();
+            int trimmed = RoadNetwork.trimAroundPlaza(world, capitol, tuning.playerRoadPlazaCapitol, touched);
+            for (PointOfInterest town : held)
+                trimmed += RoadNetwork.trimAroundPlaza(world, town, tuning.playerRoadPlazaTown, touched);
+            int joined = RoadNetwork.joinCorners(world, touched);
+            world.setPlazaLayout(PLAZA_LAYOUT);
+            System.out.println("[TFR-Roads] plazas re-laid centred (layout " + PLAZA_LAYOUT + "): " + trimmed
+                    + " stray plaza tile(s) lifted around the Capitol and " + held.size() + " held town(s), " + joined
+                    + " corner joint(s) joined");
+        }
         // Round 369: the icons back on top of their plazas - also for a save whose image already has them painted over
         world.redrawMapIcon(capitol);
         for (PointOfInterest town : held)

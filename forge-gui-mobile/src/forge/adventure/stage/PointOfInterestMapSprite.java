@@ -79,6 +79,19 @@ public class PointOfInterestMapSprite extends MapSprite {
             drawEnlarged = playerTownTexture != null;
         }
         TextureRegion footprint = pointOfInterest.getSprite();
+        // Round 370 (the user: "try to center the icon a little better" on its plaza): the Capitol's and a held town's
+        // art sits on its plaza's centre - the plaza snaps to whole tiles, the place's own position does not, so this
+        // is the only way the two can line up. The entry box moves with it (at most half a tile).
+        com.badlogic.gdx.math.Vector2 plaza = texture == null ? null : forge.adventure.util.PlayerRoads.plazaCenter(pointOfInterest);
+        if (plaza != null) {
+            shiftX = plaza.x - (getX() + texture.getRegionWidth() / 2f);
+            shiftY = plaza.y - (getY() + texture.getRegionHeight() / 2f);
+            boundingRect.setCenter(plaza.x, plaza.y);
+            if (ART_SHIFT_LOGGED_FOR.add(pointOfInterest.getID()))
+                System.out.println("[TFR-MapIcon] " + pointOfInterest.getDisplayName() + ": art centred on its plaza, shifted "
+                        + shiftX + "," + shiftY + " px with its entry box (round 370)");
+            return;
+        }
         if (texture == null || footprint == null || (texture.getRegionWidth() == footprint.getRegionWidth()
                 && texture.getRegionHeight() == footprint.getRegionHeight())) {
             shiftX = shiftY = 0f;

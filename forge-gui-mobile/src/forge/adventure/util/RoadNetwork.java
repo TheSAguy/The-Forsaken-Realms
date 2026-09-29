@@ -745,6 +745,42 @@ public final class RoadNetwork {
     }
 
     /** Without (x, y), are its road neighbors (4-way) still joined to each other inside its 3x3? */
+    /**
+     * Round 370: the player-road tiles within three tiles of `place`'s plaza that are not the plaza itself come up -
+     * a row laid too low, a larger size of an earlier round - one at a time while the road around each stays joined
+     * without it (so a road running into the plaza keeps every tile it needs), until none goes. The plaza and the
+     * place's road anchor stay. Returns the tiles lifted.
+     */
+    static int trimAroundPlaza(World world, PointOfInterest place, int size, Set<Long> touched) {
+        if (world == null || place == null || size <= 0)
+            return 0;
+        int h = world.getHeightInTiles();
+        int[] o = world.plazaOrigin(place, size);
+        Set<Long> keep = new HashSet<>();
+        for (int tx = o[0]; tx < o[0] + size; tx++)
+            for (int ty = o[1]; ty < o[1] + size; ty++)
+                keep.add(key(tx, h - ty - 1));
+        int[] a = anchor(world, place);
+        keep.add(key(a[0], h - a[1]));
+        int lifted = 0;
+        boolean changed = true;
+        for (int pass = 0; changed && pass < 16; pass++) {
+            changed = false;
+            for (int tx = o[0] - 3; tx < o[0] + size + 3; tx++) {
+                for (int ty = o[1] - 3; ty < o[1] + size + 3; ty++) {
+                    int rawY = h - ty - 1;
+                    if (keep.contains(key(tx, rawY)) || world.roadKindRaw(tx, rawY) != World.ROAD_PLAYER)
+                        continue;
+                    if (staysJoined(world, tx, rawY) && world.setRoadKindRaw(tx, rawY, World.ROAD_NONE, touched)) {
+                        lifted++;
+                        changed = true;
+                    }
+                }
+            }
+        }
+        return lifted;
+    }
+
     static boolean staysJoined(World world, int x, int y) {
         int[][] four = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         List<int[]> ends = new ArrayList<>();
