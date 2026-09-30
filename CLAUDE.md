@@ -79,6 +79,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (each quest keeps its own limit, `World.questDayLimit`), 10 side quests, Instant4White white-only, notification icons
   in color. **368:** plazas 6 / 5 stamped on every load, no doodads on roads/plazas (`World.GetMapObjects` filter),
   Inn tournaments turn over each in-game week (`createdWeek`).
+  **369-373 (2026-09-29/30):** map icons over plazas + tournament win +1 local rep (369); plazas centred, art on the
+  plaza centre, top row off (370/370b, `playerRoadPlazaTopCut`); research counts distinct cards (371); A SET IS EVERY
+  CARD PRINTED IN IT (372, `util/PrintingIndex` - Research Lab totals/credit by printing, master list, Smith); gated
+  named-card rewards never off-set (373, `remapToEditionListStrict`). Ring City shops/boss rewards/deck building stay
+  ungated (user). The Smith's 372 change NOT walked to in the agent.
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text), an old road a tile short of a restored town,
   the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards, Leather Boots start unequipped.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
