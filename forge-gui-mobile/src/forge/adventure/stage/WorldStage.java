@@ -717,6 +717,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     enemyMoveVector.set(mob.territoryTarget.getPosition()).sub(mob.pos());
                     enemyMoveVector.setLength(mob.speed() * delta);
                     mob.moveBy(enemyMoveVector.x, enemyMoveVector.y);
+                } else if (mob.legendExpiryDay >= 0 && !legendGivesChase(mob)) {
+                    // Round 375 (the user chose "hold ground"): a sighted legend stands where it was seen until the
+                    // player comes within legends.json chaseTiles - the sighting is a fight to choose, not an ambush.
+                    mob.setAnimation(CharacterSprite.AnimationTypes.Idle);
                 } else if (!currentModifications.containsKey(PlayerModification.Hide)) {
                     enemyMoveVector.set(player.getX(), player.getY()).sub(mob.pos());
                     enemyMoveVector.setLength(mob.speed() * delta);
@@ -1852,7 +1856,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             spawnDelay -= delta;
             if (spawnDelay < 0) {
                 spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
-                spawnQuestExtraOnly("on a road");
+                if (!rollLegendSighting(world, biomeData)) // round 375: a legend's spot is judged on its own
+                    spawnQuestExtraOnly("on a road");
             }
             return;
         }
@@ -1867,6 +1872,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         spawnDelay -= delta;
         if (spawnDelay >= 0) return;
         spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
+        // Round 375: the legend table rolls first, on a spot of its own - a legend placed spends this roll.
+        if (rollLegendSighting(world, biomeData))
+            return;
 
         // Round 338 (user spec 2026-09-25, "adjust the spawn rates of enemies in areas with lifted FoW"): the fog zone at
         // the SPOT this roll would spawn on - drawn now the way spawn() draws it, and handed to spawn() so the enemy lands
@@ -1986,16 +1994,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         + ", life=" + enemyData.life + ", fog=" + (lit ? "lit" : "dark") + ") in " + data.name
                         + " territory (rank=" + difficultyFactor
                         + spawnTierInfo + ")");
-                // Round 173 (review S1): the two groups BiomeData appends to the roll say so when they
-                // land - frontier spawns sat dead for thirty rounds partly because nothing logged one.
-                if (forge.adventure.util.FrontierSpawns.isCandidate(enemyData))
-                    System.out.println("[TFR-Frontier] " + enemyData.getName() + " (tier=" + enemyData.tier
-                            + ", colors=" + enemyData.colors + ") roams " + data.name + " territory");
-                else if (forge.adventure.util.RoamingChampions.isChampion(enemyData)) // round 311
-                    System.out.println("[TFR-RoamingChampion] " + enemyData.getName() + " (tier=" + enemyData.tier
-                            + ", colors=" + enemyData.colors + ", beaten out here "
-                            + forge.adventure.util.SpawnTierWeighting.getPermanentKillCount(enemyData.getName())
-                            + "x) roams " + data.name + " territory");
+                // Round 173 (review S1): the groups BiomeData appends to the roll say so when they land. Round 375:
+                // legends come through the legend table only (rollLegendSighting) - one here slipped past it.
+                if (forge.adventure.util.LegendSpawns.isMember(enemyData))
+                    System.out.println("[TFR-LegendTable] LEAK: " + enemyData.name + " (tier=" + enemyData.tier
+                            + ", colors=" + enemyData.colors + ") came through the ordinary roll in " + data.name + " territory");
                 else if (forge.adventure.util.WarChampions.isBiomeAtWar(data.name)
                         && forge.adventure.util.WarChampions.championNames(data.name).contains(enemyData.getName()))
                     System.out.println("[TFR-WarChampion] " + enemyData.getName() + " rides with the war in "
@@ -2196,12 +2199,141 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         EnemySprite sprite = new EnemySprite(enemyData);
         boolean spawned = spawn(sprite, preferred);
-        if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData)) {
-            sprite.legendExpiryDay = legendExpiryDayFromNow(); // round 350: whole days, not travel-seconds
-            announceLegendSighting(sprite); // round 239; round 311: the roaming champions too
-        }
+        if (spawned && forge.adventure.util.RoamingChampions.isLegend(enemyData))
+            onLegendSighted(sprite); // a quest's or the console's legend - the legend table places its own
         return spawned;
 
+    }
+
+    /** Round 375: every legend sighting, whichever path placed it - the day clock (round 350), the legend table's
+     *  count and cooldown, and the announcement (round 239). */
+    private void onLegendSighted(EnemySprite sprite) {
+        sprite.legendExpiryDay = legendExpiryDayFromNow();
+        forge.adventure.util.LegendSpawns.recordSighting(Current.world(), sprite.getData());
+        announceLegendSighting(sprite);
+    }
+
+    /**
+     * Round 375, the legend table (LegendSpawns - the user: "Legends have their own spawn-pool/table... pretty Rare",
+     * and the best-of-3 fights gated behind Unhappy and War terrain). Once per spawn roll, before the ordinary pick: a
+     * spot is drawn legends.json spawnMinTiles..spawnMaxTiles out and the land UNDER IT decides - a color at Unhappy or
+     * War gives its chance, any other land none - so a legend only ever stands in hostile land, whatever the player is
+     * standing on. Then the cooldown and the cap on legends alive, then the draw (least-sighted first, none already
+     * roaming). Silent on a miss; one [TFR-LegendTable] line per hit. True when a legend was placed: that spends the roll.
+     */
+    private boolean rollLegendSighting(World world, List<BiomeData> biomes) {
+        if (!forge.adventure.util.LegendSpawns.isEnabled() || player == null)
+            return false;
+        Vector2 offset = new Vector2(1, 1);
+        offset.setLength(forge.adventure.util.LegendSpawns.spawnTiles(rand) * world.getTileSize());
+        offset.setAngleDeg(360 * rand.nextFloat());
+        String land = landAt(world, biomes, player.getX() + offset.x, player.getY() + offset.y);
+        float chance = forge.adventure.util.LegendSpawns.chanceFor(land);
+        if (chance <= 0f || rand.nextFloat() >= chance)
+            return false;
+        return drawLegend(world, biomes, land, offset, "roll hit in " + land + " ("
+                + ColorReputation.getStatus(land).label + ", chance " + chance + ")", false);
+    }
+
+    /** Round 375: the legend table's draw for a land and its placement - the roll above, and the console's
+     *  {@code legend <color>} with {@code force} (no cooldown, no cap on legends alive). */
+    private boolean drawLegend(World world, List<BiomeData> biomes, String land, Vector2 offset, String where, boolean force) {
+        List<EnemySprite> alive = getLegendSightings();
+        if (!force && !forge.adventure.util.LegendSpawns.roomFor(alive.size())) {
+            System.out.println("[TFR-LegendTable] " + where + " - " + alive.size() + " legend(s) already roaming, none sighted");
+            return false;
+        }
+        if (!force && !forge.adventure.util.LegendSpawns.cooledDown(world)) {
+            System.out.println("[TFR-LegendTable] " + where + " - cooling down until day "
+                    + forge.adventure.util.LegendSpawns.nextSightingDay(world) + ", none sighted");
+            return false;
+        }
+        java.util.Set<String> aliveNames = new java.util.HashSet<>();
+        for (EnemySprite legend : alive)
+            aliveNames.add(legend.getData().name);
+        float rank = Current.player().getStatistic().rank();
+        forge.adventure.util.LegendSpawns.Pick pick = forge.adventure.util.LegendSpawns.pick(world,
+                forge.adventure.util.LegendSpawns.candidatesFor(land, rank, aliveNames), rand);
+        if (pick == null) {
+            System.out.println("[TFR-LegendTable] " + where + " - no legend fits this land at rank " + rank);
+            return false;
+        }
+        System.out.println("[TFR-LegendTable] " + where + ": drew " + pick.enemy.name + " from " + pick.poolSize + " ("
+                + pick.leastSeen + " at the fewest sightings, " + pick.fewestSightings + "; its share "
+                + String.format("%.1f%%", 100f * pick.share) + ")");
+        if (placeLegend(pick.enemy, offset, force ? null : land, world, biomes))
+            return true;
+        System.out.println("[TFR-LegendTable] no open ground for " + pick.enemy.name + " in " + land + " - not placed");
+        return false;
+    }
+
+    /** Round 375, console: sight a legend of this color's pool now, on any open ground at the legend range - no chance
+     *  roll, cooldown or cap (the one-of-each rule and the rank gate still hold). */
+    public String forceLegendSighting(String color) {
+        World world = WorldSave.getCurrentSave().getWorld();
+        if (forge.adventure.util.LegendSpawns.colorLetterOf(color) == null)
+            return "Command needs a color: white/blue/black/red/green";
+        Vector2 offset = new Vector2(1, 1);
+        offset.setLength(forge.adventure.util.LegendSpawns.spawnTiles(rand) * world.getTileSize());
+        offset.setAngleDeg(360 * rand.nextFloat());
+        boolean placed = drawLegend(world, world.getData().GetBiomes(), color, offset, "console legend " + color, true);
+        return placed ? "A " + color + " legend was sighted - see forge.log [TFR-LegendTable]" : "No legend placed - see forge.log";
+    }
+
+    /** Round 375: the legend on the drawn spot, or on another spot at the same range in the same land - never in other
+     *  terrain (a null land: any), never on a colliding tile. The ordinary spawn()'s nudging would drift it off the
+     *  hostile ground. */
+    private boolean placeLegend(EnemyData enemyData, Vector2 offset, String land, World world, List<BiomeData> biomes) {
+        EnemySprite sprite = new EnemySprite(enemyData);
+        Vector2 spot = new Vector2(offset);
+        for (int attempt = 0; attempt < 12; attempt++) {
+            if (attempt > 0) {
+                spot.set(1, 1);
+                spot.setLength(forge.adventure.util.LegendSpawns.spawnTiles(rand) * world.getTileSize());
+                spot.setAngleDeg(360 * rand.nextFloat());
+            }
+            float x = player.getX() + spot.x;
+            float y = player.getY() + spot.y;
+            if (land != null && !land.equals(landAt(world, biomes, x + sprite.getWidth() / 2f, y)))
+                continue;
+            sprite.setX(x);
+            sprite.setY(y);
+            if (enemyData.flying || !world.collidingTile(sprite.boundingRect())) {
+                enemies.add(Pair.of(globalTimer, sprite));
+                foregroundSprites.addActor(sprite);
+                onLegendSighted(sprite);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Round 375: the land a world position lies in - a biome's name, or null off the map and on a road (a road's layer
+     *  index lies past the biomes: nobody's land). */
+    private static String landAt(World world, List<BiomeData> biomes, float x, float y) {
+        int tx = (int) (x / world.getTileSize());
+        int ty = (int) (y / world.getTileSize());
+        if (tx < 0 || ty < 0 || tx >= world.getWidthInTiles() || ty >= world.getHeightInTiles())
+            return null;
+        int index = World.highestBiome(world.getBiome(tx, ty));
+        return index >= 0 && index < biomes.size() ? biomes.get(index).name : null;
+    }
+
+    /** Round 375: does this sighted legend chase the player now? It starts within legends.json chaseTiles and gives up
+     *  past leashTiles, standing where it stopped. One log line per change. */
+    private boolean legendGivesChase(EnemySprite legend) {
+        float tile = Current.world().getTileSize();
+        float dist = legend.pos().dst(player.pos());
+        if (!legend.legendChasing && dist <= forge.adventure.util.LegendSpawns.chaseTiles() * tile) {
+            legend.legendChasing = true;
+            System.out.println("[TFR-Legend] " + legend.getData().getTieredDisplayName() + " sees the player "
+                    + Math.round(dist / tile) + " tile(s) away - it gives chase");
+        } else if (legend.legendChasing && dist > forge.adventure.util.LegendSpawns.leashTiles() * tile) {
+            legend.legendChasing = false;
+            System.out.println("[TFR-Legend] " + legend.getData().getTieredDisplayName()
+                    + " lets the player go - it holds its ground again");
+        }
+        return legend.legendChasing;
     }
 
     /**
@@ -2223,8 +2355,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 + days + " day(s) - until day " + legend.legendExpiryDay);
         // Round 331: the plain black tint - this took the white tint with no color tag and drew white on the paper
         // (VeggieShark's v1.14 report). Round 350: the days it stays, counted down in the quest log.
+        // Round 375: legends hold their ground now - the message says so.
         GameHUD.getInstance().addNotification("A legend has been sighted to the " + direction + ": " + name
-                + "! It moves on in " + days + " day" + (days == 1 ? "" : "s") + " - a gold dot marks it on the map.");
+                + "! It holds its ground for " + days + " day" + (days == 1 ? "" : "s") + " - a gold dot marks it on the map.");
     }
 
     /** Round 350 (the user: "give legends a day-based lifetime"): the day a legend sighted now moves on -

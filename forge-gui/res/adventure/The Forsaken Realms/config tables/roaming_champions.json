@@ -1,7 +1,10 @@
 {
   // Roaming champions (round 311, user: "Add all 'arena-only enemy' enemies as spawn able roaming champions on the
-  // overworld") - hand-editable, no code change needed to re-cast or retune. See RoamingChampions.java for the rules
-  // and BiomeData.getEnemy() for where the share is applied.
+  // overworld") - hand-editable, no code change needed to re-cast. See RoamingChampions.java.
+  //
+  // Round 375: this file only names them. They are sighted through the legend table (legends.json) with the frontier
+  // legends - Unhappy or War land only, least-sighted first - which replaced the "share" of every colour land's ordinary
+  // roll at any reputation described below (it was 0.03).
   //
   // These are the arena pools' champions (spawnRate 0, carrying their own reward lists) that no other route reaches:
   // not placed on a map, not a cave champion, not a frontier legend, not in the Chest's pools, not a war champion.
@@ -11,10 +14,6 @@
   // long legend lifetime), and beating one out here pays its whole reward list - the arena pays one Rare from its
   // deck instead (round 311).
   //
-  // share: the fraction of a colour land's ordinary spawn rolls the champions take between them. Within that, each
-  // champion's part halves every time the player beats it out here, so the ones not yet met come round first.
-  // Set it to 0 to switch the feature off.
-  "share": 0.03,
   "names": [
     "Arcades Sabboth", "Baron Levilain", "Baron Von Gant", "Bazaar Keeper", "Chromium (Boss)",
     "Elf Queen Guay", "Gaea, the Worldsoul", "Goblin King Phil", "Karona (Boss)", "King Kane Ferguson",

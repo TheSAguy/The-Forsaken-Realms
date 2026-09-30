@@ -868,6 +868,14 @@ public class DuelScene extends ForgeScene {
                     playerEffects.add(enemy.effect.opponent);
             }
         }
+        // Round 375 (the user: "Legends should all start with a Gemstone Mine in play"): a legend sighted on the
+        // overworld - the legend table's, marked by its day clock - fights with legends.json startBattleWithCard in
+        // play. Hand-placed dungeon legends and arena champions keep the balance of their own places.
+        if (enemy.legendExpiryDay >= 0 && eventData == null) {
+            EffectData legendEffect = forge.adventure.util.LegendSpawns.duelEffect();
+            if (legendEffect != null)
+                oppEffects.add(legendEffect);
+        }
         //Collect and add dungeon-wide effects.
         if (dungeonEffect != null) {
             oppEffects.add(dungeonEffect);

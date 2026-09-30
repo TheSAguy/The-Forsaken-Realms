@@ -49,6 +49,7 @@ public class Config {
     private forge.adventure.data.WarChampionData warChampionData;
     private forge.adventure.data.FrontierSpawnData frontierSpawnData;
     private forge.adventure.data.RoamingChampionData roamingChampionData; // round 311
+    private forge.adventure.data.LegendSpawnData legendSpawnData; // round 375
     private forge.adventure.data.RoamingGuardConfig roamingGuardConfig;
     /** Round 140 (S2-6): set when a plane data file that EXISTS failed to parse, so the menu can
      *  say so instead of the game running with every feature silently defaulted off. */
@@ -311,6 +312,20 @@ public class Config {
             }
         }
 
+        // The legend table (round 375) - same plane-local / fallback-to-common pattern. Absent leaves legendSpawnData
+        // null, which LegendSpawns reads as "off" (no legend is sighted at all).
+        FileHandle legendFile = new FileHandle(prefix + "config tables/legends.json");
+        if (!legendFile.exists())
+            legendFile = new FileHandle(commonPrefix + "config tables/legends.json");
+        if (legendFile.exists()) {
+            try {
+                legendSpawnData = new Json().fromJson(forge.adventure.data.LegendSpawnData.class, legendFile);
+            } catch (Exception e) {
+                System.err.println("[TFR-LegendTable] legends.json failed to load, no legend will be sighted: " + e);
+                legendSpawnData = null;
+            }
+        }
+
         // Roaming guards (MOD_SCOPE #116, round 145) - same plane-local / fallback-to-common
         // pattern. Absent leaves roamingGuardConfig null, which RoamingGuards reads as "off", so
         // no plane without this file gains the feature.
@@ -375,6 +390,10 @@ public class Config {
 
     public forge.adventure.data.RoamingChampionData getRoamingChampionData() {
         return roamingChampionData;
+    }
+
+    public forge.adventure.data.LegendSpawnData getLegendSpawnData() {
+        return legendSpawnData;
     }
 
     public forge.adventure.data.RoamingGuardConfig getRoamingGuardConfig() {

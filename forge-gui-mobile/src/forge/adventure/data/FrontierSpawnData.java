@@ -12,13 +12,8 @@ package forge.adventure.data;
  * automatically instead of going stale the first time an enemy is added or re-tiered.
  */
 public class FrontierSpawnData {
-    /** Share of a biome's spawn rolls these take while its colour is UNHAPPY with the player. */
-    public float unhappyShare;
-    /** Share while its colour is at WAR. Higher than unhappyShare by intent - war is the danger. */
-    public float warShare;
-    /** Share the colourless members take in terrain that is at NEUTRAL (including the wasteland,
-     *  which has no owner to have an opinion). Small: only a handful of enemies qualify. */
-    public float neutralColorlessShare;
+    // Round 375: unhappyShare / warShare / neutralColorlessShare are gone - how often a legend is sighted, and where, is
+    // the legend table's (LegendSpawnData, config tables/legends.json). This file only defines who is a frontier legend.
     /** Life ceiling for a candidate. Keeps the hand-placed Eldrazi titans (70 life) out of the
      *  roaming pool while admitting everything that is genuinely unreachable (max 50). */
     public int maxLife;

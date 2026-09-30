@@ -84,8 +84,20 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   CARD PRINTED IN IT (372, `util/PrintingIndex` - Research Lab totals/credit by printing, master list, Smith); gated
   named-card rewards never off-set (373, `remapToEditionListStrict`). Ring City shops/boss rewards/deck building stay
   ungated (user). The Smith's 372 change NOT walked to in the agent.
-  Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text), an old road a tile short of a restored town,
-  the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards, Leather Boots start unequipped.
+  **374:** every shop with ONE color in its name sells only that color (land/wand shops by mana symbol); UnionTest out.
+  **375 (2026-09-30): THE LEGEND TABLE** (`util/LegendSpawns`, `config tables/legends.json`; MOD_CHANGELOG has it all):
+  the 127 frontier legends + 25 roaming champions left the ordinary roll (BiomeData) and the war-tier boss roll for a
+  roll of their own before each ordinary pick (`WorldStage.rollLegendSighting`): the land UNDER the 12-20-tile spot must
+  be a color at Unhappy (0.006/roll) or War (0.012), colorless legends in any hostile land, 2-day cooldown, 1 alive,
+  least-sighted first (`repeatWeight` 0.05 on saved `World.legendSightingCount`, seeded once from the win/loss record -
+  the user's save: Traxos 4x), never one already roaming; legends HOLD GROUND until the player is within 5 tiles
+  (leash 8) and start their duels with a Gemstone Mine (overworld sightings only). Console `legend <color>`,
+  `legendroll <color> [n]`. Agent-tested on a copy of the user's save: seed, forced + natural sightings, hold/chase,
+  Gemstone Mine in the duel, counts across save/load. Spawn rolls tick on REAL time, so fast time/Wait thins them per day.
+  Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text) - STILL CLIPPED after 366's relabel: the
+  lost-card ante row at 3840x2130 cuts OK off the left edge and Bronze Coin off the right (agent, round 375); an old road
+  a tile short of a restored town, the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards,
+  Leather Boots start unequipped.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
   a DRAFT again (`gh release edit tfr-v1.14 --draft`; its three assets are still attached; v1.13 shows as Latest).

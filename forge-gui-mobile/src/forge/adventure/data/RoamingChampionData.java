@@ -5,10 +5,10 @@ package forge.adventure.data;
  * needed to re-cast or retune. See RoamingChampions.java for how it is consumed.
  * <p>
  * {@code names} are the arena-only champions: enemies.json entries authored with {@code spawnRate} 0 that no other
- * route reaches (dev-tools/arena_champion_audit.py lists them). {@code share} is the fraction of a colour land's
- * ordinary spawn rolls they take between them. An absent file, an empty list or a share of 0 switches it off.
+ * route reaches (dev-tools/arena_champion_audit.py lists them). An absent file or an empty list leaves them out of the
+ * legend table.
  */
 public class RoamingChampionData {
-    public float share;
+    // Round 375: "share" is gone - the champions are sighted through the legend table (LegendSpawnData, legends.json).
     public String[] names;
 }

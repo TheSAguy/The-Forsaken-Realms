@@ -162,6 +162,9 @@ public class EnemySprite extends CharacterSprite implements Steerable<Vector2> {
     // Round 350 (the user: "give legends a day-based lifetime"): the world day a sighted legend moves on - set at the
     // sighting (WorldStage.spawn), saved with the roaming list. -1 = the travel-time clock (getLifetime()).
     public int legendExpiryDay = -1;
+    // Round 375: a sighted legend holds its ground until the player comes within legends.json chaseTiles; true while it
+    // chases (WorldStage.legendGivesChase). Not saved - a loaded legend stands until the player comes near again.
+    public boolean legendChasing = false;
 
     private final Vector2 spriteToPlayerVec = new Vector2();
     private final Vector2 candidateToPlayerVec = new Vector2();

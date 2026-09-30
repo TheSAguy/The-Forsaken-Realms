@@ -14264,6 +14264,72 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 375: the legend table (2026-09-30)
+
+The user: "I think we need to have Legends have their own spawn-pool/table to control their appearance better. They
+should be pretty Rare and once one spawns, the odds of it spawning again before the rest has spawned once should be
+very low. There should never be 2 of the same kind on the map at the same time. Legends should all start with a
+'Gemstone Mine' in play." - after meeting Traxos 3-4 times in one save - and, asked about two best-of-3 fights at week 3
+(Elf Queen Guay, a roaming champion in white land; The Dawning Archaic, a colorless frontier legend in the wasteland):
+gate those "mini-boss" fights behind Unhappy and War terrain. The user took all four recommendations: colorless
+legends in any hostile color's land, ~1 sighting per 3 days Unhappy / 1.5 War with a 2-day cooldown and 1 alive,
+legends hold their ground, the Gemstone Mine for overworld sightings only.
+
+**Why they were common, repetitive and early.** Legends were weight shares mixed into every land's ordinary roll
+(BiomeData.getEnemy) with no memory: roaming champions 3% of colored land at ANY reputation (~1.5 rolls a day at ~50
+spawn rolls per 270-s day), frontier legends 10%/15% at Unhappy/War (up to ~7 a day at War), the three colorless
+frontier legends (Traxos, The Dawning Archaic, Zhulodok) 1% of the wasteland - the whole wasteland pool, so every
+wasteland sighting was one of three. The rank gate did nothing for the user (PlayerStatistic.rank() = 10 past 150 wins).
+And a "sighting" was an ambush: 3-13 tiles out, homing on the player from any distance for three days (Guay spawned 4
+tiles away; the Archaic was saved next to the player and caught them on load). No ordinary biome roster holds a
+best-of-3 enemy: on the overworld best-of-3 comes only from legends (55 of 152) and the War-only groups.
+
+**The table** (`util/LegendSpawns`, `data/LegendSpawnData`, `config tables/legends.json`; members = FrontierSpawns
+.isCandidate + RoamingChampions.isChampion, 127 + 25):
+- `WorldStage.rollLegendSighting()` once per spawn roll (both the road branch and the main one), before the ordinary
+  pick: a spot 12-20 tiles out (`spawnMinTiles`/`spawnMaxTiles`); the land UNDER THE SPOT must be a color at UNHAPPY
+  (`unhappyChance` 0.006) or WAR (`warChance` 0.012) - never the wasteland, the player's land, Neutral/Happy/Partner.
+  Then `cooldownDays` 2 since the last sighting, `maxAlive` 1, then the draw. A placed legend spends the roll.
+- Candidates: members carrying the land's color letter, or colorless (any hostile land); difficulty <= rank; content
+  filter; not already roaming (round 347's one-of-each, now inside the draw instead of a skipped spawn). Pool per
+  color: W 62, U 77, B 64, R 66, G 93.
+- Draw: weight = `repeatWeight` (0.05) ^ (sightings - fewest sightings in the draw) - least-sighted first. Counts per
+  catalog name in `World.legendSightingCount` (+ `lastLegendSightingDay`, `legendSightingsSeeded`), saved; an older
+  save seeds them ONCE from the win/loss record (wins + losses by display name). New Game / NG+ clears them.
+- `placeLegend()` keeps the legend in the same land (12 tries at the legend range), never on a colliding tile.
+- Hold ground: `legendExpiryDay >= 0` sprites stand (Idle) until the player is within `chaseTiles` 5, then chase until
+  `leashTiles` 8 (`EnemySprite.legendChasing`, not saved; `[TFR-Legend] ... gives chase` / `lets the player go`).
+- Duels: an overworld legend sighting (day clock set, no event) adds `LegendSpawns.duelEffect()` =
+  `startBattleWithCard: ["Gemstone Mine"]` to the opponent's effects (ETB counters are on for start cards, so its 3
+  mining counters come with it). Hand-placed dungeon legends and arena champions don't get it.
+- Every legend sighting (table, quest, console) goes through `WorldStage.onLegendSighted()`: day clock, count +
+  cooldown (`[TFR-LegendTable] <name> sighted - sighting #n`), the announcement - reworded "It holds its ground for N
+  days".
+- Out of the ordinary roll: BiomeData drops the frontier + champion injection (war champions stay); its two uniform
+  fallbacks prefer spawnRate > 0 (the weightless catalog copies include every legend). `TerritoryControl
+  .rollWarTierBoss()`: 25 of its 38 names are roaming champions - a legend drawn there returns null (the ordinary pick
+  goes ahead), so the 13 other bosses keep exactly their odds. The ordinary spawn log's frontier/champion lines became
+  a leak detector (`[TFR-LegendTable] LEAK:`).
+- Data: frontier_spawns.json keeps only `maxLife`; roaming_champions.json only `names` (FrontierSpawnData /
+  RoamingChampionData lost the share fields - libGDX Json refuses unknown keys, so file and class changed together).
+  `RoamingChampions.isChampion()` no longer depends on a share (it did: a 0 share would have un-legended all 25).
+- Console: `legend <color>` sights one now (no chance/cooldown/cap), `legendroll <color> [n]` draws n times against
+  the counts (nothing spawned), `spawnroll` reports 0 legends from the ordinary roll.
+- Validator: FrontierSpawnData/RoamingChampionData/LegendSpawnData key sets, legends.json value checks, start cards
+  must have a card script. GUIDE.md + FAQ.md rewritten for the new rules.
+
+Grep forge.log for `[TFR-LegendTable]` (hits, draws, sightings, the seed line) and `[TFR-Legend]`.
+
+**Agent-tested** on a copy of the user's save (day 18; red Unhappy, white/blue Happy): the seed line "5 legend(s)
+already met [Traxos 4x, The Dawning Archaic 1x, Elf Queen Guay 1x, Bazaar Keeper 1x, Chromium (Boss) 1x]";
+`legendroll red` 66 legends, 63 unseen drawn evenly; `spawnroll red/waste` 0 legends in 2,000; `legend red` sighted
+Zacama 15 tiles out - it stood while the player walked and waited, gave chase at 5 tiles, the duel ran with
+`battlefield=[Gemstone Mine]` on its seat (won 2-0, whole reward list); counts kept across save/load. With green at
+War and the chances raised to 0.5 in the AGENT copy only, two natural sightings in green land (The Goose Mother from
+93, then Nethroi from 92 - the live one left out of the draw). Spawn rolls tick on real frame time, so fast time and
+Wait thin them per in-game day (true of ordinary spawns too). Seen on the way: the lost-card ante row at 3840x2130
+still clips OK and Bronze Coin at the screen edges (the open v1.15 4K item).
+
 ## Round 374: color-named shops sell only their color; UnionTest removed (2026-09-30)
 
 The user: "Just like Instant4White all other shops with Color in the name should only sell cards of that color" and

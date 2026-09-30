@@ -133,12 +133,16 @@ public class TerritoryControl {
     // brought this spawn roll to that color's territory in the first place).
     public static final float WAR_TIER_BOSS_CHANCE = 0.04f;
 
-    /** A random War-tier boss for this color, or null if the color has none or the roll misses. */
+    /** A random War-tier boss for this color, or null if the color has none or the roll misses.
+     *  Round 375: 25 of the 38 names are roaming champions - legends, which come only through the legend table
+     *  (LegendSpawns) now. A legend drawn here gives the roll back to the ordinary pick, so each of the other bosses
+     *  keeps exactly the odds it had. */
     public static EnemyData rollWarTierBoss(String color, Random rand) {
         String[] pool = WAR_TIER_BOSSES.get(color);
         if (pool == null || pool.length == 0 || rand.nextFloat() >= WAR_TIER_BOSS_CHANCE)
             return null;
-        return WorldData.getEnemy(pool[rand.nextInt(pool.length)]);
+        EnemyData boss = WorldData.getEnemy(pool[rand.nextInt(pool.length)]);
+        return boss != null && LegendSpawns.isMember(boss) ? null : boss;
     }
 
     private static final int MIN_ATTACK_DAYS = 2;

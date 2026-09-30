@@ -1,0 +1,43 @@
+{
+  // The legend table (round 375) - hand-editable, no code change needed to retune. See LegendSpawns.java.
+  //
+  // The user: "Legends [should] have their own spawn-pool/table to control their appearance better. They should be
+  // pretty Rare and once one spawns, the odds of it spawning again before the rest has spawned once should be very
+  // low. There should never be 2 of the same kind on the map at the same time. Legends should all start with a
+  // Gemstone Mine in play." - and the best-of-3 "mini-boss" fights gated behind Unhappy and War terrain.
+  //
+  // WHO is a legend is not listed here: the 127 frontier legends are a rule (frontier_spawns.json, FrontierSpawns.java)
+  // and the 25 roaming champions a list (roaming_champions.json). Between them, 55 of the 152 are best-of-3 - the only
+  // best-of-3 fights on the overworld outside a war (the war champions and war-tier bosses come at War alone).
+  //
+  // WHERE: only in the land of a color that is Unhappy or at War with the player, judged at the spot the legend would
+  // stand on. A legend qualifies when it carries that color (a WUG legend in white, blue and green land); the three
+  // colorless ones - Traxos, The Dawning Archaic, Zhulodok - qualify in any hostile color's land. Never the wasteland,
+  // the player's land, or a Neutral, Happy or Partner color's. The player's rank still gates them (their difficulty).
+  //
+  // HOW OFTEN: the chance per spawn roll (about 50 rolls a day of travel), a cooldown after each sighting, and a cap on
+  // legends alive at once. 0.006 / 0.012 come to about one sighting per 3 days in Unhappy land and one per 1.5 days at
+  // War while you travel there - the cooldown and the cap slow that down further. Both chances 0: no legends at all.
+  "unhappyChance": 0.006,
+  "warChance": 0.012,
+  "cooldownDays": 2,
+  // Legends alive at once, at most (0 = no cap). A legend already roaming is never drawn again while it lives.
+  "maxAlive": 1,
+
+  // WHICH: the least-sighted first. A legend's weight is repeatWeight to the power of how many more times it has been
+  // sighted than the least-sighted legend in the same draw - 0.05: seen once more than the rest, it has a twentieth of
+  // their odds. The counts are saved in the world; an older save starts them from the win/loss record (times fought).
+  "repeatWeight": 0.05,
+
+  // HOW IT BEHAVES: sighted this far away (tiles), it holds its ground - a gold dot on the maps, the quest log's row -
+  // until the player comes within chaseTiles, then gives chase until the player is leashTiles away. It stays
+  // settings.json legendLifetimeDays (3) days.
+  "spawnMinTiles": 12,
+  "spawnMaxTiles": 20,
+  "chaseTiles": 5,
+  "leashTiles": 8,
+
+  // Cards a sighted legend starts its duels with on the battlefield. Gemstone Mine enters with its three mining
+  // counters (starting cards get their ETB counters). Hand-placed dungeon legends and arena champions don't.
+  "startBattleWithCard": [ "Gemstone Mine" ]
+}

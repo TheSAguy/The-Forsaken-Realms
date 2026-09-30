@@ -252,9 +252,10 @@ Standing also changes:
 
 - **Travel speed** on that color's land: +10% Partner, +5% Happy, -5% Unhappy, -10% War.
 - **Its creatures:** at Partner you meet them a third as often, at War three times as often. On its land they also
-  lean weaker when it likes you and tougher when it doesn't. At Unhappy and War its legends start roaming its land
-  (a legend stays 3 days, and your quest log shows which way it is and how long it has left), and at War its arena
-  champions roam too.
+  lean weaker when it likes you and tougher when it doesn't. Only at Unhappy and War do legends appear on its land -
+  rarely, the ones you haven't met first, never two of the same at once. A legend holds its ground for 3 days until
+  you come close (your quest log shows which way it is and how long it has left) and starts its duels with a
+  Gemstone Mine in play. At War its arena champions roam too.
 
 None of this touches your own towns. Each town also keeps its own **town reputation**, separate from the colors: it
 shifts prices in that town by up to 10%, and in your own towns it caps how many buildings you can have and helps fend

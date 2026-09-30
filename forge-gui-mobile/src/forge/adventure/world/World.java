@@ -414,6 +414,12 @@ public class World implements Disposable, SaveFileContent {
     // defeat every candidate in a pool an equal number of times and the pool reads as perfectly
     // uniform again, from a stateless recompute rather than a path-dependent redistribution.
     private final java.util.Map<String, Integer> enemyPermanentKillCount = new java.util.HashMap<>();
+    // Round 375, the legend table (LegendSpawns): how many times each legend has been sighted this game (catalog name ->
+    // count), the day of the last sighting (-1 = none yet) for the cooldown, and whether an older save's counts have
+    // been seeded from the win/loss record yet.
+    private final java.util.Map<String, Integer> legendSightingCount = new java.util.HashMap<>();
+    private int lastLegendSightingDay = -1;
+    private boolean legendSightingsSeeded = false;
 
     public java.util.Map<String, Integer> getPoiDespawnDay() {
         return poiDespawnDay;
@@ -525,6 +531,26 @@ public class World implements Disposable, SaveFileContent {
 
     public java.util.Map<String, Integer> getEnemyPermanentKillCount() {
         return enemyPermanentKillCount;
+    }
+
+    public java.util.Map<String, Integer> getLegendSightingCount() {
+        return legendSightingCount;
+    }
+
+    public int getLastLegendSightingDay() {
+        return lastLegendSightingDay;
+    }
+
+    public void setLastLegendSightingDay(int day) {
+        lastLegendSightingDay = day;
+    }
+
+    public boolean isLegendSightingsSeeded() {
+        return legendSightingsSeeded;
+    }
+
+    public void setLegendSightingsSeeded(boolean seeded) {
+        legendSightingsSeeded = seeded;
     }
 
     // How many rotatable dungeons/caves should be visible at once (pool rotation) - set to
@@ -1163,6 +1189,14 @@ public class World implements Disposable, SaveFileContent {
             //noinspection unchecked
             enemyPermanentKillCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("enemyPermanentKillCount"));
         }
+        // Round 375: absent on an older save - the counts start empty and LegendSpawns seeds them once.
+        legendSightingCount.clear();
+        if (saveFileData.containsKey("legendSightingCount")) {
+            //noinspection unchecked
+            legendSightingCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("legendSightingCount"));
+        }
+        lastLegendSightingDay = saveFileData.containsKey("lastLegendSightingDay") ? saveFileData.readInt("lastLegendSightingDay") : -1;
+        legendSightingsSeeded = saveFileData.containsKey("legendSightingsSeeded") && saveFileData.readBool("legendSightingsSeeded");
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
         capitolLostColors.clear();
         if (saveFileData.containsKey("capitolLostColors"))
@@ -1277,6 +1311,9 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("arenaWinWeek", arenaWinWeek);
         data.storeObject("caveChampion", caveChampion);
         data.storeObject("enemyPermanentKillCount", enemyPermanentKillCount);
+        data.storeObject("legendSightingCount", legendSightingCount); // round 375
+        data.store("lastLegendSightingDay", lastLegendSightingDay);
+        data.store("legendSightingsSeeded", legendSightingsSeeded);
         data.store("poiActiveTarget", poiActiveTarget);
         StringBuilder star = new StringBuilder();
         for (int[] t : starTownTiles)
@@ -2473,6 +2510,9 @@ public class World implements Disposable, SaveFileContent {
             // this an enemy's permanent kill count from the PREVIOUS playthrough would silently
             // carry into the new one.
             enemyPermanentKillCount.clear();
+            legendSightingCount.clear(); // round 375 - a new world meets its legends afresh
+            lastLegendSightingDay = -1;
+            legendSightingsSeeded = true; // nothing to seed: the win/loss record is the new run's too
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
             starTownTiles.clear();
             ringTargetDays.clear();

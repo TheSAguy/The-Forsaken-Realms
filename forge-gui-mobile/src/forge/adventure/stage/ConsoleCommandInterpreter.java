@@ -292,8 +292,59 @@ public class ConsoleCommandInterpreter {
                 return "Spawn " + s[0];
             return "Can not find enemy " + s[0];
         });
+        // Round 375, the legend table: sight a legend of this color's pool now (no chance roll, cooldown or cap - the
+        // one-of-each rule and the rank gate still hold).
+        registerCommand(new String[]{"legend"}, s -> {
+            if (s.length < 1)
+                return "Command needs a color (white/blue/black/red/green).";
+            return WorldStage.getInstance().forceLegendSighting(s[0].toLowerCase());
+        });
+        // Round 375: draw from a color's legend pool n times (default 2000) against the save's sighting counts and report
+        // the pool, how many share the fewest sightings, and the names drawn most - the least-seen-first check. Nothing
+        // is spawned or counted.
+        registerCommand(new String[]{"legendroll"}, s -> {
+            if (s.length < 1)
+                return "Command needs a color (white/blue/black/red/green) and optionally a draw count.";
+            int n = 2000;
+            if (s.length > 1) {
+                try {
+                    n = Integer.parseInt(s[1]);
+                } catch (Exception e) {
+                    return "Can not convert " + s[1] + " to number";
+                }
+            }
+            String color = s[0].toLowerCase();
+            if (forge.adventure.util.LegendSpawns.colorLetterOf(color) == null)
+                return "No color " + s[0];
+            forge.adventure.world.World world = WorldSave.getCurrentSave().getWorld();
+            float rank = Current.player().getStatistic().rank();
+            java.util.List<EnemyData> pool = forge.adventure.util.LegendSpawns.candidatesFor(color, rank, null);
+            if (pool.isEmpty())
+                return "No legend fits " + color + " at rank " + rank;
+            Map<String, Integer> drawn = new TreeMap<>();
+            java.util.Random random = new java.util.Random();
+            forge.adventure.util.LegendSpawns.Pick first = null;
+            for (int i = 0; i < n; i++) {
+                forge.adventure.util.LegendSpawns.Pick pick = forge.adventure.util.LegendSpawns.pick(world, pool, random);
+                if (first == null)
+                    first = pick;
+                drawn.merge(pick.enemy.name, 1, Integer::sum);
+            }
+            java.util.List<Map.Entry<String, Integer>> top = new java.util.ArrayList<>(drawn.entrySet());
+            top.sort((a, b) -> b.getValue() - a.getValue());
+            StringBuilder most = new StringBuilder();
+            for (int i = 0; i < Math.min(8, top.size()); i++)
+                most.append(i == 0 ? "" : ", ").append(top.get(i).getKey()).append(' ').append(top.get(i).getValue())
+                        .append(" (seen ").append(forge.adventure.util.LegendSpawns.sightings(world, top.get(i).getKey())).append("x)");
+            String line = "[TFR-LegendTable] legendroll " + color + " x" + n + " at rank " + rank + ": pool " + pool.size()
+                    + ", " + first.leastSeen + " at the fewest sightings (" + first.fewestSightings + "), " + drawn.size()
+                    + " distinct drawn; most: " + most + "; " + ColorReputation.getStatus(color).label + " now";
+            System.out.println(line);
+            return line;
+        });
         // Round 311: roll a land's spawn picker n times (default 2000) at the player's rank and report how often the
         // roaming champions came up, by name, and the frontier legends - the share check. Nothing is spawned.
+        // Round 375: legends left the ordinary roll for the legend table - every count here should read 0.
         registerCommand(new String[]{"spawnroll"}, s -> {
             if (s.length < 1)
                 return "Command needs a biome name (white/blue/black/red/green/waste/player) and optionally a roll count.";
@@ -322,9 +373,9 @@ public class ConsoleCommandInterpreter {
                 } else if (forge.adventure.util.FrontierSpawns.isCandidate(e))
                     frontier++;
             }
-            String line = "[TFR-RoamingChampion] spawnroll " + biome.name + " x" + n + " at rank " + rank + ": champions "
+            String line = "[TFR-LegendTable] spawnroll " + biome.name + " x" + n + " at rank " + rank + ": champions "
                     + roaming + " (" + String.format("%.1f%%", 100f * roaming / n) + ") " + champions
-                    + ", frontier legends " + frontier;
+                    + ", frontier legends " + frontier + " - both 0 since round 375 (the legend table)";
             System.out.println(line);
             return line;
         });

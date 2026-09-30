@@ -292,8 +292,8 @@ public class SpawnTierWeighting {
      * javadoc), never suppressed by this.
      */
     public static void registerKill(EnemyData data) {
-        // Round 311: a roaming champion is exempt from the tier weighting but still counts its defeats -
-        // RoamingChampions.partsOf() halves its part of the group per win, so the unmet ones come round first.
+        // Round 311: a roaming champion is exempt from the tier weighting but still counts its defeats. Round 375: the
+        // legend table goes by sightings instead (LegendSpawns); the count stays for the log and the kill history.
         if (data == null || !isEnabled() || (isExempt(data) && !RoamingChampions.isChampion(data)))
             return;
         String enemyName = data.getName();

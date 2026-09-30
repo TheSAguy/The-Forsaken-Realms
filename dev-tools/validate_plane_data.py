@@ -124,7 +124,10 @@ F["TuningData"] = set("""playerRoadSpeedBonus playerRoadPlazaCapitol playerRoadP
  capitolTargetCooldownDays functioningNeutralTownCount maxSameEnemyNearby sameEnemyNearbyRadius sameEnemySpawnRerolls
  torchPulseMultiplier torchPulseSeconds torchPulseMaxRadiusTiles dungeonLootedDespawnFactor""".split())
 F["WarChampionData"] = set("share white blue black red green".split())
-F["FrontierSpawnData"] = set("unhappyShare warShare neutralColorlessShare maxLife".split())
+F["FrontierSpawnData"] = set("maxLife".split())  # round 375: the shares moved to legends.json
+F["RoamingChampionData"] = set("names".split())  # round 375: "share" retired
+F["LegendSpawnData"] = set("""unhappyChance warChance cooldownDays maxAlive repeatWeight spawnMinTiles spawnMaxTiles chaseTiles
+ leashTiles startBattleWithCard""".split())  # round 375: the legend table
 F["RoamingGuardConfig"] = set("maxGuards lifeApprentice lifeAdept lifeMaster lifeArchmage speedStepBelowPlayer recoveryDays healShardCost".split())
 F["PointOfInterestData"] = set("name type count spriteAtlas sprite map radiusFactor offsetX offsetY active questTags questFlagsToActivate displayName".split())
 F["EnemyData"] = set("""name nameOverride sprite deck copyPlayerDeck ai boss flying randomizeDeck spawnRate difficulty tier speed scale life rewards
@@ -633,12 +636,32 @@ if rg:
 fs, _ = load_json(os.path.join(PLANE, "config tables", "frontier_spawns.json"))
 if fs:
     check_keys(fs, "FrontierSpawnData", "frontier_spawns.json")
-    for _k in ("unhappyShare", "warShare", "neutralColorlessShare"):
-        _v = fs.get(_k)
-        if _v is not None and not (0 <= _v < 1):
-            issue("bad-value", "frontier_spawns.json.%s must be in [0,1), got %r" % (_k, _v))
     if not (0 < (fs.get("maxLife") or 0) <= 200):
         issue("bad-value", "frontier_spawns.json.maxLife must be 1-200, got %r" % fs.get("maxLife"))
+rch, _ = load_json(os.path.join(PLANE, "config tables", "roaming_champions.json"))
+if rch:
+    check_keys(rch, "RoamingChampionData", "roaming_champions.json")
+# Round 375: the legend table - every key a LegendSpawnData field (libGDX Json refuses unknown ones), sane values,
+# and every start card a real card script.
+lg, _ = load_json(os.path.join(PLANE, "config tables", "legends.json"))
+if lg:
+    check_keys(lg, "LegendSpawnData", "legends.json")
+    for _k in ("unhappyChance", "warChance"):
+        if not (0 <= (lg.get(_k) or 0) <= 1):
+            issue("bad-value", "legends.json.%s must be in [0,1], got %r" % (_k, lg.get(_k)))
+    if not (0 < (lg.get("repeatWeight") or 0) <= 1):
+        issue("bad-value", "legends.json.repeatWeight must be in (0,1], got %r" % lg.get("repeatWeight"))
+    if (lg.get("cooldownDays") or 0) < 0 or (lg.get("maxAlive") or 0) < 0:
+        issue("bad-value", "legends.json: cooldownDays and maxAlive must be 0 or more")
+    if (lg.get("spawnMinTiles") or 0) > (lg.get("spawnMaxTiles") or 0):
+        issue("bad-value", "legends.json: spawnMinTiles must not exceed spawnMaxTiles")
+    if (lg.get("chaseTiles") or 0) > (lg.get("leashTiles") or 0):
+        issue("bad-value", "legends.json: chaseTiles must not exceed leashTiles")
+    _cards = os.path.join(os.path.dirname(os.path.dirname(PLANE)), "cardsfolder")
+    for _c in lg.get("startBattleWithCard") or []:
+        _fn = "".join(ch for ch in _c.lower().replace(" ", "_") if ch.isalnum() or ch == "_") + ".txt"
+        if os.path.isdir(_cards) and not os.path.exists(os.path.join(_cards, _fn[0], _fn)):
+            issue("missing-ref", "legends.json.startBattleWithCard: no card script for '%s'" % _c)
 rc, _ = load_json(os.path.join(PLANE, "config tables", "restricted_cards.json"))
 if rc:
     for k in rc.keys():

@@ -191,27 +191,10 @@ public class BiomeData implements Serializable {
         // them a weight of exactly zero, and the pass after them grants the configured share.
         List<EnemyData> warChampions = withInjectedSpawns
                 ? forge.adventure.util.WarChampions.injectFor(name, filteredEnemies) : new ArrayList<>();
-        // Frontier spawns (round 142, user spec 2026-09-07): the 111 enemies that were reachable
-        // through no route at all now roam terrain whose colour is UNHAPPY or at WAR, matched
-        // per colour letter so a multicoloured legend has several homes; the colourless few take
-        // NEUTRAL terrain instead. Unlike the war champions these DO respect the rank filter above
-        // - they are ordinary Rare/Uncommon enemies, so difficultyFactor is passed through and
-        // checked inside injectFor().
-        List<EnemyData> frontierSpawns = withInjectedSpawns
-                ? forge.adventure.util.FrontierSpawns.injectFor(name, filteredEnemies, difficultyFactor)
-                : new ArrayList<>();
-        // Roaming champions (round 311, user: "Add all 'arena-only enemy' enemies as spawn able roaming champions on
-        // the overworld"): appended LAST, in their own colours' land at any reputation, respecting the rank like the
-        // frontier legends - see RoamingChampions. Disjoint from the two groups above.
-        List<EnemyData> roamingChampions = new ArrayList<>();
-        if (withInjectedSpawns) {
-            java.util.Set<String> taken = new java.util.HashSet<>();
-            for (EnemyData e : warChampions)
-                taken.add(e.name);
-            for (EnemyData e : frontierSpawns)
-                taken.add(e.name);
-            roamingChampions = forge.adventure.util.RoamingChampions.injectFor(name, filteredEnemies, taken, difficultyFactor);
-        }
+        // Round 375: the frontier legends (round 142) and the roaming champions (round 311) were appended here as two
+        // more shares of this roll. They have a roll of their own now - the legend table, LegendSpawns, which
+        // WorldStage.rollLegendSighting() makes before this pick - and they arrive here only as the weightless copies
+        // every catalog enemy has (spawnRate 0: exempt, weight 0).
 
         float[] effectiveWeights = new float[filteredEnemies.size()];
         float totalDistribution = 0.0f;
@@ -276,27 +259,6 @@ public class BiomeData implements Serializable {
         // about 17% and 13% of the whole - which is the intended reading of "share of the pool".
         float ordinaryTotal = totalDistribution;
         int injectedTail = filteredEnemies.size();
-        if (!roamingChampions.isEmpty()) { // round 311: the last group appended, so the very tail
-            float roamingTotal = forge.adventure.util.RoamingChampions.shareWeight(ordinaryTotal);
-            if (roamingTotal > 0f) {
-                float[] parts = forge.adventure.util.RoamingChampions.partsOf(roamingChampions);
-                int first = injectedTail - roamingChampions.size();
-                for (int k = 0; k < roamingChampions.size(); k++)
-                    effectiveWeights[first + k] = roamingTotal * parts[k];
-                totalDistribution += roamingTotal;
-            }
-            injectedTail -= roamingChampions.size();
-        }
-        if (!frontierSpawns.isEmpty()) {
-            float frontierTotal = forge.adventure.util.FrontierSpawns.shareWeight(ordinaryTotal, name);
-            if (frontierTotal > 0f) {
-                float each = frontierTotal / frontierSpawns.size();
-                for (int i = injectedTail - frontierSpawns.size(); i < injectedTail; i++)
-                    effectiveWeights[i] = each;
-                totalDistribution += frontierTotal;
-            }
-            injectedTail -= frontierSpawns.size();
-        }
         if (!warChampions.isEmpty()) {
             float championTotal = forge.adventure.util.WarChampions.shareWeight(ordinaryTotal);
             if (championTotal > 0f) {
@@ -313,7 +275,7 @@ public class BiomeData implements Serializable {
         // would degenerate to always index 0 - f starts at 0 and "f <= 0.0f" is true immediately.
         // Pick uniformly at random among them instead of always the same one.
         if (totalDistribution <= 0.0f) {
-            return Aggregates.random(filteredEnemies);
+            return uniformSpawner(filteredEnemies);
         }
 
         // Perform weighted random selection
@@ -327,7 +289,17 @@ public class BiomeData implements Serializable {
         }
 
         // Fallback, should not normally reach here
-        return Aggregates.random(filteredEnemies);
+        return uniformSpawner(filteredEnemies);
+    }
+
+    /** A uniform pick that prefers real spawners (spawnRate > 0): the list also carries a weightless copy of every
+     *  catalog enemy, legends included, and round 375 keeps legends to their own table (LegendSpawns). */
+    private static EnemyData uniformSpawner(List<EnemyData> candidates) {
+        List<EnemyData> spawners = new ArrayList<>();
+        for (EnemyData e : candidates)
+            if (e != null && e.spawnRate > 0f)
+                spawners.add(e);
+        return Aggregates.random(spawners.isEmpty() ? candidates : spawners);
     }
 
     private ArrayList<String> unusedTownNames;

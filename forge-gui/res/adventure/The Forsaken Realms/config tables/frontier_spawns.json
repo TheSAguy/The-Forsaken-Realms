@@ -9,20 +9,10 @@
   // and 85 of the 111 are multicoloured, which is also why they were never going to work as
   // ordinary biome spawns.
   //
-  // They now roam terrain that has turned on the player. Matching is per colour LETTER, so a
-  // five-colour legend is eligible in all five colour biomes and a UG one in two. The three
-  // colourless members take neutral terrain instead, including the wasteland, which has no owner
-  // to have an opinion. Happy and Partner territory stays quiet - peace is meant to be worth
-  // something.
-  //
-  // The shares below are of the ORDINARY spawn pool. When a colour is at WAR the round-139 war
-  // champions are also drawing (their own 20%), so the two dilute each other slightly in the final
-  // roll - about 13% frontier and 17% champions rather than 15% and 20%.
-  //
-  // Set any share to 0 to switch off that state; set them all to 0 to disable the feature.
-  "unhappyShare": 0.10,
-  "warShare": 0.15,
-  "neutralColorlessShare": 0.01,
+  // Round 375: this file only says WHO is a frontier legend (the predicate in FrontierSpawns.java
+  // plus the life ceiling below). Where, how often and which legend is sighted belongs to the
+  // legend table, legends.json - it took over the three shares that used to live here
+  // (unhappyShare 0.10, warShare 0.15, neutralColorlessShare 0.01 in the ordinary roll).
 
   // Life ceiling for a candidate. 60 admits every genuinely unreachable enemy (the largest is 50)
   // while keeping the hand-placed Eldrazi titans - Emrakul, Ulamog, Kozilek, all 70 life - out of

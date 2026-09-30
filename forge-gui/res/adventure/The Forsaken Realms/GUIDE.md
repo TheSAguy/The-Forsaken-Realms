@@ -67,18 +67,21 @@ their towns at all. At War, ordinary towns bar you (you can storm them instead) 
 capital charges a steep gold toll just to set foot inside. Your standing with a color also shapes
 what you'll run into on their land - roaming enemies skew noticeably weaker with a Partner or Happy
 standing, and tougher the worse things get, down to War - and how often its creatures turn up at
-all: three times as often at War, a third as often as a Partner. Unhappy and War land also draws
-the realm's oversized legends out of hiding - dragon lords, gods, Slivers - wherever the land's
-color is one of theirs, and a color at War sends its own arena champions roaming; the few colorless
-legends haunt the wasteland and Neutral land instead, and the Arena's other champions roam their
-own colors' lands at any standing. A legend never arrives unannounced: you are told which one it is
-and in which direction, a **gold dot** marks it on the minimap and the map for as long as it stays,
-and it stays **three in-game days** - long enough to go and find it. Your quest log lists every
-legend roaming right now, with its direction and the days it has left, and the same legend is never
-out twice at once. Your own territory is always the safest place to fight, regardless of anyone
-else's standing. Separately, the world as a whole trends toward tougher roaming enemies the longer
-a run goes on, week by week, capped well short of an endless escalation - so the opening weeks are
-the gentlest part of any run, by design.
+all: three times as often at War, a third as often as a Partner. **Legends** - the realm's oversized
+dragon lords, gods and Slivers, and the Arena's wandering champions, many of them best-of-3 fights -
+turn up **only on the land of a color that is Unhappy or at War with you**, and rarely: roughly one
+sighting every few days of travel there, sooner at War. A legend walks a color's land when it
+carries that color; the few colorless ones walk any hostile land. The ones you haven't met come
+first - a legend you have already seen returns only once the others have had their turn - and the
+same legend is never out twice at once. A legend never arrives unannounced: you are told which one
+it is and in which direction, a **gold dot** marks it on the minimap and the map, and it **holds its
+ground for three in-game days** - it only comes for you once you walk within a few tiles, so the
+fight is yours to pick. Every legend starts its duels with a **Gemstone Mine** in play. Your quest
+log lists every legend roaming right now, with its direction and the days it has left. At War a
+color also sends its own arena champions roaming. Your own territory is always the safest place to
+fight, regardless of anyone else's standing. Separately, the world as a whole trends toward
+tougher roaming enemies the longer a run goes on, week by week, capped well short of an endless
+escalation - so the opening weeks are the gentlest part of any run, by design.
 
 ### Territory Control & Color Defeat
 
