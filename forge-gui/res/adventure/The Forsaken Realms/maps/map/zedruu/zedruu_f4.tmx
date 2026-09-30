@@ -67,8 +67,16 @@
   </object>
   <object id="180" template="../../../../common/maps/obj/waypoint.tx" x="105.695" y="175.417"/>
   <object id="184" template="../../../../common/maps/obj/waypoint.tx" x="335.19" y="156.503"/>
-  <object id="188" template="../../../../common/maps/obj/manashards.tx" x="534.233" y="208.667"/>
-  <object id="243" template="../../obj/stone.tx" x="527.233" y="237.667"/>
+  <object id="188" template="../../../../common/maps/obj/manashards.tx" x="534.233" y="208.667">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="243" template="../../obj/stone.tx" x="527.233" y="237.667">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="189" template="../../../../common/maps/obj/waypoint.tx" x="531.114" y="135.498"/>
   <object id="191" template="../../../../common/maps/obj/waypoint.tx" x="173.909" y="236.488"/>
   <object id="194" template="../../../../common/maps/obj/collision.tx" x="-3.9079" y="521.105" width="704" height="16"/>
@@ -171,6 +179,7 @@
   </object>
   <object id="241" template="../../../../common/maps/obj/booster.tx" x="501.129" y="270.441">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;MIR&quot; ],
@@ -196,6 +205,7 @@
   </object>
   <object id="242" template="../../../../common/maps/obj/booster.tx" x="142.723" y="452.241">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;MOM&quot; ],
@@ -219,9 +229,14 @@
 </property>
    </properties>
   </object>
-  <object id="244" template="../../obj/stone.tx" x="650.175" y="199.105"/>
+  <object id="244" template="../../obj/stone.tx" x="650.175" y="199.105">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="245" template="../../obj/wood.tx" x="349.388" y="363.014">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,
@@ -233,6 +248,7 @@
   </object>
   <object id="246" template="../../obj/wood.tx" x="367.751" y="415.196">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,
@@ -244,6 +260,7 @@
   </object>
   <object id="247" template="../../obj/wood.tx" x="321.933" y="407.378">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,
@@ -255,6 +272,7 @@
   </object>
   <object id="248" template="../../obj/wood.tx" x="173.206" y="395.742">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,

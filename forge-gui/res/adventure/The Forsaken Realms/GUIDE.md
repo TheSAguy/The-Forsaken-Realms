@@ -267,9 +267,18 @@ Side-quest-linked dungeons get extra grace: three failed attempts before they're
 and their lifespan extends automatically while a quest still points at them. Story-critical
 locations never disappear.
 
+**Dungeons feed the land around them.** While an ordinary dungeon or cave stands, creatures pour
+out of it: within about a dozen tiles of one, monsters turn up half again as often, and half of
+them walk out of its door - creatures of its color before you have been inside, the very ones
+that live there after. They grow stronger the longer they stand: every week adds a quarter to that
+rate, up to double. Clearing out its enemies silences it for good, and the nearest town is
+grateful - +1 local reputation. Story places, boss lairs and castles don't do this, and the
+creatures that come out are never its boss, its champion or anyone you could talk to.
+
 Loot fights back, too: a chest or booster pack inside a dungeon usually has a guard of its own.
 Grab it while the guard still stands and the guard comes after you - a little faster than you
-walk.
+walk. Loot behind a locked gate or door is the exception: the lock is its guard, so once you've
+found the key, pulled the switch or beaten what opens it, what's inside is yours.
 
 **Boss lairs** follow their own rule. A lair leaves the map only once you've beaten its boss and
 walked out with nothing left inside - losing there doesn't make it vanish - and 10 to 30 days later

@@ -94,7 +94,11 @@
     <property name="threatRange" type="int" value="50"/>
    </properties>
   </object>
-  <object id="61" template="../../../obj/stone.tx" x="205.965" y="307.13"/>
+  <object id="61" template="../../../obj/stone.tx" x="205.965" y="307.13">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="51" template="../../../../../common/maps/obj/entry_up.tx" x="209" y="480">
    <properties>
     <property name="teleport" value=""/>

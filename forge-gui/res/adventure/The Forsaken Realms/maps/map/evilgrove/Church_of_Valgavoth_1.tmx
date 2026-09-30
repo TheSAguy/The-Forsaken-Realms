@@ -69,6 +69,7 @@
   </object>
   <object id="67" template="../../../../common/maps/obj/booster.tx" x="207.25" y="51.75">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;DSK&quot; ],

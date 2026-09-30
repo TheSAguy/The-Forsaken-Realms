@@ -130,6 +130,7 @@ Nothing about it was built to keep anyone out. It was built to keep something in
   </object>
   <object id="94" template="../../../../common/maps/obj/treasure.tx" x="974.5" y="294.5">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
         &quot;type&quot;: &quot;item&quot;,
         &quot;count&quot;: 1,
@@ -137,12 +138,6 @@ Nothing about it was built to keep anyone out. It was built to keep something in
  }
 ]
 </property>
-   </properties>
-  </object>
-   <object id="95" template="../../../../common/maps/obj/enemy.tx" x="958.5" y="294.5">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

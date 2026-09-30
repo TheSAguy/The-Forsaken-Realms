@@ -261,6 +261,20 @@
     "dungeonLifespanMaxDays": 40,
     "dungeonSpotRestMinDays": 10,
     "dungeonSpotRestMaxDays": 30,
+    // Round 377 - dungeons as sources of enemies (util/DungeonSources). Within dungeonSourceRadiusTiles of an active
+    // regular dungeon or cave (a hostile one that rotates - never a story, quest or NoRotate map, a boss lair or a castle)
+    // the spawn rolls come dungeonSourceRateFactor x as fast, and dungeonSourceShare of them send one of its own
+    // creatures out of its door: its color's before the first visit, its living inhabitants after (never a boss, a
+    // champion, a legend, a quest enemy or a dialog NPC). Each week it stands adds dungeonSourceEscalationPerWeek to
+    // that rate, up to dungeonSourceEscalationMax x. Clearing its enemies silences it and pays
+    // dungeonSourceClearReputation reputation in the nearest town. dungeonSourceShare 0 and dungeonSourceRateFactor 1
+    // switch it off. Grep forge.log for [TFR-DungeonSource].
+    "dungeonSourceRadiusTiles": 12,
+    "dungeonSourceRateFactor": 1.5,
+    "dungeonSourceShare": 0.5,
+    "dungeonSourceEscalationPerWeek": 0.25,
+    "dungeonSourceEscalationMax": 2.0,
+    "dungeonSourceClearReputation": 1,
     // Round 299: a cleared boss lair comes back after the spot rest above; every visit after that pays gold /
     // shards / wood / stone x this (rounded up) and the NUMBER of cards x this (a lone card drops half the
     // time), and each non-signature item drops with the chance below. +Life and a boss's own signature item

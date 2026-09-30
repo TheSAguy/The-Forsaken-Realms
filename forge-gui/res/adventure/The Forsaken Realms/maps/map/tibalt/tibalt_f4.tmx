@@ -38,6 +38,7 @@
  <objectgroup id="12" name="Objects" opacity="0.9" offsetx="3.15789" offsety="7.89474">
   <object id="140" template="../../../../common/maps/obj/treasure.tx" x="240.675" y="89.0923">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 1,
@@ -52,7 +53,11 @@
     <property name="spawn.Hard" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="177" template="../../obj/stone.tx" x="271.152" y="102.522"/>
+  <object id="177" template="../../obj/stone.tx" x="271.152" y="102.522">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="150" template="../../../../common/maps/obj/enemy.tx" x="141.842" y="91.272">
    <properties>
     <property name="threatRange" type="int" value="20"/>
@@ -72,9 +77,14 @@
     <property name="spawn.Hard" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="166" template="../../../../common/maps/obj/manashards.tx" x="275.818" y="86.5449"/>
+  <object id="166" template="../../../../common/maps/obj/manashards.tx" x="275.818" y="86.5449">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="167" template="../../../../common/maps/obj/booster.tx" x="242.398" y="116.332">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;AVR&quot; ],
@@ -163,6 +173,7 @@
   </object>
   <object id="178" template="../../obj/wood.tx" x="81.9465" y="91.2596">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,
@@ -170,18 +181,6 @@
     &quot;addMaxCount&quot;: 10
  }
 ]</property>
-   </properties>
-  </object>
-   <object id="179" template="../../../../common/maps/obj/enemy.tx" x="226.398" y="116.332">
-   <properties>
-    <property name="enemy" value="Devil of Tibalt"/>
-    <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
-  <object id="180" template="../../../../common/maps/obj/enemy.tx" x="240.675" y="105.0923">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

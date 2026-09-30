@@ -41,7 +41,7 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="51" template="../../../../common/maps/obj/enemy.tx" x="272" y="48">
+  <object id="51" template="../../../../common/maps/obj/enemy.tx" x="406.833" y="232.834">
    <properties>
     <property name="enemy" value="Geist"/>
     <property name="threatRange" type="int" value="40"/>
@@ -267,6 +267,7 @@
   <object id="75" template="../../../../common/maps/obj/waypoint.tx" x="307.667" y="240.667"/>
   <object id="76" template="../../../../common/maps/obj/booster.tx" x="287.667" y="47.6667">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;ZEN&quot; ],
@@ -290,8 +291,16 @@
 </property>
    </properties>
   </object>
-  <object id="79" template="../../../../common/maps/obj/treasure.tx" x="303.667" y="47.3333"/>
-  <object id="80" template="../../../../common/maps/obj/gold.tx" x="321" y="46"/>
+  <object id="79" template="../../../../common/maps/obj/treasure.tx" x="303.667" y="47.3333">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="80" template="../../../../common/maps/obj/gold.tx" x="321" y="46">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="81" name="switch" type="dialog" gid="4426" x="192" y="340" width="16" height="16">
    <properties>
     <property name="dialog">[

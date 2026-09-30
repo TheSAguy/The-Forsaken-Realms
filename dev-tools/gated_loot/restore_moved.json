@@ -1,0 +1,146 @@
+[
+ {
+  "map": "debug_map.tmx",
+  "id": 87,
+  "enemy": "Elf warrior",
+  "template": "enemy.tx",
+  "x": "48",
+  "y": "320",
+  "restore_x": "48",
+  "restore_y": "384",
+  "scope": "room",
+  "guards": [
+   "booster #70"
+  ],
+  "restore_is_outside_gate": true,
+  "waypoints": ""
+ },
+ {
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 55,
+  "enemy": "Adept White Wizard",
+  "template": "enemy.tx",
+  "x": "272",
+  "y": "96",
+  "restore_x": "335.333",
+  "restore_y": "127.167",
+  "scope": "room",
+  "guards": [
+   "booster #64"
+  ],
+  "restore_is_outside_gate": true,
+  "waypoints": ""
+ },
+ {
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 56,
+  "enemy": "Adept Red Wizard",
+  "template": "enemy.tx",
+  "x": "128",
+  "y": "96",
+  "restore_x": "127.667",
+  "restore_y": "318.333",
+  "scope": "room",
+  "guards": [
+   "booster #63"
+  ],
+  "restore_is_outside_gate": true,
+  "waypoints": ""
+ },
+ {
+  "map": "graveyard_crypt/crypt_5.tmx",
+  "id": 51,
+  "enemy": "Geist",
+  "template": "enemy.tx",
+  "x": "272",
+  "y": "48",
+  "restore_x": "406.833",
+  "restore_y": "232.834",
+  "scope": "room",
+  "guards": [
+   "booster #76"
+  ],
+  "restore_is_outside_gate": true,
+  "waypoints": ""
+ },
+ {
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 72,
+  "enemy": "Adept Black Wizard",
+  "template": "enemy.tx",
+  "x": "192",
+  "y": "64",
+  "restore_x": "209.317",
+  "restore_y": "145.131",
+  "scope": "room",
+  "guards": [
+   "chest #101"
+  ],
+  "restore_is_outside_gate": true,
+  "waypoints": "81,77,76,81"
+ },
+ {
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 68,
+  "enemy": "Mimic",
+  "template": "enemy.tx",
+  "x": "254.667",
+  "y": "60.3333",
+  "restore_x": "287.074",
+  "restore_y": "141.29",
+  "scope": "section",
+  "guards": [
+   "booster #98"
+  ],
+  "restore_is_outside_gate": false,
+  "waypoints": ""
+ },
+ {
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 74,
+  "enemy": "Eye",
+  "template": "enemy.tx",
+  "x": "96",
+  "y": "144",
+  "restore_x": "146.177",
+  "restore_y": "188.331",
+  "scope": "section",
+  "guards": [
+   "booster #97"
+  ],
+  "restore_is_outside_gate": false,
+  "waypoints": "76,80,75,79,75,77,75,80,78"
+ },
+ {
+  "map": "monastery/unhallowed_abbey_1F.tmx",
+  "id": 50,
+  "enemy": "High Cultist",
+  "template": "enemy.tx",
+  "x": "224",
+  "y": "64",
+  "restore_x": "208.402",
+  "restore_y": "144.809",
+  "scope": "room",
+  "guards": [
+   "booster #67"
+  ],
+  "restore_is_outside_gate": true,
+  "waypoints": ""
+ },
+ {
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 75,
+  "enemy": "Demon",
+  "template": "enemy.tx",
+  "x": "272",
+  "y": "64",
+  "restore_x": "291.571",
+  "restore_y": "166.141",
+  "scope": "room",
+  "guards": [
+   "booster #87"
+  ],
+  "restore_is_outside_gate": false,
+  "waypoints": "100,101,99"
+ }
+]

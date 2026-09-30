@@ -436,6 +436,7 @@
   <object id="82" template="../../../../../common/maps/obj/waypoint.tx" x="508.667" y="500.667"/>
   <object id="83" template="../../../../../common/maps/obj/treasure.tx" x="425" y="459.5">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -481,9 +482,14 @@
 ]</property>
    </properties>
   </object>
-  <object id="85" template="../../../obj/stone.tx" x="430" y="488.5"/>
+  <object id="85" template="../../../obj/stone.tx" x="430" y="488.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="84" template="../../../../../common/maps/obj/treasure.tx" x="310.5" y="462.5">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -527,18 +533,6 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
-   </properties>
-  </object>
-   <object id="86" template="../../../../../common/maps/obj/enemy.tx" x="409" y="459.5">
-   <properties>
-    <property name="enemy" value="Dinosaur"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="87" template="../../../../../common/maps/obj/enemy.tx" x="294.5" y="462.5">
-   <properties>
-    <property name="enemy" value="Dinosaur"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

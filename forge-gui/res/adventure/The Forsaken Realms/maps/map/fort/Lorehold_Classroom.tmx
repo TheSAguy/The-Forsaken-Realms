@@ -44,7 +44,11 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="52" template="../../../../common/maps/obj/gold.tx" x="270.167" y="270.5"/>
+  <object id="52" template="../../../../common/maps/obj/gold.tx" x="270.167" y="270.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="223.16" y="41.762">
    <properties>
     <property name="threatRange" type="int" value="20"/>
@@ -63,6 +67,7 @@
   </object>
   <object id="57" template="../../../../common/maps/obj/booster.tx" x="294.308" y="269.487">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;STX&quot; ],
@@ -86,7 +91,11 @@
 </property>
    </properties>
   </object>
-  <object id="58" template="../../../../common/maps/obj/manashards.tx" x="317.975" y="272.958"/>
+  <object id="58" template="../../../../common/maps/obj/manashards.tx" x="317.975" y="272.958">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="254.878" y="125.935">
    <properties>
     <property name="enemy" value="Plargg"/>
@@ -172,12 +181,6 @@
     &quot;addMaxCount&quot;: 10
  }
 ]</property>
-   </properties>
-  </object>
-   <object id="93" template="../../../../common/maps/obj/enemy.tx" x="278.308" y="269.487">
-   <properties>
-    <property name="enemy" value="Marblehewn Golem"/>
-    <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
 </objectgroup>

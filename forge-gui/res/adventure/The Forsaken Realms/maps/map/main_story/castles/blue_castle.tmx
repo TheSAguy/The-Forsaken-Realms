@@ -438,6 +438,7 @@
   </object>
   <object id="88" template="../../../../../common/maps/obj/treasure.tx" x="313" y="467">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -483,9 +484,14 @@
 ]</property>
    </properties>
   </object>
-  <object id="90" template="../../../obj/stone.tx" x="318" y="496"/>
+  <object id="90" template="../../../obj/stone.tx" x="318" y="496">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="89" template="../../../../../common/maps/obj/treasure.tx" x="424.5" y="461.5">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -529,18 +535,6 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
-   </properties>
-  </object>
-   <object id="91" template="../../../../../common/maps/obj/enemy.tx" x="297" y="467">
-   <properties>
-    <property name="enemy" value="Apprentice Blue Wizard"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="92" template="../../../../../common/maps/obj/enemy.tx" x="408.5" y="461.5">
-   <properties>
-    <property name="enemy" value="Apprentice Blue Wizard"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

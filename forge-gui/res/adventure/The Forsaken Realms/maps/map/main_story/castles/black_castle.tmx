@@ -441,6 +441,7 @@
   </object>
   <object id="87" template="../../../../../common/maps/obj/treasure.tx" x="426.955" y="462.554">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -486,9 +487,14 @@
 ]</property>
    </properties>
   </object>
-  <object id="89" template="../../../obj/stone.tx" x="431.955" y="491.554"/>
+  <object id="89" template="../../../obj/stone.tx" x="431.955" y="491.554">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="88" template="../../../../../common/maps/obj/treasure.tx" x="309.155" y="469.027">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -532,18 +538,6 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
-   </properties>
-  </object>
-   <object id="90" template="../../../../../common/maps/obj/enemy.tx" x="410.955" y="462.554">
-   <properties>
-    <property name="enemy" value="Pointed Demonspawn"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="91" template="../../../../../common/maps/obj/enemy.tx" x="293.155" y="469.027">
-   <properties>
-    <property name="enemy" value="Pointed Demonspawn"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

@@ -45,7 +45,7 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="50" template="../../../../common/maps/obj/enemy.tx" x="224" y="64">
+  <object id="50" template="../../../../common/maps/obj/enemy.tx" x="208.402" y="144.809">
    <properties>
     <property name="enemy" value="High Cultist"/>
     <property name="reward">[
@@ -62,6 +62,7 @@
   </object>
   <object id="66" template="../../../../common/maps/obj/treasure.tx" x="224" y="95.5">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -79,9 +80,14 @@
 }]</property>
    </properties>
   </object>
-  <object id="90" template="../../obj/stone.tx" x="192.809" y="90.1885"/>
+  <object id="90" template="../../obj/stone.tx" x="192.809" y="90.1885">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="67" template="../../../../common/maps/obj/booster.tx" x="224.25" y="80.25">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;SOI&quot;, &quot;EMN&quot;, &quot;MID&quot;, &quot;VOW&quot; ],
@@ -195,11 +201,5 @@
   </object>
   <object id="92" template="../../../../common/maps/obj/waypoint.tx" x="300.5" y="186"/>
   <object id="93" template="../../../../common/maps/obj/waypoint.tx" x="300.5" y="250"/>
-   <object id="94" template="../../../../common/maps/obj/enemy.tx" x="208" y="95.5">
-   <properties>
-    <property name="enemy" value="False Knight"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

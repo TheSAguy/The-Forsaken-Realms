@@ -7252,7 +7252,13 @@
 					"text": "Your navigation arrow should now direct you to the nearest dungeon. Many quests will send you to dungeons, but you are also free to enter them without a quest. Follow the arrow and travel to a dungeon.",
 					"options": [
 						{
-							"name": "(Continue)"
+							"name": "(Continue)",
+							"text": "Dungeons and caves are living parts of the realm. While one stands, creatures pour out of it into the land around it - creatures of its color at first, and once you have been inside, the very ones that live there. The longer it stands, the more of them come. Clear one out to calm the land around it, and the nearest town will thank you: +1 reputation.",
+							"options": [
+								{
+									"name": "(Continue)"
+								}
+							]
 						}
 					]
 				},
@@ -7320,7 +7326,7 @@
 				],
 				"prologue": {},
 				"epilogue": {
-					"text": "A cave is functionally identical to a dungeon, but classified separately for quest purposes - a cave would not have completed your objective to find a dungeon, nor the reverse.",
+					"text": "A cave is functionally identical to a dungeon, but classified separately for quest purposes - a cave would not have completed your objective to find a dungeon, nor the reverse. Like a dungeon, a cave sends its creatures into the land around it until it is cleared.",
 					"options": [
 						{
 							"name": "(Continue)"

@@ -47,6 +47,7 @@
   </object>
   <object id="71" template="../../../../common/maps/obj/treasure.tx" x="258.823" y="291.536">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
         &quot;type&quot;: &quot;card&quot;
         &quot;count&quot;: 6,
@@ -75,12 +76,6 @@
     <property name="spawn.Insane" type="bool" value="false"/>
     <property name="speedModifier" type="float" value="50"/>
     <property name="threatRange" type="int" value="100"/>
-   </properties>
-  </object>
-   <object id="74" template="../../../../common/maps/obj/enemy.tx" x="242.823" y="291.536">
-   <properties>
-    <property name="enemy" value="Eldrazi Scion"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

@@ -418,6 +418,11 @@ public class World implements Disposable, SaveFileContent {
     // count), the day of the last sighting (-1 = none yet) for the cooldown, and whether an older save's counts have
     // been seeded from the win/loss record yet.
     private final java.util.Map<String, Integer> legendSightingCount = new java.util.HashMap<>();
+    // Round 377, the dungeon sources (DungeonSources): the day each regular dungeon or cave appeared - its age drives
+    // the escalation - and the day its enemies were cleared (a cleared source falls quiet and pays once). Keyed by POI
+    // id; both go with the incarnation (DungeonRotation.hidePoi).
+    private final java.util.Map<String, Integer> dungeonAppearedDay = new java.util.HashMap<>();
+    private final java.util.Map<String, Integer> dungeonClearedDay = new java.util.HashMap<>();
     private int lastLegendSightingDay = -1;
     private boolean legendSightingsSeeded = false;
 
@@ -535,6 +540,14 @@ public class World implements Disposable, SaveFileContent {
 
     public java.util.Map<String, Integer> getLegendSightingCount() {
         return legendSightingCount;
+    }
+
+    public java.util.Map<String, Integer> getDungeonAppearedDay() {
+        return dungeonAppearedDay;
+    }
+
+    public java.util.Map<String, Integer> getDungeonClearedDay() {
+        return dungeonClearedDay;
     }
 
     public int getLastLegendSightingDay() {
@@ -1196,6 +1209,17 @@ public class World implements Disposable, SaveFileContent {
             legendSightingCount.putAll((java.util.Map<String, Integer>) saveFileData.readObject("legendSightingCount"));
         }
         lastLegendSightingDay = saveFileData.containsKey("lastLegendSightingDay") ? saveFileData.readInt("lastLegendSightingDay") : -1;
+        // Round 377: absent on an older save - an active dungeon's age starts the day it is first found near the player.
+        dungeonAppearedDay.clear();
+        if (saveFileData.containsKey("dungeonAppearedDay")) {
+            //noinspection unchecked
+            dungeonAppearedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("dungeonAppearedDay"));
+        }
+        dungeonClearedDay.clear();
+        if (saveFileData.containsKey("dungeonClearedDay")) {
+            //noinspection unchecked
+            dungeonClearedDay.putAll((java.util.Map<String, Integer>) saveFileData.readObject("dungeonClearedDay"));
+        }
         legendSightingsSeeded = saveFileData.containsKey("legendSightingsSeeded") && saveFileData.readBool("legendSightingsSeeded");
         poiActiveTarget = saveFileData.containsKey("poiActiveTarget") ? saveFileData.readInt("poiActiveTarget") : 0;
         capitolLostColors.clear();
@@ -1314,6 +1338,8 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("legendSightingCount", legendSightingCount); // round 375
         data.store("lastLegendSightingDay", lastLegendSightingDay);
         data.store("legendSightingsSeeded", legendSightingsSeeded);
+        data.storeObject("dungeonAppearedDay", dungeonAppearedDay); // round 377
+        data.storeObject("dungeonClearedDay", dungeonClearedDay);
         data.store("poiActiveTarget", poiActiveTarget);
         StringBuilder star = new StringBuilder();
         for (int[] t : starTownTiles)
@@ -2513,6 +2539,8 @@ public class World implements Disposable, SaveFileContent {
             legendSightingCount.clear(); // round 375 - a new world meets its legends afresh
             lastLegendSightingDay = -1;
             legendSightingsSeeded = true; // nothing to seed: the win/loss record is the new run's too
+            dungeonAppearedDay.clear(); // round 377 - DungeonRotation.initializeNewWorld() dates the first ones
+            dungeonClearedDay.clear();
             poiActiveTarget = 0; // initializeNewWorld() sets it once the pool is placed
             starTownTiles.clear();
             ringTargetDays.clear();

@@ -44,7 +44,11 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="52" template="../../../../common/maps/obj/gold.tx" x="270.167" y="270.5"/>
+  <object id="52" template="../../../../common/maps/obj/gold.tx" x="270.167" y="270.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="78" template="../../obj/wood.tx" x="203.152" y="42.4608"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="223.16" y="41.762">
    <properties>
@@ -64,6 +68,7 @@
   </object>
   <object id="57" template="../../../../common/maps/obj/booster.tx" x="294.308" y="269.487">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;STX&quot; ],
@@ -87,7 +92,11 @@
 </property>
    </properties>
   </object>
-  <object id="58" template="../../../../common/maps/obj/manashards.tx" x="317.975" y="272.958"/>
+  <object id="58" template="../../../../common/maps/obj/manashards.tx" x="317.975" y="272.958">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="59" template="../../../../common/maps/obj/enemy.tx" x="254.878" y="125.935">
    <properties>
     <property name="enemy" value="Valentin"/>
@@ -151,11 +160,5 @@
   <object id="75" template="../../../../common/maps/obj/collision.tx" x="145.341" y="1.1218" width="13.3186" height="29.7564"/>
   <object id="76" template="../../../../common/maps/obj/collision.tx" x="321.674" y="176.455" width="13.3186" height="29.7564"/>
   <object id="77" template="../../../../common/maps/obj/collision.tx" x="144.674" y="177.455" width="13.3186" height="29.7564"/>
-   <object id="79" template="../../../../common/maps/obj/enemy.tx" x="278.308" y="269.487">
-   <properties>
-    <property name="enemy" value="Swamp Troll"/>
-    <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

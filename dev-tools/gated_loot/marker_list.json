@@ -1,0 +1,2972 @@
+[
+ {
+  "scope": "room",
+  "map": "barbariancamp/Prismari_Classroom.tmx",
+  "id": 52,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "270.167",
+  "y": "270.5"
+ },
+ {
+  "scope": "room",
+  "map": "barbariancamp/Prismari_Classroom.tmx",
+  "id": 57,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "294.308",
+  "y": "269.487"
+ },
+ {
+  "scope": "room",
+  "map": "barbariancamp/Prismari_Classroom.tmx",
+  "id": 58,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "317.975",
+  "y": "272.958"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_0.tmx",
+  "id": 94,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "974.5",
+  "y": "294.5"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Azlask.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "259.845",
+  "y": "290.514"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Emrakul.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "263",
+  "y": "290.091"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Kozilek.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "263.934",
+  "y": "291.536"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Ulalek.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "258.823",
+  "y": "291.536"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Ulamog.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "262.912",
+  "y": "290.514"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Zhulodok.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "256.778",
+  "y": "289.492"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Hall_of_the_Unifier.tmx",
+  "id": 146,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "192.25",
+  "y": "224"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Hall_of_the_Unifier.tmx",
+  "id": 149,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "240.333",
+  "y": "224"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 56,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "917.75",
+  "y": "240.667"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 73,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "911.333",
+  "y": "262.182"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 82,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "870.583",
+  "y": "228.833"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 101,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "849",
+  "y": "228.583"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 102,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "891.667",
+  "y": "228.333"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 103,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "916.917",
+  "y": "221.667"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 104,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "822.833",
+  "y": "224.75"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 105,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "822.417",
+  "y": "242.667"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 107,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "822",
+  "y": "263"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 118,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "836.75",
+  "y": "274"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 119,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "899.75",
+  "y": "274"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 183,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "841.25",
+  "y": "249"
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 186,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "897.5",
+  "y": "249.25"
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 79,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "247.726",
+  "y": "78.6608"
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 88,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "259.495",
+  "y": "112.671"
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 80,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "390.485",
+  "y": "136.693"
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 84,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "188.921",
+  "y": "58.93"
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 87,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "363.79",
+  "y": "94.1359"
+ },
+ {
+  "scope": "room",
+  "map": "debug_map.tmx",
+  "id": 47,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "48",
+  "y": "352"
+ },
+ {
+  "scope": "room",
+  "map": "debug_map.tmx",
+  "id": 69,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "64",
+  "y": "336"
+ },
+ {
+  "scope": "room",
+  "map": "debug_map.tmx",
+  "id": 70,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "48",
+  "y": "336"
+ },
+ {
+  "scope": "room",
+  "map": "debug_map.tmx",
+  "id": 71,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "64",
+  "y": "352"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Church_of_Valgavoth_1.tmx",
+  "id": 67,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "207.25",
+  "y": "51.75"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 87,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "286.333",
+  "y": "225.667"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 88,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "287.333",
+  "y": "254.333"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 89,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "340",
+  "y": "218.333"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 90,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "339.667",
+  "y": "237.333"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 91,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "169.333",
+  "y": "257.667"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 120,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "192",
+  "y": "257.333"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 121,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "143.667",
+  "y": "257.333"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 166,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "308.162",
+  "y": "872.554"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 167,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "332.766",
+  "y": "832.094"
+ },
+ {
+  "scope": "section",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 195,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "158.333",
+  "y": "486.5"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 211,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "332",
+  "y": "854"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 212,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "331",
+  "y": "872"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 213,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "309",
+  "y": "836.5"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 214,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "311.136",
+  "y": "849.682"
+ },
+ {
+  "scope": "section",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 222,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "321.954",
+  "y": "774.137"
+ },
+ {
+  "scope": "section",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 215,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "368.5",
+  "y": "482.5"
+ },
+ {
+  "scope": "section",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 216,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "368.5",
+  "y": "511"
+ },
+ {
+  "scope": "section",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 217,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "128.333",
+  "y": "498.833"
+ },
+ {
+  "scope": "section",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 223,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "138.364",
+  "y": "522.727"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Silverquill_Classroom.tmx",
+  "id": 52,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "270.167",
+  "y": "270.5"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Silverquill_Classroom.tmx",
+  "id": 57,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "294.308",
+  "y": "269.487"
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Silverquill_Classroom.tmx",
+  "id": 58,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "317.975",
+  "y": "272.958"
+ },
+ {
+  "scope": "section",
+  "map": "fort/Kenriths_Court.tmx",
+  "id": 48,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "268.275",
+  "y": "85"
+ },
+ {
+  "scope": "section",
+  "map": "fort/Kenriths_Court.tmx",
+  "id": 104,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "50.6667",
+  "y": "236"
+ },
+ {
+  "scope": "section",
+  "map": "fort/Kenriths_Court.tmx",
+  "id": 132,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "179.667",
+  "y": "85"
+ },
+ {
+  "scope": "section",
+  "map": "fort/Kenriths_Court.tmx",
+  "id": 169,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "116.264",
+  "y": "236.781"
+ },
+ {
+  "scope": "room",
+  "map": "fort/Lorehold_Classroom.tmx",
+  "id": 52,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "270.167",
+  "y": "270.5"
+ },
+ {
+  "scope": "room",
+  "map": "fort/Lorehold_Classroom.tmx",
+  "id": 57,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "294.308",
+  "y": "269.487"
+ },
+ {
+  "scope": "room",
+  "map": "fort/Lorehold_Classroom.tmx",
+  "id": 58,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "317.975",
+  "y": "272.958"
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 48,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "269.167",
+  "y": "95"
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 61,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "248.75",
+  "y": "89"
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 62,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "170.25",
+  "y": "89.75"
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 63,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "127.75",
+  "y": "108"
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 64,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "288",
+  "y": "108.25"
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 74,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "114.583",
+  "y": "135.194"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 49,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "48.3333",
+  "y": "126.333"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 51,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "47.6667",
+  "y": "112.667"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 52,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "63.3333",
+  "y": "111.667"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 55,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "64.3333",
+  "y": "126.667"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 56,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "56.3333",
+  "y": "125.333"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 57,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "52",
+  "y": "125.667"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 58,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "60.3333",
+  "y": "125"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt_5.tmx",
+  "id": 76,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "287.667",
+  "y": "47.6667"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt_5.tmx",
+  "id": 79,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "303.667",
+  "y": "47.3333"
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt_5.tmx",
+  "id": 80,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "321",
+  "y": "46"
+ },
+ {
+  "scope": "room",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 140,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "308.807",
+  "y": "867.623"
+ },
+ {
+  "scope": "room",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 166,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "328.662",
+  "y": "867.554"
+ },
+ {
+  "scope": "room",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 167,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "308.266",
+  "y": "840.594"
+ },
+ {
+  "scope": "room",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 177,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "334.782",
+  "y": "845.759"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 194,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "370.667",
+  "y": "479.333"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 195,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "161.333",
+  "y": "480"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 196,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "138",
+  "y": "332"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 197,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "429.333",
+  "y": "102"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 198,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "97.3333",
+  "y": "494"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 199,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "50.6667",
+  "y": "131.333"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 200,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "394.667",
+  "y": "762.667"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 211,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "383.667",
+  "y": "731.667"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 201,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "431.333",
+  "y": "122"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 202,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "84",
+  "y": "626"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 212,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "323.667",
+  "y": "655.333"
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 213,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "342.333",
+  "y": "297"
+ },
+ {
+  "scope": "room",
+  "map": "grove/Witherbloom_Classroom.tmx",
+  "id": 52,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "270.167",
+  "y": "270.5"
+ },
+ {
+  "scope": "room",
+  "map": "grove/Witherbloom_Classroom.tmx",
+  "id": 57,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "294.308",
+  "y": "269.487"
+ },
+ {
+  "scope": "room",
+  "map": "grove/Witherbloom_Classroom.tmx",
+  "id": 58,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "317.975",
+  "y": "272.958"
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 101,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "224.945",
+  "y": "57.9992"
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 106,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "223.879",
+  "y": "73.1085"
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 94,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "209.123",
+  "y": "58.295"
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 97,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "208.716",
+  "y": "71.4606"
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 100,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "194.105",
+  "y": "57.4273"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 71,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "210.851",
+  "y": "46.2797"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 82,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "109.798",
+  "y": "107.489"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 83,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "172.162",
+  "y": "230.484"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 84,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "172.74",
+  "y": "214.893"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 85,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "171.008",
+  "y": "247.23"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 99,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "325.072",
+  "y": "164.249"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 101,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "150.04",
+  "y": "111.428"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 102,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "125.571",
+  "y": "191.481"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 86,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "110.953",
+  "y": "93.0526"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 87,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "91.3203",
+  "y": "108.066"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 88,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "317.678",
+  "y": "109.221"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 89,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "311.904",
+  "y": "94.785"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 90,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "298.045",
+  "y": "108.066"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 91,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "303.242",
+  "y": "143.534"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 92,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "111.775",
+  "y": "144.778"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 94,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "152.667",
+  "y": "45"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 96,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "180.667",
+  "y": "44.3333"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 97,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "99",
+  "y": "170.333"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 98,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "254.667",
+  "y": "44.3333"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 103,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "184.683",
+  "y": "108.257"
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 104,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "274.858",
+  "y": "164.465"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/black_castle.tmx",
+  "id": 87,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "426.955",
+  "y": "462.554"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/black_castle.tmx",
+  "id": 89,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "431.955",
+  "y": "491.554"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/black_castle.tmx",
+  "id": 88,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "309.155",
+  "y": "469.027"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/black_castle_f1.tmx",
+  "id": 61,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "205.965",
+  "y": "307.13"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/blue_castle.tmx",
+  "id": 88,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "313",
+  "y": "467"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/blue_castle.tmx",
+  "id": 90,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "318",
+  "y": "496"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/blue_castle.tmx",
+  "id": 89,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "424.5",
+  "y": "461.5"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/blue_castle_f1.tmx",
+  "id": 57,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "199.663",
+  "y": "311.618"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/green_castle.tmx",
+  "id": 83,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "425",
+  "y": "459.5"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/green_castle.tmx",
+  "id": 85,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "430",
+  "y": "488.5"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/green_castle.tmx",
+  "id": 84,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "310.5",
+  "y": "462.5"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/green_castle_f1.tmx",
+  "id": 56,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "206.779",
+  "y": "308.095"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/red_castle.tmx",
+  "id": 85,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "310.5",
+  "y": "470"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/red_castle.tmx",
+  "id": 88,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "315.5",
+  "y": "499"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/red_castle.tmx",
+  "id": 87,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "428",
+  "y": "468"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/red_castle_f1.tmx",
+  "id": 57,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "200.509",
+  "y": "301.061"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/white_castle.tmx",
+  "id": 85,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "426.453",
+  "y": "471.329"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/white_castle.tmx",
+  "id": 87,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "431.453",
+  "y": "500.329"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/white_castle.tmx",
+  "id": 86,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "309.385",
+  "y": "471.329"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/white_castle_f1.tmx",
+  "id": 62,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "200.849",
+  "y": "314.618"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 189,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "121",
+  "y": "62"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 194,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "192",
+  "y": "144"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 202,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "223.795",
+  "y": "272.136"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 203,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "70.3333",
+  "y": "279"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 205,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "112",
+  "y": "592"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 231,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "400",
+  "y": "576"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 232,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "352",
+  "y": "592"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 273,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "321",
+  "y": "585"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 233,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "224",
+  "y": "352"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 238,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "64",
+  "y": "144"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 239,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "80",
+  "y": "176"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 245,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "416",
+  "y": "416"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 189,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "288",
+  "y": "337"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 190,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "160",
+  "y": "97.333"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 191,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "226",
+  "y": "83"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 194,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "49.3337",
+  "y": "337.666"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 259,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "161",
+  "y": "48"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 271,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "190",
+  "y": "53"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 260,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "400.75",
+  "y": "368.75"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 261,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "80",
+  "y": "161"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 262,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "383.833",
+  "y": "114.833"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 263,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "160.167",
+  "y": "289.5"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 264,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "303.5",
+  "y": "49.8333"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 265,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "128",
+  "y": "368"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 189,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "880",
+  "y": "80"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 194,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "512",
+  "y": "32"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 202,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "736",
+  "y": "16"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 203,
+  "kind": "other",
+  "template": "scroll.tx",
+  "x": "592",
+  "y": "528"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 205,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "688",
+  "y": "16"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 206,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "112",
+  "y": "33"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 207,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "32",
+  "y": "33"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 208,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "464",
+  "y": "16"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 231,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "624",
+  "y": "16"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 232,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "166",
+  "y": "25"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 290,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "171",
+  "y": "78"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 233,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "335",
+  "y": "83"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 234,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "223",
+  "y": "33"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 238,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "864",
+  "y": "96"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 239,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "576",
+  "y": "32"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 242,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "832",
+  "y": "96"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 243,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "896",
+  "y": "96"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 264,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "160",
+  "y": "448"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 265,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "560",
+  "y": "512"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 266,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "496",
+  "y": "304"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 267,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "512",
+  "y": "288"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 268,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "192",
+  "y": "336"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 280,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "544",
+  "y": "32"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 286,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "848",
+  "y": "80"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 23,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "717",
+  "y": "126"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 24,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "193",
+  "y": "222"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 28,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "756",
+  "y": "541.5"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 29,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "716",
+  "y": "541.5"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 30,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "506.75",
+  "y": "133.08"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 33,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "879.5",
+  "y": "230.5"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 56,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "343",
+  "y": "145"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 172,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "736",
+  "y": "546"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 177,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "16.0833",
+  "y": "350.75"
+ },
+ {
+  "scope": "section",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 178,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "5",
+  "y": "274"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 179,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "460.932",
+  "y": "131.48"
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 181,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "535.273",
+  "y": "131.45"
+ },
+ {
+  "scope": "room",
+  "map": "main_story_explore/dig_site_1.tmx",
+  "id": 82,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "451.354",
+  "y": "171.792"
+ },
+ {
+  "scope": "room",
+  "map": "main_story_explore/dig_site_1.tmx",
+  "id": 83,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "447.667",
+  "y": "208"
+ },
+ {
+  "scope": "room",
+  "map": "main_story_explore/dig_site_1.tmx",
+  "id": 115,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "464",
+  "y": "192"
+ },
+ {
+  "scope": "room",
+  "map": "merfolkpool/Quandrix_Classroom.tmx",
+  "id": 52,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "270.167",
+  "y": "270.5"
+ },
+ {
+  "scope": "room",
+  "map": "merfolkpool/Quandrix_Classroom.tmx",
+  "id": 57,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "294.308",
+  "y": "269.487"
+ },
+ {
+  "scope": "room",
+  "map": "merfolkpool/Quandrix_Classroom.tmx",
+  "id": 58,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "317.975",
+  "y": "272.958"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_1F.tmx",
+  "id": 66,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "224",
+  "y": "95.5"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_1F.tmx",
+  "id": 90,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "192.809",
+  "y": "90.1885"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_1F.tmx",
+  "id": 67,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "224.25",
+  "y": "80.25"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 66,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "256.447",
+  "y": "95.763"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 117,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "295.819",
+  "y": "92.6756"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 87,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "272.228",
+  "y": "95.7719"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 88,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "240.333",
+  "y": "47.6667"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 89,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "257.333",
+  "y": "47.3333"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 90,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "175.667",
+  "y": "48.3333"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 91,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "144.333",
+  "y": "95"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 92,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "127.667",
+  "y": "94"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 93,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "159",
+  "y": "47"
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 118,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "103.202",
+  "y": "126.656"
+ },
+ {
+  "scope": "room",
+  "map": "phyrexia/phyrexian_b1.tmx",
+  "id": 48,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "160.239",
+  "y": "31.7659"
+ },
+ {
+  "scope": "room",
+  "map": "phyrexia/phyrexian_b1.tmx",
+  "id": 75,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "216.75",
+  "y": "32.8333"
+ },
+ {
+  "scope": "room",
+  "map": "phyrexia/phyrexian_b1.tmx",
+  "id": 76,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "256",
+  "y": "32"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 59,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "44.5",
+  "y": "700.5"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 64,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "960",
+  "y": "193"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 103,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "1527.67",
+  "y": "945.667"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 267,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "39",
+  "y": "660"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 268,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "931",
+  "y": "198"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 269,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "1532.67",
+  "y": "916.667"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 104,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "1050.33",
+  "y": "1245"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 105,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "1504.33",
+  "y": "1103.33"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 107,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "1073.33",
+  "y": "304.333"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 108,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "1437",
+  "y": "630"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 109,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "1558",
+  "y": "1151"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 110,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "1141",
+  "y": "1008.67"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 111,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "1125",
+  "y": "1163"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 112,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "660",
+  "y": "868"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 113,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "351",
+  "y": "921"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 114,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "86",
+  "y": "765"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 115,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "399",
+  "y": "586"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 116,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "1098",
+  "y": "808"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 117,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "628",
+  "y": "537"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 118,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "1224",
+  "y": "744"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 121,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "1119",
+  "y": "1277"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 122,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "47",
+  "y": "817"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 257,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "751.667",
+  "y": "508.667"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 258,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "1422.33",
+  "y": "1018.33"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 259,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "1081",
+  "y": "943.667"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 260,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "166.667",
+  "y": "668.667"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 270,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "558.5",
+  "y": "499.5"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 271,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "995",
+  "y": "393"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 272,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "1295",
+  "y": "564.5"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 273,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "908",
+  "y": "871.5"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 274,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "572.5",
+  "y": "1150"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 275,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "440",
+  "y": "496.5"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 276,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "823",
+  "y": "829"
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 277,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "1420",
+  "y": "1138.5"
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 65,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "416.954",
+  "y": "46.4813"
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 66,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "32.76",
+  "y": "210.329"
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 67,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "456.503",
+  "y": "368.93"
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 68,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "288.62",
+  "y": "50.1133"
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 69,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "332.425",
+  "y": "44.141"
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 70,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "28.9313",
+  "y": "170.501"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f0.tmx",
+  "id": 166,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "220.318",
+  "y": "220.045"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f0.tmx",
+  "id": 175,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "247.342",
+  "y": "222.438"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f0.tmx",
+  "id": 185,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "195.509",
+  "y": "222.772"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 172,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "319.79",
+  "y": "104.641"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 207,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "364.472",
+  "y": "100.03"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 173,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "319.287",
+  "y": "87.5206"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 174,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "318.133",
+  "y": "70.1288"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 208,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "180.314",
+  "y": "237.461"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 209,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "144.662",
+  "y": "302.874"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f2.tmx",
+  "id": 210,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "269.289",
+  "y": "335.116"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 115,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "525.88",
+  "y": "209.537"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 141,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "509.503",
+  "y": "120.175"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 168,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "525.509",
+  "y": "246.272"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 208,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "558.472",
+  "y": "183.845"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 209,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "571.352",
+  "y": "240.111"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 169,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "540.009",
+  "y": "209.938"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 170,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "525.175",
+  "y": "231.605"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 171,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "538.509",
+  "y": "246.772"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 172,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "317.675",
+  "y": "40.7719"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 173,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "476.009",
+  "y": "179.438"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 174,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "511.009",
+  "y": "169.105"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 179,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "511.009",
+  "y": "148.772"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 202,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "349.342",
+  "y": "198.105"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 210,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "223.096",
+  "y": "297.914"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 140,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "240.675",
+  "y": "89.0923"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 177,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "271.152",
+  "y": "102.522"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 166,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "275.818",
+  "y": "86.5449"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 167,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "242.398",
+  "y": "116.332"
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 178,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "81.9465",
+  "y": "91.2596"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_4.tmx",
+  "id": 79,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "820",
+  "y": "548.667"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_4.tmx",
+  "id": 109,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "810",
+  "y": "471.333"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_1.tmx",
+  "id": 65,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "208.637",
+  "y": "23.8091"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_1.tmx",
+  "id": 66,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "197.253",
+  "y": "42.225"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 48,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "170.637",
+  "y": "27.2682"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 105,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "172.637",
+  "y": "48.9349"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 65,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "228.164",
+  "y": "25.3361"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 69,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "207.279",
+  "y": "30.5574"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 62,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "185.431",
+  "y": "37.9964"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 76,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "184.163",
+  "y": "61.7997"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 71,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "154.263",
+  "y": "68.7132"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 72,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "264.714",
+  "y": "67.91"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 73,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "248.246",
+  "y": "42.6066"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 74,
+  "kind": "chest",
+  "template": "treasure.tx",
+  "x": "158.279",
+  "y": "41.4017"
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 75,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "214.509",
+  "y": "40.5984"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 115,
+  "kind": "other",
+  "template": "gold.tx",
+  "x": "447.713",
+  "y": "382.537"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 231,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "463.046",
+  "y": "304.537"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 185,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "402.887",
+  "y": "196.423"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 186,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "122.797",
+  "y": "182.787"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 215,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "9.34211",
+  "y": "353.605"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 216,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "320.842",
+  "y": "52.605"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 217,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "439.342",
+  "y": "284.105"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 232,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "110.509",
+  "y": "263.105"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 233,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "237.509",
+  "y": "123.439"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 234,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "421.842",
+  "y": "55.7719"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 188,
+  "kind": "other",
+  "template": "manashards.tx",
+  "x": "534.233",
+  "y": "208.667"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 243,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "527.233",
+  "y": "237.667"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 241,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "501.129",
+  "y": "270.441"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 242,
+  "kind": "booster",
+  "template": "booster.tx",
+  "x": "142.723",
+  "y": "452.241"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 244,
+  "kind": "other",
+  "template": "stone.tx",
+  "x": "650.175",
+  "y": "199.105"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 245,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "349.388",
+  "y": "363.014"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 246,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "367.751",
+  "y": "415.196"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 247,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "321.933",
+  "y": "407.378"
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f4.tmx",
+  "id": 248,
+  "kind": "other",
+  "template": "wood.tx",
+  "x": "173.206",
+  "y": "395.742"
+ }
+]

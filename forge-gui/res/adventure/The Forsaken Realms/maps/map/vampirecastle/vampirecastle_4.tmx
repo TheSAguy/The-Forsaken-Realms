@@ -102,7 +102,11 @@
   </object>
   <object id="77" template="../../../../common/maps/obj/manashards.tx" x="356.667" y="62"/>
   <object id="78" template="../../../../common/maps/obj/manashards.tx" x="761.333" y="62.6667"/>
-  <object id="79" template="../../../../common/maps/obj/manashards.tx" x="820" y="548.667"/>
+  <object id="79" template="../../../../common/maps/obj/manashards.tx" x="820" y="548.667">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="80" template="../../../../common/maps/obj/manashards.tx" x="576.667" y="480"/>
   <object id="81" template="../../../../common/maps/obj/booster.tx" x="812.667" y="425.333">
    <properties>
@@ -337,6 +341,7 @@
   </object>
   <object id="109" template="../../obj/wood.tx" x="810" y="471.333">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,

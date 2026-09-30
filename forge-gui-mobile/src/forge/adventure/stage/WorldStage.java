@@ -1874,7 +1874,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             spawnDelay -= delta;
             if (spawnDelay < 0) {
                 spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
-                if (!rollLegendSighting(world, biomeData)) // round 375: a legend's spot is judged on its own
+                if (!rollLegendSighting(world, biomeData) // round 375: a legend's spot is judged on its own
+                        && !rollDungeonSource(world, biomeData)) // round 377: a nearby dungeon's door
                     spawnQuestExtraOnly("on a road");
             }
             return;
@@ -1892,6 +1893,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
         // Round 375: the legend table rolls first, on a spot of its own - a legend placed spends this roll.
         if (rollLegendSighting(world, biomeData))
+            return;
+        // Round 377: a regular dungeon or cave within reach feeds the land - see rollDungeonSource().
+        if (rollDungeonSource(world, biomeData))
             return;
 
         // Round 338 (user spec 2026-09-25, "adjust the spawn rates of enemies in areas with lifted FoW"): the fog zone at
@@ -2221,6 +2225,86 @@ public class WorldStage extends GameStage implements SaveFileContent {
             onLegendSighted(sprite); // a quest's or the console's legend - the legend table places its own
         return spawned;
 
+    }
+
+    /** Round 377: the source the player was last within reach of - its id, for the one log line per zone change. */
+    private String dungeonSourceZone = null;
+
+    /**
+     * Round 377, dungeons as sources of enemies (util/DungeonSources - the user: "Think of dungeons as a source of
+     * enemies and needs to be removed"). Once per spawn roll, after the legend table: within reach of an active regular
+     * dungeon or cave the NEXT roll comes its rate factor (escalated by its age) sooner, and dungeonSourceShare of the
+     * rolls send one of its creatures out of its door - its color's before the first visit, its living inhabitants
+     * after, never a special one. No message on screen - the "Find a Dungeon" quest explains it; the log says when the
+     * player comes within reach of a source, and each creature it sends. True when one was placed: that spends the roll.
+     */
+    private boolean rollDungeonSource(World world, List<BiomeData> biomes) {
+        if (!forge.adventure.util.DungeonSources.isEnabled() || player == null)
+            return false;
+        forge.adventure.util.DungeonSources.Source source = forge.adventure.util.DungeonSources.nearest(world,
+                player.getX() + player.getWidth() / 2f, player.getY() + player.getHeight() / 2f);
+        String zone = source == null ? null : source.poi.getID();
+        if (!java.util.Objects.equals(zone, dungeonSourceZone)) {
+            if (source != null)
+                System.out.println("[TFR-DungeonSource] within reach of " + source.poi.getDisplayName() + " ("
+                        + Math.round(source.distanceTiles) + " tiles, standing " + source.ageDays + " day(s), x"
+                        + source.escalation + ") - rolls come x" + source.rateFactor() + " as fast");
+            else
+                System.out.println("[TFR-DungeonSource] out of reach of any dungeon source");
+            dungeonSourceZone = zone;
+        }
+        if (source == null)
+            return false;
+        spawnDelay /= source.rateFactor(); // the next roll comes sooner
+        TuningData tuning = Config.instance().getTuningData();
+        float share = tuning == null ? 0f : tuning.dungeonSourceShare;
+        if (share <= 0f || rand.nextFloat() >= share)
+            return false;
+        forge.adventure.util.DungeonSources.Pick pick = forge.adventure.util.DungeonSources.pick(world, source.poi,
+                Current.player().getStatistic().rank(), rand);
+        if (pick == null)
+            return false;
+        EnemySprite sprite = placeAtDoor(pick.enemy, source.poi, world, biomes);
+        int ts = world.getTileSize();
+        System.out.println("[TFR-DungeonSource] " + source.poi.getDisplayName() + " sends " + pick.enemy.getName()
+                + " (" + pick.enemy.getTieredDisplayName() + ") from " + pick.from
+                + (sprite == null ? " - no open ground at its door, not placed"
+                        : " out of its door at (" + (int) (sprite.getX() / ts) + "," + (int) (sprite.getY() / ts) + "), "
+                        + Math.round(sprite.pos().dst(player.pos()) / ts) + " tiles from the player")
+                + "; standing " + source.ageDays + " day(s), rolls x" + source.rateFactor());
+        return sprite != null;
+    }
+
+    /** Round 377: a creature 1-3 tiles outside the place's footprint - on land (not a road, not off the map), not on a
+     *  colliding tile, never right beside the player. Null when 16 tries find nowhere. */
+    private EnemySprite placeAtDoor(EnemyData enemyData, forge.adventure.pointofintrest.PointOfInterest poi, World world,
+                                    List<BiomeData> biomes) {
+        Rectangle b = poi.getBoundingRectangle();
+        float cx = b.x + b.width / 2f;
+        float cy = b.y + b.height / 2f;
+        float half = Math.max(b.width, b.height) / 2f;
+        int ts = world.getTileSize();
+        EnemySprite sprite = new EnemySprite(enemyData);
+        for (int attempt = 0; attempt < 16; attempt++) {
+            float dist = half + ts * (1f + 2f * rand.nextFloat());
+            float angle = MathUtils.PI2 * rand.nextFloat();
+            float x = cx + dist * MathUtils.cos(angle) - sprite.getWidth() / 2f;
+            float y = cy + dist * MathUtils.sin(angle);
+            if (landAt(world, biomes, x + sprite.getWidth() / 2f, y) == null)
+                continue;
+            float pdx = x - player.getX();
+            float pdy = y - player.getY();
+            if (pdx * pdx + pdy * pdy < 4f * ts * ts)
+                continue;
+            sprite.setX(x);
+            sprite.setY(y);
+            if (enemyData.flying || !world.collidingTile(sprite.boundingRect())) {
+                enemies.add(Pair.of(globalTimer, sprite));
+                foregroundSprites.addActor(sprite);
+                return sprite;
+            }
+        }
+        return null;
     }
 
     /** Round 375: every legend sighting, whichever path placed it - the day clock (round 350), the legend table's

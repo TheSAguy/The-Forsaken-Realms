@@ -49,6 +49,7 @@
   </object>
   <object id="79" template="../../../../../common/maps/obj/treasure.tx" x="247.726" y="78.6608">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;randomCard&quot;,
@@ -89,9 +90,14 @@
 ]</property>
    </properties>
   </object>
-  <object id="88" template="../../../obj/stone.tx" x="259.495" y="112.671"/>
+  <object id="88" template="../../../obj/stone.tx" x="259.495" y="112.671">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="80" template="../../../../../common/maps/obj/treasure.tx" x="390.485" y="136.693">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;randomCard&quot;,
@@ -178,9 +184,14 @@
 ]</property>
    </properties>
   </object>
-  <object id="84" template="../../../../../common/maps/obj/manashards.tx" x="188.921" y="58.93"/>
+  <object id="84" template="../../../../../common/maps/obj/manashards.tx" x="188.921" y="58.93">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="87" template="../../../../../common/maps/obj/treasure.tx" x="363.79" y="94.1359">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;item&quot;,
@@ -198,17 +209,5 @@
   <object id="93" template="../../../../../common/maps/obj/waypoint.tx" x="368" y="144"/>
   <object id="95" template="../../../../../common/maps/obj/waypoint.tx" x="352" y="96"/>
   <object id="96" template="../../../../../common/maps/obj/waypoint.tx" x="320" y="80"/>
-   <object id="97" template="../../../../../common/maps/obj/enemy.tx" x="231.726" y="78.6608">
-   <properties>
-    <property name="enemy" value="False Knight"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="98" template="../../../../../common/maps/obj/enemy.tx" x="347.79" y="94.1359">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

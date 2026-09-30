@@ -38,7 +38,11 @@
   </data>
  </layer>
  <objectgroup id="4" name="Objects">
-  <object id="47" template="../../../common/maps/obj/gold.tx" x="48" y="352"/>
+  <object id="47" template="../../../common/maps/obj/gold.tx" x="48" y="352">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="50" template="../../../common/maps/obj/enemy.tx" x="192" y="64" width="64" height="64">
    <properties>
     <property name="threatRange" type="int" value="-1"/>
@@ -81,11 +85,23 @@
     <property name="sprite" value="sprites/3life.atlas"/>
    </properties>
   </object>
-  <object id="69" template="../../../common/maps/obj/treasure.tx" x="64" y="336"/>
+  <object id="69" template="../../../common/maps/obj/treasure.tx" x="64" y="336">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="74" template="../../../common/maps/obj/treasure.tx" x="240" y="64"/>
-  <object id="70" template="../../../common/maps/obj/booster.tx" x="48" y="336"/>
+  <object id="70" template="../../../common/maps/obj/booster.tx" x="48" y="336">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="72" template="../../../common/maps/obj/booster.tx" x="208" y="64"/>
-  <object id="71" template="../../../common/maps/obj/gold.tx" x="64" y="352"/>
+  <object id="71" template="../../../common/maps/obj/gold.tx" x="64" y="352">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="79" template="../../../common/maps/obj/gate.tx" x="144" y="208" width="32" height="16" visible="1">
    <properties>
     <property name="dialog">[{
@@ -342,7 +358,7 @@
 </property>
    </properties>
   </object>
-  <object id="87" template="../../../common/maps/obj/enemy.tx" x="48" y="320">
+  <object id="87" template="../../../common/maps/obj/enemy.tx" x="48" y="384">
    <properties>
     <property name="enemy" value="Elf warrior"/>
     <property name="pursueRange" type="int" value="80"/>
@@ -470,12 +486,6 @@
   <object id="123" template="../../../common/maps/obj/waypoint.tx" x="48" y="384"/>
   <object id="124" template="../../../common/maps/obj/waypoint.tx" x="64" y="384"/>
    <object id="125" template="../../../common/maps/obj/enemy.tx" x="320" y="176">
-   <properties>
-    <property name="enemy" value="Geist"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="126" template="../../../common/maps/obj/enemy.tx" x="64" y="320">
    <properties>
     <property name="enemy" value="Geist"/>
     <property name="threatRange" type="int" value="20"/>

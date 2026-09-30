@@ -41,7 +41,11 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="48" template="../../../../common/maps/obj/treasure.tx" x="160.239" y="31.7659"/>
+  <object id="48" template="../../../../common/maps/obj/treasure.tx" x="160.239" y="31.7659">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="192.235" y="47.7421">
    <properties>
     <property name="enemy" value="Gitaxian Scientist"/>
@@ -85,6 +89,7 @@
   </object>
   <object id="75" template="../../../../common/maps/obj/booster.tx" x="216.75" y="32.8333">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;NPH&quot;,&quot;ONE&quot;,&quot;MOM&quot; ],
@@ -111,7 +116,11 @@
 </property>
    </properties>
   </object>
-  <object id="76" template="../../../../common/maps/obj/treasure.tx" x="256" y="32"/>
+  <object id="76" template="../../../../common/maps/obj/treasure.tx" x="256" y="32">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="78" template="../../obj/wood.tx" x="209.552" y="126.252"/>
  </objectgroup>
  <objectgroup id="7" name="Waypoints">
@@ -136,19 +145,6 @@
   <object id="80" template="../../../../common/maps/obj/waypoint.tx" x="207.841" y="241.756"/>
   <object id="82" template="../../../../common/maps/obj/waypoint.tx" x="240" y="48"/>
   <object id="83" template="../../../../common/maps/obj/waypoint.tx" x="256" y="64"/>
-   <object id="84" template="../../../../common/maps/obj/enemy.tx" x="240" y="32">
-   <properties>
-    <property name="enemy" value="Gitaxian Underling"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="85" template="../../../../common/maps/obj/enemy.tx" x="256" y="48">
-   <properties>
-    <property name="enemy" value="Gitaxian Underling"/>
-    <property name="threatRange" type="int" value="20"/>
-    <property name="waypoints" value="86,87"/>
-   </properties>
-  </object>
   <object id="86" template="../../../../common/maps/obj/waypoint.tx" x="256" y="48"/>
   <object id="87" template="../../../../common/maps/obj/waypoint.tx" x="208" y="64"/>
 </objectgroup>

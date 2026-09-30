@@ -130,6 +130,7 @@
   </object>
   <object id="59" template="../../../../common/maps/obj/gold.tx" x="44.5" y="700.5" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
@@ -137,6 +138,7 @@
   </object>
   <object id="64" template="../../../../common/maps/obj/gold.tx" x="960" y="193" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
@@ -450,16 +452,30 @@
   </object>
   <object id="103" template="../../../../common/maps/obj/gold.tx" x="1527.67" y="945.667" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
    </properties>
   </object>
-  <object id="267" template="../../obj/stone.tx" x="39" y="660"/>
-  <object id="268" template="../../obj/stone.tx" x="931" y="198"/>
-  <object id="269" template="../../obj/stone.tx" x="1532.67" y="916.667"/>
+  <object id="267" template="../../obj/stone.tx" x="39" y="660">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="268" template="../../obj/stone.tx" x="931" y="198">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="269" template="../../obj/stone.tx" x="1532.67" y="916.667">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="104" template="../../../../common/maps/obj/gold.tx" x="1050.33" y="1245" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
@@ -467,6 +483,7 @@
   </object>
   <object id="105" template="../../../../common/maps/obj/gold.tx" x="1504.33" y="1103.33" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
@@ -491,17 +508,54 @@
     <property name="spawn.Normal" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="107" template="../../../../common/maps/obj/manashards.tx" x="1073.33" y="304.333"/>
-  <object id="108" template="../../../../common/maps/obj/manashards.tx" x="1437" y="630"/>
-  <object id="109" template="../../../../common/maps/obj/manashards.tx" x="1558" y="1151"/>
-  <object id="110" template="../../../../common/maps/obj/manashards.tx" x="1141" y="1008.67"/>
-  <object id="111" template="../../../../common/maps/obj/manashards.tx" x="1125" y="1163"/>
-  <object id="112" template="../../../../common/maps/obj/manashards.tx" x="660" y="868"/>
-  <object id="113" template="../../../../common/maps/obj/manashards.tx" x="351" y="921"/>
-  <object id="114" template="../../../../common/maps/obj/manashards.tx" x="86" y="765"/>
-  <object id="115" template="../../../../common/maps/obj/manashards.tx" x="399" y="586"/>
+  <object id="107" template="../../../../common/maps/obj/manashards.tx" x="1073.33" y="304.333">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="108" template="../../../../common/maps/obj/manashards.tx" x="1437" y="630">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="109" template="../../../../common/maps/obj/manashards.tx" x="1558" y="1151">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="110" template="../../../../common/maps/obj/manashards.tx" x="1141" y="1008.67">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="111" template="../../../../common/maps/obj/manashards.tx" x="1125" y="1163">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="112" template="../../../../common/maps/obj/manashards.tx" x="660" y="868">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="113" template="../../../../common/maps/obj/manashards.tx" x="351" y="921">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="114" template="../../../../common/maps/obj/manashards.tx" x="86" y="765">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="115" template="../../../../common/maps/obj/manashards.tx" x="399" y="586">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="116" template="../../../../common/maps/obj/gold.tx" x="1098" y="808" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
@@ -509,6 +563,7 @@
   </object>
   <object id="117" template="../../../../common/maps/obj/gold.tx" x="628" y="537" visible="1">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
  &quot;type&quot;: &quot;gold&quot;, &quot;count&quot;: 250
 }]</property>
@@ -516,6 +571,7 @@
   </object>
   <object id="118" template="../../../../common/maps/obj/booster.tx" x="1224" y="744">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;M13&quot; ],
@@ -541,6 +597,7 @@
   </object>
   <object id="121" template="../../../../common/maps/obj/booster.tx" x="1119" y="1277">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;M13&quot; ],
@@ -566,6 +623,7 @@
   </object>
   <object id="122" template="../../../../common/maps/obj/booster.tx" x="47" y="817">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;M13&quot; ],
@@ -1218,6 +1276,7 @@
   </object>
   <object id="257" template="../../../../common/maps/obj/treasure.tx" x="751.667" y="508.667">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -1237,6 +1296,7 @@
   </object>
   <object id="258" template="../../../../common/maps/obj/treasure.tx" x="1422.33" y="1018.33">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -1256,6 +1316,7 @@
   </object>
   <object id="259" template="../../../../common/maps/obj/treasure.tx" x="1081" y="943.667">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -1276,6 +1337,7 @@
   </object>
   <object id="260" template="../../../../common/maps/obj/treasure.tx" x="166.667" y="668.667">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -1353,50 +1415,46 @@
     <property name="threatRange" type="int" value="0"/>
    </properties>
   </object>
-  <object id="270" template="../../obj/wood.tx" x="558.5" y="499.5"/>
-  <object id="271" template="../../obj/wood.tx" x="995" y="393"/>
-  <object id="272" template="../../obj/wood.tx" x="1295" y="564.5"/>
-  <object id="273" template="../../obj/wood.tx" x="908" y="871.5"/>
-  <object id="274" template="../../obj/wood.tx" x="572.5" y="1150"/>
-  <object id="275" template="../../obj/stone.tx" x="440" y="496.5"/>
-  <object id="276" template="../../obj/stone.tx" x="823" y="829"/>
-  <object id="277" template="../../obj/stone.tx" x="1420" y="1138.5"/>
+  <object id="270" template="../../obj/wood.tx" x="558.5" y="499.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="271" template="../../obj/wood.tx" x="995" y="393">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="272" template="../../obj/wood.tx" x="1295" y="564.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="273" template="../../obj/wood.tx" x="908" y="871.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="274" template="../../obj/wood.tx" x="572.5" y="1150">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="275" template="../../obj/stone.tx" x="440" y="496.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="276" template="../../obj/stone.tx" x="823" y="829">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="277" template="../../obj/stone.tx" x="1420" y="1138.5">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="278" template="../../../../common/maps/obj/waypoint.tx" x="672" y="1069"/>
-   <object id="279" template="../../../../common/maps/obj/enemy.tx" x="1208" y="744">
-   <properties>
-    <property name="enemy" value="Sliver_Black"/>
-    <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
-  <object id="280" template="../../../../common/maps/obj/enemy.tx" x="31" y="817">
-   <properties>
-    <property name="enemy" value="Sliver_Black"/>
-    <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
-  <object id="281" template="../../../../common/maps/obj/enemy.tx" x="751.667" y="492.667">
-   <properties>
-    <property name="enemy" value="Archer"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="282" template="../../../../common/maps/obj/enemy.tx" x="1406.33" y="1018.33">
-   <properties>
-    <property name="enemy" value="Archer"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="283" template="../../../../common/maps/obj/enemy.tx" x="1065" y="943.667">
-   <properties>
-    <property name="enemy" value="Archer"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="284" template="../../../../common/maps/obj/enemy.tx" x="150.667" y="668.667">
-   <properties>
-    <property name="enemy" value="Archer"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

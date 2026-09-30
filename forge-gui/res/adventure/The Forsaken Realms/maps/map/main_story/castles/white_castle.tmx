@@ -463,6 +463,7 @@
   <object id="84" template="../../../../../common/maps/obj/waypoint.tx" x="47.3333" y="500"/>
   <object id="85" template="../../../../../common/maps/obj/treasure.tx" x="426.453" y="471.329">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -508,9 +509,14 @@
 ]</property>
    </properties>
   </object>
-  <object id="87" template="../../../obj/stone.tx" x="431.453" y="500.329"/>
+  <object id="87" template="../../../obj/stone.tx" x="431.453" y="500.329">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="86" template="../../../../../common/maps/obj/treasure.tx" x="309.385" y="471.329">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;shards&quot;,
@@ -554,18 +560,6 @@
     &quot;addMaxCount&quot;: 100
  }
 ]</property>
-   </properties>
-  </object>
-   <object id="88" template="../../../../../common/maps/obj/enemy.tx" x="410.453" y="471.329">
-   <properties>
-    <property name="enemy" value="Avacynian Preacher"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="89" template="../../../../../common/maps/obj/enemy.tx" x="293.385" y="471.329">
-   <properties>
-    <property name="enemy" value="Avacynian Preacher"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
 </objectgroup>

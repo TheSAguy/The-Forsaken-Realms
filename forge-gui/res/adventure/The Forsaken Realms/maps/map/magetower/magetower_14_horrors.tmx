@@ -42,7 +42,7 @@
     <property name="enemy" value="Devil of Tibalt"/>
    </properties>
   </object>
-  <object id="72" template="../../../../common/maps/obj/enemy.tx" x="192" y="64">
+  <object id="72" template="../../../../common/maps/obj/enemy.tx" x="209.317" y="145.131">
    <properties>
     <property name="displayNameOverride" value="Master of Demonology"/>
     <property name="enemy" value="Adept Black Wizard"/>
@@ -62,13 +62,23 @@
   <object id="81" template="../../../../common/maps/obj/waypoint.tx" x="208.885" y="202.527"/>
   <object id="101" template="../../../../common/maps/obj/treasure.tx" x="224.945" y="57.9992">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward" value="[{&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 10 }, {&quot;type&quot;: &quot;item&quot;,&quot;count&quot;: 1,&quot;probability&quot;:0.2,&quot;itemName&quot;: &quot;Dark Armor&quot;}]"/>
    </properties>
   </object>
-  <object id="106" template="../../obj/stone.tx" x="223.879" y="73.1085"/>
-  <object id="94" template="../../../../common/maps/obj/manashards.tx" x="209.123" y="58.295"/>
+  <object id="106" template="../../obj/stone.tx" x="223.879" y="73.1085">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="94" template="../../../../common/maps/obj/manashards.tx" x="209.123" y="58.295">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="97" template="../../../../common/maps/obj/booster.tx" x="208.716" y="71.4606">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;M14&quot; ],
@@ -97,6 +107,7 @@
   </object>
   <object id="100" template="../../../../common/maps/obj/treasure.tx" x="194.105" y="57.4273">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward" value="[{&quot;type&quot;: &quot;randomCard&quot;, &quot;count&quot;: 10 }, {&quot;type&quot;: &quot;item&quot;,&quot;count&quot;: 1,&quot;probability&quot;:0.2,&quot;itemName&quot;: &quot;Dark Armor&quot;}]"/>
    </properties>
   </object>
@@ -174,17 +185,5 @@
   <object id="110" template="../../../../common/maps/obj/waypoint.tx" x="224" y="80"/>
   <object id="112" template="../../../../common/maps/obj/waypoint.tx" x="208" y="80"/>
   <object id="113" template="../../../../common/maps/obj/waypoint.tx" x="208" y="96"/>
-   <object id="114" template="../../../../common/maps/obj/enemy.tx" x="208.945" y="57.9992">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="115" template="../../../../common/maps/obj/enemy.tx" x="178.105" y="57.4273">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

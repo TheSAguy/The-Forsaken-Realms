@@ -48,7 +48,11 @@
   </data>
  </layer>
  <objectgroup id="12" name="Objects" opacity="0.9" offsetx="3.15789" offsety="7.89474">
-  <object id="166" template="../../../../common/maps/obj/manashards.tx" x="220.318" y="220.045"/>
+  <object id="166" template="../../../../common/maps/obj/manashards.tx" x="220.318" y="220.045">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="167" template="../../../../common/maps/obj/booster.tx" x="347.898" y="529.832">
    <properties>
     <property name="reward">[
@@ -90,6 +94,7 @@
   </object>
   <object id="175" template="../../../../common/maps/obj/treasure.tx" x="247.342" y="222.438">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -128,6 +133,7 @@
   <object id="184" template="../../../../common/maps/obj/manashards.tx" x="284.175" y="440.772"/>
   <object id="185" template="../../../../common/maps/obj/treasure.tx" x="195.509" y="222.772">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -233,18 +239,6 @@
    <properties>
     <property name="enemy" value="Fire Dragon"/>
     <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
-  <object id="199" template="../../../../common/maps/obj/enemy.tx" x="231.342" y="222.438">
-   <properties>
-    <property name="enemy" value="Cinderwing Whelp"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="200" template="../../../../common/maps/obj/enemy.tx" x="179.509" y="222.772">
-   <properties>
-    <property name="enemy" value="Cinderwing Whelp"/>
-    <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
   <object id="201" template="../../../../common/maps/obj/enemy.tx" x="298.175" y="296.105">

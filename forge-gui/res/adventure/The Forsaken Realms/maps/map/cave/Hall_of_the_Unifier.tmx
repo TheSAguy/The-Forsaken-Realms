@@ -137,6 +137,7 @@
   </object>
   <object id="146" template="../../../../common/maps/obj/treasure.tx" x="192.25" y="224">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
         &quot;type&quot;: &quot;card&quot;
         &quot;count&quot;: 20,
@@ -167,6 +168,7 @@
   </object>
   <object id="149" template="../../../../common/maps/obj/treasure.tx" x="240.333" y="224">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
         &quot;type&quot;: &quot;card&quot;
         &quot;count&quot;: 20,

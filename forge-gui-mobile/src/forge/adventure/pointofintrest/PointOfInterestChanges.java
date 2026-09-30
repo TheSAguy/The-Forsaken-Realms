@@ -138,6 +138,12 @@ public class PointOfInterestChanges implements SaveFileContent  {
             if (obj instanceof java.util.Map)
                 dungeonRoster.putAll((java.util.Map<Integer, String>) obj);
         }
+        rosterSpecial.clear(); // round 377, absent on older saves - refilled on the next visit
+        if (data.containsKey("rosterSpecial")) {
+            Object obj = data.readObject("rosterSpecial");
+            if (obj instanceof java.util.Set)
+                rosterSpecial.addAll((java.util.Set<Integer>) obj);
+        }
         mapFlags.clear();
         mapFlags.putAll((java.util.Map<String, Byte>) data.readObject("mapFlags"));
         reputation.clear();
@@ -224,6 +230,7 @@ public class PointOfInterestChanges implements SaveFileContent  {
         data.storeObject("mapFlags", mapFlags);
         data.storeObject("shopSeeds", shopSeeds);
         data.storeObject("dungeonRoster", dungeonRoster);   // round 201
+        data.storeObject("rosterSpecial", rosterSpecial);   // round 377
         data.storeObject("reputation", reputation);
         data.storeObject("isBookmarked", isBookmarked);
         data.storeObject("isVisited", isVisited);
@@ -370,6 +377,31 @@ public class PointOfInterestChanges implements SaveFileContent  {
     /** Forget the roster so the next incarnation of this POI rolls a fresh one. */
     public void clearFixedRoster() {
         dungeonRoster.clear();
+        rosterSpecial.clear();
+    }
+
+    // Round 377 (the dungeon sources, util/DungeonSources): the placements of this level that must never walk out onto
+    // the overworld - a dialog carrier (a captive, a hermit, a quest giver), a boss, a quest enemy, the cave champion, a
+    // placement kept as authored. MapStage marks them on every entry, beside the roster; a save from before this round
+    // gets them on its next visit.
+    private final HashSet<Integer> rosterSpecial = new HashSet<>();
+
+    /** Round 377: this level's recorded roster, read-only - objectId -> enemy name. */
+    public java.util.Map<Integer, String> getFixedRoster() {
+        return java.util.Collections.unmodifiableMap(dungeonRoster);
+    }
+
+    public void markRosterSpecial(int objectID) {
+        rosterSpecial.add(objectID);
+    }
+
+    /** Round 377: MapStage clears them as a level loads - its placements mark them afresh, so none can go stale. */
+    public void clearRosterSpecial() {
+        rosterSpecial.clear();
+    }
+
+    public boolean isRosterSpecial(int objectID) {
+        return rosterSpecial.contains(objectID);
     }
 
     public long getShopSeed(int objectID){

@@ -42,6 +42,7 @@
   </object>
   <object id="48" template="../../../../common/maps/obj/treasure.tx" x="170.637" y="27.2682">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;randomCard&quot;,
@@ -82,7 +83,11 @@
 ]</property>
    </properties>
   </object>
-  <object id="105" template="../../obj/stone.tx" x="172.637" y="48.9349"/>
+  <object id="105" template="../../obj/stone.tx" x="172.637" y="48.9349">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="243.161" y="219.409" width="26.041" height="20.418">
    <properties>
     <property name="deckOverride" value="decks/standard/vampire_wb.dck"/>
@@ -103,6 +108,7 @@
   </object>
   <object id="65" template="../../../../common/maps/obj/treasure.tx" x="228.164" y="25.3361">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;randomCard&quot;,
@@ -148,6 +154,7 @@
   <object id="68" template="../../../../common/maps/obj/manashards.tx" x="149.443" y="268.328"/>
   <object id="69" template="../../../../common/maps/obj/booster.tx" x="207.279" y="30.5574">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
 	{
 		&quot;type&quot;: &quot;card&quot;,
@@ -727,23 +734,5 @@
   <object id="109" template="../../../../common/maps/obj/waypoint.tx" x="176" y="32"/>
   <object id="111" template="../../../../common/maps/obj/waypoint.tx" x="224" y="32"/>
   <object id="112" template="../../../../common/maps/obj/waypoint.tx" x="208" y="32"/>
-   <object id="113" template="../../../../common/maps/obj/enemy.tx" x="228.164" y="57.3361">
-   <properties>
-    <property name="enemy" value="Naked Mole Rat"/>
-    <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
-  <object id="114" template="../../../../common/maps/obj/enemy.tx" x="170.637" y="43.2682">
-   <properties>
-    <property name="enemy" value="Vampire"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="115" template="../../../../common/maps/obj/enemy.tx" x="212.164" y="25.3361">
-   <properties>
-    <property name="enemy" value="Vampire"/>
-    <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
 </objectgroup>
 </map>

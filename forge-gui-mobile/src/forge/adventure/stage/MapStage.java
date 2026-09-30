@@ -806,7 +806,10 @@ public class MapStage extends GameStage {
         sourceMapMatch.clear();
         enemies.clear();
         lootPositions.clear(); // round 279 - per map, like everything else here
+        lootBehindGates = 0; // round 378
         beatenPlacements.clear(); // round 322
+        if (changes != null)
+            changes.clearRosterSpecial(); // round 377: the placements below mark them afresh on every entry
         localInnID = -1;
         prepareCaveChampion(map);
         for (MapLayer layer : map.getLayers()) {
@@ -1085,6 +1088,8 @@ public class MapStage extends GameStage {
     }
 
     private final Array<GuardedLoot> lootPositions = new Array<>();
+    /** Round 378: rewards on this level marked noGuard=true (behind a gate) - left out of the guard pairing. */
+    private int lootBehindGates;
     /** Round 322: what the MAP authored at each enemy placement already beaten on the level being loaded - whatever
      *  stood there when it was beaten. Consumed by AdventureQuestController.creditBeatenQuestTargets() after the
      *  layer loop. Cleared per load. */
@@ -1129,8 +1134,12 @@ public class MapStage extends GameStage {
     }
 
     private void assignLootGuards(String targetMap) {
-        if (lootPositions.isEmpty())
+        if (lootPositions.isEmpty()) {
+            if (lootBehindGates > 0)
+                System.out.println("[TFR-BoosterGuard] " + targetMap + ": " + lootBehindGates
+                        + " reward(s) behind gates (noGuard) - no guards paired");
             return;
+        }
         // Three tiles, the same radius dev-tools/booster_guards.py audits with, so the tool and the runtime
         // agree about what "guarding this booster" means.
         float reach = Current.world().getTileSize() * 3f;
@@ -1190,7 +1199,8 @@ public class MapStage extends GameStage {
                 + lootPositions.size + " reward(s) have a guard (" + boosters + " booster(s), "
                 + chests + " chest(s), " + (lootPositions.size - boosters - chests)
                 + " other pickup(s)), " + posts + " of them pinned to a post"
-                + (unguarded > 0 ? "; " + unguarded + " booster(s) with no enemy within 3 tiles" : ""));
+                + (unguarded > 0 ? "; " + unguarded + " booster(s) with no enemy within 3 tiles" : "")
+                + (lootBehindGates > 0 ? "; " + lootBehindGates + " behind gates (noGuard) left out" : "")); // round 378
     }
 
     /**
@@ -1416,8 +1426,16 @@ public class MapStage extends GameStage {
                             // "sprites/booster.atlas" - and it is read from the object rather than from the
                             // reward JSON, which is a card list indistinguishable from a treasure's.
                             // Round 280 records chests as well, since "chase the thief" covers those too.
-                            lootPositions.add(new GuardedLoot(id, new Vector2(RW.getX(), RW.getY()),
-                                    Sp.contains("booster"), Sp.contains("treasure")));
+                            // Round 378 (the user: "For chests/booster packs in dungeons, that are behind gates/locked
+                            // areas... the player already needs to accomplish a task to get them, they don't need to
+                            // double fight for those rewards"): a reward behind a gate carries noGuard=true (written by
+                            // dev-tools/gated_loot/apply_gated_loot.py from its reachability audit) and gets no guard -
+                            // no pinned post, no hunt over the theft; the enemies around it fight as ordinary ones.
+                            if (isTrueProperty(prop.get("noGuard")))
+                                lootBehindGates++;
+                            else
+                                lootPositions.add(new GuardedLoot(id, new Vector2(RW.getX(), RW.getY()),
+                                        Sp.contains("booster"), Sp.contains("treasure")));
                         }
                         break;
                     case "enemy":
@@ -1526,6 +1544,16 @@ public class MapStage extends GameStage {
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {
                                 mob.defeatDialog = new MapDialog(dialogObject.toString(), this, mob.getId(), currentMap);
                             }
+                            // Round 377 (the dungeon sources): a placement that must never walk out onto the overworld -
+                            // a dialog carrier, one the map keeps as authored, the cave champion, a quest's target here,
+                            // or a special creature (DungeonSources.isSpecial). Marked beside the roster on every entry;
+                            // DungeonSources.livingInhabitants() skips it. Not `asAuthored`: that also holds every
+                            // spawnRate-0 creature, which isSpecial() already weighs on its own.
+                            if (changes != null && EN != null && (mob.dialog != null || mob.defeatDialog != null || keptByMap
+                                    || id == caveChampionObjectId || forge.adventure.util.DungeonSources.isSpecial(EN)
+                                    || AdventureQuestController.instance().isQuestTargetPlacement(EN,
+                                            AdventureQuestController.instance().mostRecentPOI)))
+                                changes.markRosterSpecial(id);
                             dialogObject = prop.get("displayNameOverride"); //Check for name override.
                             if (dialogObject != null && !dialogObject.toString().isEmpty()) {
                                 mob.nameOverride = dialogObject.toString();

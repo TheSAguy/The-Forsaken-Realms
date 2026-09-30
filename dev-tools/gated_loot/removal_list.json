@@ -1,0 +1,1994 @@
+[
+ {
+  "scope": "room",
+  "map": "barbariancamp/Prismari_Classroom.tmx",
+  "id": 91,
+  "enemy": "Efreet",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "278.308",
+  "y": "269.487",
+  "guards": [
+   "booster #57"
+  ],
+  "placed_for": "booster #57",
+  "inside_gated_area": true,
+  "gates": [
+   "#67 dialog 'Gate' (opens by: its own dialog, needs item 'Prismari Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_0.tmx",
+  "id": 95,
+  "enemy": "Skeleton",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "958.5",
+  "y": "294.5",
+  "guards": [
+   "chest #94"
+  ],
+  "placed_for": "chest #94",
+  "inside_gated_area": true,
+  "gates": [
+   "#68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Azlask.tmx",
+  "id": 75,
+  "enemy": "Eldrazi Scion",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "243.845",
+  "y": "290.514",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "cave/Eldrazi_Prison_0.tmx #68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Emrakul.tmx",
+  "id": 74,
+  "enemy": "Eldrazi Scion",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "247",
+  "y": "290.091",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "cave/Eldrazi_Prison_0.tmx #68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Kozilek.tmx",
+  "id": 74,
+  "enemy": "Eldrazi Scion",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "247.934",
+  "y": "291.536",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "cave/Eldrazi_Prison_0.tmx #68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Ulalek.tmx",
+  "id": 74,
+  "enemy": "Eldrazi Scion",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "242.823",
+  "y": "291.536",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "cave/Eldrazi_Prison_0.tmx #68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Ulamog.tmx",
+  "id": 74,
+  "enemy": "Eldrazi Scion",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "246.912",
+  "y": "290.514",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "cave/Eldrazi_Prison_0.tmx #68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Eldrazi_Prison_Zhulodok.tmx",
+  "id": 74,
+  "enemy": "Eldrazi Scion",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "240.778",
+  "y": "289.492",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "cave/Eldrazi_Prison_0.tmx #68 dialog 'Gate' (opens by: its own dialog, needs item 'Eldrazi Pentakey Shard 1' & item 'Eldrazi Pentakey Shard 2' & item 'Eldrazi Pentakey Shard 3' & item 'Eldrazi Pentakey Shard 4' & item 'Eldrazi Pentakey Shard 5')"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 191,
+  "enemy": "Spiked Ravager",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "875.667",
+  "y": "228.333",
+  "guards": [
+   "booster #101"
+  ],
+  "placed_for": "booster #102",
+  "inside_gated_area": true,
+  "gates": [
+   "#116 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 6)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/Valors_Reach_Arena.tmx",
+  "id": 192,
+  "enemy": "Rogue",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "870.583",
+  "y": "212.833",
+  "guards": [
+   "booster #102"
+  ],
+  "placed_for": "chest #82",
+  "inside_gated_area": true,
+  "gates": [
+   "#116 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 6)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 97,
+  "enemy": "False Knight",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "231.726",
+  "y": "78.6608",
+  "guards": [
+   "chest #79"
+  ],
+  "placed_for": "chest #79",
+  "inside_gated_area": true,
+  "gates": [
+   "#83 dialog 'Gate' (opens by: its own dialog, needs item 'First Shard' & item 'Second Shard' & item 'Third Shard' & item 'Fourth Shard' & item 'Fifth Shard')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "cave/cave_multilevel/cave_16BR3U.tmx",
+  "id": 98,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "347.79",
+  "y": "94.1359",
+  "guards": [
+   "chest #87"
+  ],
+  "placed_for": "chest #87",
+  "inside_gated_area": true,
+  "gates": [
+   "#83 dialog 'Gate' (opens by: its own dialog, needs item 'First Shard' & item 'Second Shard' & item 'Third Shard' & item 'Fourth Shard' & item 'Fifth Shard')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "debug_map.tmx",
+  "id": 126,
+  "enemy": "Geist",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "64",
+  "y": "320",
+  "guards": [
+   "chest #69"
+  ],
+  "placed_for": "chest #69",
+  "inside_gated_area": true,
+  "gates": [
+   "#83 dummy 'Gate' (opens by: talking to #80 Elf warrior)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": [
+   "debug/test map"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 123,
+  "enemy": "Goblin Stalker",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "270.333",
+  "y": "225.667",
+  "guards": [
+   "booster #87"
+  ],
+  "placed_for": "booster #87",
+  "inside_gated_area": false,
+  "gates": [
+   "#85 dialog 'Gate' (opens by: its own dialog, needs item 'Marchesa's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": [
+   "straddles the room's wall - fightable from outside without the gate, placed for and paired only with the gated loot"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Court_of_Paliano.tmx",
+  "id": 124,
+  "enemy": "Goblin Stalker",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "303.333",
+  "y": "254.333",
+  "guards": [
+   "booster #88"
+  ],
+  "placed_for": "booster #88",
+  "inside_gated_area": true,
+  "gates": [
+   "#85 dialog 'Gate' (opens by: its own dialog, needs item 'Marchesa's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 224,
+  "enemy": "Froghemoth",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "316.766",
+  "y": "832.094",
+  "guards": [
+   "booster #167"
+  ],
+  "placed_for": "booster #167",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Gitrog's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 225,
+  "enemy": "Froghemoth",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "316",
+  "y": "854",
+  "guards": [
+   "booster #211"
+  ],
+  "placed_for": "booster #211",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Gitrog's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Gitrog_Bog_2.tmx",
+  "id": 226,
+  "enemy": "Froghemoth",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "315",
+  "y": "872",
+  "guards": [
+   "booster #212"
+  ],
+  "placed_for": "booster #212",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Gitrog's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "evilgrove/Silverquill_Classroom.tmx",
+  "id": 86,
+  "enemy": "Bloodveil Countess",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "278.308",
+  "y": "269.487",
+  "guards": [
+   "booster #57"
+  ],
+  "placed_for": "booster #57",
+  "inside_gated_area": true,
+  "gates": [
+   "#67 dialog 'Gate' (opens by: its own dialog, needs item 'Silverquill Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "fort/Lorehold_Classroom.tmx",
+  "id": 93,
+  "enemy": "Marblehewn Golem",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "278.308",
+  "y": "269.487",
+  "guards": [
+   "booster #57"
+  ],
+  "placed_for": "booster #57",
+  "inside_gated_area": true,
+  "gates": [
+   "#67 dialog 'Gate' (opens by: its own dialog, needs item 'Lorehold Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "fort/fort_colorless_2_wizards.tmx",
+  "id": 83,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "253.167",
+  "y": "95",
+  "guards": [
+   "chest #48"
+  ],
+  "placed_for": "chest #48",
+  "inside_gated_area": true,
+  "gates": [
+   "#73 dialog 'Ward' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 5)"
+  ],
+  "room_authored_enemies": 3,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 99,
+  "enemy": "Apprentice Black Wizard",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "63.6667",
+  "y": "112.667",
+  "guards": [
+   "chest #51"
+  ],
+  "placed_for": "chest #51",
+  "inside_gated_area": true,
+  "gates": [
+   "#85 dialog 'Gate' (opens by: dialog #84 'switch')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "graveyard_crypt/crypt.tmx",
+  "id": 100,
+  "enemy": "Apprentice Black Wizard",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "79.3333",
+  "y": "127.667",
+  "guards": [
+   "chest #52"
+  ],
+  "placed_for": "chest #52",
+  "inside_gated_area": true,
+  "gates": [
+   "#85 dialog 'Gate' (opens by: dialog #84 'switch')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 214,
+  "enemy": "Witch",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "308.266",
+  "y": "856.594",
+  "guards": [
+   "booster #167"
+  ],
+  "placed_for": "booster #167",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Grolnok's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 215,
+  "enemy": "Witch",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "334.782",
+  "y": "829.759",
+  "guards": [
+   "booster #177"
+  ],
+  "placed_for": "booster #177",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Grolnok's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "grove/Witherbloom_Classroom.tmx",
+  "id": 79,
+  "enemy": "Swamp Troll",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "278.308",
+  "y": "269.487",
+  "guards": [
+   "booster #57"
+  ],
+  "placed_for": "booster #57",
+  "inside_gated_area": true,
+  "gates": [
+   "#67 dialog 'Gate' (opens by: its own dialog, needs item 'Witherbloom Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 114,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "208.945",
+  "y": "57.9992",
+  "guards": [
+   "booster #97"
+  ],
+  "placed_for": "chest #101",
+  "inside_gated_area": true,
+  "gates": [
+   "#102 dialog 'Gate' (opens by: dialog #103 'switch' needing getMapFlag gate >= 2; dialog #104 'switch' needing getMapFlag gate >= 2)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "magetower/magetower_14_horrors.tmx",
+  "id": 115,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "178.105",
+  "y": "57.4273",
+  "guards": [
+   "chest #100"
+  ],
+  "placed_for": "chest #100",
+  "inside_gated_area": false,
+  "gates": [
+   "#102 dialog 'Gate' (opens by: dialog #103 'switch' needing getMapFlag gate >= 2; dialog #104 'switch' needing getMapFlag gate >= 2)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": [
+   "straddles the room's wall - fightable from outside without the gate, placed for and paired only with the gated loot"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/black_castle.tmx",
+  "id": 90,
+  "enemy": "Pointed Demonspawn",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "410.955",
+  "y": "462.554",
+  "guards": [
+   "chest #87"
+  ],
+  "placed_for": "chest #87",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1BlackCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/black_castle.tmx",
+  "id": 91,
+  "enemy": "Pointed Demonspawn",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "293.155",
+  "y": "469.027",
+  "guards": [
+   "chest #88"
+  ],
+  "placed_for": "chest #88",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1BlackCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/blue_castle.tmx",
+  "id": 91,
+  "enemy": "Apprentice Blue Wizard",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "297",
+  "y": "467",
+  "guards": [
+   "chest #88"
+  ],
+  "placed_for": "chest #88",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1BlueCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/blue_castle.tmx",
+  "id": 92,
+  "enemy": "Apprentice Blue Wizard",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "408.5",
+  "y": "461.5",
+  "guards": [
+   "chest #89"
+  ],
+  "placed_for": "chest #89",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1BlueCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/green_castle.tmx",
+  "id": 86,
+  "enemy": "Dinosaur",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "409",
+  "y": "459.5",
+  "guards": [
+   "chest #83"
+  ],
+  "placed_for": "chest #83",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1GreenCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/green_castle.tmx",
+  "id": 87,
+  "enemy": "Dinosaur",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "294.5",
+  "y": "462.5",
+  "guards": [
+   "chest #84"
+  ],
+  "placed_for": "chest #84",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1GreenCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/red_castle.tmx",
+  "id": 89,
+  "enemy": "Pyromancer",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "294.5",
+  "y": "470",
+  "guards": [
+   "chest #85"
+  ],
+  "placed_for": "chest #85",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1RedCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/red_castle.tmx",
+  "id": 90,
+  "enemy": "Pyromancer",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "412",
+  "y": "468",
+  "guards": [
+   "chest #87"
+  ],
+  "placed_for": "chest #87",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1RedCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/white_castle.tmx",
+  "id": 88,
+  "enemy": "Avacynian Preacher",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "410.453",
+  "y": "471.329",
+  "guards": [
+   "chest #85"
+  ],
+  "placed_for": "chest #85",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1WhiteCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/castles/white_castle.tmx",
+  "id": 89,
+  "enemy": "Avacynian Preacher",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "293.385",
+  "y": "471.329",
+  "guards": [
+   "chest #86"
+  ],
+  "placed_for": "chest #86",
+  "inside_gated_area": true,
+  "gates": [
+   "#55 dialog 'Gate' (opens by: its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag mainQuest; its own dialog, needs getMapFlag enemiesDefeated >= 4 & NOT checkQuestFlag Ch1WhiteCastleComplete & checkQuestFlag mainQuest)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 298,
+  "enemy": "Wild Rat",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "848",
+  "y": "96",
+  "guards": [
+   "chest #238",
+   "other #242"
+  ],
+  "placed_for": "chest #238",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/keep.tmx #239 portal(inactive) 'portal' (opens by: quest flag lilianaBossPortal)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": [
+   "runtime pairing varies by difficulty, but always with gated loot: chest #238 [1, 2, 3], other #242 [0]",
+   "runtime pairing varies by difficulty, but always with gated loot: chest #238 [1, 2, 3], other #242 [0]"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 300,
+  "enemy": "Wild Rat",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "832",
+  "y": "80",
+  "guards": [
+   "other #242",
+   "chest #286"
+  ],
+  "placed_for": "chest #286",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/keep.tmx #239 portal(inactive) 'portal' (opens by: quest flag lilianaBossPortal)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": [
+   "runtime pairing varies by difficulty, but always with gated loot: other #242 [1], chest #286 [2, 3]",
+   "runtime pairing varies by difficulty, but always with gated loot: other #242 [1], chest #286 [2, 3]"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 192,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "716",
+  "y": "557.5",
+  "guards": [
+   "chest #29"
+  ],
+  "placed_for": "chest #29",
+  "inside_gated_area": true,
+  "gates": [
+   "#6 dialog 'Gate' (opens by: dialog #15 'switch')"
+  ],
+  "room_authored_enemies": 4,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 194,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "756",
+  "y": "525.5",
+  "guards": [
+   "chest #28"
+  ],
+  "placed_for": "chest #28",
+  "inside_gated_area": true,
+  "gates": [
+   "#6 dialog 'Gate' (opens by: dialog #15 'switch')"
+  ],
+  "room_authored_enemies": 4,
+  "notes": [
+   "runtime pairing varies by difficulty, but always with gated loot: chest #28 [1, 2, 3]"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 195,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "444.932",
+  "y": "131.48",
+  "guards": [
+   "chest #179"
+  ],
+  "placed_for": "chest #179",
+  "inside_gated_area": true,
+  "gates": [
+   "#11 dialog 'Gate' (opens by: dialog #19 'switch')",
+   "#17 dialog 'Gate' (opens by: dialog #9 'switch')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 196,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "519.273",
+  "y": "131.45",
+  "guards": [
+   "chest #30"
+  ],
+  "placed_for": "chest #181",
+  "inside_gated_area": true,
+  "gates": [
+   "#11 dialog 'Gate' (opens by: dialog #19 'switch')",
+   "#17 dialog 'Gate' (opens by: dialog #9 'switch')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story_explore/dig_site_1.tmx",
+  "id": 132,
+  "enemy": "Blue Prototype",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "435.354",
+  "y": "171.792",
+  "guards": [
+   "booster #82"
+  ],
+  "placed_for": "booster #82",
+  "inside_gated_area": true,
+  "gates": [
+   "#118 dummy 'dummy' (opens by: dialog #102 'switch' needing checkMapFlag hasGears)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "main_story_explore/dig_site_1.tmx",
+  "id": 134,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "448",
+  "y": "192",
+  "guards": [
+   "chest #115"
+  ],
+  "placed_for": "chest #115",
+  "inside_gated_area": true,
+  "gates": [
+   "#118 dummy 'dummy' (opens by: dialog #102 'switch' needing checkMapFlag hasGears)"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "merfolkpool/Quandrix_Classroom.tmx",
+  "id": 83,
+  "enemy": "Djinn",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "278.308",
+  "y": "269.487",
+  "guards": [
+   "booster #57"
+  ],
+  "placed_for": "booster #57",
+  "inside_gated_area": true,
+  "gates": [
+   "#67 dialog 'Gate' (opens by: its own dialog, needs item 'Quandrix Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_1F.tmx",
+  "id": 94,
+  "enemy": "False Knight",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "208",
+  "y": "95.5",
+  "guards": [
+   "chest #66"
+  ],
+  "placed_for": "chest #66",
+  "inside_gated_area": true,
+  "gates": [
+   "#86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 131,
+  "enemy": "Demon",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "127.667",
+  "y": "110",
+  "guards": [
+   "chest #91"
+  ],
+  "placed_for": "booster #92",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 132,
+  "enemy": "Demon",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "143",
+  "y": "47",
+  "guards": [
+   "booster #93"
+  ],
+  "placed_for": "booster #93",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 133,
+  "enemy": "Demon",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "257.333",
+  "y": "63.3333",
+  "guards": [
+   "booster #89"
+  ],
+  "placed_for": "booster #89",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 134,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "240.447",
+  "y": "95.763",
+  "guards": [
+   "chest #66"
+  ],
+  "placed_for": "chest #66",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 135,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "240.333",
+  "y": "63.6667",
+  "guards": [
+   "chest #88"
+  ],
+  "placed_for": "chest #88",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 136,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "175.667",
+  "y": "64.3333",
+  "guards": [
+   "chest #90"
+  ],
+  "placed_for": "chest #90",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "monastery/unhallowed_abbey_2F.tmx",
+  "id": 137,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "128.333",
+  "y": "95",
+  "guards": [
+   "booster #92"
+  ],
+  "placed_for": "chest #91",
+  "inside_gated_area": true,
+  "gates": [
+   "monastery/unhallowed_abbey_1F.tmx #86 dialog 'Gate' (opens by: its own dialog, needs item 'Cultist's Key')",
+   "#108 dialog 'Ward' (opens by: dialog #109 'Sacrifice1' needing getMapFlag gate >= 3; dialog #110 'Sacrifice2' needing getMapFlag gate >= 3; dialog #111 'Sacrifice3' needing getMapFlag gate >= 3)"
+  ],
+  "room_authored_enemies": 2,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "phyrexia/phyrexian_b1.tmx",
+  "id": 84,
+  "enemy": "Gitaxian Underling",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "240",
+  "y": "32",
+  "guards": [
+   "booster #75"
+  ],
+  "placed_for": "chest #76",
+  "inside_gated_area": true,
+  "gates": [
+   "#73 dialog 'Gate' (opens by: dialog #71 'switch')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "phyrexia/phyrexian_b1.tmx",
+  "id": 85,
+  "enemy": "Gitaxian Underling",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "256",
+  "y": "48",
+  "guards": [
+   "chest #76"
+  ],
+  "placed_for": "chest #76",
+  "inside_gated_area": true,
+  "gates": [
+   "#73 dialog 'Gate' (opens by: dialog #71 'switch')"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "skep/sliverqueen.tmx",
+  "id": 71,
+  "enemy": "Triplate Crawler",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "272.62",
+  "y": "50.1133",
+  "guards": [
+   "chest #68"
+  ],
+  "placed_for": "chest #68",
+  "inside_gated_area": true,
+  "gates": [
+   "skep/skep_outer.tmx #249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')",
+   "skep/skep_outer.tmx #256 dialog 'dialog' (opens by: its own dialog, needs getMapFlag commandersDefeated >= 3)"
+  ],
+  "room_authored_enemies": 1,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f0.tmx",
+  "id": 199,
+  "enemy": "Cinderwing Whelp",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "231.342",
+  "y": "222.438",
+  "guards": [
+   "chest #175",
+   "other #166"
+  ],
+  "placed_for": "chest #175",
+  "inside_gated_area": true,
+  "gates": [
+   "tibalt/tibalt_f4.tmx #168 dialog 'Gate' (opens by: its own dialog, needs item 'Tibalt's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": [
+   "runtime pairing varies by difficulty, but always with gated loot: chest #175 [0, 1, 3], other #166 [2]",
+   "runtime pairing varies by difficulty, but always with gated loot: chest #175 [0, 1, 3], other #166 [2]"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f0.tmx",
+  "id": 200,
+  "enemy": "Cinderwing Whelp",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "179.509",
+  "y": "222.772",
+  "guards": [
+   "chest #185"
+  ],
+  "placed_for": "chest #185",
+  "inside_gated_area": true,
+  "gates": [
+   "tibalt/tibalt_f4.tmx #168 dialog 'Gate' (opens by: its own dialog, needs item 'Tibalt's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": [
+   "runtime pairing varies by difficulty, but always with gated loot: chest #185 [0, 1, 3]"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f3.tmx",
+  "id": 211,
+  "enemy": "Farmer",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "495.009",
+  "y": "148.772",
+  "guards": [
+   "booster #179"
+  ],
+  "placed_for": "booster #179",
+  "inside_gated_area": true,
+  "gates": [
+   "#204 dialog 'Gate' (opens by: its own dialog, needs item 'Torturer's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 179,
+  "enemy": "Devil of Tibalt",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "226.398",
+  "y": "116.332",
+  "guards": [
+   "chest #140",
+   "other #177"
+  ],
+  "placed_for": "booster #167",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Tibalt's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": [
+   "runtime pairing varies by difficulty, but always with gated loot: chest #140 [0, 1, 3], other #177 [2]",
+   "runtime pairing varies by difficulty, but always with gated loot: chest #140 [0, 1, 3], other #177 [2]"
+  ]
+ },
+ {
+  "scope": "room",
+  "map": "tibalt/tibalt_f4.tmx",
+  "id": 180,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "240.675",
+  "y": "105.0923",
+  "guards": [
+   "booster #167"
+  ],
+  "placed_for": "chest #140",
+  "inside_gated_area": true,
+  "gates": [
+   "#168 dialog 'Gate' (opens by: its own dialog, needs item 'Tibalt's Key')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_1.tmx",
+  "id": 68,
+  "enemy": "Ancient Vampire",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "197.253",
+  "y": "26.225",
+  "guards": [
+   "chest #65"
+  ],
+  "placed_for": "booster #66",
+  "inside_gated_area": true,
+  "gates": [
+   "#63 dialog 'Ward' (opens by: dialog #62 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_1.tmx",
+  "id": 69,
+  "enemy": "Skeleton",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "208.637",
+  "y": "39.8091",
+  "guards": [
+   "booster #66"
+  ],
+  "placed_for": "chest #65",
+  "inside_gated_area": true,
+  "gates": [
+   "#63 dialog 'Ward' (opens by: dialog #62 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 113,
+  "enemy": "Naked Mole Rat",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "228.164",
+  "y": "57.3361",
+  "guards": [
+   "chest #65"
+  ],
+  "placed_for": null,
+  "inside_gated_area": true,
+  "gates": [
+   "#63 dialog 'Ward' (opens by: dialog #79 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 114,
+  "enemy": "Vampire",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "170.637",
+  "y": "43.2682",
+  "guards": [
+   "chest #48"
+  ],
+  "placed_for": "chest #48",
+  "inside_gated_area": true,
+  "gates": [
+   "#63 dialog 'Ward' (opens by: dialog #79 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_2.tmx",
+  "id": 115,
+  "enemy": "Vampire",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "212.164",
+  "y": "25.3361",
+  "guards": [
+   "booster #69"
+  ],
+  "placed_for": "chest #65",
+  "inside_gated_area": true,
+  "gates": [
+   "#63 dialog 'Ward' (opens by: dialog #79 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 84,
+  "enemy": "High Vampire",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "198.509",
+  "y": "40.5984",
+  "guards": [
+   "booster #75"
+  ],
+  "placed_for": "booster #75",
+  "inside_gated_area": true,
+  "gates": [
+   "#66 dialog 'Ward' (opens by: dialog #67 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 85,
+  "enemy": "Vampire",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "232.246",
+  "y": "42.6066",
+  "guards": [
+   "chest #73"
+  ],
+  "placed_for": "chest #73",
+  "inside_gated_area": true,
+  "gates": [
+   "#66 dialog 'Ward' (opens by: dialog #67 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "room",
+  "map": "vampirecastle/vampirecastle_grave_3.tmx",
+  "id": 86,
+  "enemy": "Vampire",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "158.279",
+  "y": "57.4017",
+  "guards": [
+   "chest #74"
+  ],
+  "placed_for": "chest #74",
+  "inside_gated_area": true,
+  "gates": [
+   "#66 dialog 'Ward' (opens by: dialog #67 'dialog')"
+  ],
+  "room_authored_enemies": 0,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 216,
+  "enemy": "Witch",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "50.6667",
+  "y": "115.333",
+  "guards": [
+   "booster #199"
+  ],
+  "placed_for": "booster #199",
+  "inside_gated_area": true,
+  "gates": [
+   "#183 dialog 'Gate' (opens by: its own dialog, needs item 'Rusty Old Key')"
+  ],
+  "room_authored_enemies": 9,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "grolnok/grolnok_f1.tmx",
+  "id": 217,
+  "enemy": "Witch",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "97.3333",
+  "y": "510",
+  "guards": [
+   "booster #198"
+  ],
+  "placed_for": "booster #198",
+  "inside_gated_area": true,
+  "gates": [
+   "#183 dialog 'Gate' (opens by: its own dialog, needs item 'Rusty Old Key')"
+  ],
+  "room_authored_enemies": 9,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 112,
+  "enemy": "Eye",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "287.242",
+  "y": "143.534",
+  "guards": [
+   "chest #91"
+  ],
+  "placed_for": "chest #91",
+  "inside_gated_area": true,
+  "gates": [
+   "magetower/magetower_8_illusion.tmx #106 dialog 'Gate' (opens by: its own dialog, needs item 'Illusionist's Key')"
+  ],
+  "room_authored_enemies": 5,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "magetower/magetower_8_illusion_basement.tmx",
+  "id": 113,
+  "enemy": "Eye",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "194.851",
+  "y": "46.2797",
+  "guards": [
+   "chest #71"
+  ],
+  "placed_for": "chest #71",
+  "inside_gated_area": true,
+  "gates": [
+   "magetower/magetower_8_illusion.tmx #106 dialog 'Gate' (opens by: its own dialog, needs item 'Illusionist's Key')"
+  ],
+  "room_authored_enemies": 5,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 274,
+  "enemy": "Harpy",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "105",
+  "y": "62",
+  "guards": [
+   "chest #189"
+  ],
+  "placed_for": "chest #189",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 15,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 275,
+  "enemy": "Harpy",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "48",
+  "y": "144",
+  "guards": [
+   "chest #238"
+  ],
+  "placed_for": "chest #238",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 15,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/bog.tmx",
+  "id": 276,
+  "enemy": "Harpy",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "64",
+  "y": "176",
+  "guards": [
+   "chest #239"
+  ],
+  "placed_for": "chest #239",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 15,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 272,
+  "enemy": "Dark Spirit",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "383.833",
+  "y": "98.833",
+  "guards": [
+   "chest #262"
+  ],
+  "placed_for": "chest #262",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 13,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/graveyard.tmx",
+  "id": 273,
+  "enemy": "Dark Spirit",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "210",
+  "y": "83",
+  "guards": [
+   "chest #191"
+  ],
+  "placed_for": "chest #191",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 13,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 291,
+  "enemy": "Necromancer",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "144",
+  "y": "448",
+  "guards": [
+   "booster #264"
+  ],
+  "placed_for": "booster #264",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 292,
+  "enemy": "Wild Rat",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "720",
+  "y": "16",
+  "guards": [
+   "chest #202"
+  ],
+  "placed_for": "chest #202",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 293,
+  "enemy": "Wild Rat",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "688",
+  "y": "32",
+  "guards": [
+   "chest #205"
+  ],
+  "placed_for": "chest #205",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 294,
+  "enemy": "Wild Rat",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "319",
+  "y": "83",
+  "guards": [
+   "chest #233"
+  ],
+  "placed_for": "chest #233",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 295,
+  "enemy": "Wild Rat",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "544",
+  "y": "512",
+  "guards": [
+   "chest #265"
+  ],
+  "placed_for": "chest #265",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 296,
+  "enemy": "Wild Rat",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "16",
+  "y": "33",
+  "guards": [
+   "chest #207"
+  ],
+  "placed_for": "chest #207",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/temple_of_liliana/town.tmx",
+  "id": 299,
+  "enemy": "Wild Rat",
+  "round": "R287",
+  "template": "enemy.tx",
+  "x": "560",
+  "y": "32",
+  "guards": [
+   "booster #280"
+  ],
+  "placed_for": "chest #239",
+  "inside_gated_area": true,
+  "gates": [
+   "main_story/temple_of_liliana/forest.tmx #270 dialog 'Gate' (opens by: its own dialog, needs checkMapFlag cemeteryKey)",
+   "main_story/temple_of_liliana/keep.tmx #227 portal(closed) 'portal' (opens by: quest flag lilianaGraveyardPortal)",
+   "main_story/temple_of_liliana/keep.tmx #228 portal(closed) 'portal' (opens by: quest flag lilianaBogPortal)",
+   "main_story/temple_of_liliana/keep.tmx #238 portal(closed) 'portal' (opens by: quest flag lilianaTownPortal)"
+  ],
+  "room_authored_enemies": 28,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "main_story/templeofchandra.tmx",
+  "id": 191,
+  "enemy": "Fire Elemental",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "5",
+  "y": "258",
+  "guards": [
+   "chest #178"
+  ],
+  "placed_for": "chest #178",
+  "inside_gated_area": true,
+  "gates": [
+   "#11 dialog 'Gate' (opens by: dialog #19 'switch')"
+  ],
+  "room_authored_enemies": 7,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 279,
+  "enemy": "Sliver_Black",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "1208",
+  "y": "744",
+  "guards": [
+   "booster #118"
+  ],
+  "placed_for": "booster #118",
+  "inside_gated_area": true,
+  "gates": [
+   "#249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')"
+  ],
+  "room_authored_enemies": 42,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 280,
+  "enemy": "Sliver_Black",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "31",
+  "y": "817",
+  "guards": [
+   "booster #122"
+  ],
+  "placed_for": "booster #122",
+  "inside_gated_area": true,
+  "gates": [
+   "#249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')"
+  ],
+  "room_authored_enemies": 42,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 281,
+  "enemy": "Archer",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "751.667",
+  "y": "492.667",
+  "guards": [
+   "chest #257"
+  ],
+  "placed_for": "chest #257",
+  "inside_gated_area": true,
+  "gates": [
+   "#249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')"
+  ],
+  "room_authored_enemies": 42,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 282,
+  "enemy": "Archer",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "1406.33",
+  "y": "1018.33",
+  "guards": [
+   "chest #258"
+  ],
+  "placed_for": "chest #258",
+  "inside_gated_area": true,
+  "gates": [
+   "#249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')"
+  ],
+  "room_authored_enemies": 42,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 283,
+  "enemy": "Archer",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "1065",
+  "y": "943.667",
+  "guards": [
+   "chest #259"
+  ],
+  "placed_for": "chest #259",
+  "inside_gated_area": true,
+  "gates": [
+   "#249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')"
+  ],
+  "room_authored_enemies": 42,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "skep/skep_outer.tmx",
+  "id": 284,
+  "enemy": "Archer",
+  "round": "R286b",
+  "template": "enemy.tx",
+  "x": "150.667",
+  "y": "668.667",
+  "guards": [
+   "chest #260"
+  ],
+  "placed_for": "chest #260",
+  "inside_gated_area": true,
+  "gates": [
+   "#249 dialog 'Gate' (opens by: talking to #101 Sliver; its own dialog, needs item 'Outer Gate Key')"
+  ],
+  "room_authored_enemies": 42,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 236,
+  "enemy": "Dwarf Demolisher",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "9.3421",
+  "y": "369.605",
+  "guards": [
+   "booster #215"
+  ],
+  "placed_for": "booster #215",
+  "inside_gated_area": true,
+  "gates": [
+   "#223 dialog 'Gate' (opens by: its own dialog, needs item 'Basement Key')"
+  ],
+  "room_authored_enemies": 12,
+  "notes": []
+ },
+ {
+  "scope": "section",
+  "map": "zedruu/zedruu_f0.tmx",
+  "id": 237,
+  "enemy": "Dwarf Demolisher",
+  "round": "R279",
+  "template": "enemy.tx",
+  "x": "423.342",
+  "y": "284.105",
+  "guards": [
+   "booster #217"
+  ],
+  "placed_for": "booster #217",
+  "inside_gated_area": true,
+  "gates": [
+   "#223 dialog 'Gate' (opens by: its own dialog, needs item 'Basement Key')"
+  ],
+  "room_authored_enemies": 12,
+  "notes": []
+ }
+]

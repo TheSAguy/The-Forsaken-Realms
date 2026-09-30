@@ -98,6 +98,14 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   townsInLiftRange, the leave flash's 3 s, hysteresis to r 11, player-held skipped; `[TFR-TownLift]`), pickups draw only
   where the player sees now (`[TFR-PickupFog]`), the unvisited magnifier + bookmark star take the fog haze (Sprite.draw
   ignored the batch tint). Agent-tested (approach flash, dim magnifier, no pickups on dim ground).
+  **377: DUNGEONS AS SOURCES** (`util/DungeonSources`, settings `dungeonSource*`): within 12 tiles of an active regular
+  dungeon/cave rolls come 1.5x (+25%/week it stands, max 2x) and half send ITS creatures out of its door - its color's
+  before a visit, its living inhabitants after (never special: boss/spawnRate 0/story tag/legend/champion; per
+  placement MapStage marks `rosterSpecial`: dialog, keepAuthored, cave champion, quest target); a clear silences it and
+  pays +1 rep in the nearest living town. Explained in the "Find a Dungeon" quest, no HUD notices (user). The Plumed
+  Knight re-cut (Walk 6 at a 44-px pitch). **378: loot behind a gate has no guard** - dev-tools/gated_loot audit +
+  apply: 96 of our guards removed (71 rooms + 25 wings), 330 rewards `noGuard=true` (MapStage leaves them out of the
+  guard pairing), 6 round-258 moves undone; booster_guards.objects_of skips noGuard so the tools never re-add them.
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text) - STILL CLIPPED after 366's relabel: the
   lost-card ante row at 3840x2130 cuts OK off the left edge and Bronze Coin off the right (agent, round 375); an old road
   a tile short of a restored town, the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards,

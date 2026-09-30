@@ -311,6 +311,13 @@ also leaves early when:
 Boss lairs are different: they only leave once cleared, and come back 10-30 days later, restocked. Return visits pay
 half, and a +Life reward or a boss's own signature item only pays once.
 
+### Why are there so many monsters around this cave?
+
+An ordinary dungeon or cave feeds the land around it. Within about 12 tiles monsters come 1.5x as often, and half of
+them walk out of its door - its color's creatures before you've been inside, its own inhabitants after. Each week it
+stands adds 25% to that rate, up to double. Clear its enemies out and it goes quiet, and the nearest town gives you +1
+reputation. Story places, boss lairs and castles don't do this.
+
 ### Why is most of the map black?
 
 That's Fog of War (on by default; you can turn it off in Settings). Black = never explored, dimmed = explored but out

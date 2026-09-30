@@ -47,6 +47,7 @@
   </object>
   <object id="82" template="../../../../common/maps/obj/booster.tx" x="451.354" y="171.792" width="9.3125" height="9.1875">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;USG&quot;, &quot;ULG&quot;, &quot;UDS&quot; ],
@@ -70,7 +71,11 @@
 </property>
    </properties>
   </object>
-  <object id="83" template="../../../../common/maps/obj/manashards.tx" x="447.667" y="208"/>
+  <object id="83" template="../../../../common/maps/obj/manashards.tx" x="447.667" y="208">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="84" template="../../../../common/maps/obj/treasure.tx" x="80.1818" y="33.2727"/>
   <object id="85" template="../../../../common/maps/obj/enemy.tx" x="205.333" y="137">
    <properties>
@@ -182,6 +187,7 @@
   </object>
   <object id="115" template="../../../../common/maps/obj/treasure.tx" x="464" y="192">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[{
   &quot;type&quot;: &quot;randomCard&quot;,
   &quot;count&quot;: 2,
@@ -253,23 +259,10 @@
   <object id="129" template="../../../../common/maps/obj/waypoint.tx" x="52" y="167"/>
   <object id="130" template="../../../../common/maps/obj/waypoint.tx" x="308.5" y="235"/>
   <object id="131" template="../../../../common/maps/obj/waypoint.tx" x="244.5" y="251"/>
-   <object id="132" template="../../../../common/maps/obj/enemy.tx" x="435.354" y="171.792">
-   <properties>
-    <property name="enemy" value="Blue Prototype"/>
-    <property name="threatRange" type="int" value="40"/>
-   </properties>
-  </object>
   <object id="133" template="../../../../common/maps/obj/enemy.tx" x="64.1818" y="33.2727">
    <properties>
     <property name="enemy" value="Construct"/>
     <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="134" template="../../../../common/maps/obj/enemy.tx" x="448" y="192">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
-    <property name="waypoints" value="135,136"/>
    </properties>
   </object>
   <object id="135" template="../../../../common/maps/obj/waypoint.tx" x="400" y="192"/>

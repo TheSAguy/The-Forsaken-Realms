@@ -306,6 +306,8 @@ public class DungeonRotation {
         java.util.Collections.shuffle(rotatable, world.getRandom());
         for (int i = activeTarget; i < rotatable.size(); i++)
             rotatable.get(i).setActive(false); // reserve pool - no cooldown, immediately swappable
+        for (int i = 0; i < Math.min(activeTarget, rotatable.size()); i++)
+            DungeonSources.onAppeared(world, rotatable.get(i), world.getCurrentDay()); // round 377: their age starts
         world.setPoiActiveTarget(activeTarget);
         System.out.println("[DungeonRotation] new world: " + activeTarget + " of " + rotatable.size()
                 + " rotatable dungeons/caves active, the rest held in reserve");
@@ -371,6 +373,7 @@ public class DungeonRotation {
             world.getPoiLootHeldDay().remove(id); // round 290: a new incarnation starts with no hold
             world.getPoiDespawnDay().put(id,
                     currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()) + SIDEQUEST_EXTENSION_DAYS);
+            DungeonSources.onAppeared(world, poi, currentDay); // round 377
             world.refreshWorldMapMarkers();
             System.out.println("[DungeonRotation] " + poi.getDisplayName()
                     + " force-spawned from reserve as a new quest target, despawns day " + world.getPoiDespawnDay().get(id));
@@ -528,6 +531,7 @@ public class DungeonRotation {
             world.getPoiLootedDay().remove(pick.getID()); // round 128
             world.getPoiLootHeldDay().remove(pick.getID()); // round 290: nor does one back from reserve
             world.getPoiDespawnDay().put(pick.getID(), currentDay + rollDays(world, despawnMinDays(), despawnMaxDays()));
+            DungeonSources.onAppeared(world, pick, currentDay); // round 377: a source from today
             System.out.println("[DungeonRotation] " + pick.getDisplayName() + " has appeared on the map");
             activeCount++;
             changed = true;
@@ -639,6 +643,7 @@ public class DungeonRotation {
      * it vanishing before the player comes back for what is on the floor.
      */
     public static void onDungeonCleared(PointOfInterest poi) {
+        DungeonSources.onCleared(poi); // round 377: the source falls quiet and the nearest town is grateful
         cutRemainingDays(poi, "cleared of enemies");
     }
 
@@ -705,6 +710,7 @@ public class DungeonRotation {
      * onDungeonDefeat().
      */
     public static void onDungeonClear(PointOfInterest poi) {
+        DungeonSources.onCleared(poi); // round 377: once per incarnation, whatever the rotation then does with it
         if (!isEnabled())
             return;
         if (!isRotatable(poi)) {
@@ -758,6 +764,7 @@ public class DungeonRotation {
         // later still "held", and the day tick re-rolled its timer every time it came due - it could stay on
         // the map for the rest of the run. Also cleared on the two re-activation paths above.
         world.getPoiLootHeldDay().remove(poi.getID());
+        DungeonSources.onHidden(world, poi); // round 377: its age and its cleared mark go with the incarnation
         world.getPoiRespawnDay().put(poi.getID(), currentDay + rollDays(world, respawnMinDays(), respawnMaxDays()));
         System.out.println("[DungeonRotation] " + poi.getDisplayName() + " despawned until day " + world.getPoiRespawnDay().get(poi.getID()));
         if (notification != null)

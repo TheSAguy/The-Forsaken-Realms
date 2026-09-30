@@ -14264,6 +14264,82 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 378: loot behind a gate has no guard (2026-09-30)
+
+The user (screenshot: magetower_14_horrors' treasure room): "For chests/booster packs in dungeons, that are behind
+gates/locked areas, we can remove the guards we added from those. Since the player already needs to accomplish a task
+to get them, they don't need to double fight for those rewards. Can we audit all dungeons and implement this."
+
+**The audit** (dev-tools/gated_loot/, a read-only subagent pass then applied here): all 430 maps; a GATE is a blocker
+that only goes through a task - a `dialog` tile object (blocks while its dialog shows) or a `dummy` object opened by a
+key item, a flag (enemies defeated), a switch / coffin / sacrifice elsewhere, a boss, an NPC; or a portal opened by a
+quest flag. Reachability = a pixel flood with the player's 10x6 box over tile collision AND `collision` objects (the
+old pixel_collision_qa ignored both gates and collision objects - which is why rounds 279/286b/287 put guards inside
+and beside locked rooms), from each POI's real arrival entry through entries and portals. GATED = no player position
+touches the loot with every gate shut, one does with them open. 46 gates lock 47 boosters + 91 chests (+192 pickups),
+in 49 maps. "Ours" from git history: object ids added by rounds 279 / 284 / 286b / 287 (436 enemies plane-wide).
+
+**Applied** (`apply_gated_loot.py --apply --scope all --restore-moved`, byte-exact, every target verified against
+template/x/y/enemy, each file re-parsed; `--check` passes): 56 maps, **96 of our guards removed** (71 in locked ROOMS
+- vaults, keeps, titan cells - and 25 in locked WINGS with their own population: skep_outer 6, temple_of_liliana
+12, zedruu_f0 2, grolnok_f1 2, magetower_8_illusion_basement 2, templeofchandra 1; the subagent would have kept the
+wings, the user's rule names locked areas, so they went too - say so if a wing plays too empty), **330 rewards marked
+`noGuard=true`**, and **6 authored enemies moved back** where they stood before round 258 pulled them into locked
+rooms (magetower_14's Master of Demonology #72 among them). The screenshot's room: Skeletons #114/#115 (R287) gone,
+#72 back at (209,145), chests #100/#101, booster #97, shards #94, stone #106 marked.
+
+**Runtime:** MapStage's reward branch leaves a `noGuard` reward out of `lootPositions`, so no enemy is paired with it -
+no pinned post, no hunt after the theft (the authored enemies near 17 locked-room boosters/chests would otherwise
+still have guarded them); `[TFR-BoosterGuard]` counts them ("N reward(s) behind gates (noGuard)"). The tools:
+`booster_guards.objects_of()` skips `noGuard` rewards, so add_booster_guards / add_loot_guards can never put a guard
+back. Agent-seen: "green_castle.tmx: 3 reward(s) behind gates (noGuard) - no guards paired". GUIDE: "the lock is its
+guard".
+
+## Round 377: dungeons as sources of enemies; the Plumed Knight re-cut (2026-09-30)
+
+The user: "I want to give the player more incentive to clear out dungeons. Let's have the spawn rates around dungeons
+to be higher. Think of dungeons as a source of enemies and needs to be removed. Let's have this only be for regular POI
+and not special POI... would be nice if the enemies that spawn match the enemies in the dungeon. At first, maybe only
+matching the color of the dungeon and then, once visited and the enemies inside are locked in, then those would spawn
+on the overworld." On the proposal: no on-screen messages (the "Find a Dungeon" quest explains it), special monsters
+left out, both the escalation and the payoff.
+
+`util/DungeonSources` (+ TuningData / settings.json `dungeonSource*`, World.dungeonAppearedDay / dungeonClearedDay,
+PointOfInterestChanges.rosterSpecial):
+- **Sources:** DungeonRotation's rotatable set (hostile dungeons/caves; never story/quest/NoRotate maps, lairs,
+  castles) while active and not cleared - 288 entries, a fifth visible at a time. Discovery not needed.
+- **Zone:** within `dungeonSourceRadiusTiles` 12 of the footprint's edge (3x3 chunks scanned per roll) the NEXT spawn
+  roll comes `dungeonSourceRateFactor` 1.5 x sooner, times the escalation: +`dungeonSourceEscalationPerWeek` 0.25 per
+  full week since it appeared, capped at `dungeonSourceEscalationMax` 2 (appearance dated on the new world, from the
+  reserve and on a quest force-spawn; an older save counts from the first time it is asked, logged).
+- **Creatures:** `dungeonSourceShare` 0.5 of the zone's rolls send one out of its DOOR (1-3 tiles off the footprint,
+  on land, not colliding, never beside the player) - before the first visit an ordinary creature of its color (the
+  land it stands on, else its Biome tag; the plain tier-weighted roll, no war champions), after it one of its LIVING
+  inhabitants (round 201's fixed roster per level minus the defeated). Never special: `DungeonSources.isSpecial` =
+  boss or spawnRate 0 (SpawnTierWeighting.isExempt - MapStage's scripted-placement rule), a story tag
+  (Boss/Story/Legendary/Challenger - NOT any questTag: an enemy's questTags are mostly descriptive, "Devil",
+  "IdentityRed", and the first build that tested questTags.length marked every tagged creature special and let only
+  untagged named legends out), a legend/roaming champion, a war champion; per placement (MapStage marks
+  `rosterSpecial` afresh on every level load): a dialog carrier, keepAuthored, the cave champion, a quest's target.
+- **Payoff:** DungeonRotation.onDungeonCleared / onDungeonClear -> `DungeonSources.onCleared`: once per incarnation it
+  falls quiet and the nearest LIVING town (not a ruin awaiting restoration, not the start camp) gains
+  `dungeonSourceClearReputation` 1 local reputation, one HUD line like the Inn's +1. DungeonRotation.hidePoi drops the
+  age and the cleared mark with the incarnation.
+- **Told through the quest, not the HUD:** "Find a Dungeon" gains a second prologue page (living parts of the realm,
+  its color then its own, stronger the longer it stands, +1 reputation for clearing); "Find a Cave" one sentence.
+  GUIDE + FAQ sections. Log: `[TFR-DungeonSource]` (entering/leaving a zone, each creature sent, each clear).
+- Agent-tested: sends before a visit (color) and after it ("Squirrel from its inhabitants (8 living)"), placement at
+  the door, zone in/out, and a clear: "Cave cleared on day 24 after 3 day(s) - it falls quiet - Andor's Trace
+  reputation +1 (now 1)". Not yet seen: the escalation past week 1.
+
+**The Plumed Knight** ("some weird art issue in its movement"): its sheet was never on the 32-px grid its atlas
+declares - the Walk row's 6 poses sit 44 px apart (read as 8 frames, so every other frame cut a knight in half), Idle
+and Attack hold 4 figures each (two per row split by a blank 4-px strip since the round-117 import - joined, no art
+lost), Hit 1 real frame, Death only standing copies. Re-cut by hand (atlas_align_qa had left it for a hand pass): Idle
+4, Walk 6, Attack 4, Hit 1, Death = the Hit frame, every frame aligned on the helmet's left edge at the old Idle
+frame's position; 192x115. atlas_align_qa no longer lists it (it still lists pitchfork_farmer, axe_orc, horror_faun,
+triplate_crawler).
+
 ## Round 376: the fog - a town lifts again on approach; pickups and place markers stay in the dark (2026-09-30)
 
 The user: "We still seem to have a situation where spawned resources on the Overworld are visible in FoW state 2...

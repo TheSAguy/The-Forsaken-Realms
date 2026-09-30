@@ -310,6 +310,19 @@ public class TuningData {
     public int dungeonLifespanMaxDays = 40;
     public int dungeonSpotRestMinDays = 10;
     public int dungeonSpotRestMaxDays = 30;
+    // Round 377 (the user: "I want to give the player more incentive to clear out dungeons... Think of dungeons as a
+    // source of enemies and needs to be removed"). Within dungeonSourceRadiusTiles of an active regular dungeon or cave
+    // (DungeonRotation's rotatable set) the spawn rolls come dungeonSourceRateFactor x as fast, and dungeonSourceShare
+    // of them send one of ITS creatures out of its door - its color's before the first visit, its living inhabitants
+    // after (never a special one). Every week it stands adds dungeonSourceEscalationPerWeek to the rate, up to
+    // dungeonSourceEscalationMax x; clearing it stops it and pays dungeonSourceClearReputation reputation in the
+    // nearest town. See util/DungeonSources; grep forge.log for [TFR-DungeonSource].
+    public float dungeonSourceRadiusTiles = 12f;
+    public float dungeonSourceRateFactor = 1.5f;
+    public float dungeonSourceShare = 0.5f;
+    public float dungeonSourceEscalationPerWeek = 0.25f;
+    public float dungeonSourceEscalationMax = 2f;
+    public int dungeonSourceClearReputation = 1;
     // Round 299 (user: "Any +Life should only be handed out once. Can't farm. All other rewards should be cut by 50%.
     // That goes for gold and number of cards."). A boss lair that was cleared comes back after the spot rest above;
     // on every visit after that, gold / shards / wood / stone are multiplied by lairReturnRewardFactor (rounded up),

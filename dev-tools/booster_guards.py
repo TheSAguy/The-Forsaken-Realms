@@ -49,6 +49,10 @@ def objects_of(tmx, loot="booster"):
         except (TypeError, ValueError):
             continue
         props = {p.get("name"): p.get("value") for p in o.findall(".//property")}
+        # Round 378: a reward behind a gate (noGuard=true, dev-tools/gated_loot) wants no guard - never list it as loot,
+        # so add_booster_guards / add_loot_guards can never put one back beside it.
+        if kind == "loot" and str(props.get("noGuard", "")).lower() == "true":
+            continue
         out.append({"kind": kind, "id": int(o.get("id", 0)), "x": x, "y": y,
                     "name": props.get("enemy") or "", "has_dialog": bool(props.get("dialog")),
                     "threat": props.get("threatRange"), "pursue": props.get("pursueRange")})

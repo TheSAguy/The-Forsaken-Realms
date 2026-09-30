@@ -42,7 +42,11 @@
     <property name="teleport" value=""/>
    </properties>
   </object>
-  <object id="48" template="../../../../common/maps/obj/treasure.tx" x="269.167" y="95"/>
+  <object id="48" template="../../../../common/maps/obj/treasure.tx" x="269.167" y="95">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="51" template="../../../../common/maps/obj/treasure.tx" x="88.75" y="188.416"/>
   <object id="52" template="../../../../common/maps/obj/gold.tx" x="338" y="89.5"/>
   <object id="53" template="../../../../common/maps/obj/enemy.tx" x="286" y="231">
@@ -73,7 +77,7 @@
     <property name="threatRange" type="int" value="20"/>
    </properties>
   </object>
-  <object id="55" template="../../../../common/maps/obj/enemy.tx" x="272" y="96">
+  <object id="55" template="../../../../common/maps/obj/enemy.tx" x="335.333" y="127.167">
    <properties>
     <property name="defeatDialog">[
    {
@@ -87,7 +91,7 @@
     <property name="threatRange" type="int" value="40"/>
    </properties>
   </object>
-  <object id="56" template="../../../../common/maps/obj/enemy.tx" x="128" y="96" width="16" height="20">
+  <object id="56" template="../../../../common/maps/obj/enemy.tx" x="127.667" y="318.333" width="16" height="20">
    <properties>
     <property name="defeatDialog">[
    {
@@ -118,10 +122,19 @@
   <object id="58" template="../../../../common/maps/obj/gold.tx" x="86.333" y="282.667"/>
   <object id="59" template="../../../../common/maps/obj/gold.tx" x="308.333" y="398.667"/>
   <object id="60" template="../../../../common/maps/obj/manashards.tx" x="376.75" y="362"/>
-  <object id="61" template="../../../../common/maps/obj/manashards.tx" x="248.75" y="89"/>
-  <object id="62" template="../../../../common/maps/obj/manashards.tx" x="170.25" y="89.75"/>
+  <object id="61" template="../../../../common/maps/obj/manashards.tx" x="248.75" y="89">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="62" template="../../../../common/maps/obj/manashards.tx" x="170.25" y="89.75">
+   <properties>
+    <property name="noGuard" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="63" template="../../../../common/maps/obj/booster.tx" x="127.75" y="108">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;CSP&quot; ],
@@ -147,6 +160,7 @@
   </object>
   <object id="64" template="../../../../common/maps/obj/booster.tx" x="288" y="108.25">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;editions&quot;: [ &quot;CSP&quot; ],
@@ -218,6 +232,7 @@
   </object>
   <object id="74" template="../../obj/wood.tx" x="114.583" y="135.194">
    <properties>
+    <property name="noGuard" type="bool" value="true"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;wood&quot;,
@@ -246,13 +261,6 @@
    <properties>
     <property name="enemy" value="Apprentice Black Wizard"/>
     <property name="threatRange" type="int" value="20"/>
-   </properties>
-  </object>
-  <object id="83" template="../../../../common/maps/obj/enemy.tx" x="253.167" y="95">
-   <properties>
-    <property name="enemy" value="Skeleton"/>
-    <property name="threatRange" type="int" value="20"/>
-    <property name="waypoints" value="84,85"/>
    </properties>
   </object>
   <object id="84" template="../../../../common/maps/obj/waypoint.tx" x="237.167" y="111"/>
