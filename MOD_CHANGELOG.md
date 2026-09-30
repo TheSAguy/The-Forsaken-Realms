@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 376: the fog - a town lifts again on approach; pickups and place markers stay in the dark (2026-09-30)
+
+The user: "We still seem to have a situation where spawned resources on the Overworld are visible in FoW state 2...
+when you first get to a POI, it lifts the FoW... it's just not firing when I get near a town and the area around is
+already at FoW stage2" (screenshots: a gold nugget and a dark orb on dimmed ground; the player beside a green town with
+only their own light circle lit). Three causes (a read-only investigation traced the first two):
+- **The town lift** (WorldBackground.draw) fired only while its circle held UNEXPLORED ground (round 185's
+  hasUnexploredIn gate) - after the first visit, a leave flash, a Torch pulse or a walk past, coming back lit nothing;
+  only leaving (MapStage -> flashDiscoveryAround, unconditional) worked. Now an in-memory set of the town-like places
+  (town/capital/castle) the player is within reach of: joining it (within vision radius of the footprint's edge) fires
+  the same 3-second flash as leaving; leaving it takes going past the lift radius (11), so walking along the edge never
+  strobes; the first-discovery and leave flashes join it too (no double flash); the set is pruned to the 3x3 chunk area
+  when the player's chunk changes (a teleport); the player's own towns are skipped (lit for good). Dungeons keep the
+  first-discovery flash alone. `[TFR-TownLift] <name> (<type>) discovery|leave|approach: r=.. at (x,y), repaint N ms` -
+  none of the three flashes logged before. Agent: "Unbroken Bough (capital) approach: r=11 at (104,446), repaint 5 ms",
+  the capital's circle bright, back to dim 5 s later.
+- **Pickups** (WorldStage.ResourceSpawnActor) were hidden only on UNEXPLORED ground (the 2026-08-12 rule, "explored-tier
+  like POI icons") and never dimmed - round 334's haze is MapSprite-only. Pickups come and go daily on ground the
+  player only remembers, so now they draw only where the player sees right now (isExploredWorld && isCurrentlyVisible,
+  the enemies' rule): their own light, their land and towns, bonfires, any flash. Not isLitTile (its zone 3 counts owned
+  ground never explored). `[TFR-PickupFog] <type> at (x,y) shown|hidden (zone N)` when a pickup flips
+  (ResourceSpawns.typeName public for it).
+- **Place markers** (MapSprite): the unvisited magnifier and the bookmark star are drawn with Sprite.draw(), which paints
+  with the sprite's own color, so round 334's batch haze never reached them - an unvisited cave's magnifier glowed
+  full-bright on remembered ground (found in the agent's capture; possibly the user's dark orb). They take the batch
+  color now and go back to white after (Config.getItemSprite hands out one cached Sprite per name).
+
 ## Round 375: the legend table (2026-09-30)
 
 The user: "I think we need to have Legends have their own spawn-pool/table to control their appearance better. They

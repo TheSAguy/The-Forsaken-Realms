@@ -302,7 +302,7 @@ public class ResourceSpawns {
                 + " (expires day " + spawn[4] + ")";
     }
 
-    private static String typeName(int type) {
+    public static String typeName(int type) { // public since round 376: WorldStage's [TFR-PickupFog] line
         switch (type) {
             case TYPE_GOLD: return "Gold";
             case TYPE_SHARDS: return "Shards";

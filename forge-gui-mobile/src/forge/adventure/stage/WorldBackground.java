@@ -77,7 +77,42 @@ public class WorldBackground extends Actor {
         int poiTileX = (int) ((bounds.x + bounds.width / 2f) / ts);
         int poiTileY = (int) ((bounds.y + bounds.height / 2f) / ts);
         int radius = isTownLikePoi(poi) ? DISCOVERY_REVEAL_RADIUS_TOWN : DISCOVERY_REVEAL_RADIUS_DUNGEON;
+        long started = System.nanoTime();
         world.flashArea(poiTileX, poiTileY, radius, this::onTileRevealed);
+        // Round 376: the player walks out standing beside it - this visit's lift is spent, no approach flash on top.
+        if (isTownLikePoi(poi))
+            townsInLiftRange.add(poi.getID());
+        logTownLift(poi, "leave", radius, poiTileX, poiTileY, started);
+    }
+
+    /**
+     * Round 376 (the user: "when you first get to a POI, it lifts the FoW... it's just not firing when I get near a town
+     * and the area around is already at FoW stage 2"). The discovery burst is gated on hasUnexploredIn() (round 185), so
+     * once a town's circle was all remembered - after the first visit, a leave flash, a Torch pulse or just walking by -
+     * coming back lit nothing but the player's own vision. The town-like places the player is within reach of right now:
+     * joining this set (within vision radius of the footprint's edge) fires the same flash as leaving the town; leaving it
+     * again takes going past the lift radius, so walking along the edge never strobes. In memory only - a load beside a
+     * town flashes once. Dungeons keep the first-discovery flash alone, as their exit does (round 121).
+     */
+    private final java.util.Set<String> townsInLiftRange = new java.util.HashSet<>();
+    private int liftSetChunkX = Integer.MIN_VALUE;
+    private int liftSetChunkY = Integer.MIN_VALUE;
+
+    /** Round 376: the approach flash - skipped for the player's own towns, whose ground is lit for good already. */
+    private void approachFlash(World world, PointOfInterest poi, int poiTileX, int poiTileY) {
+        if (forge.adventure.util.TownRestoration.isTownRestored(WorldSave.getCurrentSave().peekPointOfInterestChanges(poi.getID()))) {
+            System.out.println("[TFR-TownLift] " + poi.getDisplayName() + " approach: skipped - the player's own town is lit already");
+            return;
+        }
+        long started = System.nanoTime();
+        world.flashArea(poiTileX, poiTileY, DISCOVERY_REVEAL_RADIUS_TOWN, this::onTileRevealed);
+        logTownLift(poi, "approach", DISCOVERY_REVEAL_RADIUS_TOWN, poiTileX, poiTileY, started);
+    }
+
+    /** Round 376: one line per lift - the discovery, leave and approach flashes wrote nothing before. */
+    private static void logTownLift(PointOfInterest poi, String why, int radius, int tileX, int tileY, long started) {
+        System.out.println("[TFR-TownLift] " + poi.getDisplayName() + " (" + poi.getData().type + ") " + why + ": r=" + radius
+                + " at (" + tileX + "," + tileY + "), repaint " + (System.nanoTime() - started) / 1_000_000 + " ms");
     }
 
     /**
@@ -169,6 +204,16 @@ public class WorldBackground extends Actor {
         for (int cdx = -1; cdx <= 1; cdx++)
             for (int cdy = -1; cdy <= 1; cdy++)
                 nearbyPois.addAll(world.getPointsOfInterest(pos.x + cdx, pos.y + cdy));
+        // Round 376: a town that left the 3x3 chunk area (a teleport, a long walk) leaves the in-reach set with it, so a
+        // return later lifts again. Checked when the player's chunk changes, not every frame.
+        if (pos.x != liftSetChunkX || pos.y != liftSetChunkY) {
+            liftSetChunkX = pos.x;
+            liftSetChunkY = pos.y;
+            java.util.Set<String> near = new java.util.HashSet<>();
+            for (PointOfInterest poi : nearbyPois)
+                near.add(poi.getID());
+            townsInLiftRange.retainAll(near);
+        }
         for (PointOfInterest poi : nearbyPois) {
             // Dungeon rotation (MOD_SCOPE.md #15) overprovisions rotatable dungeons/caves 5x and
             // holds most of them inactive as a reserve pool with nothing actually there yet (see
@@ -197,7 +242,8 @@ public class WorldBackground extends Actor {
             float dyTiles = (playerY - nearestWorldY) / tileSize;
             int poiTileX = (int) ((bounds.x + bounds.width / 2f) / tileSize);
             int poiTileY = (int) ((bounds.y + bounds.height / 2f) / tileSize);
-            if (dxTiles * dxTiles + dyTiles * dyTiles <= visionRadius * visionRadius) {
+            float edgeDistSq = dxTiles * dxTiles + dyTiles * dyTiles;
+            if (edgeDistSq <= visionRadius * visionRadius) {
                 // Discovery flash (user spec 2026-08-09): the burst of tiles a town/capitol
                 // uncovers on first approach should flare fully bright for a moment before
                 // settling to the normal dimmed "explored" tier, instead of jumping straight there.
@@ -212,8 +258,17 @@ public class WorldBackground extends Actor {
                 // POI you already know flashes nothing, because by then its circle holds no unknown
                 // ground at all.
                 int discoveryRadius = isTownLikePoi(poi) ? DISCOVERY_REVEAL_RADIUS_TOWN : DISCOVERY_REVEAL_RADIUS_DUNGEON;
-                if (world.hasUnexploredIn(poiTileX, poiTileY, discoveryRadius))
+                if (world.hasUnexploredIn(poiTileX, poiTileY, discoveryRadius)) {
+                    long started = System.nanoTime();
                     world.flashArea(poiTileX, poiTileY, discoveryRadius, this::onTileRevealed);
+                    logTownLift(poi, "discovery", discoveryRadius, poiTileX, poiTileY, started);
+                    if (isTownLikePoi(poi))
+                        townsInLiftRange.add(poi.getID()); // round 376: the discovery burst is this visit's lift
+                } else if (isTownLikePoi(poi) && townsInLiftRange.add(poi.getID())) {
+                    approachFlash(world, poi, poiTileX, poiTileY); // round 376: back at a town the fog remembers
+                }
+            } else if (edgeDistSq > DISCOVERY_REVEAL_RADIUS_TOWN * DISCOVERY_REVEAL_RADIUS_TOWN) {
+                townsInLiftRange.remove(poi.getID()); // round 376: out past the lift radius - the next approach lifts again
             }
             // Round 250 (the user's option A): a place whose map icon is partly uncovered appears on the overworld
             // too - World.revealWithItsIcon() explores the tiles under the icon. Checked on the frame the player steps

@@ -94,6 +94,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (leash 8) and start their duels with a Gemstone Mine (overworld sightings only). Console `legend <color>`,
   `legendroll <color> [n]`. Agent-tested on a copy of the user's save: seed, forced + natural sightings, hold/chase,
   Gemstone Mine in the duel, counts across save/load. Spawn rolls tick on REAL time, so fast time/Wait thins them per day.
+  **376: the fog** - a town-like place lifts again each time the player comes within reach (`WorldBackground`
+  townsInLiftRange, the leave flash's 3 s, hysteresis to r 11, player-held skipped; `[TFR-TownLift]`), pickups draw only
+  where the player sees now (`[TFR-PickupFog]`), the unvisited magnifier + bookmark star take the fog haze (Sprite.draw
+  ignored the batch tint). Agent-tested (approach flash, dim magnifier, no pickups on dim ground).
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text) - STILL CLIPPED after 366's relabel: the
   lost-card ante row at 3840x2130 cuts OK off the left edge and Bronze Coin off the right (agent, round 375); an old road
   a tile short of a restored town, the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards,

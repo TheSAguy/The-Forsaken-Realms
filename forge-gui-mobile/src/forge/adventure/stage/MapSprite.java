@@ -210,15 +210,24 @@ public class MapSprite extends Actor {
                     y - (h - texture.getRegionHeight()) / 2f, w, h);
         }
         // Round 289: this field is `spriteMagnifier` since upstream's 09.22 rename of `magnifier`.
+        // Round 376 (the user: things "visible in FoW state 2"): Sprite.draw() paints with the sprite's OWN color, not
+        // the batch's, so round 334's haze tint never reached these two markers - an unvisited cave's magnifier glowed
+        // full-bright on remembered ground. They take the batch's color (the haze while the icon is hazed), then go
+        // back to white: Config.getItemSprite() hands out ONE cached Sprite per name, shared with every other user.
+        Color markerTint = batch.getColor();
         if (isCaveDungeon && !isOldorVisited && spriteMagnifier != null) {
             spriteMagnifier.setScale(0.7f, 0.7f);
             spriteMagnifier.setPosition(x - 7, y + 2);
+            spriteMagnifier.setColor(markerTint.r, markerTint.g, markerTint.b, 1f);
             spriteMagnifier.draw(batch, parentAlpha);
+            spriteMagnifier.setColor(Color.WHITE);
         }
         if (isBookmarked && spriteStar != null) {
             spriteStar.setScale(0.7f, 0.7f);
             spriteStar.setPosition(x + getWidth() - 8, y + getHeight() / 1.5f);
+            spriteStar.setColor(markerTint.r, markerTint.g, markerTint.b, 1f);
             spriteStar.draw(batch, parentAlpha);
+            spriteStar.setColor(Color.WHITE);
         }
     }
 

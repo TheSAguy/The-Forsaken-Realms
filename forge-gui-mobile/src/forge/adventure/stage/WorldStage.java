@@ -232,9 +232,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // Per-actor random phase so pickups don't all twinkle in lockstep.
         private final float twinklePhase = MathUtils.random(MathUtils.PI2);
         private float twinkleTime;
-        ResourceSpawnActor(Sprite sprite, Animation<TextureRegion> sparkleAnimation) {
+        private final String label; // round 376: for the [TFR-PickupFog] line
+        private boolean shown;      // round 376: logged when it flips
+        ResourceSpawnActor(Sprite sprite, Animation<TextureRegion> sparkleAnimation, String label) {
             this.sprite = sprite;
             this.sparkleAnimation = sparkleAnimation;
+            this.label = label;
         }
         @Override
         public void act(float delta) {
@@ -249,10 +252,25 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // so pickups rendered fully lit even on solid-black unexplored tiles. Tile coords come
             // from world.getTileSize() like every other fog gate - the first version divided by the
             // actor's own size, which only worked because setSize() happens to use tileSize today.
+            // Round 376 (the user: "spawned resources on the Overworld are visible in FoW state 2"): only where the
+            // player sees right now - their own light, their land and towns, a bonfire, a flash - as enemies already
+            // are (EnemySprite.draw). Pickups come and go daily on ground the player only remembers, so the dimmed
+            // tier gave away new ones there. Not isLitTile(): its zone 3 counts owned ground never explored, which
+            // still draws black.
             World world = Current.world();
             int tileSize = world.getTileSize();
-            if (tileSize > 0 && !world.isExploredWorld((int) (getX() / tileSize), (int) (getY() / tileSize)))
-                return;
+            if (tileSize > 0) {
+                int tx = (int) (getX() / tileSize);
+                int ty = (int) (getY() / tileSize);
+                boolean visible = world.isExploredWorld(tx, ty) && world.isCurrentlyVisible(tx, ty);
+                if (visible != shown) {
+                    shown = visible;
+                    System.out.println("[TFR-PickupFog] " + label + " at (" + tx + "," + ty + ") " + (visible ? "shown" : "hidden")
+                            + " (zone " + world.fogZone(tx, ty) + ")");
+                }
+                if (!visible)
+                    return;
+            }
             if (sparkleAnimation != null) {
                 // Real drawn animation, no alpha trickery needed - matches templeofchandra.tmx's
                 // Gold pickup exactly (same atlas/frames/timing).
@@ -508,7 +526,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             Sprite sprite = ResourceSpawns.spriteFor(spawn[2]);
             if (sprite == null)
                 continue;
-            ResourceSpawnActor actor = new ResourceSpawnActor(sprite, getSparkleAnimation(spawn[2]));
+            ResourceSpawnActor actor = new ResourceSpawnActor(sprite, getSparkleAnimation(spawn[2]), ResourceSpawns.typeName(spawn[2]));
             actor.setSize(tileSize, tileSize);
             actor.setPosition(spawn[0] * tileSize, spawn[1] * tileSize);
             foregroundSprites.addActor(actor);
