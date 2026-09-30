@@ -214,6 +214,7 @@ public class RewardData implements Serializable {
         // together so popup thresholds can never drift from the Research Lab screen's own live
         // numbers after a pool rebuild (settings toggles, save load, research completion).
         forge.adventure.scene.ResearchScene.invalidateThresholdCache();
+        forge.adventure.util.PrintingIndex.invalidate(); // round 372
     }
 
     // Restricted Cards enforcement for sourceDeck-based rewards (2026-08-22 fix, MOD_CHANGELOG.md).

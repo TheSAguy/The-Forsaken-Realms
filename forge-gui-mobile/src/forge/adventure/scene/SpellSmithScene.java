@@ -20,14 +20,12 @@ import forge.card.CardEdition.EditionEntry;
 import forge.card.CardRarity;
 import forge.item.PaperCard;
 import forge.model.FModel;
-import forge.util.IterableUtil;
 import forge.util.MyRandom;
 import forge.util.StreamUtil;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -178,8 +176,9 @@ public class SpellSmithScene extends UIScene {
                     return false;
             }
             String code = input.getCode();
-            Predicate<PaperCard> test = i -> i.getEdition().equals(code);
-            if (!IterableUtil.any(RewardData.getAllCards(), test))
+            // Round 372: a set is listed when it PRINTED a card the pool can hand out (PrintingIndex) - was: when some
+            // card's one pool printing was this set, which hid most of a set's cards and some whole sets.
+            if (forge.adventure.util.PrintingIndex.total(code) <= 0)
                 return false;
             ConfigData configData = Config.instance().getConfigData();
             if (configData.allowedEditions != null)
@@ -421,7 +420,15 @@ public class SpellSmithScene extends UIScene {
         P = StreamUtil.stream(P).filter(input -> {
             //L|Basic Land, C|Common, U|Uncommon, R|Rare, M|Mythic Rare, S|Special, N|None
             if (input == null) return false;
-            if (unlockedOnly != null && !unlockedOnly.contains(input.getEdition())) return false;
+            // Round 372 (the user: "the entire Print count ... needs to be part of each set"): a card qualifies when it
+            // has a PRINTING in a set open here (or in the picked set) - was: when its one pool printing was, which
+            // showed Amonkhet as 29 of its 254 cards.
+            if (!edition.isEmpty()) {
+                if (unlockedOnly != null && !unlockedOnly.contains(edition)) return false;
+                if (!forge.adventure.util.PrintingIndex.namesIn(edition).contains(input.getName())) return false;
+            } else if (unlockedOnly != null && !forge.adventure.util.PrintingIndex.printedInAny(input.getName(), unlockedOnly)) {
+                return false;
+            }
             final CardEdition cardEdition = FModel.getMagicDb().getEditions().get(edition);
 
             // Use the rarity of the card from the filtered set.
@@ -489,7 +496,12 @@ public class SpellSmithScene extends UIScene {
         // no-op when no restriction applies (null/empty list) or the pick is already in-list.
         java.util.Collection<String> restriction = currentEditionRestriction();
         String[] restrictionArray = restriction == null ? null : restriction.toArray(new String[0]);
-        if (Config.instance().getSettingData().useAllCardVariants) {
+        // Round 372: a picked set is paid for (the 4x surcharge), so the card is ALWAYS that set's printing - with
+        // variants off this used to keep any printing inside the restriction.
+        PaperCard inSet = edition.isEmpty() ? null : FModel.getMagicDb().getCommonCards().getCard(P.getCardName(), edition);
+        if (inSet != null) {
+            currentReward = new Reward(inSet);
+        } else if (Config.instance().getSettingData().useAllCardVariants) {
             PaperCard variant;
             if (!edition.isEmpty()) {
                 variant = CardUtil.getCardByNameAndEdition(P.getCardName(), edition);

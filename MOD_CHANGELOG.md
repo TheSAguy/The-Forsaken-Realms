@@ -14264,6 +14264,28 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 372: a set is every card printed in it - research, master list, Smith (2026-09-30)
+
+The user: "For all sets, the entire Print count (minus lands) needs to be part of each set ... you'd need 10% of 254
+to research ... When you find a card that has copies across multiple sets, it should only count to the set that
+matches the print you found" (Amonkhet read 29 cards: the reward pool holds ONE printing per name, and only the cards
+whose preferred printing was AKH were counted). Decisions: basic lands only left out; Ring City shops and boss
+rewards stay ungated; deck construction stays ungated.
+`util/PrintingIndex` (new): per edition every name in its [cards] section that the reward pool can hand out (so
+restricted/rebalanced/ante filters still apply), basic lands out; reverse map name -> editions; built once, dropped
+with the pool (RewardData.invalidateCardPool). "[TFR-Printings] 647 edition(s), 32535 card name(s), 75878 set
+printing(s)". Users:
+- ResearchScene: total = the index; found = distinct names you own IN THAT PRINTING (round 371's discoveredByEdition,
+  now over the index) - an AKH printing counts for AKH only. Threshold = 10% of the full count. The popup likewise.
+- EditionProgression.cardsPerEdition (the master list): the index - reprint-only sets come back (2ED/LEA/LEB/OM1;
+  MB1 still has none in [cards]). New worlds' color shards are dealt from the longer list; saves keep theirs.
+- SpellSmithScene: the set dropdown = sets that printed an obtainable card; the pool = names with a printing in a set
+  open here (or printed in the picked set); a picked set ALWAYS grants that set's printing (CardDb.getCard(name,set))
+  - with variants off it used to keep any in-restriction printing after the 4x surcharge.
+SEEN in the agent on a copy of the user's save: the Lab lists CMR (7/35) - 341 cards, M21 (54/26) - 259, ARN (17/8)
+- 75, YDMU (6/5) - 30. The Smith NOT walked to in the agent (the user's Capitol routes through the Job Board and
+the Bank). Next (round 373): shops and loot never hand out a printing outside their allowed sets (the fail-open remap).
+
 ## Round 371: research counts distinct cards found (2026-09-29)
 
 The user's research screen: "Ixalan (XLN) (181/10) - 94 cards ... How can I have discovered 181 cards ... the entire set

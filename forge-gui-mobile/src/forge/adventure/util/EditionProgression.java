@@ -103,9 +103,11 @@ public class EditionProgression {
      */
     private static Map<String, Integer> cardsPerEdition() {
         if (cardsPerEdition == null) {
+            // Round 372: every card printed in the edition (PrintingIndex), not just the ones whose single pool printing
+            // it is - which also brings back the sets that only hold reprints (Alpha, Beta, Unlimited ...).
             Map<String, Integer> totals = new HashMap<>();
-            for (forge.item.PaperCard pc : RewardData.getAllCards())
-                totals.merge(pc.getEdition(), 1, Integer::sum);
+            for (Map.Entry<String, java.util.Set<String>> e : PrintingIndex.byEdition().entrySet())
+                totals.put(e.getKey(), e.getValue().size());
             // Round 290 (code review): cache only a real count. An empty pool means the reward cards are
             // not built yet, and caching THAT switched the filter off for the rest of the session.
             if (totals.isEmpty())

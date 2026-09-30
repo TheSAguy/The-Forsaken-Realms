@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Align;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
-import forge.adventure.data.RewardData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
@@ -183,15 +182,11 @@ public class ResearchScene extends UIScene {
         cachedLegalNamesByEdition = null;
     }
 
-    /** Round 371: each edition's distinct card names in the live legal pool. */
+    /** Round 371: each edition's distinct card names. Round 372 (the user: "the entire Print count (minus lands) needs
+     *  to be part of each set"): every card PRINTED in the set that the pool can hand out, basic lands excluded
+     *  (PrintingIndex) - was only the cards whose one pool printing was this set (Amonkhet: 29 of 254). */
     private static Map<String, java.util.Set<String>> legalNamesByEdition() {
-        if (cachedLegalNamesByEdition == null) {
-            Map<String, java.util.Set<String>> names = new HashMap<>();
-            for (PaperCard pc : RewardData.getAllCards())
-                names.computeIfAbsent(pc.getEdition(), k -> new java.util.HashSet<>()).add(pc.getName());
-            cachedLegalNamesByEdition = names;
-        }
-        return cachedLegalNamesByEdition;
+        return forge.adventure.util.PrintingIndex.byEdition();
     }
 
     /** Round 371: the edition's card count for research - distinct names in the legal pool. */
