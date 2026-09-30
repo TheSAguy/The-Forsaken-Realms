@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 371: research counts distinct cards found (2026-09-29)
+
+The user's research screen: "Ixalan (XLN) (181/10) - 94 cards ... How can I have discovered 181 cards ... the entire set
+only has 94". The found count summed COPIES of every card printed in the set - basic lands included (dozens of XLN
+basics, the deck tool's free Plains among them) - while the total counted the set's printings in the legal pool. Both
+now count DISTINCT card names of the set that the legal pool (RewardData.getAllCards) holds:
+`ResearchScene.discoveredByEdition` / `researchTotal` over one cached names-per-edition map (dropped with the pool, as
+the old totals cache was). AdventurePlayer.maybeNotifyResearchThreshold uses the same count, so only a card new to
+the collection (by name, in that set) can cross the threshold. SEEN on a copy of the user's save: XLN (32/10) - 94
+cards; CMR (4/18) - 172, YDMU (6/5) - 29, ARN (6/5) - 12. Research is a little slower than before: copies, reprint
+basics and duplicate printings no longer count; sets already researched stay researched.
+
 ## Round 370b: the plaza's top row off (2026-09-29)
 
 The user, on round 370's preview: "the plaza one smaller at the top. So center row, minus one row at the top" - then

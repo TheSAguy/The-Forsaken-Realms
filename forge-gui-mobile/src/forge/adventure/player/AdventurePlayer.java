@@ -1982,11 +1982,16 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             int threshold = forge.adventure.scene.ResearchScene.thresholdForEditionCode(code);
             if (threshold == Integer.MAX_VALUE)
                 return;
-            int owned = 0;
+            // Round 371: distinct legal-pool cards of the set (ResearchScene.discoveredByEdition), the research line's
+            // own count - so only a card NEW to the collection (by name, in this set) can cross the threshold.
+            int sameName = 0;
             for (Map.Entry<PaperCard, Integer> entry : cards)
-                if (code.equals(entry.getKey().getEdition()))
-                    owned += entry.getValue();
-            if (owned >= threshold && owned - amountAdded < threshold) {
+                if (code.equals(entry.getKey().getEdition()) && card.getName().equals(entry.getKey().getName()))
+                    sameName += entry.getValue();
+            if (sameName > amountAdded)
+                return; // already found before this pickup
+            int owned = forge.adventure.scene.ResearchScene.discoveredByEdition(cards).getOrDefault(code, 0);
+            if (owned == threshold) {
                 forge.card.CardEdition edition = forge.model.FModel.getMagicDb().getEditions().get(code);
                 String name = edition != null ? edition.getName() : code;
                 System.out.println("[TFR-Research] threshold reached: " + code + " owned=" + owned + "/" + threshold);

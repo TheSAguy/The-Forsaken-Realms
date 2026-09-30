@@ -171,25 +171,59 @@ public class ResearchScene extends UIScene {
     // single card pickup, and re-deriving totals from RewardData.getAllCards() (tens of
     // thousands of cards) per pickup would be silly. buildList() above deliberately does NOT use
     // this cache - the on-screen list stays freshly derived every open, exactly as before.
-    private static Map<String, Integer> cachedTotalsByEdition;
+    // Round 371 (the user: "How can I have discovered 181 cards ... but the entire set only has 94 cards"): the found
+    // count summed COPIES of every card printed in the set - basic lands included (a collection holds dozens of XLN
+    // basics) - while the total counted the set's cards in the legal pool. Both now count the same thing: DISTINCT card
+    // names of the set that the legal pool holds. Cached per session, dropped when the pool is rebuilt.
+    private static Map<String, java.util.Set<String>> cachedLegalNamesByEdition;
 
     /** Drops the totals cache - called by RewardData.invalidateCardPool() whenever the legal
      *  card pool itself is rebuilt, so the popup's thresholds always track the live pool. */
     public static void invalidateThresholdCache() {
-        cachedTotalsByEdition = null;
+        cachedLegalNamesByEdition = null;
+    }
+
+    /** Round 371: each edition's distinct card names in the live legal pool. */
+    private static Map<String, java.util.Set<String>> legalNamesByEdition() {
+        if (cachedLegalNamesByEdition == null) {
+            Map<String, java.util.Set<String>> names = new HashMap<>();
+            for (PaperCard pc : RewardData.getAllCards())
+                names.computeIfAbsent(pc.getEdition(), k -> new java.util.HashSet<>()).add(pc.getName());
+            cachedLegalNamesByEdition = names;
+        }
+        return cachedLegalNamesByEdition;
+    }
+
+    /** Round 371: the edition's card count for research - distinct names in the legal pool. */
+    public static int researchTotal(String editionCode) {
+        java.util.Set<String> names = legalNamesByEdition().get(editionCode);
+        return names == null ? 0 : names.size();
+    }
+
+    /** Round 371: per edition, how many of its legal-pool cards the collection holds at least one of (by name, in that
+     *  edition's printing) - the "found" half of the research line and of the threshold popup. */
+    public static Map<String, Integer> discoveredByEdition(Iterable<Map.Entry<PaperCard, Integer>> cards) {
+        Map<String, java.util.Set<String>> legal = legalNamesByEdition();
+        Map<String, java.util.Set<String>> found = new HashMap<>();
+        for (Map.Entry<PaperCard, Integer> entry : cards) {
+            PaperCard pc = entry.getKey();
+            if (pc == null || entry.getValue() == null || entry.getValue() <= 0)
+                continue;
+            java.util.Set<String> pool = legal.get(pc.getEdition());
+            if (pool != null && pool.contains(pc.getName()))
+                found.computeIfAbsent(pc.getEdition(), k -> new java.util.HashSet<>()).add(pc.getName());
+        }
+        Map<String, Integer> out = new HashMap<>();
+        for (Map.Entry<String, java.util.Set<String>> e : found.entrySet())
+            out.put(e.getKey(), e.getValue().size());
+        return out;
     }
 
     /** The research threshold for one edition, same formula/counting the on-screen list uses
      *  (thresholdFor() over the live legal card pool). Integer.MAX_VALUE for an edition with no
      *  cards in the pool at all - callers treat that as "can never be researched, never notify". */
     public static int thresholdForEditionCode(String editionCode) {
-        if (cachedTotalsByEdition == null) {
-            Map<String, Integer> totals = new HashMap<>();
-            for (PaperCard pc : RewardData.getAllCards())
-                totals.merge(pc.getEdition(), 1, Integer::sum);
-            cachedTotalsByEdition = totals;
-        }
-        int total = cachedTotalsByEdition.getOrDefault(editionCode, 0);
+        int total = researchTotal(editionCode);
         return total <= 0 ? Integer.MAX_VALUE : thresholdFor(total);
     }
 
@@ -231,13 +265,12 @@ public class ResearchScene extends UIScene {
         // Live-derived owned-card count per edition - no separate persisted counter, recomputed
         // fresh every time this screen opens so it can never drift from the player's real
         // collection.
-        Map<String, Integer> ownedByEdition = new HashMap<>();
-        for (Map.Entry<PaperCard, Integer> entry : player.getCards())
-            ownedByEdition.merge(entry.getKey().getEdition(), entry.getValue(), Integer::sum);
-
+        // Round 371: distinct legal-pool cards found, against the set's distinct legal-pool cards (was copies of every
+        // printing, basics included, against the pool's printings).
+        Map<String, Integer> ownedByEdition = discoveredByEdition(player.getCards());
         Map<String, Integer> totalByEdition = new HashMap<>();
-        for (PaperCard pc : RewardData.getAllCards())
-            totalByEdition.merge(pc.getEdition(), 1, Integer::sum);
+        for (Map.Entry<String, java.util.Set<String>> e : legalNamesByEdition().entrySet())
+            totalByEdition.put(e.getKey(), e.getValue().size());
 
         boolean hideUnfound = hideUnfoundCheckBox.isChecked();
         boolean hidePartial = hidePartialCheckBox.isChecked(); // round 313
