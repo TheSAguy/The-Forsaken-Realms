@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 373: gated places never hand out a printing outside their sets (2026-09-30)
+
+The second half of round 372's rule ("shops ... should only sell the printed versions of the sets you've unlocked. So
+the little symbol on the card needs to match"). The sweep found the pool-driven paths already strict - CardPredicate
+only admits a name with a printing in the place's edition list, and finishCandidate/finishUnionCard then swap in such
+a printing. The hole was CardUtil.remapToEditionList's fail-open: a card with NO printing in the list kept whatever
+printing it had, reachable only from NAMED-card rewards (a shop or chest slot naming one card: RewardData's cardNames
+/ cardName branches, both variant modes). `CardUtil.remapToEditionListStrict` returns null there and those branches
+skip the card (`[TFR-PrintGate] <card> has no printing in this place's sets - not offered`, once per card). Callers
+without an edition list (quest/dialog rewards, Ring City shops, boss rewards - kept open at the user's word) are
+untouched; the lenient form stays for everything else. Weighting stays per NAME (the pool is one entry per name), so a
+card reprinted thirty times is not thirty times likelier. Not seen in play - watch for [TFR-PrintGate].
+
 ## Round 372: a set is every card printed in it - research, master list, Smith (2026-09-30)
 
 The user: "For all sets, the entire Print count (minus lands) needs to be part of each set ... you'd need 10% of 254

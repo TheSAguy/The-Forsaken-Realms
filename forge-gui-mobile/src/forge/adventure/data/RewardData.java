@@ -381,8 +381,9 @@ public class RewardData implements Serializable {
                         for (int i = 0; i < picks; i++) {
                             PaperCard card = StaticData.instance().getCommonCards().getCard(shuffledCards.get(i));
                             if (card != null) {
-                                card = CardUtil.remapToEditionList(card, this.editions, rewardRandom);
-                                ret.add(new Reward(card, isNoSell));
+                                card = CardUtil.remapToEditionListStrict(card, this.editions, rewardRandom); // round 373
+                                if (card != null)
+                                    ret.add(new Reward(card, isNoSell));
                             } else {
                                 System.err.println("Missing card: " + shuffledCards.get(i));
                             }
@@ -403,8 +404,9 @@ public class RewardData implements Serializable {
                                 for (int i = 0; i < count + addedCount; i++) {
                                     PaperCard finalCard = CardUtil.getCardByNameAndEdition(request.cardName, card.getEdition());
                                     if (finalCard != null) {
-                                        finalCard = CardUtil.remapToEditionList(finalCard, this.editions, rewardRandom);
-                                        ret.add(new Reward(finalCard, isNoSell));
+                                        finalCard = CardUtil.remapToEditionListStrict(finalCard, this.editions, rewardRandom); // round 373
+                                        if (finalCard != null)
+                                            ret.add(new Reward(finalCard, isNoSell));
                                     }
                                 }
                             }
@@ -412,8 +414,9 @@ public class RewardData implements Serializable {
                             for (int i = 0; i < count + addedCount; i++) {
                                 PaperCard card = StaticData.instance().getCommonCards().getCard(cardName);
                                 if (card != null) {
-                                    card = CardUtil.remapToEditionList(card, this.editions, rewardRandom);
-                                    ret.add(new Reward(card, isNoSell));
+                                    card = CardUtil.remapToEditionListStrict(card, this.editions, rewardRandom); // round 373
+                                    if (card != null)
+                                        ret.add(new Reward(card, isNoSell));
                                 } else
                                     System.err.println("Missing card: " + cardName);
                             }

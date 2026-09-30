@@ -758,6 +758,22 @@ public class CardUtil {
      *  Null or empty means no rarity preference, which is every pre-151 caller. */
     public static PaperCard remapToEditionList(PaperCard candidate, String[] allowedEditions,
             String[] allowedRarities, Random r) {
+        return remapToEditionList(candidate, allowedEditions, allowedRarities, r, false);
+    }
+
+    /**
+     * Round 373 (the user: "shops ... should only sell the printed versions of the sets you've unlocked. So the little
+     * symbol on the card needs to match"): the strict form - null when the card has NO printing in the list, where the
+     * lenient form hands the card over in whatever printing it had. Named-card rewards (a shop or chest slot naming one
+     * card) use it; the pool-driven paths never reach that case (their predicate only admits names printed in the list).
+     * A list-less caller (quests, dialogs) is untouched either way.
+     */
+    public static PaperCard remapToEditionListStrict(PaperCard candidate, String[] allowedEditions, Random r) {
+        return remapToEditionList(candidate, allowedEditions, null, r, true);
+    }
+
+    private static PaperCard remapToEditionList(PaperCard candidate, String[] allowedEditions,
+            String[] allowedRarities, Random r, boolean strict) {
         if (candidate == null || allowedEditions == null || allowedEditions.length == 0)
             return candidate;
         forge.adventure.world.World world = Current.world();
@@ -790,8 +806,14 @@ public class CardUtil {
                 }
             }
         }
-        if (inList.isEmpty())
-            return candidate;
+        if (inList.isEmpty()) {
+            if (!strict)
+                return candidate;
+            if (loggedRemaps.add(candidate.getCardName() + "|gate"))
+                System.out.println("[TFR-PrintGate] " + candidate.getCardName() + " has no printing in this place's sets ("
+                        + allowedEditions.length + ") - not offered");
+            return null;
+        }
         if (allowedRarities != null && allowedRarities.length > 0) {
             List<PaperCard> rightRarity = new ArrayList<>();
             for (PaperCard p : inList) {
