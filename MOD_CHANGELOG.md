@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 374: color-named shops sell only their color; UnionTest removed (2026-09-30)
+
+The user: "Just like Instant4White all other shops with Color in the name should only sell cards of that color" and
+"Remove Shop" (UnionTest). shops.json: every card slot (and Union branch) without a color filter in a shop whose name
+carries ONE color (White/Blue/Black/Red/Green - the Black1-6 style shops, InstantN, CreatureN, Enchantment, Artifact,
+Planeswalker, Legend, Phyrexian, Vehicle, Sliver and the tribal N-color shops, WanderingMerchant) got
+`colors: [<that color>]` - 170 slots; the filter means mono-that-color (CardUtil: hasNoColorsExcept, colorless out).
+Colorless families kept working by mana symbol instead: Land4X's any-land slot now needs the color's {X} in its text
+(5 slots), Wand2/4X's {T}-artifact slot needs {T} and {X} (10). The two-color Ring shops (RingWhiteGreen ...) left as
+they are. UnionTest (unreferenced) deleted: 309 -> 308 shops. Smallest pools after: White Slivers 22 names, Black
+Vehicles 31, Red Wands' color-text slot 10. Validator + shop_blueprint_audit clean. Data only - no rebuild.
+
 ## Round 373: gated places never hand out a printing outside their sets (2026-09-30)
 
 The second half of round 372's rule ("shops ... should only sell the printed versions of the sets you've unlocked. So

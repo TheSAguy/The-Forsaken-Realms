@@ -15,7 +15,10 @@
    },
    {
     "count": 2,
-    "cardText": "(destroy|exile) target|sacrifice"
+    "cardText": "(destroy|exile) target|sacrifice",
+    "colors": [
+     "black"
+    ]
    }
   ]
  },
@@ -35,7 +38,10 @@
    },
    {
     "count": 2,
-    "cardText": "destroyed|dies|return.*(hand|battlefield|library|to play)|put.*battlefield from"
+    "cardText": "destroyed|dies|return.*(hand|battlefield|library|to play)|put.*battlefield from",
+    "colors": [
+     "black"
+    ]
    }
   ]
  },
@@ -145,7 +151,10 @@
    },
    {
     "count": 2,
-    "cardText": "pay.*life.*:|(lose|gain).*life|deal.*damage"
+    "cardText": "pay.*life.*:|(lose|gain).*life|deal.*damage",
+    "colors": [
+     "black"
+    ]
    }
   ]
  },
@@ -165,7 +174,10 @@
    },
    {
     "count": 2,
-    "cardText": "search|seek|reveal.*library|choose|choice|unless"
+    "cardText": "search|seek|reveal.*library|choose|choice|unless",
+    "colors": [
+     "black"
+    ]
    }
   ]
  },
@@ -185,7 +197,10 @@
    },
    {
     "count": 2,
-    "cardText": "deathtouch|fear|intimidate|menace|ninjutsu|regenerate\\b"
+    "cardText": "deathtouch|fear|intimidate|menace|ninjutsu|regenerate\\b",
+    "colors": [
+     "black"
+    ]
    }
   ]
  },
@@ -205,7 +220,10 @@
    },
    {
     "count": 2,
-    "cardText": "([+-])\\d?/([+-])\\d?"
+    "cardText": "([+-])\\d?/([+-])\\d?",
+    "colors": [
+     "black"
+    ]
    }
   ]
  },
@@ -225,7 +243,10 @@
    },
    {
     "count": 2,
-    "cardText": "return.*to.*(hand|top of.*library)|gain(s)? control of|mill|tap |untap|counter target"
+    "cardText": "return.*to.*(hand|top of.*library)|gain(s)? control of|mill|tap |untap|counter target",
+    "colors": [
+     "blue"
+    ]
    }
   ]
  },
@@ -245,7 +266,10 @@
    },
    {
     "count": 2,
-    "cardText": "artifact|historic|explores|connive|clue token|investigate"
+    "cardText": "artifact|historic|explores|connive|clue token|investigate",
+    "colors": [
+     "blue"
+    ]
    }
   ]
  },
@@ -265,7 +289,10 @@
    },
    {
     "count": 2,
-    "cardText": "flying|prowess|unblockable|hexproof|shroud|morph|ninjutsu|phas(ing|(es (in|out)))"
+    "cardText": "flying|prowess|unblockable|hexproof|shroud|morph|ninjutsu|phas(ing|(es (in|out)))",
+    "colors": [
+     "blue"
+    ]
    }
   ]
  },
@@ -285,7 +312,10 @@
    },
    {
     "count": 2,
-    "cardText": "(change|copy).*(that|target)|color(s|ed)?\\b|land type|mana|name|flashback|overload|splice|rebound|buyback|morph|madness|delve|instead"
+    "cardText": "(change|copy).*(that|target)|color(s|ed)?\\b|land type|mana|name|flashback|overload|splice|rebound|buyback|morph|madness|delve|instead",
+    "colors": [
+     "blue"
+    ]
    }
   ]
  },
@@ -305,7 +335,10 @@
    },
    {
     "count": 2,
-    "cardText": "draw(s)?|(exile|reveal|look|search).*library|scry|seek|conjure"
+    "cardText": "draw(s)?|(exile|reveal|look|search).*library|scry|seek|conjure",
+    "colors": [
+     "blue"
+    ]
    }
   ]
  },
@@ -325,7 +358,10 @@
    },
    {
     "count": 2,
-    "cardText": "can't|must|whenever|unless|becomes|until|upkeep|(leave|enter)(s)|doesn't? .*(play|battlefield)|each"
+    "cardText": "can't|must|whenever|unless|becomes|until|upkeep|(leave|enter)(s)|doesn't? .*(play|battlefield)|each",
+    "colors": [
+     "blue"
+    ]
    }
   ]
  },
@@ -362,11 +398,17 @@
     "cardUnion": [
      {
       "count": 1,
-      "cardText": "counter.*on |counter.*distribute|distribute.*counter|proliferate|creature(s)? from"
+      "cardText": "counter.*on |counter.*distribute|distribute.*counter|proliferate|creature(s)? from",
+      "colors": [
+       "green"
+      ]
      },
      {
       "count": 1,
-      "cardText": "([+-])\\d?/([+-])\\d?"
+      "cardText": "([+-])\\d?/([+-])\\d?",
+      "colors": [
+       "green"
+      ]
      }
     ]
    }
@@ -388,7 +430,10 @@
    },
    {
     "count": 2,
-    "cardText": "still a land|(exile|reveal|look|search).*library|scry|explores|additional land|land from.*(graveyard|hand)|put.*land(s)?from|landfall"
+    "cardText": "still a land|(exile|reveal|look|search).*library|scry|explores|additional land|land from.*(graveyard|hand)|put.*land(s)?from|landfall",
+    "colors": [
+     "green"
+    ]
    }
   ]
  },
@@ -408,7 +453,10 @@
    },
    {
     "count": 2,
-    "cardText": " fight(s)?|deal(s)? damage equal|(power|toughness) equal to the number"
+    "cardText": " fight(s)?|deal(s)? damage equal|(power|toughness) equal to the number",
+    "colors": [
+     "green"
+    ]
    }
   ]
  },
@@ -428,7 +476,10 @@
    },
    {
     "count": 2,
-    "cardText": "trample|reach|hexproof|regenerate|shroud|deathtouch"
+    "cardText": "trample|reach|hexproof|regenerate|shroud|deathtouch",
+    "colors": [
+     "green"
+    ]
    }
   ]
  },
@@ -448,7 +499,10 @@
    },
    {
     "count": 2,
-    "cardText": "gain.*life|token|draw|food"
+    "cardText": "gain.*life|token|draw|food",
+    "colors": [
+     "green"
+    ]
    }
   ]
  },
@@ -468,7 +522,10 @@
    },
    {
     "count": 2,
-    "cardText": "tap.*mana|:.*add.*(\\{[gburw]\\}|to your mana)|untap"
+    "cardText": "tap.*mana|:.*add.*(\\{[gburw]\\}|to your mana)|untap",
+    "colors": [
+     "green"
+    ]
    }
   ]
  },
@@ -488,7 +545,10 @@
    },
    {
     "count": 2,
-    "cardText": "deal.*damage|destroy"
+    "cardText": "deal.*damage|destroy",
+    "colors": [
+     "red"
+    ]
    }
   ]
  },
@@ -508,7 +568,10 @@
    },
    {
     "count": 2,
-    "cardText": "haste|(first |double )strike | prowess|return .* to hand at end of turn|At the beginning of (your|the) end step, (sacrifice|return .* to (your|its owner).*hand)"
+    "cardText": "haste|(first |double )strike | prowess|return .* to hand at end of turn|At the beginning of (your|the) end step, (sacrifice|return .* to (your|its owner).*hand)",
+    "colors": [
+     "red"
+    ]
    }
   ]
  },
@@ -528,7 +591,10 @@
    },
    {
     "count": 2,
-    "cardText": "each creature|each player|any player may|unless|choose|choice"
+    "cardText": "each creature|each player|any player may|unless|choose|choice",
+    "colors": [
+     "red"
+    ]
    }
   ]
  },
@@ -548,7 +614,10 @@
    },
    {
     "count": 2,
-    "cardText": "each mountain|number of mountains|sacrifice.*:"
+    "cardText": "each mountain|number of mountains|sacrifice.*:",
+    "colors": [
+     "red"
+    ]
    }
   ]
  },
@@ -568,7 +637,10 @@
    },
    {
     "count": 2,
-    "cardText": "gain control of|when.*(cast|copy).*spell|if able"
+    "cardText": "gain control of|when.*(cast|copy).*spell|if able",
+    "colors": [
+     "red"
+    ]
    }
   ]
  },
@@ -588,7 +660,10 @@
    },
    {
     "count": 2,
-    "cardText": "top of your library|random|roll.*di(c)?e|flip .*coin|coin .*flip|draw .*discard|discard .*draw"
+    "cardText": "top of your library|random|roll.*di(c)?e|flip .*coin|coin .*flip|draw .*discard|discard .*draw",
+    "colors": [
+     "red"
+    ]
    }
   ]
  },
@@ -608,7 +683,10 @@
    },
    {
     "count": 2,
-    "cardText": "Prevent.*Damage"
+    "cardText": "Prevent.*Damage",
+    "colors": [
+     "white"
+    ]
    }
   ]
  },
@@ -628,7 +706,10 @@
    },
    {
     "count": 2,
-    "cardText": "gain.*life|life total"
+    "cardText": "gain.*life|life total",
+    "colors": [
+     "white"
+    ]
    }
   ]
  },
@@ -648,7 +729,10 @@
    },
    {
     "count": 2,
-    "cardText": "(Destroy|exile).*(attacking|defending|tapped|with)"
+    "cardText": "(Destroy|exile).*(attacking|defending|tapped|with)",
+    "colors": [
+     "white"
+    ]
    }
   ]
  },
@@ -668,7 +752,10 @@
    },
    {
     "count": 2,
-    "cardText": "Return.*to.*(your hand|battlefield|play)"
+    "cardText": "Return.*to.*(your hand|battlefield|play)",
+    "colors": [
+     "white"
+    ]
    }
   ]
  },
@@ -688,7 +775,10 @@
    },
    {
     "count": 2,
-    "cardText": "pays|more|less|tap target creature"
+    "cardText": "pays|more|less|tap target creature",
+    "colors": [
+     "white"
+    ]
    }
   ]
  },
@@ -725,11 +815,17 @@
     "cardUnion": [
      {
       "count": 1,
-      "cardText": "(Vigilance|Lifelink|Protection|First Strike|Double Strike|Flying)"
+      "cardText": "(Vigilance|Lifelink|Protection|First Strike|Double Strike|Flying)",
+      "colors": [
+       "white"
+      ]
      },
      {
       "count": 1,
-      "cardText": "([+-])\\d?/([+-])\\d?"
+      "cardText": "([+-])\\d?/([+-])\\d?",
+      "colors": [
+       "white"
+      ]
      }
     ]
    }
@@ -1203,6 +1299,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -1229,6 +1328,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -1255,6 +1357,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -1281,6 +1386,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -1431,6 +1539,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -1457,6 +1568,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -1483,6 +1597,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -1509,6 +1626,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -1535,6 +1655,9 @@
     "cardTypes": [
      "Instant",
      "Sorcery"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -1853,6 +1976,9 @@
     "count": 6,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -1877,6 +2003,9 @@
     "count": 2,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -1919,6 +2048,9 @@
     "count": 6,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -1943,6 +2075,9 @@
     "count": 2,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -1985,6 +2120,9 @@
     "count": 6,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -2009,6 +2147,9 @@
     "count": 2,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -2051,6 +2192,9 @@
     "count": 6,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -2075,6 +2219,9 @@
     "count": 2,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -2099,6 +2246,9 @@
     "count": 2,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -2123,6 +2273,9 @@
     "count": 6,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -2147,6 +2300,9 @@
     "count": 2,
     "cardTypes": [
      "Creature"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -2196,7 +2352,8 @@
     "count": 4,
     "cardTypes": [
      "Land"
-    ]
+    ],
+    "cardText": "\\Q{\\EU\\Q}\\E"
    }
   ]
  },
@@ -2234,7 +2391,8 @@
     "count": 4,
     "cardTypes": [
      "Land"
-    ]
+    ],
+    "cardText": "\\Q{\\EB\\Q}\\E"
    }
   ]
  },
@@ -2272,7 +2430,8 @@
     "count": 4,
     "cardTypes": [
      "Land"
-    ]
+    ],
+    "cardText": "\\Q{\\ER\\Q}\\E"
    }
   ]
  },
@@ -2310,7 +2469,8 @@
     "count": 4,
     "cardTypes": [
      "Land"
-    ]
+    ],
+    "cardText": "\\Q{\\EG\\Q}\\E"
    }
   ]
  },
@@ -2348,7 +2508,8 @@
     "count": 4,
     "cardTypes": [
      "Land"
-    ]
+    ],
+    "cardText": "\\Q{\\EW\\Q}\\E"
    }
   ]
  },
@@ -3155,11 +3316,17 @@
       "count": 1,
       "subTypes": [
        "Human"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Human"
+      "cardText": "Human",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -3284,11 +3451,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "black"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "black"
+      ]
      }
     ]
    },
@@ -3331,11 +3504,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -3378,11 +3557,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "green"
+      ]
      }
     ]
    },
@@ -3425,11 +3610,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -3472,11 +3663,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -3519,11 +3716,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "black"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "black"
+      ]
      }
     ]
    },
@@ -3566,11 +3769,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -3613,11 +3822,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "green"
+      ]
      }
     ]
    },
@@ -3660,11 +3875,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -3707,11 +3928,17 @@
       "count": 1,
       "subTypes": [
        "Sliver"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Sliver"
+      "cardText": "Sliver",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -3784,6 +4011,9 @@
     "count": 4,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -3808,6 +4038,9 @@
     "count": 4,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -3832,6 +4065,9 @@
     "count": 4,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -3856,6 +4092,9 @@
     "count": 4,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -3880,6 +4119,9 @@
     "count": 4,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -3904,6 +4146,9 @@
     "count": 2,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -3928,6 +4173,9 @@
     "count": 2,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -3952,6 +4200,9 @@
     "count": 2,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -3976,6 +4227,9 @@
     "count": 2,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -4000,6 +4254,9 @@
     "count": 2,
     "cardTypes": [
      "Enchantment"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -4088,6 +4345,9 @@
     "count": 4,
     "cardTypes": [
      "Artifact"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -4112,6 +4372,9 @@
     "count": 4,
     "cardTypes": [
      "Artifact"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -4136,6 +4399,9 @@
     "count": 4,
     "cardTypes": [
      "Artifact"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -4160,6 +4426,9 @@
     "count": 4,
     "cardTypes": [
      "Artifact"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -4184,6 +4453,9 @@
     "count": 4,
     "cardTypes": [
      "Artifact"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -4571,15 +4843,24 @@
       "count": 1,
       "subTypes": [
        "Vehicle"
+      ],
+      "colors": [
+       "black"
       ]
      },
      {
       "count": 1,
-      "cardText": "Vehicle"
+      "cardText": "Vehicle",
+      "colors": [
+       "black"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Pilot"
+      "cardText": "Pilot",
+      "colors": [
+       "black"
+      ]
      }
     ]
    },
@@ -4629,15 +4910,24 @@
       "count": 1,
       "subTypes": [
        "Vehicle"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Vehicle"
+      "cardText": "Vehicle",
+      "colors": [
+       "blue"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Pilot"
+      "cardText": "Pilot",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -4687,15 +4977,24 @@
       "count": 1,
       "subTypes": [
        "Vehicle"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "Vehicle"
+      "cardText": "Vehicle",
+      "colors": [
+       "green"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Pilot"
+      "cardText": "Pilot",
+      "colors": [
+       "green"
+      ]
      }
     ]
    },
@@ -4745,15 +5044,24 @@
       "count": 1,
       "subTypes": [
        "Vehicle"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Vehicle"
+      "cardText": "Vehicle",
+      "colors": [
+       "red"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Pilot"
+      "cardText": "Pilot",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -4803,15 +5111,24 @@
       "count": 1,
       "subTypes": [
        "Vehicle"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Vehicle"
+      "cardText": "Vehicle",
+      "colors": [
+       "white"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Pilot"
+      "cardText": "Pilot",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -4908,11 +5225,17 @@
       "count": 1,
       "subTypes": [
        "Ogre"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Ogre"
+      "cardText": "Ogre",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -4979,11 +5302,17 @@
       "count": 1,
       "subTypes": [
        "Dinosaur"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "Dinosaur"
+      "cardText": "Dinosaur",
+      "colors": [
+       "green"
+      ]
      }
     ]
    },
@@ -5025,11 +5354,17 @@
       "count": 1,
       "subTypes": [
        "Dinosaur"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Dinosaur"
+      "cardText": "Dinosaur",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -5109,7 +5444,6 @@
    }
   ]
  },
- 
  {
   "name": "Equip",
   "description": "Arms & Armor",
@@ -5163,11 +5497,17 @@
       "count": 1,
       "subTypes": [
        "Soldier"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Soldier"
+      "cardText": "Soldier",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -5210,11 +5550,17 @@
       "count": 1,
       "subTypes": [
        "Soldier"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Soldier"
+      "cardText": "Soldier",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -5360,7 +5706,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{B\\}|\\{B\\}.*\\{T\\}"
    },
    {
     "count": 2,
@@ -5396,7 +5742,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{B\\}|\\{B\\}.*\\{T\\}"
    },
    {
     "count": 4,
@@ -5432,7 +5778,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{U\\}|\\{U\\}.*\\{T\\}"
    },
    {
     "count": 2,
@@ -5468,7 +5814,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{U\\}|\\{U\\}.*\\{T\\}"
    },
    {
     "count": 4,
@@ -5504,7 +5850,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{G\\}|\\{G\\}.*\\{T\\}"
    },
    {
     "count": 2,
@@ -5540,7 +5886,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{G\\}|\\{G\\}.*\\{T\\}"
    },
    {
     "count": 4,
@@ -5576,7 +5922,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{R\\}|\\{R\\}.*\\{T\\}"
    },
    {
     "count": 2,
@@ -5612,7 +5958,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{R\\}|\\{R\\}.*\\{T\\}"
    },
    {
     "count": 4,
@@ -5648,7 +5994,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{W\\}|\\{W\\}.*\\{T\\}"
    },
    {
     "count": 2,
@@ -5684,7 +6030,7 @@
     "cardTypes": [
      "Artifact"
     ],
-    "cardText": "\\Q{\\ET\\Q}\\E"
+    "cardText": "(?s)\\{T\\}.*\\{W\\}|\\{W\\}.*\\{T\\}"
    },
    {
     "count": 4,
@@ -5905,11 +6251,17 @@
       "count": 1,
       "subTypes": [
        "Bird"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Bird"
+      "cardText": "Bird",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -5952,11 +6304,17 @@
       "count": 1,
       "subTypes": [
        "Bird"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Bird"
+      "cardText": "Bird",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -6070,11 +6428,17 @@
       "count": 1,
       "subTypes": [
        "Spirit"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "\\bSpirits?\\b"
+      "cardText": "\\bSpirits?\\b",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -6117,11 +6481,17 @@
       "count": 1,
       "subTypes": [
        "Spirit"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "\\bSpirits?\\b"
+      "cardText": "\\bSpirits?\\b",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -6194,15 +6564,24 @@
       "subTypes": [
        "Wolf",
        "Werewolf"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "Wolf"
+      "cardText": "Wolf",
+      "colors": [
+       "green"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Werewolf"
+      "cardText": "Werewolf",
+      "colors": [
+       "green"
+      ]
      }
     ]
    },
@@ -6254,15 +6633,24 @@
       "subTypes": [
        "Wolf",
        "Werewolf"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Wolf"
+      "cardText": "Wolf",
+      "colors": [
+       "red"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Werewolf"
+      "cardText": "Werewolf",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -6337,11 +6725,17 @@
       "count": 1,
       "subTypes": [
        "Knight"
+      ],
+      "colors": [
+       "black"
       ]
      },
      {
       "count": 1,
-      "cardText": "Knight"
+      "cardText": "Knight",
+      "colors": [
+       "black"
+      ]
      }
     ]
    },
@@ -6384,11 +6778,17 @@
       "count": 1,
       "subTypes": [
        "Knight"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Knight"
+      "cardText": "Knight",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -6431,11 +6831,17 @@
       "count": 1,
       "subTypes": [
        "Knight"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Knight"
+      "cardText": "Knight",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -6499,6 +6905,9 @@
     "count": 4,
     "cardTypes": [
      "Planeswalker"
+    ],
+    "colors": [
+     "black"
     ]
    },
    {
@@ -6523,6 +6932,9 @@
     "count": 4,
     "cardTypes": [
      "Planeswalker"
+    ],
+    "colors": [
+     "blue"
     ]
    },
    {
@@ -6547,6 +6959,9 @@
     "count": 4,
     "cardTypes": [
      "Planeswalker"
+    ],
+    "colors": [
+     "green"
     ]
    },
    {
@@ -6571,6 +6986,9 @@
     "count": 4,
     "cardTypes": [
      "Planeswalker"
+    ],
+    "colors": [
+     "red"
     ]
    },
    {
@@ -6595,6 +7013,9 @@
     "count": 4,
     "cardTypes": [
      "Planeswalker"
+    ],
+    "colors": [
+     "white"
     ]
    },
    {
@@ -6937,11 +7358,17 @@
       "count": 1,
       "subTypes": [
        "Pirate"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Pirate"
+      "cardText": "Pirate",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -7008,11 +7435,17 @@
       "count": 1,
       "subTypes": [
        "Rogue"
+      ],
+      "colors": [
+       "black"
       ]
      },
      {
       "count": 1,
-      "cardText": "Rogue"
+      "cardText": "Rogue",
+      "colors": [
+       "black"
+      ]
      }
     ]
    },
@@ -7055,11 +7488,17 @@
       "count": 1,
       "subTypes": [
        "Rogue"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Rogue"
+      "cardText": "Rogue",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -7180,15 +7619,24 @@
       "superTypes": [
        "Legend",
        "Legendary"
+      ],
+      "colors": [
+       "black"
       ]
      },
      {
       "count": 1,
-      "cardText": "Legendary"
+      "cardText": "Legendary",
+      "colors": [
+       "black"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Historic"
+      "cardText": "Historic",
+      "colors": [
+       "black"
+      ]
      }
     ]
    },
@@ -7240,15 +7688,24 @@
       "superTypes": [
        "Legend",
        "Legendary"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "Legendary"
+      "cardText": "Legendary",
+      "colors": [
+       "blue"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Historic"
+      "cardText": "Historic",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    },
@@ -7300,15 +7757,24 @@
       "superTypes": [
        "Legend",
        "Legendary"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "Legendary"
+      "cardText": "Legendary",
+      "colors": [
+       "green"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Historic"
+      "cardText": "Historic",
+      "colors": [
+       "green"
+      ]
      }
     ]
    },
@@ -7360,15 +7826,24 @@
       "superTypes": [
        "Legend",
        "Legendary"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "Legendary"
+      "cardText": "Legendary",
+      "colors": [
+       "red"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Historic"
+      "cardText": "Historic",
+      "colors": [
+       "red"
+      ]
      }
     ]
    },
@@ -7420,15 +7895,24 @@
       "superTypes": [
        "Legend",
        "Legendary"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "Legendary"
+      "cardText": "Legendary",
+      "colors": [
+       "white"
+      ]
      },
      {
       "count": 1,
-      "cardText": "Historic"
+      "cardText": "Historic",
+      "colors": [
+       "white"
+      ]
      }
     ]
    },
@@ -7524,11 +8008,17 @@
       "count": 1,
       "subTypes": [
        "Phyrexian"
+      ],
+      "colors": [
+       "white"
       ]
      },
      {
       "count": 1,
-      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated"
+      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated",
+      "colors": [
+       "white"
+      ]
      }
     ]
    }
@@ -7570,11 +8060,17 @@
       "count": 1,
       "subTypes": [
        "Phyrexian"
+      ],
+      "colors": [
+       "blue"
       ]
      },
      {
       "count": 1,
-      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated"
+      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated",
+      "colors": [
+       "blue"
+      ]
      }
     ]
    }
@@ -7616,11 +8112,17 @@
       "count": 1,
       "subTypes": [
        "Phyrexian"
+      ],
+      "colors": [
+       "green"
       ]
      },
      {
       "count": 1,
-      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated"
+      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated",
+      "colors": [
+       "green"
+      ]
      }
     ]
    }
@@ -7662,11 +8164,17 @@
       "count": 1,
       "subTypes": [
        "Phyrexian"
+      ],
+      "colors": [
+       "red"
       ]
      },
      {
       "count": 1,
-      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|for mirrodin|compleated"
+      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|for mirrodin|compleated",
+      "colors": [
+       "red"
+      ]
      }
     ]
    }
@@ -7708,42 +8216,14 @@
       "count": 1,
       "subTypes": [
        "Phyrexian"
-      ]
-     },
-     {
-      "count": 1,
-      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated"
-     }
-    ]
-   }
-  ]
- },
- {
-  "name": "UnionTest",
-  "description": "Soldier text OR Soldier type OR black goblin",
-  "spriteAtlas": "maps/tileset/buildings.atlas",
-  "sprite": "LegendShop",
-  "overlaySprite": "Overlay8White",
-  "rewards": [
-   {
-    "count": 8,
-    "type": "Union",
-    "cardUnion": [
-     {
-      "count": 1,
-      "cardText": "Soldier"
-     },
-     {
-      "count": 1,
-      "subTypes": [
-       "Soldier"
-      ]
-     },
-     {
-      "count": 1,
-      "subTypes": [
-       "Goblin"
       ],
+      "colors": [
+       "black"
+      ]
+     },
+     {
+      "count": 1,
+      "cardText": "infect|oil|proliferate|incubate|toxic|corrupted|phyrexian|poison|living weapon|compleated",
       "colors": [
        "black"
       ]
@@ -8029,20 +8509,319 @@
    }
   ]
  },
-
-  {"name": "RingWhite", "description": "Benalia: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "WhiteShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["white"]}]},
-  {"name": "RingWhiteGreen", "description": "Benalia: the Selesnya Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "SelesnyaShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["white", "green"]}, {"count": 4, "colors": ["white", "green"], "colorType": "MultiColor"}]},
-  {"name": "RingWhiteBlue", "description": "Benalia: the Azorius Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "AzoriusShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["white", "blue"]}, {"count": 4, "colors": ["white", "blue"], "colorType": "MultiColor"}]},
-  {"name": "RingBlue", "description": "Tolaria: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "BlueShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["blue"]}]},
-  {"name": "RingBlueBlack", "description": "Tolaria: the Dimir Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "DimirShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["blue", "black"]}, {"count": 4, "colors": ["blue", "black"], "colorType": "MultiColor"}]},
-  {"name": "RingBlueWhite", "description": "Tolaria: the Azorius Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "AzoriusShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["blue", "white"]}, {"count": 4, "colors": ["blue", "white"], "colorType": "MultiColor"}]},
-  {"name": "RingBlack", "description": "Urborg: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "BlackShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["black"]}]},
-  {"name": "RingBlackRed", "description": "Urborg: the Rakdos Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "RakdosShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["black", "red"]}, {"count": 4, "colors": ["black", "red"], "colorType": "MultiColor"}]},
-  {"name": "RingBlackBlue", "description": "Urborg: the Dimir Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "DimirShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["black", "blue"]}, {"count": 4, "colors": ["black", "blue"], "colorType": "MultiColor"}]},
-  {"name": "RingRed", "description": "Shiv: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "RedShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["red"]}]},
-  {"name": "RingRedGreen", "description": "Shiv: the Gruul Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "GruulShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["red", "green"]}, {"count": 4, "colors": ["red", "green"], "colorType": "MultiColor"}]},
-  {"name": "RingRedBlack", "description": "Shiv: the Rakdos Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "RakdosShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["red", "black"]}, {"count": 4, "colors": ["red", "black"], "colorType": "MultiColor"}]},
-  {"name": "RingGreen", "description": "Llanowar: the Inner Sanctum", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "GreenShop", "restockPrice": 2, "rewards": [{"count": 8, "colors": ["green"]}]},
-  {"name": "RingGreenRed", "description": "Llanowar: the Gruul Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "GruulShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["green", "red"]}, {"count": 4, "colors": ["green", "red"], "colorType": "MultiColor"}]},
-  {"name": "RingGreenWhite", "description": "Llanowar: the Selesnya Exchange", "spriteAtlas": "maps/tileset/buildings.atlas", "sprite": "SelesnyaShop", "restockPrice": 2, "rewards": [{"count": 4, "colors": ["green", "white"]}, {"count": 4, "colors": ["green", "white"], "colorType": "MultiColor"}]}
+ {
+  "name": "RingWhite",
+  "description": "Benalia: the Inner Sanctum",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "WhiteShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 8,
+    "colors": [
+     "white"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "RingWhiteGreen",
+  "description": "Benalia: the Selesnya Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "SelesnyaShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "white",
+     "green"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "white",
+     "green"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingWhiteBlue",
+  "description": "Benalia: the Azorius Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "AzoriusShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "white",
+     "blue"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "white",
+     "blue"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingBlue",
+  "description": "Tolaria: the Inner Sanctum",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "BlueShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 8,
+    "colors": [
+     "blue"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "RingBlueBlack",
+  "description": "Tolaria: the Dimir Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "DimirShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "blue",
+     "black"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "blue",
+     "black"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingBlueWhite",
+  "description": "Tolaria: the Azorius Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "AzoriusShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "blue",
+     "white"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "blue",
+     "white"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingBlack",
+  "description": "Urborg: the Inner Sanctum",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "BlackShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 8,
+    "colors": [
+     "black"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "RingBlackRed",
+  "description": "Urborg: the Rakdos Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "RakdosShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "black",
+     "red"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "black",
+     "red"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingBlackBlue",
+  "description": "Urborg: the Dimir Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "DimirShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "black",
+     "blue"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "black",
+     "blue"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingRed",
+  "description": "Shiv: the Inner Sanctum",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "RedShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 8,
+    "colors": [
+     "red"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "RingRedGreen",
+  "description": "Shiv: the Gruul Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "GruulShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "red",
+     "green"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "red",
+     "green"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingRedBlack",
+  "description": "Shiv: the Rakdos Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "RakdosShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "red",
+     "black"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "red",
+     "black"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingGreen",
+  "description": "Llanowar: the Inner Sanctum",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "GreenShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 8,
+    "colors": [
+     "green"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "RingGreenRed",
+  "description": "Llanowar: the Gruul Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "GruulShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "green",
+     "red"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "green",
+     "red"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ },
+ {
+  "name": "RingGreenWhite",
+  "description": "Llanowar: the Selesnya Exchange",
+  "spriteAtlas": "maps/tileset/buildings.atlas",
+  "sprite": "SelesnyaShop",
+  "restockPrice": 2,
+  "rewards": [
+   {
+    "count": 4,
+    "colors": [
+     "green",
+     "white"
+    ]
+   },
+   {
+    "count": 4,
+    "colors": [
+     "green",
+     "white"
+    ],
+    "colorType": "MultiColor"
+   }
+  ]
+ }
 ]
