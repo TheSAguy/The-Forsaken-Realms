@@ -337,6 +337,12 @@ public class TuningData {
     public boolean spawnClockFollowsSpeedUp = true;
     public int spawnCrowdLimit = 14;
     public float spawnCrowdRadiusTiles = 24f;
+    // Round 383b (the user: "week 1, enemy health is 50% normal, but not lower than 20 health (unless they already have
+    // less). Week 2, 75%, but not less than 25"): DuelScene.earlyWeekLife - ordinary enemies only, never New Game+.
+    public float earlyLifeWeek1Factor = 0.5f;
+    public int earlyLifeWeek1Floor = 20;
+    public float earlyLifeWeek2Factor = 0.75f;
+    public int earlyLifeWeek2Floor = 25;
     // Round 299 (user: "Any +Life should only be handed out once. Can't farm. All other rewards should be cut by 50%.
     // That goes for gold and number of cards."). A boss lair that was cleared comes back after the spot rest above;
     // on every visit after that, gold / shards / wood / stone are multiplied by lairReturnRewardFactor (rounded up),

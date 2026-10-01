@@ -240,22 +240,61 @@ public final class DungeonSources {
         }
     }
 
-    /** After the first visit one of the living inhabitants; before it (or with only special ones left) an ordinary
-     *  creature of the place's color. Null when neither yields one. */
+    /** After the first visit one of the living inhabitants, by the week's tier odds (round 383b); before it - or with
+     *  only special ones left, or none of the living due this week - an ordinary creature of the place's color. Null
+     *  when neither yields one. */
     public static Pick pick(World world, PointOfInterest poi, float rank, Random rand) {
         List<EnemyData> living = livingInhabitants(poi);
-        if (!living.isEmpty())
-            return new Pick(living.get(rand.nextInt(living.size())), "its inhabitants (" + living.size() + " living)");
         String color = colorOf(world, poi);
+        if (!living.isEmpty()) {
+            EnemyData out = byWeekTier(world, living, color, rand);
+            if (out != null)
+                return new Pick(out, "its inhabitants (" + living.size() + " living, week "
+                        + SpawnTierWeighting.currentWeek(world) + "'s tier odds)");
+        }
         BiomeData biome = biomeNamed(world, color);
         if (biome == null)
             return null;
         for (int attempt = 0; attempt < 6; attempt++) {
             EnemyData e = biome.getEnemy(rank, false, null); // the ordinary roll - no war champions, tiers as usual
             if (e != null && !isSpecial(e))
-                return new Pick(e, color + " (not visited" + (hasRoster(poi) ? ", only special ones left" : "") + ")");
+                return new Pick(e, color + (!living.isEmpty() ? " (its " + living.size() + " living not due this week)"
+                        : " (not visited" + (hasRoster(poi) ? ", only special ones left" : "") + ")"));
         }
         return null;
+    }
+
+    /**
+     * Round 383b (the user, on the dungeon spawns: "there is a chance that higher level monsters might spawn from
+     * dungeons" early on). Before a visit a source's creatures come through the ordinary roll, with the week's tier odds
+     * (SpawnTierWeighting); its inhabitants came out evenly, a Master on day 3 as likely as a rat. Now each tier present
+     * takes the week's target for it in this land, shared among its living members - a tier at 0 this week stays
+     * inside. Null when every tier present is at 0 (the caller falls back to the ordinary roll) or the weighting is off
+     * (then an even draw, as before).
+     */
+    static EnemyData byWeekTier(World world, List<EnemyData> living, String color, Random rand) {
+        if (!SpawnTierWeighting.isEnabled())
+            return living.get(rand.nextInt(living.size()));
+        int week = SpawnTierWeighting.currentWeek(world);
+        Map<String, Integer> perTier = new java.util.HashMap<>();
+        for (EnemyData e : living)
+            perTier.merge(e.tier, 1, Integer::sum);
+        float[] weights = new float[living.size()];
+        float total = 0f;
+        for (int i = 0; i < living.size(); i++) {
+            EnemyData e = living.get(i);
+            weights[i] = SpawnTierWeighting.targetTierWeight(e.tier, week, color) / perTier.get(e.tier);
+            total += weights[i];
+        }
+        if (total <= 0f)
+            return null;
+        float r = rand.nextFloat() * total;
+        for (int i = 0; i < living.size(); i++) {
+            r -= weights[i];
+            if (r <= 0f)
+                return living.get(i);
+        }
+        return living.get(living.size() - 1);
     }
 
     private static boolean hasRoster(PointOfInterest poi) {

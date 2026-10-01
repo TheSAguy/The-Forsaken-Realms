@@ -292,6 +292,15 @@
     "spawnClockFollowsSpeedUp": true,
     "spawnCrowdLimit": 14,
     "spawnCrowdRadiusTiles": 24,
+    // Round 383b (the user: "week 1, enemy health is 50% normal, but not lower than 20 health (unless they already have
+    // less). Week 2, 75%, but not less than 25"). The life a duel starts with (after the difficulty factor and the
+    // day/night terrain) x the week's factor, raised to the floor, never above what it had. Days 1-7 = week 1, 8-14 =
+    // week 2. Every ordinary enemy, outside and inside places; not bosses, legends or roaming champions, Arena or Inn
+    // fights, territory mages, a guard's fight, nor New Game+. Factor 1 switches a week off. [TFR-EarlyLife].
+    "earlyLifeWeek1Factor": 0.5,
+    "earlyLifeWeek1Floor": 20,
+    "earlyLifeWeek2Factor": 0.75,
+    "earlyLifeWeek2Floor": 25,
     // Round 299: a cleared boss lair comes back after the spot rest above; every visit after that pays gold /
     // shards / wood / stone x this (rounded up) and the NUMBER of cards x this (a lone card drops half the
     // time), and each non-signature item drops with the chance below. +Life and a boss's own signature item

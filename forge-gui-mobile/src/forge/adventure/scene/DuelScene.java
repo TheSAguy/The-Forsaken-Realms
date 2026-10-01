@@ -981,6 +981,7 @@ public class DuelScene extends ForgeScene {
                 enemyStartingLife = Current.world().applyDayNightTerrainLife(enemyStartingLife,
                         (int) enemy.getX() / tileSize, (int) enemy.getY() / tileSize);
             }
+            enemyStartingLife = earlyWeekLife(enemyStartingLife, currentEnemy); // round 383
             // Diagnostic logging standard (user request 2026-08-13) - unconditional (unlike
             // [TFR-DayNight] above, which only fires for the colored-terrain/day-night-enabled
             // subset of overworld fights), so difficulty-scaled starting life is verifiable for
@@ -1289,6 +1290,57 @@ public class DuelScene extends ForgeScene {
     public boolean leave() {
         Adventure.getInstance().renderTransitionScreen = true;
         return super.leave();
+    }
+
+    /**
+     * Round 383b (the user: "I feel like the new spawn from dungeons is going to make it a little harder to control the
+     * monster level at the start of the game... week 1, enemy health is 50% normal, but not lower than 20 health
+     * (unless they already have less). Week 2, 75%, but not less than 25"). Applied to the life the fight would start
+     * with - after the difficulty factor and the day/night terrain - and never above it: life x factor, raised to the
+     * floor, capped at the life it had. Every ordinary enemy, on the overworld and inside places. Not a boss, a legend
+     * or roaming champion, an Arena or Inn fight, a territory mage (an attacker or the Capitol's challenger), a duel
+     * the AI fights for the player's side (a guard's), nor anything in New Game+. Settings earlyLifeWeek1/2Factor and
+     * Floor; grep forge.log for [TFR-EarlyLife].
+     */
+    private int earlyWeekLife(int life, EnemyData data) {
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null || data == null || Current.world() == null)
+            return life;
+        int week = SpawnTierWeighting.currentWeek(Current.world());
+        float factor;
+        int floor;
+        if (week == 1) {
+            factor = tuning.earlyLifeWeek1Factor;
+            floor = tuning.earlyLifeWeek1Floor;
+        } else if (week == 2) {
+            factor = tuning.earlyLifeWeek2Factor;
+            floor = tuning.earlyLifeWeek2Floor;
+        } else {
+            return life;
+        }
+        if (factor >= 1f)
+            return life;
+        String exempt = null;
+        if (data.boss)
+            exempt = "a boss";
+        else if (forge.adventure.util.LegendSpawns.isMember(data))
+            exempt = "a legend";
+        else if (isArena || eventData != null)
+            exempt = "an Arena or Inn fight";
+        else if (enemy != null && enemy.territoryColor != null)
+            exempt = "a territory mage";
+        else if (aiControlsPlayerSide)
+            exempt = "the AI's fight";
+        else if (Current.player().getCharacterFlag("newGamePlus") > 0)
+            exempt = "New Game+";
+        if (exempt != null) {
+            System.out.println("[TFR-EarlyLife] " + data.getName() + " week " + week + ": " + life + " kept (" + exempt + ")");
+            return life;
+        }
+        int ramped = Math.min(life, Math.max(floor, Math.round(life * factor)));
+        System.out.println("[TFR-EarlyLife] " + data.getName() + " week " + week + ": " + life + " -> " + ramped
+                + " (x" + factor + ", floor " + floor + ")");
+        return ramped;
     }
 
     public void initDuels(PlayerSprite playerSprite, EnemySprite enemySprite) {

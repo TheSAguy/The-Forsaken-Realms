@@ -322,8 +322,8 @@
 		"displayName": "Levilain's Farm",
 		"type": "dungeon",
 		"count": 1,
-		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
-		"sprite": "farm",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Castle3",
 		"map": "../The Forsaken Realms/maps/map/fort/fort_white_4_farm.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -3807,8 +3807,8 @@
 		"displayName": "Scarecrow Farm",
 		"type": "sidebossmoderate",
 		"count": 1,
-		"spriteAtlas": "../common/maps/tileset/buildings.atlas",
-		"sprite": "farm",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Scarecrow_Farm",
 		"map": "../The Forsaken Realms/maps/map/fort/fort_green_4_scarecrowfarm.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -4282,8 +4282,8 @@
 		"displayName": "Zedruu City",
 		"type": "sidebossmoderate",
 		"count": 1,
-		"spriteAtlas": "../common/maps/tileset/buildingsbosses.atlas",
-		"sprite": "Zedruu",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Zedruu_City",
 		"map": "../The Forsaken Realms/maps/map/zedruu/zedruu.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
@@ -4363,8 +4363,8 @@
 		"displayName": "Squirrel Farm",
 		"type": "castle",
 		"count": 1,
-		"spriteAtlas": "../The Forsaken Realms/sprites/buildings.atlas",
-		"sprite": "farm",
+		"spriteAtlas": "../The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+		"sprite": "E_Squirrel_Farm",
 		"map": "../The Forsaken Realms/maps/map/grove/Squirrel_Farm.tmx",
 		"radiusFactor": 0.8,
 		"questTags": [
