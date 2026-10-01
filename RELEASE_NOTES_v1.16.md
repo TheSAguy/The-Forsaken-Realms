@@ -45,7 +45,23 @@ Your v1.15 save loads as it is.
 - An old road could stop one tile short of a town you restored.
 - Choosing the second utility slot or a second hand slot listed no items.
 - A Master Blue Wizard could fail to load its deck.
+- Commander-only cards (Arcane Signet, Command Tower, Backgrounds and more - 76 in all) no longer turn up in enemy
+  decks, boosters or rewards.
 
 ## Engine
 
 Forge 2.0.16 (the 2026-09-30 daily).
+
+## 📱 Android
+
+**Install:**
+1. On your Android device (Android 8.0+), download `forsaken-realms-1.16-signed-aligned.apk` from the assets below.
+2. Tap the downloaded file and allow your browser or file manager to install unknown apps when prompted (the game is
+   signed by us, not the Play Store).
+3. Grant the storage permission the app asks for; it stores the game data it downloads.
+4. On first launch, tap **Download** when offered the resource files (~210 MB, use Wi-Fi). The app restarts itself
+   when finished. After that it plays offline.
+5. It works alongside the official Forge app. Updating over an earlier version keeps your saves.
+
+`assets.zip` in the file list is downloaded by the app automatically; you don't need it yourself. Problems or
+cut-off layouts: Discord (https://discord.gg/TTRPKc9HYJ) with your device model.
