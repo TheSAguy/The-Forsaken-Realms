@@ -749,6 +749,24 @@ public class DuelScene extends ForgeScene {
         player.setEnableETBCountersEffect(true); //enable etbcounters on starting cards like Ring of Three Wishes, etc...
     }
 
+    /**
+     * Round 390 (the user: "I'd like to add the land 'Wastes' to all Archmages as a starting land on the battlefield.
+     * The only place this should not be added would be the Town/City/Capitol fights"): the start-of-duel cards of an
+     * Archmage-tier (Mythic) enemy seat - TuningData.archmageStartCards - or null for any other tier or when the list is
+     * empty. Callers decide where it applies: the watched duel below (not town, Ring City, capital or Capitol fights,
+     * not Inn/Arena events) and WorldStage's headless guard fight, so a simulated one matches a watched one.
+     */
+    public static EffectData archmageStartEffect(EnemyData enemy) {
+        if (enemy == null || EnemyData.tierRank(enemy.tier) < 3)
+            return null;
+        forge.adventure.data.TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null || tuning.archmageStartCards == null || tuning.archmageStartCards.length == 0)
+            return null;
+        EffectData effect = new EffectData();
+        effect.startBattleWithCard = tuning.archmageStartCards;
+        return effect;
+    }
+
     public void setDungeonEffect(EffectData E) {
         dungeonEffect = E;
     }
@@ -1011,6 +1029,14 @@ public class DuelScene extends ForgeScene {
             }
             addEffects(aiPlayer, oppEffects);
             addEffects(aiPlayer, equipmentEffects);
+            // Round 390: an Archmage seat starts with TuningData.archmageStartCards in play - per seat, so only the
+            // Archmages of a chained fight get them. Not in a town/Ring City/capital assault or the Capitol defense
+            // (WorldStage.isTownOrCapitolFight), nor in Inn/Arena events, which play by their own rules.
+            if (eventData == null && !forge.adventure.stage.WorldStage.getInstance().isTownOrCapitolFight()) {
+                EffectData archmage = archmageStartEffect(currentEnemy);
+                if (archmage != null)
+                    addEffects(aiPlayer, Array.with(archmage));
+            }
 
             //add extra cards for challenger mode
             if (chaosBattle) {

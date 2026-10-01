@@ -156,6 +156,10 @@ public class TuningData {
     // Round 350 (the user: "give legends a day-based lifetime"): a sighted legend stays this many whole days, counted
     // down in the quest log. It replaces legendLifetimeFactor for every legend the game sights now.
     public int legendLifetimeDays = 3;
+    // Round 390 (the user: "add the land 'Wastes' to all Archmages as a starting land on the battlefield"): the cards
+    // every Archmage-tier (Mythic) enemy seat starts a duel with in play - except town, Ring City, capital and Capitol
+    // fights, and Inn/Arena events (their own rules). "Name|SET" picks a printing. Empty = off.
+    public String[] archmageStartCards = {"Wastes|EOC"};
 
     // Progressive Set Unlocks (MOD_SCOPE.md #4) research eligibility threshold (2026-08-22 user
     // request to make ResearchScene's hardcoded THRESHOLD_FRACTION tunable). Fraction of an

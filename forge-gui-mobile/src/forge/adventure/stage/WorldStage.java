@@ -62,6 +62,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // for the [TFR-TownAssault] outcome line. Consequences beyond the ordinary duel win/loss
     // (capture, tiers) are deliberately not built yet - user: "for now, just choose a random enemy".
     private boolean currentMobIsTownAssault = false;
+
+    /** Round 390: the duel being set up is a town / Ring City / capital assault or the Capitol defense - the fights
+     *  that keep their own start-of-duel rules (DuelScene: no Archmage start cards). */
+    public boolean isTownOrCapitolFight() {
+        return currentMobIsTownAssault || currentMobIsCapitolDefense;
+    }
     private String townAssaultTownName = null;
     private PointOfInterest townAssaultPoi = null;
     // Round 105 (user request 2026-09-04): full-screen back-splash behind the win/lose dialog - the user's
@@ -1246,6 +1252,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // items' opponent effects on the mage's. Parity is the rule ("simulate" is presentation only).
         final Array<EffectData> gear = ArmoryStorage.effectsOf(guard);
         final Array<EffectData> gearOnMage = ArmoryStorage.opponentEffectsOf(guard);
+        EffectData archmageStart = DuelScene.archmageStartEffect(mage.getData()); // round 390: as in the watched fight
+        if (archmageStart != null)
+            gearOnMage.add(archmageStart);
         DeckTesterSimulator.runBatch(
                 RoamingGuards.displayName(guard.tier) + " Guard", deck, guard.maxLife,
                 gear.size == 0 ? null : rp -> DuelScene.applyEffects(rp, gear),

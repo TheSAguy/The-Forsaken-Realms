@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 390: every Archmage starts its duels with Wastes in play (2026-10-01)
+
+The user: "I'd like to add the land 'Wastes' to all Archmages as a starting land on the battlefield. This only place
+this should not be added would be the Town/City/Capitol fights."
+
+- `TuningData.archmageStartCards` (settings.json, default `["Wastes|EOC"]` - the Edge of Eternities Commander printing
+  the user showed; `[]` turns it off). `DuelScene.archmageStartEffect(EnemyData)`: those cards for a Mythic-tier seat,
+  else null.
+- Applied per enemy seat in `DuelScene.enter()` (only the Archmages of a chained fight), everywhere but: town, Ring
+  City and capital assaults and the Capitol defense (`WorldStage.isTownOrCapitolFight()`), and Inn events
+  (`eventData != null` - event rules). Arena champions, dungeon and lair Archmages, legends (on top of their Gemstone
+  Mine) and chest duels get it. The headless roaming-guard fight adds it to the mage's seat
+  (`WorldStage.simulateGuardDuel`), so a simulated guard fight matches a watched one.
+- Agent-seen: a console-spawned Clay Golem (Archmage) - `[TFR-DuelEffects] Clay Golem (Archmage): 1 effect(s) ...
+  battlefield=[Wastes]` after its gear line, the EOC Wastes on its battlefield; no card-lookup error.
+
 ## Round 389: a quest that needs a vanished boss lair brings it back (2026-10-01)
 
 A player on Discord: "I also completed the pest control quest and received it again, but the hive for the second quest
