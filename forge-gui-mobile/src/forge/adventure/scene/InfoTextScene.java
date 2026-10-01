@@ -90,7 +90,7 @@ public class InfoTextScene extends UIScene {
             Table row = new Table();
             for (String[] link : links) {
                 final String url = link[1];
-                row.add(Controls.newTextButton(link[0], () -> com.badlogic.gdx.Gdx.net.openURI(url))).padRight(8);
+                row.add(Controls.newTextButton(link[0], () -> openLink(url))).padRight(8);
             }
             content.add(row).align(Align.left).padBottom(10).row();
         }
@@ -109,6 +109,33 @@ public class InfoTextScene extends UIScene {
      *  to exactly whichever screen opened this one). */
     public static void show(String title, List<String> paragraphs) {
         show(title, paragraphs, null, null);
+    }
+
+    /**
+     * Round 386b (the user: "The Discord button works, but the Game Guide / FAQ does not"). libGDX's openURI hands a
+     * file: address to Desktop.browse, which did nothing with the guide's (a "file:/C:/..././res/..." URI). A local
+     * file opens through the system's own file association instead - Desktop.open, off the render thread - and
+     * anything else, or a failure, still goes through openURI. Grep forge.log for [TFR-Welcome].
+     */
+    static void openLink(String url) {
+        if (url.startsWith("file:")) {
+            try {
+                java.io.File file = new java.io.File(new java.net.URI(url)).getCanonicalFile();
+                new Thread(() -> {
+                    try {
+                        java.awt.Desktop.getDesktop().open(file);
+                        System.out.println("[TFR-Welcome] opened " + file);
+                    } catch (Exception e) {
+                        System.out.println("[TFR-Welcome] could not open " + file + " (" + e + ") - trying the browser");
+                        com.badlogic.gdx.Gdx.net.openURI(file.toURI().toString());
+                    }
+                }, "TFR-OpenLink").start();
+                return;
+            } catch (Exception e) {
+                System.out.println("[TFR-Welcome] bad file link " + url + " (" + e + ")");
+            }
+        }
+        com.badlogic.gdx.Gdx.net.openURI(url);
     }
 
     /** Round 386: as above, with a row of link buttons - each {label, url}. */

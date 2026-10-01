@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 386b: the welcome page right after world generation again; the guide button opens the guide (2026-10-01)
+
+The user: "The Discord button works, but the Game Guide / FAQ does not. Also, let's move the Welcome page to just after
+the World gen, before the spawn dungeon. That's where it was before." And on the notes: tell players what they lose per
+difficulty.
+
+- **Welcome timing:** GameScene.enter() shows it again as before round 386 (at world generation, before the spawn
+  camp). Seen in the agent: InfoTextScene with Discord / Game Guide & FAQ / Back while the player stands in the Secluded
+  Encampment. The tfr-play skill now says that first info page is the welcome page.
+- **The guide button:** libGDX's openURI hands a file: address to Desktop.browse, which did nothing with
+  "file:/C:/.../The%20Forsaken%20Realms/./res/..." (the user's report). InfoTextScene.openLink opens a file: link with
+  Desktop.open on the canonical file (the system's .html association), off the render thread, falling back to openURI;
+  guideLink() normalizes the path. Seen in the agent: clicking it opened "The Forsaken Realms — Game Guide & FAQ" in
+  Edge (this PC's .html program).
+- **Release notes:** the lost-duel line gives the percentages and minimums per difficulty (settings.json
+  defeatGoldLoss*: Easy 2%/50, Normal 5%/100, Hard 10%/150, Insane 15%/200).
+
 ## Round 386: one Game Guide & FAQ with a web page, the new welcome page, v1.16 notes (2026-10-01)
 
 The user: "Make sure the game guide is up to date. Can you create a combined Game Guide & FAQ. No need to have two. Then
@@ -14285,10 +14302,9 @@ the welcome screen" - thanks, Discord for feedback/bugs (button), the guide (but
   buttons; WorldStage.showWelcomeDialog/guideLink): Discord + "Game Guide & FAQ". On a computer the guide button opens
   the plane folder's GUIDE.html as a file:// page (Config.planeFile); on Android, or when the file is missing,
   config.json `welcomeGuideLink` = the GUIDE.md on GitHub's master (works once the release is pushed). [TFR-Welcome].
-- **The welcome page could vanish at once** (GameScene): it opened inside GameScene.enter() - leaving the starting
-  camp switched back to the world map right over it, and the once-per-save flag was already set. Seen in the agent
-  (the log said it opened, the screen showed the map). Now enter() marks it pending and act() opens it after the map
-  has been current for 0.5 s, setting the flag only then. Seen in the agent: the page with both buttons.
+- **(Withdrawn in 386b)** round 386 deferred the welcome page to GameScene.act() on a misread test: the agent's own
+  new-game steps press Back on the first info page, which IS the welcome page - nothing had vanished. The deferral
+  moved it to the moment the player leaves the spawn camp.
 - **RELEASE_NOTES_v1.16.md** - "Lairs & Legends" (my name for it).
 - **Front-view entrances** (for a later release, no game change): a background agent sorted all 344 entrance pictures;
   130 front-view (+77 unsure) copied to Pictures\Screenshots\Art_to_Tweak\Front_View with a CSV and contact sheets.

@@ -66,22 +66,7 @@ public class GameScene extends HudScene {
     @Override
     public void act(float delta) {
         stage.act(delta);
-        // Round 386: the welcome page opens once the world map has been the current scene for a moment - see enter().
-        if (welcomePending) {
-            if (Forge.getCurrentScene() != this) {
-                welcomeWait = 0f;
-            } else if ((welcomeWait += delta) >= 0.5f) {
-                welcomePending = false;
-                Current.player().setQuestFlag("TFR_WelcomeShown", 1);
-                System.out.println("[TFR-Welcome] shown on the world map");
-                WorldStage.getInstance().showWelcomeDialog(Config.instance().getConfigData().welcomePopupText);
-            }
-        }
     }
-
-    /** Round 386: the welcome page waits for a settled world map (act()). */
-    private boolean welcomePending = false;
-    private float welcomeWait = 0f;
 
     @Override
     public void render() {
@@ -106,13 +91,12 @@ public class GameScene extends HudScene {
         // dialog, see TileMapScene.initializeDialogs()). Config-driven; stock planes never set
         // welcomePopupText, so nothing changes for them.
         String welcome = Config.instance().getConfigData().welcomePopupText;
-        // Round 386 (agent test of the new welcome page): opened right here it was gone again at once - leaving the
-        // starting camp enters this scene and the exit's own switch back to it then landed on top of the welcome page,
-        // and the once-per-save flag was already set, so it never came back. Now it is only marked pending here; act()
-        // opens it when this scene has been current for half a second, and only then counts it as seen.
+        // Round 386b: right here again - the user wants it straight after world generation, before the spawn dungeon,
+        // where it always was. (Round 386 deferred it on a misread agent test: the agent's own new-game steps press
+        // Back on the first info page, which IS this welcome page.)
         if (welcome != null && !welcome.isEmpty() && !Current.player().checkQuestFlag("TFR_WelcomeShown")) {
-            welcomePending = true;
-            welcomeWait = 0f;
+            Current.player().setQuestFlag("TFR_WelcomeShown", 1);
+            WorldStage.getInstance().showWelcomeDialog(welcome);
         }
         // This causes the infinite load of POI if the two collision point is too close.
         // IIRC This is used before and the player will start inside the POI.

@@ -32,7 +32,8 @@ Your v1.15 save loads as it is.
 
 ## Changed
 
-- Losing a duel costs a percentage of your gold, with a minimum.
+- Losing a duel costs a percentage of the gold you carry, with a minimum: Easy 2% (at least 50), Normal 5% (at least
+  100), Hard 10% (at least 150), Insane 15% (at least 200). Gold in the Bank is safe.
 - Loot behind gates and locked doors is no longer guarded.
 - Pickups and place markers stay hidden in the fog until you can see them.
 - Your starting gear is worn from the start.

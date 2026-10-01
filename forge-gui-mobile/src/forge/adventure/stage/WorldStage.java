@@ -1512,7 +1512,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             java.io.File html = Config.instance().planeFile("GUIDE.html");
             if (html.isFile()) {
                 System.out.println("[TFR-Welcome] guide button -> " + html.getAbsolutePath());
-                return html.getAbsoluteFile().toURI().toString();
+                return html.getAbsoluteFile().toPath().normalize().toUri().toString(); // round 386b: no "./" in it
             }
         }
         String web = Config.instance().getConfigData().welcomeGuideLink;

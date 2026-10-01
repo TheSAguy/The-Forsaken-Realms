@@ -136,7 +136,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   new forge-gui test deps needed ONE online Maven run; jar renamed 2.0.16 - agent_launch.cmd globs it). **386:** ONE
   "Game Guide & FAQ" = plane GUIDE.md (FAQ.md gone) + GUIDE.html via dev-tools/guide_html.py (re-run after edits);
   shipped as GAME_GUIDE.md/.html; new welcome page (Discord + Guide buttons, guide = local file on PC, GitHub on
-  Android), opened from GameScene.act() once the map settles (it used to vanish at once); RELEASE_NOTES_v1.16.md.
+  Android); RELEASE_NOTES_v1.16.md. **386b:** welcome back at world generation (GameScene.enter - 386's deferral
+  was a misread test: the agent's new-game Back IS the welcome page); guide button = Desktop.open on the file.
   Open from v1.15 QA: Instant4White selling off-color cards, Leather Boots start unequipped; Inn screen's
   `eventDescription` label (100 units) does not wrap - unreported.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
