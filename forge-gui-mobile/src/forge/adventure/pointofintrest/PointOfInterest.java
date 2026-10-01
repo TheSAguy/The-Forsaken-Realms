@@ -46,6 +46,10 @@ public class PointOfInterest implements Serializable, SaveFileContent {
         Array<Sprite> textureAtlas = Config.instance().getPOISprites(this.data);
         spriteIndex = spreadZeroSpriteIndex(spriteIndex, textureAtlas.size, this.data, position);
         sprite = textureAtlas.get(spriteIndex%textureAtlas.size);
+        // Round 380 (the new dungeon entrances): the rectangle is the sprite's size at world-gen, restored from the save -
+        // a place whose art changed size since (the six 48-px landmark caves were 32) kept the old box, its map label, pin
+        // and reveal centre half a tile off. Every constructor sets it from the sprite; so does a load now.
+        rectangle.setSize(sprite.getWidth(), sprite.getHeight());
     }
 
     @Override

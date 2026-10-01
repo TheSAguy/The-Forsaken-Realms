@@ -14264,6 +14264,67 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 380: a picture of its own for every cave - the new dungeon entrances (2026-09-30)
+
+The user: "I have found/created new dungeon entrances here F:\Art_to_Tweak\NEW. Please review and see what's best to
+use. I don't want to use any that are cut-off pictures or tree-stumps that are not complete. We currently have a lot of
+similar caves we use." Then: the lighthouse for Omenport, "okay to use painted".
+
+- **The art:** 11 PixelLab sheets (the user's) cut into 696 icons -> 240 distinct accepted (white 37, blue 43, black
+  47, red 41, green 41, colorless 31); rejected 100 cut off / fused, 42 incomplete tree stumps, 16 temple facades that
+  read as towns, 7 background tiles, 6 unreadable, 5 too big, 280 near-duplicates (one kept per family). Land calls:
+  bone-white skulls and ice caves -> white, teal skulls -> blue, desert sandstone -> red. Plus six painted 64 px caves
+  used at 48 px for landmarks. S02 (...1790801836888) and S11 (...1790810034981) were drawn edge to edge - the user
+  will regenerate them with spacing (their desert-arch and ice rows exist nowhere else).
+- **Before:** caves.atlas's seven pools (CaveRed 31, CaveColorless 29, CaveBlack 26, CaveGreen 24, CaveWhite 21,
+  CaveBlue 19, Cave 7) gave 157 caves 49 distinct pictures - a random variant each; 207 dungeon-type places shared a
+  picture with another.
+- **After:** maps/tileset/dungeon_entrances_2.atlas (page 1 512x456: 178 new 32-px icons + six 48-px singles; page 2
+  over common/maps/tileset/buildings.png for 12 pinned variants - common/ untouched), ONE region per dungeon
+  (`E_<POI>`; merged twins share one), and 201 POI entries' spriteAtlas/sprite in world/points_of_interest.json (only
+  those values changed). 341 of the 344 dungeon-type places are now unique; only Levilain's Farm / Scarecrow Farm /
+  Squirrel Farm still share (no farm art yet). Names matched where the art allowed: Kiln Hollow the brick kiln,
+  Fungal Bloom the mushroom cave, Brinewell the well, Gallows Cave the gallows, Icicle Warren the ice arch, Smolder
+  Pit the lava pit; Omenport the lighthouse, Foghorn Cleft a surf sea cave. The 48-px landmarks: Mistfall Cave (the
+  waterfall), Strange Desert (the desert cave), Deep Caverns green (the double cave) and Wasteland (the dark rock),
+  Dragon's Lair green (the pine crag) and white (the rocky trees).
+- **Saves:** PointOfInterest.load() re-reads the POI's data by name and rebuilds its sprite from the atlas named
+  there; the saved spriteIndex is taken modulo the region count (one region -> 0). The saved RECTANGLE kept the old
+  32x32 for the six landmarks (label / pin / reveal centre half a tile off) - load() now sets the rectangle's size from
+  the current sprite, as every constructor does (`rectangle.setSize(sprite.getWidth(), sprite.getHeight())`).
+- Verified: every one of the 207 dungeons resolves to exactly the intended picture from the repo files; the validator
+  passes; agent-seen on the user's save copy (the green cave by Unbroken Bough wears its new mossy entrance, no
+  exception, no missing sprite). CREDITS: the PixelLab set and the painted caves (source to be confirmed).
+
+## Round 379: eight new ground-level doodads per land, the duplicates gone (2026-09-30)
+
+The user: "find 5-8 new doodads we can add per biome. 5 Major + Westland... I don't want to add MORE doodads on the
+map, but have more variety". After two review passes: no trees ("they are currently used as structures that have
+collision. So it should be small things on the ground you can run over") and every tall pick swapped for a
+ground-level one.
+
+- **Duplicates counted** from what doodads_hd.atlas draws: a picture on another land (95 today), a pixel twin in its
+  kind (13), a near-identical recolor. Each shared picture now stays on ONE land (Red the desert set, Green the forest
+  and pond set, the Wasteland the bones/branches/cracks, Black the skeletons and graves, Blue the crystals); the
+  others lose their copy and take 8 new pictures each, all ground level: White - cow skull, skull and bones, bleached
+  ribcage, dry agave star, dead thorn bush, sandstone pebbles, pale dry fern, spiky dry grass; Blue - two lily pads (on
+  water), two dune grasses, driftwood twigs and branch, a bleached branch, a blue flower patch; Black - murky lily pads,
+  dusk-bloom lilies, coral bits, violet mushrooms, grey swamp roots, a glowing root, a thorn tangle, black bramble;
+  Red - ember-hot stones, obsidian shards, a lava vent, glowing lava shards, a lava crack, charred twigs, fallen red
+  leaves, red spike grass; Green - a fallen branch, seedlings, orange wildflowers, brown and flat white pebbles, a stump
+  with a sprout, violet flowers, a tall grass clump; Wasteland - a fallen skeleton, a beast skull, masonry and rubble
+  chips, a shattered urn, a withered tuft, spiky dead grass, a dead spiky plant.
+- **Same map:** kinds, noise bands and densities unchanged - the same number of doodads; no picture on two lands, no
+  twin in a kind. Pictures per land: White 86 -> 59, Blue 85 -> 71, Black 72 -> 49, Red 70 -> 69, Green 141 -> 140,
+  Wasteland 74 -> 55 (Player 101 untouched); 545 in all (630). Kinds keep their names, so no DOODAD_SET bump - saves
+  draw the new pictures at once.
+- **Pipeline:** the 48 picks pre-cut into one sheet at C:\Users\User\Pictures\Screenshots\Terrain\new_doodads.png
+  (sources.SHEETS "nd", 96-px cells - OUTSIDE the repo, like every world-art source), spec.py's picture lists for 48
+  kinds, export.py -> world/sprites/doodads_hd.png/.atlas (512x1136); everything else it writes came out
+  byte-identical. Every kept picture verified pixel-identical; agent-seen in green land.
+- **Not done (offered):** older doodads that are trees (palms, dead trees, charred stumps, small conifers in a few
+  kinds) - the no-trees rule was applied to the new picks only.
+
 ## Round 378: loot behind a gate has no guard (2026-09-30)
 
 The user (screenshot: magetower_14_horrors' treasure room): "For chests/booster packs in dungeons, that are behind

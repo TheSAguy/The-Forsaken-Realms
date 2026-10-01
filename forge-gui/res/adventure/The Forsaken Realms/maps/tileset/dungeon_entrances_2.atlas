@@ -1,0 +1,1383 @@
+dungeon_entrances_2.png
+size: 512,456
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+E_CaveDragon
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR
+  rotate: false
+  xy: 34, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR1
+  rotate: false
+  xy: 68, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR3
+  rotate: false
+  xy: 102, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR4
+  rotate: false
+  xy: 136, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR5
+  rotate: false
+  xy: 170, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR6
+  rotate: false
+  xy: 204, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR7
+  rotate: false
+  xy: 238, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR8
+  rotate: false
+  xy: 272, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveR9
+  rotate: false
+  xy: 306, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRA
+  rotate: false
+  xy: 340, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRB
+  rotate: false
+  xy: 374, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRC
+  rotate: false
+  xy: 408, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRE
+  rotate: false
+  xy: 442, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRG
+  rotate: false
+  xy: 476, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen01
+  rotate: false
+  xy: 0, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen02
+  rotate: false
+  xy: 34, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen03
+  rotate: false
+  xy: 68, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen04
+  rotate: false
+  xy: 102, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen05
+  rotate: false
+  xy: 136, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen06
+  rotate: false
+  xy: 170, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen07
+  rotate: false
+  xy: 204, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen08
+  rotate: false
+  xy: 238, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen09
+  rotate: false
+  xy: 272, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen10
+  rotate: false
+  xy: 306, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen11
+  rotate: false
+  xy: 340, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen12
+  rotate: false
+  xy: 374, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRGen13
+  rotate: false
+  xy: 408, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRH
+  rotate: false
+  xy: 442, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRJ
+  rotate: false
+  xy: 476, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairRed
+  rotate: false
+  xy: 0, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC
+  rotate: false
+  xy: 34, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC1
+  rotate: false
+  xy: 68, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC2
+  rotate: false
+  xy: 102, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC3
+  rotate: false
+  xy: 136, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC4
+  rotate: false
+  xy: 170, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC5
+  rotate: false
+  xy: 204, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC6
+  rotate: false
+  xy: 238, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC7
+  rotate: false
+  xy: 272, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC8
+  rotate: false
+  xy: 306, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveC9
+  rotate: false
+  xy: 340, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCA
+  rotate: false
+  xy: 374, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCB
+  rotate: false
+  xy: 408, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCE
+  rotate: false
+  xy: 442, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen01
+  rotate: false
+  xy: 476, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen02
+  rotate: false
+  xy: 0, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen03
+  rotate: false
+  xy: 34, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen04
+  rotate: false
+  xy: 68, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen05
+  rotate: false
+  xy: 102, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen06
+  rotate: false
+  xy: 136, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen07
+  rotate: false
+  xy: 170, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen08
+  rotate: false
+  xy: 204, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen09
+  rotate: false
+  xy: 238, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen10
+  rotate: false
+  xy: 272, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen11
+  rotate: false
+  xy: 306, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen12
+  rotate: false
+  xy: 340, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCGen13
+  rotate: false
+  xy: 374, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveEldrazi
+  rotate: false
+  xy: 408, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveTroll
+  rotate: false
+  xy: 442, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB
+  rotate: false
+  xy: 476, 102
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB1
+  rotate: false
+  xy: 0, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB2
+  rotate: false
+  xy: 34, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB3
+  rotate: false
+  xy: 68, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB4
+  rotate: false
+  xy: 102, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB5
+  rotate: false
+  xy: 136, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB6
+  rotate: false
+  xy: 170, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveB8
+  rotate: false
+  xy: 204, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBA
+  rotate: false
+  xy: 238, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen01
+  rotate: false
+  xy: 272, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen02
+  rotate: false
+  xy: 306, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen03
+  rotate: false
+  xy: 340, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen04
+  rotate: false
+  xy: 374, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen05
+  rotate: false
+  xy: 408, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen06
+  rotate: false
+  xy: 442, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen07
+  rotate: false
+  xy: 476, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen08
+  rotate: false
+  xy: 0, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen09
+  rotate: false
+  xy: 34, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen10
+  rotate: false
+  xy: 68, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen11
+  rotate: false
+  xy: 102, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen12
+  rotate: false
+  xy: 136, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveBGen13
+  rotate: false
+  xy: 170, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveKobold
+  rotate: false
+  xy: 204, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveLarge1
+  rotate: false
+  xy: 238, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveZombie
+  rotate: false
+  xy: 272, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairBlack
+  rotate: false
+  xy: 306, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG
+  rotate: false
+  xy: 340, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG1
+  rotate: false
+  xy: 374, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG2
+  rotate: false
+  xy: 408, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG3
+  rotate: false
+  xy: 442, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG4
+  rotate: false
+  xy: 476, 170
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG5
+  rotate: false
+  xy: 0, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG6
+  rotate: false
+  xy: 34, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveG9
+  rotate: false
+  xy: 68, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen01
+  rotate: false
+  xy: 102, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen02
+  rotate: false
+  xy: 136, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen03
+  rotate: false
+  xy: 170, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen04
+  rotate: false
+  xy: 204, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen05
+  rotate: false
+  xy: 238, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen06
+  rotate: false
+  xy: 272, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen07
+  rotate: false
+  xy: 306, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen08
+  rotate: false
+  xy: 340, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen09
+  rotate: false
+  xy: 374, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen10
+  rotate: false
+  xy: 408, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen11
+  rotate: false
+  xy: 442, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen12
+  rotate: false
+  xy: 476, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveGGen13
+  rotate: false
+  xy: 0, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveReptile
+  rotate: false
+  xy: 34, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW
+  rotate: false
+  xy: 68, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW1
+  rotate: false
+  xy: 102, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW2
+  rotate: false
+  xy: 136, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW3
+  rotate: false
+  xy: 170, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW4
+  rotate: false
+  xy: 204, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW5
+  rotate: false
+  xy: 238, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveW6
+  rotate: false
+  xy: 272, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen01
+  rotate: false
+  xy: 306, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen02
+  rotate: false
+  xy: 340, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen03
+  rotate: false
+  xy: 374, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen04
+  rotate: false
+  xy: 408, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen05
+  rotate: false
+  xy: 442, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen06
+  rotate: false
+  xy: 476, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen07
+  rotate: false
+  xy: 0, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen08
+  rotate: false
+  xy: 34, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen09
+  rotate: false
+  xy: 68, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen10
+  rotate: false
+  xy: 102, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen11
+  rotate: false
+  xy: 136, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen12
+  rotate: false
+  xy: 170, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveWGen13
+  rotate: false
+  xy: 204, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveU
+  rotate: false
+  xy: 238, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveU1
+  rotate: false
+  xy: 272, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveU2
+  rotate: false
+  xy: 306, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveU3
+  rotate: false
+  xy: 340, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveU4
+  rotate: false
+  xy: 374, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen01
+  rotate: false
+  xy: 408, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen02
+  rotate: false
+  xy: 442, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen04
+  rotate: false
+  xy: 476, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen05
+  rotate: false
+  xy: 0, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen06
+  rotate: false
+  xy: 34, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen07
+  rotate: false
+  xy: 68, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen08
+  rotate: false
+  xy: 102, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen09
+  rotate: false
+  xy: 136, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen10
+  rotate: false
+  xy: 170, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen11
+  rotate: false
+  xy: 204, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen12
+  rotate: false
+  xy: 238, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveUGen13
+  rotate: false
+  xy: 272, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DragonsLairBlue
+  rotate: false
+  xy: 306, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_AncientDiamondMine
+  rotate: false
+  xy: 340, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveAmphin
+  rotate: false
+  xy: 374, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCerodon
+  rotate: false
+  xy: 408, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveRat
+  rotate: false
+  xy: 442, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_DemonsBargain
+  rotate: false
+  xy: 476, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Kavu_Lair
+  rotate: false
+  xy: 0, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_RiddlesLair
+  rotate: false
+  xy: 34, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove1
+  rotate: false
+  xy: 68, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove2
+  rotate: false
+  xy: 102, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove3
+  rotate: false
+  xy: 136, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove4
+  rotate: false
+  xy: 170, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove5
+  rotate: false
+  xy: 204, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_EvilGrove6
+  rotate: false
+  xy: 238, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove1
+  rotate: false
+  xy: 272, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove2
+  rotate: false
+  xy: 306, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove3
+  rotate: false
+  xy: 340, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove4
+  rotate: false
+  xy: 374, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove5
+  rotate: false
+  xy: 408, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove6
+  rotate: false
+  xy: 442, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove7
+  rotate: false
+  xy: 476, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Grove8
+  rotate: false
+  xy: 0, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_GroveBamboo
+  rotate: false
+  xy: 34, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_GroveFaerieDragon
+  rotate: false
+  xy: 68, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_GroveGreenDragon
+  rotate: false
+  xy: 102, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_inn_dark_forest
+  rotate: false
+  xy: 136, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Teferi_Hideout
+  rotate: false
+  xy: 170, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool3
+  rotate: false
+  xy: 204, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool4
+  rotate: false
+  xy: 238, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool5
+  rotate: false
+  xy: 272, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Oasis
+  rotate: false
+  xy: 306, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_VampireCastle3
+  rotate: false
+  xy: 340, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Omenport
+  rotate: false
+  xy: 374, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Lorehold_Classroom
+  rotate: false
+  xy: 408, 374
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_CaveCD
+  rotate: false
+  xy: 0, 408
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_CaveGB
+  rotate: false
+  xy: 50, 408
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_DragonsLairGreen
+  rotate: false
+  xy: 100, 408
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_DragonsLairWhite
+  rotate: false
+  xy: 150, 408
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_CaveUGen03
+  rotate: false
+  xy: 200, 408
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_Camel_Cave
+  rotate: false
+  xy: 250, 408
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+
+../../../common/maps/tileset/buildings.png
+size: 448,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+E_DjinnPalace
+  rotate: false
+  xy: 128, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Wizard_Palace
+  rotate: false
+  xy: 320, 432
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Fort3
+  rotate: false
+  xy: 160, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Kenriths_Court
+  rotate: false
+  xy: 224, 368
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool
+  rotate: false
+  xy: 320, 208
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+E_MerfolkPool1
+  rotate: false
+  xy: 64, 112
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_MerfolkPool2
+  rotate: false
+  xy: 352, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_NestU
+  rotate: false
+  xy: 321, 400
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_NestW
+  rotate: false
+  xy: 256, 304
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_SkullCaveR
+  rotate: false
+  xy: 64, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_SkullCaveR1
+  rotate: false
+  xy: 240, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_SkullCaveR2
+  rotate: false
+  xy: 256, 336
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

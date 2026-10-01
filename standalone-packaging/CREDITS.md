@@ -82,7 +82,12 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 - **Forests, hills, mountains, water, lava and swamp** (the overworld's structure areas) - RPG Maker MV runtime world
   tiles, © KADOKAWA / Gotcha Gotcha Games.
 - **Doodads** (the flowers, ferns, mushrooms, cacti, rocks, logs, stumps, lily pads and bones scattered over the lands) -
-  **Cyanide** ("Tilemix 11 - Nature 2"), and a VX-style nature sheet whose author is not named in the file.
+  **Cyanide** ("Tilemix 11 - Nature 2"), and a VX-style nature sheet whose author is not named in the file; the 2026-09-30
+  additions (skulls, pebbles, twigs, lily pads, coral bits, mushrooms, lava shards, wildflowers, rubble) - RPG Maker
+  MV / VX / XP runtime tiles, © KADOKAWA / Gotcha Gotcha Games / Enterbrain, a forest tile sheet and a painted desert
+  object pack whose authors are not named in the files.
+- **Cave and dungeon entrances** (the 2026-09-30 set - a picture of its own for every cave and most dungeons) -
+  made by the game's author with PixelLab, plus six painted caves for the landmark places (source to be confirmed).
 
 ## License
 
