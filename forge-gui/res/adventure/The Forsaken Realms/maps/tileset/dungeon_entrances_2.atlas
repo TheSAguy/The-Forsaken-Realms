@@ -1,5 +1,5 @@
 dungeon_entrances_2.png
-size: 512,520
+size: 512,754
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -180,9 +180,9 @@ E_CaveRGen10
   index: -1
 E_CaveRGen11
   rotate: false
-  xy: 340, 34
-  size: 32, 32
-  orig: 32, 32
+  xy: 462, 556
+  size: 48, 32
+  orig: 48, 32
   offset: 0, 0
   index: -1
 E_CaveRGen12
@@ -215,9 +215,9 @@ E_CaveRJ
   index: -1
 E_DragonsLairRed
   rotate: false
-  xy: 0, 68
-  size: 32, 32
-  orig: 32, 32
+  xy: 200, 606
+  size: 48, 34
+  orig: 48, 34
   offset: 0, 0
   index: -1
 E_CaveC
@@ -348,9 +348,9 @@ E_CaveCGen05
   index: -1
 E_CaveCGen06
   rotate: false
-  xy: 136, 102
-  size: 32, 32
-  orig: 32, 32
+  xy: 362, 556
+  size: 48, 38
+  orig: 48, 38
   offset: 0, 0
   index: -1
 E_CaveCGen07
@@ -369,9 +369,9 @@ E_CaveCGen08
   index: -1
 E_CaveCGen09
   rotate: false
-  xy: 238, 102
-  size: 32, 32
-  orig: 32, 32
+  xy: 412, 556
+  size: 48, 35
+  orig: 48, 35
   offset: 0, 0
   index: -1
 E_CaveCGen10
@@ -502,9 +502,9 @@ E_CaveBGen03
   index: -1
 E_CaveBGen04
   rotate: false
-  xy: 374, 136
-  size: 32, 32
-  orig: 32, 32
+  xy: 318, 556
+  size: 42, 48
+  orig: 42, 48
   offset: 0, 0
   index: -1
 E_CaveBGen05
@@ -824,9 +824,9 @@ E_CaveWGen03
   index: -1
 E_CaveWGen04
   rotate: false
-  xy: 408, 238
-  size: 32, 32
-  orig: 32, 32
+  xy: 100, 606
+  size: 48, 45
+  orig: 48, 45
   offset: 0, 0
   index: -1
 E_CaveWGen05
@@ -950,9 +950,9 @@ E_CaveUGen04
   index: -1
 E_CaveUGen05
   rotate: false
-  xy: 0, 306
-  size: 32, 32
-  orig: 32, 32
+  xy: 0, 606
+  size: 48, 22
+  orig: 48, 22
   offset: 0, 0
   index: -1
 E_CaveUGen06
@@ -971,9 +971,9 @@ E_CaveUGen07
   index: -1
 E_CaveUGen08
   rotate: false
-  xy: 102, 306
-  size: 32, 32
-  orig: 32, 32
+  xy: 50, 606
+  size: 48, 32
+  orig: 48, 32
   offset: 0, 0
   index: -1
 E_CaveUGen09
@@ -1020,9 +1020,9 @@ E_DragonsLairBlue
   index: -1
 E_AncientDiamondMine
   rotate: false
-  xy: 340, 306
-  size: 32, 32
-  orig: 32, 32
+  xy: 268, 556
+  size: 48, 28
+  orig: 48, 28
   offset: 0, 0
   index: -1
 E_CaveAmphin
@@ -1048,9 +1048,9 @@ E_CaveRat
   index: -1
 E_DemonsBargain
   rotate: false
-  xy: 476, 306
-  size: 32, 32
-  orig: 32, 32
+  xy: 150, 606
+  size: 48, 47
+  orig: 48, 47
   offset: 0, 0
   index: -1
 E_Kavu_Lair
@@ -1062,9 +1062,9 @@ E_Kavu_Lair
   index: -1
 E_RiddlesLair
   rotate: false
-  xy: 34, 340
-  size: 32, 32
-  orig: 32, 32
+  xy: 50, 656
+  size: 48, 40
+  orig: 48, 40
   offset: 0, 0
   index: -1
 E_EvilGrove1
@@ -1076,9 +1076,9 @@ E_EvilGrove1
   index: -1
 E_EvilGrove2
   rotate: false
-  xy: 102, 340
-  size: 32, 32
-  orig: 32, 32
+  xy: 250, 606
+  size: 46, 48
+  orig: 46, 48
   offset: 0, 0
   index: -1
 E_EvilGrove3
@@ -1132,16 +1132,16 @@ E_Grove3
   index: -1
 E_Grove4
   rotate: false
-  xy: 374, 340
-  size: 32, 32
-  orig: 32, 32
+  xy: 298, 606
+  size: 41, 48
+  orig: 41, 48
   offset: 0, 0
   index: -1
 E_Grove5
   rotate: false
-  xy: 408, 340
-  size: 32, 32
-  orig: 32, 32
+  xy: 341, 606
+  size: 48, 38
+  orig: 48, 38
   offset: 0, 0
   index: -1
 E_Grove6
@@ -1153,9 +1153,9 @@ E_Grove6
   index: -1
 E_Grove7
   rotate: false
-  xy: 476, 340
-  size: 32, 32
-  orig: 32, 32
+  xy: 391, 606
+  size: 48, 47
+  orig: 48, 47
   offset: 0, 0
   index: -1
 E_Grove8
@@ -1202,9 +1202,9 @@ E_Teferi_Hideout
   index: -1
 E_MerfolkPool3
   rotate: false
-  xy: 204, 374
-  size: 32, 32
-  orig: 32, 32
+  xy: 0, 656
+  size: 48, 42
+  orig: 48, 42
   offset: 0, 0
   index: -1
 E_MerfolkPool4
@@ -1319,6 +1319,265 @@ E_Zedruu_City
   orig: 64, 64
   offset: 0, 0
   index: -1
+Spare_E_CaveB6
+  rotate: false
+  xy: 0, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveBGen04
+  rotate: false
+  xy: 34, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveCE
+  rotate: false
+  xy: 68, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveCGen02
+  rotate: false
+  xy: 102, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveCGen13
+  rotate: false
+  xy: 136, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveDragon
+  rotate: false
+  xy: 170, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveG4
+  rotate: false
+  xy: 204, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveGGen02
+  rotate: false
+  xy: 238, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveGGen03
+  rotate: false
+  xy: 272, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveGGen06
+  rotate: false
+  xy: 306, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveGGen10
+  rotate: false
+  xy: 340, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveLarge1
+  rotate: false
+  xy: 374, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveTroll
+  rotate: false
+  xy: 408, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveUGen05
+  rotate: false
+  xy: 442, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveW4
+  rotate: false
+  xy: 476, 522
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_CaveWGen01
+  rotate: false
+  xy: 0, 556
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_EvilGrove4
+  rotate: false
+  xy: 34, 556
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_Grove4
+  rotate: false
+  xy: 68, 556
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_Kenriths_Court
+  rotate: false
+  xy: 102, 556
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spare_E_SkullCaveR
+  rotate: false
+  xy: 136, 556
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_GreyPalace_Snow_Abbey
+  rotate: false
+  xy: 170, 556
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+E_SandPalace_Djinn_s_Palace
+  rotate: false
+  xy: 220, 556
+  size: 46, 48
+  orig: 46, 48
+  offset: 0, 0
+  index: -1
+E_Kenriths_Court
+  rotate: false
+  xy: 441, 606
+  size: 46, 48
+  orig: 46, 48
+  offset: 0, 0
+  index: -1
+E_SkullCaveR
+  rotate: false
+  xy: 100, 656
+  size: 48, 43
+  orig: 48, 43
+  offset: 0, 0
+  index: -1
+E_SkullCaveR1
+  rotate: false
+  xy: 150, 656
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Building157_Vampire_Castle
+  rotate: false
+  xy: 184, 656
+  size: 47, 48
+  orig: 47, 48
+  offset: 0, 0
+  index: -1
+E_Building52_Black_Tower
+  rotate: false
+  xy: 233, 656
+  size: 48, 46
+  orig: 48, 46
+  offset: 0, 0
+  index: -1
+E_MageTower_Witherbloom_Classroom
+  rotate: false
+  xy: 283, 656
+  size: 40, 48
+  orig: 40, 48
+  offset: 0, 0
+  index: -1
+E_Great_Aurora_Eclipsed_Elven_Court
+  rotate: false
+  xy: 325, 656
+  size: 48, 34
+  orig: 48, 34
+  offset: 0, 0
+  index: -1
+E_Grove_The_Honey_Cove
+  rotate: false
+  xy: 375, 656
+  size: 43, 48
+  orig: 43, 48
+  offset: 0, 0
+  index: -1
+E_Slobad_Slobad_s_Factory
+  rotate: false
+  xy: 420, 656
+  size: 48, 44
+  orig: 48, 44
+  offset: 0, 0
+  index: -1
+E_VampireCastle_Vampire_Castle
+  rotate: false
+  xy: 0, 706
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+E_CatLair_Leonin_Camp
+  rotate: false
+  xy: 50, 706
+  size: 48, 22
+  orig: 48, 22
+  offset: 0, 0
+  index: -1
+E_Slimefoot_Slimefoot_s_Lair
+  rotate: false
+  xy: 100, 706
+  size: 48, 41
+  orig: 48, 41
+  offset: 0, 0
+  index: -1
+E_WhiteCastle_Von_Gant_s_Fortress
+  rotate: false
+  xy: 150, 706
+  size: 48, 35
+  orig: 48, 35
+  offset: 0, 0
+  index: -1
+E_FurnaceBase_Furnace_Host_Base
+  rotate: false
+  xy: 200, 706
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+E_GitLabSmall_Gitaxian_Laboratory
+  rotate: false
+  xy: 250, 706
+  size: 28, 48
+  orig: 28, 48
+  offset: 0, 0
+  index: -1
 
 ../../../common/maps/tileset/buildings.png
 size: 448,1024
@@ -1342,13 +1601,6 @@ E_Wizard_Palace
 E_Fort3
   rotate: false
   xy: 160, 274
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_Kenriths_Court
-  rotate: false
-  xy: 224, 368
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1386,20 +1638,6 @@ E_NestW
   xy: 256, 304
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_SkullCaveR
-  rotate: false
-  xy: 64, 272
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_SkullCaveR1
-  rotate: false
-  xy: 240, 0
-  size: 48, 48
-  orig: 48, 48
   offset: 0, 0
   index: -1
 E_SkullCaveR2

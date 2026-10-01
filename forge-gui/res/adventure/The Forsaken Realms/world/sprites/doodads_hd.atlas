@@ -3814,7 +3814,56 @@ PlayerMushroom
 Whirlpool
   rotate: false
   xy: 0, 1088
-  size: 48, 48
-  orig: 48, 48
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 48, 1088
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 96, 1088
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 144, 1088
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 192, 1088
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 240, 1088
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 288, 1088
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+Whirlpool
+  rotate: false
+  xy: 336, 1088
+  size: 48, 28
+  orig: 48, 28
   offset: 0, 0
   index: -1

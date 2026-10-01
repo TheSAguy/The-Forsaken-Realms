@@ -37,6 +37,19 @@ public class BiomeSprites {
         return sprites.get(index);
     }
 
+    /** Round 391: every picture of this name, in atlas order - an animated doodad's frames (BiomeSpriteData.frameDuration). */
+    public Array<Sprite> getFrames(String name) {
+        Array<Sprite> sprites = spriteBuffer.get(name);
+        if (sprites == null || sprites.isEmpty()) {
+            BiomeSpriteData spriteData = getSpriteData(name);
+            String resolvedAtlas = (spriteData != null && spriteData.atlas != null && !spriteData.atlas.isEmpty())
+                    ? spriteData.atlas : textureAtlas;
+            sprites = new Array<>(Config.instance().getAtlas(resolvedAtlas).createSprites(name));
+            spriteBuffer.put(name, sprites);
+        }
+        return sprites.isEmpty() ? null : sprites;
+    }
+
     public BiomeSpriteData getSpriteData(String name) {
         for (BiomeSpriteData data : sprites) {
             if (data.name.equals(name))

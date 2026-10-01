@@ -94,7 +94,12 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
   object pack whose authors are not named in the files, the Time Fantasy jungle tileset (**finalbossblues**) and the LPC
   base_out atlas (Liberated Pixel Cup contributors).
 - **Cave and dungeon entrances** (the 2026-09-30 set - a picture of its own for every cave and most dungeons) -
-  made by the game's author with PixelLab, plus six painted caves for the landmark places (source to be confirmed).
+  made by the game's author with PixelLab, plus six painted caves for the landmark places (source to be confirmed);
+  the 2026-10-01 three-quarter-view caves likewise made with PixelLab.
+- **Dungeon buildings and the animated whirlpool** (the 2026-10-01 set - crypt, pyramid, sanctuary, prison keep,
+  witch hut, colosseum, skull rock, mines and the other adventure-map buildings on 32 dungeons and lairs, and the
+  ocean's whirlpools) - **Heroes of Might and Magic III** adventure-map objects, © New World Computing / The 3DO
+  Company, 1999; supplied by the user.
 
 ## License
 

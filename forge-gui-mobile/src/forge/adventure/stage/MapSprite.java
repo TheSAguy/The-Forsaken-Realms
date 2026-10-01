@@ -105,6 +105,9 @@ public class MapSprite extends Actor {
                 MapSprite sprite = new MapSprite(entry.getKey(), biomeSprite, null);
                 if (current != null && current.scale > 0f && current.scale != 1f)
                     sprite.setRegionScale(current.scale);
+                if (current != null && current.frameDuration > 0f) // round 391: an animated doodad (the whirlpools)
+                    sprite.setFrames(catalog.getFrames(data.name), current.frameDuration,
+                            (int) entry.getKey().x + (int) entry.getKey().y * 11483);
                 actorGroup.add(sprite);
             }
         }
@@ -193,7 +196,34 @@ public class MapSprite extends Actor {
         return !world.isCurrentlyVisible(centerTileX, centerTileY);
     }
 
+    // Round 391 (the user: "Let's animate the whirlpools"): an animated doodad cycles every picture of its name. The
+    // frame comes from the clock at draw time - no act() needed - and each one starts at its own frame, so neighbours
+    // do not turn in step.
+    private Array<? extends TextureRegion> frames;
+    private float frameDuration;
+    private int framePhase;
+
+    public void setFrames(Array<? extends TextureRegion> frames, float frameDuration, int phase) {
+        if (frames == null || frames.size < 2 || frameDuration <= 0f)
+            return;
+        this.frames = frames;
+        this.frameDuration = frameDuration;
+        this.framePhase = Math.floorMod(phase, frames.size);
+        if (!animLogged) {
+            animLogged = true;
+            System.out.println("[TFR-AnimDoodad] an animated doodad on the map: " + frames.size + " frames x "
+                    + frameDuration + " s, first one at (" + (int) getX() + "," + (int) getY() + ")");
+        }
+    }
+
+    private static boolean animLogged;
+
     private void drawArt(Batch batch, float parentAlpha) {
+        if (frames != null) {
+            // whole milliseconds: millis() is ~1.8e12, and a float quotient of it only steps every ~1024 frames
+            long step = com.badlogic.gdx.utils.TimeUtils.millis() / Math.max(1L, Math.round(frameDuration * 1000f));
+            texture = frames.get((int) ((step + framePhase) % frames.size));
+        }
         float x = getX() + artShiftX(), y = getY() + artShiftY(); // round 329
         float scale = getDrawScale();
         if (scale == 1f) {

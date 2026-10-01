@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 391: the Front View entrances replaced, animated whirlpools (2026-10-01)
+
+The user: "I got some updated cave/dungeon entrances ... Let's replace some of the Front View entrances we currently
+have. Please show me what you propose to change for approval. Number the dungeons" (F:\Art_to_Tweak\Update: eight
+PixelLab sheets + an HMM3 adventure-map dump), "I also want to add some of the whirlpools to the water on the map.
+AVXwhrl0 - AVXwhrl7". After the numbered review page: "Let's animate the whirlpools. Let's keep cave 65", and 28
+originals marked "okay to use again".
+
+- **Entrances** (dev-tools/art-import/round391: plan391.json + install_entrances.py). The 130 Front View places
+  (Pictures\Screenshots\Art_to_Tweak\Front_View, round 386's sort): 95 caves get a three-quarter-view PixelLab cave of
+  their own land (the sheets cut by connected shape - rows were not on a grid - square-backed cells dropped, land by
+  colour then corrected by hand; each cave takes the most similar unused picture, at most two per sheet row and three
+  S5 skull faces per land), written into the cave's own E_ region; 32 dungeons/lairs/caves get an HMM3 building by name
+  (crypt, pyramid, sanctuary, library, altar, colosseum, skull rock, witch hut, mushroom hut, tent camp, dragon
+  fortress, mines...), palette-keyed (cyan out, magenta/pink -> a soft shadow) and scaled to at most 48 px, appended
+  to page 1 with their E_ region moved or a new E_<place> region and 14 POIs re-pointed (by atlas + region). Kept:
+  #65 Brimstone Hollow (the user), #119 Leonin Sphinx (HMM3's sphinx has a storm cloud), #128 Xira's Hive (no hive in
+  the art). Page 2 (common's buildings.png) is never written - E_Kenriths_Court / E_SkullCaveR / E_SkullCaveR1 moved
+  to page 1. 20 originals the user liked stay as `Spare_<region>` regions no place uses yet (the other eight live in
+  common atlases, untouched). Page 1 512x520 -> 512x754. CREDITS: the HMM3 objects.
+- **Whirlpools animate**: the HMM3 whirlpool's eight frames (`whirlpool.frames()`, sources copied to New
+  Art\Terrain\HMM3_whirlpool) - one crop box for all frames, halved to 48 px, recoloured to the ocean by each
+  channel's ratio to the frames' mean (an offset from HMM3's rim washed them to a pale cloud - previewed), faded over
+  the oval's outer 30%. map_sprites.json `frameDuration` 0.12 (`BiomeSpriteData.frameDuration`, catalog-only);
+  `MapSprite.setFrames()` cycles every region of the name by the clock at draw time, each whirlpool from its own frame
+  (`BiomeSprites.getFrames()`). Same count as before (~20, open ocean). The first build stepped once in ~2 minutes:
+  `millis() / (seconds * 1000f)` is a float quotient of ~1.8e12 - whole-millisecond division now. `[TFR-AnimDoodad]`.
+- Agent-seen: a new skull cave and the witch hut on the map; a whirlpool at (459,2349) changing frame between shots;
+  every place resolves to exactly one region from the repo files; no exception.
+
 ## Round 390: every Archmage starts its duels with Wastes in play (2026-10-01)
 
 The user: "I'd like to add the land 'Wastes' to all Archmages as a starting land on the battlefield. This only place

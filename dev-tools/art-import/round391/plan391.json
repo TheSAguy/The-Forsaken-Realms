@@ -1,0 +1,1897 @@
+[
+ {
+  "n": 1,
+  "region": "GreyPalace",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+  "names": "Snow Abbey",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXgysn0.png",
+  "note": "snow-roofed abbey",
+  "spare": true
+ },
+ {
+  "n": 2,
+  "region": "SandPalace",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances.atlas",
+  "names": "Djinn's Palace",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXbnk60.png",
+  "note": "domed palace",
+  "spare": true
+ },
+ {
+  "n": 3,
+  "region": "E_AncientDiamondMine",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Ancient Diamond Mine",
+  "land": "colorless",
+  "kind": "hmm3",
+  "src": "Mines/AVMcrdr0.png",
+  "note": "crystal cavern"
+ },
+ {
+  "n": 4,
+  "region": "E_CaveAmphin",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Flooded Cave",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S8-37",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   161,
+   130,
+   190,
+   158
+  ]
+ },
+ {
+  "n": 5,
+  "region": "E_CaveB",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S8-59",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   97,
+   225,
+   126,
+   254
+  ]
+ },
+ {
+  "n": 6,
+  "region": "E_CaveB4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S8-54",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   193,
+   194,
+   222,
+   222
+  ]
+ },
+ {
+  "n": 7,
+  "region": "E_CaveB6",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S4-59",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   232,
+   131,
+   255,
+   153
+  ],
+  "spare": true
+ },
+ {
+  "n": 8,
+  "region": "E_CaveB8",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S3-32",
+  "sheet": "pixellab-Using-the-reference-image-for--1790882649299.png",
+  "box": [
+   98,
+   227,
+   126,
+   250
+  ]
+ },
+ {
+  "n": 9,
+  "region": "E_CaveBA",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Deep Caverns",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S2-40",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   105,
+   157,
+   137,
+   179
+  ]
+ },
+ {
+  "n": 10,
+  "region": "E_CaveBGen02",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Rotroot Cellar",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S8-50",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   65,
+   194,
+   94,
+   222
+  ]
+ },
+ {
+  "n": 11,
+  "region": "E_CaveBGen03",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Gallows Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S6-27",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   225,
+   99,
+   255,
+   124
+  ]
+ },
+ {
+  "n": 12,
+  "region": "E_CaveBGen04",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cadaver Vault",
+  "land": "black",
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXbnk40.png",
+  "note": "crypt",
+  "spare": true
+ },
+ {
+  "n": 13,
+  "region": "E_CaveBGen07",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dead Man's Hollow",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S5-31",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   192,
+   130,
+   223,
+   159
+  ]
+ },
+ {
+  "n": 14,
+  "region": "E_CaveBGen10",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Miasma Cleft",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S3-26",
+  "sheet": "pixellab-Using-the-reference-image-for--1790882649299.png",
+  "box": [
+   98,
+   163,
+   126,
+   186
+  ]
+ },
+ {
+  "n": 15,
+  "region": "E_CaveC1",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-17",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   33,
+   66,
+   62,
+   94
+  ]
+ },
+ {
+  "n": 16,
+  "region": "E_CaveC2",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-16",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   1,
+   66,
+   30,
+   94
+  ]
+ },
+ {
+  "n": 17,
+  "region": "E_CaveC3",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-63",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   225,
+   226,
+   254,
+   254
+  ]
+ },
+ {
+  "n": 18,
+  "region": "E_CaveC6",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-31",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   225,
+   98,
+   254,
+   126
+  ]
+ },
+ {
+  "n": 19,
+  "region": "E_CaveC7",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-14",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   193,
+   34,
+   222,
+   62
+  ]
+ },
+ {
+  "n": 20,
+  "region": "E_CaveC9",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S5-46",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   164,
+   195,
+   188,
+   222
+  ]
+ },
+ {
+  "n": 21,
+  "region": "E_CaveCA",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S2-19",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   187,
+   69,
+   219,
+   95
+  ]
+ },
+ {
+  "n": 22,
+  "region": "E_CaveCB",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-05",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   161,
+   2,
+   190,
+   30
+  ]
+ },
+ {
+  "n": 23,
+  "region": "E_CaveCE",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S1-61",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   130,
+   229,
+   158,
+   254
+  ],
+  "spare": true
+ },
+ {
+  "n": 24,
+  "region": "E_CaveCGen01",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Wasteland Cleft",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-11",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   98,
+   34,
+   126,
+   62
+  ]
+ },
+ {
+  "n": 25,
+  "region": "E_CaveCGen02",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Corrupted Shaft",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S6-43",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   226,
+   163,
+   254,
+   186
+  ],
+  "spare": true
+ },
+ {
+  "n": 26,
+  "region": "E_CaveCGen03",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Ashen Hollow",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S1-52",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   162,
+   198,
+   190,
+   222
+  ]
+ },
+ {
+  "n": 27,
+  "region": "E_CaveCGen04",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dust Cistern",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S2-13",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   187,
+   37,
+   218,
+   63
+  ]
+ },
+ {
+  "n": 28,
+  "region": "E_CaveCGen05",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Salt Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S5-45",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   132,
+   195,
+   156,
+   223
+  ]
+ },
+ {
+  "n": 29,
+  "region": "E_CaveCGen06",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Broken Vault",
+  "land": "colorless",
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXbnk20.png",
+  "note": "stone treasury (you liked it)"
+ },
+ {
+  "n": 30,
+  "region": "E_CaveCGen07",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Grey Warren",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S1-58",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   34,
+   229,
+   62,
+   254
+  ]
+ },
+ {
+  "n": 31,
+  "region": "E_CaveCGen09",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Shattered Adit",
+  "land": "colorless",
+  "kind": "hmm3",
+  "src": "Mines/AVXamro0.png",
+  "note": "abandoned mine"
+ },
+ {
+  "n": 32,
+  "region": "E_CaveCGen10",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Barren Pocket",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S8-07",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   225,
+   2,
+   254,
+   30
+  ]
+ },
+ {
+  "n": 33,
+  "region": "E_CaveCGen12",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Scoured Gallery",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S5-49",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   2,
+   227,
+   31,
+   255
+  ]
+ },
+ {
+  "n": 34,
+  "region": "E_CaveCGen13",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Forsaken Sink",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S6-42",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   193,
+   163,
+   223,
+   190
+  ],
+  "spare": true
+ },
+ {
+  "n": 35,
+  "region": "E_CaveDragon",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S6-29",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   65,
+   130,
+   95,
+   159
+  ],
+  "spare": true
+ },
+ {
+  "n": 36,
+  "region": "E_CaveEldrazi",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S6-57",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   196,
+   227,
+   219,
+   255
+  ]
+ },
+ {
+  "n": 37,
+  "region": "E_CaveG4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S4-06",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   155,
+   3,
+   179,
+   25
+  ],
+  "spare": true
+ },
+ {
+  "n": 38,
+  "region": "E_CaveG6",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S7-49",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   33,
+   195,
+   63,
+   221
+  ]
+ },
+ {
+  "n": 39,
+  "region": "E_CaveGGen01",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Mossback Hollow",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S5-04",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   131,
+   4,
+   157,
+   31
+  ]
+ },
+ {
+  "n": 40,
+  "region": "E_CaveGGen02",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Root Cellar",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S2-00",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   3,
+   3,
+   29,
+   31
+  ],
+  "spare": true
+ },
+ {
+  "n": 41,
+  "region": "E_CaveGGen03",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Fungal Bloom",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S6-21",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   33,
+   98,
+   63,
+   128
+  ],
+  "spare": true
+ },
+ {
+  "n": 42,
+  "region": "E_CaveGGen04",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Bramble Den",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S5-08",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   2,
+   34,
+   30,
+   63
+  ]
+ },
+ {
+  "n": 43,
+  "region": "E_CaveGGen06",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dryad's Nook",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S4-68",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   206,
+   157,
+   230,
+   178
+  ],
+  "spare": true
+ },
+ {
+  "n": 44,
+  "region": "E_CaveGGen07",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Deepwood Pocket",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S7-11",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   97,
+   33,
+   127,
+   61
+  ]
+ },
+ {
+  "n": 45,
+  "region": "E_CaveGGen09",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Fernfall Cave",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S1-10",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   131,
+   33,
+   158,
+   63
+  ]
+ },
+ {
+  "n": 46,
+  "region": "E_CaveGGen10",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Wildvine Cleft",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S4-03",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   78,
+   3,
+   102,
+   25
+  ],
+  "spare": true
+ },
+ {
+  "n": 47,
+  "region": "E_CaveGGen11",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Beetle Gallery",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S2-28",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   3,
+   129,
+   29,
+   153
+  ]
+ },
+ {
+  "n": 48,
+  "region": "E_CaveGGen13",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Verdant Hollow",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S8-10",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   65,
+   34,
+   94,
+   62
+  ]
+ },
+ {
+  "n": 49,
+  "region": "E_CaveLarge1",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Forgotten Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S1-37",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   2,
+   133,
+   30,
+   158
+  ],
+  "spare": true
+ },
+ {
+  "n": 50,
+  "region": "E_CaveR",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-18",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   145,
+   67,
+   178,
+   95
+  ]
+ },
+ {
+  "n": 51,
+  "region": "E_CaveR1",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-08",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   145,
+   35,
+   178,
+   63
+  ]
+ },
+ {
+  "n": 52,
+  "region": "E_CaveR3",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S4-81",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   27,
+   208,
+   51,
+   230
+  ]
+ },
+ {
+  "n": 53,
+  "region": "E_CaveR5",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S5-40",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   226,
+   162,
+   254,
+   191
+  ]
+ },
+ {
+  "n": 54,
+  "region": "E_CaveR6",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-64",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   129,
+   233,
+   152,
+   255
+  ]
+ },
+ {
+  "n": 55,
+  "region": "E_CaveR7",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-46",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   129,
+   182,
+   152,
+   204
+  ]
+ },
+ {
+  "n": 56,
+  "region": "E_CaveR8",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-38",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   145,
+   155,
+   178,
+   179
+  ]
+ },
+ {
+  "n": 57,
+  "region": "E_CaveRA",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S1-44",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   130,
+   161,
+   158,
+   190
+  ]
+ },
+ {
+  "n": 58,
+  "region": "E_CaveRB",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-65",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   155,
+   233,
+   178,
+   255
+  ]
+ },
+ {
+  "n": 59,
+  "region": "E_CaveRC",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S1-40",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   2,
+   162,
+   30,
+   190
+  ]
+ },
+ {
+  "n": 60,
+  "region": "E_CaveRE",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-32",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   145,
+   129,
+   178,
+   153
+  ]
+ },
+ {
+  "n": 61,
+  "region": "E_CaveRG",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S1-43",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   98,
+   161,
+   126,
+   190
+  ]
+ },
+ {
+  "n": 62,
+  "region": "E_CaveRGen01",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cinder Hollow",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-04",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   145,
+   3,
+   178,
+   31
+  ]
+ },
+ {
+  "n": 63,
+  "region": "E_CaveRGen03",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Slag Pocket",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S7-58",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   65,
+   225,
+   95,
+   253
+  ]
+ },
+ {
+  "n": 64,
+  "region": "E_CaveRGen04",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Magma Seam",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S5-42",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   35,
+   195,
+   61,
+   224
+  ]
+ },
+ {
+  "n": 65,
+  "region": "E_CaveRGen05",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Brimstone Hollow",
+  "land": "red",
+  "kind": "keep",
+  "why": "the user: keep cave 65"
+ },
+ {
+  "n": 66,
+  "region": "E_CaveRGen08",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Devil's Chimney",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S4-76",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   155,
+   180,
+   179,
+   204
+  ]
+ },
+ {
+  "n": 67,
+  "region": "E_CaveRGen09",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Coalbed Warren",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S7-57",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   33,
+   225,
+   63,
+   253
+  ]
+ },
+ {
+  "n": 68,
+  "region": "E_CaveRGen10",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Furnace Cleft",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S6-35",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   193,
+   132,
+   223,
+   159
+  ]
+ },
+ {
+  "n": 69,
+  "region": "E_CaveRGen11",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Red Iron Diggings",
+  "land": "red",
+  "kind": "hmm3",
+  "src": "Mines/AVXamLV0.png",
+  "note": "abandoned mine, lava"
+ },
+ {
+  "n": 70,
+  "region": "E_CaveRGen13",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Kiln Hollow",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S2-25",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   145,
+   99,
+   178,
+   127
+  ]
+ },
+ {
+  "n": 71,
+  "region": "E_CaveRJ",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Deep Caverns",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S5-39",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   195,
+   163,
+   221,
+   190
+  ]
+ },
+ {
+  "n": 72,
+  "region": "E_CaveRat",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S1-39",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   66,
+   133,
+   94,
+   158
+  ]
+ },
+ {
+  "n": 73,
+  "region": "E_CaveReptile",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S7-02",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   65,
+   1,
+   95,
+   30
+  ]
+ },
+ {
+  "n": 74,
+  "region": "E_CaveTroll",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "colorless",
+  "kind": "pixellab",
+  "src": "S6-55",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   97,
+   226,
+   127,
+   255
+  ],
+  "spare": true
+ },
+ {
+  "n": 75,
+  "region": "E_CaveU",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S7-36",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   129,
+   131,
+   159,
+   157
+  ]
+ },
+ {
+  "n": 76,
+  "region": "E_CaveU2",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S8-44",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   129,
+   162,
+   158,
+   190
+  ]
+ },
+ {
+  "n": 77,
+  "region": "E_CaveU3",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S7-37",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   161,
+   129,
+   191,
+   157
+  ]
+ },
+ {
+  "n": 78,
+  "region": "E_CaveU4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S8-43",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   97,
+   162,
+   126,
+   190
+  ]
+ },
+ {
+  "n": 79,
+  "region": "E_CaveUGen01",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Tidecutter Grotto",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S7-42",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   65,
+   164,
+   95,
+   189
+  ]
+ },
+ {
+  "n": 80,
+  "region": "E_CaveUGen04",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Kelp Hollow",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S5-25",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   164,
+   100,
+   188,
+   127
+  ]
+ },
+ {
+  "n": 81,
+  "region": "E_CaveUGen05",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Scholar's Refuge",
+  "land": "blue",
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVSlibr0.png",
+  "note": "library",
+  "spare": true
+ },
+ {
+  "n": 82,
+  "region": "E_CaveUGen07",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Frostmere Cave",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S7-41",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   33,
+   161,
+   63,
+   189
+  ]
+ },
+ {
+  "n": 83,
+  "region": "E_CaveUGen08",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Sunken Archive",
+  "land": "blue",
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXgyds0.png",
+  "note": "archive hall (you liked it)"
+ },
+ {
+  "n": 84,
+  "region": "E_CaveUGen10",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Foghorn Cleft",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S1-31",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   226,
+   101,
+   254,
+   126
+  ]
+ },
+ {
+  "n": 85,
+  "region": "E_CaveUGen11",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Saltglass Cavern",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S8-38",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   193,
+   130,
+   222,
+   158
+  ]
+ },
+ {
+  "n": 86,
+  "region": "E_CaveW2",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S2-52",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   40,
+   208,
+   61,
+   230
+  ]
+ },
+ {
+  "n": 87,
+  "region": "E_CaveW4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S4-33",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   78,
+   80,
+   101,
+   102
+  ],
+  "spare": true
+ },
+ {
+  "n": 88,
+  "region": "E_CaveW5",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cave",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S4-24",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   104,
+   54,
+   127,
+   73
+  ]
+ },
+ {
+  "n": 89,
+  "region": "E_CaveWGen01",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Frosthollow",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S5-54",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   165,
+   224,
+   186,
+   253
+  ],
+  "spare": true
+ },
+ {
+  "n": 90,
+  "region": "E_CaveWGen04",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Chapel Undercroft",
+  "land": "white",
+  "kind": "hmm3",
+  "src": "AVXsanc0.png",
+  "note": "sanctuary chapel"
+ },
+ {
+  "n": 91,
+  "region": "E_CaveWGen05",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Icicle Warren",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S6-45",
+  "sheet": "pixellab-Using-the-reference-image-for--1790887586165.png",
+  "box": [
+   33,
+   194,
+   63,
+   224
+  ]
+ },
+ {
+  "n": 92,
+  "region": "E_CaveWGen07",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Silent Vestry",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S7-19",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   97,
+   67,
+   127,
+   95
+  ]
+ },
+ {
+  "n": 93,
+  "region": "E_CaveWGen08",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Glacier Pocket",
+  "land": "white",
+  "kind": "pixellab",
+  "src": "S8-30",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   193,
+   98,
+   222,
+   126
+  ]
+ },
+ {
+  "n": 94,
+  "region": "E_DemonsBargain",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Demon's Bargain",
+  "land": "colorless",
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AvXAltar.png",
+  "note": "altar of sacrifice"
+ },
+ {
+  "n": 95,
+  "region": "E_DragonsLairBlack",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dragon's Lair",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S7-51",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888057275.png",
+  "box": [
+   97,
+   193,
+   127,
+   222
+  ]
+ },
+ {
+  "n": 96,
+  "region": "E_DragonsLairBlue",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dragon's Lair",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S5-21",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   4,
+   98,
+   28,
+   127
+  ]
+ },
+ {
+  "n": 97,
+  "region": "E_DragonsLairRed",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dragon's Lair",
+  "land": "red",
+  "kind": "hmm3",
+  "src": "Combat Sites/AVSutop0.png",
+  "note": "dragon fortress"
+ },
+ {
+  "n": 98,
+  "region": "E_EvilGrove2",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Grove of the Dark Titan",
+  "land": "black",
+  "kind": "hmm3",
+  "src": "Exploring Sites/AVXseeb0.png",
+  "note": "dead-tree house"
+ },
+ {
+  "n": 99,
+  "region": "E_EvilGrove3",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Cursed Forest",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S3-07",
+  "sheet": "pixellab-Using-the-reference-image-for--1790882649299.png",
+  "box": [
+   98,
+   35,
+   126,
+   56
+  ]
+ },
+ {
+  "n": 100,
+  "region": "E_EvilGrove4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Neverglades National Park",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S4-60",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   2,
+   157,
+   25,
+   178
+  ],
+  "spare": true
+ },
+ {
+  "n": 101,
+  "region": "E_EvilGrove5",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Black Dragon Mountain",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S3-28",
+  "sheet": "pixellab-Using-the-reference-image-for--1790882649299.png",
+  "box": [
+   194,
+   163,
+   222,
+   186
+  ]
+ },
+ {
+  "n": 102,
+  "region": "E_EvilGrove6",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Shade's Lair",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S4-56",
+  "sheet": "pixellab-Using-the-reference-image-for--1790884875585.png",
+  "box": [
+   155,
+   131,
+   179,
+   153
+  ]
+ },
+ {
+  "n": 103,
+  "region": "E_Grove2",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dinosaur Crater",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S2-21",
+  "sheet": "pixellab-Using-the-reference-image-for--1790879137778.png",
+  "box": [
+   2,
+   99,
+   29,
+   127
+  ]
+ },
+ {
+  "n": 104,
+  "region": "E_Grove3",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Simian's City",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S1-07",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   227,
+   1,
+   253,
+   31
+  ]
+ },
+ {
+  "n": 105,
+  "region": "E_Grove4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Grove of the Forest Titan",
+  "land": "green",
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVXtrek0.png",
+  "note": "great tree",
+  "spare": true
+ },
+ {
+  "n": 106,
+  "region": "E_Grove5",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Overgrown Ruins",
+  "land": "green",
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVSarna0.png",
+  "note": "ruined colosseum (you liked it)"
+ },
+ {
+  "n": 107,
+  "region": "E_Grove7",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "The Lake of the Hydra",
+  "land": "green",
+  "kind": "hmm3",
+  "src": "Luck, Morale and Movement/AVXfyth0.png",
+  "note": "rock spring and pool"
+ },
+ {
+  "n": 108,
+  "region": "E_Grove8",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Corrupted Forest",
+  "land": "green",
+  "kind": "pixellab",
+  "src": "S5-00",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   3,
+   3,
+   29,
+   32
+  ]
+ },
+ {
+  "n": 109,
+  "region": "E_Kenriths_Court",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Kenrith's Court",
+  "land": "white",
+  "kind": "hmm3",
+  "src": "AVXhilg0.png",
+  "note": "hill castle",
+  "spare": true
+ },
+ {
+  "n": 110,
+  "region": "E_MerfolkPool3",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Merfolk Pool",
+  "land": "blue",
+  "kind": "hmm3",
+  "src": "Luck, Morale and Movement/AVXmerm0.png",
+  "note": "mermaid rock"
+ },
+ {
+  "n": 111,
+  "region": "E_MerfolkPool4",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Merfolk Pool",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S5-19",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   131,
+   66,
+   158,
+   94
+  ]
+ },
+ {
+  "n": 112,
+  "region": "E_MerfolkPool5",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Homarid Island",
+  "land": "blue",
+  "kind": "pixellab",
+  "src": "S1-29",
+  "sheet": "pixellab-Using-the-reference-image-for--1790878759795.png",
+  "box": [
+   162,
+   101,
+   190,
+   126
+  ]
+ },
+ {
+  "n": 113,
+  "region": "E_RiddlesLair",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Sphinx's Sanctum",
+  "land": "colorless",
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXPRMD0.png",
+  "note": "pyramid"
+ },
+ {
+  "n": 114,
+  "region": "E_SkullCaveR",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Skull Cave",
+  "land": "red",
+  "kind": "hmm3",
+  "src": "AvTCave0.png",
+  "note": "skull rock (you liked it)",
+  "spare": true
+ },
+ {
+  "n": 115,
+  "region": "E_SkullCaveR1",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Skull Cave",
+  "land": "red",
+  "kind": "pixellab",
+  "src": "S5-35",
+  "sheet": "pixellab-Using-the-reference-image-for--1790886174385.png",
+  "box": [
+   67,
+   162,
+   94,
+   187
+  ]
+ },
+ {
+  "n": 116,
+  "region": "E_inn_dark_forest",
+  "atlas": "The Forsaken Realms/maps/tileset/dungeon_entrances_2.atlas",
+  "names": "Dark Forest",
+  "land": "black",
+  "kind": "pixellab",
+  "src": "S8-51",
+  "sheet": "pixellab-Using-the-reference-image-for--1790888466117.png",
+  "box": [
+   97,
+   194,
+   126,
+   222
+  ]
+ },
+ {
+  "n": 117,
+  "region": "Building157",
+  "atlas": "The Forsaken Realms/sprites/buildings.atlas",
+  "names": "Vampire Castle",
+  "land": null,
+  "kind": "hmm3",
+  "src": "AVXhild0.png",
+  "note": "dark hill castle",
+  "spare": true
+ },
+ {
+  "n": 118,
+  "region": "Building52",
+  "atlas": "The Forsaken Realms/sprites/buildings.atlas",
+  "names": "Black Tower",
+  "land": null,
+  "kind": "hmm3",
+  "src": "AVXprsn0.png",
+  "note": "stone keep (you liked it)",
+  "spare": true
+ },
+ {
+  "n": 119,
+  "region": "CatLair",
+  "atlas": "The Forsaken Realms/sprites/buildings.atlas",
+  "names": "Leonin Sphinx",
+  "land": null,
+  "kind": "keep",
+  "why": "Leonin Sphinx - HMM3's sphinx statue carries a dark storm cloud; the current sphinx stays",
+  "spare": true
+ },
+ {
+  "n": 120,
+  "region": "MageTower",
+  "atlas": "The Forsaken Realms/sprites/buildings.atlas",
+  "names": "Witherbloom Classroom",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVSwtch0.png",
+  "note": "witch hut",
+  "spare": true
+ },
+ {
+  "n": 121,
+  "region": "Great Aurora",
+  "atlas": "The Forsaken Realms/sprites/buildingsbosses.atlas",
+  "names": "Eclipsed Elven Court",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Luck, Morale and Movement/AVSring0.png",
+  "note": "fairy ring"
+ },
+ {
+  "n": 122,
+  "region": "Grove",
+  "atlas": "common/maps/tileset/buildings.atlas",
+  "names": "The Honey Cove",
+  "land": "green",
+  "kind": "hmm3",
+  "src": "Exploring Sites/AVXhutm0.png",
+  "note": "straw skep hut"
+ },
+ {
+  "n": 123,
+  "region": "Slobad",
+  "atlas": "common/maps/tileset/buildings.atlas",
+  "names": "Slobad's Factory",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Combat Sites/AVXbnk10.png",
+  "note": "rock workshop",
+  "spare": true
+ },
+ {
+  "n": 124,
+  "region": "VampireCastle",
+  "atlas": "common/maps/tileset/buildings.atlas",
+  "names": "Vampire Castle",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVSwar20.png",
+  "note": "dark manor",
+  "spare": true
+ },
+ {
+  "n": 125,
+  "region": "CatLair",
+  "atlas": "common/maps/tileset/buildingsbosses.atlas",
+  "names": "Leonin Camp",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVSmerc0.png",
+  "note": "tent camp"
+ },
+ {
+  "n": 126,
+  "region": "Slimefoot",
+  "atlas": "common/maps/tileset/buildingsbosses.atlas",
+  "names": "Slimefoot's Lair",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Exploring Sites/AVXseey0.png",
+  "note": "mushroom hut"
+ },
+ {
+  "n": 127,
+  "region": "WhiteCastle",
+  "atlas": "common/maps/tileset/buildingsbosses.atlas",
+  "names": "Von Gant's Fortress",
+  "land": null,
+  "kind": "hmm3",
+  "src": "AVXfgld.png",
+  "note": "domed fortress (you liked it)"
+ },
+ {
+  "n": 128,
+  "region": "Xira",
+  "atlas": "common/maps/tileset/buildingsbosses.atlas",
+  "names": "Xira's Hive",
+  "land": null,
+  "kind": "keep",
+  "why": "Xira's Hive - no hive in the new art"
+ },
+ {
+  "n": 129,
+  "region": "FurnaceBase",
+  "atlas": "common/maps/tileset/phyrexia/Phyrexian_Buildings.atlas",
+  "names": "Furnace Host Base",
+  "land": null,
+  "kind": "hmm3",
+  "src": "AVGsieg0.png",
+  "note": "forge workshop"
+ },
+ {
+  "n": 130,
+  "region": "GitLabSmall",
+  "atlas": "common/maps/tileset/phyrexia/Phyrexian_Buildings.atlas",
+  "names": "Gitaxian Laboratory",
+  "land": null,
+  "kind": "hmm3",
+  "src": "Skill Increasing Sites/AVSschm0.png",
+  "note": "magic tower"
+ }
+]

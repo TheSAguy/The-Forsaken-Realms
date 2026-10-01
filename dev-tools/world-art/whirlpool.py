@@ -34,6 +34,48 @@ def whirlpool():
     return out
 
 
+HMM3_DIR = os.path.join(ART, "HMM3_whirlpool")   # round 391: AVXwhrl0-7.png, the HMM3 whirlpool's eight frames
+FRAME_W = 48
+
+
+def frames():
+    """Round 391 (the user: "Let's animate the whirlpools"): the HMM3 whirlpool's eight frames for the ocean. HMM3 keys
+    its sprites by palette - cyan (0,255,255) transparent; the frames are cut with ONE box (all eight share it, so the
+    swirl does not jitter), halved to FRAME_W wide, and moved into this ocean's colours: each channel is OCEAN times the
+    pixel's ratio to the frames' mean colour, so the swirl sits darker than the sea with light foam streaks and a dark
+    eye (an offset from HMM3's rim water washed it out to a pale cloud - previewed). The oval fades out over its outer
+    30%."""
+    import numpy as np
+    raw = []
+    for i in range(8):
+        a = np.asarray(Image.open(os.path.join(HMM3_DIR, "AVXwhrl%d.png" % i)).convert("RGB")).astype(int)
+        key = (a[..., 0] == 0) & (a[..., 1] == 255) & (a[..., 2] == 255)
+        rgba = np.zeros(a.shape[:2] + (4,), np.uint8)
+        rgba[..., :3] = a
+        rgba[..., 3] = np.where(key, 0, 255)
+        raw.append(rgba)
+    union = np.zeros(raw[0].shape[:2], bool)
+    for f in raw:
+        union |= f[..., 3] > 0
+    ys, xs = np.where(union)
+    box = (xs.min(), ys.min(), xs.max() + 1, ys.max() + 1)
+    mean = np.concatenate([f[f[..., 3] > 0][:, :3] for f in raw]).astype(float).mean(axis=0)
+    out = []
+    for f in raw:
+        img = Image.fromarray(f).crop(box)
+        s = FRAME_W / img.width
+        img = img.convert("RGBa").resize((FRAME_W, max(1, round(img.height * s))), Image.LANCZOS).convert("RGBA")
+        a = np.asarray(img).astype(float)
+        rgb = np.clip(np.array(OCEAN, float) * (np.maximum(a[..., :3], 1) / mean), 0, 255)
+        h, w = a.shape[:2]
+        yy, xx = np.mgrid[0:h, 0:w]
+        d = np.hypot((xx - (w - 1) / 2) / (w / 2), (yy - (h - 1) / 2) / (h / 2))   # 1 at the oval's rim
+        fade = np.clip((1.0 - d) / 0.3, 0, 1)
+        alpha = a[..., 3] * fade
+        out.append(Image.fromarray(np.dstack([rgb, alpha]).astype(np.uint8)))
+    return out
+
+
 if __name__ == "__main__":
     wp = whirlpool()
     wp.save("whirlpool_48.png")

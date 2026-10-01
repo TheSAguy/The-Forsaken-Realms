@@ -112,9 +112,11 @@ def doodads():
                 cell.alpha_composite(v, ((CELL - v.width) // 2, CELL - v.height - 1))
                 cells.append((d["name"], cell))
     import whirlpool
-    big = [("Whirlpool", whirlpool.whirlpool())]
-    entries.append(dict(name="Whirlpool", variants=[big[0][1]], layer=-1, start=0.0, end=1.0, res=1,
-                        density=dict(spec.OCEAN_DOODADS)["Whirlpool"], on=["ocean"], scale=0.6667))
+    # round 391: the HMM3 whirlpool's eight frames, in order - MapSprite cycles them (frameDuration)
+    big = [("Whirlpool", f) for f in whirlpool.frames()]
+    entries.append(dict(name="Whirlpool", variants=[im for _, im in big], layer=-1, start=0.0, end=1.0, res=1,
+                        density=dict(spec.OCEAN_DOODADS)["Whirlpool"], on=["ocean"], scale=0.6667,
+                        frameDuration=spec.WHIRLPOOL_FRAME_SECONDS))
     cols = 16
     rows = (len(cells) + cols - 1) // cols
     page = Image.new("RGBA", (cols * CELL, rows * CELL + 48), (0, 0, 0, 0))
@@ -125,7 +127,7 @@ def doodads():
         regions.append((name, (x, y, CELL, CELL)))
     for i, (name, im) in enumerate(big):   # round 305: the whirlpool, 48 px, drawn two tiles wide
         page.alpha_composite(im, (i * 48, rows * CELL))
-        regions.append((name, (i * 48, rows * CELL, 48, 48)))
+        regions.append((name, (i * 48, rows * CELL, im.width, im.height)))
         cells.append((name, im))
     write(os.path.join(PLANE, "world", "sprites", "doodads_hd.png"), page, binary=True)
     write(os.path.join(PLANE, "world", "sprites", "doodads_hd.atlas"), atlas_text("doodads_hd.png", page.size, regions))
@@ -140,6 +142,8 @@ def block(d):
              '"resolution":%s' % d["res"], '"density":%s' % d["density"], '"scale":%s' % d.get("scale", 0.5)]
     if d.get("on"):
         lines.append('"onStructures":[%s]' % ",".join('"%s"' % s for s in d["on"]))
+    if d.get("frameDuration"):
+        lines.append('"frameDuration":%s' % d["frameDuration"])   # round 391: an animated doodad
     return "{" + NL + ("," + NL).join(lines) + NL + "}"
 
 

@@ -32,6 +32,9 @@ public class BiomeSpriteData implements SaveFileContent {
     //         in the sea) and never on plain ground; unset, only on plain ground, as doodads always were.
     public float scale = 1f;
     public String[] onStructures;
+    // Round 391 (the user: "Let's animate the whirlpools"): catalog-only like the two above. Above 0 the doodad
+    // animates - every atlas region of its name is a frame, in atlas order, each shown this many seconds (MapSprite).
+    public float frameDuration;
 
     public String key() {
         return "BiomeSprite&" + name;
