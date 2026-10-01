@@ -1,0 +1,59 @@
+barkhide_dendroid.png
+size: 220,334
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 55, 54
+Idle
+  xy: 55, 64
+  size: 55, 54
+Idle
+  xy: 110, 64
+  size: 55, 54
+Idle
+  xy: 165, 64
+  size: 55, 54
+Walk
+  xy: 0, 118
+  size: 55, 54
+Walk
+  xy: 55, 118
+  size: 55, 54
+Walk
+  xy: 110, 118
+  size: 55, 54
+Walk
+  xy: 165, 118
+  size: 55, 54
+Attack
+  xy: 0, 172
+  size: 55, 54
+Attack
+  xy: 55, 172
+  size: 55, 54
+Attack
+  xy: 110, 172
+  size: 55, 54
+Hit
+  xy: 0, 226
+  size: 55, 54
+Hit
+  xy: 55, 226
+  size: 55, 54
+Death
+  xy: 0, 280
+  size: 55, 54
+Death
+  xy: 55, 280
+  size: 55, 54
+Death
+  xy: 110, 280
+  size: 55, 54
+Death
+  xy: 165, 280
+  size: 55, 54

@@ -1,0 +1,65 @@
+lampbearer_zealot.png
+size: 258,254
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 43, 38
+Idle
+  xy: 43, 64
+  size: 43, 38
+Idle
+  xy: 86, 64
+  size: 43, 38
+Idle
+  xy: 129, 64
+  size: 43, 38
+Walk
+  xy: 0, 102
+  size: 43, 38
+Walk
+  xy: 43, 102
+  size: 43, 38
+Walk
+  xy: 86, 102
+  size: 43, 38
+Walk
+  xy: 129, 102
+  size: 43, 38
+Attack
+  xy: 0, 140
+  size: 43, 38
+Attack
+  xy: 43, 140
+  size: 43, 38
+Attack
+  xy: 86, 140
+  size: 43, 38
+Hit
+  xy: 0, 178
+  size: 43, 38
+Hit
+  xy: 43, 178
+  size: 43, 38
+Death
+  xy: 0, 216
+  size: 43, 38
+Death
+  xy: 43, 216
+  size: 43, 38
+Death
+  xy: 86, 216
+  size: 43, 38
+Death
+  xy: 129, 216
+  size: 43, 38
+Death
+  xy: 172, 216
+  size: 43, 38
+Death
+  xy: 215, 216
+  size: 43, 38

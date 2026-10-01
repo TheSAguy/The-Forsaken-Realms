@@ -1,0 +1,77 @@
+ironhide_gorgon.png
+size: 846,359
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 141, 59
+Idle
+  xy: 141, 64
+  size: 141, 59
+Idle
+  xy: 282, 64
+  size: 141, 59
+Idle
+  xy: 423, 64
+  size: 141, 59
+Idle
+  xy: 564, 64
+  size: 141, 59
+Idle
+  xy: 705, 64
+  size: 141, 59
+Walk
+  xy: 0, 123
+  size: 141, 59
+Walk
+  xy: 141, 123
+  size: 141, 59
+Walk
+  xy: 282, 123
+  size: 141, 59
+Walk
+  xy: 423, 123
+  size: 141, 59
+Attack
+  xy: 0, 182
+  size: 141, 59
+Attack
+  xy: 141, 182
+  size: 141, 59
+Attack
+  xy: 282, 182
+  size: 141, 59
+Attack
+  xy: 423, 182
+  size: 141, 59
+Attack
+  xy: 564, 182
+  size: 141, 59
+Hit
+  xy: 0, 241
+  size: 141, 59
+Hit
+  xy: 141, 241
+  size: 141, 59
+Hit
+  xy: 282, 241
+  size: 141, 59
+Death
+  xy: 0, 300
+  size: 141, 59
+Death
+  xy: 141, 300
+  size: 141, 59
+Death
+  xy: 282, 300
+  size: 141, 59
+Death
+  xy: 423, 300
+  size: 141, 59
+Death
+  xy: 564, 300
+  size: 141, 59

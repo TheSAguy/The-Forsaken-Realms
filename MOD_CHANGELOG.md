@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 382: 56 new creatures - twelve of them legends, Victor the vampire an Archmage (2026-09-30)
+
+The user, on the 56 enemies staged from New Art\Units: "Let's implement the new creatures. Let's make the top two rows,
+war champions/wondering legends. The Vampire. Rename him Victor and give him my current Vampire Deck - Save 1." Then
+"Rename the current Victor and add this one please", "Please give a few of the Their color + Artifact decks. I feel
+like there are not a lot of those out there", "Double check my Vampire deck. It might be Archmage level. In that case
+you need to make Victor an Archmage please", and for the Wasteland: "3, colorless only".
+
+- **The art:** 56 atlases in sprites/enemy/tfr2/ (Heroes of Might and Magic III 37, Diablo/Hellfire 9, Arcanum 10 -
+  CREDITS lines added), sized to rank by set_scales382.py (new entries only; legends at boss size, body 30/32/36 for
+  Adept/Master/Archmage like the 25 existing champions).
+- **The 12 legends** (the overview's top two rows), named in config tables/roaming_champions.json (25 -> 37) - the
+  legend table (round 375) is their only route: spawnRate 0, boss (as the 25 champions: keeps them out of the cave
+  champions and the Chest's Illegal Arena bracket), best of 3, no roster, no arena; the house reward template of their
+  rank with every entry certain and at its top, plus their themed card at Rare/Mythic. White Seraph of the Burning
+  Brand and Sunscale Dragon, Blue Skyvault Dragon and Sixblade Naga, Black Nightscale Dragon and **Victor**, Red
+  Pyreclaw Dragon and Cinderstone Brute, Green Thornscale Dragon and Bogspawn Horror, colorless Ossuary Dragon and
+  Blightborn Mutant. The five dragons, the Seraph and Victor are Archmages (Mythic, difficulty 3).
+- **Victor** = the vampire, playing decks/legends/victor_vampire.dck - the user's "Vampire Deck" from save 1 (48 cards,
+  Black Lotus among them). Archmage on the evidence of Forge's headless sim (20 games each): Archmages Sengir and
+  Falthis 9-11, Vilis 15-5; Masters Valyx the Tormentor 12-8, Maha 19-1 - 55 of 80. Life 50, speed 49, noAnte (an ante
+  could hand over the Lotus), and no deckCard reward (it draws from his deck without the restricted list) - those
+  entries are Black "card" rewards, which the restricted list filters.
+- **The old Victor** (the WB cleric of the Church of Valgavoth) is "Victor, Valgavoth's Seneschal": enemies.json, both
+  placements in Church_of_Valgavoth_1.tmx, the white/black rosters, enemies.csv. Victor's Key keeps its name. A save's
+  win/loss record (and legend-sighting seed) for "Victor" now counts for the vampire.
+- **The 44 ordinary creatures:** decks from the round-179/318 generator (deckgen382.py, 55 decks in
+  decks/standard/tfr2/, 10 of 40 cards and 45 of 60, no restricted card), ten of them **color + artifact** decks
+  (15-36 artifacts each): Silverlance Cavalier and Sandstone Colossus (W), Tidewrought Colossus and Chainball Gremlin
+  (U), Gilded Lich and Hollowplate Phantom (B), Twinskull Ogre and Hellspark Fiend (R), Ironhide Gorgon and Flailfang
+  Gnoll (G). Rosters: each color's land +10; the Wasteland +3, the colorless ones only (Bonestinger, Clockwork
+  Legionary, Cryptstalker Fiend) - the user's call; round 179's rule (undead, horrors and constructs also roam the
+  Wasteland) is not applied this round, so their questTags carry no BiomeColorless. Arenas: +3 ordinary Masters in each
+  AI capital, +5 in the player Capitol (no legend in any pool). enemies.csv rebuilt (2028 -> 2084 rows, Include flags
+  kept by name).
+- **Pipeline:** dev-tools/art-import/round382/ (roster382 = the data, deckgen382, import382 = enemies/maps/arenas/csv,
+  set_scales382, add_to_biomes, verify382, check_decks382, deck_audit382); the staged art stayed outside the repo.
+  The background agent's run of import382.py into the repo was refused by the permission check - the user approved
+  the write, and the main session ran it.
+- **Verified:** verify382.py 0 failures (56 atlases parse, decks legal, legends/rosters/arenas/CSV); the plane validator
+  shows the baseline's categories only (enemies 2028 -> 2084, atlases 1054 -> 1110). Agent game (a copy of the user's
+  save): six spawned (Victor, Skyvault Dragon, Silverlance Cavalier, Clockwork Legionary, Broodweaver Drider, Hellmaw
+  Boar) at their ranks, drawn cleanly; a console-spawned legend gets the sighting announcement; the Skyvault Dragon's
+  duel (50 x 2.5 difficulty = 125, 118 at night on green, Gemstone Mine, best of 3) lost; Victor's (his deck found,
+  Gemstone Mine, best of 3) won 2-0 with no ante, paying 19 cards, 200 gold, 6 shards; no exception in forge.log.
+
 ## Round 381: the older doodads that were trees, rocks and pillars go ground level (2026-09-30)
 
 The user, after round 379: "yes, swap the older tree doodads for ground-level ones too." The standing rule (round 379):

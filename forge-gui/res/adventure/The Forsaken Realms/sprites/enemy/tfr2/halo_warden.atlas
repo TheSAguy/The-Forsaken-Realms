@@ -1,0 +1,74 @@
+halo_warden.png
+size: 546,339
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 91, 55
+Idle
+  xy: 91, 64
+  size: 91, 55
+Idle
+  xy: 182, 64
+  size: 91, 55
+Idle
+  xy: 273, 64
+  size: 91, 55
+Idle
+  xy: 364, 64
+  size: 91, 55
+Walk
+  xy: 0, 119
+  size: 91, 55
+Walk
+  xy: 91, 119
+  size: 91, 55
+Walk
+  xy: 182, 119
+  size: 91, 55
+Walk
+  xy: 273, 119
+  size: 91, 55
+Walk
+  xy: 364, 119
+  size: 91, 55
+Walk
+  xy: 455, 119
+  size: 91, 55
+Attack
+  xy: 0, 174
+  size: 91, 55
+Attack
+  xy: 91, 174
+  size: 91, 55
+Attack
+  xy: 182, 174
+  size: 91, 55
+Hit
+  xy: 0, 229
+  size: 91, 55
+Hit
+  xy: 91, 229
+  size: 91, 55
+Death
+  xy: 0, 284
+  size: 91, 55
+Death
+  xy: 91, 284
+  size: 91, 55
+Death
+  xy: 182, 284
+  size: 91, 55
+Death
+  xy: 273, 284
+  size: 91, 55
+Death
+  xy: 364, 284
+  size: 91, 55
+Death
+  xy: 455, 284
+  size: 91, 55

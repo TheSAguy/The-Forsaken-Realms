@@ -1,0 +1,266 @@
+fleshrender_hulk.png
+size: 366,1124
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 61, 53
+IdleRight
+  xy: 61, 64
+  size: 61, 53
+IdleRight
+  xy: 122, 64
+  size: 61, 53
+IdleRight
+  xy: 183, 64
+  size: 61, 53
+IdleRight
+  xy: 244, 64
+  size: 61, 53
+IdleDown
+  xy: 0, 117
+  size: 61, 53
+IdleDown
+  xy: 61, 117
+  size: 61, 53
+IdleDown
+  xy: 122, 117
+  size: 61, 53
+IdleDown
+  xy: 183, 117
+  size: 61, 53
+IdleDown
+  xy: 244, 117
+  size: 61, 53
+IdleLeft
+  xy: 0, 170
+  size: 61, 53
+IdleLeft
+  xy: 61, 170
+  size: 61, 53
+IdleLeft
+  xy: 122, 170
+  size: 61, 53
+IdleLeft
+  xy: 183, 170
+  size: 61, 53
+IdleLeft
+  xy: 244, 170
+  size: 61, 53
+IdleUp
+  xy: 0, 223
+  size: 61, 53
+IdleUp
+  xy: 61, 223
+  size: 61, 53
+IdleUp
+  xy: 122, 223
+  size: 61, 53
+IdleUp
+  xy: 183, 223
+  size: 61, 53
+IdleUp
+  xy: 244, 223
+  size: 61, 53
+WalkRight
+  xy: 0, 276
+  size: 61, 53
+WalkRight
+  xy: 61, 276
+  size: 61, 53
+WalkRight
+  xy: 122, 276
+  size: 61, 53
+WalkRight
+  xy: 183, 276
+  size: 61, 53
+WalkDown
+  xy: 0, 329
+  size: 61, 53
+WalkDown
+  xy: 61, 329
+  size: 61, 53
+WalkDown
+  xy: 122, 329
+  size: 61, 53
+WalkDown
+  xy: 183, 329
+  size: 61, 53
+WalkLeft
+  xy: 0, 382
+  size: 61, 53
+WalkLeft
+  xy: 61, 382
+  size: 61, 53
+WalkLeft
+  xy: 122, 382
+  size: 61, 53
+WalkLeft
+  xy: 183, 382
+  size: 61, 53
+WalkUp
+  xy: 0, 435
+  size: 61, 53
+WalkUp
+  xy: 61, 435
+  size: 61, 53
+WalkUp
+  xy: 122, 435
+  size: 61, 53
+WalkUp
+  xy: 183, 435
+  size: 61, 53
+AttackRight
+  xy: 0, 488
+  size: 61, 53
+AttackRight
+  xy: 61, 488
+  size: 61, 53
+AttackRight
+  xy: 122, 488
+  size: 61, 53
+AttackDown
+  xy: 0, 541
+  size: 61, 53
+AttackDown
+  xy: 61, 541
+  size: 61, 53
+AttackDown
+  xy: 122, 541
+  size: 61, 53
+AttackLeft
+  xy: 0, 594
+  size: 61, 53
+AttackLeft
+  xy: 61, 594
+  size: 61, 53
+AttackLeft
+  xy: 122, 594
+  size: 61, 53
+AttackLeft
+  xy: 183, 594
+  size: 61, 53
+AttackUp
+  xy: 0, 647
+  size: 61, 53
+AttackUp
+  xy: 61, 647
+  size: 61, 53
+AttackUp
+  xy: 122, 647
+  size: 61, 53
+AttackUp
+  xy: 183, 647
+  size: 61, 53
+HitRight
+  xy: 0, 700
+  size: 61, 53
+HitRight
+  xy: 61, 700
+  size: 61, 53
+HitRight
+  xy: 122, 700
+  size: 61, 53
+HitDown
+  xy: 0, 753
+  size: 61, 53
+HitDown
+  xy: 61, 753
+  size: 61, 53
+HitDown
+  xy: 122, 753
+  size: 61, 53
+HitLeft
+  xy: 0, 806
+  size: 61, 53
+HitLeft
+  xy: 61, 806
+  size: 61, 53
+HitLeft
+  xy: 122, 806
+  size: 61, 53
+HitUp
+  xy: 0, 859
+  size: 61, 53
+HitUp
+  xy: 61, 859
+  size: 61, 53
+HitUp
+  xy: 122, 859
+  size: 61, 53
+DeathRight
+  xy: 0, 912
+  size: 61, 53
+DeathRight
+  xy: 61, 912
+  size: 61, 53
+DeathRight
+  xy: 122, 912
+  size: 61, 53
+DeathRight
+  xy: 183, 912
+  size: 61, 53
+DeathRight
+  xy: 244, 912
+  size: 61, 53
+DeathRight
+  xy: 305, 912
+  size: 61, 53
+DeathDown
+  xy: 0, 965
+  size: 61, 53
+DeathDown
+  xy: 61, 965
+  size: 61, 53
+DeathDown
+  xy: 122, 965
+  size: 61, 53
+DeathDown
+  xy: 183, 965
+  size: 61, 53
+DeathDown
+  xy: 244, 965
+  size: 61, 53
+DeathDown
+  xy: 305, 965
+  size: 61, 53
+DeathLeft
+  xy: 0, 1018
+  size: 61, 53
+DeathLeft
+  xy: 61, 1018
+  size: 61, 53
+DeathLeft
+  xy: 122, 1018
+  size: 61, 53
+DeathLeft
+  xy: 183, 1018
+  size: 61, 53
+DeathLeft
+  xy: 244, 1018
+  size: 61, 53
+DeathLeft
+  xy: 305, 1018
+  size: 61, 53
+DeathUp
+  xy: 0, 1071
+  size: 61, 53
+DeathUp
+  xy: 61, 1071
+  size: 61, 53
+DeathUp
+  xy: 122, 1071
+  size: 61, 53
+DeathUp
+  xy: 183, 1071
+  size: 61, 53
+DeathUp
+  xy: 244, 1071
+  size: 61, 53
+DeathUp
+  xy: 305, 1071
+  size: 61, 53

@@ -1,0 +1,74 @@
+silverlance_cavalier.png
+size: 520,409
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 104, 69
+Idle
+  xy: 104, 64
+  size: 104, 69
+Idle
+  xy: 208, 64
+  size: 104, 69
+Idle
+  xy: 312, 64
+  size: 104, 69
+Idle
+  xy: 416, 64
+  size: 104, 69
+Walk
+  xy: 0, 133
+  size: 104, 69
+Walk
+  xy: 104, 133
+  size: 104, 69
+Walk
+  xy: 208, 133
+  size: 104, 69
+Walk
+  xy: 312, 133
+  size: 104, 69
+Walk
+  xy: 416, 133
+  size: 104, 69
+Attack
+  xy: 0, 202
+  size: 104, 69
+Attack
+  xy: 104, 202
+  size: 104, 69
+Attack
+  xy: 208, 202
+  size: 104, 69
+Attack
+  xy: 312, 202
+  size: 104, 69
+Hit
+  xy: 0, 271
+  size: 104, 69
+Hit
+  xy: 104, 271
+  size: 104, 69
+Hit
+  xy: 208, 271
+  size: 104, 69
+Death
+  xy: 0, 340
+  size: 104, 69
+Death
+  xy: 104, 340
+  size: 104, 69
+Death
+  xy: 208, 340
+  size: 104, 69
+Death
+  xy: 312, 340
+  size: 104, 69
+Death
+  xy: 416, 340
+  size: 104, 69

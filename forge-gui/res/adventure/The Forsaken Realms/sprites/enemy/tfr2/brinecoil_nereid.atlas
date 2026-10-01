@@ -1,0 +1,71 @@
+brinecoil_nereid.png
+size: 410,359
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 82, 59
+Idle
+  xy: 82, 64
+  size: 82, 59
+Idle
+  xy: 164, 64
+  size: 82, 59
+Idle
+  xy: 246, 64
+  size: 82, 59
+Idle
+  xy: 328, 64
+  size: 82, 59
+Walk
+  xy: 0, 123
+  size: 82, 59
+Walk
+  xy: 82, 123
+  size: 82, 59
+Walk
+  xy: 164, 123
+  size: 82, 59
+Walk
+  xy: 246, 123
+  size: 82, 59
+Walk
+  xy: 328, 123
+  size: 82, 59
+Attack
+  xy: 0, 182
+  size: 82, 59
+Attack
+  xy: 82, 182
+  size: 82, 59
+Attack
+  xy: 164, 182
+  size: 82, 59
+Attack
+  xy: 246, 182
+  size: 82, 59
+Attack
+  xy: 328, 182
+  size: 82, 59
+Hit
+  xy: 0, 241
+  size: 82, 59
+Hit
+  xy: 82, 241
+  size: 82, 59
+Death
+  xy: 0, 300
+  size: 82, 59
+Death
+  xy: 82, 300
+  size: 82, 59
+Death
+  xy: 164, 300
+  size: 82, 59
+Death
+  xy: 246, 300
+  size: 82, 59

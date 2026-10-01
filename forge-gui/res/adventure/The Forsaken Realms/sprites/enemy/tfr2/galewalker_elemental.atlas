@@ -1,0 +1,74 @@
+galewalker_elemental.png
+size: 348,289
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 58, 45
+Idle
+  xy: 58, 64
+  size: 58, 45
+Idle
+  xy: 116, 64
+  size: 58, 45
+Idle
+  xy: 174, 64
+  size: 58, 45
+Idle
+  xy: 232, 64
+  size: 58, 45
+Idle
+  xy: 290, 64
+  size: 58, 45
+Walk
+  xy: 0, 109
+  size: 58, 45
+Walk
+  xy: 58, 109
+  size: 58, 45
+Walk
+  xy: 116, 109
+  size: 58, 45
+Walk
+  xy: 174, 109
+  size: 58, 45
+Attack
+  xy: 0, 154
+  size: 58, 45
+Attack
+  xy: 58, 154
+  size: 58, 45
+Attack
+  xy: 116, 154
+  size: 58, 45
+Attack
+  xy: 174, 154
+  size: 58, 45
+Attack
+  xy: 232, 154
+  size: 58, 45
+Hit
+  xy: 0, 199
+  size: 58, 45
+Hit
+  xy: 58, 199
+  size: 58, 45
+Hit
+  xy: 116, 199
+  size: 58, 45
+Death
+  xy: 0, 244
+  size: 58, 45
+Death
+  xy: 58, 244
+  size: 58, 45
+Death
+  xy: 116, 244
+  size: 58, 45
+Death
+  xy: 174, 244
+  size: 58, 45

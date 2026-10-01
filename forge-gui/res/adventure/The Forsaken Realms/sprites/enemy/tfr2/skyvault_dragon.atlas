@@ -1,0 +1,56 @@
+skyvault_dragon.png
+size: 680,316
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 136, 63
+Idle
+  xy: 136, 64
+  size: 136, 63
+Idle
+  xy: 272, 64
+  size: 136, 63
+Idle
+  xy: 408, 64
+  size: 136, 63
+Walk
+  xy: 0, 127
+  size: 136, 63
+Walk
+  xy: 136, 127
+  size: 136, 63
+Walk
+  xy: 272, 127
+  size: 136, 63
+Walk
+  xy: 408, 127
+  size: 136, 63
+Attack
+  xy: 0, 190
+  size: 136, 63
+Attack
+  xy: 136, 190
+  size: 136, 63
+Attack
+  xy: 272, 190
+  size: 136, 63
+Death
+  xy: 0, 253
+  size: 136, 63
+Death
+  xy: 136, 253
+  size: 136, 63
+Death
+  xy: 272, 253
+  size: 136, 63
+Death
+  xy: 408, 253
+  size: 136, 63
+Death
+  xy: 544, 253
+  size: 136, 63

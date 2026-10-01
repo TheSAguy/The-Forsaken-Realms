@@ -1,0 +1,68 @@
+tempest_djinn.png
+size: 462,404
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 77, 68
+Idle
+  xy: 77, 64
+  size: 77, 68
+Idle
+  xy: 154, 64
+  size: 77, 68
+Idle
+  xy: 231, 64
+  size: 77, 68
+Walk
+  xy: 0, 132
+  size: 77, 68
+Walk
+  xy: 77, 132
+  size: 77, 68
+Walk
+  xy: 154, 132
+  size: 77, 68
+Walk
+  xy: 231, 132
+  size: 77, 68
+Walk
+  xy: 308, 132
+  size: 77, 68
+Walk
+  xy: 385, 132
+  size: 77, 68
+Attack
+  xy: 0, 200
+  size: 77, 68
+Attack
+  xy: 77, 200
+  size: 77, 68
+Attack
+  xy: 154, 200
+  size: 77, 68
+Hit
+  xy: 0, 268
+  size: 77, 68
+Hit
+  xy: 77, 268
+  size: 77, 68
+Hit
+  xy: 154, 268
+  size: 77, 68
+Death
+  xy: 0, 336
+  size: 77, 68
+Death
+  xy: 77, 336
+  size: 77, 68
+Death
+  xy: 154, 336
+  size: 77, 68
+Death
+  xy: 231, 336
+  size: 77, 68

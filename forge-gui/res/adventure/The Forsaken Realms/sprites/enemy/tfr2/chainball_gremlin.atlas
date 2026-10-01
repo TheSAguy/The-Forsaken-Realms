@@ -1,0 +1,71 @@
+chainball_gremlin.png
+size: 285,284
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 57, 44
+Idle
+  xy: 57, 64
+  size: 57, 44
+Idle
+  xy: 114, 64
+  size: 57, 44
+Idle
+  xy: 171, 64
+  size: 57, 44
+Walk
+  xy: 0, 108
+  size: 57, 44
+Walk
+  xy: 57, 108
+  size: 57, 44
+Walk
+  xy: 114, 108
+  size: 57, 44
+Walk
+  xy: 171, 108
+  size: 57, 44
+Walk
+  xy: 228, 108
+  size: 57, 44
+Attack
+  xy: 0, 152
+  size: 57, 44
+Attack
+  xy: 57, 152
+  size: 57, 44
+Attack
+  xy: 114, 152
+  size: 57, 44
+Attack
+  xy: 171, 152
+  size: 57, 44
+Hit
+  xy: 0, 196
+  size: 57, 44
+Hit
+  xy: 57, 196
+  size: 57, 44
+Hit
+  xy: 114, 196
+  size: 57, 44
+Death
+  xy: 0, 240
+  size: 57, 44
+Death
+  xy: 57, 240
+  size: 57, 44
+Death
+  xy: 114, 240
+  size: 57, 44
+Death
+  xy: 171, 240
+  size: 57, 44
+Death
+  xy: 228, 240
+  size: 57, 44

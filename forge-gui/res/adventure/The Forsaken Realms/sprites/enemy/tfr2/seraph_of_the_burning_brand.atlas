@@ -1,0 +1,65 @@
+seraph_of_the_burning_brand.png
+size: 615,479
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 123, 83
+Idle
+  xy: 123, 64
+  size: 123, 83
+Idle
+  xy: 246, 64
+  size: 123, 83
+Idle
+  xy: 369, 64
+  size: 123, 83
+Idle
+  xy: 492, 64
+  size: 123, 83
+Walk
+  xy: 0, 147
+  size: 123, 83
+Walk
+  xy: 123, 147
+  size: 123, 83
+Walk
+  xy: 246, 147
+  size: 123, 83
+Walk
+  xy: 369, 147
+  size: 123, 83
+Attack
+  xy: 0, 230
+  size: 123, 83
+Attack
+  xy: 123, 230
+  size: 123, 83
+Attack
+  xy: 246, 230
+  size: 123, 83
+Hit
+  xy: 0, 313
+  size: 123, 83
+Hit
+  xy: 123, 313
+  size: 123, 83
+Death
+  xy: 0, 396
+  size: 123, 83
+Death
+  xy: 123, 396
+  size: 123, 83
+Death
+  xy: 246, 396
+  size: 123, 83
+Death
+  xy: 369, 396
+  size: 123, 83
+Death
+  xy: 492, 396
+  size: 123, 83

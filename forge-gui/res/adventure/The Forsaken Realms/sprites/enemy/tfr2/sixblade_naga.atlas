@@ -1,0 +1,71 @@
+sixblade_naga.png
+size: 435,379
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 87, 63
+Idle
+  xy: 87, 64
+  size: 87, 63
+Idle
+  xy: 174, 64
+  size: 87, 63
+Idle
+  xy: 261, 64
+  size: 87, 63
+Idle
+  xy: 348, 64
+  size: 87, 63
+Walk
+  xy: 0, 127
+  size: 87, 63
+Walk
+  xy: 87, 127
+  size: 87, 63
+Walk
+  xy: 174, 127
+  size: 87, 63
+Walk
+  xy: 261, 127
+  size: 87, 63
+Walk
+  xy: 348, 127
+  size: 87, 63
+Attack
+  xy: 0, 190
+  size: 87, 63
+Attack
+  xy: 87, 190
+  size: 87, 63
+Attack
+  xy: 174, 190
+  size: 87, 63
+Attack
+  xy: 261, 190
+  size: 87, 63
+Hit
+  xy: 0, 253
+  size: 87, 63
+Hit
+  xy: 87, 253
+  size: 87, 63
+Death
+  xy: 0, 316
+  size: 87, 63
+Death
+  xy: 87, 316
+  size: 87, 63
+Death
+  xy: 174, 316
+  size: 87, 63
+Death
+  xy: 261, 316
+  size: 87, 63
+Death
+  xy: 348, 316
+  size: 87, 63

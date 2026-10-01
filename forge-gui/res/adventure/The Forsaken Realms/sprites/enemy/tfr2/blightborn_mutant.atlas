@@ -1,0 +1,305 @@
+blightborn_mutant.png
+size: 480,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 80, 48
+IdleRight
+  xy: 80, 64
+  size: 80, 48
+IdleRight
+  xy: 160, 64
+  size: 80, 48
+IdleRight
+  xy: 240, 64
+  size: 80, 48
+IdleRight
+  xy: 320, 64
+  size: 80, 48
+IdleRight
+  xy: 400, 64
+  size: 80, 48
+IdleDown
+  xy: 0, 112
+  size: 80, 48
+IdleDown
+  xy: 80, 112
+  size: 80, 48
+IdleDown
+  xy: 160, 112
+  size: 80, 48
+IdleDown
+  xy: 240, 112
+  size: 80, 48
+IdleDown
+  xy: 320, 112
+  size: 80, 48
+IdleDown
+  xy: 400, 112
+  size: 80, 48
+IdleLeft
+  xy: 0, 160
+  size: 80, 48
+IdleLeft
+  xy: 80, 160
+  size: 80, 48
+IdleLeft
+  xy: 160, 160
+  size: 80, 48
+IdleLeft
+  xy: 240, 160
+  size: 80, 48
+IdleLeft
+  xy: 320, 160
+  size: 80, 48
+IdleLeft
+  xy: 400, 160
+  size: 80, 48
+IdleUp
+  xy: 0, 208
+  size: 80, 48
+IdleUp
+  xy: 80, 208
+  size: 80, 48
+IdleUp
+  xy: 160, 208
+  size: 80, 48
+IdleUp
+  xy: 240, 208
+  size: 80, 48
+IdleUp
+  xy: 320, 208
+  size: 80, 48
+IdleUp
+  xy: 400, 208
+  size: 80, 48
+WalkRight
+  xy: 0, 256
+  size: 80, 48
+WalkRight
+  xy: 80, 256
+  size: 80, 48
+WalkRight
+  xy: 160, 256
+  size: 80, 48
+WalkRight
+  xy: 240, 256
+  size: 80, 48
+WalkRight
+  xy: 320, 256
+  size: 80, 48
+WalkRight
+  xy: 400, 256
+  size: 80, 48
+WalkDown
+  xy: 0, 304
+  size: 80, 48
+WalkDown
+  xy: 80, 304
+  size: 80, 48
+WalkDown
+  xy: 160, 304
+  size: 80, 48
+WalkDown
+  xy: 240, 304
+  size: 80, 48
+WalkDown
+  xy: 320, 304
+  size: 80, 48
+WalkDown
+  xy: 400, 304
+  size: 80, 48
+WalkLeft
+  xy: 0, 352
+  size: 80, 48
+WalkLeft
+  xy: 80, 352
+  size: 80, 48
+WalkLeft
+  xy: 160, 352
+  size: 80, 48
+WalkLeft
+  xy: 240, 352
+  size: 80, 48
+WalkLeft
+  xy: 320, 352
+  size: 80, 48
+WalkLeft
+  xy: 400, 352
+  size: 80, 48
+WalkUp
+  xy: 0, 400
+  size: 80, 48
+WalkUp
+  xy: 80, 400
+  size: 80, 48
+WalkUp
+  xy: 160, 400
+  size: 80, 48
+WalkUp
+  xy: 240, 400
+  size: 80, 48
+WalkUp
+  xy: 320, 400
+  size: 80, 48
+WalkUp
+  xy: 400, 400
+  size: 80, 48
+AttackRight
+  xy: 0, 448
+  size: 80, 48
+AttackRight
+  xy: 80, 448
+  size: 80, 48
+AttackRight
+  xy: 160, 448
+  size: 80, 48
+AttackRight
+  xy: 240, 448
+  size: 80, 48
+AttackDown
+  xy: 0, 496
+  size: 80, 48
+AttackDown
+  xy: 80, 496
+  size: 80, 48
+AttackDown
+  xy: 160, 496
+  size: 80, 48
+AttackDown
+  xy: 240, 496
+  size: 80, 48
+AttackLeft
+  xy: 0, 544
+  size: 80, 48
+AttackLeft
+  xy: 80, 544
+  size: 80, 48
+AttackLeft
+  xy: 160, 544
+  size: 80, 48
+AttackUp
+  xy: 0, 592
+  size: 80, 48
+AttackUp
+  xy: 80, 592
+  size: 80, 48
+AttackUp
+  xy: 160, 592
+  size: 80, 48
+AttackUp
+  xy: 240, 592
+  size: 80, 48
+HitRight
+  xy: 0, 640
+  size: 80, 48
+HitRight
+  xy: 80, 640
+  size: 80, 48
+HitRight
+  xy: 160, 640
+  size: 80, 48
+HitDown
+  xy: 0, 688
+  size: 80, 48
+HitDown
+  xy: 80, 688
+  size: 80, 48
+HitDown
+  xy: 160, 688
+  size: 80, 48
+HitLeft
+  xy: 0, 736
+  size: 80, 48
+HitLeft
+  xy: 80, 736
+  size: 80, 48
+HitLeft
+  xy: 160, 736
+  size: 80, 48
+HitUp
+  xy: 0, 784
+  size: 80, 48
+HitUp
+  xy: 80, 784
+  size: 80, 48
+HitUp
+  xy: 160, 784
+  size: 80, 48
+DeathRight
+  xy: 0, 832
+  size: 80, 48
+DeathRight
+  xy: 80, 832
+  size: 80, 48
+DeathRight
+  xy: 160, 832
+  size: 80, 48
+DeathRight
+  xy: 240, 832
+  size: 80, 48
+DeathRight
+  xy: 320, 832
+  size: 80, 48
+DeathRight
+  xy: 400, 832
+  size: 80, 48
+DeathDown
+  xy: 0, 880
+  size: 80, 48
+DeathDown
+  xy: 80, 880
+  size: 80, 48
+DeathDown
+  xy: 160, 880
+  size: 80, 48
+DeathDown
+  xy: 240, 880
+  size: 80, 48
+DeathDown
+  xy: 320, 880
+  size: 80, 48
+DeathDown
+  xy: 400, 880
+  size: 80, 48
+DeathLeft
+  xy: 0, 928
+  size: 80, 48
+DeathLeft
+  xy: 80, 928
+  size: 80, 48
+DeathLeft
+  xy: 160, 928
+  size: 80, 48
+DeathLeft
+  xy: 240, 928
+  size: 80, 48
+DeathLeft
+  xy: 320, 928
+  size: 80, 48
+DeathLeft
+  xy: 400, 928
+  size: 80, 48
+DeathUp
+  xy: 0, 976
+  size: 80, 48
+DeathUp
+  xy: 80, 976
+  size: 80, 48
+DeathUp
+  xy: 160, 976
+  size: 80, 48
+DeathUp
+  xy: 240, 976
+  size: 80, 48
+DeathUp
+  xy: 320, 976
+  size: 80, 48
+DeathUp
+  xy: 400, 976
+  size: 80, 48

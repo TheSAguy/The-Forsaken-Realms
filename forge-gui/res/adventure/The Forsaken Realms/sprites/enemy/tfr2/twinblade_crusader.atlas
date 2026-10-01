@@ -1,0 +1,77 @@
+twinblade_crusader.png
+size: 288,284
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 48, 44
+Idle
+  xy: 48, 64
+  size: 48, 44
+Idle
+  xy: 96, 64
+  size: 48, 44
+Idle
+  xy: 144, 64
+  size: 48, 44
+Idle
+  xy: 192, 64
+  size: 48, 44
+Walk
+  xy: 0, 108
+  size: 48, 44
+Walk
+  xy: 48, 108
+  size: 48, 44
+Walk
+  xy: 96, 108
+  size: 48, 44
+Walk
+  xy: 144, 108
+  size: 48, 44
+Walk
+  xy: 192, 108
+  size: 48, 44
+Walk
+  xy: 240, 108
+  size: 48, 44
+Attack
+  xy: 0, 152
+  size: 48, 44
+Attack
+  xy: 48, 152
+  size: 48, 44
+Attack
+  xy: 96, 152
+  size: 48, 44
+Attack
+  xy: 144, 152
+  size: 48, 44
+Hit
+  xy: 0, 196
+  size: 48, 44
+Hit
+  xy: 48, 196
+  size: 48, 44
+Death
+  xy: 0, 240
+  size: 48, 44
+Death
+  xy: 48, 240
+  size: 48, 44
+Death
+  xy: 96, 240
+  size: 48, 44
+Death
+  xy: 144, 240
+  size: 48, 44
+Death
+  xy: 192, 240
+  size: 48, 44
+Death
+  xy: 240, 240
+  size: 48, 44

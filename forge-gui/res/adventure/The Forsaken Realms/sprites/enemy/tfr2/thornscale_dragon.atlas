@@ -1,0 +1,77 @@
+thornscale_dragon.png
+size: 678,399
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 113, 67
+Idle
+  xy: 113, 64
+  size: 113, 67
+Idle
+  xy: 226, 64
+  size: 113, 67
+Idle
+  xy: 339, 64
+  size: 113, 67
+Walk
+  xy: 0, 131
+  size: 113, 67
+Walk
+  xy: 113, 131
+  size: 113, 67
+Walk
+  xy: 226, 131
+  size: 113, 67
+Walk
+  xy: 339, 131
+  size: 113, 67
+Walk
+  xy: 452, 131
+  size: 113, 67
+Walk
+  xy: 565, 131
+  size: 113, 67
+Attack
+  xy: 0, 198
+  size: 113, 67
+Attack
+  xy: 113, 198
+  size: 113, 67
+Attack
+  xy: 226, 198
+  size: 113, 67
+Attack
+  xy: 339, 198
+  size: 113, 67
+Attack
+  xy: 452, 198
+  size: 113, 67
+Hit
+  xy: 0, 265
+  size: 113, 67
+Hit
+  xy: 113, 265
+  size: 113, 67
+Hit
+  xy: 226, 265
+  size: 113, 67
+Death
+  xy: 0, 332
+  size: 113, 67
+Death
+  xy: 113, 332
+  size: 113, 67
+Death
+  xy: 226, 332
+  size: 113, 67
+Death
+  xy: 339, 332
+  size: 113, 67
+Death
+  xy: 452, 332
+  size: 113, 67

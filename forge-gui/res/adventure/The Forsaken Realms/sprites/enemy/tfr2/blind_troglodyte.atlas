@@ -1,0 +1,44 @@
+blind_troglodyte.png
+size: 295,202
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 59, 46
+Idle
+  xy: 59, 64
+  size: 59, 46
+Idle
+  xy: 118, 64
+  size: 59, 46
+Idle
+  xy: 177, 64
+  size: 59, 46
+Idle
+  xy: 236, 64
+  size: 59, 46
+Walk
+  xy: 0, 110
+  size: 59, 46
+Walk
+  xy: 59, 110
+  size: 59, 46
+Walk
+  xy: 118, 110
+  size: 59, 46
+Walk
+  xy: 177, 110
+  size: 59, 46
+Attack
+  xy: 0, 156
+  size: 59, 46
+Attack
+  xy: 59, 156
+  size: 59, 46
+Attack
+  xy: 118, 156
+  size: 59, 46

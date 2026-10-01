@@ -1,0 +1,77 @@
+sunscale_dragon.png
+size: 642,384
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 107, 64
+Idle
+  xy: 107, 64
+  size: 107, 64
+Idle
+  xy: 214, 64
+  size: 107, 64
+Idle
+  xy: 321, 64
+  size: 107, 64
+Walk
+  xy: 0, 128
+  size: 107, 64
+Walk
+  xy: 107, 128
+  size: 107, 64
+Walk
+  xy: 214, 128
+  size: 107, 64
+Walk
+  xy: 321, 128
+  size: 107, 64
+Walk
+  xy: 428, 128
+  size: 107, 64
+Walk
+  xy: 535, 128
+  size: 107, 64
+Attack
+  xy: 0, 192
+  size: 107, 64
+Attack
+  xy: 107, 192
+  size: 107, 64
+Attack
+  xy: 214, 192
+  size: 107, 64
+Attack
+  xy: 321, 192
+  size: 107, 64
+Attack
+  xy: 428, 192
+  size: 107, 64
+Hit
+  xy: 0, 256
+  size: 107, 64
+Hit
+  xy: 107, 256
+  size: 107, 64
+Hit
+  xy: 214, 256
+  size: 107, 64
+Death
+  xy: 0, 320
+  size: 107, 64
+Death
+  xy: 107, 320
+  size: 107, 64
+Death
+  xy: 214, 320
+  size: 107, 64
+Death
+  xy: 321, 320
+  size: 107, 64
+Death
+  xy: 428, 320
+  size: 107, 64

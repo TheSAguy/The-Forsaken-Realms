@@ -1,0 +1,71 @@
+thunderhelm_titan.png
+size: 405,394
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 81, 66
+Idle
+  xy: 81, 64
+  size: 81, 66
+Idle
+  xy: 162, 64
+  size: 81, 66
+Idle
+  xy: 243, 64
+  size: 81, 66
+Idle
+  xy: 324, 64
+  size: 81, 66
+Walk
+  xy: 0, 130
+  size: 81, 66
+Walk
+  xy: 81, 130
+  size: 81, 66
+Walk
+  xy: 162, 130
+  size: 81, 66
+Walk
+  xy: 243, 130
+  size: 81, 66
+Walk
+  xy: 324, 130
+  size: 81, 66
+Attack
+  xy: 0, 196
+  size: 81, 66
+Attack
+  xy: 81, 196
+  size: 81, 66
+Attack
+  xy: 162, 196
+  size: 81, 66
+Attack
+  xy: 243, 196
+  size: 81, 66
+Hit
+  xy: 0, 262
+  size: 81, 66
+Hit
+  xy: 81, 262
+  size: 81, 66
+Hit
+  xy: 162, 262
+  size: 81, 66
+Death
+  xy: 0, 328
+  size: 81, 66
+Death
+  xy: 81, 328
+  size: 81, 66
+Death
+  xy: 162, 328
+  size: 81, 66
+Death
+  xy: 243, 328
+  size: 81, 66

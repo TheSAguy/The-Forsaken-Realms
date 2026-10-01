@@ -1,0 +1,281 @@
+scythewing_reaver.png
+size: 654,1404
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 109, 67
+IdleRight
+  xy: 109, 64
+  size: 109, 67
+IdleRight
+  xy: 218, 64
+  size: 109, 67
+IdleRight
+  xy: 327, 64
+  size: 109, 67
+IdleRight
+  xy: 436, 64
+  size: 109, 67
+IdleRight
+  xy: 545, 64
+  size: 109, 67
+IdleDown
+  xy: 0, 131
+  size: 109, 67
+IdleDown
+  xy: 109, 131
+  size: 109, 67
+IdleDown
+  xy: 218, 131
+  size: 109, 67
+IdleDown
+  xy: 327, 131
+  size: 109, 67
+IdleDown
+  xy: 436, 131
+  size: 109, 67
+IdleDown
+  xy: 545, 131
+  size: 109, 67
+IdleLeft
+  xy: 0, 198
+  size: 109, 67
+IdleLeft
+  xy: 109, 198
+  size: 109, 67
+IdleLeft
+  xy: 218, 198
+  size: 109, 67
+IdleLeft
+  xy: 327, 198
+  size: 109, 67
+IdleLeft
+  xy: 436, 198
+  size: 109, 67
+IdleLeft
+  xy: 545, 198
+  size: 109, 67
+IdleUp
+  xy: 0, 265
+  size: 109, 67
+IdleUp
+  xy: 109, 265
+  size: 109, 67
+IdleUp
+  xy: 218, 265
+  size: 109, 67
+IdleUp
+  xy: 327, 265
+  size: 109, 67
+IdleUp
+  xy: 436, 265
+  size: 109, 67
+IdleUp
+  xy: 545, 265
+  size: 109, 67
+WalkRight
+  xy: 0, 332
+  size: 109, 67
+WalkRight
+  xy: 109, 332
+  size: 109, 67
+WalkRight
+  xy: 218, 332
+  size: 109, 67
+WalkRight
+  xy: 327, 332
+  size: 109, 67
+WalkRight
+  xy: 436, 332
+  size: 109, 67
+WalkDown
+  xy: 0, 399
+  size: 109, 67
+WalkDown
+  xy: 109, 399
+  size: 109, 67
+WalkDown
+  xy: 218, 399
+  size: 109, 67
+WalkDown
+  xy: 327, 399
+  size: 109, 67
+WalkDown
+  xy: 436, 399
+  size: 109, 67
+WalkLeft
+  xy: 0, 466
+  size: 109, 67
+WalkLeft
+  xy: 109, 466
+  size: 109, 67
+WalkLeft
+  xy: 218, 466
+  size: 109, 67
+WalkLeft
+  xy: 327, 466
+  size: 109, 67
+WalkLeft
+  xy: 436, 466
+  size: 109, 67
+WalkUp
+  xy: 0, 533
+  size: 109, 67
+WalkUp
+  xy: 109, 533
+  size: 109, 67
+WalkUp
+  xy: 218, 533
+  size: 109, 67
+WalkUp
+  xy: 327, 533
+  size: 109, 67
+WalkUp
+  xy: 436, 533
+  size: 109, 67
+AttackRight
+  xy: 0, 600
+  size: 109, 67
+AttackRight
+  xy: 109, 600
+  size: 109, 67
+AttackRight
+  xy: 218, 600
+  size: 109, 67
+AttackRight
+  xy: 327, 600
+  size: 109, 67
+AttackDown
+  xy: 0, 667
+  size: 109, 67
+AttackDown
+  xy: 109, 667
+  size: 109, 67
+AttackDown
+  xy: 218, 667
+  size: 109, 67
+AttackDown
+  xy: 327, 667
+  size: 109, 67
+AttackLeft
+  xy: 0, 734
+  size: 109, 67
+AttackLeft
+  xy: 109, 734
+  size: 109, 67
+AttackLeft
+  xy: 218, 734
+  size: 109, 67
+AttackLeft
+  xy: 327, 734
+  size: 109, 67
+AttackLeft
+  xy: 436, 734
+  size: 109, 67
+AttackUp
+  xy: 0, 801
+  size: 109, 67
+AttackUp
+  xy: 109, 801
+  size: 109, 67
+AttackUp
+  xy: 218, 801
+  size: 109, 67
+AttackUp
+  xy: 327, 801
+  size: 109, 67
+AttackUp
+  xy: 436, 801
+  size: 109, 67
+HitRight
+  xy: 0, 868
+  size: 109, 67
+HitRight
+  xy: 109, 868
+  size: 109, 67
+HitRight
+  xy: 218, 868
+  size: 109, 67
+HitDown
+  xy: 0, 935
+  size: 109, 67
+HitDown
+  xy: 109, 935
+  size: 109, 67
+HitDown
+  xy: 218, 935
+  size: 109, 67
+HitLeft
+  xy: 0, 1002
+  size: 109, 67
+HitLeft
+  xy: 109, 1002
+  size: 109, 67
+HitLeft
+  xy: 218, 1002
+  size: 109, 67
+HitUp
+  xy: 0, 1069
+  size: 109, 67
+HitUp
+  xy: 109, 1069
+  size: 109, 67
+HitUp
+  xy: 218, 1069
+  size: 109, 67
+DeathRight
+  xy: 0, 1136
+  size: 109, 67
+DeathRight
+  xy: 109, 1136
+  size: 109, 67
+DeathRight
+  xy: 218, 1136
+  size: 109, 67
+DeathRight
+  xy: 327, 1136
+  size: 109, 67
+DeathDown
+  xy: 0, 1203
+  size: 109, 67
+DeathDown
+  xy: 109, 1203
+  size: 109, 67
+DeathDown
+  xy: 218, 1203
+  size: 109, 67
+DeathDown
+  xy: 327, 1203
+  size: 109, 67
+DeathLeft
+  xy: 0, 1270
+  size: 109, 67
+DeathLeft
+  xy: 109, 1270
+  size: 109, 67
+DeathLeft
+  xy: 218, 1270
+  size: 109, 67
+DeathLeft
+  xy: 327, 1270
+  size: 109, 67
+DeathUp
+  xy: 0, 1337
+  size: 109, 67
+DeathUp
+  xy: 109, 1337
+  size: 109, 67
+DeathUp
+  xy: 218, 1337
+  size: 109, 67
+DeathUp
+  xy: 327, 1337
+  size: 109, 67
+DeathUp
+  xy: 436, 1337
+  size: 109, 67

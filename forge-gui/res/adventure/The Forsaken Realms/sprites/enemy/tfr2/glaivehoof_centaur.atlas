@@ -1,0 +1,62 @@
+glaivehoof_centaur.png
+size: 276,354
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 69, 58
+Idle
+  xy: 69, 64
+  size: 69, 58
+Idle
+  xy: 138, 64
+  size: 69, 58
+Idle
+  xy: 207, 64
+  size: 69, 58
+Walk
+  xy: 0, 122
+  size: 69, 58
+Walk
+  xy: 69, 122
+  size: 69, 58
+Walk
+  xy: 138, 122
+  size: 69, 58
+Walk
+  xy: 207, 122
+  size: 69, 58
+Attack
+  xy: 0, 180
+  size: 69, 58
+Attack
+  xy: 69, 180
+  size: 69, 58
+Attack
+  xy: 138, 180
+  size: 69, 58
+Hit
+  xy: 0, 238
+  size: 69, 58
+Hit
+  xy: 69, 238
+  size: 69, 58
+Hit
+  xy: 138, 238
+  size: 69, 58
+Death
+  xy: 0, 296
+  size: 69, 58
+Death
+  xy: 69, 296
+  size: 69, 58
+Death
+  xy: 138, 296
+  size: 69, 58
+Death
+  xy: 207, 296
+  size: 69, 58

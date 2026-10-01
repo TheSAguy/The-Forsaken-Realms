@@ -1,0 +1,77 @@
+frillback_basilisk.png
+size: 378,259
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 63, 39
+Idle
+  xy: 63, 64
+  size: 63, 39
+Idle
+  xy: 126, 64
+  size: 63, 39
+Idle
+  xy: 189, 64
+  size: 63, 39
+Idle
+  xy: 252, 64
+  size: 63, 39
+Idle
+  xy: 315, 64
+  size: 63, 39
+Walk
+  xy: 0, 103
+  size: 63, 39
+Walk
+  xy: 63, 103
+  size: 63, 39
+Walk
+  xy: 126, 103
+  size: 63, 39
+Walk
+  xy: 189, 103
+  size: 63, 39
+Walk
+  xy: 252, 103
+  size: 63, 39
+Walk
+  xy: 315, 103
+  size: 63, 39
+Attack
+  xy: 0, 142
+  size: 63, 39
+Attack
+  xy: 63, 142
+  size: 63, 39
+Attack
+  xy: 126, 142
+  size: 63, 39
+Hit
+  xy: 0, 181
+  size: 63, 39
+Hit
+  xy: 63, 181
+  size: 63, 39
+Death
+  xy: 0, 220
+  size: 63, 39
+Death
+  xy: 63, 220
+  size: 63, 39
+Death
+  xy: 126, 220
+  size: 63, 39
+Death
+  xy: 189, 220
+  size: 63, 39
+Death
+  xy: 252, 220
+  size: 63, 39
+Death
+  xy: 315, 220
+  size: 63, 39

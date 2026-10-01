@@ -1,0 +1,77 @@
+nightscale_dragon.png
+size: 720,389
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 120, 65
+Idle
+  xy: 120, 64
+  size: 120, 65
+Idle
+  xy: 240, 64
+  size: 120, 65
+Idle
+  xy: 360, 64
+  size: 120, 65
+Idle
+  xy: 480, 64
+  size: 120, 65
+Idle
+  xy: 600, 64
+  size: 120, 65
+Walk
+  xy: 0, 129
+  size: 120, 65
+Walk
+  xy: 120, 129
+  size: 120, 65
+Walk
+  xy: 240, 129
+  size: 120, 65
+Walk
+  xy: 360, 129
+  size: 120, 65
+Walk
+  xy: 480, 129
+  size: 120, 65
+Walk
+  xy: 600, 129
+  size: 120, 65
+Attack
+  xy: 0, 194
+  size: 120, 65
+Attack
+  xy: 120, 194
+  size: 120, 65
+Attack
+  xy: 240, 194
+  size: 120, 65
+Attack
+  xy: 360, 194
+  size: 120, 65
+Hit
+  xy: 0, 259
+  size: 120, 65
+Hit
+  xy: 120, 259
+  size: 120, 65
+Hit
+  xy: 240, 259
+  size: 120, 65
+Death
+  xy: 0, 324
+  size: 120, 65
+Death
+  xy: 120, 324
+  size: 120, 65
+Death
+  xy: 240, 324
+  size: 120, 65
+Death
+  xy: 360, 324
+  size: 120, 65

@@ -1,0 +1,68 @@
+ossuary_dragon.png
+size: 600,336
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 100, 68
+Idle
+  xy: 100, 64
+  size: 100, 68
+Idle
+  xy: 200, 64
+  size: 100, 68
+Idle
+  xy: 300, 64
+  size: 100, 68
+Idle
+  xy: 400, 64
+  size: 100, 68
+Walk
+  xy: 0, 132
+  size: 100, 68
+Walk
+  xy: 100, 132
+  size: 100, 68
+Walk
+  xy: 200, 132
+  size: 100, 68
+Walk
+  xy: 300, 132
+  size: 100, 68
+Walk
+  xy: 400, 132
+  size: 100, 68
+Walk
+  xy: 500, 132
+  size: 100, 68
+Attack
+  xy: 0, 200
+  size: 100, 68
+Attack
+  xy: 100, 200
+  size: 100, 68
+Attack
+  xy: 200, 200
+  size: 100, 68
+Attack
+  xy: 300, 200
+  size: 100, 68
+Death
+  xy: 0, 268
+  size: 100, 68
+Death
+  xy: 100, 268
+  size: 100, 68
+Death
+  xy: 200, 268
+  size: 100, 68
+Death
+  xy: 300, 268
+  size: 100, 68
+Death
+  xy: 400, 268
+  size: 100, 68

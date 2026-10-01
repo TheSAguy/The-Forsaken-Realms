@@ -1,0 +1,71 @@
+silvervale_skyrider.png
+size: 462,334
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 77, 54
+Idle
+  xy: 77, 64
+  size: 77, 54
+Idle
+  xy: 154, 64
+  size: 77, 54
+Idle
+  xy: 231, 64
+  size: 77, 54
+Walk
+  xy: 0, 118
+  size: 77, 54
+Walk
+  xy: 77, 118
+  size: 77, 54
+Walk
+  xy: 154, 118
+  size: 77, 54
+Walk
+  xy: 231, 118
+  size: 77, 54
+Attack
+  xy: 0, 172
+  size: 77, 54
+Attack
+  xy: 77, 172
+  size: 77, 54
+Attack
+  xy: 154, 172
+  size: 77, 54
+Attack
+  xy: 231, 172
+  size: 77, 54
+Hit
+  xy: 0, 226
+  size: 77, 54
+Hit
+  xy: 77, 226
+  size: 77, 54
+Hit
+  xy: 154, 226
+  size: 77, 54
+Death
+  xy: 0, 280
+  size: 77, 54
+Death
+  xy: 77, 280
+  size: 77, 54
+Death
+  xy: 154, 280
+  size: 77, 54
+Death
+  xy: 231, 280
+  size: 77, 54
+Death
+  xy: 308, 280
+  size: 77, 54
+Death
+  xy: 385, 280
+  size: 77, 54

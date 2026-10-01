@@ -1,0 +1,68 @@
+flailfang_gnoll.png
+size: 235,284
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 47, 44
+Idle
+  xy: 47, 64
+  size: 47, 44
+Idle
+  xy: 94, 64
+  size: 47, 44
+Idle
+  xy: 141, 64
+  size: 47, 44
+Idle
+  xy: 188, 64
+  size: 47, 44
+Walk
+  xy: 0, 108
+  size: 47, 44
+Walk
+  xy: 47, 108
+  size: 47, 44
+Walk
+  xy: 94, 108
+  size: 47, 44
+Walk
+  xy: 141, 108
+  size: 47, 44
+Attack
+  xy: 0, 152
+  size: 47, 44
+Attack
+  xy: 47, 152
+  size: 47, 44
+Attack
+  xy: 94, 152
+  size: 47, 44
+Attack
+  xy: 141, 152
+  size: 47, 44
+Hit
+  xy: 0, 196
+  size: 47, 44
+Hit
+  xy: 47, 196
+  size: 47, 44
+Death
+  xy: 0, 240
+  size: 47, 44
+Death
+  xy: 47, 240
+  size: 47, 44
+Death
+  xy: 94, 240
+  size: 47, 44
+Death
+  xy: 141, 240
+  size: 47, 44
+Death
+  xy: 188, 240
+  size: 47, 44

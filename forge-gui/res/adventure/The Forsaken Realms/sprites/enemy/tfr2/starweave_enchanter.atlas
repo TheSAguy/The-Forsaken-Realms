@@ -1,0 +1,71 @@
+starweave_enchanter.png
+size: 255,329
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 51, 53
+Idle
+  xy: 51, 64
+  size: 51, 53
+Idle
+  xy: 102, 64
+  size: 51, 53
+Idle
+  xy: 153, 64
+  size: 51, 53
+Idle
+  xy: 204, 64
+  size: 51, 53
+Walk
+  xy: 0, 117
+  size: 51, 53
+Walk
+  xy: 51, 117
+  size: 51, 53
+Walk
+  xy: 102, 117
+  size: 51, 53
+Walk
+  xy: 153, 117
+  size: 51, 53
+Attack
+  xy: 0, 170
+  size: 51, 53
+Attack
+  xy: 51, 170
+  size: 51, 53
+Attack
+  xy: 102, 170
+  size: 51, 53
+Attack
+  xy: 153, 170
+  size: 51, 53
+Attack
+  xy: 204, 170
+  size: 51, 53
+Hit
+  xy: 0, 223
+  size: 51, 53
+Hit
+  xy: 51, 223
+  size: 51, 53
+Death
+  xy: 0, 276
+  size: 51, 53
+Death
+  xy: 51, 276
+  size: 51, 53
+Death
+  xy: 102, 276
+  size: 51, 53
+Death
+  xy: 153, 276
+  size: 51, 53
+Death
+  xy: 204, 276
+  size: 51, 53

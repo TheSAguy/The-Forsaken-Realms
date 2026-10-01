@@ -1,0 +1,74 @@
+stonegaze_medusa.png
+size: 402,334
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 67, 54
+Idle
+  xy: 67, 64
+  size: 67, 54
+Idle
+  xy: 134, 64
+  size: 67, 54
+Idle
+  xy: 201, 64
+  size: 67, 54
+Idle
+  xy: 268, 64
+  size: 67, 54
+Walk
+  xy: 0, 118
+  size: 67, 54
+Walk
+  xy: 67, 118
+  size: 67, 54
+Walk
+  xy: 134, 118
+  size: 67, 54
+Walk
+  xy: 201, 118
+  size: 67, 54
+Walk
+  xy: 268, 118
+  size: 67, 54
+Walk
+  xy: 335, 118
+  size: 67, 54
+Attack
+  xy: 0, 172
+  size: 67, 54
+Attack
+  xy: 67, 172
+  size: 67, 54
+Attack
+  xy: 134, 172
+  size: 67, 54
+Hit
+  xy: 0, 226
+  size: 67, 54
+Hit
+  xy: 67, 226
+  size: 67, 54
+Death
+  xy: 0, 280
+  size: 67, 54
+Death
+  xy: 67, 280
+  size: 67, 54
+Death
+  xy: 134, 280
+  size: 67, 54
+Death
+  xy: 201, 280
+  size: 67, 54
+Death
+  xy: 268, 280
+  size: 67, 54
+Death
+  xy: 335, 280
+  size: 67, 54

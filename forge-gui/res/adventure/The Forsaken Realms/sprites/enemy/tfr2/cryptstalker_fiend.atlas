@@ -1,0 +1,221 @@
+cryptstalker_fiend.png
+size: 408,784
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 68, 45
+IdleRight
+  xy: 68, 64
+  size: 68, 45
+IdleRight
+  xy: 136, 64
+  size: 68, 45
+IdleRight
+  xy: 204, 64
+  size: 68, 45
+IdleDown
+  xy: 0, 109
+  size: 68, 45
+IdleDown
+  xy: 68, 109
+  size: 68, 45
+IdleDown
+  xy: 136, 109
+  size: 68, 45
+IdleDown
+  xy: 204, 109
+  size: 68, 45
+IdleLeft
+  xy: 0, 154
+  size: 68, 45
+IdleLeft
+  xy: 68, 154
+  size: 68, 45
+IdleLeft
+  xy: 136, 154
+  size: 68, 45
+IdleLeft
+  xy: 204, 154
+  size: 68, 45
+IdleUp
+  xy: 0, 199
+  size: 68, 45
+IdleUp
+  xy: 68, 199
+  size: 68, 45
+IdleUp
+  xy: 136, 199
+  size: 68, 45
+IdleUp
+  xy: 204, 199
+  size: 68, 45
+WalkRight
+  xy: 0, 244
+  size: 68, 45
+WalkRight
+  xy: 68, 244
+  size: 68, 45
+WalkRight
+  xy: 136, 244
+  size: 68, 45
+WalkRight
+  xy: 204, 244
+  size: 68, 45
+WalkRight
+  xy: 272, 244
+  size: 68, 45
+WalkRight
+  xy: 340, 244
+  size: 68, 45
+WalkDown
+  xy: 0, 289
+  size: 68, 45
+WalkDown
+  xy: 68, 289
+  size: 68, 45
+WalkDown
+  xy: 136, 289
+  size: 68, 45
+WalkDown
+  xy: 204, 289
+  size: 68, 45
+WalkDown
+  xy: 272, 289
+  size: 68, 45
+WalkDown
+  xy: 340, 289
+  size: 68, 45
+WalkLeft
+  xy: 0, 334
+  size: 68, 45
+WalkLeft
+  xy: 68, 334
+  size: 68, 45
+WalkLeft
+  xy: 136, 334
+  size: 68, 45
+WalkLeft
+  xy: 204, 334
+  size: 68, 45
+WalkLeft
+  xy: 272, 334
+  size: 68, 45
+WalkLeft
+  xy: 340, 334
+  size: 68, 45
+WalkUp
+  xy: 0, 379
+  size: 68, 45
+WalkUp
+  xy: 68, 379
+  size: 68, 45
+WalkUp
+  xy: 136, 379
+  size: 68, 45
+WalkUp
+  xy: 204, 379
+  size: 68, 45
+WalkUp
+  xy: 272, 379
+  size: 68, 45
+WalkUp
+  xy: 340, 379
+  size: 68, 45
+AttackRight
+  xy: 0, 424
+  size: 68, 45
+AttackRight
+  xy: 68, 424
+  size: 68, 45
+AttackRight
+  xy: 136, 424
+  size: 68, 45
+AttackRight
+  xy: 204, 424
+  size: 68, 45
+AttackDown
+  xy: 0, 469
+  size: 68, 45
+AttackDown
+  xy: 68, 469
+  size: 68, 45
+AttackDown
+  xy: 136, 469
+  size: 68, 45
+AttackDown
+  xy: 204, 469
+  size: 68, 45
+AttackLeft
+  xy: 0, 514
+  size: 68, 45
+AttackLeft
+  xy: 68, 514
+  size: 68, 45
+AttackLeft
+  xy: 136, 514
+  size: 68, 45
+AttackUp
+  xy: 0, 559
+  size: 68, 45
+AttackUp
+  xy: 68, 559
+  size: 68, 45
+AttackUp
+  xy: 136, 559
+  size: 68, 45
+AttackUp
+  xy: 204, 559
+  size: 68, 45
+DeathRight
+  xy: 0, 604
+  size: 68, 45
+DeathRight
+  xy: 68, 604
+  size: 68, 45
+DeathRight
+  xy: 136, 604
+  size: 68, 45
+DeathRight
+  xy: 204, 604
+  size: 68, 45
+DeathDown
+  xy: 0, 649
+  size: 68, 45
+DeathDown
+  xy: 68, 649
+  size: 68, 45
+DeathDown
+  xy: 136, 649
+  size: 68, 45
+DeathDown
+  xy: 204, 649
+  size: 68, 45
+DeathLeft
+  xy: 0, 694
+  size: 68, 45
+DeathLeft
+  xy: 68, 694
+  size: 68, 45
+DeathLeft
+  xy: 136, 694
+  size: 68, 45
+DeathLeft
+  xy: 204, 694
+  size: 68, 45
+DeathUp
+  xy: 0, 739
+  size: 68, 45
+DeathUp
+  xy: 68, 739
+  size: 68, 45
+DeathUp
+  xy: 136, 739
+  size: 68, 45
+DeathUp
+  xy: 204, 739
+  size: 68, 45

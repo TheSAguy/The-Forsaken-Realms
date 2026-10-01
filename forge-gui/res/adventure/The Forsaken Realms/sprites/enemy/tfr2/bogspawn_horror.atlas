@@ -1,0 +1,305 @@
+bogspawn_horror.png
+size: 552,1444
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 92, 69
+IdleRight
+  xy: 92, 64
+  size: 92, 69
+IdleRight
+  xy: 184, 64
+  size: 92, 69
+IdleRight
+  xy: 276, 64
+  size: 92, 69
+IdleRight
+  xy: 368, 64
+  size: 92, 69
+IdleRight
+  xy: 460, 64
+  size: 92, 69
+IdleDown
+  xy: 0, 133
+  size: 92, 69
+IdleDown
+  xy: 92, 133
+  size: 92, 69
+IdleDown
+  xy: 184, 133
+  size: 92, 69
+IdleDown
+  xy: 276, 133
+  size: 92, 69
+IdleDown
+  xy: 368, 133
+  size: 92, 69
+IdleDown
+  xy: 460, 133
+  size: 92, 69
+IdleLeft
+  xy: 0, 202
+  size: 92, 69
+IdleLeft
+  xy: 92, 202
+  size: 92, 69
+IdleLeft
+  xy: 184, 202
+  size: 92, 69
+IdleLeft
+  xy: 276, 202
+  size: 92, 69
+IdleLeft
+  xy: 368, 202
+  size: 92, 69
+IdleLeft
+  xy: 460, 202
+  size: 92, 69
+IdleUp
+  xy: 0, 271
+  size: 92, 69
+IdleUp
+  xy: 92, 271
+  size: 92, 69
+IdleUp
+  xy: 184, 271
+  size: 92, 69
+IdleUp
+  xy: 276, 271
+  size: 92, 69
+IdleUp
+  xy: 368, 271
+  size: 92, 69
+IdleUp
+  xy: 460, 271
+  size: 92, 69
+WalkRight
+  xy: 0, 340
+  size: 92, 69
+WalkRight
+  xy: 92, 340
+  size: 92, 69
+WalkRight
+  xy: 184, 340
+  size: 92, 69
+WalkRight
+  xy: 276, 340
+  size: 92, 69
+WalkRight
+  xy: 368, 340
+  size: 92, 69
+WalkRight
+  xy: 460, 340
+  size: 92, 69
+WalkDown
+  xy: 0, 409
+  size: 92, 69
+WalkDown
+  xy: 92, 409
+  size: 92, 69
+WalkDown
+  xy: 184, 409
+  size: 92, 69
+WalkDown
+  xy: 276, 409
+  size: 92, 69
+WalkDown
+  xy: 368, 409
+  size: 92, 69
+WalkDown
+  xy: 460, 409
+  size: 92, 69
+WalkLeft
+  xy: 0, 478
+  size: 92, 69
+WalkLeft
+  xy: 92, 478
+  size: 92, 69
+WalkLeft
+  xy: 184, 478
+  size: 92, 69
+WalkLeft
+  xy: 276, 478
+  size: 92, 69
+WalkLeft
+  xy: 368, 478
+  size: 92, 69
+WalkLeft
+  xy: 460, 478
+  size: 92, 69
+WalkUp
+  xy: 0, 547
+  size: 92, 69
+WalkUp
+  xy: 92, 547
+  size: 92, 69
+WalkUp
+  xy: 184, 547
+  size: 92, 69
+WalkUp
+  xy: 276, 547
+  size: 92, 69
+WalkUp
+  xy: 368, 547
+  size: 92, 69
+WalkUp
+  xy: 460, 547
+  size: 92, 69
+AttackRight
+  xy: 0, 616
+  size: 92, 69
+AttackRight
+  xy: 92, 616
+  size: 92, 69
+AttackRight
+  xy: 184, 616
+  size: 92, 69
+AttackRight
+  xy: 276, 616
+  size: 92, 69
+AttackDown
+  xy: 0, 685
+  size: 92, 69
+AttackDown
+  xy: 92, 685
+  size: 92, 69
+AttackDown
+  xy: 184, 685
+  size: 92, 69
+AttackDown
+  xy: 276, 685
+  size: 92, 69
+AttackLeft
+  xy: 0, 754
+  size: 92, 69
+AttackLeft
+  xy: 92, 754
+  size: 92, 69
+AttackLeft
+  xy: 184, 754
+  size: 92, 69
+AttackUp
+  xy: 0, 823
+  size: 92, 69
+AttackUp
+  xy: 92, 823
+  size: 92, 69
+AttackUp
+  xy: 184, 823
+  size: 92, 69
+AttackUp
+  xy: 276, 823
+  size: 92, 69
+HitRight
+  xy: 0, 892
+  size: 92, 69
+HitRight
+  xy: 92, 892
+  size: 92, 69
+HitRight
+  xy: 184, 892
+  size: 92, 69
+HitDown
+  xy: 0, 961
+  size: 92, 69
+HitDown
+  xy: 92, 961
+  size: 92, 69
+HitDown
+  xy: 184, 961
+  size: 92, 69
+HitLeft
+  xy: 0, 1030
+  size: 92, 69
+HitLeft
+  xy: 92, 1030
+  size: 92, 69
+HitLeft
+  xy: 184, 1030
+  size: 92, 69
+HitUp
+  xy: 0, 1099
+  size: 92, 69
+HitUp
+  xy: 92, 1099
+  size: 92, 69
+HitUp
+  xy: 184, 1099
+  size: 92, 69
+DeathRight
+  xy: 0, 1168
+  size: 92, 69
+DeathRight
+  xy: 92, 1168
+  size: 92, 69
+DeathRight
+  xy: 184, 1168
+  size: 92, 69
+DeathRight
+  xy: 276, 1168
+  size: 92, 69
+DeathRight
+  xy: 368, 1168
+  size: 92, 69
+DeathRight
+  xy: 460, 1168
+  size: 92, 69
+DeathDown
+  xy: 0, 1237
+  size: 92, 69
+DeathDown
+  xy: 92, 1237
+  size: 92, 69
+DeathDown
+  xy: 184, 1237
+  size: 92, 69
+DeathDown
+  xy: 276, 1237
+  size: 92, 69
+DeathDown
+  xy: 368, 1237
+  size: 92, 69
+DeathDown
+  xy: 460, 1237
+  size: 92, 69
+DeathLeft
+  xy: 0, 1306
+  size: 92, 69
+DeathLeft
+  xy: 92, 1306
+  size: 92, 69
+DeathLeft
+  xy: 184, 1306
+  size: 92, 69
+DeathLeft
+  xy: 276, 1306
+  size: 92, 69
+DeathLeft
+  xy: 368, 1306
+  size: 92, 69
+DeathLeft
+  xy: 460, 1306
+  size: 92, 69
+DeathUp
+  xy: 0, 1375
+  size: 92, 69
+DeathUp
+  xy: 92, 1375
+  size: 92, 69
+DeathUp
+  xy: 184, 1375
+  size: 92, 69
+DeathUp
+  xy: 276, 1375
+  size: 92, 69
+DeathUp
+  xy: 368, 1375
+  size: 92, 69
+DeathUp
+  xy: 460, 1375
+  size: 92, 69

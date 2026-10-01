@@ -1,0 +1,71 @@
+grave_wight.png
+size: 190,289
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 38, 45
+Idle
+  xy: 38, 64
+  size: 38, 45
+Idle
+  xy: 76, 64
+  size: 38, 45
+Idle
+  xy: 114, 64
+  size: 38, 45
+Idle
+  xy: 152, 64
+  size: 38, 45
+Walk
+  xy: 0, 109
+  size: 38, 45
+Walk
+  xy: 38, 109
+  size: 38, 45
+Walk
+  xy: 76, 109
+  size: 38, 45
+Walk
+  xy: 114, 109
+  size: 38, 45
+Walk
+  xy: 152, 109
+  size: 38, 45
+Attack
+  xy: 0, 154
+  size: 38, 45
+Attack
+  xy: 38, 154
+  size: 38, 45
+Attack
+  xy: 76, 154
+  size: 38, 45
+Attack
+  xy: 114, 154
+  size: 38, 45
+Hit
+  xy: 0, 199
+  size: 38, 45
+Hit
+  xy: 38, 199
+  size: 38, 45
+Death
+  xy: 0, 244
+  size: 38, 45
+Death
+  xy: 38, 244
+  size: 38, 45
+Death
+  xy: 76, 244
+  size: 38, 45
+Death
+  xy: 114, 244
+  size: 38, 45
+Death
+  xy: 152, 244
+  size: 38, 45

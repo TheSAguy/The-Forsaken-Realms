@@ -1,0 +1,296 @@
+driftbell_medusoid.png
+size: 378,824
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 63, 38
+IdleRight
+  xy: 63, 64
+  size: 63, 38
+IdleRight
+  xy: 126, 64
+  size: 63, 38
+IdleRight
+  xy: 189, 64
+  size: 63, 38
+IdleRight
+  xy: 252, 64
+  size: 63, 38
+IdleDown
+  xy: 0, 102
+  size: 63, 38
+IdleDown
+  xy: 63, 102
+  size: 63, 38
+IdleDown
+  xy: 126, 102
+  size: 63, 38
+IdleDown
+  xy: 189, 102
+  size: 63, 38
+IdleDown
+  xy: 252, 102
+  size: 63, 38
+IdleLeft
+  xy: 0, 140
+  size: 63, 38
+IdleLeft
+  xy: 63, 140
+  size: 63, 38
+IdleLeft
+  xy: 126, 140
+  size: 63, 38
+IdleLeft
+  xy: 189, 140
+  size: 63, 38
+IdleLeft
+  xy: 252, 140
+  size: 63, 38
+IdleUp
+  xy: 0, 178
+  size: 63, 38
+IdleUp
+  xy: 63, 178
+  size: 63, 38
+IdleUp
+  xy: 126, 178
+  size: 63, 38
+IdleUp
+  xy: 189, 178
+  size: 63, 38
+IdleUp
+  xy: 252, 178
+  size: 63, 38
+WalkRight
+  xy: 0, 216
+  size: 63, 38
+WalkRight
+  xy: 63, 216
+  size: 63, 38
+WalkRight
+  xy: 126, 216
+  size: 63, 38
+WalkRight
+  xy: 189, 216
+  size: 63, 38
+WalkRight
+  xy: 252, 216
+  size: 63, 38
+WalkDown
+  xy: 0, 254
+  size: 63, 38
+WalkDown
+  xy: 63, 254
+  size: 63, 38
+WalkDown
+  xy: 126, 254
+  size: 63, 38
+WalkDown
+  xy: 189, 254
+  size: 63, 38
+WalkDown
+  xy: 252, 254
+  size: 63, 38
+WalkLeft
+  xy: 0, 292
+  size: 63, 38
+WalkLeft
+  xy: 63, 292
+  size: 63, 38
+WalkLeft
+  xy: 126, 292
+  size: 63, 38
+WalkLeft
+  xy: 189, 292
+  size: 63, 38
+WalkLeft
+  xy: 252, 292
+  size: 63, 38
+WalkUp
+  xy: 0, 330
+  size: 63, 38
+WalkUp
+  xy: 63, 330
+  size: 63, 38
+WalkUp
+  xy: 126, 330
+  size: 63, 38
+WalkUp
+  xy: 189, 330
+  size: 63, 38
+WalkUp
+  xy: 252, 330
+  size: 63, 38
+AttackRight
+  xy: 0, 368
+  size: 63, 38
+AttackRight
+  xy: 63, 368
+  size: 63, 38
+AttackRight
+  xy: 126, 368
+  size: 63, 38
+AttackRight
+  xy: 189, 368
+  size: 63, 38
+AttackRight
+  xy: 252, 368
+  size: 63, 38
+AttackDown
+  xy: 0, 406
+  size: 63, 38
+AttackDown
+  xy: 63, 406
+  size: 63, 38
+AttackDown
+  xy: 126, 406
+  size: 63, 38
+AttackDown
+  xy: 189, 406
+  size: 63, 38
+AttackDown
+  xy: 252, 406
+  size: 63, 38
+AttackLeft
+  xy: 0, 444
+  size: 63, 38
+AttackLeft
+  xy: 63, 444
+  size: 63, 38
+AttackLeft
+  xy: 126, 444
+  size: 63, 38
+AttackLeft
+  xy: 189, 444
+  size: 63, 38
+AttackLeft
+  xy: 252, 444
+  size: 63, 38
+AttackUp
+  xy: 0, 482
+  size: 63, 38
+AttackUp
+  xy: 63, 482
+  size: 63, 38
+AttackUp
+  xy: 126, 482
+  size: 63, 38
+AttackUp
+  xy: 189, 482
+  size: 63, 38
+AttackUp
+  xy: 252, 482
+  size: 63, 38
+HitRight
+  xy: 0, 520
+  size: 63, 38
+HitRight
+  xy: 63, 520
+  size: 63, 38
+HitRight
+  xy: 126, 520
+  size: 63, 38
+HitDown
+  xy: 0, 558
+  size: 63, 38
+HitDown
+  xy: 63, 558
+  size: 63, 38
+HitDown
+  xy: 126, 558
+  size: 63, 38
+HitLeft
+  xy: 0, 596
+  size: 63, 38
+HitLeft
+  xy: 63, 596
+  size: 63, 38
+HitLeft
+  xy: 126, 596
+  size: 63, 38
+HitUp
+  xy: 0, 634
+  size: 63, 38
+HitUp
+  xy: 63, 634
+  size: 63, 38
+HitUp
+  xy: 126, 634
+  size: 63, 38
+DeathRight
+  xy: 0, 672
+  size: 63, 38
+DeathRight
+  xy: 63, 672
+  size: 63, 38
+DeathRight
+  xy: 126, 672
+  size: 63, 38
+DeathRight
+  xy: 189, 672
+  size: 63, 38
+DeathRight
+  xy: 252, 672
+  size: 63, 38
+DeathRight
+  xy: 315, 672
+  size: 63, 38
+DeathDown
+  xy: 0, 710
+  size: 63, 38
+DeathDown
+  xy: 63, 710
+  size: 63, 38
+DeathDown
+  xy: 126, 710
+  size: 63, 38
+DeathDown
+  xy: 189, 710
+  size: 63, 38
+DeathDown
+  xy: 252, 710
+  size: 63, 38
+DeathDown
+  xy: 315, 710
+  size: 63, 38
+DeathLeft
+  xy: 0, 748
+  size: 63, 38
+DeathLeft
+  xy: 63, 748
+  size: 63, 38
+DeathLeft
+  xy: 126, 748
+  size: 63, 38
+DeathLeft
+  xy: 189, 748
+  size: 63, 38
+DeathLeft
+  xy: 252, 748
+  size: 63, 38
+DeathLeft
+  xy: 315, 748
+  size: 63, 38
+DeathUp
+  xy: 0, 786
+  size: 63, 38
+DeathUp
+  xy: 63, 786
+  size: 63, 38
+DeathUp
+  xy: 126, 786
+  size: 63, 38
+DeathUp
+  xy: 189, 786
+  size: 63, 38
+DeathUp
+  xy: 252, 786
+  size: 63, 38
+DeathUp
+  xy: 315, 786
+  size: 63, 38

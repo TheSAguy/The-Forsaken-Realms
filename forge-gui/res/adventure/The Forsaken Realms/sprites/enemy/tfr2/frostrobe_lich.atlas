@@ -1,0 +1,284 @@
+frostrobe_lich.png
+size: 282,1284
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 47, 61
+IdleRight
+  xy: 47, 64
+  size: 47, 61
+IdleRight
+  xy: 94, 64
+  size: 47, 61
+IdleRight
+  xy: 141, 64
+  size: 47, 61
+IdleRight
+  xy: 188, 64
+  size: 47, 61
+IdleRight
+  xy: 235, 64
+  size: 47, 61
+IdleDown
+  xy: 0, 125
+  size: 47, 61
+IdleDown
+  xy: 47, 125
+  size: 47, 61
+IdleDown
+  xy: 94, 125
+  size: 47, 61
+IdleDown
+  xy: 141, 125
+  size: 47, 61
+IdleDown
+  xy: 188, 125
+  size: 47, 61
+IdleDown
+  xy: 235, 125
+  size: 47, 61
+IdleLeft
+  xy: 0, 186
+  size: 47, 61
+IdleLeft
+  xy: 47, 186
+  size: 47, 61
+IdleLeft
+  xy: 94, 186
+  size: 47, 61
+IdleLeft
+  xy: 141, 186
+  size: 47, 61
+IdleLeft
+  xy: 188, 186
+  size: 47, 61
+IdleLeft
+  xy: 235, 186
+  size: 47, 61
+IdleUp
+  xy: 0, 247
+  size: 47, 61
+IdleUp
+  xy: 47, 247
+  size: 47, 61
+IdleUp
+  xy: 94, 247
+  size: 47, 61
+IdleUp
+  xy: 141, 247
+  size: 47, 61
+IdleUp
+  xy: 188, 247
+  size: 47, 61
+IdleUp
+  xy: 235, 247
+  size: 47, 61
+WalkRight
+  xy: 0, 308
+  size: 47, 61
+WalkRight
+  xy: 47, 308
+  size: 47, 61
+WalkRight
+  xy: 94, 308
+  size: 47, 61
+WalkRight
+  xy: 141, 308
+  size: 47, 61
+WalkRight
+  xy: 188, 308
+  size: 47, 61
+WalkDown
+  xy: 0, 369
+  size: 47, 61
+WalkDown
+  xy: 47, 369
+  size: 47, 61
+WalkDown
+  xy: 94, 369
+  size: 47, 61
+WalkDown
+  xy: 141, 369
+  size: 47, 61
+WalkDown
+  xy: 188, 369
+  size: 47, 61
+WalkLeft
+  xy: 0, 430
+  size: 47, 61
+WalkLeft
+  xy: 47, 430
+  size: 47, 61
+WalkLeft
+  xy: 94, 430
+  size: 47, 61
+WalkLeft
+  xy: 141, 430
+  size: 47, 61
+WalkLeft
+  xy: 188, 430
+  size: 47, 61
+WalkUp
+  xy: 0, 491
+  size: 47, 61
+WalkUp
+  xy: 47, 491
+  size: 47, 61
+WalkUp
+  xy: 94, 491
+  size: 47, 61
+WalkUp
+  xy: 141, 491
+  size: 47, 61
+WalkUp
+  xy: 188, 491
+  size: 47, 61
+AttackRight
+  xy: 0, 552
+  size: 47, 61
+AttackRight
+  xy: 47, 552
+  size: 47, 61
+AttackRight
+  xy: 94, 552
+  size: 47, 61
+AttackDown
+  xy: 0, 613
+  size: 47, 61
+AttackDown
+  xy: 47, 613
+  size: 47, 61
+AttackDown
+  xy: 94, 613
+  size: 47, 61
+AttackLeft
+  xy: 0, 674
+  size: 47, 61
+AttackLeft
+  xy: 47, 674
+  size: 47, 61
+AttackLeft
+  xy: 94, 674
+  size: 47, 61
+AttackUp
+  xy: 0, 735
+  size: 47, 61
+AttackUp
+  xy: 47, 735
+  size: 47, 61
+AttackUp
+  xy: 94, 735
+  size: 47, 61
+HitRight
+  xy: 0, 796
+  size: 47, 61
+HitRight
+  xy: 47, 796
+  size: 47, 61
+HitRight
+  xy: 94, 796
+  size: 47, 61
+HitDown
+  xy: 0, 857
+  size: 47, 61
+HitDown
+  xy: 47, 857
+  size: 47, 61
+HitDown
+  xy: 94, 857
+  size: 47, 61
+HitLeft
+  xy: 0, 918
+  size: 47, 61
+HitLeft
+  xy: 47, 918
+  size: 47, 61
+HitLeft
+  xy: 94, 918
+  size: 47, 61
+HitUp
+  xy: 0, 979
+  size: 47, 61
+HitUp
+  xy: 47, 979
+  size: 47, 61
+HitUp
+  xy: 94, 979
+  size: 47, 61
+DeathRight
+  xy: 0, 1040
+  size: 47, 61
+DeathRight
+  xy: 47, 1040
+  size: 47, 61
+DeathRight
+  xy: 94, 1040
+  size: 47, 61
+DeathRight
+  xy: 141, 1040
+  size: 47, 61
+DeathRight
+  xy: 188, 1040
+  size: 47, 61
+DeathRight
+  xy: 235, 1040
+  size: 47, 61
+DeathDown
+  xy: 0, 1101
+  size: 47, 61
+DeathDown
+  xy: 47, 1101
+  size: 47, 61
+DeathDown
+  xy: 94, 1101
+  size: 47, 61
+DeathDown
+  xy: 141, 1101
+  size: 47, 61
+DeathDown
+  xy: 188, 1101
+  size: 47, 61
+DeathDown
+  xy: 235, 1101
+  size: 47, 61
+DeathLeft
+  xy: 0, 1162
+  size: 47, 61
+DeathLeft
+  xy: 47, 1162
+  size: 47, 61
+DeathLeft
+  xy: 94, 1162
+  size: 47, 61
+DeathLeft
+  xy: 141, 1162
+  size: 47, 61
+DeathLeft
+  xy: 188, 1162
+  size: 47, 61
+DeathLeft
+  xy: 235, 1162
+  size: 47, 61
+DeathUp
+  xy: 0, 1223
+  size: 47, 61
+DeathUp
+  xy: 47, 1223
+  size: 47, 61
+DeathUp
+  xy: 94, 1223
+  size: 47, 61
+DeathUp
+  xy: 141, 1223
+  size: 47, 61
+DeathUp
+  xy: 188, 1223
+  size: 47, 61
+DeathUp
+  xy: 235, 1223
+  size: 47, 61

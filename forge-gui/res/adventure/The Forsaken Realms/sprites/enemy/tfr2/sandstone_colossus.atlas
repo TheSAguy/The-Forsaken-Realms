@@ -1,0 +1,296 @@
+sandstone_colossus.png
+size: 540,1304
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 90, 62
+IdleRight
+  xy: 90, 64
+  size: 90, 62
+IdleRight
+  xy: 180, 64
+  size: 90, 62
+IdleRight
+  xy: 270, 64
+  size: 90, 62
+IdleRight
+  xy: 360, 64
+  size: 90, 62
+IdleDown
+  xy: 0, 126
+  size: 90, 62
+IdleDown
+  xy: 90, 126
+  size: 90, 62
+IdleDown
+  xy: 180, 126
+  size: 90, 62
+IdleDown
+  xy: 270, 126
+  size: 90, 62
+IdleDown
+  xy: 360, 126
+  size: 90, 62
+IdleLeft
+  xy: 0, 188
+  size: 90, 62
+IdleLeft
+  xy: 90, 188
+  size: 90, 62
+IdleLeft
+  xy: 180, 188
+  size: 90, 62
+IdleLeft
+  xy: 270, 188
+  size: 90, 62
+IdleLeft
+  xy: 360, 188
+  size: 90, 62
+IdleUp
+  xy: 0, 250
+  size: 90, 62
+IdleUp
+  xy: 90, 250
+  size: 90, 62
+IdleUp
+  xy: 180, 250
+  size: 90, 62
+IdleUp
+  xy: 270, 250
+  size: 90, 62
+IdleUp
+  xy: 360, 250
+  size: 90, 62
+WalkRight
+  xy: 0, 312
+  size: 90, 62
+WalkRight
+  xy: 90, 312
+  size: 90, 62
+WalkRight
+  xy: 180, 312
+  size: 90, 62
+WalkRight
+  xy: 270, 312
+  size: 90, 62
+WalkRight
+  xy: 360, 312
+  size: 90, 62
+WalkDown
+  xy: 0, 374
+  size: 90, 62
+WalkDown
+  xy: 90, 374
+  size: 90, 62
+WalkDown
+  xy: 180, 374
+  size: 90, 62
+WalkDown
+  xy: 270, 374
+  size: 90, 62
+WalkDown
+  xy: 360, 374
+  size: 90, 62
+WalkLeft
+  xy: 0, 436
+  size: 90, 62
+WalkLeft
+  xy: 90, 436
+  size: 90, 62
+WalkLeft
+  xy: 180, 436
+  size: 90, 62
+WalkLeft
+  xy: 270, 436
+  size: 90, 62
+WalkLeft
+  xy: 360, 436
+  size: 90, 62
+WalkUp
+  xy: 0, 498
+  size: 90, 62
+WalkUp
+  xy: 90, 498
+  size: 90, 62
+WalkUp
+  xy: 180, 498
+  size: 90, 62
+WalkUp
+  xy: 270, 498
+  size: 90, 62
+WalkUp
+  xy: 360, 498
+  size: 90, 62
+AttackRight
+  xy: 0, 560
+  size: 90, 62
+AttackRight
+  xy: 90, 560
+  size: 90, 62
+AttackRight
+  xy: 180, 560
+  size: 90, 62
+AttackRight
+  xy: 270, 560
+  size: 90, 62
+AttackRight
+  xy: 360, 560
+  size: 90, 62
+AttackDown
+  xy: 0, 622
+  size: 90, 62
+AttackDown
+  xy: 90, 622
+  size: 90, 62
+AttackDown
+  xy: 180, 622
+  size: 90, 62
+AttackDown
+  xy: 270, 622
+  size: 90, 62
+AttackDown
+  xy: 360, 622
+  size: 90, 62
+AttackLeft
+  xy: 0, 684
+  size: 90, 62
+AttackLeft
+  xy: 90, 684
+  size: 90, 62
+AttackLeft
+  xy: 180, 684
+  size: 90, 62
+AttackLeft
+  xy: 270, 684
+  size: 90, 62
+AttackLeft
+  xy: 360, 684
+  size: 90, 62
+AttackUp
+  xy: 0, 746
+  size: 90, 62
+AttackUp
+  xy: 90, 746
+  size: 90, 62
+AttackUp
+  xy: 180, 746
+  size: 90, 62
+AttackUp
+  xy: 270, 746
+  size: 90, 62
+AttackUp
+  xy: 360, 746
+  size: 90, 62
+HitRight
+  xy: 0, 808
+  size: 90, 62
+HitRight
+  xy: 90, 808
+  size: 90, 62
+HitRight
+  xy: 180, 808
+  size: 90, 62
+HitDown
+  xy: 0, 870
+  size: 90, 62
+HitDown
+  xy: 90, 870
+  size: 90, 62
+HitDown
+  xy: 180, 870
+  size: 90, 62
+HitLeft
+  xy: 0, 932
+  size: 90, 62
+HitLeft
+  xy: 90, 932
+  size: 90, 62
+HitLeft
+  xy: 180, 932
+  size: 90, 62
+HitUp
+  xy: 0, 994
+  size: 90, 62
+HitUp
+  xy: 90, 994
+  size: 90, 62
+HitUp
+  xy: 180, 994
+  size: 90, 62
+DeathRight
+  xy: 0, 1056
+  size: 90, 62
+DeathRight
+  xy: 90, 1056
+  size: 90, 62
+DeathRight
+  xy: 180, 1056
+  size: 90, 62
+DeathRight
+  xy: 270, 1056
+  size: 90, 62
+DeathRight
+  xy: 360, 1056
+  size: 90, 62
+DeathRight
+  xy: 450, 1056
+  size: 90, 62
+DeathDown
+  xy: 0, 1118
+  size: 90, 62
+DeathDown
+  xy: 90, 1118
+  size: 90, 62
+DeathDown
+  xy: 180, 1118
+  size: 90, 62
+DeathDown
+  xy: 270, 1118
+  size: 90, 62
+DeathDown
+  xy: 360, 1118
+  size: 90, 62
+DeathDown
+  xy: 450, 1118
+  size: 90, 62
+DeathLeft
+  xy: 0, 1180
+  size: 90, 62
+DeathLeft
+  xy: 90, 1180
+  size: 90, 62
+DeathLeft
+  xy: 180, 1180
+  size: 90, 62
+DeathLeft
+  xy: 270, 1180
+  size: 90, 62
+DeathLeft
+  xy: 360, 1180
+  size: 90, 62
+DeathLeft
+  xy: 450, 1180
+  size: 90, 62
+DeathUp
+  xy: 0, 1242
+  size: 90, 62
+DeathUp
+  xy: 90, 1242
+  size: 90, 62
+DeathUp
+  xy: 180, 1242
+  size: 90, 62
+DeathUp
+  xy: 270, 1242
+  size: 90, 62
+DeathUp
+  xy: 360, 1242
+  size: 90, 62
+DeathUp
+  xy: 450, 1242
+  size: 90, 62

@@ -1,0 +1,65 @@
+dreadmount_rider.png
+size: 558,352
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 93, 72
+Idle
+  xy: 93, 64
+  size: 93, 72
+Idle
+  xy: 186, 64
+  size: 93, 72
+Idle
+  xy: 279, 64
+  size: 93, 72
+Idle
+  xy: 372, 64
+  size: 93, 72
+Idle
+  xy: 465, 64
+  size: 93, 72
+Walk
+  xy: 0, 136
+  size: 93, 72
+Walk
+  xy: 93, 136
+  size: 93, 72
+Walk
+  xy: 186, 136
+  size: 93, 72
+Walk
+  xy: 279, 136
+  size: 93, 72
+Walk
+  xy: 372, 136
+  size: 93, 72
+Walk
+  xy: 465, 136
+  size: 93, 72
+Attack
+  xy: 0, 208
+  size: 93, 72
+Attack
+  xy: 93, 208
+  size: 93, 72
+Attack
+  xy: 186, 208
+  size: 93, 72
+Death
+  xy: 0, 280
+  size: 93, 72
+Death
+  xy: 93, 280
+  size: 93, 72
+Death
+  xy: 186, 280
+  size: 93, 72
+Death
+  xy: 279, 280
+  size: 93, 72

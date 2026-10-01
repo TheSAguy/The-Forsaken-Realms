@@ -198,7 +198,7 @@
                     "Ygra",
                     "Firja",
                     "Vilis",
-                    "Victor",
+                    "Victor, Valgavoth's Seneschal",
                     "The Scarab God",
                     "The Scorpion God",
                     "Arguel",
@@ -652,7 +652,17 @@
                     "Harvester of Last Breaths",
                     "Rotfang Hound",
                     "Gravemoss Bear",
-                    "Carrion Steed"
+                    "Carrion Steed",
+                    "Frostrobe Lich",
+                    "Dreadmount Rider",
+                    "Gilded Lich",
+                    "Scythewing Reaver",
+                    "Broodweaver Drider",
+                    "Fleshrender Hulk",
+                    "Hollowplate Phantom",
+                    "Stonegaze Medusa",
+                    "Grave Wight",
+                    "Blind Troglodyte"
                 ],
     "pointsOfInterest":  [
                              "Gitrog Bog",

@@ -1,0 +1,266 @@
+tuskmaw_fiend.png
+size: 395,1144
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 79, 54
+IdleRight
+  xy: 79, 64
+  size: 79, 54
+IdleRight
+  xy: 158, 64
+  size: 79, 54
+IdleRight
+  xy: 237, 64
+  size: 79, 54
+IdleRight
+  xy: 316, 64
+  size: 79, 54
+IdleDown
+  xy: 0, 118
+  size: 79, 54
+IdleDown
+  xy: 79, 118
+  size: 79, 54
+IdleDown
+  xy: 158, 118
+  size: 79, 54
+IdleDown
+  xy: 237, 118
+  size: 79, 54
+IdleDown
+  xy: 316, 118
+  size: 79, 54
+IdleLeft
+  xy: 0, 172
+  size: 79, 54
+IdleLeft
+  xy: 79, 172
+  size: 79, 54
+IdleLeft
+  xy: 158, 172
+  size: 79, 54
+IdleLeft
+  xy: 237, 172
+  size: 79, 54
+IdleLeft
+  xy: 316, 172
+  size: 79, 54
+IdleUp
+  xy: 0, 226
+  size: 79, 54
+IdleUp
+  xy: 79, 226
+  size: 79, 54
+IdleUp
+  xy: 158, 226
+  size: 79, 54
+IdleUp
+  xy: 237, 226
+  size: 79, 54
+IdleUp
+  xy: 316, 226
+  size: 79, 54
+WalkRight
+  xy: 0, 280
+  size: 79, 54
+WalkRight
+  xy: 79, 280
+  size: 79, 54
+WalkRight
+  xy: 158, 280
+  size: 79, 54
+WalkRight
+  xy: 237, 280
+  size: 79, 54
+WalkRight
+  xy: 316, 280
+  size: 79, 54
+WalkDown
+  xy: 0, 334
+  size: 79, 54
+WalkDown
+  xy: 79, 334
+  size: 79, 54
+WalkDown
+  xy: 158, 334
+  size: 79, 54
+WalkDown
+  xy: 237, 334
+  size: 79, 54
+WalkDown
+  xy: 316, 334
+  size: 79, 54
+WalkLeft
+  xy: 0, 388
+  size: 79, 54
+WalkLeft
+  xy: 79, 388
+  size: 79, 54
+WalkLeft
+  xy: 158, 388
+  size: 79, 54
+WalkLeft
+  xy: 237, 388
+  size: 79, 54
+WalkLeft
+  xy: 316, 388
+  size: 79, 54
+WalkUp
+  xy: 0, 442
+  size: 79, 54
+WalkUp
+  xy: 79, 442
+  size: 79, 54
+WalkUp
+  xy: 158, 442
+  size: 79, 54
+WalkUp
+  xy: 237, 442
+  size: 79, 54
+WalkUp
+  xy: 316, 442
+  size: 79, 54
+AttackRight
+  xy: 0, 496
+  size: 79, 54
+AttackRight
+  xy: 79, 496
+  size: 79, 54
+AttackRight
+  xy: 158, 496
+  size: 79, 54
+AttackRight
+  xy: 237, 496
+  size: 79, 54
+AttackDown
+  xy: 0, 550
+  size: 79, 54
+AttackDown
+  xy: 79, 550
+  size: 79, 54
+AttackDown
+  xy: 158, 550
+  size: 79, 54
+AttackDown
+  xy: 237, 550
+  size: 79, 54
+AttackLeft
+  xy: 0, 604
+  size: 79, 54
+AttackLeft
+  xy: 79, 604
+  size: 79, 54
+AttackLeft
+  xy: 158, 604
+  size: 79, 54
+AttackLeft
+  xy: 237, 604
+  size: 79, 54
+AttackUp
+  xy: 0, 658
+  size: 79, 54
+AttackUp
+  xy: 79, 658
+  size: 79, 54
+AttackUp
+  xy: 158, 658
+  size: 79, 54
+AttackUp
+  xy: 237, 658
+  size: 79, 54
+HitRight
+  xy: 0, 712
+  size: 79, 54
+HitRight
+  xy: 79, 712
+  size: 79, 54
+HitRight
+  xy: 158, 712
+  size: 79, 54
+HitDown
+  xy: 0, 766
+  size: 79, 54
+HitDown
+  xy: 79, 766
+  size: 79, 54
+HitDown
+  xy: 158, 766
+  size: 79, 54
+HitLeft
+  xy: 0, 820
+  size: 79, 54
+HitLeft
+  xy: 79, 820
+  size: 79, 54
+HitLeft
+  xy: 158, 820
+  size: 79, 54
+HitUp
+  xy: 0, 874
+  size: 79, 54
+HitUp
+  xy: 79, 874
+  size: 79, 54
+HitUp
+  xy: 158, 874
+  size: 79, 54
+DeathRight
+  xy: 0, 928
+  size: 79, 54
+DeathRight
+  xy: 79, 928
+  size: 79, 54
+DeathRight
+  xy: 158, 928
+  size: 79, 54
+DeathRight
+  xy: 237, 928
+  size: 79, 54
+DeathRight
+  xy: 316, 928
+  size: 79, 54
+DeathDown
+  xy: 0, 982
+  size: 79, 54
+DeathDown
+  xy: 79, 982
+  size: 79, 54
+DeathDown
+  xy: 158, 982
+  size: 79, 54
+DeathDown
+  xy: 237, 982
+  size: 79, 54
+DeathLeft
+  xy: 0, 1036
+  size: 79, 54
+DeathLeft
+  xy: 79, 1036
+  size: 79, 54
+DeathLeft
+  xy: 158, 1036
+  size: 79, 54
+DeathLeft
+  xy: 237, 1036
+  size: 79, 54
+DeathLeft
+  xy: 316, 1036
+  size: 79, 54
+DeathUp
+  xy: 0, 1090
+  size: 79, 54
+DeathUp
+  xy: 79, 1090
+  size: 79, 54
+DeathUp
+  xy: 158, 1090
+  size: 79, 54
+DeathUp
+  xy: 237, 1090
+  size: 79, 54

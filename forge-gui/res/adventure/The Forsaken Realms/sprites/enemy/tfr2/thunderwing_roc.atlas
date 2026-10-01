@@ -1,0 +1,62 @@
+thunderwing_roc.png
+size: 380,424
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 95, 72
+Idle
+  xy: 95, 64
+  size: 95, 72
+Idle
+  xy: 190, 64
+  size: 95, 72
+Idle
+  xy: 285, 64
+  size: 95, 72
+Walk
+  xy: 0, 136
+  size: 95, 72
+Walk
+  xy: 95, 136
+  size: 95, 72
+Walk
+  xy: 190, 136
+  size: 95, 72
+Walk
+  xy: 285, 136
+  size: 95, 72
+Attack
+  xy: 0, 208
+  size: 95, 72
+Attack
+  xy: 95, 208
+  size: 95, 72
+Attack
+  xy: 190, 208
+  size: 95, 72
+Attack
+  xy: 285, 208
+  size: 95, 72
+Hit
+  xy: 0, 280
+  size: 95, 72
+Hit
+  xy: 95, 280
+  size: 95, 72
+Hit
+  xy: 190, 280
+  size: 95, 72
+Death
+  xy: 0, 352
+  size: 95, 72
+Death
+  xy: 95, 352
+  size: 95, 72
+Death
+  xy: 190, 352
+  size: 95, 72

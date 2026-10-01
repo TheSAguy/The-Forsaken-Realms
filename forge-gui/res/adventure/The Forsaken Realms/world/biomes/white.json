@@ -208,7 +208,7 @@
                     "Thalia",
                     "Avacyn",
                     "Firja",
-                    "Victor",
+                    "Victor, Valgavoth's Seneschal",
                     "Gishath",
                     "Atla Palani",
                     "Arguel",
@@ -645,7 +645,17 @@
                     "Dunebacked Behemoth",
                     "Moonsilver Werewolf",
                     "Dawnmane Kirin",
-                    "Marblehewn Golem"
+                    "Marblehewn Golem",
+                    "Moonhorn Unicorn",
+                    "Silverlance Cavalier",
+                    "Sandstone Colossus",
+                    "Thunderhelm Titan",
+                    "Crownfeather Griffin",
+                    "Halo Warden",
+                    "Silvervale Skyrider",
+                    "Glaivehoof Centaur",
+                    "Twinblade Crusader",
+                    "Lampbearer Zealot"
                 ],
     "pointsOfInterest":  [
                              "Omenport",

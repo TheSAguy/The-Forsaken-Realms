@@ -1,0 +1,68 @@
+rendclaw_mauler.png
+size: 546,424
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 91, 72
+Idle
+  xy: 91, 64
+  size: 91, 72
+Idle
+  xy: 182, 64
+  size: 91, 72
+Idle
+  xy: 273, 64
+  size: 91, 72
+Walk
+  xy: 0, 136
+  size: 91, 72
+Walk
+  xy: 91, 136
+  size: 91, 72
+Walk
+  xy: 182, 136
+  size: 91, 72
+Walk
+  xy: 273, 136
+  size: 91, 72
+Walk
+  xy: 364, 136
+  size: 91, 72
+Walk
+  xy: 455, 136
+  size: 91, 72
+Attack
+  xy: 0, 208
+  size: 91, 72
+Attack
+  xy: 91, 208
+  size: 91, 72
+Attack
+  xy: 182, 208
+  size: 91, 72
+Hit
+  xy: 0, 280
+  size: 91, 72
+Hit
+  xy: 91, 280
+  size: 91, 72
+Death
+  xy: 0, 352
+  size: 91, 72
+Death
+  xy: 91, 352
+  size: 91, 72
+Death
+  xy: 182, 352
+  size: 91, 72
+Death
+  xy: 273, 352
+  size: 91, 72
+Death
+  xy: 364, 352
+  size: 91, 72

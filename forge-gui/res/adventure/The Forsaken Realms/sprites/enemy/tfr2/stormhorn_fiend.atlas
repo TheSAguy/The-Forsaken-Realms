@@ -1,0 +1,185 @@
+stormhorn_fiend.png
+size: 430,944
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 86, 55
+IdleRight
+  xy: 86, 64
+  size: 86, 55
+IdleRight
+  xy: 172, 64
+  size: 86, 55
+IdleRight
+  xy: 258, 64
+  size: 86, 55
+IdleDown
+  xy: 0, 119
+  size: 86, 55
+IdleDown
+  xy: 86, 119
+  size: 86, 55
+IdleDown
+  xy: 172, 119
+  size: 86, 55
+IdleDown
+  xy: 258, 119
+  size: 86, 55
+IdleLeft
+  xy: 0, 174
+  size: 86, 55
+IdleLeft
+  xy: 86, 174
+  size: 86, 55
+IdleLeft
+  xy: 172, 174
+  size: 86, 55
+IdleLeft
+  xy: 258, 174
+  size: 86, 55
+IdleUp
+  xy: 0, 229
+  size: 86, 55
+IdleUp
+  xy: 86, 229
+  size: 86, 55
+IdleUp
+  xy: 172, 229
+  size: 86, 55
+IdleUp
+  xy: 258, 229
+  size: 86, 55
+WalkRight
+  xy: 0, 284
+  size: 86, 55
+WalkRight
+  xy: 86, 284
+  size: 86, 55
+WalkRight
+  xy: 172, 284
+  size: 86, 55
+WalkRight
+  xy: 258, 284
+  size: 86, 55
+WalkDown
+  xy: 0, 339
+  size: 86, 55
+WalkDown
+  xy: 86, 339
+  size: 86, 55
+WalkDown
+  xy: 172, 339
+  size: 86, 55
+WalkDown
+  xy: 258, 339
+  size: 86, 55
+WalkLeft
+  xy: 0, 394
+  size: 86, 55
+WalkLeft
+  xy: 86, 394
+  size: 86, 55
+WalkLeft
+  xy: 172, 394
+  size: 86, 55
+WalkLeft
+  xy: 258, 394
+  size: 86, 55
+WalkUp
+  xy: 0, 449
+  size: 86, 55
+WalkUp
+  xy: 86, 449
+  size: 86, 55
+WalkUp
+  xy: 172, 449
+  size: 86, 55
+WalkUp
+  xy: 258, 449
+  size: 86, 55
+AttackRight
+  xy: 0, 504
+  size: 86, 55
+AttackRight
+  xy: 86, 504
+  size: 86, 55
+AttackRight
+  xy: 172, 504
+  size: 86, 55
+AttackRight
+  xy: 258, 504
+  size: 86, 55
+AttackRight
+  xy: 344, 504
+  size: 86, 55
+AttackDown
+  xy: 0, 559
+  size: 86, 55
+AttackDown
+  xy: 86, 559
+  size: 86, 55
+AttackDown
+  xy: 172, 559
+  size: 86, 55
+AttackDown
+  xy: 258, 559
+  size: 86, 55
+AttackDown
+  xy: 344, 559
+  size: 86, 55
+AttackLeft
+  xy: 0, 614
+  size: 86, 55
+AttackLeft
+  xy: 86, 614
+  size: 86, 55
+AttackLeft
+  xy: 172, 614
+  size: 86, 55
+AttackLeft
+  xy: 258, 614
+  size: 86, 55
+AttackLeft
+  xy: 344, 614
+  size: 86, 55
+AttackUp
+  xy: 0, 669
+  size: 86, 55
+AttackUp
+  xy: 86, 669
+  size: 86, 55
+AttackUp
+  xy: 172, 669
+  size: 86, 55
+AttackUp
+  xy: 258, 669
+  size: 86, 55
+HitRight
+  xy: 0, 724
+  size: 86, 55
+HitRight
+  xy: 86, 724
+  size: 86, 55
+HitDown
+  xy: 0, 779
+  size: 86, 55
+HitDown
+  xy: 86, 779
+  size: 86, 55
+HitLeft
+  xy: 0, 834
+  size: 86, 55
+HitLeft
+  xy: 86, 834
+  size: 86, 55
+HitUp
+  xy: 0, 889
+  size: 86, 55
+HitUp
+  xy: 86, 889
+  size: 86, 55

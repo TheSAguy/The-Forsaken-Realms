@@ -1,0 +1,65 @@
+pyreclaw_dragon.png
+size: 636,352
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 106, 72
+Idle
+  xy: 106, 64
+  size: 106, 72
+Idle
+  xy: 212, 64
+  size: 106, 72
+Idle
+  xy: 318, 64
+  size: 106, 72
+Walk
+  xy: 0, 136
+  size: 106, 72
+Walk
+  xy: 106, 136
+  size: 106, 72
+Walk
+  xy: 212, 136
+  size: 106, 72
+Walk
+  xy: 318, 136
+  size: 106, 72
+Walk
+  xy: 424, 136
+  size: 106, 72
+Walk
+  xy: 530, 136
+  size: 106, 72
+Attack
+  xy: 0, 208
+  size: 106, 72
+Attack
+  xy: 106, 208
+  size: 106, 72
+Attack
+  xy: 212, 208
+  size: 106, 72
+Attack
+  xy: 318, 208
+  size: 106, 72
+Death
+  xy: 0, 280
+  size: 106, 72
+Death
+  xy: 106, 280
+  size: 106, 72
+Death
+  xy: 212, 280
+  size: 106, 72
+Death
+  xy: 318, 280
+  size: 106, 72
+Death
+  xy: 424, 280
+  size: 106, 72

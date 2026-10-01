@@ -1,0 +1,74 @@
+crownfeather_griffin.png
+size: 528,324
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 88, 52
+Idle
+  xy: 88, 64
+  size: 88, 52
+Idle
+  xy: 176, 64
+  size: 88, 52
+Idle
+  xy: 264, 64
+  size: 88, 52
+Idle
+  xy: 352, 64
+  size: 88, 52
+Idle
+  xy: 440, 64
+  size: 88, 52
+Walk
+  xy: 0, 116
+  size: 88, 52
+Walk
+  xy: 88, 116
+  size: 88, 52
+Walk
+  xy: 176, 116
+  size: 88, 52
+Walk
+  xy: 264, 116
+  size: 88, 52
+Attack
+  xy: 0, 168
+  size: 88, 52
+Attack
+  xy: 88, 168
+  size: 88, 52
+Attack
+  xy: 176, 168
+  size: 88, 52
+Attack
+  xy: 264, 168
+  size: 88, 52
+Hit
+  xy: 0, 220
+  size: 88, 52
+Hit
+  xy: 88, 220
+  size: 88, 52
+Hit
+  xy: 176, 220
+  size: 88, 52
+Death
+  xy: 0, 272
+  size: 88, 52
+Death
+  xy: 88, 272
+  size: 88, 52
+Death
+  xy: 176, 272
+  size: 88, 52
+Death
+  xy: 264, 272
+  size: 88, 52
+Death
+  xy: 352, 272
+  size: 88, 52

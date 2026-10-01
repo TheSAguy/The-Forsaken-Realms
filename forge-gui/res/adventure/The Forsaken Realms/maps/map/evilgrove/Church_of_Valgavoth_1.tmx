@@ -52,7 +52,7 @@
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="208.402" y="144.809">
    <properties>
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Valgavoth's Faithful|DSK&quot;, &quot;Bear Trap|DSK&quot;, &quot;Keys to the House|DSK&quot;, &quot;Solitary study|YDSK&quot;]}"/>
-    <property name="enemy" value="Victor"/>
+    <property name="enemy" value="Victor, Valgavoth's Seneschal"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;item&quot;,
@@ -212,7 +212,7 @@ Your spark stirs, sensing something truly mighty in this place.&quot;,
   <object id="108" template="../../../../common/maps/obj/enemy.tx" x="207.818" y="144.545">
    <properties>
     <property name="effect" value="{&quot;startBattleWithCard&quot;: [&quot;Valgavoth's Faithful|DSK&quot;, &quot;Bear Trap|DSK&quot;, &quot;Keys to the House|DSK&quot;]}"/>
-    <property name="enemy" value="Victor"/>
+    <property name="enemy" value="Victor, Valgavoth's Seneschal"/>
     <property name="reward">[
   {
     &quot;type&quot;: &quot;item&quot;,

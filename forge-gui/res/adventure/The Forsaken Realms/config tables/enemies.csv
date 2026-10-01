@@ -546,7 +546,7 @@ Avacyn,W,avacyn,53,Mythic,N,3.0,Y
 Firja,WB,firja,40,Rare,N,2.0,Y
 Drakuseth,R,drakuseth,54,Mythic,N,3.0,Y
 Vilis,B,vilis,50,Mythic,N,3.0,Y
-Victor,WB,victor,40,Rare,N,2.0,Y
+"Victor, Valgavoth's Seneschal",WB,victor,40,Rare,N,2.0,Y
 The Scarab God,UB,the_scarab_god,40,Rare,N,2.0,Y
 The Locust God,UR,the_locust_god,40,Rare,N,2.0,Y
 The Scorpion God,BR,the_scorpion_god,40,Uncommon,N,2.0,Y
@@ -2027,3 +2027,59 @@ Gravemoss Bear,BG,gravemoss_bear,19,Uncommon,N,1.0,Y
 Carrion Steed,B,carrion_steed,20,Uncommon,N,1.0,Y
 Bronzecrest Automaton,C,bronzecrest_automaton,22,Uncommon,N,1.0,Y
 Ironcrest Sentinel,C,ironcrest_sentinel,24,Rare,N,2.0,Y
+Seraph of the Burning Brand,W,seraph_of_the_burning_brand,48,Mythic,Y,3.0,Y
+Sunscale Dragon,W,sunscale_dragon,50,Mythic,Y,3.0,Y
+Moonhorn Unicorn,W,moonhorn_unicorn,24,Rare,N,2.0,Y
+Silverlance Cavalier,W,silverlance_cavalier,26,Rare,N,2.0,Y
+Sandstone Colossus,W,sandstone_colossus,28,Rare,N,2.0,Y
+Thunderhelm Titan,WU,thunderhelm_titan,25,Rare,N,2.0,Y
+Crownfeather Griffin,W,crownfeather_griffin,21,Uncommon,N,1.0,Y
+Halo Warden,W,halo_warden,22,Uncommon,N,1.0,Y
+Silvervale Skyrider,WG,silvervale_skyrider,21,Uncommon,N,1.0,Y
+Glaivehoof Centaur,WG,glaivehoof_centaur,20,Uncommon,N,1.0,Y
+Twinblade Crusader,W,twinblade_crusader,13,Common,N,0.1,Y
+Lampbearer Zealot,W,lampbearer_zealot,12,Common,N,0.1,Y
+Skyvault Dragon,U,skyvault_dragon,50,Mythic,Y,3.0,Y
+Sixblade Naga,U,sixblade_naga,38,Rare,Y,2.0,Y
+Tempest Djinn,U,tempest_djinn,26,Rare,N,2.0,Y
+Tidewrought Colossus,U,tidewrought_colossus,26,Rare,N,2.0,Y
+Brinecoil Nereid,U,brinecoil_nereid,22,Uncommon,N,1.0,Y
+Starweave Enchanter,U,starweave_enchanter,22,Uncommon,N,1.0,Y
+Frostrobe Lich,UB,frostrobe_lich,22,Uncommon,N,1.0,Y
+Stormhorn Fiend,UR,stormhorn_fiend,19,Uncommon,N,1.0,Y
+Chainball Gremlin,U,chainball_gremlin,11,Common,N,0.1,Y
+Galewalker Elemental,U,galewalker_elemental,13,Common,N,0.1,Y
+Driftbell Medusoid,U,driftbell_medusoid,14,Common,N,0.1,Y
+Nightscale Dragon,B,nightscale_dragon,50,Mythic,Y,3.0,Y
+Victor,B,victor_vampire,50,Mythic,Y,3.0,Y
+Dreadmount Rider,B,dreadmount_rider,25,Rare,N,2.0,Y
+Gilded Lich,B,gilded_lich,24,Rare,N,2.0,Y
+Scythewing Reaver,BR,scythewing_reaver,27,Rare,N,2.0,Y
+Broodweaver Drider,BG,broodweaver_drider,25,Rare,N,2.0,Y
+Fleshrender Hulk,B,fleshrender_hulk,24,Uncommon,N,1.0,Y
+Hollowplate Phantom,B,hollowplate_phantom,22,Uncommon,N,1.0,Y
+Stonegaze Medusa,BG,stonegaze_medusa,22,Uncommon,N,1.0,Y
+Grave Wight,B,grave_wight,11,Common,N,0.1,Y
+Blind Troglodyte,B,blind_troglodyte,12,Common,N,0.1,Y
+Pyreclaw Dragon,R,pyreclaw_dragon,50,Mythic,Y,3.0,Y
+Cinderstone Brute,R,cinderstone_brute,38,Rare,Y,2.0,Y
+Emberlord Efreet,R,emberlord_efreet,24,Rare,N,2.0,Y
+Thunderwing Roc,R,thunderwing_roc,28,Rare,N,2.0,Y
+Rendclaw Mauler,RG,rendclaw_mauler,28,Rare,N,2.0,Y
+Three-Maw Hellhound,R,three_maw_hellhound,20,Uncommon,N,1.0,Y
+Hellmaw Boar,R,hellmaw_boar,21,Uncommon,N,1.0,Y
+Twinskull Ogre,R,twinskull_ogre,20,Uncommon,N,1.0,Y
+Tuskmaw Fiend,R,tuskmaw_fiend,21,Uncommon,N,1.0,Y
+Hellspark Fiend,R,hellspark_fiend,13,Common,N,0.1,Y
+Thornscale Dragon,G,thornscale_dragon,49,Mythic,Y,3.0,Y
+Bogspawn Horror,G,bogspawn_horror,38,Rare,Y,2.0,Y
+Ironhide Gorgon,G,ironhide_gorgon,26,Rare,N,2.0,Y
+Barkhide Dendroid,G,barkhide_dendroid,20,Uncommon,N,1.0,Y
+Frillback Basilisk,G,frillback_basilisk,21,Uncommon,N,1.0,Y
+Marshscale Lizardman,G,marshscale_lizardman,20,Uncommon,N,1.0,Y
+Flailfang Gnoll,G,flailfang_gnoll,12,Common,N,0.1,Y
+Ossuary Dragon,C,ossuary_dragon,36,Rare,Y,2.0,Y
+Blightborn Mutant,C,blightborn_mutant,32,Uncommon,Y,1.0,Y
+Bonestinger,C,bonestinger,19,Uncommon,N,1.0,Y
+Clockwork Legionary,C,clockwork_legionary,19,Uncommon,N,1.0,Y
+Cryptstalker Fiend,C,cryptstalker_fiend,11,Common,N,0.1,Y

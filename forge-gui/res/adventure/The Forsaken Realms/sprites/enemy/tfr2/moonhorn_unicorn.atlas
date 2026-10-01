@@ -1,0 +1,59 @@
+moonhorn_unicorn.png
+size: 408,429
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 102, 73
+Idle
+  xy: 102, 64
+  size: 102, 73
+Idle
+  xy: 204, 64
+  size: 102, 73
+Idle
+  xy: 306, 64
+  size: 102, 73
+Walk
+  xy: 0, 137
+  size: 102, 73
+Walk
+  xy: 102, 137
+  size: 102, 73
+Walk
+  xy: 204, 137
+  size: 102, 73
+Walk
+  xy: 306, 137
+  size: 102, 73
+Attack
+  xy: 0, 210
+  size: 102, 73
+Attack
+  xy: 102, 210
+  size: 102, 73
+Attack
+  xy: 204, 210
+  size: 102, 73
+Hit
+  xy: 0, 283
+  size: 102, 73
+Hit
+  xy: 102, 283
+  size: 102, 73
+Hit
+  xy: 204, 283
+  size: 102, 73
+Death
+  xy: 0, 356
+  size: 102, 73
+Death
+  xy: 102, 356
+  size: 102, 73
+Death
+  xy: 204, 356
+  size: 102, 73

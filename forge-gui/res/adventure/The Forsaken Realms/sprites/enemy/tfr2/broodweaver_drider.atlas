@@ -1,0 +1,296 @@
+broodweaver_drider.png
+size: 606,1404
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+IdleRight
+  xy: 0, 64
+  size: 101, 67
+IdleRight
+  xy: 101, 64
+  size: 101, 67
+IdleRight
+  xy: 202, 64
+  size: 101, 67
+IdleRight
+  xy: 303, 64
+  size: 101, 67
+IdleRight
+  xy: 404, 64
+  size: 101, 67
+IdleDown
+  xy: 0, 131
+  size: 101, 67
+IdleDown
+  xy: 101, 131
+  size: 101, 67
+IdleDown
+  xy: 202, 131
+  size: 101, 67
+IdleDown
+  xy: 303, 131
+  size: 101, 67
+IdleDown
+  xy: 404, 131
+  size: 101, 67
+IdleLeft
+  xy: 0, 198
+  size: 101, 67
+IdleLeft
+  xy: 101, 198
+  size: 101, 67
+IdleLeft
+  xy: 202, 198
+  size: 101, 67
+IdleLeft
+  xy: 303, 198
+  size: 101, 67
+IdleLeft
+  xy: 404, 198
+  size: 101, 67
+IdleUp
+  xy: 0, 265
+  size: 101, 67
+IdleUp
+  xy: 101, 265
+  size: 101, 67
+IdleUp
+  xy: 202, 265
+  size: 101, 67
+IdleUp
+  xy: 303, 265
+  size: 101, 67
+IdleUp
+  xy: 404, 265
+  size: 101, 67
+WalkRight
+  xy: 0, 332
+  size: 101, 67
+WalkRight
+  xy: 101, 332
+  size: 101, 67
+WalkRight
+  xy: 202, 332
+  size: 101, 67
+WalkRight
+  xy: 303, 332
+  size: 101, 67
+WalkRight
+  xy: 404, 332
+  size: 101, 67
+WalkDown
+  xy: 0, 399
+  size: 101, 67
+WalkDown
+  xy: 101, 399
+  size: 101, 67
+WalkDown
+  xy: 202, 399
+  size: 101, 67
+WalkDown
+  xy: 303, 399
+  size: 101, 67
+WalkDown
+  xy: 404, 399
+  size: 101, 67
+WalkLeft
+  xy: 0, 466
+  size: 101, 67
+WalkLeft
+  xy: 101, 466
+  size: 101, 67
+WalkLeft
+  xy: 202, 466
+  size: 101, 67
+WalkLeft
+  xy: 303, 466
+  size: 101, 67
+WalkLeft
+  xy: 404, 466
+  size: 101, 67
+WalkUp
+  xy: 0, 533
+  size: 101, 67
+WalkUp
+  xy: 101, 533
+  size: 101, 67
+WalkUp
+  xy: 202, 533
+  size: 101, 67
+WalkUp
+  xy: 303, 533
+  size: 101, 67
+WalkUp
+  xy: 404, 533
+  size: 101, 67
+AttackRight
+  xy: 0, 600
+  size: 101, 67
+AttackRight
+  xy: 101, 600
+  size: 101, 67
+AttackRight
+  xy: 202, 600
+  size: 101, 67
+AttackRight
+  xy: 303, 600
+  size: 101, 67
+AttackRight
+  xy: 404, 600
+  size: 101, 67
+AttackDown
+  xy: 0, 667
+  size: 101, 67
+AttackDown
+  xy: 101, 667
+  size: 101, 67
+AttackDown
+  xy: 202, 667
+  size: 101, 67
+AttackDown
+  xy: 303, 667
+  size: 101, 67
+AttackDown
+  xy: 404, 667
+  size: 101, 67
+AttackLeft
+  xy: 0, 734
+  size: 101, 67
+AttackLeft
+  xy: 101, 734
+  size: 101, 67
+AttackLeft
+  xy: 202, 734
+  size: 101, 67
+AttackLeft
+  xy: 303, 734
+  size: 101, 67
+AttackLeft
+  xy: 404, 734
+  size: 101, 67
+AttackUp
+  xy: 0, 801
+  size: 101, 67
+AttackUp
+  xy: 101, 801
+  size: 101, 67
+AttackUp
+  xy: 202, 801
+  size: 101, 67
+AttackUp
+  xy: 303, 801
+  size: 101, 67
+AttackUp
+  xy: 404, 801
+  size: 101, 67
+HitRight
+  xy: 0, 868
+  size: 101, 67
+HitRight
+  xy: 101, 868
+  size: 101, 67
+HitRight
+  xy: 202, 868
+  size: 101, 67
+HitDown
+  xy: 0, 935
+  size: 101, 67
+HitDown
+  xy: 101, 935
+  size: 101, 67
+HitDown
+  xy: 202, 935
+  size: 101, 67
+HitLeft
+  xy: 0, 1002
+  size: 101, 67
+HitLeft
+  xy: 101, 1002
+  size: 101, 67
+HitLeft
+  xy: 202, 1002
+  size: 101, 67
+HitUp
+  xy: 0, 1069
+  size: 101, 67
+HitUp
+  xy: 101, 1069
+  size: 101, 67
+HitUp
+  xy: 202, 1069
+  size: 101, 67
+DeathRight
+  xy: 0, 1136
+  size: 101, 67
+DeathRight
+  xy: 101, 1136
+  size: 101, 67
+DeathRight
+  xy: 202, 1136
+  size: 101, 67
+DeathRight
+  xy: 303, 1136
+  size: 101, 67
+DeathRight
+  xy: 404, 1136
+  size: 101, 67
+DeathRight
+  xy: 505, 1136
+  size: 101, 67
+DeathDown
+  xy: 0, 1203
+  size: 101, 67
+DeathDown
+  xy: 101, 1203
+  size: 101, 67
+DeathDown
+  xy: 202, 1203
+  size: 101, 67
+DeathDown
+  xy: 303, 1203
+  size: 101, 67
+DeathDown
+  xy: 404, 1203
+  size: 101, 67
+DeathDown
+  xy: 505, 1203
+  size: 101, 67
+DeathLeft
+  xy: 0, 1270
+  size: 101, 67
+DeathLeft
+  xy: 101, 1270
+  size: 101, 67
+DeathLeft
+  xy: 202, 1270
+  size: 101, 67
+DeathLeft
+  xy: 303, 1270
+  size: 101, 67
+DeathLeft
+  xy: 404, 1270
+  size: 101, 67
+DeathLeft
+  xy: 505, 1270
+  size: 101, 67
+DeathUp
+  xy: 0, 1337
+  size: 101, 67
+DeathUp
+  xy: 101, 1337
+  size: 101, 67
+DeathUp
+  xy: 202, 1337
+  size: 101, 67
+DeathUp
+  xy: 303, 1337
+  size: 101, 67
+DeathUp
+  xy: 404, 1337
+  size: 101, 67
+DeathUp
+  xy: 505, 1337
+  size: 101, 67

@@ -1,0 +1,65 @@
+victor_vampire.png
+size: 408,359
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 68, 59
+Idle
+  xy: 68, 64
+  size: 68, 59
+Idle
+  xy: 136, 64
+  size: 68, 59
+Idle
+  xy: 204, 64
+  size: 68, 59
+Walk
+  xy: 0, 123
+  size: 68, 59
+Walk
+  xy: 68, 123
+  size: 68, 59
+Walk
+  xy: 136, 123
+  size: 68, 59
+Walk
+  xy: 204, 123
+  size: 68, 59
+Attack
+  xy: 0, 182
+  size: 68, 59
+Attack
+  xy: 68, 182
+  size: 68, 59
+Attack
+  xy: 136, 182
+  size: 68, 59
+Hit
+  xy: 0, 241
+  size: 68, 59
+Hit
+  xy: 68, 241
+  size: 68, 59
+Death
+  xy: 0, 300
+  size: 68, 59
+Death
+  xy: 68, 300
+  size: 68, 59
+Death
+  xy: 136, 300
+  size: 68, 59
+Death
+  xy: 204, 300
+  size: 68, 59
+Death
+  xy: 272, 300
+  size: 68, 59
+Death
+  xy: 340, 300
+  size: 68, 59

@@ -1,0 +1,65 @@
+gilded_lich.png
+size: 310,369
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 62, 61
+Idle
+  xy: 62, 64
+  size: 62, 61
+Idle
+  xy: 124, 64
+  size: 62, 61
+Idle
+  xy: 186, 64
+  size: 62, 61
+Idle
+  xy: 248, 64
+  size: 62, 61
+Walk
+  xy: 0, 125
+  size: 62, 61
+Walk
+  xy: 62, 125
+  size: 62, 61
+Walk
+  xy: 124, 125
+  size: 62, 61
+Walk
+  xy: 186, 125
+  size: 62, 61
+Attack
+  xy: 0, 186
+  size: 62, 61
+Attack
+  xy: 62, 186
+  size: 62, 61
+Attack
+  xy: 124, 186
+  size: 62, 61
+Attack
+  xy: 186, 186
+  size: 62, 61
+Hit
+  xy: 0, 247
+  size: 62, 61
+Hit
+  xy: 62, 247
+  size: 62, 61
+Death
+  xy: 0, 308
+  size: 62, 61
+Death
+  xy: 62, 308
+  size: 62, 61
+Death
+  xy: 124, 308
+  size: 62, 61
+Death
+  xy: 186, 308
+  size: 62, 61

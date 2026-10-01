@@ -1,0 +1,77 @@
+hellspark_fiend.png
+size: 336,284
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Avatar
+  xy: 0, 0
+  size: 64, 64
+Idle
+  xy: 0, 64
+  size: 56, 44
+Idle
+  xy: 56, 64
+  size: 56, 44
+Idle
+  xy: 112, 64
+  size: 56, 44
+Idle
+  xy: 168, 64
+  size: 56, 44
+Idle
+  xy: 224, 64
+  size: 56, 44
+Walk
+  xy: 0, 108
+  size: 56, 44
+Walk
+  xy: 56, 108
+  size: 56, 44
+Walk
+  xy: 112, 108
+  size: 56, 44
+Walk
+  xy: 168, 108
+  size: 56, 44
+Walk
+  xy: 224, 108
+  size: 56, 44
+Attack
+  xy: 0, 152
+  size: 56, 44
+Attack
+  xy: 56, 152
+  size: 56, 44
+Attack
+  xy: 112, 152
+  size: 56, 44
+Attack
+  xy: 168, 152
+  size: 56, 44
+Hit
+  xy: 0, 196
+  size: 56, 44
+Hit
+  xy: 56, 196
+  size: 56, 44
+Hit
+  xy: 112, 196
+  size: 56, 44
+Death
+  xy: 0, 240
+  size: 56, 44
+Death
+  xy: 56, 240
+  size: 56, 44
+Death
+  xy: 112, 240
+  size: 56, 44
+Death
+  xy: 168, 240
+  size: 56, 44
+Death
+  xy: 224, 240
+  size: 56, 44
+Death
+  xy: 280, 240
+  size: 56, 44
