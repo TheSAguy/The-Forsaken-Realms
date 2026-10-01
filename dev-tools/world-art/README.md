@@ -4,8 +4,10 @@ The toolchain that turned the user's RPG Maker sheets into the plane's 32 px wor
 scratchpad from round 303 to 308 and moved here in round 309, byte-for-byte: `export.py` with round 303's `spec.py`
 reproduces the plane's `*_structures_hd.*`, `doodads_hd.*`, `map_sprites.json` and biome `spriteNames` exactly.
 
-- **Inputs** stay outside the repo: the user's sheets in `C:\Users\User\Pictures\Screenshots\Terrain\` (`paths.ART`),
-  credited in `standalone-packaging/CREDITS.md`.
+- **Inputs** stay outside the repo: the user's sheets in `C:\Users\User\Pictures\Screenshots\New Art\Terrain\`
+  (`paths.ART`; the folder moved there from `Screenshots\Terrain\` - round 388), credited in
+  `standalone-packaging/CREDITS.md`. `new_doodads.png` (the `nd:` cells) is the pre-cut sheet of rounds 379/381/388;
+  `new_doodads.pre-r388.png` beside it is the sheet before round 388's re-cuts.
 - **Outputs** of the preview tools go to `C:\TFR\art-staging\world-art\` (`paths.OUT`, or `WORLD_ART_OUT`).
 - **The plane** is written only by `export.py <repo root>` (`--dry` to list what it would write).
 
@@ -15,6 +17,7 @@ reproduces the plane's `*_structures_hd.*`, `doodads_hd.*`, `map_sprites.json` a
 | `sources.py` | sprite refs (`cy:`, `rdx:`, `rd:` from round 303; `<sheet>:c,r` / `c,r#k` / `@x0,y0,x1,y1` from the user's other sheets, `SHEETS`), tint, fit, autotile helpers |
 | `build.py` | builds a land's structure sheets and doodad pictures from the spec; `python build.py preview` writes before/after previews |
 | `export.py` | writes the plane: structure sheets, `doodads_hd.png/.atlas`, `map_sprites.json` entries, biome `spriteNames`, the ocean's plane copy |
+| `doodad_table.py [repo root] [out.html]` | round 388: every doodad picture by land, read back from the plane, on one HTML page |
 | `cellcat.py <sheet> [c0,r0,c1,r1] [--whole]` | a catalog of a sheet's objects with the ref that picks each |
 | `segment.py` | round 303's cut of a transparent sheet into numbered boxes (`boxes/`) |
 | `a1_convert.py`, `a2_convert.py` | MV A1/A2 autotiles -> XP at 32 px (`autotiles/`) |

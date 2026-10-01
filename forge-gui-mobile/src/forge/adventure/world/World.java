@@ -1565,9 +1565,55 @@ public class World implements Disposable, SaveFileContent {
             counter++;
         }
         if (lastFullNeighbour < 0 && !drawingInfoCache.isEmpty()) {
+            int under = landUnderlay(x, y, biomeIndex);
+            if (under >= 0) {
+                drawingInfoCache.removeIf(info -> info.regions == biomeTexture[0]);
+                drawingInfoCache.add(0, new DrawingInformation(0b111_111_111, biomeTexture[under], 0));
+                return 0;
+            }
             drawingInfoCache.get(0).neighbors = 0b111_111_111;
         }
         return Math.max(0, lastFullNeighbour);
+    }
+
+    // Round 388 (the user, with a screenshot of the Blue land beside the Wasteland: "their terrain seems to have a
+    // 'water' looking edge"): a tile with no fully covered layer had its FIRST layer promoted to full - and on a
+    // land tile that still carries the world-gen ocean bit, that is the sea. Along a land-to-land seam (a territory
+    // edge, a captured town's disc, Pass B's cut-back) the land's soft edge rim then showed a line of water. The sea
+    // stays the fallback only where the tile really touches open water (a coast); between two lands the ground of the
+    // land next door goes under the rim instead, so the seam blends like stock world-gen boundaries do.
+    private int seaSeamTiles;
+
+    /** The land to draw under tile (x, y)'s edge rim, or -1 to keep the old fallback (a coast, or an ocean tile). */
+    private int landUnderlay(int x, int y, long bits) {
+        long roads = roadMask();
+        if ((bits & 1L) == 0)
+            return -1;   // no sea bit on this tile - the old fallback promotes a land layer already
+        int own = highestBiome(bits & ~roads);
+        if (own <= 0)
+            return -1;   // the tile is sea
+        int[] votes = new int[biomeTexture.length];
+        for (int ny = -1; ny <= 1; ny++) {
+            for (int nx = -1; nx <= 1; nx++) {
+                if (nx == 0 && ny == 0)
+                    continue;
+                long nb = getBiome(x + nx, y + ny) & ~roads;
+                int top = nb == 0 ? 0 : highestBiome(nb);
+                if (top <= 0)
+                    return -1;   // open water beside it: a coast keeps the sea under its rim
+                if (top != own && top < votes.length)
+                    votes[top]++;
+            }
+        }
+        int best = own;
+        for (int i = 1; i < votes.length; i++)
+            if (votes[i] > 0 && (best == own || votes[i] > votes[best]))
+                best = i;
+        if (seaSeamTiles++ < 3 || seaSeamTiles % 2000 == 0)
+            System.out.println("[TFR-SeaSeam] land seam tile (" + x + "," + y + ") of " + data.GetBiomes().get(own).name
+                    + ": " + data.GetBiomes().get(best).name + " ground under the edge instead of the sea (" + seaSeamTiles
+                    + " tiles so far)");
+        return best;
     }
 
     // Round 331 (the user, after v1.14: "add a black 1pix border around all collision objects on the main map.

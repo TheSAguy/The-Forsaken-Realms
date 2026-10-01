@@ -8,6 +8,7 @@ Round 309, the user's other sheets (SHEETS: key -> file, grid):
               "<key>:c,r#k"       the k-th separate object in that cell, left to right
               "<key>@x0,y0,x1,y1" a pixel box
               soft drop shadows (semi-transparent near-black) are dropped, then the sprite is trimmed
+Round 388:    "<any ref>~"        the same sprite with its soft drop shadow dropped (cy:/rdx: keep theirs by default)
 Autotile refs: "a2:c_r"  the MV World A2 autotile (a2/c_r.png, XP at 32 px)
                "a1:name" an MV World A1 block (a1/name.png), its baked sand keyed out
                "old:<atlas>:<name>"  a current 16 px sheet region, enlarged 2x (kept as is)
@@ -121,6 +122,8 @@ def sheet_sprite(ref):
 
 
 def sprite(ref):
+    if ref.endswith("~"):   # round 388: drop the soft drop shadow - fit()'s crisp alpha hardens it into a black blob
+        return trim(unshadow(sprite(ref[:-1])))
     if ref.split("@")[0].split(":")[0] in SHEETS:
         return sheet_sprite(ref)
     kind, arg = ref.split(":", 1)

@@ -6,7 +6,10 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
-ART = r"C:\Users\User\Pictures\Screenshots\Terrain"
+# Round 388: the user's Terrain folder moved under "New Art" (the old path stays as a fallback)
+ART = next((p for p in (r"C:\Users\User\Pictures\Screenshots\New Art\Terrain",
+                        r"C:\Users\User\Pictures\Screenshots\Terrain") if os.path.isdir(p)),
+           r"C:\Users\User\Pictures\Screenshots\New Art\Terrain")
 OUT = os.environ.get("WORLD_ART_OUT", r"C:\TFR\art-staging\world-art")
 os.makedirs(OUT, exist_ok=True)
 

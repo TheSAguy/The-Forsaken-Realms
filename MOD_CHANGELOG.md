@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 388: whole doodad pictures, doodads under the player, no sea line between lands (2026-10-01)
+
+The user, from a table of every doodad by land: "some look cut/clipped" - then, with two screenshots: "It looks like
+I'm behind the doodads ... the doodads need to be on the ground", and "For Blue, their terrain seems to have a 'water'
+looking edge".
+
+- **Cut pictures (29) re-cut or replaced** (dev-tools/world-art/spec.py + the `nd` sheet). None overflowed its atlas
+  box: rounds 379/381 pre-cut most of them as ONE 32 px tile of an object spanning several (or a tile of a grass/moss/
+  ash ground texture). Each is now the whole object, re-staged into its old `nd` cell (driftwood, glowing root, charred
+  twigs, the dragon bone pile, the bone heap, grey driftwood, the berry bush `fo:4,8,5,8`), or a whole, unused
+  ground-level picture where the source was a texture or shared by two slots (three slots came from one dragon
+  skeleton, two from one bone heap, two from one twig pile). New cells `nd:0..3,18`. The pre-cut sheet before this
+  round is kept as `new_doodads.pre-r388.png` beside it. Also: RedSpire #3 / RedPot #4 (flat pixel icons) -> orange
+  flowers / a clay jar; eight cy/rdx pictures whose soft shadow hardened into a black blob take the new `~` ref suffix
+  (`sources.sprite`: unshadow); `bc:15,2#0` sheds a stray pixel. 44 pictures change; kinds, bands, densities and
+  picture counts are the same, and placed doodads draw by atlas position, so saves follow with no re-scatter.
+- **Doodads lie under everything**: all 44 layer-0 kinds -> layer -1 (map_sprites.json). MapSprite reads the layer from
+  the catalog, not the save, so old worlds follow at once.
+- **The sea line along land seams** (`World.collectDrawingInfo` -> `landUnderlay`): a tile with no fully covered layer
+  promoted its FIRST layer to full - on a land tile still carrying the world-gen sea bit, that was open water, and the
+  land's soft edge rim showed a line of it along territory edges (Pass B's cut-back, captures, expansion). Now, unless
+  the tile touches open water (a coast keeps the sea), the sea entries are dropped and the ground of the most common
+  other land among its neighbours goes under the rim. `[TFR-SeaSeam]` logs the first three tiles and every 2000th.
+- Tooling: `paths.ART` -> `Pictures\Screenshots\New Art\Terrain` (the old folder is gone), `doodad_table.py` (the
+  review page). The export reproduced the shipped sheet byte for byte before any change.
+- Agent-seen: the Blue/wasteland and player/wasteland seams blend; that world logged no `[TFR-SeaSeam]` tile, so the
+  user's world is the real test. Not seen yet: a doodad overlapping the player on screen.
+
 ## Round 387: commander-only cards out of enemy decks, boosters and the pool (2026-10-01)
 
 A player on Discord: "I'm guessing there shouldn't be commander specific cards in the pool and in enemy decks? (like
