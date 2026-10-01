@@ -321,13 +321,21 @@ public class TuningData {
     // clear out all the dungeons in an area, it will feel safe"): full pull within dungeonSourceRadiusTiles, fading to 0
     // at dungeonSourceReachTiles; each roll sends dungeonSourceShare x the pull - the sources' falloffs summed but at
     // most 1, times their escalation, capped at dungeonSourceMaxPerRoll - and the land's own pick goes ahead on
-    // landSpawnShare of the rolls. The rate factor no
+    // the land share (round 384: landSpawnShare*) of the rolls. The rate factor no
     // longer speeds the roll clock (that sped the quest rolls too) - it is each source's pull.
-    public float landSpawnShare = 0.15f;
+    // Round 384 (the user: "15% attribution to spawns from Terrain is good for the player, but low for other areas"):
+    // the land's share by land and standing - WorldStage.landShareOn(); the dungeons take the rest.
+    public float landSpawnSharePlayer = 0.15f;
+    public float landSpawnShareWaste = 0.25f;
+    public float landSpawnSharePartner = 0.15f;
+    public float landSpawnShareHappy = 0.20f;
+    public float landSpawnShareNeutral = 0.25f;
+    public float landSpawnShareUnhappy = 0.30f;
+    public float landSpawnShareWar = 0.40f;
     public float dungeonSourceRadiusTiles = 10f;
     public float dungeonSourceReachTiles = 28f;
     public float dungeonSourceRateFactor = 1f;
-    public float dungeonSourceShare = 0.85f;
+    public float dungeonSourceShare = 1f; // round 384: only the switch now - 0 = no dungeon sources
     public float dungeonSourceMaxPerRoll = 2f;
     public float dungeonSourceEscalationPerWeek = 0.25f;
     public float dungeonSourceEscalationMax = 2f;

@@ -1877,8 +1877,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 if (spawnCrowded())
                     return;
                 spawnQuestExtraOnly("on a road"); // round 383: the quest's own roll, whatever the rest does
-                if (!rollLegendSighting(world, biomeData)) // round 375: a legend's spot is judged on its own
-                    rollDungeonSource(world, biomeData); // round 377/383: the dungeons in reach
+                if (!rollLegendSighting(world, biomeData)) { // round 375: a legend's spot is judged on its own
+                    // Round 384: the land under the road sets the split; the road keeps the land's own pick off it.
+                    String under = landUnder(world, biomeData, player.getX() + player.getWidth() / 2f, player.getY());
+                    rollDungeonSource(world, biomeData, 1f - landShareOn(under)); // round 377/383: the dungeons in reach
+                }
             }
             return;
         }
@@ -1906,7 +1909,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
             return;
         // Round 377/383: the dungeons in reach send their share - see rollDungeonSource(). The land's own roll below
         // is a separate share of the budget, not spent by them.
-        rollDungeonSource(world, biomeData);
+        float landShare = landShareOn(data.name); // round 384: this land's split, before any intrusion swaps the roster
+        rollDungeonSource(world, biomeData, 1f - landShare);
 
         // Round 338 (user spec 2026-09-25, "adjust the spawn rates of enemies in areas with lifted FoW"): the fog zone at
         // the SPOT this roll would spawn on - drawn now the way spawn() draws it, and handed to spawn() so the enemy lands
@@ -1930,10 +1934,10 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         if (!lit && fogTuning != null && fogTuning.fogDarkSpawnRate > 0f)
             spawnDelay /= fogTuning.fogDarkSpawnRate;
-        // Round 383: the land's share of the budget - the other 85% is the dungeons'. One line per roll it holds back.
-        float landShare = fogTuning == null ? 1f : fogTuning.landSpawnShare;
+        // Round 383: the land's share of the budget - the rest is the dungeons'. Round 384: the share by land and
+        // standing (landShareOn). One line per roll it holds back.
         if (landShare < 1f && rand.nextFloat() >= landShare) {
-            System.out.println("[TFR-SpawnBudget] land roll held back (landSpawnShare " + landShare + ") in " + data.name
+            System.out.println("[TFR-SpawnBudget] land roll held back (land share " + landShare + ") in " + data.name
                     + " territory");
             return;
         }
@@ -2290,7 +2294,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
      * screen - the "Find a Dungeon" quest explains it; the log says when the nearest source changes, and each creature.
      * True when one was placed.
      */
-    private boolean rollDungeonSource(World world, List<BiomeData> biomes) {
+    private boolean rollDungeonSource(World world, List<BiomeData> biomes, float dungeonShare) {
         if (!forge.adventure.util.DungeonSources.isEnabled() || player == null)
             return false;
         if (dungeonCoverageLogged != world) {
@@ -2316,8 +2320,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         if (sources.isEmpty() || pull <= 0f)
             return false;
-        TuningData tuning = Config.instance().getTuningData();
-        float share = tuning == null ? 0f : tuning.dungeonSourceShare;
+        float share = Math.max(0f, dungeonShare); // round 384: 1 - the land's share here (landShareOn)
         float expected = share * pull;
         int count = (int) expected + (rand.nextFloat() < expected - (int) expected ? 1 : 0);
         boolean placed = false;
@@ -2389,7 +2392,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         long start = System.nanoTime();
         int ts = world.getTileSize();
         int land = 0, full = 0, partial = 0;
-        float pullSum = 0f;
+        float pullSum = 0f, landSum = 0f;
         Rectangle probe = new Rectangle(0, 0, ts / 2f, ts / 2f);
         for (int tx = 0; tx < world.getWidthInTiles(); tx += 4) {
             for (int ty = 0; ty < world.getHeightInTiles(); ty += 4) {
@@ -2401,10 +2404,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 if (world.collidingTile(probe))
                     continue;
                 land++;
+                float sampleLand = landShareOn(landAt(world, biomes, x, y)); // round 384: this spot's split
+                landSum += sampleLand;
                 List<forge.adventure.util.DungeonSources.Source> in = forge.adventure.util.DungeonSources.inReach(world, x, y, false);
                 if (in.isEmpty())
                     continue;
-                pullSum += forge.adventure.util.DungeonSources.totalWeight(in);
+                pullSum += (1f - sampleLand) * forge.adventure.util.DungeonSources.totalWeight(in);
                 boolean atFull = false;
                 for (forge.adventure.util.DungeonSources.Source src : in)
                     atFull |= src.falloff >= 1f;
@@ -2414,16 +2419,48 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     partial++;
             }
         }
-        TuningData tuning = Config.instance().getTuningData();
-        float share = tuning == null ? 0f : tuning.dungeonSourceShare;
-        float landShare = tuning == null ? 1f : tuning.landSpawnShare;
-        float dungeonPerRoll = land == 0 ? 0f : share * pullSum / land;
+        float landShare = land == 0 ? 0f : landSum / land;
+        float dungeonPerRoll = land == 0 ? 0f : pullSum / land;
         float total = dungeonPerRoll + landShare;
         System.out.println("[TFR-DungeonSource] coverage: " + land + " land samples - " + pct(full, land) + "% at full pull, "
                 + pct(partial, land) + "% fading, " + pct(land - full - partial, land) + "% out of reach; per roll on average "
                 + String.format(java.util.Locale.ROOT, "%.2f from dungeons + %.2f from the land (dungeons %.0f%%)",
                         dungeonPerRoll, landShare, total <= 0f ? 0f : 100f * dungeonPerRoll / total)
                 + " in " + (System.nanoTime() - start) / 1_000_000 + "ms");
+    }
+
+    /**
+     * Round 384 (the user: "I think 15% attribution to spawns from Terrain is good for the player, but low for other
+     * areas" - Player 15%, Waste 25%, and on a color's land by the player's standing: Partner 15, Happy 20, Neutral 25,
+     * Unhappy 30, War 40; the dungeons take the rest). The land's own pick's share of a roll on this land.
+     */
+    private static float landShareOn(String land) {
+        TuningData t = Config.instance().getTuningData();
+        if (t == null)
+            return 1f;
+        if ("player".equals(land))
+            return t.landSpawnSharePlayer;
+        if ("waste".equals(land) || "colorless".equals(land))
+            return t.landSpawnShareWaste;
+        if (land == null || !ColorReputation.isEnabled() || forge.adventure.util.LegendSpawns.colorLetterOf(land) == null)
+            return t.landSpawnShareNeutral;
+        switch (ColorReputation.getStatus(land)) {
+            case PARTNER: return t.landSpawnSharePartner;
+            case HAPPY: return t.landSpawnShareHappy;
+            case UNHAPPY: return t.landSpawnShareUnhappy;
+            case WAR: return t.landSpawnShareWar;
+            default: return t.landSpawnShareNeutral;
+        }
+    }
+
+    /** Round 384: the land under (x, y), world units, a road's bits left out - which color's land a road crosses. */
+    private static String landUnder(World world, List<BiomeData> biomes, float x, float y) {
+        int tx = (int) (x / world.getTileSize());
+        int ty = (int) (y / world.getTileSize());
+        if (tx < 0 || ty < 0 || tx >= world.getWidthInTiles() || ty >= world.getHeightInTiles())
+            return null;
+        int index = World.highestBiome(world.getBiome(tx, ty) & ~world.roadMask());
+        return index >= 0 && index < biomes.size() ? biomes.get(index).name : null;
     }
 
     private static int pct(int part, int whole) {

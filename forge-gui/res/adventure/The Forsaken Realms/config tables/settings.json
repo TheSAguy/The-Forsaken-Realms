@@ -275,11 +275,21 @@
     // and pays dungeonSourceClearReputation reputation in the nearest town. dungeonSourceShare 0 switches the sources
     // off (and landSpawnShare 1 gives the land its old rate back). Grep forge.log for [TFR-DungeonSource] and
     // [TFR-SpawnBudget].
-    "landSpawnShare": 0.15,
+    // Round 384 (the user: "15% attribution to spawns from Terrain is good for the player, but low for other areas"):
+    // the land's own pick's share of a roll, by the land the player stands on (under a road, the land beneath) and,
+    // on a color's land, the player's standing with that color. The dungeons in reach take the rest (1 - this), times
+    // their pull. dungeonSourceShare below is now only the switch: 0 = no dungeon sources.
+    "landSpawnSharePlayer": 0.15,
+    "landSpawnShareWaste": 0.25,
+    "landSpawnSharePartner": 0.15,
+    "landSpawnShareHappy": 0.20,
+    "landSpawnShareNeutral": 0.25,
+    "landSpawnShareUnhappy": 0.30,
+    "landSpawnShareWar": 0.40,
     "dungeonSourceRadiusTiles": 10,
     "dungeonSourceReachTiles": 28,
     "dungeonSourceRateFactor": 1.0,
-    "dungeonSourceShare": 0.85,
+    "dungeonSourceShare": 1.0,
     "dungeonSourceMaxPerRoll": 2.0,
     "dungeonSourceEscalationPerWeek": 0.25,
     "dungeonSourceEscalationMax": 2.0,

@@ -313,8 +313,9 @@ half, and a +Life reward or a boss's own signature item only pays once.
 
 ### Why are there so many monsters around this cave?
 
-Most of the creatures roaming the realm come out of ordinary dungeons and caves - about 85% of them; the land itself
-adds only the rest. A dungeon pulls at full strength within about 10 tiles and fades out by about 28, and its
+Most of the creatures roaming the realm come out of ordinary dungeons and caves; the land itself adds only the rest -
+15% on your own land, 25% on the Wasteland, and on a color's land from 15% (Partner) through 20% (Happy), 25%
+(Neutral) and 30% (Unhappy) to 40% (War). A dungeon pulls at full strength within about 10 tiles and fades out by about 28, and its
 creatures come at you from its side: its color's before you've been inside, its own inhabitants after. Each week it
 stands adds 25% to what it sends, up to double. Clear its enemies out and it goes quiet, and the nearest town gives you
 +1 reputation - clear the dungeons around you and the land there goes quiet. Story places, boss lairs and castles

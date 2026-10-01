@@ -31,9 +31,10 @@ import java.util.Random;
  * nothing at dungeonSourceReachTiles, times the escalation: + dungeonSourceEscalationPerWeek for each full week the place
  * has stood (World.dungeonAppearedDay), up to dungeonSourceEscalationMax x. The sources in reach pull together, their
  * presence saturating at one (totalWeight), up to dungeonSourceMaxPerRoll.</li>
- * <li><b>The budget:</b> round 383 - dungeons carry dungeonSourceShare (0.85) of the spawns and the land the rest
- * (landSpawnShare, 0.15, WorldStage): each roll sends share x pull creatures from the sources in reach, the fraction a
- * coin flip, so an area whose dungeons are cleared keeps only the land's trickle. Quest creatures roll on their own.</li>
+ * <li><b>The budget:</b> round 383 - the dungeons carry most of the spawns and the land the rest; round 384 - the land's
+ * share by land and standing (WorldStage.landShareOn: player 15%, waste 25%, a color's land 15-40% from Partner to War),
+ * the dungeons 1 - that: each roll sends share x pull creatures from the sources in reach, the fraction a coin flip, so
+ * an area whose dungeons are cleared keeps only the land's trickle. Quest creatures roll on their own.</li>
  * <li><b>What comes out:</b> one of a source's creatures, on its way out towards the player - before the
  * first visit an ordinary creature of its color (the land it stands on, else its Biome tag), after it one of its
  * LIVING inhabitants (round 201's fixed roster minus the defeated, per level). Never a special one: a boss, a quest
