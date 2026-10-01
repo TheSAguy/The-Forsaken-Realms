@@ -133,7 +133,10 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   land + standing (player .15, waste .25, Partner .15 / Happy .20 / Neutral .25 / Unhappy .30 / War .40; dungeons the
   rest - WorldStage.landShareOn). **385: ENGINE = THE 09.30 DAILY, Forge 2.0.16-SNAPSHOT** (upstream `fd5c996b843`;
   5 conflicts Forge/TransitionScreen/RewardActor/RewardScene/ArenaScene, all both-sides; Master Blue Wizard deck swap;
-  new forge-gui test deps needed ONE online Maven run; jar renamed 2.0.16 - agent_launch.cmd globs it).
+  new forge-gui test deps needed ONE online Maven run; jar renamed 2.0.16 - agent_launch.cmd globs it). **386:** ONE
+  "Game Guide & FAQ" = plane GUIDE.md (FAQ.md gone) + GUIDE.html via dev-tools/guide_html.py (re-run after edits);
+  shipped as GAME_GUIDE.md/.html; new welcome page (Discord + Guide buttons, guide = local file on PC, GitHub on
+  Android), opened from GameScene.act() once the map settles (it used to vanish at once); RELEASE_NOTES_v1.16.md.
   Open from v1.15 QA: Instant4White selling off-color cards, Leather Boots start unequipped; Inn screen's
   `eventDescription` label (100 units) does not wrap - unreported.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the

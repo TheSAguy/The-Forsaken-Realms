@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 386: one Game Guide & FAQ with a web page, the new welcome page, v1.16 notes (2026-10-01)
+
+The user: "Make sure the game guide is up to date. Can you create a combined Game Guide & FAQ. No need to have two. Then
+also create a .html version of that file. Give me the high level release notes for this version - 1.16. I want to re-do
+the welcome screen" - thanks, Discord for feedback/bugs (button), the guide (button), where the settings files live.
+
+- **GUIDE.md = "Game Guide & FAQ"** (plane folder; background agent): the old guide and FAQ.md merged, FAQ.md deleted;
+  a "What's New in 1.16" section; new sections Where the Monsters Come From, Legends, Quests, Races; every number
+  checked against settings.json/legends.json (dungeon pull 10/28 tiles, land shares by standing, lost-duel gold
+  2/5/10/15% with minimums, week 1/2 life ramp, crowd limit, legend frequency and leash, quest limits); the FAQ is the
+  last part, short answers pointing into the guide. Unverified carry-overs listed in the agent's report: the race
+  table, research cost by difficulty, the Capitol land-shop repair price, the Android steps.
+- **GUIDE.html** from `dev-tools/guide_html.py` (re-run after any GUIDE.md edit; `--check` validates headings, links,
+  pictures and tags): one self-contained page, parchment theme + dark mode, sidebar contents on wide screens, a
+  collapsible one on phones, `guide/` pictures relative. Seen in headless Edge at 1400 and 600 px.
+- **Packaging** (build_standalone.py step 7): GAME_GUIDE.md + GAME_GUIDE.html at the game root (plus the plane
+  folder's GUIDE.html), an old root FAQ.md removed; README points at the guide.
+- **The welcome page** (config.json welcomePopupText rewritten from the user's draft; InfoTextScene takes a row of link
+  buttons; WorldStage.showWelcomeDialog/guideLink): Discord + "Game Guide & FAQ". On a computer the guide button opens
+  the plane folder's GUIDE.html as a file:// page (Config.planeFile); on Android, or when the file is missing,
+  config.json `welcomeGuideLink` = the GUIDE.md on GitHub's master (works once the release is pushed). [TFR-Welcome].
+- **The welcome page could vanish at once** (GameScene): it opened inside GameScene.enter() - leaving the starting
+  camp switched back to the world map right over it, and the once-per-save flag was already set. Seen in the agent
+  (the log said it opened, the screen showed the map). Now enter() marks it pending and act() opens it after the map
+  has been current for 0.5 s, setting the flag only then. Seen in the agent: the page with both buttons.
+- **RELEASE_NOTES_v1.16.md** - "Lairs & Legends" (my name for it).
+- **Front-view entrances** (for a later release, no game change): a background agent sorted all 344 entrance pictures;
+  130 front-view (+77 unsure) copied to Pictures\Screenshots\Art_to_Tweak\Front_View with a CSV and contact sheets.
+
 ## Round 385: the 09.30 engine merge - Forge 2.0.16-SNAPSHOT (2026-10-01)
 
 The user: "I've updated the base game of Forge (E:\GAMES\Forge_2) Please update to it." The install is the 09.30 daily

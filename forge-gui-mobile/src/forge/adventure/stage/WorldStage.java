@@ -1490,8 +1490,34 @@ public class WorldStage extends GameStage implements SaveFileContent {
         // Paragraph breaks match how welcomePopupText is authored in config.json (blank-line-
         // separated), same convention InfoTextScene's other callers use for a hand-split list.
         // welcomePopupLink (config.json, optional) renders as a real browser-opening button.
-        InfoTextScene.show("Welcome", Arrays.asList(text.split("\n\n")),
-                "Join us on Discord", Config.instance().getConfigData().welcomePopupLink);
+        // Round 386 (the user's redo: "Feedback/Bug reports on Discord please - Button. Game guide / FAQ - Button"):
+        // two buttons - Discord, and the Game Guide & FAQ (guideLink()).
+        java.util.List<String[]> links = new java.util.ArrayList<>();
+        String discord = Config.instance().getConfigData().welcomePopupLink;
+        if (discord != null && !discord.isEmpty())
+            links.add(new String[]{"Discord", discord});
+        String guide = guideLink();
+        if (guide != null)
+            links.add(new String[]{"Game Guide & FAQ", guide});
+        InfoTextScene.show("Welcome", Arrays.asList(text.split("\n\n")), links);
+    }
+
+    /**
+     * Round 386: where the Game Guide & FAQ opens. On a computer, the GUIDE.html that ships in the plane folder, as a
+     * file the browser opens; anywhere else - Android cannot hand an app's own file to a browser - or when the file is
+     * missing, config.json's welcomeGuideLink (the guide on the project's GitHub page). Null when neither exists.
+     */
+    public static String guideLink() {
+        if (com.badlogic.gdx.Gdx.app.getType() == com.badlogic.gdx.Application.ApplicationType.Desktop) {
+            java.io.File html = Config.instance().planeFile("GUIDE.html");
+            if (html.isFile()) {
+                System.out.println("[TFR-Welcome] guide button -> " + html.getAbsolutePath());
+                return html.getAbsoluteFile().toURI().toString();
+            }
+        }
+        String web = Config.instance().getConfigData().welcomeGuideLink;
+        System.out.println("[TFR-Welcome] guide button -> " + (web == null ? "none (no GUIDE.html, no welcomeGuideLink)" : web));
+        return web == null || web.isEmpty() ? null : web;
     }
 
     // Side-quest timer expiry (user request 2026-08-08): a real blocking dialog, same pattern as

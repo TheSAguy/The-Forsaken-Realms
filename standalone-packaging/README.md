@@ -7,7 +7,7 @@ Explore a living overworld where five mage colors wage a slow war for territory:
 capture and rebuild towns, raise your Capitol, manage Wood/Stone/Gold/Shard
 economies, build reputations with each color, research new card expansions,
 and fight through hundreds of rotating dungeons — all with Forge's full
-rules engine underneath. Fair warning: it's HARD, and that's intentional. See `GAME_GUIDE.md` for a complete player guide and `FAQ.md` for quick answers to common questions.
+rules engine underneath. Fair warning: it's HARD, and that's intentional. See `GAME_GUIDE.html` (or `GAME_GUIDE.md`) for the Game Guide & FAQ - how everything works, and answers to common questions.
 
 ## Requirements
 

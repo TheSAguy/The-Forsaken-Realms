@@ -1,25 +1,28 @@
-# The Forsaken Realms — Player Guide
+# The Forsaken Realms — Game Guide & FAQ
 
 *A standalone card-adventure game built on the Forge rules engine.*
 
 This guide walks through what's different about The Forsaken Realms compared to the base
 Adventure experience, how the plane's custom systems fit together, and what to expect as you
 explore. It's meant to sit alongside the game, not replace discovering things yourself — read as
-much or as little as you want before diving in. For quick answers, the FAQ (`FAQ.md`) sits beside
-this guide in the game folder.
+much or as little as you want before diving in. Quick answers to the questions players ask most
+are in the [FAQ](#faq) at the end.
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Starting Out](#starting-out)
-3. [Changes from the Base Game](#changes-from-the-base-game)
-4. [Early Game Advice](#early-game-advice)
-5. [Mid and Late Game Advice](#mid-and-late-game-advice)
-6. [The World](#the-world)
-7. [Dungeon Guide, by Color](#dungeon-guide-by-color)
-8. [Item Guide](#item-guide)
-9. [Notes on Difficulty](#notes-on-difficulty)
-10. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
+2. [What's New in 1.16](#whats-new-in-116)
+3. [Starting Out](#starting-out)
+4. [Changes from the Base Game](#changes-from-the-base-game)
+5. [Early Game Advice](#early-game-advice)
+6. [Mid and Late Game Advice](#mid-and-late-game-advice)
+7. [The World](#the-world)
+8. [Dungeon Guide, by Color](#dungeon-guide-by-color)
+9. [Item Guide](#item-guide)
+10. [Notes on Difficulty](#notes-on-difficulty)
+11. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
+12. [FAQ](#faq)
+13. [Support & Community](#support--community)
 
 ---
 
@@ -35,7 +38,49 @@ duel loop, not a replacement for it.
 doesn't wait for you, and losses have teeth. Digging yourself out is the fun — but go in knowing
 the early game is meant to be a fight.
 
-*Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android version - playable, but it gets far less testing than the desktop builds.*
+*Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
+version - playable, but it gets far less testing than the desktop builds.*
+
+## What's New in 1.16
+
+The short version for returning players. Each item links to where the guide covers it in full.
+
+- **Dungeons are where the monsters come from.** Most roaming creatures now come out of the ordinary
+  dungeons and caves around you; the land itself adds only a share that depends on whose land it is and how
+  that color feels about you. Clear the dungeons in an area and it goes quiet. See
+  [Where the Monsters Come From](#where-the-monsters-come-from).
+- **A gentler first two weeks.** In days 1-7 a monster starts its duel with half its life (never under 20),
+  in days 8-14 with three quarters (never under 25). See [Notes on Difficulty](#notes-on-difficulty).
+- **Legends have a table of their own.** They appear only on the land of a color that is Unhappy or at War
+  with you, rarely, the ones you haven't met first, one at a time. They hold their ground until you come
+  close, start with a Gemstone Mine in play, and pay half the gold and two thirds of the cards they used to.
+  See [Legends](#legends).
+- **56 new creatures**, twelve of them legends - among them five dragons and **Victor**, a vampire Archmage
+  - and ten new color + artifact decks. (The Church of Valgavoth's cleric is now "Victor, Valgavoth's
+  Seneschal".)
+- **Your character's hidden slots are on the doll.** The Blessing, Heart, Pocket and Token slots now show on
+  the inventory and Armory screens. See the [Item Guide](#item-guide).
+- **Speed-Up keeps the monsters in step.** Spawns now follow game time, so a day brings the same number of
+  creatures at any speed, with a cap on how many crowd around you.
+- **Losing a duel costs a share of your gold** - 2% / 5% / 10% / 15% by difficulty, with a minimum.
+- **Quests:** up to 10 side quests at once, new ones last 15 days, "return to town" stages wait until you
+  actually walk back in, and the creatures a quest asks for turn up on roads and on your own land too. See
+  [Quests](#quests).
+- **Inn tournaments** turn over each in-game week, and winning one raises that town's reputation by 1.
+- **Card sets:** a set is now every card printed in it, and Research counts each distinct card you own in
+  that set's printing. Shops only hand out printings from the sets they're allowed. See
+  [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
+- **Shops:** a shop with one color in its name sells only that color's cards; the Gods shop is Mythic, and
+  the Angel, Demon, Dragon, Hydra, Nobles and Sphinx shops are Rare (Capitol only).
+- **Fog of War:** a town lights up again each time you approach it, resource pickups only show where you can
+  see right now, and unvisited-place markers dim under the fog.
+- **Dungeons:** every dungeon and cave has an entrance picture of its own, and loot behind a locked gate or
+  door no longer has a guard.
+- **The map:** your Capitol and towns sit on cobbled plazas, no decoration lies on a road, and every
+  walk-over decoration is now low to the ground - anything tall is an obstacle.
+- **Your starting kit is worn:** starting gear goes straight onto an empty slot.
+- **Engine:** Forge 2.0.16 (the 09.30 build) - a reworked match transition, the reward screen shows the
+  duel's last picture behind it, faster targeting arrows, smarter AI combat and card fixes.
 
 ## Starting Out
 
@@ -43,7 +88,7 @@ the early game is meant to be a fight.
   you start with depends on difficulty - and the cards your starting deck is built from) and two
   starting shops. Your color comes from the Color picker. A `?` help button on the race-selection
   screen explains what each race actually grants before you commit. Twenty races, including the
-  Goblin, Angel, Merfolk and Vampire.
+  Goblin, Angel, Merfolk and Vampire - the full list is in [Races](#races).
 - **Difficulty** affects more than combat: enemy roaming-encounter tiers, what buildings and
   research cost, what your cards sell for, and how many editions you start with unlocked are all
   difficulty-scaled.
@@ -51,7 +96,8 @@ the early game is meant to be a fight.
   town at the heart of the map, with a **Homeward rune** that will always carry you home. The
   opening quest, "Oaths at the Ring", sends you around the five **Ring Cities** that circle Orazca,
   and each hands over part of your starting kit: gold, Shards, Wood, Stone, your starting items and
-  your Challenge Coins. (Skip the introduction and you get the whole kit at once.)
+  your Challenge Coins. (Skip the introduction and you get the whole kit at once.) Starting gear with
+  a slot of its own - Leather Boots, say - goes straight on if that slot is empty.
 - Your starting deck is a real, playable toolkit — expect to reshape it as you loot and buy cards,
   not to carry it unmodified into the late game.
 
@@ -64,24 +110,20 @@ five tiers - **Partner** (80+), **Happy** (30-79), **Neutral**, **Unhappy** (-30
 **War** (-80 and below) - and each tier changes real things: card-shop pricing (30% cheaper as a
 Partner, 40% pricier at War), how often that color's mages target you, and whether you can enter
 their towns at all. At War, ordinary towns bar you (you can storm them instead) and a color's own
-capital charges a steep gold toll just to set foot inside. Your standing with a color also shapes
-what you'll run into on their land - roaming enemies skew noticeably weaker with a Partner or Happy
-standing, and tougher the worse things get, down to War - and how often its creatures turn up at
-all: three times as often at War, a third as often as a Partner. **Legends** - the realm's oversized
-dragon lords, gods and Slivers, and the Arena's wandering champions, many of them best-of-3 fights -
-turn up **only on the land of a color that is Unhappy or at War with you**, and rarely: roughly one
-sighting every few days of travel there, sooner at War. A legend walks a color's land when it
-carries that color; the few colorless ones walk any hostile land. The ones you haven't met come
-first - a legend you have already seen returns only once the others have had their turn - and the
-same legend is never out twice at once. A legend never arrives unannounced: you are told which one
-it is and in which direction, a **gold dot** marks it on the minimap and the map, and it **holds its
-ground for three in-game days** - it only comes for you once you walk within a few tiles, so the
-fight is yours to pick. Every legend starts its duels with a **Gemstone Mine** in play. Your quest
-log lists every legend roaming right now, with its direction and the days it has left. At War a
-color also sends its own arena champions roaming. Your own territory is always the safest place to
-fight, regardless of anyone else's standing. Separately, the world as a whole trends toward
-tougher roaming enemies the longer a run goes on, week by week, capped well short of an endless
-escalation - so the opening weeks are the gentlest part of any run, by design.
+capital charges a steep gold toll just to set foot inside.
+
+Your standing with a color also shapes what you'll run into on its land. Roaming enemies there skew
+noticeably weaker with a Partner or Happy standing and tougher the worse things get, down to War; the
+color's own creatures make up three times their usual share of what you meet at War and a third of it
+as a Partner; and the worse your standing, the more of what you meet comes from the land itself rather
+than its dungeons (see [Where the Monsters Come From](#where-the-monsters-come-from)). Only Unhappy and
+War land holds [Legends](#legends), and at War a color also sends its own arena champions roaming. Your
+own territory is always the safest place to fight, regardless of anyone else's standing. Separately,
+the world as a whole trends toward tougher roaming enemies the longer a run goes on, week by week,
+capped well short of an endless escalation - so the opening weeks are the gentlest part of any run, by
+design.
+
+The numbers behind all of this are in [Color Reputation, in Detail](#color-reputation-in-detail).
 
 ### Territory Control & Color Defeat
 
@@ -131,14 +173,22 @@ Losing a duel never ends a run - it costs gold, life and your ante (see
   no wasteland town anywhere - no working or ruined one, and no unclaimed Ring City - for you to
   take.
 
+A defeat screen then returns you to the main menu.
+
 ### Time, Day & Night
 
 The Forsaken Realms runs on a living clock. Every in-game day the world ticks forward: territory
 spreads, mages march, shops restock on their weekly cycle, mines pay out and guards draw their
 wages on payday (the first day of each new week - days 8, 15, 22 and so on), quest timers count
-down (side quests fail after 15 days - story quests never expire), and dungeons age toward their
-rotation. A HUD clock shows the time of day and a Day/Week tracker keeps the calendar visible; a
-**Speed-Up** toggle fast-forwards time when you're waiting on the world rather than exploring it.
+down (see [Quests](#quests)), and dungeons age toward their rotation. A HUD clock shows the time of
+day and a Day/Week tracker keeps the calendar visible. The tracker counts the day within the week
+(1-7) and numbers the weeks from 0, so day 8 shows as "Day 1, Week 1". When this guide says "week 1",
+it means days 1-7 - the HUD's Week 0.
+
+A **Speed-Up** toggle fast-forwards time when you're waiting on the world rather than exploring it
+(holding **Z** speeds things up too). Monsters keep pace with the clock: a game day brings the same
+number of them at any speed, and new ones stop coming while about 14 are already roaming within 24
+tiles of you, so the screen never fills up.
 
 Day and night change the fights themselves. Between **6am and 6pm**, enemies you battle on the
 overworld get a life bonus or penalty based on the terrain you fight them on - and the effect
@@ -160,14 +210,81 @@ roaming overworld fights - dungeons, towns, Arenas, and Inn tournaments are unaf
 Fog of War is on by default (Settings can switch it off). **Black** is land you have never
 explored, **dimmed** is land you have seen but can't see right now, and **bright** is what's in
 view: the circle around you, your own land and towns, an Outlook's reach, a Bonfire's light.
-Creatures only show in the bright.
+Creatures only show in the bright, and so do the resource pickups (gold nuggets, wood, stone and the
+rest), which come and go on ground you only remember. The marker on a place you haven't visited dims
+with the fog around it.
+
+A town, capital or castle lights up the land around it for a few seconds each time you come within
+reach of it - not only the first time - and again when you leave it, so you can get your bearings.
+Your own towns stay lit for good.
 
 The fog also changes what you meet. Where you can't see right now - dimmed or black - roaming
-creatures turn up about a quarter more often, lean toward the tougher ranks, and move 10% faster.
-In the light, a quarter of the spawns never happen, the mix leans easy, and creatures move at their
-normal pace. Your own light counts, so a Torch pushes the danger back - and a creature chasing you
-slows down as it steps into your light. (With the fog switched off, the whole map counts as lit.)
-The [Item Guide](#item-guide) covers the Torch and the Bonfire.
+creatures turn up more often, lean toward the tougher ranks, and move 10% faster. In the light they
+come less often and the mix leans easy. Your own light counts, so a Torch pushes the danger back -
+and a creature chasing you slows down as it steps into your light. (With the fog switched off, the
+whole map counts as lit.) The [Item Guide](#item-guide) covers the Torch and the Bonfire.
+
+### Where the Monsters Come From
+
+Most of the creatures roaming the realm come out of its **dungeons and caves**. Every ordinary
+dungeon or cave on the map - whether you've found it or not - sends creatures into the land around it
+while it stands. The land itself adds only a share of its own:
+
+| Land you stand on | The land's share | The dungeons' share |
+| --- | --- | --- |
+| Your own land | 15% | 85% |
+| The Wasteland | 25% | 75% |
+| A color's land, Partner | 15% | 85% |
+| A color's land, Happy | 20% | 80% |
+| A color's land, Neutral | 25% | 75% |
+| A color's land, Unhappy | 30% | 70% |
+| A color's land, War | 40% | 60% |
+
+- **Reach.** A dungeon pulls at full strength within about 10 tiles and fades out by about 28. Several
+  dungeons close together don't add up beyond one at full strength, but with none in reach only the
+  land's own share comes - so **clear the dungeons around you and the land there goes quiet.**
+- **Which creatures.** A dungeon you haven't been inside sends ordinary creatures of its color. Once
+  you've been in, it sends the very creatures that live there - the weaker ones first, the stronger only
+  as the weeks go by. They come at you from the dungeon's side, at the usual distance.
+- **It grows.** Each full week a dungeon stands adds a quarter to what it sends, up to double.
+- **Clearing it** - beating every enemy inside - silences it for good, and the nearest town is grateful:
+  +1 town reputation.
+- **What doesn't count.** Story places, boss lairs and castles don't send creatures, and what comes out
+  is never a dungeon's boss, its champion or anyone you could talk to.
+- **Roads.** While you travel a road, the land itself sends nothing new, but the dungeons in reach still
+  can.
+- **Quest creatures are separate.** A creature a quest asks you to defeat - an invasion to stop, a
+  creature to hunt - gets a roll of its own every time, wherever you are: on a road, on your own land,
+  near dungeons or far from them.
+
+The "Find a Dungeon" quest early in the story explains the same thing in the game.
+
+### Legends
+
+**Legends** - the realm's oversized dragon lords, gods and Slivers, and the Arena's wandering
+champions, many of them best-of-3 fights - have a table of their own, separate from everything else
+that roams.
+
+- **Where.** Only on the land of a color that is **Unhappy or at War** with you. A legend walks a
+  color's land when it carries that color; the few colorless ones walk any hostile land. Never on your
+  own land, the Wasteland, or a Neutral, Happy or Partner color's land.
+- **How often.** Rarely: about one sighting every three days of travel on Unhappy land and one every day
+  and a half at War, with at least two days between sightings and only one legend out at a time.
+- **Which one.** The ones you haven't met come first - a legend you have already seen returns only once
+  the others have had their turn - and the same legend is never out twice at once.
+- **The sighting.** A legend never arrives unannounced: you are told which one it is and in which
+  direction, a **gold dot** marks it on the minimap and the map, and your quest log lists every legend
+  roaming right now with its direction and the days it has left. It appears 12-20 tiles away and **holds
+  its ground for three in-game days**: it only comes for you once you walk within about 5 tiles, and lets
+  you go once you're 8 tiles off - so the fight is yours to pick.
+- **The duel.** A legend you meet on the overworld starts its duels with a **Gemstone Mine** in play.
+- **The reward.** A legend pays half the gold and two thirds of the cards on its reward list (its own
+  named card is the last to go); shards, items and +Life rewards are paid in full.
+
+The legends include the twelve added in 1.16: the Seraph of the Burning Brand and the Sunscale Dragon
+(white), the Skyvault Dragon and the Sixblade Naga (blue), the Nightscale Dragon and **Victor**, the vampire
+Archmage (black), the Pyreclaw Dragon and the Cinderstone Brute (red), the Thornscale Dragon and the Bogspawn
+Horror (green), and the colorless Ossuary Dragon and Blightborn Mutant.
 
 ### The Capitol
 
@@ -189,7 +306,8 @@ the field.
 you hold (captured Ring Cities included), taking over the old sand roads wherever they already run,
 and every town you restore or capture later joins the network. Any road speeds you up, but your own
 are faster still - about 1.7x your normal pace against the old roads' 1.5x, and the extra is yours
-alone. The Capitol and each of your towns sit on a small cobbled plaza.
+alone. The Capitol sits on a cobbled plaza six tiles wide and five deep, each of your towns on one five
+wide and four deep.
 
 ### Wood & Stone
 
@@ -217,7 +335,8 @@ enemy's name - and your **first victory** over each kind of enemy is the big one
   hunt the color whose resource you need. A color's "defeat five" quest counts those kills wherever
   they happen, out in the wilds or down in a dungeon.
 - Bosses, tournament opponents, chests and quest rewards pay what they always did. An Arena
-  champion you beat pays one Rare card from its deck.
+  champion you beat pays one Rare card from its deck. A [legend](#legends) pays half its gold and two
+  thirds of its cards.
 - Every number here is a setting: `cardBudget...` (1 to 5 cards each) and `resourcePurse...` in
   the plane's `config tables/settings.json`.
 
@@ -237,8 +356,13 @@ rare items. Guards can be hired to defend a town, paid weekly out of your own co
 out to the map - step back in and the town stands in your own town layout, its Inn open and its
 other slots still rubble for you to build on. Ruins and neutral towns you don't hold keep the old
 Wasteland look, and Orazca, once restored, keeps the Warden inside. A town you capture from a color
-starts out the same way. How many buildings one of your towns can hold depends on its own town
-reputation - three per point, and restoring a town earns the first point.
+starts out the same way.
+
+**Town reputation caps building.** Each point of a town's own reputation allows three buildings
+there. You get +1 for restoring the town, +2 when it becomes your Capitol, +1 for each attacking mage
+you beat there, +1 for winning its Inn tournament, +1 when you clear a dungeon near it, and more from
+its Job Board quests. **Destroy Building** clears a slot, with no refund. A Capitol's colored Land Shop
+can be repaired (50 gold) once you've visited that color's AI capital.
 
 ### Progressive Set Unlocks
 
@@ -249,8 +373,9 @@ run at once. (Don't confuse this with the **Archaeologist**, who runs week-long 
 cards and items - a different building doing a different job.)
 
 **Your shops stock only what you have unlocked.** A card shop you build sells cards from the sets
-*you* have unlocked - nothing else. Unlock more sets to stock your shops. In return they sell cheaper
-than anyone else's: 25% under a neutral town's prices and 40% under an AI town's.
+*you* have unlocked - nothing else, and in a printing from one of those sets. Unlock more sets to stock
+your shops. In return they sell cheaper than anyone else's: 25% under a neutral town's prices and 40%
+under an AI town's.
 
 *Full detail — what you start with, where the other sets live, and exactly how to unlock them —
 in [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).*
@@ -262,18 +387,12 @@ which it despawns on its own (at once if you lose a fight there and it isn't a s
 fresh one appears elsewhere to take its place, drawn from a much larger reserve pool than what's
 ever visible at once. Clearing a dungeon out completely also retires it, making room for something
 new - and stripping one of its loot while its guards still stand leaves it only a quarter of the
-days it had left.
-Side-quest-linked dungeons get extra grace: three failed attempts before they're gone for good,
-and their lifespan extends automatically while a quest still points at them. Story-critical
-locations never disappear.
+days it had left. Side-quest-linked dungeons get extra grace: three failed attempts before they're
+gone for good, and 30 extra days while a quest still points at them. Story-critical locations never
+disappear.
 
-**Dungeons feed the land around them.** While an ordinary dungeon or cave stands, creatures pour
-out of it: within about a dozen tiles of one, monsters turn up half again as often, and half of
-them walk out of its door - creatures of its color before you have been inside, the very ones
-that live there after. They grow stronger the longer they stand: every week adds a quarter to that
-rate, up to double. Clearing out its enemies silences it for good, and the nearest town is
-grateful - +1 local reputation. Story places, boss lairs and castles don't do this, and the
-creatures that come out are never its boss, its champion or anyone you could talk to.
+While an ordinary dungeon stands, it sends creatures into the land around it, more the longer it
+stands - see [Where the Monsters Come From](#where-the-monsters-come-from).
 
 Loot fights back, too: a chest or booster pack inside a dungeon usually has a guard of its own.
 Grab it while the guard still stands and the guard comes after you - a little faster than you
@@ -286,16 +405,32 @@ it comes back to the same spot, fully restocked. Return visits pay half the gold
 cards; a +Life reward and the boss's own signature item pay only once, and every other item is a
 coin flip - though a key you need to get deeper in always drops.
 
+### Quests
+
+- **Up to 10 side quests** can be active at once.
+- **A side quest lasts 15 days** from when you take it, then fails (quests taken in an older version keep
+  the 20 days they started with). Story quests never expire.
+- **"Return to town" stages wait for you.** A bounty or reward that asks you to go back pays when you
+  walk into that town - not wherever you happen to be. If the stage starts while you're already standing
+  in the town, step out and back in.
+- **The creatures a quest asks for come to you.** While a "defeat" quest is active, its creatures get their
+  own roll every time new creatures appear - on roads and on your own land as much as anywhere. With
+  several such quests, each gets an equal turn.
+- The **blue dot** in the quest list marks the quest you're tracking, and counting quests - "defeat five
+  Blue enemies", "clear three dungeons" - show their progress there, "(2/5)".
+
 ### Ante, Tournaments & Hostile Lands
 
 Ordinary duels are played for ante (on by default): each side stakes a card, winner takes it. If
 you lose a card you value, a **Buy Back** option lets you repurchase it on the spot (priced by
 rarity), and an escalating-cost **Re-roll** lets you swap out an ante you don't want to risk
-before the duel starts — re-rolls won't repeat a card you just rejected.
+before the duel starts — re-rolls won't repeat a card you just rejected. Or hand over a **Bronze
+Coin** (the button on the "Card Lost" screen) - see [The Bronze Challenge Coin](#the-bronze-challenge-coin).
 
 Innkeepers run weekly **tournaments** (Draft, Sealed, and - once per player - Jumpstart) — these
 are entry-fee events with prize support, **no ante at stake**. They also offer an opt-in "simulate
-the AI rounds" mode if you'd rather not watch every AI match play out.
+the AI rounds" mode if you'd rather not watch every AI match play out. Details in
+[Inn Tournaments](#inn-tournaments).
 
 Beyond the tavern, remember the world itself takes sides: depending on your standing with each
 color, their lands are more hostile or more friendly — travel speed, shop prices, town access,
@@ -308,11 +443,12 @@ Archmages.
 
 ### Item Economy & Shops
 
-Shops restock on a weekly cycle (or sooner, if you pay a few Shards to refresh one), a card shop
-in your own town can be re-assigned to another type you know, and prices differ depending on
-who's buying: your own shops sell to you under market, AI shops charge you a premium. Rare items
-exist as genuine chase rewards, not just vendor filler - several bosses across the world
-(including all-new content, see below) drop items nobody else carries.
+Shops restock on a weekly cycle (or sooner: the Refresh button re-rolls one for a few Shards, +1 for
+each refresh that week), a card shop in your own town can be re-assigned to another type you know, and
+prices differ depending on who's buying: your own shops sell to you under market, AI shops charge you a
+premium. A shop with a single color in its name - a White Instant shop, a Black Vehicle shop, a Red
+Sliver shop - sells only cards of that color. Rare items exist as genuine chase rewards, not just
+vendor filler - several bosses across the world drop items nobody else carries.
 
 ### World Standings & Mod Details
 
@@ -324,11 +460,17 @@ open in another window.
 ## Early Game Advice
 
 Your starting deck is a foundation, not a finished product - expect to add and cut cards
-constantly for the first several in-game weeks. Prioritize a town of your own early - and make
-Orazca, the ruin at the center, one of the first, since it's the only place your Capitol can rise.
-Even a small town gives you a Mine or two, a place to restock cards, and a foothold toward the
-five you need for that Capitol. Watch your reputation with the color you're camped nearest to -
-it's much easier to stay Happy than to climb back from Unhappy once shops start charging you extra.
+constantly for the first several in-game weeks. The first two weeks are the gentlest the run will
+ever be - monsters start their duels with less life - so use them to build up. Prioritize a town of
+your own early - and make Orazca, the ruin at the center, one of the first, since it's the only place
+your Capitol can rise. Even a small town gives you a Mine or two, a place to restock cards, and a
+foothold toward the five you need for that Capitol. Watch your reputation with the color you're camped
+nearest to - it's much easier to stay Happy than to climb back from Unhappy once shops start charging you
+extra.
+
+Clear the dungeons and caves near your towns. Each one you clear stops sending creatures into the land
+around it and earns a point of reputation with the nearest town, and the longer a dungeon stands, the more
+it sends.
 
 Carry a light. The dark is where the tougher creatures come from, and they come more often
 there; a Torch (your own Armory keeps one on the shelf until you've bought your first) doubles how
@@ -339,20 +481,20 @@ investment, but it's the only place a Trader can be upgraded into an Exchange, o
 the Bank, the Archaeologist and the Research Lab outright. Build a **Trader** well before then,
 even though its rates are worse than an Exchange's - it's a guaranteed early way to turn spare
 Gold into the Wood and Stone your buildings actually need, instead of waiting on Mines or dungeon
-loot alone. It's also a good home for Gold you don't need sitting in your pocket: if you lose an
-ante duel and want the card back, Buy Back costs real Gold, priced by rarity - a cost that bites
-hardest on Insane, where you start with barely any cushion. Gold you've already converted into
-Wood or Stone isn't there tempting you into a buy-back you hadn't planned for.
+loot alone. It's also a good home for Gold you don't need sitting in your pocket: a lost duel takes a
+share of the gold you carry, and if you lose an ante duel and want the card back, Buy Back costs real
+Gold, priced by rarity - costs that bite hardest on Insane, where you start with barely any cushion.
+Gold you've already converted into Wood or Stone, or put in the Bank, isn't there to lose.
 
 ## Mid and Late Game Advice
 
 By the midgame you should have a Capitol, at least one or two economy buildings generating
 passive income, and enough reputation with your home colors to move through their territory
 freely. The late game is about picking your fights: which colors you push toward War (and can
-actually back up with a real deck), which capitals you're strong enough to storm, and how far
-you push into the plane's hardest dungeons and boss fights - including the newest, hardest content
-(see below). The run itself is won by holding all five Ring Cities and bringing down all five
-castles - see [Winning and Losing](#winning-and-losing).
+actually back up with a real deck - Unhappy and War land is where the legends walk), which capitals you're strong
+enough to storm, and how far you push into the plane's hardest dungeons and boss fights. The run itself
+is won by holding all five Ring Cities and bringing down all five castles - see
+[Winning and Losing](#winning-and-losing).
 
 ## The World
 
@@ -369,11 +511,15 @@ worth seeking out - ancient castles like **Von Gant's Fortress**, **Emrakul's Ca
 quieter finds like **Grolnok's Bog** or the **Secluded Elven Encampment**. Not every location is
 hostile - some are just worth the detour.
 
+**Reading the map.** A thin black outline on the world map means you can't walk through it - trees,
+rocks, water, mountains. The decorations without one - flowers, pebbles, bones, puddles - are all low
+to the ground, and you walk right over them; none ever lies on a road or a plaza.
+
 ## Dungeon Guide, by Color
 
 This isn't an exhaustive list (the world generates far more dungeons than any one playthrough will
-see), but a starting point for what to expect in each color's territory. Nearly every dungeon has
-an entrance icon of its own on the map, so you'll soon learn to tell them apart at a glance.
+see), but a starting point for what to expect in each color's territory. Every dungeon and cave has
+an entrance picture of its own on the map, so you'll soon learn to tell them apart at a glance.
 
 ### White
 
@@ -426,18 +572,36 @@ power level than the surrounding world, and they are deliberately not scaled dow
 them by the **red triple-skull marker** on the minimap and a warning at the door. Treat them as
 your character's final exams, not a mid-game detour.
 
+### The Caves
+
+**78 caves**, thirteen per biome - Frosthollow, Tidecutter Grotto, Bonepile Hollow, Cinder Hollow,
+Mossback Hollow, Wasteland Cleft and their kin. Small, medium and large chambers with three to five
+patrolling creatures - most of them small fry, but one or two in every cave can be anything from an
+Apprentice to an Archmage, so look before you step in. Each holds a card chest, gold and building
+stone; the deeper ones add wood, mana shards, a second gold pile and sometimes a booster pack. They
+spawn in new worlds and join the dungeon rotation, and like every ordinary dungeon they send creatures
+into the land around them until you clear them.
+
 ## Item Guide
 
 Items are a real part of building your character, not an afterthought - between shop purchases,
 dungeon rewards, and boss drops, expect to be actively hunting for upgrades throughout a run.
 Several items exist only as drops from specific bosses and can't be bought anywhere, including a
-wave of new equipment tied to the plane's newest dungeons (boots, crowns, armor, and more, each
+wave of equipment tied to the plane's newest dungeons (boots, crowns, armor, and more, each
 built around the specific card it grants you at the start of a fight). Check what a boss drops
 before you commit to fighting them if a specific item is your goal.
 
-**Two utility slots.** Runes, Omenstones, Torches and the Bonfire all go in your utility slot, and
-you have two of them, so you can carry, say, a Torch and a rune at once. Two lights don't add up:
-only the stronger one counts.
+**Your equipment slots.** The character doll on the inventory and Armory screens shows every slot you
+have. Besides the usual ones - both hands, body, boots, neck, the medal and the staff slot - there are:
+
+- **Two utility slots** for Runes, Omenstones, Torches and the Bonfire, so you can carry, say, a Torch
+  and a rune at once. Two lights don't add up: only the stronger one counts.
+- A **Blessing** slot (the Blessings of Speed, Windwalker's Blessing), a **Heart** slot (the Captive
+  Souls), a **Pocket** slot (the Generous Ingot) and a **Token** slot (the Tokens of Bounty, Blades,
+  Insight and the rest). These always worked; they now show on the doll, under the first ability slot and
+  beside the medal.
+
+Pick an empty slot and the screen tells you what goes there.
 
 **Runes and Omenstones** are reusable teleports that cost a shard per use. Everyone starts with a
 **Homeward rune**, which takes you home - to just outside Orazca, or your Capitol once it stands.
@@ -471,10 +635,19 @@ best-of-three) are tuned to be a real test even with a well-built deck. If you'r
 specific new boss unfair, it's worth checking whether an easier difficulty changes that fight's
 deck tier before assuming it's just you.
 
-Losing a duel costs gold: a flat 50 on Easy, 100 on Normal, 150 on Hard and 200 on Insane - or all of it, if you
-carry less. It also costs life - 10% of your max life on Easy, 20% on Normal, 30% on Hard and Insane - and your
-ante. Handing over a Bronze Coin at the ante prompt saves your gold and your anted cards (the life loss still
-applies). If your life runs out you're carried home: to your Capitol, or to Orazca before it stands.
+**What a lost duel costs.** Gold: a share of what you carry - 2% on Easy, 5% on Normal, 10% on Hard
+and 15% on Insane - but at least 50 / 100 / 150 / 200 gold, or all of it if you carry less. (The
+share takes over above 2,500 gold on Easy, 2,000 on Normal, 1,500 on Hard and about 1,330 on Insane.
+Gold in the Bank is safe.) Life: 10% of your max life on Easy, 20% on Normal, 30% on Hard and Insane.
+And your ante. Handing over a Bronze Coin on the "Card Lost" screen saves your gold and your anted
+cards (the life loss still applies). If your life runs out you're carried home: to your Capitol, or to
+Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish.
+
+**The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
+but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
+already has less keeps what it has. Bosses, legends, Arena and Inn fights, war mages and your guards'
+fights are never eased, and neither is New Game+. A dungeon you've been inside also sends out its
+stronger inhabitants only as the weeks go by.
 
 Difficulty also scales what a win pays in gold and resources (half again as much on Easy, a quarter more on
 Normal, the base amount on Hard and a fifth less on Insane), and a new world on Normal, Hard or Insane starts
@@ -512,12 +685,19 @@ color(s):
 - Its two allies: **−1** each
 - Its two enemies: **+2** each
 
-So killing Black creatures makes Green and White like you, and annoys Blue and Red. A **boss**
-counts triple; a **territory attack mage** counts double. A multicolor enemy applies half the
-pattern for each of its colors, and colorless creatures, losses, Arena and tournament games
-change nothing. Attacking one of a color's towns costs **−4** with that color and capturing it
-**−8** more, spread over the wheel the same way. Your **starting deck** seeds the wheel too, which
-is why you begin already liked by some and disliked by others.
+That's −2 −1 −1 +2 +2 = 0. So killing Black creatures makes Green and White like you, and annoys Blue
+and Red - and fighting your own color's creatures annoys your own color. A **boss** counts triple; a
+**territory attack mage** counts double. A multicolor enemy applies half the pattern for each of its
+colors, and colorless creatures, losses, Arena and tournament games change nothing. Attacking one of a
+color's towns costs **−4** with that color and capturing it **−8** more, spread over the wheel the same
+way. Your **starting deck** seeds the wheel too, which is why you begin already liked by some and
+disliked by others.
+
+**An example.** A mono-Red starting deck seeds Red +10, its allies Black and Green +5 each, and its
+enemies White and Blue −10 each (total 0). You beat a mono-Black creature: Black −2, Blue −1, Red −1,
+Green +2, White +2. Now White −8, Blue −11, Black +3, Red +9, Green +7 - still 0. To raise Red, beat
+White and Blue creatures: +2 Red a win, while White and Blue sink with every one. If one color is at
++80, the other four share about −80.
 
 **The exceptions.** Only three things add or take reputation outside the wheel: some color quests
 pay a flat +1 or +2 with the color that asked, the five "Find the ... Capital" quests (from your
@@ -526,13 +706,13 @@ with that color.
 
 **The five tiers**, and what each actually does:
 
-| Standing | Range | Card prices | Attacks on you | Other |
-|---|---|---|---|---|
-| **Partner** | 80+ | **30% off** | 75% less likely | Entering its towns heals you to full plus 2 extra life until your next duel; all its blueprints on sale, Rare and Mythic included |
-| **Happy** | 30 to 79 | 15% off | 50% less likely | Its Spellsmiths serve you; Common and Uncommon blueprints |
-| **Neutral** | −29 to 29 | — | — | Common blueprints only |
-| **Unhappy** | −30 to −79 | 25% pricier | 15% more likely | No blueprints; entering its towns no longer heals you |
-| **War** | −80 or worse | **40% pricier** | 50% more likely, and it may target your Capitol | Towns barred (you may storm them instead); its capital charges a 500 gold toll; no healing in its towns |
+| Standing | Range | Card prices | Attacks on you | Travel on its land | Other |
+|---|---|---|---|---|---|
+| **Partner** | 80+ | **30% off** | 75% less likely | 10% faster | Entering its towns heals you to full plus 2 extra life until your next duel; all its blueprints on sale, Rare and Mythic included |
+| **Happy** | 30 to 79 | 15% off | 50% less likely | 5% faster | Its Spellsmiths serve you; Common and Uncommon blueprints |
+| **Neutral** | −29 to 29 | — | — | — | Common blueprints only |
+| **Unhappy** | −30 to −79 | 25% pricier | 15% more likely | 5% slower | No blueprints; entering its towns no longer heals you; legends walk its land |
+| **War** | −80 or worse | **40% pricier** | 50% more likely, and it may target your Capitol | 10% slower | Towns barred (you may storm them instead); its capital charges a 500 gold toll; no healing in its towns; legends and its arena champions walk its land |
 
 Two consequences worth planning around. At **War** that color's towns shut their gates on you —
 you can storm them, once a week each, and you can still buy your way into its capital, but at a
@@ -541,10 +721,10 @@ free heal to full plus 2 on every visit to its towns come on top of Happy's Spel
 Uncommon blueprints, which is a genuinely different game from Neutral.
 
 **Town reputation is a separate thing.** Each individual town also remembers how you've treated
-it, and that adjusts prices there by up to 10% either way. It goes up when you restore the town or
-complete work for it, and it is per-town — unlike color reputation, it is not zero-sum and costs
-you nothing elsewhere. In your own towns it also sets how many buildings you may put up (three per
-point) and helps fend off war mages.
+it, and that adjusts prices there by up to 10% either way. It goes up when you restore the town,
+complete work for it, win its Inn tournament or clear a dungeon near it, and it is per-town — unlike
+color reputation, it is not zero-sum and costs you nothing elsewhere. In your own towns it also sets how
+many buildings you may put up (three per point) and helps fend off war mages.
 
 ### Shop Blueprints — learning what you're allowed to build
 
@@ -561,7 +741,7 @@ build stocks ONLY cards from the sets you have unlocked - unlock more sets to fi
 
 That's deliberately a weak opening hand. Your color's *Uncommon* trio and its Rare capstone are
 withheld, so there is an obvious ladder to climb within your own color before you ever look
-outward.
+outward. (A Chaos or Custom start has no color, so it only gets the race shops.)
 
 **Where the rest went.** Nowhere — they all exist, and the build menu shows you every one of
 them, grayed out, with a live count of how many cards each could stock for you. Nothing is hidden;
@@ -577,10 +757,13 @@ you can see exactly what you're missing and decide what's worth hunting.
    a blueprint you don't know yet, and an Archaeologist expedition a 15% chance. A drop arrives as
    a card you turn over, like any other reward.
 
+- **Building one:** walk into a rubble slot and pick Card Shop, then the tier, then the category, then
+  the type. An open slot can also become a Mine, a Trader, an Outlook and so on.
 - **The build menu shows everything**, tier first, then By Color / By Card Type / Tribal /
   Special, sorted **Available → Built → Locked**. Locked types are grayed rather than hidden, so
   you can see what exists to hunt for. Each entry shows how many cards it could actually stock for
-  you right now — a number that grows as you research more sets.
+  you right now — a number that grows as you research more sets. In the menu, shops go by their sign
+  names (the Zombie shop is "Braaaaaains???", the Cat shop "The Feline Kingdom").
 - **Building a shop costs by tier** (Normal; 25% less on Easy, 25% more on Hard, 50% more on
   Insane): Common 100 gold + 5 Wood, Uncommon 150 gold + 10 Wood, Rare 200 gold + 50 Shards,
   Mythic 300 gold + 100 Shards. Rare and Mythic shops can only be built in your Capitol.
@@ -588,6 +771,8 @@ you can see exactly what you're missing and decide what's worth hunting.
   Phyrexian, Planeswalker and Legend shops. The Angel, Demon, Dragon, Hydra, Nobles and Sphinx shops
   are Rare - their stock is mostly Rare and Mythic cards. (The five colored booster-pack shops and
   five Instant shops sit in the Common tier.)
+- **Color in the name, color on the shelf.** A shop whose name carries one color sells only cards of
+  that color; land and wand shops go by the color's mana symbol instead.
 - **Blueprint prices are in Shards, set by the type's tier in your own build menu**: 20 Common,
   40 Uncommon, 100 Rare, 200 Mythic — the same in every town that sells it.
 - **Reputation gates the five colors' towns**, by the same tier. At one of their towns — capital
@@ -600,7 +785,9 @@ you can see exactly what you're missing and decide what's worth hunting.
 - **One type per town.** A type already standing in a town can't be built there again, so each
   town ends up with a spread rather than six copies of your favorite.
 - The five **Cartographer's Guild** basic-land shops are outside this system entirely — no
-  blueprint needed, and none is ever sold or dropped for them.
+  blueprint needed, and none is ever sold or dropped for them. Armories and Ring City shops can't be
+  learned either.
+- Blueprints are for building only. You can shop in any store you can enter, blueprint or not.
 
 ### The Armory — what's on the shelf, and when
 
@@ -620,10 +807,10 @@ separate chances at something good, not one shop-wide rarity.
 | **Your towns** | 60/30/0/0 | 60/30/8/0 | 60/30/8/0 | 60/30/8/2 |
 | **Neutral towns** | 60/30/0/0 | 60/30/8/0 | 60/30/8/0 | 60/30/8/0 |
 
-*(Common/Uncommon/Rare/Mythic.)* In plain terms: **no Rare anywhere in week 1, no Mythic anywhere
-until week 3**, and then only in your Capitol. Your own towns catch up at week 4, when the Capitol
-also sharpens considerably. **Neutral towns never sell Mythics**, ever — that's what makes owning
-your own Capitol worth the trouble.
+*(Common/Uncommon/Rare/Mythic; week 1 = days 1-7.)* In plain terms: **no Rare anywhere in week 1, no
+Mythic anywhere until week 3**, and then only in your Capitol. Your own towns catch up at week 4, when
+the Capitol also sharpens considerably. **Neutral towns never sell Mythics**, ever — that's what makes
+owning your own Capitol worth the trouble.
 
 Other Armory notes:
 - **Upgrading to Level 2** costs 150 Stone and takes the shelf from 6 items to 8. Player-owned
@@ -649,8 +836,12 @@ Other Armory notes:
 
 Not every card set is available to you, and this is the system most worth understanding early.
 
-**What you start with.** Each race is tied to four thematic editions. You begin with a random
-subset of *those four*, sized by difficulty:
+**What a set is.** A set is every card ever printed in it (basic lands aside), reprints included. A
+card belongs to every set it was printed in, and any source that holds one of those sets can give it
+to you - as that set's printing, the little set symbol on the card matching.
+
+**What you start with.** Each race is tied to four thematic editions (see [Races](#races)). You begin
+with a random subset of *those four*, sized by difficulty:
 
 | Difficulty | Starting editions |
 |---|---|
@@ -664,50 +855,97 @@ beyond flavor, and why the race-select `?` button is worth reading before you co
 
 **Where the other sets went.** Every new world deals the sets out among six owners — the five
 colors and a neutral pool. Twelve go to the neutral pool and the rest are split evenly among the
-five colors, and the deal is fresh for every world. **Your race's four sets never go to a color:**
-they're added to the neutral pool, so neutral towns sell them and colorless enemies drop them.
-Those shares aren't locked away in the abstract: they decide **what the shops sell**.
+five colors, and the deal is fresh for every world: a set can be Red's in one game and Blue's in the
+next. **Your race's four sets never go to a color:** they're added to the neutral pool, so neutral
+towns sell them and colorless enemies drop them. Never dealt at all: sets with no booster packs,
+Un-sets and other novelty or promo sets, and Alpha, Beta and Unlimited (their cards still turn up as
+later printings). A short ban list - the Power 9, Sol Ring, Signets, Commander-only cards and the like -
+is kept out of rewards and shops.
 
-- **Your own towns and Capitol** stock cards only from the editions *you* have unlocked. Unlock more
-  sets to stock your shops - and they sell cheaper than any neutral or AI shop (25% and 40% under).
-- **An AI color's town** stocks cards from that color's own share.
+Those shares decide **where each card can come from**:
+
+- **Your own towns and Capitol** (card shops, the Capitol's Booster Shop and Spellsmith) stock cards
+  only from the editions *you* have unlocked - and they sell cheaper than any neutral or AI shop (25%
+  and 40% under).
+- **An AI color's towns and capital** stock cards from that color's own share.
 - **A neutral town** stocks from the neutral pool.
 - **A Ring City** stocks every set, at double price.
+- **Enemies** drop cards from their **own color's** sets (their first color, if they have several; a
+  colorless enemy uses the neutral pool). Bosses and other special fighters can drop anything.
+- **A dungeon's chests** follow whoever owns the land the dungeon stands on (the neutral pool on the
+  Wasteland and on your own land); some dungeons have themed chests of their own.
+- **The Archaeologist** (Capitol) brings back cards you don't own, from any set.
+- **Inns** - see [Inn Tournaments](#inn-tournaments).
 
-The practical consequence: **traveling is how you shop.** If you want cards from a set you have
-not unlocked, you buy them in whichever faction's towns hold that set — which is exactly where
-your standing with that color starts to matter.
+A shop's type (say, Goblins) combined with its owner's sets can make for a short shelf. The practical
+consequence of all this: **traveling is how you shop.** If you want cards from a set you have not
+unlocked, you buy them in whichever faction's towns hold that set — which is exactly where your standing
+with that color starts to matter. (Advanced: the content filter tables in the game folder let you switch
+sets, items or enemies off yourself; everything is on by default.)
 
 **How to unlock a set properly.** The **Research Lab** in your Capitol is the formal route:
 
 1. **Collect the cards first.** A set becomes researchable once you own **10%** of it (minimum 5
-   cards). You'll get a popup the moment you cross that line. The Lab lists every edition with
-   your progress as `(owned/needed)` - research under way first, then the sets ready to research -
-   and two checkboxes hide the sets you have found no cards for, or not yet enough.
+   cards). What counts is each *distinct* card you own *in that set's printing* - a second copy doesn't
+   count again, and a card you own as an Amonkhet printing counts for Amonkhet only. You'll get a popup
+   the moment you cross that line. The Lab lists every edition with your progress as `(owned/needed)` -
+   research under way first, then the sets ready to research - and two checkboxes hide the sets you have
+   found no cards for, or not yet enough.
 2. **Pay 50 Shards** (on Normal - 38 on Easy, 63 on Hard, 75 on Insane) and start the research.
 3. **Wait a week.** Each edition runs on its own 7-day timer, and you can research several at once.
 
 Once researched, that edition joins your unlocked pool permanently: your own shops start stocking
-it, and it becomes legal in your own towns' Inn tournaments.
+it, and it becomes legal in your own towns' Inn tournaments. It does **not** change what AI or neutral
+towns sell, what enemies drop or what chests hold.
 
 **Two things that don't wait for research.** Cards you own are always yours to play regardless of
 which sets are unlocked — the restriction governs what shops *sell*, never what your deck may
-*contain*. And loot ignores your unlock list: an enemy drops cards from its **own color's** sets
-(its first color, if it has several; a colorless enemy uses the neutral pool), while a dungeon's
-chests follow whoever owns the land the dungeon stands on (the neutral pool on the Wasteland and on
-your own land). Bosses and other special fighters can drop anything. So fighting a color's
-creatures, and exploring its ground, are real ways to pick up cards you couldn't buy.
+*contain*. And loot ignores your unlock list (see the list above), so fighting a color's creatures and
+exploring its ground are real ways to pick up cards you couldn't buy.
+
+### Races
+
+Your race decides your look, your four card sets and two of your five starting shop blueprints. It
+doesn't change any stats. Standard, Constructed and Pile starting decks are built from your race's sets,
+no AI color ever holds them, and your own towns' Inn tournaments use them.
+
+| Race | Sets | Tribal shops |
+|---|---|---|
+| Angel | AVR, SNC, FDN, KHM | Angel, Spirit |
+| Black Dragon | DTK, TDM, AFR, VOW | Dragon, Vampire |
+| Blue Dragon | DTK, TDM, M21, MH1 | Dragon, Sphinx |
+| Devil | RNA, TOR, SOI, VOW | Devil, Demon |
+| Dwarf | KLD, AER, KHM, BRO | Dwarf, Giant |
+| Elf | LRW, MOR, KHM, ELD | Elf, Druid |
+| Goblin | ONS, LGN, SCG, 10E | Goblin, Shaman |
+| Green Dragon | DTK, TDM, IKO, KHM | Dragon, Hydra |
+| Human | DOM, DMU, M20, M21 | Human, Soldier |
+| Kor | ZEN, BFZ, ZNR, ROE | Angel, Eldrazi |
+| Leonin | MRD, DST, AKH, IKO | Cat, Knight |
+| Merfolk | LRW, SHM, EVE, ECL | Merfolk, Wizard |
+| Metathran | INV, PLS, APC, 8ED | Wizard, Sphinx |
+| Phyrexian | SOM, MBS, NPH, ONE | Horror, Mutant |
+| Red Dragon | DTK, TDM, M19, IKO | Dragon, Minotaur |
+| Undead | AKH, HOU, ISD, DKA | Zombie, Skeleton |
+| Vampire | VOW, XLN, RIX, LCI | Vampire, Noble |
+| Viashino | GRN, ALA, ARB, DGM | Goblin, Dinosaur |
+| Werewolf | ISD, MID, EMN, DKA | Wolf, Spirit |
+| White Dragon | DTK, TDM, M20, AFR | Dragon, Angel |
 
 ### The Bronze Challenge Coin
 
-Your starting kit includes three, and they have two separate uses.
+Your starting kit includes 1 Gold, 1 Silver and 3 Bronze Challenge Coins. The gold coin is a free
+Draft entry and the silver a free Sealed entry; winning two or more rounds of a Draft pays a gold coin,
+and of a Sealed a silver one. The bronze coins have two separate uses.
 
 1. **Free entry to a Jumpstart tournament** at an Inn, in place of the 500 gold or 50 Shard fee -
    and since you only ever get one Jumpstart tournament (New Game+ included), only one coin ever
    goes this way; the other two are for ransom.
-2. **Ante ransom.** Lose an ordinary duel and you can hand the winner a coin instead of losing
-   your anted cards — you get every anted card back *and* keep your gold. Beat that same enemy
-   later and you take the coin back as part of the reward.
+2. **Ante ransom.** Lose an ordinary duel and the "Card Lost" screen offers a **Bronze Coin** button:
+   hand the winner a coin instead of losing your anted cards — you get every anted card back (every
+   game of a best-of-3) *and* keep your gold. The life loss still applies. Beat that same kind of enemy
+   later and you take the coin back as part of the reward. It's offered on the ante screen, so it needs
+   Play for Ante on (the default).
 
 **Or buy one.** Your own Armory can stock a Bronze Coin as a Mythic item (1,000 gold list price) -
 from week 3 in your Capitol and week 4 in your other towns.
@@ -721,12 +959,10 @@ loss costs nothing beyond the entry - the coin is the only prize.
 against Foxes until you've won it back. (Bosses, Arena fights and tournament matches never take
 one at all.)
 
-The gold coin is a free Draft entry and the silver a free Sealed entry; winning two or more rounds
-of a Draft pays a gold coin, and of a Sealed a silver one.
-
 ### Inn Tournaments
 
-Every Inn runs one, refreshed on a cooldown. The entry fee scales with the town's opinion of you.
+Every Inn runs one, and it turns over at the start of each in-game week (days 8, 15, 22 and so on) -
+unless you've entered it or have prizes waiting. The entry fee scales with the town's opinion of you.
 
 - **Your own towns run on your own stock**: the card pool is your race's editions plus everything
   you've researched. It widens as you unlock more sets, and a tournament you haven't entered yet
@@ -739,6 +975,7 @@ Every Inn runs one, refreshed on a cooldown. The entry fee scales with the town'
   Jumpstart products, whatever your race, and the entry is 500 gold or 50 Shards (or a Bronze
   Coin). After you have played one Jumpstart tournament - on any run, New Game+ included - Inns
   only offer Draft and Sealed.
+- **Winning a tournament** raises that town's reputation with you by 1.
 - Tournament wins **don't** count toward your win/loss record, and don't push up the enemy tiers
   you meet in the world.
 - A **ruined town's** Inn is boarded up until you restore the town at its Job Board — restoring it
@@ -831,14 +1068,15 @@ mage that reaches your Capitol past both guards forces the duel described above.
 A New Game+ is a **new game plus your collection**. You keep cards, decks, equipment, inventory
 and every resource — gold (your bank's balance is paid into your purse), shards, wood and stone.
 Everything else resets to a fresh run: shop blueprints, researched editions, research in progress,
-quests and story flags, color reputation, statistics, blessings, and any Bronze Coins enemies were
-holding. Your challenge-coin purse is topped back up to 1 gold / 1 silver / 3 bronze, keeping any
-surplus you'd hoarded. The one thing that doesn't come back is the Jumpstart tournament: that's
-once per player.
+quests and story flags, color reputation, statistics, blessings, legend sightings, and any Bronze Coins
+enemies were holding. Your challenge-coin purse is topped back up to 1 gold / 1 silver / 3 bronze,
+keeping any surplus you'd hoarded. The one thing that doesn't come back is the Jumpstart tournament:
+that's once per player.
 
-Two things worth knowing before you press it: your **max life returns to the difficulty's
-starting value** (accumulated bonuses are not carried), and an **in-progress tournament is
-discarded**, including cards you've drafted but not yet banked.
+Things worth knowing before you press it: your **max life returns to the difficulty's starting value**
+(accumulated bonuses are not carried), an **in-progress tournament is discarded**, including cards
+you've drafted but not yet banked, and the first two weeks' [eased monsters](#notes-on-difficulty) don't
+apply.
 
 ### Smaller Things Worth Knowing
 
@@ -846,25 +1084,10 @@ discarded**, including cards you've drafted but not yet banked.
 - **Selling** cards pays a share of value set by your difficulty - 60% Easy, 50% Normal,
   25% Hard, 5% Insane (shown as the sale price on the new-game screen); the town's opinion of
   you adjusts it from there.
-- **Leaving a town** lights up the land around it for a moment - the same flash as when you first
-  discovered it - so you can re-orient before setting off.
-- **A thin black outline** on the world map means you can't walk through it - trees, rocks, water,
-  mountains. The plain decorations you can walk over have none.
 - **Max life grows with your realm:** +1 for every five towns you hold, +1 for the Capitol, and +1
   for each Ring City you have visited, for as long as no AI color holds it.
 - **+Life rewards pay once per game** - beat the same legend twice and only the first win raises
   your max life.
-- **Caves wear their biome.** Cave mouths on the map come in dozens of looks - mossy in the
-  forests, red rock in the mountains, crystal-lit in the swamps, icy on the coasts - instead of
-  one shared icon.
-- **78 new caves**, thirteen per biome - Frosthollow, Tidecutter Grotto, Bonepile Hollow, Cinder
-  Hollow, Mossback Hollow, Wasteland Cleft and their kin. Small, medium and large chambers with
-  three to five patrolling creatures - most of them small fry, but one or two in every cave can be
-  anything from an Apprentice to an Archmage, so look before you step in. Each holds a card chest,
-  gold and building stone; the deeper ones add wood, mana shards, a second gold pile and sometimes
-  a booster pack. They spawn in new worlds and join the dungeon rotation.
-- The **blue dot** in the quest list marks the quest you're currently tracking. Quests that count -
-  "defeat five Blue enemies", "clear three dungeons" - show their progress there, "(2/5)".
 - A **Mystery pickup** (the diamond) can bless you: about one pickup in ten grants **+3 starting
   life in your next duel**, added to whatever blessing you already carry.
 - Enemy names carry their tier — "Clay Golem (Master)" — so you can judge a fight before taking
@@ -877,7 +1100,198 @@ discarded**, including cards you've drafted but not yet banked.
 
 ---
 
-*This guide covers The Forsaken Realms v1.15, as of 2026-09-26. See `MOD_CHANGELOG.md` in the
+## FAQ
+
+Quick answers to the questions players ask most. Where the guide covers a topic in depth, the answer
+here is short and links to it. If your question isn't here, ask on the Discord:
+https://discord.gg/TTRPKc9HYJ
+
+### How does Research work? How do I unlock more card sets?
+
+You start with only a few sets open (4 on Easy down to 1 on Insane, from your race's four). Once you
+own 10% of a set's distinct cards in that set's printing (at least 5), the **Research Lab** in your
+Capitol unlocks it for 50 Shards on Normal and a week's wait. An unlocked set stocks your own shops and
+joins your own Inns' tournaments; it never limits your deck. Full detail:
+[Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
+
+### Why does the Research Lab count fewer cards than I own?
+
+It counts each card once, and only in the printing you own it in: a second copy adds nothing, and a card
+you own as an Amonkhet printing counts toward Amonkhet, not toward the other sets it was printed in. A
+set's total is every card printed in it (basic lands aside), reprints included.
+
+### Why can't I find cards from set XYZ?
+
+Every new world deals the sets out at random to the five AI colors and a neutral pool, so XYZ is probably
+in a color's share this game: its towns sell it and its creatures drop it. Your own shops sell only the
+sets you've unlocked, and a Ring City sells every set at double price. A few sets are never dealt at all.
+See [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest) for where every card can come from.
+
+### What do the Challenge Coins do?
+
+Gold = a free Draft entry, Silver = a free Sealed entry. Bronze = a free Jumpstart entry (once) or, far
+more often, an **ante ransom**: lose an ordinary duel and the **Bronze Coin** button on the "Card Lost"
+screen gets your anted cards back and keeps your gold. Win the coin back by beating that kind of enemy
+again, by a Coin Challenge at a Level 2 Arena, or buy one in your own Armory. See
+[The Bronze Challenge Coin](#the-bronze-challenge-coin).
+
+### How do I lose the game? How do I win?
+
+Losing duels never ends a run. Only three things do: your Capitol falls, one AI color holds three of the
+five Ring Cities, or no free town is left while you hold none. You win by holding all five Ring Cities and
+bringing down all five colors' castles. See [Winning and Losing](#winning-and-losing).
+
+### What does losing a duel cost?
+
+A share of the gold you carry (2% / 5% / 10% / 15% from Easy to Insane, at least 50 / 100 / 150 / 200,
+everything if you carry less - the Bank is safe), 10-30% of your max life, and your ante. See
+[Notes on Difficulty](#notes-on-difficulty).
+
+### What does my race change?
+
+Your look, your four card sets and your two tribal shop blueprints - no stats. The table is in
+[Races](#races); the `?` button on the race screen shows the same before you commit.
+
+### How do shops work in my towns and Capitol?
+
+A town has 9 slots (8 open and an Armory), your Capitol 24. You build card shops by tier from the
+blueprints you know, one of each type per town, and they sell only your unlocked sets - cheaper than
+anyone else. Each point of a town's reputation allows three buildings there. See
+[Buildings & the Economy](#buildings--the-economy) and
+[Shop Blueprints](#shop-blueprints--learning-what-youre-allowed-to-build).
+
+### How do Blueprints work?
+
+You start knowing five shop types (your color's three Common ones and your race's two). Learn more by
+buying the blueprint in a shop you're standing in (20 / 40 / 100 / 200 Shards by tier, gated by your
+standing in a color's towns) or from Mystery pickups, chests and the Archaeologist. See
+[Shop Blueprints](#shop-blueprints--learning-what-youre-allowed-to-build).
+
+### How does Reputation work?
+
+Each of the five colors has its own standing with you - Partner, Happy, Neutral, Unhappy, War - and it
+sets shop prices, how often its mages come for you, whether you can enter its towns, how fast you travel
+on its land and what you meet there. The tiers are in
+[Color Reputation, in Detail](#color-reputation-in-detail).
+
+### What is the "Net-0" rule? Why does beating one color change the others?
+
+Reputation is only ever moved around the color wheel, never created, so your five standings always add up
+to zero. Beating a creature costs its color 2 and each of its allies 1, and gives each of its enemies 2.
+You can't be everyone's Partner. Worked example and exceptions:
+[Color Reputation, in Detail](#color-reputation-in-detail).
+
+### Why are there so many monsters around this cave?
+
+Most roaming creatures come out of the ordinary dungeons and caves near you, more the longer each one
+stands. Clear its enemies out and it goes quiet - and the nearest town gives you +1 reputation. Quest
+creatures come as usual wherever you are. See [Where the Monsters Come From](#where-the-monsters-come-from).
+
+### Why did a dungeon disappear from my map?
+
+Dungeons and caves rotate: each lasts 20-40 days, and one leaves early when you clear it, lose a duel
+inside it, or strip its loot while its enemies still stand. Boss lairs leave only once cleared and come
+back restocked 10-30 days later. See [Dungeons That Actually Rotate](#dungeons-that-actually-rotate).
+
+### Why do monsters have less life early on?
+
+The realm eases you in: in days 1-7 a monster starts its duel with half its life (never under 20), in days
+8-14 with three quarters (never under 25). Bosses, legends, Arena and Inn fights, war mages and New Game+
+are never eased. See [Notes on Difficulty](#notes-on-difficulty).
+
+### Does Speed-Up change how many monsters I meet?
+
+No. Monsters keep pace with the clock, so a game day brings the same number at any speed - and new ones
+stop coming while about 14 are already roaming near you, so the screen doesn't fill up.
+
+### Where are the legends? Why do I keep meeting the same one?
+
+You shouldn't any more: legends now come only on the land of a color that is Unhappy or at War with you,
+rarely, one at a time, and the ones you haven't met first. When one appears you're told where, and it
+waits three days for you to come to it. See [Legends](#legends).
+
+### Why is most of the map black?
+
+That's Fog of War (on by default; Settings can turn it off). Black = never explored, dimmed = explored
+but out of sight, bright = what you see right now; creatures and resource pickups only show in the
+bright. A Torch, a Bonfire and an Outlook push it back. See [Fog of War](#fog-of-war).
+
+### What are the cobblestone roads?
+
+Your own roads, laid when you raise your Capitol and joining it to every town you hold. You travel about
+1.7x on them, against 1.5x on the old sand roads. See [The Capitol](#the-capitol).
+
+### My quest says to return to town, but nothing happens.
+
+Walk back into the town that gave the quest - the reward pays on arrival. If the stage started while
+you were already standing in that town, step out and back in. See [Quests](#quests).
+
+### How many quests can I have, and how long do they last?
+
+Up to 10 side quests at once, each lasting 15 days. Story quests never expire. See [Quests](#quests).
+
+### Where did my blessing, token or captive soul go?
+
+Nowhere - they were always equipped and working. Their slots (Blessing, Heart, Pocket and Token) now
+show on the character doll on the inventory and Armory screens. See the [Item Guide](#item-guide).
+
+### Can I play this on Android?
+
+Yes. Every release includes an Android version (Android 8.0 or newer), installed by sideloading:
+
+1. Download the `forsaken-realms-...-signed-aligned.apk` file from the release on GitHub.
+2. Open it and allow installs from your browser or file manager when asked (it's signed by us, not the
+   Play Store).
+3. Grant the storage permission it asks for.
+4. On first launch, tap Download for the game data (about 220 MB, use Wi-Fi). The app restarts, and after
+   that it plays offline.
+
+It installs alongside the official Forge app. Installing a newer APK over the old one keeps your saves.
+Android gets less testing than PC, so please report problems on the Discord with your device model and
+Android version. (There is no iOS version.)
+
+### Is this a mod for Forge?
+
+No. The Forsaken Realms began as an Adventure-mode world for Forge, but since v1.00 it's a standalone
+game built on the Forge rules engine.
+
+- Unzip it into its own folder (not into a Forge install) and run `The Forsaken Realms.exe`. It needs
+  Java 17 or newer (64-bit). Windows is the tested platform; macOS and Linux launchers are included but
+  untested.
+- It keeps its own saves and settings, so your Forge install is untouched, and the other way around.
+- On PC it shares Forge's card-art folder, so card images you already downloaded in Forge aren't
+  downloaded again.
+
+### How do I update the game to the latest version of Forge?
+
+You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
+notes - 1.16 runs on Forge 2.0.16 (the 09.30 build). Forge's own updater is switched off on purpose,
+because a different engine underneath can break your world. Engine updates come to you with new Forsaken
+Realms releases.
+
+To update the game itself, download the new release zip from GitHub and unzip it (a fresh folder is
+cleanest). Your saves live outside the game folder and carry over. On Android, install the new APK over
+the old one; the app also tells you when a new version is out.
+
+### How can I help?
+
+See the #how-can-i-help channel on the Discord: https://discord.gg/TTRPKc9HYJ
+
+### Where are my saves and logs? How do I report a bug?
+
+On Windows everything is in **`%APPDATA%\ForsakenRealms`** (paste that into File Explorer's address
+bar). Saves are in its `adventure\The Forsaken Realms` folder. The log is **`forge.log`**. Each time you
+start the game, the previous log is renamed `forge.<date>-<time>.log` (the last 10 are kept).
+
+- macOS: `~/Library/Application Support/ForsakenRealms`
+- Linux: `~/.forsakenrealms`
+
+To report a bug, post on the Discord: what happened, your difficulty, and the `forge.log` from that
+session (grab it before restarting, or pick the matching dated file). Screenshots and your save help too.
+
+---
+
+*This guide covers The Forsaken Realms v1.16, as of 2026-10-01. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community

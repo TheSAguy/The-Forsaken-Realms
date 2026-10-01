@@ -135,6 +135,9 @@ public class ConfigData {
     // system browser via Gdx.net.openURI, which also works on Android for the planned mobile
     // release. Null/absent on stock planes - no button.
     public String welcomePopupLink;
+    // Round 386: the welcome page's Game Guide & FAQ button opens the plane's GUIDE.html on a computer; this URL is where
+    // it goes otherwise (Android) or when the file is missing. Null = no button there.
+    public String welcomeGuideLink;
     // Start-menu version label overhaul (2026-08-22, user spec): the label now shows the last
     // upstream Forge snapshot merged (engineBuildVersion, e.g. "2.0.15-SNAPSHOT-08.19" - stays
     // static across TFR-only rounds, only bumped when a new engine merge happens) alongside

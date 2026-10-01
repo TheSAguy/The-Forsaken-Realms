@@ -290,8 +290,9 @@
     "engineBuildVersion": "2.0.16-SNAPSHOT-09.30",
     "disableGeneticDeckOverrides": true,
     "caveChampionChance": 0.25,
-    "welcomePopupText": "Thanks for trying out The Forsaken Realms!\n\nThis is an early release - your feedback on balance, bugs, and anything else is very much appreciated. Join us on Discord: discord.gg/TTRPKc9HYJ\n\nRecommended settings (already ON by default): Fog of War, Play for Ante, and Match Ante Rarity - visit Settings if you'd like to change them.\n\nPlaying for ante means you can lose a card - but you're not defenseless: Re-roll lets you swap out a risky ante before the duel starts, and Buy Back lets you repurchase a card you lost right after you lose it. Both cost gold/shards, and both are explained in the full guide.\n\nGood luck out there, planeswalker!",
+    "welcomePopupText": "Thanks for playing The Forsaken Realms!\n\nFound a bug, or have thoughts on balance? Tell us on Discord - every report helps shape the next update.\n\nNew here? The Game Guide & FAQ explains everything this game adds to Forge's Adventure mode - how reputation, territory, dungeons and your Capitol work, and answers to the common questions. It is also in your game folder as GAME_GUIDE.html.\n\nMost of the game's numbers can be tuned in its settings files. The main one is settings.json, in The Forsaken Realms\\res\\adventure\\The Forsaken Realms\\config tables - make a copy before you edit it.\n\nRecommended settings (already on): Fog of War, Play for Ante and Match Ante Rarity - change them under Settings.\n\nHave fun out there, planeswalker!",
     "welcomePopupLink": "https://discord.gg/TTRPKc9HYJ",
+    "welcomeGuideLink": "https://github.com/TheSAguy/The-Forsaken-Realms/blob/master/forge-gui/res/adventure/The%20Forsaken%20Realms/GUIDE.md",
     "raceEditions": [
         { "race": "Devil",        "editions": ["RNA", "TOR", "SOI", "VOW"] },
         { "race": "Kor",          "editions": ["ZEN", "BFZ", "ZNR", "ROE"] },

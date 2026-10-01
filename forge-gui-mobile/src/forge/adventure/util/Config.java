@@ -342,6 +342,11 @@ public class Config {
         }
     }
 
+    /** Round 386: a file in the current plane's folder (e.g. GUIDE.html) - it may not exist. */
+    public java.io.File planeFile(String name) {
+        return new java.io.File(prefix + name);
+    }
+
     private String resPath() {
         // Android/iOS: resources live at ASSETS_DIR (extracted storage / app bundle);
         // the desktop-relative "./res" probes below never match there

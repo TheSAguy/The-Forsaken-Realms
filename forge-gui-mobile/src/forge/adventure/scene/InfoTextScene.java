@@ -68,6 +68,14 @@ public class InfoTextScene extends UIScene {
      *  black TypingLabel row, matching the plain-text style every other info dialog in this mod
      *  already uses (addContentRow() in EconomyBuildings.java, WorldStandingsScene's wiki dialogs). */
     private void setContent(String title, List<String> paragraphs, String linkLabel, String linkUrl) {
+        java.util.List<String[]> links = new java.util.ArrayList<>();
+        if (linkUrl != null && !linkUrl.isEmpty())
+            links.add(new String[]{linkLabel != null ? linkLabel : linkUrl, linkUrl});
+        setContent(title, paragraphs, links);
+    }
+
+    /** Round 386: any number of link buttons ({label, url} pairs), side by side in the first row. */
+    private void setContent(String title, List<String> paragraphs, List<String[]> links) {
         titleLabel.setText(title);
         content.clear();
         content.row();
@@ -77,9 +85,14 @@ public class InfoTextScene extends UIScene {
         // (Gdx.net.openURI works on both desktop and Android, which matters for the planned
         // Android release). FIRST row, above the text: appended after it (2026-08-27 playtest)
         // the button sat below the scroll fold on a full-length welcome text and read as absent.
-        if (linkUrl != null && !linkUrl.isEmpty()) {
-            content.add(Controls.newTextButton(linkLabel != null ? linkLabel : linkUrl,
-                    () -> com.badlogic.gdx.Gdx.net.openURI(linkUrl))).align(Align.left).padBottom(10).row();
+        // Round 386 (the user's welcome redo: a Discord button and a Game Guide button): one row of buttons.
+        if (links != null && !links.isEmpty()) {
+            Table row = new Table();
+            for (String[] link : links) {
+                final String url = link[1];
+                row.add(Controls.newTextButton(link[0], () -> com.badlogic.gdx.Gdx.net.openURI(url))).padRight(8);
+            }
+            content.add(row).align(Align.left).padBottom(10).row();
         }
         for (String paragraph : paragraphs) {
             TypingLabel label = Controls.newTypingLabel(paragraph);
@@ -96,6 +109,12 @@ public class InfoTextScene extends UIScene {
      *  to exactly whichever screen opened this one). */
     public static void show(String title, List<String> paragraphs) {
         show(title, paragraphs, null, null);
+    }
+
+    /** Round 386: as above, with a row of link buttons - each {label, url}. */
+    public static void show(String title, List<String> paragraphs, List<String[]> links) {
+        instance().setContent(title, paragraphs, links);
+        Forge.switchScene(instance(), true);
     }
 
     /** As above, plus an optional link button appended after the text (null linkUrl = no button). */
