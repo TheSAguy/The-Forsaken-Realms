@@ -24,6 +24,8 @@ public class ConfigData {
     public DifficultyData[] difficulties;
     public RewardData legalCards;
     public String[] restrictedCards;
+    // Round 387: restricted_cards.json commanderOnlyCards (merged into restrictedCards as well) - util/CommanderCards.
+    public String[] commanderOnlyCards;
     public String[] restrictedEditions;
     public String[] restrictedBlocks;
     public String[] restrictedTokens;

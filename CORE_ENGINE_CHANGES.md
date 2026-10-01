@@ -3437,6 +3437,14 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
 
+## Round 387 (2026-10-01) - commander-only cards out of enemy decks and boosters
+
+Adventure-side, small hooks in upstream files (a merge keeps the wrapping call): `data/EnemyData.generateDeck()` wraps
+its three returns in `CommanderCards.stripEnemyDeck(...)`; `util/AdventureEventController` - `generateBooster`,
+`generateBoosterByColor` and `getJumpstartBoosters` pass their cards through `CommanderCards.cleanPack(...)`;
+`data/AdventureEventData` - the sealed human and AI packs likewise; `util/Config` / `data/ConfigData` /
+`data/RestrictedCardsData` - the `commanderOnlyCards` field. New: `util/CommanderCards.java`. No Forge-core file.
+
 ## Round 385 (2026-10-01) - the 09.30 engine merge (upstream `fd5c996b843`, Forge 2.0.16-SNAPSHOT)
 
 - **`forge-gui-mobile/src/forge/Forge.java`** - `render()`: our `AgentBridge.startIfConfigured()` line and upstream's

@@ -17,6 +17,15 @@
     //
     // Moved here 2026-08-22 (was inline in config.json) so the list has its own
     // easy-to-edit home, same as settings.json - see MOD_CHANGELOG.md.
+    //
+    // Round 387 (a player on Discord: "there shouldn't be commander specific cards in the
+    // pool and in enemy decks (like arcane signet and command tower)"): commanderOnlyCards
+    // below lists every card that does nothing - or breaks - without a commander. They are
+    // restricted like everything here, AND taken out of every ENEMY deck as it loads
+    // (swapped for a basic land of the deck's main color - the restricted list itself never
+    // touched enemy decks, so 600+ decks still played Arcane Signet). Boosters now honor
+    // BOTH lists too (a restricted card in a pack is swapped for another card of the same
+    // rarity from the same set). Grep forge.log for [TFR-CommanderCards].
     // ============================================================================
     "restrictedCards": [
         // --- Power 9 / broken-power staples (original list) ---
@@ -45,28 +54,6 @@
         "Gaea's Cradle",
         "Drake Stone",
         "Wrenn and One",
-
-        // --- Commander-only support cards (original list) ---
-        "Command Tower",
-        "Arcane Signet",
-        "Opal Palace",
-        "Path of Ancestry",
-        "War Room",
-        "Commander's Plate",
-        "Campfire",
-        "Cloudkill",
-        "Command Beacon",
-        "Commander's Insignia",
-        "Forge of Heroes",
-        "Imposing Grandeur",
-        "Jeweled Lotus",
-        "Myth Unbound",
-        "Netherborn Altar",
-        "Sanctum of Eternity",
-        "Stinging Study",
-        "Study Hall",
-        "Witch's Clinic",
-        "Commander's Sphere",
 
         // --- Un-set / joke / booster-fun cards (original list) ---
         "Under-Construction Skyscraper",
@@ -104,5 +91,89 @@
         "Rakdos Signet",
         "Selesnya Signet",
         "Simic Signet"
+    ],
+    // Round 387: cards that need a commander (scan of every card script for "commander" /
+    // "command zone" / Backgrounds, then a review: Backgrounds; mana in your commander's color
+    // identity; effects aimed only at your commander; War Room and Commander's Plate break
+    // without one). Kept OUT on purpose - cards that still work without a commander: Lieutenant
+    // creatures, "Choose a Background" and Partner creatures, the Will cycle, Fierce
+    // Guardianship & co. (free with a commander, full price without), Rulebreaker legends.
+    "commanderOnlyCards": [
+        "Acolyte of Bahamut",
+        "Agent of the Iron Throne",
+        "Agent of the Shadow Thieves",
+        "Anara, Wolvid Familiar",
+        "Arcane Signet",
+        "Bastion Protector",
+        "Campfire",
+        "Candlekeep Sage",
+        "Champions of Archery",
+        "Clan Crafter",
+        "Cloakwood Hermit",
+        "Cloudkill",
+        "Command Beacon",
+        "Command Tower",
+        "Commander's Insignia",
+        "Commander's Plate",
+        "Commander's Sphere",
+        "Criminal Past",
+        "Crimson Honor Guard",
+        "Cultist of the Absolute",
+        "Disguise Agent",
+        "Dragon Cultist",
+        "Dungeon Delver",
+        "Esior, Wardwing Familiar",
+        "Falthis, Shadowcat Familiar",
+        "Far Traveler",
+        "Feywild Visitor",
+        "Flamekin Herald",
+        "Flaming Fist",
+        "Folk Hero",
+        "Font of Magic",
+        "Forge of Heroes",
+        "Guild Artisan",
+        "Hardy Outlander",
+        "Haunted One",
+        "Hidden Hideout",
+        "I Am Never Alone",
+        "Imposing Grandeur",
+        "Inspiring Leader",
+        "Jeska, Thrice Reborn",
+        "Jeweled Lotus",
+        "Kediss, Emberclaw Familiar",
+        "Keleth, Sunmane Familiar",
+        "Leadership Vacuum",
+        "Majestic Genesis",
+        "Master Chef",
+        "My Champion Stands Supreme",
+        "Myth Unbound",
+        "Netherborn Altar",
+        "Noble Heritage",
+        "Opal Palace",
+        "Passionate Archaeologist",
+        "Path of Ancestry",
+        "Popular Entertainer",
+        "Raised by Giants",
+        "Sagrada Familiar",
+        "Sanctum of Eternity",
+        "Scion of Halaster",
+        "Search for Dagger",
+        "Shameless Charlatan",
+        "Stinging Study",
+        "Street Urchin",
+        "Study Hall",
+        "Sword Coast Sailor",
+        "Tangleweave Armor",
+        "Tavern Brawler",
+        "The Dilu Horse",
+        "Tome of Legends",
+        "Try-My-Deck Elemental",
+        "Veteran Soldier",
+        "Vexilus Praetor",
+        "War Room",
+        "Witch's Clinic",
+        "Worldknit",
+        "You Will Know True Suffering",
+        "You're in Command"
     ]
 }

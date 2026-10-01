@@ -141,13 +141,15 @@ public class EnemyData implements Serializable {
             } else if (rand > 50) {
                 fmt = FModel.getFormats().getModern();
             }
-            return DeckgenUtil.buildLDACArchetypeDeck(fmt, true);
+            return forge.adventure.util.CommanderCards.stripEnemyDeck(DeckgenUtil.buildLDACArchetypeDeck(fmt, true), getName());
         }
 
         if (randomizeDeck) {
-            return CardUtil.getDeck(Aggregates.random(deck), true, isFantasyMode, colors, life > 13, canUseGeneticAI);
+            return forge.adventure.util.CommanderCards.stripEnemyDeck( // round 387: no commander-only cards
+                    CardUtil.getDeck(Aggregates.random(deck), true, isFantasyMode, colors, life > 13, canUseGeneticAI), getName());
         }
-        return CardUtil.getDeck(deck[Current.player().getEnemyDeckNumber(this.getName(), deck.length)], true, isFantasyMode, colors, life > 13, canUseGeneticAI);
+        return forge.adventure.util.CommanderCards.stripEnemyDeck( // round 387: no commander-only cards
+                CardUtil.getDeck(deck[Current.player().getEnemyDeckNumber(this.getName(), deck.length)], true, isFantasyMode, colors, life > 13, canUseGeneticAI), getName());
     }
 
     // Session-local, transient by design: one line per run is enough to prove the gate is

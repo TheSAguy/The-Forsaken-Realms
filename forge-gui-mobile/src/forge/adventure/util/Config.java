@@ -210,6 +210,18 @@ public class Config {
         if (restrictedCardsFile.exists()) {
             try {
                 RestrictedCardsData restrictedCardsData = new Json().fromJson(RestrictedCardsData.class, restrictedCardsFile);
+                // Round 387: the commander-only group is restricted like the rest - and CommanderCards also strips it
+                // from enemy decks.
+                if (restrictedCardsData.commanderOnlyCards != null && restrictedCardsData.commanderOnlyCards.length > 0) {
+                    configData.commanderOnlyCards = restrictedCardsData.commanderOnlyCards;
+                    Set<String> all = new LinkedHashSet<>();
+                    if (restrictedCardsData.restrictedCards != null)
+                        all.addAll(Arrays.asList(restrictedCardsData.restrictedCards));
+                    all.addAll(Arrays.asList(restrictedCardsData.commanderOnlyCards));
+                    restrictedCardsData.restrictedCards = all.toArray(new String[0]);
+                    System.out.println("[TFR-CommanderCards] " + restrictedCardsData.commanderOnlyCards.length
+                            + " commander-only card(s) - restricted, and out of enemy decks");
+                }
                 if (restrictedCardsData.restrictedCards != null && restrictedCardsData.restrictedCards.length > 0) {
                     Set<String> merged = new LinkedHashSet<>();
                     if (configData.restrictedCards != null)

@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 387: commander-only cards out of enemy decks, boosters and the pool (2026-10-01)
+
+A player on Discord: "I'm guessing there shouldn't be commander specific cards in the pool and in enemy decks? (like
+arcane signet and command tower)". The user: "I thought all Commander only cards were removed. Can we do this audit all
+decks loot... they should be suppressed and marked as inactive in restricted_cards.json".
+
+- **Why they still showed up:** Command Tower and Arcane Signet were ALREADY on the restricted list - but that list
+  only ever filtered the player's reward/shop pools (its own header listed the gaps). Enemy decks never consulted it:
+  the audit found Arcane Signet in 620 enemy deck slots, Command Tower 575, Path of Ancestry 252, Commander's Sphere
+  123, War Room 83 (their ante and deck-card paths could hand them over). Boosters are built from a set's sheets and
+  skipped it too (Commander Legends packs: Command Tower, Signet, Sphere, Path, the Familiars).
+- **The list** (restricted_cards.json `commanderOnlyCards`, 76 cards; scan + review scripts in the session scratchpad,
+  cmdr_scan/usage/classify/final.py): every card script whose text needs a commander / the command zone, then judged
+  - Backgrounds; mana in your commander's color identity; effects aimed only at your commander (Familiars, Flamekin
+  Herald, Font of Magic, Tome of Legends, Tangleweave Armor...); War Room (a free draw without one) and Commander's
+  Plate (protection from every color); the old "Commander-only support" section moved in. Kept playable on purpose:
+  Lieutenant, Partner and "Choose a Background" creatures, the Will cycle, Fierce Guardianship & co., Rulebreaker
+  legends, the Storm copies. Config merges the group into restrictedCards (pools as before).
+- **Enemy decks** (util/CommanderCards.stripEnemyDeck, from EnemyData.generateDeck - every enemy deck path): each
+  commander-only copy becomes a basic land of the deck's main color (Wastes if colorless); one log line per deck.
+  Only this group - a boss's Sol Ring or Black Lotus stays. Commander-mode STARTER decks are left alone (the player has
+  a commander there).
+- **Boosters** (CommanderCards.cleanPack in AdventureEventController.generateBooster / generateBoosterByColor /
+  getJumpstartBoosters and AdventureEventData's sealed packs): any restricted card (both lists) swapped for a random
+  card of the same rarity from the same set, or dropped if there is none.
+- Seen in the agent: Hapatra "Command Tower x1 -> 1 Forest"; 20 CMR boosters, 11 swaps (Command Tower -> Inspiring
+  Roar, Arcane Signet -> Reyav, Master Smith, Vampiric Tutor -> Bruse Tarl...); no exception.
+
 ## Round 386b: the welcome page right after world generation again; the guide button opens the guide (2026-10-01)
 
 The user: "The Discord button works, but the Game Guide / FAQ does not. Also, let's move the Welcome page to just after

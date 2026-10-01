@@ -513,7 +513,7 @@ public class AdventureEventData implements Serializable {
                     booster = new UnOpenedProduct(template);
                 }
 
-                humanPool.addAllFlat(booster.get());
+                humanPool.addAllFlat(forge.adventure.util.CommanderCards.cleanPack(booster.get(), setCode + " event pack")); // round 387
             }
 
             if (humanPool.isEmpty()) return;
@@ -551,7 +551,7 @@ public class AdventureEventData implements Serializable {
                         booster = new UnOpenedProduct(template);
                     }
 
-                    aiPool.addAllFlat(booster.get());
+                    aiPool.addAllFlat(forge.adventure.util.CommanderCards.cleanPack(booster.get(), setCode + " event pack")); // round 387
                 }
 
                 if (aiPool.isEmpty()) continue;

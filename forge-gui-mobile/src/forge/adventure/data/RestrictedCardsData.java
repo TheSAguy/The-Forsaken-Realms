@@ -12,4 +12,6 @@ package forge.adventure.data;
  */
 public class RestrictedCardsData {
     public String[] restrictedCards;
+    // Round 387: cards that need a commander - restricted too, and also taken out of enemy decks (CommanderCards).
+    public String[] commanderOnlyCards;
 }

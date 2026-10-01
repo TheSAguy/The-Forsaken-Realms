@@ -209,7 +209,7 @@ public class AdventureEventController implements Serializable {
 
     public Deck generateBooster(String setCode) {
         SealedTemplate template = AdventureOverrides.instance().getBoosterTemplate(setCode);
-        List<PaperCard> cards = BoosterGenerator.getBoosterPack(template);
+        List<PaperCard> cards = CommanderCards.cleanPack(BoosterGenerator.getBoosterPack(template), setCode + " booster"); // round 387
         Deck output = new Deck();
         output.getMain().add(cards);
         String editionName = FModel.getMagicDb().getEditions().get(setCode).getName();
@@ -248,7 +248,7 @@ public class AdventureEventController implements Serializable {
                 Pair.of(BoosterSlots.RARE_MYTHIC + ":color(\"" + color + "\"):!" + BoosterSlots.LAND + setClause, 1),
                 Pair.of(BoosterSlots.LAND + ":color(\"" + color + "\")" + setClause, 1))
         ));
-        List<PaperCard> cards = pack.getCards();
+        List<PaperCard> cards = CommanderCards.cleanPack(pack.getCards(), color + " booster"); // round 387
         Deck output = new Deck();
         output.getMain().add(cards);
         String editionName = color + " Booster Pack";
@@ -267,7 +267,7 @@ public class AdventureEventController implements Serializable {
             UnOpenedProduct toOpen = new UnOpenedProduct(template);
 
             Deck contents = new Deck();
-            contents.getMain().add(toOpen.get());
+            contents.getMain().add(CommanderCards.cleanPack(toOpen.get(), template.getEdition() + " jumpstart")); // round 387
 
             int size = contents.getMain().toFlatList().size();
 
