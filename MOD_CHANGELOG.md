@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 393: the White Tower church's skeleton stays inside (2026-10-01)
+
+The user: "The White tower dungeon has a skeleton walking outside the boundaries." The church map
+(maps/map/magetower/magetower_7_church.tmx, the White Tower `MageTower7Church`): the Skeleton (object 143) patrols
+waypoints 144 -> 145, and 145 sat at tile (2,5) - outside the octagon's left wall; map enemies walk their legs straight,
+through walls. Waypoint 145 moved inside the nave, tile (7,6) (x 120, y 104): a short loop by the top-left pews.
+dev-tools/fix_routes.py missed it - pixel_collision_qa's model of this map leaks to the left and top (it calls the
+outside reachable), while the game's own collision holds: agent-checked, the walker cannot leave the room (stuck at the
+wall, (8,11)), and the skeleton's sampled positions stayed in the nave until it engaged.
+
 ## Round 392: one road into the star per town (2026-10-01)
 
 The user, with screenshots of a new world's centre: "there seems to be a lot of roads here. Seems only the one spot
