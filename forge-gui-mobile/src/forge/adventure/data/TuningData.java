@@ -317,12 +317,26 @@ public class TuningData {
     // after (never a special one). Every week it stands adds dungeonSourceEscalationPerWeek to the rate, up to
     // dungeonSourceEscalationMax x; clearing it stops it and pays dungeonSourceClearReputation reputation in the
     // nearest town. See util/DungeonSources; grep forge.log for [TFR-DungeonSource].
-    public float dungeonSourceRadiusTiles = 12f;
-    public float dungeonSourceRateFactor = 1.5f;
-    public float dungeonSourceShare = 0.5f;
+    // Round 383 (the user: "85% of spawns should come from dungeons and the remaining 15% from the land. So if you
+    // clear out all the dungeons in an area, it will feel safe"): full pull within dungeonSourceRadiusTiles, fading to 0
+    // at dungeonSourceReachTiles; each roll sends dungeonSourceShare x the pull - the sources' falloffs summed but at
+    // most 1, times their escalation, capped at dungeonSourceMaxPerRoll - and the land's own pick goes ahead on
+    // landSpawnShare of the rolls. The rate factor no
+    // longer speeds the roll clock (that sped the quest rolls too) - it is each source's pull.
+    public float landSpawnShare = 0.15f;
+    public float dungeonSourceRadiusTiles = 10f;
+    public float dungeonSourceReachTiles = 28f;
+    public float dungeonSourceRateFactor = 1f;
+    public float dungeonSourceShare = 0.85f;
+    public float dungeonSourceMaxPerRoll = 2f;
     public float dungeonSourceEscalationPerWeek = 0.25f;
     public float dungeonSourceEscalationMax = 2f;
     public int dungeonSourceClearReputation = 1;
+    // Round 383 (the user: "Enemy spawns are timed in real time, so fast time means fewer spawns per game day - should
+    // increase with speed-up"): the spawn clock on game time, and a crowd limit so 50x does not bury the player.
+    public boolean spawnClockFollowsSpeedUp = true;
+    public int spawnCrowdLimit = 14;
+    public float spawnCrowdRadiusTiles = 24f;
     // Round 299 (user: "Any +Life should only be handed out once. Can't farm. All other rewards should be cut by 50%.
     // That goes for gold and number of cards."). A boss lair that was cleared comes back after the spot rest above;
     // on every visit after that, gold / shards / wood / stone are multiplied by lairReturnRewardFactor (rounded up),
@@ -331,6 +345,12 @@ public class TuningData {
     // per place - see PlaceRewards.
     public float lairReturnRewardFactor = 0.5f;
     public float lairReturnItemChance = 0.5f;
+    // Round 383 (Zacama paid 6,617 gold; the user: legends' GOLD cut in half, the NUMBER OF CARDS to 2/3). A legend
+    // (LegendSpawns.isMember - the frontier legends and the roaming champions) pays its gold x legendRewardGoldFactor
+    // (rounded up) and keeps legendRewardCardFactor of its cards (the fraction a coin flip); its own named card goes
+    // last. Shards, items and +Life are untouched - see PlaceRewards.applyLegendCut().
+    public float legendRewardGoldFactor = 0.5f;
+    public float legendRewardCardFactor = 0.667f;
 
     public float torchPulseMultiplier = 3f;
     public float torchPulseSeconds = 2f;

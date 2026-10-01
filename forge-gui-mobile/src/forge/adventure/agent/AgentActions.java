@@ -434,6 +434,9 @@ final class AgentActions {
 
     private CompletableFuture<Map<String, Object>> load(int slot) {
         walker.cancel("loading a save");
+        // Round 383: the Load screen drops the map view's bookmarks before it loads - they hold the old world's POIs.
+        forge.adventure.scene.MapViewScene.instance().clearBookMarks();
+        String from = Forge.getCurrentScene() == null ? "none" : Forge.getCurrentScene().getClass().getSimpleName();
         CompletableFuture<Map<String, Object>> f = new CompletableFuture<>();
         Forge.setTransitionScreen(new TransitionScreen(() -> {
             boolean ok = WorldSave.load(slot);
@@ -443,8 +446,14 @@ final class AgentActions {
                 // that sprite, so a fresh one at (0,0) was stored over the saved spot. Put the saved spot on the new
                 // sprite first; the menu paths (SaveLoadScene, StartScene) leave a different scene and never hit it.
                 forge.adventure.stage.WorldStage.getInstance().getPlayerSprite().LoadPos();
+                float savedX = AdventurePlayer.current().getWorldPosX(), savedY = AdventurePlayer.current().getWorldPosY();
                 forge.sound.SoundSystem.instance.changeBackgroundTrack();
                 Forge.switchScene(GameScene.instance());
+                // Round 383: the ocean bug's check - the sprite must stand on the saved spot after the switch, not (0,0).
+                Actor me = WorldStage.getInstance().getPlayerSprite();
+                bridge.log(String.format("[TFR-Agent] load slot %d from %s: saved (%.0f,%.0f), player now (%.0f,%.0f)%s",
+                        slot, from, savedX, savedY, me.getX(), me.getY(),
+                        me.getX() == savedX && me.getY() == savedY ? "" : " - MOVED OFF THE SAVED SPOT"));
             }
             f.complete(WalkController.result(ok, ok ? "loaded slot " + slot : "load failed: " + slot));
         }, null, false, true, "Loading"));

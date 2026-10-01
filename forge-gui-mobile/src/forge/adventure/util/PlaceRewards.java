@@ -14,6 +14,10 @@ import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
 import forge.util.MyRandom;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Round 299 - reward rules for places that can be fought through more than once. User, once cleared boss lairs were
  * to come back: "Any +Life should only be handed out once. Can't farm. All other rewards should be cut by 50%. That
@@ -35,6 +39,8 @@ import forge.util.MyRandom;
  * Round 302 (user: "Make these a one time only also", of the +Life legends fought outside places): an enemy's +Life is
  * paid once per GAME as well - key "enemy|life|enemyName", checked by every duel payout, the overworld's included
  * (filterWorldPayout()). See payLifeOnce().
+ * <p>
+ * Round 383: a legend's payout is cut wherever it is beaten - half the gold, 2/3 of the cards. See applyLegendCut().
  */
 public final class PlaceRewards {
     private PlaceRewards() {
@@ -47,6 +53,7 @@ public final class PlaceRewards {
 
     /** MapStage.getReward(): the payout of a duel won inside a place, filtered in place before the reward screen. */
     public static void filterDuelPayout(Array<Reward> loot, EnemySprite sprite) {
+        applyLegendCut(loot, sprite); // round 383 - before the place checks: a hand-placed legend is a legend too
         PointOfInterest place = currentPlace();
         EnemyData enemy = sprite == null ? null : sprite.getData();
         if (loot == null || enemy == null || place == null || place.getData() == null)
@@ -90,6 +97,69 @@ public final class PlaceRewards {
         }
         if (notes.length() > 0)
             System.out.println("[TFR-PlaceRewards] overworld, " + sprite.getName() + ": " + notes);
+        applyLegendCut(loot, sprite); // round 383
+    }
+
+    /**
+     * Round 383. Zacama paid 6,617 gold: a legend is exempt from the card budget and the resource purse (spawnRate 0,
+     * SpawnTierWeighting.isExempt), so its whole reward list paid. The user's call: cut the GOLD in half and the NUMBER
+     * OF CARDS to 2/3, for legends only - a member of the legend table (LegendSpawns.isMember: the frontier legends and
+     * the roaming champions), on the overworld or hand-placed in a place. Gold x TuningData.legendRewardGoldFactor,
+     * rounded up; cards x legendRewardCardFactor, the fraction a coin flip (keepCount(), as on a lair's return visit).
+     * The cards dropped are picked at random, the legend's own named card (a fixed cardName on its list - Zacama's
+     * Zacama, Primal Calamity) last of all. Shards, items, +Life and the land sketchbook pay as before; no legend
+     * carries a card pack. A legend that is also a lair's boss takes the return-visit cut on top of this one.
+     */
+    private static void applyLegendCut(Array<Reward> rewards, EnemySprite sprite) {
+        EnemyData enemy = sprite == null ? null : sprite.getData();
+        if (rewards == null || enemy == null || !LegendSpawns.isMember(enemy))
+            return;
+        TuningData tuning = Config.instance().getTuningData();
+        float goldFactor = clamp01(tuning.legendRewardGoldFactor, 0.5f);
+        float cardFactor = clamp01(tuning.legendRewardCardFactor, 0.667f);
+        int goldBefore = 0, goldAfter = 0;
+        List<Integer> spare = new ArrayList<>(), named = new ArrayList<>();
+        for (int i = 0; i < rewards.size; i++) {
+            Reward reward = rewards.get(i);
+            if (reward.getType() == Reward.Type.Gold && reward.getCount() > 0) {
+                int after = keep(reward.getCount(), goldFactor);
+                goldBefore += reward.getCount();
+                goldAfter += after;
+                if (after != reward.getCount())
+                    rewards.set(i, new Reward(Reward.Type.Gold, after));
+            } else if (reward.getType() == Reward.Type.Card) {
+                boolean own = reward.getCard() != null && (namesFixedCard(enemy.rewards, reward.getCard().getName())
+                        || namesFixedCard(sprite.rewards, reward.getCard().getName()));
+                if (own)
+                    named.add(i);
+                else
+                    spare.add(i);
+            }
+        }
+        int cards = spare.size() + named.size();
+        int keepCards = keepCount(cards, cardFactor);
+        Collections.shuffle(spare, MyRandom.getRandom());
+        spare.addAll(named); // the drop order: the rest at random, the legend's own card last
+        List<Integer> drop = new ArrayList<>(spare.subList(0, cards - keepCards));
+        drop.sort(Collections.reverseOrder()); // highest index first, so the lower ones stay put
+        for (int i : drop)
+            rewards.removeIndex(i);
+        System.out.println("[TFR-LegendReward] " + sprite.getName() + ": gold " + goldBefore + " -> " + goldAfter
+                + ", cards " + cards + " -> " + keepCards);
+    }
+
+    /** Round 383: a fixed cardName on a reward list ("Karona, False God|SCG" - the set code is not compared). */
+    private static boolean namesFixedCard(RewardData[] rewards, String cardName) {
+        if (rewards == null || cardName == null)
+            return false;
+        for (RewardData data : rewards) {
+            if (data == null || !"card".equalsIgnoreCase(data.type) || data.cardName == null)
+                continue;
+            int bar = data.cardName.indexOf('|');
+            if (cardName.equals(bar < 0 ? data.cardName : data.cardName.substring(0, bar)))
+                return true;
+        }
+        return false;
     }
 
     /**

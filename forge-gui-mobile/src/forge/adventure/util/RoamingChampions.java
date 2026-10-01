@@ -14,7 +14,8 @@ import java.util.Set;
  * <p>
  * Like the war champions they keep {@code spawnRate} 0 in the data - so the tier weighting and the card budget leave
  * them alone, and their whole reward list pays when one is beaten out here (the arena pays one Rare from their deck
- * since round 311). They arrive as a legend sighting: announced, a gold dot on the maps, the legend day clock.
+ * since round 311). They arrive as a legend sighting: announced, a gold dot on the maps, the legend day clock. Round
+ * 383: that list pays half its gold and 2/3 of its cards (PlaceRewards.applyLegendCut).
  * <p>
  * <b>Round 375:</b> only the membership is left here. Round 311 gave them a share of every colour land's ordinary roll
  * at any reputation - the way Elf Queen Guay met the user in friendly land at week 3. They belong to the legend table

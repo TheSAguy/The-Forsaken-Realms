@@ -115,11 +115,19 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   creatures** (sprites/enemy/tfr2, decks/standard/tfr2; dev-tools/art-import/round382): 12 legends via
   roaming_champions.json (25 -> 37), Victor = the vampire Archmage with the user's save-1 Vampire Deck
   (decks/legends/victor_vampire.dck, noAnte), the old one "Victor, Valgavoth's Seneschal"; 10 color + artifact decks;
-  rosters +10 per color, Wasteland +3 (colorless only - the user's call).
-  Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text) - STILL CLIPPED after 366's relabel: the
-  lost-card ante row at 3840x2130 cuts OK off the left edge and Bronze Coin off the right (agent, round 375); an old road
-  a tile short of a restored town, the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards,
-  Leather Boots start unequipped.
+  rosters +10 per color, Wasteland +3 (colorless only - the user's call). **383: THE SPAWN BUDGET** - dungeons 85%
+  (`dungeonSourceShare`; pull = falloffs summed AT MOST 1 x escalation, full within 10 tiles, gone at 28; creature placed
+  on the dungeon's side at spawn distance), the land 15% (`landSpawnShare`), QUEST creatures their own roll first every
+  roll (never thinned); spawn clock on GAME time (Speed-Up, run key) + `spawnCrowdLimit` 14 within 24 tiles;
+  `[TFR-DungeonSource] coverage:` once per world (agent world: 0.79 + 0.15 = 84%). The special doll slots Blessing /
+  Heart / Pocket / Token (4 layouts) + `AdventurePlayer.slotTakes` (Ability3/Left2/Right2 filters listed nothing) +
+  empty-slot text; the "green box at (17,44)" NOT FOUND - asked the user. Legends pay gold x0.5, cards x2/3
+  (PlaceRewards.applyLegendCut). FButton corner padding (ENGINE) - the ante row seen clear at 3840x2130. The bridge's
+  ocean load seen fixed (round 364's fix + a log line). World-map autosaves storePos first (autoSaveHere). RoadNetwork:
+  roads to MOVED anchors (Forest 32 px -> Waste 48 px after the road pass) recognized, the restore lift touches only
+  its own road - offline-verified, not seen in a game.
+  Open from v1.15 QA: Instant4White selling off-color cards, Leather Boots start unequipped; Inn screen's
+  `eventDescription` label (100 units) does not wrap - unreported.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the
   morning after it went out ("take 1.14 down. Let's post the 1.14.1 fix once done"): the GitHub release `tfr-v1.14` is
   a DRAFT again (`gh release edit tfr-v1.14 --draft`; its three assets are still attached; v1.13 shows as Latest).

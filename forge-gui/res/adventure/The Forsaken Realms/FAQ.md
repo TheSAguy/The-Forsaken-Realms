@@ -313,10 +313,18 @@ half, and a +Life reward or a boss's own signature item only pays once.
 
 ### Why are there so many monsters around this cave?
 
-An ordinary dungeon or cave feeds the land around it. Within about 12 tiles monsters come 1.5x as often, and half of
-them walk out of its door - its color's creatures before you've been inside, its own inhabitants after. Each week it
-stands adds 25% to that rate, up to double. Clear its enemies out and it goes quiet, and the nearest town gives you +1
-reputation. Story places, boss lairs and castles don't do this.
+Most of the creatures roaming the realm come out of ordinary dungeons and caves - about 85% of them; the land itself
+adds only the rest. A dungeon pulls at full strength within about 10 tiles and fades out by about 28, and its
+creatures come at you from its side: its color's before you've been inside, its own inhabitants after. Each week it
+stands adds 25% to what it sends, up to double. Clear its enemies out and it goes quiet, and the nearest town gives you
++1 reputation - clear the dungeons around you and the land there goes quiet. Story places, boss lairs and castles
+don't do this, and quest creatures (an invasion to stop, a creature to hunt) come as usual wherever you are.
+
+### Does Speed-Up change how many monsters I meet?
+
+Monsters keep pace with the clock: with Speed-Up on (or the run key held), they show up as much faster as the days go
+by, so a game day brings the same number at any speed. So the screen doesn't fill up, new ones stop coming while about
+14 are already roaming near you.
 
 ### Why is most of the map black?
 

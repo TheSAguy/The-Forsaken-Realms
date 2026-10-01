@@ -261,26 +261,49 @@
     "dungeonLifespanMaxDays": 40,
     "dungeonSpotRestMinDays": 10,
     "dungeonSpotRestMaxDays": 30,
-    // Round 377 - dungeons as sources of enemies (util/DungeonSources). Within dungeonSourceRadiusTiles of an active
-    // regular dungeon or cave (a hostile one that rotates - never a story, quest or NoRotate map, a boss lair or a castle)
-    // the spawn rolls come dungeonSourceRateFactor x as fast, and dungeonSourceShare of them send one of its own
-    // creatures out of its door: its color's before the first visit, its living inhabitants after (never a boss, a
-    // champion, a legend, a quest enemy or a dialog NPC). Each week it stands adds dungeonSourceEscalationPerWeek to
-    // that rate, up to dungeonSourceEscalationMax x. Clearing its enemies silences it and pays
-    // dungeonSourceClearReputation reputation in the nearest town. dungeonSourceShare 0 and dungeonSourceRateFactor 1
-    // switch it off. Grep forge.log for [TFR-DungeonSource].
-    "dungeonSourceRadiusTiles": 12,
-    "dungeonSourceRateFactor": 1.5,
-    "dungeonSourceShare": 0.5,
+    // Round 377 - dungeons as sources of enemies (util/DungeonSources), reweighted in round 383 (the user: "85% of
+    // spawns should come from dungeons and the remaining 15% from the land. So if you clear out all the dungeons in an
+    // area, it will feel safe"). An active regular dungeon or cave (a hostile one that rotates - never a story, quest or
+    // NoRotate map, a boss lair or a castle) pulls at full strength within dungeonSourceRadiusTiles of its footprint,
+    // fading to nothing at dungeonSourceReachTiles. Each spawn roll sends dungeonSourceShare x the pull of the sources
+    // in reach - their falloffs summed but at most 1 (one dungeon close by is full strength, a crowd is not more),
+    // times their escalation and dungeonSourceRateFactor, capped at dungeonSourceMaxPerRoll; the fraction a coin flip -
+    // of their creatures towards the player: a source's color before the first visit, its living inhabitants after (never a
+    // boss, a champion, a legend, a quest enemy or a dialog NPC). The land's own pick goes ahead on landSpawnShare of
+    // the rolls. Quest creatures roll on their own and are never thinned. Each week a source stands adds
+    // dungeonSourceEscalationPerWeek to its pull, up to dungeonSourceEscalationMax x. Clearing its enemies silences it
+    // and pays dungeonSourceClearReputation reputation in the nearest town. dungeonSourceShare 0 switches the sources
+    // off (and landSpawnShare 1 gives the land its old rate back). Grep forge.log for [TFR-DungeonSource] and
+    // [TFR-SpawnBudget].
+    "landSpawnShare": 0.15,
+    "dungeonSourceRadiusTiles": 10,
+    "dungeonSourceReachTiles": 28,
+    "dungeonSourceRateFactor": 1.0,
+    "dungeonSourceShare": 0.85,
+    "dungeonSourceMaxPerRoll": 2.0,
     "dungeonSourceEscalationPerWeek": 0.25,
     "dungeonSourceEscalationMax": 2.0,
     "dungeonSourceClearReputation": 1,
+    // Round 383 (the user: "Enemy spawns are timed in real time, so fast time means fewer spawns per game day - should
+    // increase with speed-up"). The spawn clock runs on game time: Speed-Up and the run key make the rolls come as much
+    // faster as they make the day. So the screen does not fill at 50x, a roll waits while spawnCrowdLimit ordinary
+    // roamers (not legends, not territory mages) are already within spawnCrowdRadiusTiles of the player.
+    // spawnClockFollowsSpeedUp false = the old real-time clock; spawnCrowdLimit 0 = no limit.
+    "spawnClockFollowsSpeedUp": true,
+    "spawnCrowdLimit": 14,
+    "spawnCrowdRadiusTiles": 24,
     // Round 299: a cleared boss lair comes back after the spot rest above; every visit after that pays gold /
     // shards / wood / stone x this (rounded up) and the NUMBER of cards x this (a lone card drops half the
     // time), and each non-signature item drops with the chance below. +Life and a boss's own signature item
     // are paid once per place, never again.
     "lairReturnRewardFactor": 0.5,
     "lairReturnItemChance": 0.5,
+    // Round 383: a beaten legend (the frontier legends and the roaming champions) pays its gold x the first
+    // (rounded up) and keeps the second's share of its cards (the fraction a coin flip; its own named card goes
+    // last). Shards, items and +Life are untouched; 1 and 1 pay the whole list again. Grep forge.log for
+    // [TFR-LegendReward].
+    "legendRewardGoldFactor": 0.5,
+    "legendRewardCardFactor": 0.667,
 
     // Enemy size by tier (round 178, user decision: one size per rank, so the size tells you the rank).
     // Every non-boss enemy's "scale" in world/enemies.json draws its BODY at the hero's body size

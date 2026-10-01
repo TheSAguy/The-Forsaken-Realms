@@ -649,6 +649,8 @@ public class DuelScene extends ForgeScene {
         // Round 366 (the user's 4K report: "Use Bronze Coin" clipped at the right edge). The coin is the last button, i.e.
         // the bottom-right corner button, which breaks its text at the first space and has no right padding - "Use" over
         // "Bronze Coin" ran into the screen edge. "Bronze Coin" splits into two short lines.
+        // Round 383: still touching the edge at 3840x2130 (and OK at the left one) - the missing padding is now in
+        // FButton.draw's corner cases, for every corner button.
         final String COIN_BUTTON = "Bronze Coin";
         if (won && eventData == null) {
             int sellPrice = Current.player().cardSellPrice(card);

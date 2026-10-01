@@ -7253,7 +7253,7 @@
 					"options": [
 						{
 							"name": "(Continue)",
-							"text": "Dungeons and caves are living parts of the realm. While one stands, creatures pour out of it into the land around it - creatures of its color at first, and once you have been inside, the very ones that live there. The longer it stands, the more of them come. Clear one out to calm the land around it, and the nearest town will thank you: +1 reputation.",
+							"text": "Dungeons and caves are living parts of the realm, and most of the creatures roaming it come out of them - creatures of its color at first, and once you have been inside, the very ones that live there. The longer one stands, the more of them come. Clear out the dungeons around you and the land goes quiet, and the nearest town will thank you for each: +1 reputation.",
 							"options": [
 								{
 									"name": "(Continue)"

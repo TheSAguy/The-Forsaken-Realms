@@ -283,7 +283,74 @@ public final class RoadNetwork {
         return Math.hypot(pa[0] - pb[0], pa[1] - pb[1]);
     }
 
-    /** Does a road already run between these two towns - either staircase at least EDGE_COVERAGE road? */
+    /**
+     * Round 383 (QA: "an old road can stop one tile short of a restored town"). A town's anchor column is the middle of
+     * its sprite (PointOfInterest.getTilePosition), and the sprite's width changes with the town: world-gen lays every
+     * road, THEN TerritoryControl.neutralizeAfterGeneration turns each Forest Town (32 px) outside the green keep into a
+     * Waste Town (48 px), and every capture swaps a town's data the same way. The anchor moves a column and the road on
+     * the ground still ends at the old one - 32 of the 254 roads in the user's world, the ruins a player restores among
+     * them. Walked from today's anchors those roads are below EDGE_COVERAGE, so no rule here saw them: never kept, and
+     * the lift along a new road's other staircase cut them beside the town (an offline replay of the user's save: a
+     * restore's hop into a former Forest ruin cut another road within five tiles of it in 116 of 1,876 cases, any town
+     * 211 of 3,778 - none after this round). The anchor columns a town's sprite widths give.
+     */
+    static final int[] TOWN_SPRITE_WIDTHS = {32, 48, 64};
+
+    static int[] anchorColumns(World world, PointOfInterest poi) {
+        int ts = world.getTileSize();
+        int[] out = new int[TOWN_SPRITE_WIDTHS.length + 1];
+        int n = 0;
+        out[n++] = anchor(world, poi)[0];
+        for (int w : TOWN_SPRITE_WIDTHS) {
+            int x = (int) ((poi.getPosition().x + w / 2f) / ts);
+            boolean seen = false;
+            for (int i = 0; i < n; i++)
+                seen |= out[i] == x;
+            if (!seen)
+                out[n++] = x;
+        }
+        return Arrays.copyOf(out, n);
+    }
+
+    /**
+     * Round 383: the two staircases between a and b as the road on the ground was walked - {canonical, other}. Today's
+     * anchors when either of their staircases is at least EDGE_COVERAGE road, else the anchor columns (anchorColumns)
+     * whose staircases are best covered: a road laid before a town changed its sprite.
+     */
+    static long[][] groundWalks(World world, PointOfInterest a, PointOfInterest b) {
+        int[] pa = anchor(world, a), pb = anchor(world, b);
+        long[][] best = walkPair(world, pa[0], pa[1], pb[0], pb[1]);
+        float bestCover = Math.max(coverage(world, best[0]), coverage(world, best[1]));
+        if (bestCover >= EDGE_COVERAGE)
+            return best;
+        for (int xa : anchorColumns(world, a)) {
+            for (int xb : anchorColumns(world, b)) {
+                if (xa == pa[0] && xb == pb[0])
+                    continue;
+                long[][] w = walkPair(world, xa, pa[1], xb, pb[1]);
+                float cover = Math.max(coverage(world, w[0]), coverage(world, w[1]));
+                if (cover > bestCover) {
+                    best = w;
+                    bestCover = cover;
+                }
+            }
+        }
+        return best;
+    }
+
+    /** {the walk from the canonical end, the other} between two anchor tiles. */
+    static long[][] walkPair(World world, int xa, int ya, int xb, int yb) {
+        boolean aFirst = canonicalFirst(xa, ya, xb, yb);
+        long[] fromA = walk(world, xa, ya, xb, yb), fromB = walk(world, xb, yb, xa, ya);
+        return aFirst ? new long[][]{fromA, fromB} : new long[][]{fromB, fromA};
+    }
+
+    /**
+     * Does a road already run between these two towns - either staircase at least EDGE_COVERAGE road? Round 383 left
+     * this on today's anchors: it prices TerritoryControl's old-road routes, and an old road laid along a pair is
+     * walked from today's anchors without lifting anything - routing it onto a road laid to an older anchor would draw
+     * a second staircase a column beside it.
+     */
     public static boolean roadJoins(World world, PointOfInterest a, PointOfInterest b) {
         if (a == null || b == null || a == b || tileDistance(world, a, b) > MAX_EDGE_TILES)
             return false;
@@ -300,18 +367,22 @@ public final class RoadNetwork {
 
     static final class Edge {
         final PointOfInterest a, b;
-        final long[] canon, reverse, drawn;
+        final long[] canon, reverse, drawn, ground;
         final float kc, kr;
         float formerShare;
 
-        Edge(PointOfInterest a, PointOfInterest b, long[] canon, long[] reverse, float kc, float kr) {
+        Edge(PointOfInterest a, PointOfInterest b, long[] canon, long[] reverse, float kc, float kr, long[] ground) {
             this.a = a;
             this.b = b;
             this.canon = canon;
             this.reverse = reverse;
             this.kc = kc;
             this.kr = kr;
-            this.drawn = kc >= EDGE_COVERAGE ? canon : reverse;
+            // Round 383: the staircase more of which is road. A pair laid from its other end before round 351 can cover
+            // its canonical staircase 95% too, and taking that one protected the wrong tiles - a lift could then take a
+            // step of the real road (the likely source of round 365's corner joint by Silent Crossing).
+            this.drawn = kc >= EDGE_COVERAGE && kc >= kr ? canon : reverse;
+            this.ground = ground;
         }
 
         boolean both() {
@@ -335,11 +406,12 @@ public final class RoadNetwork {
                 if (Math.hypot(anchors[i][0] - anchors[j][0], anchors[i][1] - anchors[j][1]) > MAX_EDGE_TILES)
                     continue;
                 PointOfInterest a = towns.get(i), b = towns.get(j);
-                long[] canon = walkBetween(world, a, b, true), reverse = walkBetween(world, a, b, false);
+                long[][] w = groundWalks(world, a, b); // round 383: as walked, the anchor a sprite change moved or not
+                long[] canon = w[0], reverse = w[1];
                 float kc = coverage(world, canon), kr = coverage(world, reverse);
                 if (Math.max(kc, kr) < EDGE_COVERAGE)
                     continue;
-                Edge e = new Edge(a, b, canon, reverse, kc, kr);
+                Edge e = new Edge(a, b, canon, reverse, kc, kr, roadCells(world, canon, reverse));
                 if (former != null && e.drawn.length > 0) {
                     int f = 0;
                     for (long c : e.drawn)
@@ -364,6 +436,33 @@ public final class RoadNetwork {
         Set<Long> out = new HashSet<>();
         for (Edge e : edges)
             for (long c : e.drawn)
+                out.add(c);
+        return out;
+    }
+
+    /** Round 383: the cells of either staircase that are road - an edge's road as it lies on the ground. */
+    static long[] roadCells(World world, long[] canon, long[] reverse) {
+        Set<Long> out = new LinkedHashSet<>();
+        for (long[] cells : new long[][]{canon, reverse})
+            for (long c : cells)
+                if (world.roadKindRaw(keyX(c), keyY(c)) > 0)
+                    out.add(c);
+        long[] arr = new long[out.size()];
+        int i = 0;
+        for (long c : out)
+            arr[i++] = c;
+        return arr;
+    }
+
+    /**
+     * Round 383: what a lift along another road leaves alone - every road tile of these edges' staircases, not just the
+     * one drawnTiles() takes for theirs. A lift that took a step of a road's real staircase left it a corner short
+     * (round 365) or, across a straight run, a tile short.
+     */
+    static Set<Long> groundTiles(Collection<Edge> edges) {
+        Set<Long> out = new HashSet<>();
+        for (Edge e : edges)
+            for (long c : e.ground)
                 out.add(c);
         return out;
     }
@@ -647,8 +746,8 @@ public final class RoadNetwork {
 
     /**
      * Lays the hops as player road, each on its canonical staircase, then lifts what the upgrade leaves beside it: the
-     * pair's other staircase and the tiles its old road drew there, unless another road draws them. Returns
-     * {tiles laid, old tiles paved over, tiles lifted}.
+     * pair's old road on either staircase, unless another road lies there (round 383: its road as it lies, not the
+     * staircase taken for it). Returns {tiles laid, old tiles paved over, tiles lifted}.
      */
     static int[] layHops(World world, List<PointOfInterest[]> hops, List<Edge> edges, Set<Long> prot, Set<Long> touched) {
         int laid = 0, paved = 0, lifted = 0;
@@ -672,12 +771,14 @@ public final class RoadNetwork {
             for (Edge e : edges)
                 if (e != own && !hasHop(hops, e.a, e.b))
                     others.add(e);
-            Set<Long> keep = drawnTiles(others);
+            // Round 383: the pair's own old road as it lies (both staircases, walked from the anchors it was laid to),
+            // and nothing else. The blind lift along today's other staircase took whatever old road crossed it - a
+            // road no rule saw, ending at a town whose sprite changed, cut a tile or a corner from the town. Old road
+            // left squeezed beside the new road still goes, in thinBesidePlayerRoad, while its neighbors stay joined.
+            Set<Long> keep = groundTiles(others);
             keep.addAll(playerDrawn);
-            for (long c : walkBetween(world, hop[0], hop[1], false))
-                lifted += liftOld(world, c, prot, keep, touched);
             if (own != null)
-                for (long c : own.drawn)
+                for (long c : own.ground)
                     lifted += liftOld(world, c, prot, keep, touched);
         }
         return new int[]{laid, paved, lifted};

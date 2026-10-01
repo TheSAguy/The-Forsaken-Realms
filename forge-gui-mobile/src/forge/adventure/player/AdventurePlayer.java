@@ -2808,6 +2808,20 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return granted;
     }
 
+    /**
+     * Round 383: does the paperdoll slot {@code slot} take this item? Its own slot, the twin a gauntlet grants
+     * ("Left2" takes a "Left" item), and Ability3 takes what Ability2 does - slotCandidates()'s rule without the grant
+     * check, for the inventory and armory filters: picking Ability3, Left2 or Right2 used to list nothing at all,
+     * since no item names those slots as its own.
+     */
+    public static boolean slotTakes(String slot, ItemData item) {
+        if (slot == null || item == null || item.equipmentSlot == null || item.equipmentSlot.isEmpty())
+            return false;
+        if (slot.equals(item.equipmentSlot) || slot.equals(item.equipmentSlot + "2"))
+            return true;
+        return "Ability3".equals(slot) && "Ability2".equalsIgnoreCase(item.equipmentSlot);
+    }
+
     /** Round 137: the slots this item may occupy, in fill order - its own, then the granted twin. */
     private java.util.List<String> slotCandidates(ItemData item) {
         java.util.List<String> candidates = new java.util.ArrayList<>();

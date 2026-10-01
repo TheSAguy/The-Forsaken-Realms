@@ -103,6 +103,26 @@ public class InventoryScene extends UIScene {
         itemDescription.invalidateHierarchy();
     }
 
+    /**
+     * Round 383 (the user: "show the Blessing slot on the character"): picking an empty slot names it and what it takes,
+     * since the four special slots - Blessing, Heart, Token, Pocket - have no picture of their own on the doll.
+     */
+    private static String emptySlotText(String slot) {
+        String what;
+        switch (slot) {
+            case "Blessing": what = "Blessing - a special slot for a blessing, such as a Blessing of Speed. Passive."; break;
+            case "Heart": what = "Heart - a special slot for a captive soul."; break;
+            case "Token": what = "Token - a special slot for a token you bring into every duel."; break;
+            case "Pocket": what = "Pocket - a special slot, for a Generous Ingot."; break;
+            case "Medal": what = "Medal - a medal that sets a duel's handicap and its rewards."; break;
+            case "Ability1": what = "Staff - a colored staff you use from the HUD."; break;
+            case "Ability2": case "Ability3": what = "Utility - a rune, a torch or a staff you use from the HUD."; break;
+            case "Left2": case "Right2": what = "Second hand - granted by the gauntlet you wear."; break;
+            default: what = slot; break;
+        }
+        return what + "\n[%98]Empty. The items that fit are listed on the right.";
+    }
+
     /** Round 292: the box the description scrolls in - its width is what the text wraps to. */
     private ScrollPane descriptionPane;
 
@@ -178,6 +198,7 @@ public class InventoryScene extends UIScene {
                                     changeButton.setChecked(true);
                             } else {
                                 setSelected(null);
+                                setDescription(emptySlotText(slotName)); // round 383: say what goes here
                             }
                         } else {
                             removeSlotBorder(button);
@@ -558,7 +579,7 @@ public class InventoryScene extends UIScene {
                 System.err.print("Can not find sprite name " + item.iconName + "\n");
                 continue;
             }
-            if (selectedSlot != null && !selectedSlot.equals(item.equipmentSlot)) {
+            if (selectedSlot != null && !forge.adventure.player.AdventurePlayer.slotTakes(selectedSlot, item)) { // round 383
                 continue;
             }
             items.add(item);

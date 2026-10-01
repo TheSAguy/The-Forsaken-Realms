@@ -237,7 +237,7 @@ public class ArmoryScene extends UIScene {
                 System.err.print("Can not find sprite name " + item.iconName + "\n");
                 continue;
             }
-            if (selectedSlot != null && !selectedSlot.equals(item.equipmentSlot))
+            if (selectedSlot != null && !forge.adventure.player.AdventurePlayer.slotTakes(selectedSlot, item)) // round 383
                 continue;
             out.add(item);
         }

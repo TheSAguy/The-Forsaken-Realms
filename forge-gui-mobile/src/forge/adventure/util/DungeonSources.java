@@ -27,10 +27,14 @@ import java.util.Random;
  * <ul>
  * <li><b>Which places:</b> the regular ones - DungeonRotation's rotatable set (hostile dungeons and caves; never a
  * story, quest or NoRotate map, a boss lair or a castle) - while active and not yet cleared.</li>
- * <li><b>The zone:</b> within dungeonSourceRadiusTiles of the place's footprint the spawn rolls come
- * dungeonSourceRateFactor x as fast, times the escalation: + dungeonSourceEscalationPerWeek for each full week the place
- * has stood (World.dungeonAppearedDay), up to dungeonSourceEscalationMax x.</li>
- * <li><b>What comes out:</b> dungeonSourceShare of those rolls send one of its creatures out of its door - before the
+ * <li><b>The zone:</b> round 383 - full strength within dungeonSourceRadiusTiles of the place's footprint, fading to
+ * nothing at dungeonSourceReachTiles, times the escalation: + dungeonSourceEscalationPerWeek for each full week the place
+ * has stood (World.dungeonAppearedDay), up to dungeonSourceEscalationMax x. The sources in reach pull together, their
+ * presence saturating at one (totalWeight), up to dungeonSourceMaxPerRoll.</li>
+ * <li><b>The budget:</b> round 383 - dungeons carry dungeonSourceShare (0.85) of the spawns and the land the rest
+ * (landSpawnShare, 0.15, WorldStage): each roll sends share x pull creatures from the sources in reach, the fraction a
+ * coin flip, so an area whose dungeons are cleared keeps only the land's trickle. Quest creatures roll on their own.</li>
+ * <li><b>What comes out:</b> one of a source's creatures, on its way out towards the player - before the
  * first visit an ordinary creature of its color (the land it stands on, else its Biome tag), after it one of its
  * LIVING inhabitants (round 201's fixed roster minus the defeated, per level). Never a special one: a boss, a quest
  * enemy, a legend or champion, the cave champion, a dialog NPC, a placement kept as authored
@@ -49,7 +53,7 @@ public final class DungeonSources {
 
     public static boolean isEnabled() {
         TuningData t = tuning();
-        return t != null && (t.dungeonSourceShare > 0f || t.dungeonSourceRateFactor > 1f);
+        return t != null && t.dungeonSourceShare > 0f;
     }
 
     /** A regular place (DungeonRotation's rotatable set) - the only kind that can be a source. */
@@ -62,64 +66,132 @@ public final class DungeonSources {
         return isRegular(poi) && poi.getActive() && !world.getDungeonClearedDay().containsKey(poi.getID());
     }
 
-    /** The source nearest the player within the zone radius, or null. */
+    /** One source within reach of the player, and how hard it pulls there. */
     public static final class Source {
         public final PointOfInterest poi;
         public final float distanceTiles;
         public final int ageDays;
         public final float escalation;
+        /** Round 383: 1 within dungeonSourceRadiusTiles of the footprint, fading to 0 at dungeonSourceReachTiles. */
+        public final float falloff;
 
-        Source(PointOfInterest poi, float distanceTiles, int ageDays, float escalation) {
+        Source(PointOfInterest poi, float distanceTiles, int ageDays, float escalation, float falloff) {
             this.poi = poi;
             this.distanceTiles = distanceTiles;
             this.ageDays = ageDays;
             this.escalation = escalation;
+            this.falloff = falloff;
         }
 
-        /** How much faster the rolls come here: the base factor times the escalation. */
-        public float rateFactor() {
+        /** Its pull on this spot: the per-source factor, times the escalation, times the falloff with distance. */
+        public float weight() {
             TuningData t = tuning();
-            float base = t == null ? 1f : Math.max(1f, t.dungeonSourceRateFactor);
-            return base * escalation;
+            float base = t == null ? 1f : Math.max(0f, t.dungeonSourceRateFactor);
+            return base * escalation * falloff;
         }
     }
 
-    /** The nearest source whose footprint lies within the zone radius of (px, py), world units. Scans the 3x3 chunks
-     *  around the player - a chunk is a screen wide, far more than the radius. */
-    public static Source nearest(World world, float px, float py) {
+    /**
+     * Round 383 (the user: "I want the dungeons on the map to contribute the most to overworld spawns. Let's say 85% of
+     * spawns should come from dungeons and the remaining 15% from the land. So if you clear out all the dungeons in an
+     * area, it will feel safe"). Every source whose footprint lies within dungeonSourceReachTiles of (px, py), world
+     * units, strongest pull first - empty when none. Scans the chunks the reach can touch (a chunk is a screen wide,
+     * 30 tiles).
+     */
+    public static List<Source> inReach(World world, float px, float py) {
+        return inReach(world, px, py, true);
+    }
+
+    /** {@code record} false: a read-only look (the coverage log) - a source with no appearance day counts as new and
+     *  keeps no date, so a diagnostic never starts every source's clock at once on an old save. */
+    public static List<Source> inReach(World world, float px, float py, boolean record) {
+        List<Source> out = new ArrayList<>();
         TuningData t = tuning();
         if (!isEnabled() || world == null || t == null)
-            return null;
+            return out;
         int ts = world.getTileSize();
         int chunk = world.getChunkSize();
         if (ts <= 0 || chunk <= 0)
-            return null;
-        float radius = Math.max(1f, t.dungeonSourceRadiusTiles);
+            return out;
+        float full = Math.max(0f, t.dungeonSourceRadiusTiles);
+        float reach = Math.max(full, t.dungeonSourceReachTiles);
+        if (reach <= 0f)
+            return out;
+        int span = (int) Math.ceil(reach / chunk);
         int cx = (int) px / ts / chunk;
         int cy = (int) py / ts / chunk;
-        PointOfInterest best = null;
-        float bestDist = Float.MAX_VALUE;
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -span; dx <= span; dx++) {
+            for (int dy = -span; dy <= span; dy++) {
                 for (PointOfInterest poi : world.getPointsOfInterest(cx + dx, cy + dy)) {
                     if (!isSource(world, poi))
                         continue;
                     float d = edgeDistanceTiles(poi, px, py, ts);
-                    if (d <= radius && d < bestDist) {
-                        best = poi;
-                        bestDist = d;
-                    }
+                    float falloff = falloff(d, full, reach);
+                    if (falloff <= 0f)
+                        continue;
+                    int age = record ? ageDays(world, poi) : peekAgeDays(world, poi);
+                    out.add(new Source(poi, d, age, escalation(age), falloff));
                 }
             }
         }
-        if (best == null)
-            return null;
-        int age = ageDays(world, best);
-        return new Source(best, bestDist, age, escalation(age));
+        out.sort((a, b) -> Float.compare(b.weight(), a.weight()));
+        return out;
+    }
+
+    /** The nearest source in reach of (px, py), or null - the strongest pull of inReach() is not always the nearest. */
+    public static Source nearest(World world, float px, float py) {
+        Source best = null;
+        for (Source s : inReach(world, px, py))
+            if (best == null || s.distanceTiles < best.distanceTiles)
+                best = s;
+        return best;
+    }
+
+    /** 1 up to {@code full} tiles from the footprint, then a straight fade to 0 at {@code reach}. */
+    static float falloff(float distanceTiles, float full, float reach) {
+        if (distanceTiles <= full)
+            return 1f;
+        if (distanceTiles >= reach || reach <= full)
+            return 0f;
+        return 1f - (distanceTiles - full) / (reach - full);
+    }
+
+    /**
+     * Round 383: the whole pull on a spot. Presence saturates - the sources' falloffs summed, at most 1, so one young
+     * dungeon close by is the full 0.85 and a crowd of them is not more (the agent world had 10-11 sources within 40
+     * tiles of every spot, and summing them nearly doubled the old spawn rate) - times their escalation, averaged by
+     * pull, so old dungeons still pour out more. Capped at dungeonSourceMaxPerRoll.
+     */
+    public static float totalWeight(List<Source> sources) {
+        float presence = 0f, weight = 0f;
+        for (Source s : sources) {
+            presence += s.falloff;
+            weight += s.weight();
+        }
+        if (presence <= 0f)
+            return 0f;
+        float perPresence = weight / presence; // the rate factor times the escalation, averaged by falloff
+        TuningData t = tuning();
+        float cap = t == null || t.dungeonSourceMaxPerRoll <= 0f ? Float.MAX_VALUE : t.dungeonSourceMaxPerRoll;
+        return Math.min(Math.min(1f, presence) * perPresence, cap);
+    }
+
+    /** Round 383: one source drawn by its share of the pull - the dungeon a creature comes from. */
+    public static Source draw(List<Source> sources, Random rand) {
+        float sum = 0f;
+        for (Source s : sources)
+            sum += s.weight();
+        float r = rand.nextFloat() * sum;
+        for (Source s : sources) {
+            r -= s.weight();
+            if (r <= 0f)
+                return s;
+        }
+        return sources.isEmpty() ? null : sources.get(sources.size() - 1);
     }
 
     /** Distance from (px, py) to the nearest edge of the place's footprint, in tiles - 0 on or inside it. */
-    static float edgeDistanceTiles(PointOfInterest poi, float px, float py, int ts) {
+    public static float edgeDistanceTiles(PointOfInterest poi, float px, float py, int ts) {
         Rectangle b = poi.getBoundingRectangle();
         float nx = Math.max(b.x, Math.min(px, b.x + b.width));
         float ny = Math.max(b.y, Math.min(py, b.y + b.height));
@@ -140,6 +212,12 @@ public final class DungeonSources {
             return 0;
         }
         return Math.max(0, today - since);
+    }
+
+    /** Round 383: ageDays() without writing - an undated source is new. */
+    static int peekAgeDays(World world, PointOfInterest poi) {
+        Integer since = world.getDungeonAppearedDay().get(poi.getID());
+        return since == null ? 0 : Math.max(0, world.getCurrentDay() - since);
     }
 
     /** 1 + dungeonSourceEscalationPerWeek per full week, capped at dungeonSourceEscalationMax. */

@@ -788,7 +788,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
                                     .withEnemyStatKey(mob.getName()));
                             currentMob = mob;
-                            WorldSave.getCurrentSave().autoSave();
+                            autoSaveHere();
                         });
                     });
                     break;
@@ -979,7 +979,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     // The loadPOI generates booster and other things that may take time to load, so show a little loading text.
                     OverlayText.getInstance().update("[%240]" + GameScene.instance().getLocationColorID() + "{CAROUSEL} A U T O S A V E ");
                     startPause(1f, ()-> {
-                        WorldSave.getCurrentSave().autoSave();
+                        autoSaveHere();
                         loadPOI(point.getPointOfInterest());
                         point.getMapSprite().checkOut();
                         WorldSave.getCurrentSave().getPointOfInterestChanges(point.getPointOfInterest().getID()).visit();
@@ -1125,7 +1125,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     defender.getAtlasPath(), Current.player().getName(), defender.getTieredDisplayName())
                     .withEnemyStatKey(defender.getName()));
-            WorldSave.getCurrentSave().autoSave();
+            autoSaveHere();
         });
     }
 
@@ -1146,7 +1146,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     duelMage.getAtlasPath(), Current.player().getName(), duelMage.getTieredDisplayName())
                     .withEnemyStatKey(duelMage.getName()));
-            WorldSave.getCurrentSave().autoSave();
+            autoSaveHere();
         });
     }
 
@@ -1210,7 +1210,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     guardFoe.getAtlasPath(), RoamingGuards.displayName(guard.tier) + " Guard",
                     guardFoe.getTieredDisplayName()));
-            WorldSave.getCurrentSave().autoSave();
+            autoSaveHere();
         });
     }
 
@@ -1289,7 +1289,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(),
                     enemy.getAtlasPath(), Current.player().getName(), enemy.getTieredDisplayName())
                     .withEnemyStatKey(enemy.getName()));
-            WorldSave.getCurrentSave().autoSave();
+            autoSaveHere();
         });
     }
 
@@ -1550,7 +1550,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         return;
                     Current.player().takeGold(ColorReputation.CAPITAL_ENTRY_TOLL);
                     hideDialog();
-                    WorldSave.getCurrentSave().autoSave();
+                    autoSaveHere();
                     loadPOI(poi);
                     point.getMapSprite().checkOut();
                     WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
@@ -1607,7 +1607,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
         dialog.getButtonTable().add(Controls.newTextButton("Enter", () -> {
             hideDialog();
-            WorldSave.getCurrentSave().autoSave();
+            autoSaveHere();
             loadPOI(poi);
             point.getMapSprite().checkOut();
             WorldSave.getCurrentSave().getPointOfInterestChanges(poi.getID()).visit();
@@ -1871,12 +1871,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
             // Round 357 (the user: "make sure the player terrain does not hinder Quest creature spawns"): a road
             // used to stop the spawn clock outright, and the player roads now run all over the player's land. The
             // clock keeps running on a road; ordinary monsters still stay off it, a Defeat quest's creatures don't.
-            spawnDelay -= delta;
+            spawnDelay -= spawnClock(delta); // round 383: game time
             if (spawnDelay < 0) {
                 spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
-                if (!rollLegendSighting(world, biomeData) // round 375: a legend's spot is judged on its own
-                        && !rollDungeonSource(world, biomeData)) // round 377: a nearby dungeon's door
-                    spawnQuestExtraOnly("on a road");
+                if (spawnCrowded())
+                    return;
+                spawnQuestExtraOnly("on a road"); // round 383: the quest's own roll, whatever the rest does
+                if (!rollLegendSighting(world, biomeData)) // round 375: a legend's spot is judged on its own
+                    rollDungeonSource(world, biomeData); // round 377/383: the dungeons in reach
             }
             return;
         }
@@ -1888,15 +1890,23 @@ public class WorldStage extends GameStage implements SaveFileContent {
         }
         player.setMoveModifier(1.0f * sprintingMod * territorySpeedModifier(data) * runMod);
 
-        spawnDelay -= delta;
+        spawnDelay -= spawnClock(delta); // round 383: game time - see spawnClock()
         if (spawnDelay >= 0) return;
         spawnDelay = spawnInterval + (rand.nextFloat() * 4.0f);
+        if (spawnCrowded())
+            return;
+        // Round 383 (the user: "Make sure though, that this does not affect Quest spawns. If you get a quest to stop
+        // Elf Invasion or something like that, that should still spawn normally"). An active Defeat quest's creature
+        // rolls first and on its own, at the 80% the old 50/30/20 split gave it - never thinned by the land's share, a
+        // lit spot, a legend or a dungeon below. (The split also held the ordinary monster back on 30% of the rolls
+        // while a quest ran; it no longer does.)
+        spawnQuestExtraOnly("on land");
         // Round 375: the legend table rolls first, on a spot of its own - a legend placed spends this roll.
         if (rollLegendSighting(world, biomeData))
             return;
-        // Round 377: a regular dungeon or cave within reach feeds the land - see rollDungeonSource().
-        if (rollDungeonSource(world, biomeData))
-            return;
+        // Round 377/383: the dungeons in reach send their share - see rollDungeonSource(). The land's own roll below
+        // is a separate share of the budget, not spent by them.
+        rollDungeonSource(world, biomeData);
 
         // Round 338 (user spec 2026-09-25, "adjust the spawn rates of enemies in areas with lifted FoW"): the fog zone at
         // the SPOT this roll would spawn on - drawn now the way spawn() draws it, and handed to spawn() so the enemy lands
@@ -1914,12 +1924,19 @@ public class WorldStage extends GameStage implements SaveFileContent {
         if (lit && fogTuning != null && rand.nextFloat() >= fogTuning.fogLitSpawnChance) {
             System.out.println("[TFR-FogZone] lit spot (" + spotTileX + "," + spotTileY + ") - this roll skipped (chance "
                     + fogTuning.fogLitSpawnChance + ")");
-            // Round 357: the player's land is always lit, so this skip thinned quest creatures there - they still come.
-            spawnQuestExtraOnly("on a lit spot");
+            // Round 357: the player's land is always lit, so this skip thinned quest creatures there - since round 383
+            // their roll comes before this one.
             return;
         }
         if (!lit && fogTuning != null && fogTuning.fogDarkSpawnRate > 0f)
             spawnDelay /= fogTuning.fogDarkSpawnRate;
+        // Round 383: the land's share of the budget - the other 85% is the dungeons'. One line per roll it holds back.
+        float landShare = fogTuning == null ? 1f : fogTuning.landSpawnShare;
+        if (landShare < 1f && rand.nextFloat() >= landShare) {
+            System.out.println("[TFR-SpawnBudget] land roll held back (landSpawnShare " + landShare + ") in " + data.name
+                    + " territory");
+            return;
+        }
 
         // Roaming-spawn intrusion (MOD_SCOPE.md #7 follow-up, user request 2026-08-10): a nearby
         // foreign-color town/capital/castle can bleed its color's monsters into this spawn roll,
@@ -2027,41 +2044,15 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             + data.name + " territory");
             }
         }
-        // Round 358: the quest first, then its creature (AdventureQuestController.pickExtraQuestSpawn) - was
-        // data.getExtraSpawnEnemy(), one draw over every active quest's creatures pooled together.
-        AdventureQuestController.QuestSpawnPick questPick =
-                AdventureQuestController.instance().pickExtraQuestSpawn(difficultyFactor, rand);
-        EnemyData extraSpawnForQuests = questPick == null ? null : questPick.enemy;
-        if (extraSpawnForQuests != null) {
-            // This path (quest-tag extra spawns) bypasses the weighted tier system by design -
-            // quest-authored enemies spawn as authored. Logged since 2026-08-27 (it was the one
-            // completely silent world-map spawn path) so tier reports stay attributable.
-            System.out.println("[TFR-Spawn] quest-extra " + extraSpawnForQuests.getName()
-                    + " (tier=" + extraSpawnForQuests.tier + ", shown=\""
-                    + extraSpawnForQuests.getTieredDisplayName() + "\") in " + data.name + " territory for \""
-                    + questPick.quest + "\" (1 of " + questPick.questCount + " quest(s))");
-            float spawnPicker = rand.nextFloat();
-
-            if (spawnPicker > 0.5f) //todo: make this difficulty dependent, more enemies on harder difficulty
-            {
-                spawn(enemyData);
-                spawn(extraSpawnForQuests);
-            }
-            else if (spawnPicker > 0.2f) {
-                spawn(extraSpawnForQuests);
-            }
-            else {
-                spawn(enemyData);
-            }
-
-        }
-        else spawn(enemyData, spawnOffset); // round 338: on the spot the fog zone was judged for
+        // Round 358's quest pick moved to the top of the roll in round 383 (spawnQuestExtraOnly) - this is the land's own.
+        spawn(enemyData, spawnOffset); // round 338: on the spot the fog zone was judged for
     }
 
     /**
      * Round 357: a spawn roll the terrain holds back from ordinary monsters (a road, a lit spot's skip) still sends out
-     * an active Defeat quest's creature, at the chance an ordinary roll would (the 50/30/20 split above lets it out 80%
-     * of the time). Nothing happens without such a quest. Grep forge.log for [TFR-QuestSpawn].
+     * an active Defeat quest's creature, at the chance an ordinary roll would (the old 50/30/20 split let it out 80%
+     * of the time). Since round 383 EVERY roll starts here - the quest's creatures are their own roll, untouched by the
+     * land's share, the dungeons and the fog. Nothing happens without such a quest. Grep forge.log for [TFR-QuestSpawn].
      */
     private void spawnQuestExtraOnly(String where) {
         float difficultyFactor = Current.player().getStatistic().rank();
@@ -2227,52 +2218,216 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     }
 
+    /**
+     * Round 383: an autosave from the world map keeps the spot the player stands on. The player sprite writes its
+     * position into the save's data only on a scene leave (or F5, which calls storePos() first) - so the autosave before
+     * a duel or a door recorded wherever the player last LEFT the world map, and loading it put them back there, far
+     * from where they were. Found while tracing the agent bridge's load-from-the-world-map ocean bug.
+     */
+    private void autoSaveHere() {
+        if (player != null)
+            player.storePos();
+        WorldSave.getCurrentSave().autoSave();
+    }
+
     /** Round 377: the source the player was last within reach of - its id, for the one log line per zone change. */
     private String dungeonSourceZone = null;
+    /** Round 383: the share of the land in dungeon reach is measured once per world - see logDungeonCoverage(). */
+    private World dungeonCoverageLogged = null;
+
+    /**
+     * Round 383 (the user: "Enemy spawns are timed in real time, so fast time means fewer spawns per game day - should
+     * increase with speed-up"). The spawn clock's step: game time, the way the day clock takes it - Speed-Up's
+     * multiplier and the run key - so a game day sees the same rolls at any speed, up to spawnCrowded()'s limit.
+     */
+    private float spawnClock(float delta) {
+        TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null || !tuning.spawnClockFollowsSpeedUp)
+            return delta;
+        float clock = fastTimeEnabled ? delta * fastTimeMultiplier() : delta;
+        if (isRunKeyHeld())
+            clock *= RUN_KEY_SPEED_MULTIPLIER;
+        return clock;
+    }
+
+    /** Round 383: the crowd state last logged - one line when it turns, not one per roll. */
+    private boolean spawnCrowdedLogged = false;
+
+    /** Round 383: true while spawnCrowdLimit ordinary roamers stand within spawnCrowdRadiusTiles - the roll waits. */
+    private boolean spawnCrowded() {
+        TuningData tuning = Config.instance().getTuningData();
+        if (tuning == null || tuning.spawnCrowdLimit <= 0 || player == null)
+            return false;
+        float radius = tuning.spawnCrowdRadiusTiles * Current.world().getTileSize();
+        float radiusSq = radius * radius;
+        int count = 0;
+        for (Pair<Float, EnemySprite> pair : enemies) {
+            EnemySprite e = pair.getValue();
+            if (e.territoryTarget != null || e.legendExpiryDay >= 0)
+                continue;
+            if (e.pos().dst2(player.pos()) <= radiusSq)
+                count++;
+        }
+        boolean crowded = count >= tuning.spawnCrowdLimit;
+        if (crowded != spawnCrowdedLogged) {
+            spawnCrowdedLogged = crowded;
+            System.out.println("[TFR-SpawnBudget] " + (crowded ? count + " roamers within "
+                    + Math.round(tuning.spawnCrowdRadiusTiles) + " tiles (limit " + tuning.spawnCrowdLimit + ") - rolls wait"
+                    + (fastTimeEnabled ? " (Speed-Up on)" : "") : "the crowd thinned - rolls resume"));
+        }
+        return crowded;
+    }
 
     /**
      * Round 377, dungeons as sources of enemies (util/DungeonSources - the user: "Think of dungeons as a source of
-     * enemies and needs to be removed"). Once per spawn roll, after the legend table: within reach of an active regular
-     * dungeon or cave the NEXT roll comes its rate factor (escalated by its age) sooner, and dungeonSourceShare of the
-     * rolls send one of its creatures out of its door - its color's before the first visit, its living inhabitants
-     * after, never a special one. No message on screen - the "Find a Dungeon" quest explains it; the log says when the
-     * player comes within reach of a source, and each creature it sends. True when one was placed: that spends the roll.
+     * enemies and needs to be removed"), reweighted in round 383 (the user: "85% of spawns should come from dungeons and
+     * the remaining 15% from the land. So if you clear out all the dungeons in an area, it will feel safe"). Once per
+     * spawn roll, after the legend table: the active regular dungeons and caves in reach pull together (full near one,
+     * fading out at dungeonSourceReachTiles, saturating at one, escalated by age - DungeonSources.totalWeight), and the
+     * roll sends dungeonSourceShare x that pull
+     * of their creatures - 0.85 beside one young dungeon, the fraction a coin flip. Each comes from a source drawn by
+     * its pull: its color's before the first visit, its living inhabitants after, never a special one. No message on
+     * screen - the "Find a Dungeon" quest explains it; the log says when the nearest source changes, and each creature.
+     * True when one was placed.
      */
     private boolean rollDungeonSource(World world, List<BiomeData> biomes) {
         if (!forge.adventure.util.DungeonSources.isEnabled() || player == null)
             return false;
-        forge.adventure.util.DungeonSources.Source source = forge.adventure.util.DungeonSources.nearest(world,
+        if (dungeonCoverageLogged != world) {
+            dungeonCoverageLogged = world;
+            logDungeonCoverage(world, biomes);
+        }
+        List<forge.adventure.util.DungeonSources.Source> sources = forge.adventure.util.DungeonSources.inReach(world,
                 player.getX() + player.getWidth() / 2f, player.getY() + player.getHeight() / 2f);
-        String zone = source == null ? null : source.poi.getID();
+        float pull = forge.adventure.util.DungeonSources.totalWeight(sources);
+        forge.adventure.util.DungeonSources.Source nearest = null;
+        for (forge.adventure.util.DungeonSources.Source s : sources)
+            if (nearest == null || s.distanceTiles < nearest.distanceTiles)
+                nearest = s;
+        String zone = nearest == null ? null : nearest.poi.getID();
         if (!java.util.Objects.equals(zone, dungeonSourceZone)) {
-            if (source != null)
-                System.out.println("[TFR-DungeonSource] within reach of " + source.poi.getDisplayName() + " ("
-                        + Math.round(source.distanceTiles) + " tiles, standing " + source.ageDays + " day(s), x"
-                        + source.escalation + ") - rolls come x" + source.rateFactor() + " as fast");
+            if (nearest != null)
+                System.out.println("[TFR-DungeonSource] nearest source " + nearest.poi.getDisplayName() + " ("
+                        + Math.round(nearest.distanceTiles) + " tiles, standing " + nearest.ageDays + " day(s), x"
+                        + nearest.escalation + ") - " + sources.size() + " in reach, pull " + pull);
             else
                 System.out.println("[TFR-DungeonSource] out of reach of any dungeon source");
             dungeonSourceZone = zone;
         }
-        if (source == null)
+        if (sources.isEmpty() || pull <= 0f)
             return false;
-        spawnDelay /= source.rateFactor(); // the next roll comes sooner
         TuningData tuning = Config.instance().getTuningData();
         float share = tuning == null ? 0f : tuning.dungeonSourceShare;
-        if (share <= 0f || rand.nextFloat() >= share)
-            return false;
-        forge.adventure.util.DungeonSources.Pick pick = forge.adventure.util.DungeonSources.pick(world, source.poi,
-                Current.player().getStatistic().rank(), rand);
-        if (pick == null)
-            return false;
-        EnemySprite sprite = placeAtDoor(pick.enemy, source.poi, world, biomes);
+        float expected = share * pull;
+        int count = (int) expected + (rand.nextFloat() < expected - (int) expected ? 1 : 0);
+        boolean placed = false;
+        for (int n = 0; n < count; n++) {
+            forge.adventure.util.DungeonSources.Source source = forge.adventure.util.DungeonSources.draw(sources, rand);
+            if (source == null)
+                break;
+            forge.adventure.util.DungeonSources.Pick pick = forge.adventure.util.DungeonSources.pick(world, source.poi,
+                    Current.player().getStatistic().rank(), rand);
+            if (pick == null)
+                continue;
+            EnemySprite sprite = placeFromSource(pick.enemy, source.poi, world, biomes);
+            int ts = world.getTileSize();
+            System.out.println("[TFR-DungeonSource] " + source.poi.getDisplayName() + " sends " + pick.enemy.getName()
+                    + " (" + pick.enemy.getTieredDisplayName() + ") from " + pick.from
+                    + (sprite == null ? " - no open ground on its way, not placed"
+                            : " at (" + (int) (sprite.getX() / ts) + "," + (int) (sprite.getY() / ts) + "), "
+                            + Math.round(sprite.pos().dst(player.pos()) / ts) + " tiles from the player")
+                    + "; " + Math.round(source.distanceTiles) + " tiles off, standing " + source.ageDays
+                    + " day(s), roll " + (n + 1) + " of " + count + " (expected " + expected + ")");
+            placed |= sprite != null;
+        }
+        return placed;
+    }
+
+    /**
+     * Round 383: a creature from a source "on its way out" - at its door when the player is within the ordinary spawn
+     * distance of it, otherwise at the ordinary spawn distance from the player on the dungeon's side (within 35
+     * degrees of the line to it), so the player meets it rather than it starting a screen or two away. Falls back to
+     * the door.
+     */
+    private EnemySprite placeFromSource(EnemyData enemyData, forge.adventure.pointofintrest.PointOfInterest poi,
+                                        World world, List<BiomeData> biomes) {
+        TuningData tuning = Config.instance().getTuningData();
         int ts = world.getTileSize();
-        System.out.println("[TFR-DungeonSource] " + source.poi.getDisplayName() + " sends " + pick.enemy.getName()
-                + " (" + pick.enemy.getTieredDisplayName() + ") from " + pick.from
-                + (sprite == null ? " - no open ground at its door, not placed"
-                        : " out of its door at (" + (int) (sprite.getX() / ts) + "," + (int) (sprite.getY() / ts) + "), "
-                        + Math.round(sprite.pos().dst(player.pos()) / ts) + " tiles from the player")
-                + "; standing " + source.ageDays + " day(s), rolls x" + source.rateFactor());
-        return sprite != null;
+        float maxTiles = tuning == null ? 13f : tuning.spawnMaxTiles;
+        Rectangle b = poi.getBoundingRectangle();
+        float px = player.getX() + player.getWidth() / 2f;
+        float py = player.getY() + player.getHeight() / 2f;
+        float doorTiles = forge.adventure.util.DungeonSources.edgeDistanceTiles(poi, px, py, ts);
+        if (doorTiles > maxTiles) {
+            float toward = MathUtils.atan2(b.y + b.height / 2f - py, b.x + b.width / 2f - px);
+            EnemySprite sprite = new EnemySprite(enemyData);
+            for (int attempt = 0; attempt < 16; attempt++) {
+                float angle = toward + (rand.nextFloat() * 2f - 1f) * 35f * MathUtils.degreesToRadians;
+                float dist = spawnDistance();
+                float x = px + dist * MathUtils.cos(angle) - sprite.getWidth() / 2f;
+                float y = py + dist * MathUtils.sin(angle);
+                if (landAt(world, biomes, x + sprite.getWidth() / 2f, y) == null)
+                    continue;
+                sprite.setX(x);
+                sprite.setY(y);
+                if (enemyData.flying || !world.collidingTile(sprite.boundingRect())) {
+                    enemies.add(Pair.of(globalTimer, sprite));
+                    foregroundSprites.addActor(sprite);
+                    return sprite;
+                }
+            }
+        }
+        return placeAtDoor(enemyData, poi, world, biomes);
+    }
+
+    /**
+     * Round 383: once per world (the first roll after a load or a new game), how much of the land lies in dungeon reach
+     * - the check on the 85/15 budget, since a spot out of every source's reach only ever gets the land's 15%. Samples
+     * every 4th tile of land (not roads, not water or other colliding ground).
+     */
+    private void logDungeonCoverage(World world, List<BiomeData> biomes) {
+        long start = System.nanoTime();
+        int ts = world.getTileSize();
+        int land = 0, full = 0, partial = 0;
+        float pullSum = 0f;
+        Rectangle probe = new Rectangle(0, 0, ts / 2f, ts / 2f);
+        for (int tx = 0; tx < world.getWidthInTiles(); tx += 4) {
+            for (int ty = 0; ty < world.getHeightInTiles(); ty += 4) {
+                float x = tx * ts + ts / 2f;
+                float y = ty * ts + ts / 2f;
+                if (landAt(world, biomes, x, y) == null)
+                    continue;
+                probe.setPosition(x - ts / 4f, y - ts / 4f);
+                if (world.collidingTile(probe))
+                    continue;
+                land++;
+                List<forge.adventure.util.DungeonSources.Source> in = forge.adventure.util.DungeonSources.inReach(world, x, y, false);
+                if (in.isEmpty())
+                    continue;
+                pullSum += forge.adventure.util.DungeonSources.totalWeight(in);
+                boolean atFull = false;
+                for (forge.adventure.util.DungeonSources.Source src : in)
+                    atFull |= src.falloff >= 1f;
+                if (atFull)
+                    full++;
+                else
+                    partial++;
+            }
+        }
+        TuningData tuning = Config.instance().getTuningData();
+        float share = tuning == null ? 0f : tuning.dungeonSourceShare;
+        float landShare = tuning == null ? 1f : tuning.landSpawnShare;
+        float dungeonPerRoll = land == 0 ? 0f : share * pullSum / land;
+        float total = dungeonPerRoll + landShare;
+        System.out.println("[TFR-DungeonSource] coverage: " + land + " land samples - " + pct(full, land) + "% at full pull, "
+                + pct(partial, land) + "% fading, " + pct(land - full - partial, land) + "% out of reach; per roll on average "
+                + String.format(java.util.Locale.ROOT, "%.2f from dungeons + %.2f from the land (dungeons %.0f%%)",
+                        dungeonPerRoll, landShare, total <= 0f ? 0f : 100f * dungeonPerRoll / total)
+                + " in " + (System.nanoTime() - start) / 1_000_000 + "ms");
+    }
+
+    private static int pct(int part, int whole) {
+        return whole <= 0 ? 0 : Math.round(100f * part / whole);
     }
 
     /** Round 377: a creature 1-3 tiles outside the place's footprint - on land (not a road, not off the map), not on a

@@ -12,7 +12,8 @@
   // an arena champion. They roam their own colours' land in every reputation state (a WUG champion in white, blue
   // and green), never the player's own; they arrive as a legend sighting (announced, a gold dot on the maps, the
   // long legend lifetime), and beating one out here pays its whole reward list - the arena pays one Rare from its
-  // deck instead (round 311).
+  // deck instead (round 311). Round 383: half its gold and 2/3 of its cards (settings.json legendRewardGoldFactor /
+  // legendRewardCardFactor, PlaceRewards.applyLegendCut).
   //
   // Round 382: the twelve new legends (the art-import round) - spawnRate 0, best of three, no roster and
   // no arena; this list is their only route.

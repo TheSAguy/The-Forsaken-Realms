@@ -100,6 +100,42 @@
     },
     {
       "type": "ImageButton",
+      "name": "Equipment_Blessing",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 42
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Heart",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 17,
+      "y": 197
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Pocket",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 175
+    },
+    {
+      "type": "ImageButton",
+      "name": "Equipment_Token",
+      "style": "item_frame_static",
+      "width": 20,
+      "height": 20,
+      "x": 107,
+      "y": 197
+    },
+    {
+      "type": "ImageButton",
       "name": "Equipment_Right",
       "style": "item_frame_static",
       "width": 20,

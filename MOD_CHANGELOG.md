@@ -14264,6 +14264,82 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 383: dungeons carry 85% of the spawns, the special slots on the doll, and the old bugs (2026-09-30)
+
+The user, opening the thread: "Special Slot: show the Blessing slot on the character (Gold Blessing of Speed etc.) on
+the inventory and armory screens, landscape and portrait. Also check the other hidden slots (Heart, Token, Pocket)".
+Mid-round: "I want the dungeons on the map to contribute the most to overworld spawns. Let's say 85% of spawns should
+come from dungeons and the remaining 15% from the land. So if you clear out all the dungeons in an area, it will feel
+safe. Make sure though, that this does not affect Quest spawns." And on the older bugs: legends "cut gold in half and
+the number of cards 2/3"; spawns timed in real time "should increase with speed-up"; the 4K buttons, the bridge's ocean
+load and the short road - "see if we can fix".
+
+- **The special slots** (ui/inventory, inventory_portrait, armory, armory_portrait): four new doll buttons -
+  Equipment_Blessing (17,42, under Ability 1), Equipment_Heart (17,197, under the Medal), Equipment_Pocket (107,175) and
+  Equipment_Token (107,197); portrait = y + 104. No Java was needed to draw them: both scenes collect every
+  "Equipment_*" child and fill it from `itemInSlot(name)`. Items in those slots were always equipped and working
+  (Blessing 4, Heart 5, Token 12, Pocket 1) - only invisible. Previewed with the real art before building.
+- **Slot filters** (`AdventurePlayer.slotTakes`, InventoryScene + ArmoryScene): picking Ability3, Left2 or Right2 listed
+  NOTHING - the filter compared the slot's name with the item's own slot, and no item names those. Now the granted twin
+  takes its base slot's items and Ability3 takes Ability2's.
+- **Empty slot text** (InventoryScene.emptySlotText): picking an empty slot names it and what goes there.
+- **The green box** at ~(17,44): not found - not in equipment.png, the skin's item frames (grey/blue) or the code, and
+  not on the agent's landscape inventory. Asked the user where they see it. (17,42) is where the Blessing slot now is.
+- **The spawn budget** (WorldStage.handleMonsterSpawn/rollDungeonSource, util/DungeonSources, settings
+  `landSpawnShare` 0.15, `dungeonSourceShare` 0.85, `dungeonSourceRadiusTiles` 10, new `dungeonSourceReachTiles` 28,
+  `dungeonSourceRateFactor` 1, new `dungeonSourceMaxPerRoll` 2): each roll, the dungeons in reach send 0.85 x their
+  pull (presence = falloffs summed, AT MOST 1 - one young dungeon near is full strength, a crowd is not more - times
+  their escalation, so an old one sends up to 1.7), the fraction a coin flip; the land's own pick goes ahead on 15% of
+  the rolls ([TFR-SpawnBudget] "land roll held back"). A dungeon creature is placed at the ordinary spawn distance on
+  the dungeon's side of the player (within 35 degrees; at the door when the player is near), not 30 tiles away at the
+  door. The rate factor no longer shortens the roll clock (that sped quest rolls). First try summed the pulls with a
+  40-tile reach: the agent world had 10-11 sources in reach of EVERY spot and 1.7 dungeon spawns a roll - nearly double
+  the old rate, and clearing "an area" meant ten dungeons; hence the saturation and the shorter reach. The coverage line
+  (`[TFR-DungeonSource] coverage:`, once per world, read-only) on the agent world now: 50% of the land at full pull, 49%
+  fading, 1% out of reach; 0.79 from dungeons + 0.15 from the land a roll (84%).
+- **Quest spawns untouched:** an active Defeat quest's creature now rolls FIRST and on its own every roll
+  (spawnQuestExtraOnly, 80% - the old 50/30/20 split's rate), before the legend table, the dungeons, the fog's lit skip
+  and the land's share. The old split also held the ordinary monster back on 30% of the rolls while a quest ran; it no
+  longer does. A dungeon spawn used to spend the roll, quest included - it no longer does.
+- **The spawn clock on game time** (WorldStage.spawnClock, settings `spawnClockFollowsSpeedUp`): Speed-Up's multiplier
+  and the run key step the spawn clock as they step the day, so a day gets the same rolls at any speed. Roamers still
+  despawn on real time (20 s), so 50x would fill the screen: `spawnCrowded()` holds the roll while `spawnCrowdLimit` 14
+  ordinary roamers (not legends, not territory mages) stand within `spawnCrowdRadiusTiles` 24 ([TFR-SpawnBudget]
+  "rolls wait" / "resume", one line per change).
+- **Legend rewards** (util/PlaceRewards.applyLegendCut, settings `legendRewardGoldFactor` 0.5,
+  `legendRewardCardFactor` 0.667; background agent): legends skip the card budget and the purse (spawnRate 0), so their
+  whole list paid (Zacama 6,617 gold). Now on the overworld and in a place: gold x0.5 rounded up, cards x2/3 with the
+  fraction a coin flip, dropped at random but the legend's own named card last; shards, items, +Life, sketchbook,
+  Bronze Coin ransom unchanged. A lair boss that is a legend takes both cuts. [TFR-LegendReward].
+- **4K ante row** (Forge's toolbox/FButton - ENGINE, CORE_ENGINE_CHANGES): the corner buttons' text box ran to the screen
+  edge; at a tall window the scale(40) floor makes button and font grow together with no slack, so "Bronze Coin" and
+  "OK" touched the edges. PADDING kept off the edge side; drawText shrinks into it. Seen at 3840x2130 in the agent: both
+  clear of the edges. The Inn event text: already fixed in round 366 (the Event Standings pane wraps); the Inn screen's
+  100-unit `eventDescription` label does not wrap - not reported, left.
+- **The bridge's ocean load** (agent/AgentActions.load; background agent): round 364's fix (LoadPos before the
+  GameScene -> GameScene switch, whose leave() stored a fresh sprite's (0,0)) had never been run - now seen: save at
+  (346,369), walk away, load from the world map -> (346,369) on land; new log `[TFR-Agent] load slot 4 from GameScene:
+  saved (5534,5917), player now (5534,5917)`. Also clears the map view's bookmarks as the Load screen does.
+- **World-map autosaves keep the spot** (WorldStage.autoSaveHere, 8 call sites): found by the same trace - the
+  autosaves before a duel or a door recorded where the player last LEFT the world map (the sprite stores its position
+  only on a scene leave or F5), so loading one put a real player somewhere stale. storePos() first, as F5 does.
+- **Quest text / FAQ:** "Find a Dungeon" and FAQ.md's cave answer say most creatures come from dungeons and clearing the
+  ones around you quiets the land; a new FAQ entry on Speed-Up.
+- **The old road a tile short of a restored town** (util/RoadNetwork; background agent, verified offline on the user's
+  save): a road ends at a town's anchor, `getTilePosition` = (x + spriteWidth/2)/16 - and the width changes AFTER the
+  roads are laid (neutralizeAfterGeneration turns every Forest Town outside the green keep, 32 px, into a Waste Town,
+  48 px; captures swap data too), so the anchor moved a column off the road on the ground. 32 of the save's 254 roads
+  match the ground only with the old widths - most former-Forest ruins, the towns a player restores. RoadNetwork knew
+  a road only by re-walking it from today's anchors at 95%, so those roads had no protection, and layHops' lift along
+  a restored town's new hop cut them a tile or a corner short. Now: detectEdges also tries the anchor columns of
+  widths 32/48/64 (`anchorColumns`, `groundWalks`, `walkPair`) and keeps the best-covered pair; `Edge.drawn` is the
+  staircase that is more road (not always the canonical one - the second cause, likely round 365's Silent Crossing
+  joint); the keep-set is every road tile on other roads' staircases (`Edge.ground`, `groundTiles`), and the lift
+  touches only the hop's own old road. Replay on the user's save: restore cuts within 5 tiles 116/1,876 -> 0; any-town
+  hops 211/3,778 -> 0. No VERSION bump (the save has 0 gaps). Not in a running game yet. Not done: moving
+  neutralizeAfterGeneration before the road pass (World.java, fresh worlds only); TerritoryControl.layRoad still walks
+  from today's anchors.
+
 ## Round 382: 56 new creatures - twelve of them legends, Victor the vampire an Archmage (2026-09-30)
 
 The user, on the 56 enemies staged from New Art\Units: "Let's implement the new creatures. Let's make the top two rows,

@@ -3430,6 +3430,18 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
 
+## Round 383 (2026-09-30) - corner buttons keep off the screen edge
+
+- **`toolbox/FButton.java`** (Forge's own, `draw()`): the BottomLeft corner case adds `x += PADDING; w -= PADDING;` and
+  BottomRight `w -= PADDING;` after the corner offsets - the text box no longer runs to the screen edge, and drawText's
+  shrink loop fits the label inside it. Every corner button (the lost-ante row's OK / Bronze Coin, the duel's OK /
+  Cancel) draws its text a padding in from the edge; a long label slightly smaller. On a merge: three lines in two
+  switch cases; if upstream reworks the corner geometry, re-apply as "keep PADDING off the screen side".
+- Not engine: `stage/WorldStage.java` is mod-heavy (spawn budget, spawn clock, crowd limit, autoSaveHere at the eight
+  world-map autosaves - stock calls `WorldSave.getCurrentSave().autoSave()` there; keep autoSaveHere on a merge),
+  `util/DungeonSources`, `util/PlaceRewards`, `util/RoadNetwork`, `agent/AgentActions` (mod-added), the four doll
+  layouts.
+
 ## Round 366 (2026-09-28) - the Inn panel wraps; the coin button's label
 
 - **`scene/EventScene.java`** - the blessingInfo block: the Simulate checkbox label wraps (setWrap, growX, image cell

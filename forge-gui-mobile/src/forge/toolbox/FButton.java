@@ -316,6 +316,14 @@ public class FButton extends FDisplayObject implements IButton {
                     w -= cornerTextOffsetX;
                     y += cornerTextOffsetY;
                     h -= cornerTextOffsetY;
+                    // Round 383 (QA at 3840x2130: "OK" hard against the left screen edge, "Bronze Coin" off the
+                    // right). A corner button's text box ran to the screen edge with no padding, and drawText only
+                    // shrinks text until it fills that box - so a long word touched the edge. Small windows hid it:
+                    // the button is 1.1 cm tall there (Utils.AVG_FINGER_HEIGHT), roomier than the scale(40) floor
+                    // that takes over in a tall window, where button and font grow together and leave no slack.
+                    // Keep PADDING off the edge side so drawText shrinks the text to fit inside it.
+                    x += PADDING;
+                    w -= PADDING;
                     break;
                 case BottomRight:
                     g.startClip(x, y, w, h);
@@ -326,6 +334,7 @@ public class FButton extends FDisplayObject implements IButton {
                     w -= cornerTextOffsetX;
                     y += cornerTextOffsetY;
                     h -= cornerTextOffsetY;
+                    w -= PADDING; // Round 383: off the right screen edge - see BottomLeft
                     break;
                 case BottomMiddle:
                     g.startClip(x, y, w, h);
