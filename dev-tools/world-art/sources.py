@@ -35,7 +35,9 @@ def trim(img):
 
 SHEETS = {"ob": ("Outside_B.png", 48), "wc": ("World_C.png", 48), "fo": ("foresta 3.png", 48),
           "bc": ("BCDE_Moderno_18.png", 48), "zb": ("ZRPGBeach.png", 32), "dt": ("deserttiles2.png", 48),
-          "tn": ("73nunEG.png", 48), "cb": ("CaveUploadB.png", 48)}
+          "tn": ("73nunEG.png", 48), "cb": ("CaveUploadB.png", 48),
+          # 2026-09-30: the new doodads, pre-cut from New Art\Terrain (one object per 96 px cell)
+          "nd": ("new_doodads.png", 96)}
 _sheets = {}
 
 
