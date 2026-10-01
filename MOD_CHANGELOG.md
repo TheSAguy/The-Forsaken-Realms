@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 392: one road into the star per town (2026-10-01)
+
+The user, with screenshots of a new world's centre: "there seems to be a lot of roads here. Seems only the one spot
+though." Their save (slot 2, day 1), read with a read-only RoadMap tool: the centre is the densest road block on the
+map - the wheel (Orazca, five spokes, the five-sided rim, the campfire road; rounds 347-348, the user's spec) sits
+about 25 tiles across, and two outside towns had a road into TWO Ring Cities each (Amanaxis Forge - Shiv as well as
+its nearer one; Baker's Steading - Tolaria likewise): parallel roads beside a wheel that already joins them. Cause:
+`worldGenDirect()` never counts a Ring City as the town between two others when the far end is a Ring City too (two
+star towns may not link), so the chain rule that thins roads everywhere else never applied there. "go ahead with the
+one-road-per-town fix":
+
+- A town outside the star keeps ONE road into it, to its nearest Ring City: world-gen filters its pairs
+  (`RoadNetwork.oneRoadIntoStar`, logged), the old-road router (`Star.allowsHop`) only hops from an outside town into
+  its nearest Ring City (captures and the Capitol's network follow the same rule), and saves are normalized once on
+  load - rule 4 (`RoadNetwork.VERSION` 4, `liftExtraStarLinks`): the extra roads lifted, old road only, every kept
+  road's ground and each town's own square left alone. A rule-3 save runs rule 4 alone (no corner pass again). The
+  wheel is unchanged.
+- Agent-checked on a copy of the user's save: `rule 4: 2 extra road(s) into the star lifted (83 tile(s))`, the
+  before/after centre shows the parallel pair gone; a fresh world: `3 extra road(s) into the star dropped`.
+
 ## Round 391: the Front View entrances replaced, animated whirlpools (2026-10-01)
 
 The user: "I got some updated cave/dungeon entrances ... Let's replace some of the Front View entrances we currently

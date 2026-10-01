@@ -3309,6 +3309,10 @@ public class World implements Disposable, SaveFileContent {
             allSortedTowns.clear();
             allSortedTowns.addAll(uniqueRoadLinks);
             repeatedRoadLinks -= allSortedTowns.size();
+            // Round 392: a town outside the star gets one road into it, to its nearest Ring City.
+            int extraStarRoads = forge.adventure.util.RoadNetwork.oneRoadIntoStar(allSortedTowns);
+            System.out.println("[TFR-Roads] world-gen town roads: " + extraStarRoads
+                    + " extra road(s) into the star dropped - one per town outside it (round 392)");
             System.out.println("[TFR-Roads] world-gen town roads: " + repeatedRoadLinks + " pair(s) named twice drawn once");
             System.out.println("[TFR-Roads] world-gen town roads: " + allSortedTowns.size() + " edge(s) including the star's, "
                     + skippedRoadSources + " nearest-neighbor source(s) skipped (fraction " + roadSkip + "), "

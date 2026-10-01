@@ -58,7 +58,7 @@ import forge.adventure.world.World;
  */
 public final class RoadNetwork {
     /** Bumped when the rules change and every save should be normalized again (World.roadsNormalized). */
-    public static final int VERSION = 3; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365)
+    public static final int VERSION = 4; // 2: roads past a town chained on both sides lifted (round 351b); 3: corner joints joined (round 365); 4: one road into the star per town (round 392)
     /** A hop along a road that is already there costs this share of a new one (cost = distance squared). */
     public static final double EXISTING_ROAD_DISCOUNT = 0.35;
     /** A pair of towns is joined by road when this share of either staircase between them is road. */
@@ -168,21 +168,30 @@ public final class RoadNetwork {
         }
 
         /**
-         * May a road run straight between these two towns? Off the star, always; into it only to a Ring City; between
-         * two star towns only along the wheel - the hub to a Ring City or the campfire, a Ring City to its rim
-         * neighbors.
+         * May a road run straight between these two towns? Off the star, always; into it only to a Ring City - and
+         * since round 392 only to the outside town's NEAREST Ring City (one road into the star per town); between two
+         * star towns only along the wheel - the hub to a Ring City or the campfire, a Ring City to its rim neighbors.
          */
         public boolean allowsHop(PointOfInterest a, PointOfInterest b) {
             int ra = role(a), rb = role(b);
             if (ra == 0 && rb == 0)
                 return true;
-            if (ra == 0 || rb == 0)
-                return (ra == 0 ? rb : ra) == RING;
+            if (ra == 0 || rb == 0) {
+                PointOfInterest outside = ra == 0 ? a : b, inside = ra == 0 ? b : a;
+                return (ra == 0 ? rb : ra) == RING && nearestRing(outside) == inside;
+            }
             if (ra == HUB || rb == HUB)
                 return (ra == HUB ? rb : ra) != HUB;
             if (ra == RING && rb == RING)
                 return rimNeighbors(a, b);
             return false;
+        }
+
+        private final Map<PointOfInterest, PointOfInterest> nearestRing = new IdentityHashMap<>();
+
+        /** Round 392: the Ring City nearest this town (positions) - the one road it may have into the star. */
+        PointOfInterest nearestRing(PointOfInterest t) {
+            return nearestRing.computeIfAbsent(t, k -> RoadNetwork.nearestRing(k, rim));
         }
 
         boolean rimNeighbors(PointOfInterest a, PointOfInterest b) {
@@ -191,6 +200,106 @@ public final class RoadNetwork {
                 return false;
             return n < 3 || (i + 1) % n == j || (j + 1) % n == i;
         }
+    }
+
+    // ------------------------------------------------------------------ one road into the star (round 392)
+
+    /** The Ring City of these nearest t, by position; null when there is none. */
+    static PointOfInterest nearestRing(PointOfInterest t, Collection<PointOfInterest> rings) {
+        PointOfInterest best = null;
+        float bd = Float.MAX_VALUE;
+        for (PointOfInterest r : rings) {
+            float d = t.getPosition().dst(r.getPosition());
+            if (d < bd) {
+                bd = d;
+                best = r;
+            }
+        }
+        return best;
+    }
+
+    /** The outside end of a road between a town outside the star and a Ring City; null for any other road. */
+    static PointOfInterest outsideEnd(PointOfInterest a, PointOfInterest b) {
+        int ra = starRole(a), rb = starRole(b);
+        if (ra == 0 && rb == RING)
+            return a;
+        if (rb == 0 && ra == RING)
+            return b;
+        return null;
+    }
+
+    /**
+     * Round 392 (the user, of a new world's centre: "there seems to be a lot of roads here. Seems only the one spot";
+     * then "go ahead with the one-road-per-town fix"): a town outside the star keeps ONE road into it, to the nearest
+     * Ring City it has a road to. worldGenDirect() never counts a Ring City as the town between two others when the far
+     * end is a Ring City too (two star towns may not link), so a town between two Ring Cities was linked to both - two
+     * roads side by side into a wheel that already joins them. World-gen's pairs, filtered in place; returns how many
+     * went.
+     */
+    public static int oneRoadIntoStar(List<Pair<PointOfInterest, PointOfInterest>> pairs) {
+        Map<PointOfInterest, Pair<PointOfInterest, PointOfInterest>> keep = new IdentityHashMap<>();
+        for (Pair<PointOfInterest, PointOfInterest> p : pairs) {
+            PointOfInterest out = outsideEnd(p.getLeft(), p.getRight());
+            if (out == null)
+                continue;
+            Pair<PointOfInterest, PointOfInterest> cur = keep.get(out);
+            if (cur == null || ringDistance(out, p) < ringDistance(out, cur))
+                keep.put(out, p);
+        }
+        int before = pairs.size();
+        pairs.removeIf(p -> {
+            PointOfInterest out = outsideEnd(p.getLeft(), p.getRight());
+            return out != null && keep.get(out) != p;
+        });
+        return before - pairs.size();
+    }
+
+    private static float ringDistance(PointOfInterest out, Pair<PointOfInterest, PointOfInterest> p) {
+        PointOfInterest ring = p.getLeft() == out ? p.getRight() : p.getLeft();
+        return out.getPosition().dst(ring.getPosition());
+    }
+
+    /** Round 392: the roads into the star an outside town has beyond the one to its nearest Ring City (rule 4). */
+    static List<Edge> extraStarLinks(List<Edge> edges) {
+        Map<PointOfInterest, Edge> keep = new IdentityHashMap<>();
+        for (Edge e : edges) {
+            PointOfInterest out = outsideEnd(e.a, e.b);
+            if (out == null)
+                continue;
+            Edge cur = keep.get(out);
+            if (cur == null || out.getPosition().dst((e.a == out ? e.b : e.a).getPosition())
+                    < out.getPosition().dst((cur.a == out ? cur.b : cur.a).getPosition()))
+                keep.put(out, e);
+        }
+        List<Edge> extra = new ArrayList<>();
+        for (Edge e : edges) {
+            PointOfInterest out = outsideEnd(e.a, e.b);
+            if (out != null && keep.get(out) != e)
+                extra.add(e);
+        }
+        return extra;
+    }
+
+    /** Rule 4 (round 392): a save's extra roads into the star lifted - old road only, each town's own square kept. */
+    static int liftExtraStarLinks(World world, Set<Long> touched) {
+        List<PointOfInterest> towns = towns(world);
+        List<Edge> edges = detectEdges(world, towns, null);
+        List<Edge> extra = extraStarLinks(edges);
+        edges.removeAll(extra);
+        Set<Long> keep = groundTiles(edges);
+        Set<Long> prot = protectedTiles(world, towns);
+        int tiles = 0;
+        StringBuilder names = new StringBuilder();
+        for (Edge e : extra) {
+            for (long c : e.canon)
+                tiles += liftOld(world, c, prot, keep, touched);
+            for (long c : e.reverse)
+                tiles += liftOld(world, c, prot, keep, touched);
+            names.append(names.length() == 0 ? "" : ", ").append(e.a.getDisplayName()).append(" - ").append(e.b.getDisplayName());
+        }
+        System.out.println("[TFR-Roads] rule 4: " + extra.size() + " extra road(s) into the star lifted (" + tiles
+                + " tile(s)) - each town outside it keeps one, to its nearest Ring City" + (extra.isEmpty() ? "" : ": " + names));
+        return tiles;
     }
 
     // ------------------------------------------------------------------ geometry
@@ -1118,7 +1227,9 @@ public final class RoadNetwork {
             normalizeAndRebuild(world);
         // Round 365: rule 3 is the corner-joint pass alone - a rule-2 save must NOT rerun the normalization above,
         // which would turn the player network back to old road and route it again against today's map.
-        int joined = joinCorners(world, new HashSet<>());
+        int joined = world.getRoadsNormalized() < 3 ? joinCorners(world, new HashSet<>()) : 0;
+        // Round 392: rule 4 alone for a rule-3 save - one road into the star per outside town.
+        liftExtraStarLinks(world, new HashSet<>());
         world.setRoadsNormalized(VERSION);
         System.out.println("[TFR-Roads] roads normalized to rule " + VERSION + " (" + joined + " corner joint(s) joined) in "
                 + (System.nanoTime() - t0) / 1_000_000 + " ms");
