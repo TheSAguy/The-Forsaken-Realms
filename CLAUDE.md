@@ -110,8 +110,8 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   at Pictures\Screenshots\Terrain\new_doodads.png, spec.py + export.py; no trees - the user's rule). **380: new
   dungeon entrances** - maps/tileset/dungeon_entrances_2 (PixelLab set, one region per dungeon, E_<POI>), 341 of 344
   dungeon places unique (the 3 farms share), six 48-px landmarks; PointOfInterest.load() resizes the saved rectangle to
-  the current sprite. New art staged, NOT imported: 56 enemies from New Art\Units (scratchpad new_units/, the user:
-  "TBD").
+  the current sprite. **381: the OLDER doodads that were trees/rocks/pillars** (95 on seven lands, the player's
+  included) swapped for ground-level pictures (same counts; Terrain\new_doodads.png rows 7-18).
   Open from v1.15 QA: 4K clipped buttons (Use Bronze Coin, Inn event text) - STILL CLIPPED after 366's relabel: the
   lost-card ante row at 3840x2130 cuts OK off the left edge and Bronze Coin off the right (agent, round 375); an old road
   a tile short of a restored town, the bridge's world-map `cmd load` at (0,0), Instant4White selling off-color cards,

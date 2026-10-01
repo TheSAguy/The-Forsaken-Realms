@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 381: the older doodads that were trees, rocks and pillars go ground level (2026-09-30)
+
+The user, after round 379: "yes, swap the older tree doodads for ground-level ones too." The standing rule (round 379):
+doodads are small things on the ground you can run over - trees and rocks are structures with collision elsewhere.
+
+- Audit of all 544 pictures on the seven lands (the player's land included): tall shapes flagged automatically,
+  pictures identical to a BLOCKING structure (the blue boulder, the green/player bush and tree, the Wasteland tree, a
+  cactus) flagged, then every land by eye. 96 rule-breakers; the user rejected one replacement (White's "sand drift" -
+  the original rock pile stays) and asked for the clipped "low prickly pear" to be fixed (re-cut from both of its source
+  tiles - one plant drawn across two XP cells - 24x21 -> 24x26, pad tops whole). 95 replaced, one ground-level picture
+  each: White 9 (upright cacti -> prickly pear pads, desert bloom, low cactus clump, purple sage, dry grass, broadleaf,
+  daisies; a sandstone pile -> a sand ripple), Blue 8 (boulders -> beach pebbles, pebble trail, beach grass; palms ->
+  sea-pinks, sea holly; crystal/ice spires -> ice flower, sea-glass, white pebbles), Black 9 (gravestones/cross ->
+  toadstools, grave flowers, purple roots, scattered bones; crystal spires -> amethyst bits, violet bloom; a standing
+  ribcage -> a bone pile; tar blobs -> tar puddle, tar hole), Red 24 (urns -> rafflesia, fire lily; charred trunks ->
+  charred branch/roots; dead trees, tall cacti, rocks, spires -> leaf litter, thornbush, flowers, toadstools, pebbles,
+  gravel, bones, cracks, sand drifts, dry tufts), Green 17 (tall stumps, boulders, saplings/small trees -> a bird nest,
+  mushrooms, leaves, clover, sprouts, bellflowers, moss, white flowers), Wasteland 13 (an amphora, rock heaps, spires,
+  dead trees, a standing ribcage -> broken planks, ash pebbles, puffballs, twigs, driftwood, ash patch, bones, fallen
+  ribs), Player 15 (structure-twin bushes and fern, boulders, a trunk, signposts, blossom trees -> flower shrubs, a teal
+  fern, flat stones, pebbles, a burrow, mushrooms, pink flowers).
+- Kept as borderline LOW: fallen logs and flat stumps, low bushes, low barrel cacti, low pots, mushrooms, cattails,
+  tall flower stems and fern fronds, dead weed tufts, one bramble, small stones.
+- Same kinds, bands, densities and picture counts (104 kinds, 545 pictures); the round-379 picks and the other 449
+  pictures pixel-identical; no picture on two of the six lands; no twin. The sheet Terrain\new_doodads.png grew to 18
+  rows (rows 1-6 = round 379 unchanged); spec.py 35 kinds; export.py -> doodads_hd.png (the .atlas unchanged). Kinds
+  keep their names - no DOODAD_SET bump. CREDITS: + the Time Fantasy jungle tileset (finalbossblues), the LPC
+  base_out atlas.
+
 ## Round 380: a picture of its own for every cave - the new dungeon entrances (2026-09-30)
 
 The user: "I have found/created new dungeon entrances here F:\Art_to_Tweak\NEW. Please review and see what's best to
