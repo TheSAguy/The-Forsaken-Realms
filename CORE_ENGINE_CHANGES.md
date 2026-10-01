@@ -2329,6 +2329,13 @@ from the plane's `config tables/settings.json`).
 
 ## Upstream merge log
 
+- **2026-10-01 - merged upstream `master` @ `fd5c996b843` (Forge 2.0.16-SNAPSHOT, 09.30 daily; round 385).** Five
+  conflicts (`Forge.java`, `TransitionScreen.java`, `RewardActor.java`, `RewardScene.java`, `ArenaScene.java`) - see
+  "Round 385" above. Base install `E:\GAMES\Forge_2`: `build.txt` `2026-09-30 18:27:14`, jars 2.0.16-SNAPSHOT; probes:
+  HAS `fd5c996b843` (`dungeonMasterQuestGiven` in `AdventurePlayer.class`), LACKS `07adf4d5483` (`nlDeckUrlGhostText`
+  in `res/languages/en-US.properties`). The next merge starts at `07adf4d5483` (upstream head at the fetch:
+  `153b545fa43`).
+
 - **2026-09-26 - merged upstream `master` @ `95dc682bf92` (Forge 2.0.15-SNAPSHOT, 09.26 daily; 30 first-parent
   commits / 43 in all since `3a1b16089da`; round 353).** Three conflicts (`MapStage.java`, `Reward.java`,
   `FBufferedImage.java`) - see "Round 353: the 09.26 engine merge" above. Base install `E:\GAMES\Forge_2`:
@@ -3429,6 +3436,28 @@ into the town just left. It also leans on `TileMapScene.leave()` clearing the wo
 ## Round 176 (2026-09-11) - no engine edits
 
 Client only (`dev-tools/agent/tfr_agent.py`: `settle` stops at a lost ante's Bronze Coin / Buy Back prompt).
+
+## Round 385 (2026-10-01) - the 09.30 engine merge (upstream `fd5c996b843`, Forge 2.0.16-SNAPSHOT)
+
+- **`forge-gui-mobile/src/forge/Forge.java`** - `render()`: our `AgentBridge.startIfConfigured()` line and upstream's
+  new `ScreenUtil.getInstance().onRenderFrame()` both kept (ours first).
+- **`forge-gui-mobile/src/forge/screens/TransitionScreen.java`** - upstream declares `bgTexture` once for every branch;
+  the loading branch now only overrides it with `ADV_WORLDGEN_BG` on the "Generating World" screen (was our own local
+  declaration there).
+- **`forge-gui-mobile/src/forge/adventure/util/RewardActor.java`** - `renderPlaceholder()`: our round-321 wrapper
+  (closes and reopens the shared batch) kept; upstream #12054's guard (GUI thread or headless only, else null) placed
+  at its top, before the batch is touched.
+- **`forge-gui-mobile/src/forge/adventure/scene/RewardScene.java`** - upstream's `origDrawable = getBGDrawable()` added
+  at the end of our (much longer) constructor; the rest of upstream's changes (the `EventReward` type, the last-duel
+  picture behind Loot) merged cleanly.
+- **`forge-gui-mobile/src/forge/adventure/scene/ArenaScene.java`** - our round-311 payout block kept; its reward screen
+  now opens as upstream's new `RewardScene.Type.EventReward` (was `Loot`).
+- Not a conflict, but needed: upstream deleted `common/decks/standard/bluewizard_hard_control2.dck` (#11732), which the
+  TFR plane's Master Blue Wizard still listed - swapped for upstream's replacement `bluewizard_hard_tempo.dck`.
+- Version 2.0.15-SNAPSHOT -> **2.0.16-SNAPSHOT** (upstream released 2.0.15): the jar is
+  `forge-gui-mobile-dev-2.0.16-SNAPSHOT-jar-with-dependencies.jar`. The packager finds it by pattern;
+  `dev-tools/agent/agent_launch.cmd` now does too (it named 2.0.15). Delete the old jar from
+  `forge-gui-mobile-dev/target/` before a package (the packager wants exactly one).
 
 ## Round 383 (2026-09-30) - corner buttons keep off the screen edge
 

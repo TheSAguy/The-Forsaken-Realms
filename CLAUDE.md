@@ -129,7 +129,11 @@ Then run `git log --oneline -15` and `git status` — those two tell you the res
   (floor 25), never raised (DuelScene.earlyWeekLife; not boss/legend/Arena/Inn/territory mage/guard/NG+; NOTE the HUD
   shows "Week 0" for days 1-7); a visited dungeon's inhabitants by the week's tier odds (DungeonSources.byWeekTier);
   farms + Zedruu City in dungeon_entrances_2 (TRAP: that atlas has a 2nd page = buildings.png - new regions BEFORE the
-  page break); console POI teleport refused mid-duel. Legend reward cut still unseen in play.
+  page break); console POI teleport refused mid-duel. Legend reward cut still unseen in play. **384:** terrain share by
+  land + standing (player .15, waste .25, Partner .15 / Happy .20 / Neutral .25 / Unhappy .30 / War .40; dungeons the
+  rest - WorldStage.landShareOn). **385: ENGINE = THE 09.30 DAILY, Forge 2.0.16-SNAPSHOT** (upstream `fd5c996b843`;
+  5 conflicts Forge/TransitionScreen/RewardActor/RewardScene/ArenaScene, all both-sides; Master Blue Wizard deck swap;
+  new forge-gui test deps needed ONE online Maven run; jar renamed 2.0.16 - agent_launch.cmd globs it).
   Open from v1.15 QA: Instant4White selling off-color cards, Leather Boots start unequipped; Inn screen's
   `eventDescription` label (100 units) does not wrap - unreported.
 - **NEXT SESSION starts here (round 331, 2026-09-24 afternoon): the v1.14.1 HOTFIX.** The user pulled v1.14 the

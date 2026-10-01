@@ -966,7 +966,7 @@ public class GameHUD extends Stage {
             return;
         if (Forge.advFreezePlayerControls)
             return;
-        WorldSave.getCurrentSave().header.createPreview();
+        WorldSave.requestPreview();
         Forge.switchScene(InventoryScene.instance());
     }
 

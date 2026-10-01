@@ -14264,6 +14264,41 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 385: the 09.30 engine merge - Forge 2.0.16-SNAPSHOT (2026-10-01)
+
+The user: "I've updated the base game of Forge (E:\GAMES\Forge_2) Please update to it." The install is the 09.30 daily
+(build.txt 2026-09-30 18:27:14, jars 2.0.16-SNAPSHOT); probes put it at upstream `fd5c996b843` (has the NG+ quest-gate
+flags, lacks the deck-import-from-URL strings). 36 first-parent commits since `95dc682bf92`; upstream also released
+2.0.15 and moved to 2.0.16-SNAPSHOT.
+
+- **Five conflicts**, all resolved keeping both sides (CORE_ENGINE_CHANGES "Round 385"): Forge.render (agent bridge +
+  ScreenUtil.onRenderFrame), TransitionScreen (upstream's shared bgTexture, our world-gen picture), RewardActor
+  (our batch wrapper + upstream's GUI-thread guard), RewardScene (upstream's origDrawable at the end of our
+  constructor), ArenaScene (our payout block, upstream's EventReward type).
+- **What upstream brings that players see:** the reward screen after a duel shows that duel's last picture behind it
+  (Loot) - arena, Inn and booster rewards open as the new EventReward instead; the match transition screen reworked;
+  faster targeting arrows; New Game+ clears the quest-gate flags (`noQuest`, `dungeonMasterQuestGiven`); AI combat
+  changes (#12079 and the attack/block controllers); the Master Blue Wizard's weak control deck replaced by a tempo list
+  and the Slingshot Bandit's deck fixed (common decks); card fixes.
+- **Plane data:** the TFR Master Blue Wizard listed the deleted `bluewizard_hard_control2.dck` - now upstream's
+  `bluewizard_hard_tempo.dck`. Validator: baseline categories only.
+- **Build:** forge-gui now has test-only dependencies (Mockito, ByteBuddy, Objenesis, AssertJ) - one online Maven run
+  fetched them; offline builds work again after. The jar's new name: the packager matches it by pattern;
+  agent_launch.cmd now does too.
+
+## Round 384: the terrain share of spawns by land and standing (2026-10-01)
+
+The user: "I think 15% attribution to spawns from Terrain is good for the player, but low for other areas. Player: 15%
+Terrain - 85% Dungeons. Waste: 25/75. AI Partner: 15/85. AI Happy: 20/80. AI Neutral: 25/75. AI Unhappy: 30/70. AI
+War: 40/60."
+
+- `WorldStage.landShareOn(land)`: settings `landSpawnSharePlayer` 0.15, `Waste` 0.25, and on a color's land by
+  ColorReputation.getStatus - `Partner` 0.15, `Happy` 0.20, `Neutral` 0.25, `Unhappy` 0.30, `War` 0.40 (anything else,
+  or reputation off: Neutral). The land is the player's own tile, before an intrusion swaps the roster; on a road, the
+  land under it (`landUnder`, road bits masked). The dungeons in reach get 1 - that, times their pull.
+  `dungeonSourceShare` is now only the switch (1; 0 = off). The single `landSpawnShare` is gone.
+- The coverage log weighs each sample by its own land's split. FAQ's cave answer lists the shares.
+
 ## Round 383b: gentler first two weeks, dungeon inhabitants by the week's odds, farm and Zedruu pictures (2026-09-30)
 
 The user, after round 383: "I feel like the new spawn from dungeons is going to make it a little harder to control the

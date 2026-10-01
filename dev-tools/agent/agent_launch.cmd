@@ -13,7 +13,8 @@ set "APPDATA=C:\TFR\agent\profile"
 set "TFR_AGENT_PORT=8765"
 set "TFR_AGENT_CHEATS="
 if /i "%~1"=="cheats" set "TFR_AGENT_CHEATS=1"
-set "JAR=C:\TFR\agent\The Forsaken Realms\forge-gui-mobile-dev-2.0.15-SNAPSHOT-jar-with-dependencies.jar"
+rem Round 385: whichever engine version the folder holds (2.0.16-SNAPSHOT since the 09.30 merge).
+for %%J in ("C:\TFR\agent\The Forsaken Realms\forge-gui-mobile-dev-*-jar-with-dependencies.jar") do set "JAR=%%~fJ"
 set "OPENS=--add-opens java.desktop/java.beans=ALL-UNNAMED --add-opens java.desktop/javax.swing.border=ALL-UNNAMED --add-opens java.desktop/javax.swing.event=ALL-UNNAMED --add-opens java.desktop/sun.swing=ALL-UNNAMED --add-opens java.desktop/java.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt.color=ALL-UNNAMED --add-opens java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/javax.swing=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/java.math=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED -Dio.netty.tryReflectionSetAccessible=true -Dfile.encoding=UTF-8"
 cd /d "C:\TFR\agent\The Forsaken Realms"
 if "%~2"=="" (

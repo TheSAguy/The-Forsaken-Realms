@@ -1420,7 +1420,7 @@ public class ArenaScene extends UIScene implements IAfterMatch {
                 System.out.println("[TFR-ArenaCoin] bracket payout: no coin-holding foes were"
                         + " beaten this bracket - nothing owed");
             coinRansomFoesBeaten.clear();
-            RewardScene.instance().loadRewards(data, RewardScene.Type.Loot, null);
+            RewardScene.instance().loadRewards(data, RewardScene.Type.EventReward, null); // round 385: upstream 09.30
             Forge.switchScene(RewardScene.instance());
         } else {
             // roundsWon == 0: no reward screen is shown at all, so there is nowhere to put a coin.

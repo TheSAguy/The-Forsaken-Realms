@@ -635,7 +635,7 @@ public abstract class GameStage extends Stage {
                 noQuicksaveDialog.activate();
             } else {
                 getPlayerSprite().storePos();
-                WorldSave.getCurrentSave().header.createPreview();
+                WorldSave.requestPreview();
                 WorldSave.getCurrentSave().quickSave();
             }
         }
@@ -781,7 +781,7 @@ public abstract class GameStage extends Stage {
     public void openMenu() {
         if (Forge.advFreezePlayerControls)
             return;
-        WorldSave.getCurrentSave().header.createPreview();
+        WorldSave.requestPreview();
         Forge.switchScene(StartScene.instance());
     }
 

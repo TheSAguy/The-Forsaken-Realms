@@ -3,11 +3,13 @@ package forge.adventure.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.github.tommyettinger.textra.TextraButton;
@@ -63,7 +65,8 @@ public class RewardScene extends UIScene {
         Shop,
         Loot,
         QuestReward,
-        RewardChoice
+        RewardChoice,
+        EventReward
     }
 
     Type type;
@@ -81,6 +84,7 @@ public class RewardScene extends UIScene {
     private float selectionPriceMultiplier = 0f;
     public Image marketBackgroundImg = null;
     private Actor cachedCardsContainerActor = null;
+    private Drawable origDrawable = null;
 
     private RewardScene() {
         super(Forge.isLandscapeMode() ? "ui/items.json" : "ui/items_portrait.json");
@@ -171,6 +175,7 @@ public class RewardScene extends UIScene {
         placeModButton(storageButton, 0);
         storageButton.setVisible(false);
         ui.addActor(storageButton);
+        origDrawable = getBGDrawable(); // round 385 (09.30 merge): upstream keeps the page background for enter()
     }
 
     /**
@@ -636,7 +641,7 @@ public class RewardScene extends UIScene {
             if (!(actor instanceof RewardActor rewardActor)) {
                 continue;
             }
-            if (type == Type.Loot)
+            if (type == Type.Loot || type == Type.EventReward)
                 AdventurePlayer.current().addReward(rewardActor.getReward());
             if (type == Type.QuestReward)
                 AdventurePlayer.current().addReward(rewardActor.getReward()); // TODO Want to customize this soon to have selectable rewards which will be handled different here
@@ -668,7 +673,7 @@ public class RewardScene extends UIScene {
         stage.act(delta);
         ImageCache.getInstance().allowSingleLoad();
         if (doneClicked) {
-            if (type == Type.Loot || type == Type.QuestReward) {
+            if (type == Type.EventReward || type == Type.Loot || type == Type.QuestReward) {
                 flipCountDown -= delta;
                 exitCountDown += delta;
             }
@@ -685,6 +690,11 @@ public class RewardScene extends UIScene {
     public void enter() {
         autoSell = false;
         updateDetailButton();
+        if (type == Type.Loot && Forge.lastPreview != null) {
+            setUIBackground(getLastPreviewDrawable(new TextureRegion(Forge.lastPreview)));
+        } else {
+            setUIBackground(origDrawable);
+        }
         super.enter();
         // Round 146: coming back from the roaming-guard Info screen, which is a real scene switch -
         // re-open the roster the player left rather than dropping them on the Armory page.
@@ -714,7 +724,7 @@ public class RewardScene extends UIScene {
         }
         if (exit)
             done(true);
-        else if ((type == Type.Loot || type == Type.QuestReward) && !shown) {
+        else if ((type == Type.EventReward || type == Type.Loot || type == Type.QuestReward) && !shown) {
             shown = true;
             float delay = 0.09f;
             generated.shuffle();
@@ -959,7 +969,7 @@ public class RewardScene extends UIScene {
         headerLabel.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (type == Type.Loot || type == Type.QuestReward) {
+                if (type == Type.EventReward || type == Type.Loot || type == Type.QuestReward) {
                     autoSell = !autoSell;
                     String cb = autoSell ? "\u2611 " : "\u2610 ";
                     headerLabel.setText("[%?SHINY][;]" + cb + Forge.getLocalizer().getMessage("lblAll"));
@@ -1135,6 +1145,7 @@ public class RewardScene extends UIScene {
                 }
                 break;
             case QuestReward:
+            case EventReward:
             case Loot:
                 headerLabel.setPosition(restockButton.getX(), restockButton.getY());
                 headerLabel.setVisible(true);
@@ -1259,7 +1270,7 @@ public class RewardScene extends UIScene {
                     lastRowXAdjust = ((numberOfColumns * cardWidth) - (lastRowCount * cardWidth)) / 2;
             }
 
-            RewardActor actor = new RewardActor(reward, type == Type.Loot || type == Type.QuestReward, type, type == Type.Shop && (numberOfRows > 2 || numberOfColumns > 2));
+            RewardActor actor = new RewardActor(reward, type == Type.EventReward || type == Type.Loot || type == Type.QuestReward, type, type == Type.Shop && (numberOfRows > 2 || numberOfColumns > 2));
 
             actor.setBounds(lastRowXAdjust + xOff + cardWidth * (i % numberOfColumns) + spacing, yOff + cardHeight * currentRow + spacing, cardWidth - spacing * 2, cardHeight - spacing * 2);
 
