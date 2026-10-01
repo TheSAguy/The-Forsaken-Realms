@@ -320,6 +320,13 @@ stands adds 25% to what it sends, up to double. Clear its enemies out and it goe
 +1 reputation - clear the dungeons around you and the land there goes quiet. Story places, boss lairs and castles
 don't do this, and quest creatures (an invasion to stop, a creature to hunt) come as usual wherever you are.
 
+### Why do monsters have less life early on?
+
+The realm eases you in: in your first week (days 1-7) a monster starts its duel with half its life, but never fewer
+than 20, and in the second week three quarters, never fewer than 25. A monster that already has less keeps what it
+has. Bosses, legends, Arena and Inn fights and war mages are never eased, and neither is New Game+. A dungeon you've
+been inside also sends out its stronger inhabitants only as the weeks go by.
+
 ### Does Speed-Up change how many monsters I meet?
 
 Monsters keep pace with the clock: with Speed-Up on (or the run key held), they show up as much faster as the days go

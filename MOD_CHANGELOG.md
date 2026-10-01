@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 383b: gentler first two weeks, dungeon inhabitants by the week's odds, farm and Zedruu pictures (2026-09-30)
+
+The user, after round 383: "I feel like the new spawn from dungeons is going to make it a little harder to control the
+monster level at the start of the game... Let's make it that week 1, enemy health is 50% normal, but not lower than 20
+health (unless they already have less). Week 2, 75%, but not less than 25." On my reply (the real leak is a visited
+dungeon's inhabitants coming out evenly, ignoring the week; exempt bosses, legends, Arena/Inn, territory mages, New
+Game+): "yes, do both with those exemptions." Then three new entrance sheets (New Art/Farm.png, VampireCastle.png,
+Zedruu.png, 8x8 of 32 px each) - and on the preview: "I liked the older Vampire castle 1, 2 & 3 more than the new."
+
+- **The early life ramp** (DuelScene.earlyWeekLife, settings `earlyLifeWeek1Factor` 0.5 / `Floor` 20,
+  `earlyLifeWeek2Factor` 0.75 / `Floor` 25): the life a duel starts with, after the difficulty factor and the
+  day/night terrain, x the week's factor, raised to the floor, never above what it had. Week = SpawnTierWeighting's
+  (days 1-7, 8-14) - NOTE the HUD counts from "Week 0", so the ramp covers the HUD's Week 0 and Week 1. Exempt: boss,
+  legend/roaming champion (LegendSpawns.isMember), Arena or Inn (isArena/eventData), territory mage (territoryColor),
+  a guard's fight (aiControlsPlayerSide), New Game+ (character flag). Seen: Clay Golem week 1 45 -> 23; Apprentices at
+  12-15 kept (under the floor on Normal).
+- **Inhabitants by the week's odds** (DungeonSources.byWeekTier): a visited source's living inhabitants are drawn by
+  SpawnTierWeighting.targetTierWeight(tier, week, land color) shared among each tier's members - a tier at 0 this
+  week stays inside, and if every tier present is at 0 the ordinary roll of its color takes over ("its N living not
+  due this week"). Seen on the day-24 save: "from its inhabitants (13 living, week 4's tier odds)".
+- **Entrance pictures** (maps/tileset/dungeon_entrances_2, a 64-px strip appended at y 456; install script in the
+  session scratchpad, install_entrances384.py): Levilain's Farm (Castle3) = Farm #8, Scarecrow Farm #19, Squirrel Farm
+  #58 - the three farms no longer share - and Zedruu City = Zedruu #15 at 64 px (was buildingsbosses' 57x42). The
+  Vampire Castles keep their art (the user's call); the Vampire Dungeon keeps round 380's. TRAP found doing it: this
+  atlas has a SECOND page (`../../../common/maps/tileset/buildings.png`, E_DjinnPalace onward), so regions appended at
+  the end of the file land on buildings.png - the first build drew castle fragments; new regions go before the page
+  break. Seen in the agent game: the three non-rotating places show the new art.
+- **Console teleport during a duel** (ConsoleCommandInterpreter "teleport to poi"): refused while DuelScene is up. The
+  agent test teleported mid-duel; the duel's end reached MapStage.setWinner with no mob of the newly loaded map - NPE,
+  game closed. Cheat-only path.
+- **Also seen this round (round 383 items):** Speed-Up with the crowd limit - "15 roamers within 24 tiles (limit 14) -
+  rolls wait (Speed-Up on)" / "rolls resume", 13 roamers within ~13 tiles after two fast days; the world-map load
+  again on its tile. Not seen: a legend's reward cut (the Cinderstone Brute beat the day-24 Black deck).
+
 ## Round 383: dungeons carry 85% of the spawns, the special slots on the doll, and the old bugs (2026-09-30)
 
 The user, opening the thread: "Special Slot: show the Blessing slot on the character (Gold Blessing of Speed etc.) on

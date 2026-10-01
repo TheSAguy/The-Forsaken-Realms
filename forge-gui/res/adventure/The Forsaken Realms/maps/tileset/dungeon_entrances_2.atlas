@@ -1291,6 +1291,34 @@ E_Camel_Cave
   orig: 48, 48
   offset: 0, 0
   index: -1
+E_Castle3
+  rotate: false
+  xy: 0, 456
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Scarecrow_Farm
+  rotate: false
+  xy: 32, 456
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Squirrel_Farm
+  rotate: false
+  xy: 64, 456
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+E_Zedruu_City
+  rotate: false
+  xy: 96, 456
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 
 ../../../common/maps/tileset/buildings.png
 size: 448,1024
@@ -1379,33 +1407,5 @@ E_SkullCaveR2
   xy: 256, 336
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_Castle3
-  rotate: false
-  xy: 0, 456
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_Scarecrow_Farm
-  rotate: false
-  xy: 32, 456
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_Squirrel_Farm
-  rotate: false
-  xy: 64, 456
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-E_Zedruu_City
-  rotate: false
-  xy: 96, 456
-  size: 64, 64
-  orig: 64, 64
   offset: 0, 0
   index: -1

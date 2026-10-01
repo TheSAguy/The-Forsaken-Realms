@@ -218,6 +218,10 @@ public class ConsoleCommandInterpreter {
             // Teleporter (EconomyBuildings.travelTo()) and every portal do. Loading one map over another without
             // leaving it is how a chain of hops ended in a lost duel whose result reached the world stage (the NPE in
             // WorldStage.setWinner, agent log forge.r301-crash.log).
+            // Round 383b (agent test): a teleport issued while a duel ran loaded the place under it, and the duel's end
+            // then reached MapStage.setWinner with no mob of that map - an NPE that closed the game. Not during a duel.
+            if (Forge.getCurrentScene() instanceof forge.adventure.scene.DuelScene)
+                return "Not during a duel.";
             if (MapStage.getInstance().isInMap())
                 MapStage.getInstance().exitDungeon(false, false);
 
