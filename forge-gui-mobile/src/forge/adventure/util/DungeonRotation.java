@@ -251,16 +251,54 @@ public class DungeonRotation {
             Integer backDay = world.getPoiRespawnDay().get(id);
             if (backDay != null && currentDay < backDay)
                 continue;
-            poi.setActive(true);
-            world.getPoiRespawnDay().remove(id);
-            world.getLairBossDownDay().remove(id);
-            int restocked = restock(poi);
-            System.out.println("[TFR-Lair] " + poi.getDisplayName() + " is back on the map (day " + currentDay
-                    + ", after clear #" + clears + "): " + restocked + " enemies/rewards restocked - return visits pay"
-                    + " half, no +Life, no signature item");
+            returnLair(world, poi, "day " + currentDay + ", after clear #" + clears);
             changed = true;
         }
         return changed;
+    }
+
+    /** Round 299's return of a cleared lair to its own spot, restocked; round 389 also calls it for a quest target. */
+    private static void returnLair(World world, PointOfInterest poi, String why) {
+        String id = poi.getID();
+        poi.setActive(true);
+        world.getPoiRespawnDay().remove(id);
+        world.getLairBossDownDay().remove(id);
+        int restocked = restock(poi);
+        System.out.println("[TFR-Lair] " + poi.getDisplayName() + " is back on the map (" + why + "): " + restocked
+                + " enemies/rewards restocked - return visits pay half, no +Life, no signature item");
+    }
+
+    /**
+     * Round 389 (a player on Discord: "I also completed the pest control quest and received it again, but the hive for
+     * the second quest does not exist; my arrow is pointing to something invisible"). Pest Control targets the one place
+     * tagged Xira - Xira's Hive, a vanishing lair - and a lair the player emptied is off the map for its rest. The quest
+     * stage's fallback binds a hidden place when no visible one carries the tag, and onQuestTargetBound() brings a hidden
+     * DUNGEON back for it, but returned at once for a lair (not rotatable), so the arrow pointed at nothing. Now a lair
+     * a quest needs comes back early: when the quest binds it, and on load for a quest already pointing at a hidden one
+     * (a quest's saved target is its own copy of the place, so the world's place is looked up by id).
+     */
+    private static boolean returnLairForQuest(World world, PointOfInterest poi, String why) {
+        if (poi == null || poi.getActive() || !isVanishingLair(poi.getData()) || isRetired(poi))
+            return false;
+        returnLair(world, poi, why);
+        world.refreshWorldMapMarkers();
+        return true;
+    }
+
+    /** Round 389: on load - every hidden lair a quest in the log still needs comes back. */
+    public static void returnQuestTargetLairs(World world) {
+        if (!isEnabled() || world == null || Current.player() == null)
+            return;
+        java.util.Map<String, String> needed = new java.util.HashMap<>();
+        for (AdventureQuestData quest : Current.player().getQuests())
+            for (PointOfInterest target : quest.getAllPendingTargetPOIs())
+                if (target != null && target.getID() != null)
+                    needed.put(target.getID(), quest.name);
+        if (needed.isEmpty())
+            return;
+        for (PointOfInterest poi : world.getAllPointOfInterest())
+            if (needed.containsKey(poi.getID()))
+                returnLairForQuest(world, poi, "the quest '" + needed.get(poi.getID()) + "' points at it - repaired on load");
     }
 
     /**
@@ -352,8 +390,12 @@ public class DungeonRotation {
      * so the density self-corrects at the next natural despawn.
      */
     public static void onQuestTargetBound(PointOfInterest poi) {
-        if (!isEnabled() || !isRotatable(poi))
+        if (!isEnabled())
             return;
+        if (!isRotatable(poi)) {
+            returnLairForQuest(WorldSave.getCurrentSave().getWorld(), poi, "a new quest targets it"); // round 389
+            return;
+        }
         if (isRetired(poi)) {
             // Round 347: AdventureQuestStage no longer offers a retired place at all; this guards any other caller. A
             // place retired for good never comes back, not even for a quest - the Demon's Bargain would deal again.

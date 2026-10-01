@@ -283,6 +283,7 @@ public class WorldSave {
                     currentSave.world.migrateGround();
                     currentSave.world.migrateMapIconLayout();
                     forge.adventure.util.PlayerRoads.migrateOnLoad(currentSave.world); // round 346: a Capitol from before
+                    forge.adventure.util.DungeonRotation.returnQuestTargetLairs(currentSave.world); // round 389
                     // Re-derive the minimap fog overlay now that the vision cache is real -
                     // World.load()'s own rebuild ran before pointOfInterestChanges loaded, so its
                     // Revealed tier (owned-town vision circles) was computed against an empty

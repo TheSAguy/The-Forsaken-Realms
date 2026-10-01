@@ -14264,6 +14264,27 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 389: a quest that needs a vanished boss lair brings it back (2026-10-01)
+
+A player on Discord: "I also completed the pest control quest and received it again, but the hive for the second quest
+does not exist; my arrow is pointing to something invisible."
+
+- **Cause:** Pest Control's Clear stage targets the one place tagged `Xira` - Xira's Hive, a round-299 vanishing lair
+  (`sidebosseasy`, Hostile, count 1). Emptied, it leaves the map for its rest. The re-offered quest found no VISIBLE
+  place with the tag, took the hidden one (AdventureQuestStage's inactive fallback), and `onQuestTargetBound()` - which
+  force-spawns a hidden DUNGEON for exactly this case - returned at once for anything not rotatable, lairs included.
+- **Fix** (util/DungeonRotation): `returnLair()` (round 299's return, factored out) also runs for a quest -
+  `onQuestTargetBound()` brings a hidden, unretired vanishing lair back at once (restocked, return-visit rewards), and
+  `returnQuestTargetLairs()` runs on every load (WorldSave, after PlayerRoads) for a save already pointing at one. A
+  quest's saved target is its own copy of the place, so the world's place is found by id. Every boss-lair quest, not
+  just Pest Control. Log: `[TFR-Lair] ... is back on the map (a new quest targets it | the quest '...' points at it -
+  repaired on load)`.
+- **Spawns** (the user asked): hidden places feed none - `DungeonSources.isSource()` takes only rotatable places that
+  are active and not cleared; lairs are never sources.
+- Agent-seen: Xira's Hive emptied by console, walked out ("gone until day 40"), `give quest 24` -> "back on the map (a
+  new quest targets it): 20 enemies/rewards restocked", listed 2 tiles E. The on-load repair not exercised (the fix
+  makes the state unreachable in a new session; the reporter's save will show it).
+
 ## Round 388: whole doodad pictures, doodads under the player, no sea line between lands (2026-10-01)
 
 The user, from a table of every doodad by land: "some look cut/clipped" - then, with two screenshots: "It looks like
