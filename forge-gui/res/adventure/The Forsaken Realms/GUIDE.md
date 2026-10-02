@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.16](#whats-new-in-116)
+2. [What's New in 1.17](#whats-new-in-117)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,46 +41,29 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.16
+## What's New in 1.17
 
 The short version for returning players. Each item links to where the guide covers it in full.
 
-- **Dungeons are where the monsters come from.** Most roaming creatures now come out of the ordinary
-  dungeons and caves around you; the land itself adds only a share that depends on whose land it is and how
-  that color feels about you. Clear the dungeons in an area and it goes quiet. See
-  [Where the Monsters Come From](#where-the-monsters-come-from).
-- **A gentler first two weeks.** In days 1-7 a monster starts its duel with half its life (never under 20),
-  in days 8-14 with three quarters (never under 25). See [Notes on Difficulty](#notes-on-difficulty).
-- **Legends have a table of their own.** They appear only on the land of a color that is Unhappy or at War
-  with you, rarely, the ones you haven't met first, one at a time. They hold their ground until you come
-  close, start with a Gemstone Mine in play, and pay half the gold and two thirds of the cards they used to.
-  See [Legends](#legends).
-- **56 new creatures**, twelve of them legends - among them five dragons and **Victor**, a vampire Archmage
-  - and ten new color + artifact decks. (The Church of Valgavoth's cleric is now "Victor, Valgavoth's
-  Seneschal".)
-- **Your character's hidden slots are on the doll.** The Blessing, Heart, Pocket and Token slots now show on
-  the inventory and Armory screens. See the [Item Guide](#item-guide).
-- **Speed-Up keeps the monsters in step.** Spawns now follow game time, so a day brings the same number of
-  creatures at any speed, with a cap on how many crowd around you.
-- **Losing a duel costs a share of your gold** - 2% / 5% / 10% / 15% by difficulty, with a minimum.
-- **Quests:** up to 10 side quests at once, new ones last 15 days, "return to town" stages wait until you
-  actually walk back in, and the creatures a quest asks for turn up on roads and on your own land too. See
-  [Quests](#quests).
-- **Inn tournaments** turn over each in-game week, and winning one raises that town's reputation by 1.
-- **Card sets:** a set is now every card printed in it, and Research counts each distinct card you own in
-  that set's printing. Shops only hand out printings from the sets they're allowed. See
-  [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
-- **Shops:** a shop with one color in its name sells only that color's cards; the Gods shop is Mythic, and
-  the Angel, Demon, Dragon, Hydra, Nobles and Sphinx shops are Rare (Capitol only).
-- **Fog of War:** a town lights up again each time you approach it, resource pickups only show where you can
-  see right now, and unvisited-place markers dim under the fog.
-- **Dungeons:** every dungeon and cave has an entrance picture of its own, and loot behind a locked gate or
-  door no longer has a guard.
-- **The map:** your Capitol and towns sit on cobbled plazas, no decoration lies on a road, and every
-  walk-over decoration is now low to the ground - anything tall is an obstacle.
-- **Your starting kit is worn:** starting gear goes straight onto an empty slot.
-- **Engine:** Forge 2.0.16 (the 09.30 build) - a reworked match transition, the reward screen shows the
-  duel's last picture behind it, faster targeting arrows, smarter AI combat and card fixes.
+- **Enemies learn your tricks.** Beat the same enemy three times in a row and from then on it starts each
+  duel with a **Wastes** in play - until it beats you once, and its count starts over. Normal difficulty and
+  up. **Archmages** now start every duel with a Wastes too (not in town, Ring City, capital or Capitol fights,
+  or Inn tournaments). See [Notes on Difficulty](#notes-on-difficulty).
+- **New Game+ asks what comes along:** cards only, cards and the resources you carry, or those plus a refund
+  of what you invested in the towns and buildings you still hold - and whether to keep your items. Every
+  New Game+ starts with exactly five coins, and your roaming guards hand back their decks and gear. See
+  [New Game+](#new-game).
+- **Well over a hundred dungeons, caves, castles and lairs have new map pictures** - the old front-view caves
+  are now three-quarter-view caves of their own land.
+- **Each kind of dungeon at its share of the map** - no more clusters of one kind. Existing worlds rebalance
+  once on load.
+- **The Bronze Coin button shows the gold it saves** on the "Card Lost" screen.
+- **Arena-only sets are out:** MTG Arena's digital-only sets (Alchemy and the other cards with perpetual,
+  seek or conjure) no longer turn up in shops, boosters, rewards or enemy decks.
+- **A quest that sends you to a boss lair that has vanished brings the lair back.**
+- **The map:** decoration lies under you, a town outside the center has one road into the Ring Cities, and the
+  water line along some land borders is gone.
+- **Engine:** Forge 2.0.16 (the 10.01 build).
 
 ## Starting Out
 
@@ -643,6 +626,13 @@ And your ante. Handing over a Bronze Coin on the "Card Lost" screen saves your g
 cards (the life loss still applies). If your life runs out you're carried home: to your Capitol, or to
 Orazca before it stands. Losing inside a rotating dungeon usually makes that dungeon vanish.
 
+**Enemies learn your tricks.** On Normal and above, beat the same enemy three times in a row and from the
+fourth duel on it starts with a **Wastes** in play - a notice tells you as the duel opens. It keeps that edge
+until it beats you once (a Bronze Coin still counts as a loss); then its count starts over. The count is per
+enemy, whichever of its decks it brings, and covers every duel but Inn tournaments and your guards' fights.
+**Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights
+and Inn tournaments - so an Archmage on a streak starts with two.
+
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
 already has less keeps what it has. Bosses, legends, Arena and Inn fights, war mages and your guards'
@@ -945,7 +935,7 @@ and of a Sealed a silver one. The bronze coins have two separate uses.
    hand the winner a coin instead of losing your anted cards — you get every anted card back (every
    game of a best-of-3) *and* keep your gold. The life loss still applies. Beat that same kind of enemy
    later and you take the coin back as part of the reward. It's offered on the ante screen, so it needs
-   Play for Ante on (the default).
+   Play for Ante on (the default). The button shows the gold it saves you.
 
 **Or buy one.** Your own Armory can stock a Bronze Coin as a Mythic item (1,000 gold list price) -
 from week 3 in your Capitol and week 4 in your other towns.
@@ -1065,13 +1055,25 @@ mage that reaches your Capitol past both guards forces the duel described above.
 
 ### New Game+
 
-A New Game+ is a **new game plus your collection**. You keep cards, decks, equipment, inventory
-and every resource — gold (your bank's balance is paid into your purse), shards, wood and stone.
-Everything else resets to a fresh run: shop blueprints, researched editions, research in progress,
-quests and story flags, color reputation, statistics, blessings, legend sightings, and any Bronze Coins
-enemies were holding. Your challenge-coin purse is topped back up to 1 gold / 1 silver / 3 bronze,
-keeping any surplus you'd hoarded. The one thing that doesn't come back is the Jumpstart tournament:
-that's once per player.
+A New Game+ is a **new game plus your collection**. Press Start and it asks what comes along:
+
+- **Cards only** - your cards, decks and boosters; gold, Shards, Wood and Stone start from zero and the
+  starting kit fills your purse as in a new game.
+- **Cards + current resources** (the default) - also the gold (your bank's balance is paid into your
+  purse), Shards, Wood and Stone you have now.
+- **Cards + current + invested resources** - also a refund of what you put into the world you are leaving:
+  the restore fee of every town you still hold (not one you took by force), your Capitol, and each building
+  standing in them at its price. A town you lost counts for nothing; research, blueprints, guards and
+  re-rolls are not refunded. A notice shows the refund.
+- **Keep items and equipment** (on by default) - your bag, what you wear and your Armory's storage come along
+  (the storage into your bag). Off, you start with the new game's kit.
+
+Everything else resets to a fresh run: shop blueprints, researched editions, research in progress, quests and
+story flags, color reputation, statistics, blessings, legend sightings, enemies' win streaks and any Bronze
+Coins enemies were holding. **Every New Game+ starts with exactly five coins** - 1 Challenge, 1 Silver and 3
+Bronze - whatever you carried. Your **roaming guards are released**: each one's deck goes into an empty deck
+slot and its gear into your Armory's storage. The one thing that doesn't come back is the Jumpstart
+tournament: that's once per player.
 
 Things worth knowing before you press it: your **max life returns to the difficulty's starting value**
 (accumulated bonuses are not carried), an **in-progress tournament is discarded**, including cards
