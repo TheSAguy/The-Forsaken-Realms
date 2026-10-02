@@ -527,7 +527,10 @@ public class EconomyBuildings {
             String costText = goldCost + " [+Gold]" + (shardCost > 0 ? " + " + shardCost + " [+Shards]" : "") + "/wk";
             boolean canAfford = AdventurePlayer.current().getGold() >= goldCost && AdventurePlayer.current().getShards() >= shardCost;
             boolean hasRoom = currentCount < maxGuards;
-            addHalfButton(dialog, column, "[%75]Hire " + guardTierDisplayName(tier) + " (" + costText + ")", hasRoom && canAfford, () -> {
+            // Round 402 (Android button check): a portrait half-button is 118 px, and "Hire Archmage (150 + 23 /wk)" ran
+            // off its right edge - in portrait the price takes a second line.
+            String hireLabel = "[%75]Hire " + guardTierDisplayName(tier) + (forge.Forge.isLandscapeMode() ? " (" : "\n(") + costText + ")";
+            addHalfButton(dialog, column, hireLabel, hasRoom && canAfford, () -> {
                 AdventurePlayer.current().takeGold(goldCost);
                 if (shardCost > 0)
                     AdventurePlayer.current().takeShards(shardCost);

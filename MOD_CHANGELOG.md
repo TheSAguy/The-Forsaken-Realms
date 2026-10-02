@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 402b: every building screen checked in portrait (2026-10-02)
+
+The user: "can you double-check all buildings with multiple buttons on Android, just confirming there are no other button
+issues." The agent game in a phone-shaped portrait window (the desktop launcher's `portrait width=900 height=1950`) on a
+copy of the user's Quick Save (a Capitol with a Level 2 Armory, a Bank, an Exchange, a Teleporter, four roaming guards):
+every building screen and the dialogs behind its buttons, 37 screens. Three problems, fixed:
+
+- Armory: the full-width Manage Guards button lay over the player's gold. RewardScene measured the gold readout on its
+  AccountingLabel, which draws a stand-in at the layout's placeholder and has no bounds of its own - the clearance check
+  had been reading y 0. It measures the placeholder now (`goldSpot`).
+- Local Guards: "Hire Archmage (150 + 23 /wk)" ran off its 118 px half-button; in portrait the price takes a second line.
+- Inn tournament: a portrait phone shows about five lines of the info pane and the event's details fill them - the
+  Simulate checkbox (round 397) was below the fold. In portrait it heads the pane; landscape is unchanged.
+- Fine as they were: Bank, Exchange, Teleporter, the rebuild menu and its Card Shop / Industry / Utility lists (the long
+  type list scrolls inside the dialog), Balance Sheet, Gold Mine, Archaeologist, Outlook, Destroy confirm, the Armory's
+  Re-roll confirm and Storage screen, the guard chooser, the roaming roster and a guard's settings, Arena, Spellsmith
+  (rubble dialog and the Spellsmith screen), Inn, Research Lab, Job Board quests, the Booster and land-shop repair
+  dialogs, a player card shop's page. Cosmetic, not changed: on a tall phone the Research Lab's parchment and the
+  Armory Storage screen's backdrop stop short of the bottom edge, so the town shows below them.
+- Agent bridge: `cmd warp actor=N` / `warp x= y=` (cheats only) stands the player beside a map actor - inside a map the
+  walker follows the enemies' navigation graph, which knows nothing of exits, and every long walk from the Capitol's
+  gate left by a side exit.
+
 ## Round 402: on Android, Buy Blueprint no longer covers the shop's Refresh button (2026-10-02)
 
 A player on Discord (Galon88, with a phone screenshot of an AI town's card shop): "Android can the blueprint button be

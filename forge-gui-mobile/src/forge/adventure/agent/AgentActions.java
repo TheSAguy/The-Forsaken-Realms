@@ -55,6 +55,7 @@ final class AgentActions {
         try {
             switch (cmd) {
                 case "goto": return gotoCmd(a);
+                case "warp": return warp(a);
                 case "explore": return explore(a);
                 case "stop": walker.cancel("stop requested"); return now(true, "stopped");
                 case "wait": return walker.waitDays(a.getInt("days", 1));
@@ -122,6 +123,31 @@ final class AgentActions {
         if (a.has("x") && a.has("y"))
             return walker.walkTo(new Vector2(a.getFloat("x"), a.getFloat("y")), "point " + a.getFloat("x") + "," + a.getFloat("y"));
         return now(false, "goto needs poi, actor, tile or x/y");
+    }
+
+    /**
+     * Round 402 (cheats only): stands the player just below a map actor, so a short `goto actor=N` reaches it. Inside a
+     * map the walker follows the enemies' navigation graph, which knows nothing of exits - in the Capitol every long walk
+     * from the gate crossed a side exit and left the map, so a test of its buildings never arrived.
+     */
+    private CompletableFuture<Map<String, Object>> warp(JsonValue a) {
+        if (!bridge.cheatsAllowed()) return now(false, "warp needs cheats");
+        if (!needGame() || !MapStage.getInstance().isInMap()) return now(false, "warp works inside a map");
+        if (a.has("x") && a.has("y")) {   // a spot - the Inn and the Research Lab are actors without an object id
+            MapStage.getInstance().getPlayerSprite().setPosition(a.getFloat("x"), a.getFloat("y"));
+            return now(true, "warped to " + a.getFloat("x") + "," + a.getFloat("y"));
+        }
+        int id = a.getInt("actor", -1);
+        for (MapActor m : AgentStageAccess.mapActors()) {
+            if (m.getObjectId() != id)
+                continue;
+            forge.adventure.character.PlayerSprite p = MapStage.getInstance().getPlayerSprite();
+            float x = m.getX() + m.getWidth() / 2f - p.getWidth() / 2f, y = m.getY() - p.getHeight() - 6f;
+            p.setPosition(x, y);
+            bridge.log("[TFR-Agent] warp: below actor " + id + " at (" + (int) x + "," + (int) y + ")");
+            return now(true, "warped below actor " + id + " - `goto actor=" + id + "` to step in");
+        }
+        return now(false, "no actor with id " + id);
     }
 
     private CompletableFuture<Map<String, Object>> explore(JsonValue a) {

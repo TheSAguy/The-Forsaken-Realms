@@ -271,8 +271,14 @@ public class EventScene extends MenuScene implements IAfterMatch {
         Table blessingContainer = new Table(Controls.getSkin());
         blessingScrollTop.setWidth(blessing.getWidth() - 5);
         blessingScrollBottom.setWidth(blessing.getWidth() - 5);
-        blessingContainer.add(blessingScrollTop).growX().top();
-        blessingContainer.row();
+        // Round 402 (Android button check): a portrait phone shows about five lines of this pane, and the event's type,
+        // block, boosters and competition style fill them - the checkbox round 397 put above the Prizes was still below
+        // the fold. In portrait it heads the pane; landscape keeps it after the event's details.
+        boolean checkboxFirst = !Forge.isLandscapeMode();
+        if (!checkboxFirst) {
+            blessingContainer.add(blessingScrollTop).growX().top();
+            blessingContainer.row();
+        }
         // Round 366 (the user's 4K screenshots: "8 players, ma", "The Lord of the Rings: Tale", "(slow" cut at the right
         // edge - at every resolution, not only 4K). The checkbox's one-line label measured ~290 units against the
         // 144-unit pane, and a pane that may scroll sideways sizes its table to the widest child - so the wrapped
@@ -284,6 +290,10 @@ public class EventScene extends MenuScene implements IAfterMatch {
         simulateAiMatches.getImageCell().top(); // the box beside the first line, not the middle of three
         blessingContainer.add(simulateAiMatches).growX().left().padTop(5).padBottom(10);
         blessingContainer.row();
+        if (checkboxFirst) {
+            blessingContainer.add(blessingScrollTop).growX().top();
+            blessingContainer.row();
+        }
         if (!bottomDescription.isEmpty()) {
             blessingContainer.add(blessingScrollBottom).growX().top();
         }

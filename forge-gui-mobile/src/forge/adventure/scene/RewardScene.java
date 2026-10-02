@@ -46,6 +46,7 @@ import java.util.List;
 public class RewardScene extends UIScene {
     private TextraButton doneButton, detailButton, restockButton, destroyButton, guardsButton, upgradeButton, rerollButton, shopTypeRerollButton, buyBlueprintButton, storageButton;
     private TextraLabel playerGold, playerShards;
+    private Actor goldSpot;
     private TypingLabel headerLabel;
     private Vector2 headerLabelOrigPos;
     private boolean autoSell;
@@ -89,6 +90,7 @@ public class RewardScene extends UIScene {
     private RewardScene() {
         super(Forge.isLandscapeMode() ? "ui/items.json" : "ui/items_portrait.json");
 
+        goldSpot = ui.findActor("playerGold"); // round 402: where the gold readout is drawn - see layoutPortraitModButtons()
         playerGold = Controls.newAccountingLabel(ui.findActor("playerGold"), false);
         playerShards = Controls.newAccountingLabel(ui.findActor("playerShards"), true);
         headerLabel = ui.findActor("shopName");
@@ -356,7 +358,12 @@ public class RewardScene extends UIScene {
         // Round 402 (a player on Discord, Android: "can the blueprint button be moved? So you can reroll without
         // buying it"): and the Refresh button, which sits right above Done on a card shop - the Armory never shows it,
         // so this block was only ever checked there, and on an AI town's card shop Buy Blueprint lay over Refresh.
-        float bottom = Math.max(playerGold.getY() + playerGold.getHeight(),
+        // Round 402 (found re-checking every Android shop page after that report): the gold readout is measured at the
+        // layout's placeholder. playerGold is an AccountingLabel - it hides the placeholder and draws a stand-in at its
+        // spot, but the AccountingLabel actor itself has no bounds, so this check had been measuring y 0: an Armory's
+        // full-width Manage Guards button lay over the player's gold.
+        Actor gold = goldSpot != null ? goldSpot : playerGold;
+        float bottom = Math.max(gold.getY() + gold.getHeight(),
                 doneButton.getY() + doneButton.getHeight());
         if (restockButton != null && restockButton.isVisible())
             bottom = Math.max(bottom, restockButton.getY() + restockButton.getHeight());
