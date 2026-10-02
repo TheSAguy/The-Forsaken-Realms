@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 401: every dungeon entrance reviewed against the user's new art (2026-10-02)
+
+The user: "I've actually found/created some great new ones. Saved here: Pictures/Screenshots/Update_2. Let's go through
+all dungeons again, not just the 77 unsure ... There is one 'Eldrazi_Prison.png' that I think will be a good replacement."
+Update_2: 14 PixelLab sheets (void rifts, town buildings, dark mage towers, large set pieces, flesh/horror lairs, Theros
+temples, terrain caves) and two white-backed singles - 706 pictures cut. All 350 dungeon-type places (caves, dungeons,
+castles, side-boss lairs) were rendered with their names, lands and map types and matched; 113 proposals went to the
+user on a numbered page. Their answer: 88 change and keep the old picture for re-use, 17 change with the old picture
+"low probability to re-use", 8 stay; "keep the size of the icons uniform, 32x32, unless special location or tower".
+
+- dev-tools/art-import/round401/install_entrances.py + plan401.json: each changed place gets its own new region on
+  page 1 of dungeon_entrances_2 and is re-pointed by its unique POI name (round 391 re-pointed every place sharing a
+  region; the two Skull Cave pairs now differ). Sizes: 94 at 32x32 (64 px art scaled down smoothly, hard alpha edge,
+  standing on the cell's bottom); the Kor Outpost watchtower and the Necromancer's spire 32 wide, 48 tall; castles and
+  side-boss lairs up to 48 (Tibalt, Unhallowed Abbey, Vampire Castle + Dungeon, Xira's Hive, Squirrel Farm, Gitrog
+  Bog); the two Eldrazi places at their own size (Emrakul's Castle 54x53, the user's Eldrazi Prison 55x58, white keyed).
+- The old pictures: an old region of this atlas no place uses any more is renamed Spare_ (re-use) or SpareLow_; those
+  in other atlases stay put. All 105 are exported to Pictures/Screenshots/Art_to_Tweak/Entrance_Spares/{Reuse,Low}
+  and listed in spares401.csv. Page 1 grew 512x754 -> 512x1068.
+- Saves pick the new pictures up on load (a place's art comes from its data; a saved variant index wraps). The minimap
+  draws generic markers for these places, so nothing there is baked.
+- Agent-seen in the user's world: the Black Tower's dark castle and a factory's workshop at 32 px, magnifier in place.
+
 ## Round 400b: the roaming guards' decks and gear come home in New Game+ (2026-10-02)
 
 The user: "Good call on the Armory Storage. Let's also confirm any roaming guards stuff is included. Items and Decks."
